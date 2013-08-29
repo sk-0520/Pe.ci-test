@@ -16,7 +16,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Pe
+namespace Pe.UI
 {
 	/// <summary>
 	/// Interaction logic for Window1.xaml
