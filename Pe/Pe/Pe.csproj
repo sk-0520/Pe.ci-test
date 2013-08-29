@@ -72,6 +72,9 @@
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MainWindow.xaml.Function.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="UI\MainWindow.xaml" />
@@ -83,9 +86,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="etc\lang" />
     <Folder Include="Logic" />
     <Folder Include="UI" />
     <Folder Include="IF" />
+    <Folder Include="etc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="etc\lang\日本語.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -19,13 +19,18 @@ using System.Windows.Media;
 namespace Pe.UI
 {
 	/// <summary>
-	/// Interaction logic for Window1.xaml
+	/// メインウィンドウ。
+	/// 
+	/// メインウィンドウはPe内のタスクManagerとして使用され、
+	/// 基本的に表には出てこないものとする。
 	/// </summary>
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
+			
+			Initialize();
 		}
 	}
 }
