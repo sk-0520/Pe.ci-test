@@ -95,7 +95,9 @@
     <Folder Include="etc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="etc\lang\日本語.xml" />
+    <None Include="etc\lang\日本語.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

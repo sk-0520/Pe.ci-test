@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
-<Language lang="ja/JP" name="Japanese">
+<language lang="ja/JP" name="Japanese">
 	<common>
 		<item id="ok" word="OK" />
 	</common>
-</Language>
+</language>

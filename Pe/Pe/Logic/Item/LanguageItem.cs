@@ -60,18 +60,18 @@ namespace Pe.Logic
 			}
 		}
 		
-		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs exExport)
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs impArg)
 		{
-			var result = base.ToXmlElement(xml, exExport);
+			var result = base.ToXmlElement(xml, impArg);
 			
 			result.SetAttribute(WORD, Word);
 			
 			return result;
 		}
 		
-		public override void FromXmlElement(XmlElement element)
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
-			base.FromXmlElement(element);
+			base.FromXmlElement(element, impArg);
 			
 			var word = element.GetAttribute(WORD);
 			
@@ -80,7 +80,7 @@ namespace Pe.Logic
 	}
 	
 	
-	public class LanguageItemContainer: ItemContainer<LanguageItem>, IExportXmlElement, IImportXmlElement
+	public class LanguageItemContainer: ItemContainer<LanguageItem>, IImportExportXmlElement
 	{
 		public LanguageItemContainer()
 		{
@@ -104,15 +104,15 @@ namespace Pe.Logic
 			}
 		}
 		
-		public XmlElement ToXmlElement(XmlDocument xml, ExportArgs exExport)
+		public XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			throw new NotImplementedException();
 		}
-		public void FromXmlElement(XmlElement xml)
+		public void FromXmlElement(XmlElement xml, ImportArgs impArg)
 		{
 			foreach(XmlElement element in xml.GetElementsByTagName("item")) {
 				var item = new LanguageItem(this);
-				item.FromXmlElement(element);
+				item.FromXmlElement(element, impArg);
 				Set(item);
 			}
 		}

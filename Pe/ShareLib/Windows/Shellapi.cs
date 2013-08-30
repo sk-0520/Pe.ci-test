@@ -10,13 +10,14 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
+
 namespace ShareLib
 {
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 	public struct SHFILEINFO 
 	{
 		public IntPtr hIcon;
-		public IntPtr iIcon;
+		public int iIcon;
 		public uint dwAttributes;
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
 		public string szDisplayName;
@@ -46,6 +47,15 @@ namespace ShareLib
         /// 
         /// </summary>
         SHGFI_USEFILEATTRIBUTES = 0x10,
+        
+        SHGFI_SYSICONINDEX = 0x4000,
+	}
+	
+        
+	public enum SHIL: int
+	{
+	    SHIL_EXTRALARGE = 0x2,
+	    SHIL_JUMBO = 0x4,
 	}
 			
 	/// <summary>
@@ -56,7 +66,11 @@ namespace ShareLib
 		[DllImport("shell32.dll")]
 		public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, SHGFI uFlags);
 
-		[DllImport( "shlwapi.dll", CharSet = CharSet.Unicode )]
+		//[DllImport("shell32.dll", EntryPoint = "#727")]
+		[DllImport("shell32.dll")]
+		public static extern int SHGetImageList(int iImageList, ref Guid riid, ref IImageList ppv);
+
+		 [DllImport( "shlwapi.dll", CharSet = CharSet.Unicode )]
 		public static extern long StrFormatByteSize( long fileSize, [MarshalAs( UnmanagedType.LPTStr )] StringBuilder buffer, int bufferSize );
 	}
 }

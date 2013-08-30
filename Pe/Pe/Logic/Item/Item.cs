@@ -82,7 +82,7 @@ namespace Pe.Logic
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs exExport)
+		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = xml.CreateElement("item");
 			
@@ -98,7 +98,7 @@ namespace Pe.Logic
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public virtual void FromXmlElement(XmlElement element)
+		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			var id = element.GetAttribute(ID);
 			Id = id;

@@ -11,6 +11,8 @@ using System.Xml;
 
 namespace Pe.IF
 {
+	public abstract class ImportArgs { }
+	
 	/// <summary>
 	/// 
 	/// </summary>
@@ -21,7 +23,7 @@ namespace Pe.IF
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		void FromXmlElement(XmlElement element);
+		void FromXmlElement(XmlElement element, ImportArgs impArg);
 	}
 	
 	/// <summary>
@@ -39,7 +41,7 @@ namespace Pe.IF
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		XmlElement ToXmlElement(XmlDocument xml, ExportArgs exExport);
+		XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg);
 	}
 	
 	/// <summary>

@@ -14,13 +14,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Drawing;
 
 namespace ShareLib
 {
 	public delegate string GetUniqueDg(string source, int index);
+	
 	
 	public static class Extension
 	{
@@ -34,7 +33,17 @@ namespace ShareLib
 			return s == null || s.Length == 0;
 		}
 		
-		public static string[] SplitLines(this string s)
+		public static System.Drawing.Color ToNegative(this System.Drawing.Color color)
+		{
+			return System.Drawing.Color.FromArgb(color.ToArgb() ^ 0xFFFFFF);
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> SplitLines(this string s)
 		{
 			if (s.IsEmpty()) {
 				return null;
@@ -48,11 +57,14 @@ namespace ShareLib
 				}
 			}
 
-			return result.ToArray();
+			return result;
 		}
 		
 	}
 	
+	/// <summary>
+	/// 
+	/// </summary>
 	public static class Common
 	{
 		/// <summary>
@@ -212,18 +224,158 @@ namespace ShareLib
 			}
 			return false;
 		}
+
+		/// <summary>
+		/// ファイルをバイナリとして読み込む
+		/// </summary>
+		/// <param name="filePath">展開済みファイルパス</param>
+		/// <param name="startIndex">読み出し位置</param>
+		/// <param name="readLength">読み出しサイズ</param>
+		/// <returns></returns>
+		public static byte[] FileToBinary(string filePath, int startIndex, int readLength)
+		{
+			byte[] buffer;
+
+			using (var stream = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read))) {
+				buffer = new byte[readLength];
+				stream.Read(buffer, startIndex, readLength);
+			}
+
+			return buffer;
+		}
+		/// <summary>
+		/// ファイルをバイナリとして読み込む
+		/// </summary>
+		/// <param name="filePath">展開済みファイルパス</param>
+		/// <returns></returns>
+		public static byte[] FileToBinary(string filePath)
+		{
+			var fileInfo = new System.IO.FileInfo(filePath);
+			return FileToBinary(filePath, 0, (int)fileInfo.Length);
+		}
+
+		public static byte[] BinaryListToArray(List<byte[]> list)
+		{
+			int totalLength = 0;
+			foreach (var buffer in list) {
+				totalLength += buffer.Length;
+			}
+			if (totalLength == 0) {
+				return null;
+			}
+			var result = new byte[totalLength];
+			int index = 0;
+			foreach (var buffer in list) {
+				Buffer.BlockCopy(buffer, 0, result, index, buffer.Length);
+				index += buffer.Length;
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// 0番兵文字列をC#stringへ変換。
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static string ToSafeString(string s)
+		{
+			for (var i = 0; i < s.Length; i++) {
+				if (s[i] == '\0') {
+					return s.Substring(0, i);
+				}
+			}
+
+			return s;
+		}
+
+		/// <summary>
+		/// すらいすー
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="sourceArray"></param>
+		/// <param name="start"></param>
+		/// <param name="end"></param>
+		/// <returns></returns>
+		public static T[] ArraySlice<T>(T[] sourceArray, int start, int end)
+		{
+			if (start < 0) {
+				start = sourceArray.Length + start;
+			}
+			if (end < 0) {
+				end = sourceArray.Length + end;
+			}
+			Debug.Assert(end - start > 0);
+			var result = new T[end - start];
+			Buffer.BlockCopy(sourceArray, start, result, 0, result.Length);
+			return result;
+		}
+		public static T[] ArraySlice<T>(T[] sourceArray, int start)
+		{
+			return ArraySlice(sourceArray, start, sourceArray.Length);
+		}
+
+		/// <summary>
+		/// ラジアンから度
+		/// </summary>
+		/// <param name="radian"></param>
+		/// <returns></returns>
+		public static decimal RadianToDegree(decimal radian)
+		{
+			return radian * 180.0m / (decimal)Math.PI;
+		}
+		public static double RadianToDegree(double radian)
+		{
+			return radian * 180.0 / Math.PI;
+		}
+		/// <summary>
+		/// 度からラジアン
+		/// </summary>
+		/// <param name="degree"></param>
+		/// <returns></returns>
+		public static decimal DegreeToRadian(decimal degree)
+		{
+			return degree * (decimal)Math.PI / 180.0m;
+		}
+		public static double DegreeToRadian(double degree)
+		{
+			return degree * Math.PI / 180.0;
+		}
+		/// <summary>
+		/// 2点間の距離
+		/// </summary>
+		public static double Distance(Point p1, Point p2)
+		{
+			var x = p1.X - p2.Y;
+			var y = p1.Y - p2.Y;
+			return Math.Sqrt(x * x + y * y);
+		}
+
 	}
 	
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LList<TCAR, TCDR>
 	{
-		public TCAR car;
-		public TCDR cdr;
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="car"></param>
+		/// <param name="cdr"></param>
 		public LList(TCAR car, TCDR cdr)
 		{
-			this.car = car;
-			this.cdr = cdr;
+			this.Car = car;
+			this.Cdr = cdr;
 		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public TCAR Car { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public TCDR Cdr { get; set; }
 	}
 	
 	/// <summary>
@@ -255,13 +407,13 @@ namespace ShareLib
 		
 		public bool Test 
 		{
-			get { return this.car; } 
-			set { this.car = value; }
+			get { return this.Car; } 
+			set { this.Car = value; }
 		}
 		public string Info 
 		{
-			get { return this.cdr; } 
-			set { this.cdr = value; }
+			get { return this.Cdr; } 
+			set { this.Cdr = value; }
 		}
 		public object Tag { get; set; }
 	}
