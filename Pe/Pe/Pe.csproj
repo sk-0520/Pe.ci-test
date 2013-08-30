@@ -65,7 +65,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="IF\ImpExp.cs" />
-    <Compile Include="Logic\Item.cs" />
+    <Compile Include="Logic\Item\Item.cs" />
+    <Compile Include="Logic\Item\LanguageItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="UI\MainWindow.xaml.cs">
@@ -88,6 +89,7 @@
   <ItemGroup>
     <Folder Include="etc\lang" />
     <Folder Include="Logic" />
+    <Folder Include="Logic\Item" />
     <Folder Include="UI" />
     <Folder Include="IF" />
     <Folder Include="etc" />
