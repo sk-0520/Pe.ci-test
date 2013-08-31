@@ -42,21 +42,27 @@ namespace ShareLib
 		
 		public TestAndInfo Load()
 		{
+			TestAndInfo result;
+			
+			var fileInfo = new SHFILEINFO();
+			Icon icon = null;
+			
 			if (Common.IsIn(IconSize, IconSize.Small, IconSize.Normal)) {
 				// 16, 32 px
-				var fileInfo = new SHFILEINFO();
 				fileInfo.iIcon = Index;
 
 				var iconFlag = IconSize == IconSize.Small ? SHGFI.SHGFI_SMALLICON : SHGFI.SHGFI_LARGEICON;
 
 				var hImgSmall = WindowsAPI.SHGetFileInfo(IconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), SHGFI.SHGFI_ICON | iconFlag);
 				if (hImgSmall != IntPtr.Zero) {
-					Icon = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
+					icon = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
 					WindowsAPI.DestroyIcon(fileInfo.hIcon);
+					result = TestAndInfo.Success();
+				} else {
+					result = TestAndInfo.Failure(hImgSmall.ToString());
 				}
 			} else {
 				var shellImageList = IconSize == IconSize.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
-				var fileInfo = new SHFILEINFO();
 				var hImgSmall = WindowsAPI.SHGetFileInfo(IconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), SHGFI.SHGFI_SYSICONINDEX);
 
 				IImageList imageList = null;
@@ -65,14 +71,19 @@ namespace ShareLib
 				if (getImageListResult == ComResult.S_OK) {
 					IntPtr hIcon = IntPtr.Zero;
 					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
-					Icon = (Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
+					icon = (Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
 					WindowsAPI.DestroyIcon(hIcon);
+					result = TestAndInfo.Success();
+				} else {
+					result = TestAndInfo.Failure(getImageListResult.ToString());
 				}
-
 			}
-
-			return result;
 			
+			if(result.Test) {
+				Icon = icon;
+			}
+			
+			return result;
 		}
 	}
 }

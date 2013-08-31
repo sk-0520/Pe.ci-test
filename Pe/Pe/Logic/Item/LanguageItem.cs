@@ -16,7 +16,7 @@ namespace Pe.Logic
 {
 	public class LanguageItem: Item
 	{
-		const string WORD = "word";
+		const string AttributeWord = "word";
 		
 		private string text = null;
 		
@@ -64,7 +64,7 @@ namespace Pe.Logic
 		{
 			var result = base.ToXmlElement(xml, impArg);
 			
-			result.SetAttribute(WORD, Word);
+			result.SetAttribute(AttributeWord, Word);
 			
 			return result;
 		}
@@ -73,7 +73,7 @@ namespace Pe.Logic
 		{
 			base.FromXmlElement(element, impArg);
 			
-			var word = element.GetAttribute(WORD);
+			var word = element.GetAttribute(AttributeWord);
 			
 			Word = word;
 		}

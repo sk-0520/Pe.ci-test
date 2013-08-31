@@ -13,6 +13,14 @@ using System.Text;
 
 namespace ShareLib
 {
+        public enum ComResult : int
+        {
+                S_OK = unchecked((int)0x00000000),
+                S_FALSE = unchecked((int)0x00000001),
+                E_NOINTERFACE = unchecked((int)0x80004002),
+                INET_E_DEFAULT_ACTION = unchecked((int)0x800C0011),
+        }
+        
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 	public struct SHFILEINFO 
 	{
@@ -63,12 +71,14 @@ namespace ShareLib
 	/// </summary>
 	public static partial class WindowsAPI
 	{
+		public static Guid IID_IImageList = new Guid("{46EB5926-582E-4017-9FDF-E8998DAA0950}");
+		
 		[DllImport("shell32.dll")]
 		public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, SHGFI uFlags);
 
 		//[DllImport("shell32.dll", EntryPoint = "#727")]
 		[DllImport("shell32.dll")]
-		public static extern int SHGetImageList(int iImageList, ref Guid riid, ref IImageList ppv);
+		public static extern ComResult SHGetImageList(int iImageList, ref Guid riid, ref IImageList ppv);
 
 		 [DllImport( "shlwapi.dll", CharSet = CharSet.Unicode )]
 		public static extern long StrFormatByteSize( long fileSize, [MarshalAs( UnmanagedType.LPTStr )] StringBuilder buffer, int bufferSize );

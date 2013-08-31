@@ -12,11 +12,6 @@ namespace ShareLib
 {
 	public class ShareLibException: Exception
 	{
-		private void Initialize()
-		{
-			DateTime = DateTime.Now;
-		}
-		
 		public ShareLibException() 
 		{
 			Initialize();
@@ -36,5 +31,13 @@ namespace ShareLib
 		/// 
 		/// </summary>
 		public DateTime DateTime { get; private set; }
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		private void Initialize()
+		{
+			DateTime = DateTime.Now;
+		}
 	}
 }

@@ -27,8 +27,8 @@ namespace Pe.Logic
 			, 
 			RegexOptions.None
 		);
-		
-		const string ID = "id";
+		const string TagItem = "item";
+		const string AttributeId = "id";
 		
 		public static string UniqueItemId(string source, int index) 
 		{
@@ -84,9 +84,9 @@ namespace Pe.Logic
 		/// <returns></returns>
 		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
-			var result = xml.CreateElement("item");
+			var result = xml.CreateElement(TagItem);
 			
-			result.SetAttribute(ID, Id);
+			result.SetAttribute(AttributeId, Id);
 			
 			return result;
 		}
@@ -100,7 +100,7 @@ namespace Pe.Logic
 		/// <returns></returns>
 		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
-			var id = element.GetAttribute(ID);
+			var id = element.GetAttribute(AttributeId);
 			Id = id;
 		}
 	}
