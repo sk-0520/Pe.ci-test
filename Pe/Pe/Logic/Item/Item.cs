@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
-
 using Pe.IF;
+using ShareLib;
 
 namespace Pe.Logic
 {
@@ -75,6 +75,8 @@ namespace Pe.Logic
 			}
 		}
 		
+		public string Comment { get; set; }
+		
 		/// <summary>
 		/// XML要素出力。
 		/// 
@@ -87,6 +89,10 @@ namespace Pe.Logic
 			var result = xml.CreateElement(TagItem);
 			
 			result.SetAttribute(AttributeId, Id);
+			if(Comment.IsEmpty()) {
+				var commentElement = xml.CreateComment(Comment);
+				result.AppendChild(commentElement);
+			}
 			
 			return result;
 		}
@@ -101,7 +107,15 @@ namespace Pe.Logic
 		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			var id = element.GetAttribute(AttributeId);
+			
 			Id = id;
+			
+			foreach(XmlNode node in element.ChildNodes) {
+				if(node.NodeType == XmlNodeType.Comment) {
+					Comment = ((XmlComment)node).Data;
+					break;
+				}
+			}
 		}
 	}
 
