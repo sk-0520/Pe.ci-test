@@ -18,6 +18,8 @@ namespace Pe.Logic
 		{
 		}
 		
+		public override string Name { get { return "icon"; } }
+		
 		public string Path { get; set; }
 		public int Index { get; set; }
 	}

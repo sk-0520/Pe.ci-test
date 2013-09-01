@@ -10,9 +10,16 @@ using System;
 using System.Diagnostics;
 using System.Xml;
 using Pe.IF;
+using ShareLib;
 
 namespace Pe.Logic
 {
+	public class DataValue
+	{
+		public static string Tag { get { return "data"; } }
+		public static string Attribute { get { return "value"; } }
+		//public string Value { get; set; }
+	}
 	/// <summary>
 	/// アイテムが格納する構造化可能なデータ
 	/// 

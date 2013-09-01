@@ -23,6 +23,8 @@ namespace Pe.Logic
 			Tags = new List<string>();
 		}
 		
+		public override string Name { get { return "tags"; } }
+		
 		public List<string> Tags { get; private set; }
 	}
 }

@@ -20,6 +20,7 @@ namespace Pe.Logic
 			WorkDirectory = new List<string>();
 			OptionCommand = new List<string>();
 		}
+		public override string Name { get { return "history"; } }
 		
 		public int ExecuteCount { get; set; }
 		public List<string> WorkDirectory { get; private set; }

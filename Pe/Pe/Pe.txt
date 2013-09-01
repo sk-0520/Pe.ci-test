@@ -6,14 +6,18 @@
 		<timestamp create="YYYY-MM-DDThh:mm:ss" update="YYYY-MM-DDThh:mm:ss" />
 		<history count="int">
 			<workdirectory>
-				<data path="string" />
-				<data path="string" />
+				<data value="string" />
+				<data value="string" />
 			</workdirectory>
 			<optioncommand>
-				<data path="string" />
-				<data path="string" />
+				<data value="string" />
+				<data value="string" />
 			</optioncommand>
 		</history>
+		<tags>
+			<data value="string" />
+			<data value="string" />
+		</tags>
 	</item>
 </launcher>
 
