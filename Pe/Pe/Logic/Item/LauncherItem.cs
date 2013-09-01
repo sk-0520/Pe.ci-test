@@ -129,7 +129,6 @@ namespace Pe.Logic
 		{
 			var result = base.ToXmlElement(xml, expArg);
 			
-			// TODO: 未実装
 			result.SetAttribute(AttributeLauncherType, LauncherType.ToString());
 			result.SetAttribute(AttributeProcessWatcher, ProcessWatcher.ToString());
 			result.SetAttribute(AttributeGetStdOutput, GetStdOutput.ToString());
@@ -200,8 +199,5 @@ namespace Pe.Logic
 				TimestampItemData.FromXmlElement(timestampItemData, impArg);
 			}
 		}
-		
 	}
-	
-	
 }
