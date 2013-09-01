@@ -96,13 +96,13 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public virtual string Id 
+		public string Id 
 		{ 
 			get { return this.id; }
 			set 
 			{
-				if(this.id != null && !IsSafeId(value)) {
-					throw new Exception(id);
+				if(!IsSafeId(value)) {
+					throw new PeException(value);
 				}
 				this.id = value;  
 			}

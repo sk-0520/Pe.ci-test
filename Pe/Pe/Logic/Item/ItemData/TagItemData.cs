@@ -8,6 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Xml;
+using Pe.IF;
 
 namespace Pe.Logic
 {
@@ -21,6 +23,6 @@ namespace Pe.Logic
 			Tags = new List<string>();
 		}
 		
-		public List<string> Tags { get; set; }
+		public List<string> Tags { get; private set; }
 	}
 }

@@ -47,8 +47,7 @@ namespace Pe.Logic
 						var repResult = Regex.Replace(word, @"\$\{(.+)\}", (Match m) => {
 							string s = m.Value;
 							var id = s.Substring("${".Length, s.Length - "${}".Length);
-							//return Language[id].Text;
-							return string.Empty;
+							return LanguageItemContainer[id].Text;
 						});
 						word = repResult;
 					}

@@ -42,9 +42,8 @@ namespace Pe.Logic
 		Maxim,
 	}
 	
-	public class LauncherItem: Item
+	public class LauncherItem: TitleItem
 	{
-		const string AttributeName = "name";
 		
 		public LauncherItem()
 		{
@@ -54,10 +53,6 @@ namespace Pe.Logic
 			TimestampItemData = new TimestampItemData();
 		}
 		
-		/// <summary>
-		/// アイテム名
-		/// </summary>
-		public string Title { get; set; }
 		/// <summary>
 		/// ランチャー種別
 		/// </summary>
@@ -89,7 +84,7 @@ namespace Pe.Logic
 		/// </summary>
 		public LauncherApplicationShow LauncherApplicationShow { get; set; }
 		/// <summary>
-		/// アイコンパス
+		/// アイコン
 		/// </summary>
 		public IconItemData IconItemData { get; private set; }
 		/// <summary>

@@ -7,23 +7,46 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using Pe.IF;
+using ShareLib;
 
 namespace Pe.Logic
 {
-	public abstract class NameItem: Item
+	public abstract class TitleItem: Item
 	{
 		const string AttributeTitle = "title";
 		
-		public NameItem()
+		public static bool IsSafeTitle(string s)
+		{
+			return s.SplitLines().Count() == 1;
+		}
+		public static string ToSafeTitle(string s)
+		{
+			return string.Join("-", s.SplitLines());
+		}
+		
+		private string title;
+		
+		public TitleItem()
 		{
 		}
 		
 		/// <summary>
 		/// アイテム名
 		/// </summary>
-		public string Title { get; set; }
+		public string Title { 
+			get { return this.title; }
+			set
+			{
+				if(!IsSafeTitle(value)) {
+					throw new PeException(value);
+				}
+				this.title = value;
+			}
+		}
 		
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{

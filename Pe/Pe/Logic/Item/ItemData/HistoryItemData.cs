@@ -8,6 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Xml;
+using Pe.IF;
 
 namespace Pe.Logic
 {

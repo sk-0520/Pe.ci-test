@@ -8,6 +8,8 @@
  */
 using System;
 using System.Diagnostics;
+using System.Xml;
+using Pe.IF;
 
 namespace Pe.Logic
 {
