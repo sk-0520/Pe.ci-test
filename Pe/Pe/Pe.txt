@@ -1,0 +1,7 @@
+﻿[LauncherItem]
+<launcher>
+	<item id="string" name="string" >
+		<!-- comment -->
+	</item>
+</launcher>
+

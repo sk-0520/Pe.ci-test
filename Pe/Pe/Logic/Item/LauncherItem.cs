@@ -43,33 +43,20 @@ namespace Pe.Logic
 	{
 		const string AttributeName = "name";
 		
-		private string name;
-		
 		public LauncherItem()
 		{
-			Tags = new List<string>();
 			HistoryWorkDirectoryList = new List<string>();
 			HistoryOptionCommandList = new List<string>();
+			Tags = new List<string>();
+			
+			ResistTimestamp = DateTime.MinValue;
+			UpdateTimestamp = DateTime.MinValue;
 		}
 		
 		/// <summary>
 		/// アイテム名
 		/// </summary>
-		public string Name 
-		{
-			get 
-			{
-				if(this.name.IsEmpty()) {
-					return Id;
-				}
-				
-				return this.name;
-			}
-			set
-			{
-				this.name = value;
-			}
-		}
+		public string Name { get; set; }
 		/// <summary>
 		/// ランチャー種別
 		/// </summary>
@@ -132,6 +119,8 @@ namespace Pe.Logic
 		/// 更新日時
 		/// </summary>
 		public DateTime UpdateTimestamp { get; set; }
+		
+		
 	}
 	
 	

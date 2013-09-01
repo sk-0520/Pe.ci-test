@@ -14,7 +14,7 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
-	public class LanguageItem: Item
+	public class LanguageItem: NameItem
 	{
 		const string AttributeWord = "word";
 		
@@ -74,7 +74,6 @@ namespace Pe.Logic
 			base.FromXmlElement(element, impArg);
 			
 			var word = element.GetAttribute(AttributeWord);
-			
 			Word = word;
 		}
 	}
