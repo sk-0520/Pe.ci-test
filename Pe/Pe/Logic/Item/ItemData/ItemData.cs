@@ -27,9 +27,5 @@ namespace Pe.Logic
 	/// </summary>
 	public abstract class ItemData: ItemBase
 	{
-		public ItemData()
-		{
-			Debug.Assert(Name != "item");
-		}
 	}
 }

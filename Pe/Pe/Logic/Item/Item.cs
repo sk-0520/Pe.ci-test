@@ -57,7 +57,7 @@ namespace Pe.Logic
 		
 		public Item() { }
 		
-		public sealed override string Name { get { return "item"; } }
+		public override string Name { get { return "item"; } }
 		
 		/// <summary>
 		/// 
@@ -75,6 +75,14 @@ namespace Pe.Logic
 		}
 		
 		public string Comment { get; set; }
+		
+		public override void Clear()
+		{
+			base.Clear();
+			
+			this.id = default(string);
+			Comment = default(string);
+		}
 		
 		/// <summary>
 		/// XML要素出力。

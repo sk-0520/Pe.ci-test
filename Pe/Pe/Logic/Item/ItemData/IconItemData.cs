@@ -14,6 +14,9 @@ namespace Pe.Logic
 {
 	public class IconItemData: ItemData
 	{
+		const string AttributePath = "path";
+		const string AttributeIndex = "index";
+		
 		public IconItemData()
 		{
 		}
@@ -28,7 +31,32 @@ namespace Pe.Logic
 			base.Clear();
 			
 			Path = default(string);
-			Index = default(0);
+			Index = default(int);
+		}
+		
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
+		{
+			var result = base.ToXmlElement(xml, expArg);
+			
+			result.SetAttribute(AttributePath, Path);
+			result.SetAttribute(AttributeIndex, Index.ToString());
+			
+			return result;
+		}
+		
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
+		{
+			base.FromXmlElement(element, impArg);
+			
+			var unsafePath = element.GetAttribute(AttributePath);
+			var unsafeIndex = element.GetAttribute(AttributeIndex);
+			
+			int outInt;
+			
+			Path = unsafePath;
+			if(int.TryParse(unsafeIndex, out outInt)) {
+				Index = outInt;
+			}
 		}
 	}
 }

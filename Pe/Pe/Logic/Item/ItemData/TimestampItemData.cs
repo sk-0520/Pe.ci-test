@@ -40,9 +40,22 @@ namespace Pe.Logic
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
+						
+			var create = Create.ToString("o");
+			var update = Update.ToString("o");
 			
-			var unsafeCreate = result.GetAttribute(AttributeCreate);
-			var unsafeUpdate = result.GetAttribute(AttributeUpdate);
+			result.SetAttribute(AttributeCreate, create);
+			result.SetAttribute(AttributeUpdate, update);
+			
+			return result;
+		}
+		
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
+		{
+			base.FromXmlElement(element, impArg);
+			
+			var unsafeCreate = element.GetAttribute(AttributeCreate);
+			var unsafeUpdate = element.GetAttribute(AttributeUpdate);
 			
 			DateTime outDateTime;
 			
@@ -52,19 +65,6 @@ namespace Pe.Logic
 			if(DateTime.TryParse(unsafeUpdate, out outDateTime)) {
 				Update = outDateTime;
 			}
-			
-			return result;
-		}
-		
-		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
-		{
-			base.FromXmlElement(element, impArg);
-			
-			var create = Create.ToString("o");
-			var update = Update.ToString("o");
-			
-			element.SetAttribute(AttributeCreate, create);
-			element.SetAttribute(AttributeUpdate, update);
 		}
 	}
 }

@@ -44,7 +44,14 @@ namespace Pe.Logic
 	
 	public class LauncherItem: TitleItem
 	{
-		
+		const string AttributeLauncherType = "type";
+		const string AttributeProcessWatcher = "pswatch";
+		const string AttributeGetStdOutput = "getstdout";
+		const string AttributeLauncherCommand = "command";
+		const string AttributeWorkDirectory = "dir";
+		const string AttributeOptionCommand = "option";
+		const string AttributeLauncherApplicationShow = "show";
+			
 		public LauncherItem()
 		{
 			IconItemData = new IconItemData();
@@ -104,6 +111,14 @@ namespace Pe.Logic
 		{
 			base.Clear();
 			
+			LauncherType = default(Logic.LauncherType);
+			ProcessWatcher = default(bool);
+			GetStdOutput = default(bool);
+			LauncherCommand = default(string);
+			WorkDirectory = default(string);
+			OptionCommand = default(string);
+			LauncherApplicationShow = default(LauncherApplicationShow);
+			
 			IconItemData.Clear();
 			HistoryItemData.Clear();
 			TagItemData.Clear();
@@ -115,7 +130,19 @@ namespace Pe.Logic
 			var result = base.ToXmlElement(xml, expArg);
 			
 			// TODO: 未実装
+			result.SetAttribute(AttributeLauncherType, LauncherType.ToString());
+			result.SetAttribute(AttributeProcessWatcher, ProcessWatcher.ToString());
+			result.SetAttribute(AttributeGetStdOutput, GetStdOutput.ToString());
+			result.SetAttribute(AttributeLauncherCommand, LauncherCommand);
+			result.SetAttribute(AttributeWorkDirectory, WorkDirectory);
+			result.SetAttribute(AttributeOptionCommand, OptionCommand);
+			result.SetAttribute(AttributeLauncherApplicationShow, LauncherApplicationShow.ToString());
 			
+			result.AppendChild(IconItemData.ToXmlElement(xml, expArg));
+			result.AppendChild(HistoryItemData.ToXmlElement(xml, expArg));
+			result.AppendChild(TagItemData.ToXmlElement(xml, expArg));
+			result.AppendChild(TimestampItemData.ToXmlElement(xml, expArg));
+
 			return result;
 		}
 		
@@ -123,7 +150,55 @@ namespace Pe.Logic
 		{
 			base.FromXmlElement(element, impArg);
 			
-			// TODO: 未実装
+			var unsafeLauncherType = element.GetAttribute(AttributeLauncherType);
+			var unsafeProcessWatcher = element.GetAttribute(AttributeProcessWatcher);
+			var unsafeGetStdOutput = element.GetAttribute(AttributeGetStdOutput);
+			var unsafeLauncherCommand = element.GetAttribute(AttributeLauncherCommand);
+			var unsafeWorkDirectory = element.GetAttribute(AttributeWorkDirectory);
+			var unsafeOptionCommand = element.GetAttribute(AttributeOptionCommand);
+			var unsafeLauncherApplicationShow = element.GetAttribute(AttributeLauncherApplicationShow);
+			
+			Logic.LauncherType outLauncherType;
+			Logic.LauncherApplicationShow outLauncherApplicationShow;
+			bool outBool;
+			
+			if(Logic.LauncherType.TryParse(unsafeLauncherType, out outLauncherType)) {
+				LauncherType = outLauncherType;
+			}
+			if(bool.TryParse(unsafeProcessWatcher, out outBool)) {
+				ProcessWatcher = outBool;
+			}
+			if(bool.TryParse(unsafeGetStdOutput, out outBool)) {
+				GetStdOutput = outBool;
+			}
+			
+			LauncherCommand = unsafeLauncherCommand;
+			WorkDirectory = unsafeWorkDirectory;
+			OptionCommand = unsafeOptionCommand;
+			
+			if(Logic.LauncherApplicationShow.TryParse(unsafeLauncherApplicationShow, out outLauncherApplicationShow)) {
+				LauncherApplicationShow = outLauncherApplicationShow;
+			}
+			
+			var iconDataElement = element[IconItemData.Name];
+			if(iconDataElement != null) {
+				IconItemData.FromXmlElement(iconDataElement, impArg);
+			}
+			
+			var historyItemData = element[HistoryItemData.Name];
+			if(historyItemData != null) {
+				HistoryItemData.FromXmlElement(historyItemData, impArg);
+			}
+
+			var tagItemData = element[TagItemData.Name];
+			if(tagItemData != null) {
+				TagItemData.FromXmlElement(tagItemData, impArg);
+			}
+			
+			var timestampItemData = element[TimestampItemData.Name];
+			if(timestampItemData != null) {
+				TimestampItemData.FromXmlElement(timestampItemData, impArg);
+			}
 		}
 		
 	}
