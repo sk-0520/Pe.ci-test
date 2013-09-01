@@ -8,6 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Xml;
+
+using Pe.IF;
 using ShareLib;
 
 namespace Pe.Logic
@@ -45,18 +48,16 @@ namespace Pe.Logic
 		
 		public LauncherItem()
 		{
-			HistoryWorkDirectoryList = new List<string>();
-			HistoryOptionCommandList = new List<string>();
-			Tags = new List<string>();
-			
-			ResistTimestamp = DateTime.MinValue;
-			UpdateTimestamp = DateTime.MinValue;
+			IconItemData = new IconItemData();
+			HistoryItemData = new HistoryItemData();
+			TagItemData = new TagItemData();
+			TimestampItemData = new TimestampItemData();
 		}
 		
 		/// <summary>
 		/// アイテム名
 		/// </summary>
-		public string Name { get; set; }
+		public string Title { get; set; }
 		/// <summary>
 		/// ランチャー種別
 		/// </summary>
@@ -90,43 +91,34 @@ namespace Pe.Logic
 		/// <summary>
 		/// アイコンパス
 		/// </summary>
-		public string IconPath { get; set; }
+		public IconItemData IconItemData { get; private set; }
 		/// <summary>
-		/// アイコンインデックス
+		/// 過去分
 		/// </summary>
-		public int IconIndex { get; set; }
-		/// <summary>
-		/// アイテム実行回数
-		/// </summary>
-		public uint HistoryExecuteCount { get; set; }
-		/// <summary>
-		/// アイテムの登録済み作業ディレクトリ以外で使用された作業ディレクトリ
-		/// </summary>
-		public List<string> HistoryWorkDirectoryList { get; private set; }
-		/// <summary>
-		/// アイテムの登録済みオプション以外で使用されたオプション
-		/// </summary>
-		public List<string> HistoryOptionCommandList { get; private set; }
+		public HistoryItemData HistoryItemData { get; private set; }
 		/// <summary>
 		/// タグ
 		/// </summary>
-		public List<string> Tags { get; private set; }
+		public TagItemData TagItemData { get; private set; }
 		/// <summary>
-		/// 登録日時
+		/// 
 		/// </summary>
-		public DateTime ResistTimestamp { get; set; }
-		/// <summary>
-		/// 更新日時
-		/// </summary>
-		public DateTime UpdateTimestamp { get; set; }
+		public TimestampItemData TimestampItemData { get; set; }
 		
-		public override System.Xml.XmlElement ToXmlElement(System.Xml.XmlDocument xml, Pe.IF.ExportArgs expArg)
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
 			
-			
+			// TODO: 未実装
 			
 			return result;
+		}
+		
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
+		{
+			base.FromXmlElement(element, impArg);
+			
+			// TODO: 未実装
 		}
 		
 	}

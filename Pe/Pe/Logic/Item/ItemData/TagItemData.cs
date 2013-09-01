@@ -2,25 +2,25 @@
  * SharpDevelopによって生成
  * ユーザ: sk
  * 日付: 2013/09/01
- * 時刻: 17:59
+ * 時刻: 19:33
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Pe.Logic
 {
 	/// <summary>
-	/// アイテムが格納する構造化可能なデータ
-	/// 
-	/// 使用する基準はXMLのタグに対して属性じゃ見栄え悪くなりそうな場合
+	/// Description of TagItemData.
 	/// </summary>
-	public abstract class ItemData: ItemBase
+	public class TagItemData: ItemData
 	{
-		public ItemData()
+		public TagItemData()
 		{
-			Debug.Assert(Name != "item");
+			Tags = new List<string>();
 		}
+		
+		public List<string> Tags { get; set; }
 	}
 }

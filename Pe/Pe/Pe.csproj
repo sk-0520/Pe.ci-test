@@ -87,10 +87,14 @@
     <Compile Include="Exception.cs" />
     <Compile Include="IF\ImpExp.cs" />
     <Compile Include="Logic\Item\Item.cs" />
+    <Compile Include="Logic\Item\ItemData\HistoryItemData.cs" />
+    <Compile Include="Logic\Item\ItemData\IconItemData.cs" />
     <Compile Include="Logic\Item\ItemData\ItemData.cs" />
+    <Compile Include="Logic\Item\ItemData\TagItemData.cs" />
+    <Compile Include="Logic\Item\ItemData\TimestampItemData.cs" />
     <Compile Include="Logic\Item\LanguageItem.cs" />
     <Compile Include="Logic\Item\LauncherItem.cs" />
-    <Compile Include="Logic\Item\NameItem.cs" />
+    <Compile Include="Logic\Item\TitleItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="UI\MainWindow.xaml.cs">

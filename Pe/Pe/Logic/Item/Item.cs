@@ -16,8 +16,44 @@ using ShareLib;
 
 namespace Pe.Logic
 {
-	public abstract class Item: IImportExportXmlElement
+	public abstract class ItemBase: IImportExportXmlElement
 	{
+		public virtual string Name
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+		
+		/// <summary>
+		/// XML要素出力。
+		/// 
+		/// メソッドをオーバーライドする場合、スーパークラスのメソッド戻り値を使用すること。
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
+		{
+			var result = xml.CreateElement(Name);
+			
+			return result;
+		}
+		
+		/// <summary>
+		/// XML要素入力
+		/// 
+		/// メソッドをオーバーライドする場合、スーパークラスから先に呼び出すこと。
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg) { }
+	}
+	
+	public abstract class Item: ItemBase
+	{
+		const string AttributeId = "id";
+		
 		static Regex _reg = new Regex(
 			""
 			+ "([" 
@@ -27,8 +63,6 @@ namespace Pe.Logic
 			, 
 			RegexOptions.None
 		);
-		const string TagItem = "item";
-		const string AttributeId = "id";
 		
 		public static string UniqueItemId(string source, int index) 
 		{
@@ -55,10 +89,9 @@ namespace Pe.Logic
 		
 		private string id;
 		
-		public Item()
-		{
-			
-		}
+		public Item() { }
+		
+		public sealed override string Name { get { return "item"; } }
 		
 		/// <summary>
 		/// 
@@ -84,11 +117,12 @@ namespace Pe.Logic
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
-			var result = xml.CreateElement(TagItem);
+			var result = base.ToXmlElement(xml, expArg);
 			
 			result.SetAttribute(AttributeId, Id);
+			
 			if(Comment.IsEmpty()) {
 				var commentElement = xml.CreateComment(Comment);
 				result.AppendChild(commentElement);
@@ -104,10 +138,11 @@ namespace Pe.Logic
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg)
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
-			var id = element.GetAttribute(AttributeId);
+			base.FromXmlElement(element, impArg);
 			
+			var id = element.GetAttribute(AttributeId);
 			Id = id;
 			
 			foreach(XmlNode node in element.ChildNodes) {

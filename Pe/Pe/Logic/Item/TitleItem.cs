@@ -14,7 +14,7 @@ namespace Pe.Logic
 {
 	public abstract class NameItem: Item
 	{
-		const string AttributeName = "name";
+		const string AttributeTitle = "title";
 		
 		public NameItem()
 		{
@@ -23,13 +23,13 @@ namespace Pe.Logic
 		/// <summary>
 		/// アイテム名
 		/// </summary>
-		public string Name { get; set; }
+		public string Title { get; set; }
 		
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
 			
-			result.SetAttribute(AttributeName, Name);
+			result.SetAttribute(AttributeTitle, Title);
 			
 			return result;
 		}
@@ -38,8 +38,8 @@ namespace Pe.Logic
 		{
 			base.FromXmlElement(element, impArg);
 			
-			var name = element.GetAttribute(AttributeName);
-			Name = name;
+			var title = element.GetAttribute(AttributeTitle);
+			Title = title;
 		}
 	}
 }

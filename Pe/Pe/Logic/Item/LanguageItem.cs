@@ -14,7 +14,7 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
-	public class LanguageItem: NameItem
+	public class LanguageItem: Item
 	{
 		const string AttributeWord = "word";
 		
