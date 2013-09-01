@@ -120,6 +120,14 @@ namespace Pe.Logic
 		/// </summary>
 		public DateTime UpdateTimestamp { get; set; }
 		
+		public override System.Xml.XmlElement ToXmlElement(System.Xml.XmlDocument xml, Pe.IF.ExportArgs expArg)
+		{
+			var result = base.ToXmlElement(xml, expArg);
+			
+			
+			
+			return result;
+		}
 		
 	}
 	

@@ -2,6 +2,7 @@
 <launcher>
 	<item id="string" name="string" >
 		<!-- comment -->
+		<item id="timestamp">
 	</item>
 </launcher>
 
