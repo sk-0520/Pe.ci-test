@@ -100,6 +100,16 @@ namespace Pe.Logic
 		/// </summary>
 		public TimestampItemData TimestampItemData { get; set; }
 		
+		public override void Clear()
+		{
+			base.Clear();
+			
+			IconItemData.Clear();
+			HistoryItemData.Clear();
+			TagItemData.Clear();
+			TimestampItemData.Clear();
+		}
+		
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);

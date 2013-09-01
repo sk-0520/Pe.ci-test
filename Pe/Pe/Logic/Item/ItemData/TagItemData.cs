@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using Pe.IF;
 
@@ -26,5 +27,35 @@ namespace Pe.Logic
 		public override string Name { get { return "tags"; } }
 		
 		public List<string> Tags { get; private set; }
+		
+		public override void Clear()
+		{
+			base.Clear();
+			
+			Tags.Clear();
+		}
+		
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
+		{
+			var result = base.ToXmlElement(xml, expArg);
+			
+			foreach(var tag in Tags) {
+				var dataElement = xml.CreateElement(DataElement.Tag);
+				dataElement.SetAttribute(DataElement.Attribute, tag);
+				result.AppendChild(dataElement);
+			}
+			
+			return result;
+		}
+		
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
+		{
+			base.FromXmlElement(element, impArg);
+			
+			foreach(XmlElement childElement in element.GetElementsByTagName(DataElement.Tag)) {
+				var tag = childElement.GetAttribute(DataElement.Attribute);
+				Tags.Add(tag);
+			}
+		}
 	}
 }

@@ -22,5 +22,13 @@ namespace Pe.Logic
 		
 		public string Path { get; set; }
 		public int Index { get; set; }
+		
+		public override void Clear()
+		{
+			base.Clear();
+			
+			Path = default(string);
+			Index = default(0);
+		}
 	}
 }

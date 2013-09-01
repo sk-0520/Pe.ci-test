@@ -16,40 +16,6 @@ using ShareLib;
 
 namespace Pe.Logic
 {
-	public abstract class ItemBase: IImportExportXmlElement
-	{
-		public virtual string Name
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-		}
-		
-		/// <summary>
-		/// XML要素出力。
-		/// 
-		/// メソッドをオーバーライドする場合、スーパークラスのメソッド戻り値を使用すること。
-		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
-		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
-		{
-			var result = xml.CreateElement(Name);
-			
-			return result;
-		}
-		
-		/// <summary>
-		/// XML要素入力
-		/// 
-		/// メソッドをオーバーライドする場合、スーパークラスから先に呼び出すこと。
-		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
-		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg) { }
-	}
-	
 	public abstract class Item: ItemBase
 	{
 		const string AttributeId = "id";

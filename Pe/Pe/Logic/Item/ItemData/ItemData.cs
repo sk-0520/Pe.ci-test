@@ -14,7 +14,7 @@ using ShareLib;
 
 namespace Pe.Logic
 {
-	public class DataValue
+	public class DataElement
 	{
 		public static string Tag { get { return "data"; } }
 		public static string Attribute { get { return "value"; } }

@@ -22,8 +22,6 @@ namespace Pe.Logic
 		
 		public TimestampItemData()
 		{
-			Create = DateTime.MinValue;
-			Update = DateTime.MinValue;
 		}
 		
 		public override string Name { get { return "timestamp"; } }
@@ -31,13 +29,29 @@ namespace Pe.Logic
 		public DateTime Create { get; set; }
 		public DateTime Update { get; set; }
 		
+		public override void Clear()
+		{
+			base.Clear();
+			
+			Create = DateTime.MinValue;
+			Update = DateTime.MinValue;
+		}
+		
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
 			
-			// TODO: 変換未実装
 			var unsafeCreate = result.GetAttribute(AttributeCreate);
 			var unsafeUpdate = result.GetAttribute(AttributeUpdate);
+			
+			DateTime outDateTime;
+			
+			if(DateTime.TryParse(unsafeCreate, out outDateTime)) {
+				Create = outDateTime;
+			}
+			if(DateTime.TryParse(unsafeUpdate, out outDateTime)) {
+				Update = outDateTime;
+			}
 			
 			return result;
 		}

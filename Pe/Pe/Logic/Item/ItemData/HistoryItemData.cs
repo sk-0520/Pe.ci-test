@@ -25,5 +25,14 @@ namespace Pe.Logic
 		public int ExecuteCount { get; set; }
 		public List<string> WorkDirectory { get; private set; }
 		public List<string> OptionCommand { get; private set; }
+		
+		public override void Clear()
+		{
+			base.Clear();
+			
+			ExecuteCount = 0;
+			WorkDirectory.Clear();
+			OptionCommand.Clear();
+		}
 	}
 }
