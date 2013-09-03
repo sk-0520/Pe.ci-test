@@ -15,26 +15,40 @@ using Pe.IF;
 namespace Pe.Logic
 {
 	/// <summary>
-	/// Description of TagItemData.
+	/// 
 	/// </summary>
 	public class TagItemData: ItemData
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public TagItemData()
 		{
 			Tags = new List<string>();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override string Name { get { return "tags"; } }
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public List<string> Tags { get; private set; }
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
 			
 			Tags.Clear();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -47,7 +61,11 @@ namespace Pe.Logic
 			
 			return result;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);

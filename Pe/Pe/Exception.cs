@@ -11,18 +11,31 @@ using ShareLib;
 
 namespace Pe
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class PeException: ShareLibException
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public PeException() 
 		{
 			Initialize();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="message"></param>
 		public PeException(string message) : base(message) 
 		{
 			Initialize();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="inner"></param>
 		public PeException(string message, Exception inner) : base(message) 
 		{
 			Initialize();

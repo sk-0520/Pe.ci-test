@@ -15,24 +15,32 @@ using ShareLib;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public abstract class TitleItem: Item
 	{
 		const string AttributeTitle = "title";
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		public static bool IsSafeTitle(string s)
 		{
 			return s.SplitLines().Count() == 1;
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		public static string ToSafeTitle(string s)
 		{
 			return string.Join("-", s.SplitLines());
 		}
 		
 		private string title;
-		
-		public TitleItem()
-		{
-		}
 		
 		/// <summary>
 		/// アイテム名
@@ -48,6 +56,12 @@ namespace Pe.Logic
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -56,7 +70,11 @@ namespace Pe.Logic
 			
 			return result;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);

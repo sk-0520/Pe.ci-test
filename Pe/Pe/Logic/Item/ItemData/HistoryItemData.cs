@@ -13,23 +13,43 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class HistoryItemData: ItemData
 	{
 		const string TagWorkDirectory = "workdirectory";
 		const string TagOptionCommand = "optioncommand";
 		const string AttributeExecuteCount = "count";
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public HistoryItemData()
 		{
 			WorkDirectory = new List<string>();
 			OptionCommand = new List<string>();
 		}
+		/// <summary>
+		/// 
+		/// </summary>
 		public override string Name { get { return "history"; } }
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public int ExecuteCount { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
 		public List<string> WorkDirectory { get; private set; }
+		/// <summary>
+		/// 
+		/// </summary>
 		public List<string> OptionCommand { get; private set; }
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
@@ -39,6 +59,12 @@ namespace Pe.Logic
 			OptionCommand.Clear();
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -64,6 +90,11 @@ namespace Pe.Logic
 			return result;
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);

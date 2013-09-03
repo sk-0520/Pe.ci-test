@@ -19,10 +19,13 @@ using System.Windows.Media;
 namespace Pe.UI
 {
 	/// <summary>
-	/// Interaction logic for ToolWindows.xaml
+	/// 
 	/// </summary>
 	public partial class ToolWindows : Window
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public ToolWindows()
 		{
 			InitializeComponent();

@@ -33,15 +33,31 @@ namespace Pe.Logic
 		/// </summary>
 		PeCommand
 	}
-	
+	/// <summary>
+	/// 
+	/// </summary>
 	public enum LauncherApplicationShow
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		Default,
+		/// <summary>
+		/// 
+		/// </summary>
 		Normal,
+		/// <summary>
+		/// 
+		/// </summary>
 		Minimum,
+		/// <summary>
+		/// 
+		/// </summary>
 		Maxim,
 	}
-	
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LauncherItem: TitleItem
 	{
 		/*
@@ -54,6 +70,9 @@ namespace Pe.Logic
 		const string AttributeLauncherApplicationShow = "show";
 		*/
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public LauncherItem()
 		{
 			ExecuteItemData = new ExecuteItemData();
@@ -115,6 +134,9 @@ namespace Pe.Logic
 		/// </summary>
 		public TimestampItemData TimestampItemData { get; set; }
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
@@ -125,7 +147,12 @@ namespace Pe.Logic
 			TagItemData.Clear();
 			TimestampItemData.Clear();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -146,7 +173,11 @@ namespace Pe.Logic
 
 			return result;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);
