@@ -26,16 +26,7 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="lang"></param>
-		public LanguageItem(LanguageItemContainer lang)
-		{
-			LanguageItemContainer = lang;
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		public LanguageItemContainer LanguageItemContainer { get; internal protected set; }
+		public LanguageItemContainer Container { get; internal protected set; }
 		
 		/// <summary>
 		/// 
@@ -57,7 +48,7 @@ namespace Pe.Logic
 						var repResult = Regex.Replace(word, @"\$\{(.+)\}", (Match m) => {
 							string s = m.Value;
 							var id = s.Substring("${".Length, s.Length - "${}".Length);
-							return LanguageItemContainer[id].Text;
+							return Container[id].Text;
 						});
 						word = repResult;
 					}
@@ -118,7 +109,7 @@ namespace Pe.Logic
 	/// <summary>
 	/// 
 	/// </summary>
-	public class LanguageItemContainer: ItemContainer<LanguageItem>, IImportExportXmlElement
+	public class LanguageItemContainer: ItemContainer<LanguageItem>
 	{
 		/// <summary>
 		/// 
@@ -131,33 +122,25 @@ namespace Pe.Logic
 					return item;
 				}
 				
-				item = new LanguageItem(this);
+				item = new LanguageItem();
+				item.Container = this;
 				item.Id = id;
 				item.Word = string.Format("<{0}>", id);
 				return item; 
 			}
 		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="xml"></param>
-		/// <param name="expArg"></param>
-		/// <returns></returns>
-		public XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
-		{
-			throw new NotImplementedException();
-		}
+		
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="xml"></param>
 		/// <param name="impArg"></param>
-		public void FromXmlElement(XmlElement xml, ImportArgs impArg)
+		public override void FromXmlElement(XmlElement xml, ImportArgs impArg)
 		{
-			foreach(XmlElement element in xml.GetElementsByTagName(LauncherItem.TagName)) {
-				var item = new LanguageItem(this);
-				item.FromXmlElement(element, impArg);
-				Set(item);
+			base.FromXmlElement(xml, impArg);
+			
+			foreach(var item in Items) {
+				item.Container = this;
 			}
 		}
 	}

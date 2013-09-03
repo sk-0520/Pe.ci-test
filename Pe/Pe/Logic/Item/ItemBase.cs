@@ -25,6 +25,7 @@ namespace Pe.Logic
 			Initialize();
 			Clear();
 		}
+		
 		/// <summary>
 		/// アイテム名
 		/// 
