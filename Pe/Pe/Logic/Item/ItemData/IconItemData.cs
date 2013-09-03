@@ -12,20 +12,37 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class IconItemData: ItemData
 	{
 		const string AttributePath = "path";
 		const string AttributeIndex = "index";
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public IconItemData()
 		{
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override string Name { get { return "icon"; } }
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public string Path { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
 		public int Index { get; set; }
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
@@ -34,6 +51,12 @@ namespace Pe.Logic
 			Index = default(int);
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -44,6 +67,11 @@ namespace Pe.Logic
 			return result;
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);

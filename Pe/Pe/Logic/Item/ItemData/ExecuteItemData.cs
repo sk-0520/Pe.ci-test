@@ -6,6 +6,9 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ExecuteItemData: ItemData
 	{
 		const string AttributeLauncherType = "type";
@@ -19,10 +22,16 @@ namespace Pe.Logic
 		const string AttributeProcessWatcher ="pswatch";
 		const string AttributeGetStdOutput ="getstdout";
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public ExecuteItemData()
 		{
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override string Name { get { return "execute"; } }
 		
 		/// <summary>
@@ -56,7 +65,9 @@ namespace Pe.Logic
 		/// </summary>
 		public bool GetStdOutput { get; set; }
 		
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
@@ -70,6 +81,12 @@ namespace Pe.Logic
 			LauncherApplicationShow = default(LauncherApplicationShow);
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -93,7 +110,11 @@ namespace Pe.Logic
 			
 			return result;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);

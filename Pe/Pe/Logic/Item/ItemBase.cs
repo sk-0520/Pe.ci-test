@@ -12,6 +12,9 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public abstract class ItemBase: IImportExportXmlElement
 	{
 		/// <summary>
@@ -40,6 +43,7 @@ namespace Pe.Logic
 		/// メソッドをオーバーライドする場合、スーパークラスのメソッド戻り値を使用すること。
 		/// </summary>
 		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
 		/// <returns></returns>
 		public virtual XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
@@ -53,8 +57,8 @@ namespace Pe.Logic
 		/// 
 		/// メソッドをオーバーライドする場合、スーパークラスから先に呼び出すこと。
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public virtual void FromXmlElement(XmlElement element, ImportArgs impArg) 
 		{
 			Clear();

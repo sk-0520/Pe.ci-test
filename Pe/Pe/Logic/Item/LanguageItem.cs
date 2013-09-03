@@ -14,17 +14,27 @@ using Pe.IF;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LanguageItem: Item
 	{
 		const string AttributeWord = "word";
 		
 		private string text = null;
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="lang"></param>
 		public LanguageItem(LanguageItemContainer lang)
 		{
 			LanguageItemContainer = lang;
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public LanguageItemContainer LanguageItemContainer { get; internal protected set; }
 		
 		/// <summary>
@@ -59,6 +69,12 @@ namespace Pe.Logic
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="impArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs impArg)
 		{
 			var result = base.ToXmlElement(xml, impArg);
@@ -67,7 +83,11 @@ namespace Pe.Logic
 			
 			return result;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);
@@ -77,13 +97,11 @@ namespace Pe.Logic
 		}
 	}
 	
-	
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LanguageItemContainer: ItemContainer<LanguageItem>, IImportExportXmlElement
 	{
-		public LanguageItemContainer()
-		{
-		}
-		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -101,11 +119,21 @@ namespace Pe.Logic
 				return item; 
 			}
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			throw new NotImplementedException();
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="impArg"></param>
 		public void FromXmlElement(XmlElement xml, ImportArgs impArg)
 		{
 			foreach(XmlElement element in xml.GetElementsByTagName("item")) {

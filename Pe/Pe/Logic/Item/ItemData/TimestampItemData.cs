@@ -20,15 +20,22 @@ namespace Pe.Logic
 		const string AttributeCreate = "create";
 		const string AttributeUpdate = "update";
 		
-		public TimestampItemData()
-		{
-		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override string Name { get { return "timestamp"; } }
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public DateTime Create { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
 		public DateTime Update { get; set; }
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
@@ -36,7 +43,12 @@ namespace Pe.Logic
 			Create = DateTime.MinValue;
 			Update = DateTime.MinValue;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
@@ -49,7 +61,11 @@ namespace Pe.Logic
 			
 			return result;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);

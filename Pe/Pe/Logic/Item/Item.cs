@@ -16,6 +16,9 @@ using ShareLib;
 
 namespace Pe.Logic
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public abstract class Item: ItemBase
 	{
 		const string AttributeId = "id";
@@ -29,7 +32,12 @@ namespace Pe.Logic
 			, 
 			RegexOptions.None
 		);
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
 		public static string UniqueItemId(string source, int index) 
 		{
 			return string.Format("{0}_{1}", source, index);
@@ -47,6 +55,11 @@ namespace Pe.Logic
 			}
 			return !_reg.Match(id).Success;
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public static string ToSafeId(string id) 
 		{
 			var result = _reg.Replace(id, "_");
@@ -55,10 +68,10 @@ namespace Pe.Logic
 		
 		private string id;
 		
-		public Item() { }
-		
-		public override string Name { get { return "item"; } }
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		public sealed override string Name { get { return "item"; } }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -73,9 +86,14 @@ namespace Pe.Logic
 				this.id = value;  
 			}
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public string Comment { get; set; }
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();
@@ -83,13 +101,11 @@ namespace Pe.Logic
 			this.id = default(string);
 			Comment = default(string);
 		}
-		
 		/// <summary>
-		/// XML要素出力。
 		/// 
-		/// メソッドをオーバーライドする場合、スーパークラスのメソッド戻り値を使用すること。
 		/// </summary>
 		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
 		/// <returns></returns>
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
@@ -104,14 +120,11 @@ namespace Pe.Logic
 			
 			return result;
 		}
-		
 		/// <summary>
-		/// XML要素入力
 		/// 
-		/// メソッドをオーバーライドする場合、スーパークラスから先に呼び出すこと。
 		/// </summary>
-		/// <param name="xml"></param>
-		/// <returns></returns>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);
@@ -128,6 +141,9 @@ namespace Pe.Logic
 		}
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ItemContainer<TItem>
 		where TItem: Item
 	{		
@@ -143,6 +159,9 @@ namespace Pe.Logic
 		{
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public int Count 
 		{
 			get { return this.map.Count; }
@@ -174,11 +193,17 @@ namespace Pe.Logic
 			get { return this.map.Values; }
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Clear()
 		{
 			this.map.Clear();
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Valid()
 		{
 			var list = new List<string>();
@@ -195,11 +220,21 @@ namespace Pe.Logic
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public bool ContainsId(string id)
 		{
 			return this.map.ContainsKey(id);
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public bool TryGetItem(string id, out TItem value)
 		{
 			return this.map.TryGetValue(id, out value);
@@ -213,14 +248,21 @@ namespace Pe.Logic
 		{
 			this.map[item.Id] = item;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="items"></param>
 		public void SetRange(IEnumerable<TItem> items)
 		{
 			foreach(var item in items) {
 				Set(item);
 			}
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="fromId"></param>
+		/// <param name="toId"></param>
 		public void ChangeId(string fromId, string toId)
 		{
 			Debug.Assert(this.map.ContainsKey(fromId));
@@ -231,14 +273,22 @@ namespace Pe.Logic
 			tempItem.Id = toId;
 			this.Set(tempItem);
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="itemId"></param>
+		/// <returns></returns>
 		public TItem Remove(string itemId)
 		{
 			var item = this.map[itemId];
 			this.map.Remove(itemId);
 			return item;
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public TItem Remove(TItem item)
 		{
 			return Remove(item.Id);
