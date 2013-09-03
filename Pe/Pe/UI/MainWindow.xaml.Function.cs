@@ -18,9 +18,9 @@ namespace Pe.UI
 	{
 		void Initialize()
 		{
-			/*
 			var item = new Pe.Logic.LauncherItem();
 			item.Id = "test";
+			item.ExecuteItemData.LauncherCommand = "#";
 			var xml = new System.Xml.XmlDocument();
 			var elm = item.ToXmlElement(xml, null);
 			xml.AppendChild(elm);

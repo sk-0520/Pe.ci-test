@@ -97,7 +97,7 @@ namespace Pe.Logic
 			
 			result.SetAttribute(AttributeId, Id);
 			
-			if(Comment.IsEmpty()) {
+			if(!Comment.IsEmpty()) {
 				var commentElement = xml.CreateComment(Comment);
 				result.AppendChild(commentElement);
 			}

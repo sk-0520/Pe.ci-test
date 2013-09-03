@@ -44,6 +44,7 @@ namespace Pe.Logic
 	
 	public class LauncherItem: TitleItem
 	{
+		/*
 		const string AttributeLauncherType = "type";
 		const string AttributeProcessWatcher = "pswatch";
 		const string AttributeGetStdOutput = "getstdout";
@@ -51,15 +52,17 @@ namespace Pe.Logic
 		const string AttributeWorkDirectory = "dir";
 		const string AttributeOptionCommand = "option";
 		const string AttributeLauncherApplicationShow = "show";
-			
+		*/
+		
 		public LauncherItem()
 		{
+			ExecuteItemData = new ExecuteItemData();
 			IconItemData = new IconItemData();
 			HistoryItemData = new HistoryItemData();
 			TagItemData = new TagItemData();
 			TimestampItemData = new TimestampItemData();
 		}
-		
+		/*
 		/// <summary>
 		/// ランチャー種別
 		/// </summary>
@@ -90,6 +93,11 @@ namespace Pe.Logic
 		/// ランチャーアイテムの実行時の表示状態
 		/// </summary>
 		public LauncherApplicationShow LauncherApplicationShow { get; set; }
+		//*/
+		/// <summary>
+		/// 実行データ
+		/// </summary>
+		public ExecuteItemData ExecuteItemData { get; private set; }
 		/// <summary>
 		/// アイコン
 		/// </summary>
@@ -111,14 +119,7 @@ namespace Pe.Logic
 		{
 			base.Clear();
 			
-			LauncherType = default(Logic.LauncherType);
-			ProcessWatcher = default(bool);
-			GetStdOutput = default(bool);
-			LauncherCommand = default(string);
-			WorkDirectory = default(string);
-			OptionCommand = default(string);
-			LauncherApplicationShow = default(LauncherApplicationShow);
-			
+			ExecuteItemData.Clear();
 			IconItemData.Clear();
 			HistoryItemData.Clear();
 			TagItemData.Clear();
@@ -128,7 +129,7 @@ namespace Pe.Logic
 		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
 		{
 			var result = base.ToXmlElement(xml, expArg);
-			
+			/*
 			result.SetAttribute(AttributeLauncherType, LauncherType.ToString());
 			result.SetAttribute(AttributeProcessWatcher, ProcessWatcher.ToString());
 			result.SetAttribute(AttributeGetStdOutput, GetStdOutput.ToString());
@@ -136,7 +137,8 @@ namespace Pe.Logic
 			result.SetAttribute(AttributeWorkDirectory, WorkDirectory);
 			result.SetAttribute(AttributeOptionCommand, OptionCommand);
 			result.SetAttribute(AttributeLauncherApplicationShow, LauncherApplicationShow.ToString());
-			
+			*/
+			result.AppendChild(ExecuteItemData.ToXmlElement(xml, expArg));
 			result.AppendChild(IconItemData.ToXmlElement(xml, expArg));
 			result.AppendChild(HistoryItemData.ToXmlElement(xml, expArg));
 			result.AppendChild(TagItemData.ToXmlElement(xml, expArg));
@@ -148,7 +150,7 @@ namespace Pe.Logic
 		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
 			base.FromXmlElement(element, impArg);
-			
+			/*
 			var unsafeLauncherType = element.GetAttribute(AttributeLauncherType);
 			var unsafeProcessWatcher = element.GetAttribute(AttributeProcessWatcher);
 			var unsafeGetStdOutput = element.GetAttribute(AttributeGetStdOutput);
@@ -177,6 +179,12 @@ namespace Pe.Logic
 			
 			if(Logic.LauncherApplicationShow.TryParse(unsafeLauncherApplicationShow, out outLauncherApplicationShow)) {
 				LauncherApplicationShow = outLauncherApplicationShow;
+			}
+			*/
+			
+			var executeItemDataElement = element[ExecuteItemData.Name];
+			if(executeItemDataElement != null) {
+				ExecuteItemData.FromXmlElement(executeItemDataElement, impArg);
 			}
 			
 			var iconDataElement = element[IconItemData.Name];
