@@ -72,6 +72,22 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
+		protected override void Initialize()
+		{
+			base.Initialize();
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Clear()
+		{
+			base.Clear();
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="xml"></param>
 		/// <param name="impArg"></param>
 		/// <returns></returns>
@@ -136,7 +152,7 @@ namespace Pe.Logic
 		/// <param name="impArg"></param>
 		public void FromXmlElement(XmlElement xml, ImportArgs impArg)
 		{
-			foreach(XmlElement element in xml.GetElementsByTagName("item")) {
+			foreach(XmlElement element in xml.GetElementsByTagName(LauncherItem.TagName)) {
 				var item = new LanguageItem(this);
 				item.FromXmlElement(element, impArg);
 				Set(item);

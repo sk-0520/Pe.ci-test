@@ -15,7 +15,7 @@ namespace Pe.Logic
 	/// <summary>
 	/// 
 	/// </summary>
-	public abstract class ItemBase: IImportExportXmlElement
+	public abstract class ItemBase: IImportExportXmlElement, IDataClean
 	{
 		/// <summary>
 		/// アイテム名
@@ -31,9 +31,15 @@ namespace Pe.Logic
 		}
 		
 		/// <summary>
-		/// 自身の保持するデータをクリア
+		/// データ初期化
+		/// </summary>
+		protected virtual void Initialize()
+		{
+			
+		}
+		
+		/// <summary>
 		/// 
-		/// 初期化とは異なる
 		/// </summary>
 		public virtual void Clear() { }
 		

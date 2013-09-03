@@ -23,6 +23,11 @@ namespace Pe.Logic
 	{
 		const string AttributeId = "id";
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		public static string TagName { get { return "item"; } }
+		
 		static Regex _reg = new Regex(
 			""
 			+ "([" 
@@ -71,7 +76,8 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public sealed override string Name { get { return "item"; } }
+		public sealed override string Name { get { return TagName; } }
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -90,6 +96,14 @@ namespace Pe.Logic
 		/// 
 		/// </summary>
 		public string Comment { get; set; }
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		protected override void Initialize()
+		{
+			base.Initialize();
+		}
 		
 		/// <summary>
 		/// 

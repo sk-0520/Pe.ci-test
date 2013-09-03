@@ -59,6 +59,22 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
+		protected override void Initialize()
+		{
+			base.Initialize();
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Clear()
+		{
+			base.Clear();
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="xml"></param>
 		/// <param name="expArg"></param>
 		/// <returns></returns>

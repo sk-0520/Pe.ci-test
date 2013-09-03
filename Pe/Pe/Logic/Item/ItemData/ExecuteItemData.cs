@@ -25,13 +25,6 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public ExecuteItemData()
-		{
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		public override string Name { get { return "execute"; } }
 		
 		/// <summary>

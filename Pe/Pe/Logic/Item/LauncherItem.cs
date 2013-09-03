@@ -137,6 +137,14 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
+		protected override void Initialize()
+		{
+			base.Initialize();
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void Clear()
 		{
 			base.Clear();

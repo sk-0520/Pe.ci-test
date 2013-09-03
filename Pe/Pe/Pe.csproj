@@ -83,6 +83,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Exception.cs" />
+    <Compile Include="IF\DataContainer.cs" />
     <Compile Include="IF\ImpExp.cs" />
     <Compile Include="Logic\Item\Item.cs" />
     <Compile Include="Logic\Item\ItemBase.cs" />
