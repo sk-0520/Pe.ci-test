@@ -87,6 +87,7 @@
     <Compile Include="IF\ImpExp.cs" />
     <Compile Include="Logic\Item\Item.cs" />
     <Compile Include="Logic\Item\ItemBase.cs" />
+    <Compile Include="Logic\Item\ItemContainer.cs" />
     <Compile Include="Logic\Item\ItemData\HistoryItemData.cs" />
     <Compile Include="Logic\Item\ItemData\IconItemData.cs" />
     <Compile Include="Logic\Item\ItemData\ItemData.cs" />
