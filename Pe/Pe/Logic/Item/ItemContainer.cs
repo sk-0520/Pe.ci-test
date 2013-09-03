@@ -25,7 +25,17 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		SortedDictionary<string, TItem> map = null;
+		private SortedDictionary<string, TItem> map = null;
+		private string name;
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name"></param>
+		public ItemContainer(string name)
+		{
+			this.name = name;
+		}
 		
 		/// <summary>
 		/// 
