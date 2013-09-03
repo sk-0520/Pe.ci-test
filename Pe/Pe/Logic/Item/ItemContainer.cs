@@ -54,7 +54,9 @@ namespace Pe.Logic
 			get { return this.map.Keys; }
 		}
 		/// <summary>
+		/// データアクセス。
 		/// 
+		/// 添え字とアイテムIDの相違を避けるためsetterは未実装なのでSetメソッドを使用する。
 		/// </summary>
 		public SortedDictionary<string, TItem>.ValueCollection Items
 		{
