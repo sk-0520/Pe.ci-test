@@ -34,6 +34,14 @@ namespace Pe.Logic
 		/// 
 		/// </summary>
 		public List<string> Tags { get; private set; }
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		protected override void Initialize()
+		{
+			base.Initialize();
+		}
 		/// <summary>
 		/// 
 		/// </summary>
