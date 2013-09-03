@@ -133,11 +133,11 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="xml"></param>
+		/// <param name="element"></param>
 		/// <param name="impArg"></param>
-		public override void FromXmlElement(XmlElement xml, ImportArgs impArg)
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
-			base.FromXmlElement(xml, impArg);
+			base.FromXmlElement(element, impArg);
 			
 			foreach(var item in Items) {
 				item.Container = this;

@@ -14,24 +14,6 @@ namespace Pe.IF
 	/// <summary>
 	/// 
 	/// </summary>
-	public abstract class ImportArgs { }
-	
-	/// <summary>
-	/// 
-	/// </summary>
-	public interface IImportXmlElement
-	{
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="element"></param>
-		/// <param name="impArg"></param>
-		void FromXmlElement(XmlElement element, ImportArgs impArg);
-	}
-	
-	/// <summary>
-	/// 
-	/// </summary>
 	public abstract class ExportArgs { }
 	
 	/// <summary>
@@ -47,6 +29,25 @@ namespace Pe.IF
 		/// <returns></returns>
 		XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg);
 	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public abstract class ImportArgs { }
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public interface IImportXmlElement
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
+		void FromXmlElement(XmlElement element, ImportArgs impArg);
+	}
+	
 	
 	/// <summary>
 	/// 

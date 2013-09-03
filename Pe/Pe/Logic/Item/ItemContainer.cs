@@ -192,16 +192,16 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="xml"></param>
+		/// <param name="element"></param>
 		/// <param name="impArg"></param>
-		public override void FromXmlElement(XmlElement xml, ImportArgs impArg)
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
 		{
-			var list = new List<TItem>(xml.ChildNodes.Count);
+			var list = new List<TItem>(element.ChildNodes.Count);
 			var hasChild = false;
 			
-			foreach(XmlElement element in xml.GetElementsByTagName(Item.TagName)) {
+			foreach(XmlElement itemElement in element.GetElementsByTagName(Item.TagName)) {
 				var item = new TItem();
-				item.FromXmlElement(element, impArg);
+				item.FromXmlElement(itemElement, impArg);
 				list.Add(item);
 				
 				hasChild = true;
