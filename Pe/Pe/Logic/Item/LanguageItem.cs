@@ -83,6 +83,8 @@ namespace Pe.Logic
 		public override void Clear()
 		{
 			base.Clear();
+			
+			Word = default(string);
 		}
 		
 		/// <summary>

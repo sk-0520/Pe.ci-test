@@ -70,17 +70,6 @@ namespace Pe.Logic
 		const string AttributeLauncherApplicationShow = "show";
 		*/
 		
-		/// <summary>
-		/// 
-		/// </summary>
-		public LauncherItem()
-		{
-			ExecuteItemData = new ExecuteItemData();
-			IconItemData = new IconItemData();
-			HistoryItemData = new HistoryItemData();
-			TagItemData = new TagItemData();
-			TimestampItemData = new TimestampItemData();
-		}
 		/*
 		/// <summary>
 		/// ランチャー種別
@@ -140,6 +129,12 @@ namespace Pe.Logic
 		protected override void Initialize()
 		{
 			base.Initialize();
+			
+			ExecuteItemData = new ExecuteItemData();
+			IconItemData = new IconItemData();
+			HistoryItemData = new HistoryItemData();
+			TagItemData = new TagItemData();
+			TimestampItemData = new TimestampItemData();
 		}
 		
 		/// <summary>

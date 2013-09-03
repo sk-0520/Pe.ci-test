@@ -70,6 +70,8 @@ namespace Pe.Logic
 		public override void Clear()
 		{
 			base.Clear();
+			
+			this.title = default(string);
 		}
 		
 		/// <summary>

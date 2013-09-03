@@ -19,14 +19,7 @@ namespace Pe.Logic
 	{
 		const string AttributePath = "path";
 		const string AttributeIndex = "index";
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		public IconItemData()
-		{
-		}
-		
+
 		/// <summary>
 		/// 
 		/// </summary>

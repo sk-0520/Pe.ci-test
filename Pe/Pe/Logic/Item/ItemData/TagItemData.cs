@@ -22,13 +22,6 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public TagItemData()
-		{
-			Tags = new List<string>();
-		}
-		/// <summary>
-		/// 
-		/// </summary>
 		public override string Name { get { return "tags"; } }
 		/// <summary>
 		/// 
@@ -41,6 +34,8 @@ namespace Pe.Logic
 		protected override void Initialize()
 		{
 			base.Initialize();
+			
+			Tags = new List<string>();
 		}
 		/// <summary>
 		/// 

@@ -25,14 +25,6 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public HistoryItemData()
-		{
-			WorkDirectory = new List<string>();
-			OptionCommand = new List<string>();
-		}
-		/// <summary>
-		/// 
-		/// </summary>
 		public override string Name { get { return "history"; } }
 		/// <summary>
 		/// 
@@ -53,6 +45,9 @@ namespace Pe.Logic
 		protected override void Initialize()
 		{
 			base.Initialize();
+			
+			WorkDirectory = new List<string>();
+			OptionCommand = new List<string>();
 		}
 		/// <summary>
 		/// 

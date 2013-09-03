@@ -18,6 +18,14 @@ namespace Pe.Logic
 	public abstract class ItemBase: IImportExportXmlElement, IDataClean
 	{
 		/// <summary>
+		/// 
+		/// </summary>
+		protected ItemBase()
+		{
+			Initialize();
+			Clear();
+		}
+		/// <summary>
 		/// アイテム名
 		/// 
 		/// タグ名として機能
