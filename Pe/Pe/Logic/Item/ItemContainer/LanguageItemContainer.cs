@@ -22,7 +22,15 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public LanguageItemContainer(): base("language") { }
+		public LanguageItemContainer(): base("language") 
+		{
+			DefineItemContainer = new ItemContainer<LanguageDefineItem>("define");
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public ItemContainer<LanguageDefineItem> DefineItemContainer { get; private set; }
 		
 		/// <summary>
 		/// 
@@ -36,11 +44,27 @@ namespace Pe.Logic
 				}
 				
 				item = new LanguageItem();
-				item.Container = this;
+				item.Container = DefineItemContainer;
 				item.Id = id;
 				item.Word = string.Format("<{0}>", id);
 				return item; 
 			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="expArg"></param>
+		/// <returns></returns>
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs expArg)
+		{
+			var result = base.ToXmlElement(xml, expArg);
+			
+			var defineElement = DefineItemContainer.ToXmlElement(xml, expArg);
+			result.AppendChild(defineElement);
+			
+			return result;
 		}
 		
 		/// <summary>
@@ -52,8 +76,13 @@ namespace Pe.Logic
 		{
 			base.FromXmlElement(element, impArg);
 			
+			var defineElement = element[DefineItemContainer.Name];
+			if(defineElement != null) {
+				DefineItemContainer.FromXmlElement(element, impArg);
+			}
+			
 			foreach(var item in Items) {
-				item.Container = this;
+				item.Container = DefineItemContainer;
 			}
 		}
 	}

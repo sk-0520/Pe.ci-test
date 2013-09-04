@@ -17,7 +17,61 @@ namespace Pe.Logic
 	/// <summary>
 	/// 
 	/// </summary>
-	public class LanguageItem: Item
+	public abstract class LanguageBaseItem: Item
+	{
+		const string AttributeWord = "word";
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Word { get; set; }
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		public override void Clear()
+		{
+			base.Clear();
+			
+			Word = default(string);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="xml"></param>
+		/// <param name="impArg"></param>
+		/// <returns></returns>
+		public override XmlElement ToXmlElement(XmlDocument xml, ExportArgs impArg)
+		{
+			var result = base.ToXmlElement(xml, impArg);
+			
+			result.SetAttribute(AttributeWord, Word);
+			
+			return result;
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="element"></param>
+		/// <param name="impArg"></param>
+		public override void FromXmlElement(XmlElement element, ImportArgs impArg)
+		{
+			base.FromXmlElement(element, impArg);
+			
+			var word = element.GetAttribute(AttributeWord);
+			Word = word;
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public class LanguageDefineItem: LanguageBaseItem {	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public class LanguageItem: LanguageBaseItem
 	{
 		const string AttributeWord = "word";
 		
@@ -26,12 +80,14 @@ namespace Pe.Logic
 		/// <summary>
 		/// 
 		/// </summary>
-		public LanguageItemContainer Container { get; internal protected set; }
+		public ItemContainer<LanguageDefineItem> Container { get; internal protected set; }
 		
+		/*
 		/// <summary>
 		/// 
 		/// </summary>
 		public string Word { get; set; }
+		*/
 		
 		/// <summary>
 		/// Wordからの変換値
@@ -48,7 +104,7 @@ namespace Pe.Logic
 						var repResult = Regex.Replace(word, @"\$\{(.+)\}", (Match m) => {
 							string s = m.Value;
 							var id = s.Substring("${".Length, s.Length - "${}".Length);
-							return Container[id].Text;
+							return Container[id].Word;
 						});
 						word = repResult;
 					}
