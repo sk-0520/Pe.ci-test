@@ -78,7 +78,7 @@ namespace Pe.Logic
 			
 			var defineElement = element[DefineItemContainer.Name];
 			if(defineElement != null) {
-				DefineItemContainer.FromXmlElement(element, impArg);
+				DefineItemContainer.FromXmlElement(defineElement, impArg);
 			}
 			
 			foreach(var item in Items) {

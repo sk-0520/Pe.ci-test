@@ -36,6 +36,10 @@ namespace Pe.Logic
 		{
 			this.name = name;
 		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public sealed override string Name { get { return this.name; } }
 		
 		/// <summary>
 		/// 
@@ -209,12 +213,14 @@ namespace Pe.Logic
 			var list = new List<TItem>(element.ChildNodes.Count);
 			var hasChild = false;
 			
-			foreach(XmlElement itemElement in element.GetElementsByTagName(Item.TagName)) {
-				var item = new TItem();
-				item.FromXmlElement(itemElement, impArg);
-				list.Add(item);
-				
-				hasChild = true;
+			foreach(XmlElement itemElement in element.ChildNodes) {
+				if(itemElement.Name == Item.TagName) {
+					var item = new TItem();
+					item.FromXmlElement(itemElement, impArg);
+					list.Add(item);
+					
+					hasChild = true;
+				}
 			}
 			if(hasChild) {
 				SetRange(list);

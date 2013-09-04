@@ -18,11 +18,25 @@ namespace Pe.UI
 	{
 		void Initialize()
 		{
+			/*
 			var item = new Pe.Logic.LauncherItem();
 			item.Id = "test";
 			item.ExecuteItemData.LauncherCommand = "#";
 			var xml = new System.Xml.XmlDocument();
 			var elm = item.ToXmlElement(xml, null);
+			xml.AppendChild(elm);
+			using(var s = new StringWriter()) {
+				xml.Save(s);
+				System.Diagnostics.Debug.WriteLine(s.ToString());
+			}
+			//*/
+			/*
+			var lang = new Pe.Logic.LanguageItemContainer();
+			var xml = new System.Xml.XmlDocument();
+			xml.Load(@"./etc/lang/日本語.xml");
+			lang.FromXmlElement(xml.DocumentElement, null);
+			xml = new System.Xml.XmlDocument();
+			var elm = lang.ToXmlElement(xml, null);
 			xml.AppendChild(elm);
 			using(var s = new StringWriter()) {
 				xml.Save(s);

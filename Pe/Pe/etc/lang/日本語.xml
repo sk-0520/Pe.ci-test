@@ -1,4 +1,13 @@
 ﻿<?xml version="1.0"?>
 <language lang="ja/JP" name="Japanese">
-	<item id="common/ok" word="OK" />
+	<define>
+		<item id="ok"     word="OK" />
+		<item id="cancel" word="キャンセル" />
+		<item id="yes"    word="はい" />
+		<item id="no"     word="いいえ" />
+	</define>
+	<item id="common/ok"     word="${ok}" />
+	<item id="common/cancel" word="${cancel}" />
+	<item id="common/yes"    word="${yes}" />
+	<item id="common/no"     word="${no}" />
 </language>
