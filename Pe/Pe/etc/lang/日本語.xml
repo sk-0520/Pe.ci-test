@@ -6,8 +6,8 @@
 		<item id="yes"    word="はい" />
 		<item id="no"     word="いいえ" />
 	</define>
-	<item id="common/ok"     word="${ok}" />
-	<item id="common/cancel" word="${cancel}" />
-	<item id="common/yes"    word="${yes}" />
-	<item id="common/no"     word="${no}" />
+	<item id="ok"     word="${ok}" />
+	<item id="cancel" word="${cancel}" />
+	<item id="yes"    word="${yes}" />
+	<item id="no"     word="${no}" />
 </language>
