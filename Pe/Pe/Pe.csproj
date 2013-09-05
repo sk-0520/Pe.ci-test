@@ -95,9 +95,12 @@
     <Compile Include="Logic\Item\ItemData\ExecuteItemData.cs" />
     <Compile Include="Logic\Item\ItemData\TagItemData.cs" />
     <Compile Include="Logic\Item\ItemData\TimestampItemData.cs" />
+    <Compile Include="Logic\Item\ItemData\WindowToolItemData.cs" />
+    <Compile Include="Logic\Item\ItemData\WindowViewItemData.cs" />
     <Compile Include="Logic\Item\LanguageItem.cs" />
     <Compile Include="Logic\Item\LauncherItem.cs" />
     <Compile Include="Logic\Item\TitleItem.cs" />
+    <Compile Include="Logic\Item\WindowItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\WPFAssemblyInfo.cs" />
     <Compile Include="UI\MainWindow.xaml.cs">
@@ -107,14 +110,9 @@
     <Compile Include="UI\MainWindow.xaml.Function.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ToolWindows.xaml.cs">
-      <DependentUpon>ToolWindows.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="UI\MainWindow.xaml" />
-    <Page Include="UI\ToolWindows.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShareLib\ShareLib.csproj">
@@ -147,6 +145,7 @@
     <None Include="share\sgml\launcher.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="share\sgml\window.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
