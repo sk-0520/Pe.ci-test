@@ -14,19 +14,19 @@ using System.Windows.Forms;
 
 namespace PeMain
 {
-	public sealed class NotificationIcon
+	public sealed class PeMain
 	{
 		private NotifyIcon notifyIcon;
 		private ContextMenu notificationMenu;
 		
 		#region Initialize icon and menu
-		public NotificationIcon()
+		public PeMain()
 		{
 			notifyIcon = new NotifyIcon();
 			notificationMenu = new ContextMenu(InitializeMenu());
 			
 			notifyIcon.DoubleClick += IconDoubleClick;
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PeMain));
 			notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
 			notifyIcon.ContextMenu = notificationMenu;
 		}
@@ -54,7 +54,7 @@ namespace PeMain
 			// Please use a unique name for the mutex to prevent conflicts with other programs
 			using (Mutex mtx = new Mutex(true, "PeMain", out isFirstInstance)) {
 				if (isFirstInstance) {
-					NotificationIcon notificationIcon = new NotificationIcon();
+					PeMain notificationIcon = new PeMain();
 					notificationIcon.notifyIcon.Visible = true;
 					Application.Run();
 					notificationIcon.notifyIcon.Dispose();
