@@ -27,7 +27,7 @@ namespace PeMain
 			
 			notifyIcon.DoubleClick += IconDoubleClick;
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationIcon));
-			notifyIcon.Icon = (Icon)resources.GetObject("$this.Icon");
+			notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
 			notifyIcon.ContextMenu = notificationMenu;
 		}
 		
