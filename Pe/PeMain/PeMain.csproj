@@ -79,5 +79,11 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PeSetting\PeSetting.csproj">
+      <Project>{7693829E-3176-4147-A793-980667271840}</Project>
+      <Name>PeSetting</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
