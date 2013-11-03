@@ -17,10 +17,8 @@ namespace PeSetting
 		[Test]
 		public void IsSafeName()
 		{
-			Assert.IsTrue(Item.IsSafeName("4"), "4");
-			Assert.IsTrue(Item.IsSafeName("1"), "1");
-			Assert.IsTrue(Item.IsSafeName("2"), "2");
-			Assert.IsTrue(Item.IsSafeName("3"), "3");
+			Assert.IsTrue(Item.IsSafeName("-"), "-");
+			Assert.IsTrue(Item.IsSafeName("_"), "_");
 		}
 	}
 }
