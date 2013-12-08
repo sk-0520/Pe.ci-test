@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
@@ -50,6 +51,8 @@ namespace PeMain
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			
+			Initialize(args);
+			
 			bool isFirstInstance;
 			// Please use a unique name for the mutex to prevent conflicts with other programs
 			using (Mutex mtx = new Mutex(true, "PeMain", out isFirstInstance)) {
@@ -82,5 +85,10 @@ namespace PeMain
 			MessageBox.Show("The icon was double clicked");
 		}
 		#endregion
+		
+		static void Initialize(IEnumerable<string> args)
+		{
+			
+		}
 	}
 }

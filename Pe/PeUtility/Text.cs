@@ -14,11 +14,6 @@ namespace PeUtility
 	/// <summary>
 	/// 
 	/// </summary>
-	public delegate string TextUnique(string source, int index);
-	
-	/// <summary>
-	/// 
-	/// </summary>
 	public static class Text
 	{
 		/// <summary>
@@ -28,7 +23,7 @@ namespace PeUtility
 		/// <param name="list"></param>
 		/// <param name="dg"></param>
 		/// <returns></returns>
-		public static string ToUnique(this string target, IEnumerable<string> list, TextUnique dg = null)
+		public static string ToUnique(this string target, IEnumerable<string> list, Func<string, int, string> dg = null)
 		{
 			if(dg == null) {
 				dg = (string source, int index) => string.Format("{0}({1})", source, index);
