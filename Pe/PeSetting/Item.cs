@@ -13,8 +13,6 @@ using System.Xml;
 
 namespace PeSetting
 {
-	public delegate XmlElement XmlElementCreater(string name);
-	
 	/// <summary>
 	/// 最少構成要素
 	/// </summary>
@@ -60,7 +58,7 @@ namespace PeSetting
 		/// </summary>
 		/// <param name="dg"></param>
 		/// <returns></returns>
-		public virtual XmlElement ExportXML(XmlElementCreater dg)
+		public virtual XmlElement ExportXML(Func<string, XmlElement> dg)
 		{
 			Debug.Assert(dg != null);
 			
