@@ -20,6 +20,10 @@ namespace PeMain
 	/// </summary>
 	public partial class Pe
 	{
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="args"></param>
 		void Initialize(string[] args)
 		{
 			InitializeSetting(args);

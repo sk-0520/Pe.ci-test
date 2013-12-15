@@ -12,18 +12,21 @@ using System.Runtime.Serialization;
 namespace PeMain.Setting
 {
 	/// <summary>
-	/// Description of Item.
+	/// なんかを保持するアイテムの基底。
 	/// </summary>
 	[Serializable]
 	public abstract class Item
 	{
 	}
 	
+	/// <summary>
+	/// 名前付きアイテム
+	/// </summary>
 	[Serializable]
 	public abstract class NameItem: Item
 	{
 		/// <summary>
-		/// 
+		/// 名前
 		/// </summary>
 		[System.Xml.Serialization.XmlAttribute("Name")]
 		public string Name { get; set; }

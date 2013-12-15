@@ -2,24 +2,18 @@
  * SharpDevelopによって生成
  * ユーザ: sk
  * 日付: 2013/12/15
- * 時刻: 15:11
+ * 時刻: 20:14
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
 
-namespace PeMain.Setting
+namespace PeUtility
 {
-	/// <summary>
-	/// 設定統括
-	/// </summary>
-	[Serializable]
-	public class MainSetting: Item
+	public enum IconSize
 	{
-		/// <summary>
-		/// 使用言語
-		/// </summary>
-		public string Language { get; set; }
-		
+		Small = 16,
+		Normal = 32,
+		Big = 48
 	}
 }

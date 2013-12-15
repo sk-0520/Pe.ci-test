@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMain", "PeMain\PeMain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUtility", "PeUtility\PeUtility.csproj", "{863C2A90-A386-4F98-9D0B-EFB839168293}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "Windows\API.csproj", "{2E80DF8C-5682-4B45-9172-846BAD85C305}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,5 +22,9 @@ Global
 		{863C2A90-A386-4F98-9D0B-EFB839168293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{863C2A90-A386-4F98-9D0B-EFB839168293}.Release|Any CPU.Build.0 = Release|Any CPU
 		{863C2A90-A386-4F98-9D0B-EFB839168293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E80DF8C-5682-4B45-9172-846BAD85C305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E80DF8C-5682-4B45-9172-846BAD85C305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E80DF8C-5682-4B45-9172-846BAD85C305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E80DF8C-5682-4B45-9172-846BAD85C305}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal
