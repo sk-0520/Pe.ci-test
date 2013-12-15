@@ -9,5 +9,6 @@
 		<Word Name="exit">終了</Word>
 	</Define>
 	<Common>
+		<Word />
 	</Common>
 </Language>

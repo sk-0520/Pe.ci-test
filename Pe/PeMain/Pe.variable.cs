@@ -21,5 +21,6 @@ namespace PeMain
 		private ContextMenu notificationMenu;
 		
 		private MainSetting mainSetting;
+		private Language language;
 	}
 }

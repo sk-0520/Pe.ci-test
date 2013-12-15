@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PeMain.Setting
 {
@@ -30,16 +31,35 @@ namespace PeMain.Setting
 	[Serializable]
 	public class Language: NameItem
 	{
+		private Dictionary<string, List<Word>> _map;
+			
 		public Language()
 		{
-			Define = new Dictionary<string, Word>();
-			Common = new Dictionary<string, Word>();
+			Define = new List<Word>();
+			Common = new List<Word>();
+			this._map = new Dictionary<string, List<Word>>() {
+				{"Define", Define},
+				{"Common", Common},
+			};
 		}
-		public Dictionary<string, Word> Define { get; private set; }
-		public Dictionary<string, Word> Common { get; private set; }
+		public List<Word> Define { get; set; }
+		public List<Word> Common { get; set; }
 		
 		[System.Xml.Serialization.XmlAttribute("Code")]
 		public string Code { get; set; }
+		
+		private Word getWord(string group, string key)
+		{
+			var list = this._map[group];
+			var word = list.SingleOrDefault(item => item.Name == key);
+			if(word == null) {
+				word = new Word();
+				word.Name = key;
+				word.Text = "<" + key + ">";
+			}
+			
+			return word;
+		}
 		
 	}
 }

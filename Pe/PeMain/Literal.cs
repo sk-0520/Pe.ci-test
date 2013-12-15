@@ -8,6 +8,7 @@
  */
 using System;
 using System.IO;
+using System.Windows.Forms;
 
 namespace PeMain
 {
@@ -24,6 +25,39 @@ namespace PeMain
 		public const string mainSettingFileName = "setting.xml";
 		
 		/// <summary>
+		/// 起動ディレクトリ
+		/// </summary>
+		public static string PeRootDirPath
+		{
+			get
+			{
+				return Path.GetDirectoryName(Application.ExecutablePath);
+			}
+		}
+		
+		/// <summary>
+		/// etc/
+		/// </summary>
+		public static string PeEtcDirPath
+		{
+			get
+			{
+				return Path.Combine(PeRootDirPath, "etc");
+			}
+		}
+		
+		/// <summary>
+		/// etc/lang/
+		/// </summary>
+		public static string PeLanguageDirPath
+		{
+			get
+			{
+				return Path.Combine(PeEtcDirPath, "lang");
+			}
+		}
+		
+		/// <summary>
 		/// ユーザー設定ルートディレクトリ
 		/// </summary>
 		public static string UserSettingDirPath 
@@ -38,7 +72,9 @@ namespace PeMain
 		/// </summary>
 		public static string UserMainSettingPath
 		{
-			get { return Path.Combine(UserSettingDirPath, mainSettingFileName); }
+			get {
+				return Path.Combine(UserSettingDirPath, mainSettingFileName);
+			}
 		}
 	}
 }

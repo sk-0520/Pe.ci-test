@@ -32,18 +32,28 @@ namespace PeMain
 		void InitializeSetting(string[] args)
 		{
 			this.mainSetting = new MainSetting();
-			InitializeMainSetting(args, this.mainSetting);
+			this.language = new Language();
+			
+			InitializeMainSetting(Literal.UserMainSettingPath, this.mainSetting);
+			InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"), this.language);
 		}
-		void InitializeMainSetting(string[] args, MainSetting setting)
+		void InitializeMainSetting(string settingPath, MainSetting setting)
 		{
-			var settingPath = Literal.UserMainSettingPath;
 			if(File.Exists(settingPath)) {
 				var serializer = new XmlSerializer(typeof(MainSetting));
 				using(var stream = new FileStream(settingPath, FileMode.Open)) {
 					serializer.Serialize(stream, setting);
 				}
 			}
-			
+		}
+		void InitializeLanguage(string languagePath, Language lang)
+		{
+			if(File.Exists(languagePath)) {
+				var serializer = new XmlSerializer(typeof(Language));
+				using(var stream = new FileStream(languagePath, FileMode.Open)) {
+					lang = (Language)serializer.Deserialize(stream);
+				}
+			}
 		}
 		
 		private MenuItem[] InitializeMenu()
@@ -62,7 +72,6 @@ namespace PeMain
 			this.notifyIcon.DoubleClick += IconDoubleClick;
 			this.notifyIcon.Visible = true;
 			
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pe));
 			this.notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
 			this.notifyIcon.ContextMenu = this.notificationMenu;
 		}
