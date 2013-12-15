@@ -63,12 +63,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PeMain.cs" />
+    <Compile Include="Literal.cs" />
+    <Compile Include="Pe.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Images.Designer.cs">
       <DependentUpon>Images.resx</DependentUpon>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Setting\Item.cs" />
+    <Compile Include="Setting\Language.cs" />
+    <Compile Include="Setting\MainSetting.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Images.resx">
@@ -78,16 +83,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="etc\lang\js-JP.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PeSetting\PeSetting.csproj">
-      <Project>{2E7E57F8-93A5-49FA-A303-96A4BBE2FE2A}</Project>
-      <Name>PeSetting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">
       <Project>{863C2A90-A386-4F98-9D0B-EFB839168293}</Project>
       <Name>PeUtility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="etc\lang" />
+    <Folder Include="Setting" />
+    <Folder Include="etc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

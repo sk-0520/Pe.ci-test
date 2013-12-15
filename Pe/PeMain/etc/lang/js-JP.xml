@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<Language Name="日本語" Code="ja-JP">
+	<Define>
+		<Word Name="yes">はい</Word>
+		<Word Name="no">いいえ</Word>
+		<Word Name="cancel">キャンセル</Word>
+		<Word Name="ok">OK</Word>
+		<Word Name="retry">再試行</Word>
+	</Define>
+</Language>

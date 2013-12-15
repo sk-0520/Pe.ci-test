@@ -4,8 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMain", "PeMain\PeMain.csproj", "{6877BDA1-FA71-4850-983C-F91DF0F9C6E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeSetting", "PeSetting\PeSetting.csproj", "{2E7E57F8-93A5-49FA-A303-96A4BBE2FE2A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUtility", "PeUtility\PeUtility.csproj", "{863C2A90-A386-4F98-9D0B-EFB839168293}"
 EndProject
 Global
@@ -18,10 +16,6 @@ Global
 		{6877BDA1-FA71-4850-983C-F91DF0F9C6E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6877BDA1-FA71-4850-983C-F91DF0F9C6E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6877BDA1-FA71-4850-983C-F91DF0F9C6E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E7E57F8-93A5-49FA-A303-96A4BBE2FE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E7E57F8-93A5-49FA-A303-96A4BBE2FE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E7E57F8-93A5-49FA-A303-96A4BBE2FE2A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E7E57F8-93A5-49FA-A303-96A4BBE2FE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{863C2A90-A386-4F98-9D0B-EFB839168293}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{863C2A90-A386-4F98-9D0B-EFB839168293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{863C2A90-A386-4F98-9D0B-EFB839168293}.Release|Any CPU.Build.0 = Release|Any CPU
