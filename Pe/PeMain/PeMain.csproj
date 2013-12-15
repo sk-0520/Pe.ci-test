@@ -66,6 +66,12 @@
     <Compile Include="Literal.cs" />
     <Compile Include="Pe.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Pe.initialize.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pe.variable.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Images.Designer.cs">
       <DependentUpon>Images.resx</DependentUpon>

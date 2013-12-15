@@ -6,5 +6,8 @@
 		<Word Name="cancel">キャンセル</Word>
 		<Word Name="ok">OK</Word>
 		<Word Name="retry">再試行</Word>
+		<Word Name="exit">終了</Word>
 	</Define>
+	<Common>
+	</Common>
 </Language>

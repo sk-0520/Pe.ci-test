@@ -21,6 +21,8 @@ namespace PeMain
 		/// </summary>
 		private const string dirRootName = "Pe";
 		
+		public const string mainSettingFileName = "setting.xml";
+		
 		/// <summary>
 		/// ユーザー設定ルートディレクトリ
 		/// </summary>
@@ -30,6 +32,13 @@ namespace PeMain
 			{
 				return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), dirRootName);
 			}
+		}
+		/// <summary>
+		/// ユーザー設定ファイル
+		/// </summary>
+		public static string UserMainSettingPath
+		{
+			get { return Path.Combine(UserSettingDirPath, mainSettingFileName); }
 		}
 	}
 }

@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace PeMain
@@ -14,15 +15,13 @@ namespace PeMain
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	public class Pe: IDisposable
+	public partial class Pe: IDisposable
 	{
-		private NotifyIcon notifyIcon;
-		private ContextMenu notificationMenu;
-		
 		public Pe(string[] args)
 		{
 			Initialize(args);
 		}
+		
 		public void Dispose()
 		{
 			if(this.notifyIcon != null) {
@@ -47,29 +46,5 @@ namespace PeMain
 		}
 		#endregion
 		
-		void Initialize(string[] args)
-		{
-			InitializeUI(args);
-		}
-		private MenuItem[] InitializeMenu()
-		{
-			MenuItem[] menu = new MenuItem[] {
-				new MenuItem("About", menuAboutClick),
-				new MenuItem("Exit", menuExitClick)
-			};
-			return menu;
-		}
-		void InitializeUI(string[] args)
-		{
-			this.notifyIcon = new NotifyIcon();
-			this.notificationMenu = new ContextMenu(InitializeMenu());
-			
-			this.notifyIcon.DoubleClick += IconDoubleClick;
-			this.notifyIcon.Visible = true;
-			
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pe));
-			this.notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
-			this.notifyIcon.ContextMenu = this.notificationMenu;
-		}
 	}
 }
