@@ -8,6 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using PeUtility;
 
 namespace PeMain.Setting
 {
@@ -45,10 +47,17 @@ namespace PeMain.Setting
 	/// ランチャー設定データ。
 	/// </summary>
 	[Serializable]
-	public class Launcher: NameItem
+	public class Launcher: NameItem, IDisposable
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		private Dictionary<IconSize, Icon> _iconMap;
+		
 		public Launcher()
 		{
+			this._iconMap = new Dictionary<IconSize, Icon>();
+			
 			LauncherHistory = new LauncherHistory();
 			Tag = new List<string>();
 		}
@@ -88,5 +97,36 @@ namespace PeMain.Setting
 		/// タグ
 		/// </summary>
 		public List<string> Tag { get; set; }
+		
+		public void Dispose()
+		{
+			foreach(var icon in _iconMap.Values) {
+				if(icon != null) {
+					icon.Dispose();
+				}
+			}
+		}
+	}
+	
+	/// <summary>
+	/// ランチャーアイテム統括。
+	/// </summary>
+	public class LauncherSet: Item, IDisposable
+	{
+		public LauncherSet()
+		{
+			Items = new SortedSet<Launcher>();
+		}
+		/// <summary>
+		/// 各ランチャアイテム
+		/// </summary>
+		public SortedSet<Launcher> Items { get; set; }
+		
+		public void Dispose()
+		{
+			foreach(var item in Items) {
+				item.Dispose();
+			}
+		}
 	}
 }

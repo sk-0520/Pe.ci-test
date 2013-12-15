@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace PeMain
+namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe.
@@ -29,7 +29,6 @@ namespace PeMain
 			}
 		}
 		
-		#region Event Handlers
 		private void menuAboutClick(object sender, EventArgs e)
 		{
 			MessageBox.Show("About This Application");
@@ -44,7 +43,5 @@ namespace PeMain
 		{
 			MessageBox.Show("The icon was double clicked");
 		}
-		#endregion
-		
 	}
 }

@@ -10,7 +10,7 @@ using System;
 using System.Windows.Forms;
 using PeMain.Setting;
 
-namespace PeMain
+namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_variable.

@@ -12,8 +12,8 @@ namespace PeUtility
 {
 	public enum IconSize
 	{
-		Small = 16,
-		Normal = 32,
-		Big = 48
+		x16 = 16,
+		x32 = 32,
+		x46 = 48
 	}
 }

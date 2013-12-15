@@ -46,5 +46,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Text.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Windows\API.csproj">
+      <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
+      <Name>API</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

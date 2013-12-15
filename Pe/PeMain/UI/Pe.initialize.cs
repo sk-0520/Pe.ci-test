@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 
 using PeMain.Setting;
 
-namespace PeMain
+namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_initialize.
@@ -41,6 +41,11 @@ namespace PeMain
 			InitializeMainSetting(Literal.UserMainSettingPath, this.mainSetting);
 			InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"), this.language);
 		}
+		/// <summary>
+		/// 本体設定ファイル初期化
+		/// </summary>
+		/// <param name="settingPath"></param>
+		/// <param name="setting"></param>
 		void InitializeMainSetting(string settingPath, MainSetting setting)
 		{
 			if(File.Exists(settingPath)) {
@@ -50,6 +55,11 @@ namespace PeMain
 				}
 			}
 		}
+		/// <summary>
+		/// 言語ファイル初期化
+		/// </summary>
+		/// <param name="languagePath"></param>
+		/// <param name="lang"></param>
 		void InitializeLanguage(string languagePath, Language lang)
 		{
 			if(File.Exists(languagePath)) {
@@ -60,6 +70,10 @@ namespace PeMain
 			}
 		}
 		
+		/// <summary>
+		/// 本体メニュー初期化
+		/// </summary>
+		/// <returns></returns>
 		private MenuItem[] InitializeMenu()
 		{
 			MenuItem[] menu = new MenuItem[] {
@@ -68,6 +82,10 @@ namespace PeMain
 			};
 			return menu;
 		}
+		/// <summary>
+		/// 本体UI初期化
+		/// </summary>
+		/// <param name="args"></param>
 		void InitializeUI(string[] args)
 		{
 			this.notifyIcon = new NotifyIcon();
