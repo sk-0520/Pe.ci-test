@@ -21,7 +21,7 @@ namespace PeMain.Setting
 		/// <summary>
 		/// 
 		/// </summary>
-		[System.Xml.Serialization.XmlAttribute("Text")]
+		[System.Xml.Serialization.XmlAttribute]
 		public string Text { get; set; }
 	}
 	

@@ -41,21 +41,24 @@ namespace PeMain.UI
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.checkCommandTopmost = new System.Windows.Forms.CheckBox();
+			this.titleCommandHideTime = new System.Windows.Forms.Label();
+			this.commandCommandFont = new System.Windows.Forms.Button();
+			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.titleCommandFont = new System.Windows.Forms.Label();
-			this.commandCommandFont = new System.Windows.Forms.Button();
-			this.titleCommandHideTime = new System.Windows.Forms.Label();
-			this.inputCommandHideTime = new System.Windows.Forms.DomainUpDown();
-			this.checkCommandTopmost = new System.Windows.Forms.CheckBox();
+			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.pageDisplay = new System.Windows.Forms.TabPage();
+			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.tabSetting.SuspendLayout();
 			this.pageCommand.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -63,6 +66,8 @@ namespace PeMain.UI
 			this.tabSetting.Controls.Add(this.pageMain);
 			this.tabSetting.Controls.Add(this.pageLauncher);
 			this.tabSetting.Controls.Add(this.pageCommand);
+			this.tabSetting.Controls.Add(this.pageToolbar);
+			this.tabSetting.Controls.Add(this.pageDisplay);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabSetting.Location = new System.Drawing.Point(3, 4);
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -95,8 +100,8 @@ namespace PeMain.UI
 			// 
 			// pageCommand
 			// 
-			this.pageCommand.Controls.Add(this.checkCommandTopmost);
 			this.pageCommand.Controls.Add(this.inputCommandHideTime);
+			this.pageCommand.Controls.Add(this.checkCommandTopmost);
 			this.pageCommand.Controls.Add(this.titleCommandHideTime);
 			this.pageCommand.Controls.Add(this.commandCommandFont);
 			this.pageCommand.Controls.Add(this.titleCommandFont);
@@ -107,6 +112,40 @@ namespace PeMain.UI
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
+			// 
+			// checkCommandTopmost
+			// 
+			this.checkCommandTopmost.Location = new System.Drawing.Point(35, 125);
+			this.checkCommandTopmost.Name = "checkCommandTopmost";
+			this.checkCommandTopmost.Size = new System.Drawing.Size(104, 24);
+			this.checkCommandTopmost.TabIndex = 4;
+			this.checkCommandTopmost.Text = "{TOPMOST}";
+			this.checkCommandTopmost.UseVisualStyleBackColor = true;
+			// 
+			// titleCommandHideTime
+			// 
+			this.titleCommandHideTime.Location = new System.Drawing.Point(35, 78);
+			this.titleCommandHideTime.Name = "titleCommandHideTime";
+			this.titleCommandHideTime.Size = new System.Drawing.Size(100, 23);
+			this.titleCommandHideTime.TabIndex = 2;
+			this.titleCommandHideTime.Text = "{HIDE TIME}";
+			// 
+			// commandCommandFont
+			// 
+			this.commandCommandFont.Location = new System.Drawing.Point(156, 23);
+			this.commandCommandFont.Name = "commandCommandFont";
+			this.commandCommandFont.Size = new System.Drawing.Size(171, 23);
+			this.commandCommandFont.TabIndex = 1;
+			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
+			this.commandCommandFont.UseVisualStyleBackColor = true;
+			// 
+			// titleCommandFont
+			// 
+			this.titleCommandFont.Location = new System.Drawing.Point(35, 28);
+			this.titleCommandFont.Name = "titleCommandFont";
+			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
+			this.titleCommandFont.TabIndex = 0;
+			this.titleCommandFont.Text = "{FONT}";
 			// 
 			// commandCancel
 			// 
@@ -159,47 +198,30 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// titleCommandFont
+			// pageToolbar
 			// 
-			this.titleCommandFont.Location = new System.Drawing.Point(35, 28);
-			this.titleCommandFont.Name = "titleCommandFont";
-			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
-			this.titleCommandFont.TabIndex = 0;
-			this.titleCommandFont.Text = "{FONT}";
+			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
+			this.pageToolbar.Name = "pageToolbar";
+			this.pageToolbar.Size = new System.Drawing.Size(460, 205);
+			this.pageToolbar.TabIndex = 3;
+			this.pageToolbar.Text = "{TOOLBAR}";
+			this.pageToolbar.UseVisualStyleBackColor = true;
 			// 
-			// commandCommandFont
+			// pageDisplay
 			// 
-			this.commandCommandFont.Location = new System.Drawing.Point(156, 23);
-			this.commandCommandFont.Name = "commandCommandFont";
-			this.commandCommandFont.Size = new System.Drawing.Size(171, 23);
-			this.commandCommandFont.TabIndex = 1;
-			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
-			this.commandCommandFont.UseVisualStyleBackColor = true;
-			// 
-			// titleCommandHideTime
-			// 
-			this.titleCommandHideTime.Location = new System.Drawing.Point(35, 78);
-			this.titleCommandHideTime.Name = "titleCommandHideTime";
-			this.titleCommandHideTime.Size = new System.Drawing.Size(100, 23);
-			this.titleCommandHideTime.TabIndex = 2;
-			this.titleCommandHideTime.Text = "{HIDE TIME}";
+			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
+			this.pageDisplay.Name = "pageDisplay";
+			this.pageDisplay.Size = new System.Drawing.Size(460, 205);
+			this.pageDisplay.TabIndex = 5;
+			this.pageDisplay.Text = "{DISPLAY}";
+			this.pageDisplay.UseVisualStyleBackColor = true;
 			// 
 			// inputCommandHideTime
 			// 
-			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 67);
+			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 76);
 			this.inputCommandHideTime.Name = "inputCommandHideTime";
 			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
-			this.inputCommandHideTime.TabIndex = 3;
-			this.inputCommandHideTime.Text = "domainUpDown1";
-			// 
-			// checkCommandTopmost
-			// 
-			this.checkCommandTopmost.Location = new System.Drawing.Point(35, 125);
-			this.checkCommandTopmost.Name = "checkCommandTopmost";
-			this.checkCommandTopmost.Size = new System.Drawing.Size(104, 24);
-			this.checkCommandTopmost.TabIndex = 4;
-			this.checkCommandTopmost.Text = "{TOPMOST}";
-			this.checkCommandTopmost.UseVisualStyleBackColor = true;
+			this.inputCommandHideTime.TabIndex = 5;
 			// 
 			// SettingForm
 			// 
@@ -219,10 +241,13 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TabPage pageDisplay;
+		private System.Windows.Forms.TabPage pageToolbar;
+		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label titleCommandHideTime;
-		private System.Windows.Forms.DomainUpDown inputCommandHideTime;
 		private System.Windows.Forms.CheckBox checkCommandTopmost;
 		private System.Windows.Forms.Button commandCommandFont;
 		private System.Windows.Forms.Label titleCommandFont;

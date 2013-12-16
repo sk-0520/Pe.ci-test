@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <Language Name="日本語" Code="ja-JP">
 	<Define>
-		<Word Name="yes">はい</Word>
-		<Word Name="no">いいえ</Word>
-		<Word Name="cancel">キャンセル</Word>
-		<Word Name="ok">OK</Word>
-		<Word Name="retry">再試行</Word>
-		<Word Name="exit">終了</Word>
+		<Word Name="yes"    Text="はい" />
+		<Word Name="no"     Text="いいえ" />
+		<Word Name="cancel" Text="キャンセル" />
+		<Word Name="ok"     Text="OK" />
+		<Word Name="retry"  Text="再試行" />
+		<Word Name="exit"   Text="終了" />
 	</Define>
 	<Common>
 		<Word />
