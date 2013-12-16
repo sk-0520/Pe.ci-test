@@ -36,31 +36,39 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.commandSubmit = new System.Windows.Forms.Button();
+			this.pageCommand = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
+			this.commandSubmit = new System.Windows.Forms.Button();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.titleCommandFont = new System.Windows.Forms.Label();
+			this.commandCommandFont = new System.Windows.Forms.Button();
+			this.titleCommandHideTime = new System.Windows.Forms.Label();
+			this.inputCommandHideTime = new System.Windows.Forms.DomainUpDown();
+			this.checkCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
+			this.pageCommand.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
 			// 
 			this.tabSetting.Controls.Add(this.pageMain);
 			this.tabSetting.Controls.Add(this.pageLauncher);
+			this.tabSetting.Controls.Add(this.pageCommand);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabSetting.Location = new System.Drawing.Point(0, 0);
+			this.tabSetting.Location = new System.Drawing.Point(3, 4);
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(331, 239);
+			this.tabSetting.Size = new System.Drawing.Size(468, 233);
 			this.tabSetting.TabIndex = 0;
 			// 
 			// pageMain
@@ -69,7 +77,7 @@ namespace PeMain.UI
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(323, 211);
+			this.pageMain.Size = new System.Drawing.Size(460, 205);
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
@@ -80,58 +88,30 @@ namespace PeMain.UI
 			this.pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageLauncher.Name = "pageLauncher";
 			this.pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageLauncher.Size = new System.Drawing.Size(323, 211);
+			this.pageLauncher.Size = new System.Drawing.Size(460, 205);
 			this.pageLauncher.TabIndex = 1;
 			this.pageLauncher.Text = "{LAUNCHER}";
 			this.pageLauncher.UseVisualStyleBackColor = true;
 			// 
-			// splitContainer1
+			// pageCommand
 			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.splitContainer1.Name = "splitContainer1";
-			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.tabSetting);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-			this.splitContainer1.Size = new System.Drawing.Size(331, 284);
-			this.splitContainer1.SplitterDistance = 239;
-			this.splitContainer1.SplitterWidth = 5;
-			this.splitContainer1.TabIndex = 1;
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.AutoSize = true;
-			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
-			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
-			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(331, 40);
-			this.flowLayoutPanel1.TabIndex = 0;
-			// 
-			// commandSubmit
-			// 
-			this.commandSubmit.Location = new System.Drawing.Point(148, 4);
-			this.commandSubmit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.commandSubmit.Name = "commandSubmit";
-			this.commandSubmit.Size = new System.Drawing.Size(87, 29);
-			this.commandSubmit.TabIndex = 0;
-			this.commandSubmit.Text = "{OK}";
-			this.commandSubmit.UseVisualStyleBackColor = true;
+			this.pageCommand.Controls.Add(this.checkCommandTopmost);
+			this.pageCommand.Controls.Add(this.inputCommandHideTime);
+			this.pageCommand.Controls.Add(this.titleCommandHideTime);
+			this.pageCommand.Controls.Add(this.commandCommandFont);
+			this.pageCommand.Controls.Add(this.titleCommandFont);
+			this.pageCommand.Location = new System.Drawing.Point(4, 24);
+			this.pageCommand.Name = "pageCommand";
+			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
+			this.pageCommand.Size = new System.Drawing.Size(460, 205);
+			this.pageCommand.TabIndex = 2;
+			this.pageCommand.Text = "{COMMAND}";
+			this.pageCommand.UseVisualStyleBackColor = true;
 			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandCancel.Location = new System.Drawing.Point(241, 4);
+			this.commandCancel.Location = new System.Drawing.Point(96, 4);
 			this.commandCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandCancel.Name = "commandCancel";
 			this.commandCancel.Size = new System.Drawing.Size(87, 29);
@@ -139,33 +119,122 @@ namespace PeMain.UI
 			this.commandCancel.Text = "{CANCEL}";
 			this.commandCancel.UseVisualStyleBackColor = true;
 			// 
+			// commandSubmit
+			// 
+			this.commandSubmit.Location = new System.Drawing.Point(3, 4);
+			this.commandSubmit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.commandSubmit.Name = "commandSubmit";
+			this.commandSubmit.Size = new System.Drawing.Size(87, 29);
+			this.commandSubmit.TabIndex = 0;
+			this.commandSubmit.Text = "{OK}";
+			this.commandSubmit.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.tabSetting, 0, 0);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 284);
+			this.tableLayoutPanel1.TabIndex = 2;
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.AutoSize = true;
+			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
+			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(285, 244);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(186, 37);
+			this.flowLayoutPanel1.TabIndex = 3;
+			// 
+			// errorProvider
+			// 
+			this.errorProvider.ContainerControl = this;
+			// 
+			// titleCommandFont
+			// 
+			this.titleCommandFont.Location = new System.Drawing.Point(35, 28);
+			this.titleCommandFont.Name = "titleCommandFont";
+			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
+			this.titleCommandFont.TabIndex = 0;
+			this.titleCommandFont.Text = "{FONT}";
+			// 
+			// commandCommandFont
+			// 
+			this.commandCommandFont.Location = new System.Drawing.Point(156, 23);
+			this.commandCommandFont.Name = "commandCommandFont";
+			this.commandCommandFont.Size = new System.Drawing.Size(171, 23);
+			this.commandCommandFont.TabIndex = 1;
+			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
+			this.commandCommandFont.UseVisualStyleBackColor = true;
+			// 
+			// titleCommandHideTime
+			// 
+			this.titleCommandHideTime.Location = new System.Drawing.Point(35, 78);
+			this.titleCommandHideTime.Name = "titleCommandHideTime";
+			this.titleCommandHideTime.Size = new System.Drawing.Size(100, 23);
+			this.titleCommandHideTime.TabIndex = 2;
+			this.titleCommandHideTime.Text = "{HIDE TIME}";
+			// 
+			// inputCommandHideTime
+			// 
+			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 67);
+			this.inputCommandHideTime.Name = "inputCommandHideTime";
+			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
+			this.inputCommandHideTime.TabIndex = 3;
+			this.inputCommandHideTime.Text = "domainUpDown1";
+			// 
+			// checkCommandTopmost
+			// 
+			this.checkCommandTopmost.Location = new System.Drawing.Point(35, 125);
+			this.checkCommandTopmost.Name = "checkCommandTopmost";
+			this.checkCommandTopmost.Size = new System.Drawing.Size(104, 24);
+			this.checkCommandTopmost.TabIndex = 4;
+			this.checkCommandTopmost.Text = "{TOPMOST}";
+			this.checkCommandTopmost.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(331, 284);
-			this.Controls.Add(this.splitContainer1);
+			this.ClientSize = new System.Drawing.Size(474, 284);
+			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "SettingForm";
 			this.Text = "{SETTING}";
 			this.tabSetting.ResumeLayout(false);
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			this.splitContainer1.Panel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-			this.splitContainer1.ResumeLayout(false);
+			this.pageCommand.ResumeLayout(false);
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label titleCommandHideTime;
+		private System.Windows.Forms.DomainUpDown inputCommandHideTime;
+		private System.Windows.Forms.CheckBox checkCommandTopmost;
+		private System.Windows.Forms.Button commandCommandFont;
+		private System.Windows.Forms.Label titleCommandFont;
+		private System.Windows.Forms.ErrorProvider errorProvider;
+		private System.Windows.Forms.TabPage pageCommand;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Button commandCancel;
 		private System.Windows.Forms.Button commandSubmit;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TabPage pageLauncher;
 		private System.Windows.Forms.TabPage pageMain;
 		private System.Windows.Forms.TabControl tabSetting;
+		
 	}
 }

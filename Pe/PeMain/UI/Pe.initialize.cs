@@ -21,37 +21,16 @@ namespace PeMain.UI
 	public partial class Pe
 	{
 		/// <summary>
-		/// 初期化
-		/// </summary>
-		/// <param name="args"></param>
-		void Initialize(string[] args)
-		{
-			InitializeSetting(args);
-			InitializeUI(args);
-		}
-		/// <summary>
-		/// 設定ファイル初期化
-		/// </summary>
-		/// <param name="args"></param>
-		void InitializeSetting(string[] args)
-		{
-			this.mainSetting = new MainSetting();
-			this.language = new Language();
-			
-			InitializeMainSetting(Literal.UserMainSettingPath, this.mainSetting);
-			InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"), this.language);
-		}
-		/// <summary>
 		/// 本体設定ファイル初期化
 		/// </summary>
 		/// <param name="settingPath"></param>
 		/// <param name="setting"></param>
-		void InitializeMainSetting(string settingPath, MainSetting setting)
+		void InitializeMainSetting(string mainSettingPath, MainSetting mainSetting)
 		{
-			if(File.Exists(settingPath)) {
+			if(File.Exists(mainSettingPath)) {
 				var serializer = new XmlSerializer(typeof(MainSetting));
-				using(var stream = new FileStream(settingPath, FileMode.Open)) {
-					serializer.Serialize(stream, setting);
+				using(var stream = new FileStream(mainSettingPath, FileMode.Open)) {
+					serializer.Serialize(stream, mainSetting);
 				}
 			}
 		}
@@ -71,6 +50,19 @@ namespace PeMain.UI
 		}
 		
 		/// <summary>
+		/// 設定ファイル初期化
+		/// </summary>
+		/// <param name="args"></param>
+		void InitializeSetting(string[] args)
+		{
+			this.mainSetting = new MainSetting();
+			this.language = new Language();
+			
+			InitializeMainSetting(Literal.UserMainSettingPath, this.mainSetting);
+			InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"), this.language);
+		}
+		
+		/// <summary>
 		/// 本体メニュー初期化
 		/// </summary>
 		/// <returns></returns>
@@ -78,10 +70,15 @@ namespace PeMain.UI
 		{
 			MenuItem[] menu = new MenuItem[] {
 				new MenuItem("About", menuAboutClick),
-				new MenuItem("Exit", menuExitClick)
+				new MenuItem("Setting(Forms)", (object sender, EventArgs e) => {
+				             	var f = new SettingForm(this.language, this.mainSetting);
+				             	f.ShowDialog();
+				}),
+				new MenuItem("Exit", menuExitClick),
 			};
 			return menu;
 		}
+		
 		/// <summary>
 		/// 本体UI初期化
 		/// </summary>
@@ -96,6 +93,16 @@ namespace PeMain.UI
 			
 			this.notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
 			this.notifyIcon.ContextMenu = this.notificationMenu;
+		}
+		
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="args"></param>
+		void Initialize(string[] args)
+		{
+			InitializeSetting(args);
+			InitializeUI(args);
 		}
 	}
 }

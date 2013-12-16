@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using PeMain.Setting;
 
 namespace PeMain.UI
 {
@@ -17,16 +18,14 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm : Form
 	{
-		public SettingForm()
+		public SettingForm(Language language, MainSetting setting)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+			Initialize(language, setting);
 		}
 	}
 }

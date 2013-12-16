@@ -47,6 +47,8 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -61,6 +63,7 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Literal.cs" />
@@ -76,7 +79,13 @@
     <Compile Include="Setting\Launcher.cs" />
     <Compile Include="Setting\MainSetting.cs" />
     <Compile Include="UI\Pe.cs" />
+    <Compile Include="UI\Pe.functions.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.initialize.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.language.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.variable.cs">
@@ -84,6 +93,18 @@
     </Compile>
     <Compile Include="UI\SettingForm.cs" />
     <Compile Include="UI\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.initialize.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.language.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.property.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -100,6 +121,9 @@
     <None Include="app.config" />
     <None Include="etc\lang\default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="UI\SettingForm.functions.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
