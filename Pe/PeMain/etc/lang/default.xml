@@ -9,6 +9,6 @@
 		<Word Name="exit"   Text="終了" />
 	</Define>
 	<Common>
-		<Word />
+		<Word Name="exit" Text="＠${exit}！" />
 	</Common>
 </Language>

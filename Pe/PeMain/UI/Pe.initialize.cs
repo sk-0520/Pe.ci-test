@@ -24,29 +24,31 @@ namespace PeMain.UI
 		/// 本体設定ファイル初期化
 		/// </summary>
 		/// <param name="settingPath"></param>
-		/// <param name="setting"></param>
-		void InitializeMainSetting(string mainSettingPath, MainSetting mainSetting)
+		MainSetting InitializeMainSetting(string mainSettingPath)
 		{
 			if(File.Exists(mainSettingPath)) {
 				var serializer = new XmlSerializer(typeof(MainSetting));
 				using(var stream = new FileStream(mainSettingPath, FileMode.Open)) {
-					serializer.Serialize(stream, mainSetting);
+					return (MainSetting)serializer.Deserialize(stream);
 				}
 			}
+			
+			return null;
 		}
 		/// <summary>
 		/// 言語ファイル初期化
 		/// </summary>
 		/// <param name="languagePath"></param>
-		/// <param name="lang"></param>
-		void InitializeLanguage(string languagePath, Language lang)
+		Language InitializeLanguage(string languagePath)
 		{
 			if(File.Exists(languagePath)) {
 				var serializer = new XmlSerializer(typeof(Language));
 				using(var stream = new FileStream(languagePath, FileMode.Open)) {
-					lang = (Language)serializer.Deserialize(stream);
+					return (Language)serializer.Deserialize(stream);
 				}
 			}
+			
+			return null;
 		}
 		
 		/// <summary>
@@ -55,11 +57,8 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void InitializeSetting(string[] args)
 		{
-			this.mainSetting = new MainSetting();
-			this.language = new Language();
-			
-			InitializeMainSetting(Literal.UserMainSettingPath, this.mainSetting);
-			InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"), this.language);
+			this.mainSetting = InitializeMainSetting(Literal.UserMainSettingPath);
+			this.language = InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
 		}
 		
 		/// <summary>
@@ -74,7 +73,7 @@ namespace PeMain.UI
 				             	var f = new SettingForm(this.language, this.mainSetting);
 				             	f.ShowDialog();
 				}),
-				new MenuItem("Exit", menuExitClick),
+				new MenuItem(this.language["Common/exit"], menuExitClick),
 			};
 			return menu;
 		}

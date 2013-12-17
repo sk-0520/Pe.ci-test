@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace PeMain.Setting
@@ -31,6 +32,9 @@ namespace PeMain.Setting
 	[Serializable]
 	public class Language: NameItem
 	{
+		private const string DEFINE = "Define";
+		private const string COMMON = "Common";
+		
 		private Dictionary<string, List<Word>> _map;
 			
 		public Language()
@@ -38,28 +42,64 @@ namespace PeMain.Setting
 			Define = new List<Word>();
 			Common = new List<Word>();
 			this._map = new Dictionary<string, List<Word>>() {
-				{"Define", Define},
-				{"Common", Common},
+				{DEFINE, Define},
+				{COMMON, Common},
 			};
 		}
+
 		public List<Word> Define { get; set; }
 		public List<Word> Common { get; set; }
-		
-		[System.Xml.Serialization.XmlAttribute("Code")]
+		[System.Xml.Serialization.XmlAttribute]
 		public string Code { get; set; }
 		
-		private Word getWord(string group, string key)
+		private Word getWord(string group, string name)
 		{
+			if(!this._map.ContainsKey(group)) {
+				return string.Format("<{0}/{1}>", group, name);
+			}
+			
 			var list = this._map[group];
-			var word = list.SingleOrDefault(item => item.Name == key);
+			var word = list.SingleOrDefault(item => item.Name == name);
 			if(word == null) {
 				word = new Word();
-				word.Name = key;
-				word.Text = "<" + key + ">";
+				word.Name = name;
+				word.Text = "<" + name + ">";
 			}
 			
 			return word;
 		}
 		
+		public string getPlain(string key)
+		{
+			var splitter = key.IndexOf('/');
+			if(splitter == -1) {
+				throw new ArgumentException(key);
+			}
+			var group = key.Substring(0, splitter);
+			var name = key.Substring(splitter + 1);
+			
+			var word = getWord(group, name);
+			
+			return word.Text;
+		}
+		
+		/// <summary>
+		/// 変換済み文字列の取得。
+		/// 
+		/// 定義済み文字列は展開される。
+		/// </summary>
+		public string this[string key]
+		{
+			get 
+			{
+				var text = getPlain(key);
+				if(text.Any(c => c == '$')) {
+					// ${...}
+					Debug.WriteLine("asdf");
+				}
+				
+				return text;
+			}
+		}
 	}
 }
