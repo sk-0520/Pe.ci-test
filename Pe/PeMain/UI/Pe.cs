@@ -23,6 +23,8 @@ namespace PeMain.UI
 			var f = new BaseToolbarForm();
 			f.Show();
 			f.DockType = DockType.Left;
+			f.TopMost = true;
+			f.Docking();
 		}
 		
 		public void Dispose()
