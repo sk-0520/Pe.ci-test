@@ -11,6 +11,12 @@ using System.Runtime.InteropServices;
 
 namespace Windows
 {
+	public enum WM: uint
+	{
+		WM_ACTIVATE = 0x06,
+		WM_WINDOWPOSCHANGED = 0x47,
+	}
+
 	public static partial class API
 	{
 		/// <summary>
