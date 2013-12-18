@@ -20,6 +20,9 @@ namespace PeMain.UI
 		public Pe(string[] args)
 		{
 			Initialize(args);
+			var f = new BaseToolbarForm();
+			f.Show();
+			f.DockType = DockType.Left;
 		}
 		
 		public void Dispose()

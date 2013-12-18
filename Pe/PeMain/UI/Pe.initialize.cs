@@ -33,7 +33,7 @@ namespace PeMain.UI
 				}
 			}
 			
-			return null;
+			return new MainSetting();
 		}
 		/// <summary>
 		/// 言語ファイル初期化

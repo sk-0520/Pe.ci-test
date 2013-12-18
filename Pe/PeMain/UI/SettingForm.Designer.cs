@@ -41,24 +41,25 @@ namespace PeMain.UI
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.checkCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.titleCommandHideTime = new System.Windows.Forms.Label();
 			this.commandCommandFont = new System.Windows.Forms.Button();
 			this.titleCommandFont = new System.Windows.Forms.Label();
+			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.pageToolbar = new System.Windows.Forms.TabPage();
-			this.pageDisplay = new System.Windows.Forms.TabPage();
-			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
+			this.pageNote = new System.Windows.Forms.TabPage();
 			this.tabSetting.SuspendLayout();
 			this.pageCommand.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -67,6 +68,7 @@ namespace PeMain.UI
 			this.tabSetting.Controls.Add(this.pageLauncher);
 			this.tabSetting.Controls.Add(this.pageCommand);
 			this.tabSetting.Controls.Add(this.pageToolbar);
+			this.tabSetting.Controls.Add(this.pageNote);
 			this.tabSetting.Controls.Add(this.pageDisplay);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabSetting.Location = new System.Drawing.Point(3, 4);
@@ -113,6 +115,13 @@ namespace PeMain.UI
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
 			// 
+			// inputCommandHideTime
+			// 
+			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 76);
+			this.inputCommandHideTime.Name = "inputCommandHideTime";
+			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
+			this.inputCommandHideTime.TabIndex = 5;
+			// 
 			// checkCommandTopmost
 			// 
 			this.checkCommandTopmost.Location = new System.Drawing.Point(35, 125);
@@ -146,6 +155,24 @@ namespace PeMain.UI
 			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
 			this.titleCommandFont.TabIndex = 0;
 			this.titleCommandFont.Text = "{FONT}";
+			// 
+			// pageToolbar
+			// 
+			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
+			this.pageToolbar.Name = "pageToolbar";
+			this.pageToolbar.Size = new System.Drawing.Size(460, 205);
+			this.pageToolbar.TabIndex = 3;
+			this.pageToolbar.Text = "{TOOLBAR}";
+			this.pageToolbar.UseVisualStyleBackColor = true;
+			// 
+			// pageDisplay
+			// 
+			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
+			this.pageDisplay.Name = "pageDisplay";
+			this.pageDisplay.Size = new System.Drawing.Size(460, 205);
+			this.pageDisplay.TabIndex = 5;
+			this.pageDisplay.Text = "{DISPLAY}";
+			this.pageDisplay.UseVisualStyleBackColor = true;
 			// 
 			// commandCancel
 			// 
@@ -198,30 +225,14 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// pageToolbar
+			// pageNote
 			// 
-			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
-			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(460, 205);
-			this.pageToolbar.TabIndex = 3;
-			this.pageToolbar.Text = "{TOOLBAR}";
-			this.pageToolbar.UseVisualStyleBackColor = true;
-			// 
-			// pageDisplay
-			// 
-			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
-			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(460, 205);
-			this.pageDisplay.TabIndex = 5;
-			this.pageDisplay.Text = "{DISPLAY}";
-			this.pageDisplay.UseVisualStyleBackColor = true;
-			// 
-			// inputCommandHideTime
-			// 
-			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 76);
-			this.inputCommandHideTime.Name = "inputCommandHideTime";
-			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
-			this.inputCommandHideTime.TabIndex = 5;
+			this.pageNote.Location = new System.Drawing.Point(4, 24);
+			this.pageNote.Name = "pageNote";
+			this.pageNote.Size = new System.Drawing.Size(460, 205);
+			this.pageNote.TabIndex = 6;
+			this.pageNote.Text = "{NOTE}";
+			this.pageNote.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -237,13 +248,14 @@ namespace PeMain.UI
 			this.Text = "{SETTING}";
 			this.tabSetting.ResumeLayout(false);
 			this.pageCommand.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TabPage pageNote;
 		private System.Windows.Forms.TabPage pageDisplay;
 		private System.Windows.Forms.TabPage pageToolbar;
 		private System.Windows.Forms.NumericUpDown inputCommandHideTime;

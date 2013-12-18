@@ -26,6 +26,10 @@ namespace PeMain.Setting
 		/// URI。
 		/// </summary>
 		URI,
+		/// <summary>
+		/// 組み込み
+		/// </summary>
+		Pe
 	}
 	
 	/// <summary>
@@ -47,14 +51,14 @@ namespace PeMain.Setting
 	/// ランチャー設定データ。
 	/// </summary>
 	[Serializable]
-	public class Launcher: NameItem, IDisposable
+	public class LauncherItem: NameItem, IDisposable
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		private Dictionary<IconSize, Icon> _iconMap;
 		
-		public Launcher()
+		public LauncherItem()
 		{
 			this._iconMap = new Dictionary<IconSize, Icon>();
 			
@@ -111,16 +115,16 @@ namespace PeMain.Setting
 	/// <summary>
 	/// ランチャーアイテム統括。
 	/// </summary>
-	public class LauncherSet: Item, IDisposable
+	public class LauncherSetting: Item, IDisposable
 	{
-		public LauncherSet()
+		public LauncherSetting()
 		{
-			Items = new SortedSet<Launcher>();
+			Items = new SortedSet<LauncherItem>();
 		}
 		/// <summary>
 		/// 各ランチャアイテム
 		/// </summary>
-		public SortedSet<Launcher> Items { get; set; }
+		public SortedSet<LauncherItem> Items { get; set; }
 		
 		public void Dispose()
 		{

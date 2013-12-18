@@ -18,25 +18,22 @@ namespace PeMain.Setting
 	/// </summary>
 	public class CommandSetting: Item, IDisposable
 	{
-		private Font _font = null;
+		//private Font _font = null;
 		
 		public CommandSetting()
 		{
 			Width = 200;
 			Height = 200;
+			FontSetting = new FontSetting();
 		}
 		/// <summary>
 		/// アイコンサイズ
 		/// </summary>
 		public IconSize IconSize { get; set; }
 		/// <summary>
-		/// フォント名。
+		/// フォント
 		/// </summary>
-		public string FontName { get; set; }
-		/// <summary>
-		/// フォントサイズ。
-		/// </summary>
-		public float FontSize { get; set; }
+		FontSetting FontSetting { get; set; }
 		/// <summary>
 		/// 入力欄の横幅。
 		/// </summary>
@@ -54,36 +51,10 @@ namespace PeMain.Setting
 		/// </summary>
 		public bool TopMost { get; set; }
 		
-		/// <summary>
-		/// フォント。
-		/// </summary>
-		public Font Font
-		{
-			get
-			{
-				if(this._font == null) {
-					FontFamily family = null;
-					if(!string.IsNullOrWhiteSpace(FontName)) {
-						family = FontFamily.Families.SingleOrDefault(f => f.Name == FontName);
-					}
-					if(family == null) {
-						family = FontFamily.GenericMonospace;
-					}
-					var size = FontSize;
-					if(float.IsNaN(size) || size == 0.0) {
-						size = SystemFonts.DefaultFont.Size;
-					}
-					this._font = new Font(family, size);
-				}
-				
-				return this._font;
-			}
-		}
-		
 		public void Dispose()
 		{
-			if(Font != null) {
-				Font.Dispose();
+			if(FontSetting != null) {
+				FontSetting.Dispose();
 			}
 		}
 	}

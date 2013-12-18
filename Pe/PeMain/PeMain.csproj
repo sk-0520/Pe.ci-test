@@ -74,10 +74,28 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Setting\CommandSetting.cs" />
+    <Compile Include="Setting\FontSetting.cs" />
     <Compile Include="Setting\Item.cs" />
     <Compile Include="Setting\Language.cs" />
-    <Compile Include="Setting\Launcher.cs" />
+    <Compile Include="Setting\LauncherSetting.cs" />
     <Compile Include="Setting\MainSetting.cs" />
+    <Compile Include="Setting\NoteSetting.cs" />
+    <Compile Include="Setting\ToolbarSetting.cs" />
+    <Compile Include="UI\BaseToolbarForm.functions.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BaseToolbarForm.initialize.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BaseToolbarForm.property.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BaseToolbarForm.variable.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\BaseToolbarForm.wndProc.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.cs" />
     <Compile Include="UI\Pe.functions.cs">
       <DependentUpon>Pe.cs</DependentUpon>
@@ -107,6 +125,10 @@
     <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\BaseToolbarForm.cs" />
+    <Compile Include="UI\BaseToolbarForm.Designer.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Images.resx">
@@ -122,6 +144,9 @@
     <None Include="etc\lang\default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="UI\BaseToolbarForm.define.cs">
+      <DependentUpon>BaseToolbarForm.cs</DependentUpon>
+    </Compile>
     <None Include="UI\SettingForm.functions.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </None>

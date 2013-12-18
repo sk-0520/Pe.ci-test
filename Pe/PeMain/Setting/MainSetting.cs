@@ -18,8 +18,10 @@ namespace PeMain.Setting
 	{
 		public MainSetting()
 		{
-			LauncherSet = new LauncherSet();
+			Launcher = new LauncherSetting();
 			Command = new CommandSetting();
+			Toolbar = new ToolbarSetting();
+			Note = new NoteSetting();
 		}
 		
 		/// <summary>
@@ -29,11 +31,19 @@ namespace PeMain.Setting
 		/// <summary>
 		/// ランチャアイテム統括。
 		/// </summary>
-		public LauncherSet LauncherSet { get; set; }
+		public LauncherSetting Launcher { get; set; }
 		/// <summary>
 		/// コマンドランチャ設定。
 		/// </summary>
 		public CommandSetting Command { get; set; }
+		/// <summary>
+		/// ツールバー
+		/// </summary>
+		public ToolbarSetting Toolbar { get; set; }
+		/// <summary>
+		/// ノード
+		/// </summary>
+		public NoteSetting Note { get; set; }
 		
 		public void Dispose()
 		{

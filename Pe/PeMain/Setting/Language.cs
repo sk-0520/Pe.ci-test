@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace PeMain.Setting
 {
@@ -54,12 +55,13 @@ namespace PeMain.Setting
 		
 		private Word getWord(string group, string name)
 		{
-			if(!this._map.ContainsKey(group)) {
-				return string.Format("<{0}/{1}>", group, name);
+			Word word = null;
+			
+			if(this._map.ContainsKey(group)) {
+				var list = this._map[group];
+				word = list.SingleOrDefault(item => item.Name == name);
 			}
 			
-			var list = this._map[group];
-			var word = list.SingleOrDefault(item => item.Name == name);
 			if(word == null) {
 				word = new Word();
 				word.Name = name;
@@ -95,7 +97,10 @@ namespace PeMain.Setting
 				var text = getPlain(key);
 				if(text.Any(c => c == '$')) {
 					// ${...}
-					Debug.WriteLine("asdf");
+					var replacedText = Regex.Replace(text, @"\$\{(.+)\}", (Match m) => 
+						getWord(DEFINE, m.Groups[1].Value).Text
+					);
+					return replacedText;
 				}
 				
 				return text;
