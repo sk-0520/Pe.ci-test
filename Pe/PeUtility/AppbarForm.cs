@@ -15,9 +15,9 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm.
 	/// </summary>
-	public partial class BaseToolbarForm : Form
+	public partial class AppbarForm : Form
 	{
-		public BaseToolbarForm()
+		public AppbarForm()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.

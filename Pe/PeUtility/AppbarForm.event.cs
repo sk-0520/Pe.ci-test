@@ -23,7 +23,7 @@ namespace PeMain.UI
 		public bool FullScreen { get; set; }
 	}
 	
-	public partial class BaseToolbarForm
+	public partial class AppbarForm
 	{
 		public event EventHandler<AppbarFullScreenEvent> AppbarFullScreen;
 		
@@ -39,7 +39,8 @@ namespace PeMain.UI
 		
 		public event EventHandler<EventArgs> AppbarPosChanged;
 		
-		protected virtual void OnAppbarPosChanged(EventArgs e) {
+		protected virtual void OnAppbarPosChanged(EventArgs e)
+		{
 			Docking();
 
 			if (AppbarPosChanged != null) {
@@ -49,7 +50,8 @@ namespace PeMain.UI
 		
 		
 		public event EventHandler<EventArgs> AppbarStateChange;
-		protected virtual void OnAppbarStateChange(EventArgs e) {
+		protected virtual void OnAppbarStateChange(EventArgs e)
+		{
 			if (AppbarStateChange != null) {
 				AppbarStateChange(this, e);
 			}

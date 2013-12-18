@@ -8,7 +8,7 @@
  */
 namespace PeMain.UI
 {
-	partial class BaseToolbarForm
+	partial class AppbarForm
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
@@ -36,12 +36,20 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.SuspendLayout();
 			// 
-			// ToolbarForm
+			// AppbarForm
 			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Text = "ToolbarForm";
-			this.Name = "ToolbarForm";
+			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.ControlBox = false;
+			this.Name = "AppbarForm";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.Text = "AppbarForm";
+			this.TopMost = true;
+			this.ResumeLayout(false);
 		}
 	}
 }

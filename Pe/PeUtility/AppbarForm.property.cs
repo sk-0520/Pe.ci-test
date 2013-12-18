@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace PeMain.UI
 {
-	public partial class BaseToolbarForm
+	public partial class AppbarForm
 	{
 		/// <summary>
 		/// ドッキングするディスプレイ

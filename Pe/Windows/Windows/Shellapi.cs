@@ -60,12 +60,22 @@ namespace Windows
 		//        RECT rc;
 		//        LPARAM lParam;
 		//      } APPBARDATA, *PAPPBARDATA;
-		public static readonly int cbSize = Marshal.SizeOf(typeof(APPBARDATA));
+		public int cbSize;
 		public IntPtr hWnd;
 		public uint uCallbackMessage;
 		public ABE uEdge;
 		public RECT rc;
 		public int lParam;
+		
+		public APPBARDATA(IntPtr hWnd)
+		{
+			this.cbSize = Marshal.SizeOf(typeof(APPBARDATA));
+			this.hWnd = hWnd;
+			this.uCallbackMessage = 0;
+			this.uEdge = ABE.ABE_LEFT;
+			this.rc = new RECT();
+			this.lParam = 0;
+		}
 	}
 	
 	public partial class API

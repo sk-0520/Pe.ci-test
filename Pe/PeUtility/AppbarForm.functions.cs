@@ -18,7 +18,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of BaseToolbarForm_function.
 	/// </summary>
-	public partial class BaseToolbarForm
+	public partial class AppbarForm
 	{
 		protected override CreateParams CreateParams {
 			get {
@@ -32,16 +32,48 @@ namespace PeMain.UI
 			}
 		}
 		
+		protected override void OnResizeEnd(EventArgs e)
+		{
+			if(IsDocking) {
+				// AppBar のサイズを更新します。
+				switch (DockType) {
+					case DockType.Left:
+					case DockType.Right:
+						BarSize = new Size(Width, BarSize.Height);
+						break;
+					case DockType.Top:
+					case DockType.Bottom:
+						BarSize = new Size(BarSize.Width, Height);
+						break;
+				}
+				Docking();
+			}
+			base.OnResizeEnd(e);
+		}
+		
+		protected override void OnFormClosed(FormClosedEventArgs e)
+		{
+			if(IsDocking) {
+				UnResistAppBar();
+			}
+			
+			base.OnFormClosed(e);
+		}
+		
+		
 		private bool ResistAppBar()
 		{
 			Debug.Assert(!this.DesignMode);
 
-			var appData = new APPBARDATA();
-			appData.hWnd = Handle;
-			
 			this.callbackMessage = Windows.API.RegisterWindowMessage(MessageString);
-			var registResult = Windows.API.SHAppBarMessage(ABM.ABM_NEW, ref appData);
+			var appBar = new APPBARDATA(Handle);
+			appBar.uCallbackMessage = this.callbackMessage;
+			
+			Debug.WriteLine("callbackMessage: " + callbackMessage);
+			var registResult = Windows.API.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
+			Debug.WriteLine("registResult: " + registResult);
 			IsDocking = registResult.ToInt32() != 0;
+			Debug.WriteLine("IsDocking: " + IsDocking);
 			
 			return IsDocking;
 		}
@@ -50,10 +82,10 @@ namespace PeMain.UI
 		{
 			Debug.Assert(!this.DesignMode);
 
-			var appData = new APPBARDATA();
-			appData.hWnd = Handle;
+			var appBar = new APPBARDATA(Handle);
 
-			var unregistResult = Windows.API.SHAppBarMessage(ABM.ABM_REMOVE, ref appData);
+			var unregistResult = Windows.API.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
+			Debug.WriteLine("unregistResult: " + unregistResult);
 			
 			IsDocking = false;
 			this.callbackMessage = 0;
@@ -117,8 +149,7 @@ namespace PeMain.UI
 			Debug.Assert(!IsDocking);
 			ResistAppBar();
 			
-			var appBar = new APPBARDATA();
-			appBar.hWnd = Handle;
+			var appBar = new APPBARDATA(Handle);
 			appBar.uEdge = DockType.ToABE();
 			appBar.rc = CalcBarArea();
 			// 現在の希望するサイズから実際のサイズ要求する

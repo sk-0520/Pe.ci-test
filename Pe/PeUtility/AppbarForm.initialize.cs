@@ -13,7 +13,7 @@ namespace PeMain.UI
 {
 	/// <summary>
 	/// </summary>
-	public partial class BaseToolbarForm
+	public partial class AppbarForm
 	{
 		void Initialize()
 		{

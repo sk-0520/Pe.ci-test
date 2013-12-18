@@ -12,17 +12,15 @@ using Windows;
 
 namespace PeMain.UI
 {
-	public partial class BaseToolbarForm
+	public partial class AppbarForm
 	{
 		protected override void WndProc(ref Message m) {
 			if(IsDocking) {
 				if(m.Msg == (int)WM.WM_ACTIVATE) {
-					var appBar = new APPBARDATA();
-					appBar.hWnd = Handle;
+					var appBar = new APPBARDATA(Handle);
 					Windows.API.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
 				} else if(m.Msg == (int)WM.WM_WINDOWPOSCHANGED) {
-					var appBar = new APPBARDATA();
-					appBar.hWnd = Handle;
+				var appBar = new APPBARDATA(Handle);
 					Windows.API.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
 				}
 				

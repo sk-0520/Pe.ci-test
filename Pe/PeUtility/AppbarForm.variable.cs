@@ -13,7 +13,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of BaseToolbarForm_variable.
 	/// </summary>
-	public partial class BaseToolbarForm
+	public partial class AppbarForm
 	{
 		public uint callbackMessage;
 	}
