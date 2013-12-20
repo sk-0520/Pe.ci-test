@@ -13,7 +13,7 @@ namespace PeMain
 	/// <summary>
 	/// Description of DataMember.
 	/// </summary>
-	public class DataMember<T>
+	public class ItemData<T>
 	{
 		private T _data;
 		
@@ -34,7 +34,7 @@ namespace PeMain
 		/// <summary>
 		/// 設定データ
 		/// </summary>
-		public sealed T DataMember
+		public T DataMember
 		{
 			get
 			{
