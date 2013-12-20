@@ -69,9 +69,9 @@ namespace PeMain.UI
 		{
 			MenuItem[] menu = new MenuItem[] {
 				new MenuItem("About", menuAboutClick),
-				new MenuItem("Setting(Forms)", (object sender, EventArgs e) => {
+				new MenuItem(this.language["main/menu/setting"], (object sender, EventArgs e) => {
 				             	var f = new SettingForm(this.language, this.mainSetting);
-				             	f.ShowDialog();
+				             	PauseOthers(() => f.ShowDialog());
 				}),
 				new MenuItem(this.language["common/exit"], menuExitClick),
 			};

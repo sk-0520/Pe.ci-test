@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0"?>
 <Language Name="日本語" Code="ja-JP">
 	<Define>
-		<Word Name="yes"    Text="はい" />
-		<Word Name="no"     Text="いいえ" />
-		<Word Name="cancel" Text="キャンセル" />
-		<Word Name="ok"     Text="OK" />
-		<Word Name="retry"  Text="再試行" />
-		<Word Name="exit"   Text="終了" />
+		<Word Name="yes"      Text="はい" />
+		<Word Name="no"       Text="いいえ" />
+		<Word Name="cancel"   Text="キャンセル" />
+		<Word Name="ok"       Text="OK" />
+		<Word Name="retry"    Text="再試行" />
+		<Word Name="exit"     Text="終了" />
+		<Word Name="open-ui"  Text="..." />
 	</Define>
 	<Words>
-		<Word Name="common/exit" Text="${exit}" />
+		<Word Name="common/exit"       Text="${exit}" />
+		<Word Name="main/menu/setting" Text="設定(&amp;S) ${open-ui}" />
 	</Words>
 </Language>

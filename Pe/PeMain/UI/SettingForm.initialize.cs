@@ -19,28 +19,34 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
-		void InitializeCommand(CommandSetting commandSetting)
-		{
-			
-		}
-		
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			
 		}
 		
+		void InitializeLauncher(LauncherSetting launcherSetting)
+		{
+			
+		}
+		
+		void InitializeCommand(CommandSetting commandSetting)
+		{
+			LauncherSizeChanged();
+		}
 		
 		void InitializeUI(MainSetting mainSetting)
 		{
 			ApplyLanguage();
 			
 			InitializeMainSetting(mainSetting);
+			InitializeLauncher(mainSetting.Launcher);
 			InitializeCommand(mainSetting.Command);
 		}
 		
 		void Initialize(Language language, MainSetting mainSetting)
 		{
 			Language = language;
+			
 			InitializeUI(mainSetting);
 		}
 	}

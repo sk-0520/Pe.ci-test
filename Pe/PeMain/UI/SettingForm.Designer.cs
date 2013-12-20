@@ -45,7 +45,6 @@ namespace PeMain.UI
 			this.listLauncherItems = new System.Windows.Forms.ListBox();
 			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
 			this.toolLauncherItems_filter = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolLauncherItems_type_full = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolLauncherItems_type_name = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +65,9 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.toolLauncherItems_create = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolLauncherItems_remove = new System.Windows.Forms.ToolStripButton();
 			this.tabSetting.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -138,23 +140,25 @@ namespace PeMain.UI
 			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listLauncherItems.FormattingEnabled = true;
 			this.listLauncherItems.ItemHeight = 15;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
 			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(176, 153);
+			this.listLauncherItems.Size = new System.Drawing.Size(176, 172);
 			this.listLauncherItems.TabIndex = 2;
 			// 
 			// toolLauncherItems
 			// 
 			this.toolLauncherItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolLauncherItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLauncherItems_filter,
+									this.toolLauncherItems_create,
+									this.toolLauncherItems_remove,
 									this.toolStripSeparator1,
+									this.toolLauncherItems_filter,
 									this.toolLauncherItems_type,
 									this.toolLauncherItems_input});
 			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(176, 44);
+			this.toolLauncherItems.Size = new System.Drawing.Size(176, 25);
 			this.toolLauncherItems.TabIndex = 1;
 			this.toolLauncherItems.Text = "toolStrip1";
 			// 
@@ -166,11 +170,6 @@ namespace PeMain.UI
 			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
 			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
 			this.toolLauncherItems_filter.Text = "toolStripButton1";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
 			// 
 			// toolLauncherItems_type
 			// 
@@ -213,7 +212,7 @@ namespace PeMain.UI
 			// toolLauncherItems_input
 			// 
 			this.toolLauncherItems_input.Name = "toolLauncherItems_input";
-			this.toolLauncherItems_input.Size = new System.Drawing.Size(100, 25);
+			this.toolLauncherItems_input.Size = new System.Drawing.Size(20, 25);
 			// 
 			// pageCommand
 			// 
@@ -349,6 +348,29 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// toolLauncherItems_create
+			// 
+			this.toolLauncherItems_create.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolLauncherItems_create.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_create.Image")));
+			this.toolLauncherItems_create.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolLauncherItems_create.Name = "toolLauncherItems_create";
+			this.toolLauncherItems_create.Size = new System.Drawing.Size(23, 20);
+			this.toolLauncherItems_create.Text = "toolStripButton1";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
+			// 
+			// toolLauncherItems_remove
+			// 
+			this.toolLauncherItems_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolLauncherItems_remove.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_remove.Image")));
+			this.toolLauncherItems_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolLauncherItems_remove.Name = "toolLauncherItems_remove";
+			this.toolLauncherItems_remove.Size = new System.Drawing.Size(23, 20);
+			this.toolLauncherItems_remove.Text = "toolStripButton1";
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -377,6 +399,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripButton toolLauncherItems_remove;
+		private System.Windows.Forms.ToolStripButton toolLauncherItems_create;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_tag;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_display;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_name;

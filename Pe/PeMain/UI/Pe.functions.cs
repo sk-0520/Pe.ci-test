@@ -15,5 +15,9 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
+		void PauseOthers(Action action)
+		{
+			action();
+		}
 	}
 }
