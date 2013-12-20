@@ -169,7 +169,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_filter.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
 			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_filter.Text = "toolStripButton1";
+			this.toolLauncherItems_filter.Text = "{LAUNCHER_FILTERING}";
 			// 
 			// toolLauncherItems_type
 			// 
@@ -183,31 +183,31 @@ namespace PeMain.UI
 			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
 			this.toolLauncherItems_type.Size = new System.Drawing.Size(29, 20);
-			this.toolLauncherItems_type.Text = "toolStripSplitButton1";
+			this.toolLauncherItems_type.Text = "{?}";
 			// 
 			// toolLauncherItems_type_full
 			// 
 			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
-			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(193, 22);
-			this.toolLauncherItems_type_full.Text = "toolStripMenuItem1";
+			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_full.Text = "{LAUNCHER_FILTER_FULL}";
 			// 
 			// toolLauncherItems_type_name
 			// 
 			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
-			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(193, 22);
-			this.toolLauncherItems_type_name.Text = "toolStripMenuItem2";
+			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_name.Text = "{LAUNCHER_FILTER_NAME}";
 			// 
 			// toolLauncherItems_type_display
 			// 
 			this.toolLauncherItems_type_display.Name = "toolLauncherItems_type_display";
-			this.toolLauncherItems_type_display.Size = new System.Drawing.Size(193, 22);
-			this.toolLauncherItems_type_display.Text = "toolStripMenuItem3";
+			this.toolLauncherItems_type_display.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_display.Text = "{LAUNCHER_FILTER_DISPLAY}";
 			// 
 			// toolLauncherItems_type_tag
 			// 
 			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
-			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(193, 22);
-			this.toolLauncherItems_type_tag.Text = "toolStripMenuItem1";
+			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_tag.Text = "{LAUNCHER_FILTER_TAG}";
 			// 
 			// toolLauncherItems_input
 			// 
@@ -355,7 +355,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_create.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_create.Name = "toolLauncherItems_create";
 			this.toolLauncherItems_create.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_create.Text = "toolStripButton1";
+			this.toolLauncherItems_create.Text = "{LAUNCHER_ITEM_CREATE}";
 			// 
 			// toolStripSeparator1
 			// 
@@ -369,7 +369,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_remove.Name = "toolLauncherItems_remove";
 			this.toolLauncherItems_remove.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_remove.Text = "toolStripButton1";
+			this.toolLauncherItems_remove.Text = "{LAUNCHER_ITEM_REMOVE}";
 			// 
 			// SettingForm
 			// 
