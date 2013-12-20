@@ -17,7 +17,7 @@ namespace PeMain
 	{
 		private T _data;
 		
-		public DataMember(T data)
+		public ItemData(T data)
 		{
 			this._data = data;
 		}

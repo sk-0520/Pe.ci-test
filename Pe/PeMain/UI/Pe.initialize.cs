@@ -73,7 +73,7 @@ namespace PeMain.UI
 				             	var f = new SettingForm(this.language, this.mainSetting);
 				             	f.ShowDialog();
 				}),
-				new MenuItem(this.language["Common/exit"], menuExitClick),
+				new MenuItem(this.language["common/exit"], menuExitClick),
 			};
 			return menu;
 		}

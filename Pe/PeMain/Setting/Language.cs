@@ -33,39 +33,27 @@ namespace PeMain.Setting
 	[Serializable]
 	public class Language: NameItem
 	{
-		private const string DEFINE = "Define";
-		private const string COMMON = "Common";
-		
-		private Dictionary<string, List<Word>> _map;
-			
 		public Language()
 		{
 			Define = new List<Word>();
-			Common = new List<Word>();
-			this._map = new Dictionary<string, List<Word>>() {
-				{DEFINE, Define},
-				{COMMON, Common},
-			};
 		}
 
 		public List<Word> Define { get; set; }
-		public List<Word> Common { get; set; }
+		public List<Word> Words  { get; set; }
+		
 		[System.Xml.Serialization.XmlAttribute]
 		public string Code { get; set; }
 		
-		private Word getWord(string group, string name)
+		private Word getWord(IEnumerable<Word> list, string key)
 		{
 			Word word = null;
 			
-			if(this._map.ContainsKey(group)) {
-				var list = this._map[group];
-				word = list.SingleOrDefault(item => item.Name == name);
-			}
+			word = list.SingleOrDefault(item => item.Name == key);
 			
 			if(word == null) {
 				word = new Word();
-				word.Name = name;
-				word.Text = "<" + name + ">";
+				word.Name = key;
+				word.Text = "<" + key + ">";
 			}
 			
 			return word;
@@ -73,14 +61,7 @@ namespace PeMain.Setting
 		
 		public string getPlain(string key)
 		{
-			var splitter = key.IndexOf('/');
-			if(splitter == -1) {
-				throw new ArgumentException(key);
-			}
-			var group = key.Substring(0, splitter);
-			var name = key.Substring(splitter + 1);
-			
-			var word = getWord(group, name);
+			var word = getWord(Words, key);
 			
 			return word.Text;
 		}
@@ -98,7 +79,7 @@ namespace PeMain.Setting
 				if(text.Any(c => c == '$')) {
 					// ${...}
 					var replacedText = Regex.Replace(text, @"\$\{(.+)\}", (Match m) => 
-						getWord(DEFINE, m.Groups[1].Value).Text
+						getWord(Define, m.Groups[1].Value).Text
 					);
 					return replacedText;
 				}

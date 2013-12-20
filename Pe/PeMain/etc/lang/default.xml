@@ -8,7 +8,7 @@
 		<Word Name="retry"  Text="再試行" />
 		<Word Name="exit"   Text="終了" />
 	</Define>
-	<Common>
-		<Word Name="exit" Text="${exit}" />
-	</Common>
+	<Words>
+		<Word Name="common/exit" Text="${exit}" />
+	</Words>
 </Language>
