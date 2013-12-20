@@ -27,5 +27,10 @@ namespace PeMain.UI
 			
 			Initialize(language, setting);
 		}
+		
+		void SplitContainer1SizeChanged(object sender, EventArgs e)
+		{
+			LauncherSizeChanged();
+		}
 	}
 }

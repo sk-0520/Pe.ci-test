@@ -41,6 +41,17 @@ namespace PeMain.UI
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.listLauncherItems = new System.Windows.Forms.ListBox();
+			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
+			this.toolLauncherItems_filter = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripDropDownButton();
+			this.toolLauncherItems_type_full = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolLauncherItems_type_name = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolLauncherItems_type_display = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolLauncherItems_type_tag = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolLauncherItems_input = new System.Windows.Forms.ToolStripTextBox();
 			this.pageCommand = new System.Windows.Forms.TabPage();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.checkCommandTopmost = new System.Windows.Forms.CheckBox();
@@ -55,24 +66,17 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
-			this.toolLauncherItems_filter = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripSplitButton();
-			this.toolLauncherItems_input = new System.Windows.Forms.ToolStripTextBox();
-			this.listLauncherItems = new System.Windows.Forms.ListBox();
 			this.tabSetting.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			this.toolLauncherItems.SuspendLayout();
 			this.pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
-			this.toolLauncherItems.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -113,6 +117,103 @@ namespace PeMain.UI
 			this.pageLauncher.TabIndex = 1;
 			this.pageLauncher.Text = "{LAUNCHER}";
 			this.pageLauncher.UseVisualStyleBackColor = true;
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.Location = new System.Drawing.Point(3, 4);
+			this.splitContainer1.Name = "splitContainer1";
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.listLauncherItems);
+			this.splitContainer1.Panel1.Controls.Add(this.toolLauncherItems);
+			this.splitContainer1.Size = new System.Drawing.Size(454, 197);
+			this.splitContainer1.SplitterDistance = 176;
+			this.splitContainer1.TabIndex = 0;
+			this.splitContainer1.SizeChanged += new System.EventHandler(this.SplitContainer1SizeChanged);
+			// 
+			// listLauncherItems
+			// 
+			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listLauncherItems.FormattingEnabled = true;
+			this.listLauncherItems.ItemHeight = 15;
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
+			this.listLauncherItems.Name = "listLauncherItems";
+			this.listLauncherItems.Size = new System.Drawing.Size(176, 153);
+			this.listLauncherItems.TabIndex = 2;
+			// 
+			// toolLauncherItems
+			// 
+			this.toolLauncherItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolLauncherItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.toolLauncherItems_filter,
+									this.toolStripSeparator1,
+									this.toolLauncherItems_type,
+									this.toolLauncherItems_input});
+			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
+			this.toolLauncherItems.Name = "toolLauncherItems";
+			this.toolLauncherItems.Size = new System.Drawing.Size(176, 44);
+			this.toolLauncherItems.TabIndex = 1;
+			this.toolLauncherItems.Text = "toolStrip1";
+			// 
+			// toolLauncherItems_filter
+			// 
+			this.toolLauncherItems_filter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolLauncherItems_filter.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_filter.Image")));
+			this.toolLauncherItems_filter.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
+			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
+			this.toolLauncherItems_filter.Text = "toolStripButton1";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
+			// 
+			// toolLauncherItems_type
+			// 
+			this.toolLauncherItems_type.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolLauncherItems_type.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.toolLauncherItems_type_full,
+									this.toolLauncherItems_type_name,
+									this.toolLauncherItems_type_display,
+									this.toolLauncherItems_type_tag});
+			this.toolLauncherItems_type.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type.Image")));
+			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
+			this.toolLauncherItems_type.Size = new System.Drawing.Size(29, 20);
+			this.toolLauncherItems_type.Text = "toolStripSplitButton1";
+			// 
+			// toolLauncherItems_type_full
+			// 
+			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
+			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(193, 22);
+			this.toolLauncherItems_type_full.Text = "toolStripMenuItem1";
+			// 
+			// toolLauncherItems_type_name
+			// 
+			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
+			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(193, 22);
+			this.toolLauncherItems_type_name.Text = "toolStripMenuItem2";
+			// 
+			// toolLauncherItems_type_display
+			// 
+			this.toolLauncherItems_type_display.Name = "toolLauncherItems_type_display";
+			this.toolLauncherItems_type_display.Size = new System.Drawing.Size(193, 22);
+			this.toolLauncherItems_type_display.Text = "toolStripMenuItem3";
+			// 
+			// toolLauncherItems_type_tag
+			// 
+			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
+			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(193, 22);
+			this.toolLauncherItems_type_tag.Text = "toolStripMenuItem1";
+			// 
+			// toolLauncherItems_input
+			// 
+			this.toolLauncherItems_input.Name = "toolLauncherItems_input";
+			this.toolLauncherItems_input.Size = new System.Drawing.Size(100, 25);
 			// 
 			// pageCommand
 			// 
@@ -248,72 +349,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// splitContainer1
-			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(3, 4);
-			this.splitContainer1.Name = "splitContainer1";
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.listLauncherItems);
-			this.splitContainer1.Panel1.Controls.Add(this.toolLauncherItems);
-			this.splitContainer1.Size = new System.Drawing.Size(454, 197);
-			this.splitContainer1.SplitterDistance = 176;
-			this.splitContainer1.TabIndex = 0;
-			// 
-			// toolLauncherItems
-			// 
-			this.toolLauncherItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolLauncherItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLauncherItems_filter,
-									this.toolStripSeparator1,
-									this.toolLauncherItems_type,
-									this.toolLauncherItems_input});
-			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
-			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(176, 25);
-			this.toolLauncherItems.TabIndex = 1;
-			this.toolLauncherItems.Text = "toolStrip1";
-			// 
-			// toolLauncherItems_filter
-			// 
-			this.toolLauncherItems_filter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_filter.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_filter.Image")));
-			this.toolLauncherItems_filter.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
-			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 22);
-			this.toolLauncherItems_filter.Text = "toolStripButton1";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolLauncherItems_type
-			// 
-			this.toolLauncherItems_type.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_type.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type.Image")));
-			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
-			this.toolLauncherItems_type.Size = new System.Drawing.Size(32, 22);
-			this.toolLauncherItems_type.Text = "toolStripSplitButton1";
-			// 
-			// toolLauncherItems_input
-			// 
-			this.toolLauncherItems_input.Name = "toolLauncherItems_input";
-			this.toolLauncherItems_input.Size = new System.Drawing.Size(100, 25);
-			// 
-			// listLauncherItems
-			// 
-			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listLauncherItems.FormattingEnabled = true;
-			this.listLauncherItems.ItemHeight = 15;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
-			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(176, 172);
-			this.listLauncherItems.TabIndex = 2;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -328,23 +363,27 @@ namespace PeMain.UI
 			this.Text = "{SETTING}";
 			this.tabSetting.ResumeLayout(false);
 			this.pageLauncher.ResumeLayout(false);
-			this.pageCommand.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.flowLayoutPanel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.toolLauncherItems.ResumeLayout(false);
 			this.toolLauncherItems.PerformLayout();
+			this.pageCommand.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
+			this.flowLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_tag;
+		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_display;
+		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_name;
+		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_full;
 		private System.Windows.Forms.ListBox listLauncherItems;
 		private System.Windows.Forms.ToolStripTextBox toolLauncherItems_input;
-		private System.Windows.Forms.ToolStripSplitButton toolLauncherItems_type;
+		private System.Windows.Forms.ToolStripDropDownButton toolLauncherItems_type;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_filter;
 		private System.Windows.Forms.ToolStrip toolLauncherItems;
