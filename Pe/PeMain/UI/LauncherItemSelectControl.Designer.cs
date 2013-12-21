@@ -57,9 +57,9 @@ namespace PeMain.UI
 			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listLauncherItems.FormattingEnabled = true;
 			this.listLauncherItems.ItemHeight = 12;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
 			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(150, 106);
+			this.listLauncherItems.Size = new System.Drawing.Size(147, 125);
 			this.listLauncherItems.TabIndex = 4;
 			// 
 			// toolLauncherItems
@@ -75,7 +75,7 @@ namespace PeMain.UI
 			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(150, 44);
+			this.toolLauncherItems.Size = new System.Drawing.Size(147, 25);
 			this.toolLauncherItems.TabIndex = 3;
 			this.toolLauncherItems.Text = "toolStrip1";
 			// 
@@ -161,6 +161,8 @@ namespace PeMain.UI
 			this.Controls.Add(this.listLauncherItems);
 			this.Controls.Add(this.toolLauncherItems);
 			this.Name = "LauncherItemSelectControl";
+			this.Size = new System.Drawing.Size(147, 150);
+			this.Load += new System.EventHandler(this.LauncherItemSelectControlLoad);
 			this.Resize += new System.EventHandler(this.LauncherItemSelectControlResize);
 			this.toolLauncherItems.ResumeLayout(false);
 			this.toolLauncherItems.PerformLayout();
