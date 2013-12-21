@@ -15,6 +15,10 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
+		/// <summary>
+		/// TODO: 未実装
+		/// </summary>
+		/// <param name="action"></param>
 		void PauseOthers(Action action)
 		{
 			action();

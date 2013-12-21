@@ -10,7 +10,16 @@
 		<Word Name="open-ui"  Text="..." />
 	</Define>
 	<Words>
-		<Word Name="common/exit"       Text="${exit}" />
+		<Word Name="common/button/exit"       Text="${exit}" />
+		<Word Name="common/menu/exit"         Text="${exit}(&amp;X)" />
+		
 		<Word Name="main/menu/setting" Text="設定(&amp;S) ${open-ui}" />
+		
+		<Word Name="setting/tab/main"     Text="本体" />
+		<Word Name="setting/tab/launcher" Text="ランチャ" />
+		<Word Name="setting/tab/toolbar"  Text="ツールバー" />
+		<Word Name="setting/tab/command"  Text="コマンド" />
+		<Word Name="setting/tab/display"  Text="ディスプレイ" />
+		<Word Name="setting/tab/note"     Text="ノート" />
 	</Words>
 </Language>

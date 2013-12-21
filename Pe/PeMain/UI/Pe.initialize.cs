@@ -21,44 +21,13 @@ namespace PeMain.UI
 	public partial class Pe
 	{
 		/// <summary>
-		/// 本体設定ファイル初期化
-		/// </summary>
-		/// <param name="settingPath"></param>
-		MainSetting InitializeMainSetting(string mainSettingPath)
-		{
-			if(File.Exists(mainSettingPath)) {
-				var serializer = new XmlSerializer(typeof(MainSetting));
-				using(var stream = new FileStream(mainSettingPath, FileMode.Open)) {
-					return (MainSetting)serializer.Deserialize(stream);
-				}
-			}
-			
-			return new MainSetting();
-		}
-		/// <summary>
-		/// 言語ファイル初期化
-		/// </summary>
-		/// <param name="languagePath"></param>
-		Language InitializeLanguage(string languagePath)
-		{
-			if(File.Exists(languagePath)) {
-				var serializer = new XmlSerializer(typeof(Language));
-				using(var stream = new FileStream(languagePath, FileMode.Open)) {
-					return (Language)serializer.Deserialize(stream);
-				}
-			}
-			
-			return null;
-		}
-		
-		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
 		void InitializeSetting(string[] args)
 		{
-			this.mainSetting = InitializeMainSetting(Literal.UserMainSettingPath);
-			this.language = InitializeLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
+			this.mainSetting = Initializer.GetMainSetting(Literal.UserMainSettingPath);
+			this.language = Initializer.GetLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
 		}
 		
 		/// <summary>
@@ -73,7 +42,7 @@ namespace PeMain.UI
 				             	var f = new SettingForm(this.language, this.mainSetting);
 				             	PauseOthers(() => f.ShowDialog());
 				}),
-				new MenuItem(this.language["common/exit"], menuExitClick),
+				new MenuItem(this.language["common/menu/exit"], menuExitClick),
 			};
 			return menu;
 		}
