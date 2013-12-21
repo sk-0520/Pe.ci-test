@@ -64,30 +64,6 @@ namespace PeMain.Setting
 			}
 			return item.Name == Name;
 		}
-		
-		public override int GetHashCode()
-		{
-			int hashCode = 0;
-			unchecked {
-				if (_iconMap != null)
-					hashCode += 1000000007 * _iconMap.GetHashCode();
-			}
-			return hashCode;
-		}
-		
-		public static bool operator ==(LauncherItem lhs, LauncherItem rhs)
-		{
-			if (ReferenceEquals(lhs, rhs))
-				return true;
-			if (ReferenceEquals(lhs, null) || ReferenceEquals(rhs, null))
-				return false;
-			return lhs.Equals(rhs);
-		}
-		
-		public static bool operator !=(LauncherItem lhs, LauncherItem rhs)
-		{
-			return !(lhs == rhs);
-		}
 		#endregion
 
 		/// <summary>
