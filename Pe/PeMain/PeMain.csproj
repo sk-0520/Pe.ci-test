@@ -83,6 +83,19 @@
     <Compile Include="Setting\MainSetting.cs" />
     <Compile Include="Setting\NoteSetting.cs" />
     <Compile Include="Setting\ToolbarSetting.cs" />
+    <Compile Include="UI\LauncherItemSelectControl.cs" />
+    <Compile Include="UI\LauncherItemSelectControl.Designer.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LauncherItemSelectControl.event.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LauncherItemSelectControl.functions.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LauncherItemSelectControl.property.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.cs" />
     <Compile Include="UI\Pe.functions.cs">
       <DependentUpon>Pe.cs</DependentUpon>
@@ -120,6 +133,9 @@
     <EmbeddedResource Include="Properties\Images.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LauncherItemSelectControl.resx">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>

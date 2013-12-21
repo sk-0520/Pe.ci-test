@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace PeMain
 {
-	public sealed class PeMain
+	public sealed class Startup
 	{
 		[STAThread]
 		public static void Main(string[] args)

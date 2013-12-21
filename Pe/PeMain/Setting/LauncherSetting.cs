@@ -64,6 +64,17 @@ namespace PeMain.Setting
 			}
 			return item.Name == Name;
 		}
+		
+		public override int GetHashCode()
+		{
+			// TODO: 処理実装がデフォのまま
+			int hashCode = 0;
+			unchecked {
+				if (_iconMap != null)
+					hashCode += 1000000007 * _iconMap.GetHashCode();
+			}
+			return hashCode;
+		}
 		#endregion
 
 		/// <summary>

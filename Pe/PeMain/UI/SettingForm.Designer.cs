@@ -37,27 +37,27 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.listLauncherItems = new System.Windows.Forms.ListBox();
-			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
-			this.toolLauncherItems_filter = new System.Windows.Forms.ToolStripButton();
-			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripDropDownButton();
-			this.toolLauncherItems_type_full = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolLauncherItems_type_name = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolLauncherItems_type_display = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolLauncherItems_type_tag = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolLauncherItems_input = new System.Windows.Forms.ToolStripTextBox();
+			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
 			this.pageCommand = new System.Windows.Forms.TabPage();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
-			this.checkCommandTopmost = new System.Windows.Forms.CheckBox();
+			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.titleCommandHideTime = new System.Windows.Forms.Label();
 			this.commandCommandFont = new System.Windows.Forms.Button();
 			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.treeToolbarItemGroup = new System.Windows.Forms.TreeView();
+			this.labelToolbarIcon = new System.Windows.Forms.Label();
+			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
+			this.labelToolbarPosition = new System.Windows.Forms.Label();
+			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
+			this.selectToolbarShow = new System.Windows.Forms.CheckBox();
+			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
+			this.commandToolbarFont = new System.Windows.Forms.Button();
+			this.labelToolbarFonr = new System.Windows.Forms.Label();
 			this.pageNote = new System.Windows.Forms.TabPage();
 			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
@@ -65,17 +65,15 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.toolLauncherItems_create = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolLauncherItems_remove = new System.Windows.Forms.ToolStripButton();
+			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
 			this.tabSetting.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.toolLauncherItems.SuspendLayout();
 			this.pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
+			this.pageToolbar.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -94,7 +92,7 @@ namespace PeMain.UI
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(468, 233);
+			this.tabSetting.Size = new System.Drawing.Size(578, 281);
 			this.tabSetting.TabIndex = 0;
 			// 
 			// pageMain
@@ -103,7 +101,7 @@ namespace PeMain.UI
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(460, 205);
+			this.pageMain.Size = new System.Drawing.Size(570, 253);
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
@@ -115,7 +113,7 @@ namespace PeMain.UI
 			this.pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageLauncher.Name = "pageLauncher";
 			this.pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageLauncher.Size = new System.Drawing.Size(460, 205);
+			this.pageLauncher.Size = new System.Drawing.Size(570, 253);
 			this.pageLauncher.TabIndex = 1;
 			this.pageLauncher.Text = "{LAUNCHER}";
 			this.pageLauncher.UseVisualStyleBackColor = true;
@@ -128,103 +126,32 @@ namespace PeMain.UI
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.listLauncherItems);
-			this.splitContainer1.Panel1.Controls.Add(this.toolLauncherItems);
-			this.splitContainer1.Size = new System.Drawing.Size(454, 197);
-			this.splitContainer1.SplitterDistance = 176;
+			this.splitContainer1.Panel1.Controls.Add(this.selecterLauncher);
+			this.splitContainer1.Size = new System.Drawing.Size(564, 245);
+			this.splitContainer1.SplitterDistance = 217;
 			this.splitContainer1.TabIndex = 0;
 			this.splitContainer1.SizeChanged += new System.EventHandler(this.SplitContainer1SizeChanged);
 			// 
-			// listLauncherItems
+			// selecterLauncher
 			// 
-			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listLauncherItems.FormattingEnabled = true;
-			this.listLauncherItems.ItemHeight = 15;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
-			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(176, 172);
-			this.listLauncherItems.TabIndex = 2;
-			// 
-			// toolLauncherItems
-			// 
-			this.toolLauncherItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.toolLauncherItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLauncherItems_create,
-									this.toolLauncherItems_remove,
-									this.toolStripSeparator1,
-									this.toolLauncherItems_filter,
-									this.toolLauncherItems_type,
-									this.toolLauncherItems_input});
-			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
-			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(176, 25);
-			this.toolLauncherItems.TabIndex = 1;
-			this.toolLauncherItems.Text = "toolStrip1";
-			// 
-			// toolLauncherItems_filter
-			// 
-			this.toolLauncherItems_filter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_filter.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_filter.Image")));
-			this.toolLauncherItems_filter.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
-			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_filter.Text = "{LAUNCHER_FILTERING}";
-			// 
-			// toolLauncherItems_type
-			// 
-			this.toolLauncherItems_type.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_type.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLauncherItems_type_full,
-									this.toolLauncherItems_type_name,
-									this.toolLauncherItems_type_display,
-									this.toolLauncherItems_type_tag});
-			this.toolLauncherItems_type.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type.Image")));
-			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
-			this.toolLauncherItems_type.Size = new System.Drawing.Size(29, 20);
-			this.toolLauncherItems_type.Text = "{?}";
-			// 
-			// toolLauncherItems_type_full
-			// 
-			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
-			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(262, 22);
-			this.toolLauncherItems_type_full.Text = "{LAUNCHER_FILTER_FULL}";
-			// 
-			// toolLauncherItems_type_name
-			// 
-			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
-			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(262, 22);
-			this.toolLauncherItems_type_name.Text = "{LAUNCHER_FILTER_NAME}";
-			// 
-			// toolLauncherItems_type_display
-			// 
-			this.toolLauncherItems_type_display.Name = "toolLauncherItems_type_display";
-			this.toolLauncherItems_type_display.Size = new System.Drawing.Size(262, 22);
-			this.toolLauncherItems_type_display.Text = "{LAUNCHER_FILTER_DISPLAY}";
-			// 
-			// toolLauncherItems_type_tag
-			// 
-			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
-			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(262, 22);
-			this.toolLauncherItems_type_tag.Text = "{LAUNCHER_FILTER_TAG}";
-			// 
-			// toolLauncherItems_input
-			// 
-			this.toolLauncherItems_input.Name = "toolLauncherItems_input";
-			this.toolLauncherItems_input.Size = new System.Drawing.Size(20, 25);
+			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
+			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.selecterLauncher.Name = "selecterLauncher";
+			this.selecterLauncher.Size = new System.Drawing.Size(217, 245);
+			this.selecterLauncher.TabIndex = 0;
 			// 
 			// pageCommand
 			// 
 			this.pageCommand.Controls.Add(this.inputCommandHideTime);
-			this.pageCommand.Controls.Add(this.checkCommandTopmost);
+			this.pageCommand.Controls.Add(this.selectCommandTopmost);
 			this.pageCommand.Controls.Add(this.titleCommandHideTime);
 			this.pageCommand.Controls.Add(this.commandCommandFont);
 			this.pageCommand.Controls.Add(this.titleCommandFont);
 			this.pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.pageCommand.Name = "pageCommand";
 			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCommand.Size = new System.Drawing.Size(460, 205);
+			this.pageCommand.Size = new System.Drawing.Size(570, 253);
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
@@ -236,14 +163,14 @@ namespace PeMain.UI
 			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
 			this.inputCommandHideTime.TabIndex = 5;
 			// 
-			// checkCommandTopmost
+			// selectCommandTopmost
 			// 
-			this.checkCommandTopmost.Location = new System.Drawing.Point(35, 125);
-			this.checkCommandTopmost.Name = "checkCommandTopmost";
-			this.checkCommandTopmost.Size = new System.Drawing.Size(104, 24);
-			this.checkCommandTopmost.TabIndex = 4;
-			this.checkCommandTopmost.Text = "{TOPMOST}";
-			this.checkCommandTopmost.UseVisualStyleBackColor = true;
+			this.selectCommandTopmost.Location = new System.Drawing.Point(35, 125);
+			this.selectCommandTopmost.Name = "selectCommandTopmost";
+			this.selectCommandTopmost.Size = new System.Drawing.Size(104, 24);
+			this.selectCommandTopmost.TabIndex = 4;
+			this.selectCommandTopmost.Text = "{TOPMOST}";
+			this.selectCommandTopmost.UseVisualStyleBackColor = true;
 			// 
 			// titleCommandHideTime
 			// 
@@ -272,18 +199,102 @@ namespace PeMain.UI
 			// 
 			// pageToolbar
 			// 
+			this.pageToolbar.Controls.Add(this.selecterToolbar);
+			this.pageToolbar.Controls.Add(this.treeToolbarItemGroup);
+			this.pageToolbar.Controls.Add(this.labelToolbarIcon);
+			this.pageToolbar.Controls.Add(this.selectToolbarIcon);
+			this.pageToolbar.Controls.Add(this.labelToolbarPosition);
+			this.pageToolbar.Controls.Add(this.selectToolbarPosition);
+			this.pageToolbar.Controls.Add(this.selectToolbarShow);
+			this.pageToolbar.Controls.Add(this.selectToolbarTopmost);
+			this.pageToolbar.Controls.Add(this.commandToolbarFont);
+			this.pageToolbar.Controls.Add(this.labelToolbarFonr);
 			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(460, 205);
+			this.pageToolbar.Size = new System.Drawing.Size(570, 253);
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
+			// 
+			// treeToolbarItemGroup
+			// 
+			this.treeToolbarItemGroup.Location = new System.Drawing.Point(288, 48);
+			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(121, 150);
+			this.treeToolbarItemGroup.TabIndex = 13;
+			// 
+			// labelToolbarIcon
+			// 
+			this.labelToolbarIcon.Location = new System.Drawing.Point(23, 128);
+			this.labelToolbarIcon.Name = "labelToolbarIcon";
+			this.labelToolbarIcon.Size = new System.Drawing.Size(100, 23);
+			this.labelToolbarIcon.TabIndex = 12;
+			this.labelToolbarIcon.Text = "{ICON}";
+			// 
+			// selectToolbarIcon
+			// 
+			this.selectToolbarIcon.FormattingEnabled = true;
+			this.selectToolbarIcon.Location = new System.Drawing.Point(129, 131);
+			this.selectToolbarIcon.Name = "selectToolbarIcon";
+			this.selectToolbarIcon.Size = new System.Drawing.Size(121, 23);
+			this.selectToolbarIcon.TabIndex = 11;
+			// 
+			// labelToolbarPosition
+			// 
+			this.labelToolbarPosition.Location = new System.Drawing.Point(23, 105);
+			this.labelToolbarPosition.Name = "labelToolbarPosition";
+			this.labelToolbarPosition.Size = new System.Drawing.Size(100, 23);
+			this.labelToolbarPosition.TabIndex = 10;
+			this.labelToolbarPosition.Text = "{POSITION}";
+			// 
+			// selectToolbarPosition
+			// 
+			this.selectToolbarPosition.FormattingEnabled = true;
+			this.selectToolbarPosition.Location = new System.Drawing.Point(129, 102);
+			this.selectToolbarPosition.Name = "selectToolbarPosition";
+			this.selectToolbarPosition.Size = new System.Drawing.Size(121, 23);
+			this.selectToolbarPosition.TabIndex = 9;
+			// 
+			// selectToolbarShow
+			// 
+			this.selectToolbarShow.Location = new System.Drawing.Point(23, 78);
+			this.selectToolbarShow.Name = "selectToolbarShow";
+			this.selectToolbarShow.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarShow.TabIndex = 8;
+			this.selectToolbarShow.Text = "{SHOW}";
+			this.selectToolbarShow.UseVisualStyleBackColor = true;
+			// 
+			// selectToolbarTopmost
+			// 
+			this.selectToolbarTopmost.Location = new System.Drawing.Point(23, 48);
+			this.selectToolbarTopmost.Name = "selectToolbarTopmost";
+			this.selectToolbarTopmost.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarTopmost.TabIndex = 7;
+			this.selectToolbarTopmost.Text = "{TOPMOST}";
+			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
+			// 
+			// commandToolbarFont
+			// 
+			this.commandToolbarFont.Location = new System.Drawing.Point(133, 18);
+			this.commandToolbarFont.Name = "commandToolbarFont";
+			this.commandToolbarFont.Size = new System.Drawing.Size(171, 23);
+			this.commandToolbarFont.TabIndex = 6;
+			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
+			this.commandToolbarFont.UseVisualStyleBackColor = true;
+			// 
+			// labelToolbarFonr
+			// 
+			this.labelToolbarFonr.Location = new System.Drawing.Point(27, 22);
+			this.labelToolbarFonr.Name = "labelToolbarFonr";
+			this.labelToolbarFonr.Size = new System.Drawing.Size(100, 23);
+			this.labelToolbarFonr.TabIndex = 5;
+			this.labelToolbarFonr.Text = "{FONT}";
 			// 
 			// pageNote
 			// 
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(460, 205);
+			this.pageNote.Size = new System.Drawing.Size(570, 253);
 			this.pageNote.TabIndex = 6;
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
@@ -292,7 +303,7 @@ namespace PeMain.UI
 			// 
 			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(460, 205);
+			this.pageDisplay.Size = new System.Drawing.Size(570, 253);
 			this.pageDisplay.TabIndex = 5;
 			this.pageDisplay.Text = "{DISPLAY}";
 			this.pageDisplay.UseVisualStyleBackColor = true;
@@ -330,7 +341,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(474, 284);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(584, 332);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
 			// flowLayoutPanel1
@@ -339,7 +350,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
 			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(285, 244);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(395, 292);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(186, 37);
 			this.flowLayoutPanel1.TabIndex = 3;
@@ -348,28 +359,13 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// toolLauncherItems_create
+			// selecterToolbar
 			// 
-			this.toolLauncherItems_create.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_create.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_create.Image")));
-			this.toolLauncherItems_create.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolLauncherItems_create.Name = "toolLauncherItems_create";
-			this.toolLauncherItems_create.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_create.Text = "{LAUNCHER_ITEM_CREATE}";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
-			// 
-			// toolLauncherItems_remove
-			// 
-			this.toolLauncherItems_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_remove.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_remove.Image")));
-			this.toolLauncherItems_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolLauncherItems_remove.Name = "toolLauncherItems_remove";
-			this.toolLauncherItems_remove.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_remove.Text = "{LAUNCHER_ITEM_REMOVE}";
+			this.selecterToolbar.Location = new System.Drawing.Point(415, 48);
+			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.selecterToolbar.Name = "selecterToolbar";
+			this.selecterToolbar.Size = new System.Drawing.Size(150, 150);
+			this.selecterToolbar.TabIndex = 14;
 			// 
 			// SettingForm
 			// 
@@ -377,7 +373,7 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(474, 284);
+			this.ClientSize = new System.Drawing.Size(584, 332);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -386,38 +382,35 @@ namespace PeMain.UI
 			this.tabSetting.ResumeLayout(false);
 			this.pageLauncher.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			this.toolLauncherItems.ResumeLayout(false);
-			this.toolLauncherItems.PerformLayout();
 			this.pageCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
+			this.pageToolbar.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.ToolStripButton toolLauncherItems_remove;
-		private System.Windows.Forms.ToolStripButton toolLauncherItems_create;
-		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_tag;
-		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_display;
-		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_name;
-		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_full;
-		private System.Windows.Forms.ListBox listLauncherItems;
-		private System.Windows.Forms.ToolStripTextBox toolLauncherItems_input;
-		private System.Windows.Forms.ToolStripDropDownButton toolLauncherItems_type;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripButton toolLauncherItems_filter;
-		private System.Windows.Forms.ToolStrip toolLauncherItems;
+		private PeMain.UI.LauncherItemSelectControl selecterToolbar;
+		private PeMain.UI.LauncherItemSelectControl selecterLauncher;
+		private System.Windows.Forms.TreeView treeToolbarItemGroup;
+		private System.Windows.Forms.ComboBox selectToolbarPosition;
+		private System.Windows.Forms.Label labelToolbarPosition;
+		private System.Windows.Forms.ComboBox selectToolbarIcon;
+		private System.Windows.Forms.Label labelToolbarIcon;
+		private System.Windows.Forms.CheckBox selectToolbarShow;
+		private System.Windows.Forms.Label labelToolbarFonr;
+		private System.Windows.Forms.Button commandToolbarFont;
+		private System.Windows.Forms.CheckBox selectToolbarTopmost;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TabPage pageNote;
 		private System.Windows.Forms.TabPage pageDisplay;
 		private System.Windows.Forms.TabPage pageToolbar;
 		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label titleCommandHideTime;
-		private System.Windows.Forms.CheckBox checkCommandTopmost;
+		private System.Windows.Forms.CheckBox selectCommandTopmost;
 		private System.Windows.Forms.Button commandCommandFont;
 		private System.Windows.Forms.Label titleCommandFont;
 		private System.Windows.Forms.ErrorProvider errorProvider;

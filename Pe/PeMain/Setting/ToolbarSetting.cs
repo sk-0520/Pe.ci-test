@@ -54,11 +54,11 @@ namespace PeMain.Setting
 		WindowBottom,
 	}
 	/// <summary>
-	/// ツールバー
+	/// 
 	/// </summary>
-	public class ToolbarItem: Item
+	public class ToolbarSetting: Item
 	{
-		public ToolbarItem()
+		public ToolbarSetting()
 		{
 			FontSetting = new FontSetting();
 		}
@@ -95,19 +95,5 @@ namespace PeMain.Setting
 		/// フォント
 		/// </summary>
 		public FontSetting FontSetting { get; set; }
-		/// <summary>
-		/// デスクトップ状態でのディスプレイ
-		/// </summary>
-		public string DesktopDisplay { get; set; }
-	}
-	
-	public class ToolbarSetting: Item
-	{
-		public ToolbarSetting()
-		{
-			Items = new Dictionary<string, ToolbarItem>();
-		}
-		
-		public Dictionary<string, ToolbarItem> Items { get; set; }
 	}
 }

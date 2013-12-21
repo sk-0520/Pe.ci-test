@@ -30,7 +30,6 @@ namespace PeMain.UI
 		
 		void SplitContainer1SizeChanged(object sender, EventArgs e)
 		{
-			LauncherSizeChanged();
 		}
 	}
 }

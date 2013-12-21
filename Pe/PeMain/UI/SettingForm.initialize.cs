@@ -31,7 +31,6 @@ namespace PeMain.UI
 		
 		void InitializeCommand(CommandSetting commandSetting)
 		{
-			LauncherSizeChanged();
 		}
 		
 		void InitializeUI(MainSetting mainSetting)
