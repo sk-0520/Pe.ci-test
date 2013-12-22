@@ -25,7 +25,7 @@ namespace PeMain.UI
 			//
 			InitializeComponent();
 			
-			ResizeInputArea();
+			Initialize();
 		}
 		
 		void LauncherItemSelectControlResize(object sender, EventArgs e)
