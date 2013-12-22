@@ -15,5 +15,19 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
+		public bool ItemEdit
+		{
+			get 
+			{
+				return this._itemEdit;
+			}
+			set
+			{
+				foreach(var item in GetEditToolItem()) {
+					item.Visible = value;
+				}
+				this._itemEdit = value;
+			}
+		}
 	}
 }

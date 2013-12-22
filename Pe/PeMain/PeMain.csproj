@@ -93,7 +93,13 @@
     <Compile Include="UI\LauncherItemSelectControl.functions.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\LauncherItemSelectControl.initialize.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\LauncherItemSelectControl.property.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LauncherItemSelectControl.variable.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.cs" />

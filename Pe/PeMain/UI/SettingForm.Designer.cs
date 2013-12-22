@@ -49,6 +49,7 @@ namespace PeMain.UI
 			this.commandCommandFont = new System.Windows.Forms.Button();
 			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
 			this.treeToolbarItemGroup = new System.Windows.Forms.TreeView();
 			this.labelToolbarIcon = new System.Windows.Forms.Label();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
@@ -65,7 +66,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
 			this.tabSetting.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -135,6 +135,7 @@ namespace PeMain.UI
 			// selecterLauncher
 			// 
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selecterLauncher.ItemEdit = true;
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
@@ -215,6 +216,15 @@ namespace PeMain.UI
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
+			// 
+			// selecterToolbar
+			// 
+			this.selecterToolbar.ItemEdit = false;
+			this.selecterToolbar.Location = new System.Drawing.Point(415, 48);
+			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.selecterToolbar.Name = "selecterToolbar";
+			this.selecterToolbar.Size = new System.Drawing.Size(150, 150);
+			this.selecterToolbar.TabIndex = 14;
 			// 
 			// treeToolbarItemGroup
 			// 
@@ -358,14 +368,6 @@ namespace PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// selecterToolbar
-			// 
-			this.selecterToolbar.Location = new System.Drawing.Point(415, 48);
-			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.selecterToolbar.Name = "selecterToolbar";
-			this.selecterToolbar.Size = new System.Drawing.Size(150, 150);
-			this.selecterToolbar.TabIndex = 14;
 			// 
 			// SettingForm
 			// 

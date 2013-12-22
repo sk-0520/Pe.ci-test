@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,14 +18,23 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
+		IEnumerable<ToolStripItem> GetEditToolItem()
+		{
+			return new ToolStripItem[] {
+				this.toolLauncherItems_create,
+				this.toolLauncherItems_remove,
+				this.toolLauncherItems_editSeparator
+			};
+		}
 		void ResizeInputArea()
 		{
 			int totalWidth = this.toolLauncherItems.Margin.Horizontal + this.toolLauncherItems.Padding.Horizontal;
 			foreach(ToolStripItem item in this.toolLauncherItems.Items) {
 				if(item == this.toolLauncherItems_input) {
 					continue;
+				} else if(item.Visible) {
+					totalWidth += item.Width + item.Padding.Horizontal + item.Margin.Horizontal;
 				}
-				totalWidth += item.Width + item.Padding.Horizontal + item.Margin.Horizontal;
 			}
 			var parentWidth = this.toolLauncherItems.Width - this.toolLauncherItems.Padding.Horizontal - this.toolLauncherItems.Margin.Horizontal;
 			var inputWidth = parentWidth - totalWidth - this.toolLauncherItems.Margin.Horizontal - this.toolLauncherItems.Padding.Horizontal;
