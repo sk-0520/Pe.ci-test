@@ -12,6 +12,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using PeMain.Setting;
+
 namespace PeMain.UI
 {
 	/// <summary>
@@ -49,6 +51,29 @@ namespace PeMain.UI
 			}[(ToolStripItem)sender];
 			
 			FilterType = type;
+		}
+		
+		void ToolLauncherItems_createClick(object sender, EventArgs e)
+		{
+			CreateLauncherItem();
+		}
+		
+		void ToolLauncherItems_removeClick(object sender, EventArgs e)
+		{
+			var item = this.listLauncherItems.SelectedItem;
+			if(item != null) {
+				RemoveLauncherItem((LauncherItem)item);
+			}
+		}
+		
+		void ListLauncherItemsSelectedIndexChanged(object sender, EventArgs e)
+		{
+			if(SelectedItem != null) {
+				var ev = new SelectedItemEventArg();
+				var index = this.listLauncherItems.SelectedIndex;
+				ev.Item = IndexToItem(index);
+				SelectedItem(this, ev);
+			}
 		}
 	}
 }

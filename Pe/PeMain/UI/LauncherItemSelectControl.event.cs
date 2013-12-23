@@ -7,12 +7,24 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeMain.Setting;
 
 namespace PeMain.UI
 {
-	public class SelectedItem: EventArgs
+	public abstract class ItemEventArgs: EventArgs
 	{
-		
+		public LauncherItem Item { get; set; }
+	}
+	public class CreateItemEventArg: ItemEventArgs
+	{
+	}
+	
+	public class RemovedItemEventArg: ItemEventArgs
+	{
+	}
+	
+	public class SelectedItemEventArg: ItemEventArgs
+	{
 	}
 	
 	/// <summary>
@@ -20,5 +32,8 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
+		public event EventHandler<CreateItemEventArg> CreateItem;
+		public event EventHandler<RemovedItemEventArg> RemovedItem;
+		public event EventHandler<SelectedItemEventArg> SelectedItem;
 	}
 }

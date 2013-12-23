@@ -17,12 +17,19 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
+		void InitializeUI()
+		{
+			this.listLauncherItems.Items.AddRange(this._items.ToArray());
+		}
+		
 		void Initialize()
 		{
-			_items = new List<LauncherItem>();
+			this._items = new List<LauncherItem>();
 			
 			ItemEdit = true;
 			FilterType = LauncherItemSelecterType.Full;
+			
+			InitializeUI();
 			ResizeInputArea();
 		}
 	}

@@ -69,6 +69,7 @@
     <Compile Include="AppbarForm.wndProc.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Functions.cs" />
     <Compile Include="Icon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Text.cs" />

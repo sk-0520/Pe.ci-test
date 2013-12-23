@@ -17,21 +17,6 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
-		/*
-		public Language LanguageSetting
-		{
-			get 
-			{
-				return this._language;
-			}
-			set
-			{
-				ApplyLanguage(value);
-				this._language = value;
-			}
-		}
-		*/
-		
 		public bool ItemEdit
 		{
 			get 
@@ -59,22 +44,5 @@ namespace PeMain.UI
 				this._filterType = value;
 			}
 		}
-		
-		/*
-		public IEnumerable<LauncherItem> Items
-		{
-			get
-			{
-				return this._items;
-			}
-			set
-			{
-				this._items.Clear();
-				if(value != null) {
-					this._items.AddRange(value);
-				}
-			}
-		}
-		*/
 	}
 }

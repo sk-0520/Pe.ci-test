@@ -57,10 +57,11 @@ namespace PeMain.UI
 			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listLauncherItems.FormattingEnabled = true;
 			this.listLauncherItems.ItemHeight = 12;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
 			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(147, 106);
+			this.listLauncherItems.Size = new System.Drawing.Size(147, 125);
 			this.listLauncherItems.TabIndex = 4;
+			this.listLauncherItems.SelectedIndexChanged += new System.EventHandler(this.ListLauncherItemsSelectedIndexChanged);
 			// 
 			// toolLauncherItems
 			// 
@@ -75,7 +76,7 @@ namespace PeMain.UI
 			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(147, 44);
+			this.toolLauncherItems.Size = new System.Drawing.Size(147, 25);
 			this.toolLauncherItems.TabIndex = 3;
 			this.toolLauncherItems.Text = "toolStrip1";
 			// 
@@ -87,6 +88,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_create.Name = "toolLauncherItems_create";
 			this.toolLauncherItems_create.Size = new System.Drawing.Size(23, 20);
 			this.toolLauncherItems_create.Text = "{LAUNCHER_ITEM_CREATE}";
+			this.toolLauncherItems_create.Click += new System.EventHandler(this.ToolLauncherItems_createClick);
 			// 
 			// toolLauncherItems_remove
 			// 
@@ -96,6 +98,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_remove.Name = "toolLauncherItems_remove";
 			this.toolLauncherItems_remove.Size = new System.Drawing.Size(23, 20);
 			this.toolLauncherItems_remove.Text = "{LAUNCHER_ITEM_REMOVE}";
+			this.toolLauncherItems_remove.Click += new System.EventHandler(this.ToolLauncherItems_removeClick);
 			// 
 			// toolLauncherItems_editSeparator
 			// 

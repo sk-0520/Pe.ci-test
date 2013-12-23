@@ -29,6 +29,10 @@ namespace PeMain.Setting
 		/// </summary>
 		public string Language { get; set; }
 		/// <summary>
+		/// ノート保存ディレクトリ
+		/// </summary>
+		public string NoteSaveDirPath { get; set; }
+		/// <summary>
 		/// ランチャアイテム統括。
 		/// </summary>
 		public LauncherSetting Launcher { get; set; }

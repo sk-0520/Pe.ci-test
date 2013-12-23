@@ -8,10 +8,12 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Setting;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -64,11 +66,49 @@ namespace PeMain.UI
 			ApplyLanguage(language);
 			this._language = language;
 		}
+		
 		public void SetItems(IEnumerable<LauncherItem> items)
 		{
 			this._items.Clear();
 			if(items != null) {
 				this._items.AddRange(items);
+			}
+		}
+		
+		public LauncherItem IndexToItem(int index)
+		{
+			var items = this.listLauncherItems.Items;
+			if(index.IsIn(0, items.Count)) {
+				return (LauncherItem)items[index];
+			}
+			return null;
+		}
+		
+		void CreateLauncherItem()
+		{
+			var itemName = "Item";
+			if(_items.Count > 0) {
+				itemName = itemName.ToUnique(_items.Select(i => i.Name));
+			}
+			var item = new LauncherItem();
+			item.Name = itemName;
+			this._items.Add(item);
+			this.listLauncherItems.Items.Add(item);
+			if(CreateItem != null)  {
+				var e = new CreateItemEventArg();
+				e.Item = item;
+				CreateItem(this, e);
+			}
+		}
+		
+		void RemoveLauncherItem(LauncherItem item)
+		{
+			this._items.Remove(item);
+			this.listLauncherItems.Items.Remove(item);
+			if(RemovedItem != null) {
+				var e = new RemovedItemEventArg();
+				e.Item = item;
+				RemovedItem(this, e);
 			}
 		}
 	}
