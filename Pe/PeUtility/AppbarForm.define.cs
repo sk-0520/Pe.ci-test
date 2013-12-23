@@ -8,7 +8,7 @@
  */
 using System;
 using System.Diagnostics;
-using Windows;
+using SC.Windows;
 
 namespace PeMain.UI
 {

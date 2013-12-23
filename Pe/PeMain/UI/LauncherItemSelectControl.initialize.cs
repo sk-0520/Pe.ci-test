@@ -19,7 +19,6 @@ namespace PeMain.UI
 	{
 		void InitializeUI()
 		{
-			this.listLauncherItems.Items.AddRange(this._items.ToArray());
 		}
 		
 		void Initialize()
@@ -28,8 +27,10 @@ namespace PeMain.UI
 			
 			ItemEdit = true;
 			FilterType = LauncherItemSelecterType.Full;
+			IconSize = PeUtility.IconSize.Normal;
 			
 			InitializeUI();
+			TuneItemHeight();
 			ResizeInputArea();
 		}
 	}

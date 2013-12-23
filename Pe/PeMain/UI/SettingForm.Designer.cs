@@ -37,24 +37,27 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.labelLauncherNote = new System.Windows.Forms.Label();
+			this.inputLauncherIconIndex = new System.Windows.Forms.NumericUpDown();
+			this.labelLauncherTag = new System.Windows.Forms.Label();
+			this.labelLauncherIconPath = new System.Windows.Forms.Label();
+			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
+			this.labelLauncherName = new System.Windows.Forms.Label();
+			this.labelLauncherCommand = new System.Windows.Forms.Label();
+			this.inputLauncherNote = new System.Windows.Forms.TextBox();
+			this.inputLauncherTag = new System.Windows.Forms.TextBox();
+			this.inputLauncherIconPath = new System.Windows.Forms.TextBox();
+			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
+			this.inputLauncherName = new System.Windows.Forms.TextBox();
+			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
+			this.commandLauncherIconPath = new System.Windows.Forms.Button();
+			this.commandLauncherWorkDirPath = new System.Windows.Forms.Button();
+			this.commandLauncherFilePath = new System.Windows.Forms.Button();
 			this.labelLauncherItemState = new System.Windows.Forms.Label();
 			this.groupLauncherType = new System.Windows.Forms.GroupBox();
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
@@ -83,17 +86,14 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.commandLauncherDirPath = new System.Windows.Forms.Button();
 			this.tabSetting.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).BeginInit();
 			this.groupLauncherType.SuspendLayout();
 			this.pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
@@ -118,7 +118,6 @@ namespace PeMain.UI
 			this.tabSetting.SelectedIndex = 0;
 			this.tabSetting.Size = new System.Drawing.Size(578, 338);
 			this.tabSetting.TabIndex = 0;
-			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSettingSelecting);
 			// 
 			// pageMain
 			// 
@@ -126,7 +125,7 @@ namespace PeMain.UI
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(570, 253);
+			this.pageMain.Size = new System.Drawing.Size(570, 310);
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
@@ -155,22 +154,23 @@ namespace PeMain.UI
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.label6);
-			this.splitContainer1.Panel2.Controls.Add(this.numericUpDown1);
-			this.splitContainer1.Panel2.Controls.Add(this.label5);
-			this.splitContainer1.Panel2.Controls.Add(this.label3);
-			this.splitContainer1.Panel2.Controls.Add(this.label2);
-			this.splitContainer1.Panel2.Controls.Add(this.label4);
-			this.splitContainer1.Panel2.Controls.Add(this.label1);
-			this.splitContainer1.Panel2.Controls.Add(this.textBox6);
-			this.splitContainer1.Panel2.Controls.Add(this.textBox5);
-			this.splitContainer1.Panel2.Controls.Add(this.textBox3);
-			this.splitContainer1.Panel2.Controls.Add(this.textBox2);
-			this.splitContainer1.Panel2.Controls.Add(this.textBox4);
-			this.splitContainer1.Panel2.Controls.Add(this.textBox1);
-			this.splitContainer1.Panel2.Controls.Add(this.button3);
-			this.splitContainer1.Panel2.Controls.Add(this.button2);
-			this.splitContainer1.Panel2.Controls.Add(this.button1);
+			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherNote);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherIconIndex);
+			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherTag);
+			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherIconPath);
+			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherWorkDirPath);
+			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherName);
+			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherCommand);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherNote);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherTag);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherIconPath);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherWorkDirPath);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherName);
+			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherCommand);
+			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherIconPath);
+			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherWorkDirPath);
+			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherDirPath);
+			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherFilePath);
 			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherItemState);
 			this.splitContainer1.Panel2.Controls.Add(this.groupLauncherType);
 			this.splitContainer1.Size = new System.Drawing.Size(564, 302);
@@ -181,106 +181,139 @@ namespace PeMain.UI
 			// 
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterLauncher.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
+			this.selecterLauncher.IconSize = PeUtility.IconSize.Small;
 			this.selecterLauncher.ItemEdit = true;
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
 			this.selecterLauncher.Size = new System.Drawing.Size(217, 302);
 			this.selecterLauncher.TabIndex = 0;
+			this.selecterLauncher.SelectChnagedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
-			// numericUpDown1
+			// labelLauncherNote
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(225, 155);
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(33, 23);
-			this.numericUpDown1.TabIndex = 5;
+			this.labelLauncherNote.Location = new System.Drawing.Point(13, 223);
+			this.labelLauncherNote.Name = "labelLauncherNote";
+			this.labelLauncherNote.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherNote.TabIndex = 6;
+			this.labelLauncherNote.Text = "{NOTE}";
 			// 
-			// label3
+			// inputLauncherIconIndex
 			// 
-			this.label3.Location = new System.Drawing.Point(13, 152);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(100, 23);
-			this.label3.TabIndex = 4;
-			this.label3.Text = "{ICON}";
+			this.inputLauncherIconIndex.Location = new System.Drawing.Point(225, 155);
+			this.inputLauncherIconIndex.Name = "inputLauncherIconIndex";
+			this.inputLauncherIconIndex.Size = new System.Drawing.Size(33, 23);
+			this.inputLauncherIconIndex.TabIndex = 5;
 			// 
-			// label2
+			// labelLauncherTag
 			// 
-			this.label2.Location = new System.Drawing.Point(13, 123);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 23);
-			this.label2.TabIndex = 4;
-			this.label2.Text = "{WORK_DIR}";
+			this.labelLauncherTag.Location = new System.Drawing.Point(13, 189);
+			this.labelLauncherTag.Name = "labelLauncherTag";
+			this.labelLauncherTag.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherTag.TabIndex = 4;
+			this.labelLauncherTag.Text = "{TAG}";
 			// 
-			// label4
+			// labelLauncherIconPath
 			// 
-			this.label4.Location = new System.Drawing.Point(13, 67);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(100, 23);
-			this.label4.TabIndex = 4;
-			this.label4.Text = "{NAME}";
+			this.labelLauncherIconPath.Location = new System.Drawing.Point(13, 152);
+			this.labelLauncherIconPath.Name = "labelLauncherIconPath";
+			this.labelLauncherIconPath.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherIconPath.TabIndex = 4;
+			this.labelLauncherIconPath.Text = "{ICON}";
 			// 
-			// label1
+			// labelLauncherWorkDirPath
 			// 
-			this.label1.Location = new System.Drawing.Point(13, 94);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(100, 23);
-			this.label1.TabIndex = 4;
-			this.label1.Text = "{PATH}";
+			this.labelLauncherWorkDirPath.Location = new System.Drawing.Point(13, 123);
+			this.labelLauncherWorkDirPath.Name = "labelLauncherWorkDirPath";
+			this.labelLauncherWorkDirPath.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherWorkDirPath.TabIndex = 4;
+			this.labelLauncherWorkDirPath.Text = "{WORK_DIR}";
 			// 
-			// textBox3
+			// labelLauncherName
 			// 
-			this.textBox3.Location = new System.Drawing.Point(119, 155);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(100, 23);
-			this.textBox3.TabIndex = 3;
+			this.labelLauncherName.Location = new System.Drawing.Point(13, 67);
+			this.labelLauncherName.Name = "labelLauncherName";
+			this.labelLauncherName.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherName.TabIndex = 4;
+			this.labelLauncherName.Text = "{NAME}";
 			// 
-			// textBox2
+			// labelLauncherCommand
 			// 
-			this.textBox2.Location = new System.Drawing.Point(119, 124);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(100, 23);
-			this.textBox2.TabIndex = 3;
+			this.labelLauncherCommand.Location = new System.Drawing.Point(13, 94);
+			this.labelLauncherCommand.Name = "labelLauncherCommand";
+			this.labelLauncherCommand.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherCommand.TabIndex = 4;
+			this.labelLauncherCommand.Text = "{COMMAND}";
 			// 
-			// textBox4
+			// inputLauncherNote
 			// 
-			this.textBox4.Location = new System.Drawing.Point(119, 68);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(100, 23);
-			this.textBox4.TabIndex = 3;
+			this.inputLauncherNote.Location = new System.Drawing.Point(119, 218);
+			this.inputLauncherNote.Multiline = true;
+			this.inputLauncherNote.Name = "inputLauncherNote";
+			this.inputLauncherNote.Size = new System.Drawing.Size(216, 75);
+			this.inputLauncherNote.TabIndex = 3;
 			// 
-			// textBox1
+			// inputLauncherTag
 			// 
-			this.textBox1.Location = new System.Drawing.Point(119, 95);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(100, 23);
-			this.textBox1.TabIndex = 3;
+			this.inputLauncherTag.Location = new System.Drawing.Point(119, 189);
+			this.inputLauncherTag.Name = "inputLauncherTag";
+			this.inputLauncherTag.Size = new System.Drawing.Size(216, 23);
+			this.inputLauncherTag.TabIndex = 3;
 			// 
-			// button3
+			// inputLauncherIconPath
 			// 
-			this.button3.Location = new System.Drawing.Point(260, 153);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 2;
-			this.button3.Text = "button1";
-			this.button3.UseVisualStyleBackColor = true;
+			this.inputLauncherIconPath.Location = new System.Drawing.Point(119, 155);
+			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
+			this.inputLauncherIconPath.Size = new System.Drawing.Size(100, 23);
+			this.inputLauncherIconPath.TabIndex = 3;
 			// 
-			// button2
+			// inputLauncherWorkDirPath
 			// 
-			this.button2.Location = new System.Drawing.Point(225, 123);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "button1";
-			this.button2.UseVisualStyleBackColor = true;
+			this.inputLauncherWorkDirPath.Location = new System.Drawing.Point(119, 124);
+			this.inputLauncherWorkDirPath.Name = "inputLauncherWorkDirPath";
+			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(100, 23);
+			this.inputLauncherWorkDirPath.TabIndex = 3;
 			// 
-			// button1
+			// inputLauncherName
 			// 
-			this.button1.Location = new System.Drawing.Point(225, 94);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 2;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
+			this.inputLauncherName.Location = new System.Drawing.Point(119, 68);
+			this.inputLauncherName.Name = "inputLauncherName";
+			this.inputLauncherName.Size = new System.Drawing.Size(100, 23);
+			this.inputLauncherName.TabIndex = 3;
+			// 
+			// inputLauncherCommand
+			// 
+			this.inputLauncherCommand.Location = new System.Drawing.Point(119, 95);
+			this.inputLauncherCommand.Name = "inputLauncherCommand";
+			this.inputLauncherCommand.Size = new System.Drawing.Size(100, 23);
+			this.inputLauncherCommand.TabIndex = 3;
+			// 
+			// commandLauncherIconPath
+			// 
+			this.commandLauncherIconPath.Location = new System.Drawing.Point(260, 153);
+			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
+			this.commandLauncherIconPath.Size = new System.Drawing.Size(75, 23);
+			this.commandLauncherIconPath.TabIndex = 2;
+			this.commandLauncherIconPath.Text = "button1";
+			this.commandLauncherIconPath.UseVisualStyleBackColor = true;
+			// 
+			// commandLauncherWorkDirPath
+			// 
+			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(225, 123);
+			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
+			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(75, 23);
+			this.commandLauncherWorkDirPath.TabIndex = 2;
+			this.commandLauncherWorkDirPath.Text = "button1";
+			this.commandLauncherWorkDirPath.UseVisualStyleBackColor = true;
+			// 
+			// commandLauncherFilePath
+			// 
+			this.commandLauncherFilePath.Location = new System.Drawing.Point(225, 94);
+			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
+			this.commandLauncherFilePath.Size = new System.Drawing.Size(75, 23);
+			this.commandLauncherFilePath.TabIndex = 2;
+			this.commandLauncherFilePath.Text = "button1";
+			this.commandLauncherFilePath.UseVisualStyleBackColor = true;
 			// 
 			// labelLauncherItemState
 			// 
@@ -331,7 +364,7 @@ namespace PeMain.UI
 			this.pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.pageCommand.Name = "pageCommand";
 			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCommand.Size = new System.Drawing.Size(570, 253);
+			this.pageCommand.Size = new System.Drawing.Size(570, 310);
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
@@ -391,7 +424,7 @@ namespace PeMain.UI
 			this.pageToolbar.Controls.Add(this.labelToolbarFonr);
 			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(570, 253);
+			this.pageToolbar.Size = new System.Drawing.Size(570, 310);
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
@@ -484,7 +517,7 @@ namespace PeMain.UI
 			// 
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(570, 253);
+			this.pageNote.Size = new System.Drawing.Size(570, 310);
 			this.pageNote.TabIndex = 6;
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
@@ -493,7 +526,7 @@ namespace PeMain.UI
 			// 
 			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(570, 253);
+			this.pageDisplay.Size = new System.Drawing.Size(570, 310);
 			this.pageDisplay.TabIndex = 5;
 			this.pageDisplay.Text = "{DISPLAY}";
 			this.pageDisplay.UseVisualStyleBackColor = true;
@@ -549,36 +582,14 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// label5
+			// commandLauncherDirPath
 			// 
-			this.label5.Location = new System.Drawing.Point(13, 189);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(100, 23);
-			this.label5.TabIndex = 4;
-			this.label5.Text = "{TAG}";
-			// 
-			// label6
-			// 
-			this.label6.Location = new System.Drawing.Point(13, 223);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(100, 23);
-			this.label6.TabIndex = 6;
-			this.label6.Text = "{NOTE}";
-			// 
-			// textBox5
-			// 
-			this.textBox5.Location = new System.Drawing.Point(119, 189);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(216, 23);
-			this.textBox5.TabIndex = 3;
-			// 
-			// textBox6
-			// 
-			this.textBox6.Location = new System.Drawing.Point(119, 218);
-			this.textBox6.Multiline = true;
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(216, 75);
-			this.textBox6.TabIndex = 3;
+			this.commandLauncherDirPath.Location = new System.Drawing.Point(306, 94);
+			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
+			this.commandLauncherDirPath.Size = new System.Drawing.Size(75, 23);
+			this.commandLauncherDirPath.TabIndex = 2;
+			this.commandLauncherDirPath.Text = "button1";
+			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -599,7 +610,7 @@ namespace PeMain.UI
 			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).EndInit();
 			this.groupLauncherType.ResumeLayout(false);
 			this.pageCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
@@ -610,23 +621,24 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Button commandLauncherDirPath;
+		private System.Windows.Forms.TextBox inputLauncherTag;
+		private System.Windows.Forms.TextBox inputLauncherNote;
+		private System.Windows.Forms.Label labelLauncherTag;
+		private System.Windows.Forms.Label labelLauncherNote;
 		private System.Windows.Forms.Label labelLauncherItemState;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.Button commandLauncherFilePath;
+		private System.Windows.Forms.Button commandLauncherWorkDirPath;
+		private System.Windows.Forms.Button commandLauncherIconPath;
+		private System.Windows.Forms.TextBox inputLauncherCommand;
+		private System.Windows.Forms.TextBox inputLauncherName;
+		private System.Windows.Forms.TextBox inputLauncherWorkDirPath;
+		private System.Windows.Forms.TextBox inputLauncherIconPath;
+		private System.Windows.Forms.Label labelLauncherCommand;
+		private System.Windows.Forms.Label labelLauncherName;
+		private System.Windows.Forms.Label labelLauncherWorkDirPath;
+		private System.Windows.Forms.Label labelLauncherIconPath;
+		private System.Windows.Forms.NumericUpDown inputLauncherIconIndex;
 		private System.Windows.Forms.RadioButton selectLauncherType_file;
 		private System.Windows.Forms.RadioButton selectLauncherType_uri;
 		private System.Windows.Forms.GroupBox groupLauncherType;

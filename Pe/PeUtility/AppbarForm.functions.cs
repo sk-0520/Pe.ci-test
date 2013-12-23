@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-using Windows;
+using SC.Windows;
 
 namespace PeMain.UI
 {
@@ -65,12 +65,12 @@ namespace PeMain.UI
 		{
 			Debug.Assert(!this.DesignMode);
 
-			this.callbackMessage = Windows.API.RegisterWindowMessage(MessageString);
+			this.callbackMessage = API.RegisterWindowMessage(MessageString);
 			var appBar = new APPBARDATA(Handle);
 			appBar.uCallbackMessage = this.callbackMessage;
 			
 			Debug.WriteLine("callbackMessage: " + callbackMessage);
-			var registResult = Windows.API.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
+			var registResult = API.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
 			Debug.WriteLine("registResult: " + registResult);
 			IsDocking = registResult.ToInt32() != 0;
 			Debug.WriteLine("IsDocking: " + IsDocking);
@@ -84,7 +84,7 @@ namespace PeMain.UI
 
 			var appBar = new APPBARDATA(Handle);
 
-			var unregistResult = Windows.API.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
+			var unregistResult = API.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
 			Debug.WriteLine("unregistResult: " + unregistResult);
 			
 			IsDocking = false;
@@ -155,7 +155,7 @@ namespace PeMain.UI
 			appBar.uEdge = dockType.ToABE();
 			appBar.rc = CalcBarArea();
 			// 現在の希望するサイズから実際のサイズ要求する
-			Windows.API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
+			API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 			switch(dockType) {
 				case DockType.Left:
 					appBar.rc.Right = appBar.rc.Left + BarSize.Width;
@@ -180,7 +180,7 @@ namespace PeMain.UI
 			
 			// TopMost のときに領域を確保する
 			if (TopMost) {
-				var appbarResult = Windows.API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+				var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
 				Debug.WriteLine(appbarResult);
 			}
 			

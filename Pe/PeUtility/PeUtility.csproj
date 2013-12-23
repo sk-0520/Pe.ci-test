@@ -75,9 +75,9 @@
     <Compile Include="Text.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Windows\API.csproj">
+    <ProjectReference Include="..\Windows\SC.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>API</Name>
+      <Name>SC</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

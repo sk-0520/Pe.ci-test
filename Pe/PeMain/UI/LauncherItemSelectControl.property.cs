@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using PeMain.Setting;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -53,5 +54,9 @@ namespace PeMain.UI
 				return item as LauncherItem;
 			}
 		}
+		
+		public IconSize IconSize { get; set; }
+		
+		public IEnumerable<LauncherItem> Items { get { return this._items; } }
 	}
 }

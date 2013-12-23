@@ -7,7 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using Windows;
+using SC.Windows;
 
 namespace PeMain.UI
 {
@@ -19,11 +19,11 @@ namespace PeMain.UI
 		void InitializeUI()
 		{
 			bool isAero;
-			Windows.API.DwmIsCompositionEnabled(out isAero);
+			API.DwmIsCompositionEnabled(out isAero);
 			if(isAero) {
 				var margin = new MARGINS();
 				margin.leftWidth = -1;
-				Windows.API.DwmExtendFrameIntoClientArea(Handle, ref margin);
+				API.DwmExtendFrameIntoClientArea(Handle, ref margin);
 			}
 		}
 		

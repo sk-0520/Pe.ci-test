@@ -47,6 +47,14 @@ namespace PeMain.UI
 			this.toolLauncherItems_input.Size = size;
 		}
 		
+		void TuneItemHeight()
+		{
+			var iconHeight = IconSize.ToHeight();
+			var fontHeight = Font.Height;
+			var itemheight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical;
+			this.listLauncherItems.ItemHeight = itemheight;
+		}
+		
 		void SetFilterType(LauncherItemSelecterType type)
 		{
 			var toolItem = new Dictionary<LauncherItemSelecterType, ToolStripItem>() {
@@ -94,6 +102,9 @@ namespace PeMain.UI
 			item.Name = itemName;
 			this._items.Add(item);
 			this.listLauncherItems.Items.Add(item);
+			
+			this.listLauncherItems.SelectedItem = item;
+			
 			if(CreateItem != null)  {
 				var e = new CreateItemEventArg();
 				e.Item = item;
@@ -110,6 +121,17 @@ namespace PeMain.UI
 				e.Item = item;
 				RemovedItem(this, e);
 			}
+		}
+		
+		public bool HasItem(LauncherItem item)
+		{
+			return this._items.Any(i => i.Name == item.Name);
+		}
+		
+		public void AddItem(LauncherItem item)
+		{
+			this._items.Add(item);
+			this.listLauncherItems.Items.Add(item);
 		}
 	}
 }

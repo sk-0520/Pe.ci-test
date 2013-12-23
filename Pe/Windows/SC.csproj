@@ -5,11 +5,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>Windows</RootNamespace>
-    <AssemblyName>API</AssemblyName>
+    <RootNamespace>SC</RootNamespace>
+    <AssemblyName>SC</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,10 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\Commctrl.cs" />
+    <Compile Include="Windows\CommonControls.cs" />
     <Compile Include="Windows\Dwmapi.cs" />
     <Compile Include="Windows\Shellapi.cs" />
     <Compile Include="Windows\user32.cs" />
     <Compile Include="Windows\Windef.cs" />
+    <Compile Include="Windows\Winerror.cs" />
     <Compile Include="Windows\Winuser.cs" />
   </ItemGroup>
   <ItemGroup>

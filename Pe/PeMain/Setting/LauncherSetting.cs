@@ -178,6 +178,18 @@ namespace PeMain.Setting
 			
 			return result;
 		}
+		
+		public Icon GetIcon(IconSize iconSize)
+		{
+			var hasIcon = this._iconMap.ContainsKey(iconSize);
+			if(hasIcon && !string.IsNullOrWhiteSpace(IconPath)) {
+				var icon = IconLoader.Load(IconPath, iconSize, 0);
+				this._iconMap[iconSize] = icon;
+			} else if(!hasIcon) {
+				return null;
+			}
+			return this._iconMap[iconSize];
+		}
 	}
 	
 	/// <summary>

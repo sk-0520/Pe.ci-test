@@ -7,6 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 
 namespace PeUtility
 {
@@ -15,15 +18,121 @@ namespace PeUtility
 	/// </summary>
 	public static class Functions
 	{
-		public static bool IsIn<T>(this T value, params T[] targets)
-			where T: IComparable<T>
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		private static BaseNumberConverter CreateNumberVar<T>()
 		{
-			foreach(var target in targets) {
-				if(value.CompareTo(target) == 0) {
+			var typeInfo = typeof(T);
+
+			if (typeInfo == typeof(Byte)) return new ByteConverter();
+			if (typeInfo == typeof(Decimal)) return new DecimalConverter();
+			if (typeInfo == typeof(Double)) return new DoubleConverter();
+			if (typeInfo == typeof(Int16)) return new Int16Converter();
+			if (typeInfo == typeof(Int32)) return new Int32Converter();
+			if (typeInfo == typeof(Int64)) return new Int64Converter();
+			if (typeInfo == typeof(SByte)) return new SByteConverter();
+			if (typeInfo == typeof(Single)) return new SingleConverter();
+			if (typeInfo == typeof(UInt16)) return new UInt32Converter();
+			if (typeInfo == typeof(UInt32)) return new UInt32Converter();
+			if (typeInfo == typeof(UInt64)) return new UInt32Converter();
+
+			return null;
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source"></param>
+		/// <returns></returns>
+		public static T ToNumber<T>(this string source)
+		{
+			try {
+				var converter = CreateNumberVar<T>();
+				if (converter != null && converter.CanConvertFrom(typeof(String))) {
+					return (T)converter.ConvertFromString(source);
+				}
+			} catch (Exception ex) {
+				Debug.WriteLine(ex);
+			}
+
+			return default(T);
+		}
+
+		/// <summary>
+		/// min &gt;= value &lt;= max
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static bool Between<T>(this T value, T min, T max)
+			where T : IComparable
+		{
+			return min.CompareTo(value) <= 0 && 0 <= max.CompareTo(value);
+		}
+
+		/// <summary>
+		/// 丸め
+		/// valueがmin未満かmaxより多ければminかmaxの適応する方に丸める。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static T Rounding<T>(this T value, T min, T max)
+			where T : IComparable
+		{
+			if (min.CompareTo(value) > 0) {
+				return min;
+			} else if (max.CompareTo(value) < 0) {
+				return max;
+			} else {
+				return value;
+			}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name="datas"></param>
+		/// <returns></returns>
+		public static bool IsIn<T>(this T value, params T[] datas)
+			where T : IComparable
+		{
+			if (datas == null || datas.Length == 0) {
+				throw new ArgumentException(string.Format("null -> {0}, length -> {1}", datas == null, datas.Length));
+			}
+			foreach (var data in datas) {
+				if (value.CompareTo(data) == 0) {
 					return true;
 				}
 			}
 			return false;
+		}
+
+		/// <summary>
+		/// ファイルをバイナリとして読み込む
+		/// </summary>
+		/// <param name="filePath">展開済みファイルパス</param>
+		/// <param name="startIndex">読み出し位置</param>
+		/// <param name="readLength">読み出しサイズ</param>
+		/// <returns></returns>
+		public static byte[] FileToBinary(string filePath, int startIndex, int readLength)
+		{
+			byte[] buffer;
+
+			using (var stream = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read))) {
+				buffer = new byte[readLength];
+				stream.Read(buffer, startIndex, readLength);
+			}
+
+			return buffer;
 		}
 	}
 }

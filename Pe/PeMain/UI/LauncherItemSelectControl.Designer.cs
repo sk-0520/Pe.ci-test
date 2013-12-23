@@ -55,12 +55,15 @@ namespace PeMain.UI
 			// listLauncherItems
 			// 
 			this.listLauncherItems.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listLauncherItems.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.listLauncherItems.FormattingEnabled = true;
+			this.listLauncherItems.IntegralHeight = false;
 			this.listLauncherItems.ItemHeight = 12;
 			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
 			this.listLauncherItems.Name = "listLauncherItems";
 			this.listLauncherItems.Size = new System.Drawing.Size(147, 125);
 			this.listLauncherItems.TabIndex = 4;
+			this.listLauncherItems.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListLauncherItems_DrawItem);
 			this.listLauncherItems.SelectedIndexChanged += new System.EventHandler(this.ListLauncherItemsSelectedIndexChanged);
 			// 
 			// toolLauncherItems

@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Windows
+namespace SC.Windows
 {
 	public enum WM: uint
 	{
@@ -37,5 +37,14 @@ namespace Windows
 		/// <returns></returns>
 		[DllImport("user32.dll", SetLastError=true, CharSet=CharSet.Auto)]
 		public static extern uint RegisterWindowMessage(string lpString);
+		
+		/// <summary>
+		/// http://pinvoke.net/default.aspx/user32/DestroyIcon.html
+		/// </summary>
+		/// <param name="hIcon"></param>
+		/// <returns></returns>
+		[DllImport("user32.dll", SetLastError=true)]
+		public static extern bool DestroyIcon(IntPtr hIcon);
+
 	}
 }

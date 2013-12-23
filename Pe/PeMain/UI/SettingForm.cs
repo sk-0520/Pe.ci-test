@@ -29,12 +29,12 @@ namespace PeMain.UI
 			Initialize(language, setting);
 		}
 		
-				
-		void TabSettingSelecting(object sender, TabControlCancelEventArgs e)
+		
+		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
 		{
-			if(e.TabPage == this.pageLauncher) {
-				// TODO: 入力状態確認
-				Debug.WriteLine("++");
+			if(e.Item == null) {
+				// 未選択状態
+				return;
 			}
 		}
 	}

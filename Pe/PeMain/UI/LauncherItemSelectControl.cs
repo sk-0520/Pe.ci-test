@@ -9,9 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -38,6 +38,7 @@ namespace PeMain.UI
 		
 		void LauncherItemSelectControlLoad(object sender, EventArgs e)
 		{
+			TuneItemHeight();
 			ResizeInputArea();
 		}
 		
@@ -74,6 +75,33 @@ namespace PeMain.UI
 				ev.Item = IndexToItem(index);
 				SelectChnagedItem(this, ev);
 			}
+		}
+		
+		void ListLauncherItems_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			e.DrawBackground();
+			
+			var g = e.Graphics;
+			if(e.Index != -1) {
+				var item = (LauncherItem)this.listLauncherItems.Items[e.Index];
+				var icon = item.GetIcon(IconSize);
+				if(icon != null) {
+					g.DrawIcon(icon, e.Bounds.X, e.Bounds.Y);
+				}
+				var textArea = new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
+				Debug.WriteLine(textArea);
+				Debug.WriteLine(this.listLauncherItems.ItemHeight);
+				textArea.X += this.listLauncherItems.ItemHeight;
+				textArea.Width -= this.listLauncherItems.ItemHeight;
+				using(var brush = new SolidBrush(e.ForeColor))
+				using(var format = new StringFormat()) {
+					format.Alignment = StringAlignment.Near;
+					format.LineAlignment = StringAlignment.Center;
+					g.DrawString(item.Name, e.Font, brush, textArea, format);
+				}
+			}
+			
+			e.DrawFocusRectangle();
 		}
 	}
 }
