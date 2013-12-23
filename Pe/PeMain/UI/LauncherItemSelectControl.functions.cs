@@ -83,15 +83,6 @@ namespace PeMain.UI
 			}
 		}
 		
-		public LauncherItem IndexToItem(int index)
-		{
-			var items = this.listLauncherItems.Items;
-			if(index.IsIn(0, items.Count)) {
-				return (LauncherItem)items[index];
-			}
-			return null;
-		}
-		
 		void CreateLauncherItem()
 		{
 			var itemName = "Item";

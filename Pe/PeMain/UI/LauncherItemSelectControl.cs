@@ -70,9 +70,10 @@ namespace PeMain.UI
 		void ListLauncherItemsSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if(SelectChnagedItem != null) {
+			Debug.WriteLine(e);
 				var ev = new SelectedItemEventArg();
 				var index = this.listLauncherItems.SelectedIndex;
-				ev.Item = IndexToItem(index);
+				ev.Item = (LauncherItem)this.listLauncherItems.Items[index];
 				SelectChnagedItem(this, ev);
 			}
 		}
@@ -89,8 +90,6 @@ namespace PeMain.UI
 					g.DrawIcon(icon, e.Bounds.X, e.Bounds.Y);
 				}
 				var textArea = new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
-				Debug.WriteLine(textArea);
-				Debug.WriteLine(this.listLauncherItems.ItemHeight);
 				textArea.X += this.listLauncherItems.ItemHeight;
 				textArea.Width -= this.listLauncherItems.ItemHeight;
 				using(var brush = new SolidBrush(e.ForeColor))

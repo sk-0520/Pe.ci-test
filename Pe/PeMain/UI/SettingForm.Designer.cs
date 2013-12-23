@@ -57,6 +57,7 @@ namespace PeMain.UI
 			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
 			this.commandLauncherIconPath = new System.Windows.Forms.Button();
 			this.commandLauncherWorkDirPath = new System.Windows.Forms.Button();
+			this.commandLauncherDirPath = new System.Windows.Forms.Button();
 			this.commandLauncherFilePath = new System.Windows.Forms.Button();
 			this.labelLauncherItemState = new System.Windows.Forms.Label();
 			this.groupLauncherType = new System.Windows.Forms.GroupBox();
@@ -86,7 +87,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.commandLauncherDirPath = new System.Windows.Forms.Button();
 			this.tabSetting.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -188,6 +188,7 @@ namespace PeMain.UI
 			this.selecterLauncher.Name = "selecterLauncher";
 			this.selecterLauncher.Size = new System.Drawing.Size(217, 302);
 			this.selecterLauncher.TabIndex = 0;
+			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChnagedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
 			// labelLauncherNote
@@ -305,6 +306,15 @@ namespace PeMain.UI
 			this.commandLauncherWorkDirPath.TabIndex = 2;
 			this.commandLauncherWorkDirPath.Text = "button1";
 			this.commandLauncherWorkDirPath.UseVisualStyleBackColor = true;
+			// 
+			// commandLauncherDirPath
+			// 
+			this.commandLauncherDirPath.Location = new System.Drawing.Point(306, 94);
+			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
+			this.commandLauncherDirPath.Size = new System.Drawing.Size(75, 23);
+			this.commandLauncherDirPath.TabIndex = 2;
+			this.commandLauncherDirPath.Text = "button1";
+			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
 			// 
 			// commandLauncherFilePath
 			// 
@@ -432,6 +442,7 @@ namespace PeMain.UI
 			// selecterToolbar
 			// 
 			this.selecterToolbar.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
+			this.selecterToolbar.IconSize = PeUtility.IconSize.Normal;
 			this.selecterToolbar.ItemEdit = false;
 			this.selecterToolbar.Location = new System.Drawing.Point(415, 48);
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -581,15 +592,6 @@ namespace PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// commandLauncherDirPath
-			// 
-			this.commandLauncherDirPath.Location = new System.Drawing.Point(306, 94);
-			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
-			this.commandLauncherDirPath.Size = new System.Drawing.Size(75, 23);
-			this.commandLauncherDirPath.TabIndex = 2;
-			this.commandLauncherDirPath.Text = "button1";
-			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 

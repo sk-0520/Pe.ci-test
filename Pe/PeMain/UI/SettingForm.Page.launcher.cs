@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using PeMain.Setting;
 
 namespace PeMain.UI
 {
@@ -17,5 +18,10 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
+		void LauncherSelectItem(LauncherItem item)
+		{
+			this.inputLauncherName.Text = item.Name;
+			this._launcherSelectedItem = item;
+		}
 	}
 }
