@@ -17,6 +17,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
+		/*
 		public Language LanguageSetting
 		{
 			get 
@@ -29,6 +30,7 @@ namespace PeMain.UI
 				this._language = value;
 			}
 		}
+		*/
 		
 		public bool ItemEdit
 		{
@@ -58,6 +60,7 @@ namespace PeMain.UI
 			}
 		}
 		
+		/*
 		public IEnumerable<LauncherItem> Items
 		{
 			get
@@ -72,6 +75,6 @@ namespace PeMain.UI
 				}
 			}
 		}
-		
+		*/
 	}
 }

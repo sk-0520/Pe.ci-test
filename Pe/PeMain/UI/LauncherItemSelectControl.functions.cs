@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+using PeMain.Setting;
+
 namespace PeMain.UI
 {
 	/// <summary>
@@ -55,6 +57,19 @@ namespace PeMain.UI
 			this.toolLauncherItems_type.Text = toolItem.Text;
 			this.toolLauncherItems_type.ToolTipText = toolItem.ToolTipText;
 			this.toolLauncherItems_type.Image = toolItem.Image;
+		}
+		
+		public void SetLanguage(Language language)
+		{
+			ApplyLanguage(language);
+			this._language = language;
+		}
+		public void SetItems(IEnumerable<LauncherItem> items)
+		{
+			this._items.Clear();
+			if(items != null) {
+				this._items.AddRange(items);
+			}
 		}
 	}
 }

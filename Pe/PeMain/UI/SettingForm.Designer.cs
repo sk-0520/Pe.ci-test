@@ -182,7 +182,6 @@ namespace PeMain.UI
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterLauncher.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
 			this.selecterLauncher.ItemEdit = true;
-			this.selecterLauncher.Items = ((System.Collections.Generic.IEnumerable<PeMain.Setting.LauncherItem>)(resources.GetObject("selecterLauncher.Items")));
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
@@ -401,7 +400,6 @@ namespace PeMain.UI
 			// 
 			this.selecterToolbar.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
 			this.selecterToolbar.ItemEdit = false;
-			this.selecterToolbar.Items = ((System.Collections.Generic.IEnumerable<PeMain.Setting.LauncherItem>)(resources.GetObject("selecterToolbar.Items")));
 			this.selecterToolbar.Location = new System.Drawing.Point(415, 48);
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";

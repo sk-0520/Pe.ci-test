@@ -31,7 +31,7 @@ namespace PeMain.UI
 			foreach(var item in launcherSetting.Items) {
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
-			this.selecterLauncher.Items = this._launcherItems;
+			this.selecterLauncher.SetItems(this._launcherItems);
 		}
 		
 		void InitializeCommand(CommandSetting commandSetting)
@@ -41,7 +41,7 @@ namespace PeMain.UI
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
-			this.selecterToolbar.Items = this._launcherItems;
+			this.selecterToolbar.SetItems(this._launcherItems);
 			
 			this.toolbarFont = toolbarSetting.FontSetting;
 		}

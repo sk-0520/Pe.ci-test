@@ -29,6 +29,9 @@ namespace PeMain.UI
 			this.commandSubmit.Text= Language["common/button/ok"];
 			this.commandCancel.Text = Language["common/button/cancel"];
 			
+			this.selecterLauncher.SetLanguage(Language);
+			this.selecterToolbar.SetLanguage(Language);
+			
 			ApplyLanguageTab();
 		}
 	}
