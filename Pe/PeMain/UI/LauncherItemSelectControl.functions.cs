@@ -26,6 +26,7 @@ namespace PeMain.UI
 				this.toolLauncherItems_editSeparator
 			};
 		}
+		
 		void ResizeInputArea()
 		{
 			int totalWidth = this.toolLauncherItems.Margin.Horizontal + this.toolLauncherItems.Padding.Horizontal;
@@ -40,6 +41,20 @@ namespace PeMain.UI
 			var inputWidth = parentWidth - totalWidth - this.toolLauncherItems.Margin.Horizontal - this.toolLauncherItems.Padding.Horizontal;
 			var size = new Size(inputWidth, this.toolLauncherItems_input.Size.Height);
 			this.toolLauncherItems_input.Size = size;
+		}
+		
+		void SetFilterType(LauncherItemSelecterType type)
+		{
+			var toolItem = new Dictionary<LauncherItemSelecterType, ToolStripItem>() {
+				{LauncherItemSelecterType.Full, this.toolLauncherItems_type_full},
+				{LauncherItemSelecterType.Name, this.toolLauncherItems_type_name},
+				{LauncherItemSelecterType.Display, this.toolLauncherItems_type_display},
+				{LauncherItemSelecterType.Tag, this.toolLauncherItems_type_tag},
+			}[type];
+			
+			this.toolLauncherItems_type.Text = toolItem.Text;
+			this.toolLauncherItems_type.ToolTipText = toolItem.ToolTipText;
+			this.toolLauncherItems_type.Image = toolItem.Image;
 		}
 	}
 }

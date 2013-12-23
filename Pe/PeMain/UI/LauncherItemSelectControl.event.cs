@@ -10,6 +10,11 @@ using System;
 
 namespace PeMain.UI
 {
+	public class SelectedItem: EventArgs
+	{
+		
+	}
+	
 	/// <summary>
 	/// Description of LauncherItemSelectControl_event.
 	/// </summary>

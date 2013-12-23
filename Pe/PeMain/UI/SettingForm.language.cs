@@ -26,8 +26,8 @@ namespace PeMain.UI
 		{
 			Debug.Assert(Language != null);
 			
-			this.commandSubmit.Text= Language["command/submit"];
-			this.commandCancel.Text = Language["command/cancel"];
+			this.commandSubmit.Text= Language["common/button/ok"];
+			this.commandCancel.Text = Language["common/button/cancel"];
 			
 			ApplyLanguageTab();
 		}

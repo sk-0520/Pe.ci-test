@@ -84,6 +84,9 @@
     <Compile Include="Setting\NoteSetting.cs" />
     <Compile Include="Setting\ToolbarSetting.cs" />
     <Compile Include="UI\LauncherItemSelectControl.cs" />
+    <Compile Include="UI\LauncherItemSelectControl.define.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
@@ -94,6 +97,9 @@
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LauncherItemSelectControl.initialize.cs">
+      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LauncherItemSelectControl.language.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LauncherItemSelectControl.property.cs">

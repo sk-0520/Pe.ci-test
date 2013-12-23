@@ -36,6 +36,7 @@ namespace PeMain.Setting
 		public Language()
 		{
 			Define = new List<Word>();
+			Words = new List<Word>();
 		}
 
 		public List<Word> Define { get; set; }

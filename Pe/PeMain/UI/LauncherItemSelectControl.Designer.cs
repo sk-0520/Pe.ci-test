@@ -127,27 +127,35 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_full
 			// 
+			this.toolLauncherItems_type_full.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type_full.Image")));
 			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
 			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(262, 22);
 			this.toolLauncherItems_type_full.Text = "{LAUNCHER_FILTER_FULL}";
+			this.toolLauncherItems_type_full.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_type_name
 			// 
+			this.toolLauncherItems_type_name.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type_name.Image")));
 			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
 			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(262, 22);
 			this.toolLauncherItems_type_name.Text = "{LAUNCHER_FILTER_NAME}";
+			this.toolLauncherItems_type_name.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_type_display
 			// 
+			this.toolLauncherItems_type_display.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type_display.Image")));
 			this.toolLauncherItems_type_display.Name = "toolLauncherItems_type_display";
 			this.toolLauncherItems_type_display.Size = new System.Drawing.Size(262, 22);
 			this.toolLauncherItems_type_display.Text = "{LAUNCHER_FILTER_DISPLAY}";
+			this.toolLauncherItems_type_display.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_type_tag
 			// 
+			this.toolLauncherItems_type_tag.Image = ((System.Drawing.Image)(resources.GetObject("toolLauncherItems_type_tag.Image")));
 			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
 			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(262, 22);
 			this.toolLauncherItems_type_tag.Text = "{LAUNCHER_FILTER_TAG}";
+			this.toolLauncherItems_type_tag.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_input
 			// 

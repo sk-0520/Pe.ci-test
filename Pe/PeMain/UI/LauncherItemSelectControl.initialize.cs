@@ -17,7 +17,9 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
+			Language = new PeMain.Setting.Language();
 			ItemEdit = true;
+			FilterType = LauncherItemSelecterType.Full;
 			ResizeInputArea();
 		}
 	}

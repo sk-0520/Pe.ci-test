@@ -10,9 +10,12 @@
 		<Word Name="open-ui"  Text="..." />
 	</Define>
 	<Words>
+		<Word Name="common/button/ok"         Text="${ok}" />
+		<Word Name="common/button/cancel"     Text="${cancel}" />
 		<Word Name="common/button/exit"       Text="${exit}" />
 		<Word Name="common/menu/exit"         Text="${exit}(&amp;X)" />
 		
+		<Word Name="main/menu/about"   Text="バージョン情報(&amp;A) ${open-ui}" />
 		<Word Name="main/menu/setting" Text="設定(&amp;S) ${open-ui}" />
 		
 		<Word Name="setting/tab/main"     Text="本体" />
