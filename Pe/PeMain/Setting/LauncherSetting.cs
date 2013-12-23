@@ -41,10 +41,12 @@ namespace PeMain.Setting
 		{
 			WorkDirs = new List<string>();
 			Options = new List<string>();
+			DateHistory = new DateHistory();
 		}
 		public uint ExecuteCount { get; set; }
 		public List<string> WorkDirs { get; set; }
 		public List<string> Options { get; set; }
+		public DateHistory DateHistory { get; set; }
 		
 		public object Clone()
 		{

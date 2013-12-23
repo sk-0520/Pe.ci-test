@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
-		public Language Language
+		public Language LanguageSetting
 		{
 			get 
 			{
@@ -67,7 +67,9 @@ namespace PeMain.UI
 			set
 			{
 				this._items.Clear();
-				this._items.AddRange(value);
+				if(value != null) {
+					this._items.AddRange(value);
+				}
 			}
 		}
 		

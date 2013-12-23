@@ -21,7 +21,7 @@ namespace PeMain.UI
 		{
 			_items = new List<LauncherItem>();
 			
-			Language = new PeMain.Setting.Language();
+			LanguageSetting = new PeMain.Setting.Language();
 			ItemEdit = true;
 			FilterType = LauncherItemSelecterType.Full;
 			ResizeInputArea();

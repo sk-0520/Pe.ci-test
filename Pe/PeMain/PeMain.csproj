@@ -77,6 +77,7 @@
     </Compile>
     <Compile Include="Setting\CommandSetting.cs" />
     <Compile Include="Setting\FontSetting.cs" />
+    <Compile Include="Setting\DateHistory.cs" />
     <Compile Include="Setting\Item.cs" />
     <Compile Include="Setting\Language.cs" />
     <Compile Include="Setting\LauncherSetting.cs" />

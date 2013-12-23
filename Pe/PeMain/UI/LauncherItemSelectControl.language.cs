@@ -18,6 +18,9 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage(Language lang)
 		{
+			if(lang == null) {
+				return;
+			}
 			this.toolLauncherItems_create.Text = lang["item-selecter/create"];
 			this.toolLauncherItems_remove.Text = lang["item-selecter/remove"];
 			this.toolLauncherItems_filter.Text = lang["item-selecter/filtering"];

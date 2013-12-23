@@ -64,5 +64,6 @@ namespace PeMain.UI
 			
 			InitializeUI(mainSetting);
 		}
+
 	}
 }
