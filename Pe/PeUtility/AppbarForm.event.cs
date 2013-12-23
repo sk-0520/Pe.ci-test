@@ -41,7 +41,7 @@ namespace PeMain.UI
 		
 		protected virtual void OnAppbarPosChanged(EventArgs e)
 		{
-			Docking();
+			Docking(DockType);
 
 			if (AppbarPosChanged != null) {
 				AppbarPosChanged(this, e);

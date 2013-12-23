@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using PeMain.Setting;
@@ -26,17 +27,23 @@ namespace PeMain.UI
 		
 		void InitializeLauncher(LauncherSetting launcherSetting)
 		{
+			this._launcherItems.Clear();
 			foreach(var item in launcherSetting.Items) {
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
+			this.selecterLauncher.Items = this._launcherItems;
 		}
 		
 		void InitializeCommand(CommandSetting commandSetting)
 		{
+			this.commandFont = commandSetting.FontSetting;
 		}
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
+			this.selecterToolbar.Items = this._launcherItems;
+			
+			this.toolbarFont = toolbarSetting.FontSetting;
 		}
 		
 		void InitializeUI(MainSetting mainSetting)
@@ -51,7 +58,7 @@ namespace PeMain.UI
 		
 		void Initialize(Language language, MainSetting mainSetting)
 		{
-			this._launcherItems = new SortedSet<LauncherItem>();
+			this._launcherItems = new HashSet<LauncherItem>();
 			
 			Language = language;
 			

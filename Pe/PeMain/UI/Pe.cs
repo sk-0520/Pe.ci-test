@@ -20,13 +20,6 @@ namespace PeMain.UI
 		public Pe(string[] args)
 		{
 			Initialize(args);
-			/*
-			var f = new AppbarForm();
-			f.Show();
-			f.DockType = DockType.Left;
-			f.TopMost = true;
-			f.Docking();
-			*/
 		}
 		
 		public void Dispose()

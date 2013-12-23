@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Windows
 {
@@ -16,6 +17,16 @@ namespace Windows
 	/// </summary>
 	public static partial class API
 	{
-		
+		/// <summary>
+		/// http://www.pinvoke.net/default.aspx/user32.registerhotkey
+		/// </summary>
+		/// <param name="hWnd"></param>
+		/// <param name="id"></param>
+		/// <param name="fsModifiers"></param>
+		/// <param name="vk"></param>
+		/// <returns></returns>
+		[DllImport("user32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 	}
 }

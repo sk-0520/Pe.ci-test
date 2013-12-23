@@ -140,6 +140,22 @@
     <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ToolbarForm.cs" />
+    <Compile Include="UI\ToolbarForm.Designer.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolbarForm.functions.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolbarForm.initialize.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolbarForm.property.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ToolbarForm.variable.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Images.resx">
@@ -151,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ToolbarForm.resx">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

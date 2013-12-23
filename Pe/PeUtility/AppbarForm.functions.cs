@@ -46,7 +46,7 @@ namespace PeMain.UI
 						BarSize = new Size(BarSize.Width, Height);
 						break;
 				}
-				Docking();
+				Docking(DockType);
 			}
 			base.OnResizeEnd(e);
 		}
@@ -132,12 +132,9 @@ namespace PeMain.UI
 		/// 
 		/// すでにドッキングされている場合はドッキングを再度実行する
 		/// </summary>
-		public void Docking()
+		private void Docking(DockType dockType)
 		{
 			if(DesignMode) {
-				return;
-			}
-			if(DockType == DockType.None) {
 				return;
 			}
 			
@@ -145,16 +142,21 @@ namespace PeMain.UI
 			if(IsDocking) {
 				UnResistAppBar();
 			}
+			
+			if(dockType == DockType.None) {
+				return;
+			}
+			
 			// 登録
 			Debug.Assert(!IsDocking);
 			ResistAppBar();
 			
 			var appBar = new APPBARDATA(Handle);
-			appBar.uEdge = DockType.ToABE();
+			appBar.uEdge = dockType.ToABE();
 			appBar.rc = CalcBarArea();
 			// 現在の希望するサイズから実際のサイズ要求する
 			Windows.API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
-			switch(DockType) {
+			switch(dockType) {
 				case DockType.Left:
 					appBar.rc.Right = appBar.rc.Left + BarSize.Width;
 					break;
@@ -172,7 +174,7 @@ namespace PeMain.UI
 					break;
 					
 				default:
-					Debug.Assert(false, DockType.ToString());
+					Debug.Assert(false, dockType.ToString());
 					break;
 			}
 			

@@ -17,6 +17,8 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
-		SortedSet<LauncherItem> _launcherItems;
+		HashSet<LauncherItem> _launcherItems;
+		FontSetting commandFont;
+		FontSetting toolbarFont;
 	}
 }

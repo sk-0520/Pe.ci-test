@@ -1,8 +1,8 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2013/12/18
- * 時刻: 14:45
+ * 日付: 2013/12/23
+ * 時刻: 13:17
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
@@ -11,11 +11,12 @@ using System;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of BaseToolbarForm_variable.
+	/// Description of ToolbarForm_functions.
 	/// </summary>
-	public partial class AppbarForm
+	public class ToolbarForm_functions
 	{
-		public uint callbackMessage;
-		DockType _dockType;
+		public ToolbarForm_functions()
+		{
+		}
 	}
 }

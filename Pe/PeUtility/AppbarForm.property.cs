@@ -21,7 +21,17 @@ namespace PeMain.UI
 		/// <summary>
 		/// ドッキングタイプ
 		/// </summary>
-		public DockType DockType { get; set; }
+		public DockType DockType { 
+			get
+			{
+				return this._dockType;
+			}
+			set
+			{
+				Docking(value);
+				this._dockType = value;
+			}
+		}
 		/// <summary>
 		/// ドッキングしているか
 		/// </summary>

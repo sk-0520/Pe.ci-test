@@ -33,7 +33,7 @@ namespace PeMain.Setting
 		/// <summary>
 		/// フォント
 		/// </summary>
-		FontSetting FontSetting { get; set; }
+		public FontSetting FontSetting { get; set; }
 		/// <summary>
 		/// 入力欄の横幅。
 		/// </summary>

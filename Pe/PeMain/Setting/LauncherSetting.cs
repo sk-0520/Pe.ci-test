@@ -87,13 +87,7 @@ namespace PeMain.Setting
 		
 		public override int GetHashCode()
 		{
-			// TODO: 処理実装がデフォのまま
-			int hashCode = 0;
-			unchecked {
-				if (_iconMap != null)
-					hashCode += 1000000007 * _iconMap.GetHashCode();
-			}
-			return hashCode;
+			return this.Name.GetHashCode();
 		}
 		#endregion
 		
@@ -191,12 +185,12 @@ namespace PeMain.Setting
 	{
 		public LauncherSetting()
 		{
-			Items = new SortedSet<LauncherItem>();
+			Items = new HashSet<LauncherItem>();
 		}
 		/// <summary>
 		/// 各ランチャアイテム
 		/// </summary>
-		public SortedSet<LauncherItem> Items { get; set; }
+		public HashSet<LauncherItem> Items { get; set; }
 		
 		public void Dispose()
 		{
