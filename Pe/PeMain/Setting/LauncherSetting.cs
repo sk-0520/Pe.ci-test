@@ -35,7 +35,7 @@ namespace PeMain.Setting
 	/// <summary>
 	/// 実行履歴
 	/// </summary>
-	public class LauncherHistory: Item
+	public class LauncherHistory: Item, ICloneable
 	{
 		public LauncherHistory()
 		{
@@ -45,6 +45,16 @@ namespace PeMain.Setting
 		public uint ExecuteCount { get; set; }
 		public List<string> WorkDirs { get; set; }
 		public List<string> Options { get; set; }
+		
+		public object Clone()
+		{
+			var result = new LauncherHistory();
+			result.ExecuteCount = ExecuteCount;
+			result.WorkDirs.AddRange(WorkDirs);
+			result.Options.AddRange(Options);
+			
+			return result;
+		}
 	}
 	
 	/// <summary>
@@ -53,8 +63,18 @@ namespace PeMain.Setting
 	/// 名前をキーとする。
 	/// </summary>
 	[Serializable]
-	public class LauncherItem: NameItem, IDisposable
+	public class LauncherItem: NameItem, IDisposable, ICloneable
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		private Dictionary<IconSize, Icon> _iconMap;
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		private int _pId;
+		
 		#region Equals and GetHashCode implementation
 		public override bool Equals(object obj)
 		{
@@ -76,14 +96,11 @@ namespace PeMain.Setting
 			return hashCode;
 		}
 		#endregion
-
-		/// <summary>
-		/// 
-		/// </summary>
-		private Dictionary<IconSize, Icon> _iconMap;
 		
 		public LauncherItem()
 		{
+			this._pId = 0;this._pId++;
+			
 			this._iconMap = new Dictionary<IconSize, Icon>();
 			
 			LauncherHistory = new LauncherHistory();
@@ -125,6 +142,14 @@ namespace PeMain.Setting
 		/// タグ
 		/// </summary>
 		public List<string> Tag { get; set; }
+		/// <summary>
+		/// プロセス監視
+		/// </summary>
+		public bool ProcessWatch { get; set; }
+		/// <summary>
+		/// 標準出力(とエラー)の監視
+		/// </summary>
+		public bool StdOutputWatch { get; set; }
 		
 		public void Dispose()
 		{
@@ -133,6 +158,29 @@ namespace PeMain.Setting
 					icon.Dispose();
 				}
 			}
+		}
+		
+		public object Clone()
+		{
+			var result = new LauncherItem();
+			result.LauncherType = LauncherType;
+			result.Command = Command;
+			result.WorkDirPath = WorkDirPath;
+			result.Option = Option;
+			result.IconPath = IconPath;
+			result.IconIndex = IconIndex;
+			result.LauncherHistory = (LauncherHistory)LauncherHistory.Clone();
+			result.Note = Note;
+			result.Tag.AddRange(Tag);
+			result.ProcessWatch = ProcessWatch;
+			result.StdOutputWatch = StdOutputWatch;
+			
+			// アイコンは再読み込みかったるいのでこぴっておく
+			foreach(KeyValuePair<IconSize, Icon> pair in this._iconMap) {
+				result._iconMap.Add(pair.Key, pair.Value);
+			}
+			
+			return result;
 		}
 	}
 	

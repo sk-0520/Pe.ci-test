@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -56,5 +57,19 @@ namespace PeMain.UI
 				this._filterType = value;
 			}
 		}
+		
+		public IEnumerable<LauncherItem> Items
+		{
+			get
+			{
+				return this._items;
+			}
+			set
+			{
+				this._items.Clear();
+				this._items.AddRange(value);
+			}
+		}
+		
 	}
 }

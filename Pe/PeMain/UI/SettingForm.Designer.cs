@@ -130,7 +130,6 @@ namespace PeMain.UI
 			this.splitContainer1.Size = new System.Drawing.Size(564, 245);
 			this.splitContainer1.SplitterDistance = 217;
 			this.splitContainer1.TabIndex = 0;
-			this.splitContainer1.SizeChanged += new System.EventHandler(this.SplitContainer1SizeChanged);
 			// 
 			// selecterLauncher
 			// 

@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -19,5 +20,6 @@ namespace PeMain.UI
 		private Language _language;
 		private bool _itemEdit;
 		private LauncherItemSelecterType _filterType;
+		private List<LauncherItem> _items;
 	}
 }
