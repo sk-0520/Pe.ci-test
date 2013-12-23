@@ -34,6 +34,6 @@ namespace PeMain.UI
 	{
 		public event EventHandler<CreateItemEventArg> CreateItem;
 		public event EventHandler<RemovedItemEventArg> RemovedItem;
-		public event EventHandler<SelectedItemEventArg> SelectedItem;
+		public event EventHandler<SelectedItemEventArg> SelectChnagedItem;
 	}
 }

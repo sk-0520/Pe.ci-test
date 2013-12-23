@@ -44,5 +44,14 @@ namespace PeMain.UI
 				this._filterType = value;
 			}
 		}
+		
+		public LauncherItem SelectedItem
+		{
+			get
+			{
+				var item = this.listLauncherItems.SelectedItem;
+				return item as LauncherItem;
+			}
+		}
 	}
 }
