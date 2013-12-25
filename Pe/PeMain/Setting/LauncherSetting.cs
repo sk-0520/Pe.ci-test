@@ -95,7 +95,7 @@ namespace PeMain.Setting
 		
 		public LauncherItem()
 		{
-			this._pId = 0;this._pId++;
+			this._pId = 0;
 			
 			this._iconMap = new Dictionary<IconSize, Icon>();
 			
@@ -146,6 +146,8 @@ namespace PeMain.Setting
 		/// 標準出力(とエラー)の監視
 		/// </summary>
 		public bool StdOutputWatch { get; set; }
+		
+		public int PId { get { return this._pId; } }
 		
 		public void Dispose()
 		{
