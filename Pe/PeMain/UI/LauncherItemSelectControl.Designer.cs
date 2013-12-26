@@ -37,7 +37,7 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LauncherItemSelectControl));
-			this.listLauncherItems = new System.Windows.Forms.ListBox();
+			this.listLauncherItems = new PeMain.UI.LauncherItemListBox();
 			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
 			this.toolLauncherItems_create = new System.Windows.Forms.ToolStripButton();
 			this.toolLauncherItems_remove = new System.Windows.Forms.ToolStripButton();
@@ -194,6 +194,6 @@ namespace PeMain.UI
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_remove;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_create;
 		private System.Windows.Forms.ToolStrip toolLauncherItems;
-		private System.Windows.Forms.ListBox listLauncherItems;
+		private PeMain.UI.LauncherItemListBox listLauncherItems;
 	}
 }
