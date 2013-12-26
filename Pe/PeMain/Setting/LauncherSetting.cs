@@ -146,6 +146,10 @@ namespace PeMain.Setting
 		/// 標準出力(とエラー)の監視
 		/// </summary>
 		public bool StdOutputWatch { get; set; }
+		/// <summary>
+		/// 環境変数
+		/// </summary>
+		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
 		public int PId { get { return this._pId; } }
 		

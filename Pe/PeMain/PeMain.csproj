@@ -76,6 +76,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Setting\CommandSetting.cs" />
+    <Compile Include="Setting\EnvironmentSetting.cs" />
     <Compile Include="Setting\FontSetting.cs" />
     <Compile Include="Setting\DateHistory.cs" />
     <Compile Include="Setting\Item.cs" />
