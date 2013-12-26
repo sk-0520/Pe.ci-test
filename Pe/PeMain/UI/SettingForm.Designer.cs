@@ -39,6 +39,8 @@ namespace PeMain.UI
 			this.components = new System.ComponentModel.Container();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
+			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
+			this.labelMainLanguage = new System.Windows.Forms.Label();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
@@ -87,8 +89,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.label1 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
@@ -124,8 +124,8 @@ namespace PeMain.UI
 			// 
 			// pageMain
 			// 
-			this.pageMain.Controls.Add(this.comboBox1);
-			this.pageMain.Controls.Add(this.label1);
+			this.pageMain.Controls.Add(this.selectMainLanguage);
+			this.pageMain.Controls.Add(this.labelMainLanguage);
 			this.pageMain.Location = new System.Drawing.Point(4, 24);
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
@@ -134,6 +134,22 @@ namespace PeMain.UI
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
+			// 
+			// selectMainLanguage
+			// 
+			this.selectMainLanguage.FormattingEnabled = true;
+			this.selectMainLanguage.Location = new System.Drawing.Point(121, 19);
+			this.selectMainLanguage.Name = "selectMainLanguage";
+			this.selectMainLanguage.Size = new System.Drawing.Size(121, 23);
+			this.selectMainLanguage.TabIndex = 1;
+			// 
+			// labelMainLanguage
+			// 
+			this.labelMainLanguage.Location = new System.Drawing.Point(15, 19);
+			this.labelMainLanguage.Name = "labelMainLanguage";
+			this.labelMainLanguage.Size = new System.Drawing.Size(100, 23);
+			this.labelMainLanguage.TabIndex = 0;
+			this.labelMainLanguage.Text = "{LANGUAGE}";
 			// 
 			// pageLauncher
 			// 
@@ -598,22 +614,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(49, 47);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(100, 23);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "label1";
-			// 
-			// comboBox1
-			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(155, 44);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(121, 23);
-			this.comboBox1.TabIndex = 1;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -645,8 +645,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.Label labelMainLanguage;
+		private System.Windows.Forms.ComboBox selectMainLanguage;
 		private System.Windows.Forms.Button commandLauncherDirPath;
 		private System.Windows.Forms.TextBox inputLauncherTag;
 		private System.Windows.Forms.TextBox inputLauncherNote;

@@ -106,12 +106,18 @@ namespace PeMain.UI
 		void RemoveLauncherItem(LauncherItem item)
 		{
 			this._items.Remove(item);
+			var index = this.listLauncherItems.Items.IndexOf(item);
 			this.listLauncherItems.Items.Remove(item);
+			int newIndex = -1;
+			if(this.listLauncherItems.Items.Count > 0) {
+				newIndex = index.Rounding(0, this.listLauncherItems.Items.Count - 1);
+			}
 			if(RemovedItem != null) {
 				var e = new RemovedItemEventArg();
 				e.Item = item;
 				RemovedItem(this, e);
 			}
+			this.listLauncherItems.SelectedIndex = newIndex;
 		}
 		
 		public bool HasItem(LauncherItem item)

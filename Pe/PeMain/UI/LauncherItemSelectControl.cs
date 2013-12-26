@@ -70,10 +70,11 @@ namespace PeMain.UI
 		void ListLauncherItemsSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if(SelectChnagedItem != null) {
-			Debug.WriteLine(e);
-				var ev = new SelectedItemEventArg();
 				var index = this.listLauncherItems.SelectedIndex;
-				ev.Item = (LauncherItem)this.listLauncherItems.Items[index];
+				var ev = new SelectedItemEventArg();
+				if(index != -1) {
+					ev.Item = (LauncherItem)this.listLauncherItems.Items[index];
+				}
 				SelectChnagedItem(this, ev);
 			}
 		}

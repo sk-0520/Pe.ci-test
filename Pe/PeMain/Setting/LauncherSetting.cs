@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml.Serialization;
 using PeUtility;
 
 namespace PeMain.Setting
@@ -96,8 +97,9 @@ namespace PeMain.Setting
 		public LauncherItem()
 		{
 			this._pId = 0;
-			
 			this._iconMap = new Dictionary<IconSize, Icon>();
+			
+			HasError = false;
 			
 			LauncherHistory = new LauncherHistory();
 			Tag = new List<string>();
@@ -152,6 +154,9 @@ namespace PeMain.Setting
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
 		public int PId { get { return this._pId; } }
+		
+		[XmlIgnoreAttribute()]
+		public bool HasError { get; set; }
 		
 		public void Dispose()
 		{

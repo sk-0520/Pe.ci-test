@@ -85,6 +85,7 @@
     <Compile Include="Setting\MainSetting.cs" />
     <Compile Include="Setting\NoteSetting.cs" />
     <Compile Include="Setting\ToolbarSetting.cs" />
+    <Compile Include="UI\Ex\ExListBox.cs" />
     <Compile Include="UI\LauncherItemSelectControl.cs" />
     <Compile Include="UI\LauncherItemSelectControl.define.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
@@ -198,6 +199,7 @@
     <Folder Include="Setting" />
     <Folder Include="etc" />
     <Folder Include="UI" />
+    <Folder Include="UI\Ex" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

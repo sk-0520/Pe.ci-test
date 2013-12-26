@@ -32,26 +32,29 @@ namespace PeMain.UI
 		
 		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
 		{
+			if(this._launcherSelectedItem != null) {
+				// 現在アイテムに入力内容を退避
+				LauncherSetInputValue(this._launcherSelectedItem);
+			}
 			if(e.Item == null) {
 				// 未選択状態
+				LauncherInputClear();
 				return;
 			}
 			if(e.Item == this._launcherSelectedItem) {
 				// 現在選択中アイテム
 				return;
 			}
-			Debug.WriteLine("#"+e.Item.Name);
 			LauncherSelectItem(e.Item);
 		}
 		
 		void SelecterLauncher_CreateItem(object sender, CreateItemEventArg e)
 		{
 			if(this._launcherSelectedItem != null) {
-				// 現在選択アイテムあり
-				// TODO: かくにんやらなんやら
-			} else {
-				LauncherSelectItem(e.Item);
+				// 現在アイテムに入力内容を退避
+				LauncherSetInputValue(this._launcherSelectedItem);
 			}
+			LauncherSelectItem(e.Item);
 		}
 	}
 }

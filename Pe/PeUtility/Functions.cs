@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -133,6 +134,14 @@ namespace PeUtility
 			}
 
 			return buffer;
+		}
+		
+		public static IEnumerable<T> Map<T>(this IEnumerable<T> source, Action<T> pred)
+		{
+			foreach(var item in source) {
+				pred(item);
+			}
+			return source;
 		}
 	}
 }
