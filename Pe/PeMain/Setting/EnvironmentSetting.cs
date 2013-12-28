@@ -11,22 +11,6 @@ using System.Collections.Generic;
 
 namespace PeMain.Setting
 {
-	public enum EnvironmentType
-	{
-		/// <summary>
-		/// システム
-		/// </summary>
-		System,
-		/// <summary>
-		/// 上書き(存在しなければ削除)
-		/// </summary>
-		Update,
-		/// <summary>
-		/// 削除
-		/// </summary>
-		Remove,
-	}
-	
 	/// <summary>
 	/// ランチャアイテム起動時の環境変数設定
 	/// 
