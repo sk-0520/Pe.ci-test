@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace PeUtility
 {
@@ -109,12 +110,7 @@ namespace PeUtility
 			if (datas == null || datas.Length == 0) {
 				throw new ArgumentException(string.Format("null -> {0}, length -> {1}", datas == null, datas.Length));
 			}
-			foreach (var data in datas) {
-				if (value.CompareTo(data) == 0) {
-					return true;
-				}
-			}
-			return false;
+			return datas.Any(data => value.CompareTo(data) == 0);
 		}
 
 		/// <summary>
@@ -136,6 +132,12 @@ namespace PeUtility
 			return buffer;
 		}
 		
+		/// <summary>
+		/// 集合の処理
+		/// </summary>
+		/// <param name="seq"></param>
+		/// <param name="pred"></param>
+		/// <returns>集合自体</returns>
 		public static IEnumerable<T> Transform<T>(this IEnumerable<T> seq, Action<T> pred)
 		{
 			foreach(var element in seq) {
@@ -143,7 +145,12 @@ namespace PeUtility
 				yield return element;
 			}
 		}
-		
+		/// <summary>
+		/// 集合の処理
+		/// </summary>
+		/// <param name="seq"></param>
+		/// <param name="pred"></param>
+		/// <returns>処理したデータ</returns>
 		public static IEnumerable<R> Map<T, R>(this IEnumerable<T> seq, Func<T, R> pred)
 		{
 			foreach(var element in seq) {
