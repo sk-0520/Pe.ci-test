@@ -78,8 +78,12 @@ namespace PeMain.UI
 		public void SetItems(IEnumerable<LauncherItem> items)
 		{
 			this._items.Clear();
+			this.listLauncherItems.Items.Clear();
+			
 			if(items != null) {
-				this._items.AddRange(items);
+				var list = items.ToArray();
+				this._items.AddRange(list);
+				this.listLauncherItems.Items.AddRange(list);
 			}
 		}
 		

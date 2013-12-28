@@ -67,6 +67,7 @@ namespace PeMain.UI
 			}
 			set
 			{
+				//TODO: ぼたんやなんや
 				this._filtering = value;
 			}
 		}

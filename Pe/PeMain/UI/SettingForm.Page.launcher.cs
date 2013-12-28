@@ -22,6 +22,22 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
+		LauncherType LauncherGetSelectedType()
+		{
+			if(this.selectLauncherType_file.Checked) {
+				return LauncherType.File;
+			} else {
+				Debug.Assert(this.selectLauncherType_uri.Checked);
+				return LauncherType.URI;
+			}
+		}
+		
+		void LauncherSetSelectedType(LauncherType type)
+		{
+			this.selectLauncherType_file.Checked = type == LauncherType.File;
+			this.selectLauncherType_uri.Checked  = type == LauncherType.URI;
+		}
+		
 		void LauncherInputClear()
 		{
 			this._launcherSelectedItem = null;
@@ -37,14 +53,15 @@ namespace PeMain.UI
 			};
 			textList.Map(item => item.Text = string.Empty);
 			this.inputLauncherIconIndex.Value = 0;
-			this.selectLauncherType_file.Checked = true;
-			this.selectLauncherType_uri.Checked = false;
+			LauncherSetSelectedType(LauncherType.File);
 		}
+		
 		void LauncherSelectItem(LauncherItem item)
 		{
 			LauncherInputClear();
 			this._launcherSelectedItem = item;
 			
+			LauncherSetSelectedType(item.LauncherType);
 			this.inputLauncherName.Text = item.Name;
 			this.inputLauncherCommand.Text = item.Command;
 			this.inputLauncherOption.Text = item.Option;
@@ -54,6 +71,7 @@ namespace PeMain.UI
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
 		}
+		
 		void LauncherInputValueToItem(LauncherItem item)
 		{
 			Debug.Assert(item != null);
@@ -61,6 +79,7 @@ namespace PeMain.UI
 				Path = item.IconPath,
 				Index= item.IconIndex
 			};
+			item.LauncherType = LauncherGetSelectedType();
 			item.Name = this.inputLauncherName.Text.Trim();
 			item.Command = this.inputLauncherCommand.Text.Trim();
 			item.Option = this.inputLauncherOption.Text.Trim();

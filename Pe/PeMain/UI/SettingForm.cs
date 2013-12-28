@@ -63,6 +63,10 @@ namespace PeMain.UI
 				e.Cancel = LauncherItemValid();
 			}
 			if(!e.Cancel) {
+				if(e.TabPage == this.pageToolbar) {
+					this.selecterToolbar.SetItems(this.selecterLauncher.Items);
+					this.selecterToolbar.Refresh();
+				}
 				this._nowSelectedTabPage =  e.TabPage;
 			}
 		}
