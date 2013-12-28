@@ -58,5 +58,17 @@ namespace PeMain.UI
 		public IconSize IconSize { get; set; }
 		
 		public IEnumerable<LauncherItem> Items { get { return this._items; } }
+		
+		public bool Filtering
+		{
+			get 
+			{
+				return this._filtering;
+			}
+			set
+			{
+				this._filtering = value;
+			}
+		}
 	}
 }

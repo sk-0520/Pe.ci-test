@@ -130,5 +130,7 @@ namespace PeMain.UI
 			this._items.Add(item);
 			this.listLauncherItems.Items.Add(item);
 		}
+		
+		
 	}
 }
