@@ -121,6 +121,7 @@ namespace PeMain.UI
 			this.tabSetting.SelectedIndex = 0;
 			this.tabSetting.Size = new System.Drawing.Size(578, 338);
 			this.tabSetting.TabIndex = 0;
+			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
 			// pageMain
 			// 

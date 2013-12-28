@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -21,5 +22,7 @@ namespace PeMain.UI
 		FontSetting commandFont = null;
 		FontSetting toolbarFont = null;
 		LauncherItem _launcherSelectedItem = null;
+		
+		TabPage _nowSelectedTabPage = null;
 	}
 }

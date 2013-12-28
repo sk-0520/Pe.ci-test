@@ -51,11 +51,30 @@ namespace PeMain.UI
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
 		}
-		void LauncherSetInputValue(LauncherItem item)
+		void LauncherInputValueToItem(LauncherItem item)
 		{
 			Debug.Assert(item != null);
-			item.Name = this.inputLauncherName.Text;
+			var oldIcon = new {
+				Path = item.IconPath,
+				Index= item.IconIndex
+			};
+			item.Name = this.inputLauncherName.Text.Trim();
+			item.Command = this.inputLauncherCommand.Text.Trim();
+			item.WorkDirPath = this.inputLauncherWorkDirPath.Text.Trim();
+			item.IconPath = this.inputLauncherIconPath.Text.Trim();
+			item.IconIndex = (int)this.inputLauncherIconIndex.Value;
+			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
+			item.Note = this.inputLauncherNote.Text.Trim();
 			
+			item.HasError = this.selecterLauncher.Items.Where(i => i != item).Any(i => i.Equals(item));
+			if(oldIcon.Index != item.IconIndex || oldIcon.Path != item.IconPath) {
+				item.ClearIcon();
+			}
+		}
+		
+		bool LauncherItemValid()
+		{
+			return this.selecterLauncher.Items.Any(item => item.HasError);
 		}
 		
 	}

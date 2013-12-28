@@ -136,12 +136,19 @@ namespace PeUtility
 			return buffer;
 		}
 		
-		public static IEnumerable<T> Map<T>(this IEnumerable<T> source, Action<T> pred)
+		public static IEnumerable<T> Transform<T>(this IEnumerable<T> seq, Action<T> pred)
 		{
-			foreach(var item in source) {
-				pred(item);
+			foreach(var element in seq) {
+				pred(element);
+				yield return element;
 			}
-			return source;
+		}
+		
+		public static IEnumerable<R> Map<T, R>(this IEnumerable<T> seq, Func<T, R> pred)
+		{
+			foreach(var element in seq) {
+				yield return pred(element);
+			}
 		}
 	}
 }

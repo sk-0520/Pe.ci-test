@@ -201,6 +201,11 @@ namespace PeMain.Setting
 			}
 			return this._iconMap[iconSize];
 		}
+		
+		public void ClearIcon()
+		{
+			this._iconMap.Clear();
+		}
 	}
 	
 	/// <summary>

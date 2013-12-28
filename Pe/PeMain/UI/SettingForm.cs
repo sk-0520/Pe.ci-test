@@ -34,7 +34,7 @@ namespace PeMain.UI
 		{
 			if(this._launcherSelectedItem != null) {
 				// 現在アイテムに入力内容を退避
-				LauncherSetInputValue(this._launcherSelectedItem);
+				LauncherInputValueToItem(this._launcherSelectedItem);
 			}
 			if(e.Item == null) {
 				// 未選択状態
@@ -52,9 +52,19 @@ namespace PeMain.UI
 		{
 			if(this._launcherSelectedItem != null) {
 				// 現在アイテムに入力内容を退避
-				LauncherSetInputValue(this._launcherSelectedItem);
+				LauncherInputValueToItem(this._launcherSelectedItem);
 			}
 			LauncherSelectItem(e.Item);
+		}
+		
+		void TabSetting_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			if(this._nowSelectedTabPage == this.pageLauncher) {
+				e.Cancel = LauncherItemValid();
+			}
+			if(!e.Cancel) {
+				this._nowSelectedTabPage =  e.TabPage;
+			}
 		}
 	}
 }
