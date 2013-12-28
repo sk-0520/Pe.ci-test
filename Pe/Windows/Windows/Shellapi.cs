@@ -8,6 +8,7 @@
  */
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SC.Windows
 {
@@ -126,6 +127,9 @@ namespace SC.Windows
 	}
 	public partial class API
 	{
+		[DllImport("shell32.dll", CharSet = CharSet.Auto , EntryPoint = "#62")]
+		public extern static bool SHChangeIconDialog(IntPtr hOwner, StringBuilder szFilename, int Reserved, ref int lpIconIndex);
+		
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/shell32/SHAppBarMessage.html
 		/// </summary>

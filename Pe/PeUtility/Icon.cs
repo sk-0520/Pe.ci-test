@@ -9,6 +9,9 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
+
 using SC.Windows;
 
 namespace PeUtility
@@ -73,5 +76,32 @@ namespace PeUtility
 
 			return result;
 		}
+	}
+	
+	public class OpenIconDialog: CommonDialog
+	{
+		public string IconPath { set; get; }
+		public int IconIndex { set; get; }
+		
+		//表示
+		protected override bool RunDialog(IntPtr hwndOwner)
+		{
+			const int MAX_PATH = 260;
+			
+			int iconIndex = 0;
+			var sb = new StringBuilder(IconPath,MAX_PATH);
+			bool result = API.SHChangeIconDialog(hwndOwner, sb , MAX_PATH, ref iconIndex);
+			if (result) {
+				IconIndex = iconIndex;
+				IconPath = sb.ToString();
+			}
+			return result;
+		}
+		//ダイアログを初期化する。
+		public override void Reset()
+		{
+			IconPath = string.Empty;
+			IconIndex = 0;
+		}  
 	}
 }

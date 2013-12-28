@@ -66,5 +66,35 @@ namespace PeMain.UI
 				this._nowSelectedTabPage =  e.TabPage;
 			}
 		}
+		
+		void CommandLauncherFilePath_Click(object sender, EventArgs e)
+		{
+			LauncherOpenFilePath(this.inputLauncherCommand);
+		}
+		
+		void CommandLauncherDirPath_Click(object sender, EventArgs e)
+		{
+			LauncherOpenDirPath(this.inputLauncherCommand);
+		}
+		
+		void CommandLauncherWorkDirPath_Click(object sender, EventArgs e)
+		{
+			LauncherOpenDirPath(this.inputLauncherWorkDirPath);
+		}
+		
+		void CommandLauncherIconPath_Click(object sender, EventArgs e)
+		{
+			LauncherOpenIcon();
+		}
+		
+		void CommandLauncherOptionFilePath_Click(object sender, EventArgs e)
+		{
+			LauncherOpenFilePath(this.inputLauncherOption);
+		}
+		
+		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
+		{
+			LauncherOpenDirPath(this.inputLauncherOption);
+		}
 	}
 }
