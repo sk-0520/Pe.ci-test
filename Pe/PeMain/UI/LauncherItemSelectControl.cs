@@ -69,13 +69,13 @@ namespace PeMain.UI
 		
 		void ListLauncherItemsSelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(SelectChnagedItem != null) {
+			if(SelectChangedItem != null) {
 				var index = this.listLauncherItems.SelectedIndex;
 				var ev = new SelectedItemEventArg();
 				if(index != -1) {
 					ev.Item = (LauncherItem)this.listLauncherItems.Items[index];
 				}
-				SelectChnagedItem(this, ev);
+				SelectChangedItem(this, ev);
 			}
 		}
 		

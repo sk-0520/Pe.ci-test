@@ -39,12 +39,14 @@ namespace PeMain.UI
 			if(e.Item == null) {
 				// 未選択状態
 				LauncherInputClear();
+				this.splitContainer1.Panel2.Enabled = false; // NOTE: 暫定対応
 				return;
 			}
 			if(e.Item == this._launcherSelectedItem) {
 				// 現在選択中アイテム
 				return;
 			}
+			this.splitContainer1.Panel2.Enabled = true; // NOTE: 暫定対応
 			LauncherSelectItem(e.Item);
 		}
 		
@@ -73,17 +75,17 @@ namespace PeMain.UI
 		
 		void CommandLauncherFilePath_Click(object sender, EventArgs e)
 		{
-			LauncherOpenFilePath(this.inputLauncherCommand);
+			OpenDialogFilePath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherDirPath_Click(object sender, EventArgs e)
 		{
-			LauncherOpenDirPath(this.inputLauncherCommand);
+			OpenDialogDirPath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherWorkDirPath_Click(object sender, EventArgs e)
 		{
-			LauncherOpenDirPath(this.inputLauncherWorkDirPath);
+			OpenDialogDirPath(this.inputLauncherWorkDirPath);
 		}
 		
 		void CommandLauncherIconPath_Click(object sender, EventArgs e)
@@ -93,12 +95,17 @@ namespace PeMain.UI
 		
 		void CommandLauncherOptionFilePath_Click(object sender, EventArgs e)
 		{
-			LauncherOpenFilePath(this.inputLauncherOption);
+			OpenDialogFilePath(this.inputLauncherOption);
 		}
 		
 		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
 		{
-			LauncherOpenDirPath(this.inputLauncherOption);
+			OpenDialogDirPath(this.inputLauncherOption);
+		}
+		
+		void CommandMainNoteDirPathClick(object sender, EventArgs e)
+		{
+			OpenDialogDirPath(this.inputMainNoteDirPath);
 		}
 	}
 }

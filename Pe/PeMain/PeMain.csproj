@@ -180,9 +180,9 @@
     <None Include="etc\lang\default.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="UI\SettingForm.functions.cs">
+    <Compile Include="UI\SettingForm.functions.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
-    </None>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">

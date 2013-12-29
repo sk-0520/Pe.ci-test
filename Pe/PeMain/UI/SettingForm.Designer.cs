@@ -39,7 +39,10 @@ namespace PeMain.UI
 			this.components = new System.ComponentModel.Container();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
+			this.commandMainNoteDirPath = new System.Windows.Forms.Button();
+			this.inputMainNoteDirPath = new System.Windows.Forms.TextBox();
 			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
+			this.labelMainNoteDirPath = new System.Windows.Forms.Label();
 			this.labelMainLanguage = new System.Windows.Forms.Label();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -128,7 +131,10 @@ namespace PeMain.UI
 			// 
 			// pageMain
 			// 
+			this.pageMain.Controls.Add(this.commandMainNoteDirPath);
+			this.pageMain.Controls.Add(this.inputMainNoteDirPath);
 			this.pageMain.Controls.Add(this.selectMainLanguage);
+			this.pageMain.Controls.Add(this.labelMainNoteDirPath);
 			this.pageMain.Controls.Add(this.labelMainLanguage);
 			this.pageMain.Location = new System.Drawing.Point(4, 24);
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -139,6 +145,24 @@ namespace PeMain.UI
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
 			// 
+			// commandMainNoteDirPath
+			// 
+			this.commandMainNoteDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandMainNoteDirPath.Location = new System.Drawing.Point(227, 66);
+			this.commandMainNoteDirPath.Name = "commandMainNoteDirPath";
+			this.commandMainNoteDirPath.Size = new System.Drawing.Size(34, 25);
+			this.commandMainNoteDirPath.TabIndex = 3;
+			this.commandMainNoteDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandMainNoteDirPath.UseVisualStyleBackColor = true;
+			this.commandMainNoteDirPath.Click += new System.EventHandler(this.CommandMainNoteDirPathClick);
+			// 
+			// inputMainNoteDirPath
+			// 
+			this.inputMainNoteDirPath.Location = new System.Drawing.Point(121, 66);
+			this.inputMainNoteDirPath.Name = "inputMainNoteDirPath";
+			this.inputMainNoteDirPath.Size = new System.Drawing.Size(100, 23);
+			this.inputMainNoteDirPath.TabIndex = 2;
+			// 
 			// selectMainLanguage
 			// 
 			this.selectMainLanguage.FormattingEnabled = true;
@@ -146,6 +170,14 @@ namespace PeMain.UI
 			this.selectMainLanguage.Name = "selectMainLanguage";
 			this.selectMainLanguage.Size = new System.Drawing.Size(121, 23);
 			this.selectMainLanguage.TabIndex = 1;
+			// 
+			// labelMainNoteDirPath
+			// 
+			this.labelMainNoteDirPath.Location = new System.Drawing.Point(15, 66);
+			this.labelMainNoteDirPath.Name = "labelMainNoteDirPath";
+			this.labelMainNoteDirPath.Size = new System.Drawing.Size(100, 23);
+			this.labelMainNoteDirPath.TabIndex = 0;
+			this.labelMainNoteDirPath.Text = "{LANGUAGE}";
 			// 
 			// labelMainLanguage
 			// 
@@ -218,7 +250,7 @@ namespace PeMain.UI
 			this.selecterLauncher.Size = new System.Drawing.Size(217, 302);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
-			this.selecterLauncher.SelectChnagedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
+			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
 			// labelLauncherOption
 			// 
@@ -675,6 +707,7 @@ namespace PeMain.UI
 			this.Text = "{SETTING}";
 			this.tabSetting.ResumeLayout(false);
 			this.pageMain.ResumeLayout(false);
+			this.pageMain.PerformLayout();
 			this.pageLauncher.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -692,6 +725,9 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label labelMainNoteDirPath;
+		private System.Windows.Forms.TextBox inputMainNoteDirPath;
+		private System.Windows.Forms.Button commandMainNoteDirPath;
 		private System.Windows.Forms.Button commandLauncherOptionFilePath;
 		private System.Windows.Forms.Button commandLauncherOptionDirPath;
 		private System.Windows.Forms.TextBox inputLauncherOption;

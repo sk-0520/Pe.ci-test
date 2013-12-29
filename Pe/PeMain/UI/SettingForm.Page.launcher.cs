@@ -100,36 +100,6 @@ namespace PeMain.UI
 			return this.selecterLauncher.Items.Any(item => item.HasError);
 		}
 		
-		void LauncherOpenFilePath(TextBox input)
-		{
-			var path = input.Text.Trim();
-			using(var dialog = new OpenFileDialog()) {
-				if(path.Length > 0 && File.Exists(path)) {
-					dialog.InitialDirectory = Path.GetDirectoryName(path);
-				}
-				
-				if(dialog.ShowDialog() == DialogResult.OK) {
-					input.Text = dialog.FileName;
-				}
-			}
-		}
-		
-		void LauncherOpenDirPath(TextBox input)
-		{
-			var path = input.Text.Trim();
-			using(var dialog = new FolderBrowserDialog()) {
-				dialog.ShowNewFolderButton = true;
-				
-				if(path.Length > 0 && Directory.Exists(path)) {
-					dialog.SelectedPath = path;
-				}
-				
-				if(dialog.ShowDialog() == DialogResult.OK) {
-					input.Text = dialog.SelectedPath;
-				}
-			}
-			
-		}
 		
 		void LauncherOpenIcon()
 		{
@@ -147,6 +117,7 @@ namespace PeMain.UI
 				}
 			}
 		}
+		
 		
 		
 	}
