@@ -121,6 +121,12 @@
     <Compile Include="UI\Pe.language.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pe.MessageWindow.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.MessageWindow.Designer.cs">
+      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.variable.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>

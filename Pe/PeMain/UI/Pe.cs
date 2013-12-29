@@ -24,8 +24,8 @@ namespace PeMain.UI
 		
 		public void Dispose()
 		{
-			if(this.notifyIcon != null) {
-				this.notifyIcon.Dispose();
+			if(this._notifyIcon != null) {
+				this._notifyIcon.Dispose();
 			}
 		}
 		

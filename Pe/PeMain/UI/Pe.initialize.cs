@@ -20,14 +20,19 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
+		void InitializeMessage(string[] args)
+		{
+			this._messageWindow = new MessageWindow(this);
+		}
+
 		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
 		void InitializeSetting(string[] args)
 		{
-			this.mainSetting = Initializer.GetMainSetting(Literal.UserMainSettingPath);
-			this.language = Initializer.GetLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
+			this._mainSetting = Initializer.GetMainSetting(Literal.UserMainSettingPath);
+			this._language = Initializer.GetLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
 		}
 		
 		/// <summary>
@@ -38,11 +43,11 @@ namespace PeMain.UI
 		{
 			MenuItem[] menu = new MenuItem[] {
 				new MenuItem("About", menuAboutClick),
-				new MenuItem(this.language["main/menu/setting"], (object sender, EventArgs e) => {
-				             	var f = new SettingForm(this.language, this.mainSetting);
+				new MenuItem(this._language["main/menu/setting"], (object sender, EventArgs e) => {
+				             	var f = new SettingForm(this._language, this._mainSetting);
 				             	PauseOthers(() => f.ShowDialog());
 				}),
-				new MenuItem(this.language["common/menu/exit"], menuExitClick),
+				new MenuItem(this._language["common/menu/exit"], menuExitClick),
 			};
 			return menu;
 		}
@@ -53,14 +58,14 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void InitializeUI(string[] args)
 		{
-			this.notifyIcon = new NotifyIcon();
-			this.notificationMenu = new ContextMenu(InitializeMenu());
+			this._notifyIcon = new NotifyIcon();
+			this._notificationMenu = new ContextMenu(InitializeMenu());
 			
-			this.notifyIcon.DoubleClick += IconDoubleClick;
-			this.notifyIcon.Visible = true;
+			this._notifyIcon.DoubleClick += IconDoubleClick;
+			this._notifyIcon.Visible = true;
 			
-			this.notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
-			this.notifyIcon.ContextMenu = this.notificationMenu;
+			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
+			this._notifyIcon.ContextMenu = this._notificationMenu;
 		}
 		
 		/// <summary>
@@ -69,6 +74,7 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void Initialize(string[] args)
 		{
+			InitializeMessage(args);
 			InitializeSetting(args);
 			InitializeUI(args);
 		}

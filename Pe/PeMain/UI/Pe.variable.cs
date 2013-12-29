@@ -17,10 +17,11 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
-		private NotifyIcon notifyIcon;
-		private ContextMenu notificationMenu;
+		private NotifyIcon _notifyIcon;
+		private ContextMenu _notificationMenu;
+		private MessageWindow _messageWindow;
 		
-		private MainSetting mainSetting;
-		private Language language;
+		private MainSetting _mainSetting;
+		private Language _language;
 	}
 }
