@@ -16,6 +16,7 @@ namespace PeMain.Setting
 	/// <summary>
 	/// コマンドランチャー設定
 	/// </summary>
+	[Serializable]
 	public class CommandSetting: Item, IDisposable
 	{
 		//private Font _font = null;

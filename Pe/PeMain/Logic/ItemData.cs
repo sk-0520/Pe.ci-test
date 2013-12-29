@@ -8,8 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Setting;
+using PeUtility;
 
 namespace PeMain.Logic
 {
@@ -64,12 +66,25 @@ namespace PeMain.Logic
 			control.DisplayMember  = "Display";
 		}
 		
-		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas)
+		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas, T defaultData)
 		{
 			control.DataSource = itemDatas;
 			SetValueAndDisplay(control);
 		}
+		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas)
+		{
+			control.Attachment(itemDatas, itemDatas.DefaultIfEmpty().First().Value);
+		}
 	}
 	
+	public class IconSizeItem: UseLanguageItemData<IconSize>
+	{
+		public IconSizeItem(IconSize value): base(value) { }
+		public IconSizeItem(IconSize value, Language lang): base(value, lang) { }
+		
+		public override string Display { get { return Value.ToText(Language); } }
+	}
+	
+
 	
 }

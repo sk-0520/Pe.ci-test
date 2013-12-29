@@ -7,14 +7,28 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+
+using PeMain.Logic;
 using PeMain.Setting;
+using PeUtility;
 
 namespace PeMain.UI
 {
 	public partial class SettingForm
 	{
+		void AttachmentIconSize(ComboBox control, IconSize defaultData)
+		{
+			var iconSizeList = new List<IconSizeItem>();
+			foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big, IconSize.Large }) {
+				var data = new IconSizeItem(value, Language);
+				iconSizeList.Add(data);
+			}
+			control.Attachment(iconSizeList, defaultData);
+		}
+		
 		void OpenDialogFilePath(TextBox input)
 		{
 			var path = input.Text.Trim();

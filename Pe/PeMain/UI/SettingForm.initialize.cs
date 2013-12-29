@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using PeMain.Logic;
 using PeMain.Setting;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -39,6 +40,9 @@ namespace PeMain.UI
 		{
 			this._commandFont = commandSetting.FontSetting;
 			SetViewMessage(this.commandCommandFont, this._commandFont);
+			
+			// アイコンサイズ文言の項目構築
+			AttachmentIconSize(this.selectCommandIcon, commandSetting.IconSize);
 		}
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
@@ -48,14 +52,16 @@ namespace PeMain.UI
 			this._toolbarFont = toolbarSetting.FontSetting;
 			SetViewMessage(this.commandToolbarFont, this._toolbarFont);
 			
+			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionItem>();
 			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom, }) {
 				var data = new ToolbarPositionItem(value, Language);
 				toolbarPosList.Add(data);
 			}
 			this.selectToolbarPosition.Attachment(toolbarPosList);
-
-			//Attachment
+			
+			// アイコンサイズ文言の項目構築
+			AttachmentIconSize(this.selectToolbarIcon, toolbarSetting.IconSize);
 		}
 		
 		void InitializeUI(MainSetting mainSetting)

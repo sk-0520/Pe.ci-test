@@ -14,6 +14,7 @@ namespace PeMain.Setting
 	/// <summary>
 	/// TODO: 後回し
 	/// </summary>
+	[Serializable]
 	public class NoteSetting: Item
 	{
 		public NoteSetting()

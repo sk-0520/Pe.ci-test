@@ -61,8 +61,34 @@ namespace PeMain.Setting
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
-
 	
+	/// <summary>
+	/// 
+	/// </summary>
+	[Serializable]
+	public class ToolbarItem: NameItem
+	{
+		public ToolbarItem()
+		{
+			ItemNames = new List<string>();
+		}
+		
+		public List<string> ItemNames { get; set; }
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	[Serializable]
+	public class ToolbarGroup
+	{
+		public ToolbarGroup()
+		{
+			Items = new List<ToolbarItem>();
+		}
+		
+		public List<ToolbarItem> Items { get; set; }
+	}
 	
 	
 	/// <summary>
@@ -73,7 +99,10 @@ namespace PeMain.Setting
 		public ToolbarSetting()
 		{
 			FontSetting = new FontSetting();
+			ToolbarGroup = new ToolbarGroup();
 		}
+		
+		public ToolbarGroup ToolbarGroup { get; set; }
 		
 		/// <summary>
 		/// 表示

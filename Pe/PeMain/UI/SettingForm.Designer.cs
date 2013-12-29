@@ -72,6 +72,8 @@ namespace PeMain.UI
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.labelCommandIcon = new System.Windows.Forms.Label();
+			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.titleCommandHideTime = new System.Windows.Forms.Label();
@@ -177,7 +179,7 @@ namespace PeMain.UI
 			this.labelMainNoteDirPath.Name = "labelMainNoteDirPath";
 			this.labelMainNoteDirPath.Size = new System.Drawing.Size(100, 23);
 			this.labelMainNoteDirPath.TabIndex = 0;
-			this.labelMainNoteDirPath.Text = "{LANGUAGE}";
+			this.labelMainNoteDirPath.Text = "{NOTE}";
 			// 
 			// labelMainLanguage
 			// 
@@ -464,6 +466,8 @@ namespace PeMain.UI
 			// 
 			// pageCommand
 			// 
+			this.pageCommand.Controls.Add(this.labelCommandIcon);
+			this.pageCommand.Controls.Add(this.selectCommandIcon);
 			this.pageCommand.Controls.Add(this.inputCommandHideTime);
 			this.pageCommand.Controls.Add(this.selectCommandTopmost);
 			this.pageCommand.Controls.Add(this.titleCommandHideTime);
@@ -476,6 +480,22 @@ namespace PeMain.UI
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
+			// 
+			// labelCommandIcon
+			// 
+			this.labelCommandIcon.Location = new System.Drawing.Point(39, 152);
+			this.labelCommandIcon.Name = "labelCommandIcon";
+			this.labelCommandIcon.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandIcon.TabIndex = 14;
+			this.labelCommandIcon.Text = "{ICON}";
+			// 
+			// selectCommandIcon
+			// 
+			this.selectCommandIcon.FormattingEnabled = true;
+			this.selectCommandIcon.Location = new System.Drawing.Point(145, 155);
+			this.selectCommandIcon.Name = "selectCommandIcon";
+			this.selectCommandIcon.Size = new System.Drawing.Size(121, 23);
+			this.selectCommandIcon.TabIndex = 13;
 			// 
 			// inputCommandHideTime
 			// 
@@ -727,6 +747,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ComboBox selectCommandIcon;
+		private System.Windows.Forms.Label labelCommandIcon;
 		private System.Windows.Forms.Label labelMainNoteDirPath;
 		private System.Windows.Forms.TextBox inputMainNoteDirPath;
 		private System.Windows.Forms.Button commandMainNoteDirPath;
