@@ -125,5 +125,6 @@ namespace PeMain.UI
 				SetViewMessage(this.commandToolbarFont, this._toolbarFont);
 			}
 		}
+		
 	}
 }

@@ -80,8 +80,10 @@ namespace PeMain.UI
 			this.commandCommandFont = new System.Windows.Forms.Button();
 			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
-			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.toolToolbarGroup = new System.Windows.Forms.ToolStrip();
 			this.treeToolbarItemGroup = new System.Windows.Forms.TreeView();
+			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
 			this.labelToolbarIcon = new System.Windows.Forms.Label();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
 			this.labelToolbarPosition = new System.Windows.Forms.Label();
@@ -97,6 +99,13 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.toolToolbarGroup_addGroup = new System.Windows.Forms.ToolStripButton();
+			this.toolToolbarGroup_addItem = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolToolbarGroup_up = new System.Windows.Forms.ToolStripButton();
+			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
@@ -109,6 +118,11 @@ namespace PeMain.UI
 			this.pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.pageToolbar.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+			this.splitContainer2.Panel1.SuspendLayout();
+			this.splitContainer2.Panel2.SuspendLayout();
+			this.splitContainer2.SuspendLayout();
+			this.toolToolbarGroup.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -541,8 +555,7 @@ namespace PeMain.UI
 			// 
 			// pageToolbar
 			// 
-			this.pageToolbar.Controls.Add(this.selecterToolbar);
-			this.pageToolbar.Controls.Add(this.treeToolbarItemGroup);
+			this.pageToolbar.Controls.Add(this.splitContainer2);
 			this.pageToolbar.Controls.Add(this.labelToolbarIcon);
 			this.pageToolbar.Controls.Add(this.selectToolbarIcon);
 			this.pageToolbar.Controls.Add(this.labelToolbarPosition);
@@ -558,24 +571,60 @@ namespace PeMain.UI
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
 			// 
+			// splitContainer2
+			// 
+			this.splitContainer2.Location = new System.Drawing.Point(278, 78);
+			this.splitContainer2.Name = "splitContainer2";
+			// 
+			// splitContainer2.Panel1
+			// 
+			this.splitContainer2.Panel1.Controls.Add(this.toolToolbarGroup);
+			this.splitContainer2.Panel1.Controls.Add(this.treeToolbarItemGroup);
+			// 
+			// splitContainer2.Panel2
+			// 
+			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
+			this.splitContainer2.Size = new System.Drawing.Size(265, 179);
+			this.splitContainer2.SplitterDistance = 158;
+			this.splitContainer2.TabIndex = 15;
+			// 
+			// toolToolbarGroup
+			// 
+			this.toolToolbarGroup.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolToolbarGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.toolToolbarGroup_addGroup,
+									this.toolToolbarGroup_addItem,
+									this.toolStripSeparator1,
+									this.toolToolbarGroup_up,
+									this.toolToolbarGroup_down,
+									this.toolStripSeparator2,
+									this.toolToolbarGroup_remove});
+			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
+			this.toolToolbarGroup.Name = "toolToolbarGroup";
+			this.toolToolbarGroup.Size = new System.Drawing.Size(158, 25);
+			this.toolToolbarGroup.TabIndex = 0;
+			this.toolToolbarGroup.Text = "toolStrip1";
+			// 
+			// treeToolbarItemGroup
+			// 
+			this.treeToolbarItemGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
+			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(158, 179);
+			this.treeToolbarItemGroup.TabIndex = 13;
+			// 
 			// selecterToolbar
 			// 
+			this.selecterToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterToolbar.Filtering = false;
 			this.selecterToolbar.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
 			this.selecterToolbar.IconSize = PeUtility.IconSize.Small;
 			this.selecterToolbar.ItemEdit = false;
-			this.selecterToolbar.Location = new System.Drawing.Point(415, 48);
+			this.selecterToolbar.Location = new System.Drawing.Point(0, 0);
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
-			this.selecterToolbar.Size = new System.Drawing.Size(150, 150);
+			this.selecterToolbar.Size = new System.Drawing.Size(103, 179);
 			this.selecterToolbar.TabIndex = 14;
-			// 
-			// treeToolbarItemGroup
-			// 
-			this.treeToolbarItemGroup.Location = new System.Drawing.Point(288, 48);
-			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(121, 150);
-			this.treeToolbarItemGroup.TabIndex = 13;
 			// 
 			// labelToolbarIcon
 			// 
@@ -714,6 +763,61 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// toolToolbarGroup_addGroup
+			// 
+			this.toolToolbarGroup_addGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_addGroup.Image = global::PeMain.Properties.Images.Group;
+			this.toolToolbarGroup_addGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_addGroup.Name = "toolToolbarGroup_addGroup";
+			this.toolToolbarGroup_addGroup.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_addGroup.Text = "toolStripButton1";
+			// 
+			// toolToolbarGroup_addItem
+			// 
+			this.toolToolbarGroup_addItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_addItem.Image = global::PeMain.Properties.Images.AddItem;
+			this.toolToolbarGroup_addItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_addItem.Name = "toolToolbarGroup_addItem";
+			this.toolToolbarGroup_addItem.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_addItem.Text = "toolStripButton2";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolToolbarGroup_up
+			// 
+			this.toolToolbarGroup_up.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_up.Image = global::PeMain.Properties.Images.Up;
+			this.toolToolbarGroup_up.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_up.Name = "toolToolbarGroup_up";
+			this.toolToolbarGroup_up.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_up.Text = "toolStripButton1";
+			// 
+			// toolToolbarGroup_down
+			// 
+			this.toolToolbarGroup_down.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_down.Image = global::PeMain.Properties.Images.Down;
+			this.toolToolbarGroup_down.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_down.Name = "toolToolbarGroup_down";
+			this.toolToolbarGroup_down.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_down.Text = "toolStripButton2";
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolToolbarGroup_remove
+			// 
+			this.toolToolbarGroup_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_remove.Image = global::PeMain.Properties.Images.Remove;
+			this.toolToolbarGroup_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_remove.Name = "toolToolbarGroup_remove";
+			this.toolToolbarGroup_remove.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_remove.Text = "toolStripButton3";
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -741,12 +845,28 @@ namespace PeMain.UI
 			this.pageCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.pageToolbar.ResumeLayout(false);
+			this.splitContainer2.Panel1.ResumeLayout(false);
+			this.splitContainer2.Panel1.PerformLayout();
+			this.splitContainer2.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+			this.splitContainer2.ResumeLayout(false);
+			this.toolToolbarGroup.ResumeLayout(false);
+			this.toolToolbarGroup.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripButton toolToolbarGroup_remove;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripButton toolToolbarGroup_down;
+		private System.Windows.Forms.ToolStripButton toolToolbarGroup_up;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripButton toolToolbarGroup_addItem;
+		private System.Windows.Forms.ToolStripButton toolToolbarGroup_addGroup;
+		private System.Windows.Forms.ToolStrip toolToolbarGroup;
+		private System.Windows.Forms.SplitContainer splitContainer2;
 		private System.Windows.Forms.ComboBox selectCommandIcon;
 		private System.Windows.Forms.Label labelCommandIcon;
 		private System.Windows.Forms.Label labelMainNoteDirPath;
