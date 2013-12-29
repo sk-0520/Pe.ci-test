@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Xml.Serialization;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.Setting
@@ -31,6 +32,14 @@ namespace PeMain.Setting
 		/// 組み込み
 		/// </summary>
 		Pe
+	}
+	
+	public class LauncherTypeItem: UseLanguageItemData<LauncherType>
+	{
+		public LauncherTypeItem(LauncherType value): base(value) { }
+		public LauncherTypeItem(LauncherType value, Language lang): base(value, lang) { }
+		
+		public override string Display { get { return Value.ToText(Language); } }
 	}
 	
 	/// <summary>

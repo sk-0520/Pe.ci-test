@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using PeMain.Logic;
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -46,6 +47,15 @@ namespace PeMain.UI
 			
 			this._toolbarFont = toolbarSetting.FontSetting;
 			SetViewMessage(this.commandToolbarFont, this._toolbarFont);
+			
+			var toolbarPosList = new List<ToolbarPositionItem>();
+			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom, }) {
+				var data = new ToolbarPositionItem(value, Language);
+				toolbarPosList.Add(data);
+			}
+			this.selectToolbarPosition.Attachment(toolbarPosList);
+
+			//Attachment
 		}
 		
 		void InitializeUI(MainSetting mainSetting)

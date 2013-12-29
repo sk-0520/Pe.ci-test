@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.Setting
@@ -53,6 +53,18 @@ namespace PeMain.Setting
 		/// </summary>
 		WindowBottom,
 	}
+	
+	public class ToolbarPositionItem: UseLanguageItemData<ToolbarPosition>
+	{
+		public ToolbarPositionItem(ToolbarPosition value): base(value) { }
+		public ToolbarPositionItem(ToolbarPosition value, Language lang): base(value, lang) { }
+		
+		public override string Display { get { return Value.ToText(Language); } }
+	}
+
+	
+	
+	
 	/// <summary>
 	/// 
 	/// </summary>
