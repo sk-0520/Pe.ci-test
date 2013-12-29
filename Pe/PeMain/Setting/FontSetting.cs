@@ -55,6 +55,11 @@ namespace PeMain.Setting
 			}
 		}
 		
+		public bool IsDefault
+		{
+			get { return string.IsNullOrWhiteSpace(this.Family); } 
+		}
+		
 		public void Dispose()
 		{
 			if(this._font != null) {

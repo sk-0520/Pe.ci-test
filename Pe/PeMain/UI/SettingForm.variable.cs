@@ -19,8 +19,8 @@ namespace PeMain.UI
 	public partial class SettingForm
 	{
 		HashSet<LauncherItem> _launcherItems = null;
-		FontSetting commandFont = null;
-		FontSetting toolbarFont = null;
+		FontSetting _commandFont = null;
+		FontSetting _toolbarFont = null;
 		LauncherItem _launcherSelectedItem = null;
 		
 		TabPage _nowSelectedTabPage = null;

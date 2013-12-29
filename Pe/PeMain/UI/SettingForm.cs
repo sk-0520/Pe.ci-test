@@ -107,5 +107,23 @@ namespace PeMain.UI
 		{
 			OpenDialogDirPath(this.inputMainNoteDirPath);
 		}
+		
+		void CommandCommandFont_Click(object sender, EventArgs e)
+		{
+			var fontSetting = OpenDialogFontSetting(this.commandCommandFont, this._commandFont);
+			if(fontSetting != null) {
+				this._commandFont = fontSetting;
+				SetViewMessage(this.commandCommandFont, this._commandFont);
+			}
+		}
+		
+		void CommandToolbarFont_Click(object sender, EventArgs e)
+		{
+			var fontSetting = OpenDialogFontSetting(this.commandToolbarFont, this._toolbarFont);
+			if(fontSetting != null) {
+				this._toolbarFont = fontSetting;
+				SetViewMessage(this.commandToolbarFont, this._toolbarFont);
+			}
+		}
 	}
 }

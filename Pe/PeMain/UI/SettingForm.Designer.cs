@@ -509,6 +509,7 @@ namespace PeMain.UI
 			this.commandCommandFont.TabIndex = 1;
 			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
 			this.commandCommandFont.UseVisualStyleBackColor = true;
+			this.commandCommandFont.Click += new System.EventHandler(this.CommandCommandFont_Click);
 			// 
 			// titleCommandFont
 			// 
@@ -614,6 +615,7 @@ namespace PeMain.UI
 			this.commandToolbarFont.TabIndex = 6;
 			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
 			this.commandToolbarFont.UseVisualStyleBackColor = true;
+			this.commandToolbarFont.Click += new System.EventHandler(this.CommandToolbarFont_Click);
 			// 
 			// labelToolbarFonr
 			// 

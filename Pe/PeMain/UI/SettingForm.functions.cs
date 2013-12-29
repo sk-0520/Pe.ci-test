@@ -9,6 +9,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using PeMain.Setting;
 
 namespace PeMain.UI
 {
@@ -40,6 +41,34 @@ namespace PeMain.UI
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					input.Text = dialog.SelectedPath;
+				}
+			}
+		}
+		
+		void SetViewMessage(Control viewControl, FontSetting fontSetting)
+		{
+			string viewText = Language["common/font-view"];
+			if(fontSetting != null && !fontSetting.IsDefault) {
+				viewText = string.Format("{0} {1}", fontSetting.Family, fontSetting.Height);
+			}
+			viewControl.Text = viewText;
+		}
+		
+		FontSetting OpenDialogFontSetting(Control viewControl, FontSetting fontSetting)
+		{
+			using(var dialog = new FontDialog()) {
+				if(fontSetting != null && !fontSetting.IsDefault) {
+					dialog.Font = fontSetting.Font;
+				}
+				
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					var result = new FontSetting();
+					var font = dialog.Font;
+					result.Family = font.FontFamily.Name;
+					result.Height = font.Height;
+					return result;
+				} else {
+					return null;
 				}
 			}
 		}

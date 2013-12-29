@@ -36,14 +36,16 @@ namespace PeMain.UI
 		
 		void InitializeCommand(CommandSetting commandSetting)
 		{
-			this.commandFont = commandSetting.FontSetting;
+			this._commandFont = commandSetting.FontSetting;
+			SetViewMessage(this.commandCommandFont, this._commandFont);
 		}
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
-			this.toolbarFont = toolbarSetting.FontSetting;
+			this._toolbarFont = toolbarSetting.FontSetting;
+			SetViewMessage(this.commandToolbarFont, this._toolbarFont);
 		}
 		
 		void InitializeUI(MainSetting mainSetting)
