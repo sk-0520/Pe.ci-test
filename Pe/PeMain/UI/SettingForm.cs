@@ -157,5 +157,22 @@ namespace PeMain.UI
 		{
 			
 		}
+		
+		void TreeToolbarItemGroup_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			var node = this.treeToolbarItemGroup.SelectedNode;
+			if(node.Level == TREE_LEVEL_ITEM) {
+				ToolbarSelectedChangeGroupItem((LauncherItem)node.Tag);
+			}
+		}
+		
+		void SelecterToolbar_SelectChangedItem(object sender, SelectedItemEventArg e)
+		{
+			var item = this.selecterToolbar.SelectedItem;
+			var node = this.treeToolbarItemGroup.SelectedNode;
+			if(item != null && node != null && node.Level == TREE_LEVEL_ITEM) {
+				ToolbarSetItem(node, item);
+			}
+		}
 	}
 }

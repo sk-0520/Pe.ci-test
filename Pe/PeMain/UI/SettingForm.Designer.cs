@@ -267,6 +267,7 @@ namespace PeMain.UI
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
+			this.selecterLauncher.SelectedItem = null;
 			this.selecterLauncher.Size = new System.Drawing.Size(217, 302);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
@@ -577,7 +578,7 @@ namespace PeMain.UI
 			// 
 			// splitContainer2
 			// 
-			this.splitContainer2.Location = new System.Drawing.Point(278, 78);
+			this.splitContainer2.Location = new System.Drawing.Point(269, 78);
 			this.splitContainer2.Name = "splitContainer2";
 			// 
 			// splitContainer2.Panel1
@@ -587,8 +588,8 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(265, 179);
-			this.splitContainer2.SplitterDistance = 158;
+			this.splitContainer2.Size = new System.Drawing.Size(287, 179);
+			this.splitContainer2.SplitterDistance = 171;
 			this.splitContainer2.TabIndex = 15;
 			// 
 			// toolStripContainer1
@@ -598,13 +599,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(158, 154);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(171, 154);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(158, 179);
+			this.toolStripContainer1.Size = new System.Drawing.Size(171, 179);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -615,10 +616,12 @@ namespace PeMain.UI
 			// treeToolbarItemGroup
 			// 
 			this.treeToolbarItemGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeToolbarItemGroup.HideSelection = false;
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(158, 154);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(171, 154);
 			this.treeToolbarItemGroup.TabIndex = 13;
+			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
 			// 
 			// toolToolbarGroup
 			// 
@@ -634,7 +637,7 @@ namespace PeMain.UI
 									this.toolToolbarGroup_remove});
 			this.toolToolbarGroup.Location = new System.Drawing.Point(3, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
-			this.toolToolbarGroup.Size = new System.Drawing.Size(155, 25);
+			this.toolToolbarGroup.Size = new System.Drawing.Size(130, 25);
 			this.toolToolbarGroup.TabIndex = 0;
 			this.toolToolbarGroup.Text = "toolStrip1";
 			// 
@@ -708,8 +711,10 @@ namespace PeMain.UI
 			this.selecterToolbar.Location = new System.Drawing.Point(0, 0);
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
-			this.selecterToolbar.Size = new System.Drawing.Size(103, 179);
+			this.selecterToolbar.SelectedItem = null;
+			this.selecterToolbar.Size = new System.Drawing.Size(112, 179);
 			this.selecterToolbar.TabIndex = 14;
+			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
 			// labelToolbarIcon
 			// 

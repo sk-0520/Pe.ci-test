@@ -53,6 +53,13 @@ namespace PeMain.UI
 			FilterType = type;
 		}
 		
+		void ToolLauncherItems_filter_Click(object sender, EventArgs e)
+		{
+			if(this.toolLauncherItems_filter.Checked) {
+				Filtering = false;
+			}
+		}
+		
 		void ToolLauncherItems_createClick(object sender, EventArgs e)
 		{
 			CreateLauncherItem();

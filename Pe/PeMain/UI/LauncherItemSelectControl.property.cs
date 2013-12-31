@@ -53,6 +53,10 @@ namespace PeMain.UI
 				var item = this.listLauncherItems.SelectedItem;
 				return item as LauncherItem;
 			}
+			set
+			{
+				this.listLauncherItems.SelectedItem = value;
+			}
 		}
 		
 		public IconSize IconSize { get; set; }

@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using PeMain.Setting;
 using PeUtility;
 
 namespace PeMain.UI
@@ -34,20 +35,39 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Nodes.Add(node);
 		}
 		
+		void ToolbarSetItem(TreeNode node, LauncherItem item)
+		{
+			Debug.Assert(node != null);
+			Debug.Assert(item != null);
+			
+			node.Text = item.Name;
+			node.ImageKey = item.Name;
+			node.Tag = item;
+		}
+		
 		void ToolbarAddItem(TreeNode parentNode)
 		{
 			Debug.Assert(parentNode != null);
-			var viewItems = this.selecterToolbar.ViewItems;
-			if(viewItems != null && viewItems.Count() > 0) {
+			var items = this.selecterToolbar.Items;
+			if(items != null && items.Count() > 0) {
 				var item = this.selecterToolbar.SelectedItem;
 				if(item == null) {
-					item = viewItems.First();
+					item = items.First();
 				}
 				var node = new TreeNode();
-				node.Text = item.Name;
-				node.ImageKey = item.Name;
+				ToolbarSetItem(node, item);
 				parentNode.Nodes.Add(node);
 			}
+		}
+		
+		void ToolbarSelectedChangeGroupItem(LauncherItem item)
+		{
+			Debug.Assert(item != null);
+			var showItem = this.selecterToolbar.ViewItems.Any(i => i == item);
+			if(!showItem) {
+				this.selecterToolbar.Filtering = false;
+			}
+			this.selecterToolbar.SelectedItem = item;
 		}
 	}
 }
