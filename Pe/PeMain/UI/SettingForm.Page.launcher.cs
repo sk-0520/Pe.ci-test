@@ -122,6 +122,11 @@ namespace PeMain.UI
 		{
 			var item = new LauncherItem();
 			
+			item.Command = filePath;
+			item.IconPath = filePath;
+			item.IconIndex = 0;
+			item.LauncherType = LauncherType.File;
+				
 			// ショートカットの場合リンク元をファイルとする
 			var dotExt = Path.GetExtension(filePath);
 			switch(dotExt.ToLower()) {
@@ -129,6 +134,7 @@ namespace PeMain.UI
 					break;
 					
 				case ".url":
+					item.LauncherType = LauncherType.URI;
 					break;
 				
 				case ".exe":
@@ -136,7 +142,7 @@ namespace PeMain.UI
 					
 				default:
 					item.Command = filePath;
-					item.IconIndex = filePath;
+					item.IconPath = filePath;
 					item.IconIndex = 0;
 					break;
 			}
