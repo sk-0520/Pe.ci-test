@@ -126,5 +126,30 @@ namespace PeMain.UI
 			}
 		}
 		
+		
+		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
+		{
+			ToolbarAddGroup();
+		}
+		
+		void ToolToolbarGroup_addItem_Click(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void ToolToolbarGroup_up_Click(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void ToolToolbarGroup_down_Click(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void ToolToolbarGroup_remove_Click(object sender, EventArgs e)
+		{
+			
+		}
 	}
 }

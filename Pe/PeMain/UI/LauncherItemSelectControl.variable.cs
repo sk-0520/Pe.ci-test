@@ -21,6 +21,7 @@ namespace PeMain.UI
 		private bool _itemEdit;
 		private LauncherItemSelecterType _filterType;
 		private List<LauncherItem> _items;
+		private List<LauncherItem> _viewItems;
 		private bool _filtering;
 	}
 }

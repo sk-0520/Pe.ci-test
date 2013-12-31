@@ -166,6 +166,7 @@ namespace PeMain.UI
 			// 
 			this.toolLauncherItems_input.Name = "toolLauncherItems_input";
 			this.toolLauncherItems_input.Size = new System.Drawing.Size(20, 25);
+			this.toolLauncherItems_input.TextChanged += new System.EventHandler(this.ToolLauncherItems_input_TextChanged);
 			// 
 			// LauncherItemSelectControl
 			// 

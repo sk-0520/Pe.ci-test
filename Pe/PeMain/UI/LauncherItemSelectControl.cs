@@ -103,5 +103,10 @@ namespace PeMain.UI
 			
 			e.DrawFocusRectangle();
 		}
+		
+		void ToolLauncherItems_input_TextChanged(object sender, EventArgs e)
+		{
+			Filtering = this.toolLauncherItems_input.TextLength > 0;
+		}
 	}
 }

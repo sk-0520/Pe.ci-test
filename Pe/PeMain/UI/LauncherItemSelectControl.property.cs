@@ -59,6 +59,14 @@ namespace PeMain.UI
 		
 		public IEnumerable<LauncherItem> Items { get { return this._items; } }
 		
+		public IEnumerable<LauncherItem> ViewItems
+		{
+			get
+			{
+				return this._viewItems;
+			}
+		}
+		
 		public bool Filtering
 		{
 			get 
@@ -69,6 +77,9 @@ namespace PeMain.UI
 			{
 				//TODO: ぼたんやなんや
 				this._filtering = value;
+				if(this._filtering) {
+					ApplyFilter();
+				}
 			}
 		}
 	}

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PeMain.Setting;
 using PeUtility;
@@ -133,6 +134,14 @@ namespace PeMain.UI
 		{
 			this._items.Add(item);
 			this.listLauncherItems.Items.Add(item);
+		}
+		
+		void ApplyFilter()
+		{
+			var srcPattern = this.toolLauncherItems_input.Text;
+			var wldPattern = Regex.Escape(srcPattern).Replace(@"\*", ".*").Replace(@"\?", ".");
+			var reg = new Regex(wldPattern);
+			//this._items.Where(item => )
 		}
 		
 		

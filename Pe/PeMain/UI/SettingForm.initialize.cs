@@ -62,6 +62,10 @@ namespace PeMain.UI
 			
 			// アイコンサイズ文言の項目構築
 			AttachmentIconSize(this.selectToolbarIcon, toolbarSetting.IconSize);
+			
+			// グループ用項目
+			this.imageToolbarItemGroup = new ImageList();
+			this.imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
 		}
 		
 		void InitializeUI(MainSetting mainSetting)

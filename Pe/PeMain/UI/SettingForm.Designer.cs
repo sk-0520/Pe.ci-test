@@ -81,8 +81,16 @@ namespace PeMain.UI
 			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.toolToolbarGroup = new System.Windows.Forms.ToolStrip();
+			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.treeToolbarItemGroup = new System.Windows.Forms.TreeView();
+			this.toolToolbarGroup = new System.Windows.Forms.ToolStrip();
+			this.toolToolbarGroup_addGroup = new System.Windows.Forms.ToolStripButton();
+			this.toolToolbarGroup_addItem = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolToolbarGroup_up = new System.Windows.Forms.ToolStripButton();
+			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
 			this.labelToolbarIcon = new System.Windows.Forms.Label();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
@@ -99,13 +107,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.toolToolbarGroup_addGroup = new System.Windows.Forms.ToolStripButton();
-			this.toolToolbarGroup_addItem = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolToolbarGroup_up = new System.Windows.Forms.ToolStripButton();
-			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
@@ -122,6 +123,9 @@ namespace PeMain.UI
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
+			this.toolStripContainer1.ContentPanel.SuspendLayout();
+			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
+			this.toolStripContainer1.SuspendLayout();
 			this.toolToolbarGroup.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -578,8 +582,7 @@ namespace PeMain.UI
 			// 
 			// splitContainer2.Panel1
 			// 
-			this.splitContainer2.Panel1.Controls.Add(this.toolToolbarGroup);
-			this.splitContainer2.Panel1.Controls.Add(this.treeToolbarItemGroup);
+			this.splitContainer2.Panel1.Controls.Add(this.toolStripContainer1);
 			// 
 			// splitContainer2.Panel2
 			// 
@@ -588,8 +591,38 @@ namespace PeMain.UI
 			this.splitContainer2.SplitterDistance = 158;
 			this.splitContainer2.TabIndex = 15;
 			// 
+			// toolStripContainer1
+			// 
+			this.toolStripContainer1.BottomToolStripPanelVisible = false;
+			// 
+			// toolStripContainer1.ContentPanel
+			// 
+			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(158, 154);
+			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.toolStripContainer1.LeftToolStripPanelVisible = false;
+			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+			this.toolStripContainer1.Name = "toolStripContainer1";
+			this.toolStripContainer1.RightToolStripPanelVisible = false;
+			this.toolStripContainer1.Size = new System.Drawing.Size(158, 179);
+			this.toolStripContainer1.TabIndex = 0;
+			this.toolStripContainer1.Text = "toolStripContainer1";
+			// 
+			// toolStripContainer1.TopToolStripPanel
+			// 
+			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolToolbarGroup);
+			// 
+			// treeToolbarItemGroup
+			// 
+			this.treeToolbarItemGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
+			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(158, 154);
+			this.treeToolbarItemGroup.TabIndex = 13;
+			// 
 			// toolToolbarGroup
 			// 
+			this.toolToolbarGroup.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolToolbarGroup.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolToolbarGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolToolbarGroup_addGroup,
@@ -599,19 +632,71 @@ namespace PeMain.UI
 									this.toolToolbarGroup_down,
 									this.toolStripSeparator2,
 									this.toolToolbarGroup_remove});
-			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
+			this.toolToolbarGroup.Location = new System.Drawing.Point(3, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
-			this.toolToolbarGroup.Size = new System.Drawing.Size(158, 25);
+			this.toolToolbarGroup.Size = new System.Drawing.Size(155, 25);
 			this.toolToolbarGroup.TabIndex = 0;
 			this.toolToolbarGroup.Text = "toolStrip1";
 			// 
-			// treeToolbarItemGroup
+			// toolToolbarGroup_addGroup
 			// 
-			this.treeToolbarItemGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
-			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(158, 179);
-			this.treeToolbarItemGroup.TabIndex = 13;
+			this.toolToolbarGroup_addGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_addGroup.Image = global::PeMain.Properties.Images.Group;
+			this.toolToolbarGroup_addGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_addGroup.Name = "toolToolbarGroup_addGroup";
+			this.toolToolbarGroup_addGroup.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_addGroup.Text = "toolStripButton1";
+			this.toolToolbarGroup_addGroup.Click += new System.EventHandler(this.ToolToolbarGroup_addGroup_Click);
+			// 
+			// toolToolbarGroup_addItem
+			// 
+			this.toolToolbarGroup_addItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_addItem.Image = global::PeMain.Properties.Images.AddItem;
+			this.toolToolbarGroup_addItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_addItem.Name = "toolToolbarGroup_addItem";
+			this.toolToolbarGroup_addItem.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_addItem.Text = "toolStripButton2";
+			this.toolToolbarGroup_addItem.Click += new System.EventHandler(this.ToolToolbarGroup_addItem_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolToolbarGroup_up
+			// 
+			this.toolToolbarGroup_up.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_up.Image = global::PeMain.Properties.Images.Up;
+			this.toolToolbarGroup_up.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_up.Name = "toolToolbarGroup_up";
+			this.toolToolbarGroup_up.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_up.Text = "toolStripButton1";
+			this.toolToolbarGroup_up.Click += new System.EventHandler(this.ToolToolbarGroup_up_Click);
+			// 
+			// toolToolbarGroup_down
+			// 
+			this.toolToolbarGroup_down.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_down.Image = global::PeMain.Properties.Images.Down;
+			this.toolToolbarGroup_down.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_down.Name = "toolToolbarGroup_down";
+			this.toolToolbarGroup_down.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_down.Text = "toolStripButton2";
+			this.toolToolbarGroup_down.Click += new System.EventHandler(this.ToolToolbarGroup_down_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolToolbarGroup_remove
+			// 
+			this.toolToolbarGroup_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolToolbarGroup_remove.Image = global::PeMain.Properties.Images.Remove;
+			this.toolToolbarGroup_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolToolbarGroup_remove.Name = "toolToolbarGroup_remove";
+			this.toolToolbarGroup_remove.Size = new System.Drawing.Size(23, 22);
+			this.toolToolbarGroup_remove.Text = "toolStripButton3";
+			this.toolToolbarGroup_remove.Click += new System.EventHandler(this.ToolToolbarGroup_remove_Click);
 			// 
 			// selecterToolbar
 			// 
@@ -763,61 +848,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// toolToolbarGroup_addGroup
-			// 
-			this.toolToolbarGroup_addGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addGroup.Image = global::PeMain.Properties.Images.Group;
-			this.toolToolbarGroup_addGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolToolbarGroup_addGroup.Name = "toolToolbarGroup_addGroup";
-			this.toolToolbarGroup_addGroup.Size = new System.Drawing.Size(23, 22);
-			this.toolToolbarGroup_addGroup.Text = "toolStripButton1";
-			// 
-			// toolToolbarGroup_addItem
-			// 
-			this.toolToolbarGroup_addItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addItem.Image = global::PeMain.Properties.Images.AddItem;
-			this.toolToolbarGroup_addItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolToolbarGroup_addItem.Name = "toolToolbarGroup_addItem";
-			this.toolToolbarGroup_addItem.Size = new System.Drawing.Size(23, 22);
-			this.toolToolbarGroup_addItem.Text = "toolStripButton2";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolToolbarGroup_up
-			// 
-			this.toolToolbarGroup_up.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_up.Image = global::PeMain.Properties.Images.Up;
-			this.toolToolbarGroup_up.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolToolbarGroup_up.Name = "toolToolbarGroup_up";
-			this.toolToolbarGroup_up.Size = new System.Drawing.Size(23, 22);
-			this.toolToolbarGroup_up.Text = "toolStripButton1";
-			// 
-			// toolToolbarGroup_down
-			// 
-			this.toolToolbarGroup_down.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_down.Image = global::PeMain.Properties.Images.Down;
-			this.toolToolbarGroup_down.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolToolbarGroup_down.Name = "toolToolbarGroup_down";
-			this.toolToolbarGroup_down.Size = new System.Drawing.Size(23, 22);
-			this.toolToolbarGroup_down.Text = "toolStripButton2";
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolToolbarGroup_remove
-			// 
-			this.toolToolbarGroup_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_remove.Image = global::PeMain.Properties.Images.Remove;
-			this.toolToolbarGroup_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolToolbarGroup_remove.Name = "toolToolbarGroup_remove";
-			this.toolToolbarGroup_remove.Size = new System.Drawing.Size(23, 22);
-			this.toolToolbarGroup_remove.Text = "toolStripButton3";
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -846,10 +876,14 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.pageToolbar.ResumeLayout(false);
 			this.splitContainer2.Panel1.ResumeLayout(false);
-			this.splitContainer2.Panel1.PerformLayout();
 			this.splitContainer2.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
+			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+			this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+			this.toolStripContainer1.TopToolStripPanel.PerformLayout();
+			this.toolStripContainer1.ResumeLayout(false);
+			this.toolStripContainer1.PerformLayout();
 			this.toolToolbarGroup.ResumeLayout(false);
 			this.toolToolbarGroup.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -858,6 +892,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_remove;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_down;
