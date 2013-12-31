@@ -156,8 +156,6 @@ namespace PeMain.UI
 			return list.Distinct().ToList();
 		}
 		
-		
-		
 		void ToolLauncherItems_filter_Click(object sender, EventArgs e)
 		{
 			if(this.toolLauncherItems_filter.Checked) {

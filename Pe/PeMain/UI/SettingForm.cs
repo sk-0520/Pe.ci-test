@@ -66,8 +66,7 @@ namespace PeMain.UI
 			}
 			if(!e.Cancel) {
 				if(e.TabPage == this.pageToolbar) {
-					this.selecterToolbar.SetItems(this.selecterLauncher.Items);
-					this.selecterToolbar.Refresh();
+					ToolbarSelectingPage();
 				}
 				this._nowSelectedTabPage =  e.TabPage;
 			}
@@ -134,7 +133,14 @@ namespace PeMain.UI
 		
 		void ToolToolbarGroup_addItem_Click(object sender, EventArgs e)
 		{
-			
+			var selectedNode = this.treeToolbarItemGroup.SelectedNode;
+			if(selectedNode != null) {
+				var parentNode = selectedNode;
+				if(selectedNode.Level == TREE_LEVEL_ITEM) {
+					parentNode = selectedNode.Parent;
+				}
+				ToolbarAddItem(parentNode);
+			}
 		}
 		
 		void ToolToolbarGroup_up_Click(object sender, EventArgs e)
