@@ -51,9 +51,14 @@ namespace PeMain.UI
 				this.inputLauncherTag,
 				this.inputLauncherNote,
 			};
-			textList.Map(item => item.Text = string.Empty);
+			textList.Transform(item => item.Text = string.Empty);
 			this.inputLauncherIconIndex.Value = 0;
 			LauncherSetSelectedType(LauncherType.File);
+			var checkList = new CheckBox[] {
+				this.selectLauncherProcess,
+				this.selectLauncherStdStream,
+			};
+			checkList.Transform(item => item.Checked = false);
 		}
 		
 		void LauncherSelectItem(LauncherItem item)
@@ -70,6 +75,8 @@ namespace PeMain.UI
 			this.inputLauncherIconIndex.Value = item.IconIndex;
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
+			this.selectLauncherProcess.Checked = item.ProcessWatch;
+			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
 		}
 		
 		void LauncherInputValueToItem(LauncherItem item)
@@ -120,33 +127,10 @@ namespace PeMain.UI
 		
 		void LauncherAddFile(string filePath)
 		{
-			var item = new LauncherItem();
-			
-			item.Command = filePath;
-			item.IconPath = filePath;
-			item.IconIndex = 0;
-			item.LauncherType = LauncherType.File;
-				
-			// ショートカットの場合リンク元をファイルとする
-			var dotExt = Path.GetExtension(filePath);
-			switch(dotExt.ToLower()) {
-				case ".lnk":
-					break;
-					
-				case ".url":
-					item.LauncherType = LauncherType.URI;
-					break;
-				
-				case ".exe":
-					break;
-					
-				default:
-					item.Command = filePath;
-					item.IconPath = filePath;
-					item.IconIndex = 0;
-					break;
-			}
-			
+			var item = LauncherItem.FileLoad(filePath, false);
+			var uniqueName = item.Name.ToUnique(this.selecterLauncher.Items.Select(i => i.Name));
+			item.Name = uniqueName;
+			this.selecterLauncher.AddItem(item);
 		}
 		
 		

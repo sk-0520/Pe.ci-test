@@ -193,7 +193,7 @@ namespace PeMain.UI
 		void PageLauncher_DragDrop(object sender, DragEventArgs e)
 		{
 			var filePath = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).First();
-			
+			LauncherAddFile(filePath);
 		}
 		
 	}

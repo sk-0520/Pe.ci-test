@@ -130,8 +130,13 @@ namespace PeMain.UI
 		
 		public void AddItem(LauncherItem item)
 		{
+			if(Filtering) {
+				Filtering = false;
+			}
+			
 			this._items.Add(item);
 			this.listLauncherItems.Items.Add(item);
+			this.listLauncherItems.SelectedItem = item;
 		}
 		
 		List<LauncherItem> ApplyFilter()

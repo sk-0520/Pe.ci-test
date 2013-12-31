@@ -8,8 +8,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Xml.Serialization;
+
 using PeMain.Logic;
 using PeUtility;
 
@@ -231,6 +234,49 @@ namespace PeMain.Setting
 		public void ClearIcon()
 		{
 			this._iconMap.Clear();
+		}
+		
+		public static LauncherItem FileLoad(string filePath, bool useShortcut = false)
+		{
+			var item = new LauncherItem();
+			
+			item.Name = Path.GetFileNameWithoutExtension(filePath);
+			if(item.Name.Length == 0) {
+				item.Name = filePath;
+			}
+			item.Command = filePath;
+			item.IconPath = filePath;
+			item.IconIndex = 0;
+			item.LauncherType = LauncherType.File;
+			
+			var dotExt = Path.GetExtension(filePath);
+			switch(dotExt.ToLower()) {
+					// ショートカットの場合リンク元をファイルとする
+				case ".lnk":
+					break;
+					
+				case ".url":
+					item.LauncherType = LauncherType.URI;
+					break;
+					
+				case ".exe":
+					var verInfo = FileVersionInfo.GetVersionInfo(filePath);
+					if(verInfo.ProductName.Length > 0) {
+						item.Name = verInfo.ProductName;
+					}
+					item.Note = verInfo.Comments;
+					if(verInfo.CompanyName.Length > 0) {
+						item.Tag.Add(verInfo.CompanyName);
+					}
+					break;
+					
+				default:
+					break;
+			}
+			
+			Debug.Assert(item.Name.Length > 0);
+			
+			return item;
 		}
 	}
 	
