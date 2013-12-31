@@ -209,6 +209,7 @@ namespace PeMain.UI
 			// 
 			// pageLauncher
 			// 
+			this.pageLauncher.AllowDrop = true;
 			this.pageLauncher.Controls.Add(this.splitContainer1);
 			this.pageLauncher.Location = new System.Drawing.Point(4, 24);
 			this.pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -218,6 +219,8 @@ namespace PeMain.UI
 			this.pageLauncher.TabIndex = 1;
 			this.pageLauncher.Text = "{LAUNCHER}";
 			this.pageLauncher.UseVisualStyleBackColor = true;
+			this.pageLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.PageLauncher_DragDrop);
+			this.pageLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.PageLauncher_DragEnter);
 			// 
 			// splitContainer1
 			// 

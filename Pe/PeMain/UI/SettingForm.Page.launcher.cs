@@ -118,6 +118,31 @@ namespace PeMain.UI
 			}
 		}
 		
+		void LauncherAddFile(string filePath)
+		{
+			var item = new LauncherItem();
+			
+			// ショートカットの場合リンク元をファイルとする
+			var dotExt = Path.GetExtension(filePath);
+			switch(dotExt.ToLower()) {
+				case ".lnk":
+					break;
+					
+				case ".url":
+					break;
+				
+				case ".exe":
+					break;
+					
+				default:
+					item.Command = filePath;
+					item.IconIndex = filePath;
+					item.IconIndex = 0;
+					break;
+			}
+			
+		}
+		
 		
 		
 	}

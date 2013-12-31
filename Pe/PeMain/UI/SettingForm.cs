@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Setting;
 
@@ -174,5 +175,26 @@ namespace PeMain.UI
 				ToolbarSetItem(node, item);
 			}
 		}
+		
+		void PageLauncher_DragEnter(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				var datas = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+				if(datas.Length == 1) {
+					e.Effect = DragDropEffects.Copy;
+				} else {
+					e.Effect = DragDropEffects.None;
+				}
+			} else {
+				e.Effect = DragDropEffects.None;
+			}
+		}
+		
+		void PageLauncher_DragDrop(object sender, DragEventArgs e)
+		{
+			var filePath = ((string[])e.Data.GetData(DataFormats.FileDrop, false)).First();
+			
+		}
+		
 	}
 }
