@@ -61,7 +61,6 @@ namespace PeMain.UI
 			var toolItem = new Dictionary<LauncherItemSelecterType, ToolStripItem>() {
 				{LauncherItemSelecterType.Full, this.toolLauncherItems_type_full},
 				{LauncherItemSelecterType.Name, this.toolLauncherItems_type_name},
-				{LauncherItemSelecterType.Display, this.toolLauncherItems_type_display},
 				{LauncherItemSelecterType.Tag, this.toolLauncherItems_type_tag},
 			}[type];
 			
@@ -90,17 +89,16 @@ namespace PeMain.UI
 		
 		void CreateLauncherItem()
 		{
-			var itemName = "Item";
+			var itemName = this._language["control/launcher-selecter/new-item"];
 			if(_items.Count > 0) {
 				itemName = itemName.ToUnique(_items.Select(i => i.Name));
 			}
 			var item = new LauncherItem();
 			item.Name = itemName;
 			this._items.Add(item);
-			this.listLauncherItems.Items.Add(item);
+			Filtering = false;
 			
 			this.listLauncherItems.SelectedItem = item;
-			
 			if(CreateItem != null)  {
 				var e = new CreateItemEventArg();
 				e.Item = item;
@@ -136,14 +134,35 @@ namespace PeMain.UI
 			this.listLauncherItems.Items.Add(item);
 		}
 		
-		void ApplyFilter()
+		List<LauncherItem> ApplyFilter()
 		{
 			var srcPattern = this.toolLauncherItems_input.Text;
-			var wldPattern = Regex.Escape(srcPattern).Replace(@"\*", ".*").Replace(@"\?", ".");
+			var wldPattern = TextUtility.RegexPatternToWildcard(srcPattern);
 			var reg = new Regex(wldPattern);
-			//this._items.Where(item => )
+			var type = FilterType;
+			
+			var nameSeq = this._items.Where(item => reg.IsMatch(item.Name));
+			var tagSeq = this._items.Where(item => item.Tag.Any(s => reg.IsMatch(s)));
+			
+			var list = new List<LauncherItem>();
+			
+			if(type == LauncherItemSelecterType.Full || type == LauncherItemSelecterType.Name) {
+				list.AddRange(nameSeq);
+			}
+			if(type == LauncherItemSelecterType.Full || type == LauncherItemSelecterType.Tag) {
+				list.AddRange(tagSeq);
+			}
+			
+			return list.Distinct().ToList();
 		}
 		
 		
+		
+		void ToolLauncherItems_filter_Click(object sender, EventArgs e)
+		{
+			if(this.toolLauncherItems_filter.Checked) {
+				Filtering = false;
+			}
+		}
 	}
 }

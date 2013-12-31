@@ -14,7 +14,6 @@ namespace PeMain.UI
 	{
 		Full,
 		Name,
-		Display,
 		Tag
 	}
 }

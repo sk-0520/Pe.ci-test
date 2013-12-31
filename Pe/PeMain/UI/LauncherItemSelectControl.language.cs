@@ -25,7 +25,6 @@ namespace PeMain.UI
 			this.toolLauncherItems_remove.Text = lang["item-selecter/remove"];
 			this.toolLauncherItems_filter.Text = lang["item-selecter/filtering"];
 			this.toolLauncherItems_type_full.Text = lang["item-selecter/type/full"];
-			this.toolLauncherItems_type_display.Text = lang["item-selecter/type/display"];
 			this.toolLauncherItems_type_name.Text = lang["item-selecter/type/name"];
 			this.toolLauncherItems_type_tag.Text = lang["item-selecter/type/tag"];
 		}

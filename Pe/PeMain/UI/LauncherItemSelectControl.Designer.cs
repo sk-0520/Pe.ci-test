@@ -45,7 +45,6 @@ namespace PeMain.UI
 			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolLauncherItems_type_full = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolLauncherItems_type_name = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolLauncherItems_type_display = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolLauncherItems_type_tag = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolLauncherItems_input = new System.Windows.Forms.ToolStripTextBox();
 			this.toolLauncherItems.SuspendLayout();
@@ -115,6 +114,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
 			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
 			this.toolLauncherItems_filter.Text = "{LAUNCHER_FILTERING}";
+			this.toolLauncherItems_filter.Click += new System.EventHandler(this.ToolLauncherItems_filter_Click);
 			// 
 			// toolLauncherItems_type
 			// 
@@ -122,7 +122,6 @@ namespace PeMain.UI
 			this.toolLauncherItems_type.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolLauncherItems_type_full,
 									this.toolLauncherItems_type_name,
-									this.toolLauncherItems_type_display,
 									this.toolLauncherItems_type_tag});
 			this.toolLauncherItems_type.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -134,7 +133,7 @@ namespace PeMain.UI
 			// 
 			this.toolLauncherItems_type_full.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
-			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(244, 22);
 			this.toolLauncherItems_type_full.Text = "{LAUNCHER_FILTER_FULL}";
 			this.toolLauncherItems_type_full.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
@@ -142,23 +141,15 @@ namespace PeMain.UI
 			// 
 			this.toolLauncherItems_type_name.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
-			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(244, 22);
 			this.toolLauncherItems_type_name.Text = "{LAUNCHER_FILTER_NAME}";
 			this.toolLauncherItems_type_name.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
-			// 
-			// toolLauncherItems_type_display
-			// 
-			this.toolLauncherItems_type_display.Image = global::PeMain.Properties.Images.NotImpl;
-			this.toolLauncherItems_type_display.Name = "toolLauncherItems_type_display";
-			this.toolLauncherItems_type_display.Size = new System.Drawing.Size(262, 22);
-			this.toolLauncherItems_type_display.Text = "{LAUNCHER_FILTER_DISPLAY}";
-			this.toolLauncherItems_type_display.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_type_tag
 			// 
 			this.toolLauncherItems_type_tag.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
-			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(262, 22);
+			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(244, 22);
 			this.toolLauncherItems_type_tag.Text = "{LAUNCHER_FILTER_TAG}";
 			this.toolLauncherItems_type_tag.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
@@ -185,7 +176,6 @@ namespace PeMain.UI
 		}
 		private System.Windows.Forms.ToolStripTextBox toolLauncherItems_input;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_tag;
-		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_display;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_name;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_full;
 		private System.Windows.Forms.ToolStripDropDownButton toolLauncherItems_type;

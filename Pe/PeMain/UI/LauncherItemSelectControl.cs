@@ -47,7 +47,6 @@ namespace PeMain.UI
 			var type = new Dictionary<ToolStripItem, LauncherItemSelecterType>() {
 				{this.toolLauncherItems_type_full, LauncherItemSelecterType.Full},
 				{this.toolLauncherItems_type_name, LauncherItemSelecterType.Name},
-				{this.toolLauncherItems_type_display, LauncherItemSelecterType.Display},
 				{this.toolLauncherItems_type_tag, LauncherItemSelecterType.Tag},
 			}[(ToolStripItem)sender];
 			

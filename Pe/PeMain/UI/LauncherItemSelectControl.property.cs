@@ -77,9 +77,15 @@ namespace PeMain.UI
 			{
 				//TODO: ぼたんやなんや
 				this._filtering = value;
+				this.toolLauncherItems_filter.Checked = this._filtering;
 				if(this._filtering) {
-					ApplyFilter();
+					var list = ApplyFilter();
+					this._viewItems = list;
+				} else {
+					this._viewItems = this._items;
 				}
+				this.listLauncherItems.Items.Clear();
+				this.listLauncherItems.Items.AddRange(this._viewItems.ToArray());
 			}
 		}
 	}

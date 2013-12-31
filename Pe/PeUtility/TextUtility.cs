@@ -8,13 +8,14 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace PeUtility
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public static class Text
+	public static class TextUtility
 	{
 		/// <summary>
 		/// 
@@ -38,6 +39,15 @@ namespace PeUtility
 				}
 			}
 			return changeName;
+		}
+		
+		
+		public static string RegexPatternToWildcard(string regPattern) 
+		{
+			return Regex.Escape(regPattern)
+				.Replace(@"\*", ".*")
+				.Replace(@"\?", ".")
+			;
 		}
 	}
 }
