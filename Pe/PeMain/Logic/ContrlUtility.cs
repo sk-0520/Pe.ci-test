@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Windows.Navigation;
 
 namespace PeMain.Logic
 {
@@ -103,8 +104,12 @@ namespace PeMain.Logic
 		{
 			var parentNode = targetNode.Parent;
 			var prevNode = targetNode.PrevNode;
+			var nodes = parentNode != null ? parentNode.Nodes: targetNode.TreeView.Nodes; 
+			if(prevNode == null) {
+				return;
+			}
 			targetNode.Remove();
-			parentNode.Nodes.Insert(prevNode.Index, targetNode);
+			nodes.Insert(prevNode.Index, targetNode);
 			var tree = targetNode.TreeView;
 			ToSelect(targetNode, toSelect);
 		}
@@ -118,8 +123,12 @@ namespace PeMain.Logic
 		{
 			var parentNode = targetNode.Parent;
 			var nextNode = targetNode.NextNode;
+			var nodes = parentNode != null ? parentNode.Nodes: targetNode.TreeView.Nodes; 
+			if(nextNode == null) {
+				return;
+			}
 			targetNode.Remove();
-			parentNode.Nodes.Insert(nextNode.Index + 1, targetNode);
+			nodes.Insert(nextNode.Index + 1, targetNode);
 			var tree = targetNode.TreeView;
 			ToSelect(targetNode, toSelect);
 		}

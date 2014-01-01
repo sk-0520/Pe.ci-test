@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PeMain.Logic;
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -146,17 +147,26 @@ namespace PeMain.UI
 		
 		void ToolToolbarGroup_up_Click(object sender, EventArgs e)
 		{
-			
+			var node = this.treeToolbarItemGroup.SelectedNode;
+			if(node != null) {
+				node.MoveToUp(true);
+			}
 		}
 		
 		void ToolToolbarGroup_down_Click(object sender, EventArgs e)
 		{
-			
+			var node = this.treeToolbarItemGroup.SelectedNode;
+			if(node != null) {
+				node.MoveToDown(true);
+			}
 		}
 		
 		void ToolToolbarGroup_remove_Click(object sender, EventArgs e)
 		{
-			
+			var node = this.treeToolbarItemGroup.SelectedNode;
+			if(node != null) {
+				node.Remove();
+			}
 		}
 		
 		void TreeToolbarItemGroup_AfterSelect(object sender, TreeViewEventArgs e)
