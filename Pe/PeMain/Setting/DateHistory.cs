@@ -18,10 +18,10 @@ namespace PeMain.Setting
 	{
 		public DateHistory()
 		{
-			Create = DateTime.UtcNow;
-			Update = DateTime.UtcNow;
+			CreateUTC = DateTime.UtcNow;
+			UpdateUTC = DateTime.UtcNow;
 		}
-		public DateTime Create { get; set; }
-		public DateTime Update { get; set; }
+		public DateTime CreateUTC { get; set; }
+		public DateTime UpdateUTC { get; set; }
 	}
 }

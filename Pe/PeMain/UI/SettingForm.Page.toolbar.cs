@@ -48,6 +48,7 @@ namespace PeMain.UI
 		void ToolbarAddItem(TreeNode parentNode)
 		{
 			Debug.Assert(parentNode != null);
+			
 			var items = this.selecterToolbar.Items;
 			if(items != null && items.Count() > 0) {
 				var item = this.selecterToolbar.SelectedItem;
@@ -57,6 +58,9 @@ namespace PeMain.UI
 				var node = new TreeNode();
 				ToolbarSetItem(node, item);
 				parentNode.Nodes.Add(node);
+				if(!parentNode.IsExpanded) {
+					parentNode.Expand();
+				}
 			}
 		}
 		

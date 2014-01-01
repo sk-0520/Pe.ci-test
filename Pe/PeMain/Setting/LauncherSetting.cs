@@ -253,6 +253,7 @@ namespace PeMain.Setting
 			switch(dotExt.ToLower()) {
 					// ショートカットの場合リンク元をファイルとする
 				case ".lnk":
+					//var wsh = new IWshRuntimeLibrary.WshShell();
 					break;
 					
 				case ".url":
