@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Navigation;
 
@@ -15,14 +16,32 @@ namespace PeMain.Logic
 {
 	public static class TreeViewUtility
 	{
-		
+		public static List<TreeNode> GetChildrenNodes(this TreeView treeView)
+		{
+			var result = new List<TreeNode>();
+			foreach(TreeNode node in treeView.Nodes) {
+				result.Add(node);
+				var nodes = node.GetChildrenNodes();
+				if(nodes.Count > 0) {
+					nodes.AddRange(nodes);
+				}
+			}
+			
+			return result;
+		}
 	}
 	
 	public static class TreeNoteUtility
 	{
+		/// <summary>
+		/// 対象の子ノードをすべて取得
+		/// </summary>
+		/// <param name="parent"></param>
+		/// <returns></returns>
 		public static List<TreeNode> GetChildrenNodes(this TreeNode parent)
 		{
 			var result = new List<TreeNode>();
+			
 			foreach(TreeNode node in parent.Nodes) {
 				result.Add(node);
 				if(node.Nodes.Count > 0) {
@@ -32,6 +51,7 @@ namespace PeMain.Logic
 					}
 				}
 			}
+			
 			return result;
 		}
 		
@@ -58,6 +78,9 @@ namespace PeMain.Logic
 		/// <param name="toSelect"></param>
 		public static void MoveToChild(this TreeNode fromNode, TreeNode toParent, bool toSelect)
 		{
+			Debug.Assert(fromNode != null);
+			Debug.Assert(toParent != null);
+			
 			var tree = fromNode.TreeView;
 			fromNode.Remove();
 			toParent.Nodes.Add(fromNode);
@@ -74,6 +97,9 @@ namespace PeMain.Logic
 		{
 			var parentNode = targetNode.Parent;
 			var superParentNode = parentNode.Parent;
+			if(parentNode == null) {
+				return;
+			}
 			targetNode.Remove();
 			superParentNode.Nodes.Insert(parentNode.Index + 1, targetNode);
 			superParentNode.Expand();

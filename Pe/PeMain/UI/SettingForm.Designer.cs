@@ -47,6 +47,8 @@ namespace PeMain.UI
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
+			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
+			this.selectLauncherProcess = new System.Windows.Forms.CheckBox();
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
 			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
@@ -107,8 +109,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selectLauncherProcess = new System.Windows.Forms.CheckBox();
-			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
@@ -162,7 +162,7 @@ namespace PeMain.UI
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(570, 310);
+			this.pageMain.Size = new System.Drawing.Size(734, 310);
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
@@ -279,6 +279,24 @@ namespace PeMain.UI
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
+			// 
+			// selectLauncherStdStream
+			// 
+			this.selectLauncherStdStream.Location = new System.Drawing.Point(249, 44);
+			this.selectLauncherStdStream.Name = "selectLauncherStdStream";
+			this.selectLauncherStdStream.Size = new System.Drawing.Size(104, 24);
+			this.selectLauncherStdStream.TabIndex = 12;
+			this.selectLauncherStdStream.Text = "{STD_STREAM}";
+			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
+			// 
+			// selectLauncherProcess
+			// 
+			this.selectLauncherProcess.Location = new System.Drawing.Point(249, 14);
+			this.selectLauncherProcess.Name = "selectLauncherProcess";
+			this.selectLauncherProcess.Size = new System.Drawing.Size(104, 24);
+			this.selectLauncherProcess.TabIndex = 11;
+			this.selectLauncherProcess.Text = "{PROCESS}";
+			this.selectLauncherProcess.UseVisualStyleBackColor = true;
 			// 
 			// labelLauncherOption
 			// 
@@ -578,7 +596,7 @@ namespace PeMain.UI
 			this.pageToolbar.Controls.Add(this.labelToolbarFonr);
 			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(570, 310);
+			this.pageToolbar.Size = new System.Drawing.Size(734, 310);
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
@@ -624,11 +642,14 @@ namespace PeMain.UI
 			// 
 			this.treeToolbarItemGroup.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeToolbarItemGroup.HideSelection = false;
+			this.treeToolbarItemGroup.LabelEdit = true;
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.Size = new System.Drawing.Size(171, 154);
 			this.treeToolbarItemGroup.TabIndex = 13;
+			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
+			this.treeToolbarItemGroup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeToolbarItemGroup_KeyDown);
 			// 
 			// toolToolbarGroup
 			// 
@@ -795,7 +816,7 @@ namespace PeMain.UI
 			// 
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(570, 310);
+			this.pageNote.Size = new System.Drawing.Size(734, 310);
 			this.pageNote.TabIndex = 6;
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
@@ -804,7 +825,7 @@ namespace PeMain.UI
 			// 
 			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(570, 310);
+			this.pageDisplay.Size = new System.Drawing.Size(734, 310);
 			this.pageDisplay.TabIndex = 5;
 			this.pageDisplay.Text = "{DISPLAY}";
 			this.pageDisplay.UseVisualStyleBackColor = true;
@@ -859,24 +880,6 @@ namespace PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// selectLauncherProcess
-			// 
-			this.selectLauncherProcess.Location = new System.Drawing.Point(249, 14);
-			this.selectLauncherProcess.Name = "selectLauncherProcess";
-			this.selectLauncherProcess.Size = new System.Drawing.Size(104, 24);
-			this.selectLauncherProcess.TabIndex = 11;
-			this.selectLauncherProcess.Text = "{PROCESS}";
-			this.selectLauncherProcess.UseVisualStyleBackColor = true;
-			// 
-			// selectLauncherStdStream
-			// 
-			this.selectLauncherStdStream.Location = new System.Drawing.Point(249, 44);
-			this.selectLauncherStdStream.Name = "selectLauncherStdStream";
-			this.selectLauncherStdStream.Size = new System.Drawing.Size(104, 24);
-			this.selectLauncherStdStream.TabIndex = 12;
-			this.selectLauncherStdStream.Text = "{STD_STREAM}";
-			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 

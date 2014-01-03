@@ -206,5 +206,26 @@ namespace PeMain.UI
 			LauncherAddFile(filePath);
 		}
 		
+		
+		void TreeToolbarItemGroup_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			var node = this.treeToolbarItemGroup.SelectedNode;
+			if(node == null) {
+				// 到達不可のはず
+				return;
+			}
+			e.CancelEdit = node.Level != TREE_LEVEL_GROUP;
+		}
+		
+		
+		void TreeToolbarItemGroup_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode == Keys.F2) {
+				var node = this.treeToolbarItemGroup.SelectedNode;
+				if(node != null) {
+					node.BeginEdit();
+				}
+			}
+		}
 	}
 }

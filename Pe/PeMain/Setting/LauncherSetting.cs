@@ -222,13 +222,20 @@ namespace PeMain.Setting
 		public Icon GetIcon(IconSize iconSize)
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconSize);
-			if(hasIcon && !string.IsNullOrWhiteSpace(IconPath)) {
-				var icon = IconLoader.Load(IconPath, iconSize, 0);
-				this._iconMap[iconSize] = icon;
-			} else if(!hasIcon) {
+			if(!hasIcon) {
+				if(!string.IsNullOrWhiteSpace(IconPath)) {
+					hasIcon = File.Exists(IconPath) || Directory.Exists(IconPath);
+				}
+				if(hasIcon) {
+					var icon = IconLoader.Load(IconPath, iconSize, 0);
+					this._iconMap[iconSize] = icon;
+				}
+			}
+			if(hasIcon) {
+				return this._iconMap[iconSize];
+			} else {
 				return null;
 			}
-			return this._iconMap[iconSize];
 		}
 		
 		public void ClearIcon()
@@ -252,6 +259,7 @@ namespace PeMain.Setting
 			var dotExt = Path.GetExtension(filePath);
 			switch(dotExt.ToLower()) {
 					// ショートカットの場合リンク元をファイルとする
+					// TODO: IWshRuntimeLibrary参照でAxImp.exe読めない、SDKインストールできない、とりあえず後回し
 				case ".lnk":
 					//var wsh = new IWshRuntimeLibrary.WshShell();
 					break;
