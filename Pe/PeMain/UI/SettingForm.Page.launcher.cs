@@ -41,6 +41,7 @@ namespace PeMain.UI
 		void LauncherInputClear()
 		{
 			this._launcherSelectedItem = null;
+			this._launcherItemEvent = false;
 			
 			var textList = new Control[] {
 				this.inputLauncherName,
@@ -59,11 +60,15 @@ namespace PeMain.UI
 				this.selectLauncherStdStream,
 			};
 			checkList.Transform(item => item.Checked = false);
+			
+			this._launcherItemEvent = true;
 		}
 		
 		void LauncherSelectItem(LauncherItem item)
 		{
 			LauncherInputClear();
+			this._launcherItemEvent = false;
+			
 			this._launcherSelectedItem = item;
 			
 			LauncherSetSelectedType(item.LauncherType);
@@ -77,6 +82,8 @@ namespace PeMain.UI
 			this.inputLauncherNote.Text = item.Note;
 			this.selectLauncherProcess.Checked = item.ProcessWatch;
 			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
+			
+			this._launcherItemEvent = true;
 		}
 		
 		void LauncherInputValueToItem(LauncherItem item)
@@ -107,7 +114,6 @@ namespace PeMain.UI
 			return this.selecterLauncher.Items.Any(item => item.HasError);
 		}
 		
-		
 		void LauncherOpenIcon()
 		{
 			var iconPath = this.inputLauncherIconPath.Text.Trim();
@@ -133,6 +139,13 @@ namespace PeMain.UI
 			this.selecterLauncher.AddItem(item);
 		}
 		
+		void LauncherInputChange()
+		{
+			if(this._launcherSelectedItem != null) {
+				LauncherInputValueToItem(this._launcherSelectedItem);
+				this.selecterLauncher.Refresh();
+			}
+		}
 		
 		
 	}

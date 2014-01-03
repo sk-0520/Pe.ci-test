@@ -52,7 +52,7 @@ namespace PeMain.UI
 		{
 			var iconHeight = IconSize.ToHeight();
 			var fontHeight = Font.Height;
-			var itemheight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical;
+			var itemheight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical + 1 * 2;
 			this.listLauncherItems.ItemHeight = itemheight;
 		}
 		

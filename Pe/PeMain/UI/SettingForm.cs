@@ -227,5 +227,35 @@ namespace PeMain.UI
 				}
 			}
 		}
+		
+		void CommandSubmit_Click(object sender, System.EventArgs e)
+		{
+			if(CheckValidate()) {
+				
+				DialogResult = DialogResult.OK;
+			}
+		}
+
+		
+		void InputLauncherName_TextChanged(object sender, EventArgs e)
+		{
+			if(this._launcherItemEvent) {
+				LauncherInputChange();
+			}
+		}
+		
+		void SelectLauncherType_file_CheckedChanged(object sender, EventArgs e)
+		{
+			if(this._launcherItemEvent) {
+				LauncherInputChange();
+			}
+		}
+		
+		void InputLauncherIconIndex_ValueChanged(object sender, EventArgs e)
+		{
+			if(this._launcherItemEvent) {
+				LauncherInputChange();
+			}
+		}
 	}
 }

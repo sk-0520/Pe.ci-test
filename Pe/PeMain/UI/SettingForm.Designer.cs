@@ -288,6 +288,7 @@ namespace PeMain.UI
 			this.selectLauncherStdStream.TabIndex = 12;
 			this.selectLauncherStdStream.Text = "{STD_STREAM}";
 			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
+			this.selectLauncherStdStream.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// selectLauncherProcess
 			// 
@@ -297,6 +298,7 @@ namespace PeMain.UI
 			this.selectLauncherProcess.TabIndex = 11;
 			this.selectLauncherProcess.Text = "{PROCESS}";
 			this.selectLauncherProcess.UseVisualStyleBackColor = true;
+			this.selectLauncherProcess.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// labelLauncherOption
 			// 
@@ -312,6 +314,7 @@ namespace PeMain.UI
 			this.inputLauncherOption.Name = "inputLauncherOption";
 			this.inputLauncherOption.Size = new System.Drawing.Size(100, 23);
 			this.inputLauncherOption.TabIndex = 9;
+			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// commandLauncherOptionDirPath
 			// 
@@ -349,6 +352,7 @@ namespace PeMain.UI
 			this.inputLauncherIconIndex.Name = "inputLauncherIconIndex";
 			this.inputLauncherIconIndex.Size = new System.Drawing.Size(33, 23);
 			this.inputLauncherIconIndex.TabIndex = 5;
+			this.inputLauncherIconIndex.ValueChanged += new System.EventHandler(this.InputLauncherIconIndex_ValueChanged);
 			// 
 			// labelLauncherTag
 			// 
@@ -397,6 +401,7 @@ namespace PeMain.UI
 			this.inputLauncherNote.Name = "inputLauncherNote";
 			this.inputLauncherNote.Size = new System.Drawing.Size(216, 47);
 			this.inputLauncherNote.TabIndex = 3;
+			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherTag
 			// 
@@ -404,6 +409,7 @@ namespace PeMain.UI
 			this.inputLauncherTag.Name = "inputLauncherTag";
 			this.inputLauncherTag.Size = new System.Drawing.Size(216, 23);
 			this.inputLauncherTag.TabIndex = 3;
+			this.inputLauncherTag.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherIconPath
 			// 
@@ -411,6 +417,7 @@ namespace PeMain.UI
 			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
 			this.inputLauncherIconPath.Size = new System.Drawing.Size(100, 23);
 			this.inputLauncherIconPath.TabIndex = 3;
+			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherWorkDirPath
 			// 
@@ -418,6 +425,7 @@ namespace PeMain.UI
 			this.inputLauncherWorkDirPath.Name = "inputLauncherWorkDirPath";
 			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(100, 23);
 			this.inputLauncherWorkDirPath.TabIndex = 3;
+			this.inputLauncherWorkDirPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherName
 			// 
@@ -425,6 +433,7 @@ namespace PeMain.UI
 			this.inputLauncherName.Name = "inputLauncherName";
 			this.inputLauncherName.Size = new System.Drawing.Size(100, 23);
 			this.inputLauncherName.TabIndex = 3;
+			this.inputLauncherName.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherCommand
 			// 
@@ -432,6 +441,7 @@ namespace PeMain.UI
 			this.inputLauncherCommand.Name = "inputLauncherCommand";
 			this.inputLauncherCommand.Size = new System.Drawing.Size(100, 23);
 			this.inputLauncherCommand.TabIndex = 3;
+			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// commandLauncherIconPath
 			// 
@@ -497,6 +507,7 @@ namespace PeMain.UI
 			this.selectLauncherType_uri.TabStop = true;
 			this.selectLauncherType_uri.Text = "{ITEM_URI}";
 			this.selectLauncherType_uri.UseVisualStyleBackColor = true;
+			this.selectLauncherType_uri.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// selectLauncherType_file
 			// 
@@ -507,6 +518,7 @@ namespace PeMain.UI
 			this.selectLauncherType_file.TabStop = true;
 			this.selectLauncherType_file.Text = "{ITEM_FILE}";
 			this.selectLauncherType_file.UseVisualStyleBackColor = true;
+			this.selectLauncherType_file.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// pageCommand
 			// 
@@ -850,6 +862,7 @@ namespace PeMain.UI
 			this.commandSubmit.TabIndex = 0;
 			this.commandSubmit.Text = "{OK}";
 			this.commandSubmit.UseVisualStyleBackColor = true;
+			this.commandSubmit.Click += new System.EventHandler(this.CommandSubmit_Click);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -997,6 +1010,5 @@ namespace PeMain.UI
 		private System.Windows.Forms.TabPage pageLauncher;
 		private System.Windows.Forms.TabPage pageMain;
 		private System.Windows.Forms.TabControl tabSetting;
-		
 	}
 }

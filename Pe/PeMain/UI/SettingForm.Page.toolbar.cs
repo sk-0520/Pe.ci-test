@@ -21,10 +21,10 @@ namespace PeMain.UI
 		void ToolbarSelectingPage()
 		{
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
-			this.imageToolbarItemGroup.Images.Clear();
+			this._imageToolbarItemGroup.Images.Clear();
 			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconSize.Small)}).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
-				this.imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
+				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
 			}
 		}
 		

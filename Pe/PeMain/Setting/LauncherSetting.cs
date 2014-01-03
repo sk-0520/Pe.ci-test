@@ -223,11 +223,23 @@ namespace PeMain.Setting
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconSize);
 			if(!hasIcon) {
+				string useIconPath = null;
 				if(!string.IsNullOrWhiteSpace(IconPath)) {
-					hasIcon = File.Exists(IconPath) || Directory.Exists(IconPath);
+					var expandIconPath = Environment.ExpandEnvironmentVariables(IconPath);
+					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					useIconPath = expandIconPath; 
+				}
+				if(!hasIcon &&  LauncherType == LauncherType.File) {
+					if(!string.IsNullOrWhiteSpace(Command)) {
+						var expandFilePath = Environment.ExpandEnvironmentVariables(Command);
+						hasIcon = File.Exists(expandFilePath) || Directory.Exists(expandFilePath);
+						useIconPath = expandFilePath; 
+					}
 				}
 				if(hasIcon) {
-					var icon = IconLoader.Load(IconPath, iconSize, 0);
+					Debug.Assert(useIconPath != null);
+					
+					var icon = IconLoader.Load(useIconPath, iconSize, 0);
 					this._iconMap[iconSize] = icon;
 				}
 			}

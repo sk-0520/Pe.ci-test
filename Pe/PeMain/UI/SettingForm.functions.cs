@@ -86,5 +86,10 @@ namespace PeMain.UI
 				}
 			}
 		}
+		
+		bool CheckValidate() 
+		{
+			return true;
+		}
 	}
 }

@@ -24,6 +24,7 @@ namespace PeMain.UI
 		LauncherItem _launcherSelectedItem = null;
 		
 		TabPage _nowSelectedTabPage = null;
-		ImageList imageToolbarItemGroup = null;
+		ImageList _imageToolbarItemGroup = null;
+		bool _launcherItemEvent = false;
 	}
 }
