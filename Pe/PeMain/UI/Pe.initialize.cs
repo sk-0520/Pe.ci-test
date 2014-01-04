@@ -31,7 +31,8 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void InitializeSetting(string[] args)
 		{
-			this._mainSetting = Initializer.GetMainSetting(Literal.UserMainSettingPath);
+			//this._mainSetting = Initializer.GetMainSetting(Literal.UserMainSettingPath);
+			this._mainSetting = Initializer.GetMainSetting(@"Z:mainsetting.xml");
 			this._language = Initializer.GetLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
 		}
 		
@@ -45,7 +46,15 @@ namespace PeMain.UI
 				new MenuItem("About", menuAboutClick),
 				new MenuItem(this._language["main/menu/setting"], (object sender, EventArgs e) => {
 				             	var f = new SettingForm(this._language, this._mainSetting);
-				             	PauseOthers(() => f.ShowDialog());
+				             	PauseOthers(() => {
+				             	            	if(f.ShowDialog() == DialogResult.OK) {
+				             	            		using(var stream = new FileStream(@"Z:mainsetting.xml", FileMode.Create)) {
+				             	            			var serializer = new XmlSerializer(typeof(MainSetting));
+				             	            			serializer.Serialize(stream, f.MainSetting);
+				             	            		}
+				             	            	}
+				             	            }
+				             	           );
 				}),
 				new MenuItem(this._language["common/menu/exit"], menuExitClick),
 			};

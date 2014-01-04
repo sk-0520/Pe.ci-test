@@ -100,6 +100,8 @@ namespace PeMain.Setting
 		{
 			FontSetting = new FontSetting();
 			ToolbarGroup = new ToolbarGroup();
+			ToolbarPosition = ToolbarPosition.DesktopFloat;
+			IconSize = IconSize.Small;
 		}
 		
 		public ToolbarGroup ToolbarGroup { get; set; }

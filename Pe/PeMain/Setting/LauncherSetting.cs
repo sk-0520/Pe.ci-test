@@ -119,7 +119,10 @@ namespace PeMain.Setting
 		
 		public override int GetHashCode()
 		{
-			return this.Name.GetHashCode();
+			//if(this.Name == null) {
+			//	return default(int);
+			//}
+			return Name.GetHashCode();
 		}
 		#endregion
 		
@@ -199,6 +202,7 @@ namespace PeMain.Setting
 		public object Clone()
 		{
 			var result = new LauncherItem();
+			result.Name = Name;
 			result.LauncherType = LauncherType;
 			result.Command = Command;
 			result.WorkDirPath = WorkDirPath;

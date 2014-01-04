@@ -112,6 +112,9 @@ namespace PeMain.UI
 			// ツールバー
 			// ノート
 			// ディスプレイ
+			
+			// プロパティ設定
+			MainSetting = mainSetting;
 		}
 	}
 }

@@ -25,6 +25,8 @@ namespace PeMain.Setting
 		{
 			Width = 200;
 			Height = 200;
+			IconSize = IconSize.Small;
+			HiddenTime = new TimeSpan(0, 0, 0, 1, 500);
 			FontSetting = new FontSetting();
 		}
 		/// <summary>

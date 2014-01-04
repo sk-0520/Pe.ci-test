@@ -133,7 +133,9 @@
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.cs" />
-    <Compile Include="UI\SettingForm.define.cs" />
+    <Compile Include="UI\SettingForm.define.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
