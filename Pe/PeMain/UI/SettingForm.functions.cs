@@ -87,9 +87,31 @@ namespace PeMain.UI
 			}
 		}
 		
-		bool CheckValidate() 
+		bool CheckValidate()
 		{
-			return true;
+			var checkResult = true;
+			this.errorProvider.Clear();
+			
+			if(!LauncherItemValid()) {
+				this.errorProvider.SetError(this.selecterLauncher, Language["setting/check/item-name-dup"]);
+				checkResult = false;
+			}
+			
+			return checkResult;
+		}
+		
+		void CreateSettingData()
+		{
+			var mainSetting = new MainSetting();
+			
+			// 本体
+			// ランチャ
+			LauncherExportSetting(mainSetting.Launcher);
+			
+			// コマンド
+			// ツールバー
+			// ノート
+			// ディスプレイ
 		}
 	}
 }

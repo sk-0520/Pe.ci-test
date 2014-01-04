@@ -26,5 +26,7 @@ namespace PeMain.UI
 		TabPage _nowSelectedTabPage = null;
 		ImageList _imageToolbarItemGroup = null;
 		bool _launcherItemEvent = false;
+		
+		
 	}
 }

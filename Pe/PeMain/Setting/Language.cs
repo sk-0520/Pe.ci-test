@@ -79,7 +79,7 @@ namespace PeMain.Setting
 				var text = getPlain(key);
 				if(text.Any(c => c == '$')) {
 					// ${...}
-					var replacedText = Regex.Replace(text, @"\$\{(.*)\}", (Match m) => 
+					var replacedText = Regex.Replace(text, @"\$\{(.*?)\}", (Match m) => 
 						getWord(Define, m.Groups[1].Value).Text
 					);
 					return replacedText;

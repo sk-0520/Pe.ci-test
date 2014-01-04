@@ -27,11 +27,7 @@ namespace PeMain.Setting
 		/// <summary>
 		/// 使用言語。
 		/// </summary>
-		public string Language { get; set; }
-		/// <summary>
-		/// ノート保存ディレクトリ
-		/// </summary>
-		public string NoteSaveDirPath { get; set; }
+		public string LanguageFileName { get; set; }
 		/// <summary>
 		/// ランチャアイテム統括。
 		/// </summary>

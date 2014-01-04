@@ -20,5 +20,7 @@ namespace PeMain.UI
 		/// 使用言語データ
 		/// </summary>
 		public Language Language { get; private set; }
+		
+		public MainSetting MainSetting { get; private set; }
 	}
 }

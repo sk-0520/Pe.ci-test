@@ -64,7 +64,7 @@ namespace PeMain.UI
 		void TabSetting_Selecting(object sender, TabControlCancelEventArgs e)
 		{
 			if(this._nowSelectedTabPage == this.pageLauncher) {
-				e.Cancel = LauncherItemValid();
+				e.Cancel = !LauncherItemValid();
 			}
 			if(!e.Cancel) {
 				if(e.TabPage == this.pageToolbar) {
@@ -102,11 +102,6 @@ namespace PeMain.UI
 		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
 		{
 			OpenDialogDirPath(this.inputLauncherOption);
-		}
-		
-		void CommandMainNoteDirPathClick(object sender, EventArgs e)
-		{
-			OpenDialogDirPath(this.inputMainNoteDirPath);
 		}
 		
 		void CommandCommandFont_Click(object sender, EventArgs e)
@@ -231,7 +226,8 @@ namespace PeMain.UI
 		void CommandSubmit_Click(object sender, System.EventArgs e)
 		{
 			if(CheckValidate()) {
-				
+				// 設定データ生成
+				CreateSettingData();
 				DialogResult = DialogResult.OK;
 			}
 		}

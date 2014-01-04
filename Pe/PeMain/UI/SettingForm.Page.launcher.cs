@@ -111,7 +111,7 @@ namespace PeMain.UI
 		
 		bool LauncherItemValid()
 		{
-			return this.selecterLauncher.Items.Any(item => item.HasError);
+			return !this.selecterLauncher.Items.Any(item => item.HasError);
 		}
 		
 		void LauncherOpenIcon()
@@ -147,6 +147,12 @@ namespace PeMain.UI
 			}
 		}
 		
-		
+		void LauncherExportSetting(LauncherSetting setting)
+		{
+			setting.Items.Clear();
+			foreach(var item in this.selecterLauncher.Items) {
+				setting.Items.Add(item);
+			}
+		}
 	}
 }
