@@ -125,7 +125,7 @@ namespace PeMain.UI
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
-			ToolbarAddGroup();
+			ToolbarAddGroup(Language["setting/toolbar/add-group"]);
 		}
 		
 		void ToolToolbarGroup_addItem_Click(object sender, EventArgs e)
@@ -136,7 +136,15 @@ namespace PeMain.UI
 				if(selectedNode.Level == TREE_LEVEL_ITEM) {
 					parentNode = selectedNode.Parent;
 				}
-				ToolbarAddItem(parentNode);
+				
+				var items = this.selecterToolbar.Items;
+				if(items != null && items.Count() > 0) {
+					var item = this.selecterToolbar.SelectedItem;
+					if(item == null) {
+						item = items.First();
+					}
+					ToolbarAddItem(parentNode, item);
+				}
 			}
 		}
 		
