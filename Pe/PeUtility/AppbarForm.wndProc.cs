@@ -8,7 +8,7 @@
  */
 using System;
 using System.Windows.Forms;
-using SC.Windows;
+using PI.Windows;
 
 namespace PeMain.UI
 {

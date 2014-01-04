@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace SC.Windows
+namespace PI.Windows
 {
 	public enum ComResult : int
 	{

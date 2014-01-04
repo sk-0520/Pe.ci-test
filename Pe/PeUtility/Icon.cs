@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-using SC.Windows;
+using PI.Windows;
 
 namespace PeUtility
 {

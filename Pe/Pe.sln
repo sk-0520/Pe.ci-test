@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMain", "PeMain\PeMain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUtility", "PeUtility\PeUtility.csproj", "{863C2A90-A386-4F98-9D0B-EFB839168293}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SC", "Windows\SC.csproj", "{2E80DF8C-5682-4B45-9172-846BAD85C305}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PI", "Windows\PI.csproj", "{2E80DF8C-5682-4B45-9172-846BAD85C305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

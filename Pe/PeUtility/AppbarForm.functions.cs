@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-using SC.Windows;
+using PI.Windows;
 
 namespace PeMain.UI
 {

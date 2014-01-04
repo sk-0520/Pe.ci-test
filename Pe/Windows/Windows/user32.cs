@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace SC.Windows
+namespace PI.Windows
 {
 	/// <summary>
 	/// Description of MyClass.

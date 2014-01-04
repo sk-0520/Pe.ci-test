@@ -10,7 +10,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
-namespace SC.Windows
+namespace PI.Windows
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MARGINS

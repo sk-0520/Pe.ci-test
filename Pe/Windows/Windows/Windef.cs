@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SC.Windows
+namespace PI.Windows
 {
 	/// <summary>
 	/// http://www.pinvoke.net/default.aspx/Structures/rect.html

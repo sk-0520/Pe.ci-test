@@ -75,9 +75,9 @@
     <Compile Include="TextUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Windows\SC.csproj">
+    <ProjectReference Include="..\Windows\PI.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>SC</Name>
+      <Name>PI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
