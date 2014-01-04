@@ -104,16 +104,16 @@ namespace PeMain.UI
 			
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
-				var toolbarItem = new ToolbarItem();
+				var toolbarGroupItem = new ToolbarGroupItem();
 				
 				// グループ項目
 				var groupName = groupNode.Text;
-				toolbarItem.Name = groupName;
+				toolbarGroupItem.Name = groupName;
 				
 				// グループに紐付くアイテム名
-				toolbarItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
+				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
 
-				setting.ToolbarGroup.Items.Add(toolbarItem);
+				setting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 		}
 	}

@@ -69,7 +69,7 @@ namespace PeMain.UI
 			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
 			
 			// 各グループ構築
-			foreach(var groupItem in toolbarSetting.ToolbarGroup.Items) {
+			foreach(var groupItem in toolbarSetting.ToolbarGroup.Groups) {
 				// メイングループ
 				var parentNode = ToolbarAddGroup(groupItem.Name);
 				// メイングループに紐付くアイテム

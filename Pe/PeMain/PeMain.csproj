@@ -170,6 +170,9 @@
     <Compile Include="UI\ToolbarForm.initialize.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ToolbarForm.language.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ToolbarForm.property.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>

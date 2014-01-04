@@ -93,18 +93,18 @@ namespace PeMain.UI
 			return unregistResult.ToInt32() != 0;
 		}
 		
-		private RECT CalcBarArea()
+		private RECT CalcBarArea(DockType dockType)
 		{
-			Debug.Assert(DockType != DockType.None);
+			Debug.Assert(dockType != DockType.None);
 			
 			var desktopArea = DockScreen.Bounds;
 			var barArea = new RECT();
 			
 			// 設定値からバー領域取得
-			if(DockType == DockType.Left || DockType == DockType.Right) {
+			if(dockType == DockType.Left || dockType == DockType.Right) {
 				barArea.Top = desktopArea.Top;
 				barArea.Bottom = desktopArea.Bottom;
-				if(DockType == DockType.Left) {
+				if(dockType == DockType.Left) {
 					barArea.Left = desktopArea.Left;
 					barArea.Right = desktopArea.Left + BarSize.Width;
 				} else {
@@ -112,10 +112,10 @@ namespace PeMain.UI
 					barArea.Right = desktopArea.Right;
 				}
 			} else {
-				Debug.Assert(DockType == DockType.Top || DockType == DockType.Bottom);
+				Debug.Assert(dockType == DockType.Top || dockType == DockType.Bottom);
 				barArea.Left = desktopArea.Left;
 				barArea.Right = desktopArea.Right;
-				if(DockType == DockType.Top) {
+				if(dockType == DockType.Top) {
 					barArea.Top = desktopArea.Top;
 					barArea.Bottom = desktopArea.Top + BarSize.Height;
 				} else {
@@ -153,7 +153,7 @@ namespace PeMain.UI
 			
 			var appBar = new APPBARDATA(Handle);
 			appBar.uEdge = dockType.ToABE();
-			appBar.rc = CalcBarArea();
+			appBar.rc = CalcBarArea(dockType);
 			// 現在の希望するサイズから実際のサイズ要求する
 			API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 			switch(dockType) {

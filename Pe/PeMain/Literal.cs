@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -23,6 +24,13 @@ namespace PeMain
 		private const string dirRootName = "Pe";
 		
 		public const string mainSettingFileName = "setting.xml";
+		
+		/// <summary>
+		/// ツールバー フロート状態 設定サイズ
+		/// </summary>
+		public static readonly Size toolbarFloatSize = new Size(6, 1);
+		public static readonly Size toolbarDesktopSize = new Size(1, 1);
+		
 		
 		/// <summary>
 		/// 起動ディレクトリ

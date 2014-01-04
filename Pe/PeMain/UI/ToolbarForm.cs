@@ -7,8 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using PeMain.Setting;
 
 namespace PeMain.UI
 {
@@ -25,6 +27,13 @@ namespace PeMain.UI
 			InitializeComponent();
 			
 			Initialize();
+		}
+		
+		void ToolbarForm_MenuItem_Click(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripItem)sender;
+			var group = (ToolbarGroupItem)menuItem.Tag;
+			SelectedGroup(group);
 		}
 	}
 }

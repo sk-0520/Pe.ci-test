@@ -8,6 +8,7 @@
  */
 using System;
 using PeMain.Setting;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -18,5 +19,8 @@ namespace PeMain.UI
 	{
 		public ToolbarSetting ToolbarSetting { get; private set; }
 		public Language Language { get; private set; }
+		public LauncherSetting LauncherSetting { get; private set; }
+		
+		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 	}
 }

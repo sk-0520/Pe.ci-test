@@ -36,18 +36,27 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			this.menuGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.SuspendLayout();
+			// 
+			// menuGroup
+			// 
+			this.menuGroup.Name = "menuGroup";
+			this.menuGroup.Size = new System.Drawing.Size(61, 4);
 			// 
 			// ToolbarForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.ContextMenuStrip = this.menuGroup;
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "ToolbarForm";
 			this.Text = "ToolbarForm";
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ContextMenuStrip menuGroup;
 	}
 }

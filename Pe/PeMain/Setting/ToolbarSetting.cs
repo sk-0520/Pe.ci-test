@@ -66,9 +66,9 @@ namespace PeMain.Setting
 	/// 
 	/// </summary>
 	[Serializable]
-	public class ToolbarItem: NameItem
+	public class ToolbarGroupItem: NameItem
 	{
-		public ToolbarItem()
+		public ToolbarGroupItem()
 		{
 			ItemNames = new List<string>();
 		}
@@ -84,10 +84,10 @@ namespace PeMain.Setting
 	{
 		public ToolbarGroup()
 		{
-			Items = new List<ToolbarItem>();
+			Groups = new List<ToolbarGroupItem>();
 		}
 		
-		public List<ToolbarItem> Items { get; set; }
+		public List<ToolbarGroupItem> Groups { get; set; }
 	}
 	
 	
@@ -102,6 +102,11 @@ namespace PeMain.Setting
 			ToolbarGroup = new ToolbarGroup();
 			ToolbarPosition = ToolbarPosition.DesktopFloat;
 			IconSize = IconSize.Small;
+			Visible = false;
+			Topmost = false;
+			AutoHide = false;
+			FloatSize = Literal.toolbarFloatSize;
+			DesktopSize = Literal.toolbarDesktopSize;
 		}
 		
 		public ToolbarGroup ToolbarGroup { get; set; }

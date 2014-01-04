@@ -87,7 +87,7 @@ namespace PeMain.UI
 			Debug.Assert(this._mainSetting != null);
 			
 			this._toolbarForm = new ToolbarForm();
-			this._toolbarForm.SetSettingData(this._language, this._mainSetting.Toolbar);
+			this._toolbarForm.SetSettingData(this._language, this._mainSetting);
 		}
 
 		void InitializeUI(string[] args)
