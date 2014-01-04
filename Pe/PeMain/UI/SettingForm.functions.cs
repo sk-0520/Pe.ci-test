@@ -109,7 +109,11 @@ namespace PeMain.UI
 			LauncherExportSetting(mainSetting.Launcher);
 			
 			// コマンド
+			CommandExportSetting(mainSetting.Command);
+			
 			// ツールバー
+			ToolbarExportSetting(mainSetting.Toolbar);
+			
 			// ノート
 			// ディスプレイ
 			

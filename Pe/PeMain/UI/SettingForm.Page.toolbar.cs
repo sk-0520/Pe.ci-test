@@ -22,17 +22,28 @@ namespace PeMain.UI
 		{
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
 			this._imageToolbarItemGroup.Images.Clear();
+			this._imageToolbarItemGroup.Images.Add(PeMain.Properties.Images.Group);
+			
 			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconSize.Small)}).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
 			}
+			
+			// イメージリスト再設定のために一度null初期化
+			this.treeToolbarItemGroup.ImageList = null;
+			this.treeToolbarItemGroup.StateImageList = null;
+			// イメージリスト再設定
+			this.treeToolbarItemGroup.ImageList = this._imageToolbarItemGroup;
+			this.treeToolbarItemGroup.StateImageList = this._imageToolbarItemGroup;
 		}
 		
-		void ToolbarAddGroup()
+		TreeNode ToolbarAddGroup(string groupName)
 		{
 			var node = new TreeNode();
-			node.Text = Language["setting/toolbar/add-group"];
+			node.Text = groupName;
 			this.treeToolbarItemGroup.Nodes.Add(node);
+			
+			return node;
 		}
 		
 		void ToolbarSetItem(TreeNode node, LauncherItem item)
@@ -42,13 +53,14 @@ namespace PeMain.UI
 			
 			node.Text = item.Name;
 			node.ImageKey = item.Name;
+			node.SelectedImageKey = item.Name;
 			node.Tag = item;
 		}
 		
-		void ToolbarAddItem(TreeNode parentNode)
+		void ToolbarAddItem(TreeNode parentNode, LauncherItem item)
 		{
 			Debug.Assert(parentNode != null);
-			
+			/*
 			var items = this.selecterToolbar.Items;
 			if(items != null && items.Count() > 0) {
 				var item = this.selecterToolbar.SelectedItem;
@@ -62,6 +74,13 @@ namespace PeMain.UI
 					parentNode.Expand();
 				}
 			}
+			*/
+			var node = new TreeNode();
+			ToolbarSetItem(node, item);
+			parentNode.Nodes.Add(node);
+			if(!parentNode.IsExpanded) {
+				parentNode.Expand();
+			}
 		}
 		
 		void ToolbarSelectedChangeGroupItem(LauncherItem item)
@@ -72,6 +91,11 @@ namespace PeMain.UI
 				this.selecterToolbar.Filtering = false;
 			}
 			this.selecterToolbar.SelectedItem = item;
+		}
+		
+		void ToolbarExportSetting(ToolbarSetting setting)
+		{
+			
 		}
 	}
 }

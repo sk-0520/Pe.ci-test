@@ -102,6 +102,8 @@ namespace PeMain.UI
 			item.IconIndex = (int)this.inputLauncherIconIndex.Value;
 			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
 			item.Note = this.inputLauncherNote.Text.Trim();
+			item.StdOutputWatch = this.selectLauncherStdStream.Checked;
+			item.ProcessWatch = this.selectLauncherProcess.Checked;
 			
 			item.HasError = this.selecterLauncher.Items.Where(i => i != item).Any(i => i.Equals(item));
 			if(oldIcon.Index != item.IconIndex || oldIcon.Path != item.IconPath) {

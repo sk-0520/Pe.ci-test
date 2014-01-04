@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Logic;
 using PeMain.Setting;
@@ -66,6 +67,19 @@ namespace PeMain.UI
 			// グループ用項目
 			this._imageToolbarItemGroup = new ImageList();
 			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
+			
+			// 各グループ構築
+			foreach(var groupItem in toolbarSetting.ToolbarGroup.Items) {
+				// メイングループ
+				var parentNode = ToolbarAddGroup(groupItem.Name);
+				// メイングループに紐付くアイテム
+				foreach(var itemName in groupItem.ItemNames) {
+					var relItem = this._launcherItems.SingleOrDefault(item => item.IsNameEqual(itemName));
+					if(relItem != null) {
+						ToolbarAddItem(parentNode, relItem);
+					}
+				}
+			}
 		}
 		
 		void InitializeUI(MainSetting mainSetting)

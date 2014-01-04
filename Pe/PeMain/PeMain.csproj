@@ -145,6 +145,9 @@
     <Compile Include="UI\SettingForm.language.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SettingForm.Page.command.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingForm.Page.launcher.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>

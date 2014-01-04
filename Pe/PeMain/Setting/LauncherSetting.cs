@@ -114,7 +114,7 @@ namespace PeMain.Setting
 			if(item == null) {
 				return false;
 			}
-			return item.Name == Name;
+			return IsNameEqual(item.Name);
 		}
 		
 		public override int GetHashCode()
@@ -197,6 +197,11 @@ namespace PeMain.Setting
 					icon.Dispose();
 				}
 			}
+		}
+		
+		public bool IsNameEqual(string name)
+		{
+			return Name == name;
 		}
 		
 		public object Clone()
