@@ -79,7 +79,7 @@ namespace PeMain.UI
 					var result = new FontSetting();
 					var font = dialog.Font;
 					result.Family = font.FontFamily.Name;
-					result.Height = font.Height;
+					result.Height = font.Size;
 					return result;
 				} else {
 					return null;

@@ -23,5 +23,7 @@ namespace PeMain.UI
 		
 		private MainSetting _mainSetting;
 		private Language _language;
+		
+		private ToolbarForm _toolbarForm;
 	}
 }

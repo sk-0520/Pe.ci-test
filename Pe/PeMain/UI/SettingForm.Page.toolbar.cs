@@ -95,7 +95,26 @@ namespace PeMain.UI
 		
 		void ToolbarExportSetting(ToolbarSetting setting)
 		{
+			setting.ToolbarPosition = (ToolbarPosition)this.selectToolbarPosition.SelectedValue;
+			setting.Topmost = this.selectToolbarTopmost.Checked;
+			setting.AutoHide = this.selectToolbarAutoHide.Checked;
+			setting.Visible = this.selectToolbarVisible.Checked;
 			
+			setting.FontSetting = this._toolbarFont;
+			
+			// ツリーからグループ項目構築
+			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
+				var toolbarItem = new ToolbarItem();
+				
+				// グループ項目
+				var groupName = groupNode.Text;
+				toolbarItem.Name = groupName;
+				
+				// グループに紐付くアイテム名
+				toolbarItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
+
+				setting.ToolbarGroup.Items.Add(toolbarItem);
+			}
 		}
 	}
 }

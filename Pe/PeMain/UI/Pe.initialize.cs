@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-
 using PeMain.Setting;
 
 namespace PeMain.UI
@@ -65,7 +65,7 @@ namespace PeMain.UI
 		/// 本体UI初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeUI(string[] args)
+		void InitializeMain(string[] args)
 		{
 			this._notifyIcon = new NotifyIcon();
 			this._notificationMenu = new ContextMenu(InitializeMenu());
@@ -74,7 +74,27 @@ namespace PeMain.UI
 			this._notifyIcon.Visible = true;
 			
 			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
-			this._notifyIcon.ContextMenu = this._notificationMenu;
+			this._notifyIcon.ContextMenu = this._notificationMenu;			
+		}
+			
+		void InitializeCommand(string[] args)
+		{
+			
+		}
+		
+		void InitializeToolbar(string[] args)
+		{
+			Debug.Assert(this._mainSetting != null);
+			
+			this._toolbarForm = new ToolbarForm();
+			this._toolbarForm.SetSettingData(this._language, this._mainSetting.Toolbar);
+		}
+
+		void InitializeUI(string[] args)
+		{
+			InitializeMain(args);
+			InitializeCommand(args);
+			InitializeToolbar(args);
 		}
 		
 		/// <summary>

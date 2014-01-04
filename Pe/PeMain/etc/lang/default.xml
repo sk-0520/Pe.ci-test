@@ -24,5 +24,25 @@
 		<Word Name="setting/tab/command"  Text="コマンド" />
 		<Word Name="setting/tab/display"  Text="ディスプレイ" />
 		<Word Name="setting/tab/note"     Text="ノート" />
+	
+		<Word Name="enum/toolbar-position/desktop/float"  Text="フローティング" />
+		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />
+		<Word Name="enum/toolbar-position/desktop/top"    Text="デスクトップ: 上" />
+		<Word Name="enum/toolbar-position/desktop/right"  Text="デスクトップ: 右" />
+		<Word Name="enum/toolbar-position/desktop/bottom" Text="デスクトップ: 下" />
+		<Word Name="enum/toolbar-position/window/left"    Text="ウィンドウ: 左" />
+		<Word Name="enum/toolbar-position/window/top"     Text="ウィンドウ: 上" />
+		<Word Name="enum/toolbar-position/window/right"   Text="ウィンドウ: 右" />
+		<Word Name="enum/toolbar-position/window/bottom"  Text="ウィンドウ: 下" />
+	
+		<Word Name="enum/launcher-type/file" Text="ファイル" />
+		<Word Name="enum/launcher-type/uri"  Text="URI" />
+		<Word Name="enum/launcher-type/pe"   Text="組み込み" />
+	
+		<Word Name="enum/icon-size/small"  Text="小" />
+		<Word Name="enum/icon-size/normal" Text="中" />
+		<Word Name="enum/icon-size/big"    Text="大" />
+		<Word Name="enum/icon-size/large"  Text="特大" />
+	
 	</Words>
 </Language>

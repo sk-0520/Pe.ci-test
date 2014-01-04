@@ -80,7 +80,7 @@ namespace PeMain.Setting
 	/// 
 	/// </summary>
 	[Serializable]
-	public class ToolbarGroup
+	public class ToolbarGroup: Item
 	{
 		public ToolbarGroup()
 		{

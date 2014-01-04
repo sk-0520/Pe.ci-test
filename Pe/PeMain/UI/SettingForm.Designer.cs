@@ -95,7 +95,8 @@ namespace PeMain.UI
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
 			this.labelToolbarPosition = new System.Windows.Forms.Label();
 			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
-			this.selectToolbarShow = new System.Windows.Forms.CheckBox();
+			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
+			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
 			this.commandToolbarFont = new System.Windows.Forms.Button();
 			this.labelToolbarFonr = new System.Windows.Forms.Label();
@@ -163,6 +164,7 @@ namespace PeMain.UI
 			// 
 			// selectMainLanguage
 			// 
+			this.selectMainLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.selectMainLanguage.FormattingEnabled = true;
 			this.selectMainLanguage.Location = new System.Drawing.Point(121, 19);
 			this.selectMainLanguage.Name = "selectMainLanguage";
@@ -515,6 +517,7 @@ namespace PeMain.UI
 			// 
 			// selectCommandIcon
 			// 
+			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.selectCommandIcon.FormattingEnabled = true;
 			this.selectCommandIcon.Location = new System.Drawing.Point(145, 155);
 			this.selectCommandIcon.Name = "selectCommandIcon";
@@ -570,7 +573,8 @@ namespace PeMain.UI
 			this.pageToolbar.Controls.Add(this.selectToolbarIcon);
 			this.pageToolbar.Controls.Add(this.labelToolbarPosition);
 			this.pageToolbar.Controls.Add(this.selectToolbarPosition);
-			this.pageToolbar.Controls.Add(this.selectToolbarShow);
+			this.pageToolbar.Controls.Add(this.selectToolbarVisible);
+			this.pageToolbar.Controls.Add(this.selectToolbarAutoHide);
 			this.pageToolbar.Controls.Add(this.selectToolbarTopmost);
 			this.pageToolbar.Controls.Add(this.commandToolbarFont);
 			this.pageToolbar.Controls.Add(this.labelToolbarFonr);
@@ -735,6 +739,7 @@ namespace PeMain.UI
 			// 
 			// selectToolbarIcon
 			// 
+			this.selectToolbarIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.selectToolbarIcon.FormattingEnabled = true;
 			this.selectToolbarIcon.Location = new System.Drawing.Point(129, 131);
 			this.selectToolbarIcon.Name = "selectToolbarIcon";
@@ -751,20 +756,30 @@ namespace PeMain.UI
 			// 
 			// selectToolbarPosition
 			// 
+			this.selectToolbarPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.selectToolbarPosition.FormattingEnabled = true;
 			this.selectToolbarPosition.Location = new System.Drawing.Point(129, 102);
 			this.selectToolbarPosition.Name = "selectToolbarPosition";
 			this.selectToolbarPosition.Size = new System.Drawing.Size(121, 23);
 			this.selectToolbarPosition.TabIndex = 9;
 			// 
-			// selectToolbarShow
+			// selectToolbarVisible
 			// 
-			this.selectToolbarShow.Location = new System.Drawing.Point(23, 78);
-			this.selectToolbarShow.Name = "selectToolbarShow";
-			this.selectToolbarShow.Size = new System.Drawing.Size(104, 24);
-			this.selectToolbarShow.TabIndex = 8;
-			this.selectToolbarShow.Text = "{SHOW}";
-			this.selectToolbarShow.UseVisualStyleBackColor = true;
+			this.selectToolbarVisible.Location = new System.Drawing.Point(23, 78);
+			this.selectToolbarVisible.Name = "selectToolbarVisible";
+			this.selectToolbarVisible.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarVisible.TabIndex = 8;
+			this.selectToolbarVisible.Text = "{VISIBLE}";
+			this.selectToolbarVisible.UseVisualStyleBackColor = true;
+			// 
+			// selectToolbarAutoHide
+			// 
+			this.selectToolbarAutoHide.Location = new System.Drawing.Point(133, 47);
+			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
+			this.selectToolbarAutoHide.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarAutoHide.TabIndex = 7;
+			this.selectToolbarAutoHide.Text = "{AUTOHIDE}";
+			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
 			// 
 			// selectToolbarTopmost
 			// 
@@ -906,6 +921,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectToolbarAutoHide;
 		private System.Windows.Forms.CheckBox selectLauncherProcess;
 		private System.Windows.Forms.CheckBox selectLauncherStdStream;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
@@ -953,7 +969,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.Label labelToolbarPosition;
 		private System.Windows.Forms.ComboBox selectToolbarIcon;
 		private System.Windows.Forms.Label labelToolbarIcon;
-		private System.Windows.Forms.CheckBox selectToolbarShow;
+		private System.Windows.Forms.CheckBox selectToolbarVisible;
 		private System.Windows.Forms.Label labelToolbarFonr;
 		private System.Windows.Forms.Button commandToolbarFont;
 		private System.Windows.Forms.CheckBox selectToolbarTopmost;

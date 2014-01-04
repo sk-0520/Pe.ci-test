@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeMain.Setting;
 
 namespace PeMain.UI
 {
@@ -15,5 +16,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		public ToolbarSetting ToolbarSetting { get; private set; }
+		public Language Language { get; private set; }
 	}
 }
