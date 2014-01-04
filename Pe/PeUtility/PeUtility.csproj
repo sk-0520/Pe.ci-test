@@ -75,15 +75,15 @@
     <Compile Include="TextUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Windows\PI.csproj">
-      <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>PI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="AppbarForm.resx">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PI\PI.csproj">
+      <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
+      <Name>PI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
