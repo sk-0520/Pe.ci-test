@@ -65,9 +65,10 @@ namespace PeMain.UI
 			AttachmentIconSize(this.selectToolbarIcon, toolbarSetting.IconSize);
 			
 			// 各チェック
-			this.selectToolbarAutoHide = toolbarSetting.AutoHide;
-			this.selectToolbarVisible = toolbarSetting.Visible;
-			this.selectToolbarTopmost = toolbarSetting.Topmost;
+			this.selectToolbarAutoHide.Checked = toolbarSetting.AutoHide;
+			this.selectToolbarVisible.Checked = toolbarSetting.Visible;
+			this.selectToolbarTopmost.Checked = toolbarSetting.Topmost;
+			this.selectToolbarShowText.Checked = toolbarSetting.ShowText;
 			
 			// グループ用項目
 			this._imageToolbarItemGroup = new ImageList();

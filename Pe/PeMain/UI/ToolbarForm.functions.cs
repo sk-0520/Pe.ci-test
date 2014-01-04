@@ -9,8 +9,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PeMain.Properties;
 using PeMain.Setting;
 using PeUtility;
 
@@ -81,7 +83,16 @@ namespace PeMain.UI
 			} else {
 				DockType = DockType.None;
 			}
+			ItemSizeToFormSize();
 			Visible = ToolbarSetting.Visible;
+		}
+		
+		/// <summary>
+		/// 表示タイプからウィンドウをそれっぽいサイズに変更
+		/// </summary>
+		void ItemSizeToFormSize()
+		{
+			// TODO: これから
 		}
 		
 		void SelectedGroup(ToolbarGroupItem groupItem)
@@ -95,6 +106,50 @@ namespace PeMain.UI
 			toolItem.Checked = true;
 			
 			// 表示アイテム設定
+			var iconSize = ToolbarSetting.IconSize.ToHeight();
+			this.toolLauncher.ImageScalingSize = new Size(iconSize, iconSize);
+			var toolButtonList = new List<ToolStripSplitButton>();
+			foreach(var itemName in groupItem.ItemNames) {
+				var launcherItem = LauncherSetting.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+				if(launcherItem != null) {
+					var itemButton = CreateLauncherButton(launcherItem);
+					toolButtonList.Add(itemButton);
+				}
+			}
+			toolLauncher.Items
+				.Cast<ToolStripItem>()
+				.Where(item => item.Image != null)
+				.Transform(item => item.Image.Dispose())
+			;
+			toolLauncher.Items.Clear();
+			toolLauncher.Items.AddRange(toolButtonList.ToArray());
+		}
+		
+		ToolStripSplitButton CreateLauncherButton(LauncherItem item)
+		{
+			Debug.Assert(item != null);
+			
+			var button = new ToolStripSplitButton();
+			
+			button.Text = item.Name;
+			button.ToolTipText = item.Name;
+			button.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
+			button.TextImageRelation = TextImageRelation.ImageBeforeText;
+			button.AutoSize = false;
+			var buttonLayout = GetButtonLayout();
+			button.Margin  = new Padding(0);
+			button.Padding = new Padding(0);
+			//button.Padding = buttonLayout.Padding;
+			if(ToolbarSetting.ShowText) {
+				button.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+			} else {
+				button.DisplayStyle = ToolStripItemDisplayStyle.Image;
+			}
+			button.Size = buttonLayout.ClientSize;
+			button.Tag = item;
+			button.Visible = true;
+			
+			return button;
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace PeMain.UI
 			if(isAero) {
 				var margin = new MARGINS();
 				margin.leftWidth = -1;
-				API.DwmExtendFrameIntoClientArea(Handle, ref margin);
+				//API.DwmExtendFrameIntoClientArea(Handle, ref margin);
 			}
 		}
 		

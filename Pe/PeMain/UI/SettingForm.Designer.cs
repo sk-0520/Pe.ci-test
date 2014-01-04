@@ -107,6 +107,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
@@ -568,6 +569,7 @@ namespace PeMain.UI
 			// 
 			// pageToolbar
 			// 
+			this.pageToolbar.Controls.Add(this.selectToolbarShowText);
 			this.pageToolbar.Controls.Add(this.splitContainer2);
 			this.pageToolbar.Controls.Add(this.labelToolbarIcon);
 			this.pageToolbar.Controls.Add(this.selectToolbarIcon);
@@ -878,6 +880,15 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// selectToolbarShowText
+			// 
+			this.selectToolbarShowText.Location = new System.Drawing.Point(133, 72);
+			this.selectToolbarShowText.Name = "selectToolbarShowText";
+			this.selectToolbarShowText.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarShowText.TabIndex = 16;
+			this.selectToolbarShowText.Text = "{SHOWTEXT}";
+			this.selectToolbarShowText.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -921,6 +932,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectToolbarShowText;
 		private System.Windows.Forms.CheckBox selectToolbarAutoHide;
 		private System.Windows.Forms.CheckBox selectLauncherProcess;
 		private System.Windows.Forms.CheckBox selectLauncherStdStream;

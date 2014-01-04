@@ -99,6 +99,7 @@ namespace PeMain.UI
 			setting.Topmost = this.selectToolbarTopmost.Checked;
 			setting.AutoHide = this.selectToolbarAutoHide.Checked;
 			setting.Visible = this.selectToolbarVisible.Checked;
+			setting.ShowText = this.selectToolbarShowText.Checked;
 			
 			setting.FontSetting = this._toolbarFont;
 			

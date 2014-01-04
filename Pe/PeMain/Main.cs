@@ -22,7 +22,7 @@ namespace PeMain
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-						
+			
 			bool isFirstInstance;
 			// Please use a unique name for the mutex to prevent conflicts with other programs
 			using (Mutex mtx = new Mutex(true, "PeMain", out isFirstInstance)) {

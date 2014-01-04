@@ -102,11 +102,13 @@ namespace PeMain.Setting
 			ToolbarGroup = new ToolbarGroup();
 			ToolbarPosition = ToolbarPosition.DesktopFloat;
 			IconSize = IconSize.Small;
+			ShowText = false;
 			Visible = false;
 			Topmost = false;
 			AutoHide = false;
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;
+			Width = Literal.toolbarTextWidth;
 		}
 		
 		public ToolbarGroup ToolbarGroup { get; set; }
@@ -139,6 +141,14 @@ namespace PeMain.Setting
 		/// アイコンサイズ
 		/// </summary>
 		public IconSize IconSize { get; set; }
+		/// <summary>
+		/// テキスト表示
+		/// </summary>
+		public bool ShowText { get; set; }
+		/// <summary>
+		/// テキスト表示欄の長さ(px)
+		/// </summary>
+		public int Width { get; set; }
 		/// <summary>
 		/// フォント
 		/// </summary>

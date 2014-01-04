@@ -30,7 +30,7 @@ namespace PeMain
 		/// </summary>
 		public static readonly Size toolbarFloatSize = new Size(6, 1);
 		public static readonly Size toolbarDesktopSize = new Size(1, 1);
-		
+		public const int toolbarTextWidth = 80;
 		
 		/// <summary>
 		/// 起動ディレクトリ
