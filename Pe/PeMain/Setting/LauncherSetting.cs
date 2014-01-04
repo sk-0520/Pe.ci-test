@@ -84,6 +84,7 @@ namespace PeMain.Setting
 			result.ExecuteCount = ExecuteCount;
 			result.WorkDirs.AddRange(WorkDirs);
 			result.Options.AddRange(Options);
+			result.DateHistory = (DateHistory)DateHistory.Clone();
 			
 			return result;
 		}

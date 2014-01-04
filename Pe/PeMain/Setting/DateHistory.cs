@@ -14,7 +14,7 @@ namespace PeMain.Setting
 	/// 作成・更新日時保持(UTC)
 	/// </summary>
 	[Serializable]
-	public class DateHistory: Item
+	public class DateHistory: Item, ICloneable
 	{
 		public DateHistory()
 		{
@@ -23,5 +23,15 @@ namespace PeMain.Setting
 		}
 		public DateTime CreateUTC { get; set; }
 		public DateTime UpdateUTC { get; set; }
+		
+		public object Clone()
+		{
+			var result = new DateHistory();
+			
+			result.CreateUTC = CreateUTC;
+			result.UpdateUTC = UpdateUTC;
+			
+			return result;
+		}
 	}
 }
