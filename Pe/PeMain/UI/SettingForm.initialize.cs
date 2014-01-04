@@ -64,6 +64,11 @@ namespace PeMain.UI
 			// アイコンサイズ文言の項目構築
 			AttachmentIconSize(this.selectToolbarIcon, toolbarSetting.IconSize);
 			
+			// 各チェック
+			this.selectToolbarAutoHide = toolbarSetting.AutoHide;
+			this.selectToolbarVisible = toolbarSetting.Visible;
+			this.selectToolbarTopmost = toolbarSetting.Topmost;
+			
 			// グループ用項目
 			this._imageToolbarItemGroup = new ImageList();
 			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
