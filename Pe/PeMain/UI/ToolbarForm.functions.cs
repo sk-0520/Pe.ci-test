@@ -42,6 +42,40 @@ namespace PeMain.UI
 			}[value];
 		}
 		
+		static bool IsCaptionSidePos(ToolbarPosition pos)
+		{
+			return pos.IsIn(
+				ToolbarPosition.DesktopFloat,
+				ToolbarPosition.DesktopTop,
+				ToolbarPosition.DesktopBottom,
+				ToolbarPosition.WindowTop,
+				ToolbarPosition.WindowBottom
+			);
+		}
+		
+		Rectangle GetCaptionBarRect(ToolbarPosition pos)
+		{
+			var padding = Padding;
+			var captionSize = SystemInformation.SmallCaptionButtonSize.Height / 2;
+			
+			if(IsCaptionSidePos(pos)) {
+				return new Rectangle(
+					padding.Left,
+					padding.Top,
+					captionSize,
+					ClientSize.Height - padding.Vertical
+				);
+			} else {
+				return new Rectangle(
+					padding.Left,
+					padding.Top,
+					ClientSize.Width - padding.Horizontal,
+					captionSize
+				);
+			}
+		}
+
+		
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
@@ -50,7 +84,6 @@ namespace PeMain.UI
 			
 			ApplySetting();
 		}
-		
 		
 		
 		void ApplySetting()
@@ -78,11 +111,12 @@ namespace PeMain.UI
 			}
 			
 			// 表示
-			if(IsDockingMode) {
+			if(IsDockingMode && ToolbarSetting.Visible) {
 				DockType = ToDockType(ToolbarSetting.ToolbarPosition);
 			} else {
 				DockType = DockType.None;
 			}
+			
 			ItemSizeToFormSize();
 			Visible = ToolbarSetting.Visible;
 		}
@@ -107,73 +141,77 @@ namespace PeMain.UI
 			
 			// 表示アイテム設定
 			var iconSize = ToolbarSetting.IconSize.ToHeight();
-			this.toolLauncher.ImageScalingSize = new Size(iconSize, iconSize);
-			var toolButtonList = new List<ToolStripSplitButton>();
+			//this.toolLauncher.ImageScalingSize = new Size(iconSize, iconSize);
+			this.toolLauncher.ButtonSize = new Size(iconSize, iconSize);
+			var toolButtonList = new List<ToolBarButton>();
+			this._toolbarImageList.Images.Clear();
 			foreach(var itemName in groupItem.ItemNames) {
 				var launcherItem = LauncherSetting.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 				if(launcherItem != null) {
 					var itemButton = CreateLauncherButton(launcherItem);
+					this._toolbarImageList.Images.Add(launcherItem.Name, launcherItem.GetIcon(ToolbarSetting.IconSize));
 					toolButtonList.Add(itemButton);
 				}
 			}
-			toolLauncher.Items
-				.Cast<ToolStripItem>()
-				.Where(item => item.Image != null)
-				.Transform(item => item.Image.Dispose())
-			;
-			toolLauncher.Items.Clear();
-			toolLauncher.Items.AddRange(toolButtonList.ToArray());
+			
+			this.toolLauncher.Buttons.Clear();
+			this.toolLauncher.ImageList = null;
+			this.toolLauncher.ImageList = this._toolbarImageList;
+			this.toolLauncher.Buttons.AddRange(toolButtonList.ToArray());
 		}
 		
-		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem item)
+		ContextMenu CreateFileLauncherMenuItems(LauncherItem item)
 		{
-			var result = new List<ToolStripItem>();
+			var menuItemList = new List<MenuItem>();
 			
-			var executeItem = new ToolStripMenuItem();
-			var executeExItem = new ToolStripMenuItem();
-			var pathItem = new ToolStripMenuItem();
-			var fileItem = new ToolStripMenuItem();
-			result.Add(executeItem);
-			result.Add(executeExItem);
-			result.Add(new ToolStripSeparator());
-			result.Add(pathItem);
-			result.Add(fileItem);
+			var executeItem = new MenuItem();
+			var executeExItem = new MenuItem();
+			var pathItem = new MenuItem();
+			var fileItem = new MenuItem();
+			menuItemList.Add(executeItem);
+			menuItemList.Add(executeExItem);
+			menuItemList.Add(new MenuItem());
+			menuItemList.Add(pathItem);
+			menuItemList.Add(fileItem);
 			
 			executeItem.Text = Language["toolbar/menu/file/execute"];
 			executeExItem.Text = Language["toolbar/menu/file/execute-ex"];
 			pathItem.Text = Language["toolbar/menu/file/path"];
 			fileItem.Text = Language["toolbar/menu/file/ls"];
 			
-			return result.ToArray();
+			var itemMenu = new ContextMenu();
+			itemMenu.MenuItems.AddRange(menuItemList.ToArray());
+			return itemMenu;
 		}
 		
-		ToolStripSplitButton CreateLauncherButton(LauncherItem item)
+		ToolBarButton CreateLauncherButton(LauncherItem item)
 		{
 			Debug.Assert(item != null);
 			
-			var button = new ToolStripSplitButton();
+			var button = new ToolBarButton();
 			
-			button.Text = item.Name;
+			//button.Text = item.Name;
 			button.ToolTipText = item.Name;
-			button.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
-			button.TextImageRelation = TextImageRelation.ImageBeforeText;
+			button.ImageKey = item.Name;
+			button.Style = ToolBarButtonStyle.DropDownButton;
 			//button.AutoSize = false;
-			var buttonLayout = GetButtonLayout();
+			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);
 			//button.Padding = buttonLayout.Padding;
 			if(ToolbarSetting.ShowText) {
-				button.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+				//button.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+				button.Text = item.Name;
 			} else {
-				button.DisplayStyle = ToolStripItemDisplayStyle.Image;
+				//button.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			}
 			//button.Size = buttonLayout.ClientSize;
 			button.Tag = item;
 			button.Visible = true;
 			if(item.LauncherType == LauncherType.File) {
-				button.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
+				button.DropDownMenu = CreateFileLauncherMenuItems(item);
 			}
-			button.ButtonClick += new EventHandler(button_ButtonClick);
+			//button.ButtonClick += new EventHandler(button_ButtonClick);
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
 			return button;

@@ -18,5 +18,6 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		ImageList _toolbarImageList;
 	}
 }
