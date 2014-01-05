@@ -35,5 +35,17 @@ namespace PeMain.UI
 			var group = (ToolbarGroupItem)menuItem.Tag;
 			SelectedGroup(group);
 		}
+		
+		void button_ButtonClick(object sender, EventArgs e)
+		{
+			Debug.WriteLine("click: " + sender.ToString());
+		}
+
+		
+		void button_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+			Debug.WriteLine("menu: " + e.ClickedItem.ToString());
+		}
+
 	}
 }
