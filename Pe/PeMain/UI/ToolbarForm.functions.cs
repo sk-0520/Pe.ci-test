@@ -125,6 +125,28 @@ namespace PeMain.UI
 			toolLauncher.Items.AddRange(toolButtonList.ToArray());
 		}
 		
+		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem item)
+		{
+			var result = new List<ToolStripItem>();
+			
+			var executeItem = new ToolStripMenuItem();
+			var executeExItem = new ToolStripMenuItem();
+			var pathItem = new ToolStripMenuItem();
+			var fileItem = new ToolStripMenuItem();
+			result.Add(executeItem);
+			result.Add(executeExItem);
+			result.Add(new ToolStripSeparator());
+			result.Add(pathItem);
+			result.Add(fileItem);
+			
+			executeItem.Text = Language["toolbar/menu/file/execute"];
+			executeExItem.Text = Language["toolbar/menu/file/execute-ex"];
+			pathItem.Text = Language["toolbar/menu/file/path"];
+			fileItem.Text = Language["toolbar/menu/file/ls"];
+			
+			return result.ToArray();
+		}
+		
 		ToolStripSplitButton CreateLauncherButton(LauncherItem item)
 		{
 			Debug.Assert(item != null);
@@ -135,21 +157,28 @@ namespace PeMain.UI
 			button.ToolTipText = item.Name;
 			button.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
 			button.TextImageRelation = TextImageRelation.ImageBeforeText;
-			button.AutoSize = false;
+			//button.AutoSize = false;
 			var buttonLayout = GetButtonLayout();
-			button.Margin  = new Padding(0);
-			button.Padding = new Padding(0);
+			//button.Margin  = new Padding(0);
+			//button.Padding = new Padding(0);
 			//button.Padding = buttonLayout.Padding;
 			if(ToolbarSetting.ShowText) {
 				button.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 			} else {
 				button.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			}
-			button.Size = buttonLayout.ClientSize;
+			//button.Size = buttonLayout.ClientSize;
 			button.Tag = item;
 			button.Visible = true;
+			if(item.LauncherType == LauncherType.File) {
+				button.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
+			}
+			button.ButtonClick += new EventHandler(button_ButtonClick);
+			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
 			return button;
 		}
+
+
 	}
 }
