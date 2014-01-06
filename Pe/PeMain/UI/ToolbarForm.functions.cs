@@ -157,8 +157,8 @@ namespace PeMain.UI
 			button.ToolTipText = item.Name;
 			button.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
 			button.TextImageRelation = TextImageRelation.ImageBeforeText;
-			//button.AutoSize = false;
-			var buttonLayout = GetButtonLayout();
+			button.AutoSize = true;
+			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);
 			//button.Padding = buttonLayout.Padding;

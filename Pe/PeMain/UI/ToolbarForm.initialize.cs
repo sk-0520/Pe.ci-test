@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Windows.Forms;
 using PI.Windows;
 
 namespace PeMain.UI
@@ -25,6 +26,9 @@ namespace PeMain.UI
 				margin.leftWidth = -1;
 				//API.DwmExtendFrameIntoClientArea(Handle, ref margin);
 			}
+			var frame = SystemInformation.Border3DSize;
+			frame.Height = 0;
+			Padding = new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
 		}
 		
 		void Initialize()

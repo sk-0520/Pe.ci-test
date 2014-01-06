@@ -38,8 +38,7 @@ namespace PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			this.menuGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.toolLauncher = new System.Windows.Forms.ToolStrip();
-			this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+			this.toolLauncher = new PeMain.UI.ToolbarToolStrip();
 			this.SuspendLayout();
 			// 
 			// menuGroup
@@ -49,39 +48,29 @@ namespace PeMain.UI
 			// 
 			// toolLauncher
 			// 
-			this.toolLauncher.Location = new System.Drawing.Point(2, 2);
+			this.toolLauncher.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncher.Name = "toolLauncher";
-			this.toolLauncher.Padding = new System.Windows.Forms.Padding(0);
 			this.toolLauncher.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.toolLauncher.Size = new System.Drawing.Size(176, 25);
+			this.toolLauncher.Size = new System.Drawing.Size(180, 25);
 			this.toolLauncher.TabIndex = 1;
 			this.toolLauncher.Text = "toolStrip1";
-			// 
-			// maskedTextBox1
-			// 
-			this.maskedTextBox1.Location = new System.Drawing.Point(0, 0);
-			this.maskedTextBox1.Name = "maskedTextBox1";
-			this.maskedTextBox1.Size = new System.Drawing.Size(100, 19);
-			this.maskedTextBox1.TabIndex = 0;
 			// 
 			// ToolbarForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(180, 82);
+			this.ClientSize = new System.Drawing.Size(180, 19);
 			this.ContextMenuStrip = this.menuGroup;
 			this.Controls.Add(this.toolLauncher);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "ToolbarForm";
-			this.Padding = new System.Windows.Forms.Padding(2);
 			this.Text = "ToolbarForm";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.MaskedTextBox maskedTextBox1;
-		private System.Windows.Forms.ToolStrip toolLauncher;
+		private PeMain.UI.ToolbarToolStrip toolLauncher;
 		private System.Windows.Forms.ContextMenuStrip menuGroup;
 	}
 }

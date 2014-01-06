@@ -88,6 +88,7 @@
     <Compile Include="Setting\NoteSetting.cs" />
     <Compile Include="Setting\ToolbarSetting.cs" />
     <Compile Include="UI\Ex\ExListBox.cs" />
+    <Compile Include="UI\Ex\ExToolStrip.cs" />
     <Compile Include="UI\LauncherItemSelectControl.cs" />
     <Compile Include="UI\LauncherItemSelectControl.define.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>

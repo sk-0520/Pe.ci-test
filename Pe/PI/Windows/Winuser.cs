@@ -16,6 +16,15 @@ namespace PI.Windows
 		WM_ACTIVATE = 0x06,
 		WM_WINDOWPOSCHANGED = 0x47,
 		WM_HOTKEY = 0x0312,
+		WM_MOUSEACTIVATE = 0x21,
+	}
+	
+	public enum MA: int
+	{
+		MA_ACTIVATE = 1,
+		MA_ACTIVATEANDEAT = 2,
+		MA_NOACTIVATE = 3,
+		MA_NOACTIVATEANDEAT = 4,
 	}
 
 	public enum MOD: uint
