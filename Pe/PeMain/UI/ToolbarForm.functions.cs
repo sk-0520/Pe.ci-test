@@ -61,7 +61,8 @@ namespace PeMain.UI
 		
 		Rectangle GetCaptionArea(ToolbarPosition pos)
 		{
-			var point = new Point(Padding.Left, Padding.Top);
+			var padding = GetBorderPadding();
+			var point = new Point(padding.Left, padding.Top);
 			var size = new Size();
 			
 			if(IsHorizonMode(pos)) {

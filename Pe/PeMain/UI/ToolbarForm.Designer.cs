@@ -69,6 +69,7 @@ namespace PeMain.UI
 			this.Name = "ToolbarForm";
 			this.Text = "ToolbarForm";
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ToolbarForm_MouseDown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
