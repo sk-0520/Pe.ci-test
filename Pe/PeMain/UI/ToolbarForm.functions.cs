@@ -52,6 +52,47 @@ namespace PeMain.UI
 				ToolbarPosition.WindowBottom
 			);
 		}
+		
+		Padding GetBorderPadding()
+		{
+			var frame = SystemInformation.Border3DSize;
+			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
+		}
+		
+		Rectangle GetCaptionArea(ToolbarPosition pos)
+		{
+			var point = new Point(Padding.Left, Padding.Top);
+			var size = new Size();
+			
+			if(IsHorizonMode(pos)) {
+				size.Width = SystemInformation.SmallCaptionButtonSize.Height / 2;
+				size.Height = Height - Padding.Vertical;
+			} else {
+				size.Width = Width - Padding.Horizontal;
+				size.Height = SystemInformation.SmallCaptionButtonSize.Height / 2;
+			}
+			
+			return new Rectangle(point, size);
+		}
+		
+		void SetPaddingArea(ToolbarPosition pos)
+		{
+			var borderPadding = GetBorderPadding();
+			var captionArea = GetCaptionArea(pos);
+			var captionPlus = new Size();
+			if(IsHorizonMode(pos)) {
+				captionPlus.Width = captionArea.Width;
+			} else {
+				captionPlus.Height =captionArea.Height; 
+			}
+			var padding = new Padding(
+				borderPadding.Left + captionPlus.Width,
+				borderPadding.Top  + captionPlus.Height,
+				borderPadding.Right,
+				borderPadding.Bottom
+			);
+			Padding = padding;
+		}
 
 		
 		public void SetSettingData(Language language, MainSetting mainSetting)

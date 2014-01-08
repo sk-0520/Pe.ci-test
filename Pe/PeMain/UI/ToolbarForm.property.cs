@@ -22,5 +22,20 @@ namespace PeMain.UI
 		public LauncherSetting LauncherSetting { get; private set; }
 		
 		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
+		
+		override public DockType DockType
+		{
+			get { return base.DockType; }
+			set 
+			{
+				var pos = ToolbarPosition.DesktopFloat;
+				if(ToolbarSetting != null) {
+					pos = ToolbarSetting.ToolbarPosition;
+				}
+				SetPaddingArea(pos);
+				base.DockType = value;
+			}
+		}
+
 	}
 }

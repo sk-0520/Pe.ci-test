@@ -48,5 +48,10 @@ namespace PeMain.UI
 		}
 
 		
+		
+		void ToolbarForm_Paint(object sender, PaintEventArgs e)
+		{
+			DrawFull(e.Graphics, ClientRectangle, Form.ActiveForm == this);
+		}
 	}
 }

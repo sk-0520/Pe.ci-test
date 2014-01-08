@@ -168,6 +168,9 @@
     <Compile Include="UI\ToolbarForm.Designer.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ToolbarForm.draw.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ToolbarForm.functions.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>

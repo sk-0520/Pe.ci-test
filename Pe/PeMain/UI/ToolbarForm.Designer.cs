@@ -68,6 +68,7 @@ namespace PeMain.UI
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "ToolbarForm";
 			this.Text = "ToolbarForm";
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
