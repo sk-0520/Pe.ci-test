@@ -48,6 +48,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncher
 			// 
+			this.toolLauncher.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolLauncher.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncher.Name = "toolLauncher";
 			this.toolLauncher.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;

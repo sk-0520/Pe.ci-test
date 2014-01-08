@@ -22,19 +22,5 @@ namespace PeMain.UI
 		public LauncherSetting LauncherSetting { get; private set; }
 		
 		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
-		
-		public bool IsHorizonMode
-		{
-			get 
-			{
-				return ToolbarSetting.ToolbarPosition.IsIn(
-					ToolbarPosition.DesktopFloat,
-					ToolbarPosition.DesktopTop,
-					ToolbarPosition.DesktopBottom,
-					ToolbarPosition.WindowTop,
-					ToolbarPosition.WindowBottom
-				);
-			}
-		}
 	}
 }

@@ -42,6 +42,18 @@ namespace PeMain.UI
 			}[value];
 		}
 		
+		public static bool IsHorizonMode(ToolbarPosition pos)
+		{
+			return pos.IsIn(
+				ToolbarPosition.DesktopFloat,
+				ToolbarPosition.DesktopTop,
+				ToolbarPosition.DesktopBottom,
+				ToolbarPosition.WindowTop,
+				ToolbarPosition.WindowBottom
+			);
+		}
+
+		
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
@@ -75,6 +87,9 @@ namespace PeMain.UI
 			}
 			if(ToolbarSetting.ToolbarGroup.Groups.Count > 0) {
 				SelectedGroup(ToolbarSetting.ToolbarGroup.Groups.First());
+			} else {
+				var item = CreateLauncherButton(null);
+				SetToolButtons(ToolbarSetting.IconSize, new [] { item });
 			}
 			
 			// 表示
@@ -95,6 +110,21 @@ namespace PeMain.UI
 			// TODO: これから
 		}
 		
+		void SetToolButtons(IconSize iconSize, IEnumerable<ToolStripItem> buttons)
+		{
+			this.toolLauncher.ImageScalingSize = iconSize.ToSize();
+			
+			// アイコン解放
+			this.toolLauncher.Items
+				.Cast<ToolStripItem>()
+				.Where(item => item.Image != null)
+				.Transform(item => item.Image.Dispose())
+			;
+			
+			this.toolLauncher.Items.Clear();
+			this.toolLauncher.Items.AddRange(buttons.ToArray());
+		}
+		
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
 			var toolItem = this.menuGroup.Items
@@ -105,10 +135,9 @@ namespace PeMain.UI
 			
 			toolItem.Checked = true;
 			
-			// 表示アイテム設定
-			var iconSize = ToolbarSetting.IconSize.ToHeight();
-			this.toolLauncher.ImageScalingSize = new Size(iconSize, iconSize);
-			var toolButtonList = new List<ToolStripSplitButton>();
+			// 表示アイテム生成
+			var toolButtonList = new List<ToolStripItem>();
+			toolButtonList.Add(CreateLauncherButton(null));
 			foreach(var itemName in groupItem.ItemNames) {
 				var launcherItem = LauncherSetting.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 				if(launcherItem != null) {
@@ -116,13 +145,7 @@ namespace PeMain.UI
 					toolButtonList.Add(itemButton);
 				}
 			}
-			toolLauncher.Items
-				.Cast<ToolStripItem>()
-				.Where(item => item.Image != null)
-				.Transform(item => item.Image.Dispose())
-			;
-			toolLauncher.Items.Clear();
-			toolLauncher.Items.AddRange(toolButtonList.ToArray());
+			SetToolButtons(ToolbarSetting.IconSize, toolButtonList);
 		}
 		
 		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem item)
@@ -147,36 +170,49 @@ namespace PeMain.UI
 			return result.ToArray();
 		}
 		
-		ToolStripSplitButton CreateLauncherButton(LauncherItem item)
+		ToolStripItem CreateLauncherButton(LauncherItem item)
 		{
-			Debug.Assert(item != null);
+			ToolStripDropDownItem toolItem = null;
 			
-			var button = new ToolStripSplitButton();
-			
-			button.Text = item.Name;
-			button.ToolTipText = item.Name;
-			button.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
-			button.TextImageRelation = TextImageRelation.ImageBeforeText;
-			button.AutoSize = true;
+			if(item == null) {
+				toolItem = new ToolStripDropDownButton();
+				toolItem.Text = Language["toolbar/main/text"];
+				toolItem.ToolTipText = Language["toolbar/main/text"];
+				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
+			} else {
+				toolItem = new ToolStripSplitButton();
+				toolItem.Text = item.Name;
+				toolItem.ToolTipText = item.Name;
+				toolItem.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
+			}
+			toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolItem.AutoSize = true;
 			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);
 			//button.Padding = buttonLayout.Padding;
 			if(ToolbarSetting.ShowText) {
-				button.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+				toolItem.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 			} else {
-				button.DisplayStyle = ToolStripItemDisplayStyle.Image;
+				toolItem.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			}
 			//button.Size = buttonLayout.ClientSize;
-			button.Tag = item;
-			button.Visible = true;
-			if(item.LauncherType == LauncherType.File) {
-				button.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
+			toolItem.Visible = true;
+			if(item != null) {
+				toolItem.Tag = item;
+				if(item.LauncherType == LauncherType.File) {
+					toolItem.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
+				}
+			} else {
+				
 			}
-			button.ButtonClick += new EventHandler(button_ButtonClick);
+			if(item != null) {
+				var clickItem = (ToolStripSplitButton)toolItem;
+				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
+			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
-			return button;
+			return toolItem;
 		}
 
 

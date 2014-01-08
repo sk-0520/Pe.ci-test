@@ -42,6 +42,11 @@ namespace PeUtility
 		{
 			return (int)iconSize;
 		}
+		public static Size ToSize(this IconSize iconSize)
+		{
+			var size = iconSize.ToHeight();
+			return new Size(size, size);
+		}
 		public static Icon Load(string iconPath, IconSize iconSize, int iconIndex)
 		{
 			Icon result = null;

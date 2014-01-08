@@ -47,5 +47,6 @@ namespace PeMain.UI
 			Debug.WriteLine("menu: " + e.ClickedItem.ToString());
 		}
 
+		
 	}
 }
