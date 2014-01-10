@@ -108,7 +108,7 @@ namespace PeMain.Setting
 			AutoHide = false;
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;
-			Width = Literal.toolbarTextWidth;
+			TextWidth = Literal.toolbarTextWidth;
 		}
 		
 		public ToolbarGroup ToolbarGroup { get; set; }
@@ -148,7 +148,7 @@ namespace PeMain.Setting
 		/// <summary>
 		/// テキスト表示欄の長さ(px)
 		/// </summary>
-		public int Width { get; set; }
+		public int TextWidth { get; set; }
 		/// <summary>
 		/// フォント
 		/// </summary>

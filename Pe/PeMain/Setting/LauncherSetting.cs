@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
-
 using PeMain.Logic;
 using PeUtility;
 
@@ -270,6 +270,12 @@ namespace PeMain.Setting
 			var item = new LauncherItem();
 			
 			item.Name = Path.GetFileNameWithoutExtension(filePath);
+			if(item.Name.Length == 0 && filePath.Length >= @"C:\".Length) {
+				var drive = DriveInfo.GetDrives().SingleOrDefault(d => d.Name == filePath);
+				if(drive != null) {
+					item.Name = drive.VolumeLabel;
+				}
+			}
 			if(item.Name.Length == 0) {
 				item.Name = filePath;
 			}

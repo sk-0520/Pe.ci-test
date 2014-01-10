@@ -59,10 +59,12 @@ namespace PeMain.UI
 		{
 			if(e.Button == MouseButtons.Left) {
 				// タイトルバーっぽければ移動させとく
-				var captionArea = GetCaptionArea(ToolbarSetting.ToolbarPosition);
-				if(captionArea.Contains(e.Location)) {
-					API.ReleaseCapture();
-					API.SendMessage(Handle, WM.WM_NCLBUTTONDOWN, (IntPtr)HT.HT_CAPTION, IntPtr.Zero);
+				if(ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+					var captionArea = GetCaptionArea(ToolbarSetting.ToolbarPosition);
+					if(captionArea.Contains(e.Location)) {
+						API.ReleaseCapture();
+						API.SendMessage(Handle, WM.WM_NCLBUTTONDOWN, (IntPtr)HT.HT_CAPTION, IntPtr.Zero);
+					}
 				}
 			}
 		}

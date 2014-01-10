@@ -19,41 +19,6 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
-		struct ButtonLayout
-		{
-			public int IconWidth { get; set; }
-			public int TextWidth { get; set; }
-			public int Separator { get; set; }
-			public Padding Padding { get; set; }
-			
-			public Size ClientSize
-			{
-				get
-				{
-					return new Size(
-						IconWidth + Separator + TextWidth + Padding.Horizontal,
-						IconWidth + Padding.Vertical
-					);
-				}
-			}
-		}
-		
-		ButtonLayout GetButtonLayout()
-		{
-			var result = new ButtonLayout();
-			
-			result.IconWidth = ToolbarSetting.IconSize.ToHeight();
-			if(ToolbarSetting.ShowText) {
-				result.TextWidth = ToolbarSetting.Width;
-				result.Separator = 1;
-			} else {
-				result.TextWidth = 0;
-				result.Separator = 0;
-			}
-			result.Padding = new Padding(4);
-			
-			return result;
-		}
 	}
 }
 

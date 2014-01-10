@@ -114,6 +114,10 @@
     <Compile Include="UI\LauncherItemSelectControl.variable.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UI\Pe.cs" />
     <Compile Include="UI\Pe.functions.cs">
       <DependentUpon>Pe.cs</DependentUpon>
@@ -228,6 +232,9 @@
     <Folder Include="UI" />
     <Folder Include="UI\Ex" />
     <Folder Include="Logic" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\LogWindow.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
