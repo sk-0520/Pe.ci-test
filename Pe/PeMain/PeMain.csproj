@@ -190,7 +190,7 @@
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ToolbarForm.draw.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ToolbarForm.functions.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
