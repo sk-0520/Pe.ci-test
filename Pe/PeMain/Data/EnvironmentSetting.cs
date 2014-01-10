@@ -8,8 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// ランチャアイテム起動時の環境変数設定

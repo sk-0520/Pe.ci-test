@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// 設定統括

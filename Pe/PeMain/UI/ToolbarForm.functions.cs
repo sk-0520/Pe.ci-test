@@ -13,7 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using PeMain.Properties;
-using PeMain.Setting;
+using PeMain.Data;
 using PeUtility;
 
 namespace PeMain.UI
@@ -42,7 +42,7 @@ namespace PeMain.UI
 			}[value];
 		}
 		
-		static bool IsCaptionSidePos(ToolbarPosition pos)
+		public static bool IsHorizonMode(ToolbarPosition pos)
 		{
 			return pos.IsIn(
 				ToolbarPosition.DesktopFloat,
@@ -53,26 +53,46 @@ namespace PeMain.UI
 			);
 		}
 		
-		Rectangle GetCaptionBarRect(ToolbarPosition pos)
+		Padding GetBorderPadding()
 		{
-			var padding = Padding;
-			var captionSize = SystemInformation.SmallCaptionButtonSize.Height / 2;
+			var frame = SystemInformation.Border3DSize;
+			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
+		}
+		
+		Rectangle GetCaptionArea(ToolbarPosition pos)
+		{
+			var padding = GetBorderPadding();
+			var point = new Point(padding.Left, padding.Top);
+			var size = new Size();
 			
-			if(IsCaptionSidePos(pos)) {
-				return new Rectangle(
-					padding.Left,
-					padding.Top,
-					captionSize,
-					ClientSize.Height - padding.Vertical
-				);
+			if(IsHorizonMode(pos)) {
+				size.Width = SystemInformation.SmallCaptionButtonSize.Height / 2;
+				size.Height = Height - Padding.Vertical;
 			} else {
-				return new Rectangle(
-					padding.Left,
-					padding.Top,
-					ClientSize.Width - padding.Horizontal,
-					captionSize
-				);
+				size.Width = Width - Padding.Horizontal;
+				size.Height = SystemInformation.SmallCaptionButtonSize.Height / 2;
 			}
+			
+			return new Rectangle(point, size);
+		}
+		
+		void SetPaddingArea(ToolbarPosition pos)
+		{
+			var borderPadding = GetBorderPadding();
+			var captionArea = GetCaptionArea(pos);
+			var captionPlus = new Size();
+			if(IsHorizonMode(pos)) {
+				captionPlus.Width = captionArea.Width;
+			} else {
+				captionPlus.Height =captionArea.Height; 
+			}
+			var padding = new Padding(
+				borderPadding.Left + captionPlus.Width,
+				borderPadding.Top  + captionPlus.Height,
+				borderPadding.Right,
+				borderPadding.Bottom
+			);
+			Padding = padding;
 		}
 
 		
@@ -84,6 +104,7 @@ namespace PeMain.UI
 			
 			ApplySetting();
 		}
+		
 		
 		
 		void ApplySetting()
@@ -108,15 +129,17 @@ namespace PeMain.UI
 			}
 			if(ToolbarSetting.ToolbarGroup.Groups.Count > 0) {
 				SelectedGroup(ToolbarSetting.ToolbarGroup.Groups.First());
+			} else {
+				var item = CreateLauncherButton(null);
+				SetToolButtons(ToolbarSetting.IconSize, new [] { item });
 			}
 			
 			// 表示
-			if(IsDockingMode && ToolbarSetting.Visible) {
+			if(IsDockingMode) {
 				DockType = ToDockType(ToolbarSetting.ToolbarPosition);
 			} else {
 				DockType = DockType.None;
 			}
-			
 			ItemSizeToFormSize();
 			Visible = ToolbarSetting.Visible;
 		}
@@ -129,6 +152,21 @@ namespace PeMain.UI
 			// TODO: これから
 		}
 		
+		void SetToolButtons(IconSize iconSize, IEnumerable<ToolStripItem> buttons)
+		{
+			this.toolLauncher.ImageScalingSize = iconSize.ToSize();
+			
+			// アイコン解放
+			this.toolLauncher.Items
+				.Cast<ToolStripItem>()
+				.Where(item => item.Image != null)
+				.Transform(item => item.Image.Dispose())
+			;
+			
+			this.toolLauncher.Items.Clear();
+			this.toolLauncher.Items.AddRange(buttons.ToArray());
+		}
+		
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
 			var toolItem = this.menuGroup.Items
@@ -139,82 +177,84 @@ namespace PeMain.UI
 			
 			toolItem.Checked = true;
 			
-			// 表示アイテム設定
-			var iconSize = ToolbarSetting.IconSize.ToHeight();
-			//this.toolLauncher.ImageScalingSize = new Size(iconSize, iconSize);
-			this.toolLauncher.ButtonSize = new Size(iconSize, iconSize);
-			var toolButtonList = new List<ToolBarButton>();
-			this._toolbarImageList.Images.Clear();
+			// 表示アイテム生成
+			var toolButtonList = new List<ToolStripItem>();
+			toolButtonList.Add(CreateLauncherButton(null));
 			foreach(var itemName in groupItem.ItemNames) {
 				var launcherItem = LauncherSetting.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 				if(launcherItem != null) {
 					var itemButton = CreateLauncherButton(launcherItem);
-					this._toolbarImageList.Images.Add(launcherItem.Name, launcherItem.GetIcon(ToolbarSetting.IconSize));
 					toolButtonList.Add(itemButton);
 				}
 			}
-			
-			this.toolLauncher.Buttons.Clear();
-			this.toolLauncher.ImageList = null;
-			this.toolLauncher.ImageList = this._toolbarImageList;
-			this.toolLauncher.Buttons.AddRange(toolButtonList.ToArray());
+			SetToolButtons(ToolbarSetting.IconSize, toolButtonList);
 		}
 		
-		ContextMenu CreateFileLauncherMenuItems(LauncherItem item)
+		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem item)
 		{
-			var menuItemList = new List<MenuItem>();
+			var result = new List<ToolStripItem>();
 			
-			var executeItem = new MenuItem();
-			var executeExItem = new MenuItem();
-			var pathItem = new MenuItem();
-			var fileItem = new MenuItem();
-			menuItemList.Add(executeItem);
-			menuItemList.Add(executeExItem);
-			menuItemList.Add(new MenuItem());
-			menuItemList.Add(pathItem);
-			menuItemList.Add(fileItem);
+			var executeItem = new ToolStripMenuItem();
+			var executeExItem = new ToolStripMenuItem();
+			var pathItem = new ToolStripMenuItem();
+			var fileItem = new ToolStripMenuItem();
+			result.Add(executeItem);
+			result.Add(executeExItem);
+			result.Add(new ToolStripSeparator());
+			result.Add(pathItem);
+			result.Add(fileItem);
 			
 			executeItem.Text = Language["toolbar/menu/file/execute"];
 			executeExItem.Text = Language["toolbar/menu/file/execute-ex"];
 			pathItem.Text = Language["toolbar/menu/file/path"];
 			fileItem.Text = Language["toolbar/menu/file/ls"];
 			
-			var itemMenu = new ContextMenu();
-			itemMenu.MenuItems.AddRange(menuItemList.ToArray());
-			return itemMenu;
+			return result.ToArray();
 		}
 		
-		ToolBarButton CreateLauncherButton(LauncherItem item)
+		ToolStripItem CreateLauncherButton(LauncherItem item)
 		{
-			Debug.Assert(item != null);
+			ToolStripDropDownItem toolItem = null;
 			
-			var button = new ToolBarButton();
-			
-			//button.Text = item.Name;
-			button.ToolTipText = item.Name;
-			button.ImageKey = item.Name;
-			button.Style = ToolBarButtonStyle.DropDownButton;
-			//button.AutoSize = false;
+			if(item == null) {
+				toolItem = new ToolStripDropDownButton();
+				toolItem.Text = Language["toolbar/main/text"];
+				toolItem.ToolTipText = Language["toolbar/main/text"];
+				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
+			} else {
+				toolItem = new ToolStripSplitButton();
+				toolItem.Text = item.Name;
+				toolItem.ToolTipText = item.Name;
+				toolItem.Image = item.GetIcon(ToolbarSetting.IconSize).ToBitmap();
+			}
+			toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolItem.AutoSize = true;
 			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);
 			//button.Padding = buttonLayout.Padding;
 			if(ToolbarSetting.ShowText) {
-				//button.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-				button.Text = item.Name;
+				toolItem.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 			} else {
-				//button.DisplayStyle = ToolStripItemDisplayStyle.Image;
+				toolItem.DisplayStyle = ToolStripItemDisplayStyle.Image;
 			}
 			//button.Size = buttonLayout.ClientSize;
-			button.Tag = item;
-			button.Visible = true;
-			if(item.LauncherType == LauncherType.File) {
-				button.DropDownMenu = CreateFileLauncherMenuItems(item);
+			toolItem.Visible = true;
+			if(item != null) {
+				toolItem.Tag = item;
+				if(item.LauncherType == LauncherType.File) {
+					toolItem.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
+				}
+			} else {
+				
 			}
-			//button.ButtonClick += new EventHandler(button_ButtonClick);
+			if(item != null) {
+				var clickItem = (ToolStripSplitButton)toolItem;
+				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
+			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
-			return button;
+			return toolItem;
 		}
 
 

@@ -10,7 +10,8 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using PeMain.Setting;
+using PeMain.Data;
+using PI.Windows;
 
 namespace PeMain.UI
 {
@@ -47,5 +48,25 @@ namespace PeMain.UI
 			Debug.WriteLine("menu: " + e.ClickedItem.ToString());
 		}
 
+		
+		
+		void ToolbarForm_Paint(object sender, PaintEventArgs e)
+		{
+			DrawFull(e.Graphics, ClientRectangle, Form.ActiveForm == this);
+		}
+		
+		void ToolbarForm_MouseDown(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Left) {
+				// タイトルバーっぽければ移動させとく
+				if(ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+					var captionArea = GetCaptionArea(ToolbarSetting.ToolbarPosition);
+					if(captionArea.Contains(e.Location)) {
+						API.ReleaseCapture();
+						API.SendMessage(Handle, WM.WM_NCLBUTTONDOWN, (IntPtr)HT.HT_CAPTION, IntPtr.Zero);
+					}
+				}
+			}
+		}
 	}
 }

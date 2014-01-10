@@ -49,5 +49,19 @@ namespace PeUtility
 				.Replace(@"\?", ".")
 			;
 		}
+		
+		public static string ReplaceRange(this string src, string head, string tail, Func<string, string> dg)
+		{
+			var escHead = Regex.Escape(head);
+			var escTail = Regex.Escape(tail);
+			var pattern = escHead + "(.*?)" + escTail;
+			var replacedText = Regex.Replace(src, pattern, (Match m) => dg(m.Groups[1].Value));
+			return replacedText;
+		}
+		
+		public static string ReplaceRangeFromDictionary(this string src, string head, string tail, Dictionary<string, string> map)
+		{
+			return src.ReplaceRange(head, tail, s => map.ContainsKey(s) ? map[s]: head + s + tail);
+		}
 	}
 }

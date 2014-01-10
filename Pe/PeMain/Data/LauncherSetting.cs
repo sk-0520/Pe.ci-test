@@ -11,12 +11,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
-
 using PeMain.Logic;
 using PeUtility;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// ランチャー種別。
@@ -106,7 +106,7 @@ namespace PeMain.Setting
 		/// <summary>
 		/// 
 		/// </summary>
-		private int _pId;
+		private Process _process;
 		
 		#region Equals and GetHashCode implementation
 		public override bool Equals(object obj)
@@ -129,7 +129,7 @@ namespace PeMain.Setting
 		
 		public LauncherItem()
 		{
-			this._pId = 0;
+			this._process = null;
 			this._iconMap = new Dictionary<IconSize, Icon>();
 			
 			HasError = false;
@@ -186,7 +186,7 @@ namespace PeMain.Setting
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
-		public int PId { get { return this._pId; } }
+		public Process Process { get { return this._process; } }
 		
 		[XmlIgnoreAttribute()]
 		public bool HasError { get; set; }
@@ -270,6 +270,12 @@ namespace PeMain.Setting
 			var item = new LauncherItem();
 			
 			item.Name = Path.GetFileNameWithoutExtension(filePath);
+			if(item.Name.Length == 0 && filePath.Length >= @"C:\".Length) {
+				var drive = DriveInfo.GetDrives().SingleOrDefault(d => d.Name == filePath);
+				if(drive != null) {
+					item.Name = drive.VolumeLabel;
+				}
+			}
 			if(item.Name.Length == 0) {
 				item.Name = filePath;
 			}

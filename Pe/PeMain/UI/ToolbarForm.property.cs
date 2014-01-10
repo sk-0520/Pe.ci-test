@@ -7,11 +7,8 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.Windows.Forms;
-
-using PeMain.Setting;
+using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -21,36 +18,27 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		public ILogger Logger { get; set; }
+		
 		public ToolbarSetting ToolbarSetting { get; private set; }
 		public Language Language { get; private set; }
 		public LauncherSetting LauncherSetting { get; private set; }
 		
 		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 		
-		public override DockType DockType
+		override public DockType DockType
 		{
 			get { return base.DockType; }
-			set
+			set 
 			{
-				// タイトルバー用のpadding設定
-				var paddingSize = SystemInformation.Border3DSize;
-				var pos = ToolbarSetting == null ? ToolbarPosition.DesktopFloat: ToolbarSetting.ToolbarPosition;
-				var captionRect = GetCaptionBarRect(pos);
-				var exPaddingSize = new Size(paddingSize.Width, paddingSize.Height);
-				if(IsCaptionSidePos(pos)) {
-					exPaddingSize.Width = captionRect.Width + paddingSize.Width;
-				} else {
-					exPaddingSize.Height = captionRect.Height + paddingSize.Height;
+				var pos = ToolbarPosition.DesktopFloat;
+				if(ToolbarSetting != null) {
+					pos = ToolbarSetting.ToolbarPosition;
 				}
-				Padding = new Padding(
-					exPaddingSize.Width,
-					exPaddingSize.Height,
-					paddingSize.Width,
-					paddingSize.Height
-				);
-				
+				SetPaddingArea(pos);
 				base.DockType = value;
 			}
 		}
+
 	}
 }

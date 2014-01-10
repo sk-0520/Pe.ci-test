@@ -1,8 +1,8 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2014/01/04
- * 時刻: 18:13
+ * 日付: 01/11/2014
+ * 時刻: 00:27
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
@@ -12,13 +12,10 @@ using PeMain.Data;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of SettingForm_Page_command.
+	/// Description of LogForm_property.
 	/// </summary>
-	public partial class SettingForm
+	public partial class LogForm
 	{
-		void CommandExportSetting(CommandSetting setting)
-		{
-			
-		}
+		Language Language { get; set; }
 	}
 }

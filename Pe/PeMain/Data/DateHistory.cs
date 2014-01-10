@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// 作成・更新日時保持(UTC)

@@ -1,23 +1,27 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2013/12/23
- * 時刻: 13:19
+ * 日付: 2013/12/18
+ * 時刻: 12:59
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using PeMain.Data;
 
-namespace PeMain.UI
+namespace PeMain.Data
 {
 	/// <summary>
-	/// Description of ToolbarForm_variable.
+	/// TODO: 後回し
 	/// </summary>
-	public partial class ToolbarForm
+	[Serializable]
+	public class NoteSetting: Item
 	{
-		ImageList _toolbarImageList;
+		public NoteSetting()
+		{
+//			Groups = new Dictionary<string, NoteGroup>();
+		}
+		
+//		public Dictionary<string, NoteGroup> Groups { get; set; }
 	}
 }

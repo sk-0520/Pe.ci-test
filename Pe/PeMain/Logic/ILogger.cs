@@ -1,24 +1,21 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2014/01/04
- * 時刻: 18:13
+ * 日付: 01/11/2014
+ * 時刻: 00:14
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
 using PeMain.Data;
 
-namespace PeMain.UI
+namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of SettingForm_Page_command.
+	/// Description of ILogger.
 	/// </summary>
-	public partial class SettingForm
+	public interface ILogger
 	{
-		void CommandExportSetting(CommandSetting setting)
-		{
-			
-		}
+		void Logging(LogType logType, string title, object detail, int frame = 2);
 	}
 }

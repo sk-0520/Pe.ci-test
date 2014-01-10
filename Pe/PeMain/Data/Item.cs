@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// なんかを保持するアイテムの基底。

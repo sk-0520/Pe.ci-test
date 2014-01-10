@@ -1,27 +1,25 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2013/12/18
- * 時刻: 12:59
+ * 日付: 01/11/2014
+ * 時刻: 00:16
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
 using System.Collections.Generic;
+using PeMain.Data;
 
-namespace PeMain.Setting
+namespace PeMain.UI
 {
 	/// <summary>
-	/// TODO: 後回し
+	/// Description of LogForm.
 	/// </summary>
-	[Serializable]
-	public class NoteSetting: Item
+	public partial class LogForm
 	{
-		public NoteSetting()
+		void Initialize(IEnumerable<LogItem> initLog)
 		{
-//			Groups = new Dictionary<string, NoteGroup>();
+			this._logs.AddRange(initLog);
 		}
-		
-//		public Dictionary<string, NoteGroup> Groups { get; set; }
 	}
 }

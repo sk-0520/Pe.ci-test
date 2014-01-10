@@ -12,7 +12,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace PeMain.Setting
+using PeUtility;
+
+namespace PeMain.Data
 {
 	/// <summary>
 	/// NonSerializedAttribute
@@ -79,9 +81,7 @@ namespace PeMain.Setting
 				var text = getPlain(key);
 				if(text.Any(c => c == '$')) {
 					// ${...}
-					var replacedText = Regex.Replace(text, @"\$\{(.*?)\}", (Match m) => 
-						getWord(Define, m.Groups[1].Value).Text
-					);
+					var replacedText = text.ReplaceRange("${", "}", s => getWord(Define, s).Text);
 					return replacedText;
 				}
 				
