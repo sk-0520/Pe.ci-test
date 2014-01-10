@@ -85,4 +85,11 @@ namespace PeMain
 			}
 		}
 	}
+	
+	public struct AppEnv
+	{
+		public string AppFilePath { get { return "PE_APP_EXE"; } }
+		public string AppDirPath { get { return "PE_APP_DIR"; } }
+		public string AppUserDir { get { return "PE_USER_DIR"; } }
+	}
 }

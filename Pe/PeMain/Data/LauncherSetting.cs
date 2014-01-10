@@ -106,7 +106,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// 
 		/// </summary>
-		private int _pId;
+		private Process _process;
 		
 		#region Equals and GetHashCode implementation
 		public override bool Equals(object obj)
@@ -129,7 +129,7 @@ namespace PeMain.Data
 		
 		public LauncherItem()
 		{
-			this._pId = 0;
+			this._process = null;
 			this._iconMap = new Dictionary<IconSize, Icon>();
 			
 			HasError = false;
@@ -186,7 +186,7 @@ namespace PeMain.Data
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
-		public int PId { get { return this._pId; } }
+		public Process Process { get { return this._process; } }
 		
 		[XmlIgnoreAttribute()]
 		public bool HasError { get; set; }

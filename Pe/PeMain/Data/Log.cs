@@ -24,7 +24,7 @@ namespace PeMain.Data
 		{
 			Debug.Assert(!string.IsNullOrEmpty(title));
 			Debug.Assert(!string.IsNullOrEmpty(detail));
-			Debug.Assert(!string.IsNullOrEmpty(frame >= 1));
+			Debug.Assert(frame >= 1);
 			
 			LogType = logtype;
 			Title = title;

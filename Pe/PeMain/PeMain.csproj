@@ -69,6 +69,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Log.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ContrlUtility.cs" />
@@ -117,9 +118,9 @@
     <Compile Include="UI\LauncherItemSelectControl.variable.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LogWindow.xaml.cs">
-      <DependentUpon>LogWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="UI\LogForm.cs" />
+    <Compile Include="UI\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.cs" />
     <Compile Include="UI\Pe.functions.cs">
@@ -202,6 +203,9 @@
     <EmbeddedResource Include="UI\LauncherItemSelectControl.resx">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -235,9 +239,6 @@
     <Folder Include="UI" />
     <Folder Include="UI\Ex" />
     <Folder Include="Logic" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="UI\LogWindow.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
