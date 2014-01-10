@@ -20,10 +20,10 @@ namespace PeMain.Data
 	}
 	public class LogItem
 	{
-		public LogItem(LogType logtype, string title, string detail, int frame = 1)
+		public LogItem(LogType logtype, string title, object detail, int frame = 1)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(title));
-			Debug.Assert(!string.IsNullOrEmpty(detail));
+			Debug.Assert(detail != null);
 			Debug.Assert(frame >= 1);
 			
 			LogType = logtype;
@@ -35,7 +35,7 @@ namespace PeMain.Data
 		
 		public LogType LogType { get; private set; }
 		public string Title { get; private set; }
-		public string Detail { get; private set; }
+		public object Detail { get; private set; }
 		public StackFrame StackFrame { get; private set; }
 		public DateTime DateTime { get; private set; }
 	}

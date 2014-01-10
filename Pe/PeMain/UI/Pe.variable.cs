@@ -20,6 +20,7 @@ namespace PeMain.UI
 		private NotifyIcon _notifyIcon;
 		private ContextMenu _notificationMenu;
 		private MessageWindow _messageWindow;
+		private LogForm _logForm;
 		
 		private MainSetting _mainSetting;
 		private Language _language;

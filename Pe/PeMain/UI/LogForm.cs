@@ -7,9 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
+using PeMain.Data;
 using PeMain.Logic;
 
 namespace PeMain.UI
@@ -19,7 +20,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LogForm : Form, ILogger
 	{
-		public LogForm()
+		public LogForm(IEnumerable<LogItem> initLog)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
@@ -29,7 +30,7 @@ namespace PeMain.UI
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
-			Initialize();
+			Initialize(initLog);
 		}
 		
 	}

@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LogForm
 	{
-		public void Logging(LogType logType, string title, string detail, int frame = 2)
+		public void Logging(LogType logType, string title, object detail, int frame = 2)
 		{
 			var logItem = new LogItem(logType, title, detail, frame);
 			this._logs.Add(logItem);

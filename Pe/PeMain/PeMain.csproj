@@ -74,6 +74,7 @@
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ContrlUtility.cs" />
     <Compile Include="Logic\EnumLang.cs" />
+    <Compile Include="Logic\ILogger.cs" />
     <Compile Include="Logic\ItemData.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +121,18 @@
     </Compile>
     <Compile Include="UI\LogForm.cs" />
     <Compile Include="UI\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogForm.functions.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogForm.language.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogForm.property.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogForm.variable.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.cs" />
@@ -220,6 +233,9 @@
     </None>
     <Compile Include="UI\SettingForm.functions.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogForm.initialize.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

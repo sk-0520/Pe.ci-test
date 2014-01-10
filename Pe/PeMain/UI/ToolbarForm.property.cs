@@ -8,6 +8,7 @@
  */
 using System;
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -17,6 +18,8 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		public ILogger Logger { get; set; }
+		
 		public ToolbarSetting ToolbarSetting { get; private set; }
 		public Language Language { get; private set; }
 		public LauncherSetting LauncherSetting { get; private set; }

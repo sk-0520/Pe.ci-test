@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -20,20 +21,26 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
-		void InitializeMessage(string[] args)
-		{
-			this._messageWindow = new MessageWindow(this);
-		}
-
 		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeSetting(string[] args)
+		void InitializeSetting(string[] args, List<LogItem> initLog)
 		{
-			//this._mainSetting = Initializer.GetMainSetting(Literal.UserMainSettingPath);
-			this._mainSetting = Initializer.GetMainSetting(@"Z:mainsetting.xml");
-			this._language = Initializer.GetLanguage(Path.Combine(Literal.PeLanguageDirPath, "default.xml"));
+			//var mainSettingPath = Literal.UserMainSettingPath;
+			var mainSettingFilePath = @"Z:mainsetting.xml";
+			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
+			this._mainSetting = Initializer.GetMainSetting(mainSettingFilePath);
+			
+			var languageFileName = "default.xml";
+			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
+			initLog.Add(new LogItem(LogType.Information, "language", mainSettingFilePath));
+			this._language = Initializer.GetLanguage(languageFilePath);
+		}
+		
+		void InitializeMessage(string[] args, List<LogItem> initLog)
+		{
+			this._messageWindow = new MessageWindow(this);
 		}
 		
 		/// <summary>
@@ -76,25 +83,37 @@ namespace PeMain.UI
 			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
 			this._notifyIcon.ContextMenu = this._notificationMenu;			
 		}
+		
+		void InitializeLogForm(string[] args, List<LogItem> initLog)
+		{
+			this._logForm = new LogForm(initLog);
+			this._logForm.SetSettingData(this._language, this._mainSetting);
+		}
 			
-		void InitializeCommand(string[] args)
+		void InitializeCommandForm(string[] args)
 		{
 			
 		}
 		
-		void InitializeToolbar(string[] args)
+		void InitializeToolbarForm(string[] args)
 		{
 			Debug.Assert(this._mainSetting != null);
 			
 			this._toolbarForm = new ToolbarForm();
+			this._toolbarForm.Logger = this._logForm;
 			this._toolbarForm.SetSettingData(this._language, this._mainSetting);
 		}
 
-		void InitializeUI(string[] args)
+		void InitializeUI(string[] args, List<LogItem> initLog)
 		{
+			initLog.Add(new LogItem(LogType.Information, this._language["log/init/ui"], this._language["log/start"]));
+			            
 			InitializeMain(args);
-			InitializeCommand(args);
-			InitializeToolbar(args);
+			InitializeLogForm(args, initLog);
+			InitializeCommandForm(args);
+			InitializeToolbarForm(args);
+			
+			this._logForm.Logging(LogType.Information, this._language["log/init/ui"], this._language["log/start"]);
 		}
 		
 		/// <summary>
@@ -103,9 +122,11 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void Initialize(string[] args)
 		{
-			InitializeMessage(args);
-			InitializeSetting(args);
-			InitializeUI(args);
+			var initLog = new List<LogItem>(new []{ new LogItem(LogType.Information, "Initialize", args) });
+			
+			InitializeSetting(args, initLog);
+			InitializeMessage(args, initLog);
+			InitializeUI(args, initLog);
 		}
 	}
 }
