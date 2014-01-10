@@ -12,7 +12,7 @@ using System.Drawing;
 using PeMain.Logic;
 using PeUtility;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	public enum ToolbarPosition
 	{

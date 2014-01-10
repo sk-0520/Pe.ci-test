@@ -10,7 +10,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// Description of Font.

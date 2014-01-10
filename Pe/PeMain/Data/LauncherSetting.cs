@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 using PeMain.Logic;
 using PeUtility;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// ランチャー種別。

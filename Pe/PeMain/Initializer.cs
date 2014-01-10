@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Xml.Serialization;
 
-using PeMain.Setting;
+using PeMain.Data;
 
 namespace PeMain
 {

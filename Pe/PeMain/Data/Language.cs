@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 using PeUtility;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// NonSerializedAttribute

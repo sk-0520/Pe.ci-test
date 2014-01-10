@@ -13,7 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using PeMain.Setting;
+using PeMain.Data;
 using PeUtility;
 
 namespace PeMain.UI

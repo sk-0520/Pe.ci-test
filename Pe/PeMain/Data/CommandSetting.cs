@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Linq;
 using PeUtility;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// コマンドランチャー設定

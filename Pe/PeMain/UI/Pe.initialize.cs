@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using PeMain.Setting;
+using PeMain.Data;
 
 namespace PeMain.UI
 {

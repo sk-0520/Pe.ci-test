@@ -13,7 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PeUtility;
-using PeMain.Setting;
+using PeMain.Data;
 
 namespace PeMain.UI
 {

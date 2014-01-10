@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using PeMain.Setting;
+using PeMain.Data;
 using PI.Windows;
 
 namespace PeMain.UI

@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PeMain.Setting
+namespace PeMain.Data
 {
 	/// <summary>
 	/// TODO: 後回し
