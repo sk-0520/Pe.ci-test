@@ -10,12 +10,14 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using PeMain.Logic;
+
 namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of LogForm.
 	/// </summary>
-	public partial class LogForm : Form
+	public partial class LogForm : Form, ILogger
 	{
 		public LogForm()
 		{
@@ -27,6 +29,8 @@ namespace PeMain.UI
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
+			Initialize();
 		}
+		
 	}
 }
