@@ -18,6 +18,7 @@ namespace PeMain.Data
 	{
 		public MainSetting()
 		{
+			Log = new LogSetting();
 			Launcher = new LauncherSetting();
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
@@ -32,6 +33,10 @@ namespace PeMain.Data
 		/// ランチャアイテム統括。
 		/// </summary>
 		public LauncherSetting Launcher { get; set; }
+		/// <summary>
+		/// ログ設定
+		/// </summary>
+		public LogSetting Log { get; set; }
 		/// <summary>
 		/// コマンドランチャ設定。
 		/// </summary>

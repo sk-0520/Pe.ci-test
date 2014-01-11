@@ -88,6 +88,10 @@ namespace PeMain.UI
 		{
 			this._logForm = new LogForm(initLog);
 			this._logForm.SetSettingData(this._language, this._mainSetting);
+			
+			this._logForm.Size = this._mainSetting.Log.Size;
+			this._logForm.Location = this._mainSetting.Log.Point;
+			this._logForm.Visible = this._mainSetting.Log.Visible;
 		}
 			
 		void InitializeCommandForm(string[] args)

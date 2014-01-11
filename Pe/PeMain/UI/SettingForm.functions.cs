@@ -105,6 +105,8 @@ namespace PeMain.UI
 			var mainSetting = new MainSetting();
 			
 			// 本体
+			MainExportSetting(mainSetting);
+			
 			// ランチャ
 			LauncherExportSetting(mainSetting.Launcher);
 			

@@ -93,15 +93,16 @@ namespace PeMain.UI
 			this.selecterToolbar.SelectedItem = item;
 		}
 		
-		void ToolbarExportSetting(ToolbarSetting setting)
+		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
 		{
-			setting.ToolbarPosition = (ToolbarPosition)this.selectToolbarPosition.SelectedValue;
-			setting.Topmost = this.selectToolbarTopmost.Checked;
-			setting.AutoHide = this.selectToolbarAutoHide.Checked;
-			setting.Visible = this.selectToolbarVisible.Checked;
-			setting.ShowText = this.selectToolbarShowText.Checked;
+			toolbarSetting.ToolbarPosition = (ToolbarPosition)this.selectToolbarPosition.SelectedValue;
+			toolbarSetting.Topmost = this.selectToolbarTopmost.Checked;
+			toolbarSetting.AutoHide = this.selectToolbarAutoHide.Checked;
+			toolbarSetting.Visible = this.selectToolbarVisible.Checked;
+			toolbarSetting.ShowText = this.selectToolbarShowText.Checked;
 			
-			setting.FontSetting = this._toolbarFont;
+			toolbarSetting.FontSetting = this._toolbarFont;
+			toolbarSetting.IconSize = (IconSize)this.selectToolbarIcon.SelectedValue;
 			
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
@@ -114,7 +115,7 @@ namespace PeMain.UI
 				// グループに紐付くアイテム名
 				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
 
-				setting.ToolbarGroup.Groups.Add(toolbarGroupItem);
+				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 		}
 	}

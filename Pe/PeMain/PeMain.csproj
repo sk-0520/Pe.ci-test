@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Log.cs" />
+    <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ContrlUtility.cs" />
@@ -171,6 +172,9 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.Page.launcher.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.Page.main.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.Page.toolbar.cs">

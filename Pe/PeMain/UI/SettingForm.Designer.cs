@@ -39,6 +39,8 @@ namespace PeMain.UI
 			this.components = new System.ComponentModel.Container();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
+			this.groupMainLog = new System.Windows.Forms.GroupBox();
+			this.selectLogVisible = new System.Windows.Forms.CheckBox();
 			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
 			this.labelMainLanguage = new System.Windows.Forms.Label();
 			this.pageLauncher = new System.Windows.Forms.TabPage();
@@ -79,6 +81,7 @@ namespace PeMain.UI
 			this.commandCommandFont = new System.Windows.Forms.Button();
 			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.treeToolbarItemGroup = new System.Windows.Forms.TreeView();
@@ -107,9 +110,9 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
+			this.groupMainLog.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -152,6 +155,7 @@ namespace PeMain.UI
 			// 
 			// pageMain
 			// 
+			this.pageMain.Controls.Add(this.groupMainLog);
 			this.pageMain.Controls.Add(this.selectMainLanguage);
 			this.pageMain.Controls.Add(this.labelMainLanguage);
 			this.pageMain.Location = new System.Drawing.Point(4, 24);
@@ -162,6 +166,25 @@ namespace PeMain.UI
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
+			// 
+			// groupMainLog
+			// 
+			this.groupMainLog.Controls.Add(this.selectLogVisible);
+			this.groupMainLog.Location = new System.Drawing.Point(66, 90);
+			this.groupMainLog.Name = "groupMainLog";
+			this.groupMainLog.Size = new System.Drawing.Size(200, 100);
+			this.groupMainLog.TabIndex = 2;
+			this.groupMainLog.TabStop = false;
+			this.groupMainLog.Text = "{LOG}";
+			// 
+			// selectLogVisible
+			// 
+			this.selectLogVisible.Location = new System.Drawing.Point(39, 36);
+			this.selectLogVisible.Name = "selectLogVisible";
+			this.selectLogVisible.Size = new System.Drawing.Size(104, 24);
+			this.selectLogVisible.TabIndex = 0;
+			this.selectLogVisible.Text = "{VISIBLE}";
+			this.selectLogVisible.UseVisualStyleBackColor = true;
 			// 
 			// selectMainLanguage
 			// 
@@ -587,6 +610,15 @@ namespace PeMain.UI
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
 			// 
+			// selectToolbarShowText
+			// 
+			this.selectToolbarShowText.Location = new System.Drawing.Point(133, 72);
+			this.selectToolbarShowText.Name = "selectToolbarShowText";
+			this.selectToolbarShowText.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarShowText.TabIndex = 16;
+			this.selectToolbarShowText.Text = "{SHOWTEXT}";
+			this.selectToolbarShowText.UseVisualStyleBackColor = true;
+			// 
 			// splitContainer2
 			// 
 			this.splitContainer2.Location = new System.Drawing.Point(269, 78);
@@ -880,15 +912,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// selectToolbarShowText
-			// 
-			this.selectToolbarShowText.Location = new System.Drawing.Point(133, 72);
-			this.selectToolbarShowText.Name = "selectToolbarShowText";
-			this.selectToolbarShowText.Size = new System.Drawing.Size(104, 24);
-			this.selectToolbarShowText.TabIndex = 16;
-			this.selectToolbarShowText.Text = "{SHOWTEXT}";
-			this.selectToolbarShowText.UseVisualStyleBackColor = true;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -904,6 +927,7 @@ namespace PeMain.UI
 			this.Text = "{SETTING}";
 			this.tabSetting.ResumeLayout(false);
 			this.pageMain.ResumeLayout(false);
+			this.groupMainLog.ResumeLayout(false);
 			this.pageLauncher.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -932,6 +956,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectLogVisible;
+		private System.Windows.Forms.GroupBox groupMainLog;
 		private System.Windows.Forms.CheckBox selectToolbarShowText;
 		private System.Windows.Forms.CheckBox selectToolbarAutoHide;
 		private System.Windows.Forms.CheckBox selectLauncherProcess;

@@ -23,9 +23,13 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
+		void InitializeLog(LogSetting logSetting)
+		{
+			this.selectLogVisible.Checked = logSetting.Visible;
+		}
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
-			
+			InitializeLog(mainSetting.Log);
 		}
 		
 		void InitializeLauncher(LauncherSetting launcherSetting)
