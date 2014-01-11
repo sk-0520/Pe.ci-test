@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -18,5 +19,6 @@ namespace PeMain.UI
 	public partial class LogForm
 	{
 		List<LogItem> _logs = new List<LogItem>();
+		ImageList _imageLogType = null;
 	}
 }

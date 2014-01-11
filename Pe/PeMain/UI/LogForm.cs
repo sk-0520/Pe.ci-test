@@ -33,5 +33,25 @@ namespace PeMain.UI
 			Initialize(initLog);
 		}
 		
+		
+		void ListLog_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+		{
+			if (e.ItemIndex < this._logs.Count) {
+				if(e.Item == null) {
+					e.Item = new ListViewItem();
+					e.Item.SubItems.Add(new ListViewItem.ListViewSubItem());
+				}
+				
+				var logItem = this._logs[e.ItemIndex];
+				e.Item.ImageIndex = (int)logItem.LogType;
+				
+				var dateItem = e.Item;
+				var titleItem = e.Item.SubItems[1];
+				
+				dateItem.Text = logItem.DateTime.ToString();
+				//dateItem.ImageKey = logItem.LogType.ToString();
+				titleItem.Text = logItem.Title;
+			}
+		}
 	}
 }

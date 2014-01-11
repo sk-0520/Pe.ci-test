@@ -16,6 +16,6 @@ namespace PeMain.Logic
 	/// </summary>
 	public interface ILogger
 	{
-		void Logging(LogType logType, string title, object detail, int frame = 2);
+		void Puts(LogType logType, string title, object detail, int frame = 2);
 	}
 }

@@ -117,7 +117,7 @@ namespace PeMain.UI
 			InitializeCommandForm(args);
 			InitializeToolbarForm(args);
 			
-			this._logForm.Logging(LogType.Information, this._language["log/init/ui"], this._language["log/start"]);
+			this._logForm.Puts(LogType.Information, this._language["log/init/ui"], this._language["log/start"]);
 		}
 		
 		/// <summary>

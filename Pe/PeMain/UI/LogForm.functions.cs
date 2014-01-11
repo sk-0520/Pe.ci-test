@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Windows.Forms;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -16,10 +17,12 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LogForm
 	{
-		public void Logging(LogType logType, string title, object detail, int frame = 2)
+		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
 			var logItem = new LogItem(logType, title, detail, frame);
 			this._logs.Add(logItem);
+			this.listLog.VirtualListSize = this._logs.Count;
+			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 		}
 		
 		public void SetSettingData(Language language, MainSetting mainSetting)

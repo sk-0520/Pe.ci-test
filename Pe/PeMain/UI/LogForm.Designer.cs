@@ -36,7 +36,6 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogForm));
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.statusLog = new System.Windows.Forms.StatusStrip();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -111,6 +110,7 @@ namespace PeMain.UI
 									this.headerTimestamp,
 									this.headerTitle});
 			this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listLog.FullRowSelect = true;
 			this.listLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.listLog.Location = new System.Drawing.Point(0, 0);
 			this.listLog.Name = "listLog";
@@ -118,6 +118,8 @@ namespace PeMain.UI
 			this.listLog.TabIndex = 0;
 			this.listLog.UseCompatibleStateImageBehavior = false;
 			this.listLog.View = System.Windows.Forms.View.Details;
+			this.listLog.VirtualMode = true;
+			this.listLog.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.ListLog_RetrieveVirtualItem);
 			// 
 			// headerTimestamp
 			// 
@@ -143,7 +145,7 @@ namespace PeMain.UI
 			// toolLog_save
 			// 
 			this.toolLog_save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLog_save.Image = ((System.Drawing.Image)(resources.GetObject("toolLog_save.Image")));
+			this.toolLog_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
 			this.toolLog_save.Size = new System.Drawing.Size(23, 22);
@@ -153,7 +155,7 @@ namespace PeMain.UI
 			// toolLog_clear
 			// 
 			this.toolLog_clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLog_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolLog_clear.Image")));
+			this.toolLog_clear.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
 			this.toolLog_clear.Size = new System.Drawing.Size(23, 22);

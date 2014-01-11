@@ -83,6 +83,16 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap Comment {
+			get {
+				object obj = ResourceManager.GetObject("Comment", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap Dir {
 			get {
 				object obj = ResourceManager.GetObject("Dir", resourceCulture);
@@ -96,6 +106,16 @@ namespace PeMain.Properties {
 		public static System.Drawing.Bitmap Down {
 			get {
 				object obj = ResourceManager.GetObject("Down", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap Error {
+			get {
+				object obj = ResourceManager.GetObject("Error", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
@@ -143,6 +163,16 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap Information {
+			get {
+				object obj = ResourceManager.GetObject("Information", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap NotImpl {
 			get {
 				object obj = ResourceManager.GetObject("NotImpl", resourceCulture);
@@ -173,6 +203,16 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap Save {
+			get {
+				object obj = ResourceManager.GetObject("Save", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap ToolbarMain {
 			get {
 				object obj = ResourceManager.GetObject("ToolbarMain", resourceCulture);
@@ -186,6 +226,16 @@ namespace PeMain.Properties {
 		public static System.Drawing.Bitmap Up {
 			get {
 				object obj = ResourceManager.GetObject("Up", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap Warning {
+			get {
+				object obj = ResourceManager.GetObject("Warning", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}

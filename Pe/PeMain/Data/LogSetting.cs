@@ -19,7 +19,7 @@ namespace PeMain.Data
 	{
 		public LogSetting()
 		{
-			Size = new Size(200, 250);
+			Size = new Size(350, 400);
 			Point = new Point(0, 0);
 		}
 		
