@@ -114,6 +114,12 @@ namespace PeMain.UI
 			ApplyLanguage();
 			
 			Font = ToolbarSetting.FontSetting.Font;
+			if(ToolbarSetting.ToolbarGroup.Groups.Count == 0) {
+				// グループが存在しなければグループを作っておく
+				var toolbarGroupItem = new ToolbarGroupItem();
+				toolbarGroupItem.Name = Language["setting/toolbar/add-group"];
+				ToolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
+			}
 			
 			// グループメニュー基盤構築
 			this.menuGroup.Items.Clear();
@@ -127,12 +133,8 @@ namespace PeMain.UI
 				
 				this.menuGroup.Items.Add(menuItem);
 			}
-			if(ToolbarSetting.ToolbarGroup.Groups.Count > 0) {
-				SelectedGroup(ToolbarSetting.ToolbarGroup.Groups.First());
-			} else {
-				var item = CreateLauncherButton(null);
-				SetToolButtons(ToolbarSetting.IconSize, new [] { item });
-			}
+			
+			SelectedGroup(ToolbarSetting.ToolbarGroup.Groups.First());
 			
 			// 表示
 			if(IsDockingMode) {
