@@ -53,5 +53,13 @@ namespace PeMain.UI
 				titleItem.Text = logItem.Title;
 			}
 		}
+		
+		void LogForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(e.CloseReason == CloseReason.UserClosing) {
+				e.Cancel = true;
+				Visible = false;
+			}
+		}
 	}
 }

@@ -26,5 +26,9 @@ namespace PeMain.Data
 		public bool Visible { get; set; }
 		public Point Point { get; set; }
 		public Size Size { get; set; }
+		/// <summary>
+		/// ログ追加時に画面表示
+		/// </summary>
+		public bool ShowAdd { get; set; }
 	}
 }

@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using PeMain.Data;
 
@@ -23,11 +24,16 @@ namespace PeMain.UI
 			this._logs.Add(logItem);
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+			
+			if(LogSetting.ShowAdd && !Visible) {
+				Visible = true;
+			}
 		}
 		
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
+			LogSetting = mainSetting.Log;
 			
 			ApplySetting();
 		}
@@ -36,6 +42,8 @@ namespace PeMain.UI
 		
 		void ApplySetting()
 		{
+			Debug.Assert(LogSetting != null);
+			
 			ApplyLanguage();
 		}
 
