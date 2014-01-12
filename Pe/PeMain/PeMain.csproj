@@ -186,6 +186,25 @@
     <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\StreamForm.cs" />
+    <Compile Include="UI\StreamForm.Designer.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StreamForm.functions.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StreamForm.initialize.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StreamForm.language.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StreamForm.property.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StreamForm.variable.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ToolbarForm.cs" />
     <Compile Include="UI\ToolbarForm.define.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
@@ -194,7 +213,7 @@
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ToolbarForm.draw.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ToolbarForm.functions.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
@@ -225,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\StreamForm.resx">
+      <DependentUpon>StreamForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ToolbarForm.resx">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
