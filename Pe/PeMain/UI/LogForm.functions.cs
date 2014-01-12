@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using PeMain.Data;
@@ -25,9 +26,12 @@ namespace PeMain.UI
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 			
-			if(LogSetting.ShowAdd && !Visible) {
+			if(LogSetting.AddShow && !Visible) {
 				Visible = true;
 			}
+			
+			this.listLog.Items[this.listLog.Items.Count - 1].Focused = true;
+			this.listLog.Items[this.listLog.Items.Count - 1].EnsureVisible();
 		}
 		
 		public void SetSettingData(Language language, MainSetting mainSetting)
@@ -46,6 +50,51 @@ namespace PeMain.UI
 			
 			ApplyLanguage();
 		}
-
+		
+		void ClearDetail()
+		{
+			this.treeDetail.Nodes.Clear();
+			this.listStack.Items.Clear();
+		}
+		
+		void ObjectToNode(object obj)
+		{
+			if(obj.GetType() == typeof(string)){}
+			
+		}
+		
+		ListViewItem StackToListItem(StackFrame sf)
+		{
+			var listItem = new ListViewItem();
+			var fileItem = listItem.SubItems[0];
+			var lineItem = new ListViewItem.ListViewSubItem();
+			var funcItem = new ListViewItem.ListViewSubItem();
+			listItem.SubItems.Add(lineItem);
+			listItem.SubItems.Add(funcItem);
+			
+			fileItem.Text = sf.GetFileName();
+			lineItem.Text = string.Format("{0}:{1}", sf.GetFileLineNumber(), sf.GetFileColumnNumber());
+			var method = sf.GetMethod();
+			funcItem.Text = string.Format("{0}:{1}", method.ReflectedType, method.ToString());
+						
+			return listItem;
+		}
+		
+		void SetDetail(LogItem logItem)
+		{
+			Debug.Assert(logItem != null);
+			
+			// 
+			ObjectToNode(logItem.Detail);
+			
+			//
+			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);
+			var st = logItem.StackTrace;
+			for(var i = 0; i < st.FrameCount; i++) {
+				listitemList.Add(StackToListItem(st.GetFrame(i)));
+			}
+			
+			this.listStack.Items.AddRange(listitemList.ToArray());
+		}
 	}
 }

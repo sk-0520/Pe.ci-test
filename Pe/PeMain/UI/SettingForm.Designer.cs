@@ -110,6 +110,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
@@ -169,6 +170,7 @@ namespace PeMain.UI
 			// 
 			// groupMainLog
 			// 
+			this.groupMainLog.Controls.Add(this.selectLogAddShow);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
 			this.groupMainLog.Location = new System.Drawing.Point(66, 90);
 			this.groupMainLog.Name = "groupMainLog";
@@ -179,7 +181,7 @@ namespace PeMain.UI
 			// 
 			// selectLogVisible
 			// 
-			this.selectLogVisible.Location = new System.Drawing.Point(39, 36);
+			this.selectLogVisible.Location = new System.Drawing.Point(16, 22);
 			this.selectLogVisible.Name = "selectLogVisible";
 			this.selectLogVisible.Size = new System.Drawing.Size(104, 24);
 			this.selectLogVisible.TabIndex = 0;
@@ -912,6 +914,15 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// selectLogAddShow
+			// 
+			this.selectLogAddShow.Location = new System.Drawing.Point(55, 52);
+			this.selectLogAddShow.Name = "selectLogAddShow";
+			this.selectLogAddShow.Size = new System.Drawing.Size(104, 24);
+			this.selectLogAddShow.TabIndex = 1;
+			this.selectLogAddShow.Text = "{ADD_SHOW}";
+			this.selectLogAddShow.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -956,6 +967,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectLogAddShow;
 		private System.Windows.Forms.CheckBox selectLogVisible;
 		private System.Windows.Forms.GroupBox groupMainLog;
 		private System.Windows.Forms.CheckBox selectToolbarShowText;

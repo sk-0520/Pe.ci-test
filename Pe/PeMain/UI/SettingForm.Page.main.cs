@@ -19,6 +19,7 @@ namespace PeMain.UI
 		void LogExportSetting(LogSetting logSetting)
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
+			logSetting.AddShow = this.selectLogAddShow.Checked;
 		}
 		
 		void MainExportSetting(MainSetting mainSetting)

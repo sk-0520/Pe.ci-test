@@ -39,15 +39,10 @@ namespace PeMain.UI
 		
 		void button_ButtonClick(object sender, EventArgs e)
 		{
-			Debug.WriteLine("click: " + sender.ToString());
+			var toolItem = (ToolStripItem)sender;
+			var launcherItem = (LauncherItem)toolItem.Tag;
+			ExecuteItem(launcherItem);
 		}
-
-		
-		void button_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-		{
-			Debug.WriteLine("menu: " + e.ClickedItem.ToString());
-		}
-
 		
 		
 		void ToolbarForm_Paint(object sender, PaintEventArgs e)

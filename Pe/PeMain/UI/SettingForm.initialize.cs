@@ -26,6 +26,7 @@ namespace PeMain.UI
 		void InitializeLog(LogSetting logSetting)
 		{
 			this.selectLogVisible.Checked = logSetting.Visible;
+			this.selectLogAddShow.Checked = logSetting.AddShow;
 		}
 		void InitializeMainSetting(MainSetting mainSetting)
 		{

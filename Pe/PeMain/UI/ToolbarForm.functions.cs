@@ -258,7 +258,11 @@ namespace PeMain.UI
 			
 			return toolItem;
 		}
-
+		
+		void ExecuteItem(LauncherItem launcherItem)
+		{
+			Logger.Puts(LogType.Information, "exec item", launcherItem);
+		}
 
 	}
 }

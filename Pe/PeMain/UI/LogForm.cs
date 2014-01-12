@@ -61,5 +61,15 @@ namespace PeMain.UI
 				Visible = false;
 			}
 		}
+		
+		void ListLog_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ClearDetail();
+			if(this.listLog.FocusedItem != null) {
+				var listItem = this.listLog.FocusedItem;
+				var logItem = this._logs[listItem.Index];
+				SetDetail(logItem);
+			}
+		}
 	}
 }

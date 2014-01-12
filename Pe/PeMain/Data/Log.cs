@@ -29,14 +29,14 @@ namespace PeMain.Data
 			LogType = logtype;
 			Title = title;
 			Detail = detail;
-			StackFrame = new StackFrame(frame, true);
+			StackTrace = new StackTrace(frame, true);
 			DateTime = DateTime.Now;
 		}
 		
 		public LogType LogType { get; private set; }
 		public string Title { get; private set; }
 		public object Detail { get; private set; }
-		public StackFrame StackFrame { get; private set; }
+		public StackTrace StackTrace { get; private set; }
 		public DateTime DateTime { get; private set; }
 	}
 }

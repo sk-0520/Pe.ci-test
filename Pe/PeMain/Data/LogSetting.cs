@@ -8,6 +8,7 @@
  */
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace PeMain.Data
 {
@@ -19,8 +20,12 @@ namespace PeMain.Data
 	{
 		public LogSetting()
 		{
-			Size = new Size(350, 400);
+			Size = new Size(
+				Screen.PrimaryScreen.Bounds.Width / 4,
+				Screen.PrimaryScreen.Bounds.Height / 2
+			);
 			Point = new Point(0, 0);
+			AddShow = true;
 		}
 		
 		public bool Visible { get; set; }
@@ -29,6 +34,6 @@ namespace PeMain.Data
 		/// <summary>
 		/// ログ追加時に画面表示
 		/// </summary>
-		public bool ShowAdd { get; set; }
+		public bool AddShow { get; set; }
 	}
 }
