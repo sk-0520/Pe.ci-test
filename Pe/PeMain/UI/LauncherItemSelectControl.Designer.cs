@@ -78,6 +78,7 @@ namespace PeMain.UI
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
 			this.toolLauncherItems.Size = new System.Drawing.Size(147, 44);
+			this.toolLauncherItems.Stretch = true;
 			this.toolLauncherItems.TabIndex = 3;
 			this.toolLauncherItems.Text = "toolStrip1";
 			// 

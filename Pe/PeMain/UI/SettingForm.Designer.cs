@@ -40,6 +40,7 @@ namespace PeMain.UI
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
+			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
 			this.selectLogVisible = new System.Windows.Forms.CheckBox();
 			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
 			this.labelMainLanguage = new System.Windows.Forms.Label();
@@ -110,7 +111,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
@@ -178,6 +178,15 @@ namespace PeMain.UI
 			this.groupMainLog.TabIndex = 2;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = "{LOG}";
+			// 
+			// selectLogAddShow
+			// 
+			this.selectLogAddShow.Location = new System.Drawing.Point(55, 52);
+			this.selectLogAddShow.Name = "selectLogAddShow";
+			this.selectLogAddShow.Size = new System.Drawing.Size(104, 24);
+			this.selectLogAddShow.TabIndex = 1;
+			this.selectLogAddShow.Text = "{ADD_SHOW}";
+			this.selectLogAddShow.UseVisualStyleBackColor = true;
 			// 
 			// selectLogVisible
 			// 
@@ -684,9 +693,10 @@ namespace PeMain.UI
 									this.toolToolbarGroup_down,
 									this.toolStripSeparator2,
 									this.toolToolbarGroup_remove});
-			this.toolToolbarGroup.Location = new System.Drawing.Point(3, 0);
+			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
-			this.toolToolbarGroup.Size = new System.Drawing.Size(130, 25);
+			this.toolToolbarGroup.Size = new System.Drawing.Size(171, 25);
+			this.toolToolbarGroup.Stretch = true;
 			this.toolToolbarGroup.TabIndex = 0;
 			this.toolToolbarGroup.Text = "toolStrip1";
 			// 
@@ -913,15 +923,6 @@ namespace PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// selectLogAddShow
-			// 
-			this.selectLogAddShow.Location = new System.Drawing.Point(55, 52);
-			this.selectLogAddShow.Name = "selectLogAddShow";
-			this.selectLogAddShow.Size = new System.Drawing.Size(104, 24);
-			this.selectLogAddShow.TabIndex = 1;
-			this.selectLogAddShow.Text = "{ADD_SHOW}";
-			this.selectLogAddShow.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
