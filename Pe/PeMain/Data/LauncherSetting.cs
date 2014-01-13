@@ -13,7 +13,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+
 using PeMain.Logic;
+using PeMain.UI;
 using PeUtility;
 
 namespace PeMain.Data
@@ -144,7 +146,7 @@ namespace PeMain.Data
 		/// </summary>
 		public string WorkDirPath { get; set; }
 		/// <summary>
-		/// 実行時に渡されオプション。
+		/// 実行時に渡されるオプション。
 		/// </summary>
 		public string Option { get; set; }
 		/// <summary>
@@ -224,13 +226,13 @@ namespace PeMain.Data
 				if(!string.IsNullOrWhiteSpace(IconPath)) {
 					var expandIconPath = Environment.ExpandEnvironmentVariables(IconPath);
 					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
-					useIconPath = expandIconPath; 
+					useIconPath = expandIconPath;
 				}
 				if(!hasIcon &&  LauncherType == LauncherType.File) {
 					if(!string.IsNullOrWhiteSpace(Command)) {
 						var expandFilePath = Environment.ExpandEnvironmentVariables(Command);
 						hasIcon = File.Exists(expandFilePath) || Directory.Exists(expandFilePath);
-						useIconPath = expandFilePath; 
+						useIconPath = expandFilePath;
 					}
 				}
 				if(hasIcon) {
@@ -285,11 +287,11 @@ namespace PeMain.Data
 					
 				case ".exe":
 					var verInfo = FileVersionInfo.GetVersionInfo(filePath);
-					if(verInfo.ProductName.Length > 0) {
+					if(!string.IsNullOrEmpty(verInfo.ProductName)) {
 						item.Name = verInfo.ProductName;
 					}
 					item.Note = verInfo.Comments;
-					if(verInfo.CompanyName.Length > 0) {
+					if(!string.IsNullOrEmpty(verInfo.CompanyName)) {
 						item.Tag.Add(verInfo.CompanyName);
 					}
 					break;
@@ -301,6 +303,41 @@ namespace PeMain.Data
 			Debug.Assert(item.Name.Length > 0);
 			
 			return item;
+		}
+		
+		static void ExecuteFile(ILogger logger, Language language, LauncherItem launcherItem)
+		{
+			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
+			
+			var process = new Process();
+			var startInfo = process.StartInfo;
+			startInfo.FileName = launcherItem.Command;
+			if(Path.GetExtension(launcherItem.Command).ToLower() == ".exe" && File.Exists(launcherItem.Command)) {
+				startInfo.UseShellExecute = false;
+				
+				startInfo.WorkingDirectory = launcherItem.WorkDirPath;
+				startInfo.Arguments = launcherItem.Option;
+				startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
+				if(launcherItem.StdOutputWatch) {
+					startInfo.RedirectStandardOutput = true;
+					var streamForm = new StreamForm();
+					streamForm.SetSettingData(language, process, launcherItem);
+					streamForm.Show();
+				}
+			}
+			
+			process.Start();
+			
+			if(launcherItem.StdOutputWatch) {
+				process.BeginOutputReadLine();
+			}
+		}
+		
+		public void Execute(ILogger logger, Language language)
+		{
+			if(LauncherType == LauncherType.File) {
+				ExecuteFile(logger, language, this);
+			}
 		}
 	}
 	

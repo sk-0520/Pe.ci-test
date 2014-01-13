@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PeMain.Logic;
 using PeMain.Properties;
 using PeMain.Data;
 using PeUtility;
@@ -261,7 +262,13 @@ namespace PeMain.UI
 		
 		void ExecuteItem(LauncherItem launcherItem)
 		{
-			Logger.Puts(LogType.Information, "exec item", launcherItem);
+			try {
+				if(launcherItem.LauncherType == LauncherType.File) {
+					launcherItem.Execute(Logger, Language);
+				}
+			} catch(Exception ex) {
+				Logger.Puts(LogType.Warning, Language["execute/exception"], ex);
+			}
 		}
 
 	}

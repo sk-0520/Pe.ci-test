@@ -39,19 +39,22 @@ namespace PeMain.UI
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StreamForm));
 			this.toolStream = new System.Windows.Forms.ToolStrip();
 			this.toolStream_save = new System.Windows.Forms.ToolStripButton();
-			this.tabStream = new System.Windows.Forms.TabControl();
-			this.pageStream = new System.Windows.Forms.TabPage();
-			this.pageProperty = new System.Windows.Forms.TabPage();
-			this.viewOutput = new System.Windows.Forms.TextBox();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStream_clear = new System.Windows.Forms.ToolStripButton();
+			this.tabStream = new System.Windows.Forms.TabControl();
+			this.pageStream = new System.Windows.Forms.TabPage();
+			this.viewOutput = new System.Windows.Forms.TextBox();
+			this.pageProperty = new System.Windows.Forms.TabPage();
+			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
 			this.toolStream.SuspendLayout();
 			this.tabStream.SuspendLayout();
 			this.pageStream.SuspendLayout();
+			this.pageProperty.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStream
 			// 
+			this.toolStream.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStream.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStream_save,
 									this.toolStripSeparator1,
@@ -70,6 +73,20 @@ namespace PeMain.UI
 			this.toolStream_save.Name = "toolStream_save";
 			this.toolStream_save.Size = new System.Drawing.Size(23, 22);
 			this.toolStream_save.Text = "toolStripButton1";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStream_clear
+			// 
+			this.toolStream_clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
+			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_clear.Name = "toolStream_clear";
+			this.toolStream_clear.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_clear.Text = "toolStripButton1";
 			// 
 			// tabStream
 			// 
@@ -95,8 +112,22 @@ namespace PeMain.UI
 			this.pageStream.Text = "{STREAM}";
 			this.pageStream.UseVisualStyleBackColor = true;
 			// 
+			// viewOutput
+			// 
+			this.viewOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.viewOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewOutput.Location = new System.Drawing.Point(3, 4);
+			this.viewOutput.Multiline = true;
+			this.viewOutput.Name = "viewOutput";
+			this.viewOutput.ReadOnly = true;
+			this.viewOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.viewOutput.Size = new System.Drawing.Size(317, 203);
+			this.viewOutput.TabIndex = 0;
+			this.viewOutput.WordWrap = false;
+			// 
 			// pageProperty
 			// 
+			this.pageProperty.Controls.Add(this.propertyProcess);
 			this.pageProperty.Location = new System.Drawing.Point(4, 24);
 			this.pageProperty.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageProperty.Name = "pageProperty";
@@ -106,28 +137,13 @@ namespace PeMain.UI
 			this.pageProperty.Text = "{PROPERTY}";
 			this.pageProperty.UseVisualStyleBackColor = true;
 			// 
-			// viewOutput
+			// propertyProcess
 			// 
-			this.viewOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewOutput.Location = new System.Drawing.Point(3, 4);
-			this.viewOutput.Multiline = true;
-			this.viewOutput.Name = "viewOutput";
-			this.viewOutput.Size = new System.Drawing.Size(317, 203);
-			this.viewOutput.TabIndex = 0;
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStream_clear
-			// 
-			this.toolStream_clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
-			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_clear.Name = "toolStream_clear";
-			this.toolStream_clear.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_clear.Text = "toolStripButton1";
+			this.propertyProcess.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.propertyProcess.Location = new System.Drawing.Point(3, 4);
+			this.propertyProcess.Name = "propertyProcess";
+			this.propertyProcess.Size = new System.Drawing.Size(317, 203);
+			this.propertyProcess.TabIndex = 0;
 			// 
 			// StreamForm
 			// 
@@ -137,7 +153,7 @@ namespace PeMain.UI
 			this.Controls.Add(this.tabStream);
 			this.Controls.Add(this.toolStream);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "StreamForm";
 			this.Text = "StreamForm";
@@ -146,9 +162,11 @@ namespace PeMain.UI
 			this.tabStream.ResumeLayout(false);
 			this.pageStream.ResumeLayout(false);
 			this.pageStream.PerformLayout();
+			this.pageProperty.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.PropertyGrid propertyProcess;
 		private System.Windows.Forms.TextBox viewOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_clear;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

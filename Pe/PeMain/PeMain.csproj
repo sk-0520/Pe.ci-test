@@ -282,8 +282,5 @@
     <Folder Include="UI\Ex" />
     <Folder Include="Logic" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="PeMain.cd" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
