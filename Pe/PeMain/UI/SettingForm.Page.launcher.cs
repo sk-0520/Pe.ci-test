@@ -56,7 +56,6 @@ namespace PeMain.UI
 			this.inputLauncherIconIndex.Value = 0;
 			LauncherSetSelectedType(LauncherType.File);
 			var checkList = new CheckBox[] {
-				this.selectLauncherProcess,
 				this.selectLauncherStdStream,
 			};
 			checkList.Transform(item => item.Checked = false);
@@ -80,7 +79,6 @@ namespace PeMain.UI
 			this.inputLauncherIconIndex.Value = item.IconIndex;
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
-			this.selectLauncherProcess.Checked = item.ProcessWatch;
 			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
 			
 			this._launcherItemEvent = true;
@@ -103,7 +101,6 @@ namespace PeMain.UI
 			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
 			item.Note = this.inputLauncherNote.Text.Trim();
 			item.StdOutputWatch = this.selectLauncherStdStream.Checked;
-			item.ProcessWatch = this.selectLauncherProcess.Checked;
 			
 			item.HasError = this.selecterLauncher.Items.Where(i => i != item).Any(i => i.Equals(item));
 			if(oldIcon.Index != item.IconIndex || oldIcon.Path != item.IconPath) {

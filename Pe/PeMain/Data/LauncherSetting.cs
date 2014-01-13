@@ -103,11 +103,6 @@ namespace PeMain.Data
 		/// </summary>
 		private Dictionary<IconSize, Icon> _iconMap;
 		
-		/// <summary>
-		/// 
-		/// </summary>
-		private Process _process;
-		
 		#region Equals and GetHashCode implementation
 		public override bool Equals(object obj)
 		{
@@ -129,7 +124,6 @@ namespace PeMain.Data
 		
 		public LauncherItem()
 		{
-			this._process = null;
 			this._iconMap = new Dictionary<IconSize, Icon>();
 			
 			HasError = false;
@@ -174,10 +168,6 @@ namespace PeMain.Data
 		/// </summary>
 		public List<string> Tag { get; set; }
 		/// <summary>
-		/// プロセス監視
-		/// </summary>
-		public bool ProcessWatch { get; set; }
-		/// <summary>
 		/// 標準出力(とエラー)の監視
 		/// </summary>
 		public bool StdOutputWatch { get; set; }
@@ -185,8 +175,6 @@ namespace PeMain.Data
 		/// 環境変数
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
-		
-		public Process Process { get { return this._process; } }
 		
 		[XmlIgnoreAttribute()]
 		public bool HasError { get; set; }
@@ -218,7 +206,6 @@ namespace PeMain.Data
 			result.LauncherHistory = (LauncherHistory)LauncherHistory.Clone();
 			result.Note = Note;
 			result.Tag.AddRange(Tag);
-			result.ProcessWatch = ProcessWatch;
 			result.StdOutputWatch = StdOutputWatch;
 			
 			// アイコンは再読み込みかったるいのでこぴっておく

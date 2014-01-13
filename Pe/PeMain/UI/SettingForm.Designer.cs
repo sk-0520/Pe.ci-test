@@ -48,7 +48,6 @@ namespace PeMain.UI
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
 			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
-			this.selectLauncherProcess = new System.Windows.Forms.CheckBox();
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
 			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
@@ -242,7 +241,6 @@ namespace PeMain.UI
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.selectLauncherStdStream);
-			this.splitContainer1.Panel2.Controls.Add(this.selectLauncherProcess);
 			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherOption);
 			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherOption);
 			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherOptionDirPath);
@@ -294,16 +292,6 @@ namespace PeMain.UI
 			this.selectLauncherStdStream.Text = "{STD_STREAM}";
 			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
 			this.selectLauncherStdStream.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
-			// 
-			// selectLauncherProcess
-			// 
-			this.selectLauncherProcess.Location = new System.Drawing.Point(249, 14);
-			this.selectLauncherProcess.Name = "selectLauncherProcess";
-			this.selectLauncherProcess.Size = new System.Drawing.Size(104, 24);
-			this.selectLauncherProcess.TabIndex = 11;
-			this.selectLauncherProcess.Text = "{PROCESS}";
-			this.selectLauncherProcess.UseVisualStyleBackColor = true;
-			this.selectLauncherProcess.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// labelLauncherOption
 			// 
@@ -973,7 +961,6 @@ namespace PeMain.UI
 		private System.Windows.Forms.GroupBox groupMainLog;
 		private System.Windows.Forms.CheckBox selectToolbarShowText;
 		private System.Windows.Forms.CheckBox selectToolbarAutoHide;
-		private System.Windows.Forms.CheckBox selectLauncherProcess;
 		private System.Windows.Forms.CheckBox selectLauncherStdStream;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_remove;
