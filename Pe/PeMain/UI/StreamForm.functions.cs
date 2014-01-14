@@ -33,14 +33,20 @@ namespace PeMain.UI
 			ApplyLanguage();
 			
 			this.propertyProcess.SelectedObject = Process;
+			this.propertyProperty.SelectedObject = Process.StartInfo;
 
-			Process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs e) {
-				if(this.viewOutput != null)
-				this.viewOutput.BeginInvoke((MethodInvoker)delegate() {
-					var s = e.Data;
-					this.viewOutput.Text += s;
-				});
-			};
+			Process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
+			Process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
 		}
+		
+		void OutputStreamReceived(string line, bool stdOutput)
+		{
+			this.viewOutput.BeginInvoke(
+				(MethodInvoker)delegate() {
+					this.viewOutput.Text += line + Environment.NewLine;
+				}
+			);
+		}
+
 	}
 }

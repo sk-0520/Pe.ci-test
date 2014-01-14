@@ -44,11 +44,16 @@ namespace PeMain.UI
 			this.tabStream = new System.Windows.Forms.TabControl();
 			this.pageStream = new System.Windows.Forms.TabPage();
 			this.viewOutput = new System.Windows.Forms.TextBox();
-			this.pageProperty = new System.Windows.Forms.TabPage();
+			this.pageProcess = new System.Windows.Forms.TabPage();
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
+			this.pageProperty = new System.Windows.Forms.TabPage();
+			this.propertyProperty = new System.Windows.Forms.PropertyGrid();
+			this.toolStream_kill = new System.Windows.Forms.ToolStripButton();
+			this.toolStream_refresh = new System.Windows.Forms.ToolStripButton();
 			this.toolStream.SuspendLayout();
 			this.tabStream.SuspendLayout();
 			this.pageStream.SuspendLayout();
+			this.pageProcess.SuspendLayout();
 			this.pageProperty.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -57,22 +62,23 @@ namespace PeMain.UI
 			this.toolStream.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStream.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStream_save,
+									this.toolStream_clear,
 									this.toolStripSeparator1,
-									this.toolStream_clear});
+									this.toolStream_refresh,
+									this.toolStream_kill});
 			this.toolStream.Location = new System.Drawing.Point(0, 0);
 			this.toolStream.Name = "toolStream";
-			this.toolStream.Size = new System.Drawing.Size(331, 25);
+			this.toolStream.Size = new System.Drawing.Size(362, 25);
 			this.toolStream.TabIndex = 1;
 			this.toolStream.Text = "toolStrip1";
 			// 
 			// toolStream_save
 			// 
-			this.toolStream_save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStream_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolStream_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_save.Name = "toolStream_save";
-			this.toolStream_save.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_save.Text = "toolStripButton1";
+			this.toolStream_save.Size = new System.Drawing.Size(129, 22);
+			this.toolStream_save.Text = "{STREAM_SAVE}";
 			// 
 			// toolStripSeparator1
 			// 
@@ -81,33 +87,31 @@ namespace PeMain.UI
 			// 
 			// toolStream_clear
 			// 
-			this.toolStream_clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
 			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_clear.Name = "toolStream_clear";
-			this.toolStream_clear.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_clear.Text = "toolStripButton1";
+			this.toolStream_clear.Size = new System.Drawing.Size(136, 22);
+			this.toolStream_clear.Text = "{STREAM_CLEAR}";
 			// 
 			// tabStream
 			// 
 			this.tabStream.Controls.Add(this.pageStream);
+			this.tabStream.Controls.Add(this.pageProcess);
 			this.tabStream.Controls.Add(this.pageProperty);
 			this.tabStream.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabStream.Location = new System.Drawing.Point(0, 25);
 			this.tabStream.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabStream.Name = "tabStream";
 			this.tabStream.SelectedIndex = 0;
-			this.tabStream.Size = new System.Drawing.Size(331, 239);
+			this.tabStream.Size = new System.Drawing.Size(362, 239);
 			this.tabStream.TabIndex = 2;
 			// 
 			// pageStream
 			// 
 			this.pageStream.Controls.Add(this.viewOutput);
 			this.pageStream.Location = new System.Drawing.Point(4, 24);
-			this.pageStream.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageStream.Name = "pageStream";
-			this.pageStream.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageStream.Size = new System.Drawing.Size(323, 211);
+			this.pageStream.Size = new System.Drawing.Size(354, 211);
 			this.pageStream.TabIndex = 0;
 			this.pageStream.Text = "{STREAM}";
 			this.pageStream.UseVisualStyleBackColor = true;
@@ -116,61 +120,101 @@ namespace PeMain.UI
 			// 
 			this.viewOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.viewOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewOutput.Location = new System.Drawing.Point(3, 4);
+			this.viewOutput.Location = new System.Drawing.Point(0, 0);
 			this.viewOutput.Multiline = true;
 			this.viewOutput.Name = "viewOutput";
 			this.viewOutput.ReadOnly = true;
 			this.viewOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.viewOutput.Size = new System.Drawing.Size(317, 203);
+			this.viewOutput.Size = new System.Drawing.Size(354, 211);
 			this.viewOutput.TabIndex = 0;
 			this.viewOutput.WordWrap = false;
 			// 
-			// pageProperty
+			// pageProcess
 			// 
-			this.pageProperty.Controls.Add(this.propertyProcess);
-			this.pageProperty.Location = new System.Drawing.Point(4, 24);
-			this.pageProperty.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageProperty.Name = "pageProperty";
-			this.pageProperty.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageProperty.Size = new System.Drawing.Size(323, 211);
-			this.pageProperty.TabIndex = 1;
-			this.pageProperty.Text = "{PROPERTY}";
-			this.pageProperty.UseVisualStyleBackColor = true;
+			this.pageProcess.Controls.Add(this.propertyProcess);
+			this.pageProcess.Location = new System.Drawing.Point(4, 24);
+			this.pageProcess.Name = "pageProcess";
+			this.pageProcess.Size = new System.Drawing.Size(323, 211);
+			this.pageProcess.TabIndex = 1;
+			this.pageProcess.Text = "{PROCESS}";
+			this.pageProcess.UseVisualStyleBackColor = true;
 			// 
 			// propertyProcess
 			// 
 			this.propertyProcess.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.propertyProcess.Location = new System.Drawing.Point(3, 4);
+			this.propertyProcess.Location = new System.Drawing.Point(0, 0);
 			this.propertyProcess.Name = "propertyProcess";
-			this.propertyProcess.Size = new System.Drawing.Size(317, 203);
+			this.propertyProcess.Size = new System.Drawing.Size(323, 211);
 			this.propertyProcess.TabIndex = 0;
+			// 
+			// pageProperty
+			// 
+			this.pageProperty.Controls.Add(this.propertyProperty);
+			this.pageProperty.Location = new System.Drawing.Point(4, 24);
+			this.pageProperty.Name = "pageProperty";
+			this.pageProperty.Size = new System.Drawing.Size(323, 211);
+			this.pageProperty.TabIndex = 2;
+			this.pageProperty.Text = "{PROPERTY}";
+			this.pageProperty.UseVisualStyleBackColor = true;
+			// 
+			// propertyProperty
+			// 
+			this.propertyProperty.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.propertyProperty.Location = new System.Drawing.Point(0, 0);
+			this.propertyProperty.Name = "propertyProperty";
+			this.propertyProperty.Size = new System.Drawing.Size(323, 211);
+			this.propertyProperty.TabIndex = 1;
+			// 
+			// toolStream_kill
+			// 
+			this.toolStream_kill.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStream_kill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_kill.Image = global::PeMain.Properties.Images.Kill;
+			this.toolStream_kill.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_kill.Name = "toolStream_kill";
+			this.toolStream_kill.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_kill.Text = "{KILL}";
+			// 
+			// toolStream_refresh
+			// 
+			this.toolStream_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_refresh.Image = global::PeMain.Properties.Images.Refresh;
+			this.toolStream_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_refresh.Name = "toolStream_refresh";
+			this.toolStream_refresh.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_refresh.Text = "{REFRESH}";
 			// 
 			// StreamForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(331, 264);
+			this.ClientSize = new System.Drawing.Size(362, 264);
 			this.Controls.Add(this.tabStream);
 			this.Controls.Add(this.toolStream);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "StreamForm";
-			this.Text = "StreamForm";
+			this.Text = "{ITEM@STREAM}";
 			this.toolStream.ResumeLayout(false);
 			this.toolStream.PerformLayout();
 			this.tabStream.ResumeLayout(false);
 			this.pageStream.ResumeLayout(false);
 			this.pageStream.PerformLayout();
+			this.pageProcess.ResumeLayout(false);
 			this.pageProperty.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripButton toolStream_kill;
+		private System.Windows.Forms.ToolStripButton toolStream_refresh;
+		private System.Windows.Forms.PropertyGrid propertyProperty;
+		private System.Windows.Forms.TabPage pageProperty;
 		private System.Windows.Forms.PropertyGrid propertyProcess;
 		private System.Windows.Forms.TextBox viewOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_clear;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.TabPage pageProperty;
+		private System.Windows.Forms.TabPage pageProcess;
 		private System.Windows.Forms.TabPage pageStream;
 		private System.Windows.Forms.TabControl tabStream;
 		private System.Windows.Forms.ToolStripButton toolStream_save;

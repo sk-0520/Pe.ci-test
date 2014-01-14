@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -26,5 +27,16 @@ namespace PeMain.UI
 			
 			Initialize();
 		}
+		
+		void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+		{
+			OutputStreamReceived(e.Data, true);
+		}
+
+		void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+		{
+			OutputStreamReceived(e.Data, true);
+		}
+		
 	}
 }
