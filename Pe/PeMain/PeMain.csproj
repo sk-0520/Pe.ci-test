@@ -93,6 +93,25 @@
     <Compile Include="Data\MainSetting.cs" />
     <Compile Include="Data\NoteSetting.cs" />
     <Compile Include="Data\ToolbarSetting.cs" />
+    <Compile Include="UI\ExecuteForm.cs" />
+    <Compile Include="UI\ExecuteForm.Designer.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.functions.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.initialize.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.language.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.property.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ExecuteForm.variable.cs">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Ex\ExListBox.cs" />
     <Compile Include="UI\Ex\ExToolStrip.cs" />
     <Compile Include="UI\LauncherItemSelectControl.cs" />
@@ -235,6 +254,9 @@
     <EmbeddedResource Include="Properties\Images.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ExecuteForm.resx">
+      <DependentUpon>ExecuteForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\LauncherItemSelectControl.resx">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
