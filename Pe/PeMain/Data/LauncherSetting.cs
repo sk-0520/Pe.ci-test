@@ -131,6 +131,7 @@ namespace PeMain.Data
 			HasError = false;
 			
 			LauncherHistory = new LauncherHistory();
+			EnvironmentSetting = new EnvironmentSetting();
 			Tag = new List<string>();
 		}
 		/// <summary>
@@ -177,6 +178,56 @@ namespace PeMain.Data
 		/// 環境変数
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
+		
+		/// <summary>
+		/// 存在するか
+		/// </summary>
+		public bool Exists
+		{
+			get
+			{
+				if(LauncherType != LauncherType.File) {
+					return false;
+				}
+				
+				return File.Exists(Command) || Directory.Exists(Command);
+			}
+		}
+		
+		/// <summary>
+		/// アイテムは実行形式か
+		/// </summary>
+		public bool IsExecteFile
+		{
+			get
+			{
+				if(Exists) {
+					return Path.GetExtension(Command).ToLower() == ".exe";
+				}
+				return false;
+			}
+		}
+		public bool IsNormalFile
+		{
+			get
+			{
+				if(Exists) {
+					return !IsExecteFile;
+				}
+				return false;
+			}
+		}
+		public bool IsDirectory
+		{
+			get 
+			{
+				if(LauncherType != LauncherType.File) {
+					return false;
+				}
+				return Directory.Exists(Command);
+			}
+		}
+		
 		
 		[XmlIgnoreAttribute()]
 		public bool HasError { get; set; }
@@ -317,6 +368,22 @@ namespace PeMain.Data
 				
 				startInfo.WorkingDirectory = launcherItem.WorkDirPath;
 				startInfo.Arguments = launcherItem.Option;
+				
+				// 環境変数
+				if(!launcherItem.EnvironmentSetting.UseDefault) {
+					var env = startInfo.EnvironmentVariables;
+					// 追加・更新
+					foreach(var pair in launcherItem.EnvironmentSetting.Update) {
+						env[pair.Key] = pair.Value;
+					}
+					// 削除
+					launcherItem.EnvironmentSetting.Remove
+						.Where(s => env.ContainsKey(s))
+						.Transform(s => env.Remove(s))
+					;
+				}
+				
+				// 出力取得
 				startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
 				if(launcherItem.StdOutputWatch) {
 					startInfo.RedirectStandardOutput = true;
@@ -338,6 +405,11 @@ namespace PeMain.Data
 			if(LauncherType == LauncherType.File) {
 				ExecuteFile(logger, language, this);
 			}
+		}
+		public void Increment(string workDirPath = null, string option = null)
+		{
+			LauncherHistory.ExecuteCount += 1;
+			LauncherHistory.DateHistory.UpdateUTC = DateTime.UtcNow;
 		}
 	}
 	

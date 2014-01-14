@@ -193,7 +193,7 @@ namespace PeMain.UI
 			SetToolButtons(ToolbarSetting.IconSize, toolButtonList);
 		}
 		
-		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem item)
+		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem launcherItem)
 		{
 			var result = new List<ToolStripItem>();
 			
@@ -207,13 +207,24 @@ namespace PeMain.UI
 			result.Add(pathItem);
 			result.Add(fileItem);
 			
+			// 通常実行
 			executeItem.Text = Language["toolbar/menu/file/execute"];
+			executeItem.Click += (object sender, EventArgs e) => {
+				ExecuteItem(launcherItem);
+			};
+			// 指定実行
 			executeExItem.Text = Language["toolbar/menu/file/execute-ex"];
+			executeExItem.Click += (object sender, EventArgs e) => {
+				ExecuteExItem(launcherItem);
+			};
+			// パス関係
 			pathItem.Text = Language["toolbar/menu/file/path"];
+			// ファイル一覧
 			fileItem.Text = Language["toolbar/menu/file/ls"];
 			
 			return result.ToArray();
 		}
+
 		
 		ToolStripItem CreateLauncherButton(LauncherItem item)
 		{
@@ -260,16 +271,35 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
-		void ExecuteItem(LauncherItem launcherItem)
+		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
 				if(launcherItem.LauncherType == LauncherType.File) {
 					launcherItem.Execute(Logger, Language);
+					launcherItem.Increment();
+					return true;
 				}
 			} catch(Exception ex) {
 				Logger.Puts(LogType.Warning, Language["execute/exception"], ex);
 			}
+			
+			return false;
 		}
+		
+		void ExecuteExItem(LauncherItem launcherItem)
+		{
+			using(var form = new ExecuteForm()) {
+				form.SetSettingData(Language, launcherItem);
+				form.TopMost = TopMost;
+				if(form.ShowDialog() == DialogResult.OK) {
+					var editedItem = form.EditedLauncherItem;
+					if(ExecuteItem(editedItem)) {
+						launcherItem.Increment(editedItem.WorkDirPath, editedItem.Option);
+					}
+				}
+			}
+		}
+
 
 	}
 }

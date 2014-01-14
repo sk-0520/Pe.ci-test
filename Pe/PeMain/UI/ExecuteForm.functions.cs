@@ -8,8 +8,11 @@
  */
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -30,6 +33,8 @@ namespace PeMain.UI
 			Debug.Assert(LauncherItem != null);
 			
 			ApplyLanguage();
+			
+			Icon = LauncherItem.GetIcon(IconSize.Small);
 		}
 	}
 }

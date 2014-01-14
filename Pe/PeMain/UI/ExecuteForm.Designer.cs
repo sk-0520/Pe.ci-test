@@ -36,92 +36,149 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.viewCommand = new System.Windows.Forms.TextBox();
+			this.inputOption = new System.Windows.Forms.ComboBox();
+			this.inputWorkDirPath = new System.Windows.Forms.ComboBox();
 			this.tabExecute = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.pageBasic = new System.Windows.Forms.TabPage();
+			this.selectStdStream = new System.Windows.Forms.CheckBox();
+			this.commandWorkDirPath = new System.Windows.Forms.Button();
+			this.commandOption_dir = new System.Windows.Forms.Button();
+			this.commandOption_file = new System.Windows.Forms.Button();
+			this.labelWorkDirPath = new System.Windows.Forms.Label();
+			this.labelOption = new System.Windows.Forms.Label();
 			this.pageEnv = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.commandCancel = new System.Windows.Forms.Button();
+			this.commandSubmit = new System.Windows.Forms.Button();
+			this.selectUserDefault = new System.Windows.Forms.CheckBox();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.groupUpdate = new System.Windows.Forms.GroupBox();
+			this.groupRemove = new System.Windows.Forms.GroupBox();
 			this.tabExecute.SuspendLayout();
-			this.tabPage1.SuspendLayout();
+			this.pageBasic.SuspendLayout();
+			this.pageEnv.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// viewCommand
 			// 
-			this.textBox1.Location = new System.Drawing.Point(6, 8);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(395, 23);
-			this.textBox1.TabIndex = 0;
+			this.viewCommand.Location = new System.Drawing.Point(6, 8);
+			this.viewCommand.Name = "viewCommand";
+			this.viewCommand.Size = new System.Drawing.Size(395, 23);
+			this.viewCommand.TabIndex = 0;
 			// 
-			// comboBox1
+			// inputOption
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(117, 42);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(260, 23);
-			this.comboBox1.TabIndex = 1;
+			this.inputOption.FormattingEnabled = true;
+			this.inputOption.Location = new System.Drawing.Point(117, 42);
+			this.inputOption.Name = "inputOption";
+			this.inputOption.Size = new System.Drawing.Size(260, 23);
+			this.inputOption.TabIndex = 1;
 			// 
-			// comboBox2
+			// inputWorkDirPath
 			// 
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(117, 71);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(260, 23);
-			this.comboBox2.TabIndex = 2;
+			this.inputWorkDirPath.FormattingEnabled = true;
+			this.inputWorkDirPath.Location = new System.Drawing.Point(117, 71);
+			this.inputWorkDirPath.Name = "inputWorkDirPath";
+			this.inputWorkDirPath.Size = new System.Drawing.Size(260, 23);
+			this.inputWorkDirPath.TabIndex = 2;
 			// 
 			// tabExecute
 			// 
 			this.tabExecute.Alignment = System.Windows.Forms.TabAlignment.Left;
-			this.tabExecute.Controls.Add(this.tabPage1);
+			this.tabExecute.Controls.Add(this.pageBasic);
 			this.tabExecute.Controls.Add(this.pageEnv);
 			this.tabExecute.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabExecute.Location = new System.Drawing.Point(0, 0);
 			this.tabExecute.Multiline = true;
 			this.tabExecute.Name = "tabExecute";
 			this.tabExecute.SelectedIndex = 0;
-			this.tabExecute.Size = new System.Drawing.Size(510, 183);
+			this.tabExecute.Size = new System.Drawing.Size(561, 183);
 			this.tabExecute.TabIndex = 3;
 			// 
-			// tabPage1
+			// pageBasic
 			// 
-			this.tabPage1.Controls.Add(this.checkBox1);
-			this.tabPage1.Controls.Add(this.button5);
-			this.tabPage1.Controls.Add(this.button4);
-			this.tabPage1.Controls.Add(this.button3);
-			this.tabPage1.Controls.Add(this.label2);
-			this.tabPage1.Controls.Add(this.label1);
-			this.tabPage1.Controls.Add(this.textBox1);
-			this.tabPage1.Controls.Add(this.comboBox1);
-			this.tabPage1.Controls.Add(this.comboBox2);
-			this.tabPage1.Location = new System.Drawing.Point(25, 4);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(481, 175);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "{BASIC}";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			this.pageBasic.Controls.Add(this.selectStdStream);
+			this.pageBasic.Controls.Add(this.commandWorkDirPath);
+			this.pageBasic.Controls.Add(this.commandOption_dir);
+			this.pageBasic.Controls.Add(this.commandOption_file);
+			this.pageBasic.Controls.Add(this.labelWorkDirPath);
+			this.pageBasic.Controls.Add(this.labelOption);
+			this.pageBasic.Controls.Add(this.viewCommand);
+			this.pageBasic.Controls.Add(this.inputOption);
+			this.pageBasic.Controls.Add(this.inputWorkDirPath);
+			this.pageBasic.Location = new System.Drawing.Point(25, 4);
+			this.pageBasic.Name = "pageBasic";
+			this.pageBasic.Size = new System.Drawing.Size(532, 175);
+			this.pageBasic.TabIndex = 0;
+			this.pageBasic.Text = "{BASIC}";
+			this.pageBasic.UseVisualStyleBackColor = true;
+			// 
+			// selectStdStream
+			// 
+			this.selectStdStream.Location = new System.Drawing.Point(11, 110);
+			this.selectStdStream.Name = "selectStdStream";
+			this.selectStdStream.Size = new System.Drawing.Size(128, 24);
+			this.selectStdStream.TabIndex = 8;
+			this.selectStdStream.Text = "{STD_STREAM}";
+			this.selectStdStream.UseVisualStyleBackColor = true;
+			// 
+			// commandWorkDirPath
+			// 
+			this.commandWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandWorkDirPath.Location = new System.Drawing.Point(383, 69);
+			this.commandWorkDirPath.Name = "commandWorkDirPath";
+			this.commandWorkDirPath.Size = new System.Drawing.Size(30, 26);
+			this.commandWorkDirPath.TabIndex = 7;
+			this.commandWorkDirPath.UseVisualStyleBackColor = true;
+			// 
+			// commandOption_dir
+			// 
+			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
+			this.commandOption_dir.Location = new System.Drawing.Point(419, 41);
+			this.commandOption_dir.Name = "commandOption_dir";
+			this.commandOption_dir.Size = new System.Drawing.Size(30, 26);
+			this.commandOption_dir.TabIndex = 6;
+			this.commandOption_dir.UseVisualStyleBackColor = true;
+			// 
+			// commandOption_file
+			// 
+			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
+			this.commandOption_file.Location = new System.Drawing.Point(383, 41);
+			this.commandOption_file.Name = "commandOption_file";
+			this.commandOption_file.Size = new System.Drawing.Size(30, 26);
+			this.commandOption_file.TabIndex = 5;
+			this.commandOption_file.UseVisualStyleBackColor = true;
+			// 
+			// labelWorkDirPath
+			// 
+			this.labelWorkDirPath.Location = new System.Drawing.Point(11, 71);
+			this.labelWorkDirPath.Name = "labelWorkDirPath";
+			this.labelWorkDirPath.Size = new System.Drawing.Size(100, 23);
+			this.labelWorkDirPath.TabIndex = 4;
+			this.labelWorkDirPath.Text = "{WORKDIR}";
+			// 
+			// labelOption
+			// 
+			this.labelOption.Location = new System.Drawing.Point(11, 42);
+			this.labelOption.Name = "labelOption";
+			this.labelOption.Size = new System.Drawing.Size(100, 23);
+			this.labelOption.TabIndex = 3;
+			this.labelOption.Text = "{OPTION}";
 			// 
 			// pageEnv
 			// 
+			this.pageEnv.Controls.Add(this.tableLayoutPanel1);
 			this.pageEnv.Location = new System.Drawing.Point(25, 4);
 			this.pageEnv.Name = "pageEnv";
-			this.pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.pageEnv.Size = new System.Drawing.Size(481, 175);
+			this.pageEnv.Size = new System.Drawing.Size(532, 175);
 			this.pageEnv.TabIndex = 1;
 			this.pageEnv.Text = "{ENV}";
 			this.pageEnv.UseVisualStyleBackColor = true;
@@ -142,131 +199,137 @@ namespace PeMain.UI
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-			this.splitContainer1.Size = new System.Drawing.Size(510, 224);
+			this.splitContainer1.Size = new System.Drawing.Size(561, 224);
 			this.splitContainer1.SplitterDistance = 183;
 			this.splitContainer1.TabIndex = 4;
 			// 
-			// button1
-			// 
-			this.button1.AutoSize = true;
-			this.button1.Location = new System.Drawing.Point(348, 3);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 29);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "{OK}";
-			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this.button2.AutoSize = true;
-			this.button2.Location = new System.Drawing.Point(429, 3);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(78, 29);
-			this.button2.TabIndex = 4;
-			this.button2.Text = "{CANCEL}";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
 			// flowLayoutPanel1
 			// 
-			this.flowLayoutPanel1.Controls.Add(this.button2);
-			this.flowLayoutPanel1.Controls.Add(this.button1);
+			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
+			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(510, 37);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(561, 37);
 			this.flowLayoutPanel1.TabIndex = 0;
 			// 
-			// label1
+			// commandCancel
 			// 
-			this.label1.Location = new System.Drawing.Point(11, 42);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(100, 23);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "label1";
+			this.commandCancel.AutoSize = true;
+			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.commandCancel.Location = new System.Drawing.Point(480, 3);
+			this.commandCancel.Name = "commandCancel";
+			this.commandCancel.Size = new System.Drawing.Size(78, 29);
+			this.commandCancel.TabIndex = 4;
+			this.commandCancel.Text = "{CANCEL}";
+			this.commandCancel.UseVisualStyleBackColor = true;
 			// 
-			// label2
+			// commandSubmit
 			// 
-			this.label2.Location = new System.Drawing.Point(11, 71);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 23);
-			this.label2.TabIndex = 4;
-			this.label2.Text = "label2";
+			this.commandSubmit.AutoSize = true;
+			this.commandSubmit.Location = new System.Drawing.Point(399, 3);
+			this.commandSubmit.Name = "commandSubmit";
+			this.commandSubmit.Size = new System.Drawing.Size(75, 29);
+			this.commandSubmit.TabIndex = 0;
+			this.commandSubmit.Text = "{OK}";
+			this.commandSubmit.UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// selectUserDefault
 			// 
-			this.button3.Location = new System.Drawing.Point(383, 42);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(30, 23);
-			this.button3.TabIndex = 5;
-			this.button3.Text = "button3";
-			this.button3.UseVisualStyleBackColor = true;
+			this.tableLayoutPanel1.SetColumnSpan(this.selectUserDefault, 2);
+			this.selectUserDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectUserDefault.Location = new System.Drawing.Point(3, 3);
+			this.selectUserDefault.Name = "selectUserDefault";
+			this.selectUserDefault.Size = new System.Drawing.Size(526, 24);
+			this.selectUserDefault.TabIndex = 0;
+			this.selectUserDefault.Text = "{USER_DEFAULT}";
+			this.selectUserDefault.UseVisualStyleBackColor = true;
 			// 
-			// button4
+			// tableLayoutPanel1
 			// 
-			this.button4.Location = new System.Drawing.Point(419, 42);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(30, 23);
-			this.button4.TabIndex = 6;
-			this.button4.Text = "button4";
-			this.button4.UseVisualStyleBackColor = true;
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.Controls.Add(this.selectUserDefault, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.groupUpdate, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.groupRemove, 1, 1);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 175);
+			this.tableLayoutPanel1.TabIndex = 1;
 			// 
-			// button5
+			// groupUpdate
 			// 
-			this.button5.Location = new System.Drawing.Point(383, 70);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(30, 23);
-			this.button5.TabIndex = 7;
-			this.button5.Text = "button5";
-			this.button5.UseVisualStyleBackColor = true;
+			this.groupUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupUpdate.Location = new System.Drawing.Point(3, 33);
+			this.groupUpdate.Name = "groupUpdate";
+			this.groupUpdate.Size = new System.Drawing.Size(260, 139);
+			this.groupUpdate.TabIndex = 1;
+			this.groupUpdate.TabStop = false;
+			this.groupUpdate.Text = "{INSERT/UPDATE}";
 			// 
-			// checkBox1
+			// groupRemove
 			// 
-			this.checkBox1.Location = new System.Drawing.Point(11, 110);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(104, 24);
-			this.checkBox1.TabIndex = 8;
-			this.checkBox1.Text = "checkBox1";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.groupRemove.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupRemove.Location = new System.Drawing.Point(269, 33);
+			this.groupRemove.Name = "groupRemove";
+			this.groupRemove.Size = new System.Drawing.Size(260, 139);
+			this.groupRemove.TabIndex = 2;
+			this.groupRemove.TabStop = false;
+			this.groupRemove.Text = "{REMOVE}";
 			// 
 			// ExecuteForm
 			// 
+			this.AcceptButton = this.commandSubmit;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(510, 224);
+			this.CancelButton = this.commandCancel;
+			this.ClientSize = new System.Drawing.Size(561, 224);
 			this.Controls.Add(this.splitContainer1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ExecuteForm";
+			this.ShowInTaskbar = false;
 			this.Text = "ExecuteForm";
 			this.tabExecute.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage1.PerformLayout();
+			this.pageBasic.ResumeLayout(false);
+			this.pageBasic.PerformLayout();
+			this.pageEnv.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.GroupBox groupRemove;
+		private System.Windows.Forms.GroupBox groupUpdate;
+		private System.Windows.Forms.CheckBox selectUserDefault;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.Button commandSubmit;
+		private System.Windows.Forms.Button commandCancel;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TabPage pageEnv;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.CheckBox checkBox1;
-		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.Label labelOption;
+		private System.Windows.Forms.Label labelWorkDirPath;
+		private System.Windows.Forms.Button commandOption_file;
+		private System.Windows.Forms.Button commandOption_dir;
+		private System.Windows.Forms.Button commandWorkDirPath;
+		private System.Windows.Forms.CheckBox selectStdStream;
+		private System.Windows.Forms.TabPage pageBasic;
 		private System.Windows.Forms.TabControl tabExecute;
-		private System.Windows.Forms.ComboBox comboBox2;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.ComboBox inputWorkDirPath;
+		private System.Windows.Forms.ComboBox inputOption;
+		private System.Windows.Forms.TextBox viewCommand;
 	}
 }
