@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using PeMain.Data;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -95,7 +96,8 @@ namespace PeMain.UI
 			Debug.Assert(logItem != null);
 			
 			// 
-			ObjectToNode(logItem.Detail);
+			this.treeDetail.Nodes.Add(logItem.Detail.ToString());
+			
 			
 			//
 			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);

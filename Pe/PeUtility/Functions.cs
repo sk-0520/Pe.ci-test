@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace PeUtility
 {
@@ -163,6 +164,5 @@ namespace PeUtility
 			var takeCount = fromIndex - toIndex - 1;
 			return seq.Skip(fromIndex).Take(takeCount);
 		}
-		
 	}
 }
