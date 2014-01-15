@@ -93,6 +93,44 @@
     <Compile Include="Data\MainSetting.cs" />
     <Compile Include="Data\NoteSetting.cs" />
     <Compile Include="Data\ToolbarSetting.cs" />
+    <Compile Include="UI\CustomControl\EnvRemoveControl.cs" />
+    <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.functions.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.initialize.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.language.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.property.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.variable.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.Designer.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.cs" />
+    <Compile Include="UI\CustomControl\EnvUpdateControl.functions.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.initialize.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.language.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.property.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.variable.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.cs" />
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.define.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
@@ -254,6 +292,12 @@
     <EmbeddedResource Include="Properties\Images.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CustomControl\EnvUpdateControl.resx">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\LauncherItemSelectControl.resx">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>

@@ -16,15 +16,14 @@ namespace PeMain.UI
 {
 	public partial class EnvUpdateControl
 	{
-		void SetLanguage(Language language)
+		public void SetLanguage(Language language)
 		{
 			ApplyLanguage(language);
 			this._language = language;
 		}
 		
-		void SetItem(Dictionary<string, string> map)
+		public void SetItem(Dictionary<string, string> map)
 		{
-			/*
 			this.gridEnv.Rows.Clear();
 			
 			var rowList = new List<DataGridViewRow>(map.Count);
@@ -35,7 +34,6 @@ namespace PeMain.UI
 			}
 			
 			this.gridEnv.Rows.AddRange(rowList.ToArray());
-			*/
 		}
 	}
 }

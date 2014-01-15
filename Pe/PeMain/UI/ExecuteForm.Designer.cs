@@ -51,7 +51,9 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectUserDefault = new System.Windows.Forms.CheckBox();
 			this.groupUpdate = new System.Windows.Forms.GroupBox();
+			this.envUpdate = new PeMain.UI.EnvUpdateControl();
 			this.groupRemove = new System.Windows.Forms.GroupBox();
+			this.envRemove = new PeMain.UI.EnvRemoveControl();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.commandCancel = new System.Windows.Forms.Button();
@@ -60,6 +62,8 @@ namespace PeMain.UI
 			this.pageBasic.SuspendLayout();
 			this.pageEnv.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
+			this.groupUpdate.SuspendLayout();
+			this.groupRemove.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -186,8 +190,8 @@ namespace PeMain.UI
 			// tableLayoutPanel1
 			// 
 			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
 			this.tableLayoutPanel1.Controls.Add(this.selectUserDefault, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.groupUpdate, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.groupRemove, 1, 1);
@@ -213,23 +217,43 @@ namespace PeMain.UI
 			// 
 			// groupUpdate
 			// 
+			this.groupUpdate.Controls.Add(this.envUpdate);
 			this.groupUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupUpdate.Location = new System.Drawing.Point(3, 33);
 			this.groupUpdate.Name = "groupUpdate";
-			this.groupUpdate.Size = new System.Drawing.Size(260, 139);
+			this.groupUpdate.Size = new System.Drawing.Size(339, 139);
 			this.groupUpdate.TabIndex = 1;
 			this.groupUpdate.TabStop = false;
 			this.groupUpdate.Text = "{INSERT/UPDATE}";
 			// 
+			// envUpdate
+			// 
+			this.envUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.envUpdate.Location = new System.Drawing.Point(3, 19);
+			this.envUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.envUpdate.Name = "envUpdate";
+			this.envUpdate.Size = new System.Drawing.Size(333, 117);
+			this.envUpdate.TabIndex = 0;
+			// 
 			// groupRemove
 			// 
+			this.groupRemove.Controls.Add(this.envRemove);
 			this.groupRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupRemove.Location = new System.Drawing.Point(269, 33);
+			this.groupRemove.Location = new System.Drawing.Point(348, 33);
 			this.groupRemove.Name = "groupRemove";
-			this.groupRemove.Size = new System.Drawing.Size(260, 139);
+			this.groupRemove.Size = new System.Drawing.Size(181, 139);
 			this.groupRemove.TabIndex = 2;
 			this.groupRemove.TabStop = false;
 			this.groupRemove.Text = "{REMOVE}";
+			// 
+			// envRemove
+			// 
+			this.envRemove.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.envRemove.Location = new System.Drawing.Point(3, 19);
+			this.envRemove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.envRemove.Name = "envRemove";
+			this.envRemove.Size = new System.Drawing.Size(175, 117);
+			this.envRemove.TabIndex = 0;
 			// 
 			// splitContainer1
 			// 
@@ -303,6 +327,8 @@ namespace PeMain.UI
 			this.pageBasic.PerformLayout();
 			this.pageEnv.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
+			this.groupUpdate.ResumeLayout(false);
+			this.groupRemove.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -311,6 +337,8 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private PeMain.UI.EnvRemoveControl envRemove;
+		private PeMain.UI.EnvUpdateControl envUpdate;
 		private System.Windows.Forms.GroupBox groupRemove;
 		private System.Windows.Forms.GroupBox groupUpdate;
 		private System.Windows.Forms.CheckBox selectUserDefault;

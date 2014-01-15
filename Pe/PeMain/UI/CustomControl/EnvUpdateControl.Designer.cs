@@ -36,24 +36,24 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.gridEnv = new System.Windows.Forms.DataGridView();
 			this.headerKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.headerValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridEnv)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// dataGridView1
+			// gridEnv
 			// 
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+			this.gridEnv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridEnv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
 									this.headerKey,
 									this.headerValue});
-			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.RowTemplate.Height = 21;
-			this.dataGridView1.Size = new System.Drawing.Size(150, 150);
-			this.dataGridView1.TabIndex = 0;
+			this.gridEnv.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridEnv.Location = new System.Drawing.Point(0, 0);
+			this.gridEnv.Name = "gridEnv";
+			this.gridEnv.RowTemplate.Height = 21;
+			this.gridEnv.Size = new System.Drawing.Size(150, 150);
+			this.gridEnv.TabIndex = 0;
 			// 
 			// headerKey
 			// 
@@ -69,13 +69,13 @@ namespace PeMain.UI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.dataGridView1);
+			this.Controls.Add(this.gridEnv);
 			this.Name = "EnvUpdateControl";
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridEnv)).EndInit();
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.DataGridViewTextBoxColumn headerValue;
 		private System.Windows.Forms.DataGridViewTextBoxColumn headerKey;
-		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.DataGridView gridEnv;
 	}
 }
