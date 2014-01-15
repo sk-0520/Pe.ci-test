@@ -48,23 +48,23 @@ namespace PeMain.UI
 			this.labelWorkDirPath = new System.Windows.Forms.Label();
 			this.labelOption = new System.Windows.Forms.Label();
 			this.pageEnv = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.selectUserDefault = new System.Windows.Forms.CheckBox();
+			this.groupUpdate = new System.Windows.Forms.GroupBox();
+			this.groupRemove = new System.Windows.Forms.GroupBox();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
-			this.selectUserDefault = new System.Windows.Forms.CheckBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.groupUpdate = new System.Windows.Forms.GroupBox();
-			this.groupRemove = new System.Windows.Forms.GroupBox();
 			this.tabExecute.SuspendLayout();
 			this.pageBasic.SuspendLayout();
 			this.pageEnv.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// viewCommand
@@ -183,6 +183,54 @@ namespace PeMain.UI
 			this.pageEnv.Text = "{ENV}";
 			this.pageEnv.UseVisualStyleBackColor = true;
 			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.Controls.Add(this.selectUserDefault, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.groupUpdate, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.groupRemove, 1, 1);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 175);
+			this.tableLayoutPanel1.TabIndex = 1;
+			// 
+			// selectUserDefault
+			// 
+			this.tableLayoutPanel1.SetColumnSpan(this.selectUserDefault, 2);
+			this.selectUserDefault.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectUserDefault.Location = new System.Drawing.Point(3, 3);
+			this.selectUserDefault.Name = "selectUserDefault";
+			this.selectUserDefault.Size = new System.Drawing.Size(526, 24);
+			this.selectUserDefault.TabIndex = 0;
+			this.selectUserDefault.Text = "{USER_DEFAULT}";
+			this.selectUserDefault.UseVisualStyleBackColor = true;
+			// 
+			// groupUpdate
+			// 
+			this.groupUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupUpdate.Location = new System.Drawing.Point(3, 33);
+			this.groupUpdate.Name = "groupUpdate";
+			this.groupUpdate.Size = new System.Drawing.Size(260, 139);
+			this.groupUpdate.TabIndex = 1;
+			this.groupUpdate.TabStop = false;
+			this.groupUpdate.Text = "{INSERT/UPDATE}";
+			// 
+			// groupRemove
+			// 
+			this.groupRemove.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupRemove.Location = new System.Drawing.Point(269, 33);
+			this.groupRemove.Name = "groupRemove";
+			this.groupRemove.Size = new System.Drawing.Size(260, 139);
+			this.groupRemove.TabIndex = 2;
+			this.groupRemove.TabStop = false;
+			this.groupRemove.Text = "{REMOVE}";
+			// 
 			// splitContainer1
 			// 
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -235,54 +283,6 @@ namespace PeMain.UI
 			this.commandSubmit.Text = "{OK}";
 			this.commandSubmit.UseVisualStyleBackColor = true;
 			// 
-			// selectUserDefault
-			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.selectUserDefault, 2);
-			this.selectUserDefault.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.selectUserDefault.Location = new System.Drawing.Point(3, 3);
-			this.selectUserDefault.Name = "selectUserDefault";
-			this.selectUserDefault.Size = new System.Drawing.Size(526, 24);
-			this.selectUserDefault.TabIndex = 0;
-			this.selectUserDefault.Text = "{USER_DEFAULT}";
-			this.selectUserDefault.UseVisualStyleBackColor = true;
-			// 
-			// tableLayoutPanel1
-			// 
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Controls.Add(this.selectUserDefault, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.groupUpdate, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.groupRemove, 1, 1);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 175);
-			this.tableLayoutPanel1.TabIndex = 1;
-			// 
-			// groupUpdate
-			// 
-			this.groupUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupUpdate.Location = new System.Drawing.Point(3, 33);
-			this.groupUpdate.Name = "groupUpdate";
-			this.groupUpdate.Size = new System.Drawing.Size(260, 139);
-			this.groupUpdate.TabIndex = 1;
-			this.groupUpdate.TabStop = false;
-			this.groupUpdate.Text = "{INSERT/UPDATE}";
-			// 
-			// groupRemove
-			// 
-			this.groupRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupRemove.Location = new System.Drawing.Point(269, 33);
-			this.groupRemove.Name = "groupRemove";
-			this.groupRemove.Size = new System.Drawing.Size(260, 139);
-			this.groupRemove.TabIndex = 2;
-			this.groupRemove.TabStop = false;
-			this.groupRemove.Text = "{REMOVE}";
-			// 
 			// ExecuteForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -302,13 +302,13 @@ namespace PeMain.UI
 			this.pageBasic.ResumeLayout(false);
 			this.pageBasic.PerformLayout();
 			this.pageEnv.ResumeLayout(false);
+			this.tableLayoutPanel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.GroupBox groupRemove;
