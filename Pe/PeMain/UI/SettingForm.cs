@@ -76,17 +76,17 @@ namespace PeMain.UI
 		
 		void CommandLauncherFilePath_Click(object sender, EventArgs e)
 		{
-			OpenDialogFilePath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogFilePath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherDirPath_Click(object sender, EventArgs e)
 		{
-			OpenDialogDirPath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogDirPath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherWorkDirPath_Click(object sender, EventArgs e)
 		{
-			OpenDialogDirPath(this.inputLauncherWorkDirPath);
+			DialogUtility.OpenDialogDirPath(this.inputLauncherWorkDirPath);
 		}
 		
 		void CommandLauncherIconPath_Click(object sender, EventArgs e)
@@ -96,12 +96,12 @@ namespace PeMain.UI
 		
 		void CommandLauncherOptionFilePath_Click(object sender, EventArgs e)
 		{
-			OpenDialogFilePath(this.inputLauncherOption);
+			DialogUtility.OpenDialogFilePath(this.inputLauncherOption);
 		}
 		
 		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
 		{
-			OpenDialogDirPath(this.inputLauncherOption);
+			DialogUtility.OpenDialogDirPath(this.inputLauncherOption);
 		}
 		
 		void CommandCommandFont_Click(object sender, EventArgs e)

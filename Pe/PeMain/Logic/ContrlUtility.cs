@@ -9,11 +9,44 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Navigation;
 
 namespace PeMain.Logic
 {
+	public static class DialogUtility
+	{
+		public static void OpenDialogFilePath(Control input)
+		{
+			var path = input.Text.Trim();
+			using(var dialog = new OpenFileDialog()) {
+				if(path.Length > 0 && File.Exists(path)) {
+					dialog.InitialDirectory = Path.GetDirectoryName(path);
+				}
+				
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					input.Text = dialog.FileName;
+				}
+			}
+		}
+		
+		public static void OpenDialogDirPath(Control input)
+		{
+			var path = input.Text.Trim();
+			using(var dialog = new FolderBrowserDialog()) {
+				dialog.ShowNewFolderButton = true;
+				
+				if(path.Length > 0 && Directory.Exists(path)) {
+					dialog.SelectedPath = path;
+				}
+				
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					input.Text = dialog.SelectedPath;
+				}
+			}
+		}
+	}
 	public static class TreeViewUtility
 	{
 		public static List<TreeNode> GetChildrenNodes(this TreeView treeView)

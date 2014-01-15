@@ -29,36 +29,6 @@ namespace PeMain.UI
 			control.Attachment(iconSizeList, defaultData);
 		}
 		
-		void OpenDialogFilePath(TextBox input)
-		{
-			var path = input.Text.Trim();
-			using(var dialog = new OpenFileDialog()) {
-				if(path.Length > 0 && File.Exists(path)) {
-					dialog.InitialDirectory = Path.GetDirectoryName(path);
-				}
-				
-				if(dialog.ShowDialog() == DialogResult.OK) {
-					input.Text = dialog.FileName;
-				}
-			}
-		}
-		
-		void OpenDialogDirPath(TextBox input)
-		{
-			var path = input.Text.Trim();
-			using(var dialog = new FolderBrowserDialog()) {
-				dialog.ShowNewFolderButton = true;
-				
-				if(path.Length > 0 && Directory.Exists(path)) {
-					dialog.SelectedPath = path;
-				}
-				
-				if(dialog.ShowDialog() == DialogResult.OK) {
-					input.Text = dialog.SelectedPath;
-				}
-			}
-		}
-		
 		void SetViewMessage(Control viewControl, FontSetting fontSetting)
 		{
 			string viewText = Language["common/font-view"];

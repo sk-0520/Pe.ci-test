@@ -9,8 +9,8 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeUtility;
 
@@ -36,6 +36,17 @@ namespace PeMain.UI
 			ApplyLanguage();
 			
 			Icon = LauncherItem.GetIcon(IconSize.Small);
+			
+			this.viewCommand.Text = LauncherItem.Command;
+			this.inputOption.Items.AddRange(LauncherItem.LauncherHistory.Options.ToArray());
+			this.inputOption.Text = LauncherItem.WorkDirPath;
+			this.inputWorkDirPath.Items.AddRange(LauncherItem.LauncherHistory.WorkDirs.ToArray());
+			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
+			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
+			
+			this.selectUserDefault.Checked = LauncherItem.EnvironmentSetting.UseDefault;
+			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.Key, pair => pair.Value));
+			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
 		}
 	}
 }

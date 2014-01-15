@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -25,6 +26,28 @@ namespace PeMain.UI
 			InitializeComponent();
 			
 			Initialize();
+		}
+		
+		void CommandOption_file_Click(object sender, EventArgs e)
+		{
+			DialogUtility.OpenDialogFilePath(this.inputOption);
+		}
+		
+		void CommandOption_dir_Click(object sender, EventArgs e)
+		{
+			DialogUtility.OpenDialogDirPath(this.inputOption);
+		}
+		
+		void CommandWorkDirPath_Click(object sender, EventArgs e)
+		{
+			DialogUtility.OpenDialogFilePath(this.inputWorkDirPath);
+		}
+		
+		void SelectUserDefault_CheckedChanged(object sender, EventArgs e)
+		{
+			var enabled = !this.selectUserDefault.Checked;
+			envUpdate.Enabled = enabled;
+			envRemove.Enabled = enabled;
 		}
 	}
 }
