@@ -49,5 +49,11 @@ namespace PeMain.UI
 			envUpdate.Enabled = enabled;
 			envRemove.Enabled = enabled;
 		}
+		
+		void CommandSubmit_Click(object sender, EventArgs e)
+		{
+			SubmitInput();
+			DialogResult = DialogResult.OK;
+		}
 	}
 }

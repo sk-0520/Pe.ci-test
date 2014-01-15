@@ -311,6 +311,7 @@ namespace PeMain.UI
 			this.commandSubmit.TabIndex = 0;
 			this.commandSubmit.Text = "{OK}";
 			this.commandSubmit.UseVisualStyleBackColor = true;
+			this.commandSubmit.Click += new System.EventHandler(this.CommandSubmit_Click);
 			// 
 			// ExecuteForm
 			// 

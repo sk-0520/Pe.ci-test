@@ -48,5 +48,19 @@ namespace PeMain.UI
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.Key, pair => pair.Value));
 			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
 		}
+		
+		void SubmitInput()
+		{
+			var item = (LauncherItem)LauncherItem.Clone();
+			item.Option = this.inputOption.Text;
+			item.WorkDirPath = this.inputWorkDirPath.Text;
+			item.StdOutputWatch = this.selectStdStream.Checked;
+			
+			item.EnvironmentSetting.UseDefault = this.selectUserDefault.Checked;
+			//item.EnvironmentSetting.Update = this.envUpdate
+			//item.EnvironmentSetting.Remove = this.envRemove
+			
+			EditedLauncherItem = item;
+		}
 	}
 }
