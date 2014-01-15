@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -32,10 +33,26 @@ namespace PeMain.UI
 			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
 			this._mainSetting = Initializer.GetMainSetting(mainSettingFilePath);
 			
+			// 言語
+			var langName = this._mainSetting.LanguageFileName;
 			var languageFileName = "default.xml";
+			if(!string.IsNullOrEmpty(langName)) {
+				if(!Path.HasExtension(langName)) {
+					languageFileName = Path.ChangeExtension(langName, "xml");
+				} else {
+					languageFileName = langName;
+				}
+			} else {
+				var a = CultureInfo.CurrentCulture;
+				languageFileName = Path.ChangeExtension(CultureInfo.CurrentCulture.Name, "xml");
+			}
 			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
 			initLog.Add(new LogItem(LogType.Information, "language", mainSettingFilePath));
 			this._language = Initializer.GetLanguage(languageFilePath);
+			if(this._language == null) {
+				initLog.Add(new LogItem(LogType.Warning, "not found language", languageFilePath));
+				this._language = new Language();
+			}
 		}
 		
 		void InitializeMessage(string[] args, List<LogItem> initLog)

@@ -144,6 +144,7 @@ namespace PeMain.UI
 				DockType = DockType.None;
 			}
 			ItemSizeToFormSize();
+			TopMost = ToolbarSetting.Topmost;
 			Visible = ToolbarSetting.Visible;
 		}
 		

@@ -363,7 +363,7 @@ namespace PeMain.Data
 			var process = new Process();
 			var startInfo = process.StartInfo;
 			startInfo.FileName = launcherItem.Command;
-			if(Path.GetExtension(launcherItem.Command).ToLower() == ".exe" && File.Exists(launcherItem.Command)) {
+			if(launcherItem.Exists) {
 				startInfo.UseShellExecute = false;
 				
 				startInfo.WorkingDirectory = launcherItem.WorkDirPath;
@@ -387,6 +387,7 @@ namespace PeMain.Data
 				startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
 				if(launcherItem.StdOutputWatch) {
 					startInfo.RedirectStandardOutput = true;
+					startInfo.RedirectStandardError = true;
 					var streamForm = new StreamForm();
 					streamForm.SetSettingData(language, process, launcherItem);
 					streamForm.Show();
@@ -397,6 +398,7 @@ namespace PeMain.Data
 			
 			if(launcherItem.StdOutputWatch) {
 				process.BeginOutputReadLine();
+				process.BeginErrorReadLine();
 			}
 		}
 		
