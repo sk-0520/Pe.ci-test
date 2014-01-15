@@ -134,6 +134,10 @@ namespace PeMain.Data
 		/// </summary>
 		public Size FloatSize { get; set; }
 		/// <summary>
+		/// フロート状態位置
+		/// </summary>
+		public Point FloatLocation { get; set; }
+		/// <summary>
 		/// デスクトップでのサイズ
 		/// </summary>
 		public Size DesktopSize { get; set; }

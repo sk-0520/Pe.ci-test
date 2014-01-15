@@ -40,7 +40,12 @@ namespace PI.Windows
 	
 	public enum HT
 	{
-		HT_CAPTION = 0x02,
+		HTNOWHERE = 0,
+		HTCAPTION = 0x02,
+		HTBORDER = 18,
+		HTBOTTOM = 15,
+		HTLEFT = 10,
+		HTRIGHT = 11,
 	}
 	
 	

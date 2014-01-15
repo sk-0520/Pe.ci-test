@@ -95,6 +95,9 @@ namespace PeMain.UI
 		
 		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
 		{
+			toolbarSetting.FloatLocation = this._toolbarLocation;
+			toolbarSetting.FloatSize = this._toolbarSize;
+			
 			toolbarSetting.ToolbarPosition = (ToolbarPosition)this.selectToolbarPosition.SelectedValue;
 			toolbarSetting.Topmost = this.selectToolbarTopmost.Checked;
 			toolbarSetting.AutoHide = this.selectToolbarAutoHide.Checked;

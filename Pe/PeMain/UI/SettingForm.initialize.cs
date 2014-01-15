@@ -53,6 +53,9 @@ namespace PeMain.UI
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
+			this._toolbarLocation = toolbarSetting.FloatLocation;
+			this._toolbarSize = toolbarSetting.FloatSize;
+			
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
 			this._toolbarFont = toolbarSetting.FontSetting;

@@ -143,8 +143,13 @@ namespace PeMain.UI
 				DockType = ToDockType(ToolbarSetting.ToolbarPosition);
 			} else {
 				DockType = DockType.None;
+				if(ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+					Location = ToolbarSetting.FloatLocation;
+				}
 			}
+			
 			ItemSizeToFormSize();
+			
 			TopMost = ToolbarSetting.Topmost;
 			Visible = ToolbarSetting.Visible;
 		}
@@ -154,7 +159,11 @@ namespace PeMain.UI
 		/// </summary>
 		void ItemSizeToFormSize()
 		{
-			// TODO: これから
+			var minSize = this.toolLauncher.Items[0].Bounds.Size;
+			minSize.Width += Padding.Horizontal;
+			minSize.Height += Padding.Vertical;
+			MinimumSize = minSize;
+			Size = new Size(ToolbarSetting.FloatSize.Width, 0);
 		}
 		
 		void SetToolButtons(IconSize iconSize, IEnumerable<ToolStripItem> buttons)
@@ -303,5 +312,6 @@ namespace PeMain.UI
 		}
 
 
+		
 	}
 }

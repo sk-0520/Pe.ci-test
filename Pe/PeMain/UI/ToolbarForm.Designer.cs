@@ -67,7 +67,10 @@ namespace PeMain.UI
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "ToolbarForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "ToolbarForm";
+			this.LocationChanged += new System.EventHandler(this.ToolbarForm_LocationChanged);
+			this.SizeChanged += new System.EventHandler(this.ToolbarForm_SizeChanged);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ToolbarForm_MouseDown);
 			this.ResumeLayout(false);

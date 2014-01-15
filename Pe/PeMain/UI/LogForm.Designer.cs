@@ -243,6 +243,7 @@ namespace PeMain.UI
 			this.MinimizeBox = false;
 			this.Name = "LogForm";
 			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "LogForm";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
 			this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);

@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using PeMain.Data;
 
@@ -27,6 +28,8 @@ namespace PeMain.UI
 		ImageList _imageToolbarItemGroup = null;
 		bool _launcherItemEvent = false;
 		
+		Point _toolbarLocation;
+		Size _toolbarSize;
 		
 	}
 }

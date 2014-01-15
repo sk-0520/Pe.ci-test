@@ -28,8 +28,8 @@ namespace PeMain
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
 		/// </summary>
-		public static readonly Size toolbarFloatSize = new Size(6, 1);
-		public static readonly Size toolbarDesktopSize = new Size(1, 1);
+		public static readonly Size toolbarFloatSize = new Size(SystemInformation.WorkingArea.Width / 10, 0);
+		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
 		
 		/// <summary>
