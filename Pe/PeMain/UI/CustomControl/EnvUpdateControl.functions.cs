@@ -24,6 +24,7 @@ namespace PeMain.UI
 		
 		void SetItem(Dictionary<string, string> map)
 		{
+			/*
 			this.gridEnv.Rows.Clear();
 			
 			var rowList = new List<DataGridViewRow>(map.Count);
@@ -34,6 +35,7 @@ namespace PeMain.UI
 			}
 			
 			this.gridEnv.Rows.AddRange(rowList.ToArray());
+			*/
 		}
 	}
 }
