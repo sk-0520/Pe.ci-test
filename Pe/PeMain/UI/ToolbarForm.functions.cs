@@ -100,8 +100,9 @@ namespace PeMain.UI
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
-			ToolbarSetting = mainSetting.Toolbar;
-			LauncherSetting = mainSetting.Launcher;
+			this._mainSetting = mainSetting;
+			//ToolbarSetting = mainSetting.Toolbar;
+			//LauncherSetting = mainSetting.Launcher;
 			
 			ApplySetting();
 		}
@@ -185,7 +186,7 @@ namespace PeMain.UI
 			var toolButtonList = new List<ToolStripItem>();
 			toolButtonList.Add(CreateLauncherButton(null));
 			foreach(var itemName in groupItem.ItemNames) {
-				var launcherItem = LauncherSetting.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+				var launcherItem = this._mainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 				if(launcherItem != null) {
 					var itemButton = CreateLauncherButton(launcherItem);
 					toolButtonList.Add(itemButton);
@@ -276,7 +277,7 @@ namespace PeMain.UI
 		{
 			try {
 				if(launcherItem.LauncherType == LauncherType.File) {
-					launcherItem.Execute(Logger, Language);
+					launcherItem.Execute(Logger, Language, this._mainSetting);
 					launcherItem.Increment();
 					return true;
 				}
@@ -290,7 +291,7 @@ namespace PeMain.UI
 		void ExecuteExItem(LauncherItem launcherItem)
 		{
 			using(var form = new ExecuteForm()) {
-				form.SetSettingData(Language, launcherItem);
+				form.SetSettingData(Language, this._mainSetting, launcherItem);
 				form.TopMost = TopMost;
 				if(form.ShowDialog() == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;

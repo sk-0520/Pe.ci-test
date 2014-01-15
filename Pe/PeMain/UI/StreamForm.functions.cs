@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using PeMain.Data;
@@ -16,9 +17,10 @@ namespace PeMain.UI
 {
 	public partial class StreamForm
 	{
-		public void SetSettingData(Language language, Process process, LauncherItem launcherItem)
+		public void SetSettingData(Language language, MainSetting mainSetting, Process process, LauncherItem launcherItem)
 		{
 			Language = language;
+			this._mainSetting = mainSetting;
 			Process = process;
 			LauncherItem = launcherItem;
 			
@@ -48,6 +50,12 @@ namespace PeMain.UI
 				}
 			);
 		}
-
+		
+		void RefreshProperty()
+		{
+			// TODO: ???
+			this.propertyProcess.SelectedObject = null;
+			this.propertyProcess.SelectedObject = Process;
+		}
 	}
 }

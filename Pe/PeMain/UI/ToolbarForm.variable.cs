@@ -18,5 +18,6 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		MainSetting _mainSetting;
 	}
 }

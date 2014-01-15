@@ -356,14 +356,14 @@ namespace PeMain.Data
 			return item;
 		}
 		
-		static void ExecuteFile(ILogger logger, Language language, LauncherItem launcherItem)
+		static void ExecuteFile(ILogger logger, Language language, MainSetting mainSetting, LauncherItem launcherItem)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
 			
 			var process = new Process();
 			var startInfo = process.StartInfo;
 			startInfo.FileName = launcherItem.Command;
-			if(launcherItem.Exists) {
+			if(launcherItem.IsExecteFile) {
 				startInfo.UseShellExecute = false;
 				
 				startInfo.WorkingDirectory = launcherItem.WorkDirPath;
@@ -389,7 +389,7 @@ namespace PeMain.Data
 					startInfo.RedirectStandardOutput = true;
 					startInfo.RedirectStandardError = true;
 					var streamForm = new StreamForm();
-					streamForm.SetSettingData(language, process, launcherItem);
+					streamForm.SetSettingData(language, mainSetting, process, launcherItem);
 					streamForm.Show();
 				}
 			}
@@ -402,10 +402,10 @@ namespace PeMain.Data
 			}
 		}
 		
-		public void Execute(ILogger logger, Language language)
+		public void Execute(ILogger logger, Language language, MainSetting mainSetting)
 		{
 			if(LauncherType == LauncherType.File) {
-				ExecuteFile(logger, language, this);
+				ExecuteFile(logger, language, mainSetting, this);
 			}
 		}
 		public void Increment(string workDirPath = null, string option = null)

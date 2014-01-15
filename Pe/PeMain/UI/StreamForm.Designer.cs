@@ -101,6 +101,7 @@ namespace PeMain.UI
 			this.toolStream_refresh.Name = "toolStream_refresh";
 			this.toolStream_refresh.Size = new System.Drawing.Size(23, 22);
 			this.toolStream_refresh.Text = "{REFRESH}";
+			this.toolStream_refresh.Click += new System.EventHandler(this.ToolStream_refresh_Click);
 			// 
 			// toolStream_kill
 			// 

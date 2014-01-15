@@ -17,6 +17,6 @@ namespace PeMain.UI
 	public partial class LogForm
 	{
 		Language Language { get; set; }
-		LogSetting LogSetting { get; set; }
+		LogSetting LogSetting { get { return this._mainSetting.Log; } }
 	}
 }

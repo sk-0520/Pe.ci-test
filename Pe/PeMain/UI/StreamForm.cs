@@ -38,5 +38,10 @@ namespace PeMain.UI
 			OutputStreamReceived(e.Data, true);
 		}
 		
+		
+		void ToolStream_refresh_Click(object sender, EventArgs e)
+		{
+			RefreshProperty();
+		}
 	}
 }

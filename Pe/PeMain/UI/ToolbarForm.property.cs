@@ -20,9 +20,8 @@ namespace PeMain.UI
 	{
 		public ILogger Logger { get; set; }
 		
-		public ToolbarSetting ToolbarSetting { get; private set; }
-		public Language Language { get; private set; }
-		public LauncherSetting LauncherSetting { get; private set; }
+		Language Language { get; set; }
+		ToolbarSetting ToolbarSetting { get { return this._mainSetting != null ? this._mainSetting.Toolbar: null; } }
 		
 		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 		

@@ -38,7 +38,8 @@ namespace PeMain.UI
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
-			LogSetting = mainSetting.Log;
+			this._mainSetting = mainSetting;
+			//LogSetting = mainSetting.Log;
 			
 			ApplySetting();
 		}
