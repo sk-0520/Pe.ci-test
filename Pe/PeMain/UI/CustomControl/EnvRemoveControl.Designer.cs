@@ -41,6 +41,7 @@ namespace PeMain.UI
 			// 
 			// viewEnv
 			// 
+			this.viewEnv.AcceptsReturn = true;
 			this.viewEnv.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.viewEnv.Location = new System.Drawing.Point(0, 0);
 			this.viewEnv.Multiline = true;

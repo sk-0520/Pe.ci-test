@@ -219,18 +219,22 @@ namespace PeMain.UI
 			result.Add(fileItem);
 			
 			// 通常実行
+			executeItem.Name = menuNameExecute;
 			executeItem.Text = Language["toolbar/menu/file/execute"];
 			executeItem.Click += (object sender, EventArgs e) => {
 				ExecuteItem(launcherItem);
 			};
 			// 指定実行
+			executeExItem.Name = menuNameExecuteEx;
 			executeExItem.Text = Language["toolbar/menu/file/execute-ex"];
 			executeExItem.Click += (object sender, EventArgs e) => {
 				ExecuteExItem(launcherItem);
 			};
 			// パス関係
+			pathItem.Name = menuNamePath;
 			pathItem.Text = Language["toolbar/menu/file/path"];
 			// ファイル一覧
+			fileItem.Name = menuNameFiles;
 			fileItem.Text = Language["toolbar/menu/file/ls"];
 			
 			return result.ToArray();
@@ -269,6 +273,16 @@ namespace PeMain.UI
 				toolItem.Tag = item;
 				if(item.LauncherType == LauncherType.File) {
 					toolItem.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
+					toolItem.DropDownOpening += (object sender, EventArgs e) => {
+						if(item.Exists) {
+							toolItem.DropDownItems[menuNameExecute].Enabled = true;
+							toolItem.DropDownItems[menuNameExecuteEx].Enabled = item.IsExecteFile;
+						} else {
+							toolItem.DropDownItems[menuNameExecute].Enabled = false;
+							toolItem.DropDownItems[menuNameExecuteEx].Enabled = false;
+							toolItem.DropDownItems[menuNameFiles].Enabled = false;
+						}
+					};
 				}
 			} else {
 				

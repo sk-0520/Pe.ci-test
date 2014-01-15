@@ -389,6 +389,7 @@ namespace PeMain.UI
 			// 
 			// inputLauncherNote
 			// 
+			this.inputLauncherNote.AcceptsReturn = true;
 			this.inputLauncherNote.Location = new System.Drawing.Point(119, 246);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";

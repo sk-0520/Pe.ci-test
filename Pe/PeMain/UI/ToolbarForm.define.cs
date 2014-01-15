@@ -19,6 +19,10 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		const string menuNameExecute = "exec";
+		const string menuNameExecuteEx = "ex";
+		const string menuNamePath = "path";
+		const string menuNameFiles = "ls";
 	}
 }
 
