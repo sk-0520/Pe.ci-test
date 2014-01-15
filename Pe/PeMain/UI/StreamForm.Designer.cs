@@ -39,8 +39,10 @@ namespace PeMain.UI
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StreamForm));
 			this.toolStream = new System.Windows.Forms.ToolStrip();
 			this.toolStream_save = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStream_clear = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStream_refresh = new System.Windows.Forms.ToolStripButton();
+			this.toolStream_kill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
 			this.pageStream = new System.Windows.Forms.TabPage();
 			this.viewOutput = new System.Windows.Forms.TextBox();
@@ -48,8 +50,6 @@ namespace PeMain.UI
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
 			this.pageProperty = new System.Windows.Forms.TabPage();
 			this.propertyProperty = new System.Windows.Forms.PropertyGrid();
-			this.toolStream_kill = new System.Windows.Forms.ToolStripButton();
-			this.toolStream_refresh = new System.Windows.Forms.ToolStripButton();
 			this.toolStream.SuspendLayout();
 			this.tabStream.SuspendLayout();
 			this.pageStream.SuspendLayout();
@@ -80,11 +80,6 @@ namespace PeMain.UI
 			this.toolStream_save.Size = new System.Drawing.Size(129, 22);
 			this.toolStream_save.Text = "{STREAM_SAVE}";
 			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
 			// toolStream_clear
 			// 
 			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
@@ -92,6 +87,30 @@ namespace PeMain.UI
 			this.toolStream_clear.Name = "toolStream_clear";
 			this.toolStream_clear.Size = new System.Drawing.Size(136, 22);
 			this.toolStream_clear.Text = "{STREAM_CLEAR}";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStream_refresh
+			// 
+			this.toolStream_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_refresh.Image = global::PeMain.Properties.Images.Refresh;
+			this.toolStream_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_refresh.Name = "toolStream_refresh";
+			this.toolStream_refresh.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_refresh.Text = "{REFRESH}";
+			// 
+			// toolStream_kill
+			// 
+			this.toolStream_kill.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStream_kill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_kill.Image = global::PeMain.Properties.Images.Kill;
+			this.toolStream_kill.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_kill.Name = "toolStream_kill";
+			this.toolStream_kill.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_kill.Text = "{KILL}";
 			// 
 			// tabStream
 			// 
@@ -134,7 +153,7 @@ namespace PeMain.UI
 			this.pageProcess.Controls.Add(this.propertyProcess);
 			this.pageProcess.Location = new System.Drawing.Point(4, 24);
 			this.pageProcess.Name = "pageProcess";
-			this.pageProcess.Size = new System.Drawing.Size(323, 211);
+			this.pageProcess.Size = new System.Drawing.Size(354, 211);
 			this.pageProcess.TabIndex = 1;
 			this.pageProcess.Text = "{PROCESS}";
 			this.pageProcess.UseVisualStyleBackColor = true;
@@ -144,7 +163,7 @@ namespace PeMain.UI
 			this.propertyProcess.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.propertyProcess.Location = new System.Drawing.Point(0, 0);
 			this.propertyProcess.Name = "propertyProcess";
-			this.propertyProcess.Size = new System.Drawing.Size(323, 211);
+			this.propertyProcess.Size = new System.Drawing.Size(354, 211);
 			this.propertyProcess.TabIndex = 0;
 			// 
 			// pageProperty
@@ -152,7 +171,7 @@ namespace PeMain.UI
 			this.pageProperty.Controls.Add(this.propertyProperty);
 			this.pageProperty.Location = new System.Drawing.Point(4, 24);
 			this.pageProperty.Name = "pageProperty";
-			this.pageProperty.Size = new System.Drawing.Size(323, 211);
+			this.pageProperty.Size = new System.Drawing.Size(354, 211);
 			this.pageProperty.TabIndex = 2;
 			this.pageProperty.Text = "{PROPERTY}";
 			this.pageProperty.UseVisualStyleBackColor = true;
@@ -162,27 +181,8 @@ namespace PeMain.UI
 			this.propertyProperty.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.propertyProperty.Location = new System.Drawing.Point(0, 0);
 			this.propertyProperty.Name = "propertyProperty";
-			this.propertyProperty.Size = new System.Drawing.Size(323, 211);
+			this.propertyProperty.Size = new System.Drawing.Size(354, 211);
 			this.propertyProperty.TabIndex = 1;
-			// 
-			// toolStream_kill
-			// 
-			this.toolStream_kill.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStream_kill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_kill.Image = global::PeMain.Properties.Images.Kill;
-			this.toolStream_kill.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_kill.Name = "toolStream_kill";
-			this.toolStream_kill.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_kill.Text = "{KILL}";
-			// 
-			// toolStream_refresh
-			// 
-			this.toolStream_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_refresh.Image = global::PeMain.Properties.Images.Refresh;
-			this.toolStream_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_refresh.Name = "toolStream_refresh";
-			this.toolStream_refresh.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_refresh.Text = "{REFRESH}";
 			// 
 			// StreamForm
 			// 
@@ -195,6 +195,9 @@ namespace PeMain.UI
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "StreamForm";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "{ITEM@STREAM}";
 			this.toolStream.ResumeLayout(false);
 			this.toolStream.PerformLayout();

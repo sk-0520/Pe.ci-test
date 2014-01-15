@@ -48,7 +48,6 @@ namespace PeMain.UI
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "AppbarForm";
-			this.TopMost = true;
 			this.ResumeLayout(false);
 		}
 	}

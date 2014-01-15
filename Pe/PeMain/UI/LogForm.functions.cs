@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 using PeMain.Data;
 
@@ -72,7 +73,15 @@ namespace PeMain.UI
 			listItem.SubItems.Add(lineItem);
 			listItem.SubItems.Add(funcItem);
 			
-			fileItem.Text = sf.GetFileName();
+			var filePath = sf.GetFileName();
+			var head = string.Join(Path.DirectorySeparatorChar.ToString(), "", "Pe", "Pe", "").ToUpper();
+			if(!string.IsNullOrEmpty(filePath)) {
+				var index = filePath.ToUpper().LastIndexOf(head);
+				Debug.Assert(0 <= index);
+				filePath = filePath.Substring(index);
+			}
+			
+			fileItem.Text = filePath;
 			lineItem.Text = string.Format("{0}:{1}", sf.GetFileLineNumber(), sf.GetFileColumnNumber());
 			var method = sf.GetMethod();
 			funcItem.Text = string.Format("{0}:{1}", method.ReflectedType, method.ToString());
