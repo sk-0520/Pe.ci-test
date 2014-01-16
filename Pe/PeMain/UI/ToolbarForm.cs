@@ -49,32 +49,6 @@ namespace PeMain.UI
 			DrawFull(e.Graphics, ClientRectangle, Form.ActiveForm == this);
 		}
 		
-		void ToolbarForm_MouseDown(object sender, MouseEventArgs e)
-		{
-			if(e.Button == MouseButtons.Left) {
-				// タイトルバーっぽければ移動させとく
-				if(ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-					var hitTest = HT.HTNOWHERE;
-					var captionArea = GetCaptionArea(ToolbarSetting.ToolbarPosition);
-					if(captionArea.Contains(e.Location)) {
-						hitTest = HT.HTCAPTION;
-					} else {
-						var leftArea = new Rectangle(0, 0, Padding.Left, Height);
-						var rightArea = new Rectangle(Width - Padding.Right, 0, Padding.Right, Height);
-						if(leftArea.Contains(e.Location)) {
-							hitTest = HT.HTLEFT;
-						} else if(rightArea.Contains(e.Location)) {
-							hitTest = HT.HTRIGHT;
-						}
-					}
-					if(hitTest != HT.HTNOWHERE) {
-						API.ReleaseCapture();
-						API.SendMessage(Handle, WM.WM_NCLBUTTONDOWN, (IntPtr)hitTest, IntPtr.Zero);
-					}
-				}
-			}
-		}
-		
 		void ToolbarForm_SizeChanged(object sender, EventArgs e)
 		{
 			if(ToolbarSetting != null && ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
