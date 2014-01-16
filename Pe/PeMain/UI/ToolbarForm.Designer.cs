@@ -72,7 +72,6 @@ namespace PeMain.UI
 			this.LocationChanged += new System.EventHandler(this.ToolbarForm_LocationChanged);
 			this.SizeChanged += new System.EventHandler(this.ToolbarForm_SizeChanged);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
-			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ToolbarForm_MouseDown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}

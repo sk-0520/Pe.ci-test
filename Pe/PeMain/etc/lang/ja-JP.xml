@@ -8,16 +8,31 @@
 		<Word Name="retry"    Text="再試行" />
 		<Word Name="exit"     Text="終了" />
 		<Word Name="open-ui"  Text="..." />
+		<Word Name="topmost"  Text="最前面表示" />
 	</Define>
 	<Words>
 		<Word Name="common/button/ok"         Text="${ok}" />
 		<Word Name="common/button/cancel"     Text="${cancel}" />
 		<Word Name="common/button/exit"       Text="${exit}" />
 		<Word Name="common/menu/exit"         Text="${exit}(&amp;X)" />
+		<Word Name="common/label/topmost"     Text="${topmost}" />
+		<Word Name="common/menu/topmost"      Text="${topmost}(&amp;T)" />
 		
 		<Word Name="main/menu/about"   Text="バージョン情報(&amp;A) ${open-ui}" />
 		<Word Name="main/menu/setting" Text="設定(&amp;S) ${open-ui}" />
 		
+		<Word Name="toolbar/menu/file/execute"    Text="実行" />
+		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行" />
+		<Word Name="toolbar/menu/file/path"       Text="パス" />
+		<Word Name="toolbar/menu/file/ls"         Text="ファイル" />
+		
+		<Word Name="toolbar/menu/file/path/open-parent-dir"  Text="親フォルダを開く" />
+		<Word Name="toolbar/menu/file/path/open-work-dir"    Text="作業フォルダを開く" />
+		<Word Name="toolbar/menu/file/path/copy-command"     Text="コマンドをコピー" />
+		<Word Name="toolbar/menu/file/path/copy-parent-dir"  Text="親フォルダパスをコピー" />
+		<Word Name="toolbar/menu/file/path/copy-work-dir"    Text="作業フォルダパスをコピー" />
+		<Word Name="toolbar/menu/file/path/property"         Text="プロパティ" />
+
 		<Word Name="setting/tab/main"     Text="本体" />
 		<Word Name="setting/tab/launcher" Text="ランチャ" />
 		<Word Name="setting/tab/toolbar"  Text="ツールバー" />

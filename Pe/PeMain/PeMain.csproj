@@ -287,6 +287,9 @@
     <Compile Include="UI\ToolbarForm.variable.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ToolbarForm.wndProc.cs">
+      <DependentUpon>ToolbarForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Images.resx">

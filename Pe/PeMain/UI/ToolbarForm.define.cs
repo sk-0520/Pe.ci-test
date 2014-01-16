@@ -19,10 +19,22 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
+		const string menuNameMainPosDesktopFloat = "desktop_float";
+		const string menuNameMainPosDesktopTop = "desktop_top";
+		const string menuNameMainPosDesktopBottom = "desktop_bottom";
+		const string menuNameMainTopmost = "topmost";
+			
 		const string menuNameExecute = "exec";
 		const string menuNameExecuteEx = "ex";
 		const string menuNamePath = "path";
 		const string menuNameFiles = "ls";
+		
+		const string menuNamePath_openParentDir = "open_parent_dir";
+		const string menuNamePath_openWorkDir = "open_work_dir";
+		const string menuNamePath_copyCommand = "copy_command";
+		const string menuNamePath_copyParentDir = "copy_parrent_dir";
+		const string menuNamePath_copyWorkDir = "copy_work_dir";
+		const string menuNamePath_property = "property";
 	}
 }
 

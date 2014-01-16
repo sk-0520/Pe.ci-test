@@ -22,6 +22,40 @@ namespace PeMain.UI
 			this.pageDisplay.Text = Language["setting/tab/display"];
 			this.pageNote.Text = Language["setting/tab/note"];
 		}
+		
+		void ApplyLanguageMain()
+		{
+			
+		}
+		
+		void ApplyLanguageCommand()
+		{
+			this.selectCommandTopmost.Text = Language["common/label/topmost"];
+		}
+		
+		void ApplyLanguageLauncher()
+		{
+			this.selecterLauncher.SetLanguage(Language);
+			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
+			
+		}
+		
+		void ApplyLanguageToolbar()
+		{
+			this.selecterToolbar.SetLanguage(Language);
+			
+		}
+		
+		void ApplyLanguageDisplay()
+		{
+			
+		}
+		
+		void ApplyLanguageNote()
+		{
+			
+		}
+		
 		void ApplyLanguage()
 		{
 			Debug.Assert(Language != null);
@@ -29,10 +63,14 @@ namespace PeMain.UI
 			this.commandSubmit.Text= Language["common/button/ok"];
 			this.commandCancel.Text = Language["common/button/cancel"];
 			
-			this.selecterLauncher.SetLanguage(Language);
-			this.selecterToolbar.SetLanguage(Language);
 			
 			ApplyLanguageTab();
+			ApplyLanguageMain();
+			ApplyLanguageCommand();
+			ApplyLanguageLauncher();
+			ApplyLanguageToolbar();
+			ApplyLanguageDisplay();
+			ApplyLanguageNote();
 		}
 	}
 }

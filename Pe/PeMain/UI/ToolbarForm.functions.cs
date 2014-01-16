@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PeMain.Logic;
@@ -204,6 +205,72 @@ namespace PeMain.UI
 			SetToolButtons(ToolbarSetting.IconSize, toolButtonList);
 		}
 		
+		void OpenDir(string path)
+		{
+			try {
+				Process.Start(path);
+			} catch(Exception ex) {
+				Logger.Puts(LogType.Warning, ex.Message, ex);
+			}
+		}
+		
+		void CopyText(string text)
+		{
+			Clipboard.SetText(text);
+		}
+		
+		void OpenProperty(string path)
+		{
+			Logger.Puts(LogType.Information, "P/Iから取ってくるのだるいんで後回し", path);
+		}
+		
+		ToolStripItem[] CreateFileLauncherMenuPathItems(LauncherItem launcherItem)
+		{
+			var result = new List<ToolStripItem>();
+			
+			var openParentDirItem = new ToolStripMenuItem();
+			var openWorkDirItem = new ToolStripMenuItem();
+			var copyCommandItem = new ToolStripMenuItem();
+			var copyParentDirItem = new ToolStripMenuItem();
+			var copyWorkDirItem = new ToolStripMenuItem();
+			var propertyItem = new ToolStripMenuItem();
+			result.Add(openParentDirItem);
+			result.Add(openWorkDirItem);
+			result.Add(new ToolStripSeparator());
+			result.Add(copyCommandItem);
+			result.Add(copyParentDirItem);
+			result.Add(copyWorkDirItem);
+			result.Add(new ToolStripSeparator());
+			result.Add(propertyItem);
+			
+			// 親ディレクトリを開く
+			openParentDirItem.Name = menuNamePath_openParentDir;
+			openParentDirItem.Text = Language["toolbar/menu/file/path/open-parent-dir"];
+			openParentDirItem.Click += (object sender, EventArgs e) => { OpenDir(Path.GetDirectoryName(launcherItem.Command)); };
+			// 作業ディレクトリを開く
+			openWorkDirItem.Name = menuNamePath_openWorkDir;
+			openWorkDirItem.Text = Language["toolbar/menu/file/path/open-work-dir"];
+			openWorkDirItem.Click += (object sender, EventArgs e) => { OpenDir(Path.GetDirectoryName(launcherItem.WorkDirPath)); };
+			// コマンドコピー
+			copyCommandItem.Name = menuNamePath_copyCommand;
+			copyCommandItem.Text = Language["toolbar/menu/file/path/copy-command"];
+			copyCommandItem.Click += (object sender, EventArgs e) => { CopyText(launcherItem.Command); };
+			// 親ディレクトリをコピー
+			copyParentDirItem.Name = menuNamePath_copyParentDir;
+			copyParentDirItem.Text = Language["toolbar/menu/file/path/copy-parent-dir"];
+			copyParentDirItem.Click += (object sender, EventArgs e) => { CopyText(Path.GetDirectoryName(launcherItem.Command)); };
+			// 作業ディレクトリをコピー
+			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
+			copyWorkDirItem.Text = Language["toolbar/menu/file/path/copy-work-dir"];
+			copyWorkDirItem.Click += (object sender, EventArgs e) => { CopyText(launcherItem.WorkDirPath); };
+			// プロパティ
+			propertyItem.Name = menuNamePath_property;
+			propertyItem.Text = Language["toolbar/menu/file/path/property"];
+			propertyItem.Click += (object sender, EventArgs e) => { OpenProperty(launcherItem.Command); };
+			
+			return result.ToArray();
+		}
+		
 		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem launcherItem)
 		{
 			var result = new List<ToolStripItem>();
@@ -233,9 +300,57 @@ namespace PeMain.UI
 			// パス関係
 			pathItem.Name = menuNamePath;
 			pathItem.Text = Language["toolbar/menu/file/path"];
+			pathItem.DropDownItems.AddRange(CreateFileLauncherMenuPathItems(launcherItem));
+			pathItem.DropDownOpening += (object sender, EventArgs e) => {
+				// コマンド有無
+				var commandEnabled = launcherItem.Exists;
+				pathItem.DropDownItems[menuNamePath_copyCommand].Enabled = commandEnabled;
+				pathItem.DropDownItems[menuNamePath_property].Enabled = commandEnabled;
+				// 親ディレクトリ有無
+				var parentDirPath = Path.GetDirectoryName(launcherItem.Command);
+				Debug.WriteLine(Path.GetPathRoot(parentDirPath) );
+				Debug.WriteLine(parentDirPath);
+				var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
+				pathItem.DropDownItems[menuNamePath_openParentDir].Enabled = parentDirEnabled;
+				pathItem.DropDownItems[menuNamePath_copyParentDir].Enabled = parentDirEnabled;
+				// 作業ディレクトリ有無
+				var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(launcherItem.WorkDirPath);
+				pathItem.DropDownItems[menuNamePath_openWorkDir].Enabled = workDirEnabled;
+				pathItem.DropDownItems[menuNamePath_copyWorkDir].Enabled = workDirEnabled;
+			};
 			// ファイル一覧
 			fileItem.Name = menuNameFiles;
 			fileItem.Text = Language["toolbar/menu/file/ls"];
+			
+			return result.ToArray();
+		}
+		
+		ToolStripItem[] CreateToolbarMenu()
+		{
+			var result = new List<ToolStripItem>();
+			
+			var posFloatItem = new ToolStripMenuItem();
+			var posTopItem = new ToolStripMenuItem();
+			var posBottomItem = new ToolStripMenuItem();
+			var topmostItem = new ToolStripMenuItem();
+			result.Add(posFloatItem);
+			result.Add(posTopItem);
+			result.Add(posBottomItem);
+			result.Add(new ToolStripSeparator());
+			result.Add(topmostItem);
+			
+			// フロート
+			posFloatItem.Name = menuNameMainPosDesktopFloat;
+			posFloatItem.Text = ToolbarPosition.DesktopFloat.ToText(Language);
+			// デスクトップ：上
+			posTopItem.Name = menuNameMainPosDesktopTop;
+			posTopItem.Text = ToolbarPosition.DesktopTop.ToText(Language);
+			// デスクトップ：下
+			posBottomItem.Name = menuNameMainPosDesktopBottom;
+			posBottomItem.Text = ToolbarPosition.DesktopBottom.ToText(Language);
+			// 最前面表示
+			topmostItem.Name = menuNameMainTopmost;
+			topmostItem.Text = Language["common/menu/topmost"];
 			
 			return result.ToArray();
 		}
@@ -285,7 +400,7 @@ namespace PeMain.UI
 					};
 				}
 			} else {
-				
+				toolItem.DropDownItems.AddRange(CreateToolbarMenu());
 			}
 			if(item != null) {
 				var clickItem = (ToolStripSplitButton)toolItem;

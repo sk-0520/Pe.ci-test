@@ -27,7 +27,6 @@ namespace PeMain.UI
 							(int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16)
 						)
 					);
-					Debug.WriteLine(point);
 					var padding = Padding;
 
 					var hitTest = HT.HTNOWHERE;
