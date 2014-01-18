@@ -34,6 +34,7 @@ namespace PeMain.UI
 				if(ToolbarSetting != null) {
 					pos = ToolbarSetting.ToolbarPosition;
 				}
+				
 				SetPaddingArea(pos);
 				base.DockType = value;
 			}
