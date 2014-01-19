@@ -108,7 +108,7 @@ namespace PeMain.UI
 			ApplySetting();
 		}
 		
-		void ApplySettingTopMost()
+		void ApplySettingTopmost()
 		{
 			TopMost = ToolbarSetting.Topmost;
 		}
@@ -126,6 +126,11 @@ namespace PeMain.UI
 					}
 				}
 			}
+		}
+		
+		void ApplySettingVisible()
+		{
+			Visible = ToolbarSetting.Visible;
 		}
 		
 		void ApplySetting()
@@ -159,8 +164,8 @@ namespace PeMain.UI
 			
 			// 表示
 			ApplySettingPosition();
-			ApplySettingTopMost();
-			Visible = ToolbarSetting.Visible;
+			ApplySettingTopmost();
+			ApplySettingVisible();
 		}
 		
 		/// <summary>
@@ -172,13 +177,13 @@ namespace PeMain.UI
 			minSize.Width += Padding.Horizontal;
 			minSize.Height += Padding.Vertical;
 			MinimumSize = minSize;
-			Size = new Size(ToolbarSetting.FloatSize.Width, 0);
+			if(IsHorizonMode(ToolbarSetting.ToolbarPosition)) {
+				Size = new Size(ToolbarSetting.FloatSize.Width, 0);
+			} else {
+				Size = new Size(0, ToolbarSetting.FloatSize.Height);
+			}
 			if(IsDockingMode) {
-				if(IsHorizonMode(ToolbarSetting.ToolbarPosition)) {
-					BarSize = new Size(BarSize.Width, Size.Height);
-				} else {
-					BarSize = new Size(Size.Width, BarSize.Height);
-				}
+				BarSize = new Size(BarSize.Width, Size.Height);
 			}
 		}
 		
@@ -376,12 +381,13 @@ namespace PeMain.UI
 				ToolbarSetting.ToolbarPosition = ToolbarPosition.DesktopBottom;
 				ApplySettingPosition();
 			};
+			// TODO: 左右は現状怪しいので処理しない
 			// 最前面表示
 			topmostItem.Name = menuNameMainTopmost;
 			topmostItem.Text = Language["common/menu/topmost"];
 			topmostItem.Click += (object sender, EventArgs e) => {
 				ToolbarSetting.Topmost = !topmostItem.Checked;
-				ApplySettingTopMost();
+				ApplySettingTopmost();
 			};
 			
 			return result.ToArray();
@@ -439,10 +445,14 @@ namespace PeMain.UI
 						{menuNameMainPosDesktopFloat,  ToolbarPosition.DesktopFloat},
 						{menuNameMainPosDesktopTop,    ToolbarPosition.DesktopTop},
 						{menuNameMainPosDesktopBottom, ToolbarPosition.DesktopBottom},
+						{menuNameMainPosDesktopLeft,   ToolbarPosition.DesktopLeft},
+						{menuNameMainPosDesktopRight,  ToolbarPosition.DesktopRight},
 					};
 					foreach(var pair in windowPosNameKey) {
 						var menu = (ToolStripMenuItem)(toolItem.DropDownItems[pair.Key]);
-						menu.Checked = ToolbarSetting.ToolbarPosition == pair.Value;
+						if(menu != null) {
+							menu.Checked = ToolbarSetting.ToolbarPosition == pair.Value;
+						}
 					}
 					
 					// 最前面表示

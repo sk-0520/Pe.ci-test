@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -38,6 +39,13 @@ namespace PeMain.UI
 				}
 				
 				SetPaddingArea(pos);
+				if(this.toolLauncher != null) {
+					if(IsHorizonMode(pos)) {
+						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.HorizontalStackWithOverflow;
+					} else {
+						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.VerticalStackWithOverflow;
+					}
+				}
 				base.DockType = value;
 			}
 		}

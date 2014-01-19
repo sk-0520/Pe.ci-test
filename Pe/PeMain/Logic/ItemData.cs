@@ -70,6 +70,7 @@ namespace PeMain.Logic
 		{
 			control.DataSource = itemDatas;
 			SetValueAndDisplay(control);
+			control.SelectedValue = defaultData;
 		}
 		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas)
 		{

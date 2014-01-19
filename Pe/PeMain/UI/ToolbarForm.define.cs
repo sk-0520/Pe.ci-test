@@ -23,6 +23,8 @@ namespace PeMain.UI
 		const string menuNameMainPosDesktopFloat = "desktop_float";
 		const string menuNameMainPosDesktopTop = "desktop_top";
 		const string menuNameMainPosDesktopBottom = "desktop_bottom";
+		const string menuNameMainPosDesktopLeft = "desktop_left";
+		const string menuNameMainPosDesktopRight = "desktop_right";
 		const string menuNameMainTopmost = "topmost";
 			
 		const string menuNameExecute = "exec";
