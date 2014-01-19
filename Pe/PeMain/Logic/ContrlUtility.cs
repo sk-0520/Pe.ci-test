@@ -10,14 +10,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Navigation;
+using PeUtility;
 
 namespace PeMain.Logic
 {
 	public static class DialogUtility
 	{
-		public static void OpenDialogFilePath(Control input)
+		public static void OpenDialogFilePath(Control input, bool whitespaceIsQuotation = true)
 		{
 			var path = input.Text.Trim();
 			using(var dialog = new OpenFileDialog()) {
@@ -26,7 +28,11 @@ namespace PeMain.Logic
 				}
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
-					input.Text = dialog.FileName;
+					var filePath = dialog.FileName;
+					if(whitespaceIsQuotation) {
+						filePath = (new []{filePath}).WhitespaceToQuotation().First();
+					}
+					input.Text = filePath;
 				}
 			}
 		}

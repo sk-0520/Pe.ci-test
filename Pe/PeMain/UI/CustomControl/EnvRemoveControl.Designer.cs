@@ -36,28 +36,28 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.viewEnv = new System.Windows.Forms.TextBox();
+			this.inputEnv = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
-			// viewEnv
+			// inputEnv
 			// 
-			this.viewEnv.AcceptsReturn = true;
-			this.viewEnv.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewEnv.Location = new System.Drawing.Point(0, 0);
-			this.viewEnv.Multiline = true;
-			this.viewEnv.Name = "viewEnv";
-			this.viewEnv.Size = new System.Drawing.Size(150, 150);
-			this.viewEnv.TabIndex = 0;
+			this.inputEnv.AcceptsReturn = true;
+			this.inputEnv.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputEnv.Location = new System.Drawing.Point(0, 0);
+			this.inputEnv.Multiline = true;
+			this.inputEnv.Name = "inputEnv";
+			this.inputEnv.Size = new System.Drawing.Size(150, 150);
+			this.inputEnv.TabIndex = 0;
 			// 
 			// EnvRemoveControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.viewEnv);
+			this.Controls.Add(this.inputEnv);
 			this.Name = "EnvRemoveControl";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.TextBox viewEnv;
+		private System.Windows.Forms.TextBox inputEnv;
 	}
 }

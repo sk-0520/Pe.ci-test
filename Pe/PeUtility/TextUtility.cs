@@ -8,7 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace PeUtility
 {
@@ -62,6 +65,29 @@ namespace PeUtility
 		public static string ReplaceRangeFromDictionary(this string src, string head, string tail, Dictionary<string, string> map)
 		{
 			return src.ReplaceRange(head, tail, s => map.ContainsKey(s) ? map[s]: head + s + tail);
+		}
+		
+		public static IEnumerable<string> WhitespaceToQuotation(this IEnumerable<string> seq)
+		{
+			foreach(var s in seq) {
+				string element = null;
+				if(s.Any(c => char.IsWhiteSpace(c))) {
+					element = "\"" + s + "\"";
+				} else {
+					element = s;
+				}
+				yield return element;
+			}
+		}
+		
+		public static IEnumerable<string> SplitLines(this string lines)
+		{
+			using(var stream = new StringReader(lines)) {
+				string line = null;
+				while ((line = stream.ReadLine()) != null) {
+					yield return line;
+				}
+			}
 		}
 	}
 }

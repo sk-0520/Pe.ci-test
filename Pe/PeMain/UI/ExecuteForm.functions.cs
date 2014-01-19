@@ -57,9 +57,10 @@ namespace PeMain.UI
 			item.StdOutputWatch = this.selectStdStream.Checked;
 			
 			item.EnvironmentSetting.UseDefault = this.selectUserDefault.Checked;
-			//item.EnvironmentSetting.Update = this.envUpdate
-			//item.EnvironmentSetting.Remove = this.envRemove
-			
+			if(item.EnvironmentSetting.UseDefault) {
+				item.EnvironmentSetting.Update = this.envUpdate.Items.ToList();
+				item.EnvironmentSetting.Remove = this.envRemove.Items.ToList();
+			}
 			EditedLauncherItem = item;
 		}
 	}

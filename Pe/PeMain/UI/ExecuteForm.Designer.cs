@@ -327,6 +327,7 @@ namespace PeMain.UI
 			this.MinimizeBox = false;
 			this.Name = "ExecuteForm";
 			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "ExecuteForm";
 			this.tabExecute.ResumeLayout(false);
 			this.pageBasic.ResumeLayout(false);
