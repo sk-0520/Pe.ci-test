@@ -103,8 +103,8 @@ namespace PeMain.Data
 			ToolbarPosition = ToolbarPosition.DesktopFloat;
 			IconSize = IconSize.Small;
 			ShowText = false;
-			Visible = false;
-			Topmost = false;
+			Visible = true;
+			Topmost = true;
 			AutoHide = false;
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;

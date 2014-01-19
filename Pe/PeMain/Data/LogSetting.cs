@@ -24,7 +24,8 @@ namespace PeMain.Data
 				Screen.PrimaryScreen.Bounds.Width / 4,
 				Screen.PrimaryScreen.Bounds.Height / 2
 			);
-			Point = new Point(0, 0);
+			var screenSize = Screen.PrimaryScreen.WorkingArea.Size;
+			Point = new Point(screenSize.Width - Size.Width, screenSize.Height - Size.Height);
 			AddShow = true;
 		}
 		

@@ -48,6 +48,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncher
 			// 
+			this.toolLauncher.AllowDrop = true;
 			this.toolLauncher.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolLauncher.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncher.Name = "toolLauncher";
@@ -55,6 +56,9 @@ namespace PeMain.UI
 			this.toolLauncher.Size = new System.Drawing.Size(180, 25);
 			this.toolLauncher.TabIndex = 1;
 			this.toolLauncher.Text = "toolStrip1";
+			this.toolLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragDrop);
+			this.toolLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragEnter);
+			this.toolLauncher.DragOver += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragOver);
 			// 
 			// ToolbarForm
 			// 

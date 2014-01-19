@@ -7,9 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-
+using PeMain.Data;
 using PeUtility;
 
 namespace PeMain.UI
@@ -35,6 +36,13 @@ namespace PeMain.UI
 		const string menuNamePath_copyParentDir = "copy_parrent_dir";
 		const string menuNamePath_copyWorkDir = "copy_work_dir";
 		const string menuNamePath_property = "property";
+		
+		struct DropData
+		{
+			public ToolStripItem ToolStripItem { get; set; }
+			public LauncherItem LauncherItem  { get; set; }
+			public IEnumerable<string> Files { get; set; }
+		}
 	}
 }
 

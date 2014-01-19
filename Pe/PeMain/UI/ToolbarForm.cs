@@ -61,5 +61,20 @@ namespace PeMain.UI
 				ToolbarSetting.FloatLocation = Location;
 			}
 		}
+		
+		void ToolLauncherDragEnter(object sender, DragEventArgs e)
+		{
+			ProcessDropEffect(e);
+		}
+		
+		void ToolLauncherDragOver(object sender, DragEventArgs e)
+		{
+			ProcessDropEffect(e);
+		}
+		
+		void ToolLauncherDragDrop(object sender, DragEventArgs e)
+		{
+			
+		}
 	}
 }

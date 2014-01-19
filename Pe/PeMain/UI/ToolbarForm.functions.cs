@@ -485,8 +485,49 @@ namespace PeMain.UI
 				}
 			}
 		}
-
-
 		
+		ToolStripItem GetOverButton(Point localPoint)
+		{
+			ToolStripItem overItem = null;
+			foreach(ToolStripItem toolItem in this.toolLauncher.Items) {
+				Debug.WriteLine(toolItem.Bounds);
+				if(toolItem.Bounds.Contains(localPoint.X, localPoint.Y)) {
+					overItem = toolItem; 
+					break;
+				}
+			}
+			
+			return overItem;
+		}
+
+		DropData ProcessDropEffect(DragEventArgs e)
+		{
+			var result = new DropData();
+			var localPoint = this.toolLauncher.PointToClient(new Point(e.X, e.Y));
+			
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				result.Files = (string[])e.Data.GetData(DataFormats.FileDrop, false); 
+				result.ToolStripItem = GetOverButton(localPoint);
+				if(result.ToolStripItem != null) {
+					result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
+				}
+				Debug.WriteLine(result.ToolStripItem);
+				
+				if(result.ToolStripItem != null) {
+					e.Effect = DragDropEffects.Move;
+				} else {
+					if(result.Files.Count() == 1) {
+						e.Effect = DragDropEffects.Copy;
+					} else {
+						e.Effect = DragDropEffects.None;
+					}
+				}
+			} else {
+				e.Effect = DragDropEffects.None;
+			}
+			
+			return result;
+		}
+
 	}
 }
