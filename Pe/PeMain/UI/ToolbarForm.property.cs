@@ -23,6 +23,8 @@ namespace PeMain.UI
 		Language Language { get; set; }
 		ToolbarSetting ToolbarSetting { get { return this._mainSetting != null ? this._mainSetting.Toolbar: null; } }
 		
+		ToolbarGroupItem SelectedGroupItem { get; set; }
+		
 		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 		
 		override public DockType DockType

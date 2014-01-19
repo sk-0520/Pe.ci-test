@@ -40,7 +40,7 @@ namespace PeMain.UI
 		
 		void CommandWorkDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputWorkDirPath);
+			DialogUtility.OpenDialogDirPath(this.inputWorkDirPath);
 		}
 		
 		void SelectUserDefault_CheckedChanged(object sender, EventArgs e)

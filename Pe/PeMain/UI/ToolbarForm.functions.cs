@@ -204,6 +204,7 @@ namespace PeMain.UI
 				.Transform(item => item.Checked = false)
 				.Single(item => (ToolbarGroupItem)item.Tag == groupItem)
 			;
+			SelectedGroupItem = groupItem;
 			
 			toolItem.Checked = true;
 			
@@ -511,7 +512,6 @@ namespace PeMain.UI
 				if(result.ToolStripItem != null) {
 					result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
 				}
-				Debug.WriteLine(result.ToolStripItem);
 				
 				if(result.ToolStripItem != null) {
 					e.Effect = DragDropEffects.Move;
@@ -528,6 +528,22 @@ namespace PeMain.UI
 			
 			return result;
 		}
+		
+		void ExecuteDropData(DropData dropData)
+		{
+			if(dropData.ToolStripItem != null) {
+				// ボタン上
+			} else {
+				// 追加
+				Debug.Assert(dropData.Files.Count() == 1);
+				var item = LauncherItem.FileLoad(dropData.Files.First());
+				item.Name = LauncherItem.GetUniqueName(item, this._mainSetting.Launcher.Items);
+				this._mainSetting.Launcher.Items.Add(item);
+				SelectedGroupItem.ItemNames.Add(item.Name);
+				SelectedGroup(SelectedGroupItem);
+			}
+		}
+		
 
 	}
 }

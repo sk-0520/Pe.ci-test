@@ -133,7 +133,7 @@ namespace PeMain.UI
 		void LauncherAddFile(string filePath)
 		{
 			var item = LauncherItem.FileLoad(filePath, false);
-			var uniqueName = item.Name.ToUnique(this.selecterLauncher.Items.Select(i => i.Name));
+			var uniqueName = LauncherItem.GetUniqueName(item, this.selecterLauncher.Items);
 			item.Name = uniqueName;
 			this.selecterLauncher.AddItem(item);
 		}

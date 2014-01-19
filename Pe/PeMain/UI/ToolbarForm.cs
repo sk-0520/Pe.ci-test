@@ -74,7 +74,8 @@ namespace PeMain.UI
 		
 		void ToolLauncherDragDrop(object sender, DragEventArgs e)
 		{
-			
+			var dropData = ProcessDropEffect(e);
+			ExecuteDropData(dropData);
 		}
 	}
 }

@@ -356,6 +356,11 @@ namespace PeMain.Data
 			return item;
 		}
 		
+		static public string GetUniqueName(LauncherItem item, IEnumerable<LauncherItem> seq)
+		{
+			return item.Name.ToUnique(seq.Select(i => i.Name));
+		}
+		
 		static void ExecuteFile(ILogger logger, Language language, MainSetting mainSetting, LauncherItem launcherItem)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
