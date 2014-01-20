@@ -179,10 +179,22 @@ namespace PeMain.Data
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
+		public bool IsExtExcec
+		{
+			get
+			{
+				if(LauncherType != LauncherType.File) {
+					return false;
+				}
+				
+				return Path.GetExtension(Command).ToLower() == ".exe";
+			}
+		}
+		
 		/// <summary>
 		/// 存在するか
 		/// </summary>
-		public bool Exists
+		public bool IsExists
 		{
 			get
 			{
@@ -201,7 +213,7 @@ namespace PeMain.Data
 		{
 			get
 			{
-				if(Exists) {
+				if(IsExtExcec && IsExists) {
 					return Path.GetExtension(Command).ToLower() == ".exe";
 				}
 				return false;
@@ -211,7 +223,7 @@ namespace PeMain.Data
 		{
 			get
 			{
-				if(Exists) {
+				if(IsExists) {
 					return !IsExecteFile;
 				}
 				return false;
