@@ -324,7 +324,7 @@ namespace PeMain.UI
 			pathItem.DropDownItems.AddRange(CreateFileLauncherMenuPathItems(launcherItem));
 			pathItem.DropDownOpening += (object sender, EventArgs e) => {
 				// コマンド有無
-				var commandEnabled = launcherItem.Exists;
+				var commandEnabled = launcherItem.IsExists;
 				pathItem.DropDownItems[menuNamePath_copyCommand].Enabled = commandEnabled;
 				pathItem.DropDownItems[menuNamePath_property].Enabled = commandEnabled;
 				// 親ディレクトリ有無
@@ -427,7 +427,7 @@ namespace PeMain.UI
 				if(item.LauncherType == LauncherType.File) {
 					toolItem.DropDownItems.AddRange(CreateFileLauncherMenuItems(item));
 					toolItem.DropDownOpening += (object sender, EventArgs e) => {
-						if(item.Exists) {
+						if(item.IsExists) {
 							toolItem.DropDownItems[menuNameExecute].Enabled = true;
 							toolItem.DropDownItems[menuNameExecuteEx].Enabled = item.IsExecteFile;
 						} else {
@@ -524,7 +524,11 @@ namespace PeMain.UI
 				}
 				
 				if(result.ToolStripItem != null) {
-					e.Effect = DragDropEffects.Move;
+					if(result.LauncherItem.IsExtExcec && result.LauncherItem.IsExecteFile) {
+						e.Effect = DragDropEffects.Move;
+					} else {
+						e.Effect = DragDropEffects.None;
+					}
 				} else {
 					if(result.Files.Count() == 1) {
 						e.Effect = DragDropEffects.Copy;
