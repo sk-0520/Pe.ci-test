@@ -23,7 +23,7 @@ namespace PeMain
 		/// </summary>
 		private const string dirRootName = "Pe";
 		
-		public const string mainSettingFileName = "setting.xml";
+		public const string mainSettingFileName = "mainsetting.xml";
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -72,7 +72,12 @@ namespace PeMain
 		{
 			get 
 			{
-				return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), dirRootName);
+#if DEBUG
+				var path = Path.Combine(@"Z:\");
+#else
+				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), dirRootName);
+#endif
+				return path;
 			}
 		}
 		/// <summary>
@@ -80,7 +85,8 @@ namespace PeMain
 		/// </summary>
 		public static string UserMainSettingPath
 		{
-			get {
+			get 
+			{
 				return Path.Combine(UserSettingDirPath, mainSettingFileName);
 			}
 		}

@@ -28,8 +28,7 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void InitializeSetting(string[] args, List<LogItem> initLog)
 		{
-			//var mainSettingPath = Literal.UserMainSettingPath;
-			var mainSettingFilePath = @"Z:mainsetting.xml";
+			var mainSettingFilePath = Literal.UserMainSettingPath;
 			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
 			this._mainSetting = Initializer.GetMainSetting(mainSettingFilePath);
 			
