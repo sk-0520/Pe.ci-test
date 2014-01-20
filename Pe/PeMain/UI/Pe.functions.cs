@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeMain.Data;
 
 namespace PeMain.UI
 {
@@ -22,6 +23,11 @@ namespace PeMain.UI
 		void PauseOthers(Action action)
 		{
 			action();
+		}
+		
+		void SaveMainSetting(MainSetting mainSetting, string mainSettingPath)
+		{
+			// TODO:
 		}
 	}
 }
