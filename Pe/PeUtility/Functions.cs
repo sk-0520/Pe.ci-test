@@ -115,25 +115,6 @@ namespace PeUtility
 		}
 
 		/// <summary>
-		/// ファイルをバイナリとして読み込む
-		/// </summary>
-		/// <param name="filePath">展開済みファイルパス</param>
-		/// <param name="startIndex">読み出し位置</param>
-		/// <param name="readLength">読み出しサイズ</param>
-		/// <returns></returns>
-		public static byte[] FileToBinary(string filePath, int startIndex, int readLength)
-		{
-			byte[] buffer;
-
-			using (var stream = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read))) {
-				buffer = new byte[readLength];
-				stream.Read(buffer, startIndex, readLength);
-			}
-
-			return buffer;
-		}
-		
-		/// <summary>
 		/// 集合の処理
 		/// </summary>
 		/// <param name="seq"></param>

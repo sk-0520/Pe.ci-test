@@ -7,7 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+
 using PeMain.Data;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -25,9 +31,28 @@ namespace PeMain.UI
 			action();
 		}
 		
+		void SaveSetting()
+		{
+			var mainSettingFilePath = Literal.UserMainSettingPath;
+			SaveMainSetting(this._mainSetting, mainSettingFilePath);
+		}
+		
 		void SaveMainSetting(MainSetting mainSetting, string mainSettingPath)
 		{
-			// TODO:
+			Debug.Assert(mainSetting != null);
+			FileUtility.MakeFileParentDirectory(mainSettingPath);
+
+			var serializer = new XmlSerializer(typeof(MainSetting));
+			using(var stream = new FileStream(mainSettingPath, FileMode.Create)) {
+				serializer.Serialize(stream, mainSetting);
+			}
 		}
+		
+		void CloseApplication(bool save)
+		{
+			SaveSetting();
+			Application.Exit();
+		}
+		
 	}
 }

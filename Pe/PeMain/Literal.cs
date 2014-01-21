@@ -73,7 +73,7 @@ namespace PeMain
 			get 
 			{
 #if DEBUG
-				var path = Path.Combine(@"Z:\");
+				var path = Path.Combine(@"Z:\", Environment.ExpandEnvironmentVariables("%USERNAME%"));
 #else
 				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), dirRootName);
 #endif

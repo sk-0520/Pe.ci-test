@@ -39,7 +39,7 @@ namespace PeMain.UI
 		
 		private void menuExitClick(object sender, EventArgs e)
 		{
-			Application.Exit();
+			CloseApplication(true);
 		}
 		
 		private void IconDoubleClick(object sender, EventArgs e)
