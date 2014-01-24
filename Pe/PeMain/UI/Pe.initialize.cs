@@ -68,6 +68,24 @@ namespace PeMain.UI
 			this._messageWindow = new MessageWindow(this);
 		}
 		
+		MenuItem[] CreateWindowMenu()
+		{
+			var menuList = new List<MenuItem>();
+			var itemToolbar = new MenuItem();
+			var itemLogger = new MenuItem();
+			
+			menuList.Add(itemToolbar);
+			menuList.Add(itemLogger);
+			
+			itemToolbar.Text = this._language["main/menu/window/toolbar"];
+			itemToolbar.Name = menuNameWindowToolbar;
+			
+			itemLogger.Text = this._language["main/menu/window/logger"];
+			itemLogger.Name = menuNameWindowLogger;
+			
+			return menuList.ToArray();
+		}
+		
 		/// <summary>
 		/// 本体メニュー初期化
 		/// </summary>
@@ -75,11 +93,18 @@ namespace PeMain.UI
 		private MenuItem[] InitializeMenu()
 		{
 			var menuList = new List<MenuItem>();
+			var itemWindow = new MenuItem();
 			var itemSetting = new MenuItem();
 			var itemExit = new MenuItem();
 			
+			menuList.Add(itemWindow);
 			menuList.Add(itemSetting);
 			menuList.Add(itemExit);
+			
+			// ウィンドウ
+			itemWindow.Text = this._language["main/menu/window"];
+			itemWindow.Name = menuNameWindow;
+			itemWindow.MenuItems.AddRange(CreateWindowMenu());
 			
 			// 設定
 			itemSetting.Text = this._language["main/menu/setting"];
