@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="FileUtility.cs" />
     <Compile Include="Functions.cs" />
+    <Compile Include="HotkeyControl.cs" />
     <Compile Include="IconUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextUtility.cs" />

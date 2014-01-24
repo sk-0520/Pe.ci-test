@@ -73,6 +73,7 @@ namespace PeMain.UI
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.inputCommandHotkey = new PeUtility.HotKeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
@@ -516,6 +517,7 @@ namespace PeMain.UI
 			// 
 			// pageCommand
 			// 
+			this.pageCommand.Controls.Add(this.inputCommandHotkey);
 			this.pageCommand.Controls.Add(this.labelCommandIcon);
 			this.pageCommand.Controls.Add(this.selectCommandIcon);
 			this.pageCommand.Controls.Add(this.inputCommandHideTime);
@@ -530,6 +532,18 @@ namespace PeMain.UI
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
+			// 
+			// inputCommandHotkey
+			// 
+			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
+			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputCommandHotkey.Location = new System.Drawing.Point(348, 110);
+			this.inputCommandHotkey.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputCommandHotkey.Name = "inputCommandHotkey";
+			this.inputCommandHotkey.ReadOnly = true;
+			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 27);
+			this.inputCommandHotkey.TabIndex = 15;
+			this.inputCommandHotkey.Text = "";
 			// 
 			// labelCommandIcon
 			// 
@@ -957,6 +971,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private PeUtility.HotKeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;
 		private System.Windows.Forms.CheckBox selectLogVisible;
 		private System.Windows.Forms.GroupBox groupMainLog;
