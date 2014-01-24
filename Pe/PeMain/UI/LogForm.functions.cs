@@ -28,7 +28,7 @@ namespace PeMain.UI
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 			
-			if(LogSetting.AddShow && !Visible) {
+			if(MainSetting.Log.AddShow && !Visible) {
 				Visible = true;
 			}
 			
@@ -39,7 +39,7 @@ namespace PeMain.UI
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
-			this._mainSetting = mainSetting;
+			this.MainSetting = mainSetting;
 			//LogSetting = mainSetting.Log;
 			
 			ApplySetting();
@@ -49,7 +49,7 @@ namespace PeMain.UI
 		
 		void ApplySetting()
 		{
-			Debug.Assert(LogSetting != null);
+			Debug.Assert(MainSetting != null);
 			
 			ApplyLanguage();
 		}

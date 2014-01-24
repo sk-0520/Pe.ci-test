@@ -387,7 +387,7 @@ namespace PeMain.Data
 				startInfo.Arguments = launcherItem.Option;
 				
 				// 環境変数
-				if(!launcherItem.EnvironmentSetting.UseDefault) {
+				if(launcherItem.EnvironmentSetting.EditEnvironment) {
 					var env = startInfo.EnvironmentVariables;
 					// 追加・更新
 					foreach(var pair in launcherItem.EnvironmentSetting.Update) {

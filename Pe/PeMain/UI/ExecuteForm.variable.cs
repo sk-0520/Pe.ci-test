@@ -13,6 +13,5 @@ namespace PeMain.UI
 {
 	public partial class ExecuteForm
 	{
-		MainSetting _mainSetting;
 	}
 }

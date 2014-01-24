@@ -19,7 +19,7 @@ namespace PeMain.UI
 	{
 		protected override void WndProc(ref Message m)
 		{
-			if(ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+			if(MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				if(m.Msg == (int)WM.WM_NCHITTEST) {
 					var point = PointToClient(
 						new Point(
@@ -30,7 +30,7 @@ namespace PeMain.UI
 					var padding = Padding;
 
 					var hitTest = HT.HTNOWHERE;
-					var captionArea = GetCaptionArea(ToolbarSetting.ToolbarPosition);
+					var captionArea = GetCaptionArea(MainSetting.Toolbar.ToolbarPosition);
 					if(captionArea.Contains(point)) {
 						hitTest = HT.HTCAPTION;
 					} else {

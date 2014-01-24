@@ -20,7 +20,7 @@ namespace PeMain.UI
 		public void SetSettingData(Language language, MainSetting mainSetting, Process process, LauncherItem launcherItem)
 		{
 			Language = language;
-			this._mainSetting = mainSetting;
+			this.MainSetting = mainSetting;
 			Process = process;
 			LauncherItem = launcherItem;
 			

@@ -22,11 +22,12 @@ namespace PeMain.Data
 	{
 		public EnvironmentSetting()
 		{
-			UseDefault = true;
+			EditEnvironment = false;
 			Update = new List<KeyValuePair<string, string>>();
 			Remove = new List<string>();
 		}
-		public bool UseDefault { get; set; }
+		
+		public bool EditEnvironment { get; set; }
 		/// <summary>
 		/// 追加・変更対象
 		/// </summary>

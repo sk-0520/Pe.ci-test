@@ -21,7 +21,7 @@ namespace PeMain.UI
 		public void SetSettingData(Language language, MainSetting mainSetting, LauncherItem launcherItem)
 		{
 			Language = language;
-			this._mainSetting = mainSetting;
+			this.MainSetting = mainSetting;
 			LauncherItem = launcherItem;
 			
 			ApplySetting();
@@ -44,7 +44,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
 			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
 			
-			this.selectUserDefault.Checked = LauncherItem.EnvironmentSetting.UseDefault;
+			this.selectEnvironment.Checked = !LauncherItem.EnvironmentSetting.EditEnvironment;
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.Key, pair => pair.Value));
 			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
 		}
@@ -56,8 +56,8 @@ namespace PeMain.UI
 			item.WorkDirPath = this.inputWorkDirPath.Text;
 			item.StdOutputWatch = this.selectStdStream.Checked;
 			
-			item.EnvironmentSetting.UseDefault = this.selectUserDefault.Checked;
-			if(item.EnvironmentSetting.UseDefault) {
+			item.EnvironmentSetting.EditEnvironment = !this.selectEnvironment.Checked;
+			if(item.EnvironmentSetting.EditEnvironment) {
 				item.EnvironmentSetting.Update = this.envUpdate.Items.ToList();
 				item.EnvironmentSetting.Remove = this.envRemove.Items.ToList();
 			}

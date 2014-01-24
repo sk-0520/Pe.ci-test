@@ -20,6 +20,5 @@ namespace PeMain.UI
 	{
 		List<LogItem> _logs = new List<LogItem>();
 		ImageList _imageLogType = null;
-		MainSetting _mainSetting;
 	}
 }

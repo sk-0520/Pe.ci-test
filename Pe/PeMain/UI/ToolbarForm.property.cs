@@ -22,11 +22,12 @@ namespace PeMain.UI
 		public ILogger Logger { get; set; }
 		
 		Language Language { get; set; }
-		ToolbarSetting ToolbarSetting { get { return this._mainSetting != null ? this._mainSetting.Toolbar: null; } }
+		
+		MainSetting MainSetting { get; set; }
 		
 		ToolbarGroupItem SelectedGroupItem { get; set; }
 		
-		public bool IsDockingMode { get { return ToolbarSetting.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
+		public bool IsDockingMode { get { return MainSetting.Toolbar.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 		
 		override public DockType DockType
 		{
@@ -34,8 +35,8 @@ namespace PeMain.UI
 			set 
 			{
 				var pos = ToolbarPosition.DesktopFloat;
-				if(ToolbarSetting != null) {
-					pos = ToolbarSetting.ToolbarPosition;
+				if(MainSetting != null) {
+					pos = MainSetting.Toolbar.ToolbarPosition;
 				}
 				
 				SetPaddingArea(pos);

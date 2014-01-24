@@ -18,7 +18,8 @@ namespace PeMain.UI
 	{
 		Language Language { get; set; }
 		LauncherItem LauncherItem { get; set;}
-		
+		MainSetting MainSetting { get; set; }
+
 		public LauncherItem EditedLauncherItem { get; private set; }
 	}
 }

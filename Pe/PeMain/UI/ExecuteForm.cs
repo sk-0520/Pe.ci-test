@@ -45,7 +45,7 @@ namespace PeMain.UI
 		
 		void SelectUserDefault_CheckedChanged(object sender, EventArgs e)
 		{
-			var enabled = !this.selectUserDefault.Checked;
+			var enabled = !this.selectEnvironment.Checked;
 			envUpdate.Enabled = enabled;
 			envRemove.Enabled = enabled;
 		}

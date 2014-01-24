@@ -40,8 +40,8 @@ namespace PeMain.UI
 		void DrawFull(Graphics g, Rectangle drawArea, bool active)
 		{
 			DrawEdge(g, drawArea, active);
-			var captionArea = GetCaptionArea(ToolbarSetting.ToolbarPosition);
-			DrawCaption(g, captionArea, active, IsHorizonMode(ToolbarSetting.ToolbarPosition));
+			var captionArea = GetCaptionArea(MainSetting.Toolbar.ToolbarPosition);
+			DrawCaption(g, captionArea, active, IsHorizonMode(MainSetting.Toolbar.ToolbarPosition));
 		}
 	}
 }

@@ -147,6 +147,7 @@ namespace PeMain.UI
 			InitializeSetting(args, initLog);
 			InitializeMessage(args, initLog);
 			InitializeUI(args, initLog);
+			
 		}
 	}
 }

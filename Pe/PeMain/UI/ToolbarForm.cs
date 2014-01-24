@@ -51,14 +51,14 @@ namespace PeMain.UI
 		
 		void ToolbarForm_SizeChanged(object sender, EventArgs e)
 		{
-			if(ToolbarSetting != null && ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-				ToolbarSetting.FloatSize = Size;
+			if(MainSetting != null && MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+				MainSetting.Toolbar.FloatSize = Size;
 			}
 		}
 		void ToolbarForm_LocationChanged(object sender, EventArgs e)
 		{
-			if(ToolbarSetting != null && ToolbarSetting.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-				ToolbarSetting.FloatLocation = Location;
+			if(MainSetting != null && MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+				MainSetting.Toolbar.FloatLocation = Location;
 			}
 		}
 		

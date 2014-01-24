@@ -17,6 +17,7 @@ namespace PeMain.UI
 	public partial class StreamForm
 	{
 		Language Language { get; set; }
+		MainSetting MainSetting { get; set; }
 		Process Process { get; set;}
 		LauncherItem LauncherItem { get; set;}
 	}
