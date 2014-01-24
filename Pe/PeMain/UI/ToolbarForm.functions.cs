@@ -472,7 +472,7 @@ namespace PeMain.UI
 		{
 			try {
 				if(launcherItem.LauncherType == LauncherType.File) {
-					launcherItem.Execute(Logger, Language, this.MainSetting);
+					launcherItem.Execute(Logger, Language, this.MainSetting, this);
 					launcherItem.Increment();
 					return true;
 				}
@@ -488,7 +488,7 @@ namespace PeMain.UI
 			using(var form = new ExecuteForm()) {
 				form.SetSettingData(Language, this.MainSetting, launcherItem);
 				form.TopMost = TopMost;
-				if(form.ShowDialog() == DialogResult.OK) {
+				if(form.ShowDialog(this) == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;
 					if(ExecuteItem(editedItem)) {
 						launcherItem.Increment(editedItem.WorkDirPath, editedItem.Option);

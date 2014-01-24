@@ -40,7 +40,6 @@ namespace PeMain.UI
 		{
 			Language = language;
 			this.MainSetting = mainSetting;
-			//LogSetting = mainSetting.Log;
 			
 			ApplySetting();
 		}

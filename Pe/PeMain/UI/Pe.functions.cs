@@ -7,11 +7,11 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-
 using PeMain.Data;
 using PeUtility;
 
@@ -22,13 +22,36 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
+		IEnumerable<Form> GetWindows()
+		{
+			var result = new List<Form>();
+			result.Add(this._toolbarForm);
+			result.Add(this._logForm);
+			
+			if(this._toolbarForm.OwnedForms.Length > 0) {
+				result.AddRange(this._toolbarForm.OwnedForms);
+			}
+			
+				
+			return result;
+		}
 		/// <summary>
 		/// TODO: 未実装
 		/// </summary>
 		/// <param name="action"></param>
 		void PauseOthers(Action action)
 		{
+			var windowVisible = new Dictionary<Form, bool>();
+			foreach(var window in GetWindows()) {
+				windowVisible[window] = window.Visible;
+				window.Visible = false;
+			}
+			
 			action();
+			
+			foreach(var pair in windowVisible) {
+				pair.Key.Visible = pair.Value;
+			}
 		}
 		
 		void SaveSetting()

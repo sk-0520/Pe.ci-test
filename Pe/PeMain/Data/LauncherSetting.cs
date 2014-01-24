@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 using PeMain.Logic;
@@ -373,7 +374,7 @@ namespace PeMain.Data
 			return item.Name.ToUnique(seq.Select(i => i.Name));
 		}
 		
-		static void ExecuteFile(ILogger logger, Language language, MainSetting mainSetting, LauncherItem launcherItem)
+		static void ExecuteFile(ILogger logger, Language language, MainSetting mainSetting, LauncherItem launcherItem, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
 			
@@ -407,7 +408,7 @@ namespace PeMain.Data
 					startInfo.RedirectStandardError = true;
 					var streamForm = new StreamForm();
 					streamForm.SetSettingData(language, mainSetting, process, launcherItem);
-					streamForm.Show();
+					streamForm.Show(parentForm);
 				}
 			}
 			
@@ -419,10 +420,10 @@ namespace PeMain.Data
 			}
 		}
 		
-		public void Execute(ILogger logger, Language language, MainSetting mainSetting)
+		public void Execute(ILogger logger, Language language, MainSetting mainSetting, Form parentForm)
 		{
 			if(LauncherType == LauncherType.File) {
-				ExecuteFile(logger, language, mainSetting, this);
+				ExecuteFile(logger, language, mainSetting, this, parentForm);
 			}
 		}
 		public void Increment(string workDirPath = null, string option = null)
