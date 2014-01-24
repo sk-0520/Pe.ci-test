@@ -54,5 +54,17 @@ namespace PeMain.UI
 			Application.Exit();
 		}
 		
+		void OpenSetting()
+		{
+			using(var settingForm = new SettingForm(this._language, this._mainSetting)) {
+				if(settingForm.ShowDialog() == DialogResult.OK) {
+					var mainSetting = settingForm.MainSetting;
+					this._mainSetting = mainSetting;
+					InitializeLanguage(null, null);
+					this._logForm.SetSettingData(this._language, this._mainSetting);
+					this._toolbarForm.SetSettingData(this._language, this._mainSetting);
+				}
+			}
+		}
 	}
 }

@@ -32,16 +32,6 @@ namespace PeMain.UI
 			}
 		}
 		
-		private void menuAboutClick(object sender, EventArgs e)
-		{
-			MessageBox.Show("About This Application");
-		}
-		
-		private void menuExitClick(object sender, EventArgs e)
-		{
-			CloseApplication(true);
-		}
-		
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
 			MessageBox.Show("The icon was double clicked");

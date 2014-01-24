@@ -44,7 +44,8 @@ namespace PeMain.UI
 			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
 			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
 			
-			this.selectEnvironment.Checked = !LauncherItem.EnvironmentSetting.EditEnvironment;
+			this.selectEnvironment.Checked = !this.selectEnvironment.Checked;
+			this.selectEnvironment.Checked = LauncherItem.EnvironmentSetting.EditEnvironment;
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.Key, pair => pair.Value));
 			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
 		}
@@ -56,7 +57,7 @@ namespace PeMain.UI
 			item.WorkDirPath = this.inputWorkDirPath.Text;
 			item.StdOutputWatch = this.selectStdStream.Checked;
 			
-			item.EnvironmentSetting.EditEnvironment = !this.selectEnvironment.Checked;
+			item.EnvironmentSetting.EditEnvironment = this.selectEnvironment.Checked;
 			if(item.EnvironmentSetting.EditEnvironment) {
 				item.EnvironmentSetting.Update = this.envUpdate.Items.ToList();
 				item.EnvironmentSetting.Remove = this.envRemove.Items.ToList();

@@ -22,16 +22,8 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
-		/// <summary>
-		/// 設定ファイル初期化
-		/// </summary>
-		/// <param name="args"></param>
-		void InitializeSetting(string[] args, List<LogItem> initLog)
+		void InitializeLanguage(string[] args, List<LogItem> initLog)
 		{
-			var mainSettingFilePath = Literal.UserMainSettingPath;
-			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
-			this._mainSetting = Initializer.GetMainSetting(mainSettingFilePath);
-			
 			// 言語
 			var langName = this._mainSetting.LanguageFileName;
 			var languageFileName = "default.xml";
@@ -46,12 +38,29 @@ namespace PeMain.UI
 				languageFileName = Path.ChangeExtension(CultureInfo.CurrentCulture.Name, "xml");
 			}
 			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
-			initLog.Add(new LogItem(LogType.Information, "language", mainSettingFilePath));
+			if(initLog != null) {
+				initLog.Add(new LogItem(LogType.Information, "language", languageFilePath));
+			}
 			this._language = Initializer.GetLanguage(languageFilePath);
 			if(this._language == null) {
-				initLog.Add(new LogItem(LogType.Warning, "not found language", languageFilePath));
+				if(initLog != null) {
+					initLog.Add(new LogItem(LogType.Warning, "not found language", languageFilePath));
+				}
 				this._language = new Language();
 			}
+		}
+		
+		/// <summary>
+		/// 設定ファイル初期化
+		/// </summary>
+		/// <param name="args"></param>
+		void InitializeSetting(string[] args, List<LogItem> initLog)
+		{
+			var mainSettingFilePath = Literal.UserMainSettingPath;
+			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
+			this._mainSetting = Initializer.GetMainSetting(mainSettingFilePath);
+			
+			InitializeLanguage(args, initLog);
 		}
 		
 		void InitializeMessage(string[] args, List<LogItem> initLog)
@@ -65,23 +74,28 @@ namespace PeMain.UI
 		/// <returns></returns>
 		private MenuItem[] InitializeMenu()
 		{
-			MenuItem[] menu = new MenuItem[] {
-				new MenuItem("About", menuAboutClick),
-				new MenuItem(this._language["main/menu/setting"], (object sender, EventArgs e) => {
-				             	var f = new SettingForm(this._language, this._mainSetting);
-				             	PauseOthers(() => {
-				             	            	if(f.ShowDialog() == DialogResult.OK) {
-				             	            		using(var stream = new FileStream(@"Z:mainsetting.xml", FileMode.Create)) {
-				             	            			var serializer = new XmlSerializer(typeof(MainSetting));
-				             	            			serializer.Serialize(stream, f.MainSetting);
-				             	            		}
-				             	            	}
-				             	            }
-				             	           );
-				}),
-				new MenuItem(this._language["common/menu/exit"], menuExitClick),
+			var menuList = new List<MenuItem>();
+			var itemSetting = new MenuItem();
+			var itemExit = new MenuItem();
+			
+			menuList.Add(itemSetting);
+			menuList.Add(itemExit);
+			
+			// 設定
+			itemSetting.Text = this._language["main/menu/setting"];
+			itemSetting.Name = menuNameSetting;
+			itemSetting.Click += (object sender, EventArgs e) => {
+				PauseOthers(() => OpenSetting());
 			};
-			return menu;
+			
+			// 終了
+			itemExit.Text = this._language["common/menu/exit"];
+			itemExit.Name = menuNameExit;
+			itemExit.Click += (object sender, EventArgs e) => {
+				CloseApplication(true);
+			};
+
+			return menuList.ToArray();;
 		}
 		
 		/// <summary>
