@@ -407,7 +407,10 @@ namespace PeMain.UI
 				toolItem = new ToolStripSplitButton();
 				toolItem.Text = item.Name;
 				toolItem.ToolTipText = item.Name;
-				toolItem.Image = item.GetIcon(MainSetting.Toolbar.IconSize).ToBitmap();
+				var icon = item.GetIcon(MainSetting.Toolbar.IconSize);
+				if(icon != null) {
+					toolItem.Image = icon.ToBitmap();
+				}
 			}
 			toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
 			toolItem.AutoSize = true;

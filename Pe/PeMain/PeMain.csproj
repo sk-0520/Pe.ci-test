@@ -355,5 +355,8 @@
     <Folder Include="Logic" />
     <Folder Include="UI\CustomControl" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ProfilingSessions\Session20140125_163151.sdps" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
