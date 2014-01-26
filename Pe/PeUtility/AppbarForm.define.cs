@@ -12,7 +12,7 @@ using PI.Windows;
 
 namespace PeMain.UI
 {
-	public enum DockType
+	public enum DesktopDockType
 	{
 		None,
 		Left,
@@ -21,30 +21,30 @@ namespace PeMain.UI
 		Bottom,
 	}
 	
-	public static class DockTypeConverter
+	public static class DesktopDockTypeConverter
 	{
-		public static ABE ToABE(this DockType type)
+		public static ABE ToABE(this DesktopDockType type)
 		{
 			switch(type) {
-				case DockType.Left: return ABE.ABE_LEFT;
-				case DockType.Top: return ABE.ABE_TOP;
-				case DockType.Bottom: return ABE.ABE_BOTTOM;
-				case DockType.Right: return ABE.ABE_RIGHT;
+				case DesktopDockType.Left: return ABE.ABE_LEFT;
+				case DesktopDockType.Top: return ABE.ABE_TOP;
+				case DesktopDockType.Bottom: return ABE.ABE_BOTTOM;
+				case DesktopDockType.Right: return ABE.ABE_RIGHT;
 				default:
 					Debug.Assert(false, type.ToString());
 					return ABE.ABE_LEFT; // dummy
 			}
 		}
-		public static DockType ToDockType(this ABE abe)
+		public static DesktopDockType ToDockType(this ABE abe)
 		{
 			switch(abe) {
-				case ABE.ABE_LEFT: return DockType.Left;
-				case ABE.ABE_TOP: return DockType.Top;
-				case ABE.ABE_RIGHT: return DockType.Right;
-				case ABE.ABE_BOTTOM: return DockType.Bottom;
+				case ABE.ABE_LEFT: return DesktopDockType.Left;
+				case ABE.ABE_TOP: return DesktopDockType.Top;
+				case ABE.ABE_RIGHT: return DesktopDockType.Right;
+				case ABE.ABE_BOTTOM: return DesktopDockType.Bottom;
 				default:
 					Debug.Assert(false, abe.ToString());
-					return DockType.None; // dummy
+					return DesktopDockType.None; // dummy
 			}
 		}
 	}

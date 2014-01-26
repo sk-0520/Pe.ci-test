@@ -21,7 +21,8 @@ namespace PeMain.UI
 		/// <summary>
 		/// ドッキングタイプ
 		/// </summary>
-		public virtual DockType DockType { 
+		public virtual DesktopDockType DesktopDockType
+		{
 			get
 			{
 				return this._dockType;

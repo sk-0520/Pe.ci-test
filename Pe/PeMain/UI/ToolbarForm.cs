@@ -77,5 +77,28 @@ namespace PeMain.UI
 			var dropData = ProcessDropEffect(e);
 			ExecuteDropData(dropData);
 		}
+		
+		void ToolbarFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(e.CloseReason == CloseReason.UserClosing) {
+				e.Cancel = true;
+				Visible = false;
+			}
+		}
+		
+		void ToolbarFormVisibleChanged(object sender, EventArgs e)
+		{
+			if(MainSetting == null) {
+				return;
+			}
+			
+			var visible = Visible;
+			if(visible) {
+				DesktopDockType = this._prevDesktopDockType;
+			} else {
+				_prevDesktopDockType = DesktopDockType;
+				DesktopDockType = DesktopDockType.None;
+			}
+		}
 	}
 }

@@ -25,22 +25,22 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
-		static ToolbarPosition ToToolbarPosition(DockType value)
+		static ToolbarPosition ToToolbarPosition(DesktopDockType value)
 		{
-			return new Dictionary<DockType, ToolbarPosition>() {
-				{ DockType.Left,   ToolbarPosition.DesktopLeft },
-				{ DockType.Top,    ToolbarPosition.DesktopTop },
-				{ DockType.Right,  ToolbarPosition.DesktopRight },
-				{ DockType.Bottom, ToolbarPosition.DesktopBottom },
+			return new Dictionary<DesktopDockType, ToolbarPosition>() {
+				{ DesktopDockType.Left,   ToolbarPosition.DesktopLeft },
+				{ DesktopDockType.Top,    ToolbarPosition.DesktopTop },
+				{ DesktopDockType.Right,  ToolbarPosition.DesktopRight },
+				{ DesktopDockType.Bottom, ToolbarPosition.DesktopBottom },
 			}[value];
 		}
-		static DockType ToDockType(ToolbarPosition value)
+		static DesktopDockType ToDockType(ToolbarPosition value)
 		{
-			return new Dictionary<ToolbarPosition, DockType>() {
-				{ToolbarPosition.DesktopLeft,   DockType.Left },
-				{ToolbarPosition.DesktopTop,    DockType.Top },
-				{ToolbarPosition.DesktopRight,  DockType.Right },
-				{ToolbarPosition.DesktopBottom, DockType.Bottom },
+			return new Dictionary<ToolbarPosition, DesktopDockType>() {
+				{ToolbarPosition.DesktopLeft,   DesktopDockType.Left },
+				{ToolbarPosition.DesktopTop,    DesktopDockType.Top },
+				{ToolbarPosition.DesktopRight,  DesktopDockType.Right },
+				{ToolbarPosition.DesktopBottom, DesktopDockType.Bottom },
 			}[value];
 		}
 		
@@ -118,9 +118,9 @@ namespace PeMain.UI
 				ItemSizeToFormSize();
 				
 				if(IsDockingMode) {
-					DockType = ToDockType(MainSetting.Toolbar.ToolbarPosition);
+					DesktopDockType = ToDockType(MainSetting.Toolbar.ToolbarPosition);
 				} else {
-					DockType = DockType.None;
+					DesktopDockType = DesktopDockType.None;
 					if(MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 						Location = MainSetting.Toolbar.FloatLocation;
 					}

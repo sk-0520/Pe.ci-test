@@ -68,7 +68,7 @@ namespace PeMain.UI
 				var data = new ToolbarPositionItem(value, Language);
 				toolbarPosList.Add(data);
 			}
-			this.selectToolbarPosition.Attachment(toolbarPosList);
+			this.selectToolbarPosition.Attachment(toolbarPosList, toolbarSetting.ToolbarPosition);
 			
 			// アイコンサイズ文言の項目構築
 			AttachmentIconSize(this.selectToolbarIcon, toolbarSetting.IconSize);

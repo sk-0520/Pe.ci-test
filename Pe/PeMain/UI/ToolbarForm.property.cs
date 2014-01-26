@@ -29,9 +29,9 @@ namespace PeMain.UI
 		
 		public bool IsDockingMode { get { return MainSetting.Toolbar.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 		
-		override public DockType DockType
+		override public DesktopDockType DesktopDockType
 		{
-			get { return base.DockType; }
+			get { return base.DesktopDockType; }
 			set 
 			{
 				var pos = ToolbarPosition.DesktopFloat;
@@ -47,7 +47,7 @@ namespace PeMain.UI
 						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.VerticalStackWithOverflow;
 					}
 				}
-				base.DockType = value;
+				base.DesktopDockType = value;
 			}
 		}
 

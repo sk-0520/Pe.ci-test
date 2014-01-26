@@ -19,7 +19,7 @@ namespace PeMain.UI
 		{
 			BarSize = Size;
 			DockScreen = Screen.PrimaryScreen;
-			DockType = DockType.None;
+			DesktopDockType = DesktopDockType.None;
 			IsDocking = false;
 			MessageString = "AppDesktopToolbar";
 		}

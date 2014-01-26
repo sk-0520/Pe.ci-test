@@ -79,9 +79,15 @@ namespace PeMain.UI
 			
 			itemToolbar.Text = this._language["main/menu/window/toolbar"];
 			itemToolbar.Name = menuNameWindowToolbar;
+			itemToolbar.Click += (object sender, EventArgs e) => {
+				this._toolbarForm.Visible = !this._toolbarForm.Visible;
+			};
 			
 			itemLogger.Text = this._language["main/menu/window/logger"];
 			itemLogger.Name = menuNameWindowLogger;
+			itemLogger.Click += (object sender, EventArgs e) => {
+				this._logForm.Visible = !this._logForm.Visible; 
+			};
 			
 			return menuList.ToArray();
 		}
@@ -105,6 +111,10 @@ namespace PeMain.UI
 			itemWindow.Text = this._language["main/menu/window"];
 			itemWindow.Name = menuNameWindow;
 			itemWindow.MenuItems.AddRange(CreateWindowMenu());
+			itemWindow.Popup += (object sender, EventArgs e) => {
+				itemWindow.MenuItems[menuNameWindowToolbar].Checked = this._toolbarForm.Visible;
+				itemWindow.MenuItems[menuNameWindowLogger].Checked = this._logForm.Visible;
+			};
 			
 			// 設定
 			itemSetting.Text = this._language["main/menu/setting"];

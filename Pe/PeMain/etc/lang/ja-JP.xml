@@ -18,8 +18,11 @@
 		<Word Name="common/label/topmost"     Text="${topmost}" />
 		<Word Name="common/menu/topmost"      Text="${topmost}(&amp;T)" />
 		
-		<Word Name="main/menu/about"   Text="バージョン情報(&amp;A) ${open-ui}" />
-		<Word Name="main/menu/setting" Text="設定(&amp;S) ${open-ui}" />
+		<Word Name="main/menu/window"          Text="ウィンドウ(&amp;W)" />
+		<Word Name="main/menu/window/toolbar"  Text="ツールバー(&amp;T)" />
+		<Word Name="main/menu/window/logger"   Text="ログ(&amp;L)" />
+		<Word Name="main/menu/setting"         Text="設定(&amp;S) ${open-ui}" />
+		<Word Name="main/menu/about"           Text="バージョン情報(&amp;A) ${open-ui}" />
 		
 		<Word Name="toolbar/menu/file/execute"    Text="実行" />
 		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行" />

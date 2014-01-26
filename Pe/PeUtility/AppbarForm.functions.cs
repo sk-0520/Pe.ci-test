@@ -36,17 +36,17 @@ namespace PeMain.UI
 		{
 			if(IsDocking) {
 				// AppBar のサイズを更新します。
-				switch (DockType) {
-					case DockType.Left:
-					case DockType.Right:
+				switch (DesktopDockType) {
+					case DesktopDockType.Left:
+					case DesktopDockType.Right:
 						BarSize = new Size(Width, BarSize.Height);
 						break;
-					case DockType.Top:
-					case DockType.Bottom:
+					case DesktopDockType.Top:
+					case DesktopDockType.Bottom:
 						BarSize = new Size(BarSize.Width, Height);
 						break;
 				}
-				Docking(DockType);
+				Docking(DesktopDockType);
 			}
 			base.OnResizeEnd(e);
 		}
@@ -93,18 +93,18 @@ namespace PeMain.UI
 			return unregistResult.ToInt32() != 0;
 		}
 		
-		private RECT CalcBarArea(DockType dockType)
+		private RECT CalcBarArea(DesktopDockType dockType)
 		{
-			Debug.Assert(dockType != DockType.None);
+			Debug.Assert(dockType != DesktopDockType.None);
 			
 			var desktopArea = DockScreen.Bounds;
 			var barArea = new RECT();
 			
 			// 設定値からバー領域取得
-			if(dockType == DockType.Left || dockType == DockType.Right) {
+			if(dockType == DesktopDockType.Left || dockType == DesktopDockType.Right) {
 				barArea.Top = desktopArea.Top;
 				barArea.Bottom = desktopArea.Bottom;
-				if(dockType == DockType.Left) {
+				if(dockType == DesktopDockType.Left) {
 					barArea.Left = desktopArea.Left;
 					barArea.Right = desktopArea.Left + BarSize.Width;
 				} else {
@@ -112,10 +112,10 @@ namespace PeMain.UI
 					barArea.Right = desktopArea.Right;
 				}
 			} else {
-				Debug.Assert(dockType == DockType.Top || dockType == DockType.Bottom);
+				Debug.Assert(dockType == DesktopDockType.Top || dockType == DesktopDockType.Bottom);
 				barArea.Left = desktopArea.Left;
 				barArea.Right = desktopArea.Right;
-				if(dockType == DockType.Top) {
+				if(dockType == DesktopDockType.Top) {
 					barArea.Top = desktopArea.Top;
 					barArea.Bottom = desktopArea.Top + BarSize.Height;
 				} else {
@@ -132,7 +132,7 @@ namespace PeMain.UI
 		/// 
 		/// すでにドッキングされている場合はドッキングを再度実行する
 		/// </summary>
-		private void Docking(DockType dockType)
+		private void Docking(DesktopDockType dockType)
 		{
 			if(DesignMode) {
 				return;
@@ -143,7 +143,7 @@ namespace PeMain.UI
 				UnResistAppBar();
 			}
 			
-			if(dockType == DockType.None) {
+			if(dockType == DesktopDockType.None) {
 				return;
 			}
 			
@@ -157,19 +157,19 @@ namespace PeMain.UI
 			// 現在の希望するサイズから実際のサイズ要求する
 			API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 			switch(dockType) {
-				case DockType.Left:
+				case DesktopDockType.Left:
 					appBar.rc.Right = appBar.rc.Left + BarSize.Width;
 					break;
 					
-				case DockType.Right:
+				case DesktopDockType.Right:
 					appBar.rc.Left = appBar.rc.Right - BarSize.Width;
 					break;
 					
-				case DockType.Top:
+				case DesktopDockType.Top:
 					appBar.rc.Bottom = appBar.rc.Top + BarSize.Height;
 					break;
 					
-				case DockType.Bottom:
+				case DesktopDockType.Bottom:
 					appBar.rc.Top = appBar.rc.Bottom - BarSize.Height;
 					break;
 					
