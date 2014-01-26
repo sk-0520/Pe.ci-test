@@ -47,7 +47,7 @@ namespace PeUtility
 		}
 
 
-		public void ResetHotKeys()
+		public virtual void ResetHotKeys()
 		{
 			Hotkey = Keys.None;
 			Modifiers = Keys.None;
@@ -121,7 +121,7 @@ namespace PeUtility
 		/*
 		 * This method is called to print the hotkey combination.
 		 */
-		private void Redraw()
+		protected virtual void Redraw()
 		{
 
 			if (Modifiers != Keys.None)

@@ -175,6 +175,7 @@
     <Compile Include="UI\ExecuteForm.variable.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Ex\ExHotkeyControl.cs" />
     <Compile Include="UI\Ex\ExListBox.cs" />
     <Compile Include="UI\Ex\ExToolStrip.cs" />
     <Compile Include="UI\LogForm.cs" />
@@ -354,9 +355,6 @@
     <Folder Include="UI\Ex" />
     <Folder Include="Logic" />
     <Folder Include="UI\CustomControl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ProfilingSessions\Session20140125_163151.sdps" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

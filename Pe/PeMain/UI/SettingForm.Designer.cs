@@ -73,7 +73,7 @@ namespace PeMain.UI
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.pageCommand = new System.Windows.Forms.TabPage();
-			this.inputCommandHotkey = new PeUtility.HotKeyControl();
+			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
@@ -111,6 +111,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.labelCommandHotkey = new System.Windows.Forms.Label();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
@@ -517,6 +518,7 @@ namespace PeMain.UI
 			// 
 			// pageCommand
 			// 
+			this.pageCommand.Controls.Add(this.labelCommandHotkey);
 			this.pageCommand.Controls.Add(this.inputCommandHotkey);
 			this.pageCommand.Controls.Add(this.labelCommandIcon);
 			this.pageCommand.Controls.Add(this.selectCommandIcon);
@@ -536,8 +538,10 @@ namespace PeMain.UI
 			// inputCommandHotkey
 			// 
 			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
+			this.inputCommandHotkey.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputCommandHotkey.Location = new System.Drawing.Point(348, 110);
+			this.inputCommandHotkey.Language = null;
+			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
 			this.inputCommandHotkey.Modifiers = System.Windows.Forms.Keys.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
 			this.inputCommandHotkey.ReadOnly = true;
@@ -547,7 +551,7 @@ namespace PeMain.UI
 			// 
 			// labelCommandIcon
 			// 
-			this.labelCommandIcon.Location = new System.Drawing.Point(39, 152);
+			this.labelCommandIcon.Location = new System.Drawing.Point(40, 187);
 			this.labelCommandIcon.Name = "labelCommandIcon";
 			this.labelCommandIcon.Size = new System.Drawing.Size(100, 23);
 			this.labelCommandIcon.TabIndex = 14;
@@ -557,7 +561,7 @@ namespace PeMain.UI
 			// 
 			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.selectCommandIcon.FormattingEnabled = true;
-			this.selectCommandIcon.Location = new System.Drawing.Point(145, 155);
+			this.selectCommandIcon.Location = new System.Drawing.Point(146, 190);
 			this.selectCommandIcon.Name = "selectCommandIcon";
 			this.selectCommandIcon.Size = new System.Drawing.Size(121, 23);
 			this.selectCommandIcon.TabIndex = 13;
@@ -571,7 +575,7 @@ namespace PeMain.UI
 			// 
 			// selectCommandTopmost
 			// 
-			this.selectCommandTopmost.Location = new System.Drawing.Point(35, 125);
+			this.selectCommandTopmost.Location = new System.Drawing.Point(36, 160);
 			this.selectCommandTopmost.Name = "selectCommandTopmost";
 			this.selectCommandTopmost.Size = new System.Drawing.Size(104, 24);
 			this.selectCommandTopmost.TabIndex = 4;
@@ -927,6 +931,14 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// labelCommandHotkey
+			// 
+			this.labelCommandHotkey.Location = new System.Drawing.Point(35, 109);
+			this.labelCommandHotkey.Name = "labelCommandHotkey";
+			this.labelCommandHotkey.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandHotkey.TabIndex = 16;
+			this.labelCommandHotkey.Text = "{HOT KEY}";
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -971,7 +983,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private PeUtility.HotKeyControl inputCommandHotkey;
+		private System.Windows.Forms.Label labelCommandHotkey;
+		private PeMain.UI.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;
 		private System.Windows.Forms.CheckBox selectLogVisible;
 		private System.Windows.Forms.GroupBox groupMainLog;

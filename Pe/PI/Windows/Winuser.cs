@@ -29,6 +29,7 @@ namespace PI.Windows
 		MA_NOACTIVATEANDEAT = 4,
 	}
 
+	[Flags]
 	public enum MOD: uint
 	{
 		MOD_ALT = 0x0001,
