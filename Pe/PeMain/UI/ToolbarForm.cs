@@ -86,19 +86,10 @@ namespace PeMain.UI
 			}
 		}
 		
-		void ToolbarFormVisibleChanged(object sender, EventArgs e)
+		
+		void ToolbarFormShown(object sender, EventArgs e)
 		{
-			if(MainSetting == null) {
-				return;
-			}
-			
-			var visible = Visible;
-			if(visible) {
-				DesktopDockType = this._prevDesktopDockType;
-			} else {
-				_prevDesktopDockType = DesktopDockType;
-				DesktopDockType = DesktopDockType.None;
-			}
+			ApplySettingPosition();
 		}
 	}
 }

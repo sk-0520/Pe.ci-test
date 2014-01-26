@@ -16,6 +16,7 @@ namespace PeMain.UI
 	public partial class AppbarForm
 	{
 		public uint callbackMessage;
-		DesktopDockType _dockType;
+		DesktopDockType _desktopDockType;
+		DesktopDockType _prevDesktopDockType;
 	}
 }

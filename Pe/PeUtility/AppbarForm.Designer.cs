@@ -48,6 +48,7 @@ namespace PeMain.UI
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "AppbarForm";
+			this.VisibleChanged += new System.EventHandler(this.AppbarFormVisibleChanged);
 			this.ResumeLayout(false);
 		}
 	}

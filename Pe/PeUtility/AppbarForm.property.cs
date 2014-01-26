@@ -25,12 +25,12 @@ namespace PeMain.UI
 		{
 			get
 			{
-				return this._dockType;
+				return this._desktopDockType;
 			}
 			set
 			{
 				Docking(value);
-				this._dockType = value;
+				this._desktopDockType = value;
 			}
 		}
 		/// <summary>

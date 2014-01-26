@@ -18,6 +18,5 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
-		DesktopDockType _prevDesktopDockType;
 	}
 }

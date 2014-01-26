@@ -26,5 +26,16 @@ namespace PeMain.UI
 			
 			Initialize();
 		}
+		
+		void AppbarFormVisibleChanged(object sender, EventArgs e)
+		{
+			var visible = Visible;
+			if(visible) {
+				DesktopDockType = this._prevDesktopDockType;
+			} else {
+				_prevDesktopDockType = DesktopDockType;
+				DesktopDockType = DesktopDockType.None;
+			}
+		}
 	}
 }

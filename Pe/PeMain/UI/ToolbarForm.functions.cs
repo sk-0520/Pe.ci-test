@@ -163,9 +163,9 @@ namespace PeMain.UI
 			SelectedGroup(MainSetting.Toolbar.ToolbarGroup.Groups.First());
 			
 			// 表示
+			ApplySettingVisible();
 			ApplySettingPosition();
 			ApplySettingTopmost();
-			ApplySettingVisible();
 		}
 		
 		/// <summary>
