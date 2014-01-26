@@ -7,7 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -22,7 +24,11 @@ namespace PeMain.UI
 		{
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
 			this._imageToolbarItemGroup.Images.Clear();
-			this._imageToolbarItemGroup.Images.Add(PeMain.Properties.Images.Group);
+			var treeImage = new Dictionary<int, Bitmap>() {
+				{ TREE_TYPE_NONE, PeMain.Properties.Images.NotImpl },
+				{ TREE_TYPE_GROUP, PeMain.Properties.Images.Group },
+			};
+			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 			
 			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconSize.Small)}).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
@@ -41,6 +47,8 @@ namespace PeMain.UI
 		{
 			var node = new TreeNode();
 			node.Text = groupName;
+			node.ImageIndex = TREE_TYPE_GROUP;
+			node.SelectedImageIndex = TREE_TYPE_GROUP;
 			this.treeToolbarItemGroup.Nodes.Add(node);
 			
 			return node;
@@ -52,8 +60,13 @@ namespace PeMain.UI
 			Debug.Assert(item != null);
 			
 			node.Text = item.Name;
-			node.ImageKey = item.Name;
-			node.SelectedImageKey = item.Name;
+			if(this._imageToolbarItemGroup.Images.ContainsKey(item.Name)) {
+				node.ImageKey = item.Name;
+				node.SelectedImageKey = item.Name;
+			} else {
+				node.ImageIndex = TREE_TYPE_NONE;
+				node.SelectedImageIndex = TREE_TYPE_NONE;
+			}
 			node.Tag = item;
 		}
 		

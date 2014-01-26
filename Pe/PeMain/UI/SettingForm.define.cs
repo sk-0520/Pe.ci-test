@@ -17,5 +17,8 @@ namespace PeMain.UI
 	{
 		const int TREE_LEVEL_GROUP = 0;
 		const int TREE_LEVEL_ITEM = 1;
+		
+		const int TREE_TYPE_NONE = 0;
+		const int TREE_TYPE_GROUP = 1;
 	}
 }
