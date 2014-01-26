@@ -178,9 +178,9 @@ namespace PeMain.UI
 			minSize.Height += Padding.Vertical;
 			MinimumSize = minSize;
 			if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
-				Size = new Size(MainSetting.Toolbar.FloatSize.Width, 0);
+				Size = new Size(MainSetting.Toolbar.FloatSize.Width, minSize.Height);
 			} else {
-				Size = new Size(0, MainSetting.Toolbar.FloatSize.Height);
+				Size = new Size(minSize.Width, MainSetting.Toolbar.FloatSize.Height);
 			}
 			if(IsDockingMode) {
 				BarSize = new Size(BarSize.Width, Size.Height);

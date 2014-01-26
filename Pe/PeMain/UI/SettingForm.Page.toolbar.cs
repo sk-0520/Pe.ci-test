@@ -60,13 +60,13 @@ namespace PeMain.UI
 			Debug.Assert(item != null);
 			
 			node.Text = item.Name;
-			if(this._imageToolbarItemGroup.Images.ContainsKey(item.Name)) {
+			//if(this._imageToolbarItemGroup.Images.ContainsKey(item.Name)) {
 				node.ImageKey = item.Name;
 				node.SelectedImageKey = item.Name;
-			} else {
-				node.ImageIndex = TREE_TYPE_NONE;
-				node.SelectedImageIndex = TREE_TYPE_NONE;
-			}
+			//} else {
+			//	node.ImageIndex = TREE_TYPE_NONE;
+			//	node.SelectedImageIndex = TREE_TYPE_NONE;
+			//}
 			node.Tag = item;
 		}
 		

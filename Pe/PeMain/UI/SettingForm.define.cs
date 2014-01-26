@@ -20,5 +20,6 @@ namespace PeMain.UI
 		
 		const int TREE_TYPE_NONE = 0;
 		const int TREE_TYPE_GROUP = 1;
+		
 	}
 }
