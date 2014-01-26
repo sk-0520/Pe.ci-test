@@ -81,12 +81,14 @@ namespace PeMain.UI
 			itemToolbar.Name = menuNameWindowToolbar;
 			itemToolbar.Click += (object sender, EventArgs e) => {
 				this._toolbarForm.Visible = !this._toolbarForm.Visible;
+				this._mainSetting.Toolbar.Visible = this._toolbarForm.Visible;
 			};
 			
 			itemLogger.Text = this._language["main/menu/window/logger"];
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible; 
+				this._mainSetting.Log.Visible = this._logForm.Visible;
 			};
 			
 			return menuList.ToArray();
