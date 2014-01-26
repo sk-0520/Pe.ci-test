@@ -210,6 +210,15 @@
     <Compile Include="UI\Pe.MessageWindow.Designer.cs">
       <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pe.MessageWindow.language.cs">
+      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.MessageWindow.property.cs">
+      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.MessageWindow.wndProc.cs">
+      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.variable.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
@@ -335,6 +344,9 @@
     </Compile>
     <Compile Include="UI\Pe.define.cs">
       <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.MessageWindow.functions.cs">
+      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

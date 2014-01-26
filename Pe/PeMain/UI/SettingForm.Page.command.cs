@@ -16,9 +16,12 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
-		void CommandExportSetting(CommandSetting setting)
+		void CommandExportSetting(CommandSetting commandSetting)
 		{
-			
+			var hotKey = this.inputCommandHotkey.Hotkey;
+			var modKey = this.inputCommandHotkey.Modifiers;
+			commandSetting.Hotkey = hotKey;
+			commandSetting.Modifiers = modKey;
 		}
 	}
 }

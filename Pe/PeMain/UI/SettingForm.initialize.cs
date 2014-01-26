@@ -49,6 +49,12 @@ namespace PeMain.UI
 			
 			// アイコンサイズ文言の項目構築
 			AttachmentIconSize(this.selectCommandIcon, commandSetting.IconSize);
+			
+			// ホットキー
+			var hotKey = commandSetting.Hotkey;
+			var modKey = commandSetting.Modifiers;
+			this.inputCommandHotkey.Hotkey = hotKey;
+			this.inputCommandHotkey.Modifiers = modKey;
 		}
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)

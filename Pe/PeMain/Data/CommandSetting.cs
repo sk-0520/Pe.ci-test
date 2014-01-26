@@ -9,7 +9,9 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Input;
+
 using PeUtility;
 
 namespace PeMain.Data
@@ -55,8 +57,8 @@ namespace PeMain.Data
 		/// </summary>
 		public bool TopMost { get; set; }
 		
-		public Key Key { get; set; }
-		public Key Modifiers { get; set; }
+		public Keys Hotkey { get; set; }
+		public Keys Modifiers { get; set; }
 		
 		public void Dispose()
 		{
