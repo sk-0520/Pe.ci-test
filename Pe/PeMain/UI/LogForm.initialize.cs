@@ -20,7 +20,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LogForm
 	{
-		void Initialize(IEnumerable<LogItem> initLog)
+		void Initialize()
 		{
 			// イメージリストをリソースから構築
 			this._imageLogType = new ImageList();
@@ -31,11 +31,6 @@ namespace PeMain.UI
 			this._imageLogType.Images.Add(LogType.Error.ToString(), global::PeMain.Properties.Images.Error);
 			this.listLog.SmallImageList = this._imageLogType;
 			//this.listLog.LargeImageList = this._imageLogType;
-			
-			// 
-			this._logs.AddRange(initLog);
-			this.listLog.VirtualListSize = this._logs.Count;
-			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 			
 		}
 	}

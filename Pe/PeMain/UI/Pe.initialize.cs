@@ -139,7 +139,7 @@ namespace PeMain.UI
 		/// 本体UI初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeMain(string[] args)
+		void InitializeMain(string[] args, List<LogItem> initLog)
 		{
 			this._notifyIcon = new NotifyIcon();
 			this._notificationMenu = new ContextMenu(InitializeMenu());
@@ -153,20 +153,16 @@ namespace PeMain.UI
 		
 		void InitializeLogForm(string[] args, List<LogItem> initLog)
 		{
-			this._logForm = new LogForm(initLog);
+			this._logForm = new LogForm();
 			this._logForm.SetSettingData(this._language, this._mainSetting);
-			
-			this._logForm.Size = this._mainSetting.Log.Size;
-			this._logForm.Location = this._mainSetting.Log.Point;
-			this._logForm.Visible = this._mainSetting.Log.Visible;
 		}
 			
-		void InitializeCommandForm(string[] args)
+		void InitializeCommandForm(string[] args, List<LogItem> initLog)
 		{
 			
 		}
 		
-		void InitializeToolbarForm(string[] args)
+		void InitializeToolbarForm(string[] args, List<LogItem> initLog)
 		{
 			Debug.Assert(this._mainSetting != null);
 			
@@ -179,12 +175,12 @@ namespace PeMain.UI
 		{
 			initLog.Add(new LogItem(LogType.Information, this._language["log/init/ui"], this._language["log/start"]));
 			            
-			InitializeMain(args);
+			InitializeMain(args, initLog);
 			InitializeLogForm(args, initLog);
-			InitializeCommandForm(args);
-			InitializeToolbarForm(args);
+			InitializeCommandForm(args, initLog);
+			InitializeToolbarForm(args, initLog);
 			
-			this._logForm.Puts(LogType.Information, this._language["log/init/ui"], this._language["log/start"]);
+			initLog.Add(new LogItem(LogType.Information, this._language["log/init/ui"], this._language["log/start"]));
 		}
 		
 		/// <summary>
@@ -199,6 +195,7 @@ namespace PeMain.UI
 			InitializeMessage(args, initLog);
 			InitializeUI(args, initLog);
 			
+			this._logForm.PutsList(initLog, false);
 		}
 	}
 }

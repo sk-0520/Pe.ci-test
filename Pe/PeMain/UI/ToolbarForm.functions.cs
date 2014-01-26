@@ -329,8 +329,8 @@ namespace PeMain.UI
 				pathItem.DropDownItems[menuNamePath_property].Enabled = commandEnabled;
 				// 親ディレクトリ有無
 				var parentDirPath = Path.GetDirectoryName(launcherItem.Command);
-				Debug.WriteLine(Path.GetPathRoot(parentDirPath) );
-				Debug.WriteLine(parentDirPath);
+				//Debug.WriteLine(Path.GetPathRoot(parentDirPath) );
+				//Debug.WriteLine(parentDirPath);
 				var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
 				pathItem.DropDownItems[menuNamePath_openParentDir].Enabled = parentDirEnabled;
 				pathItem.DropDownItems[menuNamePath_copyParentDir].Enabled = parentDirEnabled;
@@ -504,7 +504,7 @@ namespace PeMain.UI
 		{
 			ToolStripItem overItem = null;
 			foreach(ToolStripItem toolItem in this.toolLauncher.Items) {
-				Debug.WriteLine(toolItem.Bounds);
+				//Debug.WriteLine(toolItem.Bounds);
 				if(toolItem.Bounds.Contains(localPoint.X, localPoint.Y)) {
 					overItem = toolItem; 
 					break;

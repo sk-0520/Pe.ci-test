@@ -36,6 +36,17 @@ namespace PeMain.UI
 			this.listLog.Items[this.listLog.Items.Count - 1].EnsureVisible();
 		}
 		
+		public void PutsList(IEnumerable<LogItem> logs, bool show)
+		{
+			this._logs.AddRange(logs);
+			this.listLog.VirtualListSize = this._logs.Count;
+			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+			if(MainSetting.Log.AddShow && !Visible) {
+				Visible = show;
+			}
+		}
+		
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
@@ -44,13 +55,19 @@ namespace PeMain.UI
 			ApplySetting();
 		}
 		
-		
+		void ApplyUI()
+		{
+			Size = MainSetting.Log.Size;
+			Location = MainSetting.Log.Point;
+			Visible = MainSetting.Log.Visible;
+		}
 		
 		void ApplySetting()
 		{
 			Debug.Assert(MainSetting != null);
 			
 			ApplyLanguage();
+			ApplyUI();
 		}
 		
 		void ClearDetail()

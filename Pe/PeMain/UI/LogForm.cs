@@ -20,17 +20,14 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LogForm : Form, ILogger
 	{
-		public LogForm(IEnumerable<LogItem> initLog)
+		public LogForm()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
-			Initialize(initLog);
+			Initialize();
 		}
 		
 		
