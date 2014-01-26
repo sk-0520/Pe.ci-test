@@ -43,7 +43,7 @@
 		<Word Name="setting/tab/display"  Text="ディスプレイ" />
 		<Word Name="setting/tab/note"     Text="ノート" />
 	
-		<Word Name="enum/toolbar-position/desktop/float"  Text="フローティング" />
+		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />
 		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />
 		<Word Name="enum/toolbar-position/desktop/top"    Text="デスクトップ: 上" />
 		<Word Name="enum/toolbar-position/desktop/right"  Text="デスクトップ: 右" />
