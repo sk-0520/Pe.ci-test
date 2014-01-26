@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
@@ -78,7 +79,14 @@ namespace PeMain.UI
 
 			var serializer = new XmlSerializer(typeof(MainSetting));
 			using(var stream = new FileStream(mainSettingPath, FileMode.Create)) {
+				var sortedSet = new HashSet<LauncherItem>();
+				foreach(var item in mainSetting.Launcher.Items.OrderBy(item => item.Name)) {
+					sortedSet.Add(item);
+				}
+				var nowItems = mainSetting.Launcher.Items;
+				mainSetting.Launcher.Items = sortedSet;
 				serializer.Serialize(stream, mainSetting);
+				mainSetting.Launcher.Items = nowItems; 
 			}
 		}
 		
