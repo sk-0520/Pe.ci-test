@@ -36,6 +36,7 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridEnv = new System.Windows.Forms.DataGridView();
 			this.headerKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.headerValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,16 +53,22 @@ namespace PeMain.UI
 			this.gridEnv.Location = new System.Drawing.Point(0, 0);
 			this.gridEnv.Name = "gridEnv";
 			this.gridEnv.RowTemplate.Height = 21;
-			this.gridEnv.Size = new System.Drawing.Size(150, 150);
+			this.gridEnv.Size = new System.Drawing.Size(257, 150);
 			this.gridEnv.TabIndex = 0;
 			// 
 			// headerKey
 			// 
+			this.headerKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
 			this.headerKey.HeaderText = "{KEY}";
 			this.headerKey.Name = "headerKey";
+			this.headerKey.Width = 57;
 			// 
 			// headerValue
 			// 
+			this.headerValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.headerValue.DefaultCellStyle = dataGridViewCellStyle1;
 			this.headerValue.HeaderText = "{VALUE}";
 			this.headerValue.Name = "headerValue";
 			// 
@@ -71,6 +78,7 @@ namespace PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.gridEnv);
 			this.Name = "EnvUpdateControl";
+			this.Size = new System.Drawing.Size(257, 150);
 			((System.ComponentModel.ISupportInitialize)(this.gridEnv)).EndInit();
 			this.ResumeLayout(false);
 		}

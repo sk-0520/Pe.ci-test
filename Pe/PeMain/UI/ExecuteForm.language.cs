@@ -22,6 +22,13 @@ namespace PeMain.UI
 			
 			this.envUpdate.SetLanguage(Language);
 			this.envRemove.SetLanguage(Language);
+			
+			this.pageBasic.Text = Language["execute/tab/basic"];
+			this.pageEnv.Text = Language["execute/tab/env"];
+			this.labelOption.Text = Language["execute/label/option"];
+			this.labelWorkDirPath.Text = Language["execute/label/work-dir"];
+			this.selectStdStream.Text  = Language["execute/check/std-stream"];
+			this.selectEnvironment.Text  = Language["execute/check/edit-env"];
 		}
 	}
 }

@@ -47,6 +47,7 @@ namespace PeMain.UI
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
+			this.commandLauncherCommandSetter = new System.Windows.Forms.Button();
 			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
@@ -73,6 +74,7 @@ namespace PeMain.UI
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.labelCommandHotkey = new System.Windows.Forms.Label();
 			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
@@ -111,7 +113,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.labelCommandHotkey = new System.Windows.Forms.Label();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
@@ -142,8 +143,8 @@ namespace PeMain.UI
 			// 
 			this.tabSetting.Controls.Add(this.pageMain);
 			this.tabSetting.Controls.Add(this.pageLauncher);
-			this.tabSetting.Controls.Add(this.pageCommand);
 			this.tabSetting.Controls.Add(this.pageToolbar);
+			this.tabSetting.Controls.Add(this.pageCommand);
 			this.tabSetting.Controls.Add(this.pageNote);
 			this.tabSetting.Controls.Add(this.pageDisplay);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -242,6 +243,7 @@ namespace PeMain.UI
 			// 
 			// splitContainer1.Panel2
 			// 
+			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherCommandSetter);
 			this.splitContainer1.Panel2.Controls.Add(this.selectLauncherStdStream);
 			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherOption);
 			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherOption);
@@ -285,11 +287,20 @@ namespace PeMain.UI
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
+			// commandLauncherCommandSetter
+			// 
+			this.commandLauncherCommandSetter.Location = new System.Drawing.Point(225, 68);
+			this.commandLauncherCommandSetter.Name = "commandLauncherCommandSetter";
+			this.commandLauncherCommandSetter.Size = new System.Drawing.Size(75, 23);
+			this.commandLauncherCommandSetter.TabIndex = 13;
+			this.commandLauncherCommandSetter.Text = "{COMMAND}";
+			this.commandLauncherCommandSetter.UseVisualStyleBackColor = true;
+			// 
 			// selectLauncherStdStream
 			// 
-			this.selectLauncherStdStream.Location = new System.Drawing.Point(249, 44);
+			this.selectLauncherStdStream.Location = new System.Drawing.Point(332, 93);
 			this.selectLauncherStdStream.Name = "selectLauncherStdStream";
-			this.selectLauncherStdStream.Size = new System.Drawing.Size(104, 24);
+			this.selectLauncherStdStream.Size = new System.Drawing.Size(124, 24);
 			this.selectLauncherStdStream.TabIndex = 12;
 			this.selectLauncherStdStream.Text = "{STD_STREAM}";
 			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
@@ -534,6 +545,14 @@ namespace PeMain.UI
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
+			// 
+			// labelCommandHotkey
+			// 
+			this.labelCommandHotkey.Location = new System.Drawing.Point(35, 109);
+			this.labelCommandHotkey.Name = "labelCommandHotkey";
+			this.labelCommandHotkey.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandHotkey.TabIndex = 16;
+			this.labelCommandHotkey.Text = "{HOT KEY}";
 			// 
 			// inputCommandHotkey
 			// 
@@ -931,14 +950,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// labelCommandHotkey
-			// 
-			this.labelCommandHotkey.Location = new System.Drawing.Point(35, 109);
-			this.labelCommandHotkey.Name = "labelCommandHotkey";
-			this.labelCommandHotkey.Size = new System.Drawing.Size(100, 23);
-			this.labelCommandHotkey.TabIndex = 16;
-			this.labelCommandHotkey.Text = "{HOT KEY}";
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -983,6 +994,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Button commandLauncherCommandSetter;
 		private System.Windows.Forms.Label labelCommandHotkey;
 		private PeMain.UI.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;

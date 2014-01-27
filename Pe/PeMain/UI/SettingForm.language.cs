@@ -8,6 +8,8 @@
  */
 using System;
 using System.Diagnostics;
+using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -25,7 +27,10 @@ namespace PeMain.UI
 		
 		void ApplyLanguageMain()
 		{
-			
+			this.groupMainLog.Text = Language["setting/group/log"];
+			this.labelMainLanguage.Text = Language["setting/label/language"];
+			this.selectLogVisible.Text = Language["setting/check/visible"];
+			this.selectLogAddShow.Text = Language["setting/check/add-show"];
 		}
 		
 		void ApplyLanguageCommand()
@@ -37,7 +42,10 @@ namespace PeMain.UI
 		{
 			this.selecterLauncher.SetLanguage(Language);
 			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
-			
+			this.groupLauncherType.Text = Language["setting/group/item-type"];
+			this.selectLauncherType_file.Text = EnumLang.ToText(LauncherType.File, Language);
+			this.selectLauncherType_uri.Text = EnumLang.ToText(LauncherType.URI, Language);
+			this.selectLauncherStdStream.Text = Language["setting/check/std-stream"];
 		}
 		
 		void ApplyLanguageToolbar()
@@ -66,9 +74,9 @@ namespace PeMain.UI
 			
 			ApplyLanguageTab();
 			ApplyLanguageMain();
-			ApplyLanguageCommand();
 			ApplyLanguageLauncher();
 			ApplyLanguageToolbar();
+			ApplyLanguageCommand();
 			ApplyLanguageDisplay();
 			ApplyLanguageNote();
 		}

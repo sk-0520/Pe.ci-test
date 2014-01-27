@@ -1,14 +1,19 @@
 ﻿<?xml version="1.0"?>
 <Language Name="日本語" Code="ja-JP">
 	<Define>
-		<Word Name="yes"      Text="はい" />
-		<Word Name="no"       Text="いいえ" />
-		<Word Name="cancel"   Text="キャンセル" />
-		<Word Name="ok"       Text="OK" />
-		<Word Name="retry"    Text="再試行" />
-		<Word Name="exit"     Text="終了" />
-		<Word Name="open-ui"  Text="..." />
-		<Word Name="topmost"  Text="最前面表示" />
+		<Word Name="yes"         Text="はい" />
+		<Word Name="no"          Text="いいえ" />
+		<Word Name="cancel"      Text="キャンセル" />
+		<Word Name="ok"          Text="OK" />
+		<Word Name="retry"       Text="再試行" />
+		<Word Name="exit"        Text="終了" />
+		<Word Name="open-ui"     Text="..." />
+		<Word Name="visible"     Text="表示する" />
+		<Word Name="topmost"     Text="最前面表示" />
+		<Word Name="option"      Text="オプション" />
+		<Word Name="work-dir"    Text="作業フォルダ" />
+		<Word Name="std-stream"  Text="標準入力取得" />
+		<Word Name="edit-env"    Text="環境変数編集" />
 	</Define>
 	<Words>
 		<Word Name="common/button/ok"         Text="${ok}" />
@@ -36,13 +41,26 @@
 		<Word Name="toolbar/menu/file/path/copy-work-dir"    Text="作業フォルダパスをコピー" />
 		<Word Name="toolbar/menu/file/path/property"         Text="プロパティ" />
 
+		<Word Name="execute/tab/basic"         Text="基本指定" />
+		<Word Name="execute/tab/env"           Text="環境変数" />
+		<Word Name="execute/label/option"      Text="${option}" />
+		<Word Name="execute/label/work-dir"    Text="${work-dir}" />
+		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
+		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
+		
 		<Word Name="setting/tab/main"     Text="本体" />
 		<Word Name="setting/tab/launcher" Text="ランチャ" />
 		<Word Name="setting/tab/toolbar"  Text="ツールバー" />
 		<Word Name="setting/tab/command"  Text="コマンド" />
 		<Word Name="setting/tab/display"  Text="ディスプレイ" />
 		<Word Name="setting/tab/note"     Text="ノート" />
-	
+		<Word Name="setting/label/language"   Text="使用言語" />
+		<Word Name="setting/group/log"        Text="ログ" />
+		<Word Name="setting/check/visible"    Text="${visible}" />
+		<Word Name="setting/check/add-show"   Text="追加されるたびに表示する" />
+		<Word Name="setting/group/item-type"  Text="アイテムの種類" />
+		<Word Name="setting/check/std-stream"  Text="${std-stream}" />
+		
 		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />
 		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />
 		<Word Name="enum/toolbar-position/desktop/top"    Text="デスクトップ: 上" />
