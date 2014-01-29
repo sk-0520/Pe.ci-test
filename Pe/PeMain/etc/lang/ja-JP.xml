@@ -67,7 +67,19 @@
 		<Word Name="setting/group/log"        Text="ログ設定" />
 		<Word Name="setting/check/add-show"   Text="追加されるたびに表示する" />
 		<Word Name="setting/group/item-type"  Text="アイテムの種類" />
+		<Word Name="setting/label/item-name"  Text="アイテム名" />
+		<Word Name="setting/label/command"  Text="コマンド" />
+		<Word Name="setting/label/option"     Text="${option}" />
+		<Word Name="setting/label/work-dir"   Text="${work-dir}" />
+		<Word Name="setting/label/icon-path"   Text="アイコンパス" />
+		<Word Name="setting/label/tags"   Text="タグ" />
+		<Word Name="setting/label/node"   Text="備考" />
+		<Word Name="setting/check/std-stream"   Text="${std-stream}" />
 		
+		<Word Name="group/new"  Text="新規グループ" />
+		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
+		
+		<Word Name="enum/toolbar-position"                Text="ツールバー位置" />
 		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />
 		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />
 		<Word Name="enum/toolbar-position/desktop/top"    Text="デスクトップ: 上" />
@@ -78,10 +90,12 @@
 		<Word Name="enum/toolbar-position/window/right"   Text="ウィンドウ: 右" />
 		<Word Name="enum/toolbar-position/window/bottom"  Text="ウィンドウ: 下" />
 	
+		<Word Name="enum/launcher-type"      Text="アイテムの種類" />
 		<Word Name="enum/launcher-type/file" Text="ファイル" />
 		<Word Name="enum/launcher-type/uri"  Text="URI" />
 		<Word Name="enum/launcher-type/pe"   Text="組み込み" />
 	
+		<Word Name="enum/icon-size"        Text="アイコンサイズ" />
 		<Word Name="enum/icon-size/small"  Text="小" />
 		<Word Name="enum/icon-size/normal" Text="中" />
 		<Word Name="enum/icon-size/big"    Text="大" />

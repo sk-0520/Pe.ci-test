@@ -427,10 +427,23 @@ namespace PeMain.Data
 				ExecuteFile(logger, language, mainSetting, this, parentForm);
 			}
 		}
-		public void Increment(string workDirPath = null, string option = null)
+		
+		void IncrementList(List<string> list, string value) 
+		{
+			if(!string.IsNullOrEmpty(value)) {
+				var index = list.FindIndex(s => s == value);
+				if(index != -1) {
+					list.RemoveAt(index);
+				}
+				list.Insert(0, value);
+			}	
+		}
+		public void Increment(string option = null, string workDirPath = null)
 		{
 			LauncherHistory.ExecuteCount += 1;
 			LauncherHistory.DateHistory.UpdateUTC = DateTime.UtcNow;
+			IncrementList(LauncherHistory.Options, option);
+			IncrementList(LauncherHistory.WorkDirs, workDirPath);
 		}
 	}
 	

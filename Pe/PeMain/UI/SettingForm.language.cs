@@ -41,17 +41,23 @@ namespace PeMain.UI
 		void ApplyLanguageLauncher()
 		{
 			this.selecterLauncher.SetLanguage(Language);
-			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
 			this.groupLauncherType.Text = Language["setting/group/item-type"];
 			this.selectLauncherType_file.Text = EnumLang.ToText(LauncherType.File, Language);
 			this.selectLauncherType_uri.Text = EnumLang.ToText(LauncherType.URI, Language);
 			this.selectLauncherStdStream.Text = Language["setting/check/std-stream"];
+			this.labelLauncherName.Text = Language["setting/label/item-name"];
+			this.labelLauncherCommand.Text = Language["setting/label/command"];
+			this.labelLauncherOption.Text = Language["setting/label/option"];
+			this.labelLauncherWorkDirPath.Text = Language["setting/label/work-dir"];
+			this.labelLauncherIconPath.Text = Language["setting/label/icon-path"];
+			this.labelLauncherTag.Text = Language["setting/label/tags"];
+			this.labelLauncherNote.Text = Language["setting/label/node"];
 		}
 		
 		void ApplyLanguageToolbar()
 		{
 			this.selecterToolbar.SetLanguage(Language);
-			
+			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
 			this.selectToolbarVisible.Text = Language["common/label/visible"];
 		}
 		

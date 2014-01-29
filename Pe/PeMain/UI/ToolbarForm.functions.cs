@@ -143,7 +143,7 @@ namespace PeMain.UI
 			if(MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
 				// グループが存在しなければグループを作っておく
 				var toolbarGroupItem = new ToolbarGroupItem();
-				toolbarGroupItem.Name = Language["setting/toolbar/add-group"];
+				toolbarGroupItem.Name = Language["group/new"];
 				MainSetting.Toolbar.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 			
@@ -495,7 +495,7 @@ namespace PeMain.UI
 				if(form.ShowDialog(this) == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;
 					if(ExecuteItem(editedItem)) {
-						launcherItem.Increment(editedItem.WorkDirPath, editedItem.Option);
+						launcherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
 					}
 				}
 			}

@@ -47,7 +47,6 @@ namespace PeMain.UI
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
-			this.commandLauncherCommandSetter = new System.Windows.Forms.Button();
 			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
@@ -73,16 +72,6 @@ namespace PeMain.UI
 			this.groupLauncherType = new System.Windows.Forms.GroupBox();
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
-			this.pageCommand = new System.Windows.Forms.TabPage();
-			this.labelCommandHotkey = new System.Windows.Forms.Label();
-			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
-			this.labelCommandIcon = new System.Windows.Forms.Label();
-			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
-			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
-			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
-			this.titleCommandHideTime = new System.Windows.Forms.Label();
-			this.commandCommandFont = new System.Windows.Forms.Button();
-			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
 			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -106,6 +95,16 @@ namespace PeMain.UI
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
 			this.commandToolbarFont = new System.Windows.Forms.Button();
 			this.labelToolbarFonr = new System.Windows.Forms.Label();
+			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.labelCommandHotkey = new System.Windows.Forms.Label();
+			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
+			this.labelCommandIcon = new System.Windows.Forms.Label();
+			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
+			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
+			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
+			this.titleCommandHideTime = new System.Windows.Forms.Label();
+			this.commandCommandFont = new System.Windows.Forms.Button();
+			this.titleCommandFont = new System.Windows.Forms.Label();
 			this.pageNote = new System.Windows.Forms.TabPage();
 			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
@@ -123,8 +122,6 @@ namespace PeMain.UI
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).BeginInit();
 			this.groupLauncherType.SuspendLayout();
-			this.pageCommand.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.pageToolbar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -134,6 +131,8 @@ namespace PeMain.UI
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.toolToolbarGroup.SuspendLayout();
+			this.pageCommand.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -243,7 +242,6 @@ namespace PeMain.UI
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherCommandSetter);
 			this.splitContainer1.Panel2.Controls.Add(this.selectLauncherStdStream);
 			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherOption);
 			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherOption);
@@ -286,15 +284,6 @@ namespace PeMain.UI
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
-			// 
-			// commandLauncherCommandSetter
-			// 
-			this.commandLauncherCommandSetter.Location = new System.Drawing.Point(225, 68);
-			this.commandLauncherCommandSetter.Name = "commandLauncherCommandSetter";
-			this.commandLauncherCommandSetter.Size = new System.Drawing.Size(75, 23);
-			this.commandLauncherCommandSetter.TabIndex = 13;
-			this.commandLauncherCommandSetter.Text = "{COMMAND}";
-			this.commandLauncherCommandSetter.UseVisualStyleBackColor = true;
 			// 
 			// selectLauncherStdStream
 			// 
@@ -526,106 +515,6 @@ namespace PeMain.UI
 			this.selectLauncherType_file.Text = "{ITEM_FILE}";
 			this.selectLauncherType_file.UseVisualStyleBackColor = true;
 			this.selectLauncherType_file.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
-			// 
-			// pageCommand
-			// 
-			this.pageCommand.Controls.Add(this.labelCommandHotkey);
-			this.pageCommand.Controls.Add(this.inputCommandHotkey);
-			this.pageCommand.Controls.Add(this.labelCommandIcon);
-			this.pageCommand.Controls.Add(this.selectCommandIcon);
-			this.pageCommand.Controls.Add(this.inputCommandHideTime);
-			this.pageCommand.Controls.Add(this.selectCommandTopmost);
-			this.pageCommand.Controls.Add(this.titleCommandHideTime);
-			this.pageCommand.Controls.Add(this.commandCommandFont);
-			this.pageCommand.Controls.Add(this.titleCommandFont);
-			this.pageCommand.Location = new System.Drawing.Point(4, 24);
-			this.pageCommand.Name = "pageCommand";
-			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCommand.Size = new System.Drawing.Size(734, 310);
-			this.pageCommand.TabIndex = 2;
-			this.pageCommand.Text = "{COMMAND}";
-			this.pageCommand.UseVisualStyleBackColor = true;
-			// 
-			// labelCommandHotkey
-			// 
-			this.labelCommandHotkey.Location = new System.Drawing.Point(35, 109);
-			this.labelCommandHotkey.Name = "labelCommandHotkey";
-			this.labelCommandHotkey.Size = new System.Drawing.Size(100, 23);
-			this.labelCommandHotkey.TabIndex = 16;
-			this.labelCommandHotkey.Text = "{HOT KEY}";
-			// 
-			// inputCommandHotkey
-			// 
-			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
-			this.inputCommandHotkey.Cursor = System.Windows.Forms.Cursors.Arrow;
-			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputCommandHotkey.Language = null;
-			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
-			this.inputCommandHotkey.Modifiers = System.Windows.Forms.Keys.None;
-			this.inputCommandHotkey.Name = "inputCommandHotkey";
-			this.inputCommandHotkey.ReadOnly = true;
-			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 27);
-			this.inputCommandHotkey.TabIndex = 15;
-			this.inputCommandHotkey.Text = "";
-			// 
-			// labelCommandIcon
-			// 
-			this.labelCommandIcon.Location = new System.Drawing.Point(40, 187);
-			this.labelCommandIcon.Name = "labelCommandIcon";
-			this.labelCommandIcon.Size = new System.Drawing.Size(100, 23);
-			this.labelCommandIcon.TabIndex = 14;
-			this.labelCommandIcon.Text = "{ICON}";
-			// 
-			// selectCommandIcon
-			// 
-			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectCommandIcon.FormattingEnabled = true;
-			this.selectCommandIcon.Location = new System.Drawing.Point(146, 190);
-			this.selectCommandIcon.Name = "selectCommandIcon";
-			this.selectCommandIcon.Size = new System.Drawing.Size(121, 23);
-			this.selectCommandIcon.TabIndex = 13;
-			// 
-			// inputCommandHideTime
-			// 
-			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 76);
-			this.inputCommandHideTime.Name = "inputCommandHideTime";
-			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
-			this.inputCommandHideTime.TabIndex = 5;
-			// 
-			// selectCommandTopmost
-			// 
-			this.selectCommandTopmost.Location = new System.Drawing.Point(36, 160);
-			this.selectCommandTopmost.Name = "selectCommandTopmost";
-			this.selectCommandTopmost.Size = new System.Drawing.Size(104, 24);
-			this.selectCommandTopmost.TabIndex = 4;
-			this.selectCommandTopmost.Text = "{TOPMOST}";
-			this.selectCommandTopmost.UseVisualStyleBackColor = true;
-			// 
-			// titleCommandHideTime
-			// 
-			this.titleCommandHideTime.Location = new System.Drawing.Point(35, 78);
-			this.titleCommandHideTime.Name = "titleCommandHideTime";
-			this.titleCommandHideTime.Size = new System.Drawing.Size(100, 23);
-			this.titleCommandHideTime.TabIndex = 2;
-			this.titleCommandHideTime.Text = "{HIDE TIME}";
-			// 
-			// commandCommandFont
-			// 
-			this.commandCommandFont.Location = new System.Drawing.Point(156, 23);
-			this.commandCommandFont.Name = "commandCommandFont";
-			this.commandCommandFont.Size = new System.Drawing.Size(171, 23);
-			this.commandCommandFont.TabIndex = 1;
-			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
-			this.commandCommandFont.UseVisualStyleBackColor = true;
-			this.commandCommandFont.Click += new System.EventHandler(this.CommandCommandFont_Click);
-			// 
-			// titleCommandFont
-			// 
-			this.titleCommandFont.Location = new System.Drawing.Point(35, 28);
-			this.titleCommandFont.Name = "titleCommandFont";
-			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
-			this.titleCommandFont.TabIndex = 0;
-			this.titleCommandFont.Text = "{FONT}";
 			// 
 			// pageToolbar
 			// 
@@ -880,6 +769,106 @@ namespace PeMain.UI
 			this.labelToolbarFonr.TabIndex = 5;
 			this.labelToolbarFonr.Text = "{FONT}";
 			// 
+			// pageCommand
+			// 
+			this.pageCommand.Controls.Add(this.labelCommandHotkey);
+			this.pageCommand.Controls.Add(this.inputCommandHotkey);
+			this.pageCommand.Controls.Add(this.labelCommandIcon);
+			this.pageCommand.Controls.Add(this.selectCommandIcon);
+			this.pageCommand.Controls.Add(this.inputCommandHideTime);
+			this.pageCommand.Controls.Add(this.selectCommandTopmost);
+			this.pageCommand.Controls.Add(this.titleCommandHideTime);
+			this.pageCommand.Controls.Add(this.commandCommandFont);
+			this.pageCommand.Controls.Add(this.titleCommandFont);
+			this.pageCommand.Location = new System.Drawing.Point(4, 24);
+			this.pageCommand.Name = "pageCommand";
+			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
+			this.pageCommand.Size = new System.Drawing.Size(734, 310);
+			this.pageCommand.TabIndex = 2;
+			this.pageCommand.Text = "{COMMAND}";
+			this.pageCommand.UseVisualStyleBackColor = true;
+			// 
+			// labelCommandHotkey
+			// 
+			this.labelCommandHotkey.Location = new System.Drawing.Point(35, 109);
+			this.labelCommandHotkey.Name = "labelCommandHotkey";
+			this.labelCommandHotkey.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandHotkey.TabIndex = 16;
+			this.labelCommandHotkey.Text = "{HOT KEY}";
+			// 
+			// inputCommandHotkey
+			// 
+			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
+			this.inputCommandHotkey.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputCommandHotkey.Language = null;
+			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
+			this.inputCommandHotkey.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputCommandHotkey.Name = "inputCommandHotkey";
+			this.inputCommandHotkey.ReadOnly = true;
+			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 27);
+			this.inputCommandHotkey.TabIndex = 15;
+			this.inputCommandHotkey.Text = "";
+			// 
+			// labelCommandIcon
+			// 
+			this.labelCommandIcon.Location = new System.Drawing.Point(40, 187);
+			this.labelCommandIcon.Name = "labelCommandIcon";
+			this.labelCommandIcon.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandIcon.TabIndex = 14;
+			this.labelCommandIcon.Text = "{ICON}";
+			// 
+			// selectCommandIcon
+			// 
+			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectCommandIcon.FormattingEnabled = true;
+			this.selectCommandIcon.Location = new System.Drawing.Point(146, 190);
+			this.selectCommandIcon.Name = "selectCommandIcon";
+			this.selectCommandIcon.Size = new System.Drawing.Size(121, 23);
+			this.selectCommandIcon.TabIndex = 13;
+			// 
+			// inputCommandHideTime
+			// 
+			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 76);
+			this.inputCommandHideTime.Name = "inputCommandHideTime";
+			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
+			this.inputCommandHideTime.TabIndex = 5;
+			// 
+			// selectCommandTopmost
+			// 
+			this.selectCommandTopmost.Location = new System.Drawing.Point(36, 160);
+			this.selectCommandTopmost.Name = "selectCommandTopmost";
+			this.selectCommandTopmost.Size = new System.Drawing.Size(104, 24);
+			this.selectCommandTopmost.TabIndex = 4;
+			this.selectCommandTopmost.Text = "{TOPMOST}";
+			this.selectCommandTopmost.UseVisualStyleBackColor = true;
+			// 
+			// titleCommandHideTime
+			// 
+			this.titleCommandHideTime.Location = new System.Drawing.Point(35, 78);
+			this.titleCommandHideTime.Name = "titleCommandHideTime";
+			this.titleCommandHideTime.Size = new System.Drawing.Size(100, 23);
+			this.titleCommandHideTime.TabIndex = 2;
+			this.titleCommandHideTime.Text = "{HIDE TIME}";
+			// 
+			// commandCommandFont
+			// 
+			this.commandCommandFont.Location = new System.Drawing.Point(156, 23);
+			this.commandCommandFont.Name = "commandCommandFont";
+			this.commandCommandFont.Size = new System.Drawing.Size(171, 23);
+			this.commandCommandFont.TabIndex = 1;
+			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
+			this.commandCommandFont.UseVisualStyleBackColor = true;
+			this.commandCommandFont.Click += new System.EventHandler(this.CommandCommandFont_Click);
+			// 
+			// titleCommandFont
+			// 
+			this.titleCommandFont.Location = new System.Drawing.Point(35, 28);
+			this.titleCommandFont.Name = "titleCommandFont";
+			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
+			this.titleCommandFont.TabIndex = 0;
+			this.titleCommandFont.Text = "{FONT}";
+			// 
 			// pageNote
 			// 
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
@@ -974,8 +963,6 @@ namespace PeMain.UI
 			this.splitContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).EndInit();
 			this.groupLauncherType.ResumeLayout(false);
-			this.pageCommand.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.pageToolbar.ResumeLayout(false);
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel2.ResumeLayout(false);
@@ -988,13 +975,14 @@ namespace PeMain.UI
 			this.toolStripContainer1.PerformLayout();
 			this.toolToolbarGroup.ResumeLayout(false);
 			this.toolToolbarGroup.PerformLayout();
+			this.pageCommand.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.Button commandLauncherCommandSetter;
 		private System.Windows.Forms.Label labelCommandHotkey;
 		private PeMain.UI.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;

@@ -126,7 +126,7 @@ namespace PeMain.UI
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
-			ToolbarAddGroup(Language["setting/toolbar/add-group"]);
+			ToolbarAddGroup(Language["group/new"]);
 		}
 		
 		void ToolToolbarGroup_addItem_Click(object sender, EventArgs e)
