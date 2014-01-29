@@ -69,6 +69,22 @@ namespace PeMain.Data
 			return word.Text;
 		}
 		
+		private Dictionary<string, string> GetSystemMap()
+		{
+			var nowDateTime = DateTime.Now;
+			var systemMap = new Dictionary<string, string>() {
+				{ "PE", Literal.programName },
+				{ "Y", nowDateTime.Year.ToString() },
+				{ "M", nowDateTime.Month.ToString() },
+				{ "D", nowDateTime.Day.ToString() },
+				{ "h", nowDateTime.Hour.ToString() },
+				{ "m", nowDateTime.Minute.ToString() },
+				{ "s", nowDateTime.Second.ToString() },
+			};
+			
+			return systemMap;
+		}
+		
 		/// <summary>
 		/// 変換済み文字列の取得。
 		/// 
@@ -76,7 +92,7 @@ namespace PeMain.Data
 		/// </summary>
 		public string this[string key, Dictionary<string, string> map = null]
 		{
-			get 
+			get
 			{
 				var text = getPlain(key);
 				if(text.Any(c => c == '$')) {
@@ -84,10 +100,7 @@ namespace PeMain.Data
 					text = text.ReplaceRange("${", "}", s => getWord(Define, s).Text);
 				}
 				if(text.Any(c => c == '@')) {
-					var systemMap = new Dictionary<string, string>() {
-						{ "PE", Literal.programName },
-					};
-					
+					var systemMap = GetSystemMap();
 					Dictionary<string, string> useMap;
 					if(map == null) {
 						useMap = systemMap;
