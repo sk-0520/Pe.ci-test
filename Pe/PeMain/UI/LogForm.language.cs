@@ -19,6 +19,8 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			Debug.Assert(Language != null);
+			
+			Text = Language["window/log"];
 		}
 	}
 }

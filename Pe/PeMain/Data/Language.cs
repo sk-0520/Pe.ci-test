@@ -74,15 +74,30 @@ namespace PeMain.Data
 		/// 
 		/// 定義済み文字列は展開される。
 		/// </summary>
-		public string this[string key]
+		public string this[string key, Dictionary<string, string> map = null]
 		{
 			get 
 			{
 				var text = getPlain(key);
 				if(text.Any(c => c == '$')) {
 					// ${...}
-					var replacedText = text.ReplaceRange("${", "}", s => getWord(Define, s).Text);
-					return replacedText;
+					text = text.ReplaceRange("${", "}", s => getWord(Define, s).Text);
+				}
+				if(text.Any(c => c == '@')) {
+					var systemMap = new Dictionary<string, string>() {
+						{ "PE", Literal.programName },
+					};
+					
+					Dictionary<string, string> useMap;
+					if(map == null) {
+						useMap = systemMap;
+					} else {
+						useMap = map;
+						foreach(var pair in systemMap) {
+							useMap[pair.Key] = pair.Value;
+						}
+					}
+					text = text.ReplaceRangeFromDictionary("@[", "]", useMap);
 				}
 				
 				return text;

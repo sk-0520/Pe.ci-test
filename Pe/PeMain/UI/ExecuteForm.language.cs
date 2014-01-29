@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace PeMain.UI
@@ -17,6 +18,11 @@ namespace PeMain.UI
 		{
 			Debug.Assert(Language != null);
 			
+			var map = new Dictionary<string, string>() {
+				{ "ITEM", LauncherItem.Name },
+			};
+			
+			Text = Language["window/execute", map];
 			this.commandSubmit.Text= Language["common/button/ok"];
 			this.commandCancel.Text = Language["common/button/cancel"];
 			

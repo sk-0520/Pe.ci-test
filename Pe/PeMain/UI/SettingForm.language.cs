@@ -29,7 +29,7 @@ namespace PeMain.UI
 		{
 			this.groupMainLog.Text = Language["setting/group/log"];
 			this.labelMainLanguage.Text = Language["setting/label/language"];
-			this.selectLogVisible.Text = Language["setting/check/visible"];
+			this.selectLogVisible.Text = Language["common/label/visible"];
 			this.selectLogAddShow.Text = Language["setting/check/add-show"];
 		}
 		
@@ -52,6 +52,7 @@ namespace PeMain.UI
 		{
 			this.selecterToolbar.SetLanguage(Language);
 			
+			this.selectToolbarVisible.Text = Language["common/label/visible"];
 		}
 		
 		void ApplyLanguageDisplay()
@@ -67,6 +68,8 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			Debug.Assert(Language != null);
+			
+			Text = Language["window/setting"];
 			
 			this.commandSubmit.Text= Language["common/button/ok"];
 			this.commandCancel.Text = Language["common/button/cancel"];

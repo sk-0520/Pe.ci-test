@@ -212,21 +212,19 @@ namespace PeMain.UI
 			// 
 			// toolLog_save
 			// 
-			this.toolLog_save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolLog_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
-			this.toolLog_save.Size = new System.Drawing.Size(23, 22);
+			this.toolLog_save.Size = new System.Drawing.Size(73, 22);
 			this.toolLog_save.Text = "{SAVE}";
 			this.toolLog_save.ToolTipText = "toolLog_save";
 			// 
 			// toolLog_clear
 			// 
-			this.toolLog_clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolLog_clear.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
-			this.toolLog_clear.Size = new System.Drawing.Size(23, 22);
+			this.toolLog_clear.Size = new System.Drawing.Size(80, 22);
 			this.toolLog_clear.Text = "{CLEAR}";
 			this.toolLog_clear.ToolTipText = "toolLog_clear";
 			// 

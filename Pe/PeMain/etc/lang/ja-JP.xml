@@ -9,11 +9,12 @@
 		<Word Name="exit"        Text="終了" />
 		<Word Name="open-ui"     Text="..." />
 		<Word Name="visible"     Text="表示する" />
-		<Word Name="topmost"     Text="最前面表示" />
+		<Word Name="topmost"     Text="最前面で表示する" />
 		<Word Name="option"      Text="オプション" />
 		<Word Name="work-dir"    Text="作業フォルダ" />
-		<Word Name="std-stream"  Text="標準入力取得" />
-		<Word Name="edit-env"    Text="環境変数編集" />
+		<Word Name="std-stream"  Text="標準入力を取得する" />
+		<Word Name="edit-env"    Text="環境変数を編集する" />
+		<Word Name="font"        Text="フォント" />
 	</Define>
 	<Words>
 		<Word Name="common/button/ok"         Text="${ok}" />
@@ -22,6 +23,14 @@
 		<Word Name="common/menu/exit"         Text="${exit}(&amp;X)" />
 		<Word Name="common/label/topmost"     Text="${topmost}" />
 		<Word Name="common/menu/topmost"      Text="${topmost}(&amp;T)" />
+		<Word Name="common/label/font"        Text="${font}" />
+		<Word Name="common/label/visible"     Text="${visible}" />
+		
+		<Word Name="window/toolbar"   Text="@[PE]" />
+		<Word Name="window/log"       Text="ログ" />
+		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
+		<Word Name="window/stream"    Text="@[ITEM]の実行出力" />
+		<Word Name="window/setting"   Text="@[PE] 設定" />
 		
 		<Word Name="main/menu/window"          Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/window/toolbar"  Text="ツールバー(&amp;T)" />
@@ -29,17 +38,17 @@
 		<Word Name="main/menu/setting"         Text="設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"           Text="バージョン情報(&amp;A) ${open-ui}" />
 		
-		<Word Name="toolbar/menu/file/execute"    Text="実行" />
-		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行" />
-		<Word Name="toolbar/menu/file/path"       Text="パス" />
-		<Word Name="toolbar/menu/file/ls"         Text="ファイル" />
+		<Word Name="toolbar/menu/file/execute"    Text="実行(&amp;S)" />
+		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行(&amp;E)" />
+		<Word Name="toolbar/menu/file/path"       Text="パス(&amp;P)" />
+		<Word Name="toolbar/menu/file/ls"         Text="ファイル(&amp;F)" />
 		
-		<Word Name="toolbar/menu/file/path/open-parent-dir"  Text="親フォルダを開く" />
-		<Word Name="toolbar/menu/file/path/open-work-dir"    Text="作業フォルダを開く" />
-		<Word Name="toolbar/menu/file/path/copy-command"     Text="コマンドをコピー" />
-		<Word Name="toolbar/menu/file/path/copy-parent-dir"  Text="親フォルダパスをコピー" />
-		<Word Name="toolbar/menu/file/path/copy-work-dir"    Text="作業フォルダパスをコピー" />
-		<Word Name="toolbar/menu/file/path/property"         Text="プロパティ" />
+		<Word Name="toolbar/menu/file/path/open-parent-dir"  Text="親フォルダを開く(&amp;O)" />
+		<Word Name="toolbar/menu/file/path/open-work-dir"    Text="作業フォルダを開く(&amp;W)" />
+		<Word Name="toolbar/menu/file/path/copy-command"     Text="コマンドをコピー(&amp;C)" />
+		<Word Name="toolbar/menu/file/path/copy-parent-dir"  Text="親フォルダパスをコピー(&amp;O)" />
+		<Word Name="toolbar/menu/file/path/copy-work-dir"    Text="作業フォルダパスをコピー(&amp;W)" />
+		<Word Name="toolbar/menu/file/path/property"         Text="プロパティ(&amp;P)" />
 
 		<Word Name="execute/tab/basic"         Text="基本指定" />
 		<Word Name="execute/tab/env"           Text="環境変数" />
@@ -55,11 +64,9 @@
 		<Word Name="setting/tab/display"  Text="ディスプレイ" />
 		<Word Name="setting/tab/note"     Text="ノート" />
 		<Word Name="setting/label/language"   Text="使用言語" />
-		<Word Name="setting/group/log"        Text="ログ" />
-		<Word Name="setting/check/visible"    Text="${visible}" />
+		<Word Name="setting/group/log"        Text="ログ設定" />
 		<Word Name="setting/check/add-show"   Text="追加されるたびに表示する" />
 		<Word Name="setting/group/item-type"  Text="アイテムの種類" />
-		<Word Name="setting/check/std-stream"  Text="${std-stream}" />
 		
 		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />
 		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />

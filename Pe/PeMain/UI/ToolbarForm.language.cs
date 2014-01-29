@@ -20,6 +20,7 @@ namespace PeMain.UI
 		{
 			Debug.Assert(Language != null);
 			
+			Text = Language["window/toolbar"];
 		}
 	}
 }

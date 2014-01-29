@@ -18,10 +18,11 @@ namespace PeMain
 	/// </summary>
 	public static class Literal
 	{
+		public const string programName = "Pe";
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
 		/// </summary>
-		private const string dirRootName = "Pe";
+		private const string dirRootName = programName;
 		
 		public const string mainSettingFileName = "mainsetting.xml";
 		

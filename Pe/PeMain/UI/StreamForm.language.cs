@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace PeMain.UI
@@ -16,6 +17,12 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			Debug.Assert(Language != null);
+			
+			var map = new Dictionary<string, string>() {
+				{ "ITEM", LauncherItem.Name },
+			};
+			
+			Text = Language["window/stream", map];
 		}
 	}
 }
