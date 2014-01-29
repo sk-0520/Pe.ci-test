@@ -10,7 +10,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 using PI.Windows;
 
 namespace PeMain.UI
@@ -18,7 +20,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm.
 	/// </summary>
-	public partial class ToolbarForm : AppbarForm
+	public partial class ToolbarForm : AppbarForm, ISetSettingData
 	{
 		public ToolbarForm()
 		{

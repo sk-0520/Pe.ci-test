@@ -489,7 +489,8 @@ namespace PeMain.UI
 		void ExecuteExItem(LauncherItem launcherItem)
 		{
 			using(var form = new ExecuteForm()) {
-				form.SetSettingData(Language, this.MainSetting, launcherItem);
+				form.SetParameter(launcherItem);
+				form.SetSettingData(Language, this.MainSetting);
 				form.TopMost = TopMost;
 				if(form.ShowDialog(this) == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;

@@ -76,6 +76,7 @@
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\EnumLang.cs" />
     <Compile Include="Logic\ILogger.cs" />
+    <Compile Include="Logic\ISetSettingData.cs" />
     <Compile Include="Logic\ItemData.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

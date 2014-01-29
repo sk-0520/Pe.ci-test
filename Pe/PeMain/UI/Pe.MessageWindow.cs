@@ -10,12 +10,14 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+using PeMain.Logic;
+
 namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_MessageWindow.
 	/// </summary>
-	public partial class MessageWindow : Form
+	public partial class MessageWindow : Form, ISetSettingData
 	{
 		private Pe _parent;
 		

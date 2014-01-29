@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// </summary>
 	partial class MessageWindow
 	{
-		public void SetSettingData(MainSetting mainSetting)
+		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			MainSetting = mainSetting;
 			

@@ -18,11 +18,15 @@ namespace PeMain.UI
 {
 	public partial class ExecuteForm
 	{
-		public void SetSettingData(Language language, MainSetting mainSetting, LauncherItem launcherItem)
+		public void SetParameter(LauncherItem launcherItem)
+		{
+			LauncherItem = launcherItem;
+		}
+		
+		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
 			this.MainSetting = mainSetting;
-			LauncherItem = launcherItem;
 			
 			ApplySetting();
 		}

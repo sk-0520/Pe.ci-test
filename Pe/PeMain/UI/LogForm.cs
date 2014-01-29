@@ -18,7 +18,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LogForm.
 	/// </summary>
-	public partial class LogForm : Form, ILogger
+	public partial class LogForm : Form, ILogger, ISetSettingData
 	{
 		public LogForm()
 		{

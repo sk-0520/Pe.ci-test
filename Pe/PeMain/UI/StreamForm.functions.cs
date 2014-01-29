@@ -17,12 +17,15 @@ namespace PeMain.UI
 {
 	public partial class StreamForm
 	{
-		public void SetSettingData(Language language, MainSetting mainSetting, Process process, LauncherItem launcherItem)
+		public void SetParameter(Process process, LauncherItem launcherItem)
 		{
-			Language = language;
-			this.MainSetting = mainSetting;
 			Process = process;
 			LauncherItem = launcherItem;
+		}
+		public void SetSettingData(Language language, MainSetting mainSetting)
+		{
+			Language = language;
+			MainSetting = mainSetting;
 			
 			ApplySetting();
 		}

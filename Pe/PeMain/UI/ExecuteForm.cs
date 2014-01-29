@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ExecuteForm.
 	/// </summary>
-	public partial class ExecuteForm : Form
+	public partial class ExecuteForm : Form, ISetSettingData
 	{
 		public ExecuteForm()
 		{

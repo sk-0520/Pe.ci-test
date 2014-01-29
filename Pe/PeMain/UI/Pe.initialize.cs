@@ -66,7 +66,7 @@ namespace PeMain.UI
 		void InitializeMessage(string[] args, List<LogItem> initLog)
 		{
 			this._messageWindow = new MessageWindow(this);
-			this._messageWindow.SetSettingData(this._mainSetting);
+			this._messageWindow.SetSettingData(this._language, this._mainSetting);
 		}
 		
 		MenuItem[] CreateWindowMenu()

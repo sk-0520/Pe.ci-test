@@ -10,13 +10,14 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of StreamForm.
 	/// </summary>
-	public partial class StreamForm : Form
+	public partial class StreamForm : Form, ISetSettingData
 	{
 		public StreamForm()
 		{
