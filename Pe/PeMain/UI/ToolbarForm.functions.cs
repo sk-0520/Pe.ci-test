@@ -119,7 +119,15 @@ namespace PeMain.UI
 				
 				if(IsDockingMode) {
 					DesktopDockType = ToDockType(MainSetting.Toolbar.ToolbarPosition);
+					if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
+						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+						this.toolLauncher.Dock = DockStyle.Fill;
+					} else {
+						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
+						this.toolLauncher.Dock = DockStyle.Left;
+					}
 				} else {
+					this.toolLauncher.Dock = DockStyle.Top;
 					DesktopDockType = DesktopDockType.None;
 					if(MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 						Location = MainSetting.Toolbar.FloatLocation;
@@ -182,8 +190,16 @@ namespace PeMain.UI
 			} else {
 				Size = new Size(minSize.Width, MainSetting.Toolbar.FloatSize.Height);
 			}
+			
 			if(IsDockingMode) {
-				BarSize = new Size(BarSize.Width, Size.Height);
+				BarSize = new Size(Size.Width, Size.Height);
+			} else {
+				if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
+					Size = new Size(MainSetting.Toolbar.FloatSize.Width, 1);
+				} else {
+					Size = new Size(1, MainSetting.Toolbar.FloatSize.Height);
+				}
+				this.AutoSize = true;
 			}
 		}
 		
@@ -353,10 +369,14 @@ namespace PeMain.UI
 			var posFloatItem = new ToolStripMenuItem();
 			var posTopItem = new ToolStripMenuItem();
 			var posBottomItem = new ToolStripMenuItem();
+			var posLeftItem = new ToolStripMenuItem();
+			var posRightItem = new ToolStripMenuItem();
 			var topmostItem = new ToolStripMenuItem();
 			result.Add(posFloatItem);
 			result.Add(posTopItem);
 			result.Add(posBottomItem);
+			//result.Add(posLeftItem);
+			//result.Add(posRightItem);
 			result.Add(new ToolStripSeparator());
 			result.Add(topmostItem);
 			
@@ -381,6 +401,21 @@ namespace PeMain.UI
 				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopBottom;
 				ApplySettingPosition();
 			};
+			// デスクトップ：左
+			posLeftItem.Name = menuNameMainPosDesktopLeft;
+			posLeftItem.Text = ToolbarPosition.DesktopLeft.ToText(Language);
+			posLeftItem.Click += (object sender, EventArgs e) => {
+				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopLeft;
+				ApplySettingPosition();
+			};
+			// デスクトップ：右
+			posRightItem.Name = menuNameMainPosDesktopRight;
+			posRightItem.Text = ToolbarPosition.DesktopRight.ToText(Language);
+			posRightItem.Click += (object sender, EventArgs e) => {
+				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopRight;
+				ApplySettingPosition();
+			};
+			
 			// TODO: 左右は現状怪しいので処理しない
 			// 最前面表示
 			topmostItem.Name = menuNameMainTopmost;
