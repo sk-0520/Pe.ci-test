@@ -45,6 +45,7 @@
 		<Word Name="main/menu/about"           Text="@[PE] 情報(&amp;A) ${open-ui}" />
 		
 		<Word Name="toolbar/main/text" Text="ツールメニュー" />
+		<Word Name="toolbar/menu/main/auto-hide" Text="${auto-hide}(&amp;H)" />
 
 		<Word Name="toolbar/menu/file/execute"    Text="実行(&amp;S)" />
 		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行(&amp;E)" />
@@ -57,6 +58,7 @@
 		<Word Name="toolbar/menu/file/path/copy-parent-dir"  Text="親フォルダパスをコピー(&amp;O)" />
 		<Word Name="toolbar/menu/file/path/copy-work-dir"    Text="作業フォルダパスをコピー(&amp;W)" />
 		<Word Name="toolbar/menu/file/path/property"         Text="プロパティ(&amp;P)" />
+		<Word Name="toolbar/menu/file/ls/not-child-files"    Text="下位ファイルなし" />
 
 		<Word Name="execute/tab/basic"         Text="基本指定" />
 		<Word Name="execute/tab/env"           Text="環境変数" />

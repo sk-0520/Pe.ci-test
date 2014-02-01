@@ -373,7 +373,7 @@ namespace PeMain.UI
 					}
 				} else {
 					var menuItem = new ToolStripMenuItem();
-					menuItem.Text = Language["toolbar/menu/not-child-files"];
+					menuItem.Text = Language["toolbar/menu/file/ls/not-child-files"];
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				}
@@ -453,6 +453,7 @@ namespace PeMain.UI
 			var posLeftItem = new ToolStripMenuItem();
 			var posRightItem = new ToolStripMenuItem();
 			var topmostItem = new ToolStripMenuItem();
+			var autoHideItem = new ToolStripMenuItem();
 			result.Add(posFloatItem);
 			result.Add(posTopItem);
 			result.Add(posBottomItem);
@@ -460,6 +461,7 @@ namespace PeMain.UI
 			result.Add(posRightItem);
 			result.Add(new ToolStripSeparator());
 			result.Add(topmostItem);
+			//result.Add(autoHideItem);
 			
 			// フロート
 			posFloatItem.Name = menuNameMainPosDesktopFloat;
@@ -497,7 +499,6 @@ namespace PeMain.UI
 				ApplySettingPosition();
 			};
 			
-			// TODO: 左右は現状怪しいので処理しない
 			// 最前面表示
 			topmostItem.Name = menuNameMainTopmost;
 			topmostItem.Text = Language["common/menu/topmost"];
@@ -505,6 +506,15 @@ namespace PeMain.UI
 				MainSetting.Toolbar.Topmost = !topmostItem.Checked;
 				ApplySettingTopmost();
 			};
+			
+			// 
+			autoHideItem.Name = menuNameMainAutoHide;
+			autoHideItem.Text = Language["toolbar/menu/main/auto-hide"];
+			autoHideItem.Click += (object sender, EventArgs e) => {
+				MainSetting.Toolbar.AutoHide = !autoHideItem.Checked;
+				ApplySettingPosition();
+			};
+			
 			
 			return result.ToArray();
 		}
