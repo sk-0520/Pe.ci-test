@@ -83,11 +83,7 @@ namespace PeMain.UI
 		{
 			Debug.Assert(Language != null);
 			
-			Text = Language["window/setting"];
-			
-			this.commandSubmit.Text= Language["common/button/ok"];
-			this.commandCancel.Text = Language["common/button/cancel"];
-			
+			DialogUtility.SetDefaultText(this, Language, Language["window/setting"]);
 			
 			ApplyLanguageTab();
 			ApplyLanguageMain();

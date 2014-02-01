@@ -20,9 +20,9 @@
 		<Word Name="toolbar/auto-hide"  Text="自動的に隠す" />
 	</Define>
 	<Words>
-		<Word Name="common/button/ok"           Text="${ok}" />
-		<Word Name="common/button/cancel"       Text="${cancel}" />
-		<Word Name="common/button/exit"         Text="${exit}" />
+		<Word Name="common/command/ok"           Text="${ok}" />
+		<Word Name="common/command/cancel"       Text="${cancel}" />
+		<Word Name="common/command/exit"         Text="${exit}" />
 		<Word Name="common/menu/exit"           Text="${exit}(&amp;X)" />
 		<Word Name="common/label/topmost"       Text="${topmost}" />
 		<Word Name="common/menu/topmost"        Text="${topmost}(&amp;T)" />
@@ -30,7 +30,7 @@
 		<Word Name="common/label/visible"       Text="${visible}" />
 		<Word Name="common/label/remove"        Text="${remove}" />
 		<Word Name="common/label/edit"          Text="${edit}" />
-		<Word Name="common/button/default-font" Text="デフォルトフォント" />
+		<Word Name="common/command/default-font" Text="デフォルトフォント" />
 		
 		<Word Name="window/toolbar"   Text="@[PE]" />
 		<Word Name="window/log"       Text="ログ" />

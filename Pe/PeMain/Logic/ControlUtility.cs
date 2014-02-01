@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Navigation;
+using PeMain.Data;
 using PeUtility;
 
 namespace PeMain.Logic
@@ -52,7 +53,23 @@ namespace PeMain.Logic
 				}
 			}
 		}
+		
+		public static void SetDefaultText(Form target, Language language, string title)
+		{
+			target.Text = title;
+			
+			var acceptButton = target.AcceptButton as Button;
+			if(acceptButton != null) {
+				acceptButton.Text = language["common/command/ok"];
+			}
+			
+			var cancelButton = target.CancelButton as Button;
+			if(cancelButton != null) {
+				cancelButton.Text = language["common/command/cancel"];
+			}
+		}
 	}
+	
 	public static class TreeViewUtility
 	{
 		public static List<TreeNode> GetChildrenNodes(this TreeView treeView)

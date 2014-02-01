@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+using PeMain.Logic;
+
 namespace PeMain.UI
 {
 	public partial class ExecuteForm
@@ -22,9 +24,7 @@ namespace PeMain.UI
 				{ "ITEM", LauncherItem.Name },
 			};
 			
-			Text = Language["window/execute", map];
-			this.commandSubmit.Text= Language["common/button/ok"];
-			this.commandCancel.Text = Language["common/button/cancel"];
+			DialogUtility.SetDefaultText(this, Language, Language["window/execute", map]);
 			
 			this.envUpdate.SetLanguage(Language);
 			this.envRemove.SetLanguage(Language);
