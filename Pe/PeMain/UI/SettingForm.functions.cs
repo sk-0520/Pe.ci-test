@@ -32,7 +32,7 @@ namespace PeMain.UI
 		
 		void SetViewMessage(Control viewControl, FontSetting fontSetting)
 		{
-			string viewText = Language["common/font-view"];
+			string viewText = Language["common/button/default-font"];
 			if(fontSetting != null && !fontSetting.IsDefault) {
 				viewText = string.Format("{0} {1}", fontSetting.Family, fontSetting.Height);
 			}

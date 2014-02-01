@@ -73,6 +73,7 @@ namespace PeMain.UI
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -86,6 +87,7 @@ namespace PeMain.UI
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
+			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.labelToolbarIcon = new System.Windows.Forms.Label();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
 			this.labelToolbarPosition = new System.Windows.Forms.Label();
@@ -94,7 +96,7 @@ namespace PeMain.UI
 			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
 			this.commandToolbarFont = new System.Windows.Forms.Button();
-			this.labelToolbarFonr = new System.Windows.Forms.Label();
+			this.labelToolbarFont = new System.Windows.Forms.Label();
 			this.pageCommand = new System.Windows.Forms.TabPage();
 			this.labelCommandHotkey = new System.Windows.Forms.Label();
 			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
@@ -102,9 +104,9 @@ namespace PeMain.UI
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
-			this.titleCommandHideTime = new System.Windows.Forms.Label();
+			this.labelCommandHideTime = new System.Windows.Forms.Label();
 			this.commandCommandFont = new System.Windows.Forms.Button();
-			this.titleCommandFont = new System.Windows.Forms.Label();
+			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.pageNote = new System.Windows.Forms.TabPage();
 			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
@@ -112,8 +114,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
-			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
@@ -125,6 +125,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).BeginInit();
 			this.groupLauncherType.SuspendLayout();
 			this.pageToolbar.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.Panel2.SuspendLayout();
@@ -138,7 +139,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -533,13 +533,20 @@ namespace PeMain.UI
 			this.pageToolbar.Controls.Add(this.selectToolbarAutoHide);
 			this.pageToolbar.Controls.Add(this.selectToolbarTopmost);
 			this.pageToolbar.Controls.Add(this.commandToolbarFont);
-			this.pageToolbar.Controls.Add(this.labelToolbarFonr);
+			this.pageToolbar.Controls.Add(this.labelToolbarFont);
 			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.pageToolbar.Name = "pageToolbar";
 			this.pageToolbar.Size = new System.Drawing.Size(734, 310);
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
+			// 
+			// inputToolbarTextWidth
+			// 
+			this.inputToolbarTextWidth.Location = new System.Drawing.Point(133, 170);
+			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
+			this.inputToolbarTextWidth.Size = new System.Drawing.Size(120, 23);
+			this.inputToolbarTextWidth.TabIndex = 17;
 			// 
 			// selectToolbarShowText
 			// 
@@ -695,6 +702,14 @@ namespace PeMain.UI
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
+			// labelToolbarTextWidth
+			// 
+			this.labelToolbarTextWidth.Location = new System.Drawing.Point(23, 170);
+			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
+			this.labelToolbarTextWidth.Size = new System.Drawing.Size(100, 23);
+			this.labelToolbarTextWidth.TabIndex = 12;
+			this.labelToolbarTextWidth.Text = "{TEXT}";
+			// 
 			// labelToolbarIcon
 			// 
 			this.labelToolbarIcon.Location = new System.Drawing.Point(23, 128);
@@ -766,13 +781,13 @@ namespace PeMain.UI
 			this.commandToolbarFont.UseVisualStyleBackColor = true;
 			this.commandToolbarFont.Click += new System.EventHandler(this.CommandToolbarFont_Click);
 			// 
-			// labelToolbarFonr
+			// labelToolbarFont
 			// 
-			this.labelToolbarFonr.Location = new System.Drawing.Point(27, 22);
-			this.labelToolbarFonr.Name = "labelToolbarFonr";
-			this.labelToolbarFonr.Size = new System.Drawing.Size(100, 23);
-			this.labelToolbarFonr.TabIndex = 5;
-			this.labelToolbarFonr.Text = "{FONT}";
+			this.labelToolbarFont.Location = new System.Drawing.Point(27, 22);
+			this.labelToolbarFont.Name = "labelToolbarFont";
+			this.labelToolbarFont.Size = new System.Drawing.Size(100, 23);
+			this.labelToolbarFont.TabIndex = 5;
+			this.labelToolbarFont.Text = "{FONT}";
 			// 
 			// pageCommand
 			// 
@@ -782,9 +797,9 @@ namespace PeMain.UI
 			this.pageCommand.Controls.Add(this.selectCommandIcon);
 			this.pageCommand.Controls.Add(this.inputCommandHideTime);
 			this.pageCommand.Controls.Add(this.selectCommandTopmost);
-			this.pageCommand.Controls.Add(this.titleCommandHideTime);
+			this.pageCommand.Controls.Add(this.labelCommandHideTime);
 			this.pageCommand.Controls.Add(this.commandCommandFont);
-			this.pageCommand.Controls.Add(this.titleCommandFont);
+			this.pageCommand.Controls.Add(this.labelCommandFont);
 			this.pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.pageCommand.Name = "pageCommand";
 			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
@@ -848,13 +863,13 @@ namespace PeMain.UI
 			this.selectCommandTopmost.Text = "{TOPMOST}";
 			this.selectCommandTopmost.UseVisualStyleBackColor = true;
 			// 
-			// titleCommandHideTime
+			// labelCommandHideTime
 			// 
-			this.titleCommandHideTime.Location = new System.Drawing.Point(35, 78);
-			this.titleCommandHideTime.Name = "titleCommandHideTime";
-			this.titleCommandHideTime.Size = new System.Drawing.Size(100, 23);
-			this.titleCommandHideTime.TabIndex = 2;
-			this.titleCommandHideTime.Text = "{HIDE TIME}";
+			this.labelCommandHideTime.Location = new System.Drawing.Point(35, 78);
+			this.labelCommandHideTime.Name = "labelCommandHideTime";
+			this.labelCommandHideTime.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandHideTime.TabIndex = 2;
+			this.labelCommandHideTime.Text = "{HIDE TIME}";
 			// 
 			// commandCommandFont
 			// 
@@ -866,13 +881,13 @@ namespace PeMain.UI
 			this.commandCommandFont.UseVisualStyleBackColor = true;
 			this.commandCommandFont.Click += new System.EventHandler(this.CommandCommandFont_Click);
 			// 
-			// titleCommandFont
+			// labelCommandFont
 			// 
-			this.titleCommandFont.Location = new System.Drawing.Point(35, 28);
-			this.titleCommandFont.Name = "titleCommandFont";
-			this.titleCommandFont.Size = new System.Drawing.Size(100, 23);
-			this.titleCommandFont.TabIndex = 0;
-			this.titleCommandFont.Text = "{FONT}";
+			this.labelCommandFont.Location = new System.Drawing.Point(35, 28);
+			this.labelCommandFont.Name = "labelCommandFont";
+			this.labelCommandFont.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandFont.TabIndex = 0;
+			this.labelCommandFont.Text = "{FONT}";
 			// 
 			// pageNote
 			// 
@@ -944,21 +959,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// labelToolbarTextWidth
-			// 
-			this.labelToolbarTextWidth.Location = new System.Drawing.Point(23, 170);
-			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
-			this.labelToolbarTextWidth.Size = new System.Drawing.Size(100, 23);
-			this.labelToolbarTextWidth.TabIndex = 12;
-			this.labelToolbarTextWidth.Text = "{TEXT}";
-			// 
-			// inputToolbarTextWidth
-			// 
-			this.inputToolbarTextWidth.Location = new System.Drawing.Point(133, 170);
-			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
-			this.inputToolbarTextWidth.Size = new System.Drawing.Size(120, 23);
-			this.inputToolbarTextWidth.TabIndex = 17;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -984,6 +984,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).EndInit();
 			this.groupLauncherType.ResumeLayout(false);
 			this.pageToolbar.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).EndInit();
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -1001,7 +1002,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).EndInit();
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.Label labelToolbarTextWidth;
@@ -1060,7 +1060,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.ComboBox selectToolbarIcon;
 		private System.Windows.Forms.Label labelToolbarIcon;
 		private System.Windows.Forms.CheckBox selectToolbarVisible;
-		private System.Windows.Forms.Label labelToolbarFonr;
+		private System.Windows.Forms.Label labelToolbarFont;
 		private System.Windows.Forms.Button commandToolbarFont;
 		private System.Windows.Forms.CheckBox selectToolbarTopmost;
 		private System.Windows.Forms.SplitContainer splitContainer1;
@@ -1068,10 +1068,10 @@ namespace PeMain.UI
 		private System.Windows.Forms.TabPage pageDisplay;
 		private System.Windows.Forms.TabPage pageToolbar;
 		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
-		private System.Windows.Forms.Label titleCommandHideTime;
+		private System.Windows.Forms.Label labelCommandHideTime;
 		private System.Windows.Forms.CheckBox selectCommandTopmost;
 		private System.Windows.Forms.Button commandCommandFont;
-		private System.Windows.Forms.Label titleCommandFont;
+		private System.Windows.Forms.Label labelCommandFont;
 		private System.Windows.Forms.ErrorProvider errorProvider;
 		private System.Windows.Forms.TabPage pageCommand;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

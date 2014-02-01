@@ -140,7 +140,9 @@ namespace PeMain.UI
 		{
 			Debug.Assert(MainSetting != null);
 			
-			this.toolLauncher.Font = MainSetting.Toolbar.FontSetting.Font;
+			if(!MainSetting.Toolbar.FontSetting.IsDefault) {
+				this.toolLauncher.Font = MainSetting.Toolbar.FontSetting.Font;
+			}
 		}
 		void ApplySettingVisible()
 		{
