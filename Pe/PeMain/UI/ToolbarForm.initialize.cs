@@ -27,6 +27,9 @@ namespace PeMain.UI
 				margin.leftWidth = -1;
 				//API.DwmExtendFrameIntoClientArea(Handle, ref margin);
 			}
+			
+			this._menuGroup = new ContextMenu();
+			ContextMenu = this._menuGroup;
 		}
 		
 		void Initialize()

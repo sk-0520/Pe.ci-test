@@ -36,15 +36,8 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.menuGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.toolLauncher = new PeMain.UI.ToolbarToolStrip();
 			this.SuspendLayout();
-			// 
-			// menuGroup
-			// 
-			this.menuGroup.Name = "menuGroup";
-			this.menuGroup.Size = new System.Drawing.Size(61, 4);
 			// 
 			// toolLauncher
 			// 
@@ -66,7 +59,6 @@ namespace PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(180, 19);
-			this.ContextMenuStrip = this.menuGroup;
 			this.Controls.Add(this.toolLauncher);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -82,6 +74,5 @@ namespace PeMain.UI
 			this.PerformLayout();
 		}
 		private PeMain.UI.ToolbarToolStrip toolLauncher;
-		private System.Windows.Forms.ContextMenuStrip menuGroup;
 	}
 }

@@ -160,16 +160,16 @@ namespace PeMain.UI
 			}
 			
 			// グループメニュー基盤構築
-			this.menuGroup.Items.Clear();
+			this._menuGroup.MenuItems.Clear();
 			foreach(var groupName in MainSetting.Toolbar.ToolbarGroup.Groups) {
-				var menuItem = new ToolStripMenuItem();
+				var menuItem = new MenuItem();
 				
 				menuItem.Text = groupName.Name;
 				menuItem.Tag = groupName;
 
 				menuItem.Click += new EventHandler(ToolbarForm_MenuItem_Click);
 				
-				this.menuGroup.Items.Add(menuItem);
+				this._menuGroup.MenuItems.Add(menuItem);
 			}
 			
 			SelectedGroup(MainSetting.Toolbar.ToolbarGroup.Groups.First());
@@ -225,8 +225,8 @@ namespace PeMain.UI
 		
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
-			var toolItem = this.menuGroup.Items
-				.Cast<ToolStripMenuItem>()
+			var toolItem = this._menuGroup.MenuItems
+				.Cast<MenuItem>()
 				.Transform(item => item.Checked = false)
 				.Single(item => (ToolbarGroupItem)item.Tag == groupItem)
 			;
