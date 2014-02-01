@@ -116,6 +116,7 @@ namespace PeMain.UI
 			toolbarSetting.AutoHide = this.selectToolbarAutoHide.Checked;
 			toolbarSetting.Visible = this.selectToolbarVisible.Checked;
 			toolbarSetting.ShowText = this.selectToolbarShowText.Checked;
+			toolbarSetting.TextWidth = (int)this.inputToolbarTextWidth.Value;
 			
 			toolbarSetting.FontSetting = this._toolbarFont;
 			toolbarSetting.IconSize = (IconSize)this.selectToolbarIcon.SelectedValue;

@@ -112,6 +112,8 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
+			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
@@ -136,6 +138,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -518,8 +521,10 @@ namespace PeMain.UI
 			// 
 			// pageToolbar
 			// 
+			this.pageToolbar.Controls.Add(this.inputToolbarTextWidth);
 			this.pageToolbar.Controls.Add(this.selectToolbarShowText);
 			this.pageToolbar.Controls.Add(this.splitContainer2);
+			this.pageToolbar.Controls.Add(this.labelToolbarTextWidth);
 			this.pageToolbar.Controls.Add(this.labelToolbarIcon);
 			this.pageToolbar.Controls.Add(this.selectToolbarIcon);
 			this.pageToolbar.Controls.Add(this.labelToolbarPosition);
@@ -939,6 +944,21 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// labelToolbarTextWidth
+			// 
+			this.labelToolbarTextWidth.Location = new System.Drawing.Point(23, 170);
+			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
+			this.labelToolbarTextWidth.Size = new System.Drawing.Size(100, 23);
+			this.labelToolbarTextWidth.TabIndex = 12;
+			this.labelToolbarTextWidth.Text = "{TEXT}";
+			// 
+			// inputToolbarTextWidth
+			// 
+			this.inputToolbarTextWidth.Location = new System.Drawing.Point(133, 170);
+			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
+			this.inputToolbarTextWidth.Size = new System.Drawing.Size(120, 23);
+			this.inputToolbarTextWidth.TabIndex = 17;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -981,8 +1001,11 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label labelToolbarTextWidth;
+		private System.Windows.Forms.NumericUpDown inputToolbarTextWidth;
 		private System.Windows.Forms.Label labelCommandHotkey;
 		private PeMain.UI.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;

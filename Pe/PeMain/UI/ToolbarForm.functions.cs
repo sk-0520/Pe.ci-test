@@ -115,7 +115,6 @@ namespace PeMain.UI
 		void ApplySettingPosition()
 		{
 			if(MainSetting.Toolbar.Visible) {
-				
 				ItemSizeToFormSize();
 				
 				if(IsDockingMode) {
@@ -139,6 +138,10 @@ namespace PeMain.UI
 		
 		void ApplySettingVisible()
 		{
+			var floatSize = MainSetting.Toolbar.FloatSize;
+			if(!Visible && MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+				Size = floatSize;
+			}
 			Visible = MainSetting.Toolbar.Visible;
 		}
 		
@@ -192,10 +195,10 @@ namespace PeMain.UI
 			minSize.Height += Padding.Vertical;
 			MinimumSize = minSize;
 			
-			Size = new Size(minSize.Width, minSize.Height);
+			//Size = new Size(minSize.Width, minSize.Height);
 			
 			if(IsDockingMode) {
-				BarSize = new Size(Size.Width, Size.Height);
+				BarSize = new Size(minSize.Width, minSize.Height);
 			} else {
 				if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
 					Size = new Size(floatSize.Width, minSize.Height);
@@ -466,6 +469,7 @@ namespace PeMain.UI
 			if(toolSplit != null) {
 				toolSplit.DropDownButtonWidth = buttonLayout.MenuWidth;
 			}
+			toolItem.ImageScaling = ToolStripItemImageScaling.None;
 			if(showText) {
 				toolItem.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
 				toolItem.ImageAlign = ContentAlignment.MiddleLeft;
@@ -495,7 +499,7 @@ namespace PeMain.UI
 					toolItem.Image = icon.ToBitmap();
 				}
 			}
-			toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+
 			//toolItem.AutoSize = true;
 			SetButtonLayout(toolItem, MainSetting.Toolbar.IconSize, MainSetting.Toolbar.ShowText, MainSetting.Toolbar.TextWidth);
 			//var buttonLayout = GetButtonLayout();

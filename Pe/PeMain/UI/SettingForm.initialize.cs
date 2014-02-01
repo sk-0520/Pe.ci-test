@@ -67,6 +67,8 @@ namespace PeMain.UI
 			this._toolbarFont = toolbarSetting.FontSetting;
 			SetViewMessage(this.commandToolbarFont, this._toolbarFont);
 			
+			this.inputToolbarTextWidth.Value = toolbarSetting.TextWidth;
+			
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionItem>();
 			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
