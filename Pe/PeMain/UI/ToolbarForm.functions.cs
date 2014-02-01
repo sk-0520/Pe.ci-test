@@ -191,8 +191,8 @@ namespace PeMain.UI
 			var buttonLayout = GetButtonLayout(MainSetting.Toolbar.IconSize, MainSetting.Toolbar.ShowText, MainSetting.Toolbar.TextWidth);
 			
 			var minSize = buttonLayout.Size;
-			minSize.Width += Padding.Horizontal;
-			minSize.Height += Padding.Vertical;
+			minSize.Width += this.toolLauncher.Margin.Horizontal + Margin.Horizontal;
+			minSize.Height += this.toolLauncher.Margin.Vertical + Margin.Vertical;
 			MinimumSize = minSize;
 			
 			//Size = new Size(minSize.Width, minSize.Height);
