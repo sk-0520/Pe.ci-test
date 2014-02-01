@@ -22,7 +22,8 @@ namespace PeMain.UI
 		void AttachmentIconSize(ComboBox control, IconSize defaultData)
 		{
 			var iconSizeList = new List<IconSizeItem>();
-			foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big, IconSize.Large }) {
+			//foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big, IconSize.Large }) {
+			foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big }) {
 				var data = new IconSizeItem(value, Language);
 				iconSizeList.Add(data);
 			}

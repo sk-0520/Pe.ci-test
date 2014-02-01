@@ -8,6 +8,8 @@
 		<Word Name="retry"       Text="再試行" />
 		<Word Name="exit"        Text="終了" />
 		<Word Name="open-ui"     Text="..." />
+		<Word Name="remove"      Text="削除" />
+		<Word Name="edit"        Text="編集" />
 		<Word Name="visible"     Text="表示する" />
 		<Word Name="topmost"     Text="最前面で表示する" />
 		<Word Name="option"      Text="オプション" />
@@ -25,6 +27,8 @@
 		<Word Name="common/menu/topmost"      Text="${topmost}(&amp;T)" />
 		<Word Name="common/label/font"        Text="${font}" />
 		<Word Name="common/label/visible"     Text="${visible}" />
+		<Word Name="common/label/remove"      Text="${remove}" />
+		<Word Name="common/label/edit"        Text="${edit}" />
 		
 		<Word Name="window/toolbar"   Text="@[PE]" />
 		<Word Name="window/log"       Text="ログ" />
@@ -78,6 +82,17 @@
 		
 		<Word Name="group/new"  Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
+
+		<Word Name="item-selecter/create"    Text="新規アイテム" />
+		<Word Name="item-selecter/remove"    Text="アイテム削除" />
+		<Word Name="item-selecter/filtering" Text="アイテム抽出" />
+		<Word Name="item-selecter/type/full" Text="自動抽出" />
+		<Word Name="item-selecter/type/name" Text="アイテム名から選択" />
+		<Word Name="item-selecter/type/tag"  Text="タグから抽出"  />
+		
+		<Word Name="env-updater/key"   Text="キー" />
+		<Word Name="env-updater/value" Text="値" />
+		
 		
 		<Word Name="enum/toolbar-position"                Text="ツールバー位置" />
 		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />

@@ -45,6 +45,12 @@ namespace PeMain.UI
 			public LauncherItem LauncherItem  { get; set; }
 			public IEnumerable<string> Files { get; set; }
 		}
+		
+		struct ButtonLayout
+		{
+			public Size Size { get; set; }
+			public int MenuWidth { get; set; }
+		}
 	}
 }
 

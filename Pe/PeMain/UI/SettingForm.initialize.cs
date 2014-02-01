@@ -109,8 +109,8 @@ namespace PeMain.UI
 			
 			InitializeMainSetting(mainSetting);
 			InitializeLauncher(mainSetting.Launcher);
-			InitializeCommand(mainSetting.Command);
 			InitializeToolbar(mainSetting.Toolbar);
+			InitializeCommand(mainSetting.Command);
 		}
 		
 		void Initialize(Language language, MainSetting mainSetting)

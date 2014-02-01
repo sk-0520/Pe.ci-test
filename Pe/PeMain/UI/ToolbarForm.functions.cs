@@ -427,8 +427,54 @@ namespace PeMain.UI
 			
 			return result.ToArray();
 		}
-
 		
+		static ButtonLayout GetButtonLayout(IconSize iconSize, bool showText, int textWidth)
+		{
+			var iconBox = iconSize.ToSize();
+			var systemBorderSize = SystemInformation.Border3DSize;
+			var systemPaddingSize = SystemInformation.FixedFrameBorderSize;
+			var padding = new Padding(
+				systemBorderSize.Width + systemPaddingSize.Width, 
+				systemBorderSize.Height + systemPaddingSize.Height, 
+				systemBorderSize.Width + systemPaddingSize.Width, 
+				systemBorderSize.Height + systemPaddingSize.Height
+			);
+			var buttonSize = new Size();
+			var menuWidth = 12;
+			
+			buttonSize.Width = iconBox.Width + padding.Horizontal + menuWidth;
+			if(showText) {
+				buttonSize.Width += textWidth > 0 ? textWidth: Literal.toolbarTextWidth;
+			}
+			buttonSize.Height = iconBox.Height + padding.Vertical;
+			
+			var buttonLayout = new ButtonLayout();
+			buttonLayout.Size = buttonSize;
+			buttonLayout.MenuWidth = menuWidth;
+			return buttonLayout;
+		}
+
+		static void SetButtonLayout(ToolStripDropDownItem toolItem, IconSize iconSize, bool showText, int textWidth)
+		{
+			var toolSplit = toolItem as ToolStripSplitButton;
+			var buttonLayout = GetButtonLayout(iconSize, showText, textWidth);
+			
+			toolItem.AutoSize = false;
+			toolItem.Size = buttonLayout.Size;
+			if(toolSplit != null) {
+				toolSplit.DropDownButtonWidth = buttonLayout.MenuWidth;
+			}
+			if(showText) {
+				toolItem.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+				toolItem.ImageAlign = ContentAlignment.MiddleLeft;
+				toolItem.TextAlign = ContentAlignment.MiddleLeft;
+			} else {
+				toolItem.DisplayStyle = ToolStripItemDisplayStyle.Image;
+				toolItem.ImageAlign = ContentAlignment.MiddleCenter;
+				toolItem.TextAlign = ContentAlignment.MiddleLeft;
+			}
+		}
+			
 		ToolStripItem CreateLauncherButton(LauncherItem item)
 		{
 			ToolStripDropDownItem toolItem = null;
@@ -448,16 +494,17 @@ namespace PeMain.UI
 				}
 			}
 			toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
-			toolItem.AutoSize = true;
+			//toolItem.AutoSize = true;
+			SetButtonLayout(toolItem, MainSetting.Toolbar.IconSize, MainSetting.Toolbar.ShowText, MainSetting.Toolbar.TextWidth);
 			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);
 			//button.Padding = buttonLayout.Padding;
-			if(MainSetting.Toolbar.ShowText) {
-				toolItem.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-			} else {
-				toolItem.DisplayStyle = ToolStripItemDisplayStyle.Image;
-			}
+			//if(MainSetting.Toolbar.ShowText) {
+			//	toolItem.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+			//} else {
+			//	toolItem.DisplayStyle = ToolStripItemDisplayStyle.Image;
+			//}
 			//button.Size = buttonLayout.ClientSize;
 			toolItem.Visible = true;
 			if(item != null) {
