@@ -35,6 +35,8 @@ namespace PeMain.UI
 			this.labelWorkDirPath.Text = Language["execute/label/work-dir"];
 			this.selectStdStream.Text  = Language["execute/check/std-stream"];
 			this.selectEnvironment.Text  = Language["execute/check/edit-env"];
+			this.groupUpdate.Text = Language["common/label/edit"];
+			this.groupRemove.Text = Language["common/label/remove"];
 		}
 	}
 }

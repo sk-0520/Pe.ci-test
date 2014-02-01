@@ -1,22 +1,23 @@
 ﻿<?xml version="1.0"?>
 <Language Name="日本語" Code="ja-JP">
 	<Define>
-		<Word Name="yes"         Text="はい" />
-		<Word Name="no"          Text="いいえ" />
-		<Word Name="cancel"      Text="キャンセル" />
-		<Word Name="ok"          Text="OK" />
-		<Word Name="retry"       Text="再試行" />
-		<Word Name="exit"        Text="終了" />
-		<Word Name="open-ui"     Text="..." />
-		<Word Name="remove"      Text="削除" />
-		<Word Name="edit"        Text="編集" />
-		<Word Name="visible"     Text="表示する" />
-		<Word Name="topmost"     Text="最前面で表示する" />
-		<Word Name="option"      Text="オプション" />
-		<Word Name="work-dir"    Text="作業フォルダ" />
-		<Word Name="std-stream"  Text="標準入力を取得する" />
-		<Word Name="edit-env"    Text="環境変数を編集する" />
-		<Word Name="font"        Text="フォント" />
+		<Word Name="yes"                Text="はい" />
+		<Word Name="no"                 Text="いいえ" />
+		<Word Name="cancel"             Text="キャンセル" />
+		<Word Name="ok"                 Text="OK" />
+		<Word Name="retry"              Text="再試行" />
+		<Word Name="exit"               Text="終了" />
+		<Word Name="open-ui"            Text="..." />
+		<Word Name="remove"             Text="削除" />
+		<Word Name="edit"               Text="編集" />
+		<Word Name="visible"            Text="表示する" />
+		<Word Name="topmost"            Text="最前面で表示する" />
+		<Word Name="option"             Text="オプション" />
+		<Word Name="work-dir"           Text="作業フォルダ" />
+		<Word Name="std-stream"         Text="標準入力を取得する" />
+		<Word Name="edit-env"           Text="環境変数を編集する" />
+		<Word Name="font"               Text="フォント" />
+		<Word Name="toolbar/auto-hide"  Text="自動的に隠す" />
 	</Define>
 	<Words>
 		<Word Name="common/button/ok"         Text="${ok}" />
@@ -69,18 +70,22 @@
 		<Word Name="setting/tab/command"  Text="コマンド" />
 		<Word Name="setting/tab/display"  Text="ディスプレイ" />
 		<Word Name="setting/tab/note"     Text="ノート" />
+		
 		<Word Name="setting/label/language"   Text="使用言語" />
 		<Word Name="setting/group/log"        Text="ログ設定" />
 		<Word Name="setting/check/add-show"   Text="追加されるたびに表示する" />
 		<Word Name="setting/group/item-type"  Text="アイテムの種類" />
 		<Word Name="setting/label/item-name"  Text="アイテム名" />
-		<Word Name="setting/label/command"  Text="コマンド" />
+		<Word Name="setting/label/command"    Text="コマンド" />
 		<Word Name="setting/label/option"     Text="${option}" />
 		<Word Name="setting/label/work-dir"   Text="${work-dir}" />
-		<Word Name="setting/label/icon-path"   Text="アイコンパス" />
-		<Word Name="setting/label/tags"   Text="タグ" />
-		<Word Name="setting/label/node"   Text="備考" />
-		<Word Name="setting/check/std-stream"   Text="${std-stream}" />
+		<Word Name="setting/label/icon-path"  Text="アイコンパス" />
+		<Word Name="setting/label/tags"       Text="タグ" />
+		<Word Name="setting/label/note"       Text="備考" />
+		<Word Name="setting/check/std-stream" Text="${std-stream}" />
+		<Word Name="setting/check/auto-hide"  Text="${toolbar/auto-hide}" />
+		<Word Name="setting/check/show-text"  Text="テキストを表示する" />
+		<Word Name="setting/label/text-width" Text="テキストの長さ" />
 		
 		<Word Name="group/new"  Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />

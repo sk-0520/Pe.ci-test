@@ -136,6 +136,12 @@ namespace PeMain.UI
 			}
 		}
 		
+		void ApplySettingFont()
+		{
+			Debug.Assert(MainSetting != null);
+			
+			this.toolLauncher.Font = MainSetting.Toolbar.FontSetting.Font;
+		}
 		void ApplySettingVisible()
 		{
 			var floatSize = MainSetting.Toolbar.FloatSize;
@@ -150,6 +156,7 @@ namespace PeMain.UI
 			Debug.Assert(MainSetting != null);
 			
 			ApplyLanguage();
+			ApplySettingFont();
 			
 			Font = MainSetting.Toolbar.FontSetting.Font;
 			if(MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {

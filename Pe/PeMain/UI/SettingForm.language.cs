@@ -51,7 +51,7 @@ namespace PeMain.UI
 			this.labelLauncherWorkDirPath.Text = Language["setting/label/work-dir"];
 			this.labelLauncherIconPath.Text = Language["setting/label/icon-path"];
 			this.labelLauncherTag.Text = Language["setting/label/tags"];
-			this.labelLauncherNote.Text = Language["setting/label/node"];
+			this.labelLauncherNote.Text = Language["setting/label/note"];
 		}
 		
 		void ApplyLanguageToolbar()
@@ -59,6 +59,11 @@ namespace PeMain.UI
 			this.selecterToolbar.SetLanguage(Language);
 			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
 			this.selectToolbarVisible.Text = Language["common/label/visible"];
+			this.selectToolbarShowText.Text = Language["setting/check/show-text"];
+			this.labelToolbarIcon.Text = Language["enum/icon-size"];
+			this.selectToolbarAutoHide.Text = Language["setting/check/auto-hide"];
+			this.labelToolbarTextWidth.Text = Language["setting/label/text-width"];
+			this.labelToolbarPosition.Text = Language["enum/toolbar-position"];
 		}
 		
 		void ApplyLanguageDisplay()
