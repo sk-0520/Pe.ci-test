@@ -34,7 +34,7 @@ namespace PeMain.UI
 		
 		void ToolbarForm_MenuItem_Click(object sender, EventArgs e)
 		{
-			var menuItem = (ToolStripItem)sender;
+			var menuItem = (MenuItem)sender;
 			var group = (ToolbarGroupItem)menuItem.Tag;
 			SelectedGroup(group);
 		}
