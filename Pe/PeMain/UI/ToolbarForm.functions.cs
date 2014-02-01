@@ -322,6 +322,70 @@ namespace PeMain.UI
 			return result.ToArray();
 		}
 		
+		ToolStripMenuItem GetFileListItem(string path, bool isDir)
+		{
+			var menuItem = new ToolStripMenuItem();
+			menuItem.Text = Path.GetFileName(path);
+			using(var icon = IconLoader.Load(path, IconSize.Small, 0)) {
+				menuItem.Image = icon.ToBitmap();
+			}
+			
+			// アクセス権から使用可・不可
+			//if(isDir) {
+			//	var access = Directory.GetAccessControl(path);
+			//} else {
+			//	var access = File.GetAccessControl(path);
+			//}
+			
+			if(isDir) {
+				menuItem.DropDownOpening += (object sender, EventArgs e) => {
+					LoadFileList(menuItem, path);
+				};
+			}
+			menuItem.Click += (object sender, EventArgs e) => {
+				try {
+					Process.Start(path);
+				} catch(Exception ex) {
+					Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+			};
+			return menuItem;
+		}
+		
+		void LoadFileList(ToolStripMenuItem parentItem, string parentDirPath)
+		{
+			if(parentItem.HasDropDownItems) {
+				return;
+			}
+			
+			try {
+				var dirList = Directory.GetDirectories(parentDirPath);
+				var fileList = Directory.GetFiles(parentDirPath);
+				var menuList = new List<ToolStripMenuItem>(dirList.Length + fileList.Length);
+				if(dirList.Length + fileList.Length > 0) {
+					foreach(var path in dirList) {
+						var menuItem = GetFileListItem(path, true);
+						menuList.Add(menuItem);
+					}
+					foreach(var path in fileList) {
+						var menuItem = GetFileListItem(path, false);
+						menuList.Add(menuItem);
+					}
+				} else {
+					var menuItem = new ToolStripMenuItem();
+					menuItem.Text = Language["toolbar/menu/not-child-files"];
+					menuItem.Enabled = false;
+					menuList.Add(menuItem);
+				}
+				parentItem.DropDownItems.AddRange(menuList.ToArray());
+			} catch(UnauthorizedAccessException ex) {
+				var menuItem = new ToolStripMenuItem();
+				menuItem.Text = ex.Message;
+				menuItem.Enabled = false;
+				parentItem.DropDownItems.Add(menuItem);
+			}
+		}
+		
 		ToolStripItem[] CreateFileLauncherMenuItems(LauncherItem launcherItem)
 		{
 			var result = new List<ToolStripItem>();
@@ -372,6 +436,9 @@ namespace PeMain.UI
 			// ファイル一覧
 			fileItem.Name = menuNameFiles;
 			fileItem.Text = Language["toolbar/menu/file/ls"];
+			fileItem.DropDownOpening += (object sender, EventArgs e) => {
+				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command));
+			};
 			
 			return result.ToArray();
 		}
@@ -533,8 +600,9 @@ namespace PeMain.UI
 						} else {
 							toolItem.DropDownItems[menuNameExecute].Enabled = false;
 							toolItem.DropDownItems[menuNameExecuteEx].Enabled = false;
-							toolItem.DropDownItems[menuNameFiles].Enabled = false;
 						}
+						var parentPath = Path.GetDirectoryName(item.Command);
+						toolItem.DropDownItems[menuNameFiles].Enabled = Directory.Exists(parentPath);
 					};
 				}
 			} else {
