@@ -115,6 +115,7 @@ namespace PeMain.UI
 		void ApplySettingPosition()
 		{
 			if(MainSetting.Toolbar.Visible) {
+				
 				ItemSizeToFormSize();
 				
 				if(IsDockingMode) {
@@ -127,8 +128,8 @@ namespace PeMain.UI
 						this.toolLauncher.Dock = DockStyle.Left;
 					}
 				} else {
-					this.toolLauncher.Dock = DockStyle.Top;
 					DesktopDockType = DesktopDockType.None;
+					this.toolLauncher.Dock = DockStyle.Top;
 					if(MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 						Location = MainSetting.Toolbar.FloatLocation;
 					}
@@ -181,25 +182,26 @@ namespace PeMain.UI
 		/// </summary>
 		void ItemSizeToFormSize()
 		{
-			var minSize = this.toolLauncher.Items[0].Bounds.Size;
+			var floatSize = MainSetting.Toolbar.FloatSize;
+			SetPaddingArea(MainSetting.Toolbar.ToolbarPosition);
+			
+			var buttonLayout = GetButtonLayout(MainSetting.Toolbar.IconSize, MainSetting.Toolbar.ShowText, MainSetting.Toolbar.TextWidth);
+			
+			var minSize = buttonLayout.Size;
 			minSize.Width += Padding.Horizontal;
 			minSize.Height += Padding.Vertical;
 			MinimumSize = minSize;
-			if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
-				Size = new Size(MainSetting.Toolbar.FloatSize.Width, minSize.Height);
-			} else {
-				Size = new Size(minSize.Width, MainSetting.Toolbar.FloatSize.Height);
-			}
+			
+			Size = new Size(minSize.Width, minSize.Height);
 			
 			if(IsDockingMode) {
 				BarSize = new Size(Size.Width, Size.Height);
 			} else {
 				if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
-					Size = new Size(MainSetting.Toolbar.FloatSize.Width, 1);
+					Size = new Size(floatSize.Width, minSize.Height);
 				} else {
-					Size = new Size(1, MainSetting.Toolbar.FloatSize.Height);
+					Size = new Size(minSize.Width, floatSize.Height);
 				}
-				this.AutoSize = true;
 			}
 		}
 		
@@ -375,8 +377,8 @@ namespace PeMain.UI
 			result.Add(posFloatItem);
 			result.Add(posTopItem);
 			result.Add(posBottomItem);
-			//result.Add(posLeftItem);
-			//result.Add(posRightItem);
+			result.Add(posLeftItem);
+			result.Add(posRightItem);
 			result.Add(new ToolStripSeparator());
 			result.Add(topmostItem);
 			
@@ -434,10 +436,10 @@ namespace PeMain.UI
 			var systemBorderSize = SystemInformation.Border3DSize;
 			var systemPaddingSize = SystemInformation.FixedFrameBorderSize;
 			var padding = new Padding(
-				systemBorderSize.Width + systemPaddingSize.Width, 
-				systemBorderSize.Height + systemPaddingSize.Height, 
-				systemBorderSize.Width + systemPaddingSize.Width, 
-				systemBorderSize.Height + systemPaddingSize.Height
+				systemBorderSize.Width + systemPaddingSize.Width / 2, 
+				systemBorderSize.Height + systemPaddingSize.Height / 2, 
+				systemBorderSize.Width + systemPaddingSize.Width / 2, 
+				systemBorderSize.Height + systemPaddingSize.Height / 2
 			);
 			var buttonSize = new Size();
 			var menuWidth = 12;

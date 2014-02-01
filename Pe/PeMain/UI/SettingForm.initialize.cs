@@ -69,8 +69,7 @@ namespace PeMain.UI
 			
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionItem>();
-			//foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom, }) {
-			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, }) {
+			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
 				var data = new ToolbarPositionItem(value, Language);
 				toolbarPosList.Add(data);
 			}
