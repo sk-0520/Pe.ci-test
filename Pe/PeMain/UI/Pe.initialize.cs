@@ -78,14 +78,12 @@ namespace PeMain.UI
 			menuList.Add(itemToolbar);
 			menuList.Add(itemLogger);
 			
-			itemToolbar.Text = this._language["main/menu/window/toolbar"];
 			itemToolbar.Name = menuNameWindowToolbar;
 			itemToolbar.Click += (object sender, EventArgs e) => {
 				this._toolbarForm.Visible = !this._toolbarForm.Visible;
 				this._mainSetting.Toolbar.Visible = this._toolbarForm.Visible;
 			};
 			
-			itemLogger.Text = this._language["main/menu/window/logger"];
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible; 
@@ -104,14 +102,21 @@ namespace PeMain.UI
 			var menuList = new List<MenuItem>();
 			var itemWindow = new MenuItem();
 			var itemSetting = new MenuItem();
+			var itemAbout = new MenuItem();
 			var itemExit = new MenuItem();
 			
+			menuList.Add(itemAbout);
 			menuList.Add(itemWindow);
 			menuList.Add(itemSetting);
 			menuList.Add(itemExit);
 			
+			// 情報
+			itemAbout.Name = menuNameAbout;
+			itemAbout.Click += (object sender, EventArgs e) => {
+				MessageBox.Show("デュン！");
+			};
+			
 			// ウィンドウ
-			itemWindow.Text = this._language["main/menu/window"];
 			itemWindow.Name = menuNameWindow;
 			itemWindow.MenuItems.AddRange(CreateWindowMenu());
 			itemWindow.Popup += (object sender, EventArgs e) => {
@@ -120,14 +125,12 @@ namespace PeMain.UI
 			};
 			
 			// 設定
-			itemSetting.Text = this._language["main/menu/setting"];
 			itemSetting.Name = menuNameSetting;
 			itemSetting.Click += (object sender, EventArgs e) => {
 				PauseOthers(() => OpenSetting());
 			};
 			
 			// 終了
-			itemExit.Text = this._language["common/menu/exit"];
 			itemExit.Name = menuNameExit;
 			itemExit.Click += (object sender, EventArgs e) => {
 				CloseApplication(true);
@@ -195,6 +198,8 @@ namespace PeMain.UI
 			InitializeSetting(args, initLog);
 			InitializeMessage(args, initLog);
 			InitializeUI(args, initLog);
+			
+			ApplyLanguage();
 			
 			this._logForm.PutsList(initLog, false);
 		}

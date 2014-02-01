@@ -17,6 +17,7 @@ namespace PeMain.UI
 	{
 		const string menuNameWindow = "menu_window";
 		const string menuNameSetting = "menu_setting";
+		const string menuNameAbout = "menu_about";
 		const string menuNameExit = "menu_exit";
 		
 		const string menuNameWindowToolbar = "menu_window_toolbar";

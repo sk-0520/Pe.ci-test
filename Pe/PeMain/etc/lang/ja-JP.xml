@@ -42,7 +42,7 @@
 		<Word Name="main/menu/window/toolbar"  Text="ツールバー(&amp;T)" />
 		<Word Name="main/menu/window/logger"   Text="ログ(&amp;L)" />
 		<Word Name="main/menu/setting"         Text="設定(&amp;S) ${open-ui}" />
-		<Word Name="main/menu/about"           Text="バージョン情報(&amp;A) ${open-ui}" />
+		<Word Name="main/menu/about"           Text="@[PE] 情報(&amp;A) ${open-ui}" />
 		
 		<Word Name="toolbar/main/text" Text="ツールメニュー" />
 

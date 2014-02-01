@@ -103,6 +103,7 @@ namespace PeMain.UI
 					var mainSetting = settingForm.MainSetting;
 					this._mainSetting = mainSetting;
 					InitializeLanguage(null, null);
+					ApplyLanguage();
 					this._logForm.SetSettingData(this._language, this._mainSetting);
 					this._toolbarForm.SetSettingData(this._language, this._mainSetting);
 				}
