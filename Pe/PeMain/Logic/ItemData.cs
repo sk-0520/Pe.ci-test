@@ -51,9 +51,9 @@ namespace PeMain.Logic
 	public class UseLanguageItemData<T>: ItemData<T>
 	{
 		public UseLanguageItemData(T value): base(value) { }
-		public UseLanguageItemData(T value, Language lang): base(value) 
+		public UseLanguageItemData(T value, Language language): base(value) 
 		{
-			Language = lang;
+			Language = language;
 		}
 		public Language Language { get; set; }
 	}
@@ -78,14 +78,21 @@ namespace PeMain.Logic
 		}
 	}
 	
-	public class IconSizeItem: UseLanguageItemData<IconSize>
+	public class IconSizeItemData: UseLanguageItemData<IconSize>
 	{
-		public IconSizeItem(IconSize value): base(value) { }
-		public IconSizeItem(IconSize value, Language lang): base(value, lang) { }
+		public IconSizeItemData(IconSize value): base(value) { }
+		public IconSizeItemData(IconSize value, Language language): base(value, language) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 	
+	public class ToolbarItemData: UseLanguageItemData<ToolbarItem>
+	{
+		public ToolbarItemData(ToolbarItem value): base(value) { }
+		public ToolbarItemData(ToolbarItem value, Language language): base(value, language) { }
+		
+		public override string Display { get { return Value.Name; } }
+	}
 
 	
 }

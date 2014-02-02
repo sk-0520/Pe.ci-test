@@ -21,13 +21,13 @@ namespace PeMain.UI
 	{
 		void AttachmentIconSize(ComboBox control, IconSize defaultData)
 		{
-			var iconSizeList = new List<IconSizeItem>();
+			var iconSizeDataList = new List<IconSizeItemData>();
 			//foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big, IconSize.Large }) {
 			foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big }) {
-				var data = new IconSizeItem(value, Language);
-				iconSizeList.Add(data);
+				var data = new IconSizeItemData(value, Language);
+				iconSizeDataList.Add(data);
 			}
-			control.Attachment(iconSizeList, defaultData);
+			control.Attachment(iconSizeDataList, defaultData);
 		}
 		
 		void SetViewMessage(Control viewControl, FontSetting fontSetting)
