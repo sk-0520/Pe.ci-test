@@ -346,7 +346,7 @@ namespace PeMain.UI
 		{
 			var menuItem = new ToolStripMenuItem();
 			menuItem.Text = Path.GetFileName(path);
-			using(var icon = IconLoader.Load(path, IconSize.Small, 0)) {
+			using(var icon = IconLoader.Load(path, UseToolbarItem.IconSize, 0)) {
 				menuItem.Image = icon.ToBitmap();
 			}
 			
@@ -394,6 +394,7 @@ namespace PeMain.UI
 				} else {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = Language["toolbar/menu/file/ls/not-child-files"];
+					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				}
@@ -401,6 +402,7 @@ namespace PeMain.UI
 			} catch(UnauthorizedAccessException ex) {
 				var menuItem = new ToolStripMenuItem();
 				menuItem.Text = ex.Message;
+				menuItem.Image = SystemIcons.Warning.ToBitmap();
 				menuItem.Enabled = false;
 				parentItem.DropDownItems.Add(menuItem);
 			}
@@ -534,7 +536,6 @@ namespace PeMain.UI
 				UseToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
 			};
-			
 			
 			return result.ToArray();
 		}
