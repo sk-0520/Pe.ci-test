@@ -188,18 +188,20 @@ namespace PeMain.UI
 			// 
 			// selectLogAddShow
 			// 
-			this.selectLogAddShow.Location = new System.Drawing.Point(55, 52);
+			this.selectLogAddShow.AutoSize = true;
+			this.selectLogAddShow.Location = new System.Drawing.Point(16, 52);
 			this.selectLogAddShow.Name = "selectLogAddShow";
-			this.selectLogAddShow.Size = new System.Drawing.Size(104, 24);
+			this.selectLogAddShow.Size = new System.Drawing.Size(111, 19);
 			this.selectLogAddShow.TabIndex = 1;
 			this.selectLogAddShow.Text = "{ADD_SHOW}";
 			this.selectLogAddShow.UseVisualStyleBackColor = true;
 			// 
 			// selectLogVisible
 			// 
+			this.selectLogVisible.AutoSize = true;
 			this.selectLogVisible.Location = new System.Drawing.Point(16, 22);
 			this.selectLogVisible.Name = "selectLogVisible";
-			this.selectLogVisible.Size = new System.Drawing.Size(104, 24);
+			this.selectLogVisible.Size = new System.Drawing.Size(88, 19);
 			this.selectLogVisible.TabIndex = 0;
 			this.selectLogVisible.Text = "{VISIBLE}";
 			this.selectLogVisible.UseVisualStyleBackColor = true;
@@ -215,9 +217,10 @@ namespace PeMain.UI
 			// 
 			// labelMainLanguage
 			// 
+			this.labelMainLanguage.AutoSize = true;
 			this.labelMainLanguage.Location = new System.Drawing.Point(15, 19);
 			this.labelMainLanguage.Name = "labelMainLanguage";
-			this.labelMainLanguage.Size = new System.Drawing.Size(100, 23);
+			this.labelMainLanguage.Size = new System.Drawing.Size(87, 15);
 			this.labelMainLanguage.TabIndex = 0;
 			this.labelMainLanguage.Text = "{LANGUAGE}";
 			// 
@@ -293,9 +296,10 @@ namespace PeMain.UI
 			// 
 			// selectLauncherStdStream
 			// 
+			this.selectLauncherStdStream.AutoSize = true;
 			this.selectLauncherStdStream.Location = new System.Drawing.Point(332, 93);
 			this.selectLauncherStdStream.Name = "selectLauncherStdStream";
-			this.selectLauncherStdStream.Size = new System.Drawing.Size(124, 24);
+			this.selectLauncherStdStream.Size = new System.Drawing.Size(121, 19);
 			this.selectLauncherStdStream.TabIndex = 12;
 			this.selectLauncherStdStream.Text = "{STD_STREAM}";
 			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
@@ -303,9 +307,10 @@ namespace PeMain.UI
 			// 
 			// labelLauncherOption
 			// 
+			this.labelLauncherOption.AutoSize = true;
 			this.labelLauncherOption.Location = new System.Drawing.Point(13, 121);
 			this.labelLauncherOption.Name = "labelLauncherOption";
-			this.labelLauncherOption.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherOption.Size = new System.Drawing.Size(68, 15);
 			this.labelLauncherOption.TabIndex = 10;
 			this.labelLauncherOption.Text = "{OPTION}";
 			// 
@@ -341,9 +346,10 @@ namespace PeMain.UI
 			// 
 			// labelLauncherNote
 			// 
+			this.labelLauncherNote.AutoSize = true;
 			this.labelLauncherNote.Location = new System.Drawing.Point(13, 246);
 			this.labelLauncherNote.Name = "labelLauncherNote";
-			this.labelLauncherNote.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherNote.Size = new System.Drawing.Size(54, 15);
 			this.labelLauncherNote.TabIndex = 6;
 			this.labelLauncherNote.Text = "{NOTE}";
 			// 
@@ -357,41 +363,46 @@ namespace PeMain.UI
 			// 
 			// labelLauncherTag
 			// 
+			this.labelLauncherTag.AutoSize = true;
 			this.labelLauncherTag.Location = new System.Drawing.Point(13, 217);
 			this.labelLauncherTag.Name = "labelLauncherTag";
-			this.labelLauncherTag.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherTag.Size = new System.Drawing.Size(45, 15);
 			this.labelLauncherTag.TabIndex = 4;
 			this.labelLauncherTag.Text = "{TAG}";
 			// 
 			// labelLauncherIconPath
 			// 
+			this.labelLauncherIconPath.AutoSize = true;
 			this.labelLauncherIconPath.Location = new System.Drawing.Point(13, 181);
 			this.labelLauncherIconPath.Name = "labelLauncherIconPath";
-			this.labelLauncherIconPath.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherIconPath.Size = new System.Drawing.Size(52, 15);
 			this.labelLauncherIconPath.TabIndex = 4;
 			this.labelLauncherIconPath.Text = "{ICON}";
 			// 
 			// labelLauncherWorkDirPath
 			// 
+			this.labelLauncherWorkDirPath.AutoSize = true;
 			this.labelLauncherWorkDirPath.Location = new System.Drawing.Point(13, 152);
 			this.labelLauncherWorkDirPath.Name = "labelLauncherWorkDirPath";
-			this.labelLauncherWorkDirPath.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherWorkDirPath.Size = new System.Drawing.Size(87, 15);
 			this.labelLauncherWorkDirPath.TabIndex = 4;
 			this.labelLauncherWorkDirPath.Text = "{WORK_DIR}";
 			// 
 			// labelLauncherName
 			// 
+			this.labelLauncherName.AutoSize = true;
 			this.labelLauncherName.Location = new System.Drawing.Point(13, 67);
 			this.labelLauncherName.Name = "labelLauncherName";
-			this.labelLauncherName.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherName.Size = new System.Drawing.Size(55, 15);
 			this.labelLauncherName.TabIndex = 4;
 			this.labelLauncherName.Text = "{NAME}";
 			// 
 			// labelLauncherCommand
 			// 
+			this.labelLauncherCommand.AutoSize = true;
 			this.labelLauncherCommand.Location = new System.Drawing.Point(13, 94);
 			this.labelLauncherCommand.Name = "labelLauncherCommand";
-			this.labelLauncherCommand.Size = new System.Drawing.Size(100, 23);
+			this.labelLauncherCommand.Size = new System.Drawing.Size(84, 15);
 			this.labelLauncherCommand.TabIndex = 4;
 			this.labelLauncherCommand.Text = "{COMMAND}";
 			// 
@@ -592,27 +603,30 @@ namespace PeMain.UI
 			// 
 			// selectToolbarShowText
 			// 
+			this.selectToolbarShowText.AutoSize = true;
 			this.selectToolbarShowText.Location = new System.Drawing.Point(116, 82);
 			this.selectToolbarShowText.Name = "selectToolbarShowText";
-			this.selectToolbarShowText.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarShowText.Size = new System.Drawing.Size(109, 19);
 			this.selectToolbarShowText.TabIndex = 16;
 			this.selectToolbarShowText.Text = "{SHOWTEXT}";
 			this.selectToolbarShowText.UseVisualStyleBackColor = true;
 			// 
 			// selectToolbarTopmost
 			// 
+			this.selectToolbarTopmost.AutoSize = true;
 			this.selectToolbarTopmost.Location = new System.Drawing.Point(6, 58);
 			this.selectToolbarTopmost.Name = "selectToolbarTopmost";
-			this.selectToolbarTopmost.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarTopmost.Size = new System.Drawing.Size(99, 19);
 			this.selectToolbarTopmost.TabIndex = 7;
 			this.selectToolbarTopmost.Text = "{TOPMOST}";
 			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
 			// 
 			// selectToolbarAutoHide
 			// 
+			this.selectToolbarAutoHide.AutoSize = true;
 			this.selectToolbarAutoHide.Location = new System.Drawing.Point(116, 57);
 			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
-			this.selectToolbarAutoHide.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarAutoHide.Size = new System.Drawing.Size(104, 19);
 			this.selectToolbarAutoHide.TabIndex = 7;
 			this.selectToolbarAutoHide.Text = "{AUTOHIDE}";
 			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
@@ -627,9 +641,10 @@ namespace PeMain.UI
 			// 
 			// selectToolbarVisible
 			// 
+			this.selectToolbarVisible.AutoSize = true;
 			this.selectToolbarVisible.Location = new System.Drawing.Point(6, 88);
 			this.selectToolbarVisible.Name = "selectToolbarVisible";
-			this.selectToolbarVisible.Size = new System.Drawing.Size(104, 24);
+			this.selectToolbarVisible.Size = new System.Drawing.Size(88, 19);
 			this.selectToolbarVisible.TabIndex = 8;
 			this.selectToolbarVisible.Text = "{VISIBLE}";
 			this.selectToolbarVisible.UseVisualStyleBackColor = true;
@@ -998,7 +1013,9 @@ namespace PeMain.UI
 			this.Text = "{SETTING}";
 			this.tabSetting.ResumeLayout(false);
 			this.pageMain.ResumeLayout(false);
+			this.pageMain.PerformLayout();
 			this.groupMainLog.ResumeLayout(false);
+			this.groupMainLog.PerformLayout();
 			this.pageLauncher.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1009,6 +1026,7 @@ namespace PeMain.UI
 			this.groupLauncherType.ResumeLayout(false);
 			this.pageToolbar.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).EndInit();
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel2.ResumeLayout(false);

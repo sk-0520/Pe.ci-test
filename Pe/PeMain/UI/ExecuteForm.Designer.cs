@@ -86,7 +86,7 @@ namespace PeMain.UI
 			this.inputOption.FormattingEnabled = true;
 			this.inputOption.Location = new System.Drawing.Point(117, 42);
 			this.inputOption.Name = "inputOption";
-			this.inputOption.Size = new System.Drawing.Size(473, 23);
+			this.inputOption.Size = new System.Drawing.Size(476, 23);
 			this.inputOption.TabIndex = 1;
 			// 
 			// inputWorkDirPath
@@ -96,7 +96,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath.FormattingEnabled = true;
 			this.inputWorkDirPath.Location = new System.Drawing.Point(117, 71);
 			this.inputWorkDirPath.Name = "inputWorkDirPath";
-			this.inputWorkDirPath.Size = new System.Drawing.Size(473, 23);
+			this.inputWorkDirPath.Size = new System.Drawing.Size(476, 23);
 			this.inputWorkDirPath.TabIndex = 2;
 			// 
 			// tabExecute
@@ -132,9 +132,10 @@ namespace PeMain.UI
 			// 
 			// selectStdStream
 			// 
+			this.selectStdStream.AutoSize = true;
 			this.selectStdStream.Location = new System.Drawing.Point(11, 110);
 			this.selectStdStream.Name = "selectStdStream";
-			this.selectStdStream.Size = new System.Drawing.Size(128, 24);
+			this.selectStdStream.Size = new System.Drawing.Size(121, 19);
 			this.selectStdStream.TabIndex = 8;
 			this.selectStdStream.Text = "{STD_STREAM}";
 			this.selectStdStream.UseVisualStyleBackColor = true;
@@ -143,7 +144,7 @@ namespace PeMain.UI
 			// 
 			this.commandWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandWorkDirPath.Location = new System.Drawing.Point(594, 70);
+			this.commandWorkDirPath.Location = new System.Drawing.Point(597, 70);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(30, 25);
 			this.commandWorkDirPath.TabIndex = 7;
@@ -154,7 +155,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
-			this.commandOption_dir.Location = new System.Drawing.Point(630, 41);
+			this.commandOption_dir.Location = new System.Drawing.Point(633, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_dir.TabIndex = 6;
@@ -165,7 +166,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_file.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
-			this.commandOption_file.Location = new System.Drawing.Point(594, 41);
+			this.commandOption_file.Location = new System.Drawing.Point(597, 41);
 			this.commandOption_file.Name = "commandOption_file";
 			this.commandOption_file.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_file.TabIndex = 5;
@@ -174,17 +175,19 @@ namespace PeMain.UI
 			// 
 			// labelWorkDirPath
 			// 
-			this.labelWorkDirPath.Location = new System.Drawing.Point(11, 71);
+			this.labelWorkDirPath.AutoSize = true;
+			this.labelWorkDirPath.Location = new System.Drawing.Point(11, 73);
 			this.labelWorkDirPath.Name = "labelWorkDirPath";
-			this.labelWorkDirPath.Size = new System.Drawing.Size(100, 23);
+			this.labelWorkDirPath.Size = new System.Drawing.Size(80, 15);
 			this.labelWorkDirPath.TabIndex = 4;
 			this.labelWorkDirPath.Text = "{WORKDIR}";
 			// 
 			// labelOption
 			// 
-			this.labelOption.Location = new System.Drawing.Point(11, 42);
+			this.labelOption.AutoSize = true;
+			this.labelOption.Location = new System.Drawing.Point(11, 44);
 			this.labelOption.Name = "labelOption";
-			this.labelOption.Size = new System.Drawing.Size(100, 23);
+			this.labelOption.Size = new System.Drawing.Size(68, 15);
 			this.labelOption.TabIndex = 3;
 			this.labelOption.Text = "{OPTION}";
 			// 

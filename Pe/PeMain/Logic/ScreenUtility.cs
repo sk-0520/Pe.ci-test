@@ -19,6 +19,7 @@ namespace PeMain.Logic
 	{
 		public static string ToScreenName(this Screen screen) 
 		{
+			// TODO: ディスプレイ名称
 			return screen.DeviceName;
 		}
 		public static string ToScreenName(string screenName)
