@@ -675,7 +675,7 @@ namespace PeMain.UI
 					return true;
 				}
 			} catch(Exception ex) {
-				Logger.Puts(LogType.Warning, Language["execute/exception"], ex);
+				Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
 			
 			return false;
@@ -754,6 +754,7 @@ namespace PeMain.UI
 				this.MainSetting.Launcher.Items.Add(item);
 				SelectedGroupItem.ItemNames.Add(item.Name);
 				SelectedGroup(SelectedGroupItem);
+				// TODO: 他のツールバーに教える
 			}
 		}
 		

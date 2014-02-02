@@ -65,6 +65,8 @@ namespace PeMain.UI
 			this.Name = "ToolbarForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "ToolbarForm";
+			this.Activated += new System.EventHandler(this.ToolbarForm_Activated);
+			this.Deactivate += new System.EventHandler(this.ToolbarForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ToolbarFormFormClosing);
 			this.Shown += new System.EventHandler(this.ToolbarFormShown);
 			this.LocationChanged += new System.EventHandler(this.ToolbarForm_LocationChanged);
