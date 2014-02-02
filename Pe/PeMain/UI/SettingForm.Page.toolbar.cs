@@ -13,7 +13,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -41,6 +43,41 @@ namespace PeMain.UI
 			// イメージリスト再設定
 			this.treeToolbarItemGroup.ImageList = this._imageToolbarItemGroup;
 			this.treeToolbarItemGroup.StateImageList = this._imageToolbarItemGroup;
+		}
+		
+		void ToolbarSetSelectedItem(ToolbarItem toolbarItem)
+		{
+			toolbarItem.ToolbarPosition = (ToolbarPosition)this.selectToolbarPosition.SelectedValue;
+			toolbarItem.Topmost = this.selectToolbarTopmost.Checked;
+			toolbarItem.AutoHide = this.selectToolbarAutoHide.Checked;
+			toolbarItem.Visible = this.selectToolbarVisible.Checked;
+			toolbarItem.ShowText = this.selectToolbarShowText.Checked;
+			toolbarItem.TextWidth = (int)this.inputToolbarTextWidth.Value;
+			
+			toolbarItem.IconSize = (IconSize)this.selectToolbarIcon.SelectedValue;
+		}
+		
+		void ToolbarSelectedChangeToolbarItem(ToolbarItem toolbarItem)
+		{
+			Debug.Assert(toolbarItem != null);
+			//this._toolbarLocation = toolbarSetting.FloatLocation;
+			//this._toolbarSize = toolbarSetting.FloatSize;
+			
+			this.selectToolbarPosition.SelectedValue = toolbarItem.ToolbarPosition;
+			this.selectToolbarIcon.SelectedValue = toolbarItem.IconSize;
+			
+			SetViewMessage(this.commandToolbarFont, toolbarItem.FontSetting);
+			
+			
+			this.inputToolbarTextWidth.Value = toolbarItem.TextWidth;
+			
+			// 各ON/OFF
+			this.selectToolbarAutoHide.Checked = toolbarItem.AutoHide;
+			this.selectToolbarVisible.Checked = toolbarItem.Visible;
+			this.selectToolbarTopmost.Checked = toolbarItem.Topmost;
+			this.selectToolbarShowText.Checked = toolbarItem.ShowText;
+			
+			this._toolbarSelectedToolbarItem = toolbarItem;
 		}
 		
 		TreeNode ToolbarAddGroup(string groupName)
@@ -108,20 +145,16 @@ namespace PeMain.UI
 		
 		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
 		{
-			/*
-			toolbarSetting.FloatLocation = this._toolbarLocation;
-			toolbarSetting.FloatSize = this._toolbarSize;
+			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
+			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarItemData>()) {
+				var item = itemData.Value;
+				if(toolbarSetting.Items.Contains(item)) {
+					toolbarSetting.Items.Remove(item);
+				}
+				toolbarSetting.Items.Add(item);
+			}
 			
-			toolbarSetting.ToolbarPosition = (ToolbarPosition)this.selectToolbarPosition.SelectedValue;
-			toolbarSetting.Topmost = this.selectToolbarTopmost.Checked;
-			toolbarSetting.AutoHide = this.selectToolbarAutoHide.Checked;
-			toolbarSetting.Visible = this.selectToolbarVisible.Checked;
-			toolbarSetting.ShowText = this.selectToolbarShowText.Checked;
-			toolbarSetting.TextWidth = (int)this.inputToolbarTextWidth.Value;
-			
-			toolbarSetting.FontSetting = this._toolbarFont;
-			toolbarSetting.IconSize = (IconSize)this.selectToolbarIcon.SelectedValue;
-			*/
+				
 			
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {

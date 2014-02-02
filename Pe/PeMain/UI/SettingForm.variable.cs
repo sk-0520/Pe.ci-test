@@ -32,8 +32,11 @@ namespace PeMain.UI
 		Point _toolbarLocation;
 		Size _toolbarSize;
 		*/
+		/*
 		Dictionary<string, Rectangle> _toolbarFloat = new Dictionary<string, Rectangle>();
 		Dictionary<string, FontSetting> _toolbarFont = new Dictionary<string, FontSetting>();
+		*/
+		ToolbarItem _toolbarSelectedToolbarItem = null;
 		
 	}
 }

@@ -116,13 +116,11 @@ namespace PeMain.UI
 		
 		void CommandToolbarFont_Click(object sender, EventArgs e)
 		{
-			/*
-			var fontSetting = OpenDialogFontSetting(this.commandToolbarFont, this._toolbarFont);
+			var fontSetting = OpenDialogFontSetting(this.commandToolbarFont, this._toolbarSelectedToolbarItem.FontSetting);
 			if(fontSetting != null) {
-				this._toolbarFont = fontSetting;
-				SetViewMessage(this.commandToolbarFont, this._toolbarFont);
+				this._toolbarSelectedToolbarItem.FontSetting = fontSetting;
+				SetViewMessage(this.commandToolbarFont, this._toolbarSelectedToolbarItem.FontSetting);
 			}
-			*/
 		}
 		
 		
@@ -262,6 +260,15 @@ namespace PeMain.UI
 		{
 			if(this._launcherItemEvent) {
 				LauncherInputChange();
+			}
+		}
+		
+		void SelectToolbarItem_SelectedValueChanged(object sender, EventArgs e)
+		{
+			var toolbarItem = this.selectToolbarItem.SelectedValue as ToolbarItem;
+			if(this._toolbarSelectedToolbarItem != null && toolbarItem != null) {
+				ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
+				ToolbarSelectedChangeToolbarItem(toolbarItem);
 			}
 		}
 	}

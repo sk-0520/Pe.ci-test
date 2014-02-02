@@ -92,7 +92,7 @@ namespace PeMain.Data
 	
 	public class ToolbarItem: NameItem
 	{
-		#region Equals and GetHashCode implementation
+		#region Equals and GetHashCode implementation !![ operator == ]!!
 		public override bool Equals(object obj)
 		{
 			LauncherItem item = obj as LauncherItem;

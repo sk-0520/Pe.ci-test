@@ -105,7 +105,9 @@ namespace PeMain.UI
 					InitializeLanguage(null, null);
 					ApplyLanguage();
 					this._logForm.SetSettingData(this._language, this._mainSetting);
-					this._toolbarForms.Values.Transform(f => f.SetSettingData(this._language, this._mainSetting));
+					foreach(var toolbar in this._toolbarForms.Values) {
+						toolbar.SetSettingData(this._language, this._mainSetting);
+					}
 				}
 			}
 		}

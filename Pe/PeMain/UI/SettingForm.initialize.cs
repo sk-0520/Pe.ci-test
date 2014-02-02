@@ -60,14 +60,6 @@ namespace PeMain.UI
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
 			this.selecterToolbar.SetItems(this._launcherItems);
-			/*
-			this._toolbarLocation = toolbarSetting.FloatLocation;
-			this._toolbarSize = toolbarSetting.FloatSize;
-			
-			this._toolbarFont = toolbarSetting.FontSetting;
-			SetViewMessage(this.commandToolbarFont, this._toolbarFont);
-			
-			this.inputToolbarTextWidth.Value = toolbarSetting.TextWidth;
 			
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionItem>();
@@ -75,17 +67,24 @@ namespace PeMain.UI
 				var data = new ToolbarPositionItem(value, Language);
 				toolbarPosList.Add(data);
 			}
-			this.selectToolbarPosition.Attachment(toolbarPosList, toolbarSetting.ToolbarPosition);
+			this.selectToolbarPosition.Attachment(toolbarPosList);
 			
 			// アイコンサイズ文言の項目構築
-			AttachmentIconSize(this.selectToolbarIcon, toolbarSetting.IconSize);
-			
-			// 各チェック
-			this.selectToolbarAutoHide.Checked = toolbarSetting.AutoHide;
-			this.selectToolbarVisible.Checked = toolbarSetting.Visible;
-			this.selectToolbarTopmost.Checked = toolbarSetting.Topmost;
-			this.selectToolbarShowText.Checked = toolbarSetting.ShowText;
-			*/
+			AttachmentIconSize(this.selectToolbarIcon, IconSize.Small);
+
+			ToolbarItem initToolbarItem = null;
+			var toolbarItemDataList = new List<ToolbarItemData>();
+			foreach(var toolbarItem in toolbarSetting.Items) {
+				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
+					initToolbarItem = toolbarItem;
+				}
+				var toolbarItemData = new ToolbarItemData(toolbarItem, Language);
+				toolbarItemDataList.Add(toolbarItemData);
+			}
+			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
+			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
+			this.selectToolbarItem.SelectedIndex = 0;
+			ToolbarSelectedChangeToolbarItem(initToolbarItem);
 			
 			// グループ用項目
 			this._imageToolbarItemGroup = new ImageList();
