@@ -138,11 +138,11 @@ namespace PeMain.UI
 		void ApplyScreen()
 		{
 			Debug.Assert(MainSetting != null);
-			Debug.Assert(ParentScreen != null);
+			Debug.Assert(DockScreen != null);
 			
 			UseToolbarItem = null;
 			foreach(var item in MainSetting.Toolbar.Items) {
-				if(item.IsNameEqual(ParentScreen.DeviceName)) {
+				if(item.IsNameEqual(DockScreen.DeviceName)) {
 					UseToolbarItem = item;
 					break;
 				}
@@ -150,7 +150,7 @@ namespace PeMain.UI
 			if(UseToolbarItem == null) {
 				// 新規
 				var toolbarItem = new ToolbarItem();
-				toolbarItem.Name = ParentScreen.DeviceName;
+				toolbarItem.Name = DockScreen.DeviceName;
 				MainSetting.Toolbar.Items.Add(toolbarItem);
 				UseToolbarItem = toolbarItem;
 			}

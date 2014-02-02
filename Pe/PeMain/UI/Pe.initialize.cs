@@ -199,7 +199,8 @@ namespace PeMain.UI
 			foreach(var screen in Screen.AllScreens.OrderBy(s => s.Primary)) {
 				var toolbar = new ToolbarForm();
 				toolbar.Logger = this._logForm;
-				toolbar.ParentScreen = screen;
+				toolbar.DockScreen = screen;
+				toolbar.MessageString +=  screen.DeviceName;
 				toolbar.SetSettingData(this._language, this._mainSetting);
 				this._toolbarForms.Add(screen, toolbar);
 			}
