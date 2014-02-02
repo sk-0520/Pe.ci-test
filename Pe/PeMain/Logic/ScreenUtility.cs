@@ -17,7 +17,7 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class ScreenUtility
 	{
-		public static string ToScreenName(this Screen screen) 
+		public static string ToScreenName(Screen screen) 
 		{
 			// TODO: ディスプレイ名称
 			return screen.DeviceName;
