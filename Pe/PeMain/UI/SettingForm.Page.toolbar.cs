@@ -108,6 +108,7 @@ namespace PeMain.UI
 		
 		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
 		{
+			/*
 			toolbarSetting.FloatLocation = this._toolbarLocation;
 			toolbarSetting.FloatSize = this._toolbarSize;
 			
@@ -120,6 +121,7 @@ namespace PeMain.UI
 			
 			toolbarSetting.FontSetting = this._toolbarFont;
 			toolbarSetting.IconSize = (IconSize)this.selectToolbarIcon.SelectedValue;
+			*/
 			
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {

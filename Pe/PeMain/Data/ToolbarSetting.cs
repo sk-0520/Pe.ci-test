@@ -90,16 +90,30 @@ namespace PeMain.Data
 		public List<ToolbarGroupItem> Groups { get; set; }
 	}
 	
-	
-	/// <summary>
-	/// 
-	/// </summary>
-	public class ToolbarSetting: Item
+	public class ToolbarItem: NameItem
 	{
-		public ToolbarSetting()
+		#region Equals and GetHashCode implementation
+		public override bool Equals(object obj)
+		{
+			LauncherItem item = obj as LauncherItem;
+			if(item == null) {
+				return false;
+			}
+			return IsNameEqual(item.Name);
+		}
+		
+		public override int GetHashCode()
+		{
+			//if(this.Name == null) {
+			//	return default(int);
+			//}
+			return Name.GetHashCode();
+		}
+		#endregion
+
+		public ToolbarItem()
 		{
 			FontSetting = new FontSetting();
-			ToolbarGroup = new ToolbarGroup();
 			ToolbarPosition = ToolbarPosition.DesktopFloat;
 			IconSize = IconSize.Small;
 			ShowText = false;
@@ -109,10 +123,8 @@ namespace PeMain.Data
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;
 			TextWidth = Literal.toolbarTextWidth;
+
 		}
-		
-		public ToolbarGroup ToolbarGroup { get; set; }
-		
 		/// <summary>
 		/// 表示
 		/// </summary>
@@ -157,5 +169,26 @@ namespace PeMain.Data
 		/// フォント
 		/// </summary>
 		public FontSetting FontSetting { get; set; }
+		
+		public bool IsNameEqual(string name)
+		{
+			return Name == name;
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	public class ToolbarSetting: Item
+	{
+		public ToolbarSetting()
+		{
+			ToolbarGroup = new ToolbarGroup();
+			
+			Items = new HashSet<ToolbarItem>();
+		}
+		
+		public ToolbarGroup ToolbarGroup { get; set; }
+		public HashSet<ToolbarItem> Items { get; set; }
 	}
 }

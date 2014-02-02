@@ -109,16 +109,16 @@ namespace PeMain.UI
 		
 		void ApplySettingTopmost()
 		{
-			TopMost = MainSetting.Toolbar.Topmost;
+			TopMost = UseToolbarItem.Topmost;
 		}
 		void ApplySettingPosition()
 		{
-			if(MainSetting.Toolbar.Visible) {
+			if(UseToolbarItem.Visible) {
 				ItemSizeToFormSize();
 				
 				if(IsDockingMode) {
-					DesktopDockType = ToDockType(MainSetting.Toolbar.ToolbarPosition);
-					if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
+					DesktopDockType = ToDockType(UseToolbarItem.ToolbarPosition);
+					if(IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
 						this.toolLauncher.Dock = DockStyle.Fill;
 					} else {
@@ -128,8 +128,8 @@ namespace PeMain.UI
 				} else {
 					DesktopDockType = DesktopDockType.None;
 					this.toolLauncher.Dock = DockStyle.Top;
-					if(MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-						Location = MainSetting.Toolbar.FloatLocation;
+					if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+						Location = UseToolbarItem.FloatLocation;
 					}
 				}
 			}
@@ -139,17 +139,17 @@ namespace PeMain.UI
 		{
 			Debug.Assert(MainSetting != null);
 			
-			if(!MainSetting.Toolbar.FontSetting.IsDefault) {
-				this.toolLauncher.Font = MainSetting.Toolbar.FontSetting.Font;
+			if(!UseToolbarItem.FontSetting.IsDefault) {
+				this.toolLauncher.Font = UseToolbarItem.FontSetting.Font;
 			}
 		}
 		void ApplySettingVisible()
 		{
-			var floatSize = MainSetting.Toolbar.FloatSize;
-			if(!Visible && MainSetting.Toolbar.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+			var floatSize = UseToolbarItem.FloatSize;
+			if(!Visible && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				Size = floatSize;
 			}
-			Visible = MainSetting.Toolbar.Visible;
+			Visible = UseToolbarItem.Visible;
 		}
 		
 		void ApplySetting()
@@ -159,7 +159,7 @@ namespace PeMain.UI
 			ApplyLanguage();
 			ApplySettingFont();
 			
-			Font = MainSetting.Toolbar.FontSetting.Font;
+			Font = UseToolbarItem.FontSetting.Font;
 			if(MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
 				// グループが存在しなければグループを作っておく
 				var toolbarGroupItem = new ToolbarGroupItem();
@@ -193,10 +193,10 @@ namespace PeMain.UI
 		/// </summary>
 		void ItemSizeToFormSize()
 		{
-			var floatSize = MainSetting.Toolbar.FloatSize;
-			SetPaddingArea(MainSetting.Toolbar.ToolbarPosition);
+			var floatSize = UseToolbarItem.FloatSize;
+			SetPaddingArea(UseToolbarItem.ToolbarPosition);
 			
-			var buttonLayout = GetButtonLayout(MainSetting.Toolbar.IconSize, MainSetting.Toolbar.ShowText, MainSetting.Toolbar.TextWidth);
+			var buttonLayout = GetButtonLayout(UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			
 			var minSize = buttonLayout.Size;
 			minSize.Width += this.toolLauncher.Margin.Horizontal + Margin.Horizontal;
@@ -208,7 +208,7 @@ namespace PeMain.UI
 			if(IsDockingMode) {
 				BarSize = new Size(minSize.Width, minSize.Height);
 			} else {
-				if(IsHorizonMode(MainSetting.Toolbar.ToolbarPosition)) {
+				if(IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 					Size = new Size(floatSize.Width, minSize.Height);
 				} else {
 					Size = new Size(minSize.Width, floatSize.Height);
@@ -252,7 +252,7 @@ namespace PeMain.UI
 					toolButtonList.Add(itemButton);
 				}
 			}
-			SetToolButtons(MainSetting.Toolbar.IconSize, toolButtonList);
+			SetToolButtons(UseToolbarItem.IconSize, toolButtonList);
 		}
 		
 		void OpenDir(string path)
@@ -466,35 +466,35 @@ namespace PeMain.UI
 			posFloatItem.Name = menuNameMainPosDesktopFloat;
 			posFloatItem.Text = ToolbarPosition.DesktopFloat.ToText(Language);
 			posFloatItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopFloat;
+				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
 				ApplySettingPosition();
 			};
 			// デスクトップ：上
 			posTopItem.Name = menuNameMainPosDesktopTop;
 			posTopItem.Text = ToolbarPosition.DesktopTop.ToText(Language);
 			posTopItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopTop;
+				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
 				ApplySettingPosition();
 			};
 			// デスクトップ：下
 			posBottomItem.Name = menuNameMainPosDesktopBottom;
 			posBottomItem.Text = ToolbarPosition.DesktopBottom.ToText(Language);
 			posBottomItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopBottom;
+				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
 				ApplySettingPosition();
 			};
 			// デスクトップ：左
 			posLeftItem.Name = menuNameMainPosDesktopLeft;
 			posLeftItem.Text = ToolbarPosition.DesktopLeft.ToText(Language);
 			posLeftItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopLeft;
+				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
 				ApplySettingPosition();
 			};
 			// デスクトップ：右
 			posRightItem.Name = menuNameMainPosDesktopRight;
 			posRightItem.Text = ToolbarPosition.DesktopRight.ToText(Language);
 			posRightItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.ToolbarPosition = ToolbarPosition.DesktopRight;
+				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
 				ApplySettingPosition();
 			};
 			
@@ -502,7 +502,7 @@ namespace PeMain.UI
 			topmostItem.Name = menuNameMainTopmost;
 			topmostItem.Text = Language["common/menu/topmost"];
 			topmostItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.Topmost = !topmostItem.Checked;
+				UseToolbarItem.Topmost = !topmostItem.Checked;
 				ApplySettingTopmost();
 			};
 			
@@ -510,7 +510,7 @@ namespace PeMain.UI
 			autoHideItem.Name = menuNameMainAutoHide;
 			autoHideItem.Text = Language["toolbar/menu/main/auto-hide"];
 			autoHideItem.Click += (object sender, EventArgs e) => {
-				MainSetting.Toolbar.AutoHide = !autoHideItem.Checked;
+				UseToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
 			};
 			
@@ -579,14 +579,14 @@ namespace PeMain.UI
 				toolItem = new ToolStripSplitButton();
 				toolItem.Text = item.Name;
 				toolItem.ToolTipText = item.Name;
-				var icon = item.GetIcon(MainSetting.Toolbar.IconSize);
+				var icon = item.GetIcon(UseToolbarItem.IconSize);
 				if(icon != null) {
 					toolItem.Image = icon.ToBitmap();
 				}
 			}
 
 			//toolItem.AutoSize = true;
-			SetButtonLayout(toolItem, MainSetting.Toolbar.IconSize, MainSetting.Toolbar.ShowText, MainSetting.Toolbar.TextWidth);
+			SetButtonLayout(toolItem, UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);
@@ -628,12 +628,12 @@ namespace PeMain.UI
 					foreach(var pair in windowPosNameKey) {
 						var menu = (ToolStripMenuItem)(toolItem.DropDownItems[pair.Key]);
 						if(menu != null) {
-							menu.Checked = MainSetting.Toolbar.ToolbarPosition == pair.Value;
+							menu.Checked = UseToolbarItem.ToolbarPosition == pair.Value;
 						}
 					}
 					
 					// 最前面表示
-					((ToolStripMenuItem)(toolItem.DropDownItems[menuNameMainTopmost])).Checked = MainSetting.Toolbar.Topmost;
+					((ToolStripMenuItem)(toolItem.DropDownItems[menuNameMainTopmost])).Checked = UseToolbarItem.Topmost;
 				};
 			}
 			if(item != null) {

@@ -28,8 +28,11 @@ namespace PeMain.UI
 		ImageList _imageToolbarItemGroup = null;
 		bool _launcherItemEvent = false;
 		
+		/*
 		Point _toolbarLocation;
 		Size _toolbarSize;
+		*/
+		Dictionary<string,Rectangle> _toolbarFloat = new Dictionary<string, Rectangle>();
 		
 	}
 }

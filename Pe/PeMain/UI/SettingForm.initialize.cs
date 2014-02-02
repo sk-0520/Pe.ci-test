@@ -59,10 +59,10 @@ namespace PeMain.UI
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
+			this.selecterToolbar.SetItems(this._launcherItems);
+			/*
 			this._toolbarLocation = toolbarSetting.FloatLocation;
 			this._toolbarSize = toolbarSetting.FloatSize;
-			
-			this.selecterToolbar.SetItems(this._launcherItems);
 			
 			this._toolbarFont = toolbarSetting.FontSetting;
 			SetViewMessage(this.commandToolbarFont, this._toolbarFont);
@@ -85,6 +85,7 @@ namespace PeMain.UI
 			this.selectToolbarVisible.Checked = toolbarSetting.Visible;
 			this.selectToolbarTopmost.Checked = toolbarSetting.Topmost;
 			this.selectToolbarShowText.Checked = toolbarSetting.ShowText;
+			*/
 			
 			// グループ用項目
 			this._imageToolbarItemGroup = new ImageList();

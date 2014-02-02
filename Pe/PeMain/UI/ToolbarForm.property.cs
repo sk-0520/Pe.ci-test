@@ -27,8 +27,9 @@ namespace PeMain.UI
 		
 		ToolbarGroupItem SelectedGroupItem { get; set; }
 		public string ParentScreenDeviceName { get; set; }
+		ToolbarItem UseToolbarItem { get; set; }
 		
-		public bool IsDockingMode { get { return MainSetting.Toolbar.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
+		public bool IsDockingMode { get { return UseToolbarItem.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
 		
 		override public DesktopDockType DesktopDockType
 		{
@@ -37,7 +38,7 @@ namespace PeMain.UI
 			{
 				var pos = ToolbarPosition.DesktopFloat;
 				if(MainSetting != null) {
-					pos = MainSetting.Toolbar.ToolbarPosition;
+					pos = UseToolbarItem.ToolbarPosition;
 				}
 				
 				SetPaddingArea(pos);
