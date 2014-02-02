@@ -58,8 +58,11 @@ namespace PeMain.UI
 		
 		void DrawFullActivaChanged(bool active)
 		{
-			using(var g = CreateGraphics()) {
-				DrawFull(g, ClientRectangle, active);
+			using(var g = CreateGraphics())
+			using(var bmp = new Bitmap(Width, Height, g))
+			using(var memG = Graphics.FromImage(bmp)) {
+				DrawFull(memG, ClientRectangle, active);
+				g.DrawImage(bmp, 0, 0);
 			}
 		}
 	}
