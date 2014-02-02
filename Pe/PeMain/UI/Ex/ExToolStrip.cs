@@ -27,10 +27,11 @@ namespace PeMain.UI
 		/// <param name="m"></param>
 		protected override void WndProc(ref Message m)
 		{
-			base.WndProc(ref m);
-			if ( m.Msg == (int)WM.WM_MOUSEACTIVATE && m.Result == (IntPtr)MA.MA_ACTIVATEANDEAT)
-			{
+			if ( m.Msg == (int)WM.WM_MOUSEACTIVATE && m.Result == (IntPtr)MA.MA_ACTIVATEANDEAT) {
+				base.WndProc(ref m);
 				m.Result = (IntPtr)MA.MA_ACTIVATE;
+			} else {
+				base.WndProc(ref m);
 			}
 		}
 	}
