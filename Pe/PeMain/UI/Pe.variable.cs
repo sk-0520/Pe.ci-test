@@ -26,6 +26,6 @@ namespace PeMain.UI
 		private MainSetting _mainSetting;
 		private Language _language;
 		
-		private Dictionary<string, ToolbarForm> _toolbarForms = new Dictionary<string, ToolbarForm>();
+		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 	}
 }

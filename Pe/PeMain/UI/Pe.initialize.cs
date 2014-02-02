@@ -11,9 +11,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -174,6 +176,14 @@ namespace PeMain.UI
 		{
 			Debug.Assert(this._mainSetting != null);
 			
+			// ディスプレイ分生成
+			foreach(var screen in Screen.AllScreens.OrderBy(s => s.Primary)) {
+				var toolbar = new ToolbarForm();
+				toolbar.Logger = this._logForm;
+				toolbar.ParentScreen = screen;
+				toolbar.SetSettingData(this._language, this._mainSetting);
+				this._toolbarForms.Add(screen, toolbar);
+			}
 			/*
 			this._toolbarForms = new ToolbarForm();
 			this._toolbarForms.Logger = this._logForm;

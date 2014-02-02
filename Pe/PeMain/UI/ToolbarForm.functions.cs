@@ -96,7 +96,7 @@ namespace PeMain.UI
 			);
 			Padding = padding;
 		}
-
+		
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
@@ -135,6 +135,26 @@ namespace PeMain.UI
 			}
 		}
 		
+		void ApplyScreen()
+		{
+			Debug.Assert(MainSetting != null);
+			Debug.Assert(ParentScreen != null);
+			
+			UseToolbarItem = null;
+			foreach(var item in MainSetting.Toolbar.Items) {
+				if(item.IsNameEqual(ParentScreen.DeviceName)) {
+					UseToolbarItem = item;
+					break;
+				}
+			}
+			if(UseToolbarItem == null) {
+				// 新規
+				var toolbarItem = new ToolbarItem();
+				toolbarItem.Name = ParentScreen.DeviceName;
+				MainSetting.Toolbar.Items.Add(toolbarItem);
+				UseToolbarItem = toolbarItem;
+			}
+		}
 		void ApplySettingFont()
 		{
 			Debug.Assert(MainSetting != null);
@@ -157,6 +177,7 @@ namespace PeMain.UI
 			Debug.Assert(MainSetting != null);
 			
 			ApplyLanguage();
+			ApplyScreen();
 			ApplySettingFont();
 			
 			Font = UseToolbarItem.FontSetting.Font;
