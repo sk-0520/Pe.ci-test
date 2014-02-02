@@ -21,7 +21,7 @@ namespace PeMain.UI
 	{
 		HashSet<LauncherItem> _launcherItems = null;
 		FontSetting _commandFont = null;
-		FontSetting _toolbarFont = null;
+		//FontSetting _toolbarFont = null;
 		LauncherItem _launcherSelectedItem = null;
 		
 		TabPage _nowSelectedTabPage = null;
@@ -32,7 +32,8 @@ namespace PeMain.UI
 		Point _toolbarLocation;
 		Size _toolbarSize;
 		*/
-		Dictionary<string,Rectangle> _toolbarFloat = new Dictionary<string, Rectangle>();
+		Dictionary<string, Rectangle> _toolbarFloat = new Dictionary<string, Rectangle>();
+		Dictionary<string, FontSetting> _toolbarFont = new Dictionary<string, FontSetting>();
 		
 	}
 }

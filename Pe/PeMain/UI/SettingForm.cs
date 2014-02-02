@@ -116,11 +116,13 @@ namespace PeMain.UI
 		
 		void CommandToolbarFont_Click(object sender, EventArgs e)
 		{
+			/*
 			var fontSetting = OpenDialogFontSetting(this.commandToolbarFont, this._toolbarFont);
 			if(fontSetting != null) {
 				this._toolbarFont = fontSetting;
 				SetViewMessage(this.commandToolbarFont, this._toolbarFont);
 			}
+			*/
 		}
 		
 		
