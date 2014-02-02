@@ -26,11 +26,11 @@ namespace PeMain.UI
 		IEnumerable<Form> GetWindows()
 		{
 			var result = new List<Form>();
-			result.Add(this._toolbarForm);
+			result.AddRange(this._toolbarForms.Values);
 			result.Add(this._logForm);
 			
-			if(this._toolbarForm.OwnedForms.Length > 0) {
-				result.AddRange(this._toolbarForm.OwnedForms);
+			foreach(var f in this._toolbarForms.Values.Where(f => f.OwnedForms.Length > 0)) {
+				result.AddRange(f.OwnedForms);
 			}
 			
 				
@@ -105,7 +105,7 @@ namespace PeMain.UI
 					InitializeLanguage(null, null);
 					ApplyLanguage();
 					this._logForm.SetSettingData(this._language, this._mainSetting);
-					this._toolbarForm.SetSettingData(this._language, this._mainSetting);
+					this._toolbarForms.Values.Transform(f => f.SetSettingData(this._language, this._mainSetting));
 				}
 			}
 		}

@@ -97,7 +97,6 @@ namespace PeMain.UI
 			Padding = padding;
 		}
 
-		
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;

@@ -79,10 +79,12 @@ namespace PeMain.UI
 			menuList.Add(itemLogger);
 			
 			itemToolbar.Name = menuNameWindowToolbar;
+			/*
 			itemToolbar.Click += (object sender, EventArgs e) => {
-				this._toolbarForm.Visible = !this._toolbarForm.Visible;
-				this._mainSetting.Toolbar.Visible = this._toolbarForm.Visible;
+				this._toolbarForms.Visible = !this._toolbarForms.Visible;
+				this._mainSetting.Toolbar.Visible = this._toolbarForms.Visible;
 			};
+			*/
 			
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
@@ -119,10 +121,12 @@ namespace PeMain.UI
 			// ウィンドウ
 			itemWindow.Name = menuNameWindow;
 			itemWindow.MenuItems.AddRange(CreateWindowMenu());
+			/*
 			itemWindow.Popup += (object sender, EventArgs e) => {
-				itemWindow.MenuItems[menuNameWindowToolbar].Checked = this._toolbarForm.Visible;
+				itemWindow.MenuItems[menuNameWindowToolbar].Checked = this._toolbarForms.Visible;
 				itemWindow.MenuItems[menuNameWindowLogger].Checked = this._logForm.Visible;
 			};
+			*/
 			
 			// 設定
 			itemSetting.Name = menuNameSetting;
@@ -170,9 +174,11 @@ namespace PeMain.UI
 		{
 			Debug.Assert(this._mainSetting != null);
 			
-			this._toolbarForm = new ToolbarForm();
-			this._toolbarForm.Logger = this._logForm;
-			this._toolbarForm.SetSettingData(this._language, this._mainSetting);
+			/*
+			this._toolbarForms = new ToolbarForm();
+			this._toolbarForms.Logger = this._logForm;
+			this._toolbarForms.SetSettingData(this._language, this._mainSetting);
+			*/
 		}
 
 		void InitializeUI(string[] args, List<LogItem> initLog)
