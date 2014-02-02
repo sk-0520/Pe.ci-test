@@ -15,6 +15,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -71,6 +72,23 @@ namespace PeMain.UI
 			this._messageWindow.SetSettingData(this._language, this._mainSetting);
 		}
 		
+		MenuItem[] CreateWindowToolbarMenu()
+		{
+			var menuList = new List<MenuItem>();
+			foreach(var screen in Screen.AllScreens) {
+				var menuItem = new MenuItem();
+				menuItem.Text = ScreenUtility.ToScreenName(screen);
+				menuItem.Click += (object sender, EventArgs e) => {
+					var toolbar = this._toolbarForms[screen];
+					toolbar.Visible = !toolbar.Visible;
+					toolbar.UseToolbarItem.Visible = toolbar.Visible;
+				};
+				menuList.Add(menuItem);
+			}
+			
+			return menuList.ToArray();
+		}
+		
 		MenuItem[] CreateWindowMenu()
 		{
 			var menuList = new List<MenuItem>();
@@ -81,6 +99,7 @@ namespace PeMain.UI
 			menuList.Add(itemLogger);
 			
 			itemToolbar.Name = menuNameWindowToolbar;
+			itemToolbar.MenuItems.AddRange(CreateWindowToolbarMenu());
 			/*
 			itemToolbar.Click += (object sender, EventArgs e) => {
 				this._toolbarForms.Visible = !this._toolbarForms.Visible;

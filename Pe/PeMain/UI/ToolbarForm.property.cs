@@ -26,7 +26,7 @@ namespace PeMain.UI
 		MainSetting MainSetting { get; set; }
 		
 		ToolbarGroupItem SelectedGroupItem { get; set; }
-		ToolbarItem UseToolbarItem { get; set; }
+		public ToolbarItem UseToolbarItem { get; private set; }
 		public Screen ParentScreen { get; set; }
 		
 		public bool IsDockingMode { get { return UseToolbarItem.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
