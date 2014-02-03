@@ -407,6 +407,7 @@ namespace PeMain.Data
 					startInfo.RedirectStandardOutput = true;
 					startInfo.RedirectStandardError = true;
 					var streamForm = new StreamForm();
+					streamForm.Logger = logger;
 					streamForm.SetParameter(process, launcherItem);
 					streamForm.SetSettingData(language, mainSetting);
 					streamForm.Show(parentForm);

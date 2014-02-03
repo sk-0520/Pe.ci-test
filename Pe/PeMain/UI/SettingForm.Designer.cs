@@ -274,6 +274,7 @@ namespace PeMain.UI
 			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherDirPath);
 			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherFilePath);
 			this.splitContainer1.Panel2.Controls.Add(this.groupLauncherType);
+			this.splitContainer1.Panel2.Enabled = false;
 			this.splitContainer1.Size = new System.Drawing.Size(728, 302);
 			this.splitContainer1.SplitterDistance = 191;
 			this.splitContainer1.TabIndex = 0;

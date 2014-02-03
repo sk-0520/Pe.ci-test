@@ -44,5 +44,26 @@ namespace PeMain.UI
 		{
 			RefreshProperty();
 		}
+		
+		void Process_Exited(object sender, EventArgs e)
+		{
+			if(InvokeRequired) {
+				Invoke((MethodInvoker)delegate() { ExitedProcess(); });
+			} else {
+				ExitedProcess();
+			}
+		}
+		
+		void ToolStream_kill_Click(object sender, EventArgs e)
+		{
+			KillProcess();
+		}
+		
+		void ViewOutput_TextChanged(object sender, EventArgs e)
+		{
+			var hasText = this.viewOutput.TextLength > 0;
+			this.toolStream_save.Enabled = hasText;
+			this.toolStream_clear.Enabled = hasText;
+		}
 	}
 }
