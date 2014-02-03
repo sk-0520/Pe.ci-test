@@ -44,6 +44,16 @@
 		<Word Name="main/menu/setting"         Text="設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"           Text="@[PE] 情報(&amp;A) ${open-ui}" />
 		
+		<Word Name="log/command/save"      Text="ログ保存" />
+		<Word Name="log/tips/save"         Text="現在のログをファイルに保存" />
+		<Word Name="log/command/clear"     Text="ログクリア" />
+		<Word Name="log/tips/clear"        Text="表示中ログをクリア" />
+		<Word Name="log/header/timestamp"  Text="タイムスタンプ" />
+		<Word Name="log/header/title"      Text="概要" />
+		<Word Name="log/header/file"       Text="ソース" />
+		<Word Name="log/header/line"       Text="行数" />
+		<Word Name="log/header/method"     Text="メソッド" />
+		
 		<Word Name="toolbar/main/text" Text="ツールメニュー" />
 		<Word Name="toolbar/menu/main/auto-hide" Text="${auto-hide}(&amp;H)" />
 
@@ -67,6 +77,16 @@
 		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
 		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
 		
+		<Word Name="stream/tab/stream"    Text="標準出力" />
+		<Word Name="stream/tab/process"   Text="プロセス" />
+		<Word Name="stream/tab/property"  Text="起動プロパティ" />
+		<Word Name="stream/command/save"   Text="出力保存" />
+		<Word Name="stream/tips/save"      Text="現在の出力をファイルに保存" />
+		<Word Name="stream/command/clear"  Text="出力クリア" />
+		<Word Name="stream/tips/clear"     Text="現在の出力をクリア" />
+		<Word Name="stream/tips/refresh"   Text="プロセス情報更新" />
+		<Word Name="stream/tips/kill"      Text="プロセスを終了" />
+
 		<Word Name="setting/tab/main"     Text="本体" />
 		<Word Name="setting/tab/launcher" Text="ランチャ" />
 		<Word Name="setting/tab/toolbar"  Text="ツールバー" />
@@ -93,12 +113,12 @@
 		<Word Name="group/new"  Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
 
-		<Word Name="item-selecter/create"    Text="新規アイテム" />
-		<Word Name="item-selecter/remove"    Text="アイテム削除" />
-		<Word Name="item-selecter/filtering" Text="アイテム抽出" />
-		<Word Name="item-selecter/type/full" Text="自動抽出" />
-		<Word Name="item-selecter/type/name" Text="アイテム名から選択" />
-		<Word Name="item-selecter/type/tag"  Text="タグから抽出"  />
+		<Word Name="item-selecter/command/create"    Text="新規アイテム" />
+		<Word Name="item-selecter/command/remove"    Text="アイテム削除" />
+		<Word Name="item-selecter/command/filtering" Text="アイテム抽出" />
+		<Word Name="item-selecter/command/type-full" Text="自動抽出" />
+		<Word Name="item-selecter/command/type-name" Text="アイテム名から選択" />
+		<Word Name="item-selecter/command/type-tag"  Text="タグから抽出"  />
 		
 		<Word Name="env-updater/key"   Text="キー" />
 		<Word Name="env-updater/value" Text="値" />

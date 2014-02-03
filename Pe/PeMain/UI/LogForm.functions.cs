@@ -72,15 +72,10 @@ namespace PeMain.UI
 		
 		void ClearDetail()
 		{
-			this.treeDetail.Nodes.Clear();
+			this.viewDetail.Clear();
 			this.listStack.Items.Clear();
 		}
 		
-		void ObjectToNode(object obj)
-		{
-			if(obj.GetType() == typeof(string)){}
-			
-		}
 		
 		ListViewItem StackToListItem(StackFrame sf)
 		{
@@ -112,7 +107,7 @@ namespace PeMain.UI
 			Debug.Assert(logItem != null);
 			
 			// 
-			this.treeDetail.Nodes.Add(logItem.Detail.ToString());
+			this.viewDetail.Text = logItem.Detail.ToString();
 			
 			
 			//
