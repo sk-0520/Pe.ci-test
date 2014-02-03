@@ -397,7 +397,7 @@ namespace PeMain.Data
 					// 削除
 					launcherItem.EnvironmentSetting.Remove
 						.Where(s => env.ContainsKey(s))
-						.Transform(s => env.Remove(s))
+						.ForEach(s => env.Remove(s))
 					;
 				}
 				

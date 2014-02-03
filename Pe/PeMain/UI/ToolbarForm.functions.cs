@@ -245,7 +245,7 @@ namespace PeMain.UI
 			this.toolLauncher.Items
 				.Cast<ToolStripItem>()
 				.Where(item => item.Image != null)
-				.Transform(item => item.Image.Dispose())
+				.ForEach(item => item.Image.Dispose())
 			;
 			
 			this.toolLauncher.Items.Clear();
@@ -256,7 +256,7 @@ namespace PeMain.UI
 		{
 			var toolItem = this._menuGroup.MenuItems
 				.Cast<MenuItem>()
-				.Transform(item => item.Checked = false)
+				.ForEach(item => item.Checked = false)
 				.Single(item => (ToolbarGroupItem)item.Tag == groupItem)
 			;
 			SelectedGroupItem = groupItem;

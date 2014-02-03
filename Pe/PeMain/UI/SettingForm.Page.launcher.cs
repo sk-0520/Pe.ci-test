@@ -52,13 +52,13 @@ namespace PeMain.UI
 				this.inputLauncherTag,
 				this.inputLauncherNote,
 			};
-			textList.Transform(item => item.Text = string.Empty);
+			textList.ForEach(item => item.Text = string.Empty);
 			this.inputLauncherIconIndex.Value = 0;
 			LauncherSetSelectedType(LauncherType.File);
 			var checkList = new CheckBox[] {
 				this.selectLauncherStdStream,
 			};
-			checkList.Transform(item => item.Checked = false);
+			checkList.ForEach(item => item.Checked = false);
 			
 			this._launcherItemEvent = true;
 		}
