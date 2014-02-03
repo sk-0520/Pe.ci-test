@@ -47,10 +47,10 @@ namespace PeMain.UI
 			this.headerFile = new System.Windows.Forms.ColumnHeader();
 			this.headerLine = new System.Windows.Forms.ColumnHeader();
 			this.headerFunction = new System.Windows.Forms.ColumnHeader();
+			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.toolLog = new System.Windows.Forms.ToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
-			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -189,6 +189,17 @@ namespace PeMain.UI
 			// 
 			this.headerFunction.Text = "{FUNC}";
 			// 
+			// viewDetail
+			// 
+			this.viewDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewDetail.Location = new System.Drawing.Point(3, 3);
+			this.viewDetail.Multiline = true;
+			this.viewDetail.Name = "viewDetail";
+			this.viewDetail.ReadOnly = true;
+			this.viewDetail.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.viewDetail.Size = new System.Drawing.Size(212, 84);
+			this.viewDetail.TabIndex = 1;
+			// 
 			// toolLog
 			// 
 			this.toolLog.Dock = System.Windows.Forms.DockStyle.None;
@@ -219,16 +230,6 @@ namespace PeMain.UI
 			this.toolLog_clear.Size = new System.Drawing.Size(112, 22);
 			this.toolLog_clear.Text = "{LOG_CLEAR}";
 			this.toolLog_clear.ToolTipText = "toolLog_clear";
-			// 
-			// viewDetail
-			// 
-			this.viewDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewDetail.Location = new System.Drawing.Point(3, 3);
-			this.viewDetail.Multiline = true;
-			this.viewDetail.Name = "viewDetail";
-			this.viewDetail.ReadOnly = true;
-			this.viewDetail.Size = new System.Drawing.Size(212, 84);
-			this.viewDetail.TabIndex = 1;
 			// 
 			// LogForm
 			// 
