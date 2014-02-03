@@ -54,6 +54,7 @@ namespace PeMain.UI
 				}
 				*/
 			}
+			this._notifyIcon.Visible = false;
 			
 			action();
 			/*
@@ -64,6 +65,8 @@ namespace PeMain.UI
 			foreach(var pair in windowVisible) {
 				pair.Key.Visible = pair.Value;
 			}
+			this._notifyIcon.Visible = true;
+			
 		}
 		
 		void SaveSetting()
