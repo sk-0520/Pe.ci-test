@@ -19,6 +19,7 @@ namespace PeMain.Data
 		public MainSetting()
 		{
 			Log = new LogSetting();
+			SystemEnv = new SystemEnvSetting();
 			Launcher = new LauncherSetting();
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
@@ -37,6 +38,10 @@ namespace PeMain.Data
 		/// ログ設定
 		/// </summary>
 		public LogSetting Log { get; set; }
+		/// <summary>
+		/// システム環境セッティング
+		/// </summary>
+		public SystemEnvSetting SystemEnv { get; set; }
 		/// <summary>
 		/// コマンドランチャ設定。
 		/// </summary>

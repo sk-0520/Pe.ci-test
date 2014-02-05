@@ -72,6 +72,7 @@
     <Compile Include="Data\HotkeySetting.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Data\LogSetting.cs" />
+    <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Skin\Skin.cs" />
     <Compile Include="UI\StreamForm.cs" />
     <Compile Include="UI\StreamForm.Designer.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
@@ -372,6 +374,7 @@
     <Folder Include="UI\Ex" />
     <Folder Include="Logic" />
     <Folder Include="UI\CustomControl" />
+    <Folder Include="UI\Skin" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

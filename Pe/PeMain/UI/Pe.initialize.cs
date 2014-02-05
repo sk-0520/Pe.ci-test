@@ -205,7 +205,7 @@ namespace PeMain.UI
 			Debug.Assert(this._mainSetting != null);
 			
 			// ディスプレイ分生成
-			foreach(var screen in Screen.AllScreens.OrderBy(s => s.Primary)) {
+			foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 				var toolbar = new ToolbarForm();
 				toolbar.Logger = this._logForm;
 				toolbar.ParentScreen = screen;

@@ -7,16 +7,17 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Drawing;
+using PeMain.Data;
 
 namespace PeMain.UI.Skin
 {
 	/// <summary>
 	/// Description of Skin.
 	/// </summary>
-	public abstract class Skin
+	public interface ISkin
 	{
-		public Skin()
-		{
-		}
+		void DrawToolbarEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 	}
 }
