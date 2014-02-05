@@ -279,7 +279,7 @@ namespace PeMain.UI
 		void OpenDir(string path)
 		{
 			try {
-				Process.Start(path);
+				Executer.OpenDirectory(path, Logger, Language, null);
 			} catch(Exception ex) {
 				Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
@@ -364,7 +364,7 @@ namespace PeMain.UI
 			}
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
-					Process.Start(path);
+					Executer.OpenDirectory(path, Logger, Language, null);
 				} catch(Exception ex) {
 					Logger.Puts(LogType.Warning, ex.Message, ex);
 				}

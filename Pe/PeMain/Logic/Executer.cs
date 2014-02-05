@@ -70,9 +70,9 @@ namespace PeMain.Logic
 			}
 		}
 		
-		public static void OpenDirectory(ILogger logger, Language language, MainSetting mainSetting)
+		public static void OpenDirectory(string path, ILogger logger, Language language, LauncherItem openItem)
 		{
-			
+			Process.Start(path);
 		}
 	}
 }
