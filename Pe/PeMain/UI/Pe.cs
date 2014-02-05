@@ -9,13 +9,14 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	public partial class Pe: IDisposable
+	public partial class Pe: IDisposable, RootCommunication
 	{
 		public Pe(string[] args)
 		{

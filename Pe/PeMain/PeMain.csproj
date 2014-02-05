@@ -69,15 +69,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\HotkeySetting.cs" />
     <Compile Include="Data\Log.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\EnumLang.cs" />
+    <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\ILogger.cs" />
     <Compile Include="Logic\ISetSettingData.cs" />
     <Compile Include="Logic\ItemData.cs" />
+    <Compile Include="Logic\RootCommunication.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

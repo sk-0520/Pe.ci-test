@@ -51,8 +51,8 @@ namespace PeMain.UI
 			AttachmentIconSize(this.selectCommandIcon, commandSetting.IconSize);
 			
 			// ホットキー
-			var hotKey = commandSetting.Hotkey;
-			var modKey = commandSetting.Modifiers;
+			var hotKey = commandSetting.Hotkey.Key;
+			var modKey = commandSetting.Hotkey.Modifiers;
 			this.inputCommandHotkey.Hotkey = hotKey;
 			this.inputCommandHotkey.Modifiers = modKey;
 		}

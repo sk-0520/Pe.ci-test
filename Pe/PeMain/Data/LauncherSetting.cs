@@ -374,58 +374,11 @@ namespace PeMain.Data
 			return item.Name.ToUnique(seq.Select(i => i.Name));
 		}
 		
-		static void ExecuteFile(ILogger logger, Language language, MainSetting mainSetting, LauncherItem launcherItem, Form parentForm)
-		{
-			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
-			
-			var process = new Process();
-			var startInfo = process.StartInfo;
-			startInfo.FileName = launcherItem.Command;
-			if(launcherItem.IsExecteFile) {
-				startInfo.UseShellExecute = false;
-				
-				startInfo.WorkingDirectory = launcherItem.WorkDirPath;
-				startInfo.Arguments = launcherItem.Option;
-				
-				// 環境変数
-				if(launcherItem.EnvironmentSetting.EditEnvironment) {
-					var env = startInfo.EnvironmentVariables;
-					// 追加・更新
-					foreach(var pair in launcherItem.EnvironmentSetting.Update) {
-						env[pair.Key] = pair.Value;
-					}
-					// 削除
-					launcherItem.EnvironmentSetting.Remove
-						.Where(s => env.ContainsKey(s))
-						.ForEach(s => env.Remove(s))
-					;
-				}
-				
-				// 出力取得
-				startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
-				if(launcherItem.StdOutputWatch) {
-					startInfo.RedirectStandardOutput = true;
-					startInfo.RedirectStandardError = true;
-					var streamForm = new StreamForm();
-					streamForm.Logger = logger;
-					streamForm.SetParameter(process, launcherItem);
-					streamForm.SetSettingData(language, mainSetting);
-					streamForm.Show(parentForm);
-				}
-			}
-			
-			process.Start();
-			
-			if(launcherItem.StdOutputWatch) {
-				process.BeginOutputReadLine();
-				process.BeginErrorReadLine();
-			}
-		}
 		
 		public void Execute(ILogger logger, Language language, MainSetting mainSetting, Form parentForm)
 		{
 			if(LauncherType == LauncherType.File) {
-				ExecuteFile(logger, language, mainSetting, this, parentForm);
+				Executer.RunFileItem(logger, language, mainSetting, this, parentForm);
 			}
 		}
 		
