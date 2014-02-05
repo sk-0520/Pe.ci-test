@@ -16,11 +16,15 @@ namespace PeMain.UI
 	public partial class Pe
 	{
 		const string menuNameWindow = "menu_window";
+		const string menuNameSystemEnv = "menu_systemenv";
 		const string menuNameSetting = "menu_setting";
 		const string menuNameAbout = "menu_about";
 		const string menuNameExit = "menu_exit";
 		
 		const string menuNameWindowToolbar = "menu_window_toolbar";
 		const string menuNameWindowLogger = "menu_window_logger";
+
+		const string menuNameSystemEnvHiddenFile = "menu_systemenv_hidden";
+		const string menuNameSystemEnvExtension = "menu_systemenv_ext";
 	}
 }
