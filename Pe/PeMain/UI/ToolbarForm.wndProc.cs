@@ -9,7 +9,9 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 using PeMain.Data;
 using PI.Windows;
 
@@ -20,32 +22,61 @@ namespace PeMain.UI
 		protected override void WndProc(ref Message m)
 		{
 			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-				if(m.Msg == (int)WM.WM_NCHITTEST) {
-					var point = PointToClient(
-						new Point(
-							(int)(m.LParam.ToInt64() & 0xFFFF),
-							(int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16)
-						)
-					);
-					var padding = Padding;
-
-					var hitTest = HT.HTNOWHERE;
-					var captionArea = GetCaptionArea(UseToolbarItem.ToolbarPosition);
-					if(captionArea.Contains(point)) {
-						hitTest = HT.HTCAPTION;
-					} else {
-						var leftArea = new Rectangle(0, 0, padding.Left, Height);
-						var rightArea = new Rectangle(Width - padding.Right, 0, padding.Right, Height);
-						if(leftArea.Contains(point)) {
-							hitTest = HT.HTLEFT;
-						} else if(rightArea.Contains(point)) {
-							hitTest = HT.HTRIGHT;
+				switch(m.Msg) {
+					case (int)WM.WM_NCHITTEST:
+						{
+							var point = PointToClient(
+								new Point(
+									(int)(m.LParam.ToInt64() & 0xFFFF),
+									(int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16)
+								)
+							);
+							var padding = Padding;
+							
+							var hitTest = HT.HTNOWHERE;
+							var captionArea = GetCaptionArea(UseToolbarItem.ToolbarPosition);
+							if(captionArea.Contains(point)) {
+								hitTest = HT.HTCAPTION;
+							} else {
+								var leftArea = new Rectangle(0, 0, padding.Left, Height);
+								var rightArea = new Rectangle(Width - padding.Right, 0, padding.Right, Height);
+								if(leftArea.Contains(point)) {
+									hitTest = HT.HTLEFT;
+								} else if(rightArea.Contains(point)) {
+									hitTest = HT.HTRIGHT;
+								}
+							}
+							if(hitTest != HT.HTNOWHERE) {
+								m.Result = (IntPtr)hitTest;
+								return;
+							}
 						}
-					}
-					if(hitTest != HT.HTNOWHERE) {
-						m.Result = (IntPtr)hitTest;
-						return;
-					}
+						break;
+						
+					case (int)WM.WM_MOVING:
+						{
+							var rect = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
+							var workingArea = DockScreen.WorkingArea;
+							
+							if(rect.X < workingArea.X) {
+								// 左
+								rect.X = workingArea.X;
+							} else if(rect.Right > workingArea.Right) {
+								// 右
+								rect.X = workingArea.Right - rect.Width;
+							}
+							
+							if(rect.Y < workingArea.Y) {
+								// 上
+								rect.Y = workingArea.Y;
+							} else if(rect.Bottom > workingArea.Bottom) {
+								// 下
+								rect.Y = workingArea.Bottom - rect.Height;
+							}
+							
+							Marshal.StructureToPtr(rect, m.LParam, false);
+						}
+						break;
 				}
 			}
 			base.WndProc(ref m);

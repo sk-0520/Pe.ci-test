@@ -21,12 +21,12 @@ namespace PeMain.UI
 			if(lang == null) {
 				return;
 			}
-			this.toolLauncherItems_create.Text = lang["item-selecter/create"];
-			this.toolLauncherItems_remove.Text = lang["item-selecter/remove"];
-			this.toolLauncherItems_filter.Text = lang["item-selecter/filtering"];
-			this.toolLauncherItems_type_full.Text = lang["item-selecter/type/full"];
-			this.toolLauncherItems_type_name.Text = lang["item-selecter/type/name"];
-			this.toolLauncherItems_type_tag.Text = lang["item-selecter/type/tag"];
+			this.toolLauncherItems_create.Text = lang["item-selecter/command/create"];
+			this.toolLauncherItems_remove.Text = lang["item-selecter/command/remove"];
+			this.toolLauncherItems_filter.Text = lang["item-selecter/command/filtering"];
+			this.toolLauncherItems_type_full.Text = lang["item-selecter/command/type-full"];
+			this.toolLauncherItems_type_name.Text = lang["item-selecter/command/type-name"];
+			this.toolLauncherItems_type_tag.Text = lang["item-selecter/command/type-tag"];
 		}
 	}
 }

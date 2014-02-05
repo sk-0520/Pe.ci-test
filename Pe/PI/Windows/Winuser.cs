@@ -19,6 +19,8 @@ namespace PI.Windows
 		WM_MOUSEACTIVATE = 0x21,
 		WM_NCLBUTTONDOWN = 0xa1,
 		WM_NCHITTEST = 0x84,
+		WM_WINDOWPOSCHANGING = 0x0046,
+		WM_MOVING = 0x0216,
 	}
 	
 	public enum MA: int
@@ -49,6 +51,34 @@ namespace PI.Windows
 		HTRIGHT = 11,
 	}
 	
+	[Flags]
+	public enum SWP: int
+	{
+		SWP_ASYNCWINDOWPOS = 0x4000,
+		SWP_DEFERERASE = 0x2000,
+		SWP_DRAWFRAME = 0x0020,
+		SWP_FRAMECHANGED = 0x0020,
+		SWP_HIDEWINDOW = 0x0080,
+		SWP_NOACTIVATE = 0x0010,
+		SWP_NOCOPYBITS = 0x0100,
+		SWP_NOMOVE = 0x0002,
+		SWP_NOOWNERZORDER = 0x0200,
+		SWP_NOREDRAW = 0x0008,
+		SWP_NOREPOSITION = 0x0200,
+		SWP_NOSENDCHANGING = 0x0400,
+		SWP_NOSIZE = 0x0001,
+		SWP_NOZORDER = 0x0004,
+		SWP_SHOWWINDOW = 0x0040,
+	}
+	
+	public enum HWND
+	{
+		HWND_TOP = 0,
+		HWND_BOTTOM = 1,
+		HWND_TOPMOST = -1,
+		HWND_NOTOPMOST = -2,
+	}
+
 	
 	public static partial class API
 	{
@@ -82,5 +112,20 @@ namespace PI.Windows
 		[DllImport("user32.dll")]
 		public static extern bool ReleaseCapture();
 		
+	}
+	
+	/// <summary>
+	/// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential)]
+	public struct WINDOWPOS
+	{
+		public IntPtr hwnd;
+		public IntPtr hwndInsertAfter;
+		public int x;
+		public int y;
+		public int cx;
+		public int cy;
+		public SWP flags;
 	}
 }

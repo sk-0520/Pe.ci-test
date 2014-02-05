@@ -245,7 +245,7 @@ namespace PeMain.UI
 			this.toolLauncher.Items
 				.Cast<ToolStripItem>()
 				.Where(item => item.Image != null)
-				.Transform(item => item.Image.Dispose())
+				.ForEach(item => item.Image.Dispose())
 			;
 			
 			this.toolLauncher.Items.Clear();
@@ -256,7 +256,7 @@ namespace PeMain.UI
 		{
 			var toolItem = this._menuGroup.MenuItems
 				.Cast<MenuItem>()
-				.Transform(item => item.Checked = false)
+				.ForEach(item => item.Checked = false)
 				.Single(item => (ToolbarGroupItem)item.Tag == groupItem)
 			;
 			SelectedGroupItem = groupItem;
@@ -346,7 +346,7 @@ namespace PeMain.UI
 		{
 			var menuItem = new ToolStripMenuItem();
 			menuItem.Text = Path.GetFileName(path);
-			using(var icon = IconLoader.Load(path, IconSize.Small, 0)) {
+			using(var icon = IconLoader.Load(path, UseToolbarItem.IconSize, 0)) {
 				menuItem.Image = icon.ToBitmap();
 			}
 			
@@ -394,6 +394,7 @@ namespace PeMain.UI
 				} else {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = Language["toolbar/menu/file/ls/not-child-files"];
+					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				}
@@ -401,6 +402,7 @@ namespace PeMain.UI
 			} catch(UnauthorizedAccessException ex) {
 				var menuItem = new ToolStripMenuItem();
 				menuItem.Text = ex.Message;
+				menuItem.Image = SystemIcons.Warning.ToBitmap();
 				menuItem.Enabled = false;
 				parentItem.DropDownItems.Add(menuItem);
 			}
@@ -534,7 +536,6 @@ namespace PeMain.UI
 				UseToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
 			};
-			
 			
 			return result.ToArray();
 		}
@@ -675,7 +676,7 @@ namespace PeMain.UI
 					return true;
 				}
 			} catch(Exception ex) {
-				Logger.Puts(LogType.Warning, Language["execute/exception"], ex);
+				Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
 			
 			return false;
@@ -754,6 +755,7 @@ namespace PeMain.UI
 				this.MainSetting.Launcher.Items.Add(item);
 				SelectedGroupItem.ItemNames.Add(item.Name);
 				SelectedGroup(SelectedGroupItem);
+				// TODO: 他のツールバーに教える
 			}
 		}
 		

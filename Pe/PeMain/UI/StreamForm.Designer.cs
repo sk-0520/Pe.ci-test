@@ -74,6 +74,7 @@ namespace PeMain.UI
 			// 
 			// toolStream_save
 			// 
+			this.toolStream_save.Enabled = false;
 			this.toolStream_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolStream_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_save.Name = "toolStream_save";
@@ -82,6 +83,7 @@ namespace PeMain.UI
 			// 
 			// toolStream_clear
 			// 
+			this.toolStream_clear.Enabled = false;
 			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
 			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_clear.Name = "toolStream_clear";
@@ -112,6 +114,7 @@ namespace PeMain.UI
 			this.toolStream_kill.Name = "toolStream_kill";
 			this.toolStream_kill.Size = new System.Drawing.Size(23, 22);
 			this.toolStream_kill.Text = "{KILL}";
+			this.toolStream_kill.Click += new System.EventHandler(this.ToolStream_kill_Click);
 			// 
 			// tabStream
 			// 
@@ -148,6 +151,7 @@ namespace PeMain.UI
 			this.viewOutput.Size = new System.Drawing.Size(354, 211);
 			this.viewOutput.TabIndex = 0;
 			this.viewOutput.WordWrap = false;
+			this.viewOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
 			// 
 			// pageProcess
 			// 

@@ -21,7 +21,11 @@ namespace PeMain.UI
 		{
 			Process = process;
 			LauncherItem = launcherItem;
+			
+			Process.EnableRaisingEvents = true;
+			Process.Exited += new EventHandler(Process_Exited);
 		}
+
 		public void SetSettingData(Language language, MainSetting mainSetting)
 		{
 			Language = language;
@@ -59,6 +63,28 @@ namespace PeMain.UI
 			// TODO: ???
 			this.propertyProcess.SelectedObject = null;
 			this.propertyProcess.SelectedObject = Process;
+		}
+		
+		void ExitedProcess()
+		{
+			this.toolStream_kill.Enabled = false;
+			this.toolStream_clear.Enabled = false;
+			this.toolStream_refresh.Enabled = false;
+			RefreshProperty();
+			
+			Text += String.Format(": {0}", Process.ExitCode);
+		}
+		
+		void KillProcess()
+		{
+			if(Process.HasExited) {
+				return;
+			}
+			try {
+				Process.Kill();
+			} catch(Exception ex) {
+				Logger.Puts(LogType.Error, ex.Message, ex);
+			}
 		}
 	}
 }

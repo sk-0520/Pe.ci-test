@@ -93,5 +93,15 @@ namespace PeMain.UI
 		{
 			ApplySettingPosition();
 		}
+		
+		void ToolbarForm_Activated(object sender, EventArgs e)
+		{
+			DrawFullActivaChanged(true);
+		}
+		
+		void ToolbarForm_Deactivate(object sender, EventArgs e)
+		{
+			DrawFullActivaChanged(false);
+		}
 	}
 }

@@ -397,7 +397,7 @@ namespace PeMain.Data
 					// 削除
 					launcherItem.EnvironmentSetting.Remove
 						.Where(s => env.ContainsKey(s))
-						.Transform(s => env.Remove(s))
+						.ForEach(s => env.Remove(s))
 					;
 				}
 				
@@ -407,6 +407,7 @@ namespace PeMain.Data
 					startInfo.RedirectStandardOutput = true;
 					startInfo.RedirectStandardError = true;
 					var streamForm = new StreamForm();
+					streamForm.Logger = logger;
 					streamForm.SetParameter(process, launcherItem);
 					streamForm.SetSettingData(language, mainSetting);
 					streamForm.Show(parentForm);

@@ -8,6 +8,7 @@
  */
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace PeMain.UI
 {
@@ -18,8 +19,8 @@ namespace PeMain.UI
 	{
 		void DrawEdge(Graphics g, Rectangle drawArea, bool active)
 		{
-			var light = SystemBrushes.ControlLight;
-			var dark = SystemBrushes.ControlDark;
+			var light = active ? SystemBrushes.ControlLight: SystemBrushes.ControlLightLight;
+			var dark = active ? SystemBrushes.ControlDarkDark: SystemBrushes.ControlDark;
 			
 			// 下
 			g.FillRectangle(dark, 0, drawArea.Height - Padding.Bottom, Width, Padding.Bottom);
@@ -33,8 +34,19 @@ namespace PeMain.UI
 		
 		void DrawCaption(Graphics g, Rectangle drawArea, bool active, bool horizon)
 		{
-			Brush brush = active ? SystemBrushes.ActiveCaption: SystemBrushes.InactiveCaption;
-			g.FillRectangle(brush, drawArea);
+			Color headColor;
+			Color tailColor;
+			if(active) {
+				headColor = SystemColors.GradientActiveCaption;
+				tailColor = SystemColors.ActiveCaption;
+			} else {
+				headColor = SystemColors.GradientInactiveCaption;
+				tailColor = SystemColors.InactiveCaption;
+			}
+			var mode = IsHorizonMode(UseToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
+			using(var brush = new LinearGradientBrush(drawArea, headColor, tailColor, mode)) {
+				g.FillRectangle(brush, drawArea);
+			}
 		}
 		
 		void DrawFull(Graphics g, Rectangle drawArea, bool active)
@@ -42,6 +54,16 @@ namespace PeMain.UI
 			DrawEdge(g, drawArea, active);
 			var captionArea = GetCaptionArea(UseToolbarItem.ToolbarPosition);
 			DrawCaption(g, captionArea, active, IsHorizonMode(UseToolbarItem.ToolbarPosition));
+		}
+		
+		void DrawFullActivaChanged(bool active)
+		{
+			using(var g = CreateGraphics())
+			using(var bmp = new Bitmap(Width, Height, g))
+			using(var memG = Graphics.FromImage(bmp)) {
+				DrawFull(memG, ClientRectangle, active);
+				g.DrawImage(bmp, 0, 0);
+			}
 		}
 	}
 }

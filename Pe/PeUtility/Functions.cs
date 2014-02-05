@@ -120,7 +120,7 @@ namespace PeUtility
 		/// <param name="seq"></param>
 		/// <param name="pred"></param>
 		/// <returns>集合自体</returns>
-		public static IEnumerable<T> Transform<T>(this IEnumerable<T> seq, Action<T> pred)
+		public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq, Action<T> pred)
 		{
 			foreach(var element in seq) {
 				pred(element);

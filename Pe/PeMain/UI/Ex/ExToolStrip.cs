@@ -28,8 +28,7 @@ namespace PeMain.UI
 		protected override void WndProc(ref Message m)
 		{
 			base.WndProc(ref m);
-			if ( m.Msg == (int)WM.WM_MOUSEACTIVATE && m.Result == (IntPtr)MA.MA_ACTIVATEANDEAT)
-			{
+			if ( m.Msg == (int)WM.WM_MOUSEACTIVATE && m.Result == (IntPtr)MA.MA_ACTIVATEANDEAT) {
 				m.Result = (IntPtr)MA.MA_ACTIVATE;
 			}
 		}

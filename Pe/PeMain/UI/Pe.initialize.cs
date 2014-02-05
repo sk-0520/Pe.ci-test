@@ -77,6 +77,7 @@ namespace PeMain.UI
 			var menuList = new List<MenuItem>();
 			foreach(var screen in Screen.AllScreens) {
 				var menuItem = new MenuItem();
+				menuItem.Name = screen.DeviceName;
 				menuItem.Text = ScreenUtility.ToScreenName(screen);
 				menuItem.Click += (object sender, EventArgs e) => {
 					var toolbar = this._toolbarForms[screen];
@@ -100,6 +101,14 @@ namespace PeMain.UI
 			
 			itemToolbar.Name = menuNameWindowToolbar;
 			itemToolbar.MenuItems.AddRange(CreateWindowToolbarMenu());
+			itemToolbar.Popup += (object sender, EventArgs e) => {
+				foreach(var screen in Screen.AllScreens) {
+					if(itemToolbar.MenuItems.ContainsKey(screen.DeviceName)) {
+						var menuItem = itemToolbar.MenuItems[screen.DeviceName];
+						menuItem.Checked = this._toolbarForms[screen].Visible;
+					}
+				}
+			};
 			/*
 			itemToolbar.Click += (object sender, EventArgs e) => {
 				this._toolbarForms.Visible = !this._toolbarForms.Visible;

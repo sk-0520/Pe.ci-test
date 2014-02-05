@@ -43,11 +43,11 @@ namespace PeMain.UI
 			this.headerTimestamp = new System.Windows.Forms.ColumnHeader();
 			this.headerTitle = new System.Windows.Forms.ColumnHeader();
 			this.panelDetail = new System.Windows.Forms.TableLayoutPanel();
-			this.treeDetail = new System.Windows.Forms.TreeView();
 			this.listStack = new System.Windows.Forms.ListView();
 			this.headerFile = new System.Windows.Forms.ColumnHeader();
 			this.headerLine = new System.Windows.Forms.ColumnHeader();
 			this.headerFunction = new System.Windows.Forms.ColumnHeader();
+			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.toolLog = new System.Windows.Forms.ToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
@@ -148,8 +148,8 @@ namespace PeMain.UI
 			this.panelDetail.ColumnCount = 2;
 			this.panelDetail.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.panelDetail.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.panelDetail.Controls.Add(this.treeDetail, 0, 0);
 			this.panelDetail.Controls.Add(this.listStack, 1, 0);
+			this.panelDetail.Controls.Add(this.viewDetail, 0, 0);
 			this.panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelDetail.Location = new System.Drawing.Point(0, 0);
 			this.panelDetail.Name = "panelDetail";
@@ -157,14 +157,6 @@ namespace PeMain.UI
 			this.panelDetail.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.panelDetail.Size = new System.Drawing.Size(436, 90);
 			this.panelDetail.TabIndex = 1;
-			// 
-			// treeDetail
-			// 
-			this.treeDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeDetail.Location = new System.Drawing.Point(3, 3);
-			this.treeDetail.Name = "treeDetail";
-			this.treeDetail.Size = new System.Drawing.Size(212, 84);
-			this.treeDetail.TabIndex = 0;
 			// 
 			// listStack
 			// 
@@ -197,6 +189,17 @@ namespace PeMain.UI
 			// 
 			this.headerFunction.Text = "{FUNC}";
 			// 
+			// viewDetail
+			// 
+			this.viewDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewDetail.Location = new System.Drawing.Point(3, 3);
+			this.viewDetail.Multiline = true;
+			this.viewDetail.Name = "viewDetail";
+			this.viewDetail.ReadOnly = true;
+			this.viewDetail.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.viewDetail.Size = new System.Drawing.Size(212, 84);
+			this.viewDetail.TabIndex = 1;
+			// 
 			// toolLog
 			// 
 			this.toolLog.Dock = System.Windows.Forms.DockStyle.None;
@@ -215,8 +218,8 @@ namespace PeMain.UI
 			this.toolLog_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
-			this.toolLog_save.Size = new System.Drawing.Size(73, 22);
-			this.toolLog_save.Text = "{SAVE}";
+			this.toolLog_save.Size = new System.Drawing.Size(105, 22);
+			this.toolLog_save.Text = "{LOG_SAVE}";
 			this.toolLog_save.ToolTipText = "toolLog_save";
 			// 
 			// toolLog_clear
@@ -224,8 +227,8 @@ namespace PeMain.UI
 			this.toolLog_clear.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
-			this.toolLog_clear.Size = new System.Drawing.Size(80, 22);
-			this.toolLog_clear.Text = "{CLEAR}";
+			this.toolLog_clear.Size = new System.Drawing.Size(112, 22);
+			this.toolLog_clear.Text = "{LOG_CLEAR}";
 			this.toolLog_clear.ToolTipText = "toolLog_clear";
 			// 
 			// LogForm
@@ -256,15 +259,16 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			this.panelDetail.ResumeLayout(false);
+			this.panelDetail.PerformLayout();
 			this.toolLog.ResumeLayout(false);
 			this.toolLog.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TextBox viewDetail;
 		private System.Windows.Forms.ColumnHeader headerFunction;
 		private System.Windows.Forms.ColumnHeader headerLine;
 		private System.Windows.Forms.ColumnHeader headerFile;
 		private System.Windows.Forms.ListView listStack;
-		private System.Windows.Forms.TreeView treeDetail;
 		private System.Windows.Forms.TableLayoutPanel panelDetail;
 		private System.Windows.Forms.ColumnHeader headerTitle;
 		private System.Windows.Forms.ColumnHeader headerTimestamp;
