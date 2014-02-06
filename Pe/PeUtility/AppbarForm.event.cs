@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.UI
+namespace PeUtility
 {
 	/// <summary>
 	/// フルスクリーンイベント

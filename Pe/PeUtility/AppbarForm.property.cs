@@ -10,7 +10,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PeMain.UI
+namespace PeUtility
 {
 	public partial class AppbarForm
 	{

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 using PI.Windows;
 
-namespace PeMain.UI
+namespace PeUtility
 {
 	/// <summary>
 	/// Description of BaseToolbarForm_function.

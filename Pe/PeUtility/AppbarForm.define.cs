@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 using PI.Windows;
 
-namespace PeMain.UI
+namespace PeUtility
 {
 	public enum DesktopDockType
 	{

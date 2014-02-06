@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace PeMain.UI
+namespace PeUtility
 {
 	/// <summary>
 	/// </summary>
