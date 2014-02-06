@@ -19,10 +19,16 @@ namespace PeMain.UI
 			
 			var rootMenu = this._notificationMenu.MenuItems;
 			rootMenu[menuNameAbout].Text = this._language["main/menu/about"];
+
 			var windowMenu = rootMenu[menuNameWindow];
 			windowMenu.Text = this._language["main/menu/window"];
 			windowMenu.MenuItems[menuNameWindowToolbar].Text = this._language["main/menu/window/toolbar"];
 			windowMenu.MenuItems[menuNameWindowLogger].Text = this._language["main/menu/window/logger"];
+
+			var systemEnvMenu = rootMenu[menuNameSystemEnv];
+			systemEnvMenu.Text = this._language["main/menu/system-env"];
+			systemEnvMenu.MenuItems[menuNameSystemEnvHiddenFile].Text = this._language["main/menu/system-env/show-hiddne-file"];
+			systemEnvMenu.MenuItems[menuNameSystemEnvExtension].Text = this._language["main/menu/system-env/show-extension"];
 		
 			rootMenu[menuNameSetting].Text = this._language["main/menu/setting"];
 			rootMenu[menuNameExit].Text = this._language["common/menu/exit"];

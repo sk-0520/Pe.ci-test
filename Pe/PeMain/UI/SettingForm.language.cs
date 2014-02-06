@@ -25,12 +25,23 @@ namespace PeMain.UI
 			this.pageNote.Text = Language["setting/tab/note"];
 		}
 		
+		void ApplyLanguageLog()
+		{
+			this.selectLogVisible.Text = Language["common/label/visible"];
+			this.selectLogAddShow.Text = Language["setting/check/add-show"];
+		}
+		
+		void ApplyLanguageSystemEnv()
+		{
+		}
+		
 		void ApplyLanguageMain()
 		{
 			this.groupMainLog.Text = Language["setting/group/log"];
 			this.labelMainLanguage.Text = Language["setting/label/language"];
-			this.selectLogVisible.Text = Language["common/label/visible"];
-			this.selectLogAddShow.Text = Language["setting/check/add-show"];
+			
+			ApplyLanguageLog();
+			ApplyLanguageSystemEnv();
 		}
 		
 		void ApplyLanguageCommand()

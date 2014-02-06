@@ -39,6 +39,10 @@ namespace PeMain.UI
 			this.components = new System.ComponentModel.Container();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
+			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
+			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
+			this.inputSystemEnvExt = new PeMain.UI.PeHotkeyControl();
+			this.inputSystemEnvHiddenFile = new PeMain.UI.PeHotkeyControl();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
 			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
 			this.selectLogVisible = new System.Windows.Forms.CheckBox();
@@ -116,8 +120,10 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.labelSystemEnvExt = new System.Windows.Forms.Label();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
+			this.groupMainSystemEnv.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
 			this.pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -163,6 +169,7 @@ namespace PeMain.UI
 			// 
 			// pageMain
 			// 
+			this.pageMain.Controls.Add(this.groupMainSystemEnv);
 			this.pageMain.Controls.Add(this.groupMainLog);
 			this.pageMain.Controls.Add(this.selectMainLanguage);
 			this.pageMain.Controls.Add(this.labelMainLanguage);
@@ -175,11 +182,61 @@ namespace PeMain.UI
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
 			// 
+			// groupMainSystemEnv
+			// 
+			this.groupMainSystemEnv.Controls.Add(this.labelSystemEnvExt);
+			this.groupMainSystemEnv.Controls.Add(this.inputSystemEnvExt);
+			this.groupMainSystemEnv.Controls.Add(this.labelSystemEnvHiddenFile);
+			this.groupMainSystemEnv.Controls.Add(this.inputSystemEnvHiddenFile);
+			this.groupMainSystemEnv.Location = new System.Drawing.Point(248, 62);
+			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
+			this.groupMainSystemEnv.Size = new System.Drawing.Size(379, 100);
+			this.groupMainSystemEnv.TabIndex = 18;
+			this.groupMainSystemEnv.TabStop = false;
+			this.groupMainSystemEnv.Text = "{SYSTEM-ENV}";
+			// 
+			// labelSystemEnvHiddenFile
+			// 
+			this.labelSystemEnvHiddenFile.AutoSize = true;
+			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(6, 26);
+			this.labelSystemEnvHiddenFile.Name = "labelSystemEnvHiddenFile";
+			this.labelSystemEnvHiddenFile.Size = new System.Drawing.Size(100, 15);
+			this.labelSystemEnvHiddenFile.TabIndex = 17;
+			this.labelSystemEnvHiddenFile.Text = "{HIDDEN-FILE}";
+			// 
+			// inputSystemEnvExt
+			// 
+			this.inputSystemEnvExt.BackColor = System.Drawing.Color.White;
+			this.inputSystemEnvExt.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvExt.Language = null;
+			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
+			this.inputSystemEnvExt.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
+			this.inputSystemEnvExt.ReadOnly = true;
+			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 27);
+			this.inputSystemEnvExt.TabIndex = 16;
+			this.inputSystemEnvExt.Text = "";
+			// 
+			// inputSystemEnvHiddenFile
+			// 
+			this.inputSystemEnvHiddenFile.BackColor = System.Drawing.Color.White;
+			this.inputSystemEnvHiddenFile.Cursor = System.Windows.Forms.Cursors.Arrow;
+			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvHiddenFile.Language = null;
+			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
+			this.inputSystemEnvHiddenFile.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
+			this.inputSystemEnvHiddenFile.ReadOnly = true;
+			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(252, 27);
+			this.inputSystemEnvHiddenFile.TabIndex = 16;
+			this.inputSystemEnvHiddenFile.Text = "";
+			// 
 			// groupMainLog
 			// 
 			this.groupMainLog.Controls.Add(this.selectLogAddShow);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
-			this.groupMainLog.Location = new System.Drawing.Point(66, 90);
+			this.groupMainLog.Location = new System.Drawing.Point(15, 62);
 			this.groupMainLog.Name = "groupMainLog";
 			this.groupMainLog.Size = new System.Drawing.Size(200, 100);
 			this.groupMainLog.TabIndex = 2;
@@ -210,7 +267,7 @@ namespace PeMain.UI
 			// 
 			this.selectMainLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.selectMainLanguage.FormattingEnabled = true;
-			this.selectMainLanguage.Location = new System.Drawing.Point(121, 19);
+			this.selectMainLanguage.Location = new System.Drawing.Point(108, 16);
 			this.selectMainLanguage.Name = "selectMainLanguage";
 			this.selectMainLanguage.Size = new System.Drawing.Size(121, 23);
 			this.selectMainLanguage.TabIndex = 1;
@@ -724,7 +781,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 353);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 357);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -735,13 +792,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 328);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 332);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 353);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 357);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -757,7 +814,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 328);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 332);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -853,7 +910,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 353);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 357);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -961,7 +1018,7 @@ namespace PeMain.UI
 			// 
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(734, 369);
+			this.pageNote.Size = new System.Drawing.Size(741, 369);
 			this.pageNote.TabIndex = 6;
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
@@ -970,7 +1027,7 @@ namespace PeMain.UI
 			// 
 			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(734, 369);
+			this.pageDisplay.Size = new System.Drawing.Size(741, 369);
 			this.pageDisplay.TabIndex = 5;
 			this.pageDisplay.Text = "{DISPLAY}";
 			this.pageDisplay.UseVisualStyleBackColor = true;
@@ -1027,6 +1084,15 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// labelSystemEnvExt
+			// 
+			this.labelSystemEnvExt.AutoSize = true;
+			this.labelSystemEnvExt.Location = new System.Drawing.Point(6, 53);
+			this.labelSystemEnvExt.Name = "labelSystemEnvExt";
+			this.labelSystemEnvExt.Size = new System.Drawing.Size(91, 15);
+			this.labelSystemEnvExt.TabIndex = 17;
+			this.labelSystemEnvExt.Text = "{EXTENSION}";
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1043,6 +1109,8 @@ namespace PeMain.UI
 			this.tabSetting.ResumeLayout(false);
 			this.pageMain.ResumeLayout(false);
 			this.pageMain.PerformLayout();
+			this.groupMainSystemEnv.ResumeLayout(false);
+			this.groupMainSystemEnv.PerformLayout();
 			this.groupMainLog.ResumeLayout(false);
 			this.groupMainLog.PerformLayout();
 			this.pageLauncher.ResumeLayout(false);
@@ -1076,6 +1144,11 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Label labelSystemEnvExt;
+		private PeMain.UI.PeHotkeyControl inputSystemEnvHiddenFile;
+		private PeMain.UI.PeHotkeyControl inputSystemEnvExt;
+		private System.Windows.Forms.Label labelSystemEnvHiddenFile;
+		private System.Windows.Forms.GroupBox groupMainSystemEnv;
 		private System.Windows.Forms.ComboBox selectToolbarItem;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label labelToolbarTextWidth;

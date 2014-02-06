@@ -28,9 +28,20 @@ namespace PeMain.UI
 			this.selectLogVisible.Checked = logSetting.Visible;
 			this.selectLogAddShow.Checked = logSetting.AddShow;
 		}
+		
+		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)
+		{
+			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotkey.Key;
+			this.inputSystemEnvHiddenFile.Modifiers = systemEnvSetting.HiddenFileShowHotkey.Modifiers;
+			
+			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotkey.Key;
+			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotkey.Modifiers;
+		}
+		
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			InitializeLog(mainSetting.Log);
+			InitializeSystemEnv(mainSetting.SystemEnv);
 		}
 		
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -51,8 +62,8 @@ namespace PeMain.UI
 			AttachmentIconSize(this.selectCommandIcon, commandSetting.IconSize);
 			
 			// ホットキー
-			var hotKey = commandSetting.Hotkey;
-			var modKey = commandSetting.Modifiers;
+			var hotKey = commandSetting.Hotkey.Key;
+			var modKey = commandSetting.Hotkey.Modifiers;
 			this.inputCommandHotkey.Hotkey = hotKey;
 			this.inputCommandHotkey.Modifiers = modKey;
 		}

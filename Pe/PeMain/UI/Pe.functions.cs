@@ -23,6 +23,15 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
+		public void ShowTips(string tezt)
+		{
+			throw new NotImplementedException();
+		}
+		public void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items)
+		{
+			throw new NotImplementedException();
+		}
+
 		IEnumerable<Form> GetWindows()
 		{
 			var result = new List<Form>();

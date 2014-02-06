@@ -125,6 +125,23 @@ namespace PeMain.UI
 			return menuList.ToArray();
 		}
 		
+		MenuItem[] CreateSystemEnvMenu()
+		{
+			var menuList = new List<MenuItem>();
+			var itemHiddenFile = new MenuItem();
+			var itemExtension = new MenuItem();
+			menuList.Add(itemHiddenFile);
+			menuList.Add(itemExtension);
+			
+			// 隠しファイル
+			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
+			
+			// 拡張子
+			itemExtension.Name  = menuNameSystemEnvExtension;
+			
+			return menuList.ToArray();
+		}
+		
 		/// <summary>
 		/// 本体メニュー初期化
 		/// </summary>
@@ -133,12 +150,14 @@ namespace PeMain.UI
 		{
 			var menuList = new List<MenuItem>();
 			var itemWindow = new MenuItem();
+			var itemSystemEnv = new MenuItem();
 			var itemSetting = new MenuItem();
 			var itemAbout = new MenuItem();
 			var itemExit = new MenuItem();
 			
 			menuList.Add(itemAbout);
 			menuList.Add(itemWindow);
+			menuList.Add(itemSystemEnv);
 			menuList.Add(itemSetting);
 			menuList.Add(itemExit);
 			
@@ -151,13 +170,23 @@ namespace PeMain.UI
 			// ウィンドウ
 			itemWindow.Name = menuNameWindow;
 			itemWindow.MenuItems.AddRange(CreateWindowMenu());
-			/*
+			// ログ
 			itemWindow.Popup += (object sender, EventArgs e) => {
-				itemWindow.MenuItems[menuNameWindowToolbar].Checked = this._toolbarForms.Visible;
-				itemWindow.MenuItems[menuNameWindowLogger].Checked = this._logForm.Visible;
+				var itemLog = itemWindow.MenuItems[menuNameWindowLogger];
+				itemLog.Checked = this._logForm.Visible;
 			};
-			*/
 			
+			// システム環境
+			itemSystemEnv.Name = menuNameSystemEnv;
+			itemSystemEnv.MenuItems.AddRange(CreateSystemEnvMenu());
+			itemSystemEnv.Popup += (object sender, EventArgs e) => {
+				var itemHiddneFile = itemSystemEnv.MenuItems[menuNameSystemEnvHiddenFile];
+				itemHiddneFile.Checked = SystemEnv.IsHiddenfFileShow();
+				
+				var itemExtension = itemSystemEnv.MenuItems[menuNameSystemEnvExtension];
+				itemExtension.Checked = SystemEnv.IsExtensionShow();
+			};
+
 			// 設定
 			itemSetting.Name = menuNameSetting;
 			itemSetting.Click += (object sender, EventArgs e) => {
@@ -205,7 +234,7 @@ namespace PeMain.UI
 			Debug.Assert(this._mainSetting != null);
 			
 			// ディスプレイ分生成
-			foreach(var screen in Screen.AllScreens.OrderBy(s => s.Primary)) {
+			foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 				var toolbar = new ToolbarForm();
 				toolbar.Logger = this._logForm;
 				toolbar.DockScreen = screen;

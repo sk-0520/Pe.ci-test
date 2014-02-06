@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using PeMain.Data;
+using PI.Windows;
 
 namespace PeMain.UI
 {
@@ -24,11 +25,18 @@ namespace PeMain.UI
 			ApplySetting();
 		}
 		
+		void ApplyHotkey()
+		{
+			//API.RegisterHotKey(
+		}
+		
 		void ApplySetting()
 		{
 			Debug.Assert(MainSetting != null);
 			
 			ApplyLanguage();
+			
+			ApplyHotkey();
 		}
 	}
 }

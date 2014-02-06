@@ -20,8 +20,8 @@ namespace PeMain.UI
 		{
 			var hotKey = this.inputCommandHotkey.Hotkey;
 			var modKey = this.inputCommandHotkey.Modifiers;
-			commandSetting.Hotkey = hotKey;
-			commandSetting.Modifiers = modKey;
+			commandSetting.Hotkey.Key = hotKey;
+			commandSetting.Hotkey.Modifiers = modKey;
 		}
 	}
 }
