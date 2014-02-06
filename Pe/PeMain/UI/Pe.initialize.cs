@@ -72,7 +72,7 @@ namespace PeMain.UI
 			this._messageWindow.SetSettingData(this._language, this._mainSetting);
 		}
 		
-		MenuItem[] CreateWindowToolbarMenu()
+		void AttachmentToolbarSubMenu(MenuItem parentMenu)
 		{
 			var menuList = new List<MenuItem>();
 			foreach(var screen in Screen.AllScreens) {
@@ -87,10 +87,21 @@ namespace PeMain.UI
 				menuList.Add(menuItem);
 			}
 			
-			return menuList.ToArray();
+			// サブメニュー設定
+			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			
+			parentMenu.Popup += (object sender, EventArgs e) => {
+				foreach(var screen in Screen.AllScreens) {
+					if(parentMenu.MenuItems.ContainsKey(screen.DeviceName)) {
+						var menuItem = parentMenu.MenuItems[screen.DeviceName];
+						menuItem.Checked = this._toolbarForms[screen].Visible;
+					}
+				}
+			};
+
 		}
 		
-		MenuItem[] CreateWindowMenu()
+		void AttachmentWindowSubMenu(MenuItem parentMenu)
 		{
 			var menuList = new List<MenuItem>();
 			var itemToolbar = new MenuItem();
@@ -100,15 +111,7 @@ namespace PeMain.UI
 			menuList.Add(itemLogger);
 			
 			itemToolbar.Name = menuNameWindowToolbar;
-			itemToolbar.MenuItems.AddRange(CreateWindowToolbarMenu());
-			itemToolbar.Popup += (object sender, EventArgs e) => {
-				foreach(var screen in Screen.AllScreens) {
-					if(itemToolbar.MenuItems.ContainsKey(screen.DeviceName)) {
-						var menuItem = itemToolbar.MenuItems[screen.DeviceName];
-						menuItem.Checked = this._toolbarForms[screen].Visible;
-					}
-				}
-			};
+			AttachmentToolbarSubMenu(itemToolbar);
 			/*
 			itemToolbar.Click += (object sender, EventArgs e) => {
 				this._toolbarForms.Visible = !this._toolbarForms.Visible;
@@ -122,10 +125,17 @@ namespace PeMain.UI
 				this._mainSetting.Log.Visible = this._logForm.Visible;
 			};
 			
-			return menuList.ToArray();
+			// サブメニュー設定
+			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			
+			// ログ
+			parentMenu.Popup += (object sender, EventArgs e) => {
+				itemLogger.Checked = this._logForm.Visible;
+			};
+			
 		}
 		
-		MenuItem[] CreateSystemEnvMenu()
+		void AttachmentSystemEnvSubMenu(MenuItem parentMenu)
 		{
 			var menuList = new List<MenuItem>();
 			var itemHiddenFile = new MenuItem();
@@ -139,7 +149,14 @@ namespace PeMain.UI
 			// 拡張子
 			itemExtension.Name  = menuNameSystemEnvExtension;
 			
-			return menuList.ToArray();
+			// サブメニュー設定
+			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			
+			parentMenu.Popup += (object sender, EventArgs e) => {
+				itemHiddenFile.Checked = SystemEnv.IsHiddenfFileShow();
+				itemExtension.Checked = SystemEnv.IsExtensionShow();
+			};
+
 		}
 		
 		/// <summary>
@@ -169,23 +186,11 @@ namespace PeMain.UI
 			
 			// ウィンドウ
 			itemWindow.Name = menuNameWindow;
-			itemWindow.MenuItems.AddRange(CreateWindowMenu());
-			// ログ
-			itemWindow.Popup += (object sender, EventArgs e) => {
-				var itemLog = itemWindow.MenuItems[menuNameWindowLogger];
-				itemLog.Checked = this._logForm.Visible;
-			};
-			
+			AttachmentWindowSubMenu(itemWindow);
+
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.MenuItems.AddRange(CreateSystemEnvMenu());
-			itemSystemEnv.Popup += (object sender, EventArgs e) => {
-				var itemHiddneFile = itemSystemEnv.MenuItems[menuNameSystemEnvHiddenFile];
-				itemHiddneFile.Checked = SystemEnv.IsHiddenfFileShow();
-				
-				var itemExtension = itemSystemEnv.MenuItems[menuNameSystemEnvExtension];
-				itemExtension.Checked = SystemEnv.IsExtensionShow();
-			};
+			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
