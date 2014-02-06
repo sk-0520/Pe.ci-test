@@ -43,6 +43,9 @@
 		<Word Name="main/menu/window/logger"   Text="ログ(&amp;L)" />
 		<Word Name="main/menu/setting"         Text="設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"           Text="@[PE] 情報(&amp;A) ${open-ui}" />
+		<Word Name="main/menu/system-env"      Text="環境設定(&amp;E)" />
+		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
+		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
 		
 		<Word Name="log/command/save"      Text="ログ保存" />
 		<Word Name="log/tips/save"         Text="現在のログをファイルに保存" />

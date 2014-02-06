@@ -8,7 +8,12 @@
  */
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
+
 using Microsoft.Win32;
+using PI.Windows;
 
 namespace PeMain.Logic
 {
@@ -19,8 +24,10 @@ namespace PeMain.Logic
 	{
 		const string hiddenFileRootPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
 		const string extensionRootPath = hiddenFileRootPath;
+		const string hiddenKey = "Hidden";
+		const string extensionKey = "HideFileExt";
 		
-		enum HiddenFileHiddenType 
+		enum HiddenFileHiddenType
 		{
 			Show = 1,
 			Hidden = 2,
@@ -42,16 +49,60 @@ namespace PeMain.Logic
 		/// <returns></returns>
 		public static bool IsHiddenfFileShow()
 		{
-			var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath);
-			//Debug.WriteLine(subKey.GetValue("ShowSuperHidden"));
-			var hiddenValue = (int)subKey.GetValue("Hidden");
-			return hiddenValue == (int)HiddenFileHiddenType.Show;
+			using(var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath)) {
+				//Debug.WriteLine(subKey.GetValue("ShowSuperHidden"));
+				var hiddenValue = (int)subKey.GetValue(hiddenKey);
+				return hiddenValue == (int)HiddenFileHiddenType.Show;
+			}
 		}
+		public static void SetHiddenfFileShow(bool show)
+		{
+			using(var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath, true)) {
+				var hiddenValue = (int)(show ? HiddenFileHiddenType.Show: HiddenFileHiddenType.Hidden);
+				subKey.SetValue(hiddenKey, hiddenValue, RegistryValueKind.DWord);
+			}
+		}
+		
 		public static bool IsExtensionShow()
 		{
-			var subKey = Registry.CurrentUser.OpenSubKey(extensionRootPath);
-			var extValue = (int)subKey.GetValue("HideFileExt");
-			return extValue == (int)ExtensionHiddenType.Show;
+			using(var subKey = Registry.CurrentUser.OpenSubKey(extensionRootPath)) {
+				var extValue = (int)subKey.GetValue(extensionKey);
+				return extValue == (int)ExtensionHiddenType.Show;
+			}
+		}
+		public static void SetExtensionShow(bool show)
+		{
+			using(var subKey = Registry.CurrentUser.OpenSubKey(extensionRootPath, true)) {
+				var extType = (int)(show ? ExtensionHiddenType.Show: ExtensionHiddenType.Hidden);
+				subKey.SetValue(extensionKey, extType, RegistryValueKind.DWord);
+			}
+		}
+		
+		/// <summary>
+		/// TODO: 外部化
+		/// </summary>
+		/// <param name="hParentWnd"></param>
+		private static void RefreshShell(IntPtr hParentWnd)
+		{
+			var targetClassName = "SHELLDLL_DefView";
+			var hWnd = IntPtr.Zero;
+			var workClassName = new StringBuilder(256);
+			while(true) {
+				hWnd = API.FindWindowEx(hParentWnd, hWnd, null, null);
+				if(hWnd == IntPtr.Zero) {
+					break;
+				}
+				API.GetClassName(hWnd, workClassName, workClassName.Capacity);
+				if(workClassName.ToString() == targetClassName) {
+					API.PostMessage(hWnd, WM.WM_COMMAND, new IntPtr((int)WM_COMMAND_SUB.Refresh), IntPtr.Zero);
+				} else {
+					RefreshShell(hWnd);
+				}
+			}
+		}
+		public static void RefreshShell()
+		{
+			RefreshShell(IntPtr.Zero);
 		}
 	}
 }

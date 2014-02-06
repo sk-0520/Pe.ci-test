@@ -49,6 +49,7 @@
     <Compile Include="Windows\CommonControls.cs" />
     <Compile Include="Windows\Dwmapi.cs" />
     <Compile Include="Windows\Shellapi.cs" />
+    <Compile Include="Windows\Shlobj.cs" />
     <Compile Include="Windows\user32.cs" />
     <Compile Include="Windows\Windef.cs" />
     <Compile Include="Windows\Winerror.cs" />
