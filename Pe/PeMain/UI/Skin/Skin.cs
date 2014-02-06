@@ -10,7 +10,7 @@ using System;
 using System.Drawing;
 using PeMain.Data;
 
-namespace PeMain.UI.Skin
+namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of Skin.
@@ -18,6 +18,8 @@ namespace PeMain.UI.Skin
 	public interface ISkin
 	{
 		void DrawToolbarEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		void DrawToolbarBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		void DrawToolbarButton(Graphics g, Rectangle drawArea, bool active);
 	}
 }

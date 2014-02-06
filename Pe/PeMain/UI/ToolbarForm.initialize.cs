@@ -20,14 +20,6 @@ namespace PeMain.UI
 	{
 		void InitializeUI()
 		{
-			bool isAero;
-			API.DwmIsCompositionEnabled(out isAero);
-			if(isAero) {
-				var margin = new MARGINS();
-				margin.leftWidth = -1;
-				//API.DwmExtendFrameIntoClientArea(Handle, ref margin);
-			}
-			
 			this._menuGroup = new ContextMenu();
 			ContextMenu = this._menuGroup;
 		}

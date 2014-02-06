@@ -13,10 +13,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+
+using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Properties;
-using PeMain.Data;
 using PeUtility;
+using PI.Windows;
 
 namespace PeMain.UI
 {
@@ -83,6 +85,18 @@ namespace PeMain.UI
 		}
 		void ApplySettingPosition()
 		{
+			bool isAero;
+			API.DwmIsCompositionEnabled(out isAero);
+			if(isAero) {
+				var margin = new MARGINS();
+				margin.leftWidth = -1;
+				//API.DwmExtendFrameIntoClientArea(Handle, ref margin);
+			}
+			var renderer = new ToolbarRenderer();
+			//renderer.Skin = 
+			
+			this.toolLauncher.Renderer = renderer; 
+
 			if(UseToolbarItem.Visible) {
 				ItemSizeToFormSize();
 				
