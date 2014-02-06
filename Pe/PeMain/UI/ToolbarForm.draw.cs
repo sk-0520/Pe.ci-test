@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using PeMain.Data;
 
 namespace PeMain.UI
 {
@@ -43,7 +44,7 @@ namespace PeMain.UI
 				headColor = SystemColors.GradientInactiveCaption;
 				tailColor = SystemColors.InactiveCaption;
 			}
-			var mode = IsHorizonMode(UseToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
+			var mode = ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
 			using(var brush = new LinearGradientBrush(drawArea, headColor, tailColor, mode)) {
 				g.FillRectangle(brush, drawArea);
 			}
@@ -53,7 +54,7 @@ namespace PeMain.UI
 		{
 			DrawEdge(g, drawArea, active);
 			var captionArea = GetCaptionArea(UseToolbarItem.ToolbarPosition);
-			DrawCaption(g, captionArea, active, IsHorizonMode(UseToolbarItem.ToolbarPosition));
+			DrawCaption(g, captionArea, active, ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition));
 		}
 		
 		void DrawFullActivaChanged(bool active)

@@ -28,8 +28,6 @@ namespace PeMain.UI
 		ToolbarGroupItem SelectedGroupItem { get; set; }
 		public ToolbarItem UseToolbarItem { get; private set; }
 		
-		public bool IsDockingMode { get { return UseToolbarItem.ToolbarPosition.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom); } }
-		
 		override public DesktopDockType DesktopDockType
 		{
 			get { return base.DesktopDockType; }
@@ -42,7 +40,7 @@ namespace PeMain.UI
 				
 				SetPaddingArea(pos);
 				if(this.toolLauncher != null) {
-					if(IsHorizonMode(pos)) {
+					if(ToolbarPositionUtility.IsHorizonMode(pos)) {
 						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.HorizontalStackWithOverflow;
 					} else {
 						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.VerticalStackWithOverflow;

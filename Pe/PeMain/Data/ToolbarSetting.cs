@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+
 using PeMain.Logic;
 using PeUtility;
 
@@ -52,6 +53,43 @@ namespace PeMain.Data
 		/// アクティブウィンドウ 下側
 		/// </summary>
 		WindowBottom,
+	}
+	
+	public static class ToolbarPositionUtility
+	{
+		public static ToolbarPosition ToToolbarPosition(DesktopDockType value)
+		{
+			return new Dictionary<DesktopDockType, ToolbarPosition>() {
+				{ DesktopDockType.Left,   ToolbarPosition.DesktopLeft },
+				{ DesktopDockType.Top,    ToolbarPosition.DesktopTop },
+				{ DesktopDockType.Right,  ToolbarPosition.DesktopRight },
+				{ DesktopDockType.Bottom, ToolbarPosition.DesktopBottom },
+			}[value];
+		}
+		public static DesktopDockType ToDockType(ToolbarPosition value)
+		{
+			return new Dictionary<ToolbarPosition, DesktopDockType>() {
+				{ToolbarPosition.DesktopLeft,   DesktopDockType.Left },
+				{ToolbarPosition.DesktopTop,    DesktopDockType.Top },
+				{ToolbarPosition.DesktopRight,  DesktopDockType.Right },
+				{ToolbarPosition.DesktopBottom, DesktopDockType.Bottom },
+			}[value];
+		}
+		public static bool IsDockingMode(ToolbarPosition value)
+		{
+			return value.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom);
+		}
+		public static bool IsHorizonMode(ToolbarPosition pos)
+		{
+			return pos.IsIn(
+				ToolbarPosition.DesktopFloat,
+				ToolbarPosition.DesktopTop,
+				ToolbarPosition.DesktopBottom,
+				ToolbarPosition.WindowTop,
+				ToolbarPosition.WindowBottom
+			);
+		}
+		
 	}
 	
 	public class ToolbarPositionItem: UseLanguageItemData<ToolbarPosition>
@@ -174,6 +212,14 @@ namespace PeMain.Data
 		{
 			return Name == name;
 		}
+	}
+	
+	public class ToolbarItemData: UseLanguageItemData<ToolbarItem>
+	{
+		public ToolbarItemData(ToolbarItem value): base(value) { }
+		public ToolbarItemData(ToolbarItem value, Language language): base(value, language) { }
+		
+		public override string Display { get { return ScreenUtility.ToScreenName(Value.Name); } }
 	}
 	
 	/// <summary>

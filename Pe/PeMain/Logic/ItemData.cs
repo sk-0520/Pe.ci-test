@@ -86,13 +86,4 @@ namespace PeMain.Logic
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 	
-	public class ToolbarItemData: UseLanguageItemData<ToolbarItem>
-	{
-		public ToolbarItemData(ToolbarItem value): base(value) { }
-		public ToolbarItemData(ToolbarItem value, Language language): base(value, language) { }
-		
-		public override string Display { get { return ScreenUtility.ToScreenName(Value.Name); } }
-	}
-
-	
 }
