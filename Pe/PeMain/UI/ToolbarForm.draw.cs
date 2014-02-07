@@ -20,41 +20,19 @@ namespace PeMain.UI
 	{
 		void DrawEdge(Graphics g, Rectangle drawArea, bool active)
 		{
-			var light = active ? SystemBrushes.ControlLight: SystemBrushes.ControlLightLight;
-			var dark = active ? SystemBrushes.ControlDarkDark: SystemBrushes.ControlDark;
-			
-			// 下
-			g.FillRectangle(dark, 0, drawArea.Height - Padding.Bottom, Width, Padding.Bottom);
-			// 右
-			g.FillRectangle(dark, drawArea.Width - Padding.Right, 0, Padding.Right, Height);
-			// 左
-			g.FillRectangle(dark, 0, 0, Padding.Left, Height);
-			// 上
-			g.FillRectangle(dark, 0, 0, Width, Padding.Top);
+			CommonData.Skin.DrawToolbarEdge(g, drawArea, active, UseToolbarItem.ToolbarPosition);
 		}
 		
-		void DrawCaption(Graphics g, Rectangle drawArea, bool active, bool horizon)
+		void DrawCaption(Graphics g, Rectangle drawArea, bool active)
 		{
-			Color headColor;
-			Color tailColor;
-			if(active) {
-				headColor = SystemColors.GradientActiveCaption;
-				tailColor = SystemColors.ActiveCaption;
-			} else {
-				headColor = SystemColors.GradientInactiveCaption;
-				tailColor = SystemColors.InactiveCaption;
-			}
-			var mode = ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
-			using(var brush = new LinearGradientBrush(drawArea, headColor, tailColor, mode)) {
-				g.FillRectangle(brush, drawArea);
-			}
+			CommonData.Skin.DrawToolbarCaption(g, drawArea, active, UseToolbarItem.ToolbarPosition);
 		}
 		
 		void DrawFull(Graphics g, Rectangle drawArea, bool active)
 		{
 			DrawEdge(g, drawArea, active);
-			var captionArea = GetCaptionArea(UseToolbarItem.ToolbarPosition);
-			DrawCaption(g, captionArea, active, ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition));
+			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
+			DrawCaption(g, captionArea, active);
 		}
 		
 		void DrawFullActivaChanged(bool active)

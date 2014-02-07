@@ -34,7 +34,7 @@ namespace PeMain.UI
 							var padding = Padding;
 							
 							var hitTest = HT.HTNOWHERE;
-							var captionArea = GetCaptionArea(UseToolbarItem.ToolbarPosition);
+							var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, Size);
 							if(captionArea.Contains(point)) {
 								hitTest = HT.HTCAPTION;
 							} else {

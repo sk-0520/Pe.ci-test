@@ -27,48 +27,6 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
-		Padding GetBorderPadding()
-		{
-			var frame = SystemInformation.Border3DSize;
-			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
-		}
-		
-		Rectangle GetCaptionArea(ToolbarPosition pos)
-		{
-			var padding = GetBorderPadding();
-			var point = new Point(padding.Left, padding.Top);
-			var size = new Size();
-			
-			if(ToolbarPositionUtility.IsHorizonMode(pos)) {
-				size.Width = SystemInformation.SmallCaptionButtonSize.Height / 2;
-				size.Height = Height - Padding.Vertical;
-			} else {
-				size.Width = Width - Padding.Horizontal;
-				size.Height = SystemInformation.SmallCaptionButtonSize.Height / 2;
-			}
-			
-			return new Rectangle(point, size);
-		}
-		
-		void SetPaddingArea(ToolbarPosition pos)
-		{
-			var borderPadding = GetBorderPadding();
-			var captionArea = GetCaptionArea(pos);
-			var captionPlus = new Size();
-			if(ToolbarPositionUtility.IsHorizonMode(pos)) {
-				captionPlus.Width = captionArea.Width;
-			} else {
-				captionPlus.Height =captionArea.Height;
-			}
-			var padding = new Padding(
-				borderPadding.Left + captionPlus.Width,
-				borderPadding.Top  + captionPlus.Height,
-				borderPadding.Right,
-				borderPadding.Bottom
-			);
-			Padding = padding;
-		}
-		
 		public void SetCommonData(CommonData commonData)
 		{
 			CommonData = commonData;
@@ -84,9 +42,12 @@ namespace PeMain.UI
 		void ApplySkin()
 		{
 			var renderer = new ToolbarRenderer();
-			//renderer.Skin = 
+			renderer.Skin = CommonData.Skin;
+			renderer.ToolbarItem = UseToolbarItem;
 			
 			this.toolLauncher.Renderer = renderer; 
+			
+			CommonData.Skin.Start(this);
 		}
 		
 		void ApplySettingPosition()
@@ -198,9 +159,9 @@ namespace PeMain.UI
 		void ItemSizeToFormSize()
 		{
 			var floatSize = UseToolbarItem.FloatSize;
-			SetPaddingArea(UseToolbarItem.ToolbarPosition);
+			Padding = CommonData.Skin.GetToolbarTotalPadding(UseToolbarItem.ToolbarPosition, Size);
 			
-			var buttonLayout = GetButtonLayout(UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
+			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			
 			var minSize = buttonLayout.Size;
 			minSize.Width += this.toolLauncher.Margin.Horizontal + Margin.Horizontal;
@@ -555,39 +516,12 @@ namespace PeMain.UI
 				// 最前面表示
 				topmostItem.Checked = UseToolbarItem.Topmost;
 			};
-
-		}
-		
-		static ButtonLayout GetButtonLayout(IconSize iconSize, bool showText, int textWidth)
-		{
-			var iconBox = iconSize.ToSize();
-			var systemBorderSize = SystemInformation.Border3DSize;
-			var systemPaddingSize = SystemInformation.FixedFrameBorderSize;
-			var padding = new Padding(
-				systemBorderSize.Width + systemPaddingSize.Width / 2,
-				systemBorderSize.Height + systemPaddingSize.Height / 2,
-				systemBorderSize.Width + systemPaddingSize.Width / 2,
-				systemBorderSize.Height + systemPaddingSize.Height / 2
-			);
-			var buttonSize = new Size();
-			var menuWidth = 12;
-			
-			buttonSize.Width = iconBox.Width + padding.Horizontal + menuWidth;
-			if(showText) {
-				buttonSize.Width += textWidth > 0 ? textWidth: Literal.toolbarTextWidth;
-			}
-			buttonSize.Height = iconBox.Height + padding.Vertical;
-			
-			var buttonLayout = new ButtonLayout();
-			buttonLayout.Size = buttonSize;
-			buttonLayout.MenuWidth = menuWidth;
-			return buttonLayout;
 		}
 
-		static void SetButtonLayout(ToolStripDropDownItem toolItem, IconSize iconSize, bool showText, int textWidth)
+		static void SetButtonLayout(ToolStripDropDownItem toolItem, ISkin skin, IconSize iconSize, bool showText, int textWidth)
 		{
 			var toolSplit = toolItem as ToolStripSplitButton;
-			var buttonLayout = GetButtonLayout(iconSize, showText, textWidth);
+			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, textWidth);
 			
 			toolItem.AutoSize = false;
 			toolItem.Size = buttonLayout.Size;
@@ -626,7 +560,7 @@ namespace PeMain.UI
 			}
 
 			//toolItem.AutoSize = true;
-			SetButtonLayout(toolItem, UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
+			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);

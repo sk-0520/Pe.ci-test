@@ -27,19 +27,18 @@ namespace PeMain.UI
 		override public DesktopDockType DesktopDockType
 		{
 			get { return base.DesktopDockType; }
-			set 
+			set
 			{
-				var pos = ToolbarPosition.DesktopFloat;
-				if(CommonData != null && CommonData.MainSetting != null) {
-					pos = UseToolbarItem.ToolbarPosition;
-				}
-				
-				SetPaddingArea(pos);
-				if(this.toolLauncher != null) {
-					if(ToolbarPositionUtility.IsHorizonMode(pos)) {
-						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.HorizontalStackWithOverflow;
-					} else {
-						this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.VerticalStackWithOverflow;
+				if(CommonData != null ) {
+					var pos = UseToolbarItem.ToolbarPosition;
+					
+					Padding = CommonData.Skin.GetToolbarTotalPadding(UseToolbarItem.ToolbarPosition, Size);
+					if(this.toolLauncher != null) {
+						if(ToolbarPositionUtility.IsHorizonMode(pos)) {
+							this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.HorizontalStackWithOverflow;
+						} else {
+							this.toolLauncher.LayoutStyle =  ToolStripLayoutStyle.VerticalStackWithOverflow;
+						}
 					}
 				}
 				base.DesktopDockType = value;
