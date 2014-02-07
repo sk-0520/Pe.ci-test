@@ -69,7 +69,7 @@ namespace PeMain.UI
 			Padding = padding;
 		}
 		
-		public void SetSettingData(Language language, MainSetting mainSetting)
+		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
 		{
 			Language = language;
 			this.MainSetting = mainSetting;
@@ -83,20 +83,17 @@ namespace PeMain.UI
 		{
 			TopMost = UseToolbarItem.Topmost;
 		}
-		void ApplySettingPosition()
+		
+		void ApplySkin()
 		{
-			bool isAero;
-			API.DwmIsCompositionEnabled(out isAero);
-			if(isAero) {
-				var margin = new MARGINS();
-				margin.leftWidth = -1;
-				//API.DwmExtendFrameIntoClientArea(Handle, ref margin);
-			}
 			var renderer = new ToolbarRenderer();
 			//renderer.Skin = 
 			
 			this.toolLauncher.Renderer = renderer; 
-
+		}
+		
+		void ApplySettingPosition()
+		{
 			if(UseToolbarItem.Visible) {
 				ItemSizeToFormSize();
 				
@@ -164,6 +161,7 @@ namespace PeMain.UI
 			ApplyLanguage();
 			ApplyScreen();
 			ApplySettingFont();
+			ApplySkin();
 			
 			Font = UseToolbarItem.FontSetting.Font;
 			if(MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
@@ -661,7 +659,7 @@ namespace PeMain.UI
 		{
 			try {
 				if(launcherItem.LauncherType == LauncherType.File) {
-					launcherItem.Execute(Logger, Language, this.MainSetting, this);
+					launcherItem.Execute(Logger, Language, this.MainSetting, Skin, this);
 					launcherItem.Increment();
 					return true;
 				}
@@ -676,7 +674,7 @@ namespace PeMain.UI
 		{
 			using(var form = new ExecuteForm()) {
 				form.SetParameter(launcherItem);
-				form.SetSettingData(Language, this.MainSetting);
+				form.SetSettingData(Language, MainSetting, Skin);
 				form.TopMost = TopMost;
 				if(form.ShowDialog(this) == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;

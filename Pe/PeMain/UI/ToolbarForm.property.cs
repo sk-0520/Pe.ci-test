@@ -20,7 +20,7 @@ namespace PeMain.UI
 	public partial class ToolbarForm
 	{
 		public ILogger Logger { get; set; }
-		
+		ISkin Skin { get; set; }
 		Language Language { get; set; }
 		
 		MainSetting MainSetting { get; set; }

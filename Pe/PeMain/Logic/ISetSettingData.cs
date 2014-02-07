@@ -8,6 +8,7 @@
  */
 using System;
 using PeMain.Data;
+using PeMain.UI;
 
 namespace PeMain.Logic
 {
@@ -16,6 +17,6 @@ namespace PeMain.Logic
 	/// </summary>
 	public interface ISetSettingData
 	{
-		void SetSettingData(Language lang, MainSetting mainSetting);
+		void SetSettingData(Language lang, MainSetting mainSetting, ISkin skin);
 	}
 }

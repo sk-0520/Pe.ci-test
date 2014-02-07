@@ -26,7 +26,7 @@ namespace PeMain.UI
 			Process.Exited += new EventHandler(Process_Exited);
 		}
 
-		public void SetSettingData(Language language, MainSetting mainSetting)
+		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
 		{
 			Language = language;
 			MainSetting = mainSetting;

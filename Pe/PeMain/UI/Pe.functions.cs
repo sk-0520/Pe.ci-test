@@ -116,9 +116,9 @@ namespace PeMain.UI
 					this._mainSetting = mainSetting;
 					InitializeLanguage(null, null);
 					ApplyLanguage();
-					this._logForm.SetSettingData(this._language, this._mainSetting);
+					this._logForm.SetSettingData(this._language, this._mainSetting, this._skin);
 					foreach(var toolbar in this._toolbarForms.Values) {
-						toolbar.SetSettingData(this._language, this._mainSetting);
+						toolbar.SetSettingData(this._language, this._mainSetting, this._skin);
 					}
 				}
 			}

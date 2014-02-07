@@ -47,7 +47,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		public void SetSettingData(Language language, MainSetting mainSetting)
+		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
 		{
 			Language = language;
 			this.MainSetting = mainSetting;

@@ -70,7 +70,7 @@ namespace PeMain.UI
 		void InitializeMessage(string[] args, List<LogItem> initLog)
 		{
 			this._messageWindow = new MessageWindow(this);
-			this._messageWindow.SetSettingData(this._language, this._mainSetting);
+			this._messageWindow.SetSettingData(this._language, this._mainSetting, this._skin);
 		}
 		
 		void AttachmentToolbarSubMenu(MenuItem parentMenu)
@@ -216,6 +216,11 @@ namespace PeMain.UI
 			return menuList.ToArray();;
 		}
 		
+		void InitializeSkin(string[] args, List<LogItem> initLog)
+		{
+			this._skin = new SystemSkin();
+		}
+		
 		/// <summary>
 		/// 本体UI初期化
 		/// </summary>
@@ -235,7 +240,7 @@ namespace PeMain.UI
 		void InitializeLogForm(string[] args, List<LogItem> initLog)
 		{
 			this._logForm = new LogForm();
-			this._logForm.SetSettingData(this._language, this._mainSetting);
+			this._logForm.SetSettingData(this._language, this._mainSetting, this._skin);
 		}
 			
 		void InitializeCommandForm(string[] args, List<LogItem> initLog)
@@ -253,7 +258,7 @@ namespace PeMain.UI
 				toolbar.Logger = this._logForm;
 				toolbar.DockScreen = screen;
 				toolbar.MessageString +=  screen.DeviceName;
-				toolbar.SetSettingData(this._language, this._mainSetting);
+				toolbar.SetSettingData(this._language, this._mainSetting, this._skin);
 				this._toolbarForms.Add(screen, toolbar);
 			}
 			/*
@@ -266,7 +271,8 @@ namespace PeMain.UI
 		void InitializeUI(string[] args, List<LogItem> initLog)
 		{
 			initLog.Add(new LogItem(LogType.Information, this._language["log/init/ui"], this._language["log/start"]));
-			            
+			
+			InitializeSkin(args, initLog);
 			InitializeMain(args, initLog);
 			InitializeLogForm(args, initLog);
 			InitializeCommandForm(args, initLog);

@@ -375,10 +375,10 @@ namespace PeMain.Data
 		}
 		
 		
-		public void Execute(ILogger logger, Language language, MainSetting mainSetting, Form parentForm)
+		public void Execute(ILogger logger, Language language, MainSetting mainSetting, ISkin skin, Form parentForm)
 		{
 			if(LauncherType == LauncherType.File) {
-				Executer.RunFileItem(logger, language, mainSetting, this, parentForm);
+				Executer.RunFileItem(logger, language, mainSetting, skin, this, parentForm);
 			}
 		}
 		

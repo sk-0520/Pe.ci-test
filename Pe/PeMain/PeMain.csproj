@@ -261,6 +261,7 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Skin\Skin.cs" />
+    <Compile Include="UI\Skin\SystemSkin.cs" />
     <Compile Include="UI\Skin\ToolbarRenderer.cs" />
     <Compile Include="UI\StreamForm.cs" />
     <Compile Include="UI\StreamForm.Designer.cs">

@@ -22,7 +22,7 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class Executer
 	{
-		public static void RunFileItem(ILogger logger, Language language, MainSetting mainSetting, LauncherItem launcherItem, Form parentForm)
+		public static void RunFileItem(ILogger logger, Language language, MainSetting mainSetting, ISkin skin, LauncherItem launcherItem, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
 			
@@ -57,7 +57,7 @@ namespace PeMain.Logic
 					var streamForm = new StreamForm();
 					streamForm.Logger = logger;
 					streamForm.SetParameter(process, launcherItem);
-					streamForm.SetSettingData(language, mainSetting);
+					streamForm.SetSettingData(language, mainSetting, skin);
 					streamForm.Show(parentForm);
 				}
 			}
