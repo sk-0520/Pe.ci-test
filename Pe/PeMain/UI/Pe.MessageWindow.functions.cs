@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using PeMain.Data;
+using PeMain.Logic;
 using PI.Windows;
 
 namespace PeMain.UI
@@ -18,9 +19,9 @@ namespace PeMain.UI
 	/// </summary>
 	partial class MessageWindow
 	{
-		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
+		public void SetCommonData(CommonData commonData)
 		{
-			MainSetting = mainSetting;
+			CommonData = commonData;
 			
 			ApplySetting();
 		}
@@ -32,7 +33,7 @@ namespace PeMain.UI
 		
 		void ApplySetting()
 		{
-			Debug.Assert(MainSetting != null);
+			Debug.Assert(CommonData != null);
 			
 			ApplyLanguage();
 			

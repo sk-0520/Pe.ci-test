@@ -8,6 +8,7 @@
  */
 using System;
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -16,6 +17,6 @@ namespace PeMain.UI
 	/// </summary>
 	partial class MessageWindow
 	{
-		MainSetting MainSetting { get; set; }
+		CommonData CommonData { get; set; }
 	}
 }

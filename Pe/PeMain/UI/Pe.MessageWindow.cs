@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe_MessageWindow.
 	/// </summary>
-	public partial class MessageWindow : Form, ISetSettingData
+	public partial class MessageWindow : Form, ISetCommonData
 	{
 		private Pe _parent;
 		

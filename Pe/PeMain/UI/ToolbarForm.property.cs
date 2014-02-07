@@ -19,11 +19,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class ToolbarForm
 	{
-		public ILogger Logger { get; set; }
-		ISkin Skin { get; set; }
-		Language Language { get; set; }
-		
-		MainSetting MainSetting { get; set; }
+		CommonData CommonData { get; set; }
 		
 		ToolbarGroupItem SelectedGroupItem { get; set; }
 		public ToolbarItem UseToolbarItem { get; private set; }
@@ -34,7 +30,7 @@ namespace PeMain.UI
 			set 
 			{
 				var pos = ToolbarPosition.DesktopFloat;
-				if(MainSetting != null) {
+				if(CommonData != null && CommonData.MainSetting != null) {
 					pos = UseToolbarItem.ToolbarPosition;
 				}
 				

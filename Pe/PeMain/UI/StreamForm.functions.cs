@@ -10,7 +10,9 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -26,10 +28,9 @@ namespace PeMain.UI
 			Process.Exited += new EventHandler(Process_Exited);
 		}
 
-		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
+		public void SetCommonData(CommonData commonData)
 		{
-			Language = language;
-			MainSetting = mainSetting;
+			CommonData = commonData;
 			
 			ApplySetting();
 		}
@@ -83,7 +84,7 @@ namespace PeMain.UI
 			try {
 				Process.Kill();
 			} catch(Exception ex) {
-				Logger.Puts(LogType.Error, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 			}
 		}
 	}

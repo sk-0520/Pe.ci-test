@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	public partial class Pe: IDisposable, RootCommunication
+	public partial class Pe: IDisposable, IRootSender
 	{
 		public Pe(string[] args)
 		{

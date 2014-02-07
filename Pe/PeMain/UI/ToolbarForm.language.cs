@@ -18,9 +18,10 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage()
 		{
-			Debug.Assert(Language != null);
+			Debug.Assert(CommonData != null);
+			Debug.Assert(CommonData.Language != null);
 			
-			Text = Language["window/toolbar"];
+			Text = CommonData.Language["window/toolbar"];
 		}
 	}
 }

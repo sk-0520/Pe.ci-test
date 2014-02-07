@@ -69,12 +69,9 @@ namespace PeMain.UI
 			Padding = padding;
 		}
 		
-		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
+		public void SetCommonData(CommonData commonData)
 		{
-			Language = language;
-			this.MainSetting = mainSetting;
-			//MainSetting.Toolbar = mainSetting.Toolbar;
-			//LauncherSetting = mainSetting.Launcher;
+			CommonData = commonData;
 			
 			ApplySetting();
 		}
@@ -118,11 +115,12 @@ namespace PeMain.UI
 		
 		void ApplyScreen()
 		{
-			Debug.Assert(MainSetting != null);
+			Debug.Assert(CommonData != null);
+			Debug.Assert(CommonData.Skin != null);
 			Debug.Assert(DockScreen != null);
 			
 			UseToolbarItem = null;
-			foreach(var item in MainSetting.Toolbar.Items) {
+			foreach(var item in CommonData.MainSetting.Toolbar.Items) {
 				if(item.IsNameEqual(DockScreen.DeviceName)) {
 					UseToolbarItem = item;
 					break;
@@ -132,14 +130,15 @@ namespace PeMain.UI
 				// 新規
 				var toolbarItem = new ToolbarItem();
 				toolbarItem.Name = DockScreen.DeviceName;
-				MainSetting.Toolbar.Items.Add(toolbarItem);
+				CommonData.MainSetting.Toolbar.Items.Add(toolbarItem);
 				toolbarItem.FloatLocation = DockScreen.Bounds.Location;
 				UseToolbarItem = toolbarItem;
 			}
 		}
 		void ApplySettingFont()
 		{
-			Debug.Assert(MainSetting != null);
+			Debug.Assert(CommonData != null);
+			Debug.Assert(CommonData.MainSetting != null);
 			
 			if(!UseToolbarItem.FontSetting.IsDefault) {
 				this.toolLauncher.Font = UseToolbarItem.FontSetting.Font;
@@ -156,7 +155,8 @@ namespace PeMain.UI
 		
 		void ApplySetting()
 		{
-			Debug.Assert(MainSetting != null);
+			Debug.Assert(CommonData != null);
+			Debug.Assert(CommonData.MainSetting != null);
 			
 			ApplyLanguage();
 			ApplyScreen();
@@ -164,16 +164,16 @@ namespace PeMain.UI
 			ApplySkin();
 			
 			Font = UseToolbarItem.FontSetting.Font;
-			if(MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
+			if(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
 				// グループが存在しなければグループを作っておく
 				var toolbarGroupItem = new ToolbarGroupItem();
-				toolbarGroupItem.Name = Language["group/new"];
-				MainSetting.Toolbar.ToolbarGroup.Groups.Add(toolbarGroupItem);
+				toolbarGroupItem.Name = CommonData.Language["group/new"];
+				CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 			
 			// グループメニュー基盤構築
 			this._menuGroup.MenuItems.Clear();
-			foreach(var groupName in MainSetting.Toolbar.ToolbarGroup.Groups) {
+			foreach(var groupName in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
 				var menuItem = new MenuItem();
 				
 				menuItem.Text = groupName.Name;
@@ -184,7 +184,7 @@ namespace PeMain.UI
 				this._menuGroup.MenuItems.Add(menuItem);
 			}
 			
-			SelectedGroup(MainSetting.Toolbar.ToolbarGroup.Groups.First());
+			SelectedGroup(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First());
 			
 			// 表示
 			ApplySettingVisible();
@@ -250,7 +250,7 @@ namespace PeMain.UI
 			var toolButtonList = new List<ToolStripItem>();
 			toolButtonList.Add(CreateLauncherButton(null));
 			foreach(var itemName in groupItem.ItemNames) {
-				var launcherItem = this.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+				var launcherItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 				if(launcherItem != null) {
 					var itemButton = CreateLauncherButton(launcherItem);
 					toolButtonList.Add(itemButton);
@@ -262,9 +262,9 @@ namespace PeMain.UI
 		void OpenDir(string path)
 		{
 			try {
-				Executer.OpenDirectory(path, Logger, Language, null);
+				Executer.OpenDirectory(path, CommonData.Logger, CommonData.Language, null);
 			} catch(Exception ex) {
-				Logger.Puts(LogType.Warning, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
 		}
 		
@@ -275,7 +275,7 @@ namespace PeMain.UI
 		
 		void OpenProperty(string path)
 		{
-			Logger.Puts(LogType.Information, "P/Iから取ってくるのだるいんで後回し", path);
+			CommonData.Logger.Puts(LogType.Information, "P/Iから取ってくるのだるいんで後回し", path);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
@@ -299,27 +299,27 @@ namespace PeMain.UI
 			
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
-			openParentDirItem.Text = Language["toolbar/menu/file/path/open-parent-dir"];
+			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
 			openParentDirItem.Click += (object sender, EventArgs e) => { OpenDir(Path.GetDirectoryName(launcherItem.Command)); };
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
-			openWorkDirItem.Text = Language["toolbar/menu/file/path/open-work-dir"];
+			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
 			openWorkDirItem.Click += (object sender, EventArgs e) => { OpenDir(Path.GetDirectoryName(launcherItem.WorkDirPath)); };
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
-			copyCommandItem.Text = Language["toolbar/menu/file/path/copy-command"];
+			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
 			copyCommandItem.Click += (object sender, EventArgs e) => { CopyText(launcherItem.Command); };
 			// 親ディレクトリをコピー
 			copyParentDirItem.Name = menuNamePath_copyParentDir;
-			copyParentDirItem.Text = Language["toolbar/menu/file/path/copy-parent-dir"];
+			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
 			copyParentDirItem.Click += (object sender, EventArgs e) => { CopyText(Path.GetDirectoryName(launcherItem.Command)); };
 			// 作業ディレクトリをコピー
 			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
-			copyWorkDirItem.Text = Language["toolbar/menu/file/path/copy-work-dir"];
+			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
 			copyWorkDirItem.Click += (object sender, EventArgs e) => { CopyText(launcherItem.WorkDirPath); };
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
-			propertyItem.Text = Language["toolbar/menu/file/path/property"];
+			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
 			propertyItem.Click += (object sender, EventArgs e) => { OpenProperty(launcherItem.Command); };
 			
 			// メニュー構築
@@ -364,9 +364,9 @@ namespace PeMain.UI
 			}
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
-					Executer.OpenDirectory(path, Logger, Language, null);
+					Executer.OpenDirectory(path, CommonData.Logger, CommonData.Language, null);
 				} catch(Exception ex) {
-					Logger.Puts(LogType.Warning, ex.Message, ex);
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 				}
 			};
 			return menuItem;
@@ -393,7 +393,7 @@ namespace PeMain.UI
 					}
 				} else {
 					var menuItem = new ToolStripMenuItem();
-					menuItem.Text = Language["toolbar/menu/file/ls/not-child-files"];
+					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
 					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
@@ -424,24 +424,24 @@ namespace PeMain.UI
 			
 			// 通常実行
 			executeItem.Name = menuNameExecute;
-			executeItem.Text = Language["toolbar/menu/file/execute"];
+			executeItem.Text = CommonData.Language["toolbar/menu/file/execute"];
 			executeItem.Click += (object sender, EventArgs e) => {
 				ExecuteItem(launcherItem);
 			};
 			// 指定実行
 			executeExItem.Name = menuNameExecuteEx;
-			executeExItem.Text = Language["toolbar/menu/file/execute-ex"];
+			executeExItem.Text = CommonData.Language["toolbar/menu/file/execute-ex"];
 			executeExItem.Click += (object sender, EventArgs e) => {
 				ExecuteExItem(launcherItem);
 			};
 			// パス関係
 			pathItem.Name = menuNamePath;
-			pathItem.Text = Language["toolbar/menu/file/path"];
+			pathItem.Text = CommonData.Language["toolbar/menu/file/path"];
 			AttachmentFileLauncherPathSubMenu(pathItem, launcherItem);
 			//pathItem.DropDownItems.AddRange(CreateFileLauncherMenuPathItems(launcherItem));
 			// ファイル一覧
 			fileItem.Name = menuNameFiles;
-			fileItem.Text = Language["toolbar/menu/file/ls"];
+			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
 			fileItem.DropDownOpening += (object sender, EventArgs e) => {
 				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command));
 			};
@@ -486,35 +486,35 @@ namespace PeMain.UI
 			
 			// フロート
 			posFloatItem.Name = menuNameMainPosDesktopFloat;
-			posFloatItem.Text = ToolbarPosition.DesktopFloat.ToText(Language);
+			posFloatItem.Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language);
 			posFloatItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
 				ApplySettingPosition();
 			};
 			// デスクトップ：上
 			posTopItem.Name = menuNameMainPosDesktopTop;
-			posTopItem.Text = ToolbarPosition.DesktopTop.ToText(Language);
+			posTopItem.Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language);
 			posTopItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
 				ApplySettingPosition();
 			};
 			// デスクトップ：下
 			posBottomItem.Name = menuNameMainPosDesktopBottom;
-			posBottomItem.Text = ToolbarPosition.DesktopBottom.ToText(Language);
+			posBottomItem.Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language);
 			posBottomItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
 				ApplySettingPosition();
 			};
 			// デスクトップ：左
 			posLeftItem.Name = menuNameMainPosDesktopLeft;
-			posLeftItem.Text = ToolbarPosition.DesktopLeft.ToText(Language);
+			posLeftItem.Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language);
 			posLeftItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
 				ApplySettingPosition();
 			};
 			// デスクトップ：右
 			posRightItem.Name = menuNameMainPosDesktopRight;
-			posRightItem.Text = ToolbarPosition.DesktopRight.ToText(Language);
+			posRightItem.Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language);
 			posRightItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
 				ApplySettingPosition();
@@ -522,7 +522,7 @@ namespace PeMain.UI
 			
 			// 最前面表示
 			topmostItem.Name = menuNameMainTopmost;
-			topmostItem.Text = Language["common/menu/topmost"];
+			topmostItem.Text = CommonData.Language["common/menu/topmost"];
 			topmostItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.Topmost = !topmostItem.Checked;
 				ApplySettingTopmost();
@@ -530,7 +530,7 @@ namespace PeMain.UI
 			
 			// 
 			autoHideItem.Name = menuNameMainAutoHide;
-			autoHideItem.Text = Language["toolbar/menu/main/auto-hide"];
+			autoHideItem.Text = CommonData.Language["toolbar/menu/main/auto-hide"];
 			autoHideItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
@@ -612,8 +612,8 @@ namespace PeMain.UI
 			
 			if(item == null) {
 				toolItem = new ToolStripDropDownButton();
-				toolItem.Text = Language["toolbar/main/text"];
-				toolItem.ToolTipText = Language["toolbar/main/text"];
+				toolItem.Text = CommonData.Language["toolbar/main/text"];
+				toolItem.ToolTipText = CommonData.Language["toolbar/main/text"];
 				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
 			} else {
 				toolItem = new ToolStripSplitButton();
@@ -659,12 +659,12 @@ namespace PeMain.UI
 		{
 			try {
 				if(launcherItem.LauncherType == LauncherType.File) {
-					launcherItem.Execute(Logger, Language, this.MainSetting, Skin, this);
+					launcherItem.Execute(CommonData, this);
 					launcherItem.Increment();
 					return true;
 				}
 			} catch(Exception ex) {
-				Logger.Puts(LogType.Warning, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
 			
 			return false;
@@ -674,7 +674,7 @@ namespace PeMain.UI
 		{
 			using(var form = new ExecuteForm()) {
 				form.SetParameter(launcherItem);
-				form.SetSettingData(Language, MainSetting, Skin);
+				form.SetCommonData(CommonData);
 				form.TopMost = TopMost;
 				if(form.ShowDialog(this) == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;
@@ -739,8 +739,8 @@ namespace PeMain.UI
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
 				var item = LauncherItem.FileLoad(dropData.Files.First());
-				item.Name = LauncherItem.GetUniqueName(item, this.MainSetting.Launcher.Items);
-				this.MainSetting.Launcher.Items.Add(item);
+				item.Name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
+				CommonData.MainSetting.Launcher.Items.Add(item);
 				SelectedGroupItem.ItemNames.Add(item.Name);
 				SelectedGroup(SelectedGroupItem);
 				// TODO: 他のツールバーに教える

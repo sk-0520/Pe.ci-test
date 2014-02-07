@@ -15,7 +15,7 @@ namespace PeMain.Logic
 	/// <summary>
 	/// Description of RootCommunication.
 	/// </summary>
-	public interface RootCommunication
+	public interface IRootSender
 	{
 		void ShowTips(string text);
 	

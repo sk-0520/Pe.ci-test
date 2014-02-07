@@ -21,7 +21,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm.
 	/// </summary>
-	public partial class ToolbarForm : AppbarForm, ISetSettingData
+	public partial class ToolbarForm : AppbarForm, ISetCommonData
 	{
 		public ToolbarForm()
 		{
@@ -60,7 +60,7 @@ namespace PeMain.UI
 		}
 		void ToolbarForm_LocationChanged(object sender, EventArgs e)
 		{
-			if(MainSetting != null && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+			if(CommonData != null && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				UseToolbarItem.FloatLocation = Location;
 			}
 		}

@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of StreamForm.
 	/// </summary>
-	public partial class StreamForm : Form, ISetSettingData
+	public partial class StreamForm : Form, ISetCommonData
 	{
 		public StreamForm()
 		{

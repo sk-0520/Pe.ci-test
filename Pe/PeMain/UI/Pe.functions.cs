@@ -81,7 +81,7 @@ namespace PeMain.UI
 		void SaveSetting()
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
-			SaveMainSetting(this._mainSetting, mainSettingFilePath);
+			SaveMainSetting(this._commonData.MainSetting, mainSettingFilePath);
 		}
 		
 		void SaveMainSetting(MainSetting mainSetting, string mainSettingPath)
@@ -110,15 +110,15 @@ namespace PeMain.UI
 		
 		void OpenSetting()
 		{
-			using(var settingForm = new SettingForm(this._language, this._mainSetting)) {
+			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					var mainSetting = settingForm.MainSetting;
-					this._mainSetting = mainSetting;
+					this._commonData.MainSetting = mainSetting;
 					InitializeLanguage(null, null);
 					ApplyLanguage();
-					this._logForm.SetSettingData(this._language, this._mainSetting, this._skin);
+					this._logForm.SetCommonData(this._commonData);
 					foreach(var toolbar in this._toolbarForms.Values) {
-						toolbar.SetSettingData(this._language, this._mainSetting, this._skin);
+						toolbar.SetCommonData(this._commonData);
 					}
 				}
 			}

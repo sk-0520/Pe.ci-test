@@ -16,24 +16,25 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage()
 		{
-			Debug.Assert(Language != null);
+			Debug.Assert(CommonData != null);
+			Debug.Assert(CommonData.Language != null);
 			
 			var map = new Dictionary<string, string>() {
 				{ "ITEM", LauncherItem.Name },
 			};
 			
-			Text = Language["window/stream", map];
+			Text = CommonData.Language["window/stream", map];
 			
-			this.pageStream.Text = Language["stream/tab/stream"];
-			this.pageProcess.Text = Language["stream/tab/process"];
-			this.pageProperty.Text = Language["stream/tab/property"];
+			this.pageStream.Text = CommonData.Language["stream/tab/stream"];
+			this.pageProcess.Text = CommonData.Language["stream/tab/process"];
+			this.pageProperty.Text = CommonData.Language["stream/tab/property"];
 			
-			this.toolStream_save.Text = Language["stream/command/save"];
-			this.toolStream_save.ToolTipText = Language["stream/tips/save"];
-			this.toolStream_clear.Text = Language["stream/command/clear"];
-			this.toolStream_clear.ToolTipText = Language["stream/tips/clear"];
-			this.toolStream_refresh.Text = Language["stream/tips/refesh"];
-			this.toolStream_kill.Text = Language["stream/tips/kill"];
+			this.toolStream_save.Text = CommonData.Language["stream/command/save"];
+			this.toolStream_save.ToolTipText = CommonData.Language["stream/tips/save"];
+			this.toolStream_clear.Text = CommonData.Language["stream/command/clear"];
+			this.toolStream_clear.ToolTipText = CommonData.Language["stream/tips/clear"];
+			this.toolStream_refresh.Text = CommonData.Language["stream/tips/refesh"];
+			this.toolStream_kill.Text = CommonData.Language["stream/tips/kill"];
 		}
 	}
 }

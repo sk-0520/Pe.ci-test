@@ -9,16 +9,15 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
 	public partial class ExecuteForm
 	{
-		Language Language { get; set; }
+		CommonData CommonData { get; set; }
 		LauncherItem LauncherItem { get; set;}
-		MainSetting MainSetting { get; set; }
 
 		public LauncherItem EditedLauncherItem { get; private set; }
 	}

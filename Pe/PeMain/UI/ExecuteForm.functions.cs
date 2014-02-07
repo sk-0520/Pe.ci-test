@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -23,10 +24,9 @@ namespace PeMain.UI
 			LauncherItem = launcherItem;
 		}
 		
-		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
+		public void SetCommonData(CommonData commonData)
 		{
-			Language = language;
-			this.MainSetting = mainSetting;
+			CommonData = commonData;
 			
 			ApplySetting();
 		}

@@ -11,7 +11,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -28,7 +30,7 @@ namespace PeMain.UI
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 			
-			if(MainSetting.Log.AddShow && !Visible) {
+			if(CommonData.MainSetting.Log.AddShow && !Visible) {
 				Visible = true;
 			}
 			
@@ -42,29 +44,28 @@ namespace PeMain.UI
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-			if(MainSetting.Log.AddShow && !Visible) {
+			if(CommonData.MainSetting.Log.AddShow && !Visible) {
 				Visible = show;
 			}
 		}
 		
-		public void SetSettingData(Language language, MainSetting mainSetting, ISkin skin)
+		public void SetCommonData(CommonData commonData)
 		{
-			Language = language;
-			this.MainSetting = mainSetting;
+			CommonData = commonData;
 			
 			ApplySetting();
 		}
 		
 		void ApplyUI()
 		{
-			Size = MainSetting.Log.Size;
-			Location = MainSetting.Log.Point;
-			Visible = MainSetting.Log.Visible;
+			Size = CommonData.MainSetting.Log.Size;
+			Location = CommonData.MainSetting.Log.Point;
+			Visible = CommonData.MainSetting.Log.Visible;
 		}
 		
 		void ApplySetting()
 		{
-			Debug.Assert(MainSetting != null);
+			Debug.Assert(CommonData.MainSetting != null);
 			
 			ApplyLanguage();
 			ApplyUI();

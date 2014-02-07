@@ -18,25 +18,25 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage()
 		{
-			Debug.Assert(Language != null);
+			Debug.Assert(CommonData != null);
 			
 			var map = new Dictionary<string, string>() {
 				{ "ITEM", LauncherItem.Name },
 			};
 			
-			DialogUtility.SetDefaultText(this, Language, Language["window/execute", map]);
+			DialogUtility.SetDefaultText(this, CommonData.Language, CommonData.Language["window/execute", map]);
 			
-			this.envUpdate.SetLanguage(Language);
-			this.envRemove.SetLanguage(Language);
+			this.envUpdate.SetLanguage(CommonData.Language);
+			this.envRemove.SetLanguage(CommonData.Language);
 			
-			this.pageBasic.Text = Language["execute/tab/basic"];
-			this.pageEnv.Text = Language["execute/tab/env"];
-			this.labelOption.Text = Language["execute/label/option"];
-			this.labelWorkDirPath.Text = Language["execute/label/work-dir"];
-			this.selectStdStream.Text  = Language["execute/check/std-stream"];
-			this.selectEnvironment.Text  = Language["execute/check/edit-env"];
-			this.groupUpdate.Text = Language["common/label/edit"];
-			this.groupRemove.Text = Language["common/label/remove"];
+			this.pageBasic.Text = CommonData.Language["execute/tab/basic"];
+			this.pageEnv.Text = CommonData.Language["execute/tab/env"];
+			this.labelOption.Text = CommonData.Language["execute/label/option"];
+			this.labelWorkDirPath.Text = CommonData.Language["execute/label/work-dir"];
+			this.selectStdStream.Text  = CommonData.Language["execute/check/std-stream"];
+			this.selectEnvironment.Text  = CommonData.Language["execute/check/edit-env"];
+			this.groupUpdate.Text = CommonData.Language["common/label/edit"];
+			this.groupRemove.Text = CommonData.Language["common/label/remove"];
 		}
 	}
 }

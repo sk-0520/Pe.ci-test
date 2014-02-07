@@ -9,7 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -23,9 +25,7 @@ namespace PeMain.UI
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		
-		private MainSetting _mainSetting;
-		private Language _language;
-		private ISkin _skin;
+		private CommonData _commonData;
 		
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 	}

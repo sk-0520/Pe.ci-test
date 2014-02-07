@@ -79,9 +79,9 @@
     <Compile Include="Logic\EnumLang.cs" />
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\ILogger.cs" />
-    <Compile Include="Logic\ISetSettingData.cs" />
+    <Compile Include="Logic\CommonData.cs" />
     <Compile Include="Logic\ItemData.cs" />
-    <Compile Include="Logic\RootCommunication.cs" />
+    <Compile Include="Logic\RootSender.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\SystemEnv.cs" />
     <Compile Include="Main.cs" />

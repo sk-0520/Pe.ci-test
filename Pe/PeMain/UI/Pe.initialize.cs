@@ -29,7 +29,7 @@ namespace PeMain.UI
 		void InitializeLanguage(string[] args, List<LogItem> initLog)
 		{
 			// 言語
-			var langName = this._mainSetting.LanguageFileName;
+			var langName = this._commonData.MainSetting.LanguageFileName;
 			var languageFileName = "default.xml";
 			if(!string.IsNullOrEmpty(langName)) {
 				if(!Path.HasExtension(langName)) {
@@ -45,12 +45,12 @@ namespace PeMain.UI
 			if(initLog != null) {
 				initLog.Add(new LogItem(LogType.Information, "language", languageFilePath));
 			}
-			this._language = Initializer.GetLanguage(languageFilePath);
-			if(this._language == null) {
+			this._commonData.Language = Initializer.GetLanguage(languageFilePath);
+			if(this._commonData.Language == null) {
 				if(initLog != null) {
 					initLog.Add(new LogItem(LogType.Warning, "not found language", languageFilePath));
 				}
-				this._language = new Language();
+				this._commonData.Language = new Language();
 			}
 		}
 		
@@ -62,7 +62,7 @@ namespace PeMain.UI
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
 			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
-			this._mainSetting = Initializer.GetMainSetting(mainSettingFilePath);
+			this._commonData.MainSetting = Initializer.GetMainSetting(mainSettingFilePath);
 			
 			InitializeLanguage(args, initLog);
 		}
@@ -70,7 +70,7 @@ namespace PeMain.UI
 		void InitializeMessage(string[] args, List<LogItem> initLog)
 		{
 			this._messageWindow = new MessageWindow(this);
-			this._messageWindow.SetSettingData(this._language, this._mainSetting, this._skin);
+			this._messageWindow.SetCommonData(this._commonData);
 		}
 		
 		void AttachmentToolbarSubMenu(MenuItem parentMenu)
@@ -123,7 +123,7 @@ namespace PeMain.UI
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible; 
-				this._mainSetting.Log.Visible = this._logForm.Visible;
+				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
 			};
 			
 			// サブメニュー設定
@@ -218,7 +218,7 @@ namespace PeMain.UI
 		
 		void InitializeSkin(string[] args, List<LogItem> initLog)
 		{
-			this._skin = new SystemSkin();
+			this._commonData.Skin = new SystemSkin();
 		}
 		
 		/// <summary>
@@ -240,7 +240,9 @@ namespace PeMain.UI
 		void InitializeLogForm(string[] args, List<LogItem> initLog)
 		{
 			this._logForm = new LogForm();
-			this._logForm.SetSettingData(this._language, this._mainSetting, this._skin);
+			this._logForm.SetCommonData(this._commonData);
+			
+			this._commonData.Logger = this._logForm;
 		}
 			
 		void InitializeCommandForm(string[] args, List<LogItem> initLog)
@@ -250,27 +252,26 @@ namespace PeMain.UI
 		
 		void InitializeToolbarForm(string[] args, List<LogItem> initLog)
 		{
-			Debug.Assert(this._mainSetting != null);
+			Debug.Assert(this._commonData != null);
 			
 			// ディスプレイ分生成
 			foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 				var toolbar = new ToolbarForm();
-				toolbar.Logger = this._logForm;
 				toolbar.DockScreen = screen;
 				toolbar.MessageString +=  screen.DeviceName;
-				toolbar.SetSettingData(this._language, this._mainSetting, this._skin);
+				toolbar.SetCommonData(this._commonData);
 				this._toolbarForms.Add(screen, toolbar);
 			}
 			/*
 			this._toolbarForms = new ToolbarForm();
 			this._toolbarForms.Logger = this._logForm;
-			this._toolbarForms.SetSettingData(this._language, this._mainSetting);
+			this._toolbarForms.SetCommonData(this._commonData.Language, this._mainSetting);
 			*/
 		}
 
 		void InitializeUI(string[] args, List<LogItem> initLog)
 		{
-			initLog.Add(new LogItem(LogType.Information, this._language["log/init/ui"], this._language["log/start"]));
+			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]));
 			
 			InitializeSkin(args, initLog);
 			InitializeMain(args, initLog);
@@ -278,7 +279,7 @@ namespace PeMain.UI
 			InitializeCommandForm(args, initLog);
 			InitializeToolbarForm(args, initLog);
 			
-			initLog.Add(new LogItem(LogType.Information, this._language["log/init/ui"], this._language["log/start"]));
+			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]));
 		}
 		
 		/// <summary>
@@ -288,6 +289,9 @@ namespace PeMain.UI
 		void Initialize(string[] args)
 		{
 			var initLog = new List<LogItem>(new []{ new LogItem(LogType.Information, "Initialize", args) });
+			
+			this._commonData = new CommonData();
+			this._commonData.RootSender = this;
 			
 			InitializeSetting(args, initLog);
 			InitializeMessage(args, initLog);

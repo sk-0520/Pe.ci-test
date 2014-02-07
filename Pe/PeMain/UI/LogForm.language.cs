@@ -18,20 +18,20 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage()
 		{
-			Debug.Assert(Language != null);
+			Debug.Assert(CommonData != null);
 			
-			Text = Language["window/log"];
+			Text = CommonData.Language["window/log"];
 			
-			this.toolLog_save.Text = Language["log/command/save"];
-			this.toolLog_save.ToolTipText = Language["log/tips/save"];
-			this.toolLog_clear.Text = Language["log/command/clear"];
-			this.toolLog_clear.ToolTipText = Language["log/tips/save"];
+			this.toolLog_save.Text = CommonData.Language["log/command/save"];
+			this.toolLog_save.ToolTipText = CommonData.Language["log/tips/save"];
+			this.toolLog_clear.Text = CommonData.Language["log/command/clear"];
+			this.toolLog_clear.ToolTipText = CommonData.Language["log/tips/save"];
 			
-			this.headerTimestamp.Text = Language["log/header/timestamp"];
-			this.headerTitle.Text = Language["log/header/title"];
-			this.headerFile.Text = Language["log/header/file"];
-			this.headerLine.Text = Language["log/header/line"];
-			this.headerFunction.Text = Language["log/header/method"];
+			this.headerTimestamp.Text = CommonData.Language["log/header/timestamp"];
+			this.headerTitle.Text = CommonData.Language["log/header/title"];
+			this.headerFile.Text = CommonData.Language["log/header/file"];
+			this.headerLine.Text = CommonData.Language["log/header/line"];
+			this.headerFunction.Text = CommonData.Language["log/header/method"];
 		}
 	}
 }
