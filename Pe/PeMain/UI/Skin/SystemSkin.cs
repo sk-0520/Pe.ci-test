@@ -25,6 +25,19 @@ namespace PeMain.UI
 	/// </summary>
 	public class SystemSkin: Skin
 	{
+		private static Point GetPressOffset(ToolStripItem toolItem)
+		{
+			var splitItem = toolItem as ToolStripSplitButton;
+			if(splitItem != null && splitItem.DropDownButtonPressed) {
+				return Point.Empty;
+			}
+			
+			if(toolItem.Pressed) {
+				return new Point(1, 1);
+			}
+			return Point.Empty;
+
+		}
 		Color VisualColor { get; set;}
 		
 		private void SetVisualStyle(Form target)
@@ -193,21 +206,25 @@ namespace PeMain.UI
 		
 		public override void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem)
 		{
+			var offset = GetPressOffset(e.Item);
+			
 			var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, false, 0);
 			var iconSize = toolbarItem.IconSize.ToSize();
-			e.Graphics.DrawImage(e.Image, buttonLayout.Padding.Left, buttonLayout.Padding.Top, iconSize.Width, iconSize.Height);
+			e.Graphics.DrawImage(e.Image, buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
 		}
 		
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem)
 		{
+			var offset = GetPressOffset(e.Item);
+			
 			using(var brush = new SolidBrush(Color.FromArgb(254, e.TextColor))) {
 				using(var format = ToStringFormat(e.TextFormat)) {
 					format.LineAlignment = StringAlignment.Center;
 					var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, toolbarItem.ShowText, toolbarItem.TextWidth);
 					var iconSize = toolbarItem.IconSize.ToSize();
 					var textArea = new Rectangle(
-						buttonLayout.Padding.Vertical + iconSize.Width,
-						buttonLayout.Padding.Top,
+						buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
+						buttonLayout.Padding.Top + offset.Y,
 						buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth,
 						buttonLayout.Size.Height - buttonLayout.Padding.Vertical
 					);
