@@ -59,14 +59,11 @@ namespace PeMain.UI
 					DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
 					if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-						this.toolLauncher.Dock = DockStyle.Fill;
 					} else {
 						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
-						this.toolLauncher.Dock = DockStyle.Left;
 					}
 				} else {
 					DesktopDockType = DesktopDockType.None;
-					this.toolLauncher.Dock = DockStyle.Top;
 					if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 						Location = UseToolbarItem.FloatLocation;
 					}
@@ -523,6 +520,8 @@ namespace PeMain.UI
 			var toolSplit = toolItem as ToolStripSplitButton;
 			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, textWidth);
 			
+			toolItem.Margin = Padding.Empty;
+			toolItem.Padding = Padding.Empty;
 			toolItem.AutoSize = false;
 			toolItem.Size = buttonLayout.Size;
 			if(toolSplit != null) {

@@ -10,7 +10,10 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeUtility;
 using PI.Windows;
@@ -176,77 +179,84 @@ namespace PeMain.UI
 				
 		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
 		{
-			using(var brush = new SolidBrush(VisualColor)) {
-				e.Graphics.FillRectangle(brush, e.AffectedBounds);
-			}
+			e.Graphics.Clear(VisualColor);
 		}
 		
 		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
 		{
-			using(var brush = new SolidBrush(VisualColor)) {
-				e.Graphics.FillRectangle(brush, e.ConnectedArea);
+			//e.Graphics.FillRectangle(SystemBrushes.Desktop, e.ConnectedArea);
+		}
+		
+		public override void DrawToolbarArrow(ToolStripArrowRenderEventArgs e)
+		{
+			if(e.Item.Pressed) {
+				// 押されている
+				e.Graphics.FillRectangle(SystemBrushes.ControlLightLight, e.ArrowRectangle);
+			} else if(e.Item.Selected) {
+				// 選ばれている
+				e.Graphics.FillRectangle(SystemBrushes.ActiveCaptionText, e.ArrowRectangle);
+			} else {
+				// 通常
 			}
 		}
+		
 		
 		public override void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem)
 		{
 			var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, false, 0);
 			var iconSize = toolbarItem.IconSize.ToSize();
-				e.Graphics.DrawImage(e.Image, buttonLayout.Padding.Left, buttonLayout.Padding.Top, iconSize.Width, iconSize.Height);
-			//e.Graphics
+			e.Graphics.DrawImage(e.Image, buttonLayout.Padding.Left, buttonLayout.Padding.Top, iconSize.Width, iconSize.Height);
 		}
 		
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem)
 		{
-			using(var brush = new SolidBrush(e.TextColor)) {
+			using(var brush = new SolidBrush(Color.FromArgb(254, e.TextColor))) {
 				using(var format = ToStringFormat(e.TextFormat)) {
+					format.LineAlignment = StringAlignment.Center;
 					var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, toolbarItem.ShowText, toolbarItem.TextWidth);
 					var iconSize = toolbarItem.IconSize.ToSize();
 					var textArea = new Rectangle(
 						buttonLayout.Padding.Vertical + iconSize.Width,
 						buttonLayout.Padding.Top,
-						buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth - iconSize.Width,
-						buttonLayout.Size.Height - iconSize.Height - buttonLayout.Padding.Vertical
+						buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth,
+						buttonLayout.Size.Height - buttonLayout.Padding.Vertical
 					);
+					e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 					e.Graphics.DrawString(e.Text, e.TextFont, brush, textArea, format);
 				}
 			}
 		}
 		
-		public override void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active)
+		public override void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea)
 		{
-			if(item.Pressed) {
+			if(e.Item.Pressed) {
 				// 押されている
-				e.Graphics.FillRectangle(SystemBrushes.ButtonHighlight, item.ContentRectangle);
+				e.Graphics.FillRectangle(SystemBrushes.ButtonHighlight, itemArea);
 			} else if(item.Selected) {
 				// 選ばれている
-				e.Graphics.FillRectangle(SystemBrushes.ActiveCaption, item.ContentRectangle);
+				e.Graphics.FillRectangle(SystemBrushes.ActiveCaption, itemArea);
 			} else {
 				// 通常
-				//e.Graphics.FillRectangle(SystemBrushes.ControlDark, item.ContentRectangle);
-				using(var b = new SolidBrush(VisualColor)) {
-					e.Graphics.FillRectangle(b, item.ContentRectangle);
-				}
 			}
 		}
 		
-		public override void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active)
+		public override void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea)
 		{
-			if(item.Pressed) {
+			if(e.Item.Pressed) {
 				// 押されている
-				e.Graphics.FillRectangle(SystemBrushes.ButtonHighlight, item.ContentRectangle);
+				e.Graphics.FillRectangle(SystemBrushes.ButtonHighlight, itemArea);
 			} else if(item.Selected) {
 				// 選ばれている
-				e.Graphics.FillRectangle(SystemBrushes.ActiveCaption, item.ContentRectangle);
+				e.Graphics.FillRectangle(SystemBrushes.ActiveCaption, itemArea);
 			} else {
 				// 通常
-				e.Graphics.FillRectangle(SystemBrushes.ControlDark, item.ContentRectangle);
 			}
 		}
 		
 		
 		public override bool IsDefaultDrawToolbarBackground { get { return false; } }
 		public override bool IsDefaultDrawToolbarBorder { get { return false; } }
+		public override bool IsDefaultDrawToolbarArrow { get { return false; } }
 		public override bool IsDefaultDrawToolbarButtonImage { get { return false; } }
 		public override bool IsDefaultDrawToolbarButtonText { get { return false; } }
 		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return false; } }

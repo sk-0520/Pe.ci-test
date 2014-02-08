@@ -28,7 +28,7 @@ namespace PeMain.UI
 		
 		protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarBackground) {
+			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarBackground) {
 				base.OnRenderToolStripBackground(e);
 			} else {
 				Skin.DrawToolbarBackground(e, IsActive(e.ToolStrip), ToolbarItem.ToolbarPosition);
@@ -37,10 +37,19 @@ namespace PeMain.UI
 		
 		protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarBorder) {
+			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarBorder) {
 				base.OnRenderToolStripBorder(e);
 			} else {
 				Skin.DrawToolbarBorder(e, IsActive(e.ToolStrip), ToolbarItem.ToolbarPosition);
+			}
+		}
+		
+		protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+		{
+			if(Skin.IsDefaultDrawToolbarArrow) {
+				base.OnRenderArrow(e);
+			} else {
+				Skin.DrawToolbarArrow(e);
 			}
 		}
 		
@@ -55,7 +64,7 @@ namespace PeMain.UI
 		
 		protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarButtonText) {
+			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarButtonText) {
 				base.OnRenderItemText(e);
 			} else {
 				Skin.DrawToolbarButtonText(e, IsActive(e.ToolStrip), ToolbarItem);
@@ -67,7 +76,8 @@ namespace PeMain.UI
 			if(Skin.IsDefaultDrawToolbarDropDownButtonBackground) {
 				base.OnRenderDropDownButtonBackground(e);
 			} else {
-				Skin.DrawToolbarDropDownButtonBackground(e, (ToolStripDropDownButton)e.Item, IsActive(e.ToolStrip));
+				var itemArea = new Rectangle(Point.Empty, e.Item.Size);
+				Skin.DrawToolbarDropDownButtonBackground(e, (ToolStripDropDownButton)e.Item, IsActive(e.ToolStrip), itemArea);
 			}
 		}
 		
@@ -76,7 +86,8 @@ namespace PeMain.UI
 			if(Skin.IsDefaultDrawToolbarSplitButtonBackground) {
 				base.OnRenderSplitButtonBackground(e);
 			} else {
-				Skin.DrawToolbarSplitButtonBackground(e, (ToolStripSplitButton)e.Item, IsActive(e.ToolStrip));
+				var itemArea = new Rectangle(Point.Empty, e.Item.Size);
+				Skin.DrawToolbarSplitButtonBackground(e, (ToolStripSplitButton)e.Item, IsActive(e.ToolStrip), itemArea);
 			}
 		}
 		

@@ -10,8 +10,8 @@ using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeUtility;
 using PI.Windows;
@@ -43,12 +43,14 @@ namespace PeMain.UI
 		void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
+		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e);
 		void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
-		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active);
-		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active);
+		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
+		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		bool IsDefaultDrawToolbarBackground { get; }
 		bool IsDefaultDrawToolbarBorder { get; }
+		bool IsDefaultDrawToolbarArrow { get; }
 		bool IsDefaultDrawToolbarButtonImage { get; }
 		bool IsDefaultDrawToolbarButtonText { get; }
 		bool IsDefaultDrawToolbarDropDownButtonBackground { get; }
@@ -146,12 +148,14 @@ namespace PeMain.UI
 		public abstract void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
+		public abstract void DrawToolbarArrow(ToolStripArrowRenderEventArgs e);
 		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
-		public abstract void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active);
-		public abstract void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active);
+		public abstract void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
+		public abstract void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		public virtual bool IsDefaultDrawToolbarBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarBorder { get { return true; } }
+		public virtual bool IsDefaultDrawToolbarArrow { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarButtonImage { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarButtonText { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarDropDownButtonBackground { get { return true; } }
