@@ -43,7 +43,7 @@ namespace PeMain.UI
 		void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
-		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e);
+		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
@@ -148,7 +148,7 @@ namespace PeMain.UI
 		public abstract void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarArrow(ToolStripArrowRenderEventArgs e);
+		public abstract void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		public abstract void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);

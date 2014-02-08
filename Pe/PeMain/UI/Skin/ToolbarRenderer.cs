@@ -49,7 +49,8 @@ namespace PeMain.UI
 			if(Skin.IsDefaultDrawToolbarArrow || e.Item is ToolStripMenuItem) {
 				base.OnRenderArrow(e);
 			} else {
-				Skin.DrawToolbarArrow(e);
+				var buttonLayout = Skin.GetToolbarButtonLayout(ToolbarItem.IconSize, false, 0);
+				Skin.DrawToolbarArrow(e, buttonLayout.MenuWidth);
 			}
 		}
 		
