@@ -69,6 +69,25 @@ namespace PeMain.UI
 			Pressed,
 		}
 		
+		protected class ToolbarButtonData
+		{
+			public ToolbarButtonData()
+			{
+				Active = false;
+				HasMenuSplit = false;
+				ButtonState = ToolbarButtonState.None;
+				MenuState = ToolbarButtonState.None;
+			}
+			
+			public Graphics Graphics { get; set; }
+			public bool Active { get; set; }
+			public bool HasMenuSplit { get; set; }
+			public ToolbarButtonState ButtonState { get; set; }
+			public ToolbarButtonState MenuState { get; set; }
+			public Rectangle ButtonArea { get; set; }
+			public Rectangle MenuArea { get; set; }
+		}
+		
 		protected bool EnabledVisualStyle { get; set; }
 		
 		/// <summary>
@@ -135,7 +154,7 @@ namespace PeMain.UI
 		/// <param name="itemArea"></param>
 		/// <param name="menuWidth"></param>
 		/// <returns></returns>
-		protected static Rectangle GetArrowArea(ToolStripItem item, int menuWidth)
+		protected static Rectangle GetMenuArea(ToolStripItem item, int menuWidth)
 		{
 			var itemArea = new Rectangle(System.Drawing.Point.Empty, item.Size);
 			var arrawSize = new System.Drawing.Size(menuWidth, itemArea.Height);
@@ -175,64 +194,72 @@ namespace PeMain.UI
 
 		public virtual void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth)
 		{
-			var arrowArea = GetArrowArea(e.Item, menuWidth);
-			
-			ToolbarButtonState menuState;
+			var toolbarButton = new ToolbarButtonData();
+			toolbarButton.Graphics = e.Graphics;
+			toolbarButton.Active = true;
+			toolbarButton.MenuArea = GetMenuArea(e.Item, menuWidth);
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				menuState = ToolbarButtonState.Pressed;
+				toolbarButton.MenuState = ToolbarButtonState.Pressed;
 			} else if(e.Item.Selected) {
 				// 選ばれている
-				menuState = ToolbarButtonState.Selected;
+				toolbarButton.MenuState = ToolbarButtonState.Selected;
 			} else {
 				// 通常
-				menuState = ToolbarButtonState.Normal;
+				toolbarButton.MenuState = ToolbarButtonState.Normal;
 			}
-			DrawToolbarButton(e.Graphics, ToolbarButtonState.None, menuState, Rectangle.Empty, arrowArea);
+			
+			DrawToolbarButton(toolbarButton);
 		}
 		
 		public virtual void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea)
 		{
-			ToolbarButtonState buttonState;
+			var toolbarButtonData = new ToolbarButtonData();
+			toolbarButtonData.Graphics = e.Graphics;
+			toolbarButtonData.Active = active;
+			toolbarButtonData.ButtonArea = itemArea;
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				buttonState = ToolbarButtonState.Pressed;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Pressed;
 			} else if(item.Selected) {
 				// 選ばれている
-				buttonState = ToolbarButtonState.Selected;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Selected;
 			} else {
 				// 通常
-				buttonState = ToolbarButtonState.Normal;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Normal;
 			}
-			DrawToolbarButton(e.Graphics, buttonState, ToolbarButtonState.None, itemArea, Rectangle.Empty);
+			DrawToolbarButton(toolbarButtonData);
 		}
 		
 		public virtual void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea)
 		{
-			ToolbarButtonState buttonState;
-			ToolbarButtonState menuState;
+			var toolbarButtonData = new ToolbarButtonData();
+			toolbarButtonData.Graphics = e.Graphics;
+			toolbarButtonData.Active = active;
+			toolbarButtonData.HasMenuSplit = true;
+			toolbarButtonData.ButtonArea = itemArea;
+			toolbarButtonData.MenuArea = GetMenuArea(e.Item, item.DropDownButtonWidth);
 			
 			if(item.DropDownButtonPressed) {
 				// ドロップダウンが押されている
-				buttonState = ToolbarButtonState.Selected;
-				menuState = ToolbarButtonState.Pressed;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Selected;
+				toolbarButtonData.MenuState = ToolbarButtonState.Pressed;
 			} else if(item.ButtonPressed) {
 				// ボタンが押されている
-				buttonState = ToolbarButtonState.Pressed;
-				menuState = ToolbarButtonState.Pressed;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Pressed;
+				toolbarButtonData.MenuState = ToolbarButtonState.Pressed;
 			} else if(item.Selected) {
 				// ボタンが選ばれている
-				buttonState = ToolbarButtonState.Selected;
-				menuState = ToolbarButtonState.Selected;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Selected;
+				toolbarButtonData.MenuState = ToolbarButtonState.Selected;
 			} else {
 				// 通常
-				buttonState = ToolbarButtonState.Normal;
-				menuState = ToolbarButtonState.Normal;
+				toolbarButtonData.ButtonState = ToolbarButtonState.Normal;
+				toolbarButtonData.MenuState = ToolbarButtonState.Normal;
 			}
-			var arrowArea = GetArrowArea(e.Item, item.DropDownButtonWidth);
-			DrawToolbarButton(e.Graphics, buttonState, menuState, itemArea, arrowArea);
+			DrawToolbarButton(toolbarButtonData);
 		}
 		
 		public virtual bool IsDefaultDrawToolbarBackground { get { return true; } }
@@ -248,7 +275,7 @@ namespace PeMain.UI
 			throw new NotImplementedException();
 		}
 		
-		protected virtual void DrawToolbarButton(Graphics g, ToolbarButtonState button, ToolbarButtonState menu, Rectangle drawArea, Rectangle menuArea)
+		protected virtual void DrawToolbarButton(ToolbarButtonData toolbarButtonData)
 		{
 			throw new NotImplementedException();
 		}

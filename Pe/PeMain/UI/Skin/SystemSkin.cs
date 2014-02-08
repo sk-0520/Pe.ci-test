@@ -225,17 +225,48 @@ namespace PeMain.UI
 		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
 
-		protected override void DrawToolbarButton(Graphics g, ToolbarButtonState button, ToolbarButtonState menu, Rectangle drawArea, Rectangle menuArea)
+		protected override void DrawToolbarButton(ToolbarButtonData toolbarButtonData)
 		{
-			//base.DrawToolbarButton(g, state, drawArea);
-			if(button != ToolbarButtonState.None)
-				// 境界線描画
+			var g = toolbarButtonData.Graphics;
+			g.SmoothingMode = SmoothingMode.HighQuality;
+			var drawArea = toolbarButtonData.ButtonArea;
+			
+			if(toolbarButtonData.ButtonState != ToolbarButtonState.None) {
+				// ボタン全体の境界線を描画する
 				using(var path = new GraphicsPath()) {
-				path.AddArc(drawArea, 0, 360);
-				using(var pen = new Pen(Color.Red)) {
-					g.DrawPath(pen, path);
+					// 領域作成
+					var arcSize = new SizeF(4.5f, 4.5f);
+					const int correction = 1; // 幅・高さの補正px
+					path.StartFigure();
+					path.AddArc(drawArea.Right - arcSize.Width - correction, drawArea.Top, arcSize.Width, arcSize.Height, 270, 90);
+					path.AddArc(drawArea.Right - arcSize.Width - correction, drawArea.Bottom - correction - arcSize.Height, arcSize.Width, arcSize.Height - correction, 0, 90);
+					path.AddArc(drawArea.Left, drawArea.Bottom - arcSize.Height - correction, arcSize.Width, arcSize.Height - correction, 90, 90);
+					path.AddArc(drawArea.Left, drawArea.Top, arcSize.Width, arcSize.Height, 180, 90);
+					path.CloseFigure();
+					byte alpha = 0;
+					switch(toolbarButtonData.ButtonState) {
+							case ToolbarButtonState.Normal:   alpha = 70;  break;
+							case ToolbarButtonState.Selected: alpha = 140; break;
+							case ToolbarButtonState.Pressed:  alpha = 210; break;
+						default:
+							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
+							break;
+					}
+					// TODO: 暫定実装
+					RectangleF fillArea = drawArea;
+					fillArea.Height *= 0.6f;
+					using(var brush = new LinearGradientBrush(fillArea, Color.FromArgb(alpha, Color.White), Color.FromArgb(0, Color.White), LinearGradientMode.ForwardDiagonal)) {
+						//g.SetClip(path, CombineMode.Complement);
+						g.FillRectangle(brush, fillArea);
+						g.ResetClip();
+					}
+					using(var pen = new Pen(Color.FromArgb(alpha, Color.White))) {
+						pen.Alignment = PenAlignment.Inset;
+						g.DrawPath(pen, path);
+					}
 				}
 			}
+			
 		}
 
 	}
