@@ -26,6 +26,7 @@ namespace PeMain.UI
 	public class SystemSkin: Skin
 	{
 		Color VisualColor { get; set;}
+		
 		private void SetVisualStyle(Form target)
 		{
 			Debug.Assert(EnabledVisualStyle);
@@ -46,7 +47,6 @@ namespace PeMain.UI
 			bool blend;
 			API.DwmGetColorizationColor(out rawColor, out blend);
 			VisualColor = Color.FromArgb(Convert.ToInt32(rawColor));
-			//target.BackColor = VisualColor;
 		}
 		
 		public override void Start(Form target)
@@ -179,7 +179,11 @@ namespace PeMain.UI
 				
 		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
 		{
+			if(active) 
 			e.Graphics.Clear(VisualColor);
+			else
+			e.Graphics.Clear(Color.Transparent);
+				
 		}
 		
 		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
@@ -254,13 +258,13 @@ namespace PeMain.UI
 		}
 		
 		
-		public override bool IsDefaultDrawToolbarBackground { get { return false; } }
-		public override bool IsDefaultDrawToolbarBorder { get { return false; } }
-		public override bool IsDefaultDrawToolbarArrow { get { return false; } }
-		public override bool IsDefaultDrawToolbarButtonImage { get { return false; } }
-		public override bool IsDefaultDrawToolbarButtonText { get { return false; } }
-		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return false; } }
-		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return false; } }
+		public override bool IsDefaultDrawToolbarBackground { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarBorder { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarArrow { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarButtonImage { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarButtonText { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
 		
 
 

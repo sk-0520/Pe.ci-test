@@ -33,6 +33,7 @@ namespace PeMain.UI
 			DrawEdge(g, drawArea, active);
 			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
 			DrawCaption(g, captionArea, active);
+			this.toolLauncher.Refresh();
 		}
 		
 		void DrawFullActivaChanged(bool active)

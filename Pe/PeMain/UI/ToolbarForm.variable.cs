@@ -19,5 +19,6 @@ namespace PeMain.UI
 	public partial class ToolbarForm
 	{
 		ContextMenu _menuGroup = null;
+		bool _isRunning = false;
 	}
 }

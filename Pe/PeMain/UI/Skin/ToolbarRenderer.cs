@@ -46,7 +46,7 @@ namespace PeMain.UI
 		
 		protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarArrow) {
+			if(Skin.IsDefaultDrawToolbarArrow || e.Item is ToolStripMenuItem) {
 				base.OnRenderArrow(e);
 			} else {
 				Skin.DrawToolbarArrow(e);

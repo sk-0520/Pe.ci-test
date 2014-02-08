@@ -30,8 +30,11 @@ namespace PeMain.UI
 		public void SetCommonData(CommonData commonData)
 		{
 			CommonData = commonData;
+			this._isRunning = false;
 			
 			ApplySetting();
+			
+			this._isRunning = true;
 		}
 		
 		void ApplySettingTopmost()
