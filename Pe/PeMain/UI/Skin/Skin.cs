@@ -26,14 +26,13 @@ namespace PeMain.UI
 	}
 
 	/// <summary>
-	/// Description of Skin.
+	///スキン
 	/// </summary>
 	public interface ISkin
 	{
 		void Start(Form target);
 		void Refresh(Form target);
 		void Close(Form target);
-		
 		
 		Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
@@ -43,9 +42,9 @@ namespace PeMain.UI
 		void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
-		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
+		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		bool IsDefaultDrawToolbarBackground { get; }
@@ -57,9 +56,20 @@ namespace PeMain.UI
 		bool IsDefaultDrawToolbarSplitButtonBackground { get; }
 	}
 	
+	/// <summary>
+	/// ISkinの多分共通だろうって部分の抽象版
+	/// </summary>
 	public abstract class Skin: ISkin
 	{
-		public bool EnabledVisualStyle { get; set; }
+		protected enum ToolbarButtonState
+		{
+			None,
+			Normal,
+			Selected,
+			Pressed,
+		}
+		
+		protected bool EnabledVisualStyle { get; set; }
 		
 		/// <summary>
 		/// http://msdn.microsoft.com/ja-jp/magazine/ee221436.aspx
@@ -116,10 +126,23 @@ namespace PeMain.UI
 				format.FormatFlags |= StringFormatFlags.LineLimit;
 			}
 			
-			
 			return format;
 		}
-
+		
+		/// <summary>
+		/// TODO: システムからの領域無視
+		/// </summary>
+		/// <param name="itemArea"></param>
+		/// <param name="menuWidth"></param>
+		/// <returns></returns>
+		protected static Rectangle GetArrowArea(ToolStripItem item, int menuWidth)
+		{
+			var itemArea = new Rectangle(System.Drawing.Point.Empty, item.Size);
+			var arrawSize = new System.Drawing.Size(menuWidth, itemArea.Height);
+			var arrowArea = new Rectangle(new System.Drawing.Point(itemArea.Width - arrawSize.Width, itemArea.Height - arrawSize.Height), arrawSize);
+			
+			return arrowArea ;
+		}
 		
 		protected static bool IsEnabledVisualStyle()
 		{
@@ -135,7 +158,6 @@ namespace PeMain.UI
 		public virtual void Refresh(Form target)
 		{
 			EnabledVisualStyle = IsEnabledVisualStyle();
-			
 		}
 		public abstract void Close(Form target);
 		
@@ -148,11 +170,71 @@ namespace PeMain.UI
 		public abstract void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
-		public abstract void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
-		public abstract void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
+
+		public virtual void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth)
+		{
+			var arrowArea = GetArrowArea(e.Item, menuWidth);
+			
+			ToolbarButtonState menuState;
+			
+			if(e.Item.Pressed) {
+				// 押されている
+				menuState = ToolbarButtonState.Pressed;
+			} else if(e.Item.Selected) {
+				// 選ばれている
+				menuState = ToolbarButtonState.Selected;
+			} else {
+				// 通常
+				menuState = ToolbarButtonState.Normal;
+			}
+			DrawToolbarButton(e.Graphics, ToolbarButtonState.None, menuState, Rectangle.Empty, arrowArea);
+		}
+		
+		public virtual void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea)
+		{
+			ToolbarButtonState buttonState;
+			
+			if(e.Item.Pressed) {
+				// 押されている
+				buttonState = ToolbarButtonState.Pressed;
+			} else if(item.Selected) {
+				// 選ばれている
+				buttonState = ToolbarButtonState.Selected;
+			} else {
+				// 通常
+				buttonState = ToolbarButtonState.Normal;
+			}
+			DrawToolbarButton(e.Graphics, buttonState, ToolbarButtonState.None, itemArea, Rectangle.Empty);
+		}
+		
+		public virtual void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea)
+		{
+			ToolbarButtonState buttonState;
+			ToolbarButtonState menuState;
+			
+			if(item.DropDownButtonPressed) {
+				// ドロップダウンが押されている
+				buttonState = ToolbarButtonState.Selected;
+				menuState = ToolbarButtonState.Pressed;
+			} else if(item.ButtonPressed) {
+				// ボタンが押されている
+				buttonState = ToolbarButtonState.Pressed;
+				menuState = ToolbarButtonState.Pressed;
+			} else if(item.Selected) {
+				// ボタンが選ばれている
+				buttonState = ToolbarButtonState.Selected;
+				menuState = ToolbarButtonState.Selected;
+			} else {
+				// 通常
+				buttonState = ToolbarButtonState.Normal;
+				menuState = ToolbarButtonState.Normal;
+			}
+			var arrowArea = GetArrowArea(e.Item, item.DropDownButtonWidth);
+			DrawToolbarButton(e.Graphics, buttonState, menuState, itemArea, arrowArea);
+		}
+		
 		public virtual bool IsDefaultDrawToolbarBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarBorder { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarArrow { get { return true; } }
@@ -160,6 +242,16 @@ namespace PeMain.UI
 		public virtual bool IsDefaultDrawToolbarButtonText { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarDropDownButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
+		
+		protected virtual void DrawToolbarArrowImage(Graphics g, Rectangle drawArea, bool pressed)
+		{
+			throw new NotImplementedException();
+		}
+		
+		protected virtual void DrawToolbarButton(Graphics g, ToolbarButtonState button, ToolbarButtonState menu, Rectangle drawArea, Rectangle menuArea)
+		{
+			throw new NotImplementedException();
+		}
 	}
 	
 	

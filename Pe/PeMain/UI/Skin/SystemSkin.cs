@@ -25,21 +25,6 @@ namespace PeMain.UI
 	/// </summary>
 	public class SystemSkin: Skin
 	{
-		/// <summary>
-		/// TODO: システムからの領域無視
-		/// </summary>
-		/// <param name="itemArea"></param>
-		/// <param name="menuWidth"></param>
-		/// <returns></returns>
-		static Rectangle GetArrowArea(ToolStripItem item, int menuWidth)
-		{
-			var itemArea = new Rectangle(Point.Empty, item.Size);
-			var arrawSize = new Size(menuWidth, itemArea.Height);
-			var arrowArea = new Rectangle(new Point(itemArea.Width - arrawSize.Width, itemArea.Height - arrawSize.Height), arrawSize);
-			
-			return arrowArea ;
-		}
-		
 		Color VisualColor { get; set;}
 		
 		private void SetVisualStyle(Form target)
@@ -50,7 +35,7 @@ namespace PeMain.UI
 			var margin = new MARGINS();
 			margin.leftWidth = -1;
 			API.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
-			*/
+			 */
 			var blurHehind = new DWM_BLURBEHIND();
 			blurHehind.fEnable = true;
 			blurHehind.hRgnBlur = IntPtr.Zero;
@@ -191,34 +176,18 @@ namespace PeMain.UI
 			}
 		}
 		
-				
+		
 		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
 		{
-			if(active) 
-			e.Graphics.Clear(VisualColor);
-			else
-			e.Graphics.Clear(Color.Transparent);
-				
+			if(active) {
+				e.Graphics.Clear(VisualColor);
+			} else {
+				e.Graphics.Clear(Color.Transparent);
+			}
 		}
 		
 		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
 		{
-			//e.Graphics.FillRectangle(SystemBrushes.Desktop, e.ConnectedArea);
-		}
-		
-		public override void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth)
-		{
-			var arrowArea = GetArrowArea(e.Item, menuWidth);
-			
-			if(e.Item.Pressed) {
-				// 押されている
-				e.Graphics.FillRectangle(SystemBrushes.ControlLightLight, arrowArea);
-			} else if(e.Item.Selected) {
-				// 選ばれている
-				e.Graphics.FillRectangle(SystemBrushes.ActiveCaptionText, arrowArea);
-			} else {
-				// 通常
-			}
 		}
 		
 		
@@ -248,37 +217,6 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea)
-		{
-			if(e.Item.Pressed) {
-				// 押されている
-				e.Graphics.FillRectangle(SystemBrushes.ButtonHighlight, itemArea);
-			} else if(item.Selected) {
-				// 選ばれている
-				e.Graphics.FillRectangle(SystemBrushes.ActiveCaption, itemArea);
-			} else {
-				// 通常
-			}
-		}
-		
-		public override void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea)
-		{
-			var arrowArea = GetArrowArea(e.Item, item.DropDownButtonWidth);
-
-			if(e.Item.Pressed) {
-				// 押されている
-				e.Graphics.FillRectangle(SystemBrushes.ButtonHighlight, itemArea);
-				e.Graphics.FillRectangle(SystemBrushes.ControlLightLight, arrowArea);
-			} else if(item.Selected) {
-				// 選ばれている
-				e.Graphics.FillRectangle(SystemBrushes.ActiveCaption, itemArea);
-				e.Graphics.FillRectangle(SystemBrushes.ActiveCaptionText, arrowArea);
-			} else {
-				// 通常
-			}
-		}
-		
-		
 		public override bool IsDefaultDrawToolbarBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarBorder { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarArrow { get { return !EnabledVisualStyle; } }
@@ -286,8 +224,21 @@ namespace PeMain.UI
 		public override bool IsDefaultDrawToolbarButtonText { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
-		
 
+		protected override void DrawToolbarButton(Graphics g, ToolbarButtonState button, ToolbarButtonState menu, Rectangle drawArea, Rectangle menuArea)
+		{
+			//base.DrawToolbarButton(g, state, drawArea);
+			if(button != ToolbarButtonState.None)
+				// 境界線描画
+				using(var path = new GraphicsPath()) {
+				path.AddArc(drawArea, 0, 360);
+				using(var pen = new Pen(Color.Red)) {
+					g.DrawPath(pen, path);
+				}
+			}
+		}
 
 	}
+
 }
+
