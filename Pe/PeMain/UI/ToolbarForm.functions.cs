@@ -48,7 +48,7 @@ namespace PeMain.UI
 			renderer.Skin = CommonData.Skin;
 			renderer.ToolbarItem = UseToolbarItem;
 			
-			this.toolLauncher.Renderer = renderer; 
+			this.toolLauncher.Renderer = renderer;
 			
 			CommonData.Skin.Start(this);
 		}
@@ -209,7 +209,11 @@ namespace PeMain.UI
 			
 			// 表示アイテム生成
 			var toolButtonList = new List<ToolStripItem>();
-			toolButtonList.Add(CreateLauncherButton(null));
+			var mainButton = CreateLauncherButton(null);
+			mainButton.Text = groupItem.Name;
+			mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{"GROUP", groupItem.Name}}];
+
+			toolButtonList.Add(mainButton);
 			foreach(var itemName in groupItem.ItemNames) {
 				var launcherItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 				if(launcherItem != null) {
@@ -303,10 +307,14 @@ namespace PeMain.UI
 
 		}
 		
-		ToolStripMenuItem GetFileListItem(string path, bool isDir)
+		ToolStripMenuItem GetFileListItem(string path, bool isDir, bool showHiddenFile, bool showExtension)
 		{
 			var menuItem = new ToolStripMenuItem();
-			menuItem.Text = Path.GetFileName(path);
+			if(!isDir && showExtension) {
+				menuItem.Text = Path.GetFileNameWithoutExtension(path);
+			} else {
+				menuItem.Text = Path.GetFileName(path);
+			}
 			using(var icon = IconLoader.Load(path, UseToolbarItem.IconSize, 0)) {
 				menuItem.Image = icon.ToBitmap();
 			}
@@ -320,7 +328,7 @@ namespace PeMain.UI
 			
 			if(isDir) {
 				menuItem.DropDownOpening += (object sender, EventArgs e) => {
-					LoadFileList(menuItem, path);
+					LoadFileList(menuItem, path, showHiddenFile, showExtension);
 				};
 			}
 			menuItem.Click += (object sender, EventArgs e) => {
@@ -333,7 +341,7 @@ namespace PeMain.UI
 			return menuItem;
 		}
 		
-		void LoadFileList(ToolStripMenuItem parentItem, string parentDirPath)
+		void LoadFileList(ToolStripMenuItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
 		{
 			if(parentItem.HasDropDownItems) {
 				return;
@@ -344,13 +352,26 @@ namespace PeMain.UI
 				var fileList = Directory.GetFiles(parentDirPath);
 				var menuList = new List<ToolStripMenuItem>(dirList.Length + fileList.Length);
 				if(dirList.Length + fileList.Length > 0) {
+					// TODO: ディレクトリとファイルで処理重複
 					foreach(var path in dirList) {
-						var menuItem = GetFileListItem(path, true);
-						menuList.Add(menuItem);
+						var use = true;
+						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
+							use = false;
+						}
+						if(use) {
+							var menuItem = GetFileListItem(path, true, showHiddenFile, showExtension);
+							menuList.Add(menuItem);
+						}
 					}
 					foreach(var path in fileList) {
-						var menuItem = GetFileListItem(path, false);
-						menuList.Add(menuItem);
+						var use = true;
+						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
+							use = false;
+						}
+						if(use) {
+							var menuItem = GetFileListItem(path, false, showHiddenFile, showExtension);
+							menuList.Add(menuItem);
+						}
 					}
 				} else {
 					var menuItem = new ToolStripMenuItem();
@@ -404,7 +425,9 @@ namespace PeMain.UI
 			fileItem.Name = menuNameFiles;
 			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
 			fileItem.DropDownOpening += (object sender, EventArgs e) => {
-				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command));
+				var showHiddenFile = SystemEnv.IsHiddenfFileShow();
+				var showExtension = SystemEnv.IsExtensionShow();
+				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command), showHiddenFile, showExtension);
 			};
 			
 			// メニュー設定
@@ -548,8 +571,6 @@ namespace PeMain.UI
 			
 			if(item == null) {
 				toolItem = new ToolStripDropDownButton();
-				toolItem.Text = CommonData.Language["toolbar/main/text"];
-				toolItem.ToolTipText = CommonData.Language["toolbar/main/text"];
 				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
 			} else {
 				toolItem = new ToolStripSplitButton();

@@ -57,7 +57,7 @@
 		<Word Name="log/header/line"       Text="行数" />
 		<Word Name="log/header/method"     Text="メソッド" />
 		
-		<Word Name="toolbar/main/text" Text="ツールメニュー" />
+		<Word Name="toolbar/main/tips" Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide" Text="${auto-hide}(&amp;H)" />
 
 		<Word Name="toolbar/menu/file/execute"    Text="実行(&amp;S)" />

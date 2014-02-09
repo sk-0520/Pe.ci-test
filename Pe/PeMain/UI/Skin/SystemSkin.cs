@@ -38,7 +38,7 @@ namespace PeMain.UI
 				return new Point(1, 1);
 			}
 			return Point.Empty;
-			*/
+			 */
 		}
 		
 		
@@ -196,11 +196,7 @@ namespace PeMain.UI
 		
 		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
 		{
-			if(active) {
-				e.Graphics.Clear(VisualColor);
-			} else {
-				e.Graphics.Clear(Color.Transparent);
-			}
+			e.Graphics.Clear(VisualColor);
 		}
 		
 		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
@@ -221,19 +217,40 @@ namespace PeMain.UI
 		{
 			var offset = GetPressOffset(e.Item);
 			
-			using(var brush = new SolidBrush(Color.FromArgb(254, e.TextColor))) {
-				using(var format = ToStringFormat(e.TextFormat)) {
-					format.LineAlignment = StringAlignment.Center;
-					var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, toolbarItem.ShowText, toolbarItem.TextWidth);
-					var iconSize = toolbarItem.IconSize.ToSize();
-					var textArea = new Rectangle(
-						buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
-						buttonLayout.Padding.Top + offset.Y,
-						buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth,
-						buttonLayout.Size.Height - buttonLayout.Padding.Vertical
-					);
-					e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-					e.Graphics.DrawString(e.Text, e.TextFont, brush, textArea, format);
+			using(var textBrush = new SolidBrush(Color.FromArgb(255, Color.White))) {
+				using(var shadowBrush = new SolidBrush(Color.FromArgb(180, Color.DarkGray))) {
+					using(var format = ToStringFormat(e.TextFormat)) {
+						format.LineAlignment = StringAlignment.Center;
+						format.Trimming = StringTrimming.EllipsisCharacter;
+						var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, toolbarItem.ShowText, toolbarItem.TextWidth);
+						var iconSize = toolbarItem.IconSize.ToSize();
+						var textArea = new Rectangle(
+							buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
+							buttonLayout.Padding.Top + offset.Y,
+							buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth,
+							buttonLayout.Size.Height - buttonLayout.Padding.Vertical
+						);
+						
+						e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+						textArea.X += -1;
+						textArea.Y += +0;
+						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
+						textArea.X += +1;
+						textArea.Y += -1;
+						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
+						textArea.X += +1;
+						textArea.Y += +0;
+						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
+						textArea.X += +1;
+						textArea.Y += +1;
+						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
+						
+						textArea.X += -1;
+						textArea.Y += -1;
+						e.Graphics.DrawString(e.Text, e.TextFont, textBrush, textArea, format);
+						
+					}
 				}
 			}
 		}
@@ -249,11 +266,11 @@ namespace PeMain.UI
 		protected override void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{
 			var padding = new Padding(3);
-			var size = toolbarButtonData.MenuArea.Width - padding.Horizontal; 
+			var size = toolbarButtonData.MenuArea.Width - padding.Horizontal;
 			var arrowArea = new RectangleF(
 				(float)(toolbarButtonData.MenuArea.Left + toolbarButtonData.MenuArea.Width / 2.0 - size / 2.0),
 				(float)(toolbarButtonData.MenuArea.Top + toolbarButtonData.MenuArea.Height / 2.0 - size / 2.0),
-				size, 
+				size,
 				size
 			);
 			var lines = new[] {
@@ -296,7 +313,7 @@ namespace PeMain.UI
 					byte alpha = 0;
 					switch(toolbarButtonData.ButtonState) {
 							case ToolbarButtonState.Normal:   alpha = 70;  break;
-							case ToolbarButtonState.Selected:
+						case ToolbarButtonState.Selected:
 							case ToolbarButtonState.Pressed:  alpha = 210; break;
 						default:
 							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
@@ -326,12 +343,13 @@ namespace PeMain.UI
 					// 境界線
 					if(toolbarButtonData.HasMenuSplit) {
 						var menuArea = toolbarButtonData.MenuArea;
-						using(var pen = new Pen(Color.FromArgb(alpha + 40, Color.Wheat))) {
+						using(var pen = new Pen(Color.FromArgb(alpha, Color.Gray))) {
 							pen.Alignment = PenAlignment.Left;
 							g.DrawLine(pen, menuArea.Left, menuArea.Top + correction.Top, menuArea.Left, menuArea.Bottom - correction.Vertical);
 						}
+						// ボタン内メニューボタンあり
 						if(toolbarButtonData.ButtonState == ToolbarButtonState.Selected && toolbarButtonData.MenuState == ToolbarButtonState.Pressed) {
-							g.SetClip(new Rectangle(menuArea.Left + correction.Left, menuArea.Top + correction.Top, menuArea.Left - correction.Horizontal, menuArea.Bottom + - correction.Vertical));
+							g.SetClip(new Rectangle(menuArea.Left + correction.Left, menuArea.Top + correction.Top, menuArea.Left - correction.Horizontal, menuArea.Bottom - correction.Vertical));
 							using(var brush = new LinearGradientBrush(menuArea, endColor, startColor, LinearGradientMode.Vertical)) {
 								g.FillPath(brush, path);
 							}
