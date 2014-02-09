@@ -27,6 +27,8 @@ namespace PeMain.UI
 	{
 		private static Point GetPressOffset(ToolStripItem toolItem)
 		{
+			return Point.Empty;
+			/*
 			var splitItem = toolItem as ToolStripSplitButton;
 			if(splitItem != null && splitItem.DropDownButtonPressed) {
 				return Point.Empty;
@@ -36,8 +38,10 @@ namespace PeMain.UI
 				return new Point(1, 1);
 			}
 			return Point.Empty;
-
+			*/
 		}
+		
+		
 		Color VisualColor { get; set;}
 		
 		private void SetVisualStyle(Form target)
@@ -242,48 +246,104 @@ namespace PeMain.UI
 		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
 
+		protected override void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
+		{
+			var padding = new Padding(3);
+			var size = toolbarButtonData.MenuArea.Width - padding.Horizontal; 
+			var arrowArea = new RectangleF(
+				(float)(toolbarButtonData.MenuArea.Left + toolbarButtonData.MenuArea.Width / 2.0 - size / 2.0),
+				(float)(toolbarButtonData.MenuArea.Top + toolbarButtonData.MenuArea.Height / 2.0 - size / 2.0),
+				size, 
+				size
+			);
+			var lines = new[] {
+				new PointF(arrowArea.Left, arrowArea.Top),
+				new PointF(arrowArea.Right, arrowArea.Top),
+				new PointF(arrowArea.Left + arrowArea.Width / 2, arrowArea.Bottom),
+			};
+			byte alpha = 170;
+			Color startColor, endColor;
+			if(toolbarButtonData.MenuState == ToolbarButtonState.Pressed) {
+				startColor = Color.FromArgb(alpha, Color.White);
+				endColor = Color.FromArgb(alpha, Color.Gray);
+			} else {
+				startColor = Color.FromArgb(alpha, Color.Gray);
+				endColor = Color.FromArgb(alpha, Color.White);
+			}
+			using(var brush = new LinearGradientBrush(arrowArea, startColor, endColor, LinearGradientMode.Vertical)) {
+				toolbarButtonData.Graphics.FillPolygon(brush, lines);
+			}
+		}
+		
 		protected override void DrawToolbarButton(ToolbarButtonData toolbarButtonData)
 		{
 			var g = toolbarButtonData.Graphics;
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			var drawArea = toolbarButtonData.ButtonArea;
+			var correction = new Padding(1);// 幅・高さの補正px
 			
 			if(toolbarButtonData.ButtonState != ToolbarButtonState.None) {
 				// ボタン全体の境界線を描画する
 				using(var path = new GraphicsPath()) {
 					// 領域作成
 					var arcSize = new SizeF(4.5f, 4.5f);
-					const int correction = 1; // 幅・高さの補正px
 					path.StartFigure();
-					path.AddArc(drawArea.Right - arcSize.Width - correction, drawArea.Top, arcSize.Width, arcSize.Height, 270, 90);
-					path.AddArc(drawArea.Right - arcSize.Width - correction, drawArea.Bottom - correction - arcSize.Height, arcSize.Width, arcSize.Height - correction, 0, 90);
-					path.AddArc(drawArea.Left, drawArea.Bottom - arcSize.Height - correction, arcSize.Width, arcSize.Height - correction, 90, 90);
+					path.AddArc(drawArea.Right - arcSize.Width - correction.Left, drawArea.Top, arcSize.Width, arcSize.Height, 270, 90);
+					path.AddArc(drawArea.Right - arcSize.Width - correction.Left, drawArea.Bottom - correction.Bottom - arcSize.Height, arcSize.Width, arcSize.Height - correction.Bottom, 0, 90);
+					path.AddArc(drawArea.Left, drawArea.Bottom - arcSize.Height - correction.Bottom, arcSize.Width, arcSize.Height - correction.Bottom, 90, 90);
 					path.AddArc(drawArea.Left, drawArea.Top, arcSize.Width, arcSize.Height, 180, 90);
 					path.CloseFigure();
 					byte alpha = 0;
 					switch(toolbarButtonData.ButtonState) {
 							case ToolbarButtonState.Normal:   alpha = 70;  break;
-							case ToolbarButtonState.Selected: alpha = 140; break;
+							case ToolbarButtonState.Selected:
 							case ToolbarButtonState.Pressed:  alpha = 210; break;
 						default:
 							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
 							break;
 					}
-					// TODO: 暫定実装
+					
 					RectangleF fillArea = drawArea;
-					fillArea.Height *= 0.6f;
-					using(var brush = new LinearGradientBrush(fillArea, Color.FromArgb(alpha, Color.White), Color.FromArgb(0, Color.White), LinearGradientMode.ForwardDiagonal)) {
-						//g.SetClip(path, CombineMode.Complement);
-						g.FillRectangle(brush, fillArea);
+					Color startColor, endColor;
+					if(toolbarButtonData.ButtonState == ToolbarButtonState.Pressed) {
+						startColor = Color.FromArgb(0, Color.White);
+						endColor = Color.FromArgb(alpha, Color.White);
+					} else {
+						startColor = Color.FromArgb(alpha, Color.White);
+						endColor = Color.FromArgb(0, Color.White);
+					}
+					// 背景 TODO: クリップなしのべた塗
+					using(var brush = new LinearGradientBrush(fillArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
+						//g.FillRectangle(brush, fillArea);
+						g.FillPath(brush, path);
 						g.ResetClip();
 					}
+					// 境界線
 					using(var pen = new Pen(Color.FromArgb(alpha, Color.White))) {
 						pen.Alignment = PenAlignment.Inset;
 						g.DrawPath(pen, path);
 					}
+					// 境界線
+					if(toolbarButtonData.HasMenuSplit) {
+						var menuArea = toolbarButtonData.MenuArea;
+						using(var pen = new Pen(Color.FromArgb(alpha + 40, Color.Wheat))) {
+							pen.Alignment = PenAlignment.Left;
+							g.DrawLine(pen, menuArea.Left, menuArea.Top + correction.Top, menuArea.Left, menuArea.Bottom - correction.Vertical);
+						}
+						if(toolbarButtonData.ButtonState == ToolbarButtonState.Selected && toolbarButtonData.MenuState == ToolbarButtonState.Pressed) {
+							g.SetClip(new Rectangle(menuArea.Left + correction.Left, menuArea.Top + correction.Top, menuArea.Left - correction.Horizontal, menuArea.Bottom + - correction.Vertical));
+							using(var brush = new LinearGradientBrush(menuArea, endColor, startColor, LinearGradientMode.Vertical)) {
+								g.FillPath(brush, path);
+							}
+							g.ResetClip();
+						}
+					}
 				}
 			}
-			
+			if(toolbarButtonData.HasArrow && toolbarButtonData.MenuState != ToolbarButtonState.None) {
+				// 矢印描画
+				DrawToolbarArrowImage(toolbarButtonData);
+			}
 		}
 
 	}

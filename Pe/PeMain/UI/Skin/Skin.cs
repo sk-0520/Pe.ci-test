@@ -74,6 +74,7 @@ namespace PeMain.UI
 			public ToolbarButtonData()
 			{
 				Active = false;
+				HasArrow = false;
 				HasMenuSplit = false;
 				ButtonState = ToolbarButtonState.None;
 				MenuState = ToolbarButtonState.None;
@@ -81,6 +82,8 @@ namespace PeMain.UI
 			
 			public Graphics Graphics { get; set; }
 			public bool Active { get; set; }
+			public bool HasArrow { get; set; }
+			public ArrowDirection ArrowDirection { get; set; }
 			public bool HasMenuSplit { get; set; }
 			public ToolbarButtonState ButtonState { get; set; }
 			public ToolbarButtonState MenuState { get; set; }
@@ -194,23 +197,25 @@ namespace PeMain.UI
 
 		public virtual void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth)
 		{
-			var toolbarButton = new ToolbarButtonData();
-			toolbarButton.Graphics = e.Graphics;
-			toolbarButton.Active = true;
-			toolbarButton.MenuArea = GetMenuArea(e.Item, menuWidth);
+			var toolbarButtonData = new ToolbarButtonData();
+			toolbarButtonData.Graphics = e.Graphics;
+			toolbarButtonData.Active = true;
+			toolbarButtonData.HasArrow = true;
+			toolbarButtonData.ArrowDirection = ArrowDirection.Down;
+			toolbarButtonData.MenuArea = GetMenuArea(e.Item, menuWidth);
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				toolbarButton.MenuState = ToolbarButtonState.Pressed;
+				toolbarButtonData.MenuState = ToolbarButtonState.Pressed;
 			} else if(e.Item.Selected) {
 				// 選ばれている
-				toolbarButton.MenuState = ToolbarButtonState.Selected;
+				toolbarButtonData.MenuState = ToolbarButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButton.MenuState = ToolbarButtonState.Normal;
+				toolbarButtonData.MenuState = ToolbarButtonState.Normal;
 			}
 			
-			DrawToolbarButton(toolbarButton);
+			DrawToolbarButton(toolbarButtonData);
 		}
 		
 		public virtual void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea)
@@ -218,6 +223,8 @@ namespace PeMain.UI
 			var toolbarButtonData = new ToolbarButtonData();
 			toolbarButtonData.Graphics = e.Graphics;
 			toolbarButtonData.Active = active;
+			toolbarButtonData.HasArrow = true;
+			toolbarButtonData.ArrowDirection = ArrowDirection.Down;
 			toolbarButtonData.ButtonArea = itemArea;
 			
 			if(e.Item.Pressed) {
@@ -238,6 +245,8 @@ namespace PeMain.UI
 			var toolbarButtonData = new ToolbarButtonData();
 			toolbarButtonData.Graphics = e.Graphics;
 			toolbarButtonData.Active = active;
+			toolbarButtonData.HasArrow = true;
+			toolbarButtonData.ArrowDirection = ArrowDirection.Down;
 			toolbarButtonData.HasMenuSplit = true;
 			toolbarButtonData.ButtonArea = itemArea;
 			toolbarButtonData.MenuArea = GetMenuArea(e.Item, item.DropDownButtonWidth);
@@ -270,7 +279,7 @@ namespace PeMain.UI
 		public virtual bool IsDefaultDrawToolbarDropDownButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
 		
-		protected virtual void DrawToolbarArrowImage(Graphics g, Rectangle drawArea, bool pressed)
+		protected virtual void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{
 			throw new NotImplementedException();
 		}
