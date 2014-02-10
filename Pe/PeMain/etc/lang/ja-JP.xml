@@ -41,7 +41,7 @@
 		<Word Name="main/menu/window"          Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/window/toolbar"  Text="ツールバー(&amp;T)" />
 		<Word Name="main/menu/window/logger"   Text="ログ(&amp;L)" />
-		<Word Name="main/menu/setting"         Text="設定(&amp;S) ${open-ui}" />
+		<Word Name="main/menu/setting"         Text="@[PE] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"           Text="@[PE] 情報(&amp;A) ${open-ui}" />
 		<Word Name="main/menu/system-env"      Text="環境設定(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
@@ -60,10 +60,11 @@
 		<Word Name="toolbar/main/tips" Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide" Text="${auto-hide}(&amp;H)" />
 
-		<Word Name="toolbar/menu/file/execute"    Text="実行(&amp;S)" />
-		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行(&amp;E)" />
-		<Word Name="toolbar/menu/file/path"       Text="パス(&amp;P)" />
-		<Word Name="toolbar/menu/file/ls"         Text="ファイル(&amp;F)" />
+		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
+		<Word Name="toolbar/menu/file/execute-ex"    Text="指定して実行(&amp;E)" />
+		<Word Name="toolbar/menu/file/execute-admin" Text="管理者として実行(&amp;A) ${open-ui}" />
+		<Word Name="toolbar/menu/file/path"          Text="パス(&amp;P)" />
+		<Word Name="toolbar/menu/file/ls"            Text="ファイル(&amp;F)" />
 		
 		<Word Name="toolbar/menu/file/path/open-parent-dir"  Text="親フォルダを開く(&amp;O)" />
 		<Word Name="toolbar/menu/file/path/open-work-dir"    Text="作業フォルダを開く(&amp;W)" />
