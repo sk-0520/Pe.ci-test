@@ -176,6 +176,10 @@ namespace PeMain.Data
 		/// </summary>
 		public bool StdOutputWatch { get; set; }
 		/// <summary>
+		/// 管理者として実行
+		/// </summary>
+		public bool Administrator { get; set; }
+		/// <summary>
 		/// 環境変数
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }

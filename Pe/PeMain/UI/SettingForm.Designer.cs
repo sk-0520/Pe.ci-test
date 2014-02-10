@@ -40,8 +40,9 @@ namespace PeMain.UI
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
-			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
+			this.labelSystemEnvExt = new System.Windows.Forms.Label();
 			this.inputSystemEnvExt = new PeMain.UI.PeHotkeyControl();
+			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
 			this.inputSystemEnvHiddenFile = new PeMain.UI.PeHotkeyControl();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
 			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
@@ -51,31 +52,36 @@ namespace PeMain.UI
 			this.pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
-			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
-			this.labelLauncherOption = new System.Windows.Forms.Label();
-			this.inputLauncherOption = new System.Windows.Forms.TextBox();
-			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
-			this.commandLauncherOptionFilePath = new System.Windows.Forms.Button();
-			this.labelLauncherNote = new System.Windows.Forms.Label();
-			this.inputLauncherIconIndex = new System.Windows.Forms.NumericUpDown();
-			this.labelLauncherTag = new System.Windows.Forms.Label();
-			this.labelLauncherIconPath = new System.Windows.Forms.Label();
-			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
-			this.labelLauncherName = new System.Windows.Forms.Label();
-			this.labelLauncherCommand = new System.Windows.Forms.Label();
-			this.inputLauncherNote = new System.Windows.Forms.TextBox();
-			this.inputLauncherTag = new System.Windows.Forms.TextBox();
-			this.inputLauncherIconPath = new System.Windows.Forms.TextBox();
-			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
-			this.inputLauncherName = new System.Windows.Forms.TextBox();
-			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
-			this.commandLauncherIconPath = new System.Windows.Forms.Button();
-			this.commandLauncherWorkDirPath = new System.Windows.Forms.Button();
-			this.commandLauncherDirPath = new System.Windows.Forms.Button();
-			this.commandLauncherFilePath = new System.Windows.Forms.Button();
+			this.tabLauncher = new System.Windows.Forms.TabControl();
+			this.pageLauncherCommon = new System.Windows.Forms.TabPage();
 			this.groupLauncherType = new System.Windows.Forms.GroupBox();
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
+			this.labelLauncherName = new System.Windows.Forms.Label();
+			this.labelLauncherOption = new System.Windows.Forms.Label();
+			this.inputLauncherName = new System.Windows.Forms.TextBox();
+			this.inputLauncherOption = new System.Windows.Forms.TextBox();
+			this.labelLauncherCommand = new System.Windows.Forms.Label();
+			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
+			this.commandLauncherFilePath = new System.Windows.Forms.Button();
+			this.commandLauncherOptionFilePath = new System.Windows.Forms.Button();
+			this.commandLauncherDirPath = new System.Windows.Forms.Button();
+			this.inputLauncherIconIndex = new System.Windows.Forms.NumericUpDown();
+			this.commandLauncherWorkDirPath = new System.Windows.Forms.Button();
+			this.labelLauncherIconPath = new System.Windows.Forms.Label();
+			this.commandLauncherIconPath = new System.Windows.Forms.Button();
+			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
+			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
+			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
+			this.inputLauncherIconPath = new System.Windows.Forms.TextBox();
+			this.pageLauncherEnv = new System.Windows.Forms.TabPage();
+			this.pageLauncherOthers = new System.Windows.Forms.TabPage();
+			this.selectLauncherAdmin = new System.Windows.Forms.CheckBox();
+			this.labelLauncherTag = new System.Windows.Forms.Label();
+			this.selectLauncherStdStream = new System.Windows.Forms.CheckBox();
+			this.inputLauncherTag = new System.Windows.Forms.TextBox();
+			this.inputLauncherNote = new System.Windows.Forms.TextBox();
+			this.labelLauncherNote = new System.Windows.Forms.Label();
 			this.pageToolbar = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
@@ -120,7 +126,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.labelSystemEnvExt = new System.Windows.Forms.Label();
+			this.selectLauncherEnv = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
@@ -130,8 +136,12 @@ namespace PeMain.UI
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).BeginInit();
+			this.tabLauncher.SuspendLayout();
+			this.pageLauncherCommon.SuspendLayout();
 			this.groupLauncherType.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).BeginInit();
+			this.pageLauncherEnv.SuspendLayout();
+			this.pageLauncherOthers.SuspendLayout();
 			this.pageToolbar.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).BeginInit();
@@ -163,7 +173,7 @@ namespace PeMain.UI
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(749, 397);
+			this.tabSetting.Size = new System.Drawing.Size(749, 303);
 			this.tabSetting.TabIndex = 0;
 			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
@@ -177,7 +187,7 @@ namespace PeMain.UI
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(741, 369);
+			this.pageMain.Size = new System.Drawing.Size(741, 275);
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
@@ -195,14 +205,14 @@ namespace PeMain.UI
 			this.groupMainSystemEnv.TabStop = false;
 			this.groupMainSystemEnv.Text = "{SYSTEM-ENV}";
 			// 
-			// labelSystemEnvHiddenFile
+			// labelSystemEnvExt
 			// 
-			this.labelSystemEnvHiddenFile.AutoSize = true;
-			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(6, 26);
-			this.labelSystemEnvHiddenFile.Name = "labelSystemEnvHiddenFile";
-			this.labelSystemEnvHiddenFile.Size = new System.Drawing.Size(100, 15);
-			this.labelSystemEnvHiddenFile.TabIndex = 17;
-			this.labelSystemEnvHiddenFile.Text = "{HIDDEN-FILE}";
+			this.labelSystemEnvExt.AutoSize = true;
+			this.labelSystemEnvExt.Location = new System.Drawing.Point(6, 53);
+			this.labelSystemEnvExt.Name = "labelSystemEnvExt";
+			this.labelSystemEnvExt.Size = new System.Drawing.Size(91, 15);
+			this.labelSystemEnvExt.TabIndex = 17;
+			this.labelSystemEnvExt.Text = "{EXTENSION}";
 			// 
 			// inputSystemEnvExt
 			// 
@@ -217,6 +227,15 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 27);
 			this.inputSystemEnvExt.TabIndex = 16;
 			this.inputSystemEnvExt.Text = "";
+			// 
+			// labelSystemEnvHiddenFile
+			// 
+			this.labelSystemEnvHiddenFile.AutoSize = true;
+			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(6, 26);
+			this.labelSystemEnvHiddenFile.Name = "labelSystemEnvHiddenFile";
+			this.labelSystemEnvHiddenFile.Size = new System.Drawing.Size(100, 15);
+			this.labelSystemEnvHiddenFile.TabIndex = 17;
+			this.labelSystemEnvHiddenFile.Text = "{HIDDEN-FILE}";
 			// 
 			// inputSystemEnvHiddenFile
 			// 
@@ -289,7 +308,7 @@ namespace PeMain.UI
 			this.pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageLauncher.Name = "pageLauncher";
 			this.pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageLauncher.Size = new System.Drawing.Size(741, 369);
+			this.pageLauncher.Size = new System.Drawing.Size(741, 275);
 			this.pageLauncher.TabIndex = 1;
 			this.pageLauncher.Text = "{LAUNCHER}";
 			this.pageLauncher.UseVisualStyleBackColor = true;
@@ -308,31 +327,9 @@ namespace PeMain.UI
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.selectLauncherStdStream);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherOption);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherOption);
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherOptionDirPath);
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherOptionFilePath);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherNote);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherIconIndex);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherTag);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherIconPath);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherWorkDirPath);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherName);
-			this.splitContainer1.Panel2.Controls.Add(this.labelLauncherCommand);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherNote);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherTag);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherIconPath);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherWorkDirPath);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherName);
-			this.splitContainer1.Panel2.Controls.Add(this.inputLauncherCommand);
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherIconPath);
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherWorkDirPath);
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherDirPath);
-			this.splitContainer1.Panel2.Controls.Add(this.commandLauncherFilePath);
-			this.splitContainer1.Panel2.Controls.Add(this.groupLauncherType);
+			this.splitContainer1.Panel2.Controls.Add(this.tabLauncher);
 			this.splitContainer1.Panel2.Enabled = false;
-			this.splitContainer1.Size = new System.Drawing.Size(735, 361);
+			this.splitContainer1.Size = new System.Drawing.Size(735, 267);
 			this.splitContainer1.SplitterDistance = 192;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -347,243 +344,56 @@ namespace PeMain.UI
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
 			this.selecterLauncher.SelectedItem = null;
-			this.selecterLauncher.Size = new System.Drawing.Size(192, 361);
+			this.selecterLauncher.Size = new System.Drawing.Size(192, 267);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
-			// selectLauncherStdStream
+			// tabLauncher
 			// 
-			this.selectLauncherStdStream.AutoSize = true;
-			this.selectLauncherStdStream.Location = new System.Drawing.Point(119, 124);
-			this.selectLauncherStdStream.Name = "selectLauncherStdStream";
-			this.selectLauncherStdStream.Size = new System.Drawing.Size(121, 19);
-			this.selectLauncherStdStream.TabIndex = 12;
-			this.selectLauncherStdStream.Text = "{STD_STREAM}";
-			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
-			this.selectLauncherStdStream.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
+			this.tabLauncher.Controls.Add(this.pageLauncherCommon);
+			this.tabLauncher.Controls.Add(this.pageLauncherEnv);
+			this.tabLauncher.Controls.Add(this.pageLauncherOthers);
+			this.tabLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabLauncher.Location = new System.Drawing.Point(0, 0);
+			this.tabLauncher.Name = "tabLauncher";
+			this.tabLauncher.SelectedIndex = 0;
+			this.tabLauncher.Size = new System.Drawing.Size(539, 267);
+			this.tabLauncher.TabIndex = 13;
 			// 
-			// labelLauncherOption
+			// pageLauncherCommon
 			// 
-			this.labelLauncherOption.AutoSize = true;
-			this.labelLauncherOption.Location = new System.Drawing.Point(13, 152);
-			this.labelLauncherOption.Name = "labelLauncherOption";
-			this.labelLauncherOption.Size = new System.Drawing.Size(68, 15);
-			this.labelLauncherOption.TabIndex = 10;
-			this.labelLauncherOption.Text = "{OPTION}";
-			// 
-			// inputLauncherOption
-			// 
-			this.inputLauncherOption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherOption.Location = new System.Drawing.Point(119, 149);
-			this.inputLauncherOption.Name = "inputLauncherOption";
-			this.inputLauncherOption.Size = new System.Drawing.Size(339, 23);
-			this.inputLauncherOption.TabIndex = 9;
-			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// commandLauncherOptionDirPath
-			// 
-			this.commandLauncherOptionDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandLauncherOptionDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(501, 148);
-			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
-			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherOptionDirPath.TabIndex = 7;
-			this.commandLauncherOptionDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherOptionDirPath.UseVisualStyleBackColor = true;
-			this.commandLauncherOptionDirPath.Click += new System.EventHandler(this.CommandLauncherOptionDirPath_Click);
-			// 
-			// commandLauncherOptionFilePath
-			// 
-			this.commandLauncherOptionFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandLauncherOptionFilePath.Image = global::PeMain.Properties.Images.File;
-			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(465, 148);
-			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
-			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherOptionFilePath.TabIndex = 8;
-			this.commandLauncherOptionFilePath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherOptionFilePath.UseVisualStyleBackColor = true;
-			this.commandLauncherOptionFilePath.Click += new System.EventHandler(this.CommandLauncherOptionFilePath_Click);
-			// 
-			// labelLauncherNote
-			// 
-			this.labelLauncherNote.AutoSize = true;
-			this.labelLauncherNote.Location = new System.Drawing.Point(13, 268);
-			this.labelLauncherNote.Name = "labelLauncherNote";
-			this.labelLauncherNote.Size = new System.Drawing.Size(54, 15);
-			this.labelLauncherNote.TabIndex = 6;
-			this.labelLauncherNote.Text = "{NOTE}";
-			// 
-			// inputLauncherIconIndex
-			// 
-			this.inputLauncherIconIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherIconIndex.Location = new System.Drawing.Point(420, 207);
-			this.inputLauncherIconIndex.Name = "inputLauncherIconIndex";
-			this.inputLauncherIconIndex.Size = new System.Drawing.Size(38, 23);
-			this.inputLauncherIconIndex.TabIndex = 5;
-			this.inputLauncherIconIndex.ValueChanged += new System.EventHandler(this.InputLauncherIconIndex_ValueChanged);
-			// 
-			// labelLauncherTag
-			// 
-			this.labelLauncherTag.AutoSize = true;
-			this.labelLauncherTag.Location = new System.Drawing.Point(13, 239);
-			this.labelLauncherTag.Name = "labelLauncherTag";
-			this.labelLauncherTag.Size = new System.Drawing.Size(45, 15);
-			this.labelLauncherTag.TabIndex = 4;
-			this.labelLauncherTag.Text = "{TAG}";
-			// 
-			// labelLauncherIconPath
-			// 
-			this.labelLauncherIconPath.AutoSize = true;
-			this.labelLauncherIconPath.Location = new System.Drawing.Point(13, 210);
-			this.labelLauncherIconPath.Name = "labelLauncherIconPath";
-			this.labelLauncherIconPath.Size = new System.Drawing.Size(52, 15);
-			this.labelLauncherIconPath.TabIndex = 4;
-			this.labelLauncherIconPath.Text = "{ICON}";
-			// 
-			// labelLauncherWorkDirPath
-			// 
-			this.labelLauncherWorkDirPath.AutoSize = true;
-			this.labelLauncherWorkDirPath.Location = new System.Drawing.Point(13, 181);
-			this.labelLauncherWorkDirPath.Name = "labelLauncherWorkDirPath";
-			this.labelLauncherWorkDirPath.Size = new System.Drawing.Size(87, 15);
-			this.labelLauncherWorkDirPath.TabIndex = 4;
-			this.labelLauncherWorkDirPath.Text = "{WORK_DIR}";
-			// 
-			// labelLauncherName
-			// 
-			this.labelLauncherName.AutoSize = true;
-			this.labelLauncherName.Location = new System.Drawing.Point(13, 71);
-			this.labelLauncherName.Name = "labelLauncherName";
-			this.labelLauncherName.Size = new System.Drawing.Size(55, 15);
-			this.labelLauncherName.TabIndex = 4;
-			this.labelLauncherName.Text = "{NAME}";
-			// 
-			// labelLauncherCommand
-			// 
-			this.labelLauncherCommand.AutoSize = true;
-			this.labelLauncherCommand.Location = new System.Drawing.Point(13, 98);
-			this.labelLauncherCommand.Name = "labelLauncherCommand";
-			this.labelLauncherCommand.Size = new System.Drawing.Size(84, 15);
-			this.labelLauncherCommand.TabIndex = 4;
-			this.labelLauncherCommand.Text = "{COMMAND}";
-			// 
-			// inputLauncherNote
-			// 
-			this.inputLauncherNote.AcceptsReturn = true;
-			this.inputLauncherNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherNote.Location = new System.Drawing.Point(119, 265);
-			this.inputLauncherNote.Multiline = true;
-			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(339, 82);
-			this.inputLauncherNote.TabIndex = 3;
-			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// inputLauncherTag
-			// 
-			this.inputLauncherTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherTag.Location = new System.Drawing.Point(119, 236);
-			this.inputLauncherTag.Name = "inputLauncherTag";
-			this.inputLauncherTag.Size = new System.Drawing.Size(339, 23);
-			this.inputLauncherTag.TabIndex = 3;
-			this.inputLauncherTag.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// inputLauncherIconPath
-			// 
-			this.inputLauncherIconPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherIconPath.Location = new System.Drawing.Point(119, 207);
-			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
-			this.inputLauncherIconPath.Size = new System.Drawing.Size(294, 23);
-			this.inputLauncherIconPath.TabIndex = 3;
-			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// inputLauncherWorkDirPath
-			// 
-			this.inputLauncherWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherWorkDirPath.Location = new System.Drawing.Point(119, 178);
-			this.inputLauncherWorkDirPath.Name = "inputLauncherWorkDirPath";
-			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(339, 23);
-			this.inputLauncherWorkDirPath.TabIndex = 3;
-			this.inputLauncherWorkDirPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// inputLauncherName
-			// 
-			this.inputLauncherName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherName.Location = new System.Drawing.Point(119, 68);
-			this.inputLauncherName.Name = "inputLauncherName";
-			this.inputLauncherName.Size = new System.Drawing.Size(263, 23);
-			this.inputLauncherName.TabIndex = 3;
-			this.inputLauncherName.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// inputLauncherCommand
-			// 
-			this.inputLauncherCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherCommand.Location = new System.Drawing.Point(119, 95);
-			this.inputLauncherCommand.Name = "inputLauncherCommand";
-			this.inputLauncherCommand.Size = new System.Drawing.Size(339, 23);
-			this.inputLauncherCommand.TabIndex = 3;
-			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// commandLauncherIconPath
-			// 
-			this.commandLauncherIconPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandLauncherIconPath.Image = global::PeMain.Properties.Images.File;
-			this.commandLauncherIconPath.Location = new System.Drawing.Point(465, 207);
-			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
-			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherIconPath.TabIndex = 2;
-			this.commandLauncherIconPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherIconPath.UseVisualStyleBackColor = true;
-			this.commandLauncherIconPath.Click += new System.EventHandler(this.CommandLauncherIconPath_Click);
-			// 
-			// commandLauncherWorkDirPath
-			// 
-			this.commandLauncherWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandLauncherWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(465, 178);
-			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
-			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherWorkDirPath.TabIndex = 2;
-			this.commandLauncherWorkDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherWorkDirPath.UseVisualStyleBackColor = true;
-			this.commandLauncherWorkDirPath.Click += new System.EventHandler(this.CommandLauncherWorkDirPath_Click);
-			// 
-			// commandLauncherDirPath
-			// 
-			this.commandLauncherDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandLauncherDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherDirPath.Location = new System.Drawing.Point(501, 93);
-			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
-			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherDirPath.TabIndex = 2;
-			this.commandLauncherDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
-			this.commandLauncherDirPath.Click += new System.EventHandler(this.CommandLauncherDirPath_Click);
-			// 
-			// commandLauncherFilePath
-			// 
-			this.commandLauncherFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandLauncherFilePath.Image = global::PeMain.Properties.Images.File;
-			this.commandLauncherFilePath.Location = new System.Drawing.Point(465, 93);
-			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
-			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherFilePath.TabIndex = 2;
-			this.commandLauncherFilePath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherFilePath.UseVisualStyleBackColor = true;
-			this.commandLauncherFilePath.Click += new System.EventHandler(this.CommandLauncherFilePath_Click);
+			this.pageLauncherCommon.Controls.Add(this.groupLauncherType);
+			this.pageLauncherCommon.Controls.Add(this.labelLauncherName);
+			this.pageLauncherCommon.Controls.Add(this.labelLauncherOption);
+			this.pageLauncherCommon.Controls.Add(this.inputLauncherName);
+			this.pageLauncherCommon.Controls.Add(this.inputLauncherOption);
+			this.pageLauncherCommon.Controls.Add(this.labelLauncherCommand);
+			this.pageLauncherCommon.Controls.Add(this.commandLauncherOptionDirPath);
+			this.pageLauncherCommon.Controls.Add(this.commandLauncherFilePath);
+			this.pageLauncherCommon.Controls.Add(this.commandLauncherOptionFilePath);
+			this.pageLauncherCommon.Controls.Add(this.commandLauncherDirPath);
+			this.pageLauncherCommon.Controls.Add(this.inputLauncherIconIndex);
+			this.pageLauncherCommon.Controls.Add(this.commandLauncherWorkDirPath);
+			this.pageLauncherCommon.Controls.Add(this.labelLauncherIconPath);
+			this.pageLauncherCommon.Controls.Add(this.commandLauncherIconPath);
+			this.pageLauncherCommon.Controls.Add(this.labelLauncherWorkDirPath);
+			this.pageLauncherCommon.Controls.Add(this.inputLauncherCommand);
+			this.pageLauncherCommon.Controls.Add(this.inputLauncherWorkDirPath);
+			this.pageLauncherCommon.Controls.Add(this.inputLauncherIconPath);
+			this.pageLauncherCommon.Location = new System.Drawing.Point(4, 24);
+			this.pageLauncherCommon.Name = "pageLauncherCommon";
+			this.pageLauncherCommon.Padding = new System.Windows.Forms.Padding(3);
+			this.pageLauncherCommon.Size = new System.Drawing.Size(531, 239);
+			this.pageLauncherCommon.TabIndex = 0;
+			this.pageLauncherCommon.Text = "{COMMON}";
+			this.pageLauncherCommon.UseVisualStyleBackColor = true;
 			// 
 			// groupLauncherType
 			// 
 			this.groupLauncherType.Controls.Add(this.selectLauncherType_uri);
 			this.groupLauncherType.Controls.Add(this.selectLauncherType_file);
-			this.groupLauncherType.Location = new System.Drawing.Point(13, 3);
+			this.groupLauncherType.Location = new System.Drawing.Point(6, 3);
 			this.groupLauncherType.Name = "groupLauncherType";
 			this.groupLauncherType.Size = new System.Drawing.Size(221, 59);
 			this.groupLauncherType.TabIndex = 0;
@@ -612,13 +422,277 @@ namespace PeMain.UI
 			this.selectLauncherType_file.UseVisualStyleBackColor = true;
 			this.selectLauncherType_file.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
+			// labelLauncherName
+			// 
+			this.labelLauncherName.AutoSize = true;
+			this.labelLauncherName.Location = new System.Drawing.Point(6, 68);
+			this.labelLauncherName.Name = "labelLauncherName";
+			this.labelLauncherName.Size = new System.Drawing.Size(55, 15);
+			this.labelLauncherName.TabIndex = 4;
+			this.labelLauncherName.Text = "{NAME}";
+			// 
+			// labelLauncherOption
+			// 
+			this.labelLauncherOption.AutoSize = true;
+			this.labelLauncherOption.Location = new System.Drawing.Point(6, 127);
+			this.labelLauncherOption.Name = "labelLauncherOption";
+			this.labelLauncherOption.Size = new System.Drawing.Size(68, 15);
+			this.labelLauncherOption.TabIndex = 10;
+			this.labelLauncherOption.Text = "{OPTION}";
+			// 
+			// inputLauncherName
+			// 
+			this.inputLauncherName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherName.Location = new System.Drawing.Point(112, 65);
+			this.inputLauncherName.Name = "inputLauncherName";
+			this.inputLauncherName.Size = new System.Drawing.Size(319, 23);
+			this.inputLauncherName.TabIndex = 3;
+			this.inputLauncherName.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// inputLauncherOption
+			// 
+			this.inputLauncherOption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherOption.Location = new System.Drawing.Point(112, 124);
+			this.inputLauncherOption.Name = "inputLauncherOption";
+			this.inputLauncherOption.Size = new System.Drawing.Size(236, 23);
+			this.inputLauncherOption.TabIndex = 9;
+			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// labelLauncherCommand
+			// 
+			this.labelLauncherCommand.AutoSize = true;
+			this.labelLauncherCommand.Location = new System.Drawing.Point(6, 98);
+			this.labelLauncherCommand.Name = "labelLauncherCommand";
+			this.labelLauncherCommand.Size = new System.Drawing.Size(84, 15);
+			this.labelLauncherCommand.TabIndex = 4;
+			this.labelLauncherCommand.Text = "{COMMAND}";
+			// 
+			// commandLauncherOptionDirPath
+			// 
+			this.commandLauncherOptionDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandLauncherOptionDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(398, 122);
+			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
+			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherOptionDirPath.TabIndex = 7;
+			this.commandLauncherOptionDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherOptionDirPath.UseVisualStyleBackColor = true;
+			this.commandLauncherOptionDirPath.Click += new System.EventHandler(this.CommandLauncherOptionDirPath_Click);
+			// 
+			// commandLauncherFilePath
+			// 
+			this.commandLauncherFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandLauncherFilePath.Image = global::PeMain.Properties.Images.File;
+			this.commandLauncherFilePath.Location = new System.Drawing.Point(359, 93);
+			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
+			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherFilePath.TabIndex = 2;
+			this.commandLauncherFilePath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherFilePath.UseVisualStyleBackColor = true;
+			this.commandLauncherFilePath.Click += new System.EventHandler(this.CommandLauncherFilePath_Click);
+			// 
+			// commandLauncherOptionFilePath
+			// 
+			this.commandLauncherOptionFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandLauncherOptionFilePath.Image = global::PeMain.Properties.Images.File;
+			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(359, 122);
+			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
+			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherOptionFilePath.TabIndex = 8;
+			this.commandLauncherOptionFilePath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherOptionFilePath.UseVisualStyleBackColor = true;
+			this.commandLauncherOptionFilePath.Click += new System.EventHandler(this.CommandLauncherOptionFilePath_Click);
+			// 
+			// commandLauncherDirPath
+			// 
+			this.commandLauncherDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandLauncherDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherDirPath.Location = new System.Drawing.Point(398, 94);
+			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
+			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherDirPath.TabIndex = 2;
+			this.commandLauncherDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
+			this.commandLauncherDirPath.Click += new System.EventHandler(this.CommandLauncherDirPath_Click);
+			// 
+			// inputLauncherIconIndex
+			// 
+			this.inputLauncherIconIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherIconIndex.Location = new System.Drawing.Point(752, 207);
+			this.inputLauncherIconIndex.Name = "inputLauncherIconIndex";
+			this.inputLauncherIconIndex.Size = new System.Drawing.Size(236, 23);
+			this.inputLauncherIconIndex.TabIndex = 5;
+			this.inputLauncherIconIndex.ValueChanged += new System.EventHandler(this.InputLauncherIconIndex_ValueChanged);
+			// 
+			// commandLauncherWorkDirPath
+			// 
+			this.commandLauncherWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandLauncherWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(359, 151);
+			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
+			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherWorkDirPath.TabIndex = 2;
+			this.commandLauncherWorkDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherWorkDirPath.UseVisualStyleBackColor = true;
+			this.commandLauncherWorkDirPath.Click += new System.EventHandler(this.CommandLauncherWorkDirPath_Click);
+			// 
+			// labelLauncherIconPath
+			// 
+			this.labelLauncherIconPath.AutoSize = true;
+			this.labelLauncherIconPath.Location = new System.Drawing.Point(6, 185);
+			this.labelLauncherIconPath.Name = "labelLauncherIconPath";
+			this.labelLauncherIconPath.Size = new System.Drawing.Size(52, 15);
+			this.labelLauncherIconPath.TabIndex = 4;
+			this.labelLauncherIconPath.Text = "{ICON}";
+			// 
+			// commandLauncherIconPath
+			// 
+			this.commandLauncherIconPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandLauncherIconPath.Image = global::PeMain.Properties.Images.File;
+			this.commandLauncherIconPath.Location = new System.Drawing.Point(359, 182);
+			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
+			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherIconPath.TabIndex = 2;
+			this.commandLauncherIconPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherIconPath.UseVisualStyleBackColor = true;
+			this.commandLauncherIconPath.Click += new System.EventHandler(this.CommandLauncherIconPath_Click);
+			// 
+			// labelLauncherWorkDirPath
+			// 
+			this.labelLauncherWorkDirPath.AutoSize = true;
+			this.labelLauncherWorkDirPath.Location = new System.Drawing.Point(6, 156);
+			this.labelLauncherWorkDirPath.Name = "labelLauncherWorkDirPath";
+			this.labelLauncherWorkDirPath.Size = new System.Drawing.Size(87, 15);
+			this.labelLauncherWorkDirPath.TabIndex = 4;
+			this.labelLauncherWorkDirPath.Text = "{WORK_DIR}";
+			// 
+			// inputLauncherCommand
+			// 
+			this.inputLauncherCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherCommand.Location = new System.Drawing.Point(112, 95);
+			this.inputLauncherCommand.Name = "inputLauncherCommand";
+			this.inputLauncherCommand.Size = new System.Drawing.Size(236, 23);
+			this.inputLauncherCommand.TabIndex = 3;
+			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// inputLauncherWorkDirPath
+			// 
+			this.inputLauncherWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherWorkDirPath.Location = new System.Drawing.Point(112, 153);
+			this.inputLauncherWorkDirPath.Name = "inputLauncherWorkDirPath";
+			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(236, 23);
+			this.inputLauncherWorkDirPath.TabIndex = 3;
+			this.inputLauncherWorkDirPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// inputLauncherIconPath
+			// 
+			this.inputLauncherIconPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherIconPath.Location = new System.Drawing.Point(112, 182);
+			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
+			this.inputLauncherIconPath.Size = new System.Drawing.Size(236, 23);
+			this.inputLauncherIconPath.TabIndex = 3;
+			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// pageLauncherEnv
+			// 
+			this.pageLauncherEnv.Controls.Add(this.selectLauncherEnv);
+			this.pageLauncherEnv.Location = new System.Drawing.Point(4, 24);
+			this.pageLauncherEnv.Name = "pageLauncherEnv";
+			this.pageLauncherEnv.Padding = new System.Windows.Forms.Padding(3);
+			this.pageLauncherEnv.Size = new System.Drawing.Size(531, 239);
+			this.pageLauncherEnv.TabIndex = 1;
+			this.pageLauncherEnv.Text = "{ENV}";
+			this.pageLauncherEnv.UseVisualStyleBackColor = true;
+			// 
+			// pageLauncherOthers
+			// 
+			this.pageLauncherOthers.Controls.Add(this.selectLauncherAdmin);
+			this.pageLauncherOthers.Controls.Add(this.labelLauncherTag);
+			this.pageLauncherOthers.Controls.Add(this.selectLauncherStdStream);
+			this.pageLauncherOthers.Controls.Add(this.inputLauncherTag);
+			this.pageLauncherOthers.Controls.Add(this.inputLauncherNote);
+			this.pageLauncherOthers.Controls.Add(this.labelLauncherNote);
+			this.pageLauncherOthers.Location = new System.Drawing.Point(4, 24);
+			this.pageLauncherOthers.Name = "pageLauncherOthers";
+			this.pageLauncherOthers.Size = new System.Drawing.Size(531, 239);
+			this.pageLauncherOthers.TabIndex = 2;
+			this.pageLauncherOthers.Text = "{OTHERS}";
+			this.pageLauncherOthers.UseVisualStyleBackColor = true;
+			// 
+			// selectLauncherAdmin
+			// 
+			this.selectLauncherAdmin.AutoSize = true;
+			this.selectLauncherAdmin.Location = new System.Drawing.Point(8, 12);
+			this.selectLauncherAdmin.Name = "selectLauncherAdmin";
+			this.selectLauncherAdmin.Size = new System.Drawing.Size(81, 19);
+			this.selectLauncherAdmin.TabIndex = 13;
+			this.selectLauncherAdmin.Text = "{ADMIN}";
+			this.selectLauncherAdmin.UseVisualStyleBackColor = true;
+			this.selectLauncherAdmin.CheckedChanged += new System.EventHandler(this.InputLauncherIconIndex_ValueChanged);
+			// 
+			// labelLauncherTag
+			// 
+			this.labelLauncherTag.AutoSize = true;
+			this.labelLauncherTag.Location = new System.Drawing.Point(8, 65);
+			this.labelLauncherTag.Name = "labelLauncherTag";
+			this.labelLauncherTag.Size = new System.Drawing.Size(45, 15);
+			this.labelLauncherTag.TabIndex = 4;
+			this.labelLauncherTag.Text = "{TAG}";
+			// 
+			// selectLauncherStdStream
+			// 
+			this.selectLauncherStdStream.AutoSize = true;
+			this.selectLauncherStdStream.Location = new System.Drawing.Point(8, 37);
+			this.selectLauncherStdStream.Name = "selectLauncherStdStream";
+			this.selectLauncherStdStream.Size = new System.Drawing.Size(121, 19);
+			this.selectLauncherStdStream.TabIndex = 12;
+			this.selectLauncherStdStream.Text = "{STD_STREAM}";
+			this.selectLauncherStdStream.UseVisualStyleBackColor = true;
+			this.selectLauncherStdStream.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
+			// 
+			// inputLauncherTag
+			// 
+			this.inputLauncherTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherTag.Location = new System.Drawing.Point(84, 62);
+			this.inputLauncherTag.Name = "inputLauncherTag";
+			this.inputLauncherTag.Size = new System.Drawing.Size(433, 23);
+			this.inputLauncherTag.TabIndex = 3;
+			this.inputLauncherTag.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// inputLauncherNote
+			// 
+			this.inputLauncherNote.AcceptsReturn = true;
+			this.inputLauncherNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherNote.Location = new System.Drawing.Point(84, 91);
+			this.inputLauncherNote.Multiline = true;
+			this.inputLauncherNote.Name = "inputLauncherNote";
+			this.inputLauncherNote.Size = new System.Drawing.Size(433, 98);
+			this.inputLauncherNote.TabIndex = 3;
+			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// labelLauncherNote
+			// 
+			this.labelLauncherNote.AutoSize = true;
+			this.labelLauncherNote.Location = new System.Drawing.Point(8, 94);
+			this.labelLauncherNote.Name = "labelLauncherNote";
+			this.labelLauncherNote.Size = new System.Drawing.Size(54, 15);
+			this.labelLauncherNote.TabIndex = 6;
+			this.labelLauncherNote.Text = "{NOTE}";
+			// 
 			// pageToolbar
 			// 
 			this.pageToolbar.Controls.Add(this.groupBox1);
 			this.pageToolbar.Controls.Add(this.splitContainer2);
 			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(741, 369);
+			this.pageToolbar.Size = new System.Drawing.Size(741, 275);
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
@@ -781,7 +855,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 357);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 273);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -792,13 +866,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 332);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 248);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 357);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 273);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -814,7 +888,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 332);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 248);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -910,7 +984,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 357);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 273);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -928,7 +1002,7 @@ namespace PeMain.UI
 			this.pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.pageCommand.Name = "pageCommand";
 			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCommand.Size = new System.Drawing.Size(741, 369);
+			this.pageCommand.Size = new System.Drawing.Size(741, 275);
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
@@ -1018,7 +1092,7 @@ namespace PeMain.UI
 			// 
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(741, 369);
+			this.pageNote.Size = new System.Drawing.Size(741, 275);
 			this.pageNote.TabIndex = 6;
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
@@ -1027,7 +1101,7 @@ namespace PeMain.UI
 			// 
 			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(741, 369);
+			this.pageDisplay.Size = new System.Drawing.Size(741, 275);
 			this.pageDisplay.TabIndex = 5;
 			this.pageDisplay.Text = "{DISPLAY}";
 			this.pageDisplay.UseVisualStyleBackColor = true;
@@ -1066,7 +1140,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 448);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 354);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
 			// flowLayoutPanel1
@@ -1075,7 +1149,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
 			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(566, 408);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(566, 314);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(186, 37);
 			this.flowLayoutPanel1.TabIndex = 3;
@@ -1084,14 +1158,16 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// labelSystemEnvExt
+			// selectLauncherEnv
 			// 
-			this.labelSystemEnvExt.AutoSize = true;
-			this.labelSystemEnvExt.Location = new System.Drawing.Point(6, 53);
-			this.labelSystemEnvExt.Name = "labelSystemEnvExt";
-			this.labelSystemEnvExt.Size = new System.Drawing.Size(91, 15);
-			this.labelSystemEnvExt.TabIndex = 17;
-			this.labelSystemEnvExt.Text = "{EXTENSION}";
+			this.selectLauncherEnv.AutoSize = true;
+			this.selectLauncherEnv.Location = new System.Drawing.Point(15, 6);
+			this.selectLauncherEnv.Name = "selectLauncherEnv";
+			this.selectLauncherEnv.Size = new System.Drawing.Size(64, 19);
+			this.selectLauncherEnv.TabIndex = 14;
+			this.selectLauncherEnv.Text = "{ENV}";
+			this.selectLauncherEnv.UseVisualStyleBackColor = true;
+			this.selectLauncherEnv.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// SettingForm
 			// 
@@ -1099,7 +1175,7 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(755, 448);
+			this.ClientSize = new System.Drawing.Size(755, 354);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1116,11 +1192,17 @@ namespace PeMain.UI
 			this.pageLauncher.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
-			this.splitContainer1.Panel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).EndInit();
+			this.tabLauncher.ResumeLayout(false);
+			this.pageLauncherCommon.ResumeLayout(false);
+			this.pageLauncherCommon.PerformLayout();
 			this.groupLauncherType.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.inputLauncherIconIndex)).EndInit();
+			this.pageLauncherEnv.ResumeLayout(false);
+			this.pageLauncherEnv.PerformLayout();
+			this.pageLauncherOthers.ResumeLayout(false);
+			this.pageLauncherOthers.PerformLayout();
 			this.pageToolbar.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
@@ -1144,6 +1226,12 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectLauncherEnv;
+		private System.Windows.Forms.CheckBox selectLauncherAdmin;
+		private System.Windows.Forms.TabPage pageLauncherOthers;
+		private System.Windows.Forms.TabPage pageLauncherEnv;
+		private System.Windows.Forms.TabPage pageLauncherCommon;
+		private System.Windows.Forms.TabControl tabLauncher;
 		private System.Windows.Forms.Label labelSystemEnvExt;
 		private PeMain.UI.PeHotkeyControl inputSystemEnvHiddenFile;
 		private PeMain.UI.PeHotkeyControl inputSystemEnvExt;
