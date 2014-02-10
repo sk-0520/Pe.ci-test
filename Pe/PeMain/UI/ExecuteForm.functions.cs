@@ -47,7 +47,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath.Items.AddRange(LauncherItem.LauncherHistory.WorkDirs.ToArray());
 			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
 			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
-			
+			this.selectAdministrator.Checked = LauncherItem.Administrator;
 			this.selectEnvironment.Checked = !this.selectEnvironment.Checked;
 			this.selectEnvironment.Checked = LauncherItem.EnvironmentSetting.EditEnvironment;
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.Key, pair => pair.Value));
@@ -60,6 +60,7 @@ namespace PeMain.UI
 			item.Option = this.inputOption.Text;
 			item.WorkDirPath = this.inputWorkDirPath.Text;
 			item.StdOutputWatch = this.selectStdStream.Checked;
+			item.Administrator = this.selectAdministrator.Checked;
 			
 			item.EnvironmentSetting.EditEnvironment = this.selectEnvironment.Checked;
 			if(item.EnvironmentSetting.EditEnvironment) {
