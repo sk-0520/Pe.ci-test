@@ -23,6 +23,14 @@ namespace PeMain.UI
 		{
 			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				switch(m.Msg) {
+					case (int)WM.WM_NCPAIN:
+						{
+							if(CommonData != null) {
+								DrawFullActivaChanged(this == Form.ActiveForm);
+							}
+						}
+						break;
+						
 					case (int)WM.WM_NCHITTEST:
 						{
 							var point = PointToClient(

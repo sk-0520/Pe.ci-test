@@ -24,6 +24,7 @@ namespace PI.Windows
 		WM_MOVING = 0x0216,
 		WM_COMMAND = 0x0111,
 		WM_SETTINGCHANGE = 0x001a,
+		WM_NCPAIN = 0x0085
 	}
 	
 	public enum WM_COMMAND_SUB
