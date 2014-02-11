@@ -40,7 +40,7 @@ namespace PeMain.Logic
 					var env = startInfo.EnvironmentVariables;
 					// 追加・更新
 					foreach(var pair in launcherItem.EnvironmentSetting.Update) {
-						env[pair.Key] = pair.Value;
+						env[pair.First] = pair.Second;
 					}
 					// 削除
 					launcherItem.EnvironmentSetting.Remove

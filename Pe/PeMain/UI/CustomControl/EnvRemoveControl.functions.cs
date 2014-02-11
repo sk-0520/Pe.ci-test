@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -22,6 +23,13 @@ namespace PeMain.UI
 		
 		public void SetItem(List<string> items)
 		{
+			var lines = string.Join(Environment.NewLine, items.Where(s => !string.IsNullOrEmpty(s)));
+			this.inputEnv.Text = lines;
+		}
+		
+		public void Clear()
+		{
+			this.inputEnv.Clear();
 		}
 	}
 }

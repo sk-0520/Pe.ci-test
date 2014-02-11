@@ -274,6 +274,7 @@ namespace PeMain.Data
 			result.IconPath = IconPath;
 			result.IconIndex = IconIndex;
 			result.LauncherHistory = (LauncherHistory)LauncherHistory.Clone();
+			result.EnvironmentSetting = (EnvironmentSetting)EnvironmentSetting.Clone();
 			result.Note = Note;
 			result.Tag.AddRange(Tag);
 			result.StdOutputWatch = StdOutputWatch;

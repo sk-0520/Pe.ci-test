@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+using PeUtility;
+
 namespace PeMain.Data
 {
 	/// <summary>
@@ -18,12 +20,12 @@ namespace PeMain.Data
 	/// デフォルト環境変数(ON/OFF)に追加・変更を適用してから削除する。
 	/// </summary>
 	[Serializable]
-	public class EnvironmentSetting: Item
+	public class EnvironmentSetting: Item, ICloneable
 	{
 		public EnvironmentSetting()
 		{
 			EditEnvironment = false;
-			Update = new List<KeyValuePair<string, string>>();
+			Update = new List<TPair<string, string>>();
 			Remove = new List<string>();
 		}
 		
@@ -31,10 +33,20 @@ namespace PeMain.Data
 		/// <summary>
 		/// 追加・変更対象
 		/// </summary>
-		public List<KeyValuePair<string, string>> Update { get; set; }
+		public List<TPair<string, string>> Update { get; set; }
 		/// <summary>
 		/// 削除変数
 		/// </summary>
 		public List<string> Remove { get; set; }
+		
+		public object Clone()
+		{
+			var result = new EnvironmentSetting();
+			result.EditEnvironment = EditEnvironment;
+			result.Update.AddRange(Update);
+			result.Remove.AddRange(Remove);
+			
+			return result;
+		}
 	}
 }

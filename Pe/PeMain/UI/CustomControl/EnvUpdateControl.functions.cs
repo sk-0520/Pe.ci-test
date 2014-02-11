@@ -24,16 +24,22 @@ namespace PeMain.UI
 		
 		public void SetItem(Dictionary<string, string> map)
 		{
-			this.gridEnv.Rows.Clear();
-			
 			var rowList = new List<DataGridViewRow>(map.Count);
 			foreach(var item in map) {
-				var row = this.gridEnv.RowTemplate;
+				var row = new DataGridViewRow();
+				row.CreateCells(this.gridEnv);
 				row.Cells[this.headerKey.Index].Value = item.Key;
 				row.Cells[this.headerValue.Index].Value = item.Value;
+				
+				rowList.Add(row);
 			}
-			
+			this.gridEnv.Rows.Clear();
 			this.gridEnv.Rows.AddRange(rowList.ToArray());
+		}
+		
+		public void Clear()
+		{
+			this.gridEnv.Rows.Clear();
 		}
 	}
 }

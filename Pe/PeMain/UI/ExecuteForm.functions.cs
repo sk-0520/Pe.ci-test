@@ -50,7 +50,7 @@ namespace PeMain.UI
 			this.selectAdministrator.Checked = LauncherItem.Administrator;
 			this.selectEnvironment.Checked = !this.selectEnvironment.Checked;
 			this.selectEnvironment.Checked = LauncherItem.EnvironmentSetting.EditEnvironment;
-			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.Key, pair => pair.Value));
+			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.First, pair => pair.Second));
 			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
 		}
 		

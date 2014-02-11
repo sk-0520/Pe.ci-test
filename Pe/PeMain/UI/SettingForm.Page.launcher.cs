@@ -61,6 +61,9 @@ namespace PeMain.UI
 			};
 			checkList.ForEach(item => item.Checked = false);
 			
+			this.envLauncherUpdate.Clear();
+			this.envLauncherRemove.Clear();
+			
 			this._launcherItemEvent = true;
 		}
 		
@@ -82,6 +85,10 @@ namespace PeMain.UI
 			this.inputLauncherNote.Text = item.Note;
 			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
 			this.selectLauncherAdmin.Checked = item.Administrator;
+			this.selectLauncherEnv.Checked = !this.selectLauncherEnv.Checked;
+			this.selectLauncherEnv.Checked = item.EnvironmentSetting.EditEnvironment;
+			this.envLauncherUpdate.SetItem(item.EnvironmentSetting.Update.ToDictionary(pair => pair.First, pair => pair.Second));
+			this.envLauncherRemove.SetItem(item.EnvironmentSetting.Remove);
 			
 			this._launcherItemEvent = true;
 		}
@@ -104,7 +111,12 @@ namespace PeMain.UI
 			item.Note = this.inputLauncherNote.Text.Trim();
 			item.StdOutputWatch = this.selectLauncherStdStream.Checked;
 			item.Administrator = this.selectLauncherAdmin.Checked;
-			
+			item.EnvironmentSetting.EditEnvironment = this.selectLauncherEnv.Checked;
+			item.EnvironmentSetting.Update.Clear();
+			item.EnvironmentSetting.Update.AddRange(this.envLauncherUpdate.Items);
+			item.EnvironmentSetting.Remove.Clear();
+			item.EnvironmentSetting.Remove.AddRange(this.envLauncherRemove.Items);
+
 			item.HasError = this.selecterLauncher.Items.Where(i => i != item).Any(i => i.Equals(item));
 			if(oldIcon.Index != item.IconIndex || oldIcon.Path != item.IconPath) {
 				item.ClearIcon();

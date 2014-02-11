@@ -10,11 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using PeUtility;
+
 namespace PeMain.UI
 {
 	public partial class EnvUpdateControl
 	{
-		public IEnumerable<KeyValuePair<string, string>> Items
+		public IEnumerable<TPair<string, string>> Items
 		{
 			get
 			{
@@ -25,7 +27,10 @@ namespace PeMain.UI
 					var cellKey = row.Cells[this.headerKey.Index];
 					var cellValue = row.Cells[this.headerValue.Index];
 					if(cellKey.Value != null && cellValue != null) {
-						yield return new KeyValuePair<string, string>((string)cellKey.Value, (string)cellValue.Value);
+						var pair = new TPair<string, string>();
+						pair.First = (string)cellKey.Value;
+						pair.Second = (string)cellValue.Value;
+						yield return pair;
 					}
 				}
 			}
