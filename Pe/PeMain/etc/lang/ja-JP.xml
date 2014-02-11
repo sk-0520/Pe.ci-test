@@ -117,7 +117,7 @@
 		<Word Name="setting/check/std-stream" Text="${std-stream}" />
 		<Word Name="setting/check/auto-hide"  Text="${toolbar/auto-hide}" />
 		<Word Name="setting/check/show-text"  Text="テキストを表示する" />
-		<Word Name="setting/check/text-width" Text="テキストの長さ" />
+		<Word Name="setting/label/text-width" Text="テキストの長さ" />
 		
 		<Word Name="group/new"  Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />

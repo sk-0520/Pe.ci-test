@@ -320,7 +320,7 @@ namespace PeMain.UI
 		ToolStripMenuItem GetFileListItem(string path, bool isDir, bool showHiddenFile, bool showExtension)
 		{
 			var menuItem = new ToolStripMenuItem();
-			if(!isDir && showExtension) {
+			if(!isDir && !showExtension) {
 				menuItem.Text = Path.GetFileNameWithoutExtension(path);
 			} else {
 				menuItem.Text = Path.GetFileName(path);

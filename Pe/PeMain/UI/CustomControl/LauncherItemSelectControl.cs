@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Windows.Forms;
 using PeMain.Data;
 
@@ -104,6 +105,7 @@ namespace PeMain.UI
 				using(var format = new StringFormat()) {
 					format.Alignment = StringAlignment.Near;
 					format.LineAlignment = StringAlignment.Center;
+					g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 					g.DrawString(item.Name, e.Font, brush, textArea, format);
 				}
 			}

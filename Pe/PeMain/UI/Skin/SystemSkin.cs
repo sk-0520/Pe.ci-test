@@ -21,7 +21,7 @@ using PI.Windows;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of SystemSkin.
+	/// 標準で使用されるシステム環境にあってるっぽいスキン
 	/// </summary>
 	public class SystemSkin: Skin
 	{
@@ -180,8 +180,7 @@ namespace PeMain.UI
 		
 		public override void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
-			//var renderer = new VisualStyleRenderer(VisualStyleElement.Status.Gripper.Normal);
-			//renderer.DrawBackground(g, drawArea);
+			// TODO: なにか取っ手てきな描画
 		}
 		
 		
@@ -223,24 +222,19 @@ namespace PeMain.UI
 						);
 						
 						e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-						textArea.X += -1;
-						textArea.Y += +0;
-						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
-						textArea.X += +1;
-						textArea.Y += -1;
-						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
-						textArea.X += +1;
-						textArea.Y += +0;
-						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
-						textArea.X += +1;
-						textArea.Y += +1;
-						e.Graphics.DrawString(e.Text, e.TextFont, shadowBrush, textArea, format);
 						
-						textArea.X += -1;
-						textArea.Y += -1;
-						e.Graphics.DrawString(e.Text, e.TextFont, textBrush, textArea, format);
-						
+						var textOffsetColors = new [] {
+							new {X = +1, Y = +0, TextBrush = shadowBrush }, // 左
+							new {X = +1, Y = -1, TextBrush = shadowBrush }, // 上
+							new {X = +1, Y = +0, TextBrush = shadowBrush }, // 右
+							new {X = +1, Y = +1, TextBrush = shadowBrush }, // 下
+							new {X = -1, Y = -1, TextBrush = textBrush }, // 戻し
+						};
+						foreach(var offsetColor in textOffsetColors) {
+							textArea.X += offsetColor.X;
+							textArea.Y += offsetColor.Y;
+							e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, textArea, format);
+						}
 					}
 				}
 			}
