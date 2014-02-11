@@ -30,13 +30,14 @@ namespace PeMain.UI
 			this.envRemove.SetLanguage(CommonData.Language);
 			
 			this.pageBasic.Text = CommonData.Language["execute/tab/basic"];
-			this.pageEnv.Text = CommonData.Language["execute/tab/env"];
+			this.pageEnv.Text = CommonData.Language["common/tab/env"];
 			this.labelOption.Text = CommonData.Language["execute/label/option"];
 			this.labelWorkDirPath.Text = CommonData.Language["execute/label/work-dir"];
 			this.selectStdStream.Text  = CommonData.Language["execute/check/std-stream"];
 			this.selectEnvironment.Text  = CommonData.Language["execute/check/edit-env"];
 			this.groupUpdate.Text = CommonData.Language["common/label/edit"];
 			this.groupRemove.Text = CommonData.Language["common/label/remove"];
+			this.selectAdministrator.Text = CommonData.Language["common/check/admin"];
 		}
 	}
 }

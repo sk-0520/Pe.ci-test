@@ -19,6 +19,9 @@ namespace PeMain.UI
 		{
 			this.pageMain.Text = Language["setting/tab/main"];
 			this.pageLauncher.Text = Language["setting/tab/launcher"];
+			this.pageLauncherCommon.Text = Language["setting/tab/launcher/basic"];
+			this.pageLauncherEnv.Text = Language["common/tab/env"];
+			this.pageLauncherOthers.Text = Language["setting/tab/launcher/others"];
 			this.pageToolbar.Text = Language["setting/tab/toolbar"];
 			this.pageCommand.Text = Language["setting/tab/command"];
 			this.pageDisplay.Text = Language["setting/tab/display"];
@@ -65,6 +68,9 @@ namespace PeMain.UI
 			this.labelLauncherIconPath.Text = Language["setting/label/icon-path"];
 			this.labelLauncherTag.Text = Language["setting/label/tags"];
 			this.labelLauncherNote.Text = Language["setting/label/note"];
+			this.selectLauncherAdmin.Text = Language["common/check/admin"];
+			this.selectLauncherEnv.Text = Language["execute/check/edit-env"];
+
 		}
 		
 		void ApplyLanguageToolbar()

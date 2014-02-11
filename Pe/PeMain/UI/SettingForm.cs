@@ -254,6 +254,9 @@ namespace PeMain.UI
 			if(this._launcherItemEvent) {
 				LauncherInputChange();
 			}
+			if(sender == this.selectLauncherEnv) {
+				this.panelEnv.Enabled = this.selectLauncherEnv.Checked;
+			}
 		}
 		
 		void InputLauncherIconIndex_ValueChanged(object sender, EventArgs e)

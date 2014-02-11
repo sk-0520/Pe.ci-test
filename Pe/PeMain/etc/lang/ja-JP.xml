@@ -18,19 +18,23 @@
 		<Word Name="edit-env"           Text="環境変数を編集する" />
 		<Word Name="font"               Text="フォント" />
 		<Word Name="toolbar/auto-hide"  Text="自動的に隠す" />
+		<Word Name="admin"              Text="管理者として実行" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"           Text="${ok}" />
 		<Word Name="common/command/cancel"       Text="${cancel}" />
 		<Word Name="common/command/exit"         Text="${exit}" />
-		<Word Name="common/menu/exit"           Text="${exit}(&amp;X)" />
-		<Word Name="common/label/topmost"       Text="${topmost}" />
-		<Word Name="common/menu/topmost"        Text="${topmost}(&amp;T)" />
-		<Word Name="common/label/font"          Text="${font}" />
-		<Word Name="common/label/visible"       Text="${visible}" />
-		<Word Name="common/label/remove"        Text="${remove}" />
-		<Word Name="common/label/edit"          Text="${edit}" />
+		<Word Name="common/menu/exit"            Text="${exit}(&amp;X)" />
+		<Word Name="common/label/topmost"        Text="${topmost}" />
+		<Word Name="common/menu/topmost"         Text="${topmost}(&amp;T)" />
+		<Word Name="common/label/font"           Text="${font}" />
+		<Word Name="common/label/visible"        Text="${visible}" />
+		<Word Name="common/label/remove"         Text="${remove}" />
+		<Word Name="common/label/edit"           Text="${edit}" />
 		<Word Name="common/command/default-font" Text="デフォルトフォント" />
+		<Word Name="common/check/admin"          Text="${admin} (オプション以外の設定は無効)" />
+		<Word Name="common/tab/env"              Text="環境変数" />
+
 		
 		<Word Name="window/toolbar"   Text="@[PE]" />
 		<Word Name="window/log"       Text="ログ" />
@@ -62,7 +66,7 @@
 
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
 		<Word Name="toolbar/menu/file/execute-ex"    Text="指定して実行(&amp;E)" />
-		<Word Name="toolbar/menu/file/execute-admin" Text="管理者として実行(&amp;A) ${open-ui}" />
+		<Word Name="toolbar/menu/file/execute-admin" Text="${admin}(&amp;A) ${open-ui}" />
 		<Word Name="toolbar/menu/file/path"          Text="パス(&amp;P)" />
 		<Word Name="toolbar/menu/file/ls"            Text="ファイル(&amp;F)" />
 		
@@ -75,7 +79,6 @@
 		<Word Name="toolbar/menu/file/ls/not-child-files"    Text="下位ファイルなし" />
 
 		<Word Name="execute/tab/basic"         Text="基本指定" />
-		<Word Name="execute/tab/env"           Text="環境変数" />
 		<Word Name="execute/label/option"      Text="${option}" />
 		<Word Name="execute/label/work-dir"    Text="${work-dir}" />
 		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
@@ -91,12 +94,14 @@
 		<Word Name="stream/tips/refresh"   Text="プロセス情報更新" />
 		<Word Name="stream/tips/kill"      Text="プロセスを終了" />
 
-		<Word Name="setting/tab/main"     Text="本体" />
-		<Word Name="setting/tab/launcher" Text="ランチャ" />
-		<Word Name="setting/tab/toolbar"  Text="ツールバー" />
-		<Word Name="setting/tab/command"  Text="コマンド" />
-		<Word Name="setting/tab/display"  Text="ディスプレイ" />
-		<Word Name="setting/tab/note"     Text="ノート" />
+		<Word Name="setting/tab/main"            Text="本体" />
+		<Word Name="setting/tab/launcher"        Text="ランチャ" />
+		<Word Name="setting/tab/launcher/basic"  Text="基本設定" />
+		<Word Name="setting/tab/launcher/others" Text="その他" />
+		<Word Name="setting/tab/toolbar"         Text="ツールバー" />
+		<Word Name="setting/tab/command"         Text="コマンド" />
+		<Word Name="setting/tab/display"         Text="ディスプレイ" />
+		<Word Name="setting/tab/note"            Text="ノート" />
 		
 		<Word Name="setting/label/language"   Text="使用言語" />
 		<Word Name="setting/group/log"        Text="ログ設定" />
@@ -112,7 +117,7 @@
 		<Word Name="setting/check/std-stream" Text="${std-stream}" />
 		<Word Name="setting/check/auto-hide"  Text="${toolbar/auto-hide}" />
 		<Word Name="setting/check/show-text"  Text="テキストを表示する" />
-		<Word Name="setting/label/text-width" Text="テキストの長さ" />
+		<Word Name="setting/check/text-width" Text="テキストの長さ" />
 		
 		<Word Name="group/new"  Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />

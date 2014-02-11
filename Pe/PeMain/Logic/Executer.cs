@@ -29,41 +29,48 @@ namespace PeMain.Logic
 			var process = new Process();
 			var startInfo = process.StartInfo;
 			startInfo.FileName = launcherItem.Command;
+			var getOutput = false;
 			if(launcherItem.IsExecteFile) {
-				startInfo.UseShellExecute = false;
-				
-				startInfo.WorkingDirectory = launcherItem.WorkDirPath;
 				startInfo.Arguments = launcherItem.Option;
 				
-				// 環境変数
-				if(launcherItem.EnvironmentSetting.EditEnvironment) {
-					var env = startInfo.EnvironmentVariables;
-					// 追加・更新
-					foreach(var pair in launcherItem.EnvironmentSetting.Update) {
-						env[pair.First] = pair.Second;
+				if(launcherItem.Administrator) {
+					startInfo.Verb = "runas";
+				} else {
+					startInfo.UseShellExecute = false;
+					
+					startInfo.WorkingDirectory = launcherItem.WorkDirPath;
+					
+					// 環境変数
+					if(launcherItem.EnvironmentSetting.EditEnvironment) {
+						var env = startInfo.EnvironmentVariables;
+						// 追加・更新
+						foreach(var pair in launcherItem.EnvironmentSetting.Update) {
+							env[pair.First] = pair.Second;
+						}
+						// 削除
+						launcherItem.EnvironmentSetting.Remove
+							.Where(s => env.ContainsKey(s))
+							.ForEach(s => env.Remove(s))
+							;
 					}
-					// 削除
-					launcherItem.EnvironmentSetting.Remove
-						.Where(s => env.ContainsKey(s))
-						.ForEach(s => env.Remove(s))
-					;
-				}
-				
-				// 出力取得
-				startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
-				if(launcherItem.StdOutputWatch) {
-					startInfo.RedirectStandardOutput = true;
-					startInfo.RedirectStandardError = true;
-					var streamForm = new StreamForm();
-					streamForm.SetParameter(process, launcherItem);
-					streamForm.SetCommonData(commonData);
-					streamForm.Show(parentForm);
+					
+					// 出力取得
+					startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
+					if(launcherItem.StdOutputWatch) {
+						getOutput = true;
+						startInfo.RedirectStandardOutput = true;
+						startInfo.RedirectStandardError = true;
+						var streamForm = new StreamForm();
+						streamForm.SetParameter(process, launcherItem);
+						streamForm.SetCommonData(commonData);
+						streamForm.Show(parentForm);
+					}
 				}
 			}
 			
 			process.Start();
 			
-			if(launcherItem.StdOutputWatch) {
+			if(getOutput) {
 				process.BeginOutputReadLine();
 				process.BeginErrorReadLine();
 			}

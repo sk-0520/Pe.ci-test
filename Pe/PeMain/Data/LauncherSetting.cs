@@ -278,6 +278,7 @@ namespace PeMain.Data
 			result.Note = Note;
 			result.Tag.AddRange(Tag);
 			result.StdOutputWatch = StdOutputWatch;
+			result.Administrator = Administrator;
 			
 			// アイコンは再読み込みかったるいのでこぴっておく
 			foreach(KeyValuePair<IconSize, Icon> pair in this._iconMap) {
