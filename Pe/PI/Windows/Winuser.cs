@@ -24,7 +24,7 @@ namespace PI.Windows
 		WM_MOVING = 0x0216,
 		WM_COMMAND = 0x0111,
 		WM_SETTINGCHANGE = 0x001a,
-		WM_NCPAIN = 0x0085
+		WM_NCPAINT = 0x0085
 	}
 	
 	public enum WM_COMMAND_SUB
@@ -159,7 +159,12 @@ namespace PI.Windows
 		
 		[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
 		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-
+		
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetWindowDC(IntPtr hWnd);
+		
+		[DllImport("coredll.dll", EntryPoint="ReleaseDC", SetLastError=true)]
+		public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 	}
 
 }

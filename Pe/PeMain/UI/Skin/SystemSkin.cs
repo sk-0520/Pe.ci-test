@@ -47,12 +47,7 @@ namespace PeMain.UI
 		private void SetVisualStyle(Form target)
 		{
 			Debug.Assert(EnabledVisualStyle);
-			
-			/*
-			var margin = new MARGINS();
-			margin.leftWidth = -1;
-			API.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
-			 */
+
 			var blurHehind = new DWM_BLURBEHIND();
 			blurHehind.fEnable = true;
 			blurHehind.hRgnBlur = IntPtr.Zero;
@@ -69,7 +64,7 @@ namespace PeMain.UI
 		public override void Start(Form target)
 		{
 			base.Start(target);
-			
+			//EnabledVisualStyle = false;
 			if(EnabledVisualStyle) {
 				SetVisualStyle(target);
 			}
@@ -87,15 +82,18 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition)
+		public override Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition)
 		{
 			var frame = SystemInformation.Border3DSize;
+			if(EnabledVisualStyle) {
+				frame.Height = 0;
+			}
 			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
 		}
 		
 		public override Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
-			var padding = GetToolbarBorderPadding(toolbarPosition);
+			var padding = GetToolbarWindowEdgePadding(toolbarPosition);
 			var point = new Point(padding.Left, padding.Top);
 			var size = new Size();
 			
@@ -112,7 +110,7 @@ namespace PeMain.UI
 		
 		public override Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
-			var borderPadding = GetToolbarBorderPadding(toolbarPosition);
+			var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
 			var captionArea = GetToolbarCaptionArea(toolbarPosition, parentSize);
 			var captionPlus = new System.Drawing.Size();
 			if(ToolbarPositionUtility.IsHorizonMode(toolbarPosition)) {
@@ -121,10 +119,10 @@ namespace PeMain.UI
 				captionPlus.Height =captionArea.Height;
 			}
 			var padding = new Padding(
-				borderPadding.Left + captionPlus.Width,
-				borderPadding.Top  + captionPlus.Height,
-				borderPadding.Right,
-				borderPadding.Bottom
+				edgePadding.Left + captionPlus.Width,
+				edgePadding.Top  + captionPlus.Height,
+				edgePadding.Right,
+				edgePadding.Bottom
 			);
 			
 			return padding;
@@ -157,40 +155,33 @@ namespace PeMain.UI
 			return buttonLayout;
 		}
 
-		
-		public override void DrawToolbarEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolPosition)
+		public override void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position)
 		{
-			var borderPadding = GetToolbarBorderPadding(toolPosition);
-			//
-			var light = active ? SystemBrushes.ControlLight: SystemBrushes.ControlLightLight;
-			var dark = active ? SystemBrushes.ControlDarkDark: SystemBrushes.ControlDark;
+			g.Clear(VisualColor);
+		}
+		
+		public override void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolPosition)
+		{
+			var edgePadding = GetToolbarWindowEdgePadding(toolPosition);
+			Color startColor = Color.FromArgb(150, Color.White);
+			Color endColor = Color.FromArgb(70, Color.White);
 			
-			// 下
-			g.FillRectangle(dark, 0, drawArea.Height - borderPadding.Bottom, drawArea.Width, borderPadding.Bottom);
-			// 右
-			g.FillRectangle(dark, drawArea.Width - borderPadding.Right, 0, borderPadding.Right, drawArea.Height);
-			// 左
-			g.FillRectangle(dark, 0, 0, borderPadding.Left, drawArea.Height);
-			// 上
-			g.FillRectangle(dark, 0, 0, drawArea.Width, borderPadding.Top);
+			var leftArea = new Rectangle(drawArea.Location, new Size(edgePadding.Left, drawArea.Height));
+			var rightArea = new Rectangle(new Point(drawArea.Width - edgePadding.Right), new Size(edgePadding.Right, drawArea.Height));
+			g.SmoothingMode = SmoothingMode.AntiAlias;
+			using(var brush = new LinearGradientBrush(leftArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
+				g.FillRectangle(brush, leftArea);
+			}
+			using(var brush = new LinearGradientBrush(rightArea, endColor, startColor, LinearGradientMode.BackwardDiagonal)) {
+				g.FillRectangle(brush, rightArea);
+			}
 		}
 
 		
-		public override void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
+		public override void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
-			Color headColor;
-			Color tailColor;
-			if(active) {
-				headColor = SystemColors.GradientActiveCaption;
-				tailColor = SystemColors.ActiveCaption;
-			} else {
-				headColor = SystemColors.GradientInactiveCaption;
-				tailColor = SystemColors.InactiveCaption;
-			}
-			var mode = ToolbarPositionUtility.IsHorizonMode(toolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
-			using(var brush = new LinearGradientBrush(drawArea, headColor, tailColor, mode)) {
-				g.FillRectangle(brush, drawArea);
-			}
+			//var renderer = new VisualStyleRenderer(VisualStyleElement.Status.Gripper.Normal);
+			//renderer.DrawBackground(g, drawArea);
 		}
 		
 		
@@ -255,6 +246,9 @@ namespace PeMain.UI
 			}
 		}
 		
+		public override bool IsDefaultDrawToolbarWindowBackground { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarWindowEdge { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarWindowCaption { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarBorder { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarArrow { get { return !EnabledVisualStyle; } }

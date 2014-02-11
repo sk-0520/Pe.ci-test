@@ -34,12 +34,13 @@ namespace PeMain.UI
 		void Refresh(Form target);
 		void Close(Form target);
 		
-		Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
+		Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		SkinToolbarButtonLayout GetToolbarButtonLayout(IconSize iconSize, bool showText, int textWidth);
-		void DrawToolbarEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
@@ -47,6 +48,9 @@ namespace PeMain.UI
 		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
+		bool IsDefaultDrawToolbarWindowBackground { get; }
+		bool IsDefaultDrawToolbarWindowCaption { get; }
+		bool IsDefaultDrawToolbarWindowEdge { get; }
 		bool IsDefaultDrawToolbarBackground { get; }
 		bool IsDefaultDrawToolbarBorder { get; }
 		bool IsDefaultDrawToolbarArrow { get; }
@@ -183,13 +187,14 @@ namespace PeMain.UI
 		}
 		public abstract void Close(Form target);
 		
-		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
+		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		public abstract Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconSize iconSize, bool showText, int textWidth);
 		
-		public abstract void DrawToolbarEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
+		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
@@ -271,6 +276,9 @@ namespace PeMain.UI
 			DrawToolbarButton(toolbarButtonData);
 		}
 		
+		public virtual bool IsDefaultDrawToolbarWindowBackground { get { return true; } }
+		public virtual bool IsDefaultDrawToolbarWindowEdge { get { return true; } }
+		public virtual bool IsDefaultDrawToolbarWindowCaption { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarBorder { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarArrow { get { return true; } }

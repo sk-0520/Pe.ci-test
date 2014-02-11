@@ -23,10 +23,17 @@ namespace PeMain.UI
 		{
 			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				switch(m.Msg) {
-					case (int)WM.WM_NCPAIN:
+					case (int)WM.WM_NCPAINT:
 						{
 							if(CommonData != null) {
-								DrawFullActivaChanged(this == Form.ActiveForm);
+								var hDC = API.GetWindowDC(Handle);
+								try {
+									using(var g = Graphics.FromHdc(hDC)) {
+										DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
+									}
+								} finally {
+									API.ReleaseDC(Handle, hDC);
+								}
 							}
 						}
 						break;

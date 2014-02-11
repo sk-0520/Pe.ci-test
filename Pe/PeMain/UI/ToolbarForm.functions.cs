@@ -153,6 +153,16 @@ namespace PeMain.UI
 			ApplySettingTopmost();
 		}
 		
+		protected override void OnPaintBackground(PaintEventArgs pevent)
+		{
+			//pevent.Graphics.Clear()
+			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
+				base.OnPaintBackground(pevent);
+			} else {
+				CommonData.Skin.DrawToolbarWindowBackground(pevent.Graphics, pevent.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
+			}
+		}
+		
 		/// <summary>
 		/// 表示タイプからウィンドウをそれっぽいサイズに変更
 		/// </summary>
@@ -162,10 +172,10 @@ namespace PeMain.UI
 			Padding = CommonData.Skin.GetToolbarTotalPadding(UseToolbarItem.ToolbarPosition, Size);
 			
 			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
-			
-			var minSize = buttonLayout.Size;
-			minSize.Width += this.toolLauncher.Margin.Horizontal + Margin.Horizontal;
-			minSize.Height += this.toolLauncher.Margin.Vertical + Margin.Vertical;
+			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UseToolbarItem.ToolbarPosition);
+			var minSize = new Size(edgeSize.Horizontal + buttonLayout.Size.Width, edgeSize.Vertical + buttonLayout.Size.Height);
+			minSize.Width += this.toolLauncher.Margin.Horizontal;
+			minSize.Height += this.toolLauncher.Margin.Vertical;
 			MinimumSize = minSize;
 			
 			//Size = new Size(minSize.Width, minSize.Height);

@@ -20,32 +20,81 @@ namespace PeMain.UI
 	{
 		void DrawEdge(Graphics g, Rectangle drawArea, bool active)
 		{
-			CommonData.Skin.DrawToolbarEdge(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+			if(CommonData.Skin.IsDefaultDrawToolbarWindowEdge) {
+				var edgePadding = CommonData.Skin.GetToolbarWindowEdgePadding(UseToolbarItem.ToolbarPosition);
+				
+				// 境界線
+				var light = active ? SystemBrushes.ControlLight: SystemBrushes.ControlLightLight;
+				var dark = active ? SystemBrushes.ControlDarkDark: SystemBrushes.ControlDark;
+				
+				// 下
+				g.FillRectangle(dark, 0, drawArea.Height - edgePadding.Bottom, drawArea.Width, edgePadding.Bottom);
+				// 右
+				g.FillRectangle(dark, drawArea.Width - edgePadding.Right, 0, edgePadding.Right, drawArea.Height);
+				// 左
+				g.FillRectangle(dark, 0, 0, edgePadding.Left, drawArea.Height);
+				// 上
+				g.FillRectangle(dark, 0, 0, drawArea.Width, edgePadding.Top);
+			} else {
+				CommonData.Skin.DrawToolbarWindowEdge(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+			}
 		}
 		
 		void DrawCaption(Graphics g, Rectangle drawArea, bool active)
 		{
-			CommonData.Skin.DrawToolbarCaption(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+			if(CommonData.Skin.IsDefaultDrawToolbarWindowCaption) {
+				Color headColor;
+				Color tailColor;
+				if(active) {
+					headColor = SystemColors.GradientActiveCaption;
+					tailColor = SystemColors.ActiveCaption;
+				} else {
+					headColor = SystemColors.GradientInactiveCaption;
+					tailColor = SystemColors.InactiveCaption;
+				}
+				var mode = ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
+				using(var brush = new LinearGradientBrush(drawArea, headColor, tailColor, mode)) {
+					g.FillRectangle(brush, drawArea);
+				}
+			} else {
+				CommonData.Skin.DrawToolbarWindowCaption(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+			}
+		}
+		
+		void DrawNoClient(Graphics g, Rectangle drawArea, bool active)
+		{
+			if(!CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
+				CommonData.Skin.DrawToolbarWindowBackground(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+			}
+			
+			DrawEdge(g, drawArea, active);
+			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
+			DrawCaption(g, captionArea, active);
 		}
 		
 		void DrawFull(Graphics g, Rectangle drawArea, bool active)
 		{
-			DrawEdge(g, drawArea, active);
-			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
-			DrawCaption(g, captionArea, active);
+			DrawNoClient(g, drawArea, active);
 			this.toolLauncher.Refresh();
 		}
 		
 		void DrawFullActivaChanged(bool active)
 		{
-			using(var g = CreateGraphics())
-			using(var bmp = new Bitmap(Width, Height, g))
-			using(var memG = Graphics.FromImage(bmp)) {
-				DrawFull(memG, ClientRectangle, active);
-				g.DrawImage(bmp, 0, 0);
+			using(var g = CreateGraphics()) {
+				using(var bmp = new Bitmap(Width, Height, g)) {
+					using(var memG = Graphics.FromImage(bmp)) {
+						var rect = new Rectangle(Point.Empty, Size);
+						DrawFull(memG, rect, active);
+						if(!CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
+							g.CompositingMode = CompositingMode.SourceCopy;
+						}
+						g.DrawImage(bmp, 0, 0);
+					}
+				}
 			}
 		}
 	}
 }
+
 
 
