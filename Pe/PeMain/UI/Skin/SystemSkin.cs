@@ -180,23 +180,28 @@ namespace PeMain.UI
 		
 		public override void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
-			g.SmoothingMode = SmoothingMode.AntiAlias;
-			var size = new Size(4, 4);
-			using(var image = new Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)) {
-				using(var graphics = Graphics.FromImage(image)) {
-					var dotArea = new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1));
-					var startColor = Color.FromArgb(192, Color.White);
-					var endColor = Color.FromArgb(128, Color.Black);
-					using(var brush = new LinearGradientBrush(dotArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
-						graphics.Clear(Color.Transparent);
-						graphics.FillRectangle(brush, dotArea);
+			var prevSmoothingMode = SmoothingMode.AntiAlias;
+			try {
+				g.SmoothingMode = SmoothingMode.AntiAlias;
+				var dotSize = new Size(3, 3);
+				using(var image = new Bitmap(dotSize.Width + 1, dotSize.Height + 1, PixelFormat.Format32bppArgb)) {
+					using(var graphics = Graphics.FromImage(image)) {
+						var dotArea = new Rectangle(Point.Empty, new Size(dotSize.Width, dotSize.Height));
+						var startColor = Color.FromArgb(192, Color.White);
+						var endColor = Color.FromArgb(128, Color.Black);
+						using(var brush = new LinearGradientBrush(dotArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
+							graphics.Clear(Color.Transparent);
+							graphics.FillRectangle(brush, dotArea);
+						}
 					}
+					
+					using(var brush = new TextureBrush(image, WrapMode.Tile)) {
+						g.FillRectangle(brush, drawArea);
+					}
+					
 				}
-				
-				using(var brush = new TextureBrush(image, WrapMode.Tile)) {
-					g.FillRectangle(brush, drawArea);
-				}
-				
+			} finally {
+				g.SmoothingMode = prevSmoothingMode;
 			}
 		}
 		
@@ -224,11 +229,12 @@ namespace PeMain.UI
 		{
 			var offset = GetPressOffset(e.Item);
 			
-			using(var textBrush = new SolidBrush(Color.FromArgb(255, Color.White))) {
-				using(var shadowBrush = new SolidBrush(Color.FromArgb(180, Color.DarkGray))) {
+			using(var textBrush = new SolidBrush(Color.FromArgb(250, Color.White))) {
+				using(var shadowBrush = new SolidBrush(Color.FromArgb(255, Color.DarkGray))) {
 					using(var format = ToStringFormat(e.TextFormat)) {
 						format.LineAlignment = StringAlignment.Center;
 						format.Trimming = StringTrimming.EllipsisCharacter;
+						//format.FormatFlags = StringFormatFlags.;
 						var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, toolbarItem.ShowText, toolbarItem.TextWidth);
 						var iconSize = toolbarItem.IconSize.ToSize();
 						var textArea = new Rectangle(
@@ -237,20 +243,26 @@ namespace PeMain.UI
 							buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth,
 							buttonLayout.Size.Height - buttonLayout.Padding.Vertical
 						);
-						
-						e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-						
-						var textOffsetColors = new [] {
-							new {X = +1, Y = +0, TextBrush = shadowBrush }, // 左
-							new {X = +1, Y = -1, TextBrush = shadowBrush }, // 上
-							new {X = +1, Y = +0, TextBrush = shadowBrush }, // 右
-							new {X = +1, Y = +1, TextBrush = shadowBrush }, // 下
-							new {X = -1, Y = -1, TextBrush = textBrush }, // 戻し
-						};
-						foreach(var offsetColor in textOffsetColors) {
-							textArea.X += offsetColor.X;
-							textArea.Y += offsetColor.Y;
-							e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, textArea, format);
+						var prevTextRenderingHint = e.Graphics.TextRenderingHint;
+						try {
+						// HACK: なんとかならんのかコレ
+							var textOffsetColors = new [] {
+								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 左
+								new {X = +1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
+								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 右
+								new {X = +1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 下
+								new {X = -1, Y = -1, TextBrush = textBrush,   Hint = TextRenderingHint.ClearTypeGridFit }, // 戻し
+							};
+							foreach(var offsetColor in textOffsetColors) {
+								textArea.X += offsetColor.X;
+								textArea.Y += offsetColor.Y;
+								
+								e.Graphics.TextRenderingHint = offsetColor.Hint;
+								e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, textArea, format);
+							}
+						} finally {
+							
+							e.Graphics.TextRenderingHint = prevTextRenderingHint;
 						}
 					}
 				}
