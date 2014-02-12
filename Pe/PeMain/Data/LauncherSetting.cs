@@ -345,10 +345,15 @@ namespace PeMain.Data
 			
 			var dotExt = Path.GetExtension(filePath);
 			switch(dotExt.ToLower()) {
-					// ショートカットの場合リンク元をファイルとする
-					// TODO: IWshRuntimeLibrary参照でAxImp.exe読めない、SDKインストールできない、とりあえず後回し
 				case ".lnk":
-					//var wsh = new IWshRuntimeLibrary.WshShell();
+					var wshShell = new IWshRuntimeLibrary.WshShellClass();
+					var shortcut = (IWshRuntimeLibrary.IWshShortcut)wshShell.CreateShortcut(filePath);
+					item.Command = shortcut.TargetPath;
+					item.Option = shortcut.Arguments;
+					item.WorkDirPath = shortcut.WorkingDirectory;
+					item.IconPath = shortcut.IconLocation;
+					item.IconIndex = 0;
+					item.Note = shortcut.Description;
 					break;
 					
 				case ".url":
@@ -356,7 +361,7 @@ namespace PeMain.Data
 					break;
 					
 				case ".exe":
-					var verInfo = FileVersionInfo.GetVersionInfo(filePath);
+					var verInfo = FileVersionInfo.GetVersionInfo(item.Command);
 					if(!string.IsNullOrEmpty(verInfo.ProductName)) {
 						item.Name = verInfo.ProductName;
 					}
