@@ -163,8 +163,8 @@ namespace PI.Windows
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetWindowDC(IntPtr hWnd);
 		
-		[DllImport("coredll.dll", EntryPoint="ReleaseDC", SetLastError=true)]
-		public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+		[DllImport("user32.dll")]
+		public static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDC);
 	}
 
 }

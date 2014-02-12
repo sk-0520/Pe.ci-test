@@ -180,7 +180,24 @@ namespace PeMain.UI
 		
 		public override void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
-			// TODO: なにか取っ手てきな描画
+			g.SmoothingMode = SmoothingMode.AntiAlias;
+			var size = new Size(4, 4);
+			using(var image = new Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)) {
+				using(var graphics = Graphics.FromImage(image)) {
+					var dotArea = new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1));
+					var startColor = Color.FromArgb(192, Color.White);
+					var endColor = Color.FromArgb(128, Color.Black);
+					using(var brush = new LinearGradientBrush(dotArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
+						graphics.Clear(Color.Transparent);
+						graphics.FillRectangle(brush, dotArea);
+					}
+				}
+				
+				using(var brush = new TextureBrush(image, WrapMode.Tile)) {
+					g.FillRectangle(brush, drawArea);
+				}
+				
+			}
 		}
 		
 		
