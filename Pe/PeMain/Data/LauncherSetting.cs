@@ -236,7 +236,7 @@ namespace PeMain.Data
 		}
 		public bool IsDirectory
 		{
-			get 
+			get
 			{
 				if(LauncherType != LauncherType.File) {
 					return false;
@@ -351,8 +351,15 @@ namespace PeMain.Data
 					item.Command = shortcut.TargetPath;
 					item.Option = shortcut.Arguments;
 					item.WorkDirPath = shortcut.WorkingDirectory;
-					item.IconPath = shortcut.IconLocation;
-					item.IconIndex = 0;
+					var iconPath = shortcut.IconLocation;
+					var index = iconPath.LastIndexOf(',');
+					if(index == -1) {
+						item.IconPath = iconPath;
+						item.IconIndex = 0;
+					} else {
+						item.IconPath = iconPath.Substring(0, index);
+						item.IconIndex = int.Parse(iconPath.Substring(index + 1));
+					}
 					item.Note = shortcut.Description;
 					break;
 					
@@ -393,7 +400,7 @@ namespace PeMain.Data
 			}
 		}
 		
-		void IncrementList(List<string> list, string value) 
+		void IncrementList(List<string> list, string value)
 		{
 			if(!string.IsNullOrEmpty(value)) {
 				var index = list.FindIndex(s => s == value);
@@ -401,7 +408,7 @@ namespace PeMain.Data
 					list.RemoveAt(index);
 				}
 				list.Insert(0, value);
-			}	
+			}
 		}
 		public void Increment(string option = null, string workDirPath = null)
 		{

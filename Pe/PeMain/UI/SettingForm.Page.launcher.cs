@@ -53,7 +53,7 @@ namespace PeMain.UI
 				this.inputLauncherNote,
 			};
 			textList.ForEach(item => item.Text = string.Empty);
-			this.inputLauncherIconIndex.Value = 0;
+			this.inputLauncherIconPath.Tag = 0;
 			LauncherSetSelectedType(LauncherType.File);
 			var checkList = new CheckBox[] {
 				this.selectLauncherStdStream,
@@ -80,7 +80,7 @@ namespace PeMain.UI
 			this.inputLauncherOption.Text = item.Option;
 			this.inputLauncherWorkDirPath.Text = item.WorkDirPath;
 			this.inputLauncherIconPath.Text = item.IconPath;
-			this.inputLauncherIconIndex.Value = item.IconIndex;
+			this.inputLauncherIconPath.Tag = item.IconIndex;
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
 			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
@@ -106,7 +106,7 @@ namespace PeMain.UI
 			item.Option = this.inputLauncherOption.Text.Trim();
 			item.WorkDirPath = this.inputLauncherWorkDirPath.Text.Trim();
 			item.IconPath = this.inputLauncherIconPath.Text.Trim();
-			item.IconIndex = (int)this.inputLauncherIconIndex.Value;
+			item.IconIndex = this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
 			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
 			item.Note = this.inputLauncherNote.Text.Trim();
 			item.StdOutputWatch = this.selectLauncherStdStream.Checked;
@@ -131,7 +131,7 @@ namespace PeMain.UI
 		void LauncherOpenIcon()
 		{
 			var iconPath = this.inputLauncherIconPath.Text.Trim();
-			var iconIndex= (int)this.inputLauncherIconIndex.Value;
+			var iconIndex= this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
 			using(var dialog = new OpenIconDialog()) {
 				if(iconPath.Length > 0 && File.Exists(iconPath)) {
 					dialog.IconPath  = iconPath;
@@ -140,7 +140,7 @@ namespace PeMain.UI
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					this.inputLauncherIconPath.Text = dialog.IconPath;
-					this.inputLauncherIconIndex.Value = dialog.IconIndex;
+					this.inputLauncherIconPath.Tag = dialog.IconIndex;
 				}
 			}
 		}
