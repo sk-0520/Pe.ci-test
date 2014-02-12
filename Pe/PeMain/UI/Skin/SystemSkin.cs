@@ -86,13 +86,34 @@ namespace PeMain.UI
 		{
 			var frame = SystemInformation.Border3DSize;
 			if(EnabledVisualStyle) {
-				frame.Height = 0;
+				switch(toolbarPosition) {
+					case ToolbarPosition.DesktopFloat:
+						frame.Height = 0;
+						break;
+						
+					case ToolbarPosition.DesktopTop:
+					case ToolbarPosition.DesktopBottom:
+						frame.Height = 0;
+						break;
+						
+					case ToolbarPosition.DesktopLeft:
+					case ToolbarPosition.DesktopRight:
+						frame.Width = 0;
+						break;
+						
+					default:
+						Debug.Assert(false, toolbarPosition.ToString());
+						break;
+				}
 			}
 			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
 		}
 		
 		public override Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
+			if(toolbarPosition != ToolbarPosition.DesktopFloat) {
+				return Rectangle.Empty;
+			}
 			var padding = GetToolbarWindowEdgePadding(toolbarPosition);
 			var point = new Point(padding.Left, padding.Top);
 			var size = new Size();
@@ -166,14 +187,20 @@ namespace PeMain.UI
 			Color startColor = Color.FromArgb(150, Color.White);
 			Color endColor = Color.FromArgb(70, Color.White);
 			
-			var leftArea = new Rectangle(drawArea.Location, new Size(edgePadding.Left, drawArea.Height));
-			var rightArea = new Rectangle(new Point(drawArea.Width - edgePadding.Right), new Size(edgePadding.Right, drawArea.Height));
-			g.SmoothingMode = SmoothingMode.AntiAlias;
-			using(var brush = new LinearGradientBrush(leftArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
-				g.FillRectangle(brush, leftArea);
+			Rectangle headArea, tailArea;
+			if(ToolbarPositionUtility.IsHorizonMode(toolPosition)) {
+				headArea = new Rectangle(drawArea.Location, new Size(edgePadding.Left, drawArea.Height));
+				tailArea = new Rectangle(new Point(drawArea.Width - edgePadding.Right, 0), new Size(edgePadding.Right, drawArea.Height));
+			} else {
+				headArea = new Rectangle(drawArea.Location, new Size(drawArea.Width, edgePadding.Top));
+				tailArea = new Rectangle(new Point(0, drawArea.Height - edgePadding.Bottom), new Size(drawArea.Width, edgePadding.Bottom));
 			}
-			using(var brush = new LinearGradientBrush(rightArea, endColor, startColor, LinearGradientMode.BackwardDiagonal)) {
-				g.FillRectangle(brush, rightArea);
+			g.SmoothingMode = SmoothingMode.AntiAlias;
+			using(var brush = new LinearGradientBrush(headArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
+				g.FillRectangle(brush, headArea);
+			}
+			using(var brush = new LinearGradientBrush(tailArea, endColor, startColor, LinearGradientMode.BackwardDiagonal)) {
+				g.FillRectangle(brush, tailArea);
 			}
 		}
 
@@ -190,7 +217,7 @@ namespace PeMain.UI
 						var startColor = Color.FromArgb(192, Color.White);
 						var endColor = Color.FromArgb(128, Color.Black);
 						using(var brush = new LinearGradientBrush(dotArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
-							graphics.Clear(Color.Transparent);
+							//graphics.Clear(Color.Transparent);
 							graphics.FillRectangle(brush, dotArea);
 						}
 					}
@@ -245,7 +272,7 @@ namespace PeMain.UI
 						);
 						var prevTextRenderingHint = e.Graphics.TextRenderingHint;
 						try {
-						// HACK: なんとかならんのかコレ
+							// HACK: なんとかならんのかコレ
 							var textOffsetColors = new [] {
 								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 左
 								new {X = +1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
