@@ -7,11 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-
 using PI.Windows;
 
 namespace PeUtility
@@ -49,18 +51,37 @@ namespace PeUtility
 		}
 		public static Icon Load(string iconPath, IconSize iconSize, int iconIndex)
 		{
+			// 実行形式
+			var dotExt = Path.GetExtension(iconPath);
+			var isBin = dotExt.IsIn(".exe", ".dll");
+			
 			Icon result = null;
 			if (iconSize == IconSize.Small || iconSize == IconSize.Normal) {
 				// 16, 32 px
-				var fileInfo = new SHFILEINFO();
-				fileInfo.iIcon = iconIndex;
-
-				var iconFlag = iconSize == IconSize.Small ? SHGFI.SHGFI_SMALLICON : SHGFI.SHGFI_LARGEICON;
-
-				var hImgSmall = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), SHGFI.SHGFI_ICON | iconFlag);
-				if (hImgSmall != IntPtr.Zero) {
-					result = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
-					API.DestroyIcon(fileInfo.hIcon);
+				if(isBin) {
+					var iconHandle = new IntPtr[1];
+					if(iconSize == IconSize.Small) {
+						API.ExtractIconEx(iconPath, iconIndex, null, iconHandle, 1);
+					} else {
+						Debug.Assert(iconSize == IconSize.Normal);
+						API.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
+					}
+					result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
+					API.DestroyIcon(iconHandle[0]);
+				} else {
+					var fileInfo = new SHFILEINFO();
+					SHGFI flag = SHGFI.SHGFI_ICON;
+					if(iconSize == IconSize.Small) {
+						flag |= SHGFI.SHGFI_SMALLICON;
+					} else {
+						Debug.Assert(iconSize == IconSize.Normal);
+						flag |= SHGFI.SHGFI_LARGEICON;
+					}
+					var fileInfoResult = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
+					if (fileInfoResult != IntPtr.Zero) {
+						result = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
+						API.DestroyIcon(fileInfo.hIcon);
+					}
 				}
 			} else {
 				var shellImageList = iconSize == IconSize.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
@@ -107,6 +128,6 @@ namespace PeUtility
 		{
 			IconPath = string.Empty;
 			IconIndex = 0;
-		}  
+		}
 	}
 }

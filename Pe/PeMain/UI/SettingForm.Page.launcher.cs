@@ -130,7 +130,7 @@ namespace PeMain.UI
 		
 		void LauncherOpenIcon()
 		{
-			var iconPath = this.inputLauncherIconPath.Text.Trim();
+			var iconPath = Environment.ExpandEnvironmentVariables(this.inputLauncherIconPath.Text.Trim());
 			var iconIndex= this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
 			using(var dialog = new OpenIconDialog()) {
 				if(iconPath.Length > 0 && File.Exists(iconPath)) {

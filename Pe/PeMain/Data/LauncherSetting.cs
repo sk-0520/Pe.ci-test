@@ -184,7 +184,7 @@ namespace PeMain.Data
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
-		public bool IsExtExcec
+		public bool IsExtExec
 		{
 			get
 			{
@@ -207,7 +207,9 @@ namespace PeMain.Data
 					return false;
 				}
 				
-				return File.Exists(Command) || Directory.Exists(Command);
+				var expandCommand = Environment.ExpandEnvironmentVariables(Command);
+				var result =  (File.Exists(Command) || Directory.Exists(Command)) || (File.Exists(expandCommand) || Directory.Exists(expandCommand));
+				return result;
 			}
 		}
 		
@@ -218,7 +220,7 @@ namespace PeMain.Data
 		{
 			get
 			{
-				if(IsExtExcec && IsExists) {
+				if(IsExtExec && IsExists) {
 					return Path.GetExtension(Command).ToLower() == ".exe";
 				}
 				return false;
@@ -241,7 +243,8 @@ namespace PeMain.Data
 				if(LauncherType != LauncherType.File) {
 					return false;
 				}
-				return Directory.Exists(Command);
+				var expandCommand = Environment.ExpandEnvironmentVariables(Command);
+				return Directory.Exists(expandCommand);
 			}
 		}
 		
@@ -288,7 +291,7 @@ namespace PeMain.Data
 			return result;
 		}
 		
-		public Icon GetIcon(IconSize iconSize)
+		public Icon GetIcon(IconSize iconSize, int iconIndex)
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconSize);
 			if(!hasIcon) {
@@ -308,7 +311,7 @@ namespace PeMain.Data
 				if(hasIcon) {
 					Debug.Assert(useIconPath != null);
 					
-					var icon = IconLoader.Load(useIconPath, iconSize, 0);
+					var icon = IconLoader.Load(useIconPath, iconSize, iconIndex);
 					this._iconMap[iconSize] = icon;
 				}
 			}
@@ -346,7 +349,12 @@ namespace PeMain.Data
 			var dotExt = Path.GetExtension(filePath);
 			switch(dotExt.ToLower()) {
 				case ".lnk":
-					var wshShell = new IWshRuntimeLibrary.WshShellClass();
+					IWshRuntimeLibrary.WshShell wshShell;
+					if(Environment.Is64BitOperatingSystem) {
+						wshShell = new IWshRuntimeLibrary.WshShell();
+					} else {
+						wshShell = new IWshRuntimeLibrary.WshShellClass();
+					}
 					var shortcut = (IWshRuntimeLibrary.IWshShortcut)wshShell.CreateShortcut(filePath);
 					item.Command = shortcut.TargetPath;
 					item.Option = shortcut.Arguments;

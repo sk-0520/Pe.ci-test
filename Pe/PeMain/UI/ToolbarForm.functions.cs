@@ -586,7 +586,7 @@ namespace PeMain.UI
 				toolItem = new ToolStripSplitButton();
 				toolItem.Text = item.Name;
 				toolItem.ToolTipText = item.Name;
-				var icon = item.GetIcon(UseToolbarItem.IconSize);
+				var icon = item.GetIcon(UseToolbarItem.IconSize, item.IconIndex);
 				if(icon != null) {
 					toolItem.Image = icon.ToBitmap();
 				}
@@ -679,7 +679,7 @@ namespace PeMain.UI
 				}
 				
 				if(result.ToolStripItem != null) {
-					if(result.LauncherItem.IsExtExcec && result.LauncherItem.IsExecteFile) {
+					if(result.LauncherItem.IsExtExec && result.LauncherItem.IsExecteFile) {
 						e.Effect = DragDropEffects.Move;
 					} else {
 						e.Effect = DragDropEffects.None;

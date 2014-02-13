@@ -94,7 +94,7 @@ namespace PeMain.UI
 			if(e.Index != -1) {
 				// TODO: アイコン位置と文字列位置の補正が必要
 				var item = (LauncherItem)this.listLauncherItems.Items[e.Index];
-				var icon = item.GetIcon(IconSize);
+				var icon = item.GetIcon(IconSize, item.IconIndex);
 				if(icon != null) {
 					g.DrawIcon(icon, e.Bounds.X, e.Bounds.Y);
 				}

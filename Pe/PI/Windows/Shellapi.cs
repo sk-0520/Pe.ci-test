@@ -160,5 +160,8 @@ namespace PI.Windows
 		/// <returns></returns>
 		[DllImport("shell32.dll", EntryPoint = "#727")]
 		public extern static ComResult SHGetImageList(int iImageList, ref Guid riid, ref IImageList ppv);
+		
+		[DllImport("shell32.dll", CharSet=CharSet.Auto)]
+		public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIc);
 	}
 }

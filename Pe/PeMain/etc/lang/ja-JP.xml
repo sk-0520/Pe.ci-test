@@ -14,7 +14,7 @@
 		<Word Name="topmost"            Text="最前面で表示する" />
 		<Word Name="option"             Text="オプション" />
 		<Word Name="work-dir"           Text="作業フォルダ" />
-		<Word Name="std-stream"         Text="標準入力を取得する" />
+		<Word Name="std-stream"         Text="標準出力を取得する" />
 		<Word Name="edit-env"           Text="環境変数を編集する" />
 		<Word Name="font"               Text="フォント" />
 		<Word Name="toolbar/auto-hide"  Text="自動的に隠す" />
