@@ -66,9 +66,12 @@ namespace PeUtility
 						Debug.Assert(iconSize == IconSize.Normal);
 						API.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 					}
-					result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
-					API.DestroyIcon(iconHandle[0]);
-				} else {
+					if(iconHandle[0] != IntPtr.Zero) {
+						result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
+						API.DestroyIcon(iconHandle[0]);
+					}
+				}
+				if(result == null){
 					var fileInfo = new SHFILEINFO();
 					SHGFI flag = SHGFI.SHGFI_ICON;
 					if(iconSize == IconSize.Small) {
