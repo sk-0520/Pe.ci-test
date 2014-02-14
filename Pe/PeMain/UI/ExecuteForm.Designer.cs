@@ -41,6 +41,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath = new System.Windows.Forms.ComboBox();
 			this.tabExecute = new System.Windows.Forms.TabControl();
 			this.pageBasic = new System.Windows.Forms.TabPage();
+			this.selectAdministrator = new System.Windows.Forms.CheckBox();
 			this.selectStdStream = new System.Windows.Forms.CheckBox();
 			this.commandWorkDirPath = new System.Windows.Forms.Button();
 			this.commandOption_dir = new System.Windows.Forms.Button();
@@ -58,7 +59,6 @@ namespace PeMain.UI
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
-			this.selectAdministrator = new System.Windows.Forms.CheckBox();
 			this.tabExecute.SuspendLayout();
 			this.pageBasic.SuspendLayout();
 			this.pageEnv.SuspendLayout();
@@ -87,7 +87,7 @@ namespace PeMain.UI
 			this.inputOption.FormattingEnabled = true;
 			this.inputOption.Location = new System.Drawing.Point(117, 42);
 			this.inputOption.Name = "inputOption";
-			this.inputOption.Size = new System.Drawing.Size(479, 23);
+			this.inputOption.Size = new System.Drawing.Size(462, 23);
 			this.inputOption.TabIndex = 1;
 			// 
 			// inputWorkDirPath
@@ -97,7 +97,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath.FormattingEnabled = true;
 			this.inputWorkDirPath.Location = new System.Drawing.Point(117, 71);
 			this.inputWorkDirPath.Name = "inputWorkDirPath";
-			this.inputWorkDirPath.Size = new System.Drawing.Size(479, 23);
+			this.inputWorkDirPath.Size = new System.Drawing.Size(462, 23);
 			this.inputWorkDirPath.TabIndex = 2;
 			// 
 			// tabExecute
@@ -132,6 +132,16 @@ namespace PeMain.UI
 			this.pageBasic.Text = "{BASIC}";
 			this.pageBasic.UseVisualStyleBackColor = true;
 			// 
+			// selectAdministrator
+			// 
+			this.selectAdministrator.AutoSize = true;
+			this.selectAdministrator.Location = new System.Drawing.Point(11, 135);
+			this.selectAdministrator.Name = "selectAdministrator";
+			this.selectAdministrator.Size = new System.Drawing.Size(81, 19);
+			this.selectAdministrator.TabIndex = 9;
+			this.selectAdministrator.Text = "{ADMIN}";
+			this.selectAdministrator.UseVisualStyleBackColor = true;
+			// 
 			// selectStdStream
 			// 
 			this.selectStdStream.AutoSize = true;
@@ -146,7 +156,7 @@ namespace PeMain.UI
 			// 
 			this.commandWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandWorkDirPath.Location = new System.Drawing.Point(600, 70);
+			this.commandWorkDirPath.Location = new System.Drawing.Point(587, 70);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(30, 25);
 			this.commandWorkDirPath.TabIndex = 7;
@@ -157,7 +167,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
-			this.commandOption_dir.Location = new System.Drawing.Point(636, 41);
+			this.commandOption_dir.Location = new System.Drawing.Point(623, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_dir.TabIndex = 6;
@@ -168,7 +178,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_file.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
-			this.commandOption_file.Location = new System.Drawing.Point(600, 41);
+			this.commandOption_file.Location = new System.Drawing.Point(587, 41);
 			this.commandOption_file.Name = "commandOption_file";
 			this.commandOption_file.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_file.TabIndex = 5;
@@ -324,16 +334,6 @@ namespace PeMain.UI
 			this.commandSubmit.Text = "{OK}";
 			this.commandSubmit.UseVisualStyleBackColor = true;
 			this.commandSubmit.Click += new System.EventHandler(this.CommandSubmit_Click);
-			// 
-			// selectAdministrator
-			// 
-			this.selectAdministrator.AutoSize = true;
-			this.selectAdministrator.Location = new System.Drawing.Point(11, 135);
-			this.selectAdministrator.Name = "selectAdministrator";
-			this.selectAdministrator.Size = new System.Drawing.Size(81, 19);
-			this.selectAdministrator.TabIndex = 9;
-			this.selectAdministrator.Text = "{ADMIN}";
-			this.selectAdministrator.UseVisualStyleBackColor = true;
 			// 
 			// ExecuteForm
 			// 
