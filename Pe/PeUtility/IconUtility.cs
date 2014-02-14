@@ -93,10 +93,15 @@ namespace PeUtility
 
 				IImageList imageList = null;
 				var getImageListResult = API.SHGetImageList((int)shellImageList, ref API.IID_IImageList, ref imageList);
-
+				
 				if (getImageListResult == ComResult.S_OK) {
 					IntPtr hIcon = IntPtr.Zero;
-					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+					if(isBin) {
+						fileInfo.iIcon = iconIndex;
+						var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+					} else {
+						var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+					}
 					result = (Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
 					API.DestroyIcon(hIcon);
 				}
