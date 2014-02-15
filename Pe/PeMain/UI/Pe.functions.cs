@@ -114,6 +114,7 @@ namespace PeMain.UI
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					var mainSetting = settingForm.MainSetting;
 					this._commonData.MainSetting = mainSetting;
+					SaveSetting();
 					InitializeLanguage(null, null);
 					ApplyLanguage();
 					this._logForm.SetCommonData(this._commonData);
