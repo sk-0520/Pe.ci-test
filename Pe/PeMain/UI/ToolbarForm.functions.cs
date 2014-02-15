@@ -173,10 +173,13 @@ namespace PeMain.UI
 			
 			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UseToolbarItem.ToolbarPosition);
+			var borderPadding = CommonData.Skin.GetToolbarBorderPadding(UseToolbarItem.ToolbarPosition);
+			this.toolLauncher.Padding = borderPadding;
 			var minSize = new Size(edgeSize.Horizontal + buttonLayout.Size.Width, edgeSize.Vertical + buttonLayout.Size.Height);
-			minSize.Width += this.toolLauncher.Margin.Horizontal;
-			minSize.Height += this.toolLauncher.Margin.Vertical;
+			minSize.Width += this.toolLauncher.Margin.Horizontal + borderPadding.Horizontal;
+			minSize.Height += this.toolLauncher.Margin.Vertical + borderPadding.Vertical;
 			MinimumSize = minSize;
+			
 			
 			//Size = new Size(minSize.Width, minSize.Height);
 			

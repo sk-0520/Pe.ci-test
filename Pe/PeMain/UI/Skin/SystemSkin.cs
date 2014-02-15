@@ -109,6 +109,16 @@ namespace PeMain.UI
 			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
 		}
 		
+		public override Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition)
+		{
+			if(EnabledVisualStyle) {
+				return Padding.Empty;
+			} else {
+				return new Padding(0, 0, 0, 1);
+			}
+		}
+		
+		
 		public override Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
 			if(toolbarPosition != ToolbarPosition.DesktopFloat) {
@@ -132,6 +142,7 @@ namespace PeMain.UI
 		public override Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
 			var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
+			var borderPadding = GetToolbarBorderPadding(toolbarPosition);
 			var captionArea = GetToolbarCaptionArea(toolbarPosition, parentSize);
 			var captionPlus = new System.Drawing.Size();
 			if(ToolbarPositionUtility.IsHorizonMode(toolbarPosition)) {

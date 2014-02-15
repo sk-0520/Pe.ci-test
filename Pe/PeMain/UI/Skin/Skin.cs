@@ -35,6 +35,7 @@ namespace PeMain.UI
 		void Close(Form target);
 		
 		Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
+		Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
@@ -188,6 +189,7 @@ namespace PeMain.UI
 		public abstract void Close(Form target);
 		
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
+		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		public abstract Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		public abstract Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
