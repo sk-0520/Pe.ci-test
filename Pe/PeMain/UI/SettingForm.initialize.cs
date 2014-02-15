@@ -59,7 +59,7 @@ namespace PeMain.UI
 			SetViewMessage(this.commandCommandFont, this._commandFont);
 			
 			// アイコンサイズ文言の項目構築
-			AttachmentIconSize(this.selectCommandIcon, commandSetting.IconSize);
+			AttachmentIconScale(this.selectCommandIcon, commandSetting.IconScale);
 			
 			// ホットキー
 			var hotKey = commandSetting.Hotkey.Key;
@@ -81,7 +81,7 @@ namespace PeMain.UI
 			this.selectToolbarPosition.Attachment(toolbarPosList);
 			
 			// アイコンサイズ文言の項目構築
-			AttachmentIconSize(this.selectToolbarIcon, IconSize.Small);
+			AttachmentIconScale(this.selectToolbarIcon, IconScale.Small);
 
 			ToolbarItem initToolbarItem = null;
 			var toolbarItemDataList = new List<ToolbarItemData>();

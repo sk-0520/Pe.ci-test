@@ -27,7 +27,7 @@ namespace PeMain.UI
 			
 			ItemEdit = true;
 			FilterType = LauncherItemSelecterType.Full;
-			IconSize = PeUtility.IconSize.Normal;
+			IconScale = PeUtility.IconScale.Normal;
 			
 			InitializeUI();
 			TuneItemHeight();

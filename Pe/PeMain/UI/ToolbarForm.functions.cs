@@ -171,7 +171,7 @@ namespace PeMain.UI
 			var floatSize = UseToolbarItem.FloatSize;
 			Padding = CommonData.Skin.GetToolbarTotalPadding(UseToolbarItem.ToolbarPosition, Size);
 			
-			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
+			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UseToolbarItem.ToolbarPosition);
 			var minSize = new Size(edgeSize.Horizontal + buttonLayout.Size.Width, edgeSize.Vertical + buttonLayout.Size.Height);
 			minSize.Width += this.toolLauncher.Margin.Horizontal;
@@ -191,9 +191,9 @@ namespace PeMain.UI
 			}
 		}
 		
-		void SetToolButtons(IconSize iconSize, IEnumerable<ToolStripItem> buttons)
+		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
 		{
-			this.toolLauncher.ImageScalingSize = iconSize.ToSize();
+			this.toolLauncher.ImageScalingSize = iconScale.ToSize();
 			
 			// アイコン解放
 			this.toolLauncher.Items
@@ -231,7 +231,7 @@ namespace PeMain.UI
 					toolButtonList.Add(itemButton);
 				}
 			}
-			SetToolButtons(UseToolbarItem.IconSize, toolButtonList);
+			SetToolButtons(UseToolbarItem.IconScale, toolButtonList);
 		}
 		
 		void OpenDir(string path)
@@ -325,7 +325,7 @@ namespace PeMain.UI
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
-			using(var icon = IconLoader.Load(path, UseToolbarItem.IconSize, 0)) {
+			using(var icon = IconUtility.Load(path, UseToolbarItem.IconScale, 0)) {
 				menuItem.Image = icon.ToBitmap();
 			}
 			
@@ -551,7 +551,7 @@ namespace PeMain.UI
 			};
 		}
 
-		static void SetButtonLayout(ToolStripDropDownItem toolItem, ISkin skin, IconSize iconSize, bool showText, int textWidth)
+		static void SetButtonLayout(ToolStripDropDownItem toolItem, ISkin skin, IconScale iconSize, bool showText, int textWidth)
 		{
 			var toolSplit = toolItem as ToolStripSplitButton;
 			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, textWidth);
@@ -586,14 +586,14 @@ namespace PeMain.UI
 				toolItem = new ToolStripSplitButton();
 				toolItem.Text = item.Name;
 				toolItem.ToolTipText = item.Name;
-				var icon = item.GetIcon(UseToolbarItem.IconSize, item.IconIndex);
+				var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
 				if(icon != null) {
 					toolItem.Image = icon.ToBitmap();
 				}
 			}
 
 			//toolItem.AutoSize = true;
-			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconSize, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
+			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			//var buttonLayout = GetButtonLayout();
 			//button.Margin  = new Padding(0);
 			//button.Padding = new Padding(0);

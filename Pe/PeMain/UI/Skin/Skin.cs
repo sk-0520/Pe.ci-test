@@ -37,7 +37,7 @@ namespace PeMain.UI
 		Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
-		SkinToolbarButtonLayout GetToolbarButtonLayout(IconSize iconSize, bool showText, int textWidth);
+		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
 		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
@@ -190,7 +190,7 @@ namespace PeMain.UI
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		public abstract Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
-		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconSize iconSize, bool showText, int textWidth);
+		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
 		
 		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);

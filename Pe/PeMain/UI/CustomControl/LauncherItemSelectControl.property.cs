@@ -59,7 +59,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		public IconSize IconSize { get; set; }
+		public IconScale IconScale { get; set; }
 		
 		public IEnumerable<LauncherItem> Items { get { return this._items; } }
 		

@@ -39,7 +39,7 @@ namespace PeMain.UI
 			
 			ApplyLanguage();
 			
-			Icon = LauncherItem.GetIcon(IconSize.Small, LauncherItem.IconIndex);
+			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconIndex);
 			
 			this.viewCommand.Text = LauncherItem.Command;
 			this.inputOption.Items.AddRange(LauncherItem.LauncherHistory.Options.ToArray());

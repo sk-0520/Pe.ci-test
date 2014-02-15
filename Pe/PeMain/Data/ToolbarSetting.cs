@@ -153,7 +153,7 @@ namespace PeMain.Data
 		{
 			FontSetting = new FontSetting();
 			ToolbarPosition = ToolbarPosition.DesktopFloat;
-			IconSize = IconSize.Small;
+			IconScale = IconScale.Small;
 			ShowText = false;
 			Visible = true;
 			Topmost = true;
@@ -194,7 +194,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// アイコンサイズ
 		/// </summary>
-		public IconSize IconSize { get; set; }
+		public IconScale IconScale { get; set; }
 		/// <summary>
 		/// テキスト表示
 		/// </summary>

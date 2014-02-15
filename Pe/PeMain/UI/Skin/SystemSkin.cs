@@ -149,9 +149,9 @@ namespace PeMain.UI
 			return padding;
 		}
 		
-		public override SkinToolbarButtonLayout GetToolbarButtonLayout(IconSize iconSize, bool showText, int textWidth)
+		public override SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth)
 		{
-			var iconBox = iconSize.ToSize();
+			var iconBox = iconScale.ToSize();
 			var systemBorderSize = SystemInformation.Border3DSize;
 			var systemPaddingSize = SystemInformation.FixedFrameBorderSize;
 			var padding = new Padding(
@@ -247,8 +247,8 @@ namespace PeMain.UI
 		{
 			var offset = GetPressOffset(e.Item);
 			
-			var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, false, 0);
-			var iconSize = toolbarItem.IconSize.ToSize();
+			var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconScale, false, 0);
+			var iconSize = toolbarItem.IconScale.ToSize();
 			e.Graphics.DrawImage(e.Image, buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
 		}
 		
@@ -262,8 +262,8 @@ namespace PeMain.UI
 						format.LineAlignment = StringAlignment.Center;
 						format.Trimming = StringTrimming.EllipsisCharacter;
 						//format.FormatFlags = StringFormatFlags.;
-						var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconSize, toolbarItem.ShowText, toolbarItem.TextWidth);
-						var iconSize = toolbarItem.IconSize.ToSize();
+						var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconScale, toolbarItem.ShowText, toolbarItem.TextWidth);
+						var iconSize = toolbarItem.IconScale.ToSize();
 						var textArea = new Rectangle(
 							buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
 							buttonLayout.Padding.Top + offset.Y,

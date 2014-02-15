@@ -50,7 +50,7 @@ namespace PeMain.UI
 		
 		void TuneItemHeight()
 		{
-			var iconHeight = IconSize.ToHeight();
+			var iconHeight = IconScale.ToHeight();
 			var fontHeight = Font.Height;
 			var itemheight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical + 1 * 2;
 			this.listLauncherItems.ItemHeight = itemheight;

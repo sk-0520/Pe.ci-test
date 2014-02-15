@@ -25,7 +25,7 @@ namespace PeMain.UI
 			// イメージリストをリソースから構築
 			this._imageLogType = new ImageList();
 			this._imageLogType.ColorDepth = ColorDepth.Depth32Bit;
-			this._imageLogType.ImageSize = IconSize.Small.ToSize();
+			this._imageLogType.ImageSize = IconScale.Small.ToSize();
 			this._imageLogType.Images.Add(LogType.Information.ToString(), global::PeMain.Properties.Images.Information);
 			this._imageLogType.Images.Add(LogType.Warning.ToString(), global::PeMain.Properties.Images.Warning);
 			this._imageLogType.Images.Add(LogType.Error.ToString(), global::PeMain.Properties.Images.Error);

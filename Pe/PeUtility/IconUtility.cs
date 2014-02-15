@@ -18,7 +18,7 @@ using PI.Windows;
 
 namespace PeUtility
 {
-	public enum IconSize
+	public enum IconScale
 	{
 		/// <summary>
 		/// 16px
@@ -38,32 +38,32 @@ namespace PeUtility
 		Large = 256,
 	}
 	
-	public static class IconLoader
+	public static class IconUtility
 	{
-		public static int ToHeight(this IconSize iconSize)
+		public static int ToHeight(this IconScale iconScale)
 		{
-			return (int)iconSize;
+			return (int)iconScale;
 		}
-		public static Size ToSize(this IconSize iconSize)
+		public static Size ToSize(this IconScale iconScale)
 		{
-			var size = iconSize.ToHeight();
+			var size = iconScale.ToHeight();
 			return new Size(size, size);
 		}
-		public static Icon Load(string iconPath, IconSize iconSize, int iconIndex)
+		public static Icon Load(string iconPath, IconScale iconScale, int iconIndex)
 		{
 			// 実行形式
 			var dotExt = Path.GetExtension(iconPath);
 			var isBin = dotExt.IsIn(".exe", ".dll");
 			
 			Icon result = null;
-			if (iconSize == IconSize.Small || iconSize == IconSize.Normal) {
+			if (iconScale == IconScale.Small || iconScale == IconScale.Normal) {
 				// 16, 32 px
 				if(isBin) {
 					var iconHandle = new IntPtr[1];
-					if(iconSize == IconSize.Small) {
+					if(iconScale == IconScale.Small) {
 						API.ExtractIconEx(iconPath, iconIndex, null, iconHandle, 1);
 					} else {
-						Debug.Assert(iconSize == IconSize.Normal);
+						Debug.Assert(iconScale == IconScale.Normal);
 						API.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 					}
 					if(iconHandle[0] != IntPtr.Zero) {
@@ -74,10 +74,10 @@ namespace PeUtility
 				if(result == null){
 					var fileInfo = new SHFILEINFO();
 					SHGFI flag = SHGFI.SHGFI_ICON;
-					if(iconSize == IconSize.Small) {
+					if(iconScale == IconScale.Small) {
 						flag |= SHGFI.SHGFI_SMALLICON;
 					} else {
-						Debug.Assert(iconSize == IconSize.Normal);
+						Debug.Assert(iconScale == IconScale.Normal);
 						flag |= SHGFI.SHGFI_LARGEICON;
 					}
 					var fileInfoResult = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
@@ -87,7 +87,7 @@ namespace PeUtility
 					}
 				}
 			} else {
-				var shellImageList = iconSize == IconSize.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
+				var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
 				var fileInfo = new SHFILEINFO();
 				var hImgSmall = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), SHGFI.SHGFI_SYSICONINDEX);
 

@@ -19,12 +19,12 @@ namespace PeMain.UI
 {
 	public partial class SettingForm
 	{
-		void AttachmentIconSize(ComboBox control, IconSize defaultData)
+		void AttachmentIconScale(ComboBox control, IconScale defaultData)
 		{
-			var iconSizeDataList = new List<IconSizeItemData>();
-			//foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big, IconSize.Large }) {
-			foreach(var value in new [] { IconSize.Small, IconSize.Normal, IconSize.Big }) {
-				var data = new IconSizeItemData(value, Language);
+			var iconSizeDataList = new List<IconScaleItemData>();
+			//foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big, IconScale.Large }) {
+			foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big }) {
+				var data = new IconScaleItemData(value, Language);
 				iconSizeDataList.Add(data);
 			}
 			control.Attachment(iconSizeDataList, defaultData);

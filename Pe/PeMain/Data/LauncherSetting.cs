@@ -104,7 +104,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// 
 		/// </summary>
-		private Dictionary<IconSize, Icon> _iconMap;
+		private Dictionary<IconScale, Icon> _iconMap;
 		
 		#region Equals and GetHashCode implementation
 		public override bool Equals(object obj)
@@ -127,7 +127,7 @@ namespace PeMain.Data
 		
 		public LauncherItem()
 		{
-			this._iconMap = new Dictionary<IconSize, Icon>();
+			this._iconMap = new Dictionary<IconScale, Icon>();
 			
 			HasError = false;
 			
@@ -284,14 +284,14 @@ namespace PeMain.Data
 			result.Administrator = Administrator;
 			
 			// アイコンは再読み込みかったるいのでこぴっておく
-			foreach(KeyValuePair<IconSize, Icon> pair in this._iconMap) {
+			foreach(KeyValuePair<IconScale, Icon> pair in this._iconMap) {
 				result._iconMap.Add(pair.Key, pair.Value);
 			}
 			
 			return result;
 		}
 		
-		public Icon GetIcon(IconSize iconSize, int iconIndex)
+		public Icon GetIcon(IconScale iconSize, int iconIndex)
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconSize);
 			if(!hasIcon) {
@@ -311,7 +311,7 @@ namespace PeMain.Data
 				if(hasIcon) {
 					Debug.Assert(useIconPath != null);
 					
-					var icon = IconLoader.Load(useIconPath, iconSize, iconIndex);
+					var icon = IconUtility.Load(useIconPath, iconSize, iconIndex);
 					this._iconMap[iconSize] = icon;
 				}
 			}

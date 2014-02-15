@@ -28,7 +28,7 @@ namespace PeMain.Data
 		{
 			Width = 200;
 			Height = 200;
-			IconSize = IconSize.Small;
+			IconScale = IconScale.Small;
 			HiddenTime = new TimeSpan(0, 0, 0, 1, 500);
 			FontSetting = new FontSetting();
 			Hotkey = new HotkeySetting();
@@ -36,7 +36,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// アイコンサイズ
 		/// </summary>
-		public IconSize IconSize { get; set; }
+		public IconScale IconScale { get; set; }
 		/// <summary>
 		/// フォント
 		/// </summary>

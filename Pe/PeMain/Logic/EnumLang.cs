@@ -46,13 +46,13 @@ namespace PeMain.Logic
 			return lang[key];
 		}
 		
-		public static string ToText(this IconSize value, Language lang)
+		public static string ToText(this IconScale value, Language lang)
 		{
-			var key = "enum/icon-size/" + new Dictionary<IconSize, string>() {
-				{ IconSize.Small,  "small"},
-				{ IconSize.Normal, "normal"},
-				{ IconSize.Big,    "big"},
-				{ IconSize.Large,  "large"},
+			var key = "enum/icon-size/" + new Dictionary<IconScale, string>() {
+				{ IconScale.Small,  "small"},
+				{ IconScale.Normal, "normal"},
+				{ IconScale.Big,    "big"},
+				{ IconScale.Large,  "large"},
 			}[value];
 			
 			return lang[key];

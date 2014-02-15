@@ -78,10 +78,10 @@ namespace PeMain.Logic
 		}
 	}
 	
-	public class IconSizeItemData: UseLanguageItemData<IconSize>
+	public class IconScaleItemData: UseLanguageItemData<IconScale>
 	{
-		public IconSizeItemData(IconSize value): base(value) { }
-		public IconSizeItemData(IconSize value, Language language): base(value, language) { }
+		public IconScaleItemData(IconScale value): base(value) { }
+		public IconScaleItemData(IconScale value, Language language): base(value, language) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
