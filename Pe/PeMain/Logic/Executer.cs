@@ -42,16 +42,16 @@ namespace PeMain.Logic
 					
 					// 環境変数
 					if(launcherItem.EnvironmentSetting.EditEnvironment) {
-						var env = startInfo.EnvironmentVariables;
+						var envs = startInfo.EnvironmentVariables;
 						// 追加・更新
 						foreach(var pair in launcherItem.EnvironmentSetting.Update) {
-							env[pair.First] = pair.Second;
+							envs[pair.First] = pair.Second;
 						}
 						// 削除
-						launcherItem.EnvironmentSetting.Remove
-							.Where(s => env.ContainsKey(s))
-							.ForEach(s => env.Remove(s))
-							;
+						var removeList = launcherItem.EnvironmentSetting.Remove.Where(s => envs.ContainsKey(s));
+						foreach(var key in removeList) {
+							envs.Remove(key);
+						}
 					}
 					
 					// 出力取得

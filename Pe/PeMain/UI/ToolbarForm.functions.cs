@@ -194,13 +194,16 @@ namespace PeMain.UI
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
 		{
 			this.toolLauncher.ImageScalingSize = iconScale.ToSize();
-			
+			/*
 			// アイコン解放
-			this.toolLauncher.Items
+			var items = this.toolLauncher.Items
 				.Cast<ToolStripItem>()
 				.Where(item => item.Image != null)
-				.ForEach(item => item.Image.Dispose())
-				;
+			;
+			foreach(var item in items) {
+				item.Dispose();
+			}
+			*/
 			
 			this.toolLauncher.Items.Clear();
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
@@ -208,11 +211,11 @@ namespace PeMain.UI
 		
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
-			var toolItem = this._menuGroup.MenuItems
-				.Cast<MenuItem>()
-				.ForEach(item => item.Checked = false)
-				.Single(item => (ToolbarGroupItem)item.Tag == groupItem)
-				;
+			var toolItems = this._menuGroup.MenuItems.Cast<MenuItem>();
+			foreach(var item in toolItems) {
+				item.Checked = false;
+			}
+			var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.Tag == groupItem);
 			SelectedGroupItem = groupItem;
 			
 			toolItem.Checked = true;

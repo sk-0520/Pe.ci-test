@@ -119,19 +119,6 @@ namespace PeUtility
 		/// </summary>
 		/// <param name="seq"></param>
 		/// <param name="pred"></param>
-		/// <returns>集合自体</returns>
-		public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq, Action<T> pred)
-		{
-			foreach(var element in seq) {
-				pred(element);
-				yield return element;
-			}
-		}
-		/// <summary>
-		/// 集合の処理
-		/// </summary>
-		/// <param name="seq"></param>
-		/// <param name="pred"></param>
 		/// <returns>処理したデータ</returns>
 		public static IEnumerable<R> Map<T, R>(this IEnumerable<T> seq, Func<T, R> pred)
 		{

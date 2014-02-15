@@ -52,14 +52,18 @@ namespace PeMain.UI
 				this.inputLauncherTag,
 				this.inputLauncherNote,
 			};
-			textList.ForEach(item => item.Text = string.Empty);
+			foreach(var text in textList) {
+				text.Text = string.Empty;
+			}
 			this.inputLauncherIconPath.Tag = 0;
 			LauncherSetSelectedType(LauncherType.File);
 			var checkList = new CheckBox[] {
 				this.selectLauncherStdStream,
 				this.selectLauncherAdmin,
 			};
-			checkList.ForEach(item => item.Checked = false);
+			foreach(var check in checkList) {
+				check.Checked = false;
+			}
 			
 			this.envLauncherUpdate.Clear();
 			this.envLauncherRemove.Clear();
