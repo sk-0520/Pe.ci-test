@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\HotkeySetting.cs" />
-    <Compile Include="Data\Log.cs" />
+    <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Initializer.cs" />
