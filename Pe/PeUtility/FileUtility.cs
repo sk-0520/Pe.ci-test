@@ -67,6 +67,11 @@ namespace PeUtility
 		{
 			return IsTargetExt(path, s => s.IsIn("lnk", "utl"));
 		}
+		
+		public static bool IsExists(string path)
+		{
+			return System.IO.File.Exists(path) || Directory.Exists(path);
+		}
 	}
 	
 	public class ShortcutFile: IWshShortcut
@@ -85,7 +90,30 @@ namespace PeUtility
 		
 		public string TargetPath
 		{
-			get { return this._shortcut.TargetPath; }
+			get
+			{
+				var path = this._shortcut.TargetPath;
+				var expandPath = Environment.ExpandEnvironmentVariables(path);
+				if(FileUtility.IsExists(expandPath)) {
+					return expandPath;
+				}
+				var dirPath = Path.GetDirectoryName(expandPath);
+				var x86pfPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+				var x64pfPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+				var x86Index = dirPath.IndexOf(x86pfPath);
+				var x64Index = dirPath.IndexOf(x64pfPath);
+				
+				if(x86Index == 0) {
+					// x86指定の場合にx64を考慮(なんかへんだこれ)
+					var relationPath = dirPath.Substring(x86pfPath.Length);
+					var x64TargetPath = Path.Combine(x64pfPath, relationPath);
+					if(FileUtility.IsExists(x64TargetPath)) {
+						return x64TargetPath;
+					}
+				}
+				
+				return path;
+			}
 			set { this._shortcut.TargetPath = value; }
 		}
 		
