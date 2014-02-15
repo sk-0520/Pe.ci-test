@@ -8,6 +8,7 @@
  */
 using System;
 using System.IO;
+using IWshRuntimeLibrary;
 
 namespace PeUtility
 {
@@ -45,6 +46,95 @@ namespace PeUtility
 			var dirPath = Path.GetDirectoryName(path);
 			var dirInfo = Directory.CreateDirectory(dirPath);
 			return dirInfo.FullName;
+		}
+	}
+	
+	public class ShortcutFile: IWshShortcut
+	{
+		IWshShortcut _shortcut;
+		
+		public ShortcutFile(string path)
+		{
+			Load(path);
+		}
+		
+		public string FullName
+		{
+			get { return this._shortcut.FullName; }
+		}
+		
+		public string TargetPath
+		{
+			get { return this._shortcut.TargetPath; }
+			set { this._shortcut.TargetPath = value; }
+		}
+		
+		
+		public string Arguments
+		{
+			get { return this._shortcut.Arguments; }
+			set { this._shortcut.Arguments = value; }
+		}
+		
+		public string Description
+		{
+			get { return this._shortcut.Description; }
+			set { this._shortcut.Description = value; }
+		}
+		
+		public string Hotkey
+		{
+			get { return this._shortcut.Hotkey; }
+			set { this._shortcut.Hotkey = value; }
+		}
+		
+		public string IconLocation {
+			get { return this._shortcut.Hotkey; }
+			set { this._shortcut.Hotkey = value; }
+		}
+		
+		public string RelativePath {
+			set { this._shortcut.RelativePath = value; }
+		}
+		
+		public int WindowStyle {
+			get { return this._shortcut.WindowStyle; }
+			set { this._shortcut.WindowStyle = value; }
+		}
+		
+		public string WorkingDirectory {
+			get { return this._shortcut.WorkingDirectory; }
+			set { this._shortcut.WorkingDirectory = value; }
+		}
+		
+		public string IconPath { get; private set; }
+		public int IconIndex { get; private set; }
+		
+		public void Load(string path)
+		{
+			IWshRuntimeLibrary.WshShell wshShell;
+			if(Environment.Is64BitOperatingSystem) {
+				wshShell = new IWshRuntimeLibrary.WshShell();
+			} else {
+				wshShell = new IWshRuntimeLibrary.WshShellClass();
+			}
+			this._shortcut = (IWshShortcut)wshShell.CreateShortcut(path);
+			
+			var iconPath = this._shortcut.IconLocation;
+			var index = iconPath.LastIndexOf(',');
+			if(index == -1) {
+				IconPath = iconPath;
+				IconIndex = 0;
+			} else {
+				IconPath = iconPath.Substring(0, index);
+				IconIndex = int.Parse(iconPath.Substring(index + 1));
+			}
+
+		}
+		
+		public void Save()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

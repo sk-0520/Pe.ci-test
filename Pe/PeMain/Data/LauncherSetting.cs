@@ -349,25 +349,13 @@ namespace PeMain.Data
 			var dotExt = Path.GetExtension(filePath);
 			switch(dotExt.ToLower()) {
 				case ".lnk":
-					IWshRuntimeLibrary.WshShell wshShell;
-					if(Environment.Is64BitOperatingSystem) {
-						wshShell = new IWshRuntimeLibrary.WshShell();
-					} else {
-						wshShell = new IWshRuntimeLibrary.WshShellClass();
-					}
-					var shortcut = (IWshRuntimeLibrary.IWshShortcut)wshShell.CreateShortcut(filePath);
+					var shortcut = new ShortcutFile(filePath);
 					item.Command = shortcut.TargetPath;
 					item.Option = shortcut.Arguments;
 					item.WorkDirPath = shortcut.WorkingDirectory;
-					var iconPath = shortcut.IconLocation;
-					var index = iconPath.LastIndexOf(',');
-					if(index == -1) {
-						item.IconPath = iconPath;
-						item.IconIndex = 0;
-					} else {
-						item.IconPath = iconPath.Substring(0, index);
-						item.IconIndex = int.Parse(iconPath.Substring(index + 1));
-					}
+
+					item.IconPath = shortcut.IconPath;
+					item.IconIndex = shortcut.IconIndex;
 					item.Note = shortcut.Description;
 					break;
 					
