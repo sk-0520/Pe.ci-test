@@ -118,6 +118,11 @@
 		<Word Name="setting/check/auto-hide"  Text="${toolbar/auto-hide}" />
 		<Word Name="setting/check/show-text"  Text="テキストを表示する" />
 		<Word Name="setting/label/text-width" Text="テキストの長さ" />
+		<Word Name="setting/tips/add-group"   Text="グループの追加" />
+		<Word Name="setting/tips/add-item"    Text="ランチャーアイテムの追加" />
+		<Word Name="setting/tips/up-item"     Text="選択アイテムを上に移動" />
+		<Word Name="setting/tips/down-item"   Text="選択アイテムを下に移動" />
+		<Word Name="setting/tips/remove-item" Text="選択アイテムを取り除く" />
 		
 		<Word Name="group/new"  Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />

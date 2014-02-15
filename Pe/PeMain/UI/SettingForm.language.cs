@@ -70,7 +70,7 @@ namespace PeMain.UI
 			this.labelLauncherNote.Text = Language["setting/label/note"];
 			this.selectLauncherAdmin.Text = Language["common/check/admin"];
 			this.selectLauncherEnv.Text = Language["execute/check/edit-env"];
-
+			
 		}
 		
 		void ApplyLanguageToolbar()
@@ -84,6 +84,13 @@ namespace PeMain.UI
 			this.labelToolbarTextWidth.Text = Language["setting/label/text-width"];
 			this.labelToolbarPosition.Text = Language["enum/toolbar-position"];
 			this.labelToolbarFont.Text = Language["common/label/font"];
+			
+			this.toolToolbarGroup_addGroup.ToolTipText = Language["setting/tips/add-group"];
+			this.toolToolbarGroup_addItem.ToolTipText = Language["setting/tips/add-item"];
+			this.toolToolbarGroup_up.ToolTipText = Language["setting/tips/up-item"];
+			this.toolToolbarGroup_down.ToolTipText = Language["setting/tips/down-item"];
+			this.toolToolbarGroup_remove.ToolTipText = Language["setting/tips/remove-item"];
+
 		}
 		
 		void ApplyLanguageDisplay()
