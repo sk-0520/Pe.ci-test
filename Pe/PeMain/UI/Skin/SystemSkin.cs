@@ -221,12 +221,13 @@ namespace PeMain.UI
 			var prevSmoothingMode = SmoothingMode.AntiAlias;
 			try {
 				g.SmoothingMode = SmoothingMode.AntiAlias;
-				var dotSize = new Size(3, 3);
-				using(var image = new Bitmap(dotSize.Width + 1, dotSize.Height + 1, PixelFormat.Format32bppArgb)) {
+				var dotSize = new Size(2, 2);
+				var paddingSize = new Size(1, 1);
+				using(var image = new Bitmap(dotSize.Width + paddingSize.Width, dotSize.Height + paddingSize.Height, PixelFormat.Format32bppArgb)) {
 					using(var graphics = Graphics.FromImage(image)) {
 						var dotArea = new Rectangle(Point.Empty, new Size(dotSize.Width, dotSize.Height));
-						var startColor = Color.FromArgb(192, Color.White);
-						var endColor = Color.FromArgb(128, Color.Black);
+						var startColor = Color.FromArgb(80, Color.White);
+						var endColor = Color.FromArgb(190, Color.Black);
 						using(var brush = new LinearGradientBrush(dotArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
 							//graphics.Clear(Color.Transparent);
 							graphics.FillRectangle(brush, dotArea);
