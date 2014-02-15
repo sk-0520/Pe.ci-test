@@ -268,8 +268,8 @@ namespace PeMain.UI
 		{
 			var offset = GetPressOffset(e.Item);
 			
-			using(var textBrush = new SolidBrush(Color.FromArgb(250, Color.White))) {
-				using(var shadowBrush = new SolidBrush(Color.FromArgb(255, Color.DarkGray))) {
+			using(var textBrush = new SolidBrush(Color.FromArgb(255, Color.White))) {
+				using(var shadowBrush = new SolidBrush(Color.FromArgb(200, Color.DarkGray))) {
 					using(var format = ToStringFormat(e.TextFormat)) {
 						format.LineAlignment = StringAlignment.Center;
 						format.Trimming = StringTrimming.EllipsisCharacter;
@@ -286,18 +286,25 @@ namespace PeMain.UI
 						try {
 							// HACK: なんとかならんのかコレ
 							var textOffsetColors = new [] {
-								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 左
 								new {X = +1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
-								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 右
-								new {X = +1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 下
-								new {X = -1, Y = -1, TextBrush = textBrush,   Hint = TextRenderingHint.ClearTypeGridFit }, // 戻し
+								new {X = +0, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
+								new {X = -1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
+								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 左
+								new {X = +0, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
+								new {X = -1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
+								new {X = +1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 右
+								new {X = +0, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 上
+								new {X = -1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 下
+								//new {X = +0, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 下
+								new {X = +0, Y = +0, TextBrush = textBrush,   Hint = TextRenderingHint.ClearTypeGridFit }, // 戻し
 							};
 							foreach(var offsetColor in textOffsetColors) {
-								textArea.X += offsetColor.X;
-								textArea.Y += offsetColor.Y;
+								var tempArea = textArea;
+								tempArea.X += offsetColor.X;
+								tempArea.Y += offsetColor.Y;
 								
 								e.Graphics.TextRenderingHint = offsetColor.Hint;
-								e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, textArea, format);
+								e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, tempArea, format);
 							}
 						} finally {
 							
