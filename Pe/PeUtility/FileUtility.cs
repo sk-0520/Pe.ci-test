@@ -47,6 +47,26 @@ namespace PeUtility
 			var dirInfo = Directory.CreateDirectory(dirPath);
 			return dirInfo.FullName;
 		}
+		
+		static bool IsTargetExt(string path, Func<string, bool> dg)
+		{
+			var dotExt = Path.GetExtension(path);
+			if(dotExt.Length > ".xxx".Length) {
+				var ext = dotExt.Substring(1).ToLower();
+				return dg(ext);
+			}
+			return false;
+		}
+		
+		public static bool IsExecutePath(string path)
+		{
+			return IsTargetExt(path, s => s.IsIn("exe", "com", "bat"));
+		}
+		
+		public static bool IsShortcutPath(string path)
+		{
+			return IsTargetExt(path, s => s.IsIn("lnk", "utl"));
+		}
 	}
 	
 	public class ShortcutFile: IWshShortcut
