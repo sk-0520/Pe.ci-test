@@ -42,7 +42,7 @@ namespace PeMain.UI
 				result.AddRange(f.OwnedForms);
 			}
 			
-				
+			
 			return result;
 		}
 		/// <summary>
@@ -52,30 +52,18 @@ namespace PeMain.UI
 		void PauseOthers(Action action)
 		{
 			var windowVisible = new Dictionary<Form, bool>();
-			//var appbarDock = new Dictionary<AppbarForm, DesktopDockType>();
 			foreach(var window in GetWindows()) {
 				windowVisible[window] = window.Visible;
 				window.Visible = false;
-				/*
-				var appbar = window as AppbarForm;
-				if(appbar != null && appbar.IsDocking) {
-					appbarDock[appbar] = appbar.DesktopDockType;
-				}
-				*/
 			}
 			this._notifyIcon.Visible = false;
 			
 			action();
-			/*
-			foreach(var pair in appbarDock) {
-				pair.Key.DesktopDockType = pair.Value;
-			}
-			*/
+
 			foreach(var pair in windowVisible) {
 				pair.Key.Visible = pair.Value;
 			}
 			this._notifyIcon.Visible = true;
-			
 		}
 		
 		void SaveSetting()
@@ -89,7 +77,6 @@ namespace PeMain.UI
 			Debug.Assert(mainSetting != null);
 			FileUtility.MakeFileParentDirectory(mainSettingPath);
 
-			var serializer = new XmlSerializer(typeof(MainSetting));
 			using(var stream = new FileStream(mainSettingPath, FileMode.Create)) {
 				var sortedSet = new HashSet<LauncherItem>();
 				foreach(var item in mainSetting.Launcher.Items.OrderBy(item => item.Name)) {
@@ -97,8 +84,9 @@ namespace PeMain.UI
 				}
 				var nowItems = mainSetting.Launcher.Items;
 				mainSetting.Launcher.Items = sortedSet;
+				var serializer = new XmlSerializer(typeof(MainSetting));
 				serializer.Serialize(stream, mainSetting);
-				mainSetting.Launcher.Items = nowItems; 
+				mainSetting.Launcher.Items = nowItems;
 			}
 		}
 		
