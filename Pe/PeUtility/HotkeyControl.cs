@@ -140,6 +140,8 @@ namespace PeUtility
 			if (Modifiers == MOD.None) {
 				return (Modifiers.ToString()).Replace(", ", " + ");
 			}
+			
+
 
 			//if (Modifiers != MOD.None) {
 			return (Modifiers.ToString()).Replace(", ", " + ") + " + " + Hotkey.ToString();
@@ -151,6 +153,11 @@ namespace PeUtility
 		 */
 		protected virtual void Redraw()
 		{
+			if (Hotkey == Keys.Menu || Hotkey == Keys.ShiftKey || Hotkey == Keys.ControlKey)
+			{
+				Hotkey = Keys.None;
+				return;
+			}			
 			this.Text = ToValueString();
 		}
 	}
