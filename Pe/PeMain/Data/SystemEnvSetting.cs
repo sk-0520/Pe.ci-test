@@ -18,11 +18,11 @@ namespace PeMain.Data
 	{
 		public SystemEnvSetting()
 		{
-			HiddenFileShowHotkey = new HotkeySetting();
-			ExtensionShowHotkey = new HotkeySetting();
+			HiddenFileShowHotkey = new HotKeySetting();
+			ExtensionShowHotkey = new HotKeySetting();
 		}
 		
-		public HotkeySetting HiddenFileShowHotkey { get; set; }
-		public HotkeySetting ExtensionShowHotkey { get; set; }
+		public HotKeySetting HiddenFileShowHotkey { get; set; }
+		public HotKeySetting ExtensionShowHotkey { get; set; }
 	}
 }

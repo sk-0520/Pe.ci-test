@@ -31,7 +31,7 @@ namespace PeMain.Data
 			IconScale = IconScale.Small;
 			HiddenTime = new TimeSpan(0, 0, 0, 1, 500);
 			FontSetting = new FontSetting();
-			Hotkey = new HotkeySetting();
+			HotKey = new HotKeySetting();
 		}
 		/// <summary>
 		/// アイコンサイズ
@@ -58,7 +58,7 @@ namespace PeMain.Data
 		/// </summary>
 		public bool TopMost { get; set; }
 		
-		public HotkeySetting Hotkey { get; set; }
+		public HotKeySetting HotKey { get; set; }
 		
 		public void Dispose()
 		{
