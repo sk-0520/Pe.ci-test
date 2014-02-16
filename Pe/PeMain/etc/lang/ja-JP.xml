@@ -50,6 +50,15 @@
 		<Word Name="main/menu/system-env"      Text="環境設定(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
 		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
+		
+		<Word Name="hotkey/unregist/fail"        Text="ホットキー解除失敗" />
+		<Word Name="hotkey/unregist/command"     Text="ホットキー解除: コマンド" />
+		<Word Name="hotkey/unregist/hidden-file" Text="ホットキー解除: 隠しファイル" />
+		<Word Name="hotkey/unregist/extension"   Text="ホットキー解除: 拡張子" />
+		<Word Name="hotkey/regist/fail"          Text="ホットキー登録失敗" />
+		<Word Name="hotkey/regist/command"       Text="ホットキー登録: コマンド" />
+		<Word Name="hotkey/regist/hidden-file"   Text="ホットキー登録: 隠しファイル" />
+		<Word Name="hotkey/regist/extension"     Text="ホットキー登録: 拡張子" />
 
 		<Word Name="balloon/hidden-file/title" Text="隠しファイル" />
 		<Word Name="balloon/hidden-file/show"  Text="隠しファイルを表示" />

@@ -41,20 +41,20 @@ namespace PeMain.UI
 		void ApplyHotKey()
 		{
 			var hotKeyDatas = new [] {
-				new { Id = HotKeyId.ShowCommand, HotKey = CommonData.MainSetting.Command.HotKey,                 UnRegistMessage = string.Empty, RegistMessage = string.Empty },
-				new { Id = HotKeyId.HiddenFile,  HotKey = CommonData.MainSetting.SystemEnv.HiddenFileShowHotKey, UnRegistMessage = string.Empty, RegistMessage = string.Empty },
-				new { Id = HotKeyId.Extension,   HotKey = CommonData.MainSetting.SystemEnv.ExtensionShowHotKey,  UnRegistMessage = string.Empty, RegistMessage = string.Empty },
+				new { Id = HotKeyId.ShowCommand, HotKey = CommonData.MainSetting.Command.HotKey,                 UnRegistMessageName = "hotkey/unregist/command",     RegistMessageName = "hotkey/regist/command" },
+				new { Id = HotKeyId.HiddenFile,  HotKey = CommonData.MainSetting.SystemEnv.HiddenFileShowHotKey, UnRegistMessageName = "hotkey/unregist/hidden-file", RegistMessageName = "hotkey/regist/hidden-file" },
+				new { Id = HotKeyId.Extension,   HotKey = CommonData.MainSetting.SystemEnv.ExtensionShowHotKey,  UnRegistMessageName = "hotkey/unregist/extension",   RegistMessageName = "hotkey/regist/extension" },
 			};
 			// 登録解除
 			foreach(var hotKeyData in hotKeyDatas) {
 				if(!UnRegisterHotKey(hotKeyData.Id)) {
-					CommonData.Logger.Puts(LogType.Warning, CommonData.Language["hotkey/unregist/fail"], hotKeyData.UnRegistMessage);
+					CommonData.Logger.Puts(LogType.Warning, CommonData.Language["hotkey/unregist/fail"], CommonData.Language[hotKeyData.UnRegistMessageName]);
 				}
 			}
 			// 登録
 			foreach(var hotKeyData in hotKeyDatas.Where(data => data.HotKey.Enabled)) {
 				if(!RegisterHotKey(hotKeyData.Id, hotKeyData.HotKey.Modifiers, hotKeyData.HotKey.Key)) {
-					CommonData.Logger.Puts(LogType.Error, CommonData.Language["hotkey/regist/fail"], hotKeyData.RegistMessage);
+					CommonData.Logger.Puts(LogType.Error, CommonData.Language["hotkey/regist/fail"], CommonData.Language[hotKeyData.RegistMessageName]);
 				}
 			}
 		}

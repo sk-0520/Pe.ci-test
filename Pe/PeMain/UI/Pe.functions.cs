@@ -98,6 +98,7 @@ namespace PeMain.UI
 					InitializeLanguage(null, null);
 					ApplyLanguage();
 					this._logForm.SetCommonData(this._commonData);
+					this._messageWindow.SetCommonData(this._commonData);
 					foreach(var toolbar in this._toolbarForms.Values) {
 						toolbar.SetCommonData(this._commonData);
 					}
