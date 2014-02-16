@@ -43,6 +43,7 @@ namespace PI.Windows
 	[Flags]
 	public enum MOD: uint
 	{
+		None = 0,
 		MOD_ALT = 0x0001,
 		MOD_CONTROL = 0x0002,
 		MOD_SHIFT = 0x0004,

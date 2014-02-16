@@ -35,7 +35,7 @@ namespace PeMain.UI
 		
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("The icon was double clicked");
+			MessageBox.Show("でゅん・・・");
 		}
 	}
 }

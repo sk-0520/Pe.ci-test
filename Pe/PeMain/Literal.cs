@@ -99,4 +99,11 @@ namespace PeMain
 		public string AppDirPath { get { return "PE_APP_DIR"; } }
 		public string AppUserDir { get { return "PE_USER_DIR"; } }
 	}
+	
+	public enum HotKeyId: ushort
+	{
+		ShowCommand = 0x0001,
+		HiddenFile,
+		Extension,
+	}
 }

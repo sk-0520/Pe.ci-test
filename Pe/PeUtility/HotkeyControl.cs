@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Windows.Forms;
+using PI.Windows;
 
 namespace PeUtility
 {
@@ -32,8 +33,8 @@ namespace PeUtility
 		/*
 		 * Property to contain the Modifiers value.
 		 */
-		private Keys _Modifiers = Keys.None;
-		public Keys Modifiers
+		private MOD _Modifiers = MOD.None;
+		public MOD Modifiers
 		{
 			get
 			{
@@ -50,10 +51,10 @@ namespace PeUtility
 		public virtual void ResetHotKeys()
 		{
 			Hotkey = Keys.None;
-			Modifiers = Keys.None;
-			this.Text = "None";
+			Modifiers = MOD.None;
+			//this.Text = MOD.None;
 			Multiline = false;
-			Cursor = Cursors.Default;
+			Cursor = Cursors.IBeam;
 		}
 
 		/*
@@ -89,8 +90,24 @@ namespace PeUtility
 				ResetHotKeys();
 				return;
 			}
-
-			Modifiers = e.Modifiers;
+			
+			MOD mod = MOD.None;
+			if((e.Modifiers & Keys.LWin) == Keys.LWin) {
+				mod |= MOD.MOD_WIN;
+			}  else if((e.Modifiers & Keys.LWin) == Keys.RWin) {
+				mod |= MOD.MOD_WIN;
+			}
+			if((e.Modifiers & Keys.Alt) == Keys.Alt) {
+				mod |= MOD.MOD_ALT;
+			}
+			if((e.Modifiers & Keys.Shift) == Keys.Shift) {
+				mod |= MOD.MOD_SHIFT;
+			}
+			if((e.Modifiers & Keys.Control) == Keys.Control) {
+				mod |= MOD.MOD_CONTROL;
+			}
+			
+			Modifiers = mod;
 			Hotkey = e.KeyCode;
 			Redraw();
 		}
@@ -117,41 +134,24 @@ namespace PeUtility
 				this.SelectionStart = this.TextLength;
 			}
 		}
+		
+		protected virtual string ToValueString()
+		{
+			if (Modifiers == MOD.None) {
+				return (Modifiers.ToString()).Replace(", ", " + ");
+			}
+
+			//if (Modifiers != MOD.None) {
+			return (Modifiers.ToString()).Replace(", ", " + ") + " + " + Hotkey.ToString();
+			//}
+		}
 
 		/*
 		 * This method is called to print the hotkey combination.
 		 */
 		protected virtual void Redraw()
 		{
-
-			if (Modifiers != Keys.None)
-			{
-				this.Text = (Modifiers.ToString()).Replace(", ", " + ");
-			}
-
-			if (Hotkey == Keys.None)
-			{
-				return;
-			}
-
-			if (Hotkey == Keys.LWin || Hotkey == Keys.RWin)
-			{
-				return;
-			}
-
-			if (Hotkey == Keys.Menu || Hotkey == Keys.ShiftKey || Hotkey == Keys.ControlKey)
-			{
-				Hotkey = Keys.None;
-				return;
-			}
-			
-			if (Modifiers != Keys.None)
-			{
-				this.Text = (Modifiers.ToString()).Replace(", ", " + ") + " + " + Hotkey.ToString();
-				return;
-			}
-
-			this.Text = Hotkey.ToString();
+			this.Text = ToValueString();
 		}
 	}
 }

@@ -9,6 +9,8 @@
 using System;
 using System.Windows.Forms;
 
+using PI.Windows;
+
 namespace PeMain.Data
 {
 	/// <summary>
@@ -20,10 +22,10 @@ namespace PeMain.Data
 		public HotkeySetting()
 		{
 			Key = Keys.None;
-			Modifiers = Keys.None;
+			Modifiers = MOD.None;
 		}
 		
 		public Keys Key { get; set; }
-		public Keys Modifiers { get; set; }
+		public MOD  Modifiers { get; set; }
 	}
 }

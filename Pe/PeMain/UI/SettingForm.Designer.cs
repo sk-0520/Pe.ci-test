@@ -1,4 +1,5 @@
-﻿/*
+﻿using PI.Windows;
+/*
  * SharpDevelopによって生成
  * ユーザ: sk
  * 日付: 2013/12/15
@@ -226,7 +227,7 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvExt.Language = null;
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
-			this.inputSystemEnvExt.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvExt.Modifiers = MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
 			this.inputSystemEnvExt.ReadOnly = true;
 			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 27);
@@ -249,7 +250,7 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvHiddenFile.Language = null;
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
-			this.inputSystemEnvHiddenFile.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvHiddenFile.Modifiers = MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
 			this.inputSystemEnvHiddenFile.ReadOnly = true;
 			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(252, 27);
@@ -1064,7 +1065,7 @@ namespace PeMain.UI
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputCommandHotkey.Language = null;
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
-			this.inputCommandHotkey.Modifiers = System.Windows.Forms.Keys.None;
+			this.inputCommandHotkey.Modifiers = MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
 			this.inputCommandHotkey.ReadOnly = true;
 			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 27);

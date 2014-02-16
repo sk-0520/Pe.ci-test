@@ -8,6 +8,7 @@
  */
 using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
 using PI.Windows;
@@ -19,6 +20,16 @@ namespace PeMain.UI
 	/// </summary>
 	partial class MessageWindow
 	{
+		void RegisterHotKey(HotKeyId hotKeyId, MOD modKey, Keys key)
+		{
+			API.RegisterHotKey(Handle, (int)hotKeyId, modKey, (uint)key);
+		}
+		
+		void UnRegisterHotKey(HotKeyId hotKeyId)
+		{
+			API.UnregisterHotKey(Handle, (int)hotKeyId);
+		}
+		
 		public void SetCommonData(CommonData commonData)
 		{
 			CommonData = commonData;
@@ -39,5 +50,6 @@ namespace PeMain.UI
 			
 			ApplyHotkey();
 		}
+		
 	}
 }
