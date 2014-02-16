@@ -53,8 +53,6 @@ namespace PeUtility
 			Hotkey = Keys.None;
 			Modifiers = MOD.None;
 			//this.Text = MOD.None;
-			Multiline = false;
-			Cursor = Cursors.IBeam;
 		}
 
 		/*
@@ -62,7 +60,8 @@ namespace PeUtility
 		 */
 		public HotKeyControl()
 		{
-			this.Cursor = Cursors.Arrow;
+			this.Cursor = Cursors.IBeam;
+			Multiline = false;
 			this.ReadOnly = true;
 			this.BackColor = System.Drawing.Color.White;
 
@@ -85,8 +84,7 @@ namespace PeUtility
 		 */
 		private void Control_KeyDown(object Sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
-			{
+			if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete) {
 				ResetHotKeys();
 				return;
 			}
@@ -118,8 +116,7 @@ namespace PeUtility
 		 */
 		private void Control_KeyUp(object Sender, KeyEventArgs e)
 		{
-			if (Hotkey == Keys.None && Control.ModifierKeys == Keys.None)
-			{
+			if (Hotkey == Keys.None && Control.ModifierKeys == Keys.None) {
 				ResetHotKeys();
 			}
 		}
@@ -129,8 +126,7 @@ namespace PeUtility
 		 */
 		private void Control_SelectionChanged(object Sender, EventArgs e)
 		{
-			if (this.SelectionStart != this.TextLength)
-			{
+			if (this.SelectionStart != this.TextLength) {
 				this.SelectionStart = this.TextLength;
 			}
 		}
@@ -153,8 +149,7 @@ namespace PeUtility
 		 */
 		protected virtual void Redraw()
 		{
-			if (Hotkey == Keys.Menu || Hotkey == Keys.ShiftKey || Hotkey == Keys.ControlKey)
-			{
+			if (Hotkey == Keys.Menu || Hotkey == Keys.ShiftKey || Hotkey == Keys.ControlKey) {
 				Hotkey = Keys.None;
 				return;
 			}			
