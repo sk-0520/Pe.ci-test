@@ -274,8 +274,9 @@ namespace PeMain.UI
 			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]));
 			
 			InitializeSkin(args, initLog);
-			InitializeMain(args, initLog);
 			InitializeLogForm(args, initLog);
+			InitializeMessage(args, initLog);
+			InitializeMain(args, initLog);
 			InitializeCommandForm(args, initLog);
 			InitializeToolbarForm(args, initLog);
 			
@@ -294,7 +295,6 @@ namespace PeMain.UI
 			this._commonData.RootSender = this;
 			
 			InitializeSetting(args, initLog);
-			InitializeMessage(args, initLog);
 			InitializeUI(args, initLog);
 			
 			ApplyLanguage();

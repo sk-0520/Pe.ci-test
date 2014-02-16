@@ -24,11 +24,11 @@ namespace PeMain.UI
 		
 		void SystemEnvExportSetting(SystemEnvSetting systemEnvSetting)
 		{
-			systemEnvSetting.HiddenFileShowHotkey.Key = this.inputSystemEnvHiddenFile.Hotkey;
-			systemEnvSetting.HiddenFileShowHotkey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
+			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
+			systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
 			
-			systemEnvSetting.ExtensionShowHotkey.Key = this.inputSystemEnvExt.Hotkey;
-			systemEnvSetting.ExtensionShowHotkey.Modifiers = this.inputSystemEnvExt.Modifiers;
+			systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
+			systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
 		}
 		
 		void MainExportSetting(MainSetting mainSetting)

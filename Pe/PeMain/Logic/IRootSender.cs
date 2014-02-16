@@ -8,7 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
+
 using PeMain.Data;
+using PI.Windows;
 
 namespace PeMain.Logic
 {
@@ -20,5 +23,7 @@ namespace PeMain.Logic
 		void ShowTips(string text);
 	
 		void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items);
+		
+		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
 	}
 }

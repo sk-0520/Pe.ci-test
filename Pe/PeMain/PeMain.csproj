@@ -80,7 +80,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\HotkeySetting.cs" />
+    <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
@@ -368,6 +368,9 @@
     </Compile>
     <Compile Include="UI\Pe.MessageWindow.functions.cs">
       <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.sender.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

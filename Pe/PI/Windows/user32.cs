@@ -30,6 +30,7 @@ namespace PI.Windows
 		public static extern bool RegisterHotKey(IntPtr hWnd, int id, MOD fsModifiers, uint vk);
 		
 		[DllImport( "user32", SetLastError = true )]
-        public static extern int UnregisterHotKey (IntPtr hwnd, int id);
+		[return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool UnregisterHotKey (IntPtr hwnd, int id);
 	}
 }

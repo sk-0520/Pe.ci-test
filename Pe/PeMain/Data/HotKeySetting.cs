@@ -19,7 +19,7 @@ namespace PeMain.Data
 	[Serializable]
 	public class HotKeySetting
 	{
-		public HotkeySetting()
+		public HotKeySetting()
 		{
 			Key = Keys.None;
 			Modifiers = MOD.None;
@@ -27,5 +27,13 @@ namespace PeMain.Data
 		
 		public Keys Key { get; set; }
 		public MOD  Modifiers { get; set; }
+		
+		public bool Enabled
+		{
+			get
+			{
+				return Key != Keys.None && Modifiers != MOD.None;
+			}
+		}
 	}
 }

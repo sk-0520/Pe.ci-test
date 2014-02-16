@@ -31,11 +31,11 @@ namespace PeMain.UI
 		
 		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)
 		{
-			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotkey.Key;
-			this.inputSystemEnvHiddenFile.Modifiers = systemEnvSetting.HiddenFileShowHotkey.Modifiers;
+			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
+			this.inputSystemEnvHiddenFile.Modifiers = systemEnvSetting.HiddenFileShowHotKey.Modifiers;
 			
-			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotkey.Key;
-			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotkey.Modifiers;
+			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotKey.Key;
+			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
 		}
 		
 		void InitializeMainSetting(MainSetting mainSetting)
@@ -62,8 +62,8 @@ namespace PeMain.UI
 			AttachmentIconScale(this.selectCommandIcon, commandSetting.IconScale);
 			
 			// ホットキー
-			var hotKey = commandSetting.Hotkey.Key;
-			var modKey = commandSetting.Hotkey.Modifiers;
+			var hotKey = commandSetting.HotKey.Key;
+			var modKey = commandSetting.HotKey.Modifiers;
 			this.inputCommandHotkey.Hotkey = hotKey;
 			this.inputCommandHotkey.Modifiers = modKey;
 		}
