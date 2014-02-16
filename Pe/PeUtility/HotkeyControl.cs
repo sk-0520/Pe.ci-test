@@ -134,7 +134,7 @@ namespace PeUtility
 		protected virtual string ToValueString()
 		{
 			if (Modifiers == MOD.None) {
-				return (Modifiers.ToString()).Replace(", ", " + ");
+				return Hotkey.ToString();
 			}
 			
 			return (Modifiers.ToString()).Replace(", ", " + ") + " + " + Hotkey.ToString();
