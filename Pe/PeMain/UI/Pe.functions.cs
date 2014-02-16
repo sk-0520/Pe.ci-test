@@ -14,6 +14,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI
@@ -102,6 +103,34 @@ namespace PeMain.UI
 					}
 				}
 			}
+		}
+		
+		void ChangeShowSysEnv(Func<bool> nowValueDg, Action<bool> changeValueDg, string messageTitleName, string showMessageName, string hiddenMessageName, string errorMessageName)
+		{
+			var prevValue = nowValueDg();
+			changeValueDg(!prevValue);
+			var nowValue = nowValueDg();
+			SystemEnv.RefreshShell();
+			
+			ToolTipIcon icon;
+			string messageName;
+			if(prevValue != nowValue) {
+				if(nowValue) {
+					messageName = showMessageName;
+				} else {
+					messageName = hiddenMessageName;
+				}
+				icon = ToolTipIcon.Info;
+			} else {
+				messageName = errorMessageName;
+				icon = ToolTipIcon.Error;
+			}
+			var title = this._commonData.Language[messageTitleName];
+			var message = this._commonData.Language[messageName];
+			if(icon == ToolTipIcon.Error) {
+				this._commonData.Logger.Puts(LogType.Error, title, message);
+			}
+			ShowBalloon(icon, title, message);
 		}
 	}
 }

@@ -441,7 +441,7 @@ namespace PeMain.UI
 			fileItem.Name = menuNameFiles;
 			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
 			fileItem.DropDownOpening += (object sender, EventArgs e) => {
-				var showHiddenFile = SystemEnv.IsHiddenfFileShow();
+				var showHiddenFile = SystemEnv.IsHiddenFileShow();
 				var showExtension = SystemEnv.IsExtensionShow();
 				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command), showHiddenFile, showExtension);
 			};

@@ -20,7 +20,7 @@ namespace PeMain.Logic
 	/// </summary>
 	public interface IRootSender
 	{
-		void ShowTips(string text);
+		void ShowBalloon(ToolTipIcon icon, string title, string message);
 	
 		void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items);
 		

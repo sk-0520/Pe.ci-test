@@ -147,7 +147,7 @@ namespace PeMain.UI
 			// 隠しファイル
 			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
 			itemHiddenFile.Click += (object sender, EventArgs e) => {
-				SystemEnv.SetHiddenfFileShow(!SystemEnv.IsHiddenfFileShow());
+				SystemEnv.SetHiddenFileShow(!SystemEnv.IsHiddenFileShow());
 				SystemEnv.RefreshShell();
 			};
 			
@@ -162,7 +162,7 @@ namespace PeMain.UI
 			parentMenu.MenuItems.AddRange(menuList.ToArray());
 			
 			parentMenu.Popup += (object sender, EventArgs e) => {
-				itemHiddenFile.Checked = SystemEnv.IsHiddenfFileShow();
+				itemHiddenFile.Checked = SystemEnv.IsHiddenFileShow();
 				itemExtension.Checked = SystemEnv.IsExtensionShow();
 			};
 

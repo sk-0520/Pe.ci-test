@@ -50,6 +50,15 @@
 		<Word Name="main/menu/system-env"      Text="環境設定(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
 		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
+
+		<Word Name="balloon/hidden-file/title" Text="隠しファイル" />
+		<Word Name="balloon/hidden-file/show"  Text="隠しファイルを表示" />
+		<Word Name="balloon/hidden-file/hide"  Text="隠しファイルを非表示" />
+		<Word Name="balloon/hidden-file/error" Text="隠しファイル表示操作失敗" />
+		<Word Name="balloon/extension/title"   Text="拡張子" />
+		<Word Name="balloon/extension/show"    Text="拡張子を表示" />
+		<Word Name="balloon/extension/hide"    Text="拡張子を非表示" />
+		<Word Name="balloon/extension/error"   Text="拡張子操作表示失敗" />
 		
 		<Word Name="log/command/save"      Text="ログ保存" />
 		<Word Name="log/tips/save"         Text="現在のログをファイルに保存" />

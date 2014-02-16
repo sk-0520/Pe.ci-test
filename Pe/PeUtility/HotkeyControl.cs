@@ -137,11 +137,7 @@ namespace PeUtility
 				return (Modifiers.ToString()).Replace(", ", " + ");
 			}
 			
-
-
-			//if (Modifiers != MOD.None) {
 			return (Modifiers.ToString()).Replace(", ", " + ") + " + " + Hotkey.ToString();
-			//}
 		}
 
 		/*

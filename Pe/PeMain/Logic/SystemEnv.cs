@@ -47,7 +47,7 @@ namespace PeMain.Logic
 		/// <summary>
 		/// </summary>
 		/// <returns></returns>
-		public static bool IsHiddenfFileShow()
+		public static bool IsHiddenFileShow()
 		{
 			using(var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath)) {
 				//Debug.WriteLine(subKey.GetValue("ShowSuperHidden"));
@@ -55,7 +55,7 @@ namespace PeMain.Logic
 				return hiddenValue == (int)HiddenFileHiddenType.Show;
 			}
 		}
-		public static void SetHiddenfFileShow(bool show)
+		public static void SetHiddenFileShow(bool show)
 		{
 			using(var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath, true)) {
 				var hiddenValue = (int)(show ? HiddenFileHiddenType.Show: HiddenFileHiddenType.Hidden);

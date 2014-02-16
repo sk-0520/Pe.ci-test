@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 using PI.Windows;
 
 namespace PeMain.UI
@@ -20,9 +22,9 @@ namespace PeMain.UI
 	/// </summary>
 	partial class Pe
 	{
-		public void ShowTips(string tezt)
+		public void ShowBalloon(ToolTipIcon icon, string title, string message)
 		{
-			throw new NotImplementedException();
+			this._notifyIcon.ShowBalloonTip(0, title, message, icon);
 		}
 		public void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items)
 		{
@@ -31,7 +33,18 @@ namespace PeMain.UI
 		
 		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
 		{
-			Debug.WriteLine("{0}, {1}, {2}", hotKeyId, mod, key);
+			switch(hotKeyId) {
+				case HotKeyId.HiddenFile:
+					ChangeShowSysEnv(SystemEnv.IsHiddenFileShow, SystemEnv.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
+					break;
+					
+				case HotKeyId.Extension:
+					ChangeShowSysEnv(SystemEnv.IsExtensionShow, SystemEnv.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
+					break;
+					
+				default:
+					break;
+			}
 		}
 	}
 }
