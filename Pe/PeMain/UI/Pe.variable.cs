@@ -26,6 +26,7 @@ namespace PeMain.UI
 		private LogForm _logForm;
 		
 		private CommonData _commonData;
+		private bool _pause = false;
 		
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 	}

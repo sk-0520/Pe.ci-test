@@ -34,9 +34,9 @@ namespace PeMain.UI
 				result.AddRange(f.OwnedForms);
 			}
 			
-			
 			return result;
 		}
+		
 		/// <summary>
 		/// TODO: 未実装
 		/// </summary>
@@ -50,7 +50,9 @@ namespace PeMain.UI
 			}
 			this._notifyIcon.Visible = false;
 			
+			this._pause = true;
 			action();
+			this._pause = false;
 
 			foreach(var pair in windowVisible) {
 				pair.Key.Visible = pair.Value;
@@ -88,7 +90,7 @@ namespace PeMain.UI
 			}
 		}
 
-		void SaveSerialize<T>(T saveData, string savePath)
+		static void SaveSerialize<T>(T saveData, string savePath)
 		{
 			Debug.Assert(saveData != null);
 			FileUtility.MakeFileParentDirectory(savePath);

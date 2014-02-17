@@ -33,6 +33,10 @@ namespace PeMain.UI
 		
 		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
 		{
+			if(this._pause) {
+				break;
+			}
+			
 			switch(hotKeyId) {
 				case HotKeyId.HiddenFile:
 					ChangeShowSysEnv(SystemEnv.IsHiddenFileShow, SystemEnv.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");

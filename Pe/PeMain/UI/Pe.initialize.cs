@@ -286,7 +286,7 @@ namespace PeMain.UI
 			InitializeCommandForm(args, initLog);
 			InitializeToolbarForm(args, initLog);
 			
-			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]));
+			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/end"]));
 		}
 		
 		/// <summary>
