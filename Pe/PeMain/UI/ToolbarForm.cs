@@ -104,5 +104,10 @@ namespace PeMain.UI
 		{
 			DrawFullActivaChanged(false);
 		}
+		
+		void clickItem_DropDownOpening(object sender, EventArgs e)
+		{
+			OpeningDropDown((ToolStripSplitButton)sender);
+		}
 	}
 }

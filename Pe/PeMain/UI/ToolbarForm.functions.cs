@@ -622,11 +622,18 @@ namespace PeMain.UI
 			if(item != null) {
 				var clickItem = (ToolStripSplitButton)toolItem;
 				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
+				clickItem.DropDownOpening += new EventHandler(clickItem_DropDownOpening);
 			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
 			return toolItem;
 		}
+		
+		void OpeningDropDown(ToolStripSplitButton toolItem)
+		{
+			Debug.WriteLine("まだ試験中");
+		}
+		
 		
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
