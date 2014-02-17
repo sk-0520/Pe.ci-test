@@ -26,6 +26,7 @@ namespace PeMain
 		
 		public const string mainSettingFileName = "mainsetting.xml";
 		public const string launcherItemsName   = "launcher-items.xml";
+		public const string backupDirName       = "backup";
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -94,6 +95,12 @@ namespace PeMain
 		{
 			get { return Path.Combine(UserSettingDirPath, launcherItemsName);}
 		}
+		
+		public static string UserBackupDirPath
+		{
+			get { return Path.Combine(UserSettingDirPath, backupDirName);}
+		}
+			
 	}
 	
 	public struct AppEnv

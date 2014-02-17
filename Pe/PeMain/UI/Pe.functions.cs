@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
+using System.IO.Packaging;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -60,12 +62,47 @@ namespace PeMain.UI
 			this._notifyIcon.Visible = true;
 		}
 		
+		void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath)
+		{
+			var enabledFiles = targetFiles.Where(s => File.Exists(s));
+			if(enabledFiles.Count() == 0) {
+				return;
+			}
+			// TODO: バックアップ世代交代
+			
+			var fileName = DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss") + ".zip";
+			var saveFilePath = Path.Combine(saveDirPath, fileName);
+			FileUtility.MakeFileParentDirectory(saveFilePath);
+			
+			using(var stream = new FileStream(saveFilePath, FileMode.Create)) {
+				using(var zip = new ZipArchive(stream, ZipArchiveMode.Create)) {
+					foreach(var filePath in enabledFiles) {
+						var entry = zip.CreateEntry(Path.GetFileName(filePath));
+						using(var entryStream = new BinaryWriter(entry.Open())) {
+							var buffer = File.ReadAllBytes(filePath);
+							entryStream.Write(buffer);
+						}
+					}
+				}
+			}
+
+		}
+		
 		void SaveSetting()
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
+			var launcherItemsPath = Literal.UserLauncherItemsPath;
+			
+			// バックアップ
+			var backupFiles = new [] {
+				mainSettingFilePath,
+				launcherItemsPath,
+			};
+			BackupSetting(backupFiles, Literal.UserBackupDirPath);
+			
+			// 保存開始
 			SaveMainSetting(this._commonData.MainSetting, mainSettingFilePath);
 			
-			var launcherItemsPath = Literal.UserLauncherItemsPath;
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);

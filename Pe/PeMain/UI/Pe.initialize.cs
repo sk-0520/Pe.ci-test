@@ -179,17 +179,19 @@ namespace PeMain.UI
 		/// <returns></returns>
 		private void AttachmentMainMenu()
 		{
-			var menuList = new List<ToolStripMenuItem>();
+			var menuList = new List<ToolStripItem>();
 			var itemWindow = new ToolStripMenuItem();
 			var itemSystemEnv = new ToolStripMenuItem();
 			var itemSetting = new ToolStripMenuItem();
 			var itemAbout = new ToolStripMenuItem();
 			var itemExit = new ToolStripMenuItem();
 			
-			menuList.Add(itemAbout);
+			menuList.Add(itemSetting);
+			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemWindow);
 			menuList.Add(itemSystemEnv);
-			menuList.Add(itemSetting);
+			menuList.Add(new ToolStripSeparator());
+			menuList.Add(itemAbout);
 			menuList.Add(itemExit);
 			
 			// 情報
