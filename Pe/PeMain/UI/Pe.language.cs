@@ -8,6 +8,7 @@
  */
 using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace PeMain.UI
 {
@@ -17,18 +18,18 @@ namespace PeMain.UI
 		{
 			Debug.Assert(this._commonData.Language != null);
 			
-			var rootMenu = this._notificationMenu.MenuItems;
+			var rootMenu = this._notificationMenu.Items;
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
 
-			var windowMenu = rootMenu[menuNameWindow];
+			var windowMenu = (ToolStripMenuItem)rootMenu[menuNameWindow];
 			windowMenu.Text = this._commonData.Language["main/menu/window"];
-			windowMenu.MenuItems[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
-			windowMenu.MenuItems[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
+			windowMenu.DropDownItems[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
+			windowMenu.DropDownItems[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 
-			var systemEnvMenu = rootMenu[menuNameSystemEnv];
+			var systemEnvMenu = (ToolStripMenuItem)rootMenu[menuNameSystemEnv];
 			systemEnvMenu.Text = this._commonData.Language["main/menu/system-env"];
-			systemEnvMenu.MenuItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
-			systemEnvMenu.MenuItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
+			systemEnvMenu.DropDownItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
+			systemEnvMenu.DropDownItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
 		
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];

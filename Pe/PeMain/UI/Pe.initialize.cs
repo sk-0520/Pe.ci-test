@@ -79,11 +79,11 @@ namespace PeMain.UI
 			this._messageWindow.InitLog = null;
 		}
 		
-		void AttachmentToolbarSubMenu(MenuItem parentMenu)
+		void AttachmentToolbarSubMenu(ToolStripMenuItem parentMenu)
 		{
-			var menuList = new List<MenuItem>();
+			var menuList = new List<ToolStripMenuItem>();
 			foreach(var screen in Screen.AllScreens) {
-				var menuItem = new MenuItem();
+				var menuItem = new ToolStripMenuItem();
 				menuItem.Name = screen.DeviceName;
 				menuItem.Text = ScreenUtility.ToScreenName(screen);
 				menuItem.Click += (object sender, EventArgs e) => {
@@ -95,12 +95,12 @@ namespace PeMain.UI
 			}
 			
 			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			parentMenu.DropDownItems.AddRange(menuList.ToArray());
 			
-			parentMenu.Popup += (object sender, EventArgs e) => {
+			parentMenu.DropDownOpening += (object sender, EventArgs e) => {
 				foreach(var screen in Screen.AllScreens) {
-					if(parentMenu.MenuItems.ContainsKey(screen.DeviceName)) {
-						var menuItem = parentMenu.MenuItems[screen.DeviceName];
+					if(parentMenu.DropDownItems.ContainsKey(screen.DeviceName)) {
+						var menuItem = (ToolStripMenuItem)parentMenu.DropDownItems[screen.DeviceName];
 						menuItem.Checked = this._toolbarForms[screen].Visible;
 					}
 				}
@@ -108,11 +108,11 @@ namespace PeMain.UI
 
 		}
 		
-		void AttachmentWindowSubMenu(MenuItem parentMenu)
+		void AttachmentWindowSubMenu(ToolStripMenuItem parentMenu)
 		{
-			var menuList = new List<MenuItem>();
-			var itemToolbar = new MenuItem();
-			var itemLogger = new MenuItem();
+			var menuList = new List<ToolStripMenuItem>();
+			var itemToolbar = new ToolStripMenuItem();
+			var itemLogger = new ToolStripMenuItem();
 			
 			menuList.Add(itemToolbar);
 			menuList.Add(itemLogger);
@@ -133,20 +133,19 @@ namespace PeMain.UI
 			};
 			
 			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			parentMenu.DropDownItems.AddRange(menuList.ToArray());
 			
 			// ログ
-			parentMenu.Popup += (object sender, EventArgs e) => {
+			parentMenu.DropDownOpening += (object sender, EventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
 			};
-			
 		}
 		
-		void AttachmentSystemEnvSubMenu(MenuItem parentMenu)
+		void AttachmentSystemEnvSubMenu(ToolStripMenuItem parentMenu)
 		{
-			var menuList = new List<MenuItem>();
-			var itemHiddenFile = new MenuItem();
-			var itemExtension = new MenuItem();
+			var menuList = new List<ToolStripMenuItem>();
+			var itemHiddenFile = new ToolStripMenuItem();
+			var itemExtension = new ToolStripMenuItem();
 			menuList.Add(itemHiddenFile);
 			menuList.Add(itemExtension);
 			
@@ -165,9 +164,9 @@ namespace PeMain.UI
 			};
 			
 			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			parentMenu.DropDownItems.AddRange(menuList.ToArray());
 			
-			parentMenu.Popup += (object sender, EventArgs e) => {
+			parentMenu.DropDownOpening += (object sender, EventArgs e) => {
 				itemHiddenFile.Checked = SystemEnv.IsHiddenFileShow();
 				itemExtension.Checked = SystemEnv.IsExtensionShow();
 			};
@@ -178,14 +177,14 @@ namespace PeMain.UI
 		/// 本体メニュー初期化
 		/// </summary>
 		/// <returns></returns>
-		private MenuItem[] InitializeMenu()
+		private void AttachmentMainMenu()
 		{
-			var menuList = new List<MenuItem>();
-			var itemWindow = new MenuItem();
-			var itemSystemEnv = new MenuItem();
-			var itemSetting = new MenuItem();
-			var itemAbout = new MenuItem();
-			var itemExit = new MenuItem();
+			var menuList = new List<ToolStripMenuItem>();
+			var itemWindow = new ToolStripMenuItem();
+			var itemSystemEnv = new ToolStripMenuItem();
+			var itemSetting = new ToolStripMenuItem();
+			var itemAbout = new ToolStripMenuItem();
+			var itemExit = new ToolStripMenuItem();
 			
 			menuList.Add(itemAbout);
 			menuList.Add(itemWindow);
@@ -219,7 +218,7 @@ namespace PeMain.UI
 				CloseApplication(true);
 			};
 
-			return menuList.ToArray();;
+			this._notificationMenu.Items.AddRange(menuList.ToArray());
 		}
 		
 		void InitializeSkin(string[] args, List<LogItem> initLog)
@@ -234,13 +233,14 @@ namespace PeMain.UI
 		void InitializeMain(string[] args, List<LogItem> initLog)
 		{
 			this._notifyIcon = new NotifyIcon();
-			this._notificationMenu = new ContextMenu(InitializeMenu());
-			
+			this._notificationMenu = new ContextMenuStrip();
+			AttachmentMainMenu();
+				
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 			
 			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
-			this._notifyIcon.ContextMenu = this._notificationMenu;			
+			this._notifyIcon.ContextMenuStrip = this._notificationMenu;			
 		}
 		
 		void InitializeLogForm(string[] args, List<LogItem> initLog)

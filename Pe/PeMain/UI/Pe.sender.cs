@@ -34,7 +34,7 @@ namespace PeMain.UI
 		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
 		{
 			if(this._pause) {
-				break;
+				return;
 			}
 			
 			switch(hotKeyId) {
