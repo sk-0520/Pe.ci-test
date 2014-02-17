@@ -42,12 +42,12 @@ namespace PeMain.UI
 			this.listLog = new System.Windows.Forms.ListView();
 			this.headerTimestamp = new System.Windows.Forms.ColumnHeader();
 			this.headerTitle = new System.Windows.Forms.ColumnHeader();
-			this.panelDetail = new System.Windows.Forms.TableLayoutPanel();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.listStack = new System.Windows.Forms.ListView();
 			this.headerFile = new System.Windows.Forms.ColumnHeader();
 			this.headerLine = new System.Windows.Forms.ColumnHeader();
 			this.headerFunction = new System.Windows.Forms.ColumnHeader();
-			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.toolLog = new System.Windows.Forms.ToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
@@ -59,7 +59,10 @@ namespace PeMain.UI
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.panelDetail.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+			this.splitContainer2.Panel1.SuspendLayout();
+			this.splitContainer2.Panel2.SuspendLayout();
+			this.splitContainer2.SuspendLayout();
 			this.toolLog.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -111,7 +114,7 @@ namespace PeMain.UI
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.panelDetail);
+			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
 			this.splitContainer1.Size = new System.Drawing.Size(436, 229);
 			this.splitContainer1.SplitterDistance = 135;
 			this.splitContainer1.TabIndex = 0;
@@ -143,20 +146,33 @@ namespace PeMain.UI
 			// 
 			this.headerTitle.Text = "{TITLE}";
 			// 
-			// panelDetail
+			// splitContainer2
 			// 
-			this.panelDetail.ColumnCount = 2;
-			this.panelDetail.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.panelDetail.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.panelDetail.Controls.Add(this.listStack, 1, 0);
-			this.panelDetail.Controls.Add(this.viewDetail, 0, 0);
-			this.panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelDetail.Location = new System.Drawing.Point(0, 0);
-			this.panelDetail.Name = "panelDetail";
-			this.panelDetail.RowCount = 1;
-			this.panelDetail.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.panelDetail.Size = new System.Drawing.Size(436, 90);
-			this.panelDetail.TabIndex = 1;
+			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer2.Name = "splitContainer2";
+			// 
+			// splitContainer2.Panel1
+			// 
+			this.splitContainer2.Panel1.Controls.Add(this.viewDetail);
+			// 
+			// splitContainer2.Panel2
+			// 
+			this.splitContainer2.Panel2.Controls.Add(this.listStack);
+			this.splitContainer2.Size = new System.Drawing.Size(436, 90);
+			this.splitContainer2.SplitterDistance = 196;
+			this.splitContainer2.TabIndex = 0;
+			// 
+			// viewDetail
+			// 
+			this.viewDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewDetail.Location = new System.Drawing.Point(0, 0);
+			this.viewDetail.Multiline = true;
+			this.viewDetail.Name = "viewDetail";
+			this.viewDetail.ReadOnly = true;
+			this.viewDetail.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.viewDetail.Size = new System.Drawing.Size(196, 90);
+			this.viewDetail.TabIndex = 1;
 			// 
 			// listStack
 			// 
@@ -168,11 +184,11 @@ namespace PeMain.UI
 			this.listStack.FullRowSelect = true;
 			this.listStack.GridLines = true;
 			this.listStack.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.listStack.Location = new System.Drawing.Point(221, 3);
+			this.listStack.Location = new System.Drawing.Point(0, 0);
 			this.listStack.MultiSelect = false;
 			this.listStack.Name = "listStack";
 			this.listStack.ShowGroups = false;
-			this.listStack.Size = new System.Drawing.Size(212, 84);
+			this.listStack.Size = new System.Drawing.Size(236, 90);
 			this.listStack.TabIndex = 0;
 			this.listStack.UseCompatibleStateImageBehavior = false;
 			this.listStack.View = System.Windows.Forms.View.Details;
@@ -188,17 +204,6 @@ namespace PeMain.UI
 			// headerFunction
 			// 
 			this.headerFunction.Text = "{FUNC}";
-			// 
-			// viewDetail
-			// 
-			this.viewDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewDetail.Location = new System.Drawing.Point(3, 3);
-			this.viewDetail.Multiline = true;
-			this.viewDetail.Name = "viewDetail";
-			this.viewDetail.ReadOnly = true;
-			this.viewDetail.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.viewDetail.Size = new System.Drawing.Size(212, 84);
-			this.viewDetail.TabIndex = 1;
 			// 
 			// toolLog
 			// 
@@ -258,18 +263,21 @@ namespace PeMain.UI
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			this.panelDetail.ResumeLayout(false);
-			this.panelDetail.PerformLayout();
+			this.splitContainer2.Panel1.ResumeLayout(false);
+			this.splitContainer2.Panel1.PerformLayout();
+			this.splitContainer2.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+			this.splitContainer2.ResumeLayout(false);
 			this.toolLog.ResumeLayout(false);
 			this.toolLog.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.SplitContainer splitContainer2;
 		private System.Windows.Forms.TextBox viewDetail;
 		private System.Windows.Forms.ColumnHeader headerFunction;
 		private System.Windows.Forms.ColumnHeader headerLine;
 		private System.Windows.Forms.ColumnHeader headerFile;
 		private System.Windows.Forms.ListView listStack;
-		private System.Windows.Forms.TableLayoutPanel panelDetail;
 		private System.Windows.Forms.ColumnHeader headerTitle;
 		private System.Windows.Forms.ColumnHeader headerTimestamp;
 		private System.Windows.Forms.ListView listLog;

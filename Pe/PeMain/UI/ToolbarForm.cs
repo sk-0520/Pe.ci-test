@@ -107,7 +107,7 @@ namespace PeMain.UI
 		
 		void clickItem_DropDownOpening(object sender, EventArgs e)
 		{
-			OpeningDropDown((ToolStripSplitButton)sender);
+			OpeningDropDown((ToolStripDropDownItem)sender);
 		}
 	}
 }

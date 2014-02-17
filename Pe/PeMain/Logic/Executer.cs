@@ -28,7 +28,7 @@ namespace PeMain.Logic
 			
 			var process = new Process();
 			var startInfo = process.StartInfo;
-			startInfo.FileName = launcherItem.Command;
+			startInfo.FileName = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 			var getOutput = false;
 			if(launcherItem.IsExecteFile) {
 				startInfo.Arguments = launcherItem.Option;
@@ -38,7 +38,7 @@ namespace PeMain.Logic
 				} else {
 					startInfo.UseShellExecute = false;
 					
-					startInfo.WorkingDirectory = launcherItem.WorkDirPath;
+					startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
 					
 					// 環境変数
 					if(launcherItem.EnvironmentSetting.EditEnvironment) {

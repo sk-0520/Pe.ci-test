@@ -589,7 +589,9 @@ namespace PeMain.UI
 				toolItem = new ToolStripDropDownButton();
 				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
 			} else {
-				toolItem = new ToolStripSplitButton();
+				var clickItem = new ToolStripSplitButton();
+				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
+				toolItem = clickItem; 
 				toolItem.Text = item.Name;
 				toolItem.ToolTipText = item.Name;
 				var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
@@ -619,19 +621,18 @@ namespace PeMain.UI
 			} else {
 				AttachmentToolbarMenu(toolItem);
 			}
-			if(item != null) {
-				var clickItem = (ToolStripSplitButton)toolItem;
-				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
-				clickItem.DropDownOpening += new EventHandler(clickItem_DropDownOpening);
+			var hasMenuItem = (ToolStripDropDownItem)toolItem;
+			if(hasMenuItem != null) {
+				hasMenuItem.DropDownOpening += new EventHandler(clickItem_DropDownOpening);
 			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
 			return toolItem;
 		}
 		
-		void OpeningDropDown(ToolStripSplitButton toolItem)
+		void OpeningDropDown(ToolStripDropDownItem toolItem)
 		{
-			Debug.WriteLine("まだ試験中");
+			Debug.WriteLine("まだ試験中: " + toolItem.Text);
 		}
 		
 		
