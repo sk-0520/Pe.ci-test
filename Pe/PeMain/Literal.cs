@@ -15,6 +15,8 @@ namespace PeMain
 {
 	/// <summary>
 	/// 各種定数
+	/// 
+	/// ただしプロパティの値は定数じゃないかも
 	/// </summary>
 	public static class Literal
 	{
@@ -34,6 +36,14 @@ namespace PeMain
 		public static readonly Size toolbarFloatSize = new Size(SystemInformation.WorkingArea.Width / 10, 0);
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
+		
+		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
+		
+#if DEBUG
+		public const int backupCount = 3;
+#else
+		public const int backupCount = 20;
+#endif
 		
 		/// <summary>
 		/// 起動ディレクトリ

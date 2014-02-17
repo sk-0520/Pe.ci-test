@@ -62,18 +62,29 @@ namespace PeMain.UI
 			this._notifyIcon.Visible = true;
 		}
 		
-		void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath)
+		void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int count)
 		{
 			var enabledFiles = targetFiles.Where(s => File.Exists(s));
 			if(enabledFiles.Count() == 0) {
 				return;
 			}
-			// TODO: バックアップ世代交代
 			
-			var fileName = DateTime.Now.ToString("yyyy-MM-dd_HH_mm_ss") + ".zip";
+			// バックアップ世代交代
+			if(Directory.Exists(saveDirPath)) {
+				foreach(var path in Directory.GetFileSystemEntries(saveDirPath).OrderByDescending(s => Path.GetFileName(s)).Skip(count - 1)) {
+					try {
+						File.Delete(path);
+					} catch(Exception ex) {
+						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+					}
+				}
+			}
+			
+			var fileName = DateTime.Now.ToString(Literal.timestampFileName) + ".zip";
 			var saveFilePath = Path.Combine(saveDirPath, fileName);
 			FileUtility.MakeFileParentDirectory(saveFilePath);
 			
+			// zip
 			using(var stream = new FileStream(saveFilePath, FileMode.Create)) {
 				using(var zip = new ZipArchive(stream, ZipArchiveMode.Create)) {
 					foreach(var filePath in enabledFiles) {
@@ -98,16 +109,16 @@ namespace PeMain.UI
 				mainSettingFilePath,
 				launcherItemsPath,
 			};
-			BackupSetting(backupFiles, Literal.UserBackupDirPath);
+			BackupSetting(backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
 			
 			// 保存開始
-			SaveMainSetting(this._commonData.MainSetting, mainSettingFilePath);
+			SaveSerialize(this._commonData.MainSetting, mainSettingFilePath);
 			
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
 			}
-			SaveLauncherItems(sortedSet, launcherItemsPath);
+			SaveSerialize(sortedSet, launcherItemsPath);
 		}
 		
 		
@@ -137,16 +148,6 @@ namespace PeMain.UI
 				serializer.Serialize(stream, saveData);
 			}
 			
-		}
-		
-		void SaveMainSetting(MainSetting mainSetting, string mainSettingPath)
-		{
-			SaveSerialize(mainSetting, mainSettingPath);
-		}
-		
-		void SaveLauncherItems(HashSet<LauncherItem> items, string itemsPath)
-		{
-			SaveSerialize(items, itemsPath);
 		}
 		
 		void CloseApplication(bool save)
