@@ -11,7 +11,7 @@ using PI.Windows;
 
 namespace PeUtility
 {
-	public class HotKeyControl : RichTextBox
+	public class HotKeyControl : TextBox
 	{
 		/*
 		 * Property to contain the Hotkey value.
@@ -68,7 +68,7 @@ namespace PeUtility
 			this.KeyPress += new KeyPressEventHandler(Control_KeyPress);
 			this.KeyDown += new KeyEventHandler(Control_KeyDown);
 			this.KeyUp += new KeyEventHandler(Control_KeyUp);
-			this.SelectionChanged += new EventHandler(Control_SelectionChanged);
+			//this.SelectionChanged += new EventHandler(Control_SelectionChanged);
 		}
 
 		/*
