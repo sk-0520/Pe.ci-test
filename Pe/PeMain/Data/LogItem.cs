@@ -18,15 +18,23 @@ namespace PeMain.Data
 		Warning,
 		Error
 	}
+	
+	public struct LogData
+	{
+		public LogType LogType { get; set; }
+		public string Title { get; set; }
+		public string Detail { get; set; }
+	}
+	
 	public class LogItem
 	{
-		public LogItem(LogType logtype, string title, object detail, int frame = 1)
+		public LogItem(LogType logType, string title, object detail, int frame = 1)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(title));
 			Debug.Assert(detail != null);
 			Debug.Assert(frame >= 1);
 			
-			LogType = logtype;
+			LogType = logType;
 			Title = title;
 			Detail = detail;
 			StackTrace = new StackTrace(frame, true);

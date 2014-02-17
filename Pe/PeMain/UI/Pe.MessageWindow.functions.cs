@@ -48,13 +48,29 @@ namespace PeMain.UI
 			// 登録解除
 			foreach(var hotKeyData in hotKeyDatas) {
 				if(!UnRegisterHotKey(hotKeyData.Id)) {
-					CommonData.Logger.Puts(LogType.Warning, CommonData.Language["hotkey/unregist/fail"], CommonData.Language[hotKeyData.UnRegistMessageName]);
+					var logData = new LogData();
+					logData.LogType = LogType.Warning;
+					logData.Title   = CommonData.Language["hotkey/unregist/fail"];
+					logData.Detail  = CommonData.Language[hotKeyData.UnRegistMessageName];
+					if(InitLog == null) {
+						CommonData.Logger.Puts(logData.LogType, logData.Title, logData.Detail);
+					} else {
+						InitLog.Add(new LogItem(logData.LogType, logData.Title, logData.Detail));
+					}
 				}
 			}
 			// 登録
 			foreach(var hotKeyData in hotKeyDatas.Where(data => data.HotKey.Enabled)) {
 				if(!RegisterHotKey(hotKeyData.Id, hotKeyData.HotKey.Modifiers, hotKeyData.HotKey.Key)) {
-					CommonData.Logger.Puts(LogType.Error, CommonData.Language["hotkey/regist/fail"], CommonData.Language[hotKeyData.RegistMessageName]);
+					var logData = new LogData();
+					logData.LogType = LogType.Warning;
+					logData.Title   = CommonData.Language["hotkey/regist/fail"];
+					logData.Detail  = CommonData.Language[hotKeyData.RegistMessageName];
+					if(InitLog == null) {
+						CommonData.Logger.Puts(logData.LogType, logData.Title, logData.Detail);
+					} else {
+						InitLog.Add(new LogItem(logData.LogType, logData.Title, logData.Detail));
+					}
 				}
 			}
 		}

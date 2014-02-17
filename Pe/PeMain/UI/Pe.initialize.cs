@@ -70,7 +70,9 @@ namespace PeMain.UI
 		void InitializeMessage(string[] args, List<LogItem> initLog)
 		{
 			this._messageWindow = new MessageWindow(this);
+			this._messageWindow.InitLog = initLog;
 			this._messageWindow.SetCommonData(this._commonData);
+			this._messageWindow.InitLog = null;
 		}
 		
 		void AttachmentToolbarSubMenu(MenuItem parentMenu)
