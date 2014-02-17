@@ -25,6 +25,7 @@ namespace PeMain
 		private const string dirRootName = programName;
 		
 		public const string mainSettingFileName = "mainsetting.xml";
+		public const string launcherItemsName   = "launcher-items.xml";
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -76,7 +77,7 @@ namespace PeMain
 #if DEBUG
 				var path = Path.Combine(@"Z:\", Environment.ExpandEnvironmentVariables("%USERNAME%"));
 #else
-				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), dirRootName);
+				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), this.dirRootName);
 #endif
 				return path;
 			}
@@ -86,10 +87,12 @@ namespace PeMain
 		/// </summary>
 		public static string UserMainSettingPath
 		{
-			get 
-			{
-				return Path.Combine(UserSettingDirPath, mainSettingFileName);
-			}
+			get { return Path.Combine(UserSettingDirPath, mainSettingFileName); } 
+		}
+		
+		public static string UserLauncherItemsPath
+		{
+			get { return Path.Combine(UserSettingDirPath, launcherItemsName);}
 		}
 	}
 	

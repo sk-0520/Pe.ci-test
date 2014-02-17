@@ -45,7 +45,7 @@ namespace PeMain.UI
 			if(initLog != null) {
 				initLog.Add(new LogItem(LogType.Information, "language", languageFilePath));
 			}
-			this._commonData.Language = Initializer.GetLanguage(languageFilePath);
+			this._commonData.Language = LoadDeserialize<Language>(languageFilePath, false);
 			if(this._commonData.Language == null) {
 				if(initLog != null) {
 					initLog.Add(new LogItem(LogType.Warning, "not found language", languageFilePath));
@@ -62,7 +62,11 @@ namespace PeMain.UI
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
 			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
-			this._commonData.MainSetting = Initializer.GetMainSetting(mainSettingFilePath);
+			this._commonData.MainSetting = LoadDeserialize<MainSetting>(mainSettingFilePath, true);
+			
+			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
+			initLog.Add(new LogItem(LogType.Information, "launcher-items", launcherItemsFilePath));
+			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
 			InitializeLanguage(args, initLog);
 		}

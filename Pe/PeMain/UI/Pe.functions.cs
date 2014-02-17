@@ -62,24 +62,52 @@ namespace PeMain.UI
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
 			SaveMainSetting(this._commonData.MainSetting, mainSettingFilePath);
+			
+			var launcherItemsPath = Literal.UserLauncherItemsPath;
+			var sortedSet = new HashSet<LauncherItem>();
+			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
+				sortedSet.Add(item);
+			}
+			SaveLauncherItems(sortedSet, launcherItemsPath);
+		}
+		
+		
+		static T LoadDeserialize<T>(string path, bool failToNew)
+			where T: new()
+		{
+			if(File.Exists(path)) {
+				var serializer = new XmlSerializer(typeof(T));
+				using(var stream = new FileStream(path, FileMode.Open)) {
+					return (T)serializer.Deserialize(stream);
+				}
+			}
+			if(failToNew) {
+				return new T();
+			} else {
+				return default(T);
+			}
+		}
+
+		void SaveSerialize<T>(T saveData, string savePath)
+		{
+			Debug.Assert(saveData != null);
+			FileUtility.MakeFileParentDirectory(savePath);
+
+			using(var stream = new FileStream(savePath, FileMode.Create)) {
+				var serializer = new XmlSerializer(typeof(T));
+				serializer.Serialize(stream, saveData);
+			}
+			
 		}
 		
 		void SaveMainSetting(MainSetting mainSetting, string mainSettingPath)
 		{
-			Debug.Assert(mainSetting != null);
-			FileUtility.MakeFileParentDirectory(mainSettingPath);
-
-			using(var stream = new FileStream(mainSettingPath, FileMode.Create)) {
-				var sortedSet = new HashSet<LauncherItem>();
-				foreach(var item in mainSetting.Launcher.Items.OrderBy(item => item.Name)) {
-					sortedSet.Add(item);
-				}
-				var nowItems = mainSetting.Launcher.Items;
-				mainSetting.Launcher.Items = sortedSet;
-				var serializer = new XmlSerializer(typeof(MainSetting));
-				serializer.Serialize(stream, mainSetting);
-				mainSetting.Launcher.Items = nowItems;
-			}
+			SaveSerialize(mainSetting, mainSettingPath);
+		}
+		
+		void SaveLauncherItems(HashSet<LauncherItem> items, string itemsPath)
+		{
+			SaveSerialize(items, itemsPath);
 		}
 		
 		void CloseApplication(bool save)

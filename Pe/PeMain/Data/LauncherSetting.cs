@@ -425,9 +425,11 @@ namespace PeMain.Data
 		{
 			Items = new HashSet<LauncherItem>();
 		}
+		
 		/// <summary>
 		/// 各ランチャアイテム
 		/// </summary>
+		[XmlIgnoreAttribute()]
 		public HashSet<LauncherItem> Items { get; set; }
 		
 		public void Dispose()
