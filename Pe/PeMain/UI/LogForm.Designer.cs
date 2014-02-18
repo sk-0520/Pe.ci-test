@@ -173,6 +173,7 @@ namespace PeMain.UI
 			this.viewDetail.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.viewDetail.Size = new System.Drawing.Size(196, 90);
 			this.viewDetail.TabIndex = 1;
+			this.viewDetail.WordWrap = false;
 			// 
 			// listStack
 			// 

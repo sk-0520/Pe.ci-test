@@ -24,8 +24,11 @@ namespace PeMain
 			Application.SetCompatibleTextRenderingDefault(false);
 			
 			bool isFirstInstance;
-			// Please use a unique name for the mutex to prevent conflicts with other programs
-			using (Mutex mtx = new Mutex(true, "PeMain", out isFirstInstance)) {
+			var mutexName = Literal.programName;
+#if DEBUG
+			mutexName += "_debug";
+#endif
+			using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 				if (isFirstInstance) {
 					using(var notificationIcon = new UI.Pe(args)) {
 						Application.Run();

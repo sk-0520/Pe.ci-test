@@ -38,7 +38,9 @@ namespace PeMain.Logic
 				} else {
 					startInfo.UseShellExecute = false;
 					
-					startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+					if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
+						startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+					}
 					
 					// 環境変数
 					if(launcherItem.EnvironmentSetting.EditEnvironment) {

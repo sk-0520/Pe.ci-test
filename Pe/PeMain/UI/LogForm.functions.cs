@@ -103,13 +103,17 @@ namespace PeMain.UI
 			return listItem;
 		}
 		
+		string ObjectToString(object obj)
+		{
+			return obj.ToString();
+		}
+		
 		void SetDetail(LogItem logItem)
 		{
 			Debug.Assert(logItem != null);
 			
 			// 
-			this.viewDetail.Text = logItem.Detail.ToString();
-			
+			this.viewDetail.Text = ObjectToString(logItem.Detail);
 			
 			//
 			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);
