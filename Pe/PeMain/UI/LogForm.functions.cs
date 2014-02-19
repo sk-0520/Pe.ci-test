@@ -10,8 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -99,13 +100,54 @@ namespace PeMain.UI
 			lineItem.Text = string.Format("{0}:{1}", sf.GetFileLineNumber(), sf.GetFileColumnNumber());
 			var method = sf.GetMethod();
 			funcItem.Text = string.Format("{0}:{1}", method.ReflectedType, method.ToString());
-						
+			
 			return listItem;
 		}
 		
-		string ObjectToString(object obj)
+		IEnumerable<string> ObjectToStringList(object obj)
 		{
-			return obj.ToString();
+			var result = new List<string>();
+			var type = obj.GetType();
+			
+			if(type == typeof(string)) {
+				return new [] { (string)obj };
+			}
+
+			var members = type.GetMembers(
+				BindingFlags.Public | BindingFlags.NonPublic |
+				BindingFlags.Instance
+			)
+				.Select(m => new { Name = m.Name, Type = m.GetType(), MemberType = m.MemberType})
+				.Where(m => m.MemberType.IsIn(MemberTypes.Property, MemberTypes.Field))
+				.OrderBy(m => m.Name)
+			;
+			
+			foreach(var member in members)  {
+				object value;
+				if(member.MemberType == MemberTypes.Field) {
+					var field = type.GetField(member.Name);
+					if(field == null) {
+						continue;
+					}
+					value = field.GetValue(obj);
+				} else {
+					Debug.Assert(member.MemberType == MemberTypes.Property);
+					var prop = type.GetProperty(member.Name);
+					if(prop == null) {
+						continue;
+					}
+					value = prop.GetValue(obj);
+				}
+				var message = string.Format("{0}: {1}", member.Name, value);
+				result.Add(message);
+				
+				//if(!value.GetType().IsPrimitive) {
+				//	var childList = ObjectToStringList(value);
+				//	result.AddRange(childList.Select(s => "-> " + s));
+				//}
+				
+			}
+			return result;
 		}
 		
 		void SetDetail(LogItem logItem)
@@ -113,7 +155,7 @@ namespace PeMain.UI
 			Debug.Assert(logItem != null);
 			
 			// 
-			this.viewDetail.Text = ObjectToString(logItem.Detail);
+			this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
 			
 			//
 			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);
