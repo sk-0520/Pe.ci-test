@@ -85,20 +85,28 @@ namespace PeMain.UI
 		public override Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition)
 		{
 			var frame = SystemInformation.Border3DSize;
+			var edge = new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
+			
 			if(EnabledVisualStyle) {
 				switch(toolbarPosition) {
 					case ToolbarPosition.DesktopFloat:
-						frame.Height = 0;
+						edge.Top = edge.Bottom = 0;
 						break;
 						
 					case ToolbarPosition.DesktopTop:
+						edge.Top = 0;
+						break;
+						
 					case ToolbarPosition.DesktopBottom:
-						frame.Height = 0;
+						edge.Bottom = 0;
 						break;
 						
 					case ToolbarPosition.DesktopLeft:
+						edge.Left = 0;
+						break;
+						
 					case ToolbarPosition.DesktopRight:
-						frame.Width = 0;
+						edge.Right = 0;
 						break;
 						
 					default:
@@ -106,13 +114,36 @@ namespace PeMain.UI
 						break;
 				}
 			}
-			return new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
+			return edge;
 		}
 		
 		public override Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition)
 		{
 			if(EnabledVisualStyle) {
-				return Padding.Empty;
+				var frame = SystemInformation.Border3DSize;
+				var border = new Padding(0);
+				switch(toolbarPosition) {
+					case ToolbarPosition.DesktopFloat:
+						break;
+						
+					case ToolbarPosition.DesktopTop:
+					case ToolbarPosition.DesktopBottom:
+						border.Left = frame.Width;
+						border.Right = frame.Width;
+						break;
+						
+					case ToolbarPosition.DesktopLeft:
+					case ToolbarPosition.DesktopRight:
+						border.Top = frame.Height;
+						border.Bottom = frame.Height;
+						break;
+						
+					default:
+						Debug.Assert(false, toolbarPosition.ToString());
+						break;
+				}
+				
+				return border;
 			} else {
 				return new Padding(0, 0, 0, 1);
 			}
@@ -212,6 +243,42 @@ namespace PeMain.UI
 			}
 			using(var brush = new LinearGradientBrush(tailArea, endColor, startColor, LinearGradientMode.BackwardDiagonal)) {
 				g.FillRectangle(brush, tailArea);
+			}
+			
+			if(ToolbarPositionUtility.IsDockingMode(toolPosition)) {
+				Point startPoint, endPoint;
+				var lineWidth = 1;
+				switch(toolPosition) {
+					case ToolbarPosition.DesktopTop:
+						startPoint = new Point(drawArea.Left, drawArea.Bottom - lineWidth);
+						endPoint = new Point(drawArea.Right, drawArea.Bottom - lineWidth);
+						break;
+						
+					case ToolbarPosition.DesktopBottom:
+						startPoint = new Point(drawArea.Left, drawArea.Top);
+						endPoint = new Point(drawArea.Right, drawArea.Top);
+						break;
+						
+					case ToolbarPosition.DesktopLeft:
+						startPoint = new Point(drawArea.Right - lineWidth, drawArea.Top);
+						endPoint = new Point(drawArea.Right - lineWidth, drawArea.Bottom);
+						break;
+						
+					case ToolbarPosition.DesktopRight:
+						startPoint = new Point(drawArea.Left, drawArea.Top);
+						endPoint = new Point(drawArea.Left, drawArea.Bottom);
+						break;
+						
+					default:
+						startPoint = endPoint = Point.Empty;
+						Debug.Assert(false, toolPosition.ToString());
+						break;
+				}
+				using(var pen = new Pen(Color.FromArgb(200, Color.White))) {
+					pen.Width = lineWidth;
+					pen.Alignment = PenAlignment.Center;
+					g.DrawLine(pen, startPoint, endPoint);
+				}
 			}
 		}
 
