@@ -27,6 +27,7 @@ namespace PeMain
 			var mutexName = Literal.programName;
 #if DEBUG
 			mutexName += "_debug";
+			//mutexName += new Random().Next().ToString();
 #endif
 			using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 				if (isFirstInstance) {

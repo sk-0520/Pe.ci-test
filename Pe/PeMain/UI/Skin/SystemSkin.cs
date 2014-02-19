@@ -237,48 +237,54 @@ namespace PeMain.UI
 				headArea = new Rectangle(drawArea.Location, new Size(drawArea.Width, edgePadding.Top));
 				tailArea = new Rectangle(new Point(0, drawArea.Height - edgePadding.Bottom), new Size(drawArea.Width, edgePadding.Bottom));
 			}
-			g.SmoothingMode = SmoothingMode.AntiAlias;
-			using(var brush = new LinearGradientBrush(headArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
-				g.FillRectangle(brush, headArea);
-			}
-			using(var brush = new LinearGradientBrush(tailArea, endColor, startColor, LinearGradientMode.BackwardDiagonal)) {
-				g.FillRectangle(brush, tailArea);
-			}
-			
-			if(ToolbarPositionUtility.IsDockingMode(toolPosition)) {
-				Point startPoint, endPoint;
-				var lineWidth = 1;
-				switch(toolPosition) {
-					case ToolbarPosition.DesktopTop:
-						startPoint = new Point(drawArea.Left, drawArea.Bottom - lineWidth);
-						endPoint = new Point(drawArea.Right, drawArea.Bottom - lineWidth);
-						break;
-						
-					case ToolbarPosition.DesktopBottom:
-						startPoint = new Point(drawArea.Left, drawArea.Top);
-						endPoint = new Point(drawArea.Right, drawArea.Top);
-						break;
-						
-					case ToolbarPosition.DesktopLeft:
-						startPoint = new Point(drawArea.Right - lineWidth, drawArea.Top);
-						endPoint = new Point(drawArea.Right - lineWidth, drawArea.Bottom);
-						break;
-						
-					case ToolbarPosition.DesktopRight:
-						startPoint = new Point(drawArea.Left, drawArea.Top);
-						endPoint = new Point(drawArea.Left, drawArea.Bottom);
-						break;
-						
-					default:
-						startPoint = endPoint = Point.Empty;
-						Debug.Assert(false, toolPosition.ToString());
-						break;
+			var prevSmoothingMode = g.SmoothingMode;
+			try {
+				g.SmoothingMode = SmoothingMode.AntiAlias;
+				
+				using(var brush = new LinearGradientBrush(headArea, startColor, endColor, LinearGradientMode.ForwardDiagonal)) {
+					g.FillRectangle(brush, headArea);
 				}
-				using(var pen = new Pen(Color.FromArgb(200, Color.White))) {
-					pen.Width = lineWidth;
-					pen.Alignment = PenAlignment.Center;
-					g.DrawLine(pen, startPoint, endPoint);
+				using(var brush = new LinearGradientBrush(tailArea, endColor, startColor, LinearGradientMode.BackwardDiagonal)) {
+					g.FillRectangle(brush, tailArea);
 				}
+				
+				if(ToolbarPositionUtility.IsDockingMode(toolPosition)) {
+					Point startPoint, endPoint;
+					var lineWidth = 1;
+					switch(toolPosition) {
+						case ToolbarPosition.DesktopTop:
+							startPoint = new Point(drawArea.Left, drawArea.Bottom - lineWidth);
+							endPoint = new Point(drawArea.Right, drawArea.Bottom - lineWidth);
+							break;
+							
+						case ToolbarPosition.DesktopBottom:
+							startPoint = new Point(drawArea.Left, drawArea.Top);
+							endPoint = new Point(drawArea.Right, drawArea.Top);
+							break;
+							
+						case ToolbarPosition.DesktopLeft:
+							startPoint = new Point(drawArea.Right - lineWidth, drawArea.Top);
+							endPoint = new Point(drawArea.Right - lineWidth, drawArea.Bottom);
+							break;
+							
+						case ToolbarPosition.DesktopRight:
+							startPoint = new Point(drawArea.Left, drawArea.Top);
+							endPoint = new Point(drawArea.Left, drawArea.Bottom);
+							break;
+							
+						default:
+							startPoint = endPoint = Point.Empty;
+							Debug.Assert(false, toolPosition.ToString());
+							break;
+					}
+					using(var pen = new Pen(Color.FromArgb(180, Color.White))) {
+						pen.Width = lineWidth;
+						pen.Alignment = PenAlignment.Center;
+						g.DrawLine(pen, startPoint, endPoint);
+					}
+				}
+			} finally {
+				g.SmoothingMode = prevSmoothingMode;
 			}
 		}
 

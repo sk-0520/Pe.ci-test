@@ -56,20 +56,27 @@ namespace PeMain.UI
 		void ApplySettingPosition()
 		{
 			if(UseToolbarItem.Visible) {
-				ItemSizeToFormSize();
-				
-				if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
-					DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
-					if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
-						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+				var prevOpacity = Opacity;
+				Opacity = 0;
+				try {
+					ItemSizeToFormSize();
+					
+					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
+						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
+						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
+							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+						} else {
+							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
+						}
 					} else {
-						this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
+						DesktopDockType = DesktopDockType.None;
+						if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+							Location = UseToolbarItem.FloatLocation;
+						}
 					}
-				} else {
-					DesktopDockType = DesktopDockType.None;
-					if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-						Location = UseToolbarItem.FloatLocation;
-					}
+					//DrawFullActivaChanged(this == Form.ActiveForm);
+				} finally {
+					Opacity = prevOpacity;
 				}
 			}
 		}
@@ -206,7 +213,7 @@ namespace PeMain.UI
 			foreach(var item in items) {
 				item.Dispose();
 			}
-			*/
+			 */
 			
 			this.toolLauncher.Items.Clear();
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
@@ -591,7 +598,7 @@ namespace PeMain.UI
 			} else {
 				var clickItem = new ToolStripSplitButton();
 				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
-				toolItem = clickItem; 
+				toolItem = clickItem;
 				toolItem.Text = item.Name;
 				toolItem.ToolTipText = item.Name;
 				var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
