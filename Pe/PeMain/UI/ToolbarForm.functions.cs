@@ -92,7 +92,7 @@ namespace PeMain.UI
 				var toolbarItem = new ToolbarItem();
 				toolbarItem.Name = DockScreen.DeviceName;
 				CommonData.MainSetting.Toolbar.Items.Add(toolbarItem);
-				toolbarItem.FloatLocation = DockScreen.Bounds.Location;
+				toolbarItem.FloatLocation = DockScreen.WorkingArea.Location;
 				UseToolbarItem = toolbarItem;
 			}
 		}
