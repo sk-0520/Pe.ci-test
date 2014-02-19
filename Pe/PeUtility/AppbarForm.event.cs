@@ -41,7 +41,8 @@ namespace PeUtility
 		
 		protected virtual void OnAppbarPosChanged(EventArgs e)
 		{
-			Docking(DesktopDockType);
+			//Docking(DesktopDockType);
+			DockingFromProperty();
 
 			if (AppbarPosChanged != null) {
 				AppbarPosChanged(this, e);

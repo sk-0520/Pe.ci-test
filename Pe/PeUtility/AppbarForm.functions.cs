@@ -69,11 +69,8 @@ namespace PeUtility
 			var appBar = new APPBARDATA(Handle);
 			appBar.uCallbackMessage = this.callbackMessage;
 			
-			Debug.WriteLine("callbackMessage: " + callbackMessage);
 			var registResult = API.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
-			Debug.WriteLine("registResult: " + registResult);
 			IsDocking = registResult.ToInt32() != 0;
-			Debug.WriteLine("IsDocking: " + IsDocking);
 			
 			return IsDocking;
 		}
@@ -85,7 +82,6 @@ namespace PeUtility
 			var appBar = new APPBARDATA(Handle);
 
 			var unregistResult = API.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
-			Debug.WriteLine("unregistResult: " + unregistResult);
 			
 			IsDocking = false;
 			this.callbackMessage = 0;
@@ -93,7 +89,7 @@ namespace PeUtility
 			return unregistResult.ToInt32() != 0;
 		}
 		
-		private RECT CalcBarArea(DesktopDockType dockType)
+		private RECT CalcWantBarArea(DesktopDockType dockType)
 		{
 			Debug.Assert(dockType != DesktopDockType.None);
 			
@@ -126,7 +122,54 @@ namespace PeUtility
 			
 			return barArea;
 		}
+		private void TuneSystemBarArea(ref APPBARDATA appBar)
+		{
+			// 現在の希望するサイズから実際のサイズ要求する
+			API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
+			switch(appBar.uEdge) {
+				case ABE.ABE_LEFT:
+					appBar.rc.Right = appBar.rc.Left + BarSize.Width;
+					break;
+					
+				case ABE.ABE_RIGHT:
+					appBar.rc.Left = appBar.rc.Right - BarSize.Width;
+					break;
+					
+				case ABE.ABE_TOP:
+					appBar.rc.Bottom = appBar.rc.Top + BarSize.Height;
+					break;
+					
+				case ABE.ABE_BOTTOM:
+					appBar.rc.Top = appBar.rc.Bottom - BarSize.Height;
+					break;
+					
+				default:
+					Debug.Assert(false, appBar.uEdge.ToString());
+					break;
+			}
+		}
 		
+		private void DockingFromParameter(DesktopDockType dockType)
+		{
+			var appBar = new APPBARDATA(Handle);
+			appBar.uEdge = dockType.ToABE();
+			appBar.rc = CalcWantBarArea(dockType);
+			TuneSystemBarArea(ref appBar);
+			
+			var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+			
+			this.Bounds = new Rectangle(
+				appBar.rc.Left,
+				appBar.rc.Top,
+				appBar.rc.Right - appBar.rc.Left,
+				appBar.rc.Bottom - appBar.rc.Top
+			);
+			
+		}
+		public void DockingFromProperty()
+		{
+			DockingFromParameter(DesktopDockType);
+		}
 		/// <summary>
 		/// ドッキングの実行
 		/// 
@@ -151,45 +194,7 @@ namespace PeUtility
 			Debug.Assert(!IsDocking);
 			ResistAppBar();
 			
-			var appBar = new APPBARDATA(Handle);
-			appBar.uEdge = dockType.ToABE();
-			appBar.rc = CalcBarArea(dockType);
-			// 現在の希望するサイズから実際のサイズ要求する
-			API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
-			switch(dockType) {
-				case DesktopDockType.Left:
-					appBar.rc.Right = appBar.rc.Left + BarSize.Width;
-					break;
-					
-				case DesktopDockType.Right:
-					appBar.rc.Left = appBar.rc.Right - BarSize.Width;
-					break;
-					
-				case DesktopDockType.Top:
-					appBar.rc.Bottom = appBar.rc.Top + BarSize.Height;
-					break;
-					
-				case DesktopDockType.Bottom:
-					appBar.rc.Top = appBar.rc.Bottom - BarSize.Height;
-					break;
-					
-				default:
-					Debug.Assert(false, dockType.ToString());
-					break;
-			}
-			
-			// TopMost のときに領域を確保する
-			if (TopMost) {
-				var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
-				Debug.WriteLine(appbarResult);
-			}
-			
-			this.Bounds = new Rectangle(
-				appBar.rc.Left,
-				appBar.rc.Top,
-				appBar.rc.Right - appBar.rc.Left,
-				appBar.rc.Bottom - appBar.rc.Top
-			);
+			DockingFromParameter(dockType);
 		}
 	}
 }
