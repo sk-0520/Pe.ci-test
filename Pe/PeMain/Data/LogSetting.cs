@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -27,6 +28,7 @@ namespace PeMain.Data
 			var screenSize = Screen.PrimaryScreen.WorkingArea.Size;
 			Point = new Point(screenSize.Width - Size.Width, screenSize.Height - Size.Height);
 			AddShow = true;
+			AddShowTrigger = LogType.Warning | LogType.Error;
 		}
 		
 		public bool Visible { get; set; }
@@ -36,5 +38,6 @@ namespace PeMain.Data
 		/// ログ追加時に画面表示
 		/// </summary>
 		public bool AddShow { get; set; }
+		public LogType AddShowTrigger { get; set; }
 	}
 }

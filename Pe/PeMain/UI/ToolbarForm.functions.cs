@@ -58,6 +58,8 @@ namespace PeMain.UI
 			if(UseToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;
+				
+				SuspendLayout();
 				try {
 					ItemSizeToFormSize();
 					
@@ -76,6 +78,7 @@ namespace PeMain.UI
 					}
 					//DrawFullActivaChanged(this == Form.ActiveForm);
 				} finally {
+					ResumeLayout();
 					Opacity = prevOpacity;
 				}
 			}

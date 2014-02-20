@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using PeMain.Data;
@@ -30,6 +31,17 @@ namespace PeMain.UI
 			Initialize();
 		}
 		
+		static int LogTypeToImageIndex(LogType logType) {
+			switch(logType) {
+				case LogType.Information: return 0;
+				case LogType.Warning: return 1;
+				case LogType.Error: return 2;
+				default: 
+					Debug.Assert(false, logType.ToString());
+					return -1;
+			}
+		}
+		
 		
 		void ListLog_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
 		{
@@ -40,7 +52,7 @@ namespace PeMain.UI
 				}
 				
 				var logItem = this._logs[e.ItemIndex];
-				e.Item.ImageIndex = (int)logItem.LogType;
+				e.Item.ImageIndex = LogTypeToImageIndex(logItem.LogType);
 				
 				var dateItem = e.Item;
 				var titleItem = e.Item.SubItems[1];

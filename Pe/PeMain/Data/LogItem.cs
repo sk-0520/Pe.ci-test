@@ -12,11 +12,13 @@ using System.Xml.Serialization;
 
 namespace PeMain.Data
 {
+	[Flags]
 	public enum LogType
 	{
-		Information,
-		Warning,
-		Error
+		None = 0x00,
+		Information = 0x01,
+		Warning = 0x02,
+		Error = 0x04,
 	}
 	
 	public struct LogData

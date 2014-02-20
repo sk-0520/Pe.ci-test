@@ -130,6 +130,10 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.groupLogTrigger = new System.Windows.Forms.GroupBox();
+			this.selectLogTrigger_information = new System.Windows.Forms.CheckBox();
+			this.selectLogTrigger_warning = new System.Windows.Forms.CheckBox();
+			this.selectLogTrigger_error = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
@@ -164,6 +168,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			this.groupLogTrigger.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -227,12 +232,11 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvExt.Language = null;
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
-			this.inputSystemEnvExt.Modifiers = MOD.None;
+			this.inputSystemEnvExt.Modifiers = PI.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
 			this.inputSystemEnvExt.ReadOnly = true;
-			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 27);
+			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 23);
 			this.inputSystemEnvExt.TabIndex = 16;
-			this.inputSystemEnvExt.Text = "";
 			// 
 			// labelSystemEnvHiddenFile
 			// 
@@ -250,20 +254,20 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvHiddenFile.Language = null;
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
-			this.inputSystemEnvHiddenFile.Modifiers = MOD.None;
+			this.inputSystemEnvHiddenFile.Modifiers = PI.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
 			this.inputSystemEnvHiddenFile.ReadOnly = true;
-			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(252, 27);
+			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(252, 23);
 			this.inputSystemEnvHiddenFile.TabIndex = 16;
-			this.inputSystemEnvHiddenFile.Text = "";
 			// 
 			// groupMainLog
 			// 
 			this.groupMainLog.Controls.Add(this.selectLogAddShow);
+			this.groupMainLog.Controls.Add(this.groupLogTrigger);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
 			this.groupMainLog.Location = new System.Drawing.Point(15, 62);
 			this.groupMainLog.Name = "groupMainLog";
-			this.groupMainLog.Size = new System.Drawing.Size(200, 100);
+			this.groupMainLog.Size = new System.Drawing.Size(200, 163);
 			this.groupMainLog.TabIndex = 2;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = "{LOG}";
@@ -271,7 +275,7 @@ namespace PeMain.UI
 			// selectLogAddShow
 			// 
 			this.selectLogAddShow.AutoSize = true;
-			this.selectLogAddShow.Location = new System.Drawing.Point(16, 52);
+			this.selectLogAddShow.Location = new System.Drawing.Point(16, 47);
 			this.selectLogAddShow.Name = "selectLogAddShow";
 			this.selectLogAddShow.Size = new System.Drawing.Size(111, 19);
 			this.selectLogAddShow.TabIndex = 1;
@@ -621,7 +625,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 200);
+			this.panelEnv.Size = new System.Drawing.Size(519, 198);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -630,7 +634,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 200);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 198);
 			this.envLauncherUpdate.TabIndex = 15;
 			// 
 			// envLauncherRemove
@@ -638,7 +642,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 200);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 198);
 			this.envLauncherRemove.TabIndex = 16;
 			// 
 			// selectLauncherEnv
@@ -898,7 +902,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 281);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 283);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -909,13 +913,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 256);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 258);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 281);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 283);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -931,7 +935,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 256);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 258);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1027,7 +1031,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 281);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 283);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1065,12 +1069,11 @@ namespace PeMain.UI
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputCommandHotkey.Language = null;
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
-			this.inputCommandHotkey.Modifiers = MOD.None;
+			this.inputCommandHotkey.Modifiers = PI.Windows.MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
 			this.inputCommandHotkey.ReadOnly = true;
-			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 27);
+			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 23);
 			this.inputCommandHotkey.TabIndex = 15;
-			this.inputCommandHotkey.Text = "";
 			// 
 			// labelCommandIcon
 			// 
@@ -1201,6 +1204,47 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// groupLogTrigger
+			// 
+			this.groupLogTrigger.Controls.Add(this.selectLogTrigger_error);
+			this.groupLogTrigger.Controls.Add(this.selectLogTrigger_warning);
+			this.groupLogTrigger.Controls.Add(this.selectLogTrigger_information);
+			this.groupLogTrigger.Location = new System.Drawing.Point(6, 45);
+			this.groupLogTrigger.Name = "groupLogTrigger";
+			this.groupLogTrigger.Size = new System.Drawing.Size(188, 106);
+			this.groupLogTrigger.TabIndex = 2;
+			this.groupLogTrigger.TabStop = false;
+			// 
+			// selectLogTrigger_information
+			// 
+			this.selectLogTrigger_information.AutoSize = true;
+			this.selectLogTrigger_information.Location = new System.Drawing.Point(17, 25);
+			this.selectLogTrigger_information.Name = "selectLogTrigger_information";
+			this.selectLogTrigger_information.Size = new System.Drawing.Size(126, 19);
+			this.selectLogTrigger_information.TabIndex = 0;
+			this.selectLogTrigger_information.Text = "{INFORMATION}";
+			this.selectLogTrigger_information.UseVisualStyleBackColor = true;
+			// 
+			// selectLogTrigger_warning
+			// 
+			this.selectLogTrigger_warning.AutoSize = true;
+			this.selectLogTrigger_warning.Location = new System.Drawing.Point(17, 50);
+			this.selectLogTrigger_warning.Name = "selectLogTrigger_warning";
+			this.selectLogTrigger_warning.Size = new System.Drawing.Size(100, 19);
+			this.selectLogTrigger_warning.TabIndex = 0;
+			this.selectLogTrigger_warning.Text = "{WARNING}";
+			this.selectLogTrigger_warning.UseVisualStyleBackColor = true;
+			// 
+			// selectLogTrigger_error
+			// 
+			this.selectLogTrigger_error.AutoSize = true;
+			this.selectLogTrigger_error.Location = new System.Drawing.Point(17, 75);
+			this.selectLogTrigger_error.Name = "selectLogTrigger_error";
+			this.selectLogTrigger_error.Size = new System.Drawing.Size(80, 19);
+			this.selectLogTrigger_error.TabIndex = 0;
+			this.selectLogTrigger_error.Text = "{ERROR}";
+			this.selectLogTrigger_error.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1254,13 +1298,20 @@ namespace PeMain.UI
 			this.toolToolbarGroup.ResumeLayout(false);
 			this.toolToolbarGroup.PerformLayout();
 			this.pageCommand.ResumeLayout(false);
+			this.pageCommand.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.groupLogTrigger.ResumeLayout(false);
+			this.groupLogTrigger.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectLogTrigger_information;
+		private System.Windows.Forms.CheckBox selectLogTrigger_warning;
+		private System.Windows.Forms.CheckBox selectLogTrigger_error;
+		private System.Windows.Forms.GroupBox groupLogTrigger;
 		private PeMain.UI.EnvRemoveControl envLauncherRemove;
 		private PeMain.UI.EnvUpdateControl envLauncherUpdate;
 		private System.Windows.Forms.SplitContainer panelEnv;

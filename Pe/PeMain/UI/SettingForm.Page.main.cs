@@ -7,6 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -20,6 +23,19 @@ namespace PeMain.UI
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
 			logSetting.AddShow = this.selectLogAddShow.Checked;
+			
+			var trigger = new Dictionary<CheckBox, LogType>() {
+				{ this.selectLogTrigger_information, LogType.Information },
+				{ this.selectLogTrigger_warning,     LogType.Warning },
+				{ this.selectLogTrigger_error,       LogType.Error },
+			};
+			var logType = LogType.None;
+			foreach(var t in trigger) {
+				if(t.Key.Checked) {
+					logType |= t.Value;
+				}
+			}
+			logSetting.AddShowTrigger = logType;
 		}
 		
 		void SystemEnvExportSetting(SystemEnvSetting systemEnvSetting)

@@ -156,7 +156,7 @@ namespace PeMain.Data
 			IconScale = IconScale.Small;
 			ShowText = false;
 			Visible = true;
-			Topmost = true;
+			Topmost = false;
 			AutoHide = false;
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;

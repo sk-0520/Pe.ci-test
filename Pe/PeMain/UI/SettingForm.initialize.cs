@@ -27,6 +27,10 @@ namespace PeMain.UI
 		{
 			this.selectLogVisible.Checked = logSetting.Visible;
 			this.selectLogAddShow.Checked = logSetting.AddShow;
+			
+			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
+			this.selectLogTrigger_warning.Checked     = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
+			this.selectLogTrigger_error.Checked       = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
 		}
 		
 		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)

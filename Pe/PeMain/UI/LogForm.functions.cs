@@ -31,7 +31,7 @@ namespace PeMain.UI
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 			
-			if(CommonData.MainSetting.Log.AddShow && !Visible) {
+			if(!Visible && CommonData.MainSetting.Log.AddShow && ((CommonData.MainSetting.Log.AddShowTrigger & logType) == logType)) {
 				Visible = true;
 			}
 			
