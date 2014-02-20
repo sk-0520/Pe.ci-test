@@ -409,7 +409,7 @@ namespace PeMain.Data
 		public void Increment(string option = null, string workDirPath = null)
 		{
 			LauncherHistory.ExecuteCount += 1;
-			LauncherHistory.DateHistory.UpdateUTC = DateTime.UtcNow;
+			LauncherHistory.DateHistory.Update = DateTime.UtcNow;
 			IncrementList(LauncherHistory.Options, option);
 			IncrementList(LauncherHistory.WorkDirs, workDirPath);
 		}

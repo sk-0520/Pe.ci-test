@@ -18,18 +18,18 @@ namespace PeMain.Data
 	{
 		public DateHistory()
 		{
-			CreateUTC = DateTime.UtcNow;
-			UpdateUTC = DateTime.UtcNow;
+			Create = DateTime.Now;
+			Update = DateTime.Now;
 		}
-		public DateTime CreateUTC { get; set; }
-		public DateTime UpdateUTC { get; set; }
+		public DateTime Create { get; set; }
+		public DateTime Update { get; set; }
 		
 		public object Clone()
 		{
 			var result = new DateHistory();
 			
-			result.CreateUTC = CreateUTC;
-			result.UpdateUTC = UpdateUTC;
+			result.Create = Create;
+			result.Update = Update;
 			
 			return result;
 		}
