@@ -177,6 +177,11 @@
 		<Word Name="enum/icon-size/normal" Text="中" />
 		<Word Name="enum/icon-size/big"    Text="大" />
 		<Word Name="enum/icon-size/large"  Text="特大" />
+		
+		<Word Name="enum/log-type"              Text="ログ種別" />
+		<Word Name="enum/log-type/information"  Text="情報" />
+		<Word Name="enum/log-type/warning"      Text="警報" />
+		<Word Name="enum/log-type/error"        Text="エラー" />
 	
 	</Words>
 </Language>

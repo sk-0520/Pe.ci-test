@@ -26,29 +26,11 @@ namespace PeMain.UI
 		{
 			this._notifyIcon.ShowBalloonTip(0, title, message, icon);
 		}
+		
 		public void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items)
 		{
 			throw new NotImplementedException();
 		}
 		
-		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
-		{
-			if(this._pause) {
-				return;
-			}
-			
-			switch(hotKeyId) {
-				case HotKeyId.HiddenFile:
-					ChangeShowSysEnv(SystemEnv.IsHiddenFileShow, SystemEnv.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
-					break;
-					
-				case HotKeyId.Extension:
-					ChangeShowSysEnv(SystemEnv.IsExtensionShow, SystemEnv.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
-					break;
-					
-				default:
-					break;
-			}
-		}
 	}
 }

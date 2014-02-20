@@ -18,7 +18,7 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class EnumLang
 	{
-		public static string ToText(this LauncherType value, Language lang)
+		public static string ToText(this LauncherType value, Language language)
 		{
 			var key = "enum/launcher-type/" + new Dictionary<LauncherType, string>() {
 				{ LauncherType.File, "file"},
@@ -26,10 +26,10 @@ namespace PeMain.Logic
 				{ LauncherType.Pe,   "pe"},
 			}[value];
 			
-			return lang[key];
+			return language[key];
 		}
 		
-		public static string ToText(this ToolbarPosition value, Language lang)
+		public static string ToText(this ToolbarPosition value, Language language)
 		{
 			var key = "enum/toolbar-position/" + new Dictionary<ToolbarPosition, string>() {
 				{ ToolbarPosition.DesktopFloat,  "desktop/float" },
@@ -43,10 +43,10 @@ namespace PeMain.Logic
 				{ ToolbarPosition.WindowBottom,  "window/bottom" },
 			}[value];
 			
-			return lang[key];
+			return language[key];
 		}
 		
-		public static string ToText(this IconScale value, Language lang)
+		public static string ToText(this IconScale value, Language language)
 		{
 			var key = "enum/icon-size/" + new Dictionary<IconScale, string>() {
 				{ IconScale.Small,  "small"},
@@ -55,7 +55,18 @@ namespace PeMain.Logic
 				{ IconScale.Large,  "large"},
 			}[value];
 			
-			return lang[key];
+			return language[key];
+		}
+		
+		public static string ToText(this LogType value, Language language)
+		{
+			var key = "enum/log-type/" + new Dictionary<LogType, string>() {
+				{ LogType.Information, "information"},
+				{ LogType.Warning,     "warning"},
+				{ LogType.Error,       "error"},
+			}[value];
+			
+			return language[key];
 		}
 		
 	}

@@ -15,9 +15,11 @@ using System.IO.Packaging;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
+using PI.Windows;
 
 namespace PeMain.UI
 {
@@ -200,6 +202,28 @@ namespace PeMain.UI
 				this._commonData.Logger.Puts(LogType.Error, title, message);
 			}
 			ShowBalloon(icon, title, message);
+			
 		}
+		
+		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
+		{
+			if(this._pause) {
+				return;
+			}
+			
+			switch(hotKeyId) {
+				case HotKeyId.HiddenFile:
+					ChangeShowSysEnv(SystemEnv.IsHiddenFileShow, SystemEnv.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
+					break;
+					
+				case HotKeyId.Extension:
+					ChangeShowSysEnv(SystemEnv.IsExtensionShow, SystemEnv.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
+					break;
+					
+				default:
+					break;
+			}
+		}
+
 	}
 }
