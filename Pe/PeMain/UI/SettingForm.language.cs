@@ -60,6 +60,8 @@ namespace PeMain.UI
 		void ApplyLanguageLauncher()
 		{
 			this.selecterLauncher.SetLanguage(Language);
+			this.envLauncherUpdate.SetLanguage(Language);
+			this.envLauncherRemove.SetLanguage(Language);
 			this.groupLauncherType.Text = Language["setting/group/item-type"];
 			this.selectLauncherType_file.Text = EnumLang.ToText(LauncherType.File, Language);
 			this.selectLauncherType_uri.Text = EnumLang.ToText(LauncherType.URI, Language);

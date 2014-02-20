@@ -396,6 +396,25 @@ namespace PeMain.Data
 			}
 		}
 		
+		public bool IsValueEqual(LauncherItem target)
+		{
+			return
+				LauncherType == target.LauncherType
+				&& Administrator == target.Administrator
+				&& IconIndex == target.IconIndex
+				&& StdOutputWatch == target.StdOutputWatch
+				&& Command == target.Command
+				&& WorkDirPath == target.WorkDirPath
+				&& Option == target.Option
+				&& IconPath == target.IconPath
+				&& EnvironmentSetting.EditEnvironment == target.EnvironmentSetting.EditEnvironment
+				&& Note == target.Note
+				&& Tag.SequenceEqual(target.Tag)
+				&& EnvironmentSetting.Remove.SequenceEqual(target.EnvironmentSetting.Remove)
+				&& EnvironmentSetting.Update.SequenceEqual(target.EnvironmentSetting.Update)
+			;
+		}
+		
 		void IncrementList(List<string> list, string value)
 		{
 			if(!string.IsNullOrEmpty(value)) {

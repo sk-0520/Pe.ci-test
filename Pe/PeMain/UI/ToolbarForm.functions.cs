@@ -730,8 +730,17 @@ namespace PeMain.UI
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
 				var item = LauncherItem.FileLoad(dropData.Files.First());
-				item.Name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
-				CommonData.MainSetting.Launcher.Items.Add(item);
+				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
+				var newItem = true;
+				if(item.Name != name) {
+					// D&Dアイテムが既に登録済みアイテム名と被った場合はただの複製を考慮する
+					var haveItem = CommonData.MainSetting.Launcher.Items.Single(i => item.IsNameEqual(i.Name));
+					newItem = !haveItem.IsValueEqual(item);
+				}
+				if(newItem) {
+					item.Name = name;
+					CommonData.MainSetting.Launcher.Items.Add(item);
+				}
 				SelectedGroupItem.ItemNames.Add(item.Name);
 				SelectedGroup(SelectedGroupItem);
 				// TODO: 他のツールバーに教える
