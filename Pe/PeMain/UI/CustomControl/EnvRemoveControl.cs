@@ -27,5 +27,12 @@ namespace PeMain.UI
 			
 			Initialize();
 		}
+		
+		void InputEnv_TextChanged(object sender, EventArgs e)
+		{
+			if(this._event && ValueChanged != null) {
+				ValueChanged(this, new EventArgs());
+			}
+		}
 	}
 }

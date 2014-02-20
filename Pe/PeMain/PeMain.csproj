@@ -115,6 +115,9 @@
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomControl\EnvRemoveControl.event.cs">
+      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.functions.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </Compile>
@@ -371,6 +374,9 @@
     </Compile>
     <Compile Include="UI\Pe.sender.cs">
       <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
+      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -14,5 +14,6 @@ namespace PeMain.UI
 	partial class EnvRemoveControl
 	{
 		Language _language;
+		bool _event = false;
 	}
 }

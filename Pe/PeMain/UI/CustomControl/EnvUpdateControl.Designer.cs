@@ -55,6 +55,8 @@ namespace PeMain.UI
 			this.gridEnv.RowTemplate.Height = 21;
 			this.gridEnv.Size = new System.Drawing.Size(257, 150);
 			this.gridEnv.TabIndex = 0;
+			this.gridEnv.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridEnv_CellValueChanged);
+			this.gridEnv.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.GridEnv_RowsRemoved);
 			// 
 			// headerKey
 			// 

@@ -27,5 +27,19 @@ namespace PeMain.UI
 			
 			Initialize();
 		}
+		
+		void GridEnv_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+			if(this._event && ValueChanged != null) {
+				ValueChanged(this, new EventArgs());
+			}
+		}
+		
+		void GridEnv_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+		{
+			if(this._event && ValueChanged != null) {
+				ValueChanged(this, new EventArgs());
+			}
+		}
 	}
 }

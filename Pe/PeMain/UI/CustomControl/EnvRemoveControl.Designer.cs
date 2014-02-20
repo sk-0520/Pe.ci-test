@@ -48,6 +48,7 @@ namespace PeMain.UI
 			this.inputEnv.Name = "inputEnv";
 			this.inputEnv.Size = new System.Drawing.Size(150, 150);
 			this.inputEnv.TabIndex = 0;
+			this.inputEnv.TextChanged += new System.EventHandler(this.InputEnv_TextChanged);
 			// 
 			// EnvRemoveControl
 			// 

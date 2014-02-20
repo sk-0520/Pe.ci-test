@@ -23,8 +23,13 @@ namespace PeMain.UI
 		
 		public void SetItem(List<string> items)
 		{
-			var lines = string.Join(Environment.NewLine, items.Where(s => !string.IsNullOrEmpty(s)));
-			this.inputEnv.Text = lines;
+			this._event = false;
+			try {
+				var lines = string.Join(Environment.NewLine, items.Where(s => !string.IsNullOrEmpty(s)));
+				this.inputEnv.Text = lines;
+			} finally {
+				this._event = true;
+			}
 		}
 		
 		public void Clear()

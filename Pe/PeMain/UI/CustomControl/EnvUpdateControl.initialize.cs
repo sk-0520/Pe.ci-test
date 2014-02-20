@@ -14,7 +14,7 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			
+			this._event = true;
 		}
 	}
 }

@@ -274,5 +274,19 @@ namespace PeMain.UI
 				ToolbarSelectedChangeToolbarItem(toolbarItem);
 			}
 		}
+		
+		void EnvLauncherUpdate_ValueChanged(object sender, EventArgs e)
+		{
+			if(this._launcherItemEvent) {
+				LauncherInputChange();
+			}
+		}
+		
+		void EnvLauncherRemove_ValueChanged(object sender, EventArgs e)
+		{
+			if(this._launcherItemEvent) {
+				LauncherInputChange();
+			}	
+		}
 	}
 }
