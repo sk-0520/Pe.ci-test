@@ -43,7 +43,7 @@ namespace PeMain.UI
 			
 			this.viewCommand.Text = LauncherItem.Command;
 			this.inputOption.Items.AddRange(LauncherItem.LauncherHistory.Options.ToArray());
-			this.inputOption.Text = LauncherItem.WorkDirPath;
+			this.inputOption.Text = LauncherItem.Option;
 			this.inputWorkDirPath.Items.AddRange(LauncherItem.LauncherHistory.WorkDirs.ToArray());
 			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
 			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
