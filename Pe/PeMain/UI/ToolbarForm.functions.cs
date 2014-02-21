@@ -743,10 +743,18 @@ namespace PeMain.UI
 				}
 				SelectedGroupItem.ItemNames.Add(item.Name);
 				SelectedGroup(SelectedGroupItem);
-				// TODO: 他のツールバーに教える
+				
+				// 他のツールバーにアイテム変更を教える
+				CommonData.RootSender.ChangeLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
 			}
 		}
 		
+		public void ReceiveChangedLauncherItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
+		{
+			// 他のツールバーから通知を受け取った場合に反映処理を行う
+			Debug.Assert(toolbarItem != UseToolbarItem);
+			SelectedGroup(SelectedGroupItem);
+		}
 
 	}
 }

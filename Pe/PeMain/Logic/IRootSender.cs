@@ -22,7 +22,7 @@ namespace PeMain.Logic
 	{
 		void ShowBalloon(ToolTipIcon icon, string title, string message);
 	
-		void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items);
+		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
 		
 		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
 	}

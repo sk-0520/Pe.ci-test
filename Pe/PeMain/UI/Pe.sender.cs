@@ -9,8 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.Logic;
 using PI.Windows;
@@ -27,9 +27,11 @@ namespace PeMain.UI
 			this._notifyIcon.ShowBalloonTip(0, title, message, icon);
 		}
 		
-		public void ChangeLauncherItems(ToolbarItem toolbarItem, HashSet<LauncherItem> items)
+		public void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
 		{
-			throw new NotImplementedException();
+			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.UseToolbarItem != toolbarItem)) {
+				toolbar.ReceiveChangedLauncherItems(toolbarItem, toolbarGroupItem);
+			}
 		}
 		
 	}
