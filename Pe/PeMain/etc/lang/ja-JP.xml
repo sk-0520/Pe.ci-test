@@ -183,5 +183,34 @@
 		<Word Name="enum/log-type/warning"      Text="警報" />
 		<Word Name="enum/log-type/error"        Text="エラー" />
 	
+		<Word Name="enum/key"           Text="キー" />
+		<Word Name="enum/key/separator" Text=" + " />
+		<Word Name="enum/key/mod"         Text="修飾キー" />
+		<Word Name="enum/key/mod/alt"     Text="Alt" />
+		<Word Name="enum/key/mod/control" Text="Control" />
+		<Word Name="enum/key/mod/shift"   Text="Shift" />
+		<Word Name="enum/key/mod/windows" Text="Windows" />
+		<Word Name="enum/key/keys/k-1" Text="1" />
+		<Word Name="enum/key/keys/k-2" Text="2" />
+		<Word Name="enum/key/keys/k-3" Text="3" />
+		<Word Name="enum/key/keys/k-4" Text="4" />
+		<Word Name="enum/key/keys/k-5" Text="5" />
+		<Word Name="enum/key/keys/k-6" Text="6" />
+		<Word Name="enum/key/keys/k-7" Text="7" />
+		<Word Name="enum/key/keys/k-8" Text="8" />
+		<Word Name="enum/key/keys/k-9" Text="9" />
+		<Word Name="enum/key/keys/k-0" Text="0" />
+		<Word Name="enum/key/keys/n-1" Text="Num 1" />
+		<Word Name="enum/key/keys/n-2" Text="Num 2" />
+		<Word Name="enum/key/keys/n-3" Text="Num 3" />
+		<Word Name="enum/key/keys/n-4" Text="Num 4" />
+		<Word Name="enum/key/keys/n-5" Text="Num 5" />
+		<Word Name="enum/key/keys/n-6" Text="Num 6" />
+		<Word Name="enum/key/keys/n-7" Text="Num 7" />
+		<Word Name="enum/key/keys/n-8" Text="Num 8" />
+		<Word Name="enum/key/keys/n-9" Text="Num 9" />
+		<Word Name="enum/key/keys/n-0" Text="Num 0" />
+	
+	
 	</Words>
 </Language>

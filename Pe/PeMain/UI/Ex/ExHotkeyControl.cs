@@ -8,7 +8,9 @@
  */
 using System;
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
+using PI.Windows;
 
 namespace PeMain.UI
 {
@@ -22,21 +24,26 @@ namespace PeMain.UI
 		}
 	}
 	
-	public class PeHotkeyControl: ExHotkeyControl
+	public class PeHotkeyControl: ExHotkeyControl, ISetLanguage
 	{
-		private Language _language;
+		public Language Language { get; private set; }
 		
-		public Language Language
+		
+		protected override string ToValueString()
 		{
-			get
-			{
-				return this._language;
+			if (Modifiers == MOD.None) {
+				return Hotkey.ToText(Language);
 			}
-			set
-			{
-				this._language = value;
-				Redraw();
-			}
+			
+			var keySeparator = Language["enum/key/separator"];
+			
+			return Modifiers.ToText(Language)+ keySeparator + Hotkey.ToText(Language);
+		}
+
+		public void SetLanguage(Language language)
+		{
+			Language = language;
+			Redraw();
 		}
 	}
 }

@@ -39,6 +39,8 @@ namespace PeMain.UI
 		
 		void ApplyLanguageSystemEnv()
 		{
+			this.inputSystemEnvExt.SetLanguage(Language);
+			this.inputSystemEnvHiddenFile.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageMain()
@@ -63,8 +65,8 @@ namespace PeMain.UI
 			this.envLauncherUpdate.SetLanguage(Language);
 			this.envLauncherRemove.SetLanguage(Language);
 			this.groupLauncherType.Text = Language["setting/group/item-type"];
-			this.selectLauncherType_file.Text = EnumLang.ToText(LauncherType.File, Language);
-			this.selectLauncherType_uri.Text = EnumLang.ToText(LauncherType.URI, Language);
+			this.selectLauncherType_file.Text = LauncherType.File.ToText(Language);
+			this.selectLauncherType_uri.Text = LauncherType.URI.ToText(Language);
 			this.selectLauncherStdStream.Text = Language["setting/check/std-stream"];
 			this.labelLauncherName.Text = Language["setting/label/item-name"];
 			this.labelLauncherCommand.Text = Language["setting/label/command"];

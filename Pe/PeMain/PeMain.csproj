@@ -87,10 +87,11 @@
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
-    <Compile Include="Logic\EnumLang.cs" />
+    <Compile Include="Logic\EnumToText.cs" />
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\ILogger.cs" />
     <Compile Include="Logic\CommonData.cs" />
+    <Compile Include="Logic\ISetLanguage.cs" />
     <Compile Include="Logic\ItemData.cs" />
     <Compile Include="Logic\IRootSender.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />

@@ -148,7 +148,7 @@ namespace PeUtility
 			if (Hotkey == Keys.Menu || Hotkey == Keys.ShiftKey || Hotkey == Keys.ControlKey) {
 				Hotkey = Keys.None;
 				return;
-			}			
+			}
 			this.Text = ToValueString();
 		}
 	}

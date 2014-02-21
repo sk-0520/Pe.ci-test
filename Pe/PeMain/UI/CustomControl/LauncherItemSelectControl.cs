@@ -13,14 +13,16 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of LauncherItemSelectControl.
 	/// </summary>
-	public partial class LauncherItemSelectControl : UserControl
+	public partial class LauncherItemSelectControl : UserControl, ISetLanguage
 	{
 		public LauncherItemSelectControl()
 		{

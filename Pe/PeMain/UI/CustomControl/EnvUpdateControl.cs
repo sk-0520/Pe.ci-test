@@ -11,12 +11,14 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using PeMain.Logic;
+
 namespace PeMain.UI
 {
 	/// <summary>
 	/// Description of EnvUpdateControl.
 	/// </summary>
-	public partial class EnvUpdateControl : UserControl
+	public partial class EnvUpdateControl : UserControl, ISetLanguage
 	{
 		public EnvUpdateControl()
 		{

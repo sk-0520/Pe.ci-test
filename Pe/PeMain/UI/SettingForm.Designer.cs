@@ -230,7 +230,6 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvExt.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputSystemEnvExt.Language = null;
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
 			this.inputSystemEnvExt.Modifiers = PI.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
@@ -253,7 +252,6 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvHiddenFile.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputSystemEnvHiddenFile.Language = null;
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
 			this.inputSystemEnvHiddenFile.Modifiers = PI.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
@@ -1112,7 +1110,6 @@ namespace PeMain.UI
 			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
 			this.inputCommandHotkey.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputCommandHotkey.Language = null;
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
 			this.inputCommandHotkey.Modifiers = PI.Windows.MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
