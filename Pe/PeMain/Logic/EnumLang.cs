@@ -8,8 +8,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
+
 using PeMain.Data;
 using PeUtility;
+using PI.Windows;
 
 namespace PeMain.Logic
 {
@@ -67,6 +70,50 @@ namespace PeMain.Logic
 			}[value];
 			
 			return language[key];
+		}
+		
+		public static string ToText(this MOD value, Language language)
+		{
+			if(value == MOD.None) {
+				return string.Empty;
+			}
+			
+			var preKey = "enum/key/mod/";
+			var map = new Dictionary<MOD, string>() {
+				{ MOD.MOD_ALT,     "alt" },
+				{ MOD.MOD_CONTROL, "control" },
+				{ MOD.MOD_SHIFT,   "shift" },
+				{ MOD.MOD_WIN,     "windows" },
+			};
+			
+			var modTextList = new List<string>();
+			
+			foreach(var pair in map) {
+				if((value & pair.Key) == pair.Key) {
+					var key = preKey + pair.Value;
+					modTextList.Add(language[key]);
+				}
+			}
+			
+			var keySeparator = language["enum/key/separator"];
+			return string.Join(keySeparator, modTextList);
+		}
+		
+		public static string ToText(this Keys value, Language language)
+		{
+			var preKey = "enum/key/keys/"; 
+			var map = new Dictionary<Keys, string>() {
+				{ Keys.D1, "k-1" }, { Keys.D2, "k-2" }, { Keys.D3, "k-3" }, { Keys.D4, "k-4" }, { Keys.D5, "k-5" },
+				{ Keys.D6, "k-6" }, { Keys.D7, "k-7" }, { Keys.D8, "k-8" }, { Keys.D9, "k-9" }, { Keys.D0, "k-0" },
+			};
+			
+			string name;
+			if(map.TryGetValue(value, out name)) {
+				var key = preKey + name;
+				return language[key];
+			} else {
+				return value.ToString();
+			}
 		}
 		
 	}
