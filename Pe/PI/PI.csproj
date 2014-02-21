@@ -74,6 +74,7 @@
     <Compile Include="Windows\Shellapi.cs" />
     <Compile Include="Windows\Shlobj.cs" />
     <Compile Include="Windows\user32.cs" />
+    <Compile Include="Windows\Winbase.cs" />
     <Compile Include="Windows\Windef.cs" />
     <Compile Include="Windows\Winerror.cs" />
     <Compile Include="Windows\Winuser.cs" />

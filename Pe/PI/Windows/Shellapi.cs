@@ -94,7 +94,7 @@ namespace PI.Windows
 	/// http://pinvoke.net/default.aspx/Enums/FileInfoFlags.html
 	/// </summary>
 	[Flags]
-	public enum SHGFI : int {
+	public enum SHGFI : uint {
 		SHGFI_ICON = 0x000000100,     // get icon
 		SHGFI_DISPLAYNAME = 0x000000200,     // get display name
 		SHGFI_TYPENAME = 0x000000400,     // get type name
@@ -159,7 +159,7 @@ namespace PI.Windows
 		/// <param name="ppv"></param>
 		/// <returns></returns>
 		[DllImport("shell32.dll", EntryPoint = "#727")]
-		public extern static ComResult SHGetImageList(int iImageList, ref Guid riid, ref IImageList ppv);
+		public extern static ComResult SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
 		
 		[DllImport("shell32.dll", CharSet=CharSet.Auto)]
 		public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIc);
