@@ -105,6 +105,33 @@ namespace PeMain.Logic
 			var map = new Dictionary<Keys, string>() {
 				{ Keys.D1,      "k-1" }, { Keys.D2,      "k-2" }, { Keys.D3,      "k-3" }, { Keys.D4,      "k-4" }, { Keys.D5,      "k-5" }, { Keys.D6,      "k-6" }, { Keys.D7,      "k-7" }, { Keys.D8,      "k-8" }, { Keys.D9,      "k-9" }, { Keys.D0,      "k-0" },
 				{ Keys.NumPad1, "n-1" }, { Keys.NumPad2, "n-2" }, { Keys.NumPad3, "n-3" }, { Keys.NumPad4, "n-4" }, { Keys.NumPad5, "n-5" }, { Keys.NumPad6, "n-6" }, { Keys.NumPad7, "n-7" }, { Keys.NumPad8, "n-8" }, { Keys.NumPad9, "n-9" }, { Keys.NumPad0, "n-0" },
+				{ Keys.Add,      "n-add" },
+				{ Keys.Subtract, "n-sub" },
+				{ Keys.Multiply, "n-mul" },
+				{ Keys.Divide,   "n-div" },
+				{ Keys.Decimal,  "n-dec" },
+					
+					
+				{ Keys.PageUp,        "page-up" },
+				{ Keys.PageDown,      "page-down" },
+				{ Keys.Scroll,        "scr-lk" },
+				
+				{ Keys.IMEConvert,    "ime-convert" },
+				{ Keys.IMENonconvert, "ime-nonconvert" },
+				
+				{ Keys.OemBackslash,  "oem-backslash" },
+				{ Keys.Oemplus,       "oem-plus" },
+				{ Keys.OemMinus,      "oem-minus" },
+				{ Keys.OemSemicolon,  "oem-semicolon" },
+				{ Keys.Oemcomma,      "oem-comma" },
+				{ Keys.OemPeriod,     "oem-period" },
+				{ Keys.Oemtilde,      "oem-tilde" },
+				{ Keys.OemOpenBrackets, "oem-open-brackets" },
+				{ Keys.Oem6,            "oem-6" },
+				{ Keys.Oem5,            "oem-5" },
+				{ Keys.Oem7,            "oem-7" },
+				{ Keys.OemQuestion,     "oem-question" },
+				
 			};
 			
 			string name;

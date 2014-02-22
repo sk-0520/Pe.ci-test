@@ -1,195 +1,192 @@
 ﻿<?xml version="1.0"?>
 <Language Name="日本語" Code="ja-JP">
 	<Define>
-		<Word Name="yes"                Text="はい" />
-		<Word Name="no"                 Text="いいえ" />
-		<Word Name="cancel"             Text="キャンセル" />
-		<Word Name="ok"                 Text="OK" />
-		<Word Name="retry"              Text="再試行" />
-		<Word Name="exit"               Text="終了" />
-		<Word Name="open-ui"            Text="..." />
-		<Word Name="remove"             Text="削除" />
-		<Word Name="edit"               Text="編集" />
-		<Word Name="visible"            Text="表示する" />
-		<Word Name="topmost"            Text="最前面で表示する" />
-		<Word Name="option"             Text="オプション" />
-		<Word Name="work-dir"           Text="作業フォルダ" />
-		<Word Name="std-stream"         Text="標準出力を取得する" />
-		<Word Name="edit-env"           Text="環境変数を編集する" />
-		<Word Name="font"               Text="フォント" />
-		<Word Name="toolbar/auto-hide"  Text="自動的に隠す" />
-		<Word Name="admin"              Text="管理者として実行" />
+		<Word Name="yes" Text="はい" />
+		<Word Name="no" Text="いいえ" />
+		<Word Name="cancel" Text="キャンセル" />
+		<Word Name="ok" Text="OK" />
+		<Word Name="retry" Text="再試行" />
+		<Word Name="exit" Text="終了" />
+		<Word Name="open-ui" Text="..." />
+		<Word Name="remove" Text="削除" />
+		<Word Name="edit" Text="編集" />
+		<Word Name="visible" Text="表示する" />
+		<Word Name="topmost" Text="最前面で表示する" />
+		<Word Name="option" Text="オプション" />
+		<Word Name="work-dir" Text="作業フォルダ" />
+		<Word Name="std-stream" Text="標準出力を取得する" />
+		<Word Name="edit-env" Text="環境変数を編集する" />
+		<Word Name="font" Text="フォント" />
+		<Word Name="toolbar/auto-hide" Text="自動的に隠す" />
+		<Word Name="admin" Text="管理者として実行" />
 	</Define>
 	<Words>
-		<Word Name="common/command/ok"           Text="${ok}" />
-		<Word Name="common/command/cancel"       Text="${cancel}" />
-		<Word Name="common/command/exit"         Text="${exit}" />
-		<Word Name="common/menu/exit"            Text="${exit}(&amp;X)" />
-		<Word Name="common/label/topmost"        Text="${topmost}" />
-		<Word Name="common/menu/topmost"         Text="${topmost}(&amp;T)" />
-		<Word Name="common/label/font"           Text="${font}" />
-		<Word Name="common/label/visible"        Text="${visible}" />
-		<Word Name="common/label/remove"         Text="${remove}" />
-		<Word Name="common/label/edit"           Text="${edit}" />
+		<Word Name="common/command/ok" Text="${ok}" />
+		<Word Name="common/command/cancel" Text="${cancel}" />
+		<Word Name="common/command/exit" Text="${exit}" />
+		<Word Name="common/menu/exit" Text="${exit}(&amp;X)" />
+		<Word Name="common/label/topmost" Text="${topmost}" />
+		<Word Name="common/menu/topmost" Text="${topmost}(&amp;T)" />
+		<Word Name="common/label/font" Text="${font}" />
+		<Word Name="common/label/visible" Text="${visible}" />
+		<Word Name="common/label/remove" Text="${remove}" />
+		<Word Name="common/label/edit" Text="${edit}" />
 		<Word Name="common/command/default-font" Text="デフォルトフォント" />
-		<Word Name="common/check/admin"          Text="${admin} (オプション以外の設定は無効)" />
-		<Word Name="common/tab/env"              Text="環境変数" />
-
+		<Word Name="common/check/admin" Text="${admin} (オプション以外の設定は無効)" />
+		<Word Name="common/tab/env" Text="環境変数" />
 		
-		<Word Name="window/toolbar"   Text="@[PE]" />
-		<Word Name="window/log"       Text="ログ" />
-		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
-		<Word Name="window/stream"    Text="@[ITEM]の実行出力" />
-		<Word Name="window/setting"   Text="@[PE] 設定" />
+		<Word Name="window/toolbar" Text="@[PE]" />
+		<Word Name="window/log" Text="ログ" />
+		<Word Name="window/execute" Text="@[ITEM]を指定して実行" />
+		<Word Name="window/stream" Text="@[ITEM]の実行出力" />
+		<Word Name="window/setting" Text="@[PE] 設定" />
 		
-		<Word Name="main/menu/window"          Text="ウィンドウ(&amp;W)" />
-		<Word Name="main/menu/window/toolbar"  Text="ツールバー(&amp;T)" />
-		<Word Name="main/menu/window/logger"   Text="ログ(&amp;L)" />
-		<Word Name="main/menu/setting"         Text="@[PE] 設定(&amp;S) ${open-ui}" />
-		<Word Name="main/menu/about"           Text="@[PE] 情報(&amp;A) ${open-ui}" />
-		<Word Name="main/menu/system-env"      Text="環境設定(&amp;E)" />
-		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
-		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
+		<Word Name="main/menu/window" Text="ウィンドウ(&amp;W)" />
+		<Word Name="main/menu/window/toolbar" Text="ツールバー(&amp;T)" />
+		<Word Name="main/menu/window/logger" Text="ログ(&amp;L)" />
+		<Word Name="main/menu/setting" Text="@[PE] 設定(&amp;S) ${open-ui}" />
+		<Word Name="main/menu/about" Text="@[PE] 情報(&amp;A) ${open-ui}" />
+		<Word Name="main/menu/system-env" Text="環境設定(&amp;E)" />
+		<Word Name="main/menu/system-env/show-hiddne-file" Text="隠しファイルを表示する(&amp;F)" />
+		<Word Name="main/menu/system-env/show-extension" Text="拡張子を表示する(&amp;E)" />
 		
-		<Word Name="hotkey/unregist/fail"        Text="ホットキー解除失敗" />
-		<Word Name="hotkey/unregist/command"     Text="ホットキー解除: コマンド" />
+		<Word Name="hotkey/unregist/fail" Text="ホットキー解除失敗" />
+		<Word Name="hotkey/unregist/command" Text="ホットキー解除: コマンド" />
 		<Word Name="hotkey/unregist/hidden-file" Text="ホットキー解除: 隠しファイル" />
-		<Word Name="hotkey/unregist/extension"   Text="ホットキー解除: 拡張子" />
-		<Word Name="hotkey/regist/fail"          Text="ホットキー登録失敗" />
-		<Word Name="hotkey/regist/command"       Text="ホットキー登録: コマンド" />
-		<Word Name="hotkey/regist/hidden-file"   Text="ホットキー登録: 隠しファイル" />
-		<Word Name="hotkey/regist/extension"     Text="ホットキー登録: 拡張子" />
-
-		<Word Name="balloon/hidden-file/title" Text="隠しファイル" />
-		<Word Name="balloon/hidden-file/show"  Text="隠しファイルを表示" />
-		<Word Name="balloon/hidden-file/hide"  Text="隠しファイルを非表示" />
-		<Word Name="balloon/hidden-file/error" Text="隠しファイル表示操作失敗" />
-		<Word Name="balloon/extension/title"   Text="拡張子" />
-		<Word Name="balloon/extension/show"    Text="拡張子を表示" />
-		<Word Name="balloon/extension/hide"    Text="拡張子を非表示" />
-		<Word Name="balloon/extension/error"   Text="拡張子操作表示失敗" />
+		<Word Name="hotkey/unregist/extension" Text="ホットキー解除: 拡張子" />
+		<Word Name="hotkey/regist/fail" Text="ホットキー登録失敗" />
+		<Word Name="hotkey/regist/command" Text="ホットキー登録: コマンド" />
+		<Word Name="hotkey/regist/hidden-file" Text="ホットキー登録: 隠しファイル" />
+		<Word Name="hotkey/regist/extension" Text="ホットキー登録: 拡張子" />
 		
-		<Word Name="log/command/save"      Text="ログ保存" />
-		<Word Name="log/tips/save"         Text="現在のログをファイルに保存" />
-		<Word Name="log/command/clear"     Text="ログクリア" />
-		<Word Name="log/tips/clear"        Text="表示中ログをクリア" />
-		<Word Name="log/header/timestamp"  Text="タイムスタンプ" />
-		<Word Name="log/header/title"      Text="概要" />
-		<Word Name="log/header/file"       Text="ソース" />
-		<Word Name="log/header/line"       Text="行数" />
-		<Word Name="log/header/method"     Text="メソッド" />
+		<Word Name="balloon/hidden-file/title" Text="隠しファイル" />
+		<Word Name="balloon/hidden-file/show" Text="隠しファイルを表示" />
+		<Word Name="balloon/hidden-file/hide" Text="隠しファイルを非表示" />
+		<Word Name="balloon/hidden-file/error" Text="隠しファイル表示操作失敗" />
+		<Word Name="balloon/extension/title" Text="拡張子" />
+		<Word Name="balloon/extension/show" Text="拡張子を表示" />
+		<Word Name="balloon/extension/hide" Text="拡張子を非表示" />
+		<Word Name="balloon/extension/error" Text="拡張子操作表示失敗" />
+		
+		<Word Name="log/command/save" Text="ログ保存" />
+		<Word Name="log/tips/save" Text="現在のログをファイルに保存" />
+		<Word Name="log/command/clear" Text="ログクリア" />
+		<Word Name="log/tips/clear" Text="表示中ログをクリア" />
+		<Word Name="log/header/timestamp" Text="タイムスタンプ" />
+		<Word Name="log/header/title" Text="概要" />
+		<Word Name="log/header/file" Text="ソース" />
+		<Word Name="log/header/line" Text="行数" />
+		<Word Name="log/header/method" Text="メソッド" />
 		
 		<Word Name="toolbar/main/tips" Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide" Text="${auto-hide}(&amp;H)" />
-
-		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
-		<Word Name="toolbar/menu/file/execute-ex"    Text="指定して実行(&amp;E)" />
+		<Word Name="toolbar/menu/file/execute" Text="実行(&amp;S)" />
+		<Word Name="toolbar/menu/file/execute-ex" Text="指定して実行(&amp;E)" />
 		<Word Name="toolbar/menu/file/execute-admin" Text="${admin}(&amp;A) ${open-ui}" />
-		<Word Name="toolbar/menu/file/path"          Text="パス(&amp;P)" />
-		<Word Name="toolbar/menu/file/ls"            Text="ファイル(&amp;F)" />
+		<Word Name="toolbar/menu/file/path" Text="パス(&amp;P)" />
+		<Word Name="toolbar/menu/file/ls" Text="ファイル(&amp;F)" />
+		<Word Name="toolbar/menu/file/path/open-parent-dir" Text="親フォルダを開く(&amp;O)" />
+		<Word Name="toolbar/menu/file/path/open-work-dir" Text="作業フォルダを開く(&amp;W)" />
+		<Word Name="toolbar/menu/file/path/copy-command" Text="コマンドをコピー(&amp;C)" />
+		<Word Name="toolbar/menu/file/path/copy-parent-dir" Text="親フォルダパスをコピー(&amp;O)" />
+		<Word Name="toolbar/menu/file/path/copy-work-dir" Text="作業フォルダパスをコピー(&amp;W)" />
+		<Word Name="toolbar/menu/file/path/property" Text="プロパティ(&amp;P)" />
+		<Word Name="toolbar/menu/file/ls/not-child-files" Text="下位ファイルなし" />
 		
-		<Word Name="toolbar/menu/file/path/open-parent-dir"  Text="親フォルダを開く(&amp;O)" />
-		<Word Name="toolbar/menu/file/path/open-work-dir"    Text="作業フォルダを開く(&amp;W)" />
-		<Word Name="toolbar/menu/file/path/copy-command"     Text="コマンドをコピー(&amp;C)" />
-		<Word Name="toolbar/menu/file/path/copy-parent-dir"  Text="親フォルダパスをコピー(&amp;O)" />
-		<Word Name="toolbar/menu/file/path/copy-work-dir"    Text="作業フォルダパスをコピー(&amp;W)" />
-		<Word Name="toolbar/menu/file/path/property"         Text="プロパティ(&amp;P)" />
-		<Word Name="toolbar/menu/file/ls/not-child-files"    Text="下位ファイルなし" />
-
-		<Word Name="execute/tab/basic"         Text="基本指定" />
-		<Word Name="execute/label/option"      Text="${option}" />
-		<Word Name="execute/label/work-dir"    Text="${work-dir}" />
-		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
-		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
+		<Word Name="execute/tab/basic" Text="基本指定" />
+		<Word Name="execute/label/option" Text="${option}" />
+		<Word Name="execute/label/work-dir" Text="${work-dir}" />
+		<Word Name="execute/check/std-stream" Text="${std-stream}" />
+		<Word Name="execute/check/edit-env" Text="${edit-env}" />
 		
-		<Word Name="stream/tab/stream"    Text="標準出力" />
-		<Word Name="stream/tab/process"   Text="プロセス" />
-		<Word Name="stream/tab/property"  Text="起動プロパティ" />
-		<Word Name="stream/command/save"   Text="出力保存" />
-		<Word Name="stream/tips/save"      Text="現在の出力をファイルに保存" />
-		<Word Name="stream/command/clear"  Text="出力クリア" />
-		<Word Name="stream/tips/clear"     Text="現在の出力をクリア" />
-		<Word Name="stream/tips/refresh"   Text="プロセス情報更新" />
-		<Word Name="stream/tips/kill"      Text="プロセスを終了" />
-
-		<Word Name="setting/tab/main"            Text="本体" />
-		<Word Name="setting/tab/launcher"        Text="ランチャ" />
-		<Word Name="setting/tab/launcher/basic"  Text="基本設定" />
+		<Word Name="stream/tab/stream" Text="標準出力" />
+		<Word Name="stream/tab/process" Text="プロセス" />
+		<Word Name="stream/tab/property" Text="起動プロパティ" />
+		<Word Name="stream/command/save" Text="出力保存" />
+		<Word Name="stream/tips/save" Text="現在の出力をファイルに保存" />
+		<Word Name="stream/command/clear" Text="出力クリア" />
+		<Word Name="stream/tips/clear" Text="現在の出力をクリア" />
+		<Word Name="stream/tips/refresh" Text="プロセス情報更新" />
+		<Word Name="stream/tips/kill" Text="プロセスを終了" />
+		
+		<Word Name="setting/tab/main" Text="本体" />
+		<Word Name="setting/tab/launcher" Text="ランチャ" />
+		<Word Name="setting/tab/launcher/basic" Text="基本設定" />
 		<Word Name="setting/tab/launcher/others" Text="その他" />
-		<Word Name="setting/tab/toolbar"         Text="ツールバー" />
-		<Word Name="setting/tab/command"         Text="コマンド" />
-		<Word Name="setting/tab/display"         Text="ディスプレイ" />
-		<Word Name="setting/tab/note"            Text="ノート" />
-		
-		<Word Name="setting/label/language"   Text="使用言語" />
-		<Word Name="setting/group/log"        Text="ログ設定" />
-		<Word Name="setting/check/add-show"   Text="追加されるたびに表示する" />
-		<Word Name="setting/group/item-type"  Text="アイテムの種類" />
-		<Word Name="setting/label/item-name"  Text="アイテム名" />
-		<Word Name="setting/label/command"    Text="コマンド" />
-		<Word Name="setting/label/option"     Text="${option}" />
-		<Word Name="setting/label/work-dir"   Text="${work-dir}" />
-		<Word Name="setting/label/icon-path"  Text="アイコンパス" />
-		<Word Name="setting/label/tags"       Text="タグ" />
-		<Word Name="setting/label/note"       Text="備考" />
+		<Word Name="setting/tab/toolbar" Text="ツールバー" />
+		<Word Name="setting/tab/command" Text="コマンド" />
+		<Word Name="setting/tab/display" Text="ディスプレイ" />
+		<Word Name="setting/tab/note" Text="ノート" />
+		<Word Name="setting/label/language" Text="使用言語" />
+		<Word Name="setting/group/log" Text="ログ設定" />
+		<Word Name="setting/check/add-show" Text="追加されるたびに表示する" />
+		<Word Name="setting/group/item-type" Text="アイテムの種類" />
+		<Word Name="setting/label/item-name" Text="アイテム名" />
+		<Word Name="setting/label/command" Text="コマンド" />
+		<Word Name="setting/label/option" Text="${option}" />
+		<Word Name="setting/label/work-dir" Text="${work-dir}" />
+		<Word Name="setting/label/icon-path" Text="アイコンパス" />
+		<Word Name="setting/label/tags" Text="タグ" />
+		<Word Name="setting/label/note" Text="備考" />
 		<Word Name="setting/check/std-stream" Text="${std-stream}" />
-		<Word Name="setting/check/auto-hide"  Text="${toolbar/auto-hide}" />
-		<Word Name="setting/check/show-text"  Text="テキストを表示する" />
+		<Word Name="setting/check/auto-hide" Text="${toolbar/auto-hide}" />
+		<Word Name="setting/check/show-text" Text="テキストを表示する" />
 		<Word Name="setting/label/text-width" Text="テキストの長さ" />
-		<Word Name="setting/tips/add-group"   Text="グループの追加" />
-		<Word Name="setting/tips/add-item"    Text="ランチャーアイテムの追加" />
-		<Word Name="setting/tips/up-item"     Text="選択アイテムを上に移動" />
-		<Word Name="setting/tips/down-item"   Text="選択アイテムを下に移動" />
+		<Word Name="setting/tips/add-group" Text="グループの追加" />
+		<Word Name="setting/tips/add-item" Text="ランチャーアイテムの追加" />
+		<Word Name="setting/tips/up-item" Text="選択アイテムを上に移動" />
+		<Word Name="setting/tips/down-item" Text="選択アイテムを下に移動" />
 		<Word Name="setting/tips/remove-item" Text="選択アイテムを取り除く" />
 		
-		<Word Name="group/new"  Text="新規グループ" />
+		<Word Name="group/new" Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
-
-		<Word Name="item-selecter/command/create"    Text="新規アイテム" />
-		<Word Name="item-selecter/command/remove"    Text="アイテム削除" />
+		
+		<Word Name="item-selecter/command/create" Text="新規アイテム" />
+		<Word Name="item-selecter/command/remove" Text="アイテム削除" />
 		<Word Name="item-selecter/command/filtering" Text="アイテム抽出" />
 		<Word Name="item-selecter/command/type-full" Text="自動抽出" />
 		<Word Name="item-selecter/command/type-name" Text="アイテム名から選択" />
-		<Word Name="item-selecter/command/type-tag"  Text="タグから抽出"  />
+		<Word Name="item-selecter/command/type-tag" Text="タグから抽出" />
 		
-		<Word Name="env-updater/key"   Text="キー" />
+		<Word Name="env-updater/key" Text="キー" />
 		<Word Name="env-updater/value" Text="値" />
 		
-		
-		<Word Name="enum/toolbar-position"                Text="ツールバー位置" />
-		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />
-		<Word Name="enum/toolbar-position/desktop/left"   Text="デスクトップ: 左" />
-		<Word Name="enum/toolbar-position/desktop/top"    Text="デスクトップ: 上" />
-		<Word Name="enum/toolbar-position/desktop/right"  Text="デスクトップ: 右" />
+		<Word Name="enum/toolbar-position" Text="ツールバー位置" />
+		<Word Name="enum/toolbar-position/desktop/float" Text="フロート" />
+		<Word Name="enum/toolbar-position/desktop/left" Text="デスクトップ: 左" />
+		<Word Name="enum/toolbar-position/desktop/top" Text="デスクトップ: 上" />
+		<Word Name="enum/toolbar-position/desktop/right" Text="デスクトップ: 右" />
 		<Word Name="enum/toolbar-position/desktop/bottom" Text="デスクトップ: 下" />
-		<Word Name="enum/toolbar-position/window/left"    Text="ウィンドウ: 左" />
-		<Word Name="enum/toolbar-position/window/top"     Text="ウィンドウ: 上" />
-		<Word Name="enum/toolbar-position/window/right"   Text="ウィンドウ: 右" />
-		<Word Name="enum/toolbar-position/window/bottom"  Text="ウィンドウ: 下" />
-	
-		<Word Name="enum/launcher-type"      Text="アイテムの種類" />
-		<Word Name="enum/launcher-type/file" Text="ファイル" />
-		<Word Name="enum/launcher-type/uri"  Text="URI" />
-		<Word Name="enum/launcher-type/pe"   Text="組み込み" />
-	
-		<Word Name="enum/icon-size"        Text="アイコンサイズ" />
-		<Word Name="enum/icon-size/small"  Text="小" />
-		<Word Name="enum/icon-size/normal" Text="中" />
-		<Word Name="enum/icon-size/big"    Text="大" />
-		<Word Name="enum/icon-size/large"  Text="特大" />
+		<Word Name="enum/toolbar-position/window/left" Text="ウィンドウ: 左" />
+		<Word Name="enum/toolbar-position/window/top" Text="ウィンドウ: 上" />
+		<Word Name="enum/toolbar-position/window/right" Text="ウィンドウ: 右" />
+		<Word Name="enum/toolbar-position/window/bottom" Text="ウィンドウ: 下" />
 		
-		<Word Name="enum/log-type"              Text="ログ種別" />
-		<Word Name="enum/log-type/information"  Text="情報" />
-		<Word Name="enum/log-type/warning"      Text="警報" />
-		<Word Name="enum/log-type/error"        Text="エラー" />
-	
-		<Word Name="enum/key"           Text="キー" />
+		<Word Name="enum/launcher-type" Text="アイテムの種類" />
+		<Word Name="enum/launcher-type/file" Text="ファイル" />
+		<Word Name="enum/launcher-type/uri" Text="URI" />
+		<Word Name="enum/launcher-type/pe" Text="組み込み" />
+		
+		<Word Name="enum/icon-size" Text="アイコンサイズ" />
+		<Word Name="enum/icon-size/small" Text="小" />
+		<Word Name="enum/icon-size/normal" Text="中" />
+		<Word Name="enum/icon-size/big" Text="大" />
+		<Word Name="enum/icon-size/large" Text="特大" />
+		
+		<Word Name="enum/log-type" Text="ログ種別" />
+		<Word Name="enum/log-type/information" Text="情報" />
+		<Word Name="enum/log-type/warning" Text="警報" />
+		<Word Name="enum/log-type/error" Text="エラー" />
+		
+		<Word Name="enum/key" Text="キー" />
 		<Word Name="enum/key/separator" Text=" + " />
-		<Word Name="enum/key/mod"         Text="修飾キー" />
-		<Word Name="enum/key/mod/alt"     Text="Alt" />
+		
+		<Word Name="enum/key/mod" Text="修飾キー" />
+		<Word Name="enum/key/mod/alt" Text="Alt" />
 		<Word Name="enum/key/mod/control" Text="Control" />
-		<Word Name="enum/key/mod/shift"   Text="Shift" />
+		<Word Name="enum/key/mod/shift" Text="Shift" />
 		<Word Name="enum/key/mod/windows" Text="Windows" />
+		
 		<Word Name="enum/key/keys/k-1" Text="1" />
 		<Word Name="enum/key/keys/k-2" Text="2" />
 		<Word Name="enum/key/keys/k-3" Text="3" />
@@ -210,6 +207,33 @@
 		<Word Name="enum/key/keys/n-8" Text="Num 8" />
 		<Word Name="enum/key/keys/n-9" Text="Num 9" />
 		<Word Name="enum/key/keys/n-0" Text="Num 0" />
+		
+		<Word Name="enum/key/keys/n-add" Text="Num +" />
+		<Word Name="enum/key/keys/n-sub" Text="Num -" />
+		<Word Name="enum/key/keys/n-mul" Text="Num *" />
+		<Word Name="enum/key/keys/n-div" Text="Num /" />
+		<Word Name="enum/key/keys/n-dec" Text="Num ." />
+
+		<Word Name="enum/key/keys/page-up" Text="Page Up" />
+		<Word Name="enum/key/keys/page-down" Text="Page Down" />
+		<Word Name="enum/key/keys/scr-lk" Text="ScrLk" />
+		
+		<Word Name="enum/key/keys/ime-convert" Text="変換" />
+		<Word Name="enum/key/keys/ime-nonconvert" Text="無変換" />
+		
+		<Word Name="enum/key/keys/oem-backslash" Text="\" />
+		<Word Name="enum/key/keys/oem-plus" Text=";" />
+		<Word Name="enum/key/keys/oem-minus" Text="-" />
+		<Word Name="enum/key/keys/oem-semicolon" Text=":" />
+		<Word Name="enum/key/keys/oem-comma" Text="," />
+		<Word Name="enum/key/keys/oem-period" Text="." />
+		<Word Name="enum/key/keys/oem-tilde" Text="@" />
+		<Word Name="enum/key/keys/oem-open-brackets" Text="[" />
+		<Word Name="enum/key/keys/oem-6" Text="]" />
+		<Word Name="enum/key/keys/oem-5" Text="\" />
+		<Word Name="enum/key/keys/oem-7" Text="^" />
+		<Word Name="enum/key/keys/oem-question" Text="/" />
+	
 	
 	
 	</Words>
