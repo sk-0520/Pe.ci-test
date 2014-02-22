@@ -44,8 +44,8 @@ namespace PeMain.UI
 		/// <summary>
 		/// TODO: 未実装
 		/// </summary>
-		/// <param name="action"></param>
-		void PauseOthers(Action action)
+		/// <param name="func">ウィンドウ再構築を独自に行う場合は処理を返す。</param>
+		void PauseOthers(Func<Action> func)
 		{
 			var windowVisible = new Dictionary<Form, bool>();
 			foreach(var window in GetWindows()) {
@@ -55,12 +55,17 @@ namespace PeMain.UI
 			this._notifyIcon.Visible = false;
 			
 			this._pause = true;
-			action();
+			var action = func();
 			this._pause = false;
 
-			foreach(var pair in windowVisible) {
-				pair.Key.Visible = pair.Value;
+			if(action != null) {
+				action();
+			} else {
+				foreach(var pair in windowVisible) {
+					pair.Key.Visible = pair.Value;
+				}
 			}
+			
 			this._notifyIcon.Visible = true;
 		}
 		
@@ -158,7 +163,7 @@ namespace PeMain.UI
 			Application.Exit();
 		}
 		
-		void OpenSetting()
+		Action OpenSetting()
 		{
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
@@ -167,13 +172,17 @@ namespace PeMain.UI
 					SaveSetting();
 					InitializeLanguage(null, null);
 					ApplyLanguage();
-					this._logForm.SetCommonData(this._commonData);
-					this._messageWindow.SetCommonData(this._commonData);
-					foreach(var toolbar in this._toolbarForms.Values) {
-						toolbar.SetCommonData(this._commonData);
-					}
+					
+					return delegate() {
+						this._logForm.SetCommonData(this._commonData);
+						this._messageWindow.SetCommonData(this._commonData);
+						foreach(var toolbar in this._toolbarForms.Values) {
+							toolbar.SetCommonData(this._commonData);
+						}
+					};
 				}
 			}
+			return null;
 		}
 		
 		void ChangeShowSysEnv(Func<bool> nowValueDg, Action<bool> changeValueDg, string messageTitleName, string showMessageName, string hiddenMessageName, string errorMessageName)
