@@ -68,8 +68,8 @@ namespace PeMain.Logic
 		
 		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas, T defaultData)
 		{
-			control.DataSource = itemDatas;
 			SetValueAndDisplay(control);
+			control.DataSource = itemDatas;
 			control.SelectedValue = defaultData;
 		}
 		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas)
