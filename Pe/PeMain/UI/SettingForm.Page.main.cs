@@ -42,9 +42,11 @@ namespace PeMain.UI
 		{
 			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
 			systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
+			systemEnvSetting.HiddenFileShowHotKey.Resisted = this.inputSystemEnvHiddenFile.Resisted;
 			
 			systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
 			systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
+			systemEnvSetting.ExtensionShowHotKey.Resisted = this.inputSystemEnvExt.Resisted;
 		}
 		
 		void MainExportSetting(MainSetting mainSetting)

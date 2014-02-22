@@ -47,7 +47,9 @@ namespace PeMain.UI
 			};
 			// 登録解除
 			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Resisted)) {
-				if(!UnRegisterHotKey(hotKeyData.Id)) {
+				if(UnRegisterHotKey(hotKeyData.Id)) {
+					hotKeyData.HotKey.Resisted = false;
+				} else {
 					var logData = new LogData();
 					logData.LogType = LogType.Warning;
 					logData.Title   = CommonData.Language["hotkey/unregist/fail"];
@@ -61,7 +63,7 @@ namespace PeMain.UI
 			}
 			
 			// 登録
-			foreach(var hotKeyData in hotKeyDatas.Where(data => data.HotKey.Enabled)) {
+			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Enabled)) {
 				if(RegisterHotKey(hotKeyData.Id, hotKeyData.HotKey.Modifiers, hotKeyData.HotKey.Key)) {
 					hotKeyData.HotKey.Resisted = true;
 				} else {

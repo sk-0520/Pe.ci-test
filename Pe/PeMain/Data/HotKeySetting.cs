@@ -17,7 +17,7 @@ namespace PeMain.Data
 	/// Description of HotkeySetting.
 	/// </summary>
 	[Serializable]
-	public class HotKeySetting
+	public class HotKeySetting: Item
 	{
 		public HotKeySetting()
 		{

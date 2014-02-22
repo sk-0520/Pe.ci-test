@@ -27,7 +27,7 @@ namespace PeMain.UI
 	public class PeHotkeyControl: ExHotkeyControl, ISetLanguage
 	{
 		public Language Language { get; private set; }
-		
+		public bool Resisted { get; set; }
 		
 		protected override string ToValueString()
 		{
