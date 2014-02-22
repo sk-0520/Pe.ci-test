@@ -178,9 +178,10 @@ namespace PeMain.UI
 			// listStack
 			// 
 			this.listStack.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.headerFile,
+									this.headerFunction,
 									this.headerLine,
-									this.headerFunction});
+									this.headerFile
+									});
 			this.listStack.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listStack.FullRowSelect = true;
 			this.listStack.GridLines = true;

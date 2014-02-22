@@ -82,11 +82,11 @@ namespace PeMain.UI
 		ListViewItem StackToListItem(StackFrame sf)
 		{
 			var listItem = new ListViewItem();
-			var fileItem = listItem.SubItems[0];
+			var funcItem = listItem.SubItems[0];
 			var lineItem = new ListViewItem.ListViewSubItem();
-			var funcItem = new ListViewItem.ListViewSubItem();
+			var fileItem = new ListViewItem.ListViewSubItem();
 			listItem.SubItems.Add(lineItem);
-			listItem.SubItems.Add(funcItem);
+			listItem.SubItems.Add(fileItem);
 			
 			var filePath = sf.GetFileName();
 			var head = string.Join(Path.DirectorySeparatorChar.ToString(), "", "Pe", "Pe", "").ToUpper();
