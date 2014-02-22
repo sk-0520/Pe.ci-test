@@ -46,7 +46,7 @@ namespace PeMain.UI
 				new { Id = HotKeyId.Extension,   HotKey = CommonData.MainSetting.SystemEnv.ExtensionShowHotKey,  UnRegistMessageName = "hotkey/unregist/extension",   RegistMessageName = "hotkey/regist/extension" },
 			};
 			// 登録解除
-			foreach(var hotKeyData in hotKeyDatas) {
+			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Resisted)) {
 				if(!UnRegisterHotKey(hotKeyData.Id)) {
 					var logData = new LogData();
 					logData.LogType = LogType.Warning;
@@ -59,9 +59,12 @@ namespace PeMain.UI
 					}
 				}
 			}
+			
 			// 登録
 			foreach(var hotKeyData in hotKeyDatas.Where(data => data.HotKey.Enabled)) {
-				if(!RegisterHotKey(hotKeyData.Id, hotKeyData.HotKey.Modifiers, hotKeyData.HotKey.Key)) {
+				if(RegisterHotKey(hotKeyData.Id, hotKeyData.HotKey.Modifiers, hotKeyData.HotKey.Key)) {
+					hotKeyData.HotKey.Resisted = true;
+				} else {
 					var logData = new LogData();
 					logData.LogType = LogType.Warning;
 					logData.Title   = CommonData.Language["hotkey/regist/fail"];
