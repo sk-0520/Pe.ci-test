@@ -17,9 +17,17 @@ namespace PeUtility
 	/// </summary>
 	public class CommandLine
 	{
+		public List<string> Options { get; private set; }
+		
+		public string KeyValueHeader { get; set; }
+		public string KeyValueSeparator { get; set; }
+		
 		private void Initialize()
 		{
 			Options = new List<string>();
+			
+			KeyValueHeader = "/";
+			KeyValueSeparator = "=";
 		}
 		
 		/// <summary>
@@ -42,6 +50,39 @@ namespace PeUtility
 			Options.AddRange(args);
 		}
 		
-		public List<string> Options { get; private set; }
+		private string GetKeyOption(string option) 
+		{
+			return KeyValueHeader + option;
+		}
+		
+		private bool HasKeyOption(string keyOption)
+		{
+			return Options.Any(s => s.StartsWith(keyOption));
+		}
+		
+		/// <summary>
+		/// KeyValueHeader + option が存在するかを確認。
+		/// 
+		/// データが単独かペアかは問はない。
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
+		public bool HasOption(string option)
+		{
+			var keyOption = GetKeyOption(option);
+			return HasKeyOption(keyOption);
+		}
+		
+		private int CountKeyOption(string keyOption)
+		{
+			return Options.Count(s => s.StartsWith(keyOption));
+		}
+		
+		public int CountOption(string option)
+		{
+			var keyOption = GetKeyOption(option);
+			return CountKeyOption(keyOption);
+		}
+		
 	}
 }
