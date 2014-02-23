@@ -36,7 +36,9 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.toolLauncher = new PeMain.UI.ToolbarToolStrip();
+			this.tipsLauncher = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// toolLauncher
@@ -49,6 +51,7 @@ namespace PeMain.UI
 			this.toolLauncher.Name = "toolLauncher";
 			this.toolLauncher.Padding = new System.Windows.Forms.Padding(0);
 			this.toolLauncher.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+			this.toolLauncher.ShowItemToolTips = false;
 			this.toolLauncher.Size = new System.Drawing.Size(180, 19);
 			this.toolLauncher.TabIndex = 1;
 			this.toolLauncher.Text = "toolStrip1";
@@ -76,6 +79,7 @@ namespace PeMain.UI
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.ToolTip tipsLauncher;
 		private PeMain.UI.ToolbarToolStrip toolLauncher;
 	}
 }
