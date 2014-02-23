@@ -10,8 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
-
+using System.Windows.Forms;
 using PeUtility;
 
 namespace PeMain.Data
@@ -47,11 +48,9 @@ namespace PeMain.Data
 		[System.Xml.Serialization.XmlAttribute]
 		public string Code { get; set; }
 		
-		private Word getWord(IEnumerable<Word> list, string key)
+		private Word GetWord(IEnumerable<Word> list, string key)
 		{
-			Word word = null;
-			
-			word = list.SingleOrDefault(item => item.Name == key);
+			var word = list.SingleOrDefault(item => item.Name == key);
 			
 			if(word == null) {
 				word = new Word();
@@ -62,9 +61,9 @@ namespace PeMain.Data
 			return word;
 		}
 		
-		public string getPlain(string key)
+		public string GetPlain(string key)
 		{
-			var word = getWord(Words, key);
+			var word = GetWord(Words, key);
 			
 			return word.Text;
 		}
@@ -74,6 +73,7 @@ namespace PeMain.Data
 			var nowDateTime = DateTime.Now;
 			var systemMap = new Dictionary<string, string>() {
 				{ SystemLanguageName.application,  Literal.programName },
+				{ SystemLanguageName.version,      Application.ProductVersion },
 				{ SystemLanguageName.year,         nowDateTime.Year.ToString() },
 				{ SystemLanguageName.year04,       nowDateTime.Year.ToString("D4") },
 				{ SystemLanguageName.month,        nowDateTime.Month.ToString() },
@@ -100,10 +100,10 @@ namespace PeMain.Data
 		{
 			get
 			{
-				var text = getPlain(key);
+				var text = GetPlain(key);
 				if(text.Any(c => c == '$')) {
 					// ${...}
-					text = text.ReplaceRange("${", "}", s => getWord(Define, s).Text);
+					text = text.ReplaceRange("${", "}", s => GetWord(Define, s).Text);
 				}
 				if(text.Any(c => c == '@')) {
 					var systemMap = GetSystemMap();

@@ -110,14 +110,13 @@ namespace PeMain
 		{
 			get { return Path.Combine(UserSettingDirPath, backupDirName);}
 		}
-			
 	}
 	
-	public struct AppEnv
+	public static class AppEnv
 	{
-		public string AppFilePath { get { return "PE_APP_EXE"; } }
-		public string AppDirPath { get { return "PE_APP_DIR"; } }
-		public string AppUserDir { get { return "PE_USER_DIR"; } }
+		public static string AppFilePath { get { return "PE_APP_EXE"; } }
+		public static string AppDirPath { get { return "PE_APP_DIR"; } }
+		public static string AppUserDir { get { return "PE_USER_DIR"; } }
 	}
 	
 	public enum HotKeyId: ushort
@@ -130,6 +129,8 @@ namespace PeMain
 	public static class SystemLanguageName
 	{
 		public const string application = "PE";
+		public const string version     = "VER";
+		
 		public const string year        = "Y";
 		public const string year04      = "Y:04";
 		public const string month       = "M";
@@ -142,6 +143,7 @@ namespace PeMain
 		public const string minute02    = "m:02";
 		public const string second      = "s";
 		public const string second02    = "s:02";
+		
 		public const string groupName   = "GROUP";
 		public const string itemName    = "ITEM";
 		
