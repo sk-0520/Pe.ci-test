@@ -126,4 +126,16 @@ namespace PeMain
 		HiddenFile,
 		Extension,
 	}
+	
+	public static class SystemLanguageName
+	{
+		const string application = "PE";
+		const string year = "Y";
+		const string month = "M";
+		const string day = "D";
+		const string hour = "h";
+		const string minute = "m";
+		const string second = "s";
+		
+	}
 }
