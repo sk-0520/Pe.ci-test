@@ -75,11 +75,17 @@ namespace PeMain.Data
 			var systemMap = new Dictionary<string, string>() {
 				{ SystemLanguageName.application,  Literal.programName },
 				{ SystemLanguageName.year,         nowDateTime.Year.ToString() },
+				{ SystemLanguageName.year04,       nowDateTime.Year.ToString("D4") },
 				{ SystemLanguageName.month,        nowDateTime.Month.ToString() },
+				{ SystemLanguageName.month02,      nowDateTime.Month.ToString("D2") },
 				{ SystemLanguageName.day,          nowDateTime.Day.ToString() },
+				{ SystemLanguageName.day02,        nowDateTime.Day.ToString("D2") },
 				{ SystemLanguageName.hour,         nowDateTime.Hour.ToString() },
+				{ SystemLanguageName.hour02,       nowDateTime.Hour.ToString("D2") },
 				{ SystemLanguageName.minute,       nowDateTime.Minute.ToString() },
+				{ SystemLanguageName.minute02,     nowDateTime.Minute.ToString("D2") },
 				{ SystemLanguageName.second,       nowDateTime.Second.ToString() },
+				{ SystemLanguageName.second02,     nowDateTime.Second.ToString("D2") },
 			};
 			
 			return systemMap;
