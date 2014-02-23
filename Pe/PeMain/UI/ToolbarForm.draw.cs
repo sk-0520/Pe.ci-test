@@ -69,7 +69,9 @@ namespace PeMain.UI
 			
 			DrawEdge(g, drawArea, active);
 			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
-			DrawCaption(g, captionArea, active);
+			if(!captionArea.Size.IsEmpty) {
+				DrawCaption(g, captionArea, active);
+			}
 		}
 		
 		void DrawFull(Graphics g, Rectangle drawArea, bool active)
