@@ -11,6 +11,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using PeUtility;
+
 namespace PeMain
 {
 	/// <summary>
@@ -109,6 +111,12 @@ namespace PeMain
 		public static string UserBackupDirPath
 		{
 			get { return Path.Combine(UserSettingDirPath, backupDirName);}
+		}
+		
+		
+		public static void Initialize(CommandLine commandLine)
+		{
+			
 		}
 	}
 	

@@ -26,7 +26,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
-		void InitializeLanguage(string[] args, List<LogItem> initLog)
+		void InitializeLanguage(CommandLine commandLine, List<LogItem> initLog)
 		{
 			// 言語
 			var langName = this._commonData.MainSetting.LanguageFileName;
@@ -58,7 +58,7 @@ namespace PeMain.UI
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeSetting(string[] args, List<LogItem> initLog)
+		void InitializeSetting(CommandLine commandLine, List<LogItem> initLog)
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
 			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
@@ -68,10 +68,10 @@ namespace PeMain.UI
 			initLog.Add(new LogItem(LogType.Information, "launcher-items", launcherItemsFilePath));
 			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
-			InitializeLanguage(args, initLog);
+			InitializeLanguage(commandLine, initLog);
 		}
 		
-		void InitializeMessage(string[] args, List<LogItem> initLog)
+		void InitializeMessage(CommandLine commandLine, List<LogItem> initLog)
 		{
 			this._messageWindow = new MessageWindow(this);
 			this._messageWindow.InitLog = initLog;
@@ -223,7 +223,7 @@ namespace PeMain.UI
 			this._notificationMenu.Items.AddRange(menuList.ToArray());
 		}
 		
-		void InitializeSkin(string[] args, List<LogItem> initLog)
+		void InitializeSkin(CommandLine commandLine, List<LogItem> initLog)
 		{
 			this._commonData.Skin = new SystemSkin();
 		}
@@ -232,7 +232,7 @@ namespace PeMain.UI
 		/// 本体UI初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeMain(string[] args, List<LogItem> initLog)
+		void InitializeMain(CommandLine commandLine, List<LogItem> initLog)
 		{
 			this._notifyIcon = new NotifyIcon();
 			this._notificationMenu = new ContextMenuStrip();
@@ -245,7 +245,7 @@ namespace PeMain.UI
 			this._notifyIcon.ContextMenuStrip = this._notificationMenu;			
 		}
 		
-		void InitializeLogForm(string[] args, List<LogItem> initLog)
+		void InitializeLogForm(CommandLine commandLine, List<LogItem> initLog)
 		{
 			this._logForm = new LogForm();
 			this._logForm.SetCommonData(this._commonData);
@@ -253,12 +253,12 @@ namespace PeMain.UI
 			this._commonData.Logger = this._logForm;
 		}
 			
-		void InitializeCommandForm(string[] args, List<LogItem> initLog)
+		void InitializeCommandForm(CommandLine commandLine, List<LogItem> initLog)
 		{
 			
 		}
 		
-		void InitializeToolbarForm(string[] args, List<LogItem> initLog)
+		void InitializeToolbarForm(CommandLine commandLine, List<LogItem> initLog)
 		{
 			Debug.Assert(this._commonData != null);
 			
@@ -277,16 +277,16 @@ namespace PeMain.UI
 			*/
 		}
 
-		void InitializeUI(string[] args, List<LogItem> initLog)
+		void InitializeUI(CommandLine commandLine, List<LogItem> initLog)
 		{
 			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]));
 			
-			InitializeSkin(args, initLog);
-			InitializeLogForm(args, initLog);
-			InitializeMessage(args, initLog);
-			InitializeMain(args, initLog);
-			InitializeCommandForm(args, initLog);
-			InitializeToolbarForm(args, initLog);
+			InitializeSkin(commandLine, initLog);
+			InitializeLogForm(commandLine, initLog);
+			InitializeMessage(commandLine, initLog);
+			InitializeMain(commandLine, initLog);
+			InitializeCommandForm(commandLine, initLog);
+			InitializeToolbarForm(commandLine, initLog);
 			
 			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/end"]));
 		}
@@ -299,11 +299,15 @@ namespace PeMain.UI
 		{
 			var initLog = new List<LogItem>(new []{ new LogItem(LogType.Information, "Initialize", args) });
 			
+			var commandLine = new CommandLine(args);
+			
+			Literal.Initialize(commandLine);
+			
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
 			
-			InitializeSetting(args, initLog);
-			InitializeUI(args, initLog);
+			InitializeSetting(commandLine, initLog);
+			InitializeUI(commandLine, initLog);
 			
 			ApplyLanguage();
 			
