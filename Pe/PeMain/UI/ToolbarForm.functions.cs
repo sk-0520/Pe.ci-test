@@ -642,7 +642,31 @@ namespace PeMain.UI
 		
 		void OpeningDropDown(ToolStripDropDownItem toolItem)
 		{
-			Debug.WriteLine("まだ試験中: " + toolItem.Text);
+			switch(UseToolbarItem.ToolbarPosition) {
+				case ToolbarPosition.DesktopFloat:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
+					break;
+					
+				case ToolbarPosition.DesktopTop:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+					break;
+					
+				case ToolbarPosition.DesktopBottom:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+					break;
+					
+				case ToolbarPosition.DesktopLeft:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Right;
+					break;
+					
+				case ToolbarPosition.DesktopRight:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Left;
+					break;
+					
+				default:
+					Debug.Assert(false, UseToolbarItem.ToolbarPosition.ToString());
+					break;
+			}
 		}
 		
 		
