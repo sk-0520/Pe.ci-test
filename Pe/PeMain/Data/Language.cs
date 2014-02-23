@@ -73,13 +73,13 @@ namespace PeMain.Data
 		{
 			var nowDateTime = DateTime.Now;
 			var systemMap = new Dictionary<string, string>() {
-				{ "PE", Literal.programName },
-				{ "Y", nowDateTime.Year.ToString() },
-				{ "M", nowDateTime.Month.ToString() },
-				{ "D", nowDateTime.Day.ToString() },
-				{ "h", nowDateTime.Hour.ToString() },
-				{ "m", nowDateTime.Minute.ToString() },
-				{ "s", nowDateTime.Second.ToString() },
+				{ SystemLanguageName.application,  Literal.programName },
+				{ SystemLanguageName.year,         nowDateTime.Year.ToString() },
+				{ SystemLanguageName.month,        nowDateTime.Month.ToString() },
+				{ SystemLanguageName.day,          nowDateTime.Day.ToString() },
+				{ SystemLanguageName.hour,         nowDateTime.Hour.ToString() },
+				{ SystemLanguageName.minute,       nowDateTime.Minute.ToString() },
+				{ SystemLanguageName.second,       nowDateTime.Second.ToString() },
 			};
 			
 			return systemMap;

@@ -237,7 +237,7 @@ namespace PeMain.UI
 			var toolButtonList = new List<ToolStripItem>();
 			var mainButton = CreateLauncherButton(null);
 			mainButton.Text = groupItem.Name;
-			mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{"GROUP", groupItem.Name}}];
+			mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{SystemLanguageName.groupName, groupItem.Name}}];
 
 			toolButtonList.Add(mainButton);
 			foreach(var itemName in groupItem.ItemNames) {

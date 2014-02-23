@@ -20,7 +20,7 @@ namespace PeMain.UI
 			Debug.Assert(CommonData.Language != null);
 			
 			var map = new Dictionary<string, string>() {
-				{ "ITEM", LauncherItem.Name },
+				{ SystemLanguageName.itemName, LauncherItem.Name },
 			};
 			
 			Text = CommonData.Language["window/stream", map];

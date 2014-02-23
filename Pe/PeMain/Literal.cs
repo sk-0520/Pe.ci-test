@@ -129,13 +129,15 @@ namespace PeMain
 	
 	public static class SystemLanguageName
 	{
-		const string application = "PE";
-		const string year = "Y";
-		const string month = "M";
-		const string day = "D";
-		const string hour = "h";
-		const string minute = "m";
-		const string second = "s";
+		public const string application = "PE";
+		public const string year        = "Y";
+		public const string month       = "M";
+		public const string day         = "D";
+		public const string hour        = "h";
+		public const string minute      = "m";
+		public const string second      = "s";
+		public const string groupName   = "GROUP";
+		public const string itemName    = "ITEM";
 		
 	}
 }

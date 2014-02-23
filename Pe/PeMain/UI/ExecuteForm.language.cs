@@ -21,7 +21,7 @@ namespace PeMain.UI
 			Debug.Assert(CommonData != null);
 			
 			var map = new Dictionary<string, string>() {
-				{ "ITEM", LauncherItem.Name },
+				{ SystemLanguageName.itemName, LauncherItem.Name },
 			};
 			
 			DialogUtility.SetDefaultText(this, CommonData.Language, CommonData.Language["window/execute", map]);
