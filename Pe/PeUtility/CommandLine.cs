@@ -50,6 +50,23 @@ namespace PeUtility
 			Options.AddRange(args);
 		}
 		
+		private KeyValuePair<string, string> SplitKeyValue(string pair)
+		{
+			var index = pair.IndexOf(KeyValueSeparator);
+			if(index != -1) {
+				return new KeyValuePair<string,string>(pair.Take(index - 1).ToString(), pair.Skip(index + KeyValueHeader.Length).ToString());
+			}
+			
+			throw new ArgumentException(string.Format("pair = {0}, header = {1}", pair, KeyValueHeader));
+		}
+		
+		private string KeyToValue(string keyOption, int index)
+		{
+			var pairs = Options.Where(s => s.StartsWith(keyOption));
+			var pair = SplitKeyValue(keyOption);
+			return pair.Value;
+		}
+		
 		private string GetKeyOption(string option) 
 		{
 			return KeyValueHeader + option;
@@ -83,6 +100,18 @@ namespace PeUtility
 			var keyOption = GetKeyOption(option);
 			return CountKeyOption(keyOption);
 		}
+		
+		public string GetValue(string option)
+		{
+			var keyOption = GetKeyOption(option);
+			if(HasKeyOption(keyOption)) {
+				return KeyToValue(keyOption, 0);
+			}
+			
+			throw new ArgumentException(option);
+			
+		}
+		
 		
 	}
 }
