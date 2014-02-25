@@ -22,6 +22,8 @@ namespace PeMain.UI
 		{
 			this._menuGroup = new ContextMenu();
 			ContextMenu = this._menuGroup;
+			
+			Visible = false;
 		}
 		
 		void Initialize()
