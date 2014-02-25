@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="UI\Ex\ExHotkeyControl.cs" />
     <Compile Include="UI\Ex\ExListBox.cs" />
+    <Compile Include="UI\Ex\ExSplitButton.cs" />
     <Compile Include="UI\Ex\ExToolStrip.cs" />
     <Compile Include="UI\LogForm.cs" />
     <Compile Include="UI\LogForm.Designer.cs">
