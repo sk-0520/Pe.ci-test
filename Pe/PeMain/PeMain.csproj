@@ -57,9 +57,16 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -199,6 +206,7 @@
     </Compile>
     <Compile Include="UI\Ex\ExHotkeyControl.cs" />
     <Compile Include="UI\Ex\ExListBox.cs" />
+    <Compile Include="UI\Ex\ExSplitButton.cs" />
     <Compile Include="UI\Ex\ExToolStrip.cs" />
     <Compile Include="UI\LogForm.cs" />
     <Compile Include="UI\LogForm.Designer.cs">
@@ -379,6 +387,7 @@
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">

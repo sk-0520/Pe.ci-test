@@ -16,4 +16,5 @@ namespace PeUtility
 		public TFIRST First { get; set; }
 		public TSECOND Second { get; set; }
 	}
+	
 }

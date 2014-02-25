@@ -158,8 +158,8 @@ namespace PeMain.UI
 			SelectedGroup(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First());
 			
 			// 表示
-			ApplySettingVisible();
 			ApplySettingPosition();
+			ApplySettingVisible();
 			ApplySettingTopmost();
 		}
 		
@@ -640,6 +640,7 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
+		// TODO: 領域ぎりぎりの場合にメニュー位置が他のディスプレイに表示される
 		void OpeningDropDown(ToolStripDropDownItem toolItem)
 		{
 			switch(UseToolbarItem.ToolbarPosition) {
@@ -648,11 +649,11 @@ namespace PeMain.UI
 					break;
 					
 				case ToolbarPosition.DesktopTop:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
 					break;
 					
 				case ToolbarPosition.DesktopBottom:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.AboveLeft;
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
 					break;
 					
 				case ToolbarPosition.DesktopLeft:

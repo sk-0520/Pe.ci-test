@@ -96,6 +96,7 @@
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\HotkeyControl.cs" />
+    <Compile Include="UI\SplitButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\AppbarForm.resx">
