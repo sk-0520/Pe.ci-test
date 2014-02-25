@@ -74,6 +74,15 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.1.0.91.3\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6">
+      <HintPath>..\packages\System.Data.SQLite.1.0.91.3\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.1.0.91.3\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
@@ -388,6 +397,8 @@
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="x64\SQLite.Interop.dll" />
+    <None Include="x86\SQLite.Interop.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">
