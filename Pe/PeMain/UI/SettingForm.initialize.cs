@@ -61,8 +61,9 @@ namespace PeMain.UI
 		
 		void InitializeCommand(CommandSetting commandSetting)
 		{
-			this._commandFont = commandSetting.FontSetting;
-			SetViewMessage(this.commandCommandFont, this._commandFont);
+			//this._commandFont = commandSetting.FontSetting;
+			this.commandCommandFont.FontSetting.Include(commandSetting.FontSetting);
+			this.commandCommandFont.RefreshView();
 			
 			// アイコンサイズ文言の項目構築
 			AttachmentIconScale(this.selectCommandIcon, commandSetting.IconScale);

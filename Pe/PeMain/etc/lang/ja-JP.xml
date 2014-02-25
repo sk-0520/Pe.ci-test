@@ -21,19 +21,20 @@
 		<Word Name="admin"             Text="管理者として実行" />
 	</Define>
 	<Words>
-		<Word Name="common/command/ok"            Text="${ok}" />
-		<Word Name="common/command/cancel"        Text="${cancel}" />
-		<Word Name="common/command/exit"          Text="${exit}" />
-		<Word Name="common/menu/exit"             Text="${exit}(&amp;X)" />
-		<Word Name="common/label/topmost"         Text="${topmost}" />
-		<Word Name="common/menu/topmost"          Text="${topmost}(&amp;T)" />
-		<Word Name="common/label/font"            Text="${font}" />
-		<Word Name="common/label/visible"         Text="${visible}" />
-		<Word Name="common/label/remove"          Text="${remove}" />
-		<Word Name="common/label/edit"            Text="${edit}" />
-		<Word Name="common/command/default-font"  Text="デフォルトフォント" />
-		<Word Name="common/check/admin"           Text="${admin} (オプション以外の設定は無効)" />
-		<Word Name="common/tab/env"               Text="環境変数" />
+		<Word Name="common/command/ok"                  Text="${ok}" />
+		<Word Name="common/command/cancel"              Text="${cancel}" />
+		<Word Name="common/command/exit"                Text="${exit}" />
+		<Word Name="common/menu/exit"                   Text="${exit}(&amp;X)" />
+		<Word Name="common/label/topmost"               Text="${topmost}" />
+		<Word Name="common/menu/topmost"                Text="${topmost}(&amp;T)" />
+		<Word Name="common/label/font"                  Text="${font}" />
+		<Word Name="common/label/visible"               Text="${visible}" />
+		<Word Name="common/label/remove"                Text="${remove}" />
+		<Word Name="common/label/edit"                  Text="${edit}" />
+		<Word Name="common/command/default-font"        Text="デフォルトのフォント" />
+		<Word Name="common/command/default-font-reset"  Text="フォントをリセットする" />
+		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
+		<Word Name="common/tab/env"                     Text="環境変数" />
 		
 		<Word Name="window/toolbar"  Text="@[PE]" />
 		<Word Name="window/log"      Text="ログ" />

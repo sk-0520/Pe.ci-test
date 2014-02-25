@@ -111,7 +111,7 @@ namespace PeMain.UI
 			Debug.Assert(CommonData != null);
 			Debug.Assert(CommonData.MainSetting != null);
 			
-			if(!UseToolbarItem.FontSetting.IsDefault) {
+			if(UseToolbarItem.FontSetting != null && !UseToolbarItem.FontSetting.IsDefault) {
 				this.toolLauncher.Font = UseToolbarItem.FontSetting.Font;
 			}
 		}

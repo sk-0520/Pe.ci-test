@@ -66,5 +66,11 @@ namespace PeMain.Data
 				this._font.Dispose();
 			}
 		}
+		
+		public void Include(FontSetting fs) 
+		{
+			Height = fs.Height;
+			Family = fs.Family;
+		}
 	}
 }

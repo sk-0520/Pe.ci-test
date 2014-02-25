@@ -21,6 +21,8 @@ namespace PeMain.UI
 			commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
 			commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
 			commandSetting.HotKey.Resisted = this.inputCommandHotkey.Resisted;
+			
+			commandSetting.FontSetting = this.commandCommandFont.FontSetting;
 		}
 	}
 }

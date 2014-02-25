@@ -54,6 +54,8 @@ namespace PeMain.UI
 		
 		void ApplyLanguageCommand()
 		{
+			this.commandCommandFont.SetLanguage(Language);
+			
 			this.selectCommandTopmost.Text = Language["common/label/topmost"];
 			this.labelCommandFont.Text = Language["common/label/font"];
 			this.labelCommandIcon.Text = Language["enum/icon-size"];
@@ -83,6 +85,8 @@ namespace PeMain.UI
 		void ApplyLanguageToolbar()
 		{
 			this.selecterToolbar.SetLanguage(Language);
+			this.commandToolbarFont.SetLanguage(Language);
+			
 			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
 			this.selectToolbarVisible.Text = Language["common/label/visible"];
 			this.selectToolbarShowText.Text = Language["setting/check/show-text"];

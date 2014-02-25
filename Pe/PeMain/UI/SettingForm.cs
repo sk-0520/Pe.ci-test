@@ -105,25 +105,6 @@ namespace PeMain.UI
 			DialogUtility.OpenDialogDirPath(this.inputLauncherOption);
 		}
 		
-		void CommandCommandFont_Click(object sender, EventArgs e)
-		{
-			var fontSetting = OpenDialogFontSetting(this.commandCommandFont, this._commandFont);
-			if(fontSetting != null) {
-				this._commandFont = fontSetting;
-				SetViewMessage(this.commandCommandFont, this._commandFont);
-			}
-		}
-		
-		void CommandToolbarFont_Click(object sender, EventArgs e)
-		{
-			var fontSetting = OpenDialogFontSetting(this.commandToolbarFont, this._toolbarSelectedToolbarItem.FontSetting);
-			if(fontSetting != null) {
-				this._toolbarSelectedToolbarItem.FontSetting = fontSetting;
-				SetViewMessage(this.commandToolbarFont, this._toolbarSelectedToolbarItem.FontSetting);
-			}
-		}
-		
-		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
 			ToolbarAddGroup(Language["group/new"]);

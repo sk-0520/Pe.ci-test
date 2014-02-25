@@ -161,7 +161,6 @@ namespace PeMain.Data
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;
 			TextWidth = Literal.toolbarTextWidth;
-
 		}
 		/// <summary>
 		/// 表示

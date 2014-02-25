@@ -53,6 +53,7 @@ namespace PeMain.UI
 			toolbarItem.Visible = this.selectToolbarVisible.Checked;
 			toolbarItem.ShowText = this.selectToolbarShowText.Checked;
 			toolbarItem.TextWidth = (int)this.inputToolbarTextWidth.Value;
+			toolbarItem.FontSetting = this.commandToolbarFont.FontSetting;
 			
 			toolbarItem.IconScale = (IconScale)this.selectToolbarIcon.SelectedValue;
 		}
@@ -65,9 +66,8 @@ namespace PeMain.UI
 			
 			this.selectToolbarPosition.SelectedValue = toolbarItem.ToolbarPosition;
 			this.selectToolbarIcon.SelectedValue = toolbarItem.IconScale;
-			
-			SetViewMessage(this.commandToolbarFont, toolbarItem.FontSetting);
-			
+			this.commandToolbarFont.FontSetting.Include(toolbarItem.FontSetting);
+			this.commandToolbarFont.RefreshView();
 			
 			this.inputToolbarTextWidth.Value = toolbarItem.TextWidth;
 			
