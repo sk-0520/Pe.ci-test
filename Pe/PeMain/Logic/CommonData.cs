@@ -10,6 +10,7 @@ using System;
 using System.Data.Common;
 using PeMain.Data;
 using PeMain.UI;
+using PeUtility;
 
 namespace PeMain.Logic
 {
@@ -23,7 +24,7 @@ namespace PeMain.Logic
 		/// <summary>
 		/// 入れるべきじゃない気がする
 		/// </summary>
-		public DbConnection Connection { get; set; }
+		public DBManager Database { get; set; }
 	}
 	/// <summary>
 	/// Description of ISetCommonData.

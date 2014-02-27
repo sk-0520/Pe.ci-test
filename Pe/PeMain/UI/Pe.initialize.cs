@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
@@ -15,9 +16,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-
 using PeMain.Data;
 using PeMain.Logic;
+using PeMain.Properties;
 using PeUtility;
 using PI.Windows;
 
@@ -55,18 +56,39 @@ namespace PeMain.UI
 				this._commonData.Language = new Language();
 			}
 		}
+		
+		/// <summary>
+		/// テーブル一覧の確認と不足分作成・バージョン修正
+		/// </summary>
+		/// <param name="commandLine"></param>
+		/// <param name="initLog"></param>
+		/// <param name="dbCommand"></param>
+		void InitializeNoteTables(CommandLine commandLine, List<LogItem> initLog)
+		{
+			// 
+			bool enabledVersionTable = false;
+			var reader = this._commonData.Database.ExecuteReader(
+				global::PeMain.Properties.SQL.CheckTable,
+				new Dictionary<string, object>() {
+					{"table", DataTables.masterTableVersion}
+				}
+			);
+			using(reader) {
+				reader.Read();
+				enabledVersionTable = Convert.ToInt32(reader["NUM"]) == 1;
+			}
+			Debug.WriteLine(enabledVersionTable);
+		}
+		
 		void InitializeNote(CommandLine commandLine, List<LogItem> initLog)
 		{
 			var noteDataFilePath = Literal.UserNoteDataPath;
 			initLog.Add(new LogItem(LogType.Information, "note-data", noteDataFilePath));
-			this._commonData.Connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
-			this._commonData.Connection.Open();
-			//var command = this._commonData.Connection.CreateCommand();
-			//command.CommandText = "CREATE TABLE FkkOO (ID INTEGER PRIMARY KEY, MyValue NVARCHAR(256))";
-			//command.ExecuteNonQuery(); // Create the table, don't expect returned data
-			this._commonData.Connection.Close();
-			
+			var connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
+			this._commonData.Database = new DBManager(connection, false, true);
+			InitializeNoteTables(commandLine, initLog);
 		}
+		
 		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>

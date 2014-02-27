@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-
 using PeUtility;
 
 namespace PeMain
@@ -161,5 +161,21 @@ namespace PeMain
 		public const string groupName   = "GROUP";
 		public const string itemName    = "ITEM";
 		
+	}
+	
+	public static class DataTables
+	{
+		private static readonly Dictionary<string, int> _map;
+		static DataTables()
+		{
+			_map = new Dictionary<string, int>() {
+				{ masterTableVersion,    1},
+				{ masterTableNote,       1},
+				{ transactionTableNote,  1},
+			};
+		}
+		public static string masterTableVersion   = "M_VERSOIN";
+		public static string masterTableNote      = "M_NOTE";
+		public static string transactionTableNote = "T_NOTE";
 	}
 }

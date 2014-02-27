@@ -160,6 +160,7 @@ namespace PeMain.UI
 		void CloseApplication(bool save)
 		{
 			SaveSetting();
+			this._commonData.Database.Close();
 			Application.Exit();
 		}
 		

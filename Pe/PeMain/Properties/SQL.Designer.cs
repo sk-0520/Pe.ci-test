@@ -59,5 +59,22 @@ namespace PeMain.Properties {
 				resourceCulture = value;
 			}
 		}
+		
+		/// <summary>
+		///   select
+		///    count(*) NUM
+		///from
+		///    SQLITE_MASTER
+		///where
+		///    NAME = @table
+		///    and
+		///    TYPE = &apos;TABLE&apos;
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CheckTable {
+			get {
+				return ResourceManager.GetString("CheckTable", resourceCulture);
+			}
+		}
 	}
 }
