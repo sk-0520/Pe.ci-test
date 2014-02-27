@@ -109,5 +109,19 @@ namespace PeMain.UI
 		{
 			OpeningDropDown((ToolStripDropDownItem)sender);
 		}
+		
+		void toolItem_MouseHover(object sender, EventArgs e)
+		{
+			var toolItem = (ToolStripDropDownItem)sender;
+			/*
+			var cursorPoint = Cursor.Position;
+			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
+			var point = this.PointToClient(cursorPoint);
+			Debug.WriteLine(toolItem.ToolTipText);
+			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
+			*/
+			this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+		}
+
 	}
 }
