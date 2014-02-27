@@ -128,6 +128,10 @@
     <Compile Include="Data\MainSetting.cs" />
     <Compile Include="Data\NoteSetting.cs" />
     <Compile Include="Data\ToolbarSetting.cs" />
+    <Compile Include="Properties\SQL.Designer.cs">
+      <DependentUpon>SQL.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.cs" />
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
@@ -348,6 +352,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Images.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\SQL.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -397,8 +405,12 @@
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
     <None Include="packages.config" />
-    <None Include="x64\SQLite.Interop.dll" />
-    <None Include="x86\SQLite.Interop.dll" />
+    <None Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">

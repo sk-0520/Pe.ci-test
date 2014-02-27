@@ -8,12 +8,14 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -53,7 +55,18 @@ namespace PeMain.UI
 				this._commonData.Language = new Language();
 			}
 		}
-		
+		void InitializeNote(CommandLine commandLine, List<LogItem> initLog)
+		{
+			var noteDataFilePath = Literal.UserNoteDataPath;
+			initLog.Add(new LogItem(LogType.Information, "note-data", noteDataFilePath));
+			this._commonData.Connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
+			this._commonData.Connection.Open();
+			//var command = this._commonData.Connection.CreateCommand();
+			//command.CommandText = "CREATE TABLE FkkOO (ID INTEGER PRIMARY KEY, MyValue NVARCHAR(256))";
+			//command.ExecuteNonQuery(); // Create the table, don't expect returned data
+			this._commonData.Connection.Close();
+			
+		}
 		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
@@ -69,6 +82,8 @@ namespace PeMain.UI
 			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
 			InitializeLanguage(commandLine, initLog);
+			
+			InitializeNote(commandLine, initLog);
 		}
 		
 		void InitializeMessage(CommandLine commandLine, List<LogItem> initLog)
@@ -124,11 +139,11 @@ namespace PeMain.UI
 				this._toolbarForms.Visible = !this._toolbarForms.Visible;
 				this._mainSetting.Toolbar.Visible = this._toolbarForms.Visible;
 			};
-			*/
+			 */
 			
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
-				this._logForm.Visible = !this._logForm.Visible; 
+				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
 			};
 			
@@ -237,12 +252,12 @@ namespace PeMain.UI
 			this._notifyIcon = new NotifyIcon();
 			this._notificationMenu = new ContextMenuStrip();
 			AttachmentMainMenu();
-				
+			
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 			
 			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
-			this._notifyIcon.ContextMenuStrip = this._notificationMenu;			
+			this._notifyIcon.ContextMenuStrip = this._notificationMenu;
 		}
 		
 		void InitializeLogForm(CommandLine commandLine, List<LogItem> initLog)
@@ -252,7 +267,7 @@ namespace PeMain.UI
 			
 			this._commonData.Logger = this._logForm;
 		}
-			
+		
 		void InitializeCommandForm(CommandLine commandLine, List<LogItem> initLog)
 		{
 			
@@ -274,7 +289,7 @@ namespace PeMain.UI
 			this._toolbarForms = new ToolbarForm();
 			this._toolbarForms.Logger = this._logForm;
 			this._toolbarForms.SetCommonData(this._commonData.Language, this._mainSetting);
-			*/
+			 */
 		}
 
 		void InitializeUI(CommandLine commandLine, List<LogItem> initLog)

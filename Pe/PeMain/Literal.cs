@@ -28,9 +28,10 @@ namespace PeMain
 		/// </summary>
 		private const string dirRootName = programName;
 		
-		public const string mainSettingFileName = "mainsetting.xml";
-		public const string launcherItemsName   = "launcher-items.xml";
-		public const string backupDirName       = "backup";
+		public const string mainSettingFileName   = "mainsetting.xml";
+		public const string launcherItemsFileName = "launcher-items.xml";
+		public const string noteDataFileName      = "note.sqlite3";
+		public const string backupDirName         = "backup";
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -105,7 +106,12 @@ namespace PeMain
 		
 		public static string UserLauncherItemsPath
 		{
-			get { return Path.Combine(UserSettingDirPath, launcherItemsName);}
+			get { return Path.Combine(UserSettingDirPath, launcherItemsFileName); }
+		}
+		
+		public static string UserNoteDataPath
+		{
+			get { return Path.Combine(UserSettingDirPath, noteDataFileName); }
 		}
 		
 		public static string UserBackupDirPath
