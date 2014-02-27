@@ -58,8 +58,10 @@ namespace PeMain.UI
 			this.toolLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragDrop);
 			this.toolLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragEnter);
 			this.toolLauncher.DragOver += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragOver);
-			this.toolLauncher.MouseLeave += new System.EventHandler(this.ToolLauncher_MouseLeave);
-			this.toolLauncher.MouseHover += new System.EventHandler(this.ToolLauncher_MouseHover);
+			// 
+			// tipsLauncher
+			// 
+			this.tipsLauncher.ShowAlways = true;
 			// 
 			// ToolbarForm
 			// 

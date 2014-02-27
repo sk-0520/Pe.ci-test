@@ -609,7 +609,7 @@ namespace PeMain.UI
 					toolItem.Image = icon.ToBitmap();
 				}
 			}
-
+			toolItem.MouseHover += new EventHandler(toolItem_MouseHover);
 			//toolItem.AutoSize = true;
 			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			//var buttonLayout = GetButtonLayout();
@@ -639,6 +639,8 @@ namespace PeMain.UI
 			
 			return toolItem;
 		}
+
+
 		
 		void OpeningDropDown(ToolStripDropDownItem toolItem)
 		{
