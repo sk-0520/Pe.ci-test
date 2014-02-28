@@ -66,17 +66,7 @@ namespace PeMain.UI
 		void InitializeNoteTables(CommandLine commandLine, List<LogItem> initLog)
 		{
 			// 
-			bool enabledVersionTable = false;
-			var reader = this._commonData.Database.ExecuteReader(
-				global::PeMain.Properties.SQL.CheckTable,
-				new Dictionary<string, object>() {
-					{"table", DataTables.masterTableVersion}
-				}
-			);
-			using(reader) {
-				reader.Read();
-				enabledVersionTable = Convert.ToInt32(reader["NUM"]) == 1;
-			}
+			var enabledVersionTable = this._commonData.Database.ExistsTable(global::PeMain.Properties.SQL.CheckTable);
 			Debug.WriteLine(enabledVersionTable);
 		}
 		
@@ -85,7 +75,7 @@ namespace PeMain.UI
 			var noteDataFilePath = Literal.UserNoteDataPath;
 			initLog.Add(new LogItem(LogType.Information, "note-data", noteDataFilePath));
 			var connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
-			this._commonData.Database = new DBManager(connection, false, true);
+			this._commonData.Database = new PeDBManager(connection, false, true);
 			InitializeNoteTables(commandLine, initLog);
 		}
 		

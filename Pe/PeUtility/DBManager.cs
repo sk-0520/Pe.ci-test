@@ -37,7 +37,7 @@ namespace PeUtility
 		
 		private DbCommand UseCommand()
 		{
-			if(Command != null) {
+			if(SharedCommand) {
 				return Command;
 			} else {
 				return CreateCommand();
@@ -55,20 +55,27 @@ namespace PeUtility
 			return Connection.CreateCommand();
 		}
 		
+		protected DbParameter[] MakeParameter(DbCommand command, Dictionary<string, object> parameter)
+		{
+			var list = new List<DbParameter>();
+			foreach(var pair in parameter) {
+				var param = command.CreateParameter();
+				param.ParameterName = pair.Key;
+				param.Value = pair.Value;
+				
+				list.Add(param);
+			}
+			
+			return list.ToArray();
+		}
+		
 		public DbDataReader ExecuteReader(string code, Dictionary<string, object> parameter = null)
 		{
 			var command = UseCommand();
 			command.CommandText = code;
 			if(parameter != null && parameter.Count > 0) {
-				var list = new List<DbParameter>();
-				foreach(var pair in parameter) {
-					var param = command.CreateParameter();
-					param.ParameterName = pair.Key;
-					param.Value = pair.Value;
-					
-					list.Add(param);
-				}
-				command.Parameters.AddRange(list.ToArray());
+				var paramList = MakeParameter(command, parameter);
+				command.Parameters.AddRange(paramList);
 				command.Prepare();
 			}
 			var reader = command.ExecuteReader();

@@ -24,7 +24,7 @@ namespace PeMain.Logic
 		/// <summary>
 		/// 入れるべきじゃない気がする
 		/// </summary>
-		public DBManager Database { get; set; }
+		public PeDBManager Database { get; set; }
 	}
 	/// <summary>
 	/// Description of ISetCommonData.

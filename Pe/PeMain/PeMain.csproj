@@ -103,6 +103,7 @@
     <Compile Include="Logic\ISetLanguage.cs" />
     <Compile Include="Logic\ItemData.cs" />
     <Compile Include="Logic\IRootSender.cs" />
+    <Compile Include="Logic\PeDBManager.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\SystemEnv.cs" />
     <Compile Include="Main.cs" />
