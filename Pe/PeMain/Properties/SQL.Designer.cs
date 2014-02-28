@@ -76,5 +76,19 @@ namespace PeMain.Properties {
 				return ResourceManager.GetString("CheckTable", resourceCulture);
 			}
 		}
+		
+		/// <summary>
+		///   create table M_VERSION
+		///(
+		///    NAME     text primary key,
+		///    VERSION  integer not null
+		///)
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CreateVersionTable {
+			get {
+				return ResourceManager.GetString("CreateVersionTable", resourceCulture);
+			}
+		}
 	}
 }

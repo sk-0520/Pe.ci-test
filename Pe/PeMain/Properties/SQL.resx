@@ -128,4 +128,12 @@ where
     TYPE = 'TABLE'
 </value>
   </data>
+  <data name="CreateVersionTable" xml:space="preserve">
+    <value>create table M_VERSION
+(
+    NAME     text primary key,
+    VERSION  integer not null
+)
+</value>
+  </data>
 </root>

@@ -68,6 +68,15 @@ namespace PeMain.UI
 			// 
 			var enabledVersionTable = this._commonData.Database.ExistsTable(global::PeMain.Properties.SQL.CheckTable);
 			Debug.WriteLine(enabledVersionTable);
+			if(!enabledVersionTable) {
+				// バージョンテーブルが存在しなければ作成
+				this._commonData.Database.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionTable);
+			}
+			
+			// プログラムの知っているテーブルが存在しない、またはバージョンが異なる場合に調整する
+			foreach(var pair in DataTables.map) {
+				
+			}
 		}
 		
 		void InitializeNote(CommandLine commandLine, List<LogItem> initLog)

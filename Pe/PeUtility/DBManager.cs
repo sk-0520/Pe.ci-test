@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 
 namespace PeUtility
 {
@@ -57,6 +58,8 @@ namespace PeUtility
 		
 		protected DbParameter[] MakeParameter(DbCommand command, Dictionary<string, object> parameter)
 		{
+			Debug.Assert(parameter != null);
+			
 			var list = new List<DbParameter>();
 			foreach(var pair in parameter) {
 				var param = command.CreateParameter();
@@ -69,18 +72,41 @@ namespace PeUtility
 			return list.ToArray();
 		}
 		
-		public DbDataReader ExecuteReader(string code, Dictionary<string, object> parameter = null)
+		protected bool SetParameter(DbCommand command, Dictionary<string, object> parameter)
 		{
-			var command = UseCommand();
-			command.CommandText = code;
 			if(parameter != null && parameter.Count > 0) {
 				var paramList = MakeParameter(command, parameter);
 				command.Parameters.AddRange(paramList);
 				command.Prepare();
+				
+				return true;
 			}
-			var reader = command.ExecuteReader();
-			UnuseCommand(command);
-			return reader;
+			
+			return false;
+		}
+		
+		public DbDataReader ExecuteReader(string code, Dictionary<string, object> parameter = null)
+		{
+			var command = UseCommand();
+			try {
+				command.CommandText = code;
+				SetParameter(command, parameter);
+				var reader = command.ExecuteReader();
+				return reader;
+			} finally {
+				UnuseCommand(command);
+			}
+		}
+		public int ExecuteCommand(string code, Dictionary<string, object> parameter = null)
+		{
+			var command = UseCommand();
+			try {
+				command.CommandText = code;
+				SetParameter(command, parameter);
+				return command.ExecuteNonQuery();
+			} finally {
+				UnuseCommand(command);
+			}
 		}
 		
 		public void Close()

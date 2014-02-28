@@ -165,17 +165,20 @@ namespace PeMain
 	
 	public static class DataTables
 	{
-		private static readonly Dictionary<string, int> _map;
 		static DataTables()
 		{
-			_map = new Dictionary<string, int>() {
+			map = new Dictionary<string, int>() {
 				{ masterTableVersion,    1},
 				{ masterTableNote,       1},
 				{ transactionTableNote,  1},
 			};
 		}
+		public static readonly Dictionary<string, int> map;
+		
 		public static string masterTableVersion   = "M_VERSOIN";
 		public static string masterTableNote      = "M_NOTE";
 		public static string transactionTableNote = "T_NOTE";
+		
+		
 	}
 }

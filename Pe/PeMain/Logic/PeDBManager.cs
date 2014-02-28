@@ -32,5 +32,6 @@ namespace PeMain.Logic
 				return Convert.ToInt32(reader["NUM"]) == 1;
 			}
 		}
+		
 	}
 }
