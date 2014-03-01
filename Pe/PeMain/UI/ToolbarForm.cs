@@ -9,8 +9,8 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -112,16 +112,30 @@ namespace PeMain.UI
 		
 		void toolItem_MouseHover(object sender, EventArgs e)
 		{
-			var toolItem = (ToolStripDropDownItem)sender;
+			var toolItem = (ToolStripItem)sender;
 			/*
 			var cursorPoint = Cursor.Position;
 			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
 			var point = this.PointToClient(cursorPoint);
 			Debug.WriteLine(toolItem.ToolTipText);
 			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
-			*/
+			 */
 			this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
 		}
 
+		
+		void ToolLauncher_MouseHover(object sender, EventArgs e)
+		{
+			
+			var cursorPoint = Cursor.Position;
+			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
+			var point = this.PointToClient(cursorPoint);
+			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().SingleOrDefault(i => i.Bounds.Contains(point));
+			if(toolItem != null) {
+				this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			} else {
+				this.tipsLauncher.RemoveAll();
+			}
+		}
 	}
 }
