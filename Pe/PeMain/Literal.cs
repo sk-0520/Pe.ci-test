@@ -175,7 +175,7 @@ namespace PeMain
 		}
 		public static readonly Dictionary<string, int> map;
 		
-		public static string masterTableVersion   = "M_VERSOIN";
+		public static string masterTableVersion   = "M_VERSION";
 		public static string masterTableNote      = "M_NOTE";
 		public static string transactionTableNote = "T_NOTE";
 		

@@ -8,15 +8,22 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
+using System.Data.SQLite;
 using PeUtility;
 
 namespace PeMain.Logic
 {
+	public abstract class SQLiteDBManager: DBManager
+	{
+		public SQLiteDBManager(DbConnection connection, bool isOpened, bool sharedCommand): base(connection, isOpened, sharedCommand)
+		{ }
+	}
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
 	/// </summary>
-	public class PeDBManager: DBManager
+	public class PeDBManager: SQLiteDBManager
 	{
 		public PeDBManager(DbConnection connection, bool isOpened, bool sharedCommand): base(connection, isOpened, sharedCommand)
 		{ }
@@ -24,10 +31,10 @@ namespace PeMain.Logic
 		public bool ExistsTable(string tableName)
 		{
 			var param = new Dictionary<string, object>() {
-				{"table", DataTables.masterTableVersion}
+				{"table_name", tableName},
 			};
 
-			using(var reader = ExecuteReader(tableName, param)) {
+			using(var reader = ExecuteReader(global::PeMain.Properties.SQL.CheckTable, param)) {
 				reader.Read();
 				return Convert.ToInt32(reader["NUM"]) == 1;
 			}

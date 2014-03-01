@@ -66,7 +66,7 @@ namespace PeMain.UI
 		void InitializeNoteTables(CommandLine commandLine, List<LogItem> initLog)
 		{
 			// 
-			var enabledVersionTable = this._commonData.Database.ExistsTable(global::PeMain.Properties.SQL.CheckTable);
+			var enabledVersionTable = this._commonData.Database.ExistsTable(DataTables.masterTableVersion);
 			Debug.WriteLine(enabledVersionTable);
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成

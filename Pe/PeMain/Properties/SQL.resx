@@ -123,9 +123,9 @@
 from
     SQLITE_MASTER
 where
-    NAME = @table
+    NAME = @table_name
     and
-    TYPE = 'TABLE'
+    TYPE = 'table'
 </value>
   </data>
   <data name="CreateVersionTable" xml:space="preserve">
