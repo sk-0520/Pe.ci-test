@@ -220,28 +220,26 @@ namespace PeUtility
 			return replacedCode;
 		}
 		
-		public DbDataReader ExecuteReader(string code, Dictionary<string, object> parameter = null, Dictionary<string, CommandExpression> expr = null)
+		private T Executer<T>(Func<DbCommand,T> func, string code, Dictionary<string, object> parameter, Dictionary<string, CommandExpression> expr)
 		{
 			var command = UseCommand();
 			try {
 				command.CommandText = ExpressionReplace(code, expr);
 				SetParameter(command, parameter);
-				return command.ExecuteReader();
+				return func(command);
 			} finally {
 				UnuseCommand(command);
 			}
 		}
 		
+		public DbDataReader ExecuteReader(string code, Dictionary<string, object> parameter = null, Dictionary<string, CommandExpression> expr = null)
+		{
+			return Executer(command => command.ExecuteReader(), code, parameter, expr);
+		}
+		
 		public int ExecuteCommand(string code, Dictionary<string, object> parameter = null, Dictionary<string, CommandExpression> expr = null)
 		{
-			var command = UseCommand();
-			try {
-				command.CommandText = ExpressionReplace(code, expr);
-				SetParameter(command, parameter);
-				return command.ExecuteNonQuery();
-			} finally {
-				UnuseCommand(command);
-			}
+			return Executer(command => command.ExecuteNonQuery(), code, parameter, expr);
 		}
 		
 		public void Close()
