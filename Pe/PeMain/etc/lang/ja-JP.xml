@@ -119,7 +119,10 @@
 		<Word Name="setting/tab/display"          Text="ディスプレイ" />
 		<Word Name="setting/tab/note"             Text="ノート" />
 		<Word Name="setting/label/language"       Text="使用言語" />
+		<Word Name="setting/label/hiddenfile"     Text="隠しファイル" />
+		<Word Name="setting/label/extension"      Text="拡張子" />
 		<Word Name="setting/group/log"            Text="ログ設定" />
+		<Word Name="setting/group/system-env"     Text="環境設定" />
 		<Word Name="setting/check/add-show"       Text="追加されるたびに表示する" />
 		<Word Name="setting/group/item-type"      Text="アイテムの種類" />
 		<Word Name="setting/label/item-name"      Text="アイテム名" />

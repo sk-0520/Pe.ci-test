@@ -41,11 +41,15 @@ namespace PeMain.UI
 		{
 			this.inputSystemEnvExt.SetLanguage(Language);
 			this.inputSystemEnvHiddenFile.SetLanguage(Language);
+			
+			this.labelSystemEnvExt.Text = Language["setting/label/extension"];
+			this.labelSystemEnvHiddenFile.Text = Language["setting/label/hiddenfile"];
 		}
 		
 		void ApplyLanguageMain()
 		{
 			this.groupMainLog.Text = Language["setting/group/log"];
+			this.groupMainSystemEnv.Text = Language["setting/group/system-env"];
 			this.labelMainLanguage.Text = Language["setting/label/language"];
 			
 			ApplyLanguageLog();
