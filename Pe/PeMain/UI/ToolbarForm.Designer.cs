@@ -77,6 +77,7 @@ namespace PeMain.UI
 			this.Name = "ToolbarForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "ToolbarForm";
+			this.AppbarFullScreen += new System.EventHandler<PeUtility.AppbarFullScreenEvent>(this.ToolbarForm_AppbarFullScreen);
 			this.Activated += new System.EventHandler(this.ToolbarForm_Activated);
 			this.Deactivate += new System.EventHandler(this.ToolbarForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ToolbarFormFormClosing);

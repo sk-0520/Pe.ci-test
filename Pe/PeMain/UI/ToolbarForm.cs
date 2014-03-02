@@ -137,5 +137,15 @@ namespace PeMain.UI
 				this.tipsLauncher.RemoveAll();
 			}
 		}
+		
+		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
+		{
+			if(e.FullScreen) {
+				TopMost = false;
+				API.SetWindowPos(Handle, (IntPtr)HWND.HWND_BOTTOM, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+			} else {
+				ApplySettingTopmost();
+			}
+		}
 	}
 }
