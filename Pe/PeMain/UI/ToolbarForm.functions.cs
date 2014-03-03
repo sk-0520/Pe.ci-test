@@ -63,6 +63,8 @@ namespace PeMain.UI
 				try {
 					ItemSizeToFormSize();
 					
+					AutoHide = UseToolbarItem.AutoHide; 
+						
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
 						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
 						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
@@ -188,19 +190,20 @@ namespace PeMain.UI
 			var minSize = new Size(edgeSize.Horizontal + buttonLayout.Size.Width, edgeSize.Vertical + buttonLayout.Size.Height);
 			minSize.Width += this.toolLauncher.Margin.Horizontal + borderPadding.Horizontal;
 			minSize.Height += this.toolLauncher.Margin.Vertical + borderPadding.Vertical;
-			MinimumSize = minSize;
 			
 			
 			//Size = new Size(minSize.Width, minSize.Height);
 			
 			if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
 				BarSize = new Size(minSize.Width, minSize.Height);
+				MinimumSize = Size.Empty;
 			} else {
 				if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 					Size = new Size(floatSize.Width, minSize.Height);
 				} else {
 					Size = new Size(minSize.Width, floatSize.Height);
 				}
+				MinimumSize = minSize;
 			}
 		}
 		
@@ -492,7 +495,7 @@ namespace PeMain.UI
 			itemList.Add(posRightItem);
 			itemList.Add(new ToolStripSeparator());
 			itemList.Add(topmostItem);
-			//result.Add(autoHideItem);
+			itemList.Add(autoHideItem);
 			
 			// フロート
 			posFloatItem.Name = menuNameMainPosDesktopFloat;
@@ -538,12 +541,17 @@ namespace PeMain.UI
 				ApplySettingTopmost();
 			};
 			
-			// 
+			// 自動的に隠す
 			autoHideItem.Name = menuNameMainAutoHide;
 			autoHideItem.Text = CommonData.Language["toolbar/menu/main/auto-hide"];
 			autoHideItem.Click += (object sender, EventArgs e) => {
 				UseToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
+				if(DesktopDockType != DesktopDockType.None) {
+					UseToolbarItem.AutoHide = ExistsHideWindow(DesktopDockType) == Handle;
+				} else {
+					UseToolbarItem.AutoHide = false;
+				}
 			};
 			
 			// メニュー設定
@@ -564,6 +572,14 @@ namespace PeMain.UI
 				
 				// 最前面表示
 				topmostItem.Checked = UseToolbarItem.Topmost;
+				
+				// 自動的に隠す
+				if(UseToolbarItem.AutoHide && DesktopDockType != DesktopDockType.None) {
+					var hWnd = ExistsHideWindow(DesktopDockType);
+					autoHideItem.Checked = hWnd == Handle;
+				} else {
+					autoHideItem.Checked = false;
+				}
 			};
 		}
 

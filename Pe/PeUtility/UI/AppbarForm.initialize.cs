@@ -17,6 +17,7 @@ namespace PeUtility
 	{
 		void Initialize()
 		{
+			AutoHide = false;
 			BarSize = Size;
 			DockScreen = Screen.PrimaryScreen;
 			DesktopDockType = DesktopDockType.None;

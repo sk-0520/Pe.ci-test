@@ -33,6 +33,9 @@ namespace PeUtility
 				this._desktopDockType = value;
 			}
 		}
+		
+		public bool AutoHide { get; set; }
+		
 		/// <summary>
 		/// ドッキングしているか
 		/// </summary>

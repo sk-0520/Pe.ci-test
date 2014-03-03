@@ -89,6 +89,7 @@ namespace PeUtility
 			return unregistResult.ToInt32() != 0;
 		}
 		
+		
 		private RECT CalcWantBarArea(DesktopDockType dockType)
 		{
 			Debug.Assert(dockType != DesktopDockType.None);
@@ -149,14 +150,38 @@ namespace PeUtility
 			}
 		}
 		
-		private void DockingFromParameter(DesktopDockType dockType)
+		public IntPtr ExistsHideWindow(DesktopDockType desktopDockType)
 		{
+			Debug.Assert(desktopDockType != DesktopDockType.None);
+			
+			var appBar = new APPBARDATA(Handle);
+			appBar.uEdge = desktopDockType.ToABE();
+			var nowWnd = API.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
+			
+			return nowWnd;
+		}
+		
+		private void DockingFromParameter(DesktopDockType dockType, bool autoHide)
+		{
+			Debug.Assert(dockType != DesktopDockType.None);
+			
 			var appBar = new APPBARDATA(Handle);
 			appBar.uEdge = dockType.ToABE();
 			appBar.rc = CalcWantBarArea(dockType);
 			TuneSystemBarArea(ref appBar);
 			
-			var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+			bool autoHideResult = false;
+			if(autoHide) {
+				var hideWnd = ExistsHideWindow(dockType);
+				if(hideWnd.ToInt32() == 0 || hideWnd == Handle) {
+					// 自動的に隠す
+					var result = API.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
+					autoHideResult = result.ToInt32() != 0;
+				}
+			}
+			if(!autoHideResult) {
+				var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+			}
 			
 			this.Bounds = new Rectangle(
 				appBar.rc.Left,
@@ -168,7 +193,7 @@ namespace PeUtility
 		}
 		public void DockingFromProperty()
 		{
-			DockingFromParameter(DesktopDockType);
+			DockingFromParameter(DesktopDockType, AutoHide);
 		}
 		/// <summary>
 		/// ドッキングの実行
@@ -192,9 +217,10 @@ namespace PeUtility
 			
 			// 登録
 			Debug.Assert(!IsDocking);
+			if(!AutoHide)
 			ResistAppBar();
 			
-			DockingFromParameter(dockType);
+			DockingFromParameter(dockType, AutoHide);
 		}
 	}
 }
