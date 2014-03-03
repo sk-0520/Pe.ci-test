@@ -48,6 +48,15 @@ namespace PeUtility
 		/// </summary>
 		public Size BarSize { get; set; }
 		/// <summary>
+		/// 自動的に隠れた状態から復帰する際に使用する領域
+		/// </summary>
+		public Size ShowBarSize { get; private set; }
+		/// <summary>
+		/// 自動的に隠れた際のサイズ。
+		/// 各片がドッキング位置に対応。
+		/// </summary>
+		public Padding HiddenSize { get; set; }
+		/// <summary>
 		/// 
 		/// </summary>
 		public string MessageString { get; set; }

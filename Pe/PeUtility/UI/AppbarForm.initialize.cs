@@ -23,6 +23,7 @@ namespace PeUtility
 			DesktopDockType = DesktopDockType.None;
 			IsDocking = false;
 			MessageString = "AppDesktopToolbar";
+			HiddenSize = new Padding(SystemInformation.SizingBorderWidth);
 		}
 	}
 }

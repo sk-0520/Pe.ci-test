@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-
 using PI.Windows;
 
 namespace PeUtility
@@ -183,14 +183,21 @@ namespace PeUtility
 				var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
 			}
 			
-			this.Bounds = new Rectangle(
+			AutoHide = autoHideResult;
+			
+			Bounds = new Rectangle(
 				appBar.rc.Left,
 				appBar.rc.Top,
 				appBar.rc.Right - appBar.rc.Left,
 				appBar.rc.Bottom - appBar.rc.Top
 			);
+			ShowBarSize = Size;
 			
+			if(AutoHide) {
+				WaitHidden();
+			}
 		}
+		
 		public void DockingFromProperty()
 		{
 			DockingFromParameter(DesktopDockType, AutoHide);
@@ -205,22 +212,141 @@ namespace PeUtility
 			if(DesignMode) {
 				return;
 			}
+			if(this.timerAutoHidden.Enabled) {
+				this.timerAutoHidden.Stop();
+			}
 			
-			// 得録済みであればいったん解除
+			// 登録済みであればいったん解除
+			var needResist = true;
 			if(IsDocking) {
-				UnResistAppBar();
+				if(DesktopDockType != dockType || AutoHide) {
+					UnResistAppBar();
+					needResist = true;
+				} else {
+					needResist = false;
+				}
 			}
 			
 			if(dockType == DesktopDockType.None) {
+				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
 				return;
 			}
 			
 			// 登録
-			Debug.Assert(!IsDocking);
-			if(!AutoHide)
-			ResistAppBar();
+			if(needResist) {
+				ResistAppBar();
+			}
 			
 			DockingFromParameter(dockType, AutoHide);
 		}
+		
+		protected void StopHidden()
+		{
+			Debug.WriteLine("StopHidden");
+			if(this.timerAutoHidden.Enabled) {
+				this.timerAutoHidden.Stop();
+			}
+			ToShow();
+		}
+		protected void WaitHidden()
+		{
+			Debug.WriteLine("WaitHidden");
+			if(!this.timerAutoHidden.Enabled) {
+				this.timerAutoHidden.Start();
+			}
+		}
+		
+		void ToHidden()
+		{
+			Debug.WriteLine("ToHidden");
+			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			
+			this.timerAutoHidden.Stop();
+			var screeanPos = DockScreen.Bounds.Location;
+			var screeanSize = DockScreen.Bounds.Size;
+			var size = Size;
+			var pos = Location;
+			switch(DesktopDockType) {
+				case DesktopDockType.Top:
+					size.Width = screeanSize.Width;
+					size.Height = HiddenSize.Top;
+					pos.X = screeanPos.X;
+					pos.Y = screeanPos.Y;
+					break;
+					
+				case DesktopDockType.Bottom:
+					size.Width = screeanSize.Width;
+					size.Height = HiddenSize.Bottom;
+					pos.X = screeanPos.X;
+					pos.Y = screeanPos.Y - size.Height;
+					break;
+					
+				case DesktopDockType.Left:
+					size.Width = HiddenSize.Left;
+					size.Height = screeanSize.Height;
+					pos.X = screeanPos.X;
+					pos.Y = screeanPos.Y;
+					break;
+					
+				case DesktopDockType.Right:
+					size.Width = HiddenSize.Right;
+					size.Height = screeanSize.Height;
+					pos.X = screeanSize.Width - HiddenSize.Right;
+					pos.Y = screeanPos.Y;
+					break;
+					
+				default:
+					Debug.Assert(false, DesktopDockType.ToString());
+					break;
+			}
+			Bounds = new Rectangle(pos, size);
+		}
+		
+		void ToShow()
+		{
+			Debug.WriteLine("ToShow");
+			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			
+			var screeanPos = DockScreen.Bounds.Location;
+			var screeanSize = DockScreen.Bounds.Size;
+			var size = ShowBarSize;
+			var pos = Location;
+			switch(DesktopDockType) {
+				case DesktopDockType.Top:
+					//size.Width = screeanSize.Width;
+					//size.Height = HiddenSize.Top;
+					pos.X = screeanPos.X;
+					pos.Y = screeanPos.Y;
+					break;
+					
+				case DesktopDockType.Bottom:
+					//size.Width = screeanSize.Width;
+					//size.Height = HiddenSize.Bottom;
+					pos.X = screeanPos.X;
+					pos.Y = screeanPos.Y - size.Height;
+					break;
+					
+				case DesktopDockType.Left:
+					//size.Width = HiddenSize.Left;
+					//size.Height = screeanSize.Height;
+					pos.X = screeanPos.X;
+					pos.Y = screeanPos.Y;
+					break;
+					
+				case DesktopDockType.Right:
+					//size.Width = HiddenSize.Right;
+					//size.Height = screeanSize.Height;
+					pos.X = screeanSize.Width - HiddenSize.Right;
+					pos.Y = screeanPos.Y;
+					break;
+					
+				default:
+					Debug.Assert(false, DesktopDockType.ToString());
+					break;
+			}
+			Bounds = new Rectangle(pos, size);
+		}
+		
+
 	}
 }

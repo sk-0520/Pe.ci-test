@@ -548,7 +548,7 @@ namespace PeMain.UI
 				UseToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
 				if(DesktopDockType != DesktopDockType.None) {
-					UseToolbarItem.AutoHide = ExistsHideWindow(DesktopDockType) == Handle;
+					UseToolbarItem.AutoHide = AutoHide;
 				} else {
 					UseToolbarItem.AutoHide = false;
 				}
@@ -574,12 +574,7 @@ namespace PeMain.UI
 				topmostItem.Checked = UseToolbarItem.Topmost;
 				
 				// 自動的に隠す
-				if(UseToolbarItem.AutoHide && DesktopDockType != DesktopDockType.None) {
-					var hWnd = ExistsHideWindow(DesktopDockType);
-					autoHideItem.Checked = hWnd == Handle;
-				} else {
-					autoHideItem.Checked = false;
-				}
+				autoHideItem.Checked = AutoHide;
 			};
 		}
 

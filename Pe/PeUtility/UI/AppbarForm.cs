@@ -37,5 +37,21 @@ namespace PeUtility
 				DesktopDockType = DesktopDockType.None;
 			}
 		}
+		
+		void TimerAutoHide_Tick(object sender, EventArgs e)
+		{
+			ToHidden();
+		}
+		
+				
+		void AppbarForm_MouseEnter(object sender, EventArgs e)
+		{
+			StopHidden();
+		}
+		
+		void AppbarForm_MouseLeave(object sender, EventArgs e)
+		{
+			WaitHidden();
+		}
 	}
 }
