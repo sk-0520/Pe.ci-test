@@ -17,7 +17,7 @@
 		<Word Name="std-stream"        Text="標準出力を取得する" />
 		<Word Name="edit-env"          Text="環境変数を編集する" />
 		<Word Name="font"              Text="フォント" />
-		<Word Name="toolbar/auto-hide" Text="自動的に隠す" />
+		<Word Name="auto-hide"         Text="自動的に隠す" />
 		<Word Name="admin"             Text="管理者として実行" />
 	</Define>
 	<Words>
@@ -133,7 +133,7 @@
 		<Word Name="setting/label/tags"           Text="タグ" />
 		<Word Name="setting/label/note"           Text="備考" />
 		<Word Name="setting/check/std-stream"     Text="${std-stream}" />
-		<Word Name="setting/check/auto-hide"      Text="${toolbar/auto-hide}" />
+		<Word Name="setting/check/auto-hide"      Text="${auto-hide}" />
 		<Word Name="setting/check/show-text"      Text="テキストを表示する" />
 		<Word Name="setting/label/text-width"     Text="テキストの長さ" />
 		<Word Name="setting/tips/add-group"       Text="グループの追加" />
