@@ -1506,6 +1506,11 @@ namespace PI.Windows
 //		[DllImport("user32.dll", SetLastError = true)]
 //		[return: MarshalAs(UnmanagedType.Bool)]
 //		public static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, ref ANIMATIONINFO pvParam, SPIF fWinIni);
+		
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SWP uFlags);
+
 	}
 
 }
