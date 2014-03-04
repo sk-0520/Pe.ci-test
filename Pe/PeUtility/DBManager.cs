@@ -34,14 +34,14 @@ namespace PeUtility
 		}
 		
 		
-		public CommandExpression(bool condition, string trueText)
+		public CommandExpression(bool condition, string trueText): this()
 		{
 			Condition = condition;
 			TrueText = trueText;
 			FalseCondition = FalseCondition.Text;
 		}
 		
-		public CommandExpression(bool condition, string trueText, string falseText)
+		public CommandExpression(bool condition, string trueText, string falseText): this()
 		{
 			Condition = condition;
 			TrueText = trueText;
@@ -49,7 +49,7 @@ namespace PeUtility
 			FalseText = falseText;
 		}
 		
-		public CommandExpression(bool condition, string trueText, CommandExpression commandExpression)
+		public CommandExpression(bool condition, string trueText, CommandExpression commandExpression): this()
 		{
 			Condition = condition;
 			TrueText = trueText;
