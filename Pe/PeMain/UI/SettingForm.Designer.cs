@@ -184,7 +184,7 @@ namespace PeMain.UI
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(749, 283);
+			this.tabSetting.Size = new System.Drawing.Size(749, 294);
 			this.tabSetting.TabIndex = 0;
 			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
@@ -668,7 +668,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 188);
+			this.panelEnv.Size = new System.Drawing.Size(519, 184);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -677,7 +677,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 188);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 184);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -686,7 +686,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 188);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 184);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -784,7 +784,7 @@ namespace PeMain.UI
 			this.pageToolbar.Controls.Add(this.splitContainer2);
 			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(741, 255);
+			this.pageToolbar.Size = new System.Drawing.Size(741, 266);
 			this.pageToolbar.TabIndex = 3;
 			this.pageToolbar.Text = "{TOOLBAR}";
 			this.pageToolbar.UseVisualStyleBackColor = true;
@@ -806,7 +806,7 @@ namespace PeMain.UI
 			this.groupBox1.Controls.Add(this.labelToolbarPosition);
 			this.groupBox1.Location = new System.Drawing.Point(7, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(242, 267);
+			this.groupBox1.Size = new System.Drawing.Size(242, 260);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "☃";
@@ -937,7 +937,7 @@ namespace PeMain.UI
 			this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
-			this.splitContainer2.Location = new System.Drawing.Point(255, 13);
+			this.splitContainer2.Location = new System.Drawing.Point(255, 3);
 			this.splitContainer2.Name = "splitContainer2";
 			// 
 			// splitContainer2.Panel1
@@ -947,7 +947,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 273);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 260);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -958,13 +958,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 248);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 235);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 273);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 260);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -980,7 +980,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 248);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 235);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1076,7 +1076,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 273);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 260);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1147,9 +1147,10 @@ namespace PeMain.UI
 			// 
 			// selectCommandTopmost
 			// 
+			this.selectCommandTopmost.AutoSize = true;
 			this.selectCommandTopmost.Location = new System.Drawing.Point(36, 160);
 			this.selectCommandTopmost.Name = "selectCommandTopmost";
-			this.selectCommandTopmost.Size = new System.Drawing.Size(104, 24);
+			this.selectCommandTopmost.Size = new System.Drawing.Size(99, 19);
 			this.selectCommandTopmost.TabIndex = 4;
 			this.selectCommandTopmost.Text = "{TOPMOST}";
 			this.selectCommandTopmost.UseVisualStyleBackColor = true;
@@ -1232,7 +1233,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowCount = 3;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 9F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 354);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
@@ -1242,7 +1243,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
 			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(566, 294);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(566, 305);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(186, 37);
 			this.flowLayoutPanel1.TabIndex = 3;

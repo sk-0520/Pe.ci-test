@@ -58,6 +58,7 @@ namespace PeMain.UI
 			this.toolLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragDrop);
 			this.toolLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragEnter);
 			this.toolLauncher.DragOver += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragOver);
+			this.toolLauncher.MouseHover += new System.EventHandler(this.ToolLauncher_MouseHover);
 			// 
 			// tipsLauncher
 			// 
@@ -76,6 +77,7 @@ namespace PeMain.UI
 			this.Name = "ToolbarForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "ToolbarForm";
+			this.AppbarFullScreen += new System.EventHandler<PeUtility.AppbarFullScreenEvent>(this.ToolbarForm_AppbarFullScreen);
 			this.Activated += new System.EventHandler(this.ToolbarForm_Activated);
 			this.Deactivate += new System.EventHandler(this.ToolbarForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ToolbarFormFormClosing);

@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -14,7 +15,7 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			
+			PointingUtility.AppendEventFormLoad(this);
 		}
 	}
 }
