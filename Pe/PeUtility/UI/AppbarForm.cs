@@ -28,12 +28,13 @@ namespace PeUtility
 		}
 		protected override void OnMouseLeave(EventArgs e)
 		{
-			if(this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
+			if(AutoHide && this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
 				return;
 			} else {
 				base.OnMouseLeave(e);
 			}
 		}
+		
 		void AppbarFormVisibleChanged(object sender, EventArgs e)
 		{
 			var visible = Visible;
@@ -53,12 +54,16 @@ namespace PeUtility
 		
 		void AppbarForm_MouseEnter(object sender, EventArgs e)
 		{
-			StopHidden();
+			if(AutoHide) {
+				StopHidden();
+			}
 		}
 		
 		void AppbarForm_MouseLeave(object sender, EventArgs e)
 		{
-			WaitHidden();
+			if(AutoHide) {
+				WaitHidden();
+			}
 		}
 	}
 }

@@ -243,6 +243,7 @@ namespace PeUtility
 		protected void StopHidden()
 		{
 			Debug.WriteLine("StopHidden");
+			Debug.Assert(AutoHide);
 			if(this.timerAutoHidden.Enabled) {
 				this.timerAutoHidden.Stop();
 			}
@@ -251,6 +252,7 @@ namespace PeUtility
 		protected void WaitHidden()
 		{
 			Debug.WriteLine("WaitHidden");
+			Debug.Assert(AutoHide);
 			if(!this.timerAutoHidden.Enabled) {
 				this.timerAutoHidden.Start();
 			}
@@ -260,6 +262,7 @@ namespace PeUtility
 		{
 			Debug.WriteLine("ToHidden");
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			Debug.Assert(AutoHide);
 			
 			this.timerAutoHidden.Stop();
 			var screeanPos = DockScreen.Bounds.Location;
@@ -306,6 +309,7 @@ namespace PeUtility
 		{
 			Debug.WriteLine("ToShow");
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			Debug.Assert(AutoHide);
 			
 			var screeanPos = DockScreen.Bounds.Location;
 			var screeanSize = DockScreen.Bounds.Size;
@@ -336,7 +340,7 @@ namespace PeUtility
 				case DesktopDockType.Right:
 					//size.Width = HiddenSize.Right;
 					//size.Height = screeanSize.Height;
-					pos.X = screeanSize.Width - HiddenSize.Right;
+					pos.X = screeanSize.Width - size.Width;
 					pos.Y = screeanPos.Y;
 					break;
 					
