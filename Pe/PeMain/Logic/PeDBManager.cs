@@ -30,11 +30,11 @@ namespace PeMain.Logic
 		
 		public bool ExistsTable(string tableName)
 		{
-			var param = new Dictionary<string, object>() {
-				{"table_name", tableName},
-			};
+			Clear();
+			
+			Parameter["table_name"] = tableName;
 
-			using(var reader = ExecuteReader(global::PeMain.Properties.SQL.CheckTable, param)) {
+			using(var reader = ExecuteReader(global::PeMain.Properties.SQL.CheckTable)) {
 				reader.Read();
 				return Convert.ToInt32(reader["NUM"]) == 1;
 			}

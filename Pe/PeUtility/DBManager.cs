@@ -87,6 +87,9 @@ namespace PeUtility
 	{
 		public DBManager(DbConnection connection, bool isOpened, bool sharedCommand)
 		{
+			Parameter = new Dictionary<string, object>();
+			Expression = new Dictionary<string, CommandExpression>();
+			
 			Connection = connection;
 			
 			ConditionPattern = @"\[\[\w+\]\]";
@@ -104,6 +107,15 @@ namespace PeUtility
 		public bool SharedCommand { get; private set; }
 		public DbCommand Command { get; private set; }
 		public string ConditionPattern { get; set; }
+		
+		public Dictionary<string, object> Parameter { get; private set; }
+		public Dictionary<string, CommandExpression> Expression { get; private set; }
+		
+		public void Clear()
+		{
+			Parameter.Clear();
+			Expression.Clear();
+		}
 		
 		private DbCommand UseCommand()
 		{
@@ -181,12 +193,10 @@ namespace PeUtility
 			return param;
 		}
 		
-		protected DbParameter[] MakeParameterList(DbCommand command, Dictionary<string, object> parameter)
+		protected DbParameter[] MakeParameterList(DbCommand command)
 		{
-			Debug.Assert(parameter != null);
-			
-			var list = new List<DbParameter>(parameter.Count);
-			foreach(var pair in parameter) {
+			var list = new List<DbParameter>(Parameter.Count);
+			foreach(var pair in Parameter) {
 				var param = MakeParameter(command, pair.Key, pair.Value);
 				list.Add(param);
 			}
@@ -194,10 +204,10 @@ namespace PeUtility
 			return list.ToArray();
 		}
 		
-		protected bool SetParameter(DbCommand command, Dictionary<string, object> parameter)
+		protected bool SetParameter(DbCommand command)
 		{
-			if(parameter != null && parameter.Count > 0) {
-				var paramList = MakeParameterList(command, parameter);
+			if(Parameter.Count > 0) {
+				var paramList = MakeParameterList(command);
 				command.Parameters.Clear();
 				command.Parameters.AddRange(paramList);
 				command.Prepare();
@@ -208,38 +218,38 @@ namespace PeUtility
 			return false;
 		}
 		
-		protected virtual string ExpressionReplace(string code, Dictionary<string, CommandExpression> expr)
+		protected virtual string ExpressionReplace(string code)
 		{
-			if(expr == null || expr.Count == 0) {
+			if(Expression.Count == 0) {
 				return code;
 			}
 			
 			var pattern = ConditionPattern;
-			var replacedCode = Regex.Replace(code, pattern, (Match m) => expr[m.Groups[1].Value].ToCode());
+			var replacedCode = Regex.Replace(code, pattern, (Match m) => Expression[m.Groups[1].Value].ToCode());
 			
 			return replacedCode;
 		}
 		
-		private T Executer<T>(Func<DbCommand,T> func, string code, Dictionary<string, object> parameter, Dictionary<string, CommandExpression> expr)
+		private T Executer<T>(Func<DbCommand,T> func, string code)
 		{
 			var command = UseCommand();
 			try {
-				command.CommandText = ExpressionReplace(code, expr);
-				SetParameter(command, parameter);
+				command.CommandText = ExpressionReplace(code);
+				SetParameter(command);
 				return func(command);
 			} finally {
 				UnuseCommand(command);
 			}
 		}
 		
-		public DbDataReader ExecuteReader(string code, Dictionary<string, object> parameter = null, Dictionary<string, CommandExpression> expr = null)
+		public DbDataReader ExecuteReader(string code)
 		{
-			return Executer(command => command.ExecuteReader(), code, parameter, expr);
+			return Executer(command => command.ExecuteReader(), code);
 		}
 		
-		public int ExecuteCommand(string code, Dictionary<string, object> parameter = null, Dictionary<string, CommandExpression> expr = null)
+		public int ExecuteCommand(string code)
 		{
-			return Executer(command => command.ExecuteNonQuery(), code, parameter, expr);
+			return Executer(command => command.ExecuteNonQuery(), code);
 		}
 		
 		public void Close()
