@@ -17,11 +17,13 @@ namespace PeUtility
 	{
 		void Initialize()
 		{
+			AutoHide = false;
 			BarSize = Size;
 			DockScreen = Screen.PrimaryScreen;
 			DesktopDockType = DesktopDockType.None;
 			IsDocking = false;
 			MessageString = "AppDesktopToolbar";
+			HiddenSize = new Padding(SystemInformation.SizingBorderWidth);
 		}
 	}
 }

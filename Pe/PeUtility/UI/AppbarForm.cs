@@ -26,7 +26,14 @@ namespace PeUtility
 			
 			Initialize();
 		}
-		
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			if(this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
+				return;
+			} else {
+				base.OnMouseLeave(e);
+			}
+		}
 		void AppbarFormVisibleChanged(object sender, EventArgs e)
 		{
 			var visible = Visible;
@@ -36,6 +43,22 @@ namespace PeUtility
 				_prevDesktopDockType = DesktopDockType;
 				DesktopDockType = DesktopDockType.None;
 			}
+		}
+		
+		void TimerAutoHide_Tick(object sender, EventArgs e)
+		{
+			ToHidden();
+		}
+		
+		
+		void AppbarForm_MouseEnter(object sender, EventArgs e)
+		{
+			StopHidden();
+		}
+		
+		void AppbarForm_MouseLeave(object sender, EventArgs e)
+		{
+			WaitHidden();
 		}
 	}
 }

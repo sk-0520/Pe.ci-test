@@ -36,7 +36,14 @@ namespace PeUtility
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
+			this.timerAutoHidden = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
+			// 
+			// timerAutoHidden
+			// 
+			this.timerAutoHidden.Interval = 1000;
+			this.timerAutoHidden.Tick += new System.EventHandler(this.TimerAutoHide_Tick);
 			// 
 			// AppbarForm
 			// 
@@ -49,7 +56,10 @@ namespace PeUtility
 			this.ShowInTaskbar = false;
 			this.Text = "AppbarForm";
 			this.VisibleChanged += new System.EventHandler(this.AppbarFormVisibleChanged);
+			this.MouseEnter += new System.EventHandler(this.AppbarForm_MouseEnter);
+			this.MouseLeave += new System.EventHandler(this.AppbarForm_MouseLeave);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.Timer timerAutoHidden;
 	}
 }
