@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -28,12 +29,30 @@ namespace PeUtility
 		}
 		protected override void OnMouseLeave(EventArgs e)
 		{
-			if(this.ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
+			if(AutoHide && ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
 				return;
 			} else {
 				base.OnMouseLeave(e);
 			}
 		}
+		
+		protected override void OnControlAdded(ControlEventArgs e)
+		{
+			e.Control.MouseLeave += new EventHandler(e_Control_MouseLeave);
+			base.OnControlAdded(e);
+		}
+		
+		protected override void OnControlRemoved(ControlEventArgs e)
+		{
+			e.Control.MouseLeave -= e_Control_MouseLeave;
+			base.OnControlRemoved(e);
+		}
+
+		void e_Control_MouseLeave(object sender, EventArgs e)
+		{
+			SwitchHidden();
+		}
+		
 		void AppbarFormVisibleChanged(object sender, EventArgs e)
 		{
 			var visible = Visible;
@@ -47,18 +66,22 @@ namespace PeUtility
 		
 		void TimerAutoHide_Tick(object sender, EventArgs e)
 		{
-			ToHidden();
+			ToHidden(false);
 		}
 		
 		
 		void AppbarForm_MouseEnter(object sender, EventArgs e)
 		{
-			StopHidden();
+			if(AutoHide) {
+				StopHidden();
+			}
 		}
 		
 		void AppbarForm_MouseLeave(object sender, EventArgs e)
 		{
-			WaitHidden();
+			if(AutoHide) {
+				WaitHidden();
+			}
 		}
 	}
 }

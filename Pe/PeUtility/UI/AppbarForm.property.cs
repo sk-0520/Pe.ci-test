@@ -56,6 +56,16 @@ namespace PeUtility
 		/// 各片がドッキング位置に対応。
 		/// </summary>
 		public Padding HiddenSize { get; set; }
+		public TimeSpan HiddenTime 
+		{ 
+			get { return this._hiddenTime; }
+			set
+			{
+				this._hiddenTime = value;
+				this.timerAutoHidden.Interval = (int)this._hiddenTime.TotalMilliseconds;
+			}
+		}
+		public TimeSpan HiddenAnimateTime { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>

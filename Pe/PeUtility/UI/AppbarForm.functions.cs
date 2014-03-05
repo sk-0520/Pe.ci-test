@@ -240,28 +240,41 @@ namespace PeUtility
 			DockingFromParameter(dockType, AutoHide);
 		}
 		
-		protected void StopHidden()
+		protected void SwitchHidden()
+		{
+			if(AutoHide) {
+				WaitHidden();
+			}
+		}
+		
+		void StopHidden()
 		{
 			Debug.WriteLine("StopHidden");
+			Debug.Assert(AutoHide);
 			if(this.timerAutoHidden.Enabled) {
 				this.timerAutoHidden.Stop();
 			}
 			ToShow();
 		}
-		protected void WaitHidden()
+		void WaitHidden()
 		{
-			Debug.WriteLine("WaitHidden");
+			Debug.Assert(AutoHide);
 			if(!this.timerAutoHidden.Enabled) {
 				this.timerAutoHidden.Start();
 			}
 		}
 		
-		void ToHidden()
+		protected void ToHidden(bool force)
 		{
-			Debug.WriteLine("ToHidden");
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			Debug.Assert(AutoHide);
 			
 			this.timerAutoHidden.Stop();
+			
+			if(!force && ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
+				return;
+			}
+			
 			var screeanPos = DockScreen.Bounds.Location;
 			var screeanSize = DockScreen.Bounds.Size;
 			var size = Size;
@@ -299,13 +312,14 @@ namespace PeUtility
 					Debug.Assert(false, DesktopDockType.ToString());
 					break;
 			}
-			Bounds = new Rectangle(pos, size);
+			
+			HiddenView(new Rectangle(pos, size));
 		}
 		
-		void ToShow()
+		protected void ToShow()
 		{
-			Debug.WriteLine("ToShow");
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			Debug.Assert(AutoHide);
 			
 			var screeanPos = DockScreen.Bounds.Location;
 			var screeanSize = DockScreen.Bounds.Size;
@@ -336,7 +350,7 @@ namespace PeUtility
 				case DesktopDockType.Right:
 					//size.Width = HiddenSize.Right;
 					//size.Height = screeanSize.Height;
-					pos.X = screeanSize.Width - HiddenSize.Right;
+					pos.X = screeanSize.Width - size.Width;
 					pos.Y = screeanPos.Y;
 					break;
 					
@@ -344,9 +358,35 @@ namespace PeUtility
 					Debug.Assert(false, DesktopDockType.ToString());
 					break;
 			}
+			
 			Bounds = new Rectangle(pos, size);
 		}
 		
-
+		static AW ToAW(DesktopDockType type, bool show)
+		{
+			var result = new Dictionary<DesktopDockType, AW>() {
+				{ DesktopDockType.Top,    show ? AW.AW_VER_POSITIVE: AW.AW_VER_NEGATIVE },
+				{ DesktopDockType.Bottom, show ? AW.AW_VER_NEGATIVE: AW.AW_VER_POSITIVE },
+				{ DesktopDockType.Left,   show ? AW.AW_HOR_POSITIVE: AW.AW_HOR_NEGATIVE },
+				{ DesktopDockType.Right,  show ? AW.AW_HOR_NEGATIVE: AW.AW_HOR_POSITIVE },
+			}[type];
+			
+			if(!show) {
+				result |= AW.AW_HIDE;
+			}
+			
+			return result;
+		}
+			
+		
+		protected virtual void HiddenView(Rectangle area)
+		{
+			var prevVisible = Visible;
+			if(Visible) {
+				API.AnimateWindow(Handle, (int)HiddenAnimateTime.TotalMilliseconds, ToAW(DesktopDockType, false));
+				Bounds = area;
+				Visible = prevVisible;
+			}
+		}
 	}
 }
