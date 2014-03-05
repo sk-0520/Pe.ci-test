@@ -24,6 +24,9 @@ namespace PeUtility
 			IsDocking = false;
 			MessageString = "AppDesktopToolbar";
 			HiddenSize = new Padding(SystemInformation.SizingBorderWidth);
+			HiddenTime = new TimeSpan(0, 0, 3);
+			HiddenAnimateTime = new TimeSpan(0, 0, 0, 0, 500);
+			
 		}
 	}
 }

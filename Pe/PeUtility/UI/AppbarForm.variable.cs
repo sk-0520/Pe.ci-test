@@ -18,5 +18,6 @@ namespace PeUtility
 		uint callbackMessage;
 		DesktopDockType _desktopDockType;
 		DesktopDockType _prevDesktopDockType;
+		TimeSpan _hiddenTime;
 	}
 }

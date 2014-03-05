@@ -1417,6 +1417,19 @@ namespace PI.Windows
 		SPIF_SENDWININICHANGE = 0x02
 	}
 	
+	[Flags]
+	public enum AW
+	{
+		AW_HOR_POSITIVE = 0x00000001,
+		AW_HOR_NEGATIVE = 0x00000002,
+		AW_VER_POSITIVE = 0x00000004,
+		AW_VER_NEGATIVE = 0x00000008,
+		AW_CENTER       = 0x00000010,
+		AW_HIDE     = 0x00010000,
+		AW_ACTIVATE     = 0x00020000,
+		AW_SLIDE    = 0x00040000,
+		AW_BLEND    = 0x00080000
+	}
 	
 	/// <summary>
 	/// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
@@ -1510,6 +1523,9 @@ namespace PI.Windows
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SWP uFlags);
+		
+		[DllImport("user32")]
+		public static extern bool AnimateWindow(IntPtr hwnd, int time, AW flags);
 
 	}
 

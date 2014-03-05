@@ -303,7 +303,7 @@ namespace PeMain.UI
 			foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 				var toolbar = new ToolbarForm();
 				toolbar.DockScreen = screen;
-				toolbar.MessageString +=  screen.DeviceName;
+				//toolbar.MessageString +=  screen.DeviceName;
 				toolbar.SetCommonData(this._commonData);
 				this._toolbarForms.Add(screen, toolbar);
 			}
