@@ -28,6 +28,12 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
+		#if DEBUG
+		public void DebugProcess()
+		{
+		}
+		#endif
+		
 		IEnumerable<Form> GetWindows()
 		{
 			var result = new List<Form>();
