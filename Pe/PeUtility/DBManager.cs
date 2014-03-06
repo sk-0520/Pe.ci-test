@@ -18,7 +18,7 @@ namespace PeUtility
 {
 	public enum FalseCondition
 	{
-		Text,
+		Command,
 		Expression,
 	}
 	
@@ -27,51 +27,65 @@ namespace PeUtility
 		public CommandExpression()
 		{
 			Condition = false;
-			TrueText = string.Empty;
-			FalseCondition = FalseCondition.Text;
-			FalseText = string.Empty;
+			TrueCommand = string.Empty;
+			FalseCondition = FalseCondition.Command;
+			FalseCommand = string.Empty;
 			FalseExpression = null;
 		}
 		
 		
-		public CommandExpression(bool condition, string trueText): this()
+		public CommandExpression(bool condition, string trueCommand): this()
 		{
 			Condition = condition;
-			TrueText = trueText;
-			FalseCondition = FalseCondition.Text;
+			TrueCommand = trueCommand;
+			FalseCondition = FalseCondition.Command;
 		}
 		
-		public CommandExpression(bool condition, string trueText, string falseText): this()
+		public CommandExpression(bool condition, string trueCommand, string falseCommand): this()
 		{
 			Condition = condition;
-			TrueText = trueText;
-			FalseCondition = FalseCondition.Text;
-			FalseText = falseText;
+			TrueCommand = trueCommand;
+			FalseCondition = FalseCondition.Command;
+			FalseCommand = falseCommand;
 		}
 		
-		public CommandExpression(bool condition, string trueText, CommandExpression commandExpression): this()
+		public CommandExpression(bool condition, string trueCommand, CommandExpression commandExpression): this()
 		{
 			Condition = condition;
-			TrueText = trueText;
+			TrueCommand = trueCommand;
 			FalseCondition = FalseCondition.Expression;
 			FalseExpression = commandExpression;
 		}
-		
-		public bool Condition { get; set; }
-		public string TrueText { get; set; }
-		public FalseCondition FalseCondition { get; set; }
-		public string FalseText { get; set; }
-		public CommandExpression FalseExpression { get; set; }
+		/// <summary>
+		/// 条件
+		/// </summary>
+		public bool Condition { get; private set; }
+		/// <summary>
+		/// 条件が真の場合のコマンド
+		/// </summary>
+		public string TrueCommand { get; private set; }
+		/// <summary>
+		/// 条件が偽の場合にコマンドと式のどちらを使用するか
+		/// </summary>
+		public FalseCondition FalseCondition { get; private set; }
+		/// <summary>
+		/// 条件が偽の場合のコマンド
+		/// </summary>
+		public string FalseCommand { get; private set; }
+		/// <summary>
+		/// 条件が偽の場合の式
+		/// </summary>
+		public CommandExpression FalseExpression { get; private set; }
 		
 		public string ToCode()
 		{
 			if(Condition) {
-				return TrueText;
+				return TrueCommand;
 			}
 			
-			if(FalseCondition == FalseCondition.Text) {
+			if(FalseCondition == FalseCondition.Command) {
 				// 文字列
-				return FalseText;
+				return FalseCommand;
 			} else {
 				Debug.Assert(FalseCondition == FalseCondition.Expression);
 				// 式
@@ -111,6 +125,11 @@ namespace PeUtility
 		public Dictionary<string, object> Parameter { get; private set; }
 		public Dictionary<string, CommandExpression> Expression { get; private set; }
 		
+		public virtual CommandExpression CreateExpresstion()
+		{
+			return new CommandExpression();
+		}
+		
 		public void Clear()
 		{
 			Parameter.Clear();
@@ -125,7 +144,7 @@ namespace PeUtility
 				return CreateCommand();
 			}
 		}
-		private void UnuseCommand(DbCommand command)
+		private void ReleaseCommand(DbCommand command)
 		{
 			if(Command != command) {
 				command.Dispose();
@@ -238,7 +257,7 @@ namespace PeUtility
 				SetParameter(command);
 				return func(command);
 			} finally {
-				UnuseCommand(command);
+				ReleaseCommand(command);
 			}
 		}
 		
