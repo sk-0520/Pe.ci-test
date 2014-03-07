@@ -36,7 +36,7 @@ namespace PeMain.Logic
 
 			using(var reader = ExecuteReader(global::PeMain.Properties.SQL.CheckTable)) {
 				reader.Read();
-				return Convert.ToInt32(reader["NUM"]) == 1;
+				return Convert.ToBoolean(reader["NUM"]);
 			}
 		}
 		

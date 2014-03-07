@@ -78,6 +78,15 @@ namespace PeMain.Properties {
 		}
 		
 		/// <summary>
+		///    に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CreateNoteMasterTable {
+			get {
+				return ResourceManager.GetString("CreateNoteMasterTable", resourceCulture);
+			}
+		}
+		
+		/// <summary>
 		///   create table M_VERSION
 		///(
 		///    NAME     text primary key,
@@ -85,9 +94,9 @@ namespace PeMain.Properties {
 		///)
 		/// に類似しているローカライズされた文字列を検索します。
 		/// </summary>
-		public static string CreateVersionTable {
+		public static string CreateVersionMasterTable {
 			get {
-				return ResourceManager.GetString("CreateVersionTable", resourceCulture);
+				return ResourceManager.GetString("CreateVersionMasterTable", resourceCulture);
 			}
 		}
 	}

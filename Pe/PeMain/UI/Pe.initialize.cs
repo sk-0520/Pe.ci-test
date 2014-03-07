@@ -57,6 +57,26 @@ namespace PeMain.UI
 			}
 		}
 		
+		void InitializeNoteTableCreate(string tableName, List<LogItem> initLog)
+		{
+			initLog.Add(new LogItem(LogType.Information, tableName, "CREATE"));
+			var map = new Dictionary<string, string>() {
+				{ DataTables.masterTableNote,           string.Empty },
+				{ DataTables.masterTableNoteGroup,      string.Empty },
+				{ DataTables.transactionTableNoteGroup, string.Empty },
+				{ DataTables.transactionTableNote,      string.Empty },
+				{ DataTables.transactionTableNoteStyle, string.Empty },
+			};
+		}
+		
+		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog)
+		{
+			var map = new Dictionary<string, string>() {
+				{ DataTables.masterTableNote,      string.Empty },
+				{ DataTables.transactionTableNote, string.Empty },
+			};
+		}
+		
 		/// <summary>
 		/// テーブル一覧の確認と不足分作成・バージョン修正
 		/// </summary>
@@ -70,12 +90,16 @@ namespace PeMain.UI
 			Debug.WriteLine(enabledVersionTable);
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成
-				this._commonData.Database.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionTable);
+				this._commonData.Database.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionMasterTable);
 			}
 			
 			// プログラムの知っているテーブルが存在しない、またはバージョンが異なる場合に調整する
-			foreach(var pair in DataTables.map) {
-				
+			foreach(var pair in DataTables.map.Where(pair => pair.Key != DataTables.masterTableVersion)) {
+				if(!this._commonData.Database.ExistsTable(pair.Key)) {
+					InitializeNoteTableCreate(pair.Key, initLog);
+				} else {
+					InitializeNoteTableChange(pair.Key, pair.Value, initLog);
+				}
 			}
 		}
 		
@@ -83,6 +107,10 @@ namespace PeMain.UI
 		{
 			var noteDataFilePath = Literal.UserNoteDataPath;
 			initLog.Add(new LogItem(LogType.Information, "note-data", noteDataFilePath));
+			if(!File.Exists(noteDataFilePath)) {
+				initLog.Add(new LogItem(LogType.Information, "note-data", "dir cleate"));
+				FileUtility.MakeFileParentDirectory(noteDataFilePath);
+			}
 			var connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
 			this._commonData.Database = new PeDBManager(connection, false, true);
 			InitializeNoteTables(commandLine, initLog);

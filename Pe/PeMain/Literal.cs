@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -22,6 +23,10 @@ namespace PeMain
 	/// </summary>
 	public static class Literal
 	{
+		#if DEBUG
+		private static bool _initialized = false;
+		#endif
+		
 		public const string programName = "Pe";
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
@@ -118,12 +123,17 @@ namespace PeMain
 			get { return Path.Combine(UserSettingDirPath, _backupDirName);}
 		}
 		
-		
 		public static void Initialize(CommandLine commandLine)
 		{
+			#if DEBUG
+			Debug.Assert(_initialized == false);
+			#endif
+			
 			if(commandLine.HasOption("setting-root")) {
 				_settingRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
 			}
+			
+			_initialized = true;
 		}
 	}
 	
@@ -169,17 +179,21 @@ namespace PeMain
 		static DataTables()
 		{
 			map = new Dictionary<string, int>() {
-				{ masterTableVersion,    1},
-				{ masterTableNote,       1},
-				{ transactionTableNote,  1},
+				{ masterTableVersion,         1},
+				{ masterTableNote,            1},
+				{ masterTableNoteGroup,       1},
+				{ transactionTableNote,       1},
+				{ transactionTableNoteStyle,  1},
+				{ transactionTableNoteGroup,  1},
 			};
 		}
 		public static readonly Dictionary<string, int> map;
 		
-		public static string masterTableVersion   = "M_VERSION";
-		public static string masterTableNote      = "M_NOTE";
-		public static string transactionTableNote = "T_NOTE";
-		
-		
+		public const string masterTableVersion        = "M_VERSION";
+		public const string masterTableNote           = "M_NOTE";
+		public const string masterTableNoteGroup      = "M_NOTE_GROUP";
+		public const string transactionTableNote      = "T_NOTE";
+		public const string transactionTableNoteStyle = "T_NOTE_STYLE";
+		public const string transactionTableNoteGroup = "T_NOTE_GROUP";
 	}
 }

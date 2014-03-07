@@ -156,6 +156,21 @@ namespace PeUtility
 			return Connection.CreateCommand();
 		}
 		
+		/// <summary>
+		/// DBに合わせてデータ調整
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		protected virtual object DbValueFromValue(object value)
+		{
+			return value;
+		}
+		
+		/// <summary>
+		/// DBに合わせて型調整
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
 		protected virtual DbType DbTypeFromType(Type type)
 		{
 			var map = new Dictionary<Type, DbType>() {
@@ -206,7 +221,7 @@ namespace PeUtility
 			var param = command.CreateParameter();
 			
 			param.ParameterName = name;
-			param.Value = value;
+			param.Value = DbValueFromValue(value);
 			param.DbType = DbTypeFromType(value.GetType());
 			
 			return param;
