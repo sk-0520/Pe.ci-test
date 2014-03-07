@@ -100,6 +100,7 @@
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\ILogger.cs" />
     <Compile Include="Logic\CommonData.cs" />
+    <Compile Include="Logic\PeInformation.cs" />
     <Compile Include="Logic\ISetLanguage.cs" />
     <Compile Include="Logic\ItemData.cs" />
     <Compile Include="Logic\IRootSender.cs" />

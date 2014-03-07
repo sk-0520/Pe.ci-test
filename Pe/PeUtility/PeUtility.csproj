@@ -69,6 +69,7 @@
     <Compile Include="FileUtility.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="IconUtility.cs" />
+    <Compile Include="Information.cs" />
     <Compile Include="PathUtility.cs" />
     <Compile Include="PointingUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
