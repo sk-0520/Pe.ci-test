@@ -54,7 +54,7 @@ namespace PeUtility
 		{
 			var index = pair.IndexOf(KeyValueSeparator);
 			if(index != -1) {
-				return new KeyValuePair<string,string>(pair.Take(index - 1).ToString(), pair.Skip(index + KeyValueHeader.Length).ToString());
+				return new KeyValuePair<string,string>(string.Concat(pair.Take(index - 1)), string.Concat(pair.Skip(index + KeyValueHeader.Length)));
 			}
 			
 			throw new ArgumentException(string.Format("pair = {0}, header = {1}", pair, KeyValueHeader));
@@ -63,7 +63,7 @@ namespace PeUtility
 		private string KeyToValue(string keyOption, int index)
 		{
 			var pairs = Options.Where(s => s.StartsWith(keyOption));
-			var pair = SplitKeyValue(keyOption);
+			var pair = SplitKeyValue(pairs.ElementAt(index));
 			return pair.Value;
 		}
 		

@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
+    <StartArguments>/setting-root=z:\%USERNAME%</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>..\..\output\Release\</OutputPath>
