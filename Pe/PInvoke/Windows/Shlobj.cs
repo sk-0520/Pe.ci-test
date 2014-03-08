@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PI.Windows
+namespace PInvoke.Windows
 {
 	public enum SHCNE
 	{

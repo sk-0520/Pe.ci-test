@@ -7,7 +7,7 @@
 using System;
 using System.Collections;
 using System.Windows.Forms;
-using PI.Windows;
+using PInvoke.Windows;
 
 namespace PeUtility
 {

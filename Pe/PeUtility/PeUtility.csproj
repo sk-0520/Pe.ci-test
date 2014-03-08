@@ -109,12 +109,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PI\PI.csproj">
-      <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>PI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -126,6 +120,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+      <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
+      <Name>PInvoke</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

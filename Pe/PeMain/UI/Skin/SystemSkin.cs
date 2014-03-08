@@ -16,7 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeUtility;
-using PI.Windows;
+using PInvoke.Windows;
 
 namespace PeMain.UI
 {

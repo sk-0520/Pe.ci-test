@@ -10,7 +10,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace PI.Windows
+namespace PInvoke.Windows
 {
 	public enum WM: uint
 	{

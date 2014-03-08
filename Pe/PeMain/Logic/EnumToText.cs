@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 using PeMain.Data;
 using PeUtility;
-using PI.Windows;
+using PInvoke.Windows;
 
 namespace PeMain.Logic
 {

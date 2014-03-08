@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using PeMain.Data;
-using PI.Windows;
+using PInvoke.Windows;
 
 namespace PeMain.UI
 {

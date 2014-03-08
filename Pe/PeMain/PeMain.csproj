@@ -413,9 +413,9 @@
       <Project>{863C2A90-A386-4F98-9D0B-EFB839168293}</Project>
       <Name>PeUtility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PI\PI.csproj">
+    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>PI</Name>
+      <Name>PInvoke</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using PI.Windows;
+using PInvoke.Windows;
 
 namespace PeUtility
 {

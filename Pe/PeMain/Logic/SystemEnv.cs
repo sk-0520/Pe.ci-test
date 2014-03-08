@@ -13,7 +13,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Microsoft.Win32;
-using PI.Windows;
+using PInvoke.Windows;
 
 namespace PeMain.Logic
 {
