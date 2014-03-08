@@ -72,6 +72,7 @@
     <Compile Include="PathUtility.cs" />
     <Compile Include="PointingUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLiteDBManager.cs" />
     <Compile Include="TextUtility.cs" />
     <Compile Include="UI\AppbarForm.cs" />
     <Compile Include="UI\AppbarForm.define.cs">

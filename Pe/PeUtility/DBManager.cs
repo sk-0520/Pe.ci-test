@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace PeUtility
@@ -94,8 +96,61 @@ namespace PeUtility
 		}
 	}
 	
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[AttributeUsage(
+		AttributeTargets.Class  | AttributeTargets.Property,
+		AllowMultiple = true,
+		Inherited = true
+	)]
+	public sealed class TargetNameAttribute: Attribute
+	{
+		public TargetNameAttribute(string name)
+		{
+			TargetName = name;
+		}
+		
+		public string TargetName { get; private set; }
+	}
+	
+	public sealed class EntitySet
+	{
+		public EntitySet(string tableName, IDictionary<string, string> columnPropName)
+		{
+			TableName = tableName;
+			ColumnPropertyMap = columnPropName;
+		}
+		
+		public string TableName { get ; private set; }
+		public IDictionary<string, string> ColumnPropertyMap { get; private set; }
+	}
+	
+	public abstract class DbData
+	{ }
+	
+	/// <summary>
+	/// テーブル行に対応
+	/// TargetNameAttribute
+	/// </summary>
+	public abstract class Entity: DbData
+	{
+	}
+	
+	/// <summary>
+	/// データ取得単位に対応
+	/// </summary>
+	public abstract class Dto: DbData
+	{
+		public Dto()
+		{ }
+	}
+
 	/// <summary>
 	/// DB接続・操作の一元化
+	/// 
+	/// シングルスレッドで使用しないとトランザクションあたりが爆発する。しゃあない。
 	/// </summary>
 	public abstract class DBManager
 	{
@@ -120,6 +175,23 @@ namespace PeUtility
 		public DbConnection Connection { get; private set; }
 		public bool SharedCommand { get; private set; }
 		public DbCommand Command { get; private set; }
+		public DbTransaction BeginTransaction()
+		{
+			var tran = Connection.BeginTransaction();
+			if(SharedCommand) {
+				Debug.Assert(Command.Transaction == null);
+				Command.Transaction = tran;
+			}
+			
+			return tran;
+		}
+		public void ReleaseTransaction()
+		{
+			if(SharedCommand) {
+				Command.Transaction = null;
+			}
+		}
+		
 		public string ConditionPattern { get; set; }
 		
 		public Dictionary<string, object> Parameter { get; private set; }
@@ -156,9 +228,13 @@ namespace PeUtility
 			return Connection.CreateCommand();
 		}
 		
-		public virtual T To<T>(object value)
+		protected virtual object To(object value, Type toType)
 		{
-			return (T)value;
+			return value;
+		}
+		public T To<T>(object value)
+		{
+			return (T)(To(value, typeof(T)));
 		}
 		
 		/// <summary>
@@ -290,6 +366,117 @@ namespace PeUtility
 		public int ExecuteCommand(string code)
 		{
 			return Executer(command => command.ExecuteNonQuery(), code);
+		}
+		
+		private Dictionary<string, string> GetTargetNamePropertyMap<T>()
+			where T: DbData
+		{
+			var targetPropMap = new Dictionary<string, string>();
+			foreach(var member in typeof(T).GetMembers()) {
+				var tartgetNameAttribute = member.GetCustomAttribute(typeof(TargetNameAttribute)) as TargetNameAttribute;
+				if(tartgetNameAttribute != null) {
+					targetPropMap[tartgetNameAttribute.TargetName] = member.Name;
+				}
+			}
+			
+			return targetPropMap;
+		}
+		
+		private Dictionary<string, PropertyInfo> GetPropertyMap<T>(IEnumerable<string> propertNameList)
+		{
+			var propMap = new Dictionary<string, PropertyInfo>(propertNameList.Count());
+			foreach(var propertyName in propertNameList) {
+				var prop = typeof(T).GetProperty(propertyName);
+				propMap[propertyName] = prop;
+			}
+			return propMap;
+		}
+		
+		private IEnumerable<T> GetDtoListImpl<T>(string code)
+			where T: Dto, new()
+		{
+			var columnPropName = GetTargetNamePropertyMap<T>();
+			var propMap = GetPropertyMap<T>(columnPropName.Values);
+			using(var reader = ExecuteReader(code)) {
+				while(reader.Read()) {
+					var dto = new T();
+					foreach(var columnPair in columnPropName) {
+						var rawValue = reader[columnPair.Key];
+						var property = propMap[columnPair.Value];
+						var convedValue = To(rawValue, property.PropertyType);
+						property.SetValue(dto, convedValue);
+					}
+					yield return dto;
+				}
+			}
+		}
+		
+		
+		public T GetDtoSingle<T>(string code)
+			where T: Dto, new()
+		{
+			return GetDtoListImpl<T>(code).Single();
+		}
+		
+		public List<T> GetDtoList<T>(string code)
+			where T: Dto, new()
+		{
+			return GetDtoListImpl<T>(code).ToList();
+		}
+		
+		private EntitySet GetEntitySet<T>()
+			where T: Entity
+		{
+			var tableAttribute = (TargetNameAttribute)typeof(T).GetCustomAttribute(typeof(TargetNameAttribute));
+			var tableName = tableAttribute.TargetName;
+			var columnPropName = GetTargetNamePropertyMap<T>();
+			
+			return new EntitySet(tableName, columnPropName);
+		}
+		
+		protected virtual string CreateInsertCommandCode(EntitySet entitySet)
+		{
+			var code = string.Format(
+				"insert into {0} ({1}) values({2})",
+				entitySet.TableName,
+				string.Join(", ", entitySet.ColumnPropertyMap.Keys),
+				string.Join(", ", entitySet.ColumnPropertyMap.Values.Select(s => ":" + s))
+			);
+			
+			return code;
+		}
+		
+		protected virtual string CreateUpdateCommandCode(EntitySet entitySet)
+		{
+			return null;
+		}
+		
+		private void ExecuteEntityCommand<T>(IEnumerable<T> entityList, Func<EntitySet, string> func)
+			where T: Entity
+		{
+			Parameter.Clear();
+			
+			var entitySet = GetEntitySet<T>();
+			var code = func(entitySet);
+			var propMap = GetPropertyMap<T>(entitySet.ColumnPropertyMap.Values);
+			foreach(var entity in entityList) {
+				foreach(var pair in propMap) {
+					Parameter[pair.Key] = pair.Value.GetValue(entity);
+				}
+				ExecuteCommand(code);
+			}
+		}
+		
+		public void ExecuteInsert<T>(IEnumerable<T> entityList)
+			where T: Entity
+		{
+			ExecuteEntityCommand(entityList, CreateInsertCommandCode);
+		}
+		
+		public void ExecuteUpdate<T>(IEnumerable<T> entityList)
+			where T: Entity
+		{
+			ExecuteEntityCommand(entityList, CreateUpdateCommandCode);
 		}
 		
 		public void Close()

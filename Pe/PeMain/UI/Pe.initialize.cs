@@ -17,6 +17,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
+using PeMain.Data.DB;
 using PeMain.Logic;
 using PeMain.Properties;
 using PeUtility;
@@ -69,6 +70,16 @@ namespace PeMain.UI
 			};
 			var command = map[tableName];
 			this._commonData.Database.ExecuteCommand(command);
+			using(var tran = this._commonData.Database.BeginTransaction()) {
+				try {
+					var entity = new MVersionEntity();
+					entity.Name = tableName;
+					entity.Version = DataTables.map[tableName];
+					this._commonData.Database.ExecuteInsert(new [] { entity });
+				} finally {
+					this._commonData.Database.ReleaseTransaction();
+				}
+			}
 		}
 		
 		/// <summary>

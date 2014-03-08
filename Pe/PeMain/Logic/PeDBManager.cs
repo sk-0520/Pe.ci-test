@@ -10,56 +10,18 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SQLite;
 using PeUtility;
 
 namespace PeMain.Logic
 {
-	public abstract class SQLiteDBManager: DBManager
+	public class CountDto: Dto
 	{
-		public SQLiteDBManager(DbConnection connection, bool isOpened, bool sharedCommand): base(connection, isOpened, sharedCommand)
-		{ }
+		[TargetName("NUM")]
+		public int Count { get; set; }
 		
-		public override T To<T>(object value)
-		{
-			var map = new Dictionary<Type, Func<object>>() {
-				{ typeof(bool),     () => Convert.ToBoolean(value) },
-				{ typeof(DateTime), () => Convert.ToDateTime(value) },
-			};
-			if(map.ContainsKey(typeof(T))) {
-				return (T)map[typeof(T)]();
-			}
-			
-			return base.To<T>(value);
-		}
-		
-		protected override DbType DbTypeFromType(Type type)
-		{
-			var map = new Dictionary<Type, DbType>() {
-				{ typeof(bool),     DbType.Int32 },
-				{ typeof(DateTime), DbType.String },
-			};
-			if(map.ContainsKey(type)) {
-				return map[type];
-			}
-			
-			return base.DbTypeFromType(type);
-		}
-		
-		protected override object DbValueFromValue(object value, Type type)
-		{
-			var map = new Dictionary<Type, Func<object>>() {
-				{ typeof(bool),     () => Convert.ToInt32(value) },
-				{ typeof(DateTime), () => ((DateTime)value).ToString("s") },
-			};
-			if(map.ContainsKey(type)) {
-				return map[type]();
-			}
-			
-			return base.DbValueFromValue(value, type);
-		}
-		
+		public bool Has { get { return Count > 0; } }
 	}
+	
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
 	/// </summary>
@@ -74,10 +36,14 @@ namespace PeMain.Logic
 			
 			Parameter["table_name"] = tableName;
 
+			/*
 			using(var reader = ExecuteReader(global::PeMain.Properties.SQL.CheckTable)) {
 				reader.Read();
-				return To<bool>(reader["NUM"]);
+				return To<long>(reader["NUM"]) == 1;
 			}
+			*/
+			var count = GetDtoSingle<CountDto>(global::PeMain.Properties.SQL.CheckTable);
+			return count.Has;
 		}
 		
 	}
