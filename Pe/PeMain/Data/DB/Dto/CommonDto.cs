@@ -14,7 +14,7 @@ namespace PeMain.Data.DB
 	public class CountDto: Dto
 	{
 		[TargetName("NUM")]
-		public int Count { get; set; }
+		public long Count { get; set; }
 		
 		public bool Has { get { return Count > 0; } }
 	}
