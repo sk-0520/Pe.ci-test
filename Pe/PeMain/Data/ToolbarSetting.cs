@@ -206,6 +206,14 @@ namespace PeMain.Data
 		/// フォント
 		/// </summary>
 		public FontSetting FontSetting { get; set; }
+		/// <summary>
+		/// 非表示までの時間
+		/// </summary>
+		public TimeSpan HiddenWaitTime { get; set; }
+		/// <summary>
+		/// 非表示のアニメーション時間
+		/// </summary>
+		public TimeSpan HiddenAnimateTime { get; set; }
 		
 		public bool IsNameEqual(string name)
 		{
