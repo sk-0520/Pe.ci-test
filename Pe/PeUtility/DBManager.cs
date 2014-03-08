@@ -156,12 +156,17 @@ namespace PeUtility
 			return Connection.CreateCommand();
 		}
 		
+		public virtual T To<T>(object value)
+		{
+			return (T)value;
+		}
+		
 		/// <summary>
 		/// DBに合わせてデータ調整
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		protected virtual object DbValueFromValue(object value)
+		protected virtual object DbValueFromValue(object value, Type type)
 		{
 			return value;
 		}
@@ -221,8 +226,9 @@ namespace PeUtility
 			var param = command.CreateParameter();
 			
 			param.ParameterName = name;
-			param.Value = DbValueFromValue(value);
-			param.DbType = DbTypeFromType(value.GetType());
+			var type = value.GetType();
+			param.Value = DbValueFromValue(value, type);
+			param.DbType = DbTypeFromType(type);
 			
 			return param;
 		}

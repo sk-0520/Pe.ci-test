@@ -78,11 +78,95 @@ namespace PeMain.Properties {
 		}
 		
 		/// <summary>
-		///    に類似しているローカライズされた文字列を検索します。
+		///   create table M_NOTE_GROUP (
+		///    GROUP_ID        integer  primary key,
+		///    CMN_ENABLED     boolean not null,
+		///    CMN_CREATE      datetime not null,
+		///    CMN_UPDATE      datetime not null,
+		///    GROUP_TITLE     text
+		///    FONT_FAMILY     integer  not null,
+		///    FONT_SIZE       real     not null,
+		///    FONT_ITALIC     boolean  not null,
+		///    FONT_BOLD       boolean  not null,
+		///    COLOR_FORE      text     not null,
+		///    COLOR_BACK      text     not null
+		///)
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CreateNoteGroupMasterTable {
+			get {
+				return ResourceManager.GetString("CreateNoteGroupMasterTable", resourceCulture);
+			}
+		}
+		
+		/// <summary>
+		///   create table T_NOTE_GROUP (
+		///    GROUP_ID        integer,
+		///    NOTE_ID         integer,
+		///    CMN_ENABLED     boolean not null,
+		///    CMN_CREATE      datetime not null,
+		///    CMN_UPDATE      datetime not null,
+		///    -- pkey
+		///    primary key(GROUP_ID, NOTE_ID)
+		///)
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CreateNoteGroupTransactionTable {
+			get {
+				return ResourceManager.GetString("CreateNoteGroupTransactionTable", resourceCulture);
+			}
+		}
+		
+		/// <summary>
+		///   create table M_NOTE (
+		///    NOTE_ID      integer  primary key,
+		///    CMN_ENABLED  boolean not null,
+		///    CMN_CREATE   datetime not null,
+		///    CMN_UPDATE   datetime not null,
+		///    NOTE_TITLE   text,
+		///    NOTE_TYPE    integer  not null
+		///) に類似しているローカライズされた文字列を検索します。
 		/// </summary>
 		public static string CreateNoteMasterTable {
 			get {
 				return ResourceManager.GetString("CreateNoteMasterTable", resourceCulture);
+			}
+		}
+		
+		/// <summary>
+		///   create table T_NOTE_STYLE (
+		///    NOTE_ID         integer  primary key,
+		///    CMN_ENABLED     boolean not null,
+		///    CMN_CREATE      datetime not null,
+		///    CMN_UPDATE      datetime not null,
+		///    FONT_FAMILY     integer  not null,
+		///    FONT_SIZE       real     not null,
+		///    FONT_ITALIC     boolean  not null,
+		///    FONT_BOLD       boolean  not null,
+		///    COLOR_FORE      text     not null,
+		///    COLOR_BACK      text     not null,
+		///    WINDOW_VISIBLED boolean  not null,
+		///    WINDOW_TOPMOST  boolean  not null,
+		///  [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CreateNoteStyleTransactionTable {
+			get {
+				return ResourceManager.GetString("CreateNoteStyleTransactionTable", resourceCulture);
+			}
+		}
+		
+		/// <summary>
+		///   create table T_NOTE (
+		///    NOTE_ID      integer  primary key,
+		///    CMN_ENABLED  boolean not null,
+		///    CMN_CREATE   datetime not null,
+		///    CMN_UPDATE   datetime not null,
+		///    NOTE_BODY    text
+		///) に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string CreateNoteTransactionTable {
+			get {
+				return ResourceManager.GetString("CreateNoteTransactionTable", resourceCulture);
 			}
 		}
 		

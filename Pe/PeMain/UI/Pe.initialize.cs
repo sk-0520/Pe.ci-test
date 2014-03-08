@@ -61,19 +61,31 @@ namespace PeMain.UI
 		{
 			initLog.Add(new LogItem(LogType.Information, tableName, "CREATE"));
 			var map = new Dictionary<string, string>() {
+				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
+				{ DataTables.masterTableNoteGroup,      global::PeMain.Properties.SQL.CreateNoteGroupMasterTable },
+				{ DataTables.transactionTableNoteGroup, global::PeMain.Properties.SQL.CreateNoteGroupTransactionTable },
+				{ DataTables.transactionTableNote,      global::PeMain.Properties.SQL.CreateNoteTransactionTable },
+				{ DataTables.transactionTableNoteStyle, global::PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
+			};
+			var command = map[tableName];
+			this._commonData.Database.ExecuteCommand(command);
+		}
+		
+		/// <summary>
+		/// NOTE: 将来的な予約
+		/// </summary>
+		/// <param name="tableName"></param>
+		/// <param name="version"></param>
+		/// <param name="initLog"></param>
+		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog)
+		{
+			initLog.Add(new LogItem(LogType.Information, tableName, "CHECK"));
+			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           string.Empty },
 				{ DataTables.masterTableNoteGroup,      string.Empty },
 				{ DataTables.transactionTableNoteGroup, string.Empty },
 				{ DataTables.transactionTableNote,      string.Empty },
 				{ DataTables.transactionTableNoteStyle, string.Empty },
-			};
-		}
-		
-		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog)
-		{
-			var map = new Dictionary<string, string>() {
-				{ DataTables.masterTableNote,      string.Empty },
-				{ DataTables.transactionTableNote, string.Empty },
 			};
 		}
 		
