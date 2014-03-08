@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -22,16 +23,22 @@ namespace PeMain
 	/// </summary>
 	public static class Literal
 	{
+		#if DEBUG
+		private static bool _initialized = false;
+		#endif
+		
 		public const string programName = "Pe";
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
 		/// </summary>
-		private const string dirRootName = programName;
+		private static string _dirRootName = programName;
 		
-		public const string mainSettingFileName   = "mainsetting.xml";
-		public const string launcherItemsFileName = "launcher-items.xml";
-		public const string noteDataFileName      = "note.sqlite3";
-		public const string backupDirName         = "backup";
+		private static string _settingRootDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		
+		private static string _mainSettingFileName   = "mainsetting.xml";
+		private static string _launcherItemsFileName = "launcher-items.xml";
+		private static string _noteDataFileName      = "note.sqlite3";
+		private static string _backupDirName         = "backup";
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -88,11 +95,8 @@ namespace PeMain
 		{
 			get 
 			{
-#if DEBUG
-				var path = Path.Combine(@"Z:\", Environment.ExpandEnvironmentVariables("%USERNAME%"));
-#else
-				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), dirRootName);
-#endif
+				var path = Path.Combine(_settingRootDirPath, _dirRootName);
+				
 				return path;
 			}
 		}
@@ -101,28 +105,35 @@ namespace PeMain
 		/// </summary>
 		public static string UserMainSettingPath
 		{
-			get { return Path.Combine(UserSettingDirPath, mainSettingFileName); } 
+			get { return Path.Combine(UserSettingDirPath, _mainSettingFileName); } 
 		}
 		
 		public static string UserLauncherItemsPath
 		{
-			get { return Path.Combine(UserSettingDirPath, launcherItemsFileName); }
+			get { return Path.Combine(UserSettingDirPath, _launcherItemsFileName); }
 		}
 		
 		public static string UserNoteDataPath
 		{
-			get { return Path.Combine(UserSettingDirPath, noteDataFileName); }
+			get { return Path.Combine(UserSettingDirPath, _noteDataFileName); }
 		}
 		
 		public static string UserBackupDirPath
 		{
-			get { return Path.Combine(UserSettingDirPath, backupDirName);}
+			get { return Path.Combine(UserSettingDirPath, _backupDirName);}
 		}
-		
 		
 		public static void Initialize(CommandLine commandLine)
 		{
+			#if DEBUG
+			Debug.Assert(_initialized == false);
+			#endif
 			
+			if(commandLine.HasOption("setting-root")) {
+				_settingRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
+			}
+			
+			_initialized = true;
 		}
 	}
 	
@@ -165,17 +176,24 @@ namespace PeMain
 	
 	public static class DataTables
 	{
-		private static readonly Dictionary<string, int> _map;
 		static DataTables()
 		{
-			_map = new Dictionary<string, int>() {
-				{ masterTableVersion,    1},
-				{ masterTableNote,       1},
-				{ transactionTableNote,  1},
+			map = new Dictionary<string, int>() {
+				{ masterTableVersion,         1},
+				{ masterTableNote,            1},
+				{ masterTableNoteGroup,       1},
+				{ transactionTableNote,       1},
+				{ transactionTableNoteStyle,  1},
+				{ transactionTableNoteGroup,  1},
 			};
 		}
-		public static string masterTableVersion   = "M_VERSOIN";
-		public static string masterTableNote      = "M_NOTE";
-		public static string transactionTableNote = "T_NOTE";
+		public static readonly Dictionary<string, int> map;
+		
+		public const string masterTableVersion        = "M_VERSION";
+		public const string masterTableNote           = "M_NOTE";
+		public const string masterTableNoteGroup      = "M_NOTE_GROUP";
+		public const string transactionTableNote      = "T_NOTE";
+		public const string transactionTableNoteStyle = "T_NOTE_STYLE";
+		public const string transactionTableNoteGroup = "T_NOTE_GROUP";
 	}
 }

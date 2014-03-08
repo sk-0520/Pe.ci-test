@@ -123,9 +123,86 @@
 from
     SQLITE_MASTER
 where
-    NAME = @table
+    NAME = @table_name
     and
-    TYPE = 'TABLE'
+    TYPE = 'table'
+</value>
+  </data>
+  <data name="CreateVersionMasterTable" xml:space="preserve">
+    <value>create table M_VERSION
+(
+    NAME     text primary key,
+    VERSION  integer not null
+)
+</value>
+  </data>
+  <data name="CreateNoteMasterTable" xml:space="preserve">
+    <value>create table M_NOTE (
+    NOTE_ID      integer  primary key,
+    CMN_ENABLED  integer  not null,
+    CMN_CREATE   text     not null,
+    CMN_UPDATE   text     not null,
+    NOTE_TITLE   text,
+    NOTE_TYPE    integer  not null
+)</value>
+  </data>
+  <data name="CreateNoteTransactionTable" xml:space="preserve">
+    <value>create table T_NOTE (
+    NOTE_ID      integer  primary key,
+    CMN_ENABLED  integer  not null,
+    CMN_CREATE   text     not null,
+    CMN_UPDATE   text     not null,
+    NOTE_BODY    text
+)</value>
+  </data>
+  <data name="CreateNoteStyleTransactionTable" xml:space="preserve">
+    <value>create table T_NOTE_STYLE (
+    NOTE_ID         integer  primary key,
+    CMN_ENABLED     integer  not null,
+    CMN_CREATE      text     not null,
+    CMN_UPDATE      text     not null,
+    FONT_FAMILY     integer  not null,
+    FONT_SIZE       real     not null,
+    FONT_ITALIC     integer  not null,
+    FONT_BOLD       integer  not null,
+    COLOR_FORE      text     not null,
+    COLOR_BACK      text     not null,
+    WINDOW_VISIBLED integer  not null,
+    WINDOW_TOPMOST  integer  not null,
+    WINDOW_COMPACT  integer  not null,
+    WINDOW_POS_X    integer  not null,
+    WINDOW_POS_Y    integer  not null,
+    WINDOW_SIZE_W   integer  not null,
+    WINDOW_SIZE_H   integer  not null
+)
+</value>
+  </data>
+  <data name="CreateNoteGroupMasterTable" xml:space="preserve">
+    <value>create table M_NOTE_GROUP (
+    GROUP_ID        integer  primary key,
+    CMN_ENABLED     integer  not null,
+    CMN_CREATE      text     not null,
+    CMN_UPDATE      text     not null,
+    GROUP_TITLE     text
+    FONT_FAMILY     integer  not null,
+    FONT_SIZE       real     not null,
+    FONT_ITALIC     integer  not null,
+    FONT_BOLD       integer  not null,
+    COLOR_FORE      text     not null,
+    COLOR_BACK      text     not null
+)
+</value>
+  </data>
+  <data name="CreateNoteGroupTransactionTable" xml:space="preserve">
+    <value>create table T_NOTE_GROUP (
+    GROUP_ID        integer,
+    NOTE_ID         integer,
+    CMN_ENABLED     integer  not null,
+    CMN_CREATE      text     not null,
+    CMN_UPDATE      text     not null,
+    -- pkey
+    primary key(GROUP_ID, NOTE_ID)
+)
 </value>
   </data>
 </root>

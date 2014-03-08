@@ -25,13 +25,17 @@ namespace PeMain
 			
 			bool isFirstInstance;
 			var mutexName = Literal.programName;
-#if DEBUG
+			#if DEBUG
 			mutexName += "_debug";
 			//mutexName += new Random().Next().ToString();
-#endif
+			#endif
 			using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 				if (isFirstInstance) {
-					using(var notificationIcon = new UI.Pe(args)) {
+					using(var context = new UI.Pe(args)) {
+						#if DEBUG
+						context.DebugProcess();
+						#endif
+						
 						Application.Run();
 					}
 				} else {

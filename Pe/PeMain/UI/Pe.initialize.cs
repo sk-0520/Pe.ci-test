@@ -17,6 +17,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
+using PeMain.Data.DB;
 using PeMain.Logic;
 using PeMain.Properties;
 using PeUtility;
@@ -57,6 +58,48 @@ namespace PeMain.UI
 			}
 		}
 		
+		void InitializeNoteTableCreate(string tableName, List<LogItem> initLog)
+		{
+			initLog.Add(new LogItem(LogType.Information, tableName, "CREATE"));
+			var map = new Dictionary<string, string>() {
+				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
+				{ DataTables.masterTableNoteGroup,      global::PeMain.Properties.SQL.CreateNoteGroupMasterTable },
+				{ DataTables.transactionTableNoteGroup, global::PeMain.Properties.SQL.CreateNoteGroupTransactionTable },
+				{ DataTables.transactionTableNote,      global::PeMain.Properties.SQL.CreateNoteTransactionTable },
+				{ DataTables.transactionTableNoteStyle, global::PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
+			};
+			var command = map[tableName];
+			this._commonData.Database.ExecuteCommand(command);
+			using(var tran = this._commonData.Database.BeginTransaction()) {
+				try {
+					var entity = new MVersionEntity();
+					entity.Name = tableName;
+					entity.Version = DataTables.map[tableName];
+					this._commonData.Database.ExecuteInsert(new [] { entity });
+				} finally {
+					this._commonData.Database.ReleaseTransaction();
+				}
+			}
+		}
+		
+		/// <summary>
+		/// NOTE: 将来的な予約
+		/// </summary>
+		/// <param name="tableName"></param>
+		/// <param name="version"></param>
+		/// <param name="initLog"></param>
+		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog)
+		{
+			initLog.Add(new LogItem(LogType.Information, tableName, "CHECK"));
+			var map = new Dictionary<string, string>() {
+				{ DataTables.masterTableNote,           string.Empty },
+				{ DataTables.masterTableNoteGroup,      string.Empty },
+				{ DataTables.transactionTableNoteGroup, string.Empty },
+				{ DataTables.transactionTableNote,      string.Empty },
+				{ DataTables.transactionTableNoteStyle, string.Empty },
+			};
+		}
+		
 		/// <summary>
 		/// テーブル一覧の確認と不足分作成・バージョン修正
 		/// </summary>
@@ -66,26 +109,33 @@ namespace PeMain.UI
 		void InitializeNoteTables(CommandLine commandLine, List<LogItem> initLog)
 		{
 			// 
-			bool enabledVersionTable = false;
-			var reader = this._commonData.Database.ExecuteReader(
-				global::PeMain.Properties.SQL.CheckTable,
-				new Dictionary<string, object>() {
-					{"table", DataTables.masterTableVersion}
-				}
-			);
-			using(reader) {
-				reader.Read();
-				enabledVersionTable = Convert.ToInt32(reader["NUM"]) == 1;
-			}
+			var enabledVersionTable = this._commonData.Database.ExistsTable(DataTables.masterTableVersion);
 			Debug.WriteLine(enabledVersionTable);
+			if(!enabledVersionTable) {
+				// バージョンテーブルが存在しなければ作成
+				this._commonData.Database.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionMasterTable);
+			}
+			
+			// プログラムの知っているテーブルが存在しない、またはバージョンが異なる場合に調整する
+			foreach(var pair in DataTables.map.Where(pair => pair.Key != DataTables.masterTableVersion)) {
+				if(!this._commonData.Database.ExistsTable(pair.Key)) {
+					InitializeNoteTableCreate(pair.Key, initLog);
+				} else {
+					InitializeNoteTableChange(pair.Key, pair.Value, initLog);
+				}
+			}
 		}
 		
 		void InitializeNote(CommandLine commandLine, List<LogItem> initLog)
 		{
 			var noteDataFilePath = Literal.UserNoteDataPath;
 			initLog.Add(new LogItem(LogType.Information, "note-data", noteDataFilePath));
+			if(!File.Exists(noteDataFilePath)) {
+				initLog.Add(new LogItem(LogType.Information, "note-data", "dir cleate"));
+				FileUtility.MakeFileParentDirectory(noteDataFilePath);
+			}
 			var connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
-			this._commonData.Database = new DBManager(connection, false, true);
+			this._commonData.Database = new PeDBManager(connection, false, true);
 			InitializeNoteTables(commandLine, initLog);
 		}
 		
