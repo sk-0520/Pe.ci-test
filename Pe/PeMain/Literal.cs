@@ -133,7 +133,9 @@ namespace PeMain
 				_settingRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
 			}
 			
+			#if DEBUG
 			_initialized = true;
+			#endif
 		}
 	}
 	
