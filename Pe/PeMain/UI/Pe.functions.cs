@@ -31,6 +31,27 @@ namespace PeMain.UI
 		#if DEBUG
 		public void DebugProcess()
 		{
+			/*
+			var db = this._commonData.Database;
+			
+			using(var tran = db.BeginTransaction()) {
+				try {
+					var entity = new PeMain.Data.DB.MNoteEntity();
+					db.ExecuteInsert(new [] { entity } );
+					tran.Commit();
+				} finally {
+					db.ReleaseTransaction();
+				}
+			}
+			var reader = db.ExecuteReader("select * from M_NOTE");
+			while(reader.Read()) {
+				for(var i=0; i < reader.FieldCount;i ++) {
+					var name = reader.GetName(i);
+					var value= reader[name];
+					Debug.WriteLine("{0} = {1}", name, value);
+				}
+			}
+			*/
 		}
 		#endif
 		

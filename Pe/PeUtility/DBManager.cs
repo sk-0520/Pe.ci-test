@@ -302,10 +302,11 @@ namespace PeUtility
 			var param = command.CreateParameter();
 			
 			param.ParameterName = name;
-			var type = value.GetType();
-			param.Value = DbValueFromValue(value, type);
-			param.DbType = DbTypeFromType(type);
-			
+			if(value != null) {
+				var type = value.GetType();
+				param.Value = DbValueFromValue(value, type);
+				param.DbType = DbTypeFromType(type);
+			}
 			return param;
 		}
 		

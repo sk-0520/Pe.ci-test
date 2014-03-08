@@ -55,10 +55,12 @@ namespace PeMain.UI
 		
 		void ApplySettingPosition()
 		{
+			/*
 			if(false) {
 				HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
 				HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
 			}
+			*/
 			if(UseToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;

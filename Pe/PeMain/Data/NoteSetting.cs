@@ -12,16 +12,16 @@ using System.Collections.Generic;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// TODO: 後回し
+	/// 
 	/// </summary>
 	[Serializable]
 	public class NoteSetting: Item
 	{
 		public NoteSetting()
 		{
-//			Groups = new Dictionary<string, NoteGroup>();
+			CreateHotKey = new HotKeySetting();
 		}
 		
-//		public Dictionary<string, NoteGroup> Groups { get; set; }
+		public HotKeySetting CreateHotKey { get; set; }
 	}
 }
