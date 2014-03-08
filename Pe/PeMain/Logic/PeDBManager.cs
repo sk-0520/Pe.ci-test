@@ -10,18 +10,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+
+using PeMain.Data.DB;
 using PeUtility;
 
 namespace PeMain.Logic
 {
-	public class CountDto: Dto
-	{
-		[TargetName("NUM")]
-		public int Count { get; set; }
-		
-		public bool Has { get { return Count > 0; } }
-	}
-	
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
 	/// </summary>
