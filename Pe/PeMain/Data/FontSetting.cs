@@ -31,6 +31,14 @@ namespace PeMain.Data
 		/// フォント名
 		/// </summary>
 		public string Family { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool Italic { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public bool Bold { get; set; }
 		
 		public Font Font
 		{
@@ -67,7 +75,7 @@ namespace PeMain.Data
 			}
 		}
 		
-		public void Include(FontSetting fs) 
+		public virtual void Include(FontSetting fs) 
 		{
 			Height = fs.Height;
 			Family = fs.Family;

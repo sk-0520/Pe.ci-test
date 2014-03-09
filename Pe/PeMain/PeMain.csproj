@@ -95,6 +95,7 @@
     <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
+    <Compile Include="Data\NoteItem.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ControlUtility.cs" />

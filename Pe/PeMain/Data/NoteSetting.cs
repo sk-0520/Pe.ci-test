@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 namespace PeMain.Data
 {
+	
 	/// <summary>
 	/// 
 	/// </summary>
@@ -22,6 +23,10 @@ namespace PeMain.Data
 			CreateHotKey = new HotKeySetting();
 		}
 		
+		/// <summary>
+		/// 新規作成時のホットキー
+		/// </summary>
 		public HotKeySetting CreateHotKey { get; set; }
+		
 	}
 }
