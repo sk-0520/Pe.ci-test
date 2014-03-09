@@ -13,15 +13,18 @@ using PeUtility;
 namespace PeMain.Data.DB
 {
 	/// <summary>
-	/// Description of M_NOTE_GROUP.
+	/// 
+	/// 
+	/// NOTE: この継承はなんかダメな気がする
 	/// </summary>
 	[TargetName("M_NOTE_GROUP")]
-	public class MNoteGroupEntity: CommonDataEntity
+	public class MNoteGroupEntity: NoteStyleEntity
 	{
 		[TargetName("GROUP_ID")]
 		public long Id { get; set ;}
 		[TargetName("GROUP_TITLE")]
 		public string Title {get; set; }
+		/*
 		// mixinつかいてぇ
 		[TargetName("FONT_FAMILY")]
 		public string FontFamily { get; set; }
@@ -35,5 +38,6 @@ namespace PeMain.Data.DB
 		public Color ForeColor { get; set; }
 		[TargetName("COLOR_BACK")]
 		public Color BackColor { get; set; }
+		*/
 	}
 }
