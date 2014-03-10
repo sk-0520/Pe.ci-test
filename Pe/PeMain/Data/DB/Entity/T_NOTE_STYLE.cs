@@ -7,7 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Windows;
+using System.Drawing;
 using PeUtility;
 
 namespace PeMain.Data.DB
@@ -44,7 +44,7 @@ namespace PeMain.Data.DB
 			}
 			set
 			{
-				X = value.X;
+				X =  value.X;
 				Y = value.Y;
 			}
 		}

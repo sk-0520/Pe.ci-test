@@ -17,7 +17,7 @@ namespace PeMain.Data.DB
 	/// 
 	/// NOTE: この継承はなんかダメな気がする
 	/// </summary>
-	[TargetName("M_NOTE_GROUP")]
+	[TargetName("T_NOTE_GROUP")]
 	public class MNoteGroupEntity: NoteStyleEntity
 	{
 		[TargetName("GROUP_ID")]
