@@ -18,4 +18,12 @@ namespace PeMain.Data.DB
 		
 		public bool Has { get { return Count > 0; } }
 	}
+	
+	public class SingleIdDto: Dto
+	{
+		[TargetName("MAX_ID")]
+		public long MaxId { get; set; }
+		[TargetName("MIN_ID")]
+		public long MinId { get; set; }
+	}
 }

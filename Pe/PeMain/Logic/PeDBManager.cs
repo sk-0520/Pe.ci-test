@@ -40,5 +40,15 @@ namespace PeMain.Logic
 			return count.Has;
 		}
 		
+		public SingleIdDto GetTableId(string tableName, string idColumnName)
+		{
+			Clear();
+			
+			Parameter["table_name"] = tableName;
+			Parameter["id_column_name"] = idColumnName;
+			
+			return GetDtoSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
+		}
+		
 	}
 }

@@ -123,7 +123,7 @@
 from
     SQLITE_MASTER
 where
-    NAME = @table_name
+    NAME = :table_name
     and
     TYPE = 'table'
 </value>
@@ -203,6 +203,14 @@ where
     -- pkey
     primary key(GROUP_ID, NOTE_ID)
 )
+</value>
+  </data>
+  <data name="GetId" xml:space="preserve">
+    <value>select
+    coalesce(max(:id_column_name), 0) MAX_ID,
+    coalesce(min(:id_column_name), 0) MIN_ID
+from
+    :table_name
 </value>
   </data>
 </root>
