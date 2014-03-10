@@ -18,10 +18,10 @@ namespace PeMain.Data.DB
 	public class MNoteEntity: CommonDataEntity
 	{
 		[TargetName("NOTE_ID")]
-		public long Id { get; set ;}
+		public long Id { get; set; }
 		[TargetName("NOTE_TITLE")]
-		public string Title { get; set ;}
+		public string Title { get; set; }
 		[TargetName("NOTE_TYPE")]
-		public int RawType { get; set ;}
+		public int RawType { get; set; }
 	}
 }
