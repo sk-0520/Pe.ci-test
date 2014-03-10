@@ -131,7 +131,7 @@ namespace PeMain.UI
 				FileUtility.MakeFileParentDirectory(noteDataFilePath);
 			}
 			var connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
-			this._commonData.Database = new PeDBManager(connection, false, true);
+			this._commonData.Database = new PeDBManager(connection, false);
 			InitializeNoteTables(commandLine, initLog);
 		}
 		

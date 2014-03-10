@@ -15,7 +15,7 @@ namespace PeUtility
 {
 	public abstract class SQLiteDBManager: DBManager
 	{
-		public SQLiteDBManager(DbConnection connection, bool isOpened, bool sharedCommand): base(connection, isOpened, sharedCommand)
+		public SQLiteDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
 		{ }
 		
 		protected override object To(object value, Type toType)

@@ -154,7 +154,7 @@ namespace PeUtility
 	/// </summary>
 	public abstract class DBManager
 	{
-		public DBManager(DbConnection connection, bool isOpened, bool sharedCommand)
+		public DBManager(DbConnection connection, bool isOpened)
 		{
 			Parameter = new Dictionary<string, object>();
 			Expression = new Dictionary<string, CommandExpression>();
@@ -166,30 +166,13 @@ namespace PeUtility
 			if(!isOpened) {
 				Connection.Open();
 			}
-			
-			SharedCommand = sharedCommand;
-			if(SharedCommand) {
-				Command = CreateCommand();
-			}
 		}
 		public DbConnection Connection { get; private set; }
-		public bool SharedCommand { get; private set; }
-		public DbCommand Command { get; private set; }
 		public DbTransaction BeginTransaction()
 		{
 			var tran = Connection.BeginTransaction();
-			if(SharedCommand) {
-				Debug.Assert(Command.Transaction == null);
-				Command.Transaction = tran;
-			}
 			
 			return tran;
-		}
-		public void ReleaseTransaction()
-		{
-			if(SharedCommand) {
-				Command.Transaction = null;
-			}
 		}
 		
 		public string ConditionPattern { get; set; }
@@ -206,21 +189,6 @@ namespace PeUtility
 		{
 			Parameter.Clear();
 			Expression.Clear();
-		}
-		
-		private DbCommand UseCommand()
-		{
-			if(SharedCommand) {
-				return Command;
-			} else {
-				return CreateCommand();
-			}
-		}
-		private void ReleaseCommand(DbCommand command)
-		{
-			if(Command != command) {
-				command.Dispose();
-			}
 		}
 		
 		public DbCommand CreateCommand()
@@ -349,13 +317,10 @@ namespace PeUtility
 		
 		private T Executer<T>(Func<DbCommand,T> func, string code)
 		{
-			var command = UseCommand();
-			try {
+			using(var command = CreateCommand()) {
 				command.CommandText = ExpressionReplace(code);
 				SetParameter(command);
 				return func(command);
-			} finally {
-				ReleaseCommand(command);
 			}
 		}
 		
@@ -369,7 +334,7 @@ namespace PeUtility
 			return Executer(command => command.ExecuteNonQuery(), code);
 		}
 		
-		private Dictionary<string, string> GetTargetNamePropertyMap<T>()
+		private IDictionary<string, string> GetTargetNamePropertyMap<T>()
 			where T: DbData
 		{
 			var targetPropMap = new Dictionary<string, string>();
@@ -383,7 +348,7 @@ namespace PeUtility
 			return targetPropMap;
 		}
 		
-		private Dictionary<string, PropertyInfo> GetPropertyMap<T>(IEnumerable<string> propertNameList)
+		private IDictionary<string, PropertyInfo> GetPropertyMap<T>(ICollection<string> propertNameList)
 		{
 			var propMap = new Dictionary<string, PropertyInfo>(propertNameList.Count());
 			foreach(var propertyName in propertNameList) {
@@ -452,7 +417,7 @@ namespace PeUtility
 			return null;
 		}
 		
-		private void ExecuteEntityCommand<T>(IEnumerable<T> entityList, Func<EntitySet, string> func)
+		private void ExecuteEntityCommand<T>(IList<T> entityList, Func<EntitySet, string> func)
 			where T: Entity
 		{
 			Parameter.Clear();
@@ -468,13 +433,13 @@ namespace PeUtility
 			}
 		}
 		
-		public void ExecuteInsert<T>(IEnumerable<T> entityList)
+		public void ExecuteInsert<T>(IList<T> entityList)
 			where T: Entity
 		{
 			ExecuteEntityCommand(entityList, CreateInsertCommandCode);
 		}
 		
-		public void ExecuteUpdate<T>(IEnumerable<T> entityList)
+		public void ExecuteUpdate<T>(IList<T> entityList)
 			where T: Entity
 		{
 			ExecuteEntityCommand(entityList, CreateUpdateCommandCode);

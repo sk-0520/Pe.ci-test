@@ -21,7 +21,7 @@ namespace PeMain.Logic
 	/// </summary>
 	public class PeDBManager: SQLiteDBManager
 	{
-		public PeDBManager(DbConnection connection, bool isOpened, bool sharedCommand): base(connection, isOpened, sharedCommand)
+		public PeDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
 		{ }
 		
 		public bool ExistsTable(string tableName)

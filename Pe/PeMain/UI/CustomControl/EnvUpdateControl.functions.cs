@@ -22,7 +22,7 @@ namespace PeMain.UI
 			this._language = language;
 		}
 		
-		public void SetItem(Dictionary<string, string> map)
+		public void SetItem(IDictionary<string, string> map)
 		{
 			this._event = false;
 			try {

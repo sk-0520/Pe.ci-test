@@ -61,7 +61,7 @@ namespace PeMain.UI
 		
 		public IconScale IconScale { get; set; }
 		
-		public IEnumerable<LauncherItem> Items { get { return this._items; } }
+		public IList<LauncherItem> Items { get { return this._items; } }
 		
 		public IEnumerable<LauncherItem> ViewItems
 		{

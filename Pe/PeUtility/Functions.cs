@@ -127,7 +127,7 @@ namespace PeUtility
 			}
 		}
 		
-		public static IEnumerable<T> Slice<T>(this IEnumerable<T> seq, int fromIndex, int toIndex)
+		public static IEnumerable<T> Slice<T>(this IList<T> seq, int fromIndex, int toIndex)
 		{
 			var takeCount = fromIndex - toIndex - 1;
 			return seq.Skip(fromIndex).Take(takeCount);

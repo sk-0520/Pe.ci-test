@@ -62,7 +62,7 @@ namespace PeUtility
 			return replacedText;
 		}
 		
-		public static string ReplaceRangeFromDictionary(this string src, string head, string tail, Dictionary<string, string> map)
+		public static string ReplaceRangeFromDictionary(this string src, string head, string tail, IDictionary<string, string> map)
 		{
 			return src.ReplaceRange(head, tail, s => map.ContainsKey(s) ? map[s]: head + s + tail);
 		}

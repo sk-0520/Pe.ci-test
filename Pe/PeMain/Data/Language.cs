@@ -96,7 +96,7 @@ namespace PeMain.Data
 		/// 
 		/// 定義済み文字列は展開される。
 		/// </summary>
-		public string this[string key, Dictionary<string, string> map = null]
+		public string this[string key, IDictionary<string, string> map = null]
 		{
 			get
 			{
@@ -107,7 +107,7 @@ namespace PeMain.Data
 				}
 				if(text.Any(c => c == '@')) {
 					var systemMap = GetSystemMap();
-					Dictionary<string, string> useMap;
+					IDictionary<string, string> useMap;
 					if(map == null) {
 						useMap = systemMap;
 					} else {

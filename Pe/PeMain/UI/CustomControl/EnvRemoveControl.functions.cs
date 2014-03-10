@@ -21,7 +21,7 @@ namespace PeMain.UI
 			this._language = language;
 		}
 		
-		public void SetItem(List<string> items)
+		public void SetItem(IList<string> items)
 		{
 			this._event = false;
 			try {
