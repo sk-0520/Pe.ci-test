@@ -239,6 +239,22 @@
     <Compile Include="UI\LogForm.variable.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\NoteForm.cs" />
+    <Compile Include="UI\NoteForm.Designer.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NoteForm.initialize.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NoteForm.language.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NoteForm.property.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NoteForm.variable.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.cs" />
     <Compile Include="UI\Pe.functions.cs">
       <DependentUpon>Pe.cs</DependentUpon>
@@ -407,6 +423,9 @@
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="UI\NoteForm.functions.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </None>
     <None Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
