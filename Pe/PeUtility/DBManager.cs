@@ -107,24 +107,60 @@ namespace PeUtility
 	)]
 	public sealed class TargetNameAttribute: Attribute
 	{
-		public TargetNameAttribute(string name)
+		public TargetNameAttribute(string name, bool primary)
 		{
 			TargetName = name;
+			PrimaryKey = primary;
 		}
 		
+		public TargetNameAttribute(string name): this(name, false)
+		{ }
+		/// <summary>
+		/// 物理名
+		/// </summary>
 		public string TargetName { get; private set; }
+		/// <summary>
+		/// 主キー
+		/// </summary>
+		public bool PrimaryKey { get; private set; }
+	}
+	
+	public sealed class TargetInfo
+	{
+		string _targetName;
+		bool _primaryKey;
+		PropertyInfo _propertyInfo;
+		
+		public TargetInfo(TargetNameAttribute attribute, PropertyInfo propertyInfo)
+		{
+			this._targetName = attribute.TargetName;
+			this._primaryKey = attribute.PrimaryKey;
+			this._propertyInfo = propertyInfo;
+		}
+		/// <summary>
+		/// 物理名
+		/// </summary>
+		public string TargetName { get { return this._targetName; } }
+		/// <summary>
+		/// 主キー化
+		/// </summary>
+		public bool PrimaryKey { get { return this._primaryKey; } }
+		/// <summary>
+		/// TargetNameAttributeで紐付くプロパティ。
+		/// </summary>
+		public PropertyInfo PropertyInfo { get { return this._propertyInfo; } }
 	}
 	
 	public sealed class EntitySet
 	{
-		public EntitySet(string tableName, IDictionary<string, string> columnPropName)
+		public EntitySet(string tableName, IList<TargetInfo> targetInfos)
 		{
 			TableName = tableName;
-			ColumnPropertyMap = columnPropName;
+			TargetInfos = targetInfos;
 		}
 		
 		public string TableName { get ; private set; }
-		public IDictionary<string, string> ColumnPropertyMap { get; private set; }
+		public IList<TargetInfo> TargetInfos { get; private set; }
 	}
 	
 	public abstract class DbData
@@ -135,8 +171,7 @@ namespace PeUtility
 	/// TargetNameAttribute
 	/// </summary>
 	public abstract class Entity: DbData
-	{
-	}
+	{ }
 	
 	/// <summary>
 	/// データ取得単位に対応
@@ -369,41 +404,44 @@ namespace PeUtility
 			return Executer(command => command.ExecuteNonQuery(), code);
 		}
 		
-		private Dictionary<string, string> GetTargetNamePropertyMap<T>()
+		private IList<TargetInfo> GetTargetInfoList<T>()
 			where T: DbData
 		{
-			var targetPropMap = new Dictionary<string, string>();
+			var targetList = new List<TargetInfo>();
 			foreach(var member in typeof(T).GetMembers()) {
 				var tartgetNameAttribute = member.GetCustomAttribute(typeof(TargetNameAttribute)) as TargetNameAttribute;
 				if(tartgetNameAttribute != null) {
-					targetPropMap[tartgetNameAttribute.TargetName] = member.Name;
+					var propertyInfo = typeof(T).GetProperty(member.Name);
+					var targetInfo = new TargetInfo(tartgetNameAttribute, propertyInfo);
+					targetList.Add(targetInfo);
 				}
 			}
 			
-			return targetPropMap;
+			return targetList;
 		}
-		
-		private Dictionary<string, PropertyInfo> GetPropertyMap<T>(IEnumerable<string> propertNameList)
+		/*
+		private void GetPropertyMap<T>(IDictionary<string, TartgetInfo> nameTargetMap)
 		{
-			var propMap = new Dictionary<string, PropertyInfo>(propertNameList.Count());
-			foreach(var propertyName in propertNameList) {
-				var prop = typeof(T).GetProperty(propertyName);
-				propMap[propertyName] = prop;
+			//var propMap = new Dictionary<string, PropertyInfo>(propertNameList.Count());
+			foreach(var pair in nameTargetMap) {
+				var propertyInfo = typeof(T).GetProperty(pair.Key);
+				//propMap[propertyName] = propertyInfo;
+				pair.Value.PropertyInfo = propertyInfo;
 			}
-			return propMap;
+			//return propMap;
 		}
-		
+		*/
 		private IEnumerable<T> GetDtoListImpl<T>(string code)
 			where T: Dto, new()
 		{
-			var columnPropName = GetTargetNamePropertyMap<T>();
-			var propMap = GetPropertyMap<T>(columnPropName.Values);
+			var targetInfoList = GetTargetInfoList<T>();
+			//GetPropertyMap<T>(nameTargetMap);
 			using(var reader = ExecuteReader(code)) {
 				while(reader.Read()) {
 					var dto = new T();
-					foreach(var columnPair in columnPropName) {
-						var rawValue = reader[columnPair.Key];
-						var property = propMap[columnPair.Value];
+					foreach(var targetInfo in targetInfoList) {
+						var rawValue = reader[targetInfo.TargetName];
+						var property = targetInfo.PropertyInfo;
 						var convedValue = To(rawValue, property.PropertyType);
 						property.SetValue(dto, convedValue);
 					}
@@ -430,7 +468,7 @@ namespace PeUtility
 		{
 			var tableAttribute = (TargetNameAttribute)typeof(T).GetCustomAttribute(typeof(TargetNameAttribute));
 			var tableName = tableAttribute.TargetName;
-			var columnPropName = GetTargetNamePropertyMap<T>();
+			var columnPropName = GetTargetInfoList<T>();
 			
 			return new EntitySet(tableName, columnPropName);
 		}
@@ -440,8 +478,8 @@ namespace PeUtility
 			var code = string.Format(
 				"insert into {0} ({1}) values({2})",
 				entitySet.TableName,
-				string.Join(", ", entitySet.ColumnPropertyMap.Keys),
-				string.Join(", ", entitySet.ColumnPropertyMap.Values.Select(s => ":" + s))
+				string.Join(", ", entitySet.TargetInfos.Select(t => t.TargetName)),
+				string.Join(", ", entitySet.TargetInfos.Select(t => ":" + t.PropertyInfo.Name))
 			);
 			
 			return code;
@@ -459,10 +497,10 @@ namespace PeUtility
 			
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
-			var propMap = GetPropertyMap<T>(entitySet.ColumnPropertyMap.Values);
+			var targetInfos = GetTargetInfoList<T>();
 			foreach(var entity in entityList) {
-				foreach(var pair in propMap) {
-					Parameter[pair.Key] = pair.Value.GetValue(entity);
+				foreach(var targetInfo in entitySet.TargetInfos) {
+					Parameter[targetInfo.TargetName] = targetInfo.PropertyInfo.GetValue(entity);
 				}
 				ExecuteCommand(code);
 			}
