@@ -231,6 +231,8 @@ namespace PeUtility
 
 	/// <summary>
 	/// DB接続・操作の一元化
+	/// 
+	/// すんごいとろくない限り処理速度は考えない。
 	/// </summary>
 	public abstract class DBManager
 	{
@@ -273,7 +275,7 @@ namespace PeUtility
 		/// <summary>
 		/// 条件式パターン。
 		/// </summary>
-		public string ConditionPattern 
+		public string ConditionPattern
 		{
 			get { return CompiledPattern.ToString(); }
 			set { CompiledPattern = new Regex(value, RegexOptions.Singleline | RegexOptions.Compiled); }
@@ -393,9 +395,9 @@ namespace PeUtility
 			
 			#if DEBUG
 			if(map.ContainsKey(type)) {
-			#endif
+				#endif
 				return map[type];
-			#if DEBUG
+				#if DEBUG
 			}
 			throw new ArgumentException(type.ToString());
 			#endif
@@ -658,6 +660,13 @@ namespace PeUtility
 			return code;
 		}
 		
+		protected void SetParameterFromEntitySet(Entity entity, EntitySet entitySet)
+		{
+			foreach(var targetInfo in entitySet.TargetInfos) {
+				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
+			}
+		}
+		
 		/// <summary>
 		/// エンティティに対して処理を実行
 		/// 
@@ -673,9 +682,7 @@ namespace PeUtility
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
 			foreach(var entity in entityList) {
-				foreach(var targetInfo in entitySet.TargetInfos) {
-					Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
-				}
+				SetParameterFromEntitySet(entity, entitySet);
 				ExecuteCommand(code);
 			}
 		}
@@ -719,9 +726,7 @@ namespace PeUtility
 			
 			var entitySet = GetEntitySet<T>();
 			var code = CreateSelectCommandCode(entitySet);
-			foreach(var targetInfo in entitySet.TargetInfos) {
-				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
-			}
+			SetParameterFromEntitySet(entity, entitySet);
 			
 			return GetDtoListImpl<T>(code).SingleOrDefault();
 		}
