@@ -1,8 +1,8 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2014/03/08
- * 時刻: 13:24
+ * 日付: 2014/03/09
+ * 時刻: 21:29
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
@@ -12,28 +12,20 @@ using PeUtility;
 
 namespace PeMain.Data.DB
 {
-	public abstract class CommonDataEntity: Entity
+	/// <summary>
+	/// 
+	/// 
+	/// NOTE: この継承はなんかダメな気がする
+	/// </summary>
+	[TargetName("T_NOTE_GROUP")]
+	public class MNoteGroupEntity: NoteStyleEntity
 	{
-		[TargetName("CMN_ENABLED")]
-		public bool CommonEnabled { get; set; }
-		[TargetName("CMN_CREATE")]
-		public DateTime CommonCreate { get; set; }
-		[TargetName("CMN_UPDATE")]
-		public DateTime CommonUpdate { get; set; }
-	}
-	
-	public interface INoteStyleEntity
-	{
-		string FontFamily { get; set; }
-		float FontHeight { get; set; }
-		bool FontItalic { get; set; }
-		bool FontBold { get; set; }
-		Color ForeColor { get; set; }
-		Color BackColor { get; set; }
-	}
-	
-	public abstract class NoteStyleEntity: CommonDataEntity, INoteStyleEntity
-	{
+		[TargetName("GROUP_ID")]
+		public long Id { get; set ;}
+		[TargetName("GROUP_TITLE")]
+		public string Title {get; set; }
+		/*
+		// mixinつかいてぇ
 		[TargetName("FONT_FAMILY")]
 		public string FontFamily { get; set; }
 		[TargetName("FONT_SIZE")]
@@ -46,5 +38,6 @@ namespace PeMain.Data.DB
 		public Color ForeColor { get; set; }
 		[TargetName("COLOR_BACK")]
 		public Color BackColor { get; set; }
+		*/
 	}
 }

@@ -66,7 +66,7 @@ namespace PeMain.Properties {
 		///from
 		///    SQLITE_MASTER
 		///where
-		///    NAME = @table_name
+		///    NAME = :table_name
 		///    and
 		///    TYPE = &apos;table&apos;
 		/// に類似しているローカライズされた文字列を検索します。
@@ -80,14 +80,14 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   create table M_NOTE_GROUP (
 		///    GROUP_ID        integer  primary key,
-		///    CMN_ENABLED     boolean not null,
-		///    CMN_CREATE      datetime not null,
-		///    CMN_UPDATE      datetime not null,
+		///    CMN_ENABLED     integer  not null,
+		///    CMN_CREATE      text     not null,
+		///    CMN_UPDATE      text     not null,
 		///    GROUP_TITLE     text
 		///    FONT_FAMILY     integer  not null,
 		///    FONT_SIZE       real     not null,
-		///    FONT_ITALIC     boolean  not null,
-		///    FONT_BOLD       boolean  not null,
+		///    FONT_ITALIC     integer  not null,
+		///    FONT_BOLD       integer  not null,
 		///    COLOR_FORE      text     not null,
 		///    COLOR_BACK      text     not null
 		///)
@@ -103,9 +103,9 @@ namespace PeMain.Properties {
 		///   create table T_NOTE_GROUP (
 		///    GROUP_ID        integer,
 		///    NOTE_ID         integer,
-		///    CMN_ENABLED     boolean not null,
-		///    CMN_CREATE      datetime not null,
-		///    CMN_UPDATE      datetime not null,
+		///    CMN_ENABLED     integer  not null,
+		///    CMN_CREATE      text     not null,
+		///    CMN_UPDATE      text     not null,
 		///    -- pkey
 		///    primary key(GROUP_ID, NOTE_ID)
 		///)
@@ -120,9 +120,9 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   create table M_NOTE (
 		///    NOTE_ID      integer  primary key,
-		///    CMN_ENABLED  boolean not null,
-		///    CMN_CREATE   datetime not null,
-		///    CMN_UPDATE   datetime not null,
+		///    CMN_ENABLED  integer  not null,
+		///    CMN_CREATE   text     not null,
+		///    CMN_UPDATE   text     not null,
 		///    NOTE_TITLE   text,
 		///    NOTE_TYPE    integer  not null
 		///) に類似しているローカライズされた文字列を検索します。
@@ -136,18 +136,18 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   create table T_NOTE_STYLE (
 		///    NOTE_ID         integer  primary key,
-		///    CMN_ENABLED     boolean not null,
-		///    CMN_CREATE      datetime not null,
-		///    CMN_UPDATE      datetime not null,
+		///    CMN_ENABLED     integer  not null,
+		///    CMN_CREATE      text     not null,
+		///    CMN_UPDATE      text     not null,
 		///    FONT_FAMILY     integer  not null,
 		///    FONT_SIZE       real     not null,
-		///    FONT_ITALIC     boolean  not null,
-		///    FONT_BOLD       boolean  not null,
+		///    FONT_ITALIC     integer  not null,
+		///    FONT_BOLD       integer  not null,
 		///    COLOR_FORE      text     not null,
 		///    COLOR_BACK      text     not null,
-		///    WINDOW_VISIBLED boolean  not null,
-		///    WINDOW_TOPMOST  boolean  not null,
-		///  [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+		///    WINDOW_VISIBLED integer  not null,
+		///    WINDOW_TOPMOST  integer  not null,
+		/// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
 		/// </summary>
 		public static string CreateNoteStyleTransactionTable {
 			get {
@@ -158,9 +158,9 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   create table T_NOTE (
 		///    NOTE_ID      integer  primary key,
-		///    CMN_ENABLED  boolean not null,
-		///    CMN_CREATE   datetime not null,
-		///    CMN_UPDATE   datetime not null,
+		///    CMN_ENABLED  integer  not null,
+		///    CMN_CREATE   text     not null,
+		///    CMN_UPDATE   text     not null,
 		///    NOTE_BODY    text
 		///) に類似しているローカライズされた文字列を検索します。
 		/// </summary>
@@ -181,6 +181,20 @@ namespace PeMain.Properties {
 		public static string CreateVersionMasterTable {
 			get {
 				return ResourceManager.GetString("CreateVersionMasterTable", resourceCulture);
+			}
+		}
+		
+		/// <summary>
+		///   select
+		///    coalesce(max(:id_column_name), 0) MAX_ID,
+		///    coalesce(min(:id_column_name), 0) MIN_ID
+		///from
+		///    :table_name
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string GetId {
+			get {
+				return ResourceManager.GetString("GetId", resourceCulture);
 			}
 		}
 	}

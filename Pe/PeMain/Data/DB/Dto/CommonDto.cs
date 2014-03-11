@@ -14,8 +14,16 @@ namespace PeMain.Data.DB
 	public class CountDto: Dto
 	{
 		[TargetName("NUM")]
-		public int Count { get; set; }
+		public long Count { get; set; }
 		
 		public bool Has { get { return Count > 0; } }
+	}
+	
+	public class SingleIdDto: Dto
+	{
+		[TargetName("MAX_ID")]
+		public long MaxId { get; set; }
+		[TargetName("MIN_ID")]
+		public long MinId { get; set; }
 	}
 }

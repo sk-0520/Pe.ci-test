@@ -1,8 +1,8 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2014/03/09
- * 時刻: 0:21
+ * 日付: 2014/03/10
+ * 時刻: 23:00
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
@@ -11,17 +11,12 @@ using PeUtility;
 
 namespace PeMain.Data.DB
 {
-	/// <summary>
-	/// Description of M_NOTE.
-	/// </summary>
-	[TargetName("M_NOTE")]
-	public class MNoteEntity: CommonDataEntity
+	[TargetName("T_NOTE")]
+	public class TNoteEntity: CommonDataEntity
 	{
 		[TargetName("NOTE_ID")]
 		public long Id { get; set; }
-		[TargetName("NOTE_TITLE")]
-		public string Title { get; set; }
-		[TargetName("NOTE_TYPE")]
-		public int RawType { get; set; }
+		[TargetName("NOTE_BODY")]
+		public string Body { get; set ;}
 	}
 }

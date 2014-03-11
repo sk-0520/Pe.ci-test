@@ -88,10 +88,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DB\Dto\CountDto.cs" />
+    <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Entity\CommonData.cs" />
     <Compile Include="Data\DB\Entity\M_NOTE.cs" />
+    <Compile Include="Data\DB\Entity\M_NOTE_GROUP.cs" />
     <Compile Include="Data\DB\Entity\M_VERSION.cs" />
+    <Compile Include="Data\DB\Entity\T_NOTE.cs" />
+    <Compile Include="Data\DB\Entity\T_NOTE_GROUP.cs" />
+    <Compile Include="Data\DB\Entity\T_NOTE_STYLE.cs" />
     <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
