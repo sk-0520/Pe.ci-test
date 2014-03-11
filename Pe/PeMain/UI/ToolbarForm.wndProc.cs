@@ -40,12 +40,8 @@ namespace PeMain.UI
 						
 					case (int)WM.WM_NCHITTEST:
 						{
-							var point = PointToClient(
-								new Point(
-									(int)(m.LParam.ToInt64() & 0xFFFF),
-									(int)((m.LParam.ToInt64() & 0xFFFF0000) >> 16)
-								)
-							);
+							
+							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
 							var padding = Padding;
 							
 							var hitTest = HT.HTNOWHERE;
