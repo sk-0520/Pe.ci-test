@@ -41,14 +41,17 @@ namespace PeMain.UI
 		void ApplyHotKey()
 		{
 			var hotKeyDatas = new [] {
-				new { Id = HotKeyId.ShowCommand, HotKey = CommonData.MainSetting.Command.HotKey,                 UnRegistMessageName = "hotkey/unregist/command",     RegistMessageName = "hotkey/regist/command" },
-				new { Id = HotKeyId.HiddenFile,  HotKey = CommonData.MainSetting.SystemEnv.HiddenFileShowHotKey, UnRegistMessageName = "hotkey/unregist/hidden-file", RegistMessageName = "hotkey/regist/hidden-file" },
-				new { Id = HotKeyId.Extension,   HotKey = CommonData.MainSetting.SystemEnv.ExtensionShowHotKey,  UnRegistMessageName = "hotkey/unregist/extension",   RegistMessageName = "hotkey/regist/extension" },
+				new { Id = HotKeyId.ShowCommand, HotKey = CommonData.MainSetting.Command.HotKey,                 UnRegistMessageName = "hotkey/unregist/command",      RegistMessageName = "hotkey/regist/command" },
+				new { Id = HotKeyId.HiddenFile,  HotKey = CommonData.MainSetting.SystemEnv.HiddenFileShowHotKey, UnRegistMessageName = "hotkey/unregist/hidden-file",  RegistMessageName = "hotkey/regist/hidden-file" },
+				new { Id = HotKeyId.Extension,   HotKey = CommonData.MainSetting.SystemEnv.ExtensionShowHotKey,  UnRegistMessageName = "hotkey/unregist/extension",    RegistMessageName = "hotkey/regist/extension" },
+				new { Id = HotKeyId.CreateNote,  HotKey = CommonData.MainSetting.Note.CreateHotKey,              UnRegistMessageName = "hotkey/unregist/create-note",  RegistMessageName = "hotkey/regist/create-note" },
+				new { Id = HotKeyId.HiddenNote,  HotKey = CommonData.MainSetting.Note.HiddenHotKey,              UnRegistMessageName = "hotkey/unregist/hidden-note",  RegistMessageName = "hotkey/regist/hidden-note" },
+				new { Id = HotKeyId.CompactNote, HotKey = CommonData.MainSetting.Note.CompactHotKey,             UnRegistMessageName = "hotkey/unregist/compact-note", RegistMessageName = "hotkey/regist/compact-note" },
 			};
 			// 登録解除
-			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Resisted)) {
+			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Registered)) {
 				if(UnRegisterHotKey(hotKeyData.Id)) {
-					hotKeyData.HotKey.Resisted = false;
+					hotKeyData.HotKey.Registered = false;
 				} else {
 					var logData = new LogData();
 					logData.LogType = LogType.Warning;
@@ -65,7 +68,7 @@ namespace PeMain.UI
 			// 登録
 			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Enabled)) {
 				if(RegisterHotKey(hotKeyData.Id, hotKeyData.HotKey.Modifiers, hotKeyData.HotKey.Key)) {
-					hotKeyData.HotKey.Resisted = true;
+					hotKeyData.HotKey.Registered = true;
 				} else {
 					var logData = new LogData();
 					logData.LogType = LogType.Warning;

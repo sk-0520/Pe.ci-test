@@ -35,13 +35,17 @@ namespace PeMain.UI
 		
 		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)
 		{
+			/*
 			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
 			this.inputSystemEnvHiddenFile.Modifiers = systemEnvSetting.HiddenFileShowHotKey.Modifiers;
-			this.inputSystemEnvHiddenFile.Resisted = systemEnvSetting.HiddenFileShowHotKey.Resisted;
+			this.inputSystemEnvHiddenFile.Registered = systemEnvSetting.HiddenFileShowHotKey.Registered;
 			
 			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotKey.Key;
 			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
-			this.inputSystemEnvExt.Resisted = systemEnvSetting.ExtensionShowHotKey.Resisted;
+			this.inputSystemEnvExt.Registered = systemEnvSetting.ExtensionShowHotKey.Registered;
+			*/
+			this.inputSystemEnvHiddenFile.HotKeySetting = systemEnvSetting.HiddenFileShowHotKey;
+			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
 		}
 		
 		void InitializeMainSetting(MainSetting mainSetting)
@@ -69,10 +73,20 @@ namespace PeMain.UI
 			AttachmentIconScale(this.selectCommandIcon, commandSetting.IconScale);
 			
 			// ホットキー
+			/*
 			this.inputCommandHotkey.Hotkey = commandSetting.HotKey.Key;
 			this.inputCommandHotkey.Modifiers = commandSetting.HotKey.Modifiers;
-			this.inputCommandHotkey.Resisted = commandSetting.HotKey.Resisted;
+			this.inputCommandHotkey.Registered = commandSetting.HotKey.Registered;
+			*/
+			this.inputCommandHotkey.HotKeySetting = commandSetting.HotKey;
 		}
+		
+		void InitializeNote(NoteSetting noteSetting)
+		{
+			// ホットキー
+			
+		}
+		
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
@@ -129,6 +143,7 @@ namespace PeMain.UI
 			InitializeLauncher(mainSetting.Launcher);
 			InitializeToolbar(mainSetting.Toolbar);
 			InitializeCommand(mainSetting.Command);
+			InitializeNote(mainSetting.Note);
 		}
 		
 		void Initialize(Language language, MainSetting mainSetting)

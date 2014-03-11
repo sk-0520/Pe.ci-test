@@ -21,12 +21,16 @@ namespace PeMain.Data
 		public NoteSetting()
 		{
 			CreateHotKey = new HotKeySetting();
+			HiddenHotKey = new HotKeySetting();
+			CompactHotKey = new HotKeySetting();
 		}
 		
 		/// <summary>
 		/// 新規作成時のホットキー
 		/// </summary>
 		public HotKeySetting CreateHotKey { get; set; }
+		public HotKeySetting HiddenHotKey { get; set; }
+		public HotKeySetting CompactHotKey { get; set; }
 		
 	}
 }

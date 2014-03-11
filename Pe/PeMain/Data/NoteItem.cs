@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 
@@ -30,6 +31,16 @@ namespace PeMain.Data
 					return -1;
 			}
 		}
+		public static NoteType ToNoteType(long value)
+		{
+			switch(value) {
+				case 1: return NoteType.Text;
+				case 2: return NoteType.Rtf;
+				default:
+					Debug.Assert(false, value.ToString());
+					return NoteType.Text;
+			}
+		}
 	}
 	
 	/// <summary>
@@ -40,8 +51,7 @@ namespace PeMain.Data
 	public class NoteItem
 	{
 		public NoteItem()
-		{
-		}
+		{ }
 		
 		public long NoteId { get; set; }
 		
@@ -62,5 +72,11 @@ namespace PeMain.Data
 		public FontSetting FontSetting { get; set; }
 		public Color ForeColor { get; set; }
 		public Color BaclColor { get; set; }
+	}
+	
+	public class NoteGroup
+	{
+		public long GroupId { get; set; }
+		public string Title { get; set; }
 	}
 }

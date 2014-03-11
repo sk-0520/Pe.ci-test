@@ -151,6 +151,9 @@ namespace PeMain
 		ShowCommand = 0x0001,
 		HiddenFile,
 		Extension,
+		CreateNote,
+		HiddenNote,
+		CompactNote,
 	}
 	
 	public static class SystemLanguageName

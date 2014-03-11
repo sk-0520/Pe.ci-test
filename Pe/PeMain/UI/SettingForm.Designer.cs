@@ -38,6 +38,7 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
@@ -128,6 +129,13 @@ namespace PeMain.UI
 			this.commandCommandFont = new PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.pageNote = new System.Windows.Forms.TabPage();
+			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.labelNoteCreate = new System.Windows.Forms.Label();
+			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
+			this.labelNoteHiddent = new System.Windows.Forms.Label();
+			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
+			this.label1 = new System.Windows.Forms.Label();
+			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
 			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
@@ -166,6 +174,8 @@ namespace PeMain.UI
 			this.toolToolbarGroup.SuspendLayout();
 			this.pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
+			this.pageNote.SuspendLayout();
+			this.flowLayoutPanel2.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -198,7 +208,7 @@ namespace PeMain.UI
 			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageMain.Name = "pageMain";
 			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(741, 255);
+			this.pageMain.Size = new System.Drawing.Size(741, 266);
 			this.pageMain.TabIndex = 0;
 			this.pageMain.Text = "{Pe}";
 			this.pageMain.UseVisualStyleBackColor = true;
@@ -230,11 +240,12 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvExt.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvExt.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputSystemEnvExt.HotKeySetting")));
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
 			this.inputSystemEnvExt.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
 			this.inputSystemEnvExt.ReadOnly = true;
-			this.inputSystemEnvExt.Resisted = false;
+			this.inputSystemEnvExt.Registered = false;
 			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 23);
 			this.inputSystemEnvExt.TabIndex = 16;
 			this.inputSystemEnvExt.Text = "None";
@@ -253,11 +264,12 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvHiddenFile.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputSystemEnvHiddenFile.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputSystemEnvHiddenFile.HotKeySetting")));
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
 			this.inputSystemEnvHiddenFile.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
 			this.inputSystemEnvHiddenFile.ReadOnly = true;
-			this.inputSystemEnvHiddenFile.Resisted = false;
+			this.inputSystemEnvHiddenFile.Registered = false;
 			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(252, 23);
 			this.inputSystemEnvHiddenFile.TabIndex = 16;
 			this.inputSystemEnvHiddenFile.Text = "None";
@@ -361,7 +373,7 @@ namespace PeMain.UI
 			this.pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.pageLauncher.Name = "pageLauncher";
 			this.pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageLauncher.Size = new System.Drawing.Size(741, 255);
+			this.pageLauncher.Size = new System.Drawing.Size(741, 266);
 			this.pageLauncher.TabIndex = 1;
 			this.pageLauncher.Text = "{LAUNCHER}";
 			this.pageLauncher.UseVisualStyleBackColor = true;
@@ -382,7 +394,7 @@ namespace PeMain.UI
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.tabLauncher);
 			this.splitContainer1.Panel2.Enabled = false;
-			this.splitContainer1.Size = new System.Drawing.Size(735, 247);
+			this.splitContainer1.Size = new System.Drawing.Size(735, 258);
 			this.splitContainer1.SplitterDistance = 192;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -397,7 +409,7 @@ namespace PeMain.UI
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
 			this.selecterLauncher.SelectedItem = null;
-			this.selecterLauncher.Size = new System.Drawing.Size(192, 247);
+			this.selecterLauncher.Size = new System.Drawing.Size(192, 258);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
@@ -411,7 +423,7 @@ namespace PeMain.UI
 			this.tabLauncher.Location = new System.Drawing.Point(0, 0);
 			this.tabLauncher.Name = "tabLauncher";
 			this.tabLauncher.SelectedIndex = 0;
-			this.tabLauncher.Size = new System.Drawing.Size(539, 247);
+			this.tabLauncher.Size = new System.Drawing.Size(539, 258);
 			this.tabLauncher.TabIndex = 13;
 			// 
 			// pageLauncherCommon
@@ -436,7 +448,7 @@ namespace PeMain.UI
 			this.pageLauncherCommon.Location = new System.Drawing.Point(4, 24);
 			this.pageLauncherCommon.Name = "pageLauncherCommon";
 			this.pageLauncherCommon.Padding = new System.Windows.Forms.Padding(3);
-			this.pageLauncherCommon.Size = new System.Drawing.Size(531, 219);
+			this.pageLauncherCommon.Size = new System.Drawing.Size(531, 230);
 			this.pageLauncherCommon.TabIndex = 0;
 			this.pageLauncherCommon.Text = "{COMMON}";
 			this.pageLauncherCommon.UseVisualStyleBackColor = true;
@@ -648,7 +660,7 @@ namespace PeMain.UI
 			this.pageLauncherEnv.Location = new System.Drawing.Point(4, 22);
 			this.pageLauncherEnv.Name = "pageLauncherEnv";
 			this.pageLauncherEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.pageLauncherEnv.Size = new System.Drawing.Size(531, 223);
+			this.pageLauncherEnv.Size = new System.Drawing.Size(531, 234);
 			this.pageLauncherEnv.TabIndex = 1;
 			this.pageLauncherEnv.Text = "{ENV}";
 			this.pageLauncherEnv.UseVisualStyleBackColor = true;
@@ -668,7 +680,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 184);
+			this.panelEnv.Size = new System.Drawing.Size(519, 178);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -677,7 +689,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 184);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 178);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -686,7 +698,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 184);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 178);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -711,7 +723,7 @@ namespace PeMain.UI
 			this.pageLauncherOthers.Controls.Add(this.labelLauncherNote);
 			this.pageLauncherOthers.Location = new System.Drawing.Point(4, 22);
 			this.pageLauncherOthers.Name = "pageLauncherOthers";
-			this.pageLauncherOthers.Size = new System.Drawing.Size(531, 223);
+			this.pageLauncherOthers.Size = new System.Drawing.Size(531, 234);
 			this.pageLauncherOthers.TabIndex = 2;
 			this.pageLauncherOthers.Text = "{OTHERS}";
 			this.pageLauncherOthers.UseVisualStyleBackColor = true;
@@ -947,7 +959,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 260);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 266);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -958,13 +970,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 235);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 241);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 260);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 266);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -980,7 +992,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 235);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 241);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1076,7 +1088,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 260);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 266);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1094,7 +1106,7 @@ namespace PeMain.UI
 			this.pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.pageCommand.Name = "pageCommand";
 			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCommand.Size = new System.Drawing.Size(741, 255);
+			this.pageCommand.Size = new System.Drawing.Size(741, 266);
 			this.pageCommand.TabIndex = 2;
 			this.pageCommand.Text = "{COMMAND}";
 			this.pageCommand.UseVisualStyleBackColor = true;
@@ -1112,11 +1124,12 @@ namespace PeMain.UI
 			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
 			this.inputCommandHotkey.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputCommandHotkey.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputCommandHotkey.HotKeySetting")));
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
 			this.inputCommandHotkey.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
 			this.inputCommandHotkey.ReadOnly = true;
-			this.inputCommandHotkey.Resisted = false;
+			this.inputCommandHotkey.Registered = false;
 			this.inputCommandHotkey.Size = new System.Drawing.Size(252, 23);
 			this.inputCommandHotkey.TabIndex = 15;
 			this.inputCommandHotkey.Text = "None";
@@ -1183,18 +1196,105 @@ namespace PeMain.UI
 			// 
 			// pageNote
 			// 
+			this.pageNote.Controls.Add(this.flowLayoutPanel2);
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(741, 255);
+			this.pageNote.Size = new System.Drawing.Size(741, 266);
 			this.pageNote.TabIndex = 6;
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
+			// 
+			// flowLayoutPanel2
+			// 
+			this.flowLayoutPanel2.Controls.Add(this.labelNoteCreate);
+			this.flowLayoutPanel2.Controls.Add(this.inputNoteCreate);
+			this.flowLayoutPanel2.Controls.Add(this.labelNoteHiddent);
+			this.flowLayoutPanel2.Controls.Add(this.inputNoteHidden);
+			this.flowLayoutPanel2.Controls.Add(this.label1);
+			this.flowLayoutPanel2.Controls.Add(this.inputNoteCompact);
+			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(5, 3);
+			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(225, 151);
+			this.flowLayoutPanel2.TabIndex = 8;
+			// 
+			// labelNoteCreate
+			// 
+			this.labelNoteCreate.AutoSize = true;
+			this.labelNoteCreate.Location = new System.Drawing.Point(3, 0);
+			this.labelNoteCreate.Name = "labelNoteCreate";
+			this.labelNoteCreate.Size = new System.Drawing.Size(104, 15);
+			this.labelNoteCreate.TabIndex = 1;
+			this.labelNoteCreate.Text = "{CREATE-NOTE}";
+			// 
+			// inputNoteCreate
+			// 
+			this.inputNoteCreate.BackColor = System.Drawing.Color.White;
+			this.inputNoteCreate.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputNoteCreate.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputNoteCreate.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputNoteCreate.HotKeySetting")));
+			this.inputNoteCreate.Location = new System.Drawing.Point(3, 18);
+			this.inputNoteCreate.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteCreate.Name = "inputNoteCreate";
+			this.inputNoteCreate.ReadOnly = true;
+			this.inputNoteCreate.Registered = false;
+			this.inputNoteCreate.Size = new System.Drawing.Size(211, 23);
+			this.inputNoteCreate.TabIndex = 3;
+			this.inputNoteCreate.Text = "None";
+			// 
+			// labelNoteHiddent
+			// 
+			this.labelNoteHiddent.AutoSize = true;
+			this.labelNoteHiddent.Location = new System.Drawing.Point(3, 44);
+			this.labelNoteHiddent.Name = "labelNoteHiddent";
+			this.labelNoteHiddent.Size = new System.Drawing.Size(107, 15);
+			this.labelNoteHiddent.TabIndex = 4;
+			this.labelNoteHiddent.Text = "{HIDDEN-NOTE}";
+			// 
+			// inputNoteHidden
+			// 
+			this.inputNoteHidden.BackColor = System.Drawing.Color.White;
+			this.inputNoteHidden.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputNoteHidden.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputNoteHidden.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputNoteHidden.HotKeySetting")));
+			this.inputNoteHidden.Location = new System.Drawing.Point(3, 62);
+			this.inputNoteHidden.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteHidden.Name = "inputNoteHidden";
+			this.inputNoteHidden.ReadOnly = true;
+			this.inputNoteHidden.Registered = false;
+			this.inputNoteHidden.Size = new System.Drawing.Size(211, 23);
+			this.inputNoteHidden.TabIndex = 5;
+			this.inputNoteHidden.Text = "None";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(3, 88);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(116, 15);
+			this.label1.TabIndex = 4;
+			this.label1.Text = "{COMPACT-NOTE}";
+			// 
+			// inputNoteCompact
+			// 
+			this.inputNoteCompact.BackColor = System.Drawing.Color.White;
+			this.inputNoteCompact.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputNoteCompact.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputNoteCompact.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputNoteCompact.HotKeySetting")));
+			this.inputNoteCompact.Location = new System.Drawing.Point(3, 106);
+			this.inputNoteCompact.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteCompact.Name = "inputNoteCompact";
+			this.inputNoteCompact.ReadOnly = true;
+			this.inputNoteCompact.Registered = false;
+			this.inputNoteCompact.Size = new System.Drawing.Size(211, 23);
+			this.inputNoteCompact.TabIndex = 6;
+			this.inputNoteCompact.Text = "None";
 			// 
 			// pageDisplay
 			// 
 			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(741, 255);
+			this.pageDisplay.Size = new System.Drawing.Size(741, 266);
 			this.pageDisplay.TabIndex = 5;
 			this.pageDisplay.Text = "{DISPLAY}";
 			this.pageDisplay.UseVisualStyleBackColor = true;
@@ -1309,12 +1409,22 @@ namespace PeMain.UI
 			this.pageCommand.ResumeLayout(false);
 			this.pageCommand.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
+			this.pageNote.ResumeLayout(false);
+			this.flowLayoutPanel2.ResumeLayout(false);
+			this.flowLayoutPanel2.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+		private System.Windows.Forms.Label label1;
+		private PeMain.UI.PeHotkeyControl inputNoteCompact;
+		private System.Windows.Forms.Label labelNoteHiddent;
+		private PeMain.UI.PeHotkeyControl inputNoteHidden;
+		private System.Windows.Forms.Label labelNoteCreate;
+		private PeMain.UI.PeHotkeyControl inputNoteCreate;
 		private System.Windows.Forms.CheckBox selectLogTrigger_information;
 		private System.Windows.Forms.CheckBox selectLogTrigger_warning;
 		private System.Windows.Forms.CheckBox selectLogTrigger_error;

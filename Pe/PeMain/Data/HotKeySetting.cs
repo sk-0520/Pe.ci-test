@@ -24,14 +24,14 @@ namespace PeMain.Data
 			Key = Keys.None;
 			Modifiers = MOD.None;
 			
-			Resisted = false;
+			Registered = false;
 		}
 		
 		public Keys Key { get; set; }
 		public MOD  Modifiers { get; set; }
 		
 		[XmlIgnore()]
-		public bool Resisted { get; set; }
+		public bool Registered { get; set; }
 		
 		public bool Enabled
 		{

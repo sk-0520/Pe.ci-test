@@ -18,9 +18,12 @@ namespace PeMain.UI
 	{
 		void CommandExportSetting(CommandSetting commandSetting)
 		{
+			/*
 			commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
 			commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
-			commandSetting.HotKey.Resisted = this.inputCommandHotkey.Resisted;
+			commandSetting.HotKey.Registered = this.inputCommandHotkey.Registered;
+			*/
+			commandSetting.HotKey = this.inputCommandHotkey.HotKeySetting;
 			
 			commandSetting.FontSetting = this.commandCommandFont.FontSetting;
 		}

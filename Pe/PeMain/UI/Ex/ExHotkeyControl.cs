@@ -24,10 +24,36 @@ namespace PeMain.UI
 	public class PeHotkeyControl: ExHotkeyControl, ISetLanguage
 	{
 		public Language Language { get; private set; }
-		public bool Resisted { get; set; }
+		public bool Registered { get; set; }
+		
+		public HotKeySetting HotKeySetting
+		{
+			get
+			{
+				var result = new HotKeySetting();
+				
+				result.Key = Hotkey;
+				result.Modifiers = Modifiers;
+				result.Registered = Registered;
+				
+				return result;
+			}
+			set
+			{
+				if(value == null) {
+					return;
+				}
+				Hotkey = value.Key;
+				Modifiers = value.Modifiers;
+				Registered = value.Registered;
+			}
+		}
 		
 		protected override string ToValueString()
 		{
+			if(DesignMode) {
+				return base.ToValueString();
+			}
 			if (Modifiers == MOD.None) {
 				return Hotkey.ToText(Language);
 			}
@@ -36,7 +62,7 @@ namespace PeMain.UI
 			
 			return Modifiers.ToText(Language)+ keySeparator + Hotkey.ToText(Language);
 		}
-
+		
 		public void SetLanguage(Language language)
 		{
 			Language = language;
