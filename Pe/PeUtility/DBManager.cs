@@ -166,30 +166,21 @@ namespace PeUtility
 		public bool PrimaryKey { get; private set; }
 	}
 	
+	/// <summary>
+	/// TargetNameAttributeに紐付く物理名とプロパティ情報。
+	/// </summary>
 	public sealed class TargetInfo
 	{
-		string _targetName;
-		bool _primaryKey;
-		PropertyInfo _propertyInfo;
-		
 		public TargetInfo(TargetNameAttribute attribute, PropertyInfo propertyInfo)
 		{
-			this._targetName = attribute.TargetName;
-			this._primaryKey = attribute.PrimaryKey;
-			this._propertyInfo = propertyInfo;
+			TargetNameAttribute = attribute;
+			PropertyInfo = propertyInfo;
 		}
-		/// <summary>
-		/// 物理名
-		/// </summary>
-		public string TargetName { get { return this._targetName; } }
-		/// <summary>
-		/// 主キー化
-		/// </summary>
-		public bool PrimaryKey { get { return this._primaryKey; } }
+		public TargetNameAttribute TargetNameAttribute { get; private set; }
 		/// <summary>
 		/// TargetNameAttributeで紐付くプロパティ。
 		/// </summary>
-		public PropertyInfo PropertyInfo { get { return this._propertyInfo; } }
+		public PropertyInfo PropertyInfo { get; private set; }
 	}
 	
 	public sealed class EntitySet
@@ -518,12 +509,11 @@ namespace PeUtility
 			where T: Dto, new()
 		{
 			var targetInfoList = GetTargetInfoList<T>();
-			//GetPropertyMap<T>(nameTargetMap);
 			using(var reader = ExecuteReader(code)) {
 				while(reader.Read()) {
 					var dto = new T();
 					foreach(var targetInfo in targetInfoList) {
-						var rawValue = reader[targetInfo.TargetName];
+						var rawValue = reader[targetInfo.TargetNameAttribute.TargetName];
 						var property = targetInfo.PropertyInfo;
 						var convedValue = To(rawValue, property.PropertyType);
 						property.SetValue(dto, convedValue);
@@ -569,7 +559,7 @@ namespace PeUtility
 			var code = string.Format(
 				"insert into {0} ({1}) values({2})",
 				entitySet.TableName,
-				string.Join(", ", entitySet.TargetInfos.Select(t => t.TargetName)),
+				string.Join(", ", entitySet.TargetInfos.Select(t => t.TargetNameAttribute.TargetName)),
 				string.Join(", ", entitySet.TargetInfos.Select(t => ":" + t.PropertyInfo.Name))
 			);
 			
@@ -578,7 +568,19 @@ namespace PeUtility
 		
 		protected virtual string CreateUpdateCommandCode(EntitySet entitySet)
 		{
-			return null;
+			// 主キー
+			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
+			// 変更データ
+			var data = entitySet.TargetInfos.Where(t => !t.TargetNameAttribute.PrimaryKey);
+			
+			var code = string.Format(
+				"update {0} set {1} where {2}",
+				entitySet.TableName,
+				string.Join(", ", data.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name))),
+				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+			);
+			
+			return code;
 		}
 		
 		private void ExecuteEntityCommand<T>(IList<T> entityList, Func<EntitySet, string> func)
@@ -588,7 +590,6 @@ namespace PeUtility
 			
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
-			//var targetInfos = GetTargetInfoList<T>();
 			foreach(var entity in entityList) {
 				foreach(var targetInfo in entitySet.TargetInfos) {
 					Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);

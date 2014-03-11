@@ -15,7 +15,7 @@ namespace PeMain.Data.DB
 	[TargetName("M_VERSION")]
 	public class MVersionEntity: Entity
 	{
-		[TargetName("NAME")]
+		[TargetName("NAME", true)]
 		public string Name { get; set; }
 		[TargetName("VERSION")]
 		public int Version { get; set; }

@@ -17,9 +17,9 @@ namespace PeMain.Data.DB
 	[TargetName("T_NOTE_GROUP")]
 	public class TNoteGroupEntity: Entity
 	{
-		[TargetName("GROUP_ID")]
+		[TargetName("GROUP_ID", true)]
 		public long GroupId { get; set; }
-		[TargetName("NOTE_ID")]
+		[TargetName("NOTE_ID", true)]
 		public long NoteId { get; set; }
 	}
 }

@@ -39,12 +39,29 @@ namespace PeMain.UI
 				db.ExecuteInsert(new [] { entity } );
 				tran.Commit();
 			}
-			var reader = db.ExecuteReader("select * from M_NOTE");
-			while(reader.Read()) {
-				for(var i=0; i < reader.FieldCount;i ++) {
-					var name = reader.GetName(i);
-					var value= reader[name];
-					Debug.WriteLine("{0} = {1}", name, value);
+			
+			using(var reader = db.ExecuteReader("select * from M_NOTE")) {
+				while(reader.Read()) {
+					for(var i=0; i < reader.FieldCount;i ++) {
+						var name = reader.GetName(i);
+						var value= reader[name];
+						Debug.WriteLine("{0} = {1}", name, value);
+					}
+				}
+			}
+			using(var tran = db.BeginTransaction()) {
+				var entity = new PeMain.Data.DB.MNoteEntity();
+				entity.Title = "a'b--c";
+				db.ExecuteUpdate(new [] { entity } );
+				tran.Commit();
+			}
+			using(var reader = db.ExecuteReader("select * from M_NOTE")) {
+				while(reader.Read()) {
+					for(var i=0; i < reader.FieldCount;i ++) {
+						var name = reader.GetName(i);
+						var value= reader[name];
+						Debug.WriteLine("{0} = {1}", name, value);
+					}
 				}
 			}
 			

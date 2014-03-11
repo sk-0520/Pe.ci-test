@@ -18,7 +18,7 @@ namespace PeMain.Data.DB
 	[TargetName("T_NOTE_STYLE")]
 	public class TNoteStyleEntity: NoteStyleEntity
 	{
-		[TargetName("NOTE_ID")]
+		[TargetName("NOTE_ID", true)]
 		public long Id { get; set; }
 
 		[TargetName("WINDOW_VISIBLED")]

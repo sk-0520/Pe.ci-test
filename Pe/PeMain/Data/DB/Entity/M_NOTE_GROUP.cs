@@ -20,7 +20,7 @@ namespace PeMain.Data.DB
 	[TargetName("T_NOTE_GROUP")]
 	public class MNoteGroupEntity: NoteStyleEntity
 	{
-		[TargetName("GROUP_ID")]
+		[TargetName("GROUP_ID", true)]
 		public long Id { get; set ;}
 		[TargetName("GROUP_TITLE")]
 		public string Title {get; set; }
