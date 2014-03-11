@@ -588,10 +588,10 @@ namespace PeUtility
 			
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
-			var targetInfos = GetTargetInfoList<T>();
+			//var targetInfos = GetTargetInfoList<T>();
 			foreach(var entity in entityList) {
 				foreach(var targetInfo in entitySet.TargetInfos) {
-					Parameter[targetInfo.TargetName] = targetInfo.PropertyInfo.GetValue(entity);
+					Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
 				}
 				ExecuteCommand(code);
 			}
