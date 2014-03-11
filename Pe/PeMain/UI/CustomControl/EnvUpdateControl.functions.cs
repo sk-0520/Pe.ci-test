@@ -26,17 +26,17 @@ namespace PeMain.UI
 		{
 			this._event = false;
 			try {
-			var rowList = new List<DataGridViewRow>(map.Count);
-			foreach(var item in map) {
-				var row = new DataGridViewRow();
-				row.CreateCells(this.gridEnv);
-				row.Cells[this.headerKey.Index].Value = item.Key;
-				row.Cells[this.headerValue.Index].Value = item.Value;
-				
-				rowList.Add(row);
-			}
-			this.gridEnv.Rows.Clear();
-			this.gridEnv.Rows.AddRange(rowList.ToArray());
+				var rowList = new List<DataGridViewRow>(map.Count);
+				foreach(var item in map) {
+					var row = new DataGridViewRow();
+					row.CreateCells(this.gridEnv);
+					row.Cells[this.headerKey.Index].Value = item.Key;
+					row.Cells[this.headerValue.Index].Value = item.Value;
+					
+					rowList.Add(row);
+				}
+				this.gridEnv.Rows.Clear();
+				this.gridEnv.Rows.AddRange(rowList.ToArray());
 			} finally {
 				this._event = true;
 			}

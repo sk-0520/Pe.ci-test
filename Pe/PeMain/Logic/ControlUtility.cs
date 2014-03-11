@@ -72,7 +72,7 @@ namespace PeMain.Logic
 	
 	public static class TreeViewUtility
 	{
-		public static List<TreeNode> GetChildrenNodes(this TreeView treeView)
+		public static IList<TreeNode> GetChildrenNodes(this TreeView treeView)
 		{
 			var result = new List<TreeNode>();
 			foreach(TreeNode node in treeView.Nodes) {
