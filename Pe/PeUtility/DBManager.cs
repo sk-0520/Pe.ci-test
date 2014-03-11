@@ -730,6 +730,22 @@ namespace PeUtility
 			
 			return GetDtoListImpl<T>(code).SingleOrDefault();
 		}
+		/// <summary>
+		/// 指定エンティティから主キー(将来的には非重複キー)のみのデータを持つエンティティを作成。
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public virtual T CreateKeyEntity<T>(T src)
+			where T: Entity, new()
+		{
+			var targetInfos = GetTargetInfoList<T>();
+			var keyEntity = new T();
+			foreach(var targetInfo in targetInfos.Where(t => t.TargetNameAttribute.PrimaryKey)) {
+				var value = targetInfo.PropertyInfo.GetValue(src);
+				targetInfo.PropertyInfo.SetValue(keyEntity, value);
+			}
+			return keyEntity;
+		}
 		
 		/// <summary>
 		/// とじるん。
@@ -739,5 +755,7 @@ namespace PeUtility
 			Connection.Close();
 			Connection.Dispose();
 		}
+		
+		
 	}
 }

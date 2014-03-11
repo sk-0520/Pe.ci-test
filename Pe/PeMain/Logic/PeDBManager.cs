@@ -36,7 +36,7 @@ namespace PeMain.Logic
 				return To<long>(reader["NUM"]) == 1;
 			}
 			*/
-			var count = GetDtoSingle<CountDto>(global::PeMain.Properties.SQL.CheckTable);
+			var count = GetResultSingle<CountDto>(global::PeMain.Properties.SQL.CheckTable);
 			return count.Has;
 		}
 		
@@ -47,7 +47,7 @@ namespace PeMain.Logic
 			Parameter["table_name"] = tableName;
 			Parameter["id_column_name"] = idColumnName;
 			
-			return GetDtoSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
+			return GetResultSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
 		}
 		
 	}

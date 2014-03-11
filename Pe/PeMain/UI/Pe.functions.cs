@@ -71,6 +71,10 @@ namespace PeMain.UI
 					}
 				}
 			}
+			var e2 = new PeMain.Data.DB.MNoteEntity();
+			var e3 = db.GetEntity(e2);
+			Debug.WriteLine(e2.Title);
+			Debug.WriteLine(e3.Title);
 			//*/
 		}
 		#endif
