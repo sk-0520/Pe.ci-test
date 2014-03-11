@@ -12,5 +12,7 @@ namespace PeMain.UI
 {
 	partial class NoteForm
 	{
+		void Initialize()
+		{ }
 	}
 }
