@@ -509,17 +509,6 @@ namespace PeUtility
 			return targetList;
 		}
 		
-		private void GetPropertyMap<T>(IDictionary<string, TartgetInfo> nameTargetMap)
-		{
-			//var propMap = new Dictionary<string, PropertyInfo>(propertNameList.Count());
-			foreach(var pair in nameTargetMap) {
-				var propertyInfo = typeof(T).GetProperty(pair.Key);
-				//propMap[propertyName] = propertyInfo;
-				pair.Value.PropertyInfo = propertyInfo;
-			}
-			//return propMap;
-		}
-		*/
 		/// <summary>
 		/// 指定値からコマンドを実行
 		/// </summary>
