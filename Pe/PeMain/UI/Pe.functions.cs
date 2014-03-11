@@ -31,11 +31,12 @@ namespace PeMain.UI
 		#if DEBUG
 		public void DebugProcess()
 		{
-			
+			/*
 			var db = this._commonData.Database;
 			
 			using(var tran = db.BeginTransaction()) {
 				var entity = new PeMain.Data.DB.MNoteEntity();
+				db.ExecuteDelete(new [] { entity } );
 				db.ExecuteInsert(new [] { entity } );
 				tran.Commit();
 			}
@@ -55,6 +56,12 @@ namespace PeMain.UI
 				db.ExecuteUpdate(new [] { entity } );
 				tran.Commit();
 			}
+			using(var tran = db.BeginTransaction()) {
+				var entity = new PeMain.Data.DB.MNoteEntity();
+				entity.Id = 1;
+				db.ExecuteInsert(new [] { entity } );
+				tran.Rollback();
+			}
 			using(var reader = db.ExecuteReader("select * from M_NOTE")) {
 				while(reader.Read()) {
 					for(var i=0; i < reader.FieldCount;i ++) {
@@ -64,7 +71,7 @@ namespace PeMain.UI
 					}
 				}
 			}
-			
+			//*/
 		}
 		#endif
 		

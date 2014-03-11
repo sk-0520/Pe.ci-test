@@ -25,6 +25,7 @@ namespace PeUtility
 				{ typeof(DateTime), () => Convert.ToDateTime(value) },
 				{ typeof(int),      () => Convert.ToInt32(value) },
 			};
+			
 			if(map.ContainsKey(toType)) {
 				return map[toType]();
 			}

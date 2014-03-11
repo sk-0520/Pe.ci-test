@@ -167,6 +167,8 @@ namespace PeUtility
 	}
 	
 	/// <summary>
+	/// 物理名・プロパティ紐付。
+	/// 
 	/// TargetNameAttributeに紐付く物理名とプロパティ情報。
 	/// </summary>
 	public sealed class TargetInfo
@@ -183,6 +185,11 @@ namespace PeUtility
 		public PropertyInfo PropertyInfo { get; private set; }
 	}
 	
+	/// <summary>
+	/// エンティティ一覧情報
+	/// 
+	/// エンティティとして必要な物理名とエンティティオブジェクトのプロパティ一覧。
+	/// </summary>
 	public sealed class EntitySet
 	{
 		public EntitySet(string tableName, IList<TargetInfo> targetInfos)
@@ -194,26 +201,30 @@ namespace PeUtility
 		/// テーブル名。
 		/// </summary>
 		public string TableName { get ; private set; }
+		/// <summary>
+		/// 対象TargetInfoの集合
+		/// </summary>
 		public IList<TargetInfo> TargetInfos { get; private set; }
 	}
 	
 	/// <summary>
 	/// Entity, DTO の共通クラス。
 	/// 
-	/// 特に何もしない。
+	/// 特に何もしないが継承クラスではTargetNameAttributeを当てて使用する。
 	/// </summary>
 	public abstract class DbData
 	{ }
 	
 	/// <summary>
 	/// テーブル行に対応
-	/// TargetNameAttribute
+	/// TargetNameAttributeを当てて使用する。
 	/// </summary>
 	public abstract class Entity: DbData
 	{ }
 	
 	/// <summary>
 	/// データ取得単位に対応
+	/// TargetNameAttributeを当てて使用する。
 	/// </summary>
 	public abstract class Dto: DbData
 	{
@@ -239,7 +250,7 @@ namespace PeUtility
 			
 			Connection = connection;
 			
-			ConditionPattern = @"\[\[\w+\]\]";
+			ConditionPattern = @"\{\w+\}";
 			
 			if(!isOpened) {
 				Connection.Open();
@@ -259,10 +270,18 @@ namespace PeUtility
 			
 			return tran;
 		}
+		
+		
+		private Regex CompiledPattern { get; set; }
 		/// <summary>
 		/// 条件式パターン。
 		/// </summary>
-		public string ConditionPattern { get; set; }
+		public string ConditionPattern 
+		{
+			get { return CompiledPattern.ToString(); }
+			set { CompiledPattern = new Regex(value, RegexOptions.Singleline | RegexOptions.Compiled); }
+		}
+		
 		/// <summary>
 		/// パラメータ。
 		/// </summary>
@@ -375,11 +394,14 @@ namespace PeUtility
 				{ typeof(DateTime?), DbType.DateTime },
 			};
 			
+			#if DEBUG
 			if(map.ContainsKey(type)) {
+			#endif
 				return map[type];
+			#if DEBUG
 			}
-			
 			throw new ArgumentException(type.ToString());
+			#endif
 		}
 		
 		/// <summary>
@@ -389,7 +411,7 @@ namespace PeUtility
 		/// <param name="name">パラメータ名</param>
 		/// <param name="value">パラメータ値</param>
 		/// <returns>パラメータ</returns>
-		protected virtual DbParameter MakeParameter(DbCommand command, string name, object value)
+		protected DbParameter MakeParameter(DbCommand command, string name, object value)
 		{
 			var param = command.CreateParameter();
 			
@@ -402,7 +424,7 @@ namespace PeUtility
 			return param;
 		}
 		/// <summary>
-		/// 現在設定されているパラメータを作成。
+		/// 現在設定されているパラメータの配列を作成
 		/// </summary>
 		/// <param name="command">コマンド</param>
 		/// <returns>パラメータ一覧</returns>
@@ -445,8 +467,8 @@ namespace PeUtility
 				return code;
 			}
 			
-			var pattern = ConditionPattern;
-			var replacedCode = Regex.Replace(code, pattern, (Match m) => Expression[m.Groups[1].Value].ToCode());
+			//var pattern = ConditionPattern;
+			var replacedCode = CompiledPattern.Replace(code, (Match m) => Expression[m.Groups[1].Value].ToCode());
 			
 			return replacedCode;
 		}
@@ -454,7 +476,7 @@ namespace PeUtility
 		/// <summary>
 		/// 現在の指定値からコマンド実行。
 		/// </summary>
-		/// <param name="func"></param>
+		/// <param name="func">実行を担当する処理</param>
 		/// <param name="code">コマンド</param>
 		/// <returns></returns>
 		private T Executer<T>(Func<DbCommand,T> func, string code)
@@ -484,11 +506,16 @@ namespace PeUtility
 			return Executer(command => command.ExecuteNonQuery(), code);
 		}
 		
+		/// <summary>
+		/// 対象Entity/DTOから物理名・プロパティ紐付一覧を取得。
+		/// </summary>
+		/// <returns></returns>
 		private IList<TargetInfo> GetTargetInfoList<T>()
 			where T: DbData
 		{
-			var targetList = new List<TargetInfo>();
-			foreach(var member in typeof(T).GetMembers()) {
+			var members = typeof(T).GetMembers();
+			var targetList = new List<TargetInfo>(members.Length);
+			foreach(var member in members) {
 				var tartgetNameAttribute = member.GetCustomAttribute(typeof(TargetNameAttribute)) as TargetNameAttribute;
 				if(tartgetNameAttribute != null) {
 					var propertyInfo = typeof(T).GetProperty(member.Name);
@@ -508,11 +535,11 @@ namespace PeUtility
 		private IEnumerable<T> GetDtoListImpl<T>(string code)
 			where T: Dto, new()
 		{
-			var targetInfoList = GetTargetInfoList<T>();
+			var targetInfos = GetTargetInfoList<T>();
 			using(var reader = ExecuteReader(code)) {
 				while(reader.Read()) {
 					var dto = new T();
-					foreach(var targetInfo in targetInfoList) {
+					foreach(var targetInfo in targetInfos) {
 						var rawValue = reader[targetInfo.TargetNameAttribute.TargetName];
 						var property = targetInfo.PropertyInfo;
 						var convedValue = To(rawValue, property.PropertyType);
@@ -544,6 +571,10 @@ namespace PeUtility
 			return GetDtoListImpl<T>(code);
 		}
 		
+		/// <summary>
+		/// 対象のエンティティからエンティティ一覧情報を取得
+		/// </summary>
+		/// <returns></returns>
 		private EntitySet GetEntitySet<T>()
 			where T: Entity
 		{
@@ -554,6 +585,11 @@ namespace PeUtility
 			return new EntitySet(tableName, columnPropName);
 		}
 		
+		/// <summary>
+		/// エンティティ挿入用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
 		protected virtual string CreateInsertCommandCode(EntitySet entitySet)
 		{
 			var code = string.Format(
@@ -565,7 +601,11 @@ namespace PeUtility
 			
 			return code;
 		}
-		
+		/// <summary>
+		/// エンティティ更新用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
 		protected virtual string CreateUpdateCommandCode(EntitySet entitySet)
 		{
 			// 主キー
@@ -583,10 +623,36 @@ namespace PeUtility
 			return code;
 		}
 		
+		/// <summary>
+		/// エンティティ削除用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
+		protected virtual string CreateDeleteCommandCode(EntitySet entitySet)
+		{
+			// 主キー
+			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
+			
+			var code = string.Format(
+				"delete from {0} where {1}",
+				entitySet.TableName,
+				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+			);
+			
+			return code;
+		}
+		
+		/// <summary>
+		/// エンティティに対して処理を実行
+		/// 
+		/// 呼び出し時にパラメータ・条件式はクリアされる。
+		/// </summary>
+		/// <param name="entityList"></param>
+		/// <param name="func">実行するコマンドを生成する処理</param>
 		private void ExecuteEntityCommand<T>(IList<T> entityList, Func<EntitySet, string> func)
 			where T: Entity
 		{
-			Parameter.Clear();
+			Clear();
 			
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
@@ -616,11 +682,22 @@ namespace PeUtility
 			ExecuteEntityCommand(entityList, CreateUpdateCommandCode);
 		}
 		/// <summary>
+		/// Entityの削除。
+		/// </summary>
+		/// <param name="entityList"></param>
+		public void ExecuteDelete<T>(IList<T> entityList)
+			where T: Entity
+		{
+			ExecuteEntityCommand(entityList, CreateDeleteCommandCode);
+		}
+		
+		/// <summary>
 		/// とじるん。
 		/// </summary>
 		public void Close()
 		{
 			Connection.Close();
+			Connection.Dispose();
 		}
 	}
 }
