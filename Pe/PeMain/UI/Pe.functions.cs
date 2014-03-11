@@ -76,6 +76,11 @@ namespace PeMain.UI
 			Debug.WriteLine(e2.Title);
 			Debug.WriteLine(e3.Title);
 			//*/
+			
+			//*
+			var note = new NoteForm();
+			note.Show();
+			//*/
 		}
 		#endif
 		

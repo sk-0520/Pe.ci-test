@@ -36,12 +36,20 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.SuspendLayout();
 			// 
 			// NoteForm
 			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Text = "NoteForm";
+			this.ClientSize = new System.Drawing.Size(256, 186);
+			this.ControlBox = false;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.MaximizeBox = false;
 			this.Name = "NoteForm";
+			this.ShowInTaskbar = false;
+			this.Text = "NoteForm";
+			this.ResumeLayout(false);
 		}
 	}
 }

@@ -389,6 +389,9 @@
     <EmbeddedResource Include="UI\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\NoteForm.resx">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -423,9 +426,9 @@
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
     <None Include="packages.config" />
-    <None Include="UI\NoteForm.functions.cs">
+    <Compile Include="UI\NoteForm.functions.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
-    </None>
+    </Compile>
     <None Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

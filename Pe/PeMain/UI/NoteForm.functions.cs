@@ -7,10 +7,22 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
 	partial class NoteForm
 	{
+		public void SetCommonData(CommonData commonData)
+		{
+			CommonData = commonData;
+			
+			ApplySetting();
+		}
+		
+		void ApplySetting()
+		{
+			
+		}
 	}
 }
