@@ -227,10 +227,7 @@ namespace PeUtility
 	/// TargetNameAttributeを当てて使用する。
 	/// </summary>
 	public abstract class Dto: DbData
-	{
-		public Dto()
-		{ }
-	}
+	{ }
 
 	/// <summary>
 	/// DB接続・操作の一元化
@@ -533,7 +530,7 @@ namespace PeUtility
 		/// <param name="code"></param>
 		/// <returns>Tの集合</returns>
 		private IEnumerable<T> GetDtoListImpl<T>(string code)
-			where T: Dto, new()
+			where T: DbData, new()
 		{
 			var targetInfos = GetTargetInfoList<T>();
 			using(var reader = ExecuteReader(code)) {
@@ -555,7 +552,7 @@ namespace PeUtility
 		/// </summary>
 		/// <param name="code"></param>
 		/// <returns>T単体</returns>
-		public T GetDtoSingle<T>(string code)
+		public T GetResultSingle<T>(string code)
 			where T: Dto, new()
 		{
 			return GetDtoListImpl<T>(code).Single();
@@ -565,7 +562,7 @@ namespace PeUtility
 		/// </summary>
 		/// <param name="code"></param>
 		/// <returns>T集合</returns>
-		public IEnumerable<T> GetDtoList<T>(string code)
+		public IEnumerable<T> GetResultList<T>(string code)
 			where T: Dto, new()
 		{
 			return GetDtoListImpl<T>(code);
@@ -583,6 +580,25 @@ namespace PeUtility
 			var columnPropName = GetTargetInfoList<T>();
 			
 			return new EntitySet(tableName, columnPropName);
+		}
+		
+		/// <summary>
+		/// エンティティ取得用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
+		protected virtual string CreateSelectCommandCode(EntitySet entitySet)
+		{
+			// 主キー
+			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
+			
+			var code = string.Format(
+				"select * from {0} where {1}",
+				entitySet.TableName,
+				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+			);
+			
+			return code;
 		}
 		
 		/// <summary>
@@ -689,6 +705,25 @@ namespace PeUtility
 			where T: Entity
 		{
 			ExecuteEntityCommand(entityList, CreateDeleteCommandCode);
+		}
+		
+		/// <summary>
+		/// 指定エンティティから一致するエンティティを取得する。
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <returns>対象のデータが設定されたエンティティ。見つからない場合は null。</returns>
+		public T GetEntity<T>(T entity)
+			where T: Entity, new()
+		{
+			Clear();
+			
+			var entitySet = GetEntitySet<T>();
+			var code = CreateSelectCommandCode(entitySet);
+			foreach(var targetInfo in entitySet.TargetInfos) {
+				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
+			}
+			
+			return GetDtoListImpl<T>(code).SingleOrDefault();
 		}
 		
 		/// <summary>
