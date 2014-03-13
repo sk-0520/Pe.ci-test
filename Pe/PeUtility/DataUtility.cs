@@ -16,4 +16,20 @@ namespace PeUtility
 		public TFIRST First { get; set; }
 		public TSECOND Second { get; set; }
 	}
+	/// <summary>
+	/// 評価
+	/// </summary>
+	public class Evaluation
+	{
+		public bool Eval { get; set; }
+		public string Info { get; set; }
+		public object Tag { get; set; }
+	}
+	/// <summary>
+	/// 評価とその結果
+	/// </summary>
+	public class EvaluationResult<T>: Evaluation
+	{
+		public T Result { get; set; }
+	}
 }

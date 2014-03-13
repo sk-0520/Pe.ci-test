@@ -103,7 +103,7 @@ namespace PeMain.UI
 								} else if(pos.Bottom) {
 									
 								} else {
-									
+									hitTest = HT.HTLEFT;
 								}
 							} else if(pos.Right) {
 								if(pos.Top) {
@@ -111,7 +111,7 @@ namespace PeMain.UI
 								} else if(pos.Bottom) {
 									
 								} else {
-									
+									hitTest = HT.HTRIGHT;
 								}
 							} else if(pos.Top) {
 								if(pos.Left) {
