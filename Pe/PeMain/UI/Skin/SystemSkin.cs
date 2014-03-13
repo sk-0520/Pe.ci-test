@@ -170,27 +170,6 @@ namespace PeMain.UI
 			return new Rectangle(point, size);
 		}
 		
-		public override Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
-		{
-			var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
-			var borderPadding = GetToolbarBorderPadding(toolbarPosition);
-			var captionArea = GetToolbarCaptionArea(toolbarPosition, parentSize);
-			var captionPlus = new System.Drawing.Size();
-			if(ToolbarPositionUtility.IsHorizonMode(toolbarPosition)) {
-				captionPlus.Width = captionArea.Width;
-			} else {
-				captionPlus.Height =captionArea.Height;
-			}
-			var padding = new Padding(
-				edgePadding.Left + captionPlus.Width,
-				edgePadding.Top  + captionPlus.Height,
-				edgePadding.Right,
-				edgePadding.Bottom
-			);
-			
-			return padding;
-		}
-		
 		public override SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth)
 		{
 			var iconBox = iconScale.ToSize();
@@ -217,6 +196,18 @@ namespace PeMain.UI
 			buttonLayout.MenuWidth = menuWidth;
 			return buttonLayout;
 		}
+		
+		public override Padding GetNoteWindowEdgePadding()
+		{
+			var size = SystemInformation.BorderSize;
+			return new Padding() {
+				Left = size.Width,
+				Right = size.Width,
+				Top = size.Height,
+				Bottom = size.Height
+			};
+		}
+		
 
 		public override void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position)
 		{

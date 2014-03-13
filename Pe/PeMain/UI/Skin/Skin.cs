@@ -39,6 +39,10 @@ namespace PeMain.UI
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
+		
+		Padding GetNoteWindowEdgePadding();
+//		Rectangle GetNoteCaptionArea();
+		
 		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
@@ -49,6 +53,7 @@ namespace PeMain.UI
 		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
+		
 		bool IsDefaultDrawToolbarWindowBackground { get; }
 		bool IsDefaultDrawToolbarWindowCaption { get; }
 		bool IsDefaultDrawToolbarWindowEdge { get; }
@@ -191,8 +196,31 @@ namespace PeMain.UI
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		public abstract Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
-		public abstract Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
+		
+		public virtual Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
+		{
+						var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
+			var borderPadding = GetToolbarBorderPadding(toolbarPosition);
+			var captionArea = GetToolbarCaptionArea(toolbarPosition, parentSize);
+			var captionPlus = new System.Drawing.Size();
+			if(ToolbarPositionUtility.IsHorizonMode(toolbarPosition)) {
+				captionPlus.Width = captionArea.Width;
+			} else {
+				captionPlus.Height =captionArea.Height;
+			}
+			var padding = new Padding(
+				edgePadding.Left + captionPlus.Width,
+				edgePadding.Top  + captionPlus.Height,
+				edgePadding.Right,
+				edgePadding.Bottom
+			);
+			
+			return padding;
+		}
+		
 		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
+		
+		public abstract Padding GetNoteWindowEdgePadding();
 		
 		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);

@@ -79,6 +79,7 @@ namespace PeMain.UI
 			
 			//*
 			var note = new NoteForm();
+			note.SetCommonData(this._commonData);
 			note.Show();
 			//*/
 		}
