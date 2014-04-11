@@ -199,7 +199,7 @@ namespace PeMain.UI
 		
 		public override Padding GetNoteWindowEdgePadding()
 		{
-			var size = SystemInformation.BorderSize;
+			var size = SystemInformation.Border3DSize;
 			return new Padding() {
 				Left = size.Width,
 				Right = size.Width,
