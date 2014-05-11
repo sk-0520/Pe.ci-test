@@ -60,7 +60,7 @@ namespace PeMain.UI
 				HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
 				HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
 			}
-			*/
+			//*/
 			if(UseToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;
@@ -69,7 +69,9 @@ namespace PeMain.UI
 				try {
 					ItemSizeToFormSize();
 					
-					AutoHide = UseToolbarItem.AutoHide; 
+					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
+						AutoHide = UseToolbarItem.AutoHide;
+					}
 						
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
 						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
