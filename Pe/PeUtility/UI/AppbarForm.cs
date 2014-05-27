@@ -66,7 +66,11 @@ namespace PeUtility
 		
 		void TimerAutoHide_Tick(object sender, EventArgs e)
 		{
-			ToHidden(false);
+			if(IsDocking) {
+				ToHidden(false);
+			} else {
+				this.timerAutoHidden.Stop();
+			}
 		}
 		
 		
