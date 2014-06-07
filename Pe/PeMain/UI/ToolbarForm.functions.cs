@@ -72,7 +72,7 @@ namespace PeMain.UI
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
 						AutoHide = UseToolbarItem.AutoHide;
 					}
-						
+					
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
 						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
 						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
@@ -218,6 +218,7 @@ namespace PeMain.UI
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
 		{
 			this.toolLauncher.ImageScalingSize = iconScale.ToSize();
+			
 			/*
 			// アイコン解放
 			var items = this.toolLauncher.Items
@@ -353,6 +354,7 @@ namespace PeMain.UI
 				menuItem.Text = Path.GetFileName(path);
 			}
 			using(var icon = IconUtility.Load(path, UseToolbarItem.IconScale, 0)) {
+				//using(var icon = IconUtility.Load(path, IconScale.Small, 0)) {
 				menuItem.Image = icon.ToBitmap();
 			}
 			
@@ -482,7 +484,7 @@ namespace PeMain.UI
 				var parentPath = Path.GetDirectoryName(launcherItem.Command);
 				fileItem.Enabled = Directory.Exists(parentPath);
 			};
-
+			
 		}
 		
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
@@ -628,6 +630,7 @@ namespace PeMain.UI
 					toolItem.Image = icon.ToBitmap();
 				}
 			}
+			
 			toolItem.MouseHover += new EventHandler(toolItem_MouseHover);
 			//toolItem.AutoSize = true;
 			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);

@@ -44,6 +44,5 @@ namespace PeMain.UI
 				base.DesktopDockType = value;
 			}
 		}
-
 	}
 }
