@@ -59,6 +59,7 @@ namespace PeMain.UI
 		void ApplyLanguageCommand()
 		{
 			this.commandCommandFont.SetLanguage(Language);
+			this.inputCommandHotkey.SetLanguage(Language);
 			
 			this.selectCommandTopmost.Text = Language["common/label/topmost"];
 			this.labelCommandFont.Text = Language["common/label/font"];
