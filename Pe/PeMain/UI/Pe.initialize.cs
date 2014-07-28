@@ -16,6 +16,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+
+using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.Logic;
@@ -394,7 +396,15 @@ namespace PeMain.UI
 			
 			ApplyLanguage();
 			
+			SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
+			
 			this._logForm.PutsList(initLog, false);
+		}
+
+		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+		{
+			this._logForm.Puts(LogType.Information, "SessionEnding", e);
+			SaveSetting();
 		}
 	}
 }

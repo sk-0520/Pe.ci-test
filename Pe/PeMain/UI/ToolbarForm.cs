@@ -130,7 +130,7 @@ namespace PeMain.UI
 			var cursorPoint = Cursor.Position;
 			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
 			var point = this.PointToClient(cursorPoint);
-			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().SingleOrDefault(i => i.Bounds.Contains(point));
+			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().FirstOrDefault(i => i.Bounds.Contains(point));
 			if(toolItem != null) {
 				this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
 			} else {
