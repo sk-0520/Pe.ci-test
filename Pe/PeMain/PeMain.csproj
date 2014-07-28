@@ -247,6 +247,9 @@
     <Compile Include="UI\NoteForm.Designer.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\NoteForm.draw.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\NoteForm.initialize.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
@@ -307,6 +310,9 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.Page.main.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SettingForm.Page.note.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.Page.toolbar.cs">

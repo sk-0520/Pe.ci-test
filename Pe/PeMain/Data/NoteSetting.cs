@@ -23,6 +23,8 @@ namespace PeMain.Data
 			CreateHotKey = new HotKeySetting();
 			HiddenHotKey = new HotKeySetting();
 			CompactHotKey = new HotKeySetting();
+			
+			CaptionFontSetting = new FontSetting();
 		}
 		
 		/// <summary>
@@ -31,6 +33,8 @@ namespace PeMain.Data
 		public HotKeySetting CreateHotKey { get; set; }
 		public HotKeySetting HiddenHotKey { get; set; }
 		public HotKeySetting CompactHotKey { get; set; }
+		
+		public FontSetting CaptionFontSetting { get; set; }
 		
 	}
 }

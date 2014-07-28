@@ -41,7 +41,7 @@ namespace PeMain.UI
 		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
 		
 		Padding GetNoteWindowEdgePadding();
-//		Rectangle GetNoteCaptionArea();
+		Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
 		
 		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
@@ -54,6 +54,9 @@ namespace PeMain.UI
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		
+		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, Color backColor);
+		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, Color foreColor, Color backColor);
+
 		bool IsDefaultDrawToolbarWindowBackground { get; }
 		bool IsDefaultDrawToolbarWindowCaption { get; }
 		bool IsDefaultDrawToolbarWindowEdge { get; }
@@ -193,13 +196,15 @@ namespace PeMain.UI
 		}
 		public abstract void Close(Form target);
 		
+#region Layout Toolbar
+
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		public abstract Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		
 		public virtual Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
-						var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
+			var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
 			var borderPadding = GetToolbarBorderPadding(toolbarPosition);
 			var captionArea = GetToolbarCaptionArea(toolbarPosition, parentSize);
 			var captionPlus = new System.Drawing.Size();
@@ -220,8 +225,16 @@ namespace PeMain.UI
 		
 		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
 		
-		public abstract Padding GetNoteWindowEdgePadding();
+#endregion
 		
+#region Layout Note
+
+		public abstract Padding GetNoteWindowEdgePadding();
+		public abstract Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
+		
+#endregion
+
+#region Draw Toolbar
 		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
@@ -305,7 +318,17 @@ namespace PeMain.UI
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
-		
+
+#endregion
+			
+#region Draw Note
+
+		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, Color backColor);
+		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, Color foreColor, Color backColor);
+
+#endregion
+
+
 		public virtual bool IsDefaultDrawToolbarWindowBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarWindowEdge { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarWindowCaption { get { return true; } }

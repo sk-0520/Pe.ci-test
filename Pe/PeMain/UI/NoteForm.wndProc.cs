@@ -67,6 +67,21 @@ namespace PeMain.UI
 		protected override void WndProc(ref Message m)
 		{
 			switch(m.Msg) {
+				case (int)WM.WM_NCPAINT:
+					{
+						if(CommonData != null) {
+							var hDC = API.GetWindowDC(Handle);
+							try {
+								using(var g = Graphics.FromHdc(hDC)) {
+									DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
+								}
+							} finally {
+								API.ReleaseDC(Handle, hDC);
+							}
+						}
+					}
+					break;
+					
 				case (int)WM.WM_NCHITTEST:
 					{
 						var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
@@ -117,6 +132,11 @@ namespace PeMain.UI
 								hitTest = HT.HTTOP;
 							} else if(pos.Bottom) {
 								hitTest = HT.HTBOTTOM;
+							}
+						} else {
+							var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
+							if(captionArea.Contains(point)) {
+								hitTest = HT.HTCAPTION;
 							}
 						}
 						

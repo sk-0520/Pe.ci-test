@@ -82,6 +82,7 @@ namespace PeMain.UI
 			}
 		}
 		
+#region Layout Toolbar
 		public override Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition)
 		{
 			var frame = SystemInformation.Border3DSize;
@@ -196,7 +197,9 @@ namespace PeMain.UI
 			buttonLayout.MenuWidth = menuWidth;
 			return buttonLayout;
 		}
+#endregion
 		
+#region Layout Note
 		public override Padding GetNoteWindowEdgePadding()
 		{
 			var size = SystemInformation.Border3DSize;
@@ -207,8 +210,21 @@ namespace PeMain.UI
 				Bottom = size.Height
 			};
 		}
+		public override Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize)
+		{
+			var height = SystemInformation.CaptionHeight;
+			var padding = GetNoteWindowEdgePadding();
+			return new Rectangle(
+				padding.Left,
+				padding.Top,
+				parentSize.Width - padding.Vertical,
+				height
+			);
+		}
+#endregion
 		
-
+		
+#region Draw Toolbar
 		public override void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position)
 		{
 			g.Clear(VisualColor);
@@ -378,6 +394,21 @@ namespace PeMain.UI
 				}
 			}
 		}
+#endregion 
+		
+#region Note
+
+		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, Color backColor)
+		{
+			
+		}
+		
+		public override void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, Color foreColor, Color backColor)
+		{
+			
+		}
+
+#endregion
 		
 		public override bool IsDefaultDrawToolbarWindowBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarWindowEdge { get { return !EnabledVisualStyle; } }

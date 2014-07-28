@@ -84,7 +84,12 @@ namespace PeMain.UI
 		void InitializeNote(NoteSetting noteSetting)
 		{
 			// ホットキー
+			this.inputNoteCreate.HotKeySetting = noteSetting.CreateHotKey;
+			this.inputNoteCompact.HotKeySetting = noteSetting.CompactHotKey;
+			this.inputNoteHidden.HotKeySetting = noteSetting.HiddenHotKey;
 			
+			this.commandNoteCaptionFont.FontSetting.Include(noteSetting.CaptionFontSetting);
+			this.commandNoteCaptionFont.RefreshView();
 		}
 		
 		

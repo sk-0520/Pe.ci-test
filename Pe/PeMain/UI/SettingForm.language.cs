@@ -120,6 +120,8 @@ namespace PeMain.UI
 			this.inputNoteHidden.SetLanguage(Language);
 			this.inputNoteCompact.SetLanguage(Language);
 			
+			this.commandNoteCaptionFont.SetLanguage(Language);
+			
 		}
 		
 		void ApplyLanguage()
