@@ -16,6 +16,5 @@ namespace PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		NoteItem NoteItem { get; set; }
-		public bool EditMode { get; private set; }
 	}
 }

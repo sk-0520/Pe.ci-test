@@ -16,7 +16,7 @@ namespace PeMain.Data
 	/// 
 	/// </summary>
 	[Serializable]
-	public class NoteSetting: Item
+	public class NoteSetting: Item, IDisposable
 	{
 		public NoteSetting()
 		{
@@ -35,6 +35,11 @@ namespace PeMain.Data
 		public HotKeySetting CompactHotKey { get; set; }
 		
 		public FontSetting CaptionFontSetting { get; set; }
+		
+		public void Dispose()
+		{
+			CaptionFontSetting.Dispose();
+		}
 		
 	}
 }

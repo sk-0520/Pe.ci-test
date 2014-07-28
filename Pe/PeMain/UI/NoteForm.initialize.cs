@@ -13,6 +13,8 @@ namespace PeMain.UI
 	partial class NoteForm
 	{
 		void Initialize()
-		{ }
+		{
+			NoteItem = new PeMain.Data.NoteItem();
+		}
 	}
 }

@@ -168,6 +168,7 @@ where
     COLOR_FORE      text     not null,
     COLOR_BACK      text     not null,
     WINDOW_VISIBLED integer  not null,
+    WINDOW_LOCKED   integer  not null,
     WINDOW_TOPMOST  integer  not null,
     WINDOW_COMPACT  integer  not null,
     WINDOW_POS_X    integer  not null,

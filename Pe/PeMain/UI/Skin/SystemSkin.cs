@@ -150,7 +150,6 @@ namespace PeMain.UI
 			}
 		}
 		
-		
 		public override Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize)
 		{
 			if(toolbarPosition != ToolbarPosition.DesktopFloat) {
@@ -221,6 +220,25 @@ namespace PeMain.UI
 				height
 			);
 		}
+		
+		public override Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, NoteCommand noteCommand)
+		{
+			int pos = 0;
+			switch(noteCommand) {
+				case NoteCommand.Close:   pos = 1; break;
+				case NoteCommand.Compact: pos = 2; break;
+				case NoteCommand.Lock:    pos = 3; break;
+				default: 
+					Debug.Assert(false);
+					break;
+			}
+			var size = new Size(parentArea.Height, parentArea.Height);
+			return new Rectangle(
+				new Point(parentArea.Right - size.Width * pos - pos*2, parentArea.Top),
+				size
+			);
+		}
+
 #endregion
 		
 		
@@ -398,12 +416,49 @@ namespace PeMain.UI
 		
 #region Note
 
-		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, Color backColor)
+		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color backColor)
 		{
-			
+			g.Clear(backColor);
 		}
 		
-		public override void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, Color foreColor, Color backColor)
+		public override void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor)
+		{
+			var padding = GetNoteWindowEdgePadding();
+			
+			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Black))) {
+				Rectangle edgeArea;
+				// 左
+				edgeArea = new Rectangle(drawArea.Left, drawArea.Top, padding.Left, drawArea.Bottom);
+				g.FillRectangle(brush, edgeArea);
+				// 右
+				edgeArea = new Rectangle(drawArea.Right - padding.Right, drawArea.Top, padding.Right, drawArea.Bottom);
+				g.FillRectangle(brush, edgeArea);
+				// 上
+				edgeArea = new Rectangle(drawArea.Left, drawArea.Top, drawArea.Width, padding.Top);
+				g.FillRectangle(brush, edgeArea);
+				// 下
+				edgeArea = new Rectangle(drawArea.Left, drawArea.Bottom - padding.Bottom, drawArea.Width, padding.Bottom);
+				g.FillRectangle(brush, edgeArea);
+			}
+		}
+		
+		public override void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string caption)
+		{
+			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Red))) {
+				g.FillRectangle(brush, drawArea);
+				g.DrawString(caption, font, SystemBrushes.ActiveCaption, drawArea);
+			}
+		}
+		
+		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, NoteCommand noteCommand)
+		{
+			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Green))) {
+				g.FillRectangle(brush, drawArea);
+				g.DrawString(noteCommand.ToString()[0].ToString(), SystemFonts.CaptionFont, SystemBrushes.ActiveCaption, drawArea);
+			}
+		}
+		
+		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string body)
 		{
 			
 		}

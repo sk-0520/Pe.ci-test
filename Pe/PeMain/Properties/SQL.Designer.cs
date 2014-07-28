@@ -146,7 +146,7 @@ namespace PeMain.Properties {
 		///    COLOR_FORE      text     not null,
 		///    COLOR_BACK      text     not null,
 		///    WINDOW_VISIBLED integer  not null,
-		///    WINDOW_TOPMOST  integer  not null,
+		///    WINDOW_LOCKED   integer  not null,
 		/// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
 		/// </summary>
 		public static string CreateNoteStyleTransactionTable {

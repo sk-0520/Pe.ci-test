@@ -47,6 +47,11 @@ namespace PeMain
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
 		
+		/// <summary>
+		/// ノートサイズ
+		/// </summary>
+		public static readonly Size noteSize = new Size(200, 200);
+		
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 		
 #if DEBUG

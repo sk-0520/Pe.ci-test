@@ -19,6 +19,13 @@ namespace PeMain.Data
 		Rtf,
 	}
 	
+	public enum NoteCommand
+	{
+		Close,
+		Compact,
+		Lock,
+	}
+	
 	public static class NoteTypeUtility
 	{
 		public static long ToLong(this NoteType type)
@@ -48,10 +55,19 @@ namespace PeMain.Data
 	/// 
 	/// 主要データはDBに格納するためシリアライズ処理は行わない
 	/// </summary>
-	public class NoteItem
+	public class NoteItem: IDisposable
 	{
 		public NoteItem()
-		{ }
+		{
+			Style = new NoteStyle();
+			
+			Visibled = true;
+			Locked = false;
+			Topmost = false;
+			Compact = false;
+			
+			Size = Literal.noteSize;
+		}
 		
 		public long NoteId { get; set; }
 		
@@ -61,17 +77,35 @@ namespace PeMain.Data
 		public NoteStyle Style { get; set; }
 		
 		public bool Visibled { get; set; }
+		public bool Locked { get; set; }
 		public bool Topmost { get; set; }
 		public bool Compact { get; set; }
 		public Point Location { get; set; }
 		public Size Size { get; set; }
+		
+		public void Dispose()
+		{
+			Style.Dispose();
+		}		
 	}
 	
-	public class NoteStyle
+	public class NoteStyle: IDisposable
 	{
+		public NoteStyle()
+		{
+			FontSetting = new FontSetting();
+			ForeColor = Color.Black;
+			BackColor = Color.LightYellow;
+		}
+		
 		public FontSetting FontSetting { get; set; }
 		public Color ForeColor { get; set; }
-		public Color BaclColor { get; set; }
+		public Color BackColor { get; set; }
+		
+		public void Dispose()
+		{
+			FontSetting.Dispose();
+		}
 	}
 	
 	public class NoteGroup

@@ -42,6 +42,7 @@ namespace PeMain.UI
 		
 		Padding GetNoteWindowEdgePadding();
 		Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
+		Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, NoteCommand noteCommand);
 		
 		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
 		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
@@ -54,8 +55,11 @@ namespace PeMain.UI
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		
-		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, Color backColor);
-		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, Color foreColor, Color backColor);
+		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color backColor);
+		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor);
+		void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string caption);
+		void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, NoteCommand noteCommand);
+		void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string body);
 
 		bool IsDefaultDrawToolbarWindowBackground { get; }
 		bool IsDefaultDrawToolbarWindowCaption { get; }
@@ -231,6 +235,8 @@ namespace PeMain.UI
 
 		public abstract Padding GetNoteWindowEdgePadding();
 		public abstract Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
+		public abstract Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, NoteCommand noteCommand);
+
 		
 #endregion
 
@@ -323,8 +329,12 @@ namespace PeMain.UI
 			
 #region Draw Note
 
-		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, Color backColor);
-		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, Color foreColor, Color backColor);
+		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color backColor);
+		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor);
+		public abstract void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string caption);
+		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, NoteCommand noteCommand);
+		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string body);
+
 
 #endregion
 

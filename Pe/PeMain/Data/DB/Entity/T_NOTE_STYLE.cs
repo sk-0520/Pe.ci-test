@@ -23,6 +23,8 @@ namespace PeMain.Data.DB
 
 		[TargetName("WINDOW_VISIBLED")]
 		public bool Visibled { get; set; }
+		[TargetName("WINDOW_LOCKED")]
+		public bool Locked { get; set; }
 		[TargetName("WINDOW_TOPMOST")]
 		public bool Topmost { get; set; }
 		[TargetName("WINDOW_COMPACT")]
