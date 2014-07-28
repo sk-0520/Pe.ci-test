@@ -39,7 +39,7 @@ namespace PeMain.UI
 				if(value) {
 					this._flag |= bit;
 				} else {
-					this._flag &= ~this._flag;
+					this._flag &= ~(this._flag & bit);
 				}
 			}
 
@@ -83,7 +83,7 @@ namespace PeMain.UI
 						pos.Top = area.Contains(point);
 						// 下
 						area = noteArea;
-						area.Y -= edgePadding.Bottom;
+						area.Y = noteArea.Height - edgePadding.Bottom;
 						area.Height = edgePadding.Bottom;
 						pos.Bottom = area.Contains(point);
 						// 左
@@ -92,43 +92,31 @@ namespace PeMain.UI
 						pos.Left = area.Contains(point);
 						// 右
 						area = noteArea;
-						area.X -= edgePadding.Right;
+						area.X = noteArea.Width - edgePadding.Right;
 						area.Width = edgePadding.Right;
 						pos.Right = area.Contains(point);
 						
 						if(pos.HasTrue) {
 							if(pos.Left) {
 								if(pos.Top) {
-									
+									hitTest = HT.HTTOPLEFT;
 								} else if(pos.Bottom) {
-									
+									hitTest = HT.HTBOTTOMLEFT;
 								} else {
 									hitTest = HT.HTLEFT;
 								}
 							} else if(pos.Right) {
 								if(pos.Top) {
-									
+									hitTest = HT.HTTOPRIGHT;
 								} else if(pos.Bottom) {
-									
+									hitTest = HT.HTBOTTOMRIGHT;
 								} else {
 									hitTest = HT.HTRIGHT;
 								}
 							} else if(pos.Top) {
-								if(pos.Left) {
-									
-								} else if(pos.Right) {
-									
-								} else {
-									
-								}
+								hitTest = HT.HTTOP;
 							} else if(pos.Bottom) {
-								if(pos.Left) {
-									
-								} else if(pos.Right) {
-									
-								} else {
-									
-								}
+								hitTest = HT.HTBOTTOM;
 							}
 						}
 						
