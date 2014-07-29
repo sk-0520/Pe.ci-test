@@ -24,6 +24,14 @@ namespace PeMain.UI
 		public Padding Padding { get; set; }
 		public int MenuWidth { get; set; }
 	}
+	
+	public struct SkinNoteStatus
+	{
+		public bool Locked { get; set; }
+		public bool Topmost { get; set; }
+		public bool Compact { get; set; }
+	}
+		
 
 	/// <summary>
 	///スキン
@@ -55,11 +63,11 @@ namespace PeMain.UI
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		
-		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color backColor);
-		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor);
-		void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string caption);
-		void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, NoteCommand noteCommand);
-		void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string body);
+		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
+		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
+		void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption);
+		void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand);
+		void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
 		bool IsDefaultDrawToolbarWindowBackground { get; }
 		bool IsDefaultDrawToolbarWindowCaption { get; }
@@ -329,11 +337,11 @@ namespace PeMain.UI
 			
 #region Draw Note
 
-		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color backColor);
-		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor);
-		public abstract void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string caption);
-		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, NoteCommand noteCommand);
-		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string body);
+		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
+		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
+		public abstract void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption);
+		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand);
+		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
 
 #endregion

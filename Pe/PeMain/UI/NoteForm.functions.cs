@@ -24,5 +24,10 @@ namespace PeMain.UI
 		{
 			
 		}
+		
+		SkinNoteStatus GetNoteStatus()
+		{
+			return new SkinNoteStatus();
+		}
 	}
 }

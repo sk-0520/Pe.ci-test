@@ -416,12 +416,12 @@ namespace PeMain.UI
 		
 #region Note
 
-		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color backColor)
+		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor)
 		{
 			g.Clear(backColor);
 		}
 		
-		public override void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor)
+		public override void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor)
 		{
 			var padding = GetNoteWindowEdgePadding();
 			
@@ -442,7 +442,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string caption)
+		public override void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption)
 		{
 			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Red))) {
 				g.FillRectangle(brush, drawArea);
@@ -450,7 +450,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, NoteCommand noteCommand)
+		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand)
 		{
 			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Green))) {
 				g.FillRectangle(brush, drawArea);
@@ -458,7 +458,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, bool locked, bool topmost, bool compact, Color foreColor, Color backColor, Font font, string body)
+		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body)
 		{
 			
 		}
