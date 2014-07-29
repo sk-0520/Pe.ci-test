@@ -77,7 +77,7 @@ namespace PeMain.UI
 			Debug.WriteLine(e3.Title);
 			//*/
 			
-			//*
+			/*
 			var note = new NoteForm();
 			note.SetCommonData(this._commonData);
 			note.Show();
