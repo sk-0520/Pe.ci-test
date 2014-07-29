@@ -49,6 +49,9 @@ namespace PeMain.UI
 			this.Name = "NoteForm";
 			this.ShowInTaskbar = false;
 			this.Text = "NoteForm";
+			this.Activated += new System.EventHandler(this.NoteForm_Activated);
+			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteForm_Paint);
 			this.ResumeLayout(false);
 		}
 	}

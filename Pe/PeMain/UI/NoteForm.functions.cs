@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Windows.Forms;
 using PeMain.Logic;
 
 namespace PeMain.UI
@@ -28,6 +29,16 @@ namespace PeMain.UI
 		SkinNoteStatus GetNoteStatus()
 		{
 			return new SkinNoteStatus();
+		}
+		
+		protected override void OnPaintBackground(PaintEventArgs pevent)
+		{
+			//base.OnPaintBackground(pevent);
+		}
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			this.Invalidate();
 		}
 	}
 }

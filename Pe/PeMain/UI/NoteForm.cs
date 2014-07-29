@@ -27,5 +27,26 @@ namespace PeMain.UI
 			
 			Initialize();
 		}
+		
+		void NoteForm_Paint(object sender, PaintEventArgs e)
+		{
+				using(var bmp = new Bitmap(Width, Height, e.Graphics)) {
+					using(var memG = Graphics.FromImage(bmp)) {
+						var rect = new Rectangle(Point.Empty, Size);
+						DrawFull(memG, rect, this == Form.ActiveForm);
+						e.Graphics.DrawImage(bmp, 0, 0);
+					}
+				}
+		}
+		
+		void NoteForm_Activated(object sender, EventArgs e)
+		{
+			DrawFullActivaChanged(true);
+		}
+		
+		void NoteForm_Deactivate(object sender, EventArgs e)
+		{
+			DrawFullActivaChanged(false);
+		}
 	}
 }

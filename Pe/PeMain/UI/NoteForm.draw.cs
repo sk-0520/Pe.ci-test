@@ -8,6 +8,7 @@
  */
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -48,6 +49,23 @@ namespace PeMain.UI
 		void DrawBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
 			CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, NoteItem.Style.FontSetting.Font, NoteItem.Body);
+		}
+		
+		void DrawFull(Graphics g, Rectangle drawArea, bool active)
+		{
+			DrawNoClient(g, drawArea, active);
+		}
+		void DrawFullActivaChanged(bool active)
+		{
+			using(var g = CreateGraphics()) {
+				using(var bmp = new Bitmap(Width, Height, g)) {
+					using(var memG = Graphics.FromImage(bmp)) {
+						var rect = new Rectangle(Point.Empty, Size);
+						DrawFull(memG, rect, active);
+						g.DrawImage(bmp, 0, 0);
+					}
+				}
+			}
 		}
 	}
 }
