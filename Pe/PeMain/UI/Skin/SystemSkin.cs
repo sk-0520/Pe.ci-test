@@ -450,7 +450,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand)
+		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, ButtonState buttonState)
 		{
 			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Green))) {
 				g.FillRectangle(brush, drawArea);
@@ -493,7 +493,7 @@ namespace PeMain.UI
 			};
 			byte alpha = 170;
 			Color startColor, endColor;
-			if(toolbarButtonData.MenuState == ToolbarButtonState.Pressed) {
+			if(toolbarButtonData.MenuState == ButtonState.Pressed) {
 				startColor = Color.FromArgb(alpha, Color.White);
 				endColor = Color.FromArgb(alpha, Color.Gray);
 			} else {
@@ -512,7 +512,7 @@ namespace PeMain.UI
 			var drawArea = toolbarButtonData.ButtonArea;
 			var correction = new Padding(1);// 幅・高さの補正px
 			
-			if(toolbarButtonData.ButtonState != ToolbarButtonState.None) {
+			if(toolbarButtonData.ButtonState != ButtonState.None) {
 				// ボタン全体の境界線を描画する
 				using(var path = new GraphicsPath()) {
 					// 領域作成
@@ -525,9 +525,9 @@ namespace PeMain.UI
 					path.CloseFigure();
 					byte alpha = 0;
 					switch(toolbarButtonData.ButtonState) {
-							case ToolbarButtonState.Normal:   alpha = 70;  break;
-						case ToolbarButtonState.Selected:
-							case ToolbarButtonState.Pressed:  alpha = 210; break;
+							case ButtonState.Normal:   alpha = 70;  break;
+						case ButtonState.Selected:
+							case ButtonState.Pressed:  alpha = 210; break;
 						default:
 							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
 							break;
@@ -535,7 +535,7 @@ namespace PeMain.UI
 					
 					RectangleF fillArea = drawArea;
 					Color startColor, endColor;
-					if(toolbarButtonData.ButtonState == ToolbarButtonState.Pressed) {
+					if(toolbarButtonData.ButtonState == ButtonState.Pressed) {
 						startColor = Color.FromArgb(0, Color.White);
 						endColor = Color.FromArgb(alpha, Color.White);
 					} else {
@@ -561,7 +561,7 @@ namespace PeMain.UI
 							g.DrawLine(pen, menuArea.Left, menuArea.Top + correction.Top, menuArea.Left, menuArea.Bottom - correction.Vertical);
 						}
 						// ボタン内メニューボタンあり
-						if(toolbarButtonData.ButtonState == ToolbarButtonState.Selected && toolbarButtonData.MenuState == ToolbarButtonState.Pressed) {
+						if(toolbarButtonData.ButtonState == ButtonState.Selected && toolbarButtonData.MenuState == ButtonState.Pressed) {
 							g.SetClip(new Rectangle(menuArea.Left + correction.Left, menuArea.Top + correction.Top, menuArea.Left - correction.Horizontal, menuArea.Bottom - correction.Vertical));
 							using(var brush = new LinearGradientBrush(menuArea, endColor, startColor, LinearGradientMode.Vertical)) {
 								g.FillPath(brush, path);
@@ -571,7 +571,7 @@ namespace PeMain.UI
 					}
 				}
 			}
-			if(toolbarButtonData.HasArrow && toolbarButtonData.MenuState != ToolbarButtonState.None) {
+			if(toolbarButtonData.HasArrow && toolbarButtonData.MenuState != ButtonState.None) {
 				// 矢印描画
 				DrawToolbarArrowImage(toolbarButtonData);
 			}
