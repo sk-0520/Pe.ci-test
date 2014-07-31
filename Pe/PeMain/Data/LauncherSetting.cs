@@ -101,6 +101,19 @@ namespace PeMain.Data
 	[Serializable]
 	public class LauncherItem: NameItem, IDisposable, ICloneable
 	{
+		private static Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
+			{ IconScale.Small,  Icon.FromHandle(PeMain.Properties.Images.NotFound_016.GetHicon()) },
+			{ IconScale.Normal, Icon.FromHandle(PeMain.Properties.Images.NotFound_032.GetHicon()) },
+			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
+			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
+			/*
+			{ IconScale.Small,  new Icon(typeof(Bitmap), "NotFound_016") },
+			{ IconScale.Normal, new Icon(typeof(Bitmap), "NotFound_032") },
+			{ IconScale.Big,    new Icon(typeof(Bitmap), "NotFound_048") },
+			{ IconScale.Large,  new Icon(typeof(Bitmap), "NotFound_256") },
+			*/
+		};
+			
 		/// <summary>
 		/// 
 		/// </summary>
@@ -318,7 +331,7 @@ namespace PeMain.Data
 			if(hasIcon) {
 				return this._iconMap[iconSize];
 			} else {
-				return null;
+				return _notfoundIconMap[iconSize];
 			}
 		}
 		
