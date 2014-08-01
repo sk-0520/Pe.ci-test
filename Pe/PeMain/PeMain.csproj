@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <SourceAnalysisOverrideSettingsFile>C:\Users\sk\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunCodeAnalysis>False</RunCodeAnalysis>
+    <ApplicationIcon>..\..\Resource\image\Pe.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
