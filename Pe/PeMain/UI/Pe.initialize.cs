@@ -103,9 +103,17 @@ namespace PeMain.UI
 		/// </summary>
 		/// <param name="commandLine"></param>
 		/// <param name="initLog"></param>
-		/// <param name="dbCommand"></param>
-		void InitializeNoteTables(CommandLine commandLine, List<LogItem> initLog)
+		void InitializeDB(CommandLine commandLine, List<LogItem> initLog)
 		{
+			var dbFilePath = Literal.UserDBPath;
+			initLog.Add(new LogItem(LogType.Information, "db-file", dbFilePath));
+			if(!File.Exists(dbFilePath)) {
+				initLog.Add(new LogItem(LogType.Information, "note-data", "dir cleate"));
+				FileUtility.MakeFileParentDirectory(dbFilePath);
+			}
+			var connection = new SQLiteConnection("Data Source=" + dbFilePath);
+			this._commonData.Database = new PeDBManager(connection, false);
+
 			// 
 			var enabledVersionTable = this._commonData.Database.ExistsTable(DataTables.masterTableVersion);
 			Debug.WriteLine(enabledVersionTable);
@@ -126,15 +134,6 @@ namespace PeMain.UI
 		
 		void InitializeNote(CommandLine commandLine, List<LogItem> initLog)
 		{
-			var noteDataFilePath = Literal.UserNoteDataPath;
-			initLog.Add(new LogItem(LogType.Information, "note-data", noteDataFilePath));
-			if(!File.Exists(noteDataFilePath)) {
-				initLog.Add(new LogItem(LogType.Information, "note-data", "dir cleate"));
-				FileUtility.MakeFileParentDirectory(noteDataFilePath);
-			}
-			var connection = new SQLiteConnection("Data Source=" + noteDataFilePath);
-			this._commonData.Database = new PeDBManager(connection, false);
-			InitializeNoteTables(commandLine, initLog);
 		}
 		
 		/// <summary>
@@ -153,7 +152,10 @@ namespace PeMain.UI
 			
 			InitializeLanguage(commandLine, initLog);
 			
+#if DEBUG
+			InitializeDB(commandLine, initLog);
 			InitializeNote(commandLine, initLog);
+#endif
 		}
 		
 		void InitializeMessage(CommandLine commandLine, List<LogItem> initLog)

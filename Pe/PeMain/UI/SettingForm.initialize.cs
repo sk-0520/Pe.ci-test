@@ -149,6 +149,13 @@ namespace PeMain.UI
 			InitializeToolbar(mainSetting.Toolbar);
 			InitializeCommand(mainSetting.Command);
 			InitializeNote(mainSetting.Note);
+
+#if RELEASE
+			var debugPage = new [] { this.pageNote, this.pageCommand, this.pageDisplay };
+			foreach(var page in debugPage) {
+				this.tabSetting.TabPages.Remove(page);
+			}
+#endif
 		}
 		
 		void Initialize(Language language, MainSetting mainSetting)

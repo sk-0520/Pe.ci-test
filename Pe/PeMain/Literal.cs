@@ -37,7 +37,7 @@ namespace PeMain
 		
 		private static string _mainSettingFileName   = "mainsetting.xml";
 		private static string _launcherItemsFileName = "launcher-items.xml";
-		private static string _noteDataFileName      = "note.sqlite3";
+		private static string _dbFileName            = "db.sqlite3";
 		private static string _backupDirName         = "backup";
 		
 		/// <summary>
@@ -118,9 +118,9 @@ namespace PeMain
 			get { return Path.Combine(UserSettingDirPath, _launcherItemsFileName); }
 		}
 		
-		public static string UserNoteDataPath
+		public static string UserDBPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _noteDataFileName); }
+			get { return Path.Combine(UserSettingDirPath, _dbFileName); }
 		}
 		
 		public static string UserBackupDirPath

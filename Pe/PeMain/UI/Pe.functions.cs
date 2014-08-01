@@ -217,7 +217,9 @@ namespace PeMain.UI
 		void CloseApplication(bool save)
 		{
 			SaveSetting();
-			this._commonData.Database.Close();
+			if(this._commonData.Database != null) {
+				this._commonData.Database.Close();
+			}
 			Application.Exit();
 		}
 		
