@@ -419,6 +419,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="doc\readme-ja.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="etc\lang\ja-JP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -476,6 +479,7 @@
     <Folder Include="Logic" />
     <Folder Include="UI\CustomControl" />
     <Folder Include="UI\Skin" />
+    <Folder Include="doc" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
