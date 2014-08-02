@@ -230,7 +230,7 @@ namespace PeMain.UI
 					var mainSetting = settingForm.MainSetting;
 					this._commonData.MainSetting = mainSetting;
 					SaveSetting();
-					InitializeLanguage(null, null);
+					InitializeLanguage(null, null, null);
 					ApplyLanguage();
 					
 					return delegate() {

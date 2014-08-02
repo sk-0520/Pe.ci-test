@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -20,5 +21,6 @@ namespace PeMain.UI
 	{
 		List<LogItem> _logs = new List<LogItem>();
 		ImageList _imageLogType = null;
+		FileLogger _fileLogger = null;
 	}
 }

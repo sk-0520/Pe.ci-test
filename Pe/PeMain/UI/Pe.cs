@@ -19,7 +19,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe: IDisposable, IRootSender
 	{
-		public Pe(CommandLine commandLine, ILogger fileLogger)
+		public Pe(CommandLine commandLine, FileLogger fileLogger)
 		{
 			Initialize(commandLine, fileLogger);
 		}

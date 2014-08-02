@@ -27,6 +27,7 @@ namespace PeMain.UI
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
 			var logItem = new LogItem(logType, title, detail, frame);
+			this._fileLogger.WiteItem(logItem);
 			this._logs.Add(logItem);
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);

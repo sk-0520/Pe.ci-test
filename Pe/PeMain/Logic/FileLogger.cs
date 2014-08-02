@@ -19,6 +19,8 @@ namespace PeMain.Logic
 	{
 		private StreamWriter _stream;
 		
+		public FileLogger() { }
+		
 		public FileLogger(string path)
 		{
 			this._stream = new StreamWriter(new FileStream(path, FileMode.CreateNew));
@@ -28,7 +30,9 @@ namespace PeMain.Logic
 		public void Dispose()
 		{
 			Puts(LogType.None, "FileLogger", "End");
-			this._stream.Dispose();
+			if(this._stream != null) {
+				this._stream.Dispose();
+			}
 		}
 		
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
@@ -39,7 +43,9 @@ namespace PeMain.Logic
 		
 		public void WiteItem(LogItem logItem)
 		{
-			this._stream.WriteLine("{0} {1} {2} {3}", logItem.DateTime, logItem.Title, logItem.Detail, logItem.StackTrace);
+			if(this._stream != null) {
+				this._stream.WriteLine("{0} {1} {2} {3}", logItem.DateTime, logItem.Title, logItem.Detail, logItem.StackTrace);
+			}
 		}
 	}
 }

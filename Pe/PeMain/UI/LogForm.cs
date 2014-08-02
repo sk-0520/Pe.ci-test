@@ -21,12 +21,14 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LogForm : Form, ILogger, ISetCommonData
 	{
-		public LogForm()
+		public LogForm(FileLogger fileLogger)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+			
+			this._fileLogger = fileLogger;
 			
 			Initialize();
 		}
