@@ -10,11 +10,14 @@ using System;
 
 namespace PeMain.UI
 {
-	partial class MessageWindow
+	public partial class Pe
 	{
-		void ApplyLanguage()
+		partial class MessageWindow
 		{
-			// 無意味
+			void ApplyLanguage()
+			{
+				// 無意味
+			}
 		}
 	}
 }

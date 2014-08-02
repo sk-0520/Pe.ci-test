@@ -451,6 +451,9 @@
     <Compile Include="UI\NoteForm.wndProc.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pe.logger.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
     <None Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

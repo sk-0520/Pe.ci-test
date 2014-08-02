@@ -14,21 +14,24 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	/// <summary>
-	/// Description of Pe_MessageWindow.
-	/// </summary>
-	public partial class MessageWindow : Form, ISetCommonData
+	public partial class Pe
 	{
-		private Pe _parent;
-		
-		public MessageWindow(Pe parent)
+		/// <summary>
+		/// Description of Pe_MessageWindow.
+		/// </summary>
+		public partial class MessageWindow : Form, ISetCommonData
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
-			InitializeComponent();
+			private Pe _parent;
 			
-			this._parent = parent;
+			public MessageWindow(Pe parent)
+			{
+				//
+				// The InitializeComponent() call is required for Windows Forms designer support.
+				//
+				InitializeComponent();
+				
+				this._parent = parent;
+			}
 		}
 	}
 }

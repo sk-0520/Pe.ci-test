@@ -21,7 +21,8 @@ namespace PeMain.UI
 	{
 		public Pe(CommandLine commandLine, FileLogger fileLogger)
 		{
-			Initialize(commandLine, fileLogger);
+			var logger = new StartupLogger(fileLogger);
+			Initialize(commandLine, logger);
 		}
 		
 		public void Dispose()

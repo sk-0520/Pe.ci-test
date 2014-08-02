@@ -12,19 +12,22 @@ using PInvoke.Windows;
 
 namespace PeMain.UI
 {
-	/// <summary>
-	/// Description of Pe_MessageWindow_wndProc.
-	/// </summary>
-	partial class MessageWindow
+	public partial class Pe
 	{
-		protected override void WndProc(ref Message m) {
-			if(m.Msg == (int)WM.WM_HOTKEY) {
-				var id = (HotKeyId)m.WParam;
-				var mod = (MOD)unchecked((short)(long)m.LParam);
-				var key = (Keys)unchecked((ushort)((long)m.LParam >> 16));
-				CommonData.RootSender.ReceiveHotKey(id, mod, key);
+		/// <summary>
+		/// Description of Pe_MessageWindow_wndProc.
+		/// </summary>
+		partial class MessageWindow
+		{
+			protected override void WndProc(ref Message m) {
+				if(m.Msg == (int)WM.WM_HOTKEY) {
+					var id = (HotKeyId)m.WParam;
+					var mod = (MOD)unchecked((short)(long)m.LParam);
+					var key = (Keys)unchecked((ushort)((long)m.LParam >> 16));
+					CommonData.RootSender.ReceiveHotKey(id, mod, key);
+				}
+				base.WndProc(ref m);
 			}
-			base.WndProc(ref m);
 		}
 	}
 }

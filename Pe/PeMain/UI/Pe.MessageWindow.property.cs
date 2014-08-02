@@ -13,12 +13,15 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	/// <summary>
-	/// Description of Pe_MessageWindow_property.
-	/// </summary>
-	partial class MessageWindow
+	public partial class Pe
 	{
-		CommonData CommonData { get; set; }
-		public List<LogItem> InitLog { get; set; }
+		/// <summary>
+		/// Description of Pe_MessageWindow_property.
+		/// </summary>
+		partial class MessageWindow
+		{
+			CommonData CommonData { get; set; }
+			public ILogger StartupLogger { get; set; }
+		}
 	}
 }

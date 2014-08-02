@@ -32,7 +32,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
-		void InitializeLanguage(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeLanguage(CommandLine commandLine, StartupLogger logger)
 		{
 			// 言語
 			var langName = this._commonData.MainSetting.LanguageFileName;
@@ -48,24 +48,21 @@ namespace PeMain.UI
 				languageFileName = Path.ChangeExtension(CultureInfo.CurrentCulture.Name, "xml");
 			}
 			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
-			if(initLog != null) {
-				initLog.Add(new LogItem(LogType.Information, "language", languageFilePath));
-				fileLogger.WiteItem(initLog.Last());
+			if(logger != null) {
+				logger.Puts(LogType.Information, "language", languageFilePath);
 			}
 			this._commonData.Language = LoadDeserialize<Language>(languageFilePath, false);
 			if(this._commonData.Language == null) {
-				if(initLog != null) {
-					initLog.Add(new LogItem(LogType.Warning, "not found language", languageFilePath));
-					fileLogger.WiteItem(initLog.Last());
+				if(logger != null) {
+					logger.Puts(LogType.Warning, "not found language", languageFilePath);
 				}
 				this._commonData.Language = new Language();
 			}
 		}
 		
-		void InitializeNoteTableCreate(string tableName, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
 		{
-			initLog.Add(new LogItem(LogType.Information, tableName, "CREATE"));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, tableName, "CREATE");
 			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
@@ -90,10 +87,9 @@ namespace PeMain.UI
 		/// <param name="tableName"></param>
 		/// <param name="version"></param>
 		/// <param name="initLog"></param>
-		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeNoteTableChange(string tableName, int version, StartupLogger logger)
 		{
-			initLog.Add(new LogItem(LogType.Information, tableName, "CHECK"));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, tableName, "CHECK");
 			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           string.Empty },
@@ -109,15 +105,13 @@ namespace PeMain.UI
 		/// </summary>
 		/// <param name="commandLine"></param>
 		/// <param name="initLog"></param>
-		void InitializeDB(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeDB(CommandLine commandLine, StartupLogger logger)
 		{
 			var dbFilePath = Literal.UserDBPath;
-			initLog.Add(new LogItem(LogType.Information, "db-file", dbFilePath));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, "db-file", dbFilePath);
 
 			if(!File.Exists(dbFilePath)) {
-				initLog.Add(new LogItem(LogType.Information, "note-data", "dir cleate"));
-				fileLogger.WiteItem(initLog.Last());
+				logger.Puts(LogType.Information, "note-data", "dir cleate");
 				
 				FileUtility.MakeFileParentDirectory(dbFilePath);
 			}
@@ -135,14 +129,14 @@ namespace PeMain.UI
 			// プログラムの知っているテーブルが存在しない、またはバージョンが異なる場合に調整する
 			foreach(var pair in DataTables.map.Where(pair => pair.Key != DataTables.masterTableVersion)) {
 				if(!this._commonData.Database.ExistsTable(pair.Key)) {
-					InitializeNoteTableCreate(pair.Key, initLog, fileLogger);
+					InitializeNoteTableCreate(pair.Key, logger);
 				} else {
-					InitializeNoteTableChange(pair.Key, pair.Value, initLog, fileLogger);
+					InitializeNoteTableChange(pair.Key, pair.Value, logger);
 				}
 			}
 		}
 		
-		void InitializeNote(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLooger)
+		void InitializeNote(CommandLine commandLine, StartupLogger logger)
 		{
 		}
 		
@@ -150,33 +144,30 @@ namespace PeMain.UI
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeSetting(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeSetting(CommandLine commandLine, StartupLogger logger)
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
-			initLog.Add(new LogItem(LogType.Information, "main-setting", mainSettingFilePath));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, "main-setting", mainSettingFilePath);
 			
 			this._commonData.MainSetting = LoadDeserialize<MainSetting>(mainSettingFilePath, true);
 			
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
-			initLog.Add(new LogItem(LogType.Information, "launcher-items", launcherItemsFilePath));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, "launcher-items", launcherItemsFilePath);
 			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
-			InitializeLanguage(commandLine, initLog, fileLogger);
+			InitializeLanguage(commandLine, logger);
 			
 			#if DEBUG
-			InitializeDB(commandLine, initLog, fileLogger);
-			InitializeNote(commandLine, initLog, fileLogger);
+			InitializeDB(commandLine, logger);
+			InitializeNote(commandLine, logger);
 			#endif
 		}
 		
-		void InitializeMessage(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeMessage(CommandLine commandLine, StartupLogger logger)
 		{
 			this._messageWindow = new MessageWindow(this);
-			this._messageWindow.InitLog = initLog;
+			this._messageWindow.StartupLogger = logger;
 			this._messageWindow.SetCommonData(this._commonData);
-			this._messageWindow.InitLog = null;
 		}
 		
 		void AttachmentToolbarSubMenu(ToolStripMenuItem parentMenu)
@@ -323,7 +314,7 @@ namespace PeMain.UI
 			this._notificationMenu.Items.AddRange(menuList.ToArray());
 		}
 		
-		void InitializeSkin(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
 		{
 			this._commonData.Skin = new SystemSkin();
 		}
@@ -332,7 +323,7 @@ namespace PeMain.UI
 		/// 本体UI初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeMain(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeMain(CommandLine commandLine, StartupLogger logger)
 		{
 			this._notifyIcon = new NotifyIcon();
 			this._notificationMenu = new ContextMenuStrip();
@@ -345,20 +336,20 @@ namespace PeMain.UI
 			this._notifyIcon.ContextMenuStrip = this._notificationMenu;
 		}
 		
-		void InitializeLogForm(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeLogForm(CommandLine commandLine, StartupLogger logger)
 		{
-			this._logForm = new LogForm(fileLogger);
+			this._logForm = new LogForm(logger.FileLogger);
 			this._logForm.SetCommonData(this._commonData);
 			
 			this._commonData.Logger = this._logForm;
 		}
 		
-		void InitializeCommandForm(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{
 			
 		}
 		
-		void InitializeToolbarForm(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeToolbarForm(CommandLine commandLine, StartupLogger logger)
 		{
 			Debug.Assert(this._commonData != null);
 			
@@ -377,42 +368,39 @@ namespace PeMain.UI
 			 */
 		}
 
-		void InitializeUI(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
+		void InitializeUI(CommandLine commandLine, StartupLogger logger)
 		{
-			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]);
 
-			InitializeSkin(commandLine, initLog, fileLogger);
-			InitializeLogForm(commandLine, initLog, fileLogger);
-			InitializeMessage(commandLine, initLog, fileLogger);
-			InitializeMain(commandLine, initLog, fileLogger);
-			InitializeCommandForm(commandLine, initLog, fileLogger);
-			InitializeToolbarForm(commandLine, initLog, fileLogger);
+			InitializeSkin(commandLine, logger);
+			InitializeLogForm(commandLine, logger);
+			InitializeMessage(commandLine, logger);
+			InitializeMain(commandLine, logger);
+			InitializeCommandForm(commandLine, logger);
+			InitializeToolbarForm(commandLine, logger);
 			
-			initLog.Add(new LogItem(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/end"]));
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/end"]);
 		}
 		
 		/// <summary>
 		/// 初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void Initialize(CommandLine commandLine, FileLogger fileLogger)
+		void Initialize(CommandLine commandLine, StartupLogger logger)
 		{
-			var initLog = new List<LogItem>(new []{ new LogItem(LogType.Information, "Initialize", commandLine.Options.ToArray()) });
-			fileLogger.WiteItem(initLog.Last());
+			logger.Puts(LogType.Information, "Initialize", commandLine.Options.ToArray());
 			
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
 			
-			InitializeSetting(commandLine, initLog, fileLogger);
-			InitializeUI(commandLine, initLog, fileLogger);
+			InitializeSetting(commandLine, logger);
+			InitializeUI(commandLine, logger);
 			
 			ApplyLanguage();
 			
 			SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
 			
-			this._logForm.PutsList(initLog, false);
+			this._logForm.PutsList(logger.GetList(), false);
 		}
 
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
