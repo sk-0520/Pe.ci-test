@@ -54,7 +54,7 @@ namespace PeUtility
 		{
 			var index = pair.IndexOf(KeyValueSeparator);
 			if(index != -1) {
-				return new KeyValuePair<string,string>(string.Concat(pair.Take(index - 1)), string.Concat(pair.Skip(index + KeyValueHeader.Length)));
+				return new KeyValuePair<string,string>(string.Concat(pair.Take(index)), string.Concat(pair.Skip(index + KeyValueHeader.Length)));
 			}
 			
 			throw new ArgumentException(string.Format("pair = {0}, header = {1}", pair, KeyValueHeader));
@@ -88,6 +88,17 @@ namespace PeUtility
 		{
 			var keyOption = GetKeyOption(option);
 			return HasKeyOption(keyOption);
+		}
+		
+		public bool HasValue(string option, int index = 0)
+		{
+			var keyOption = GetKeyOption(option);
+			if(HasKeyOption(keyOption)) {
+				var pairs = Options.Where(s => s.StartsWith(keyOption));
+				return pairs.ElementAt(index).IndexOf(KeyValueSeparator) != -1;
+			}
+			
+			throw new ArgumentException(keyOption);
 		}
 		
 		private int CountKeyOption(string keyOption)

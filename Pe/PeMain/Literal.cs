@@ -147,6 +147,12 @@ namespace PeMain
 				_settingRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
 			}
 			
+			if(commandLine.HasOption("log")) {
+				if(commandLine.HasValue("log")) {
+					_logRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("log"));
+				}
+			}
+			
 			#if DEBUG
 			_initialized = true;
 			#endif
