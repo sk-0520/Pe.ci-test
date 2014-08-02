@@ -62,9 +62,11 @@ namespace PeMain.UI
 			}
 		}
 		
-		void InitializeNoteTableCreate(string tableName, List<LogItem> initLog)
+		void InitializeNoteTableCreate(string tableName, List<LogItem> initLog, FileLogger fileLogger)
 		{
 			initLog.Add(new LogItem(LogType.Information, tableName, "CREATE"));
+			fileLogger.WiteItem(initLog.Last());
+			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
 				{ DataTables.masterTableNoteGroup,      global::PeMain.Properties.SQL.CreateNoteGroupMasterTable },
@@ -88,9 +90,11 @@ namespace PeMain.UI
 		/// <param name="tableName"></param>
 		/// <param name="version"></param>
 		/// <param name="initLog"></param>
-		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog)
+		void InitializeNoteTableChange(string tableName, int version, List<LogItem> initLog, FileLogger fileLogger)
 		{
 			initLog.Add(new LogItem(LogType.Information, tableName, "CHECK"));
+			fileLogger.WiteItem(initLog.Last());
+			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           string.Empty },
 				{ DataTables.masterTableNoteGroup,      string.Empty },
@@ -105,12 +109,16 @@ namespace PeMain.UI
 		/// </summary>
 		/// <param name="commandLine"></param>
 		/// <param name="initLog"></param>
-		void InitializeDB(CommandLine commandLine, List<LogItem> initLog)
+		void InitializeDB(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLogger)
 		{
 			var dbFilePath = Literal.UserDBPath;
 			initLog.Add(new LogItem(LogType.Information, "db-file", dbFilePath));
+			fileLogger.WiteItem(initLog.Last());
+
 			if(!File.Exists(dbFilePath)) {
 				initLog.Add(new LogItem(LogType.Information, "note-data", "dir cleate"));
+				fileLogger.WiteItem(initLog.Last());
+				
 				FileUtility.MakeFileParentDirectory(dbFilePath);
 			}
 			var connection = new SQLiteConnection("Data Source=" + dbFilePath);
@@ -127,14 +135,14 @@ namespace PeMain.UI
 			// プログラムの知っているテーブルが存在しない、またはバージョンが異なる場合に調整する
 			foreach(var pair in DataTables.map.Where(pair => pair.Key != DataTables.masterTableVersion)) {
 				if(!this._commonData.Database.ExistsTable(pair.Key)) {
-					InitializeNoteTableCreate(pair.Key, initLog);
+					InitializeNoteTableCreate(pair.Key, initLog, fileLogger);
 				} else {
-					InitializeNoteTableChange(pair.Key, pair.Value, initLog);
+					InitializeNoteTableChange(pair.Key, pair.Value, initLog, fileLogger);
 				}
 			}
 		}
 		
-		void InitializeNote(CommandLine commandLine, List<LogItem> initLog)
+		void InitializeNote(CommandLine commandLine, List<LogItem> initLog, FileLogger fileLooger)
 		{
 		}
 		
@@ -158,8 +166,8 @@ namespace PeMain.UI
 			InitializeLanguage(commandLine, initLog, fileLogger);
 			
 			#if DEBUG
-			InitializeDB(commandLine, initLog);
-			InitializeNote(commandLine, initLog);
+			InitializeDB(commandLine, initLog, fileLogger);
+			InitializeNote(commandLine, initLog, fileLogger);
 			#endif
 		}
 		
