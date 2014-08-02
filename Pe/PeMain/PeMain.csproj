@@ -39,7 +39,7 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
-    <StartArguments>/setting-root=z:\%USERNAME%\debug</StartArguments>
+    <StartArguments>/setting-root=z:\%USERNAME%\debug /file-log</StartArguments>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -107,6 +107,7 @@
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\EnumToText.cs" />
     <Compile Include="Logic\Executer.cs" />
+    <Compile Include="Logic\FileLogger.cs" />
     <Compile Include="Logic\ILogger.cs" />
     <Compile Include="Logic\CommonData.cs" />
     <Compile Include="Logic\PeInformation.cs" />

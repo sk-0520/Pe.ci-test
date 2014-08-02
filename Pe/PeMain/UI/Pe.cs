@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using PeMain.Logic;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -18,9 +19,9 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe: IDisposable, IRootSender
 	{
-		public Pe(string[] args)
+		public Pe(CommandLine commandLine, ILogger fileLogger)
 		{
-			Initialize(args);
+			Initialize(commandLine, fileLogger);
 		}
 		
 		public void Dispose()

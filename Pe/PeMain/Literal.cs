@@ -34,6 +34,7 @@ namespace PeMain
 		private static string _dirRootName = programName;
 		
 		private static string _settingRootDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		private static string _logRootDirPath     = Path.Combine(UserSettingDirPath, "log");
 		
 		private static string _mainSettingFileName   = "mainsetting.xml";
 		private static string _launcherItemsFileName = "launcher-items.xml";
@@ -126,6 +127,14 @@ namespace PeMain
 		public static string UserBackupDirPath
 		{
 			get { return Path.Combine(UserSettingDirPath, _backupDirName);}
+		}
+		
+		/// <summary>
+		/// ログ保存ディレクトリ
+		/// </summary>
+		public static string LogFileDirPath
+		{
+			get { return _logRootDirPath; }
 		}
 		
 		public static void Initialize(CommandLine commandLine)

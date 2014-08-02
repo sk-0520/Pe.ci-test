@@ -382,13 +382,9 @@ namespace PeMain.UI
 		/// 初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void Initialize(string[] args)
+		void Initialize(CommandLine commandLine, ILogger fileLogger)
 		{
-			var initLog = new List<LogItem>(new []{ new LogItem(LogType.Information, "Initialize", args) });
-			
-			var commandLine = new CommandLine(args);
-			
-			Literal.Initialize(commandLine);
+			var initLog = new List<LogItem>(new []{ new LogItem(LogType.Information, "Initialize", commandLine.Options.ToArray()) });
 			
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
