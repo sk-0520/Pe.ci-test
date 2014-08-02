@@ -28,7 +28,6 @@ namespace PeMain
 			Literal.Initialize(commandLine);
 			PeMain.Logic.FileLogger fileLogger = new PeMain.Logic.FileLogger();
 			if(commandLine.HasOption("log")) {
-				// TODO:場所
 				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.timestampFileName) + ".log");
 				PeUtility.FileUtility.MakeFileParentDirectory(logPath);
 				fileLogger = new PeMain.Logic.FileLogger(logPath);

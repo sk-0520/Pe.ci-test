@@ -45,6 +45,7 @@ namespace PeMain.Logic
 		{
 			if(this._stream != null) {
 				this._stream.WriteLine("{0} {1} {2} {3}", logItem.DateTime, logItem.Title, logItem.Detail, logItem.StackTrace);
+				this._stream.Flush();
 			}
 		}
 	}
