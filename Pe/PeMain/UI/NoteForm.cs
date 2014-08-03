@@ -54,74 +54,40 @@ namespace PeMain.UI
 		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
 		{
-			var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
-			if(!captionArea.Size.IsEmpty) {
-				var commands = new [] { NoteCommand.Compact, NoteCommand.Close, };
-				var active = this == Form.ActiveForm;
-				var noteStatus = GetNoteStatus();
-				if(captionArea.Contains(e.Location)) {
-					using(var g = CreateGraphics()) {
-						foreach(var command in commands) {
-							var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
-							var nowState = ButtonState.None;
-							
-							if(commandArea.Contains(e.Location)) {
-								// 入っている
-								//var isClick = e.Button == MouseButtons.Left;
-								//nowState = isClick ? ButtonState.Pressed: ButtonState.Selected;
-								nowState = ButtonState.Pressed;
-							} else {
-								// 外
-								nowState = ButtonState.Normal;
-							}
-							
-							if(nowState != ButtonState.None) {
-								if(this._commandStateMap[command] != nowState) {
-									Debug.WriteLine("down" + nowState.ToString());
-									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
-									this._commandStateMap[command] = nowState;
-								}
-							}
-						}
+			DrawCommand(
+				e.Location,
+				(isIn, nowState) => {
+					if(isIn) {
+						return ButtonState.Pressed;
+					} else {
+						return ButtonState.Normal;
 					}
-				}
-			}
+				},
+				null,
+				null,
+				false
+			);
 		}
 		
 		void NoteForm_MouseUp(object sender, MouseEventArgs e)
 		{
-			var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
-			if(!captionArea.Size.IsEmpty) {
-				var commands = new [] { NoteCommand.Compact, NoteCommand.Close, };
-				var active = this == Form.ActiveForm;
-				var noteStatus = GetNoteStatus();
-				if(captionArea.Contains(e.Location)) {
-					using(var g = CreateGraphics()) {
-						foreach(var command in commands) {
-							var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
-							var nowState = ButtonState.None;
-							
-							if(commandArea.Contains(e.Location)) {
-								// 入っている
-								nowState = ButtonState.Selected;
-							} else {
-								// 外
-								nowState = ButtonState.Normal;
-							}
-							Debug.WriteLine(this._commandStateMap[command]);
-							if(nowState != ButtonState.None) {
-								Debug.WriteLine("up" + nowState.ToString());
-								Debug.WriteLine(this._commandStateMap[command]);
-								if(this._commandStateMap[command] == ButtonState.Pressed) {
-									clickCommand(command);
-								}
-								CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
-								this._commandStateMap[command] = nowState;
-							}
-						}
+			DrawCommand(
+				e.Location,
+				(isIn, nowState) => {
+					if(isIn) {
+						return ButtonState.Selected;
+					} else {
+						return ButtonState.Normal;
 					}
-				}
-			}			
+				},
+				command => {
+					if(this._commandStateMap[command] == ButtonState.Pressed) {
+						clickCommand(command);
+					}
+				},
+				null,
+				true
+			);
 		}
 	}
 }

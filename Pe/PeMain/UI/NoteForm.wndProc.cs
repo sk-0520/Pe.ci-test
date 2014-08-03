@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 using PInvoke.Windows;
@@ -148,52 +149,29 @@ namespace PeMain.UI
 								hitTest = HT.HTBOTTOM;
 							}
 						} else {
-							var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
-							var active = this == Form.ActiveForm;
-							var noteStatus = GetNoteStatus();
-							if(captionArea.Contains(point)) {
-								var throwHittest = true;
-								var commands = new [] { NoteCommand.Compact, NoteCommand.Close, };
-								using(var g = CreateGraphics()) {
-									foreach(var command in commands) {
-										var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
-										var nowState = ButtonState.None;
-										
-										if(commandArea.Contains(point)) {
-											// 入っている
-											if(this._commandStateMap[command] == ButtonState.Pressed) {
-												nowState = ButtonState.Pressed;
-											} else {
-												nowState = ButtonState.Selected;
-											}
-											throwHittest = false;
+							var throwHittest = true;
+							DrawCommand(
+								point,
+								(isIn, nowState) => {
+									if(isIn) {
+										throwHittest = false;
+										if(nowState == ButtonState.Pressed) {
+											return ButtonState.Pressed;
 										} else {
-											// 外
-											nowState = ButtonState.Normal;
+											return ButtonState.Selected;
 										}
-										
-										if(nowState != ButtonState.None) {
-											if(this._commandStateMap[command] != nowState) {
-												CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
-												this._commandStateMap[command] = nowState;
-											}
-										}
+									} else {
+										return ButtonState.Normal;
 									}
-								}
-								if(throwHittest) {
-									hitTest = HT.HTCAPTION;
-								}
-							} else {
-								using(var g = CreateGraphics()) {
-									foreach(var pair in this._commandStateMap) {
-										if(pair.Value != ButtonState.Normal) {
-											var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
-											CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, ButtonState.Normal);
-											this._commandStateMap[pair.Key] = ButtonState.Normal;
-										}
+								},
+								null,
+								() => {
+									if(throwHittest) {
+										hitTest = HT.HTCAPTION;
 									}
-								}
-							}
+								},
+								true
+							);
 						}
 						
 						if(hitTest != HT.HTNOWHERE) {
