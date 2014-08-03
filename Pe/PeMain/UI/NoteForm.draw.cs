@@ -22,10 +22,10 @@ namespace PeMain.UI
 		
 		void DrawCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
-			ButtonState buttonState = ButtonState.None;
+			ButtonState buttonState = ButtonState.Normal;
 			
 			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, CommonData.MainSetting.Note.CaptionFontSetting.Font, NoteItem.Title);
-			var commands = new [] { NoteCommand.Lock, NoteCommand.Compact, NoteCommand.Close, };
+			var commands = new [] { NoteCommand.Compact, NoteCommand.Close, };
 			foreach(var command in commands) {
 				var commandArea = CommonData.Skin.GetNoteCommandArea(drawArea, command);
 				CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, buttonState);

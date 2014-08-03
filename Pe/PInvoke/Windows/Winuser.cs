@@ -24,12 +24,21 @@ namespace PInvoke.Windows
 		WM_MOVING = 0x0216,
 		WM_COMMAND = 0x0111,
 		WM_SETTINGCHANGE = 0x001a,
-		WM_NCPAINT = 0x0085
+		WM_NCPAINT = 0x0085,
+		WM_SYSCOMMAND = 0x112,
+		
 	}
 	
 	public enum WM_COMMAND_SUB
 	{
 		Refresh = 0x7103,
+	}
+	
+	public enum SC
+	{
+		SC_MINIMIZE = 0xf020,
+		SC_MAXIMIZE = 0xf030,
+		SC_RESTORE = 0xf120,
 	}
 	
 	public enum MA: int

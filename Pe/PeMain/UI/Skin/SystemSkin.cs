@@ -227,7 +227,6 @@ namespace PeMain.UI
 			switch(noteCommand) {
 				case NoteCommand.Close:   pos = 1; break;
 				case NoteCommand.Compact: pos = 2; break;
-				case NoteCommand.Lock:    pos = 3; break;
 				default: 
 					Debug.Assert(false);
 					break;
@@ -414,7 +413,7 @@ namespace PeMain.UI
 		}
 #endregion 
 		
-#region Note
+#region Draw Note
 
 		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor)
 		{
@@ -452,7 +451,23 @@ namespace PeMain.UI
 		
 		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, ButtonState buttonState)
 		{
-			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Green))) {
+			Color color = Color.Transparent;
+			switch(buttonState) {
+				case ButtonState.Normal:
+					color = Color.Green;
+					break;
+				case ButtonState.Selected:
+					color = Color.Blue;
+					break;
+				case ButtonState.Pressed:
+					color = Color.Red;
+					break;
+				default:
+					Debug.Assert(false, buttonState.ToString());
+					break;
+			}
+				
+			using(var brush = new SolidBrush(color)) {
 				g.FillRectangle(brush, drawArea);
 				g.DrawString(noteCommand.ToString()[0].ToString(), SystemFonts.CaptionFont, SystemBrushes.ActiveCaption, drawArea);
 			}

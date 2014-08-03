@@ -55,6 +55,8 @@ namespace PeMain.UI
 			this.Activated += new System.EventHandler(this.NoteForm_Activated);
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteForm_Paint);
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseDown);
+			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseUp);
 			this.ResumeLayout(false);
 		}
 	}

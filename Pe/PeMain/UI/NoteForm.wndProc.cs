@@ -7,9 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-
+using PeMain.Data;
 using PInvoke.Windows;
 
 namespace PeMain.UI
@@ -67,6 +68,19 @@ namespace PeMain.UI
 		protected override void WndProc(ref Message m)
 		{
 			switch(m.Msg) {
+				case (int)WM.WM_SYSCOMMAND:
+					{
+						switch (m.WParam.ToInt32() & 0xfff0) {
+							case (int)SC.SC_MINIMIZE:
+							case (int)SC.SC_MAXIMIZE:
+							case (int)SC.SC_RESTORE:
+								return;
+							default:
+								break;
+						}
+						break;
+					}
+					
 				case (int)WM.WM_NCPAINT:
 					{
 						if(CommonData != null) {
@@ -135,8 +149,50 @@ namespace PeMain.UI
 							}
 						} else {
 							var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
+							var active = this == Form.ActiveForm;
+							var noteStatus = GetNoteStatus();
 							if(captionArea.Contains(point)) {
-								hitTest = HT.HTCAPTION;
+								var throwHittest = true;
+								var commands = new [] { NoteCommand.Compact, NoteCommand.Close, };
+								using(var g = CreateGraphics()) {
+									foreach(var command in commands) {
+										var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
+										var nowState = ButtonState.None;
+										
+										if(commandArea.Contains(point)) {
+											// 入っている
+											if(this._commandStateMap[command] == ButtonState.Pressed) {
+												nowState = ButtonState.Pressed;
+											} else {
+												nowState = ButtonState.Selected;
+											}
+											throwHittest = false;
+										} else {
+											// 外
+											nowState = ButtonState.Normal;
+										}
+										
+										if(nowState != ButtonState.None) {
+											if(this._commandStateMap[command] != nowState) {
+												CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
+												this._commandStateMap[command] = nowState;
+											}
+										}
+									}
+								}
+								if(throwHittest) {
+									hitTest = HT.HTCAPTION;
+								}
+							} else {
+								using(var g = CreateGraphics()) {
+									foreach(var pair in this._commandStateMap) {
+										if(pair.Value != ButtonState.Normal) {
+											var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
+											CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, ButtonState.Normal);
+											this._commandStateMap[pair.Key] = ButtonState.Normal;
+										}
+									}
+								}
 							}
 						}
 						
