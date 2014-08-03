@@ -96,5 +96,12 @@ namespace PeMain.UI
 			}
 		}
 		
+		void ResizeInputArea()
+		{
+			var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
+			var captionArea = this.CommonData.Skin.GetNoteCaptionArea(ClientSize);
+			this.inputBody.Location = new Point(edge.Left, captionArea.Bottom);
+			this.inputBody.Size = new Size(ClientSize.Width - edge.Horizontal, ClientSize.Height - (edge.Vertical + captionArea.Height));
+		}
 	}
 }

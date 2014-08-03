@@ -246,6 +246,9 @@
       <DependentUpon>NoteConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\NoteForm.cs" />
+    <Compile Include="UI\NoteForm.define.cs">
+      <DependentUpon>NoteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\NoteForm.Designer.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>

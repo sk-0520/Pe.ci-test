@@ -36,7 +36,17 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.inputBody = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
+			// 
+			// inputBody
+			// 
+			this.inputBody.Location = new System.Drawing.Point(56, 56);
+			this.inputBody.Multiline = true;
+			this.inputBody.Name = "inputBody";
+			this.inputBody.Size = new System.Drawing.Size(160, 96);
+			this.inputBody.TabIndex = 0;
+			this.inputBody.Visible = false;
 			// 
 			// NoteForm
 			// 
@@ -44,6 +54,7 @@ namespace PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(256, 186);
 			this.ControlBox = false;
+			this.Controls.Add(this.inputBody);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -55,9 +66,13 @@ namespace PeMain.UI
 			this.Activated += new System.EventHandler(this.NoteForm_Activated);
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteForm_Paint);
+			this.DoubleClick += new System.EventHandler(this.NoteForm_DoubleClick);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseDown);
 			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseUp);
+			this.Resize += new System.EventHandler(this.NoteForm_Resize);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 		}
+		private System.Windows.Forms.TextBox inputBody;
 	}
 }

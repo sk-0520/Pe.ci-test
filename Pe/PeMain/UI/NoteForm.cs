@@ -89,5 +89,18 @@ namespace PeMain.UI
 				true
 			);
 		}
+		
+		void NoteForm_DoubleClick(object sender, EventArgs e)
+		{
+			if(!this.inputBody.Visible) {
+				//ResizeInputArea();
+				this.inputBody.Visible = true;
+			}
+		}
+		
+		void NoteForm_Resize(object sender, EventArgs e)
+		{
+			ResizeInputArea();
+		}
 	}
 }

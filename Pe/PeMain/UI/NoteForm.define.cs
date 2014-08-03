@@ -1,20 +1,19 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2014/03/12
- * 時刻: 4:30
+ * 日付: 2014/08/03
+ * 時刻: 22:17
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using PeMain.Data;
 
 namespace PeMain.UI
 {
+	/// <summary>
+	/// Description of NoteForm_define.
+	/// </summary>
 	partial class NoteForm
 	{
-		Dictionary<NoteCommand, ButtonState> _commandStateMap;
 	}
 }
