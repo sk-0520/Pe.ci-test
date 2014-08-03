@@ -39,5 +39,6 @@ namespace PeMain.UI
 		{
 			MessageBox.Show("でゅん・・・");
 		}
+		
 	}
 }

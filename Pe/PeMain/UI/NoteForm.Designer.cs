@@ -46,8 +46,11 @@ namespace PeMain.UI
 			this.ControlBox = false;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "NoteForm";
+			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "NoteForm";
 			this.Activated += new System.EventHandler(this.NoteForm_Activated);
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);

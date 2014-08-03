@@ -289,10 +289,44 @@ namespace PeMain.UI
 					ChangeShowSysEnv(SystemEnv.IsExtensionShow, SystemEnv.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
 					break;
 					
+				case HotKeyId.CreateNote:
+					CreateNote();
+					break;
+				case HotKeyId.HiddenNote:
+					HiddenNote();
+					break;
+				case HotKeyId.CompactNote:
+					CompactNote();
+					break;
+					
 				default:
 					break;
 			}
 		}
 
+		void CreateNote()
+		{
+			var item = new NoteItem();
+			CreateNote(item);
+		}
+		
+		void CreateNote(NoteItem noteItem)
+		{
+			var note = new NoteForm();
+			note.SetCommonData(this._commonData);
+			note.NoteItem = noteItem;
+			note.Show();
+			this._noteWindowList.Add(note);
+		}
+		
+		void HiddenNote()
+		{
+			
+		}
+		
+		void CompactNote()
+		{
+			
+		}
 	}
 }

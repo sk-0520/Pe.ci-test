@@ -44,6 +44,10 @@
 		
 		<Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
+		<Word Name="main/menu/window/note"                  Text="ノート(&amp;N)" />
+		<Word Name="main/menu/window/note/create"           Text="新規作成(&amp;N)" />
+		<Word Name="main/menu/window/note/hidden"           Text="非表示(&amp;H)" />
+		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/logger"                Text="ログ(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[PE] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[PE] 情報(&amp;A) ${open-ui}" />

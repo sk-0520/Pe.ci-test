@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using PeUtility;
 
 namespace PeMain.Data
 {
@@ -18,6 +19,8 @@ namespace PeMain.Data
 	[Serializable]
 	public class NoteSetting: Item, IDisposable
 	{
+		private DBManager _db;
+		
 		public NoteSetting()
 		{
 			CreateHotKey = new HotKeySetting();
@@ -35,6 +38,11 @@ namespace PeMain.Data
 		public HotKeySetting CompactHotKey { get; set; }
 		
 		public FontSetting CaptionFontSetting { get; set; }
+		
+		public void setDatabase(DBManager db)
+		{
+			this._db  = db;
+		}
 		
 		public void Dispose()
 		{

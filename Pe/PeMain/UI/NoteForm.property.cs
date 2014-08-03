@@ -15,6 +15,6 @@ namespace PeMain.UI
 	partial class NoteForm
 	{
 		CommonData CommonData { get; set; }
-		NoteItem NoteItem { get; set; }
+		public NoteItem NoteItem { get; set; }
 	}
 }

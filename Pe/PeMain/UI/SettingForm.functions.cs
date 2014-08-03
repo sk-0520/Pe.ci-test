@@ -60,6 +60,8 @@ namespace PeMain.UI
 			ToolbarExportSetting(mainSetting.Toolbar);
 			
 			// ノート
+			ToolbarExportSetting(mainSetting.Note);
+			
 			// ディスプレイ
 			
 			// プロパティ設定

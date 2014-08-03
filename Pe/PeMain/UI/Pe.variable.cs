@@ -25,6 +25,8 @@ namespace PeMain.UI
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		
+		private List<NoteForm> _noteWindowList = new List<NoteForm>();
+		
 		private CommonData _commonData;
 		private bool _pause = false;
 		

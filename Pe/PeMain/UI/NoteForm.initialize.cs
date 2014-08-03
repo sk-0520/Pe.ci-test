@@ -14,7 +14,6 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			NoteItem = new PeMain.Data.NoteItem();
 		}
 	}
 }

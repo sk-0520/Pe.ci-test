@@ -130,10 +130,12 @@ namespace PeMain.UI
 					InitializeNoteTableChange(pair.Key, pair.Value, logger);
 				}
 			}
+			
 		}
 		
 		void InitializeNote(CommandLine commandLine, StartupLogger logger)
 		{
+			this._commonData.MainSetting.Note.setDatabase(this._commonData.Database);
 		}
 		
 		/// <summary>
@@ -192,26 +194,48 @@ namespace PeMain.UI
 					}
 				}
 			};
-
+		}
+		
+		void AttachmentNoteSubMenu(ToolStripMenuItem parentMenu)
+		{
+			var menuList = new List<ToolStripItem>();
+			var itemNoteCreate = new ToolStripMenuItem();
+			var itemNoteHidden = new ToolStripMenuItem();
+			var itemNoteCompact= new ToolStripMenuItem();
+			menuList.Add(itemNoteCreate);
+			menuList.Add(itemNoteHidden);
+			menuList.Add(itemNoteCompact);
+			
+			// ノート作成
+			itemNoteCreate.Name = menuNameWindowNoteCreate;
+			itemNoteCreate.Click += delegate(object sender, EventArgs e) {
+				CreateNote();
+			};
+			// ノート非表示
+			itemNoteHidden.Name = menuNameWindowNoteHidden;
+			// ノート作成
+			itemNoteCompact.Name = menuNameWindowNoteCompact;
+			
+			// サブメニュー設定
+			parentMenu.DropDownItems.AddRange(menuList.ToArray());
 		}
 		
 		void AttachmentWindowSubMenu(ToolStripMenuItem parentMenu)
 		{
 			var menuList = new List<ToolStripMenuItem>();
 			var itemToolbar = new ToolStripMenuItem();
+			var itemNote = new ToolStripMenuItem();
 			var itemLogger = new ToolStripMenuItem();
 			
 			menuList.Add(itemToolbar);
+			menuList.Add(itemNote);
 			menuList.Add(itemLogger);
 			
 			itemToolbar.Name = menuNameWindowToolbar;
 			AttachmentToolbarSubMenu(itemToolbar);
-			/*
-			itemToolbar.Click += (object sender, EventArgs e) => {
-				this._toolbarForms.Visible = !this._toolbarForms.Visible;
-				this._mainSetting.Toolbar.Visible = this._toolbarForms.Visible;
-			};
-			 */
+			
+			itemNote.Name = menuNameWindowNote;
+			AttachmentNoteSubMenu(itemNote);
 			
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
@@ -363,6 +387,10 @@ namespace PeMain.UI
 			this._toolbarForms.SetCommonData(this._commonData.Language, this._mainSetting);
 			 */
 		}
+		
+		void InitializeNoteForm(CommandLine commandLine, StartupLogger logger)
+		{
+		}
 
 		void InitializeUI(CommandLine commandLine, StartupLogger logger)
 		{
@@ -374,6 +402,7 @@ namespace PeMain.UI
 			InitializeMain(commandLine, logger);
 			InitializeCommandForm(commandLine, logger);
 			InitializeToolbarForm(commandLine, logger);
+			InitializeNoteForm(commandLine, logger);
 			
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/end"]);
 		}

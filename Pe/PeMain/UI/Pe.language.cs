@@ -14,17 +14,21 @@ namespace PeMain.UI
 {
 	public partial class Pe
 	{
-		void ApplyLanguage()
+		void ApplyLanguageMainMenu()
 		{
-			Debug.Assert(this._commonData.Language != null);
-			
 			var rootMenu = this._notificationMenu.Items;
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
 
 			var windowMenu = (ToolStripMenuItem)rootMenu[menuNameWindow];
 			windowMenu.Text = this._commonData.Language["main/menu/window"];
 			windowMenu.DropDownItems[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
+			windowMenu.DropDownItems[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
 			windowMenu.DropDownItems[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
+			
+			var noteMenu = (ToolStripMenuItem)windowMenu.DropDownItems[menuNameWindowNote];
+			noteMenu.DropDownItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
+			noteMenu.DropDownItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
+			noteMenu.DropDownItems[menuNameWindowNoteCompact].Text =this._commonData.Language["main/menu/window/note/compact"]; 
 
 			var systemEnvMenu = (ToolStripMenuItem)rootMenu[menuNameSystemEnv];
 			systemEnvMenu.Text = this._commonData.Language["main/menu/system-env"];
@@ -33,7 +37,14 @@ namespace PeMain.UI
 		
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];
+		}
+		
+		
+		void ApplyLanguage()
+		{
+			Debug.Assert(this._commonData.Language != null);
 			
+			ApplyLanguageMainMenu();
 		}
 	}
 }
