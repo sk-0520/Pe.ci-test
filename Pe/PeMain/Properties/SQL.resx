@@ -178,34 +178,6 @@ where
 )
 </value>
   </data>
-  <data name="CreateNoteGroupMasterTable" xml:space="preserve">
-    <value>create table M_NOTE_GROUP (
-    GROUP_ID        integer  primary key,
-    CMN_ENABLED     integer  not null,
-    CMN_CREATE      text     not null,
-    CMN_UPDATE      text     not null,
-    GROUP_TITLE     text
-    FONT_FAMILY     integer  not null,
-    FONT_SIZE       real     not null,
-    FONT_ITALIC     integer  not null,
-    FONT_BOLD       integer  not null,
-    COLOR_FORE      text     not null,
-    COLOR_BACK      text     not null
-)
-</value>
-  </data>
-  <data name="CreateNoteGroupTransactionTable" xml:space="preserve">
-    <value>create table T_NOTE_GROUP (
-    GROUP_ID        integer,
-    NOTE_ID         integer,
-    CMN_ENABLED     integer  not null,
-    CMN_CREATE      text     not null,
-    CMN_UPDATE      text     not null,
-    -- pkey
-    primary key(GROUP_ID, NOTE_ID)
-)
-</value>
-  </data>
   <data name="GetId" xml:space="preserve">
     <value>select
     coalesce(max(:id_column_name), 0) MAX_ID,

@@ -206,19 +206,15 @@ namespace PeMain
 			map = new Dictionary<string, int>() {
 				{ masterTableVersion,         1},
 				{ masterTableNote,            1},
-				{ masterTableNoteGroup,       1},
 				{ transactionTableNote,       1},
 				{ transactionTableNoteStyle,  1},
-				{ transactionTableNoteGroup,  1},
 			};
 		}
 		public static readonly Dictionary<string, int> map;
 		
 		public const string masterTableVersion        = "M_VERSION";
 		public const string masterTableNote           = "M_NOTE";
-		public const string masterTableNoteGroup      = "M_NOTE_GROUP";
 		public const string transactionTableNote      = "T_NOTE";
 		public const string transactionTableNoteStyle = "T_NOTE_STYLE";
-		public const string transactionTableNoteGroup = "T_NOTE_GROUP";
 	}
 }

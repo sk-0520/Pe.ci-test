@@ -78,46 +78,6 @@ namespace PeMain.Properties {
 		}
 		
 		/// <summary>
-		///   create table M_NOTE_GROUP (
-		///    GROUP_ID        integer  primary key,
-		///    CMN_ENABLED     integer  not null,
-		///    CMN_CREATE      text     not null,
-		///    CMN_UPDATE      text     not null,
-		///    GROUP_TITLE     text
-		///    FONT_FAMILY     integer  not null,
-		///    FONT_SIZE       real     not null,
-		///    FONT_ITALIC     integer  not null,
-		///    FONT_BOLD       integer  not null,
-		///    COLOR_FORE      text     not null,
-		///    COLOR_BACK      text     not null
-		///)
-		/// に類似しているローカライズされた文字列を検索します。
-		/// </summary>
-		public static string CreateNoteGroupMasterTable {
-			get {
-				return ResourceManager.GetString("CreateNoteGroupMasterTable", resourceCulture);
-			}
-		}
-		
-		/// <summary>
-		///   create table T_NOTE_GROUP (
-		///    GROUP_ID        integer,
-		///    NOTE_ID         integer,
-		///    CMN_ENABLED     integer  not null,
-		///    CMN_CREATE      text     not null,
-		///    CMN_UPDATE      text     not null,
-		///    -- pkey
-		///    primary key(GROUP_ID, NOTE_ID)
-		///)
-		/// に類似しているローカライズされた文字列を検索します。
-		/// </summary>
-		public static string CreateNoteGroupTransactionTable {
-			get {
-				return ResourceManager.GetString("CreateNoteGroupTransactionTable", resourceCulture);
-			}
-		}
-		
-		/// <summary>
 		///   create table M_NOTE (
 		///    NOTE_ID      integer  primary key,
 		///    CMN_ENABLED  integer  not null,

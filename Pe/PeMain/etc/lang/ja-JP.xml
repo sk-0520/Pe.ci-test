@@ -132,6 +132,9 @@
 		<Word Name="setting/label/icon-path"      Text="アイコンパス" />
 		<Word Name="setting/label/tags"           Text="タグ" />
 		<Word Name="setting/label/note"           Text="備考" />
+		<Word Name="setting/label/note-create"    Text="作成" />
+		<Word Name="setting/label/note-hidden"    Text="隠す" />
+		<Word Name="setting/label/note-compact"   Text="最小化" />
 		<Word Name="setting/check/std-stream"     Text="${std-stream}" />
 		<Word Name="setting/check/auto-hide"      Text="${auto-hide}" />
 		<Word Name="setting/check/show-text"      Text="テキストを表示する" />

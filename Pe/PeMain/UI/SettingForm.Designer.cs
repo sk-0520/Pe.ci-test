@@ -129,12 +129,14 @@ namespace PeMain.UI
 			this.commandCommandFont = new PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.pageNote = new System.Windows.Forms.TabPage();
+			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
+			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelNoteCreate = new System.Windows.Forms.Label();
 			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
 			this.labelNoteHiddent = new System.Windows.Forms.Label();
 			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
-			this.label1 = new System.Windows.Forms.Label();
+			this.labelNoteCompact = new System.Windows.Forms.Label();
 			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
 			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
@@ -142,8 +144,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
-			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
@@ -682,7 +682,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 176);
+			this.panelEnv.Size = new System.Drawing.Size(519, 174);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -691,7 +691,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 176);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 174);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -700,7 +700,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 176);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 174);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -961,7 +961,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 268);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 270);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -972,13 +972,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 243);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 245);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 268);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 270);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -994,7 +994,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 243);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 245);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1090,7 +1090,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 268);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 270);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1208,13 +1208,31 @@ namespace PeMain.UI
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
 			// 
+			// commandNoteCaptionFont
+			// 
+			this.commandNoteCaptionFont.AutoSize = true;
+			this.commandNoteCaptionFont.Location = new System.Drawing.Point(119, 162);
+			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
+			this.commandNoteCaptionFont.Size = new System.Drawing.Size(171, 25);
+			this.commandNoteCaptionFont.TabIndex = 10;
+			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
+			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
+			// 
+			// labelNoteCaptionFont
+			// 
+			this.labelNoteCaptionFont.Location = new System.Drawing.Point(8, 167);
+			this.labelNoteCaptionFont.Name = "labelNoteCaptionFont";
+			this.labelNoteCaptionFont.Size = new System.Drawing.Size(100, 23);
+			this.labelNoteCaptionFont.TabIndex = 9;
+			this.labelNoteCaptionFont.Text = "{FONT}";
+			// 
 			// flowLayoutPanel2
 			// 
 			this.flowLayoutPanel2.Controls.Add(this.labelNoteCreate);
 			this.flowLayoutPanel2.Controls.Add(this.inputNoteCreate);
 			this.flowLayoutPanel2.Controls.Add(this.labelNoteHiddent);
 			this.flowLayoutPanel2.Controls.Add(this.inputNoteHidden);
-			this.flowLayoutPanel2.Controls.Add(this.label1);
+			this.flowLayoutPanel2.Controls.Add(this.labelNoteCompact);
 			this.flowLayoutPanel2.Controls.Add(this.inputNoteCompact);
 			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flowLayoutPanel2.Location = new System.Drawing.Point(5, 3);
@@ -1270,14 +1288,14 @@ namespace PeMain.UI
 			this.inputNoteHidden.TabIndex = 5;
 			this.inputNoteHidden.Text = "None";
 			// 
-			// label1
+			// labelNoteCompact
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 88);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(116, 15);
-			this.label1.TabIndex = 4;
-			this.label1.Text = "{COMPACT-NOTE}";
+			this.labelNoteCompact.AutoSize = true;
+			this.labelNoteCompact.Location = new System.Drawing.Point(3, 88);
+			this.labelNoteCompact.Name = "labelNoteCompact";
+			this.labelNoteCompact.Size = new System.Drawing.Size(116, 15);
+			this.labelNoteCompact.TabIndex = 4;
+			this.labelNoteCompact.Text = "{COMPACT-NOTE}";
 			// 
 			// inputNoteCompact
 			// 
@@ -1356,24 +1374,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// commandNoteCaptionFont
-			// 
-			this.commandNoteCaptionFont.AutoSize = true;
-			this.commandNoteCaptionFont.Location = new System.Drawing.Point(119, 162);
-			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
-			this.commandNoteCaptionFont.Size = new System.Drawing.Size(171, 25);
-			this.commandNoteCaptionFont.TabIndex = 10;
-			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
-			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
-			// 
-			// labelNoteCaptionFont
-			// 
-			this.labelNoteCaptionFont.Location = new System.Drawing.Point(8, 167);
-			this.labelNoteCaptionFont.Name = "labelNoteCaptionFont";
-			this.labelNoteCaptionFont.Size = new System.Drawing.Size(100, 23);
-			this.labelNoteCaptionFont.TabIndex = 9;
-			this.labelNoteCaptionFont.Text = "{FONT}";
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1444,7 +1444,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.Label labelNoteCaptionFont;
 		private PeMain.UI.FontSplitButton commandNoteCaptionFont;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label labelNoteCompact;
 		private PeMain.UI.PeHotkeyControl inputNoteCompact;
 		private System.Windows.Forms.Label labelNoteHiddent;
 		private PeMain.UI.PeHotkeyControl inputNoteHidden;

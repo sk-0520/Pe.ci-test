@@ -66,8 +66,6 @@ namespace PeMain.UI
 			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
-				{ DataTables.masterTableNoteGroup,      global::PeMain.Properties.SQL.CreateNoteGroupMasterTable },
-				{ DataTables.transactionTableNoteGroup, global::PeMain.Properties.SQL.CreateNoteGroupTransactionTable },
 				{ DataTables.transactionTableNote,      global::PeMain.Properties.SQL.CreateNoteTransactionTable },
 				{ DataTables.transactionTableNoteStyle, global::PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
 			};
@@ -93,8 +91,6 @@ namespace PeMain.UI
 			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           string.Empty },
-				{ DataTables.masterTableNoteGroup,      string.Empty },
-				{ DataTables.transactionTableNoteGroup, string.Empty },
 				{ DataTables.transactionTableNote,      string.Empty },
 				{ DataTables.transactionTableNoteStyle, string.Empty },
 			};
@@ -157,10 +153,10 @@ namespace PeMain.UI
 			
 			InitializeLanguage(commandLine, logger);
 			
-			#if DEBUG
+			//#if DEBUG
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
-			#endif
+			//#endif
 		}
 		
 		void InitializeMessage(CommandLine commandLine, StartupLogger logger)

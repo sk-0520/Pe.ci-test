@@ -122,6 +122,10 @@ namespace PeMain.UI
 			
 			this.commandNoteCaptionFont.SetLanguage(Language);
 			
+			this.labelNoteCreate.Text = Language["setting/label/note-create"];
+			this.labelNoteHiddent.Text = Language["setting/label/note-hidden"];
+			this.labelNoteCompact.Text = Language["setting/label/note-compact"];
+			this.labelNoteCaptionFont.Text = Language["common/label/font"];
 		}
 		
 		void ApplyLanguage()
