@@ -44,7 +44,16 @@ namespace PeMain.Logic
 		public void WiteItem(LogItem logItem)
 		{
 			if(this._stream != null) {
-				this._stream.WriteLine("{0} {1} {2} {3}", logItem.DateTime, logItem.Title, logItem.Detail, logItem.StackTrace);
+				this._stream.WriteLine(
+					"====================================={0}" +
+					"{1} {2}{3}" +
+					"{4}{5}" +
+					"{6}{7}",
+					Environment.NewLine, 
+					logItem.DateTime, logItem.Title, Environment.NewLine,
+					logItem.Detail, Environment.NewLine, 
+					logItem.StackTrace, Environment.NewLine
+				);
 				this._stream.Flush();
 			}
 		}
