@@ -41,12 +41,14 @@ namespace PeMain.UI
 			// 
 			// inputBody
 			// 
+			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.inputBody.Location = new System.Drawing.Point(56, 56);
 			this.inputBody.Multiline = true;
 			this.inputBody.Name = "inputBody";
 			this.inputBody.Size = new System.Drawing.Size(160, 96);
 			this.inputBody.TabIndex = 0;
 			this.inputBody.Visible = false;
+			this.inputBody.Leave += new System.EventHandler(this.InputBody_Leave);
 			// 
 			// NoteForm
 			// 

@@ -84,7 +84,7 @@ namespace PeMain.UI
 					
 				case (int)WM.WM_NCPAINT:
 					{
-						if(CommonData != null) {
+						if(CommonData != null && !this.inputBody.Visible) {
 							var hDC = API.GetWindowDC(Handle);
 							try {
 								using(var g = Graphics.FromHdc(hDC)) {

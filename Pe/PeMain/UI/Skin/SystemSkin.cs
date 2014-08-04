@@ -227,6 +227,7 @@ namespace PeMain.UI
 			switch(noteCommand) {
 				case NoteCommand.Close:   pos = 1; break;
 				case NoteCommand.Compact: pos = 2; break;
+				case NoteCommand.Topmost: pos = 3; break;
 				default: 
 					Debug.Assert(false);
 					break;
@@ -475,7 +476,9 @@ namespace PeMain.UI
 		
 		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body)
 		{
-			
+			using(var brush = new SolidBrush(foreColor)) {
+				g.DrawString(body, font, brush, drawArea);
+			}
 		}
 
 #endregion

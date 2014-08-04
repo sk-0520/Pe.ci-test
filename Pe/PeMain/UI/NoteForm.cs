@@ -48,6 +48,7 @@ namespace PeMain.UI
 		
 		void NoteForm_Deactivate(object sender, EventArgs e)
 		{
+			HiddenInputArea();
 			DrawFullActivaChanged(false);
 		}
 		
@@ -92,15 +93,17 @@ namespace PeMain.UI
 		
 		void NoteForm_DoubleClick(object sender, EventArgs e)
 		{
-			if(!this.inputBody.Visible) {
-				//ResizeInputArea();
-				this.inputBody.Visible = true;
-			}
+			ShowInputArea();
 		}
 		
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
 			ResizeInputArea();
+		}
+		
+		void InputBody_Leave(object sender, EventArgs e)
+		{
+			HiddenInputArea();
 		}
 	}
 }

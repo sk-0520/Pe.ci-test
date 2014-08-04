@@ -19,6 +19,7 @@ namespace PeMain.UI
 			this._commandStateMap = new Dictionary<NoteCommand, ButtonState>() {
 				{ NoteCommand.Close, ButtonState.Normal },
 				{ NoteCommand.Compact, ButtonState.Normal },
+				{ NoteCommand.Topmost, ButtonState.Normal },
 			};
 		}
 	}

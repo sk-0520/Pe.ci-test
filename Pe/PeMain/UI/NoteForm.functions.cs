@@ -56,7 +56,7 @@ namespace PeMain.UI
 		{
 			var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
 			if(!captionArea.Size.IsEmpty) {
-				var commands = new [] { NoteCommand.Compact, NoteCommand.Close, };
+				var commands = new [] { NoteCommand.Topmost, NoteCommand.Compact, NoteCommand.Close, };
 				var active = this == Form.ActiveForm;
 				var noteStatus = GetNoteStatus();
 				if(captionArea.Contains(point)) {
@@ -96,12 +96,45 @@ namespace PeMain.UI
 			}
 		}
 		
+		Rectangle GetBodyArea()
+		{
+			return GetBodyArea(
+				this.CommonData.Skin.GetNoteWindowEdgePadding(),
+				this.CommonData.Skin.GetNoteCaptionArea(ClientSize)
+			);
+		}
+		Rectangle GetBodyArea(Padding edge, Rectangle captionArea)
+		{
+			return new Rectangle(
+				 new Point(edge.Left, captionArea.Bottom),
+				 new Size(ClientSize.Width - edge.Horizontal, ClientSize.Height - (edge.Vertical + captionArea.Height))
+			);
+		}
+
 		void ResizeInputArea()
 		{
 			var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
 			var captionArea = this.CommonData.Skin.GetNoteCaptionArea(ClientSize);
-			this.inputBody.Location = new Point(edge.Left, captionArea.Bottom);
-			this.inputBody.Size = new Size(ClientSize.Width - edge.Horizontal, ClientSize.Height - (edge.Vertical + captionArea.Height));
+			var bodyArea = GetBodyArea();
+			this.inputBody.Location = bodyArea.Location;
+			this.inputBody.Size = bodyArea.Size;
+		}
+		
+		void ShowInputArea()
+		{
+			this.inputBody.Text = NoteItem.Body;
+			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
+			
+			if(!this.inputBody.Visible) {
+				this.inputBody.Visible = true;
+				this.inputBody.Focus();
+			}
+		}
+		
+		void HiddenInputArea()
+		{
+			NoteItem.Body = this.inputBody.Text; 
+			this.inputBody.Visible = false;
 		}
 	}
 }

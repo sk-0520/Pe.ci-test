@@ -313,8 +313,8 @@ namespace PeMain.UI
 		void CreateNote(NoteItem noteItem)
 		{
 			var note = new NoteForm();
-			note.SetCommonData(this._commonData);
 			note.NoteItem = noteItem;
+			note.SetCommonData(this._commonData);
 			note.Show();
 			this._noteWindowList.Add(note);
 		}
