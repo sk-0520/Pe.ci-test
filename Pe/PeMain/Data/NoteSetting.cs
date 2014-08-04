@@ -9,6 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
 using System.Xml.Serialization;
 using PeMain.Data.DB;
 using PeMain.Logic;
@@ -49,6 +51,48 @@ namespace PeMain.Data
 			this._db = db;
 		}
 		
+		public IEnumerable<NoteItem> GetNoteItemList(bool enabledOnly)
+		{
+			var dtoList = this._db.GetResultList<NoteItemDto>(global::PeMain.Properties.SQL.GetNoteItemList);
+			if(enabledOnly) {
+				dtoList = dtoList.Where(dto => dto.CommonEnabled);
+			}
+			var count = dtoList.Count();
+			if(count > 0) {
+				var result = new List<NoteItem>(count);
+				foreach(var dto in dtoList) {
+					var noteItem = new NoteItem();
+					
+					noteItem.Title = dto.Title;
+					noteItem.Body = dto.Body;
+					noteItem.NoteType = NoteTypeUtility.ToNoteType(dto.RawType);
+					
+					noteItem.Visibled = dto.Visibled;
+					noteItem.Compact = dto.Compact;
+					noteItem.Topmost = dto.Topmost;
+					noteItem.Locked = dto.Locked;
+					
+					noteItem.Location = new Point(dto.X, dto.Y);
+					noteItem.Size = new Size(dto.Width, dto.Height);
+					
+					noteItem.Style.ForeColor = dto.ForeColor;
+					noteItem.Style.BackColor = dto.BackColor;
+					if(!string.IsNullOrWhiteSpace(dto.FontFamily) && dto.FontHeight > 0) {
+						noteItem.Style.FontSetting.Family = dto.FontFamily; 
+						noteItem.Style.FontSetting.Height = dto.FontHeight; 
+						noteItem.Style.FontSetting.Bold = dto.FontBold; 
+						noteItem.Style.FontSetting.Italic = dto.FontItalic; 
+					}
+					
+					result.Add(noteItem);
+				}
+				
+				return result;
+			} else {
+				return null;
+			}
+		}
+		
 		public NoteItem InsertItem(NoteItem noteItem)
 		{
 			lock(this._db) {
@@ -57,7 +101,7 @@ namespace PeMain.Data
 					noteItem.NoteId = noteDto.MaxId + 1;
 					var mNote = new MNoteEntity();
 					mNote.Id = noteItem.NoteId;
-					mNote.RawType = (int)NoteType.Text;
+					mNote.RawType = NoteTypeUtility.ToNumber(NoteType.Text);
 					mNote.Title = noteItem.Title;
 					mNote.CommonCreate = mNote.CommonUpdate = DateTime.Now;
 					mNote.CommonEnabled = true;
@@ -135,7 +179,7 @@ namespace PeMain.Data
 					mNote = this._db.GetEntity(mNote);
 					Debug.Assert(mNote != null, noteItem.ToString());
 					mNote.Title = noteItem.Title;
-					mNote.RawType = (int)NoteType.Text;
+					mNote.RawType = NoteTypeUtility.ToNumber(NoteType.Text);
 					mNote.Title = noteItem.Title;
 					mNote.CommonUpdate = timestamp;
 					

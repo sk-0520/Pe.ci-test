@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
+    <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
     <Compile Include="Data\DB\Entity\CommonData.cs" />
     <Compile Include="Data\DB\Entity\M_NOTE.cs" />
     <Compile Include="Data\DB\Entity\M_VERSION.cs" />

@@ -232,7 +232,7 @@ namespace PeMain.UI
 			this.contextMenu.Show(this, point);
 		}
 		
-		void SaveItem()
+		public void SaveItem()
 		{
 			if(this._changed) {
 				CommonData.MainSetting.Note.ResistItem(NoteItem);

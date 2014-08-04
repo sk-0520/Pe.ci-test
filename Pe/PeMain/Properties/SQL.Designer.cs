@@ -156,5 +156,41 @@ namespace PeMain.Properties {
 				return ResourceManager.GetString("GetId", resourceCulture);
 			}
 		}
+		
+		/// <summary>
+		///   select
+		///	CMN_ENABLED,
+		///	NOTE_ID,
+		///	NOTE_TITLE,
+		///	NOTE_TYPE,
+		///	NOTE_BODY,
+		///	WINDOW_VISIBLED,
+		///	WINDOW_LOCKED,
+		///	WINDOW_TOPMOST,
+		///	WINDOW_COMPACT,
+		///	WINDOW_POS_X,
+		///	WINDOW_POS_Y,
+		///	WINDOW_SIZE_W,
+		///	WINDOW_SIZE_H,
+		///	FONT_FAMILY,
+		///	FONT_SIZE,
+		///	FONT_ITALIC,
+		///	FONT_BOLD,
+		///	COLOR_FORE,
+		///	COLOR_BACK
+		///from
+		///	M_NOTE
+		///	inner join T_NOTE using(NOTE_ID)
+		///	inner join T_NOTE_STYLE using(NOTE_ID)
+		///order by
+		///	M_NOTE.CMN_CREATE
+		///
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string GetNoteItemList {
+			get {
+				return ResourceManager.GetString("GetNoteItemList", resourceCulture);
+			}
+		}
 	}
 }

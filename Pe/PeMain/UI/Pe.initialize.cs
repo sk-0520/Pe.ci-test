@@ -390,6 +390,9 @@ namespace PeMain.UI
 		
 		void InitializeNoteForm(CommandLine commandLine, StartupLogger logger)
 		{
+			foreach(var item in this._commonData.MainSetting.Note.GetNoteItemList(true).Where(item => item.Visibled)) {
+				CreateNote(item);
+			}
 		}
 
 		void InitializeUI(CommandLine commandLine, StartupLogger logger)

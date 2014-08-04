@@ -319,6 +319,9 @@ namespace PeMain.UI
 			noteForm.NoteItem = noteItem;
 			noteForm.SetCommonData(this._commonData);
 			noteForm.Show();
+			noteForm.Closed += delegate(object sender, EventArgs e) { 
+				this._noteWindowList.Remove(noteForm);
+			};
 			this._noteWindowList.Add(noteForm);
 			return noteForm;
 		}

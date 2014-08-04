@@ -28,11 +28,11 @@ namespace PeMain.Data
 	
 	public static class NoteTypeUtility
 	{
-		public static long ToLong(this NoteType type)
+		public static int ToNumber(this NoteType type)
 		{
 			switch(type) {
-				case NoteType.Text: return 1;
-				case NoteType.Rtf:  return 2;
+				case NoteType.Text: return 0;
+				case NoteType.Rtf:  return 1;
 				default:
 					Debug.Assert(false, type.ToString());
 					return -1;
@@ -41,8 +41,8 @@ namespace PeMain.Data
 		public static NoteType ToNoteType(long value)
 		{
 			switch(value) {
-				case 1: return NoteType.Text;
-				case 2: return NoteType.Rtf;
+				case 0: return NoteType.Text;
+				case 1: return NoteType.Rtf;
 				default:
 					Debug.Assert(false, value.ToString());
 					return NoteType.Text;
@@ -68,6 +68,7 @@ namespace PeMain.Data
 			
 			Title = string.Empty;
 			Body = string.Empty;
+			NoteType = NoteType.Text;
 			
 			Size = Literal.noteSize;
 		}
@@ -76,6 +77,8 @@ namespace PeMain.Data
 		
 		public string Title { get; set; }
 		public string Body { get; set; }
+		
+		public NoteType NoteType { get; set; }
 		
 		public NoteStyle Style { get; set; }
 		

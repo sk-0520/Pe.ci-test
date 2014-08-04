@@ -31,6 +31,11 @@ namespace PeMain.UI
 			Initialize();
 		}
 		
+		protected override bool ShowWithoutActivation 
+		{
+			get { return true; }
+		}
+
 		protected override void OnPaintBackground(PaintEventArgs pevent)
 		{
 			//base.OnPaintBackground(pevent);
