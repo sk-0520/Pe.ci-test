@@ -140,6 +140,11 @@ namespace PeMain.UI
 		{
 			this.contextMenu.Show(this, point);
 		}
+		
+		void SaveItem()
+		{
+			CommonData.MainSetting.Note.ResistItem(NoteItem);
+		}
 
 	}
 }

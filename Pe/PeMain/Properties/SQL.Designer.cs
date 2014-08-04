@@ -99,7 +99,7 @@ namespace PeMain.Properties {
 		///    CMN_ENABLED     integer  not null,
 		///    CMN_CREATE      text     not null,
 		///    CMN_UPDATE      text     not null,
-		///    FONT_FAMILY     integer  not null,
+		///    FONT_FAMILY     text     not null,
 		///    FONT_SIZE       real     not null,
 		///    FONT_ITALIC     integer  not null,
 		///    FONT_BOLD       integer  not null,

@@ -66,6 +66,9 @@ namespace PeMain.Data
 			Topmost = false;
 			Compact = false;
 			
+			Title = string.Empty;
+			Body = string.Empty;
+			
 			Size = Literal.noteSize;
 		}
 		

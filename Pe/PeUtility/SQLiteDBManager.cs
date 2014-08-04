@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace PeUtility
 {
@@ -24,6 +26,8 @@ namespace PeUtility
 				{ typeof(bool),     () => Convert.ToBoolean(value) },
 				{ typeof(DateTime), () => Convert.ToDateTime(value) },
 				{ typeof(int),      () => Convert.ToInt32(value) },
+				{ typeof(Color),    () => Color.FromArgb(Convert.ToInt32(value)) },
+				{ typeof(float),    () => Convert.ToSingle(value) },
 			};
 			
 			if(map.ContainsKey(toType)) {
@@ -38,6 +42,7 @@ namespace PeUtility
 			var map = new Dictionary<Type, DbType>() {
 				{ typeof(bool),     DbType.Int32 },
 				{ typeof(DateTime), DbType.String },
+				{ typeof(Color),    DbType.Int32 },
 			};
 			if(map.ContainsKey(type)) {
 				return map[type];
@@ -51,6 +56,7 @@ namespace PeUtility
 			var map = new Dictionary<Type, Func<object>>() {
 				{ typeof(bool),     () => Convert.ToInt32(value) },
 				{ typeof(DateTime), () => ((DateTime)value).ToString("s") },
+				{ typeof(Color),    () => ((Color)value).ToArgb() },
 			};
 			if(map.ContainsKey(type)) {
 				return map[type]();

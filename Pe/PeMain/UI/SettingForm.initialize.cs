@@ -150,7 +150,7 @@ namespace PeMain.UI
 			InitializeNote(mainSetting.Note);
 
 #if RELEASE
-			var debugPage = new [] { this.pageNote, this.pageCommand, this.pageDisplay };
+			var debugPage = new [] { this.pageCommand, this.pageDisplay };
 			foreach(var page in debugPage) {
 				this.tabSetting.TabPages.Remove(page);
 			}

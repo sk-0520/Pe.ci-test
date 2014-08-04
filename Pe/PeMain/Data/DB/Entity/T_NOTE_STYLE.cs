@@ -16,7 +16,7 @@ namespace PeMain.Data.DB
 	/// Description of T_NOTE_STYLE.
 	/// </summary>
 	[TargetName("T_NOTE_STYLE")]
-	public class TNoteStyleEntity: NoteStyleEntity
+	public class TNoteStyleEntity: CommonDataEntity
 	{
 		[TargetName("NOTE_ID", true)]
 		public long Id { get; set; }
@@ -37,6 +37,19 @@ namespace PeMain.Data.DB
 		public int Width { get; set; }
 		[TargetName("WINDOW_SIZE_H")]
 		public int Height { get; set; }
+		
+		[TargetName("FONT_FAMILY")]
+		public string FontFamily { get; set; }
+		[TargetName("FONT_SIZE")]
+		public float FontHeight { get; set; }
+		[TargetName("FONT_ITALIC")]
+		public bool FontItalic { get; set; }
+		[TargetName("FONT_BOLD")]
+		public bool FontBold { get; set; }
+		[TargetName("COLOR_FORE")]
+		public Color ForeColor { get; set; }
+		[TargetName("COLOR_BACK")]
+		public Color BackColor { get; set; }
 		
 		public Point Location
 		{

@@ -51,6 +51,7 @@ namespace PeMain.UI
 		{
 			HiddenInputArea();
 			DrawFullActivaChanged(false);
+			SaveItem();
 		}
 		
 		

@@ -21,30 +21,5 @@ namespace PeMain.Data.DB
 		[TargetName("CMN_UPDATE")]
 		public DateTime CommonUpdate { get; set; }
 	}
-	
-	public interface INoteStyleEntity
-	{
-		string FontFamily { get; set; }
-		float FontHeight { get; set; }
-		bool FontItalic { get; set; }
-		bool FontBold { get; set; }
-		Color ForeColor { get; set; }
-		Color BackColor { get; set; }
-	}
-	
-	public abstract class NoteStyleEntity: CommonDataEntity, INoteStyleEntity
-	{
-		[TargetName("FONT_FAMILY")]
-		public string FontFamily { get; set; }
-		[TargetName("FONT_SIZE")]
-		public float FontHeight { get; set; }
-		[TargetName("FONT_ITALIC")]
-		public bool FontItalic { get; set; }
-		[TargetName("FONT_BOLD")]
-		public bool FontBold { get; set; }
-		[TargetName("COLOR_FORE")]
-		public Color ForeColor { get; set; }
-		[TargetName("COLOR_BACK")]
-		public Color BackColor { get; set; }
-	}
+
 }
