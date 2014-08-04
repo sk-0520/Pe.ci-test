@@ -63,6 +63,8 @@ namespace PeMain.Data
 				foreach(var dto in dtoList) {
 					var noteItem = new NoteItem();
 					
+					noteItem.NoteId = dto.Id;
+					
 					noteItem.Title = dto.Title;
 					noteItem.Body = dto.Body;
 					noteItem.NoteType = NoteTypeUtility.ToNoteType(dto.RawType);
