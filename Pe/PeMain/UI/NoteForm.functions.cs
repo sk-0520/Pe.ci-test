@@ -114,7 +114,7 @@ namespace PeMain.UI
 		
 		void DrawCommand(Point point, Func<bool, ButtonState, ButtonState> inFirstDg, Action<NoteCommand> prevDrawDg, Action lastInDg, bool elseProcess)
 		{
-			var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
+			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
 			if(!captionArea.Size.IsEmpty) {
 				var active = this == Form.ActiveForm;
 				var noteStatus = GetNoteStatus();
@@ -157,21 +157,21 @@ namespace PeMain.UI
 		
 		Rectangle GetTitleArea()
 		{
-			return this.CommonData.Skin.GetNoteCaptionArea(ClientSize);
+			return this.CommonData.Skin.GetNoteCaptionArea(Size);
 		}
 		
 		Rectangle GetBodyArea()
 		{
 			return GetBodyArea(
 				this.CommonData.Skin.GetNoteWindowEdgePadding(),
-				this.CommonData.Skin.GetNoteCaptionArea(ClientSize)
+				this.CommonData.Skin.GetNoteCaptionArea(Size)
 			);
 		}
 		Rectangle GetBodyArea(Padding edge, Rectangle captionArea)
 		{
 			return new Rectangle(
 				new Point(edge.Left, captionArea.Bottom),
-				new Size(ClientSize.Width - edge.Horizontal, ClientSize.Height - (edge.Vertical + captionArea.Height))
+				new Size(Size.Width - edge.Horizontal, Size.Height - (edge.Vertical + captionArea.Height))
 			);
 		}
 
@@ -227,7 +227,7 @@ namespace PeMain.UI
 		void HiddenInputBodyArea()
 		{
 			var value = this.inputBody.Text.Trim();
-			var change = NoteItem.Title != value;
+			var change = NoteItem.Body != value;
 			if(change) {
 				NoteItem.Body = value;
 				this._changed |= true;

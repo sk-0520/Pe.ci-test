@@ -91,7 +91,7 @@ namespace PeMain.Data
 				
 				return result;
 			} else {
-				return null;
+				return new NoteItem[] {};
 			}
 		}
 		

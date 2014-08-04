@@ -308,6 +308,7 @@ namespace PeMain.UI
 		{
 			// アイテムをデータ設定
 			var item = new NoteItem();
+			item.Location = Cursor.Position;
 			this._commonData.MainSetting.Note.InsertItem(item);
 			var noteForm = CreateNote(item);
 			noteForm.Activate();

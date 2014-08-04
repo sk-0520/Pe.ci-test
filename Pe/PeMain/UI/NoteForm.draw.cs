@@ -39,7 +39,7 @@ namespace PeMain.UI
 			//}
 			
 			DrawEdge(g, drawArea, active, noteStatus);
-			var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
+			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
 			if(!captionArea.Size.IsEmpty) {
 				DrawCaption(g, captionArea, active, noteStatus);
 			}
