@@ -31,6 +31,17 @@ namespace PeMain.UI
 			Initialize();
 		}
 		
+		protected override void OnPaintBackground(PaintEventArgs pevent)
+		{
+			//base.OnPaintBackground(pevent);
+		}
+		
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			this.Invalidate();
+		}
+		
 		void NoteForm_Paint(object sender, PaintEventArgs e)
 		{
 			using(var bmp = new Bitmap(Width, Height, e.Graphics)) {
@@ -49,8 +60,11 @@ namespace PeMain.UI
 		
 		void NoteForm_Deactivate(object sender, EventArgs e)
 		{
-			HiddenInputArea();
+			HiddenInputTitleArea();
+			HiddenInputBodyArea();
+			
 			DrawFullActivaChanged(false);
+			
 			SaveItem();
 		}
 		
@@ -87,7 +101,7 @@ namespace PeMain.UI
 				},
 				command => {
 					if(this._commandStateMap[command] == ButtonState.Pressed) {
-						clickCommand(command);
+						ClickCommand(command);
 					}
 				},
 				null,
@@ -97,17 +111,40 @@ namespace PeMain.UI
 		
 		void NoteForm_DoubleClick(object sender, EventArgs e)
 		{
-			ShowInputArea();
+			ShowInputBodyArea();
 		}
 		
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
-			ResizeInputArea();
+			ResizeInputTitleArea();
+			ResizeInputBodyArea();
+			
+			NoteItem.Size = Size;
+			Changed = true;
 		}
 		
-		void InputBody_Leave(object sender, EventArgs e)
+		void NoteForm_Move(object sender, EventArgs e)
 		{
-			HiddenInputArea();
+			NoteItem.Location = Location;
+			Changed = true;
 		}
+		
+		void Input_Leave(object sender, EventArgs e)
+		{
+			HiddenInputTitleArea();
+			HiddenInputBodyArea();
+		}
+		
+		void ContextMenu_title_Click(object sender, EventArgs e)
+		{
+			ShowInputTitleArea();
+		}
+		
+		void ContextMenu_body_Click(object sender, EventArgs e)
+		{
+			ShowInputBodyArea();
+		}
+
+		
 	}
 }

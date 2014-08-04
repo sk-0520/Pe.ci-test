@@ -16,5 +16,18 @@ namespace PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		public NoteItem NoteItem { get; set; }
+		bool Changed
+		{
+			get 
+			{
+				return this._changed;
+			}
+			set
+			{
+				if(this._initialized) {
+					this._changed = value;
+				}
+			}
+		}
 	}
 }

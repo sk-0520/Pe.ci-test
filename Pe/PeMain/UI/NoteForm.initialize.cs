@@ -21,6 +21,8 @@ namespace PeMain.UI
 				{ NoteCommand.Compact, ButtonState.Normal },
 				{ NoteCommand.Topmost, ButtonState.Normal },
 			};
+			
+			this.inputTitle.AutoSize = false;
 		}
 	}
 }

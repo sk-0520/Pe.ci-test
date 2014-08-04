@@ -20,9 +20,15 @@ namespace PeMain.UI
 	{
 		public void SetCommonData(CommonData commonData)
 		{
+			this._initialized = false;
+			
 			CommonData = commonData;
 			
 			ApplySetting();
+			
+
+			this._changed = false;
+			this._initialized = true;
 		}
 		
 		void ApplySetting()
@@ -35,18 +41,7 @@ namespace PeMain.UI
 			return new SkinNoteStatus();
 		}
 		
-		protected override void OnPaintBackground(PaintEventArgs pevent)
-		{
-			//base.OnPaintBackground(pevent);
-		}
-		
-		protected override void OnResize(EventArgs e)
-		{
-			base.OnResize(e);
-			this.Invalidate();
-		}
-		
-		void clickCommand(NoteCommand noteCommand)
+		void ClickCommand(NoteCommand noteCommand)
 		{
 			MessageBox.Show(noteCommand.ToString());
 		}
@@ -96,6 +91,11 @@ namespace PeMain.UI
 			}
 		}
 		
+		Rectangle GetTitleArea()
+		{
+			return this.CommonData.Skin.GetNoteCaptionArea(ClientSize);
+		}
+		
 		Rectangle GetBodyArea()
 		{
 			return GetBodyArea(
@@ -111,28 +111,63 @@ namespace PeMain.UI
 			);
 		}
 
-		void ResizeInputArea()
+		void ResizeInputTitleArea()
+		{
+			var titleArea = GetTitleArea();
+			this.inputTitle.Location = titleArea.Location;
+			this.inputTitle.Size = titleArea.Size;
+		}
+		
+		void ResizeInputBodyArea()
 		{
 			var bodyArea = GetBodyArea();
 			this.inputBody.Location = bodyArea.Location;
 			this.inputBody.Size = bodyArea.Size;
 		}
 		
-		void ShowInputArea()
+		void ShowInputTitleArea()
+		{
+			this.inputTitle.Text = NoteItem.Title;
+			this.inputTitle.Font = CommonData.MainSetting.Note.CaptionFontSetting.Font;
+			
+			if(!this.inputTitle.Visible) {
+				ResizeInputTitleArea();
+				this.inputTitle.Visible = true;
+				this.inputTitle.Focus();
+			}
+		}
+		
+		void ShowInputBodyArea()
 		{
 			this.inputBody.Text = NoteItem.Body;
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
 			
 			if(!this.inputBody.Visible) {
-				ResizeInputArea();
+				ResizeInputBodyArea();
 				this.inputBody.Visible = true;
 				this.inputBody.Focus();
 			}
 		}
 		
-		void HiddenInputArea()
+		void HiddenInputTitleArea()
 		{
-			NoteItem.Body = this.inputBody.Text; 
+			var value = this.inputTitle.Text.Trim();
+			var change = NoteItem.Title != value;
+			if(change) {
+				NoteItem.Title = value;
+				this._changed |= true;
+			}
+			this.inputTitle.Visible = false;
+		}
+		
+		void HiddenInputBodyArea()
+		{
+			var value = this.inputBody.Text.Trim();
+			var change = NoteItem.Title != value;
+			if(change) {
+				NoteItem.Body = value;
+				this._changed |= true;
+			}
 			this.inputBody.Visible = false;
 		}
 		
@@ -143,7 +178,21 @@ namespace PeMain.UI
 		
 		void SaveItem()
 		{
-			CommonData.MainSetting.Note.ResistItem(NoteItem);
+			if(this._changed) {
+				CommonData.MainSetting.Note.ResistItem(NoteItem);
+				this._changed = false;
+				//*
+				var map = new Dictionary<string, string>() {
+					{"title", NoteItem.Title},
+					{"body", NoteItem.Body},
+				};
+				CommonData.RootSender.ShowBalloon(
+					ToolTipIcon.Info, 
+					CommonData.Language["memo/save"],
+					CommonData.Language["memo/content", map]
+				);
+				//*/
+			}
 		}
 
 	}

@@ -84,7 +84,8 @@ namespace PeMain.UI
 					
 				case (int)WM.WM_NCPAINT:
 					{
-						if(CommonData != null && !this.inputBody.Visible) {
+						//if(CommonData != null && (!this.inputBody.Visible || !this.inputTitle.Visible)) {
+						if(CommonData != null) {
 							var hDC = API.GetWindowDC(Handle);
 							try {
 								using(var g = Graphics.FromHdc(hDC)) {
@@ -177,6 +178,17 @@ namespace PeMain.UI
 						if(hitTest != HT.HTNOWHERE) {
 							m.Result = (IntPtr)hitTest;
 							return;
+						}
+						break;
+					}
+					
+				case (int)WM.WM_NCLBUTTONDOWN:
+					{
+						if(this.inputTitle.Visible) {
+							HiddenInputTitleArea();
+						}
+						if(this.inputBody.Visible) {
+							HiddenInputBodyArea();
 						}
 						break;
 					}
