@@ -226,8 +226,8 @@ namespace PeMain.UI
 			int pos = 0;
 			switch(noteCommand) {
 				case NoteCommand.Close:   pos = 1; break;
-				case NoteCommand.Compact: pos = 2; break;
-				case NoteCommand.Topmost: pos = 3; break;
+				case NoteCommand.Topmost: pos = 2; break;
+				case NoteCommand.Compact: pos = 3; break;
 				default: 
 					Debug.Assert(false);
 					break;

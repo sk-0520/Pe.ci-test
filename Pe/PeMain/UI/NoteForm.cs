@@ -39,7 +39,7 @@ namespace PeMain.UI
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
-			this.Invalidate();
+			Invalidate();
 		}
 		
 		void NoteForm_Paint(object sender, PaintEventArgs e)
@@ -119,8 +119,10 @@ namespace PeMain.UI
 			ResizeInputTitleArea();
 			ResizeInputBodyArea();
 			
-			NoteItem.Size = Size;
-			Changed = true;
+			if(!NoteItem.Compact) {
+				NoteItem.Size = Size;
+				Changed = true;
+			}
 		}
 		
 		void NoteForm_Move(object sender, EventArgs e)

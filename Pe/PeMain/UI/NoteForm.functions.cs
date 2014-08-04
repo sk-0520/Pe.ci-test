@@ -36,6 +36,15 @@ namespace PeMain.UI
 			
 		}
 		
+		IEnumerable<NoteCommand> GetCommandList()
+		{
+			return new [] {
+				NoteCommand.Topmost,
+				NoteCommand.Compact,
+				NoteCommand.Close,
+			};
+		}
+		
 		SkinNoteStatus GetNoteStatus()
 		{
 			return new SkinNoteStatus();
@@ -43,7 +52,55 @@ namespace PeMain.UI
 		
 		void ClickCommand(NoteCommand noteCommand)
 		{
-			MessageBox.Show(noteCommand.ToString());
+			switch(noteCommand) {
+				case NoteCommand.Topmost:
+					{
+						NoteItem.Topmost = !NoteItem.Topmost;
+						TopMost = NoteItem.Topmost;
+						Changed = true;
+						Invalidate();
+						break;
+					}
+					
+				case NoteCommand.Compact:
+					{
+						NoteItem.Compact = !NoteItem.Compact;
+						Changed = true;
+						
+						ChangeCompact(NoteItem.Compact, NoteItem.Size);
+						
+						break;
+					}
+					
+				case NoteCommand.Close:
+					{
+						if(true) {
+							NoteItem.Visibled = false;
+							Changed = true;
+							SaveItem();
+							Close();
+						} else {
+							// TODO: 削除
+						}
+						break;
+					}
+					
+				default:
+					Debug.Assert(false, noteCommand.ToString());
+					break;
+			}
+		}
+		
+		void ChangeCompact(bool compact, Size size)
+		{
+			if(compact) {
+				var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
+				var titleArea = GetTitleArea();
+				Size = new Size(titleArea.Width + edge.Horizontal, titleArea.Height + edge.Vertical);
+			} else {
+				Size = size;
+			}
+
 		}
 		
 		
@@ -51,12 +108,11 @@ namespace PeMain.UI
 		{
 			var captionArea = CommonData.Skin.GetNoteCaptionArea(ClientSize);
 			if(!captionArea.Size.IsEmpty) {
-				var commands = new [] { NoteCommand.Topmost, NoteCommand.Compact, NoteCommand.Close, };
 				var active = this == Form.ActiveForm;
 				var noteStatus = GetNoteStatus();
 				if(captionArea.Contains(point)) {
 					using(var g = CreateGraphics()) {
-						foreach(var command in commands) {
+						foreach(var command in GetCommandList()) {
 							var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
 							var nowState = ButtonState.None;
 							var prevState = this._commandStateMap[command];
@@ -66,7 +122,7 @@ namespace PeMain.UI
 								if(prevDrawDg != null) {
 									prevDrawDg(command);
 								}
-								if(nowState != prevState) {
+								if(nowState != prevState && this.Created) {
 									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
 									this._commandStateMap[command] = nowState;
 								}
@@ -106,8 +162,8 @@ namespace PeMain.UI
 		Rectangle GetBodyArea(Padding edge, Rectangle captionArea)
 		{
 			return new Rectangle(
-				 new Point(edge.Left, captionArea.Bottom),
-				 new Size(ClientSize.Width - edge.Horizontal, ClientSize.Height - (edge.Vertical + captionArea.Height))
+				new Point(edge.Left, captionArea.Bottom),
+				new Size(ClientSize.Width - edge.Horizontal, ClientSize.Height - (edge.Vertical + captionArea.Height))
 			);
 		}
 
@@ -187,7 +243,7 @@ namespace PeMain.UI
 					{"body", NoteItem.Body},
 				};
 				CommonData.RootSender.ShowBalloon(
-					ToolTipIcon.Info, 
+					ToolTipIcon.Info,
 					CommonData.Language["memo/save"],
 					CommonData.Language["memo/content", map]
 				);

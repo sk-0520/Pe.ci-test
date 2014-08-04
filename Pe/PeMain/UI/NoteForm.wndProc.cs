@@ -127,7 +127,7 @@ namespace PeMain.UI
 						area.Width = edgePadding.Right;
 						pos.Right = area.Contains(point);
 						
-						if(pos.HasTrue) {
+						if(pos.HasTrue && !NoteItem.Compact) {
 							if(pos.Left) {
 								if(pos.Top) {
 									hitTest = HT.HTTOPLEFT;
