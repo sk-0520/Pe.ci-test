@@ -79,7 +79,7 @@ namespace PeMain.Data
 				tNote.CommonCreate = timestamp;
 			}
 			tNote.CommonUpdate = timestamp;
-			tNote.Body = noteItem.Title;
+			tNote.Body = noteItem.Body;
 			
 			if(tempTNote != null) {
 				this._db.ExecuteUpdate(new [] { tNote });

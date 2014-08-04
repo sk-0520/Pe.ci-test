@@ -149,7 +149,6 @@ where
   <data name="CreateNoteTransactionTable" xml:space="preserve">
     <value>create table T_NOTE (
     NOTE_ID      integer  primary key,
-    CMN_ENABLED  integer  not null,
     CMN_CREATE   text     not null,
     CMN_UPDATE   text     not null,
     NOTE_BODY    text
@@ -158,7 +157,6 @@ where
   <data name="CreateNoteStyleTransactionTable" xml:space="preserve">
     <value>create table T_NOTE_STYLE (
     NOTE_ID         integer  primary key,
-    CMN_ENABLED     integer  not null,
     CMN_CREATE      text     not null,
     CMN_UPDATE      text     not null,
     FONT_FAMILY     text     not null,

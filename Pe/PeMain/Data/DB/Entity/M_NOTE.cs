@@ -15,7 +15,7 @@ namespace PeMain.Data.DB
 	/// Description of M_NOTE.
 	/// </summary>
 	[TargetName("M_NOTE")]
-	public class MNoteEntity: CommonDataEntity
+	public class MNoteEntity: CommonDataEnabledEntity
 	{
 		[TargetName("NOTE_ID", true)]
 		public long Id { get; set; }
