@@ -162,6 +162,7 @@ namespace PeMain.UI
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "NoteForm";
 			this.Activated += new System.EventHandler(this.NoteForm_Activated);
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);

@@ -33,6 +33,14 @@ namespace PeMain.UI
 		
 		void ApplySetting()
 		{
+			this.inputTitle.Text = NoteItem.Title;
+			this.inputBody.Text = NoteItem.Body;
+			
+			Location = NoteItem.Location;
+			Size = NoteItem.Size;
+			
+			TopMost = NoteItem.Topmost;
+			ChangeCompact(NoteItem.Compact, NoteItem.Size);
 			
 		}
 		

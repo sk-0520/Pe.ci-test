@@ -184,7 +184,7 @@ namespace PeMain.Data
 					mNote.RawType = NoteTypeUtility.ToNumber(NoteType.Text);
 					mNote.Title = noteItem.Title;
 					mNote.CommonUpdate = timestamp;
-					
+					this._db.ExecuteUpdate(new [] { mNote });
 					ResistTNote(noteItem, timestamp);
 					ResistTNoteStyle(noteItem, timestamp);
 					

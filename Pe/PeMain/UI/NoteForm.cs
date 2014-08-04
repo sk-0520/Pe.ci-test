@@ -31,7 +31,7 @@ namespace PeMain.UI
 			Initialize();
 		}
 		
-		protected override bool ShowWithoutActivation 
+		protected override bool ShowWithoutActivation
 		{
 			get { return true; }
 		}
@@ -65,8 +65,11 @@ namespace PeMain.UI
 		
 		void NoteForm_Deactivate(object sender, EventArgs e)
 		{
-			HiddenInputTitleArea();
-			HiddenInputBodyArea();
+			if(this._initialized) {
+				HiddenInputTitleArea();
+				HiddenInputBodyArea();
+			}
+			
 			
 			DrawFullActivaChanged(false);
 			
