@@ -113,8 +113,6 @@ namespace PeMain.UI
 
 		void ResizeInputArea()
 		{
-			var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
-			var captionArea = this.CommonData.Skin.GetNoteCaptionArea(ClientSize);
 			var bodyArea = GetBodyArea();
 			this.inputBody.Location = bodyArea.Location;
 			this.inputBody.Size = bodyArea.Size;
@@ -126,6 +124,7 @@ namespace PeMain.UI
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
 			
 			if(!this.inputBody.Visible) {
+				ResizeInputArea();
 				this.inputBody.Visible = true;
 				this.inputBody.Focus();
 			}
@@ -136,5 +135,11 @@ namespace PeMain.UI
 			NoteItem.Body = this.inputBody.Text; 
 			this.inputBody.Visible = false;
 		}
+		
+		void ShowContextMenu(Point point)
+		{
+			this.contextMenu.Show(this, point);
+		}
+
 	}
 }

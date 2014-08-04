@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
+using PInvoke.Windows;
 
 namespace PeMain.UI
 {
@@ -58,7 +59,8 @@ namespace PeMain.UI
 			DrawCommand(
 				e.Location,
 				(isIn, nowState) => {
-					if(isIn) {
+					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
+					if(left && isIn) {
 						return ButtonState.Pressed;
 					} else {
 						return ButtonState.Normal;
@@ -75,7 +77,8 @@ namespace PeMain.UI
 			DrawCommand(
 				e.Location,
 				(isIn, nowState) => {
-					if(isIn) {
+					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
+					if(left && isIn) {
 						return ButtonState.Selected;
 					} else {
 						return ButtonState.Normal;

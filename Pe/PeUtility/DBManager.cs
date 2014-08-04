@@ -52,6 +52,12 @@ namespace PeUtility
 			FalseExpression = null;
 		}
 		
+		public CommandExpression(string trueCommand): this()
+		{
+			Condition = true;
+			TrueCommand = trueCommand;
+		}
+		
 		/// <summary>
 		/// 条件式を指定値で生成。
 		/// 
@@ -249,7 +255,7 @@ namespace PeUtility
 			
 			Connection = connection;
 			
-			ConditionPattern = @"\{\w+\}";
+			ConditionPattern = @"\{(\w+)\}";
 			
 			if(!isOpened) {
 				Connection.Open();

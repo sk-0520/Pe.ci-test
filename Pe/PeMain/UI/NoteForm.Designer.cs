@@ -36,7 +36,11 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.inputBody = new System.Windows.Forms.TextBox();
+			this.langnotemenutitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// inputBody
@@ -50,11 +54,25 @@ namespace PeMain.UI
 			this.inputBody.Visible = false;
 			this.inputBody.Leave += new System.EventHandler(this.InputBody_Leave);
 			// 
+			// langnotemenutitleToolStripMenuItem
+			// 
+			this.langnotemenutitleToolStripMenuItem.Name = "langnotemenutitleToolStripMenuItem";
+			this.langnotemenutitleToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+			this.langnotemenutitleToolStripMenuItem.Text = "lang:note/menu/title";
+			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.langnotemenutitleToolStripMenuItem});
+			this.contextMenu.Name = "contextMenuStrip1";
+			this.contextMenu.Size = new System.Drawing.Size(200, 26);
+			// 
 			// NoteForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(256, 186);
+			this.ContextMenuStrip = this.contextMenu;
 			this.ControlBox = false;
 			this.Controls.Add(this.inputBody);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -72,9 +90,12 @@ namespace PeMain.UI
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseDown);
 			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseUp);
 			this.Resize += new System.EventHandler(this.NoteForm_Resize);
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem langnotemenutitleToolStripMenuItem;
 		private System.Windows.Forms.TextBox inputBody;
 	}
 }

@@ -306,17 +306,21 @@ namespace PeMain.UI
 
 		void CreateNote()
 		{
+			// アイテムをデータ設定
 			var item = new NoteItem();
-			CreateNote(item);
+			this._commonData.MainSetting.Note.InsertItem(item);
+			var noteForm = CreateNote(item);
+			noteForm.Activate();
 		}
 		
-		void CreateNote(NoteItem noteItem)
+		Form CreateNote(NoteItem noteItem)
 		{
-			var note = new NoteForm();
-			note.NoteItem = noteItem;
-			note.SetCommonData(this._commonData);
-			note.Show();
-			this._noteWindowList.Add(note);
+			var noteForm = new NoteForm();
+			noteForm.NoteItem = noteItem;
+			noteForm.SetCommonData(this._commonData);
+			noteForm.Show();
+			this._noteWindowList.Add(noteForm);
+			return noteForm;
 		}
 		
 		void HiddenNote()

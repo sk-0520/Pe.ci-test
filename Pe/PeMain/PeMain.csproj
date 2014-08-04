@@ -241,10 +241,6 @@
     <Compile Include="UI\LogForm.variable.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\NoteConfigForm.cs" />
-    <Compile Include="UI\NoteConfigForm.Designer.cs">
-      <DependentUpon>NoteConfigForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\NoteForm.cs" />
     <Compile Include="UI\NoteForm.define.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
@@ -403,9 +399,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\NoteConfigForm.resx">
-      <DependentUpon>NoteConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\NoteForm.resx">
       <DependentUpon>NoteForm.cs</DependentUpon>

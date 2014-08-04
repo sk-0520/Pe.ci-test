@@ -8,6 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using PeMain.Data.DB;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.Data
@@ -19,7 +22,8 @@ namespace PeMain.Data
 	[Serializable]
 	public class NoteSetting: Item, IDisposable
 	{
-		private DBManager _db;
+		[XmlIgnore()]
+		private PeDBManager _db;
 		
 		public NoteSetting()
 		{
@@ -39,9 +43,31 @@ namespace PeMain.Data
 		
 		public FontSetting CaptionFontSetting { get; set; }
 		
-		public void setDatabase(DBManager db)
+		public void setDatabase(PeDBManager db)
 		{
-			this._db  = db;
+			this._db = db;
+		}
+		
+		public NoteItem InsertItem(NoteItem noteItem)
+		{
+			using(var tran = this._db.BeginTransaction()) {
+				var noteDto = this._db.GetTableId("M_NOTE", "NOTE_ID");
+				noteItem.NoteId = noteDto.MaxId + 1;
+				var mNote = new MNoteEntity();
+				mNote.Id = noteItem.NoteId;
+				mNote.RawType = (int)NoteType.Text;
+				mNote.Title = noteItem.Title;
+				mNote.CommonCreate = mNote.CommonUpdate = DateTime.Now;
+				mNote.CommonEnabled = true;
+				this._db.ExecuteInsert(new [] { mNote });
+				tran.Commit();
+				return noteItem;
+			}
+		}
+		
+		public void ResistItem(NoteItem noteItem)
+		{
+			
 		}
 		
 		public void Dispose()

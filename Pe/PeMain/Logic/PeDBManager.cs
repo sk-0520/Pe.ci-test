@@ -44,8 +44,8 @@ namespace PeMain.Logic
 		{
 			Clear();
 			
-			Parameter["table_name"] = tableName;
-			Parameter["id_column_name"] = idColumnName;
+			Expression["table_name"] = new CommandExpression(tableName);
+			Expression["id_column_name"] = new CommandExpression(idColumnName);
 			
 			return GetResultSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
 		}

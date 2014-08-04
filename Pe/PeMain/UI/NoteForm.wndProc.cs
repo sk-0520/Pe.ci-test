@@ -181,6 +181,19 @@ namespace PeMain.UI
 						break;
 					}
 					
+				case (int)WM.WM_NCRBUTTONUP:
+					{
+						switch (m.WParam.ToInt32()) {
+							case (int)HT.HTCAPTION:
+								var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
+								ShowContextMenu(point);
+								break;
+							default:
+								break;
+						}
+						break;
+					}
+					
 				default:
 					break;
 			}

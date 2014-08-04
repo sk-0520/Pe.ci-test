@@ -26,7 +26,13 @@ namespace PInvoke.Windows
 		WM_SETTINGCHANGE = 0x001a,
 		WM_NCPAINT = 0x0085,
 		WM_SYSCOMMAND = 0x112,
-		
+		WM_NCRBUTTONDOWN = 0xA4,
+		WM_NCRBUTTONUP = 0x00A5,
+	}
+	
+	public enum WS_EX
+	{
+		WS_EX_NOACTIVATE = 0x8000000,
 	}
 	
 	public enum WM_COMMAND_SUB
