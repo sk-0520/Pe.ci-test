@@ -26,7 +26,6 @@ namespace PeMain.UI
 			
 			ApplySetting();
 			
-
 			this._changed = false;
 			this._initialized = true;
 		}
@@ -40,7 +39,6 @@ namespace PeMain.UI
 			Size = NoteItem.Size;
 			
 			TopMost = NoteItem.Topmost;
-			ChangeCompact(NoteItem.Compact, NoteItem.Size);
 			
 		}
 		

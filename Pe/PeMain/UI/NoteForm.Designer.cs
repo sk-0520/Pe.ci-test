@@ -166,6 +166,7 @@ namespace PeMain.UI
 			this.Text = "NoteForm";
 			this.Activated += new System.EventHandler(this.NoteForm_Activated);
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);
+			this.Load += new System.EventHandler(this.NoteForm_Load);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteForm_Paint);
 			this.DoubleClick += new System.EventHandler(this.NoteForm_DoubleClick);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseDown);

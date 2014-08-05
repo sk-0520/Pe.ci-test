@@ -124,12 +124,17 @@ namespace PeMain.UI
 		
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
-			ResizeInputTitleArea();
-			ResizeInputBodyArea();
-			
-			if(!NoteItem.Compact) {
-				NoteItem.Size = Size;
-				Changed = true;
+			if(!this._initialized && NoteItem.Compact) {
+				//ChangeCompact(true, Size.Empty);
+				Height = 20;
+			} else {
+				ResizeInputTitleArea();
+				ResizeInputBodyArea();
+				
+				if(!NoteItem.Compact) {
+					NoteItem.Size = Size;
+					Changed = true;
+				}
 			}
 		}
 		
@@ -156,5 +161,11 @@ namespace PeMain.UI
 		}
 
 		
+		
+		void NoteForm_Load(object sender, EventArgs e)
+		{
+			// 生成前の高さがWindowsにより補正されるためここでリサイズ
+			ChangeCompact(NoteItem.Compact, NoteItem.Size);
+		}
 	}
 }
