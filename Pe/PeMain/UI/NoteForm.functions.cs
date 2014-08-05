@@ -10,9 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -213,6 +215,10 @@ namespace PeMain.UI
 		
 		void HiddenInputTitleArea()
 		{
+			if(!this.inputBody.Visible) {
+				break;
+			}
+			
 			var value = this.inputTitle.Text.Trim();
 			var change = NoteItem.Title != value;
 			if(change) {
@@ -224,12 +230,20 @@ namespace PeMain.UI
 		
 		void HiddenInputBodyArea()
 		{
+			if(!this.inputBody.Visible) {
+				break;
+			}
+			
 			var value = this.inputBody.Text.Trim();
 			var change = NoteItem.Body != value;
 			if(change) {
 				NoteItem.Body = value;
 				this._changed |= true;
 			}
+			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
+				NoteItem.Title = TextUtility.SplitLines(value).First();
+			}
+			
 			this.inputBody.Visible = false;
 		}
 		
