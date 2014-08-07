@@ -30,6 +30,9 @@ namespace PeMain.UI
 		{
 			get
 			{
+				if(DesignMode) {
+					return null;
+				}
 				var result = new HotKeySetting();
 				
 				result.Key = Hotkey;

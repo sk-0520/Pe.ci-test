@@ -87,7 +87,7 @@ namespace PeMain.Logic
 		}
 	}
 	
-	public static class TreeNoteUtility
+	public static class TreeNodeUtility
 	{
 		/// <summary>
 		/// 対象の子ノードをすべて取得

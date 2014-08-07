@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeMain.Data;
 
 namespace PeMain.UI
 {
@@ -21,5 +22,20 @@ namespace PeMain.UI
 		const int TREE_TYPE_NONE = 0;
 		const int TREE_TYPE_GROUP = 1;
 		
+		class NoteWrapItem
+		{
+			public NoteWrapItem(NoteItem item)
+			{
+				Remove = false;
+				NewItem = false;
+				
+				NoteItem = item;
+			}
+			
+			public bool Remove { get; set; }
+			public bool NewItem { get; set; }
+			public NoteItem NoteItem { get; set; }
+			
+		}
 	}
 }

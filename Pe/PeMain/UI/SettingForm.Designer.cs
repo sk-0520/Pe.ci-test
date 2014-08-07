@@ -129,8 +129,9 @@ namespace PeMain.UI
 			this.commandCommandFont = new PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.pageNote = new System.Windows.Forms.TabPage();
-			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
-			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
+			this.groupNoteItem = new System.Windows.Forms.GroupBox();
+			this.gridNoteItems = new System.Windows.Forms.DataGridView();
+			this.groupNoteKey = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelNoteCreate = new System.Windows.Forms.Label();
 			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
@@ -138,12 +139,22 @@ namespace PeMain.UI
 			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
 			this.labelNoteCompact = new System.Windows.Forms.Label();
 			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
+			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
+			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.gridNoteItems_remove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_visibled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_body = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_font = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.gridNoteItems_fore = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.gridNoteItems_back = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.tabSetting.SuspendLayout();
 			this.pageMain.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
@@ -177,6 +188,9 @@ namespace PeMain.UI
 			this.pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.pageNote.SuspendLayout();
+			this.groupNoteItem.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
+			this.groupNoteKey.SuspendLayout();
 			this.flowLayoutPanel2.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -682,7 +696,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 174);
+			this.panelEnv.Size = new System.Drawing.Size(519, 164);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -691,7 +705,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 174);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 164);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -700,7 +714,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 174);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 164);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -961,7 +975,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 270);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 280);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -972,13 +986,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 245);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 255);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 270);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 280);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -994,7 +1008,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 245);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 255);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1090,7 +1104,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 270);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 280);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1198,9 +1212,10 @@ namespace PeMain.UI
 			// 
 			// pageNote
 			// 
+			this.pageNote.Controls.Add(this.groupNoteItem);
+			this.pageNote.Controls.Add(this.groupNoteKey);
 			this.pageNote.Controls.Add(this.commandNoteCaptionFont);
 			this.pageNote.Controls.Add(this.labelNoteCaptionFont);
-			this.pageNote.Controls.Add(this.flowLayoutPanel2);
 			this.pageNote.Location = new System.Drawing.Point(4, 24);
 			this.pageNote.Name = "pageNote";
 			this.pageNote.Size = new System.Drawing.Size(741, 266);
@@ -1208,23 +1223,44 @@ namespace PeMain.UI
 			this.pageNote.Text = "{NOTE}";
 			this.pageNote.UseVisualStyleBackColor = true;
 			// 
-			// commandNoteCaptionFont
+			// groupNoteItem
 			// 
-			this.commandNoteCaptionFont.AutoSize = true;
-			this.commandNoteCaptionFont.Location = new System.Drawing.Point(119, 162);
-			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
-			this.commandNoteCaptionFont.Size = new System.Drawing.Size(171, 25);
-			this.commandNoteCaptionFont.TabIndex = 10;
-			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
-			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
+			this.groupNoteItem.Controls.Add(this.gridNoteItems);
+			this.groupNoteItem.Location = new System.Drawing.Point(272, 8);
+			this.groupNoteItem.Name = "groupNoteItem";
+			this.groupNoteItem.Size = new System.Drawing.Size(456, 248);
+			this.groupNoteItem.TabIndex = 12;
+			this.groupNoteItem.TabStop = false;
+			this.groupNoteItem.Text = ":setting/group/item";
 			// 
-			// labelNoteCaptionFont
+			// gridNoteItems
 			// 
-			this.labelNoteCaptionFont.Location = new System.Drawing.Point(8, 167);
-			this.labelNoteCaptionFont.Name = "labelNoteCaptionFont";
-			this.labelNoteCaptionFont.Size = new System.Drawing.Size(100, 23);
-			this.labelNoteCaptionFont.TabIndex = 9;
-			this.labelNoteCaptionFont.Text = "{FONT}";
+			this.gridNoteItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+									this.gridNoteItems_remove,
+									this.gridNoteItems_id,
+									this.gridNoteItems_visibled,
+									this.gridNoteItems_title,
+									this.gridNoteItems_body,
+									this.gridNoteItems_font,
+									this.gridNoteItems_fore,
+									this.gridNoteItems_back});
+			this.gridNoteItems.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridNoteItems.Location = new System.Drawing.Point(3, 19);
+			this.gridNoteItems.Name = "gridNoteItems";
+			this.gridNoteItems.RowTemplate.Height = 21;
+			this.gridNoteItems.Size = new System.Drawing.Size(450, 226);
+			this.gridNoteItems.TabIndex = 0;
+			// 
+			// groupNoteKey
+			// 
+			this.groupNoteKey.Controls.Add(this.flowLayoutPanel2);
+			this.groupNoteKey.Location = new System.Drawing.Point(8, 8);
+			this.groupNoteKey.Name = "groupNoteKey";
+			this.groupNoteKey.Size = new System.Drawing.Size(256, 168);
+			this.groupNoteKey.TabIndex = 11;
+			this.groupNoteKey.TabStop = false;
+			this.groupNoteKey.Text = ":setting/group/key";
 			// 
 			// flowLayoutPanel2
 			// 
@@ -1234,10 +1270,11 @@ namespace PeMain.UI
 			this.flowLayoutPanel2.Controls.Add(this.inputNoteHidden);
 			this.flowLayoutPanel2.Controls.Add(this.labelNoteCompact);
 			this.flowLayoutPanel2.Controls.Add(this.inputNoteCompact);
+			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(5, 3);
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(225, 151);
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(250, 146);
 			this.flowLayoutPanel2.TabIndex = 8;
 			// 
 			// labelNoteCreate
@@ -1308,9 +1345,27 @@ namespace PeMain.UI
 			this.inputNoteCompact.Name = "inputNoteCompact";
 			this.inputNoteCompact.ReadOnly = true;
 			this.inputNoteCompact.Registered = false;
-			this.inputNoteCompact.Size = new System.Drawing.Size(211, 23);
+			this.inputNoteCompact.Size = new System.Drawing.Size(213, 23);
 			this.inputNoteCompact.TabIndex = 6;
 			this.inputNoteCompact.Text = "None";
+			// 
+			// commandNoteCaptionFont
+			// 
+			this.commandNoteCaptionFont.AutoSize = true;
+			this.commandNoteCaptionFont.Location = new System.Drawing.Point(112, 184);
+			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
+			this.commandNoteCaptionFont.Size = new System.Drawing.Size(152, 25);
+			this.commandNoteCaptionFont.TabIndex = 10;
+			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
+			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
+			// 
+			// labelNoteCaptionFont
+			// 
+			this.labelNoteCaptionFont.Location = new System.Drawing.Point(8, 184);
+			this.labelNoteCaptionFont.Name = "labelNoteCaptionFont";
+			this.labelNoteCaptionFont.Size = new System.Drawing.Size(100, 23);
+			this.labelNoteCaptionFont.TabIndex = 9;
+			this.labelNoteCaptionFont.Text = "{FONT}";
 			// 
 			// pageDisplay
 			// 
@@ -1374,6 +1429,53 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// gridNoteItems_remove
+			// 
+			this.gridNoteItems_remove.HeaderText = ":setting/column/note/remove";
+			this.gridNoteItems_remove.Name = "gridNoteItems_remove";
+			// 
+			// gridNoteItems_id
+			// 
+			this.gridNoteItems_id.HeaderText = ":setting/column/note/id";
+			this.gridNoteItems_id.Name = "gridNoteItems_id";
+			this.gridNoteItems_id.ReadOnly = true;
+			// 
+			// gridNoteItems_visibled
+			// 
+			this.gridNoteItems_visibled.HeaderText = ":setting/column/note/visibled";
+			this.gridNoteItems_visibled.Name = "gridNoteItems_visibled";
+			this.gridNoteItems_visibled.ReadOnly = true;
+			// 
+			// gridNoteItems_title
+			// 
+			this.gridNoteItems_title.HeaderText = ":setting/column/note/title";
+			this.gridNoteItems_title.Name = "gridNoteItems_title";
+			this.gridNoteItems_title.ReadOnly = true;
+			// 
+			// gridNoteItems_body
+			// 
+			this.gridNoteItems_body.HeaderText = ":setting/column/note/body";
+			this.gridNoteItems_body.Name = "gridNoteItems_body";
+			this.gridNoteItems_body.ReadOnly = true;
+			// 
+			// gridNoteItems_font
+			// 
+			this.gridNoteItems_font.HeaderText = ":setting/column/note/font";
+			this.gridNoteItems_font.Name = "gridNoteItems_font";
+			this.gridNoteItems_font.ReadOnly = true;
+			// 
+			// gridNoteItems_fore
+			// 
+			this.gridNoteItems_fore.HeaderText = ":setting/column/note/fore";
+			this.gridNoteItems_fore.Name = "gridNoteItems_fore";
+			this.gridNoteItems_fore.ReadOnly = true;
+			// 
+			// gridNoteItems_back
+			// 
+			this.gridNoteItems_back.HeaderText = ":setting/column/note/back";
+			this.gridNoteItems_back.Name = "gridNoteItems_back";
+			this.gridNoteItems_back.ReadOnly = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1433,6 +1535,9 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.pageNote.ResumeLayout(false);
 			this.pageNote.PerformLayout();
+			this.groupNoteItem.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
+			this.groupNoteKey.ResumeLayout(false);
 			this.flowLayoutPanel2.ResumeLayout(false);
 			this.flowLayoutPanel2.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -1441,6 +1546,17 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_remove;
+		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_back;
+		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_fore;
+		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_font;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_body;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_title;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_visibled;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_id;
+		private System.Windows.Forms.DataGridView gridNoteItems;
+		private System.Windows.Forms.GroupBox groupNoteItem;
+		private System.Windows.Forms.GroupBox groupNoteKey;
 		private System.Windows.Forms.Label labelNoteCaptionFont;
 		private PeMain.UI.FontSplitButton commandNoteCaptionFont;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
