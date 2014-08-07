@@ -215,11 +215,14 @@ namespace PeMain.UI
 		
 		void HiddenInputTitleArea()
 		{
-			if(!this.inputBody.Visible) {
-				break;
+			if(!this.inputTitle.Visible) {
+				return;
 			}
 			
 			var value = this.inputTitle.Text.Trim();
+			if(value.Length == 0 && NoteItem.Body.Length > 0) {
+				value = TextUtility.SplitLines(NoteItem.Body).First().Trim();
+			}
 			var change = NoteItem.Title != value;
 			if(change) {
 				NoteItem.Title = value;
@@ -231,7 +234,7 @@ namespace PeMain.UI
 		void HiddenInputBodyArea()
 		{
 			if(!this.inputBody.Visible) {
-				break;
+				return;
 			}
 			
 			var value = this.inputBody.Text.Trim();
@@ -241,7 +244,7 @@ namespace PeMain.UI
 				this._changed |= true;
 			}
 			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
-				NoteItem.Title = TextUtility.SplitLines(value).First();
+				NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
 			}
 			
 			this.inputBody.Visible = false;
