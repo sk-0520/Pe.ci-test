@@ -99,7 +99,7 @@ namespace PeMain.UI
 				case NoteCommand.Close:
 					{
 						if(true) {
-							NoteItem.Visibled = false;
+							NoteItem.Visible = false;
 							Changed = true;
 							SaveItem();
 							Close();

@@ -89,6 +89,26 @@ namespace PeMain.UI
 			
 			this.commandNoteCaptionFont.FontSetting.Include(noteSetting.CaptionFontSetting);
 			this.commandNoteCaptionFont.RefreshView();
+			
+			// 全リスト
+			this.gridNoteItems.AutoGenerateColumns = false;
+			var noteRawList = noteSetting.GetNoteItemList(false);
+			var noteList = new List<NoteWrapItem>(noteRawList.Count());
+			foreach(var item in noteRawList) {
+				var wrap = new NoteWrapItem(item);
+				noteList.Add(wrap);
+			}
+			this.gridNoteItems_remove.DataPropertyName = "Remove";
+			this.gridNoteItems_id.DataPropertyName = "Id";
+			this.gridNoteItems_visible.DataPropertyName = "Visible";
+			this.gridNoteItems_title.DataPropertyName = "Title";
+			this.gridNoteItems_body.DataPropertyName = "Body";
+			this.gridNoteItems_font.DataPropertyName = "Font";
+			this.gridNoteItems_fore.DataPropertyName = "Fore";
+			this.gridNoteItems_back.DataPropertyName = "Back";
+            this.gridNoteItems.DataSource = new BindingSource(noteList, string.Empty); 
+            
+//			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}
 		
 		

@@ -38,7 +38,6 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
@@ -149,9 +148,9 @@ namespace PeMain.UI
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.gridNoteItems_remove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.gridNoteItems_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_visibled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.gridNoteItems_title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_body = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_body = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.gridNoteItems_font = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.gridNoteItems_fore = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.gridNoteItems_back = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -256,7 +255,7 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvExt.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputSystemEnvExt.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputSystemEnvExt.HotKeySetting")));
+			this.inputSystemEnvExt.HotKeySetting = null;
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
 			this.inputSystemEnvExt.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
@@ -280,7 +279,7 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvHiddenFile.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputSystemEnvHiddenFile.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputSystemEnvHiddenFile.HotKeySetting")));
+			this.inputSystemEnvHiddenFile.HotKeySetting = null;
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
 			this.inputSystemEnvHiddenFile.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
@@ -696,7 +695,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 164);
+			this.panelEnv.Size = new System.Drawing.Size(519, 160);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -705,7 +704,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 164);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 160);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -714,7 +713,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 164);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 160);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -975,7 +974,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 280);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 284);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -986,13 +985,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 255);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 259);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 280);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 284);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -1008,7 +1007,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 255);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 259);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1104,7 +1103,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 280);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 284);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1140,7 +1139,7 @@ namespace PeMain.UI
 			this.inputCommandHotkey.BackColor = System.Drawing.Color.White;
 			this.inputCommandHotkey.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputCommandHotkey.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputCommandHotkey.HotKeySetting")));
+			this.inputCommandHotkey.HotKeySetting = null;
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
 			this.inputCommandHotkey.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
@@ -1239,7 +1238,7 @@ namespace PeMain.UI
 			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
 									this.gridNoteItems_remove,
 									this.gridNoteItems_id,
-									this.gridNoteItems_visibled,
+									this.gridNoteItems_visible,
 									this.gridNoteItems_title,
 									this.gridNoteItems_body,
 									this.gridNoteItems_font,
@@ -1291,7 +1290,7 @@ namespace PeMain.UI
 			this.inputNoteCreate.BackColor = System.Drawing.Color.White;
 			this.inputNoteCreate.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.inputNoteCreate.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputNoteCreate.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputNoteCreate.HotKeySetting")));
+			this.inputNoteCreate.HotKeySetting = null;
 			this.inputNoteCreate.Location = new System.Drawing.Point(3, 18);
 			this.inputNoteCreate.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputNoteCreate.Name = "inputNoteCreate";
@@ -1315,7 +1314,7 @@ namespace PeMain.UI
 			this.inputNoteHidden.BackColor = System.Drawing.Color.White;
 			this.inputNoteHidden.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.inputNoteHidden.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputNoteHidden.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputNoteHidden.HotKeySetting")));
+			this.inputNoteHidden.HotKeySetting = null;
 			this.inputNoteHidden.Location = new System.Drawing.Point(3, 62);
 			this.inputNoteHidden.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputNoteHidden.Name = "inputNoteHidden";
@@ -1339,7 +1338,7 @@ namespace PeMain.UI
 			this.inputNoteCompact.BackColor = System.Drawing.Color.White;
 			this.inputNoteCompact.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.inputNoteCompact.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputNoteCompact.HotKeySetting = ((PeMain.Data.HotKeySetting)(resources.GetObject("inputNoteCompact.HotKeySetting")));
+			this.inputNoteCompact.HotKeySetting = null;
 			this.inputNoteCompact.Location = new System.Drawing.Point(3, 106);
 			this.inputNoteCompact.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputNoteCompact.Name = "inputNoteCompact";
@@ -1440,41 +1439,37 @@ namespace PeMain.UI
 			this.gridNoteItems_id.Name = "gridNoteItems_id";
 			this.gridNoteItems_id.ReadOnly = true;
 			// 
-			// gridNoteItems_visibled
+			// gridNoteItems_visible
 			// 
-			this.gridNoteItems_visibled.HeaderText = ":setting/column/note/visibled";
-			this.gridNoteItems_visibled.Name = "gridNoteItems_visibled";
-			this.gridNoteItems_visibled.ReadOnly = true;
+			this.gridNoteItems_visible.HeaderText = ":setting/column/note/visible";
+			this.gridNoteItems_visible.Name = "gridNoteItems_visible";
 			// 
 			// gridNoteItems_title
 			// 
 			this.gridNoteItems_title.HeaderText = ":setting/column/note/title";
 			this.gridNoteItems_title.Name = "gridNoteItems_title";
-			this.gridNoteItems_title.ReadOnly = true;
 			// 
 			// gridNoteItems_body
 			// 
 			this.gridNoteItems_body.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_body.Name = "gridNoteItems_body";
-			this.gridNoteItems_body.ReadOnly = true;
+			this.gridNoteItems_body.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_body.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// gridNoteItems_font
 			// 
 			this.gridNoteItems_font.HeaderText = ":setting/column/note/font";
 			this.gridNoteItems_font.Name = "gridNoteItems_font";
-			this.gridNoteItems_font.ReadOnly = true;
 			// 
 			// gridNoteItems_fore
 			// 
 			this.gridNoteItems_fore.HeaderText = ":setting/column/note/fore";
 			this.gridNoteItems_fore.Name = "gridNoteItems_fore";
-			this.gridNoteItems_fore.ReadOnly = true;
 			// 
 			// gridNoteItems_back
 			// 
 			this.gridNoteItems_back.HeaderText = ":setting/column/note/back";
 			this.gridNoteItems_back.Name = "gridNoteItems_back";
-			this.gridNoteItems_back.ReadOnly = true;
 			// 
 			// SettingForm
 			// 
@@ -1550,9 +1545,9 @@ namespace PeMain.UI
 		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_back;
 		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_fore;
 		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_font;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_body;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_body;
 		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_title;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_visibled;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_visible;
 		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_id;
 		private System.Windows.Forms.DataGridView gridNoteItems;
 		private System.Windows.Forms.GroupBox groupNoteItem;

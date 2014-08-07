@@ -228,6 +228,7 @@ namespace PeMain.UI
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					var mainSetting = settingForm.MainSetting;
+					mainSetting.Note.setDatabase(this._commonData.Database);
 					this._commonData.MainSetting = mainSetting;
 					SaveSetting();
 					InitializeLanguage(null, null);

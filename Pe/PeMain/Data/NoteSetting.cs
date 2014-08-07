@@ -69,7 +69,7 @@ namespace PeMain.Data
 					noteItem.Body = dto.Body;
 					noteItem.NoteType = NoteTypeUtility.ToNoteType(dto.RawType);
 					
-					noteItem.Visibled = dto.Visibled;
+					noteItem.Visible = dto.Visibled;
 					noteItem.Compact = dto.Compact;
 					noteItem.Topmost = dto.Topmost;
 					noteItem.Locked = dto.Locked;
@@ -156,7 +156,7 @@ namespace PeMain.Data
 			tNoteStyle.FontHeight = noteItem.Style.FontSetting.Height;
 			tNoteStyle.FontBold = noteItem.Style.FontSetting.Bold;
 			tNoteStyle.FontItalic = noteItem.Style.FontSetting.Italic;
-			tNoteStyle.Visibled = noteItem.Visibled;
+			tNoteStyle.Visibled = noteItem.Visible;
 			tNoteStyle.Locked = noteItem.Locked;
 			tNoteStyle.Topmost = noteItem.Topmost;
 			tNoteStyle.Compact = noteItem.Compact;

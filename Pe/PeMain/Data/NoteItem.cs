@@ -61,7 +61,7 @@ namespace PeMain.Data
 		{
 			Style = new NoteStyle();
 			
-			Visibled = true;
+			Visible = true;
 			Locked = false;
 			Topmost = false;
 			Compact = false;
@@ -82,7 +82,7 @@ namespace PeMain.Data
 		
 		public NoteStyle Style { get; set; }
 		
-		public bool Visibled { get; set; }
+		public bool Visible { get; set; }
 		public bool Locked { get; set; }
 		public bool Topmost { get; set; }
 		public bool Compact { get; set; }

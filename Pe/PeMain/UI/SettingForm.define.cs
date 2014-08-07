@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Drawing;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -32,10 +33,48 @@ namespace PeMain.UI
 				NoteItem = item;
 			}
 			
-			public bool Remove { get; set; }
-			public bool NewItem { get; set; }
 			public NoteItem NoteItem { get; set; }
 			
+			public bool NewItem { get; set; }
+			
+#region property name
+			public bool Remove { get; set; }
+			public long Id 
+			{ 
+				get { return NoteItem.NoteId; }
+				set { NoteItem.NoteId = value; }
+			}
+			public bool Visible
+			{
+				get { return NoteItem.Visible; }
+				set { NoteItem.Visible = value; }
+			}
+			public string Title
+			{ 
+				get { return NoteItem.Title; }
+				set { NoteItem.Title = value; }
+			}
+			public string Body
+			{
+				get { return NoteItem.Body; }
+				set { NoteItem.Body = value; }
+			}
+			public FontSetting Font
+			{
+				get { return NoteItem.Style.FontSetting; }
+				set { NoteItem.Style.FontSetting = value; }
+			}
+			public Color Fore
+			{
+				get { return NoteItem.Style.ForeColor; }
+				set { NoteItem.Style.ForeColor = value; }
+			}
+			public Color Back
+			{
+				get { return NoteItem.Style.BackColor; }
+				set { NoteItem.Style.BackColor = value; }
+			}
+#endregion
 		}
 	}
 }
