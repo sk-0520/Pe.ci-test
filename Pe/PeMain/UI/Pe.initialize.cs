@@ -11,12 +11,12 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-
 using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Data.DB;
@@ -209,12 +209,19 @@ namespace PeMain.UI
 			// ノート作成
 			itemNoteCreate.Name = menuNameWindowNoteCreate;
 			itemNoteCreate.Click += delegate(object sender, EventArgs e) {
-				CreateNote();
+				// TODO: 中心
+				CreateNote(Point.Empty);
 			};
 			// ノート非表示
 			itemNoteHidden.Name = menuNameWindowNoteHidden;
-			// ノート作成
+			itemNoteHidden.Click += delegate(object sender, EventArgs e) {
+				HiddenNote();
+			};
+			// ノート最小化
 			itemNoteCompact.Name = menuNameWindowNoteCompact;
+			itemNoteCompact.Click += delegate(object sender, EventArgs e) {
+				CompactNote();
+			};
 			
 			// サブメニュー設定
 			parentMenu.DropDownItems.AddRange(menuList.ToArray());

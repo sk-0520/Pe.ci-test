@@ -64,7 +64,17 @@ namespace PeMain.UI
 			return status;
 		}
 		
-		void ClickCommand(NoteCommand noteCommand)
+		public void ToClose()
+		{
+			ExecCommand(NoteCommand.Close);
+		}
+		
+		public void ToCompact()
+		{
+			ExecCommand(NoteCommand.Compact);
+		}
+		
+		void ExecCommand(NoteCommand noteCommand)
 		{
 			switch(noteCommand) {
 				case NoteCommand.Topmost:

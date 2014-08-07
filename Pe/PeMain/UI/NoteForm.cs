@@ -119,7 +119,7 @@ namespace PeMain.UI
 				},
 				command => {
 					if(this._commandStateMap[command] == ButtonState.Pressed) {
-						ClickCommand(command);
+						ExecCommand(command);
 					}
 				},
 				null,

@@ -9,13 +9,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.IO.Packaging;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -290,7 +290,7 @@ namespace PeMain.UI
 					break;
 					
 				case HotKeyId.CreateNote:
-					CreateNote();
+					CreateNote(Point.Empty);
 					break;
 				case HotKeyId.HiddenNote:
 					HiddenNote();
@@ -304,12 +304,16 @@ namespace PeMain.UI
 			}
 		}
 
-		void CreateNote()
+		void CreateNote(Point point)
 		{
 			// アイテムをデータ設定
 			var item = new NoteItem();
 			item.Title = DateTime.Now.ToString();
+			if(point.IsEmpty) {
 			item.Location = Cursor.Position;
+			} else {
+			item.Location = point;
+			}
 			this._commonData.MainSetting.Note.InsertItem(item);
 			var noteForm = CreateNote(item);
 			noteForm.Activate();
@@ -330,12 +334,16 @@ namespace PeMain.UI
 		
 		void HiddenNote()
 		{
-			
+			foreach(var note in this._noteWindowList.ToArray()) {
+				note.ToClose();
+			}
 		}
 		
 		void CompactNote()
 		{
-			
+			foreach(var note in this._noteWindowList.Where(note => !note.NoteItem.Compact)) {
+				note.ToCompact();
+			}
 		}
 	}
 }
