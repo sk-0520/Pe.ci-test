@@ -101,7 +101,7 @@ namespace PeMain.Data
 		{
 			FontSetting = new FontSetting();
 			ForeColor = Color.Black;
-			BackColor = Color.LightYellow;
+			BackColor = Color.FromArgb(248, 248, 182);
 		}
 		
 		public FontSetting FontSetting { get; set; }

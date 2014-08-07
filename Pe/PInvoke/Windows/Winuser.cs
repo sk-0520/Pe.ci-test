@@ -35,6 +35,11 @@ namespace PInvoke.Windows
 		WS_EX_NOACTIVATE = 0x8000000,
 	}
 	
+	public enum CS
+	{
+		CS_DROPSHADOW = 0x20000,
+	}
+
 	public enum WM_COMMAND_SUB
 	{
 		Refresh = 0x7103,

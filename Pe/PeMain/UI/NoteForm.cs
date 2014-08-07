@@ -30,6 +30,16 @@ namespace PeMain.UI
 			
 			Initialize();
 		}
+
+		protected override CreateParams CreateParams 
+		{
+			get 
+			{
+				CreateParams createParams = base.CreateParams;
+				createParams.ClassStyle |= (int)CS.CS_DROPSHADOW;
+				return createParams;
+			}
+		}
 		
 		protected override bool ShowWithoutActivation
 		{

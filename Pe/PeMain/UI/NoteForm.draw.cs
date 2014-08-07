@@ -38,13 +38,13 @@ namespace PeMain.UI
 				CommonData.Skin.DrawNoteWindowBackground(g, drawArea, active, noteStatus, NoteItem.Style.BackColor);
 			//}
 			
-			DrawEdge(g, drawArea, active, noteStatus);
 			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
 			if(!captionArea.Size.IsEmpty) {
 				DrawCaption(g, captionArea, active, noteStatus);
 			}
 			var bodyArea = GetBodyArea();
 			DrawBody(g, bodyArea, active, noteStatus);
+			DrawEdge(g, drawArea, active, noteStatus);
 		}
 		
 		void DrawBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)

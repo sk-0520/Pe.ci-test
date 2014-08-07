@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -82,7 +83,7 @@ namespace PeMain.UI
 			}
 		}
 		
-#region Layout Toolbar
+		#region Layout Toolbar
 		public override Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition)
 		{
 			var frame = SystemInformation.Border3DSize;
@@ -196,9 +197,9 @@ namespace PeMain.UI
 			buttonLayout.MenuWidth = menuWidth;
 			return buttonLayout;
 		}
-#endregion
+		#endregion
 		
-#region Layout Note
+		#region Layout Note
 		public override Padding GetNoteWindowEdgePadding()
 		{
 			var size = SystemInformation.Border3DSize;
@@ -225,10 +226,10 @@ namespace PeMain.UI
 		{
 			int pos = 0;
 			switch(noteCommand) {
-				case NoteCommand.Close:   pos = 1; break;
-				case NoteCommand.Topmost: pos = 2; break;
-				case NoteCommand.Compact: pos = 3; break;
-				default: 
+					case NoteCommand.Close:   pos = 1; break;
+					case NoteCommand.Topmost: pos = 2; break;
+					case NoteCommand.Compact: pos = 3; break;
+				default:
 					Debug.Assert(false);
 					break;
 			}
@@ -239,10 +240,10 @@ namespace PeMain.UI
 			);
 		}
 
-#endregion
+		#endregion
 		
 		
-#region Draw Toolbar
+		#region Draw Toolbar
 		public override void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position)
 		{
 			g.Clear(VisualColor);
@@ -412,9 +413,9 @@ namespace PeMain.UI
 				}
 			}
 		}
-#endregion 
+		#endregion
 		
-#region Draw Note
+		#region Draw Note
 
 		public override void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor)
 		{
@@ -423,65 +424,110 @@ namespace PeMain.UI
 		
 		public override void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor)
 		{
-			var padding = GetNoteWindowEdgePadding();
+			var edge = GetNoteWindowEdgePadding();
+			Rectangle edgeArea;
 			
-			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Black))) {
-				Rectangle edgeArea;
-				// 左
-				edgeArea = new Rectangle(drawArea.Left, drawArea.Top, padding.Left, drawArea.Bottom);
+			// 左
+			edgeArea = new Rectangle(drawArea.Left, drawArea.Top, edge.Left, drawArea.Bottom);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.White, Color.Transparent, LinearGradientMode.Horizontal)) {
 				g.FillRectangle(brush, edgeArea);
-				// 右
-				edgeArea = new Rectangle(drawArea.Right - padding.Right, drawArea.Top, padding.Right, drawArea.Bottom);
+			}
+			// 上
+			edgeArea = new Rectangle(drawArea.Left, drawArea.Top, drawArea.Width, edge.Top);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.White, Color.Transparent, LinearGradientMode.Vertical)) {
 				g.FillRectangle(brush, edgeArea);
-				// 上
-				edgeArea = new Rectangle(drawArea.Left, drawArea.Top, drawArea.Width, padding.Top);
+			}
+			// 右
+			edgeArea = new Rectangle(drawArea.Right - edge.Right, drawArea.Top, edge.Right, drawArea.Bottom);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.Black, LinearGradientMode.Horizontal)) {
 				g.FillRectangle(brush, edgeArea);
-				// 下
-				edgeArea = new Rectangle(drawArea.Left, drawArea.Bottom - padding.Bottom, drawArea.Width, padding.Bottom);
+			}
+			// 下
+			edgeArea = new Rectangle(drawArea.Left, drawArea.Bottom - edge.Bottom, drawArea.Width, edge.Bottom);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.Black, LinearGradientMode.Vertical)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 		}
 		
 		public override void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption)
 		{
-			using(var brush = new SolidBrush(Color.FromArgb(128, Color.Red))) {
-				g.FillRectangle(brush, drawArea);
-				g.DrawString(caption, font, SystemBrushes.ActiveCaption, drawArea);
+			using(var sf = new StringFormat()) {
+				using(var brush = new SolidBrush(foreColor)) {
+					sf.FormatFlags = StringFormatFlags.NoWrap;
+					sf.Alignment = StringAlignment.Near;
+					sf.LineAlignment = StringAlignment.Center;
+					g.DrawString(caption, font, brush, drawArea, sf);
+				}
 			}
 		}
 		
 		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, ButtonState buttonState)
 		{
 			Color color = Color.Transparent;
-			switch(buttonState) {
-				case ButtonState.Normal:
-					color = Color.Green;
-					break;
-				case ButtonState.Selected:
-					color = Color.Blue;
-					break;
-				case ButtonState.Pressed:
-					color = Color.Red;
-					break;
-				default:
-					Debug.Assert(false, buttonState.ToString());
-					break;
-			}
-				
-			using(var brush = new SolidBrush(color)) {
+			var buttonMap = new Dictionary<NoteCommand, Dictionary<ButtonState, string>>() {
+				{ NoteCommand.Compact, new Dictionary<ButtonState, string>() {
+						{ ButtonState.Normal,   noteStatus.Compact ? "1": "0" },
+						{ ButtonState.Selected, noteStatus.Compact ? "1": "0" },
+						{ ButtonState.Pressed,  noteStatus.Compact ? "1": "0" },
+					}},
+				{ NoteCommand.Topmost, new Dictionary<ButtonState, string>() {
+						{ ButtonState.Normal,   "ë" },
+						{ ButtonState.Selected, "ë" },
+						{ ButtonState.Pressed,  "ë" },
+					}},
+				{ NoteCommand.Close, new Dictionary<ButtonState, string>() {
+						{ ButtonState.Normal,   "r" },
+						{ ButtonState.Selected, "r" },
+						{ ButtonState.Pressed,  "r" },
+					}},
+			};
+			var button = buttonMap[noteCommand][buttonState];
+
+			using(var brush = new SolidBrush(backColor)) {
 				g.FillRectangle(brush, drawArea);
-				g.DrawString(noteCommand.ToString()[0].ToString(), SystemFonts.CaptionFont, SystemBrushes.ActiveCaption, drawArea);
+				if(noteCommand == NoteCommand.Topmost && noteStatus.Topmost) {
+					using(var pen = new Pen(Color.FromArgb(128, foreColor))) {
+						var area = new Rectangle(drawArea.X, drawArea.Y, drawArea.Width - 1, drawArea.Height - 1);
+						g.DrawRectangle(pen, area);
+					}
+				}
+			}
+			using(var sf = new StringFormat()) {
+				using(var font = new Font("Webdings", SystemFonts.CaptionFont.SizeInPoints)) {
+					using(var brush = new SolidBrush(foreColor)) {
+						sf.Alignment = StringAlignment.Center;
+						sf.LineAlignment = StringAlignment.Center;
+						
+						g.DrawString(button, font, brush, drawArea, sf);
+					}
+				}
 			}
 		}
 		
 		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body)
 		{
-			using(var brush = new SolidBrush(foreColor)) {
-				g.DrawString(body, font, brush, drawArea);
+			var edge = GetNoteWindowEdgePadding();
+			var backArea = new Rectangle(
+				drawArea.Left - edge.Left,
+				drawArea.Top,
+				drawArea.Width + edge.Horizontal,
+				drawArea.Height + edge.Bottom
+			);
+			
+			using(var brush = new LinearGradientBrush(backArea, Color.FromArgb(128, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
+				g.FillRectangle(brush, backArea);
+			}
+			
+			using(var sf = new StringFormat()) {
+				using(var brush = new SolidBrush(foreColor)) {
+					sf.Alignment = StringAlignment.Near;
+					sf.LineAlignment = StringAlignment.Near;
+					g.DrawString(body, font, brush, drawArea, sf);
+				}
 			}
 		}
 
-#endregion
+		#endregion
 		
 		public override bool IsDefaultDrawToolbarWindowBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarWindowEdge { get { return !EnabledVisualStyle; } }

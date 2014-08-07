@@ -67,11 +67,11 @@ namespace PeMain.UI
 				CommonData.Skin.DrawToolbarWindowBackground(g, drawArea, active, UseToolbarItem.ToolbarPosition);
 			}
 			
-			DrawEdge(g, drawArea, active);
 			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
 			if(!captionArea.Size.IsEmpty) {
 				DrawCaption(g, captionArea, active);
 			}
+			DrawEdge(g, drawArea, active);
 		}
 		
 		void DrawFull(Graphics g, Rectangle drawArea, bool active)

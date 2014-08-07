@@ -55,7 +55,13 @@ namespace PeMain.UI
 		
 		SkinNoteStatus GetNoteStatus()
 		{
-			return new SkinNoteStatus();
+			var status = new SkinNoteStatus();
+			
+			status.Compact = NoteItem.Compact;
+			status.Topmost = NoteItem.Topmost;
+			status.Locked  = NoteItem.Locked;
+			
+			return status;
 		}
 		
 		void ClickCommand(NoteCommand noteCommand)
