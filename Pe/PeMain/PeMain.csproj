@@ -422,6 +422,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="bat\log.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="doc\readme-ja.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -486,6 +489,7 @@
     <Folder Include="UI\CustomControl" />
     <Folder Include="UI\Skin" />
     <Folder Include="doc" />
+    <Folder Include="bat" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
