@@ -36,13 +36,28 @@ namespace PeMain.UI
 			this.errorProvider.Clear();
 			
 			if(!LauncherItemValid()) {
-				this.errorProvider.SetError(this.selecterLauncher, Language["setting/check/item-name-dup"]);
+				checkResult = false;
+			}
+			
+			if(!NoteValid()) {
 				checkResult = false;
 			}
 			
 			return checkResult;
 		}
 		
+		public void SaveDB(PeDBManager db)
+		{
+			using(var tran = db.BeginTransaction()) {
+				try {
+					SaveNoteItems(db);
+					tran.Commit();
+				} catch(Exception ex) {
+					tran.Rollback();
+					throw ex;
+				}
+			}
+		}
 		void CreateSettingData()
 		{
 			var mainSetting = new MainSetting();
@@ -60,7 +75,7 @@ namespace PeMain.UI
 			ToolbarExportSetting(mainSetting.Toolbar);
 			
 			// ノート
-			ToolbarExportSetting(mainSetting.Note);
+			NoteExportSetting(mainSetting.Note);
 			
 			// ディスプレイ
 			

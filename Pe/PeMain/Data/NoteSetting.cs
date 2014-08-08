@@ -51,6 +51,11 @@ namespace PeMain.Data
 			this._db = db;
 		}
 		
+		/// <summary>
+		/// TODO: Dataから別のどこかへ委譲。
+		/// </summary>
+		/// <param name="enabledOnly"></param>
+		/// <returns></returns>
 		public IEnumerable<NoteItem> GetNoteItemList(bool enabledOnly)
 		{
 			var dtoList = this._db.GetResultList<NoteItemDto>(global::PeMain.Properties.SQL.GetNoteItemList);
@@ -95,6 +100,11 @@ namespace PeMain.Data
 			}
 		}
 		
+		/// <summary>
+		/// TODO: Dataから別のどこかへ委譲。
+		/// </summary>
+		/// <param name="noteItem"></param>
+		/// <returns></returns>
 		public NoteItem InsertItem(NoteItem noteItem)
 		{
 			lock(this._db) {
@@ -113,7 +123,11 @@ namespace PeMain.Data
 				}
 			}
 		}
-		
+		/// <summary>
+		/// TODO: Dataから別のどこかへ委譲。
+		/// </summary>
+		/// <param name="noteItem"></param>
+		/// <param name="timestamp"></param>
 		void ResistTNote(NoteItem noteItem, DateTime timestamp)
 		{
 			var tNote = new TNoteEntity();
@@ -133,7 +147,11 @@ namespace PeMain.Data
 				this._db.ExecuteInsert(new [] { tNote });
 			}
 		}
-		
+		/// <summary>
+		/// TODO: Dataから別のどこかへ委譲。
+		/// </summary>
+		/// <param name="noteItem"></param>
+		/// <param name="timestamp"></param>
 		void ResistTNoteStyle(NoteItem noteItem, DateTime timestamp)
 		{
 			var tNoteStyle = new TNoteStyleEntity();
@@ -169,7 +187,10 @@ namespace PeMain.Data
 				this._db.ExecuteInsert(new [] { tNoteStyle });
 			}
 		}
-		
+		/// <summary>
+		/// TODO: Dataから別のどこかへ委譲。
+		/// </summary>
+		/// <param name="noteItem"></param>
 		public void ResistItem(NoteItem noteItem)
 		{
 			lock(this._db) {

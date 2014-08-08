@@ -95,6 +95,8 @@ namespace PeMain.UI
 				result.AddRange(f.OwnedForms);
 			}
 			
+			result.AddRange(this._noteWindowList);
+
 			return result;
 		}
 		
@@ -227,9 +229,16 @@ namespace PeMain.UI
 		{
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
+					foreach(var note in this._noteWindowList) {
+						note.Close();
+						note.Dispose();
+					}
+					this._noteWindowList.Clear();
+						
 					var mainSetting = settingForm.MainSetting;
 					mainSetting.Note.setDatabase(this._commonData.Database);
 					this._commonData.MainSetting = mainSetting;
+					settingForm.SaveDB(this._commonData.Database);
 					SaveSetting();
 					InitializeLanguage(null, null);
 					ApplyLanguage();
@@ -240,6 +249,8 @@ namespace PeMain.UI
 						foreach(var toolbar in this._toolbarForms.Values) {
 							toolbar.SetCommonData(this._commonData);
 						}
+						
+						InitializeNoteForm(null, null);
 					};
 				}
 			}
@@ -311,9 +322,9 @@ namespace PeMain.UI
 			var item = new NoteItem();
 			item.Title = DateTime.Now.ToString();
 			if(point.IsEmpty) {
-			item.Location = Cursor.Position;
+				item.Location = Cursor.Position;
 			} else {
-			item.Location = point;
+				item.Location = point;
 			}
 			this._commonData.MainSetting.Note.InsertItem(item);
 			var noteForm = CreateNote(item);
@@ -326,8 +337,10 @@ namespace PeMain.UI
 			noteForm.NoteItem = noteItem;
 			noteForm.SetCommonData(this._commonData);
 			noteForm.Show();
-			noteForm.Closed += delegate(object sender, EventArgs e) { 
-				this._noteWindowList.Remove(noteForm);
+			noteForm.Closed += delegate(object sender, EventArgs e) {
+				if(noteForm.Visible) {
+					this._noteWindowList.Remove(noteForm);
+				}
 			};
 			this._noteWindowList.Add(noteForm);
 			return noteForm;

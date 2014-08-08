@@ -129,7 +129,12 @@ namespace PeMain.UI
 		
 		bool LauncherItemValid()
 		{
-			return !this.selecterLauncher.Items.Any(item => item.HasError);
+			if(!this.selecterLauncher.Items.Any(item => item.HasError)) {
+				return true;
+			} else {
+				this.errorProvider.SetError(this.selecterLauncher, Language["setting/check/item-name-dup"]);
+				return false;
+			}
 		}
 		
 		void LauncherOpenIcon()

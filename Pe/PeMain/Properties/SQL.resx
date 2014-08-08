@@ -214,4 +214,15 @@ order by
 
 </value>
   </data>
+  <data name="EnabledSwitch" xml:space="preserve">
+    <value>update
+	M_NOTE
+set
+	CMN_ENABLED = :enabled,
+	CMN_UPDATE  = :update
+where
+	({ID_LIST})
+
+</value>
+  </data>
 </root>

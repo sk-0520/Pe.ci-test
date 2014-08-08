@@ -92,11 +92,11 @@ namespace PeMain.UI
 			
 			// 全リスト
 			this.gridNoteItems.AutoGenerateColumns = false;
-			var noteRawList = noteSetting.GetNoteItemList(false);
-			var noteList = new List<NoteWrapItem>(noteRawList.Count());
+			var noteRawList = noteSetting.GetNoteItemList(true);
+			this._noteItemList = new List<NoteWrapItem>(noteRawList.Count());
 			foreach(var item in noteRawList) {
 				var wrap = new NoteWrapItem(item);
-				noteList.Add(wrap);
+				this._noteItemList.Add(wrap);
 			}
 			this.gridNoteItems_remove.DataPropertyName = "Remove";
 			this.gridNoteItems_id.DataPropertyName = "Id";
@@ -106,7 +106,7 @@ namespace PeMain.UI
 			this.gridNoteItems_font.DataPropertyName = "Font";
 			this.gridNoteItems_fore.DataPropertyName = "Fore";
 			this.gridNoteItems_back.DataPropertyName = "Back";
-            this.gridNoteItems.DataSource = new BindingSource(noteList, string.Empty); 
+            this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty); 
             
 //			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}

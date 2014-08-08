@@ -111,6 +111,8 @@
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
+    <Compile Include="Logic\DB\DBWrapper.cs" />
+    <Compile Include="Logic\DB\NoteDB.cs" />
     <Compile Include="Logic\EnumToText.cs" />
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\FileLogger.cs" />
@@ -483,6 +485,7 @@
     <Folder Include="etc\lang" />
     <Folder Include="Data" />
     <Folder Include="etc" />
+    <Folder Include="Logic\DB" />
     <Folder Include="UI" />
     <Folder Include="UI\Ex" />
     <Folder Include="Logic" />

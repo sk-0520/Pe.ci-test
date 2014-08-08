@@ -239,6 +239,8 @@ namespace PeUtility
 	/// DB接続・操作の一元化
 	/// 
 	/// すんごいとろくない限り処理速度は考えない。
+	/// 
+	/// *これ、つっかいにくいなぁ...*
 	/// </summary>
 	public abstract class DBManager
 	{
@@ -641,7 +643,7 @@ namespace PeUtility
 				"update {0} set {1} where {2}",
 				entitySet.TableName,
 				string.Join(", ", data.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name))),
-				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+				string.Join(" and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
 			);
 			
 			return code;

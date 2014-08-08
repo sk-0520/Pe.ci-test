@@ -9,6 +9,8 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -68,5 +70,51 @@ namespace PeMain.UI
 				}
 			}
 		}
+		
+		
+		
+		void DrawCommand(Point point, Func<bool, ButtonState, ButtonState> inFirstDg, Action<NoteCommand> prevDrawDg, Action lastInDg, bool elseProcess)
+		{
+			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
+			if(!captionArea.Size.IsEmpty) {
+				var active = this == Form.ActiveForm;
+				var noteStatus = GetNoteStatus();
+				if(captionArea.Contains(point)) {
+					using(var g = CreateGraphics()) {
+						foreach(var command in GetCommandList()) {
+							var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
+							var nowState = ButtonState.None;
+							var prevState = this._commandStateMap[command];
+							nowState = inFirstDg(commandArea.Contains(point), prevState);
+							
+							if(nowState != ButtonState.None) {
+								if(prevDrawDg != null) {
+									prevDrawDg(command);
+								}
+								if(nowState != prevState && this.Created) {
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
+									this._commandStateMap[command] = nowState;
+								}
+							}
+						}
+					}
+					if(lastInDg != null) {
+						lastInDg();
+					}
+				} else {
+					if(elseProcess) {
+						using(var g = CreateGraphics()) {
+							foreach(var pair in this._commandStateMap) {
+								if(pair.Value != ButtonState.Normal) {
+									var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, ButtonState.Normal);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
 	}
 }

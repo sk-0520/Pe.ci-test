@@ -28,6 +28,8 @@ namespace PeMain.UI
 		ImageList _imageToolbarItemGroup = null;
 		bool _launcherItemEvent = false;
 		
+		List<NoteWrapItem> _noteItemList;
+		
 		/*
 		Point _toolbarLocation;
 		Size _toolbarSize;

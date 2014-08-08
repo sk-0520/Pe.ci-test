@@ -144,6 +144,23 @@ namespace PeMain.Properties {
 		}
 		
 		/// <summary>
+		///   update
+		///	M_NOTE
+		///set
+		///	CMN_ENABLED = :enabled,
+		///	CMN_UPDATE  = :update
+		///where
+		///	({ID_LIST})
+		///
+		/// に類似しているローカライズされた文字列を検索します。
+		/// </summary>
+		public static string EnabledSwitch {
+			get {
+				return ResourceManager.GetString("EnabledSwitch", resourceCulture);
+			}
+		}
+		
+		/// <summary>
 		///   select
 		///    coalesce(max({id_column_name}), 0) MAX_ID,
 		///    coalesce(min({id_column_name}), 0) MIN_ID

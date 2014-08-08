@@ -7,7 +7,14 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Forms;
 using PeMain.Data;
+using PeMain.Logic;
+using PeMain.Logic.DB;
 
 namespace PeMain.UI
 {
@@ -16,11 +23,34 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm
 	{
-		void ToolbarExportSetting(NoteSetting noteSetting)
+		bool NoteValid()
 		{
+			
+			
+			return true;
+		}
+
+		void NoteExportSetting(NoteSetting noteSetting)
+		{
+			// ホットキー
 			noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
 			noteSetting.HiddenHotKey = this.inputNoteHidden.HotKeySetting;
 			noteSetting.CompactHotKey= this.inputNoteCompact.HotKeySetting;
+			
+			// フォント
+			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
+			
 		}
+		
+		void SaveNoteItems(PeDBManager db)
+		{
+			var removeList = this._noteItemList.Where(note => note.Remove).Select(note => note.NoteItem);
+			var saveList = this._noteItemList.Where(note => !note.Remove).Select(note => note.NoteItem);
+			
+			var noteDB = new NoteDB(db);
+			noteDB.ToDisabled(removeList);
+			noteDB.Resist(saveList);
+		}
+		
 	}
 }
