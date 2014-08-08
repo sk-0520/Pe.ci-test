@@ -429,22 +429,22 @@ namespace PeMain.UI
 			
 			// 左
 			edgeArea = new Rectangle(drawArea.Left, drawArea.Top, edge.Left, drawArea.Bottom);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.White, Color.Transparent, LinearGradientMode.Horizontal)) {
+			using(var brush = new LinearGradientBrush(edgeArea, Color.FromArgb(128, Color.White), Color.Transparent, LinearGradientMode.Horizontal)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 			// 上
 			edgeArea = new Rectangle(drawArea.Left, drawArea.Top, drawArea.Width, edge.Top);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.White, Color.Transparent, LinearGradientMode.Vertical)) {
+			using(var brush = new LinearGradientBrush(edgeArea, Color.FromArgb(128, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 			// 右
 			edgeArea = new Rectangle(drawArea.Right - edge.Right, drawArea.Top, edge.Right, drawArea.Bottom);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.Black, LinearGradientMode.Horizontal)) {
+			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.FromArgb(128, Color.Black), LinearGradientMode.Horizontal)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 			// 下
 			edgeArea = new Rectangle(drawArea.Left, drawArea.Bottom - edge.Bottom, drawArea.Width, edge.Bottom);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.Black, LinearGradientMode.Vertical)) {
+			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.FromArgb(128, Color.Black), LinearGradientMode.Vertical)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 		}
