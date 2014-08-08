@@ -14,6 +14,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using PeMain.Data.DB;
 using PeMain.Logic;
+using PeMain.Logic.DB;
 using PeUtility;
 
 namespace PeMain.Data
@@ -123,93 +124,24 @@ namespace PeMain.Data
 				}
 			}
 		}
+
+		
 		/// <summary>
 		/// TODO: Dataから別のどこかへ委譲。
 		/// </summary>
 		/// <param name="noteItem"></param>
-		/// <param name="timestamp"></param>
-		void ResistTNote(NoteItem noteItem, DateTime timestamp)
-		{
-			var tNote = new TNoteEntity();
-			tNote.Id = noteItem.NoteId;
-			var tempTNote = this._db.GetEntity(tNote);
-			if(tempTNote != null) {
-				tNote = tempTNote;
-			} else {
-				tNote.CommonCreate = timestamp;
-			}
-			tNote.CommonUpdate = timestamp;
-			tNote.Body = noteItem.Body;
-			
-			if(tempTNote != null) {
-				this._db.ExecuteUpdate(new [] { tNote });
-			} else {
-				this._db.ExecuteInsert(new [] { tNote });
-			}
-		}
-		/// <summary>
-		/// TODO: Dataから別のどこかへ委譲。
-		/// </summary>
-		/// <param name="noteItem"></param>
-		/// <param name="timestamp"></param>
-		void ResistTNoteStyle(NoteItem noteItem, DateTime timestamp)
-		{
-			var tNoteStyle = new TNoteStyleEntity();
-			tNoteStyle.Id = noteItem.NoteId;
-			var tempTNoteStyle = this._db.GetEntity(tNoteStyle);
-			if(tempTNoteStyle != null) {
-				tNoteStyle = tempTNoteStyle;
-			} else {
-				tNoteStyle.CommonCreate = timestamp;
-			}
-			tNoteStyle.CommonUpdate = timestamp;
-			
-			tNoteStyle.ForeColor = noteItem.Style.ForeColor;
-			tNoteStyle.BackColor = noteItem.Style.BackColor;
-			if(noteItem.Style.FontSetting.IsDefault) {
-				tNoteStyle.FontFamily = string.Empty;
-			} else {
-				tNoteStyle.FontFamily = noteItem.Style.FontSetting.Family;
-			}
-			tNoteStyle.FontHeight = noteItem.Style.FontSetting.Height;
-			tNoteStyle.FontBold = noteItem.Style.FontSetting.Bold;
-			tNoteStyle.FontItalic = noteItem.Style.FontSetting.Italic;
-			tNoteStyle.Visibled = noteItem.Visible;
-			tNoteStyle.Locked = noteItem.Locked;
-			tNoteStyle.Topmost = noteItem.Topmost;
-			tNoteStyle.Compact = noteItem.Compact;
-			tNoteStyle.Location = noteItem.Location;
-			tNoteStyle.Size = noteItem.Size;
-			
-			if(tempTNoteStyle != null) {
-				this._db.ExecuteUpdate(new [] { tNoteStyle });
-			} else {
-				this._db.ExecuteInsert(new [] { tNoteStyle });
-			}
-		}
-		/// <summary>
-		/// TODO: Dataから別のどこかへ委譲。
-		/// </summary>
-		/// <param name="noteItem"></param>
-		public void ResistItem(NoteItem noteItem)
+		public void ResistItem(NoteItem noteItem, ILogger logger)
 		{
 			lock(this._db) {
-				using(var tran = this._db.BeginTransaction()) {
-					var timestamp = DateTime.Now;
-					
-					var mNote = new MNoteEntity();
-					mNote.Id = noteItem.NoteId;
-					mNote = this._db.GetEntity(mNote);
-					Debug.Assert(mNote != null, noteItem.ToString());
-					mNote.Title = noteItem.Title;
-					mNote.RawType = NoteTypeUtility.ToNumber(NoteType.Text);
-					mNote.Title = noteItem.Title;
-					mNote.CommonUpdate = timestamp;
-					this._db.ExecuteUpdate(new [] { mNote });
-					ResistTNote(noteItem, timestamp);
-					ResistTNoteStyle(noteItem, timestamp);
-					
-					tran.Commit();
+				var noteDB = new NoteDB(this._db);
+				using(var tran = noteDB.BeginTransaction()) {
+					try {
+						noteDB.Resist(new [] { noteItem });
+						tran.Commit();
+					} catch(Exception ex) {
+						tran.Rollback();
+						logger.Puts(LogType.Error, ex.Message, ex);
+					}
 				}
 			}
 		}

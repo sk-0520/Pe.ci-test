@@ -230,7 +230,7 @@ namespace PeMain.UI
 		public void SaveItem()
 		{
 			if(this._changed) {
-				CommonData.MainSetting.Note.ResistItem(NoteItem);
+				CommonData.MainSetting.Note.ResistItem(NoteItem, CommonData.Logger);
 				this._changed = false;
 				//*
 				var map = new Dictionary<string, string>() {
