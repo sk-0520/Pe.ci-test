@@ -9,8 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
-
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeUtility;
@@ -22,8 +22,58 @@ namespace PeMain.Logic.DB
 	/// </summary>
 	public class NoteDB: DBWrapper
 	{
-		public NoteDB(DBManager db): base(db)
+		public NoteDB(PeDBManager db): base(db)
 		{ }
+		
+		/// <summary>
+		/// TODO: Dataから別のどこかへ委譲。
+		/// </summary>
+		/// <param name="enabledOnly"></param>
+		/// <returns></returns>
+		public IEnumerable<NoteItem> GetNoteItemList(bool enabledOnly)
+		{
+			var dtoList = this.db.GetResultList<NoteItemDto>(global::PeMain.Properties.SQL.GetNoteItemList);
+			if(enabledOnly) {
+				dtoList = dtoList.Where(dto => dto.CommonEnabled);
+			}
+			var count = dtoList.Count();
+			if(count > 0) {
+				var result = new List<NoteItem>(count);
+				foreach(var dto in dtoList) {
+					var noteItem = new NoteItem();
+					
+					noteItem.NoteId = dto.Id;
+					
+					noteItem.Title = dto.Title;
+					noteItem.Body = dto.Body;
+					noteItem.NoteType = NoteTypeUtility.ToNoteType(dto.RawType);
+					
+					noteItem.Visible = dto.Visibled;
+					noteItem.Compact = dto.Compact;
+					noteItem.Topmost = dto.Topmost;
+					noteItem.Locked = dto.Locked;
+					
+					noteItem.Location = new Point(dto.X, dto.Y);
+					noteItem.Size = new Size(dto.Width, dto.Height);
+					
+					noteItem.Style.ForeColor = dto.ForeColor;
+					noteItem.Style.BackColor = dto.BackColor;
+					if(!string.IsNullOrWhiteSpace(dto.FontFamily) && dto.FontHeight > 0) {
+						noteItem.Style.FontSetting.Family = dto.FontFamily;
+						noteItem.Style.FontSetting.Height = dto.FontHeight;
+						noteItem.Style.FontSetting.Bold = dto.FontBold;
+						noteItem.Style.FontSetting.Italic = dto.FontItalic;
+					}
+					
+					result.Add(noteItem);
+				}
+				
+				return result;
+			} else {
+				return new NoteItem[] {};
+			}
+		}
+		
 		
 		public void ToDisabled(IEnumerable<NoteItem> noteItemList)
 		{
@@ -61,6 +111,7 @@ namespace PeMain.Logic.DB
 					entity = tempEntity;
 				} else {
 					entity.CommonCreate = timestamp;
+					entity.CommonEnabled = true;
 				}
 				entity.CommonUpdate = timestamp;
 				
@@ -169,8 +220,6 @@ namespace PeMain.Logic.DB
 			}
 		}
 		
-
-		
 		public void Resist(IEnumerable<NoteItem> noteItemList)
 		{
 			var timestamp = DateTime.Now;
@@ -178,5 +227,19 @@ namespace PeMain.Logic.DB
 			ResistTransactionNote(noteItemList, timestamp);
 			ResistTransactionNoteStyle(noteItemList, timestamp);
 		}
+		
+		public NoteItem InsertMaster(NoteItem noteItem)
+		{
+			lock(this.db) {
+				using(var tran = this.db.BeginTransaction()) {
+					var noteDto = this.db.GetTableId("M_NOTE", "NOTE_ID");
+					noteItem.NoteId = noteDto.MaxId + 1;
+					ResistMasterNote(new [] { noteItem }, DateTime.Now);
+					tran.Commit();
+					return noteItem;
+				}
+			}
+		}
+		
 	}
 }

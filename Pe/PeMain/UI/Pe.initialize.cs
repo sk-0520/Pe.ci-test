@@ -21,6 +21,7 @@ using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.Logic;
+using PeMain.Logic.DB;
 using PeMain.Properties;
 using PeUtility;
 using PInvoke.Windows;
@@ -135,7 +136,6 @@ namespace PeMain.UI
 		
 		void InitializeNote(CommandLine commandLine, StartupLogger logger)
 		{
-			this._commonData.MainSetting.Note.setDatabase(this._commonData.Database);
 		}
 		
 		/// <summary>
@@ -397,7 +397,8 @@ namespace PeMain.UI
 		
 		void InitializeNoteForm(CommandLine commandLine, StartupLogger logger)
 		{
-			foreach(var item in this._commonData.MainSetting.Note.GetNoteItemList(true).Where(item => item.Visible)) {
+			var noteDB = new NoteDB(this._commonData.Database);
+			foreach(var item in noteDB.GetNoteItemList(true).Where(item => item.Visible)) {
 				CreateNote(item);
 			}
 		}

@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.Logic;
+using PeMain.Logic.DB;
 using PeUtility;
 
 namespace PeMain.UI
@@ -80,7 +80,7 @@ namespace PeMain.UI
 			this.inputCommandHotkey.HotKeySetting = commandSetting.HotKey;
 		}
 		
-		void InitializeNote(NoteSetting noteSetting)
+		void InitializeNote(NoteSetting noteSetting, PeDBManager db)
 		{
 			// ホットキー
 			this.inputNoteCreate.HotKeySetting = noteSetting.CreateHotKey;
@@ -92,7 +92,8 @@ namespace PeMain.UI
 			
 			// 全リスト
 			this.gridNoteItems.AutoGenerateColumns = false;
-			var noteRawList = noteSetting.GetNoteItemList(true);
+			var noteDB = new NoteDB(db);
+			var noteRawList = noteDB.GetNoteItemList(true);
 			this._noteItemList = new List<NoteWrapItem>(noteRawList.Count());
 			foreach(var item in noteRawList) {
 				var wrap = new NoteWrapItem(item);
@@ -159,7 +160,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		void InitializeUI(MainSetting mainSetting)
+		void InitializeUI(MainSetting mainSetting, PeDBManager db)
 		{
 			ApplyLanguage();
 			
@@ -167,7 +168,7 @@ namespace PeMain.UI
 			InitializeLauncher(mainSetting.Launcher);
 			InitializeToolbar(mainSetting.Toolbar);
 			InitializeCommand(mainSetting.Command);
-			InitializeNote(mainSetting.Note);
+			InitializeNote(mainSetting.Note, db);
 
 #if RELEASE
 			var debugPage = new [] { this.pageCommand, this.pageDisplay };
@@ -177,13 +178,13 @@ namespace PeMain.UI
 #endif
 		}
 		
-		void Initialize(Language language, MainSetting mainSetting)
+		void Initialize(Language language, MainSetting mainSetting, PeDBManager db)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 			
 			Language = language;
 			
-			InitializeUI(mainSetting);
+			InitializeUI(mainSetting, db);
 		}
 
 	}

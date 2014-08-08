@@ -14,6 +14,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
+using PeMain.Logic.DB;
 using PeUtility;
 
 namespace PeMain.UI
@@ -230,7 +231,19 @@ namespace PeMain.UI
 		public void SaveItem()
 		{
 			if(this._changed) {
-				CommonData.MainSetting.Note.ResistItem(NoteItem, CommonData.Logger);
+				lock(CommonData.Database) {
+					var noteDB = new NoteDB(CommonData.Database);
+					using(var tran = noteDB.BeginTransaction()) {
+						try {
+							noteDB.Resist(new [] { NoteItem });
+							tran.Commit();
+						} catch(Exception ex) {
+							tran.Rollback();
+							CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+						}
+					}
+				}
+					
 				this._changed = false;
 				//*
 				var map = new Dictionary<string, string>() {

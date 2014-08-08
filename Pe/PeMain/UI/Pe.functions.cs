@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
 using PeMain.Logic;
+using PeMain.Logic.DB;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -227,7 +228,7 @@ namespace PeMain.UI
 		
 		Action OpenSetting()
 		{
-			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting)) {
+			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					foreach(var note in this._noteWindowList) {
 						note.Close();
@@ -236,7 +237,6 @@ namespace PeMain.UI
 					this._noteWindowList.Clear();
 						
 					var mainSetting = settingForm.MainSetting;
-					mainSetting.Note.setDatabase(this._commonData.Database);
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveDB(this._commonData.Database);
 					SaveSetting();
@@ -326,7 +326,9 @@ namespace PeMain.UI
 			} else {
 				item.Location = point;
 			}
-			this._commonData.MainSetting.Note.InsertItem(item);
+			var noteDB = new NoteDB(this._commonData.Database);
+			noteDB.InsertMaster(item);
+			
 			var noteForm = CreateNote(item);
 			noteForm.Activate();
 		}

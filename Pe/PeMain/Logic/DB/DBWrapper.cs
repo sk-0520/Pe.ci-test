@@ -17,9 +17,9 @@ namespace PeMain.Logic.DB
 	/// </summary>
 	abstract public class DBWrapper
 	{
-		protected DBManager db;
+		protected PeDBManager db;
 		
-		public DBWrapper(DBManager db)
+		public DBWrapper(PeDBManager db)
 		{
 			this.db = db;
 		}
