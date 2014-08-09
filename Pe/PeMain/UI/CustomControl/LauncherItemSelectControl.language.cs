@@ -8,6 +8,7 @@
  */
 using System;
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -16,17 +17,20 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class LauncherItemSelectControl
 	{
-		void ApplyLanguage(Language lang)
+		void ApplyLanguage(Language language)
 		{
-			if(lang == null) {
+			if(language == null) {
 				return;
 			}
-			this.toolLauncherItems_create.Text = lang["item-selecter/command/create"];
-			this.toolLauncherItems_remove.Text = lang["item-selecter/command/remove"];
-			this.toolLauncherItems_filter.Text = lang["item-selecter/command/filtering"];
-			this.toolLauncherItems_type_full.Text = lang["item-selecter/command/type-full"];
-			this.toolLauncherItems_type_name.Text = lang["item-selecter/command/type-name"];
-			this.toolLauncherItems_type_tag.Text = lang["item-selecter/command/type-tag"];
+			
+			this.toolLauncherItems_create.SetLanguage(language);
+			this.toolLauncherItems_remove.SetLanguage(language);
+			this.toolLauncherItems_filter.SetLanguage(language);
+			this.toolLauncherItems_type_full.SetLanguage(language);
+			this.toolLauncherItems_type_name.SetLanguage(language);
+			this.toolLauncherItems_type_tag.SetLanguage(language);
+			
+			ToolLauncherItems_type_Click(this.toolLauncherItems_type_full, null);
 		}
 	}
 }

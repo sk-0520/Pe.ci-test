@@ -30,8 +30,8 @@ namespace PeMain.UI
 				foreach(var item in map) {
 					var row = new DataGridViewRow();
 					row.CreateCells(this.gridEnv);
-					row.Cells[this.headerKey.Index].Value = item.Key;
-					row.Cells[this.headerValue.Index].Value = item.Value;
+					row.Cells[this.gridEnv_columnKey.Index].Value = item.Key;
+					row.Cells[this.gridEnv_columnValue.Index].Value = item.Value;
 					
 					rowList.Add(row);
 				}

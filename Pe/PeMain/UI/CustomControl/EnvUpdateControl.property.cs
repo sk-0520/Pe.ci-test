@@ -24,8 +24,8 @@ namespace PeMain.UI
 					if(row.IsNewRow) {
 						continue;
 					}
-					var cellKey = row.Cells[this.headerKey.Index];
-					var cellValue = row.Cells[this.headerValue.Index];
+					var cellKey = row.Cells[this.gridEnv_columnKey.Index];
+					var cellValue = row.Cells[this.gridEnv_columnValue.Index];
 					if(cellKey.Value != null && cellValue != null) {
 						var pair = new TPair<string, string>();
 						pair.First = (string)cellKey.Value;

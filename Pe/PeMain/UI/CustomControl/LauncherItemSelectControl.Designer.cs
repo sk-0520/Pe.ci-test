@@ -89,7 +89,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_create.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_create.Name = "toolLauncherItems_create";
 			this.toolLauncherItems_create.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_create.Text = "{LAUNCHER_ITEM_CREATE}";
+			this.toolLauncherItems_create.Text = ":item-selecter/command/create";
 			this.toolLauncherItems_create.Click += new System.EventHandler(this.ToolLauncherItems_createClick);
 			// 
 			// toolLauncherItems_remove
@@ -99,7 +99,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_remove.Name = "toolLauncherItems_remove";
 			this.toolLauncherItems_remove.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_remove.Text = "{LAUNCHER_ITEM_REMOVE}";
+			this.toolLauncherItems_remove.Text = ":item-selecter/command/remove";
 			this.toolLauncherItems_remove.Click += new System.EventHandler(this.ToolLauncherItems_removeClick);
 			// 
 			// toolLauncherItems_editSeparator
@@ -114,7 +114,7 @@ namespace PeMain.UI
 			this.toolLauncherItems_filter.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
 			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
-			this.toolLauncherItems_filter.Text = "{LAUNCHER_FILTERING}";
+			this.toolLauncherItems_filter.Text = ":item-selecter/command/filtering";
 			this.toolLauncherItems_filter.Click += new System.EventHandler(this.ToolLauncherItems_filter_Click);
 			// 
 			// toolLauncherItems_type
@@ -128,30 +128,30 @@ namespace PeMain.UI
 			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
 			this.toolLauncherItems_type.Size = new System.Drawing.Size(29, 20);
-			this.toolLauncherItems_type.Text = "{?}";
+			this.toolLauncherItems_type.Text = "☆";
 			// 
 			// toolLauncherItems_type_full
 			// 
 			this.toolLauncherItems_type_full.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
-			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(244, 22);
-			this.toolLauncherItems_type_full.Text = "{LAUNCHER_FILTER_FULL}";
+			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(292, 22);
+			this.toolLauncherItems_type_full.Text = ":item-selecter/command/type-full";
 			this.toolLauncherItems_type_full.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_type_name
 			// 
 			this.toolLauncherItems_type_name.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
-			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(244, 22);
-			this.toolLauncherItems_type_name.Text = "{LAUNCHER_FILTER_NAME}";
+			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(292, 22);
+			this.toolLauncherItems_type_name.Text = ":item-selecter/command/type-name";
 			this.toolLauncherItems_type_name.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_type_tag
 			// 
 			this.toolLauncherItems_type_tag.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
-			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(244, 22);
-			this.toolLauncherItems_type_tag.Text = "{LAUNCHER_FILTER_TAG}";
+			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(292, 22);
+			this.toolLauncherItems_type_tag.Text = ":item-selecter/command/type-tag";
 			this.toolLauncherItems_type_tag.Click += new System.EventHandler(this.ToolLauncherItems_type_Click);
 			// 
 			// toolLauncherItems_input

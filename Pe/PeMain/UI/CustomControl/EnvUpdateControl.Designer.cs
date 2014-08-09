@@ -38,8 +38,8 @@ namespace PeMain.UI
 		{
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridEnv = new System.Windows.Forms.DataGridView();
-			this.headerKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.headerValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridEnv_columnKey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridEnv_columnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridEnv)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -47,8 +47,8 @@ namespace PeMain.UI
 			// 
 			this.gridEnv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridEnv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-									this.headerKey,
-									this.headerValue});
+									this.gridEnv_columnKey,
+									this.gridEnv_columnValue});
 			this.gridEnv.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gridEnv.Location = new System.Drawing.Point(0, 0);
 			this.gridEnv.Name = "gridEnv";
@@ -58,21 +58,21 @@ namespace PeMain.UI
 			this.gridEnv.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridEnv_CellValueChanged);
 			this.gridEnv.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.GridEnv_RowsRemoved);
 			// 
-			// headerKey
+			// gridEnv_columnKey
 			// 
-			this.headerKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.headerKey.HeaderText = "{KEY}";
-			this.headerKey.Name = "headerKey";
-			this.headerKey.Width = 57;
+			this.gridEnv_columnKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridEnv_columnKey.HeaderText = ":env-updater/header/key";
+			this.gridEnv_columnKey.Name = "gridEnv_columnKey";
+			this.gridEnv_columnKey.Width = 118;
 			// 
-			// headerValue
+			// gridEnv_columnValue
 			// 
-			this.headerValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.gridEnv_columnValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.headerValue.DefaultCellStyle = dataGridViewCellStyle1;
-			this.headerValue.HeaderText = "{VALUE}";
-			this.headerValue.Name = "headerValue";
+			this.gridEnv_columnValue.DefaultCellStyle = dataGridViewCellStyle1;
+			this.gridEnv_columnValue.HeaderText = ":env-updater/header/value";
+			this.gridEnv_columnValue.Name = "gridEnv_columnValue";
 			// 
 			// EnvUpdateControl
 			// 
@@ -84,8 +84,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.gridEnv)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.DataGridViewTextBoxColumn headerValue;
-		private System.Windows.Forms.DataGridViewTextBoxColumn headerKey;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridEnv_columnValue;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridEnv_columnKey;
 		private System.Windows.Forms.DataGridView gridEnv;
 	}
 }

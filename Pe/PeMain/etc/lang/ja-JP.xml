@@ -159,8 +159,8 @@
 		<Word Name="item-selecter/command/type-name"  Text="アイテム名から選択" />
 		<Word Name="item-selecter/command/type-tag"   Text="タグから抽出" />
 		
-		<Word Name="env-updater/key"   Text="キー" />
-		<Word Name="env-updater/value" Text="値" />
+		<Word Name="env-updater/header/key"   Text="キー" />
+		<Word Name="env-updater/header/value" Text="値" />
 		
 		<Word Name="enum/toolbar-position"                Text="ツールバー位置" />
 		<Word Name="enum/toolbar-position/desktop/float"  Text="フロート" />

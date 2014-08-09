@@ -224,12 +224,23 @@ namespace PeMain.Logic
 				return "{" + key + "}";
 			}
 			
-			return language[key, map];
+			return language[key.Substring(1), map];
 		}
 		
-		public static void SetLanguage(this Control control, Language language, IDictionary<string, string> map = null)
+		public static void SetLanguage(this Control target, Language language, IDictionary<string, string> map = null)
 		{
-			control.Text = GetWord(language, control.Text, map);
+			target.Text = GetWord(language, target.Text, map);
 		}
+		
+		public static void SetLanguage(this DataGridViewColumn target, Language language, IDictionary<string, string> map = null)
+		{
+			target.HeaderText = GetWord(language, target.HeaderText, map);
+		}
+		
+		public static void SetLanguage(this ToolStripItem target, Language language, IDictionary<string, string> map = null)
+		{
+			target.Text = GetWord(language, target.Text, map);
+		}
+			
 	}
 }

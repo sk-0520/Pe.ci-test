@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -16,8 +17,8 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage(Language language)
 		{
-			this.headerKey.HeaderText = language["env-updater/key"];
-			this.headerValue.HeaderText = language["env-updater/value"];
+			this.gridEnv_columnKey.SetLanguage(language);
+			this.gridEnv_columnValue.SetLanguage(language);
 		}
 	}
 }
