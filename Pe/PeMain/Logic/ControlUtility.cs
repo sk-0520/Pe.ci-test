@@ -54,9 +54,9 @@ namespace PeMain.Logic
 			}
 		}
 		
-		public static void SetDefaultText(Form target, Language language, string title)
+		public static void SetDefaultText(Form target, Language language, IDictionary<string, string> map = null)
 		{
-			target.Text = title;
+			target.SetLanguage(language, map);
 			
 			var acceptButton = target.AcceptButton as Button;
 			if(acceptButton != null) {

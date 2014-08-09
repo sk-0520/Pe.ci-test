@@ -24,7 +24,7 @@ namespace PeMain.UI
 				{ SystemLanguageName.itemName, LauncherItem.Name },
 			};
 			
-			DialogUtility.SetDefaultText(this, CommonData.Language, CommonData.Language["window/execute", map]);
+			DialogUtility.SetDefaultText(this, CommonData.Language, map);
 			
 			this.envUpdate.SetLanguage(CommonData.Language);
 			this.envRemove.SetLanguage(CommonData.Language);
