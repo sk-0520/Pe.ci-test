@@ -8,6 +8,7 @@
  */
 using System;
 using System.Diagnostics;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -21,7 +22,7 @@ namespace PeMain.UI
 			Debug.Assert(CommonData != null);
 			Debug.Assert(CommonData.Language != null);
 			
-			Text = CommonData.Language["window/toolbar"];
+			DialogUtility.SetDefaultText(this, CommonData.Language);
 		}
 	}
 }
