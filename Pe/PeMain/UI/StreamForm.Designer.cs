@@ -68,7 +68,7 @@ namespace PeMain.UI
 									this.toolStream_kill});
 			this.toolStream.Location = new System.Drawing.Point(0, 0);
 			this.toolStream.Name = "toolStream";
-			this.toolStream.Size = new System.Drawing.Size(362, 25);
+			this.toolStream.Size = new System.Drawing.Size(471, 25);
 			this.toolStream.TabIndex = 1;
 			this.toolStream.Text = "toolStrip1";
 			// 
@@ -78,8 +78,9 @@ namespace PeMain.UI
 			this.toolStream_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolStream_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_save.Name = "toolStream_save";
-			this.toolStream_save.Size = new System.Drawing.Size(129, 22);
-			this.toolStream_save.Text = "{STREAM_SAVE}";
+			this.toolStream_save.Size = new System.Drawing.Size(172, 22);
+			this.toolStream_save.Text = ":stream/command/save";
+			this.toolStream_save.ToolTipText = ":stream/tips/save";
 			// 
 			// toolStream_clear
 			// 
@@ -87,8 +88,9 @@ namespace PeMain.UI
 			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
 			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_clear.Name = "toolStream_clear";
-			this.toolStream_clear.Size = new System.Drawing.Size(136, 22);
-			this.toolStream_clear.Text = "{STREAM_CLEAR}";
+			this.toolStream_clear.Size = new System.Drawing.Size(173, 22);
+			this.toolStream_clear.Text = ":stream/command/clear";
+			this.toolStream_clear.ToolTipText = ":stream/tips/clear";
 			// 
 			// toolStripSeparator1
 			// 
@@ -102,7 +104,7 @@ namespace PeMain.UI
 			this.toolStream_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_refresh.Name = "toolStream_refresh";
 			this.toolStream_refresh.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_refresh.Text = "{REFRESH}";
+			this.toolStream_refresh.ToolTipText = ":stream/tips/refesh";
 			this.toolStream_refresh.Click += new System.EventHandler(this.ToolStream_refresh_Click);
 			// 
 			// toolStream_kill
@@ -113,7 +115,7 @@ namespace PeMain.UI
 			this.toolStream_kill.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_kill.Name = "toolStream_kill";
 			this.toolStream_kill.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_kill.Text = "{KILL}";
+			this.toolStream_kill.ToolTipText = ":stream/tips/kill";
 			this.toolStream_kill.Click += new System.EventHandler(this.ToolStream_kill_Click);
 			// 
 			// tabStream
@@ -126,7 +128,7 @@ namespace PeMain.UI
 			this.tabStream.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabStream.Name = "tabStream";
 			this.tabStream.SelectedIndex = 0;
-			this.tabStream.Size = new System.Drawing.Size(362, 239);
+			this.tabStream.Size = new System.Drawing.Size(471, 255);
 			this.tabStream.TabIndex = 2;
 			// 
 			// pageStream
@@ -134,9 +136,9 @@ namespace PeMain.UI
 			this.pageStream.Controls.Add(this.viewOutput);
 			this.pageStream.Location = new System.Drawing.Point(4, 24);
 			this.pageStream.Name = "pageStream";
-			this.pageStream.Size = new System.Drawing.Size(354, 211);
+			this.pageStream.Size = new System.Drawing.Size(463, 227);
 			this.pageStream.TabIndex = 0;
-			this.pageStream.Text = "{STREAM}";
+			this.pageStream.Text = ":stream/tab/stream";
 			this.pageStream.UseVisualStyleBackColor = true;
 			// 
 			// viewOutput
@@ -148,7 +150,7 @@ namespace PeMain.UI
 			this.viewOutput.Name = "viewOutput";
 			this.viewOutput.ReadOnly = true;
 			this.viewOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.viewOutput.Size = new System.Drawing.Size(354, 211);
+			this.viewOutput.Size = new System.Drawing.Size(463, 227);
 			this.viewOutput.TabIndex = 0;
 			this.viewOutput.WordWrap = false;
 			this.viewOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
@@ -158,9 +160,9 @@ namespace PeMain.UI
 			this.pageProcess.Controls.Add(this.propertyProcess);
 			this.pageProcess.Location = new System.Drawing.Point(4, 24);
 			this.pageProcess.Name = "pageProcess";
-			this.pageProcess.Size = new System.Drawing.Size(354, 211);
+			this.pageProcess.Size = new System.Drawing.Size(463, 227);
 			this.pageProcess.TabIndex = 1;
-			this.pageProcess.Text = "{PROCESS}";
+			this.pageProcess.Text = ":stream/tab/process";
 			this.pageProcess.UseVisualStyleBackColor = true;
 			// 
 			// propertyProcess
@@ -168,7 +170,7 @@ namespace PeMain.UI
 			this.propertyProcess.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.propertyProcess.Location = new System.Drawing.Point(0, 0);
 			this.propertyProcess.Name = "propertyProcess";
-			this.propertyProcess.Size = new System.Drawing.Size(354, 211);
+			this.propertyProcess.Size = new System.Drawing.Size(463, 227);
 			this.propertyProcess.TabIndex = 0;
 			// 
 			// pageProperty
@@ -176,9 +178,9 @@ namespace PeMain.UI
 			this.pageProperty.Controls.Add(this.propertyProperty);
 			this.pageProperty.Location = new System.Drawing.Point(4, 24);
 			this.pageProperty.Name = "pageProperty";
-			this.pageProperty.Size = new System.Drawing.Size(354, 211);
+			this.pageProperty.Size = new System.Drawing.Size(463, 227);
 			this.pageProperty.TabIndex = 2;
-			this.pageProperty.Text = "{PROPERTY}";
+			this.pageProperty.Text = ":stream/tab/property";
 			this.pageProperty.UseVisualStyleBackColor = true;
 			// 
 			// propertyProperty
@@ -186,14 +188,14 @@ namespace PeMain.UI
 			this.propertyProperty.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.propertyProperty.Location = new System.Drawing.Point(0, 0);
 			this.propertyProperty.Name = "propertyProperty";
-			this.propertyProperty.Size = new System.Drawing.Size(354, 211);
+			this.propertyProperty.Size = new System.Drawing.Size(463, 227);
 			this.propertyProperty.TabIndex = 1;
 			// 
 			// StreamForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(362, 264);
+			this.ClientSize = new System.Drawing.Size(471, 280);
 			this.Controls.Add(this.tabStream);
 			this.Controls.Add(this.toolStream);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -203,7 +205,7 @@ namespace PeMain.UI
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "{ITEM@STREAM}";
+			this.Text = ":window/stream";
 			this.toolStream.ResumeLayout(false);
 			this.toolStream.PerformLayout();
 			this.tabStream.ResumeLayout(false);

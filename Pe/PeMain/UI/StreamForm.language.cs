@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -23,18 +24,16 @@ namespace PeMain.UI
 				{ SystemLanguageName.itemName, LauncherItem.Name },
 			};
 			
-			Text = CommonData.Language["window/stream", map];
+			DialogUtility.SetDefaultText(this, CommonData.Language, map);
 			
-			this.pageStream.Text = CommonData.Language["stream/tab/stream"];
-			this.pageProcess.Text = CommonData.Language["stream/tab/process"];
-			this.pageProperty.Text = CommonData.Language["stream/tab/property"];
+			this.pageStream.SetLanguage(CommonData.Language);
+			this.pageProcess.SetLanguage(CommonData.Language);
+			this.pageProperty.SetLanguage(CommonData.Language);
 			
-			this.toolStream_save.Text = CommonData.Language["stream/command/save"];
-			this.toolStream_save.ToolTipText = CommonData.Language["stream/tips/save"];
-			this.toolStream_clear.Text = CommonData.Language["stream/command/clear"];
-			this.toolStream_clear.ToolTipText = CommonData.Language["stream/tips/clear"];
-			this.toolStream_refresh.Text = CommonData.Language["stream/tips/refesh"];
-			this.toolStream_kill.Text = CommonData.Language["stream/tips/kill"];
+			this.toolStream_save.SetLanguage(CommonData.Language);
+			this.toolStream_clear.SetLanguage(CommonData.Language);
+			this.toolStream_refresh.SetLanguage(CommonData.Language);
+			this.toolStream_kill.SetLanguage(CommonData.Language);
 		}
 	}
 }
