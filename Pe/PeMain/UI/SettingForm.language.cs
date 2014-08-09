@@ -17,21 +17,18 @@ namespace PeMain.UI
 	{
 		void ApplyLanguageTab()
 		{
-			this.tabSetting_pageMain.Text = Language["setting/tab/main"];
-			this.tabSetting_pageLauncher.Text = Language["setting/tab/launcher"];
-			this.pageLauncherCommon.Text = Language["setting/tab/launcher/basic"];
-			this.pageLauncherEnv.Text = Language["common/tab/env"];
-			this.pageLauncherOthers.Text = Language["setting/tab/launcher/others"];
-			this.tabSetting_pageToolbar.Text = Language["setting/tab/toolbar"];
-			this.tabSetting_pageCommand.Text = Language["setting/tab/command"];
-			this.tabSetting_pageDisplay.Text = Language["setting/tab/display"];
-			this.tabSetting_pageNote.Text = Language["setting/tab/note"];
+			this.tabSetting_pageMain.SetLanguage(Language);
+			this.tabSetting_pageLauncher.SetLanguage(Language);
+			this.tabSetting_pageToolbar.SetLanguage(Language);
+			this.tabSetting_pageCommand.SetLanguage(Language);
+			this.tabSetting_pageNote.SetLanguage(Language);
+			this.tabSetting_pageDisplay.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageLog()
 		{
-			this.selectLogVisible.Text = Language["common/label/visible"];
-			this.selectLogAddShow.Text = Language["setting/check/add-show"];
+			this.selectLogVisible.SetLanguage(Language);
+			this.selectLogAddShow.SetLanguage(Language);
 			this.selectLogTrigger_information.Text = LogType.Information.ToText(Language);
 			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(Language);
 			this.selectLogTrigger_error.Text = LogType.Error.ToText(Language);
@@ -42,28 +39,18 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.SetLanguage(Language);
 			this.inputSystemEnvHiddenFile.SetLanguage(Language);
 			
-			this.labelSystemEnvExt.Text = Language["setting/label/extension"];
-			this.labelSystemEnvHiddenFile.Text = Language["setting/label/hiddenfile"];
+			this.labelSystemEnvExt.SetLanguage(Language);
+			this.labelSystemEnvHiddenFile.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageMain()
 		{
-			this.groupMainLog.Text = Language["setting/group/log"];
-			this.groupMainSystemEnv.Text = Language["setting/group/system-env"];
-			this.labelMainLanguage.Text = Language["setting/label/language"];
+			this.groupMainLog.SetLanguage(Language);
+			this.groupMainSystemEnv.SetLanguage(Language);
+			this.labelMainLanguage.SetLanguage(Language);
 			
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
-		}
-		
-		void ApplyLanguageCommand()
-		{
-			this.commandCommandFont.SetLanguage(Language);
-			this.inputCommandHotkey.SetLanguage(Language);
-			
-			this.selectCommandTopmost.Text = Language["common/label/topmost"];
-			this.labelCommandFont.Text = Language["common/label/font"];
-			this.labelCommandIcon.Text = Language["enum/icon-size"];
 		}
 		
 		void ApplyLanguageLauncher()
@@ -71,20 +58,28 @@ namespace PeMain.UI
 			this.selecterLauncher.SetLanguage(Language);
 			this.envLauncherUpdate.SetLanguage(Language);
 			this.envLauncherRemove.SetLanguage(Language);
-			this.groupLauncherType.Text = Language["setting/group/item-type"];
+			
+			this.tabLauncher_pageCommon.SetLanguage(Language);
+			this.tabLauncher_pageEnv.SetLanguage(Language);
+			this.tabLauncher_pageOthers.SetLanguage(Language);
+			
+			this.groupLauncherType.SetLanguage(Language);
 			this.selectLauncherType_file.Text = LauncherType.File.ToText(Language);
 			this.selectLauncherType_uri.Text = LauncherType.URI.ToText(Language);
-			this.selectLauncherStdStream.Text = Language["setting/check/std-stream"];
-			this.labelLauncherName.Text = Language["setting/label/item-name"];
-			this.labelLauncherCommand.Text = Language["setting/label/command"];
-			this.labelLauncherOption.Text = Language["setting/label/option"];
-			this.labelLauncherWorkDirPath.Text = Language["setting/label/work-dir"];
-			this.labelLauncherIconPath.Text = Language["setting/label/icon-path"];
-			this.labelLauncherTag.Text = Language["setting/label/tags"];
-			this.labelLauncherNote.Text = Language["setting/label/note"];
-			this.selectLauncherAdmin.Text = Language["common/check/admin"];
-			this.selectLauncherEnv.Text = Language["execute/check/edit-env"];
 			
+			this.labelLauncherName.SetLanguage(Language);
+			this.labelLauncherCommand.SetLanguage(Language);
+			this.labelLauncherOption.SetLanguage(Language);
+			this.labelLauncherWorkDirPath.SetLanguage(Language);
+			this.labelLauncherIconPath.SetLanguage(Language);
+			
+			this.selectLauncherEnv.SetLanguage(Language);
+			
+			this.labelLauncherTag.SetLanguage(Language);
+			this.labelLauncherNote.SetLanguage(Language);
+			
+			this.selectLauncherStdStream.SetLanguage(Language);
+			this.selectLauncherAdmin.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageToolbar()
@@ -92,26 +87,31 @@ namespace PeMain.UI
 			this.selecterToolbar.SetLanguage(Language);
 			this.commandToolbarFont.SetLanguage(Language);
 			
-			this.selectToolbarTopmost.Text = Language["common/label/topmost"];
-			this.selectToolbarVisible.Text = Language["common/label/visible"];
-			this.selectToolbarShowText.Text = Language["setting/check/show-text"];
-			this.labelToolbarIcon.Text = Language["enum/icon-size"];
-			this.selectToolbarAutoHide.Text = Language["setting/check/auto-hide"];
-			this.labelToolbarTextWidth.Text = Language["setting/label/text-width"];
-			this.labelToolbarPosition.Text = Language["enum/toolbar-position"];
-			this.labelToolbarFont.Text = Language["common/label/font"];
+			this.selectToolbarTopmost.SetLanguage(Language);
+			this.selectToolbarVisible.SetLanguage(Language);
+			this.selectToolbarAutoHide.SetLanguage(Language);
+			this.selectToolbarShowText.SetLanguage(Language);
+			this.labelToolbarTextWidth.SetLanguage(Language);
+			this.labelToolbarPosition.SetLanguage(Language);
+			this.labelToolbarIcon.SetLanguage(Language);
+			this.labelToolbarFont.SetLanguage(Language);
 			
-			this.toolToolbarGroup_addGroup.ToolTipText = Language["setting/tips/add-group"];
-			this.toolToolbarGroup_addItem.ToolTipText = Language["setting/tips/add-item"];
-			this.toolToolbarGroup_up.ToolTipText = Language["setting/tips/up-item"];
-			this.toolToolbarGroup_down.ToolTipText = Language["setting/tips/down-item"];
-			this.toolToolbarGroup_remove.ToolTipText = Language["setting/tips/remove-item"];
+			this.toolToolbarGroup_addGroup.SetLanguage(Language);
+			this.toolToolbarGroup_addItem.SetLanguage(Language);
+			this.toolToolbarGroup_up.SetLanguage(Language);
+			this.toolToolbarGroup_down.SetLanguage(Language);
+			this.toolToolbarGroup_remove.SetLanguage(Language);
 
 		}
 		
-		void ApplyLanguageDisplay()
+		void ApplyLanguageCommand()
 		{
+			this.commandCommandFont.SetLanguage(Language);
+			this.inputCommandHotkey.SetLanguage(Language);
 			
+			this.selectCommandTopmost.SetLanguage(Language);
+			this.labelCommandFont.SetLanguage(Language);
+			this.labelCommandIcon.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageNote()
@@ -122,10 +122,15 @@ namespace PeMain.UI
 			
 			this.commandNoteCaptionFont.SetLanguage(Language);
 			
-			this.labelNoteCreate.Text = Language["setting/label/note-create"];
-			this.labelNoteHiddent.Text = Language["setting/label/note-hidden"];
-			this.labelNoteCompact.Text = Language["setting/label/note-compact"];
-			this.labelNoteCaptionFont.Text = Language["common/label/font"];
+			this.labelNoteCreate.SetLanguage(Language);
+			this.labelNoteHiddent.SetLanguage(Language);
+			this.labelNoteCompact.SetLanguage(Language);
+			this.labelNoteCaptionFont.SetLanguage(Language);
+		}
+		
+		void ApplyLanguageDisplay()
+		{
+			
 		}
 		
 		void ApplyLanguage()
@@ -139,8 +144,8 @@ namespace PeMain.UI
 			ApplyLanguageLauncher();
 			ApplyLanguageToolbar();
 			ApplyLanguageCommand();
-			ApplyLanguageDisplay();
 			ApplyLanguageNote();
+			ApplyLanguageDisplay();
 		}
 	}
 }
