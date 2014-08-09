@@ -44,17 +44,17 @@ namespace PeMain.UI
 			this.toolStream_refresh = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_kill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
-			this.pageStream = new System.Windows.Forms.TabPage();
+			this.tabStream_pageStream = new System.Windows.Forms.TabPage();
 			this.viewOutput = new System.Windows.Forms.TextBox();
-			this.pageProcess = new System.Windows.Forms.TabPage();
+			this.tabStream_pageProcess = new System.Windows.Forms.TabPage();
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
-			this.pageProperty = new System.Windows.Forms.TabPage();
+			this.tabStream_pageProperty = new System.Windows.Forms.TabPage();
 			this.propertyProperty = new System.Windows.Forms.PropertyGrid();
 			this.toolStream.SuspendLayout();
 			this.tabStream.SuspendLayout();
-			this.pageStream.SuspendLayout();
-			this.pageProcess.SuspendLayout();
-			this.pageProperty.SuspendLayout();
+			this.tabStream_pageStream.SuspendLayout();
+			this.tabStream_pageProcess.SuspendLayout();
+			this.tabStream_pageProperty.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStream
@@ -120,9 +120,9 @@ namespace PeMain.UI
 			// 
 			// tabStream
 			// 
-			this.tabStream.Controls.Add(this.pageStream);
-			this.tabStream.Controls.Add(this.pageProcess);
-			this.tabStream.Controls.Add(this.pageProperty);
+			this.tabStream.Controls.Add(this.tabStream_pageStream);
+			this.tabStream.Controls.Add(this.tabStream_pageProcess);
+			this.tabStream.Controls.Add(this.tabStream_pageProperty);
 			this.tabStream.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabStream.Location = new System.Drawing.Point(0, 25);
 			this.tabStream.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -131,15 +131,15 @@ namespace PeMain.UI
 			this.tabStream.Size = new System.Drawing.Size(471, 255);
 			this.tabStream.TabIndex = 2;
 			// 
-			// pageStream
+			// tabStream_pageStream
 			// 
-			this.pageStream.Controls.Add(this.viewOutput);
-			this.pageStream.Location = new System.Drawing.Point(4, 24);
-			this.pageStream.Name = "pageStream";
-			this.pageStream.Size = new System.Drawing.Size(463, 227);
-			this.pageStream.TabIndex = 0;
-			this.pageStream.Text = ":stream/tab/stream";
-			this.pageStream.UseVisualStyleBackColor = true;
+			this.tabStream_pageStream.Controls.Add(this.viewOutput);
+			this.tabStream_pageStream.Location = new System.Drawing.Point(4, 24);
+			this.tabStream_pageStream.Name = "tabStream_pageStream";
+			this.tabStream_pageStream.Size = new System.Drawing.Size(463, 227);
+			this.tabStream_pageStream.TabIndex = 0;
+			this.tabStream_pageStream.Text = ":stream/tab/stream";
+			this.tabStream_pageStream.UseVisualStyleBackColor = true;
 			// 
 			// viewOutput
 			// 
@@ -155,15 +155,15 @@ namespace PeMain.UI
 			this.viewOutput.WordWrap = false;
 			this.viewOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
 			// 
-			// pageProcess
+			// tabStream_pageProcess
 			// 
-			this.pageProcess.Controls.Add(this.propertyProcess);
-			this.pageProcess.Location = new System.Drawing.Point(4, 24);
-			this.pageProcess.Name = "pageProcess";
-			this.pageProcess.Size = new System.Drawing.Size(463, 227);
-			this.pageProcess.TabIndex = 1;
-			this.pageProcess.Text = ":stream/tab/process";
-			this.pageProcess.UseVisualStyleBackColor = true;
+			this.tabStream_pageProcess.Controls.Add(this.propertyProcess);
+			this.tabStream_pageProcess.Location = new System.Drawing.Point(4, 24);
+			this.tabStream_pageProcess.Name = "tabStream_pageProcess";
+			this.tabStream_pageProcess.Size = new System.Drawing.Size(463, 227);
+			this.tabStream_pageProcess.TabIndex = 1;
+			this.tabStream_pageProcess.Text = ":stream/tab/process";
+			this.tabStream_pageProcess.UseVisualStyleBackColor = true;
 			// 
 			// propertyProcess
 			// 
@@ -173,15 +173,15 @@ namespace PeMain.UI
 			this.propertyProcess.Size = new System.Drawing.Size(463, 227);
 			this.propertyProcess.TabIndex = 0;
 			// 
-			// pageProperty
+			// tabStream_pageProperty
 			// 
-			this.pageProperty.Controls.Add(this.propertyProperty);
-			this.pageProperty.Location = new System.Drawing.Point(4, 24);
-			this.pageProperty.Name = "pageProperty";
-			this.pageProperty.Size = new System.Drawing.Size(463, 227);
-			this.pageProperty.TabIndex = 2;
-			this.pageProperty.Text = ":stream/tab/property";
-			this.pageProperty.UseVisualStyleBackColor = true;
+			this.tabStream_pageProperty.Controls.Add(this.propertyProperty);
+			this.tabStream_pageProperty.Location = new System.Drawing.Point(4, 24);
+			this.tabStream_pageProperty.Name = "tabStream_pageProperty";
+			this.tabStream_pageProperty.Size = new System.Drawing.Size(463, 227);
+			this.tabStream_pageProperty.TabIndex = 2;
+			this.tabStream_pageProperty.Text = ":stream/tab/property";
+			this.tabStream_pageProperty.UseVisualStyleBackColor = true;
 			// 
 			// propertyProperty
 			// 
@@ -209,23 +209,23 @@ namespace PeMain.UI
 			this.toolStream.ResumeLayout(false);
 			this.toolStream.PerformLayout();
 			this.tabStream.ResumeLayout(false);
-			this.pageStream.ResumeLayout(false);
-			this.pageStream.PerformLayout();
-			this.pageProcess.ResumeLayout(false);
-			this.pageProperty.ResumeLayout(false);
+			this.tabStream_pageStream.ResumeLayout(false);
+			this.tabStream_pageStream.PerformLayout();
+			this.tabStream_pageProcess.ResumeLayout(false);
+			this.tabStream_pageProperty.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
 		private System.Windows.Forms.ToolStripButton toolStream_kill;
 		private System.Windows.Forms.ToolStripButton toolStream_refresh;
 		private System.Windows.Forms.PropertyGrid propertyProperty;
-		private System.Windows.Forms.TabPage pageProperty;
+		private System.Windows.Forms.TabPage tabStream_pageProperty;
 		private System.Windows.Forms.PropertyGrid propertyProcess;
 		private System.Windows.Forms.TextBox viewOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_clear;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.TabPage pageProcess;
-		private System.Windows.Forms.TabPage pageStream;
+		private System.Windows.Forms.TabPage tabStream_pageProcess;
+		private System.Windows.Forms.TabPage tabStream_pageStream;
 		private System.Windows.Forms.TabControl tabStream;
 		private System.Windows.Forms.ToolStripButton toolStream_save;
 		private System.Windows.Forms.ToolStrip toolStream;

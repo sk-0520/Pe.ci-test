@@ -39,7 +39,7 @@ namespace PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			this.tabSetting = new System.Windows.Forms.TabControl();
-			this.pageMain = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
 			this.labelSystemEnvExt = new System.Windows.Forms.Label();
 			this.inputSystemEnvExt = new PeMain.UI.PeHotkeyControl();
@@ -54,7 +54,7 @@ namespace PeMain.UI
 			this.selectLogVisible = new System.Windows.Forms.CheckBox();
 			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
 			this.labelMainLanguage = new System.Windows.Forms.Label();
-			this.pageLauncher = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
 			this.tabLauncher = new System.Windows.Forms.TabControl();
@@ -90,7 +90,7 @@ namespace PeMain.UI
 			this.inputLauncherTag = new System.Windows.Forms.TextBox();
 			this.inputLauncherNote = new System.Windows.Forms.TextBox();
 			this.labelLauncherNote = new System.Windows.Forms.Label();
-			this.pageToolbar = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageToolbar = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
 			this.labelToolbarFont = new System.Windows.Forms.Label();
@@ -117,7 +117,7 @@ namespace PeMain.UI
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
-			this.pageCommand = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
 			this.labelCommandHotkey = new System.Windows.Forms.Label();
 			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
@@ -127,7 +127,7 @@ namespace PeMain.UI
 			this.labelCommandHideTime = new System.Windows.Forms.Label();
 			this.commandCommandFont = new PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
-			this.pageNote = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageNote = new System.Windows.Forms.TabPage();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
 			this.gridNoteItems_remove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -148,18 +148,18 @@ namespace PeMain.UI
 			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
 			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
 			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
-			this.pageDisplay = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.tabSetting.SuspendLayout();
-			this.pageMain.SuspendLayout();
+			this.tabSetting_pageMain.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
 			this.groupLogTrigger.SuspendLayout();
-			this.pageLauncher.SuspendLayout();
+			this.tabSetting_pageLauncher.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -173,7 +173,7 @@ namespace PeMain.UI
 			this.panelEnv.Panel2.SuspendLayout();
 			this.panelEnv.SuspendLayout();
 			this.pageLauncherOthers.SuspendLayout();
-			this.pageToolbar.SuspendLayout();
+			this.tabSetting_pageToolbar.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -184,9 +184,9 @@ namespace PeMain.UI
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
 			this.toolToolbarGroup.SuspendLayout();
-			this.pageCommand.SuspendLayout();
+			this.tabSetting_pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
-			this.pageNote.SuspendLayout();
+			this.tabSetting_pageNote.SuspendLayout();
 			this.groupNoteItem.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
 			this.groupNoteKey.SuspendLayout();
@@ -198,12 +198,12 @@ namespace PeMain.UI
 			// 
 			// tabSetting
 			// 
-			this.tabSetting.Controls.Add(this.pageMain);
-			this.tabSetting.Controls.Add(this.pageLauncher);
-			this.tabSetting.Controls.Add(this.pageToolbar);
-			this.tabSetting.Controls.Add(this.pageCommand);
-			this.tabSetting.Controls.Add(this.pageNote);
-			this.tabSetting.Controls.Add(this.pageDisplay);
+			this.tabSetting.Controls.Add(this.tabSetting_pageMain);
+			this.tabSetting.Controls.Add(this.tabSetting_pageLauncher);
+			this.tabSetting.Controls.Add(this.tabSetting_pageToolbar);
+			this.tabSetting.Controls.Add(this.tabSetting_pageCommand);
+			this.tabSetting.Controls.Add(this.tabSetting_pageNote);
+			this.tabSetting.Controls.Add(this.tabSetting_pageDisplay);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabSetting.Location = new System.Drawing.Point(3, 4);
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -213,20 +213,20 @@ namespace PeMain.UI
 			this.tabSetting.TabIndex = 0;
 			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
-			// pageMain
+			// tabSetting_pageMain
 			// 
-			this.pageMain.Controls.Add(this.groupMainSystemEnv);
-			this.pageMain.Controls.Add(this.groupMainLog);
-			this.pageMain.Controls.Add(this.selectMainLanguage);
-			this.pageMain.Controls.Add(this.labelMainLanguage);
-			this.pageMain.Location = new System.Drawing.Point(4, 24);
-			this.pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Name = "pageMain";
-			this.pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageMain.Size = new System.Drawing.Size(741, 266);
-			this.pageMain.TabIndex = 0;
-			this.pageMain.Text = "{Pe}";
-			this.pageMain.UseVisualStyleBackColor = true;
+			this.tabSetting_pageMain.Controls.Add(this.groupMainSystemEnv);
+			this.tabSetting_pageMain.Controls.Add(this.groupMainLog);
+			this.tabSetting_pageMain.Controls.Add(this.selectMainLanguage);
+			this.tabSetting_pageMain.Controls.Add(this.labelMainLanguage);
+			this.tabSetting_pageMain.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.tabSetting_pageMain.Name = "tabSetting_pageMain";
+			this.tabSetting_pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.tabSetting_pageMain.Size = new System.Drawing.Size(741, 266);
+			this.tabSetting_pageMain.TabIndex = 0;
+			this.tabSetting_pageMain.Text = "{Pe}";
+			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
 			// 
 			// groupMainSystemEnv
 			// 
@@ -380,20 +380,20 @@ namespace PeMain.UI
 			this.labelMainLanguage.TabIndex = 0;
 			this.labelMainLanguage.Text = "{LANGUAGE}";
 			// 
-			// pageLauncher
+			// tabSetting_pageLauncher
 			// 
-			this.pageLauncher.AllowDrop = true;
-			this.pageLauncher.Controls.Add(this.splitContainer1);
-			this.pageLauncher.Location = new System.Drawing.Point(4, 24);
-			this.pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageLauncher.Name = "pageLauncher";
-			this.pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.pageLauncher.Size = new System.Drawing.Size(741, 266);
-			this.pageLauncher.TabIndex = 1;
-			this.pageLauncher.Text = "{LAUNCHER}";
-			this.pageLauncher.UseVisualStyleBackColor = true;
-			this.pageLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.PageLauncher_DragDrop);
-			this.pageLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.PageLauncher_DragEnter);
+			this.tabSetting_pageLauncher.AllowDrop = true;
+			this.tabSetting_pageLauncher.Controls.Add(this.splitContainer1);
+			this.tabSetting_pageLauncher.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.tabSetting_pageLauncher.Name = "tabSetting_pageLauncher";
+			this.tabSetting_pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.tabSetting_pageLauncher.Size = new System.Drawing.Size(741, 266);
+			this.tabSetting_pageLauncher.TabIndex = 1;
+			this.tabSetting_pageLauncher.Text = "{LAUNCHER}";
+			this.tabSetting_pageLauncher.UseVisualStyleBackColor = true;
+			this.tabSetting_pageLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.PageLauncher_DragDrop);
+			this.tabSetting_pageLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.PageLauncher_DragEnter);
 			// 
 			// splitContainer1
 			// 
@@ -695,7 +695,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 158);
+			this.panelEnv.Size = new System.Drawing.Size(519, 156);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -704,7 +704,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 158);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 156);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -713,7 +713,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 158);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 156);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -805,16 +805,16 @@ namespace PeMain.UI
 			this.labelLauncherNote.TabIndex = 6;
 			this.labelLauncherNote.Text = "{NOTE}";
 			// 
-			// pageToolbar
+			// tabSetting_pageToolbar
 			// 
-			this.pageToolbar.Controls.Add(this.groupBox1);
-			this.pageToolbar.Controls.Add(this.splitContainer2);
-			this.pageToolbar.Location = new System.Drawing.Point(4, 24);
-			this.pageToolbar.Name = "pageToolbar";
-			this.pageToolbar.Size = new System.Drawing.Size(741, 266);
-			this.pageToolbar.TabIndex = 3;
-			this.pageToolbar.Text = "{TOOLBAR}";
-			this.pageToolbar.UseVisualStyleBackColor = true;
+			this.tabSetting_pageToolbar.Controls.Add(this.groupBox1);
+			this.tabSetting_pageToolbar.Controls.Add(this.splitContainer2);
+			this.tabSetting_pageToolbar.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageToolbar.Name = "tabSetting_pageToolbar";
+			this.tabSetting_pageToolbar.Size = new System.Drawing.Size(741, 266);
+			this.tabSetting_pageToolbar.TabIndex = 3;
+			this.tabSetting_pageToolbar.Text = "{TOOLBAR}";
+			this.tabSetting_pageToolbar.UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -974,7 +974,7 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(481, 286);
+			this.splitContainer2.Size = new System.Drawing.Size(481, 288);
 			this.splitContainer2.SplitterDistance = 286;
 			this.splitContainer2.TabIndex = 15;
 			// 
@@ -985,13 +985,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 261);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(286, 263);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(286, 286);
+			this.toolStripContainer1.Size = new System.Drawing.Size(286, 288);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -1007,7 +1007,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 261);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(286, 263);
 			this.treeToolbarItemGroup.TabIndex = 13;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1103,28 +1103,28 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(191, 286);
+			this.selecterToolbar.Size = new System.Drawing.Size(191, 288);
 			this.selecterToolbar.TabIndex = 14;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
-			// pageCommand
+			// tabSetting_pageCommand
 			// 
-			this.pageCommand.Controls.Add(this.labelCommandHotkey);
-			this.pageCommand.Controls.Add(this.inputCommandHotkey);
-			this.pageCommand.Controls.Add(this.labelCommandIcon);
-			this.pageCommand.Controls.Add(this.selectCommandIcon);
-			this.pageCommand.Controls.Add(this.inputCommandHideTime);
-			this.pageCommand.Controls.Add(this.selectCommandTopmost);
-			this.pageCommand.Controls.Add(this.labelCommandHideTime);
-			this.pageCommand.Controls.Add(this.commandCommandFont);
-			this.pageCommand.Controls.Add(this.labelCommandFont);
-			this.pageCommand.Location = new System.Drawing.Point(4, 24);
-			this.pageCommand.Name = "pageCommand";
-			this.pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCommand.Size = new System.Drawing.Size(741, 266);
-			this.pageCommand.TabIndex = 2;
-			this.pageCommand.Text = "{COMMAND}";
-			this.pageCommand.UseVisualStyleBackColor = true;
+			this.tabSetting_pageCommand.Controls.Add(this.labelCommandHotkey);
+			this.tabSetting_pageCommand.Controls.Add(this.inputCommandHotkey);
+			this.tabSetting_pageCommand.Controls.Add(this.labelCommandIcon);
+			this.tabSetting_pageCommand.Controls.Add(this.selectCommandIcon);
+			this.tabSetting_pageCommand.Controls.Add(this.inputCommandHideTime);
+			this.tabSetting_pageCommand.Controls.Add(this.selectCommandTopmost);
+			this.tabSetting_pageCommand.Controls.Add(this.labelCommandHideTime);
+			this.tabSetting_pageCommand.Controls.Add(this.commandCommandFont);
+			this.tabSetting_pageCommand.Controls.Add(this.labelCommandFont);
+			this.tabSetting_pageCommand.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageCommand.Name = "tabSetting_pageCommand";
+			this.tabSetting_pageCommand.Padding = new System.Windows.Forms.Padding(3);
+			this.tabSetting_pageCommand.Size = new System.Drawing.Size(741, 266);
+			this.tabSetting_pageCommand.TabIndex = 2;
+			this.tabSetting_pageCommand.Text = "{COMMAND}";
+			this.tabSetting_pageCommand.UseVisualStyleBackColor = true;
 			// 
 			// labelCommandHotkey
 			// 
@@ -1209,18 +1209,18 @@ namespace PeMain.UI
 			this.labelCommandFont.TabIndex = 0;
 			this.labelCommandFont.Text = "{FONT}";
 			// 
-			// pageNote
+			// tabSetting_pageNote
 			// 
-			this.pageNote.Controls.Add(this.groupNoteItem);
-			this.pageNote.Controls.Add(this.groupNoteKey);
-			this.pageNote.Controls.Add(this.commandNoteCaptionFont);
-			this.pageNote.Controls.Add(this.labelNoteCaptionFont);
-			this.pageNote.Location = new System.Drawing.Point(4, 24);
-			this.pageNote.Name = "pageNote";
-			this.pageNote.Size = new System.Drawing.Size(741, 266);
-			this.pageNote.TabIndex = 6;
-			this.pageNote.Text = "{NOTE}";
-			this.pageNote.UseVisualStyleBackColor = true;
+			this.tabSetting_pageNote.Controls.Add(this.groupNoteItem);
+			this.tabSetting_pageNote.Controls.Add(this.groupNoteKey);
+			this.tabSetting_pageNote.Controls.Add(this.commandNoteCaptionFont);
+			this.tabSetting_pageNote.Controls.Add(this.labelNoteCaptionFont);
+			this.tabSetting_pageNote.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageNote.Name = "tabSetting_pageNote";
+			this.tabSetting_pageNote.Size = new System.Drawing.Size(741, 266);
+			this.tabSetting_pageNote.TabIndex = 6;
+			this.tabSetting_pageNote.Text = "{NOTE}";
+			this.tabSetting_pageNote.UseVisualStyleBackColor = true;
 			// 
 			// groupNoteItem
 			// 
@@ -1409,14 +1409,14 @@ namespace PeMain.UI
 			this.labelNoteCaptionFont.TabIndex = 9;
 			this.labelNoteCaptionFont.Text = "{FONT}";
 			// 
-			// pageDisplay
+			// tabSetting_pageDisplay
 			// 
-			this.pageDisplay.Location = new System.Drawing.Point(4, 24);
-			this.pageDisplay.Name = "pageDisplay";
-			this.pageDisplay.Size = new System.Drawing.Size(741, 266);
-			this.pageDisplay.TabIndex = 5;
-			this.pageDisplay.Text = "{DISPLAY}";
-			this.pageDisplay.UseVisualStyleBackColor = true;
+			this.tabSetting_pageDisplay.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageDisplay.Name = "tabSetting_pageDisplay";
+			this.tabSetting_pageDisplay.Size = new System.Drawing.Size(741, 266);
+			this.tabSetting_pageDisplay.TabIndex = 5;
+			this.tabSetting_pageDisplay.Text = "{DISPLAY}";
+			this.tabSetting_pageDisplay.UseVisualStyleBackColor = true;
 			// 
 			// commandCancel
 			// 
@@ -1485,15 +1485,15 @@ namespace PeMain.UI
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/setting";
 			this.tabSetting.ResumeLayout(false);
-			this.pageMain.ResumeLayout(false);
-			this.pageMain.PerformLayout();
+			this.tabSetting_pageMain.ResumeLayout(false);
+			this.tabSetting_pageMain.PerformLayout();
 			this.groupMainSystemEnv.ResumeLayout(false);
 			this.groupMainSystemEnv.PerformLayout();
 			this.groupMainLog.ResumeLayout(false);
 			this.groupMainLog.PerformLayout();
 			this.groupLogTrigger.ResumeLayout(false);
 			this.groupLogTrigger.PerformLayout();
-			this.pageLauncher.ResumeLayout(false);
+			this.tabSetting_pageLauncher.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -1510,7 +1510,7 @@ namespace PeMain.UI
 			this.panelEnv.ResumeLayout(false);
 			this.pageLauncherOthers.ResumeLayout(false);
 			this.pageLauncherOthers.PerformLayout();
-			this.pageToolbar.ResumeLayout(false);
+			this.tabSetting_pageToolbar.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).EndInit();
@@ -1525,11 +1525,11 @@ namespace PeMain.UI
 			this.toolStripContainer1.PerformLayout();
 			this.toolToolbarGroup.ResumeLayout(false);
 			this.toolToolbarGroup.PerformLayout();
-			this.pageCommand.ResumeLayout(false);
-			this.pageCommand.PerformLayout();
+			this.tabSetting_pageCommand.ResumeLayout(false);
+			this.tabSetting_pageCommand.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
-			this.pageNote.ResumeLayout(false);
-			this.pageNote.PerformLayout();
+			this.tabSetting_pageNote.ResumeLayout(false);
+			this.tabSetting_pageNote.PerformLayout();
 			this.groupNoteItem.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
 			this.groupNoteKey.ResumeLayout(false);
@@ -1640,22 +1640,22 @@ namespace PeMain.UI
 		private PeMain.UI.FontSplitButton commandToolbarFont;
 		private System.Windows.Forms.CheckBox selectToolbarTopmost;
 		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.TabPage pageNote;
-		private System.Windows.Forms.TabPage pageDisplay;
-		private System.Windows.Forms.TabPage pageToolbar;
+		private System.Windows.Forms.TabPage tabSetting_pageNote;
+		private System.Windows.Forms.TabPage tabSetting_pageDisplay;
+		private System.Windows.Forms.TabPage tabSetting_pageToolbar;
 		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label labelCommandHideTime;
 		private System.Windows.Forms.CheckBox selectCommandTopmost;
 		private PeMain.UI.FontSplitButton commandCommandFont;
 		private System.Windows.Forms.Label labelCommandFont;
 		private System.Windows.Forms.ErrorProvider errorProvider;
-		private System.Windows.Forms.TabPage pageCommand;
+		private System.Windows.Forms.TabPage tabSetting_pageCommand;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Button commandCancel;
 		private System.Windows.Forms.Button commandSubmit;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-		private System.Windows.Forms.TabPage pageLauncher;
-		private System.Windows.Forms.TabPage pageMain;
+		private System.Windows.Forms.TabPage tabSetting_pageLauncher;
+		private System.Windows.Forms.TabPage tabSetting_pageMain;
 		private System.Windows.Forms.TabControl tabSetting;
 	}
 }

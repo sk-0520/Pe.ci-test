@@ -40,8 +40,8 @@ namespace PeMain.UI
 			this.groupRemove.Text = CommonData.Language["common/label/remove"];
 			this.selectAdministrator.Text = CommonData.Language["common/check/admin"];
 			*/
-			this.pageBasic.SetLanguage(CommonData.Language);
-			this.pageEnv.SetLanguage(CommonData.Language);
+			this.tabExecute_pageBasic.SetLanguage(CommonData.Language);
+			this.tabExecute_pageEnv.SetLanguage(CommonData.Language);
 			this.labelOption.SetLanguage(CommonData.Language);
 			this.labelWorkDirPath.SetLanguage(CommonData.Language);
 			this.selectStdStream.SetLanguage(CommonData.Language);

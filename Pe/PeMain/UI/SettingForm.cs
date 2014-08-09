@@ -64,11 +64,11 @@ namespace PeMain.UI
 		
 		void TabSetting_Selecting(object sender, TabControlCancelEventArgs e)
 		{
-			if(this._nowSelectedTabPage == this.pageLauncher) {
+			if(this._nowSelectedTabPage == this.tabSetting_pageLauncher) {
 				e.Cancel = !LauncherItemValid();
 			}
 			if(!e.Cancel) {
-				if(e.TabPage == this.pageToolbar) {
+				if(e.TabPage == this.tabSetting_pageToolbar) {
 					ToolbarSelectingPage();
 				}
 				this._nowSelectedTabPage =  e.TabPage;

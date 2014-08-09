@@ -26,9 +26,9 @@ namespace PeMain.UI
 			
 			DialogUtility.SetDefaultText(this, CommonData.Language, map);
 			
-			this.pageStream.SetLanguage(CommonData.Language);
-			this.pageProcess.SetLanguage(CommonData.Language);
-			this.pageProperty.SetLanguage(CommonData.Language);
+			this.tabStream_pageStream.SetLanguage(CommonData.Language);
+			this.tabStream_pageProcess.SetLanguage(CommonData.Language);
+			this.tabStream_pageProperty.SetLanguage(CommonData.Language);
 			
 			this.toolStream_save.SetLanguage(CommonData.Language);
 			this.toolStream_clear.SetLanguage(CommonData.Language);

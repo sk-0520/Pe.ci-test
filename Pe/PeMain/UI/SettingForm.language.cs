@@ -17,15 +17,15 @@ namespace PeMain.UI
 	{
 		void ApplyLanguageTab()
 		{
-			this.pageMain.Text = Language["setting/tab/main"];
-			this.pageLauncher.Text = Language["setting/tab/launcher"];
+			this.tabSetting_pageMain.Text = Language["setting/tab/main"];
+			this.tabSetting_pageLauncher.Text = Language["setting/tab/launcher"];
 			this.pageLauncherCommon.Text = Language["setting/tab/launcher/basic"];
 			this.pageLauncherEnv.Text = Language["common/tab/env"];
 			this.pageLauncherOthers.Text = Language["setting/tab/launcher/others"];
-			this.pageToolbar.Text = Language["setting/tab/toolbar"];
-			this.pageCommand.Text = Language["setting/tab/command"];
-			this.pageDisplay.Text = Language["setting/tab/display"];
-			this.pageNote.Text = Language["setting/tab/note"];
+			this.tabSetting_pageToolbar.Text = Language["setting/tab/toolbar"];
+			this.tabSetting_pageCommand.Text = Language["setting/tab/command"];
+			this.tabSetting_pageDisplay.Text = Language["setting/tab/display"];
+			this.tabSetting_pageNote.Text = Language["setting/tab/note"];
 		}
 		
 		void ApplyLanguageLog()
