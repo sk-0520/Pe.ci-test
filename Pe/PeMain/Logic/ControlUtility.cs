@@ -236,9 +236,15 @@ namespace PeMain.Logic
 		{
 			target.HeaderText = GetWord(language, target.HeaderText, map);
 		}
-		
+		public static void SetLanguage(this ColumnHeader target, Language language, IDictionary<string, string> map = null)
+		{
+			target.Text = GetWord(language, target.Text, map);
+		}
 		public static void SetLanguage(this ToolStripItem target, Language language, IDictionary<string, string> map = null)
 		{
+			if(target.Text != target.ToolTipText) {
+				target.ToolTipText = GetWord(language, target.ToolTipText, map);
+			}
 			target.Text = GetWord(language, target.Text, map);
 		}
 			

@@ -40,14 +40,14 @@ namespace PeMain.UI
 			this.statusLog = new System.Windows.Forms.StatusStrip();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.listLog = new System.Windows.Forms.ListView();
-			this.headerTimestamp = new System.Windows.Forms.ColumnHeader();
-			this.headerTitle = new System.Windows.Forms.ColumnHeader();
+			this.listLog_columnTimestamp = new System.Windows.Forms.ColumnHeader();
+			this.listLog_columnTitle = new System.Windows.Forms.ColumnHeader();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.listStack = new System.Windows.Forms.ListView();
-			this.headerFile = new System.Windows.Forms.ColumnHeader();
-			this.headerLine = new System.Windows.Forms.ColumnHeader();
-			this.headerFunction = new System.Windows.Forms.ColumnHeader();
+			this.listStack_columnFunction = new System.Windows.Forms.ColumnHeader();
+			this.listStack_columnLine = new System.Windows.Forms.ColumnHeader();
+			this.listStack_columnFile = new System.Windows.Forms.ColumnHeader();
 			this.toolLog = new System.Windows.Forms.ToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
@@ -122,8 +122,8 @@ namespace PeMain.UI
 			// listLog
 			// 
 			this.listLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.headerTimestamp,
-									this.headerTitle});
+									this.listLog_columnTimestamp,
+									this.listLog_columnTitle});
 			this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listLog.FullRowSelect = true;
 			this.listLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -138,13 +138,13 @@ namespace PeMain.UI
 			this.listLog.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.ListLog_RetrieveVirtualItem);
 			this.listLog.SelectedIndexChanged += new System.EventHandler(this.ListLog_SelectedIndexChanged);
 			// 
-			// headerTimestamp
+			// listLog_columnTimestamp
 			// 
-			this.headerTimestamp.Text = "{TIME}";
+			this.listLog_columnTimestamp.Text = ":log/header/timestamp";
 			// 
-			// headerTitle
+			// listLog_columnTitle
 			// 
-			this.headerTitle.Text = "{TITLE}";
+			this.listLog_columnTitle.Text = ":log/header/title";
 			// 
 			// splitContainer2
 			// 
@@ -178,10 +178,9 @@ namespace PeMain.UI
 			// listStack
 			// 
 			this.listStack.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.headerFunction,
-									this.headerLine,
-									this.headerFile
-									});
+									this.listStack_columnFunction,
+									this.listStack_columnLine,
+									this.listStack_columnFile});
 			this.listStack.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listStack.FullRowSelect = true;
 			this.listStack.GridLines = true;
@@ -195,17 +194,17 @@ namespace PeMain.UI
 			this.listStack.UseCompatibleStateImageBehavior = false;
 			this.listStack.View = System.Windows.Forms.View.Details;
 			// 
-			// headerFile
+			// listStack_columnFunction
 			// 
-			this.headerFile.Text = "{FILE}";
+			this.listStack_columnFunction.Text = ":log/header/method";
 			// 
-			// headerLine
+			// listStack_columnLine
 			// 
-			this.headerLine.Text = "{LINE}";
+			this.listStack_columnLine.Text = ":log/header/file";
 			// 
-			// headerFunction
+			// listStack_columnFile
 			// 
-			this.headerFunction.Text = "{FUNC}";
+			this.listStack_columnFile.Text = ":log/header/title";
 			// 
 			// toolLog
 			// 
@@ -225,18 +224,18 @@ namespace PeMain.UI
 			this.toolLog_save.Image = global::PeMain.Properties.Images.Save;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
-			this.toolLog_save.Size = new System.Drawing.Size(105, 22);
-			this.toolLog_save.Text = "{LOG_SAVE}";
-			this.toolLog_save.ToolTipText = "toolLog_save";
+			this.toolLog_save.Size = new System.Drawing.Size(147, 22);
+			this.toolLog_save.Text = ":log/command/save";
+			this.toolLog_save.ToolTipText = ":log/tips/save";
 			// 
 			// toolLog_clear
 			// 
 			this.toolLog_clear.Image = global::PeMain.Properties.Images.NotImpl;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
-			this.toolLog_clear.Size = new System.Drawing.Size(112, 22);
-			this.toolLog_clear.Text = "{LOG_CLEAR}";
-			this.toolLog_clear.ToolTipText = "toolLog_clear";
+			this.toolLog_clear.Size = new System.Drawing.Size(148, 22);
+			this.toolLog_clear.Text = ":log/command/clear";
+			this.toolLog_clear.ToolTipText = ":log/tips/clear";
 			// 
 			// LogForm
 			// 
@@ -252,7 +251,7 @@ namespace PeMain.UI
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "LogForm";
+			this.Text = ":window/log";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
 			this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
@@ -276,12 +275,12 @@ namespace PeMain.UI
 		}
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private System.Windows.Forms.TextBox viewDetail;
-		private System.Windows.Forms.ColumnHeader headerFunction;
-		private System.Windows.Forms.ColumnHeader headerLine;
-		private System.Windows.Forms.ColumnHeader headerFile;
+		private System.Windows.Forms.ColumnHeader listStack_columnFunction;
+		private System.Windows.Forms.ColumnHeader listStack_columnLine;
+		private System.Windows.Forms.ColumnHeader listStack_columnFile;
 		private System.Windows.Forms.ListView listStack;
-		private System.Windows.Forms.ColumnHeader headerTitle;
-		private System.Windows.Forms.ColumnHeader headerTimestamp;
+		private System.Windows.Forms.ColumnHeader listLog_columnTitle;
+		private System.Windows.Forms.ColumnHeader listLog_columnTimestamp;
 		private System.Windows.Forms.ListView listLog;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.ToolStripButton toolLog_clear;
