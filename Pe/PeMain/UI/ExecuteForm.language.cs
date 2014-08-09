@@ -29,6 +29,7 @@ namespace PeMain.UI
 			this.envUpdate.SetLanguage(CommonData.Language);
 			this.envRemove.SetLanguage(CommonData.Language);
 			
+			/*
 			this.pageBasic.Text = CommonData.Language["execute/tab/basic"];
 			this.pageEnv.Text = CommonData.Language["common/tab/env"];
 			this.labelOption.Text = CommonData.Language["execute/label/option"];
@@ -38,6 +39,17 @@ namespace PeMain.UI
 			this.groupUpdate.Text = CommonData.Language["common/label/edit"];
 			this.groupRemove.Text = CommonData.Language["common/label/remove"];
 			this.selectAdministrator.Text = CommonData.Language["common/check/admin"];
+			*/
+			this.pageBasic.SetLanguage(CommonData.Language);
+			this.pageEnv.SetLanguage(CommonData.Language);
+			this.labelOption.SetLanguage(CommonData.Language);
+			this.labelWorkDirPath.SetLanguage(CommonData.Language);
+			this.selectStdStream.SetLanguage(CommonData.Language);
+			this.selectEnvironment.SetLanguage(CommonData.Language);
+			this.groupUpdate.SetLanguage(CommonData.Language);
+			this.groupRemove.SetLanguage(CommonData.Language);
+			this.selectAdministrator.SetLanguage(CommonData.Language);
+			
 		}
 	}
 }
