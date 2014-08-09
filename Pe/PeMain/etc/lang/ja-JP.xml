@@ -148,6 +148,15 @@
 		<Word Name="setting/tips/up-item"         Text="選択アイテムを上に移動" />
 		<Word Name="setting/tips/down-item"       Text="選択アイテムを下に移動" />
 		<Word Name="setting/tips/remove-item"     Text="選択アイテムを取り除く" />
+		<Word Name="setting/group/item"           Text="ノート一覧" />
+		<Word Name="setting/column/note/remove"   Text="削除" />
+		<Word Name="setting/column/note/id"       Text="ID" />
+		<Word Name="setting/column/note/visible"  Text="表示" />
+		<Word Name="setting/column/note/title"    Text="タイトル" />
+		<Word Name="setting/column/note/body"     Text="本文" />
+		<Word Name="setting/column/note/font"     Text="フォント" />
+		<Word Name="setting/column/note/fore"     Text="前景色" />
+		<Word Name="setting/column/note/back"     Text="背景色" />
 		
 		<Word Name="group/new" Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />

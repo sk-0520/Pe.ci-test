@@ -99,14 +99,14 @@ namespace PeMain.UI
 				var wrap = new NoteWrapItem(item);
 				this._noteItemList.Add(wrap);
 			}
-			this.gridNoteItems_remove.DataPropertyName = "Remove";
-			this.gridNoteItems_id.DataPropertyName = "Id";
-			this.gridNoteItems_visible.DataPropertyName = "Visible";
-			this.gridNoteItems_title.DataPropertyName = "Title";
-			this.gridNoteItems_body.DataPropertyName = "Body";
-			this.gridNoteItems_font.DataPropertyName = "Font";
-			this.gridNoteItems_fore.DataPropertyName = "Fore";
-			this.gridNoteItems_back.DataPropertyName = "Back";
+			this.gridNoteItems_columnRemove.DataPropertyName = "Remove";
+			this.gridNoteItems_columnId.DataPropertyName = "Id";
+			this.gridNoteItems_columnVisible.DataPropertyName = "Visible";
+			this.gridNoteItems_columnTitle.DataPropertyName = "Title";
+			this.gridNoteItems_columnBody.DataPropertyName = "Body";
+			this.gridNoteItems_columnFont.DataPropertyName = "Font";
+			this.gridNoteItems_columnFore.DataPropertyName = "Fore";
+			this.gridNoteItems_columnBack.DataPropertyName = "Back";
             this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty); 
             
 //			this.gridNoteItems.GetRowDisplayRectangle = noteList;

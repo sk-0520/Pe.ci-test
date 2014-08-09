@@ -121,6 +121,16 @@ namespace PeMain.UI
 			this.inputNoteCompact.SetLanguage(Language);
 			
 			this.commandNoteCaptionFont.SetLanguage(Language);
+
+			this.groupNoteItem.SetLanguage(Language);
+			this.gridNoteItems_columnRemove.SetLanguage(Language);
+			this.gridNoteItems_columnId.SetLanguage(Language);
+			this.gridNoteItems_columnVisible.SetLanguage(Language);
+			this.gridNoteItems_columnBody.SetLanguage(Language);
+			this.gridNoteItems_columnTitle.SetLanguage(Language);
+			this.gridNoteItems_columnFont.SetLanguage(Language);
+			this.gridNoteItems_columnFore.SetLanguage(Language);
+			this.gridNoteItems_columnBack.SetLanguage(Language);
 			
 			this.labelNoteCreate.SetLanguage(Language);
 			this.labelNoteHiddent.SetLanguage(Language);
