@@ -97,7 +97,9 @@ namespace PeMain.Logic.DB
 		
 		public void ResistMasterNote(IEnumerable<NoteItem> noteItemList, DateTime timestamp)
 		{
-			Debug.Assert(noteItemList != null && noteItemList.Count() > 0);
+			if(noteItemList == null || noteItemList.Count() == 0) {
+				return;
+			}
 			
 			var updateList = new List<MNoteEntity>();
 			var insertList = new List<MNoteEntity>();
@@ -136,7 +138,9 @@ namespace PeMain.Logic.DB
 
 		public void ResistTransactionNote(IEnumerable<NoteItem> noteItemList, DateTime timestamp)
 		{
-			Debug.Assert(noteItemList != null && noteItemList.Count() > 0);
+			if(noteItemList == null || noteItemList.Count() == 0) {
+				return;
+			}
 			
 			var updateList = new List<TNoteEntity>();
 			var insertList = new List<TNoteEntity>();
@@ -171,7 +175,9 @@ namespace PeMain.Logic.DB
 		
 		public void ResistTransactionNoteStyle(IEnumerable<NoteItem> noteItemList, DateTime timestamp)
 		{
-			Debug.Assert(noteItemList != null && noteItemList.Count() > 0);
+			if(noteItemList == null || noteItemList.Count() == 0) {
+				return;
+			}
 			
 			var updateList = new List<TNoteStyleEntity>();
 			var insertList = new List<TNoteStyleEntity>();
