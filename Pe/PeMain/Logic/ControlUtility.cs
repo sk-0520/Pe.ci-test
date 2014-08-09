@@ -215,4 +215,21 @@ namespace PeMain.Logic
 			ToSelect(targetNode, toSelect);
 		}
 	}
+
+	public static class UIUtility
+	{
+		private static string GetWord(Language language, string key, IDictionary<string, string> map)
+		{
+			if(string.IsNullOrEmpty(key) || key[0] != ':') {
+				return "{" + key + "}";
+			}
+			
+			return language[key, map];
+		}
+		
+		public static void SetLanguage(this Control control, Language language, IDictionary<string, string> map = null)
+		{
+			control.Text = GetWord(language, control.Text, map);
+		}
+	}
 }
