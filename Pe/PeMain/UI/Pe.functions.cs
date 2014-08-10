@@ -152,20 +152,16 @@ namespace PeMain.UI
 			FileUtility.MakeFileParentDirectory(saveFilePath);
 			
 			// zip
-			using(var stream = new FileStream(saveFilePath, FileMode.Create)) {
-				using(var zip = new ZipArchive(stream, ZipArchiveMode.Create)) {
-					foreach(var filePath in enabledFiles) {
-						var entry = zip.CreateEntry(Path.GetFileName(filePath));
-						using(var entryStream = new BinaryWriter(entry.Open())) {
-							using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
-								var buffer = new byte[Literal.fileTempBufferLength];
-								int readLength;
-								while((readLength = fileStream.Read(buffer, 0, buffer.Length)) > 0) {
-									//dest.Write(buffer, 0, readLength);
-									entryStream.Write(buffer, 0, readLength);
-								}
+			using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
+				foreach(var filePath in enabledFiles) {
+					var entry = zip.CreateEntry(Path.GetFileName(filePath));
+					using(var entryStream = new BinaryWriter(entry.Open())) {
+						using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+							var buffer = new byte[Literal.fileTempBufferLength];
+							int readLength;
+							while((readLength = fileStream.Read(buffer, 0, buffer.Length)) > 0) {
+								entryStream.Write(buffer, 0, readLength);
 							}
-							//var buffer = File.ReadAllBytes(filePath);
 						}
 					}
 				}
@@ -184,8 +180,9 @@ namespace PeMain.UI
 			BackupSetting(backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
 			
 			// 保存開始
+			// メインデータ
 			SaveSerialize(this._commonData.MainSetting, Literal.UserMainSettingPath);
-			
+			//ランチャーデータ
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
