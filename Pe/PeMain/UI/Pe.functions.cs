@@ -157,8 +157,15 @@ namespace PeMain.UI
 					foreach(var filePath in enabledFiles) {
 						var entry = zip.CreateEntry(Path.GetFileName(filePath));
 						using(var entryStream = new BinaryWriter(entry.Open())) {
-							var buffer = File.ReadAllBytes(filePath);
-							entryStream.Write(buffer);
+							using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+								var buffer = new byte[Literal.fileTempBufferLength];
+								int readLength;
+								while((readLength = fileStream.Read(buffer, 0, buffer.Length)) > 0) {
+									//dest.Write(buffer, 0, readLength);
+									entryStream.Write(buffer, 0, readLength);
+								}
+							}
+							//var buffer = File.ReadAllBytes(filePath);
 						}
 					}
 				}
@@ -168,24 +175,22 @@ namespace PeMain.UI
 		
 		void SaveSetting()
 		{
-			var mainSettingFilePath = Literal.UserMainSettingPath;
-			var launcherItemsPath = Literal.UserLauncherItemsPath;
-			
 			// バックアップ
 			var backupFiles = new [] {
-				mainSettingFilePath,
-				launcherItemsPath,
+				Literal.UserMainSettingPath,
+				Literal.UserLauncherItemsPath,
+				Literal.UserDBPath,
 			};
 			BackupSetting(backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
 			
 			// 保存開始
-			SaveSerialize(this._commonData.MainSetting, mainSettingFilePath);
+			SaveSerialize(this._commonData.MainSetting, Literal.UserMainSettingPath);
 			
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
 			}
-			SaveSerialize(sortedSet, launcherItemsPath);
+			SaveSerialize(sortedSet, Literal.UserLauncherItemsPath);
 		}
 		
 		
@@ -235,7 +240,7 @@ namespace PeMain.UI
 						note.Dispose();
 					}
 					this._noteWindowList.Clear();
-						
+					
 					var mainSetting = settingForm.MainSetting;
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveDB(this._commonData.Database);
