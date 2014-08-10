@@ -52,9 +52,9 @@ namespace PeMain.UI
 				try {
 					SaveNoteItems(db);
 					tran.Commit();
-				} catch(Exception ex) {
+				} catch(Exception) {
 					tran.Rollback();
-					throw ex;
+					throw;
 				}
 			}
 		}

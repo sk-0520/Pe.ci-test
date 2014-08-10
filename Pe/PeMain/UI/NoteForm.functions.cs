@@ -246,17 +246,9 @@ namespace PeMain.UI
 				}
 					
 				this._changed = false;
-				//*
-				var map = new Dictionary<string, string>() {
-					{"title", NoteItem.Title},
-					{"body", NoteItem.Body},
-				};
-				CommonData.RootSender.ShowBalloon(
-					ToolTipIcon.Info,
-					CommonData.Language["memo/save"],
-					CommonData.Language["memo/content", map]
-				);
-				//*/
+				#if DEBUG
+				CommonData.Logger.Puts(LogType.Information, "save", NoteItem);
+				#endif
 			}
 		}
 
