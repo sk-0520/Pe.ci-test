@@ -253,6 +253,11 @@ namespace PeMain.Logic
 			}
 			target.Text = GetWord(language, target.Text, map);
 		}
+		
+		public static void SetLanguage(this ToolStrip target, Language language, IDictionary<string, string> map = null)
+		{
+			target.Text = GetWord(language, target.Text, map);
+		}
 			
 	}
 }

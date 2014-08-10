@@ -43,6 +43,7 @@ namespace PeMain.UI
 			
 			TopMost = NoteItem.Topmost;
 			
+			ApplyLanguage();
 		}
 		
 		IEnumerable<NoteCommand> GetCommandList()

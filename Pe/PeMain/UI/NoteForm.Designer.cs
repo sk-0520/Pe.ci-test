@@ -38,16 +38,16 @@ namespace PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			this.inputBody = new System.Windows.Forms.TextBox();
-			this.contextMenu_title = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.contextMenu_body = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemBody = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.contextMenu_copy = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemCopy = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.contextMenu_lock = new System.Windows.Forms.ToolStripMenuItem();
-			this.contextMenu_compact = new System.Windows.Forms.ToolStripMenuItem();
-			this.contextMenu_hidden = new System.Windows.Forms.ToolStripMenuItem();
-			this.contextMenu_remove = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemLock = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemCompact = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemHidden = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemRemove = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputTitle = new System.Windows.Forms.TextBox();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -65,74 +65,74 @@ namespace PeMain.UI
 			this.inputBody.Visible = false;
 			this.inputBody.Leave += new System.EventHandler(this.Input_Leave);
 			// 
-			// contextMenu_title
+			// contextMenu_itemTitle
 			// 
-			this.contextMenu_title.Name = "contextMenu_title";
-			this.contextMenu_title.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_title.Text = ":note/menu/title";
-			this.contextMenu_title.Click += new System.EventHandler(this.ContextMenu_title_Click);
+			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
+			this.contextMenu_itemTitle.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemTitle.Text = ":note/menu/title";
+			this.contextMenu_itemTitle.Click += new System.EventHandler(this.ContextMenu_title_Click);
 			// 
 			// contextMenu
 			// 
 			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.contextMenu_title,
-									this.contextMenu_body,
+									this.contextMenu_itemTitle,
+									this.contextMenu_itemBody,
 									this.toolStripSeparator1,
-									this.contextMenu_copy,
+									this.contextMenu_itemCopy,
 									this.toolStripSeparator2,
-									this.contextMenu_lock,
-									this.contextMenu_compact,
-									this.contextMenu_hidden,
-									this.contextMenu_remove});
+									this.contextMenu_itemLock,
+									this.contextMenu_itemCompact,
+									this.contextMenu_itemHidden,
+									this.contextMenu_itemRemove});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(203, 170);
+			this.contextMenu.Size = new System.Drawing.Size(203, 192);
 			// 
-			// contextMenu_body
+			// contextMenu_itemBody
 			// 
-			this.contextMenu_body.Name = "contextMenu_body";
-			this.contextMenu_body.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_body.Text = ":note/menu/body";
-			this.contextMenu_body.Click += new System.EventHandler(this.ContextMenu_body_Click);
+			this.contextMenu_itemBody.Name = "contextMenu_itemBody";
+			this.contextMenu_itemBody.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemBody.Text = ":note/menu/body";
+			this.contextMenu_itemBody.Click += new System.EventHandler(this.ContextMenu_body_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
 			// 
-			// contextMenu_copy
+			// contextMenu_itemCopy
 			// 
-			this.contextMenu_copy.Name = "contextMenu_copy";
-			this.contextMenu_copy.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_copy.Text = ":note/menu/copy";
+			this.contextMenu_itemCopy.Name = "contextMenu_itemCopy";
+			this.contextMenu_itemCopy.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemCopy.Text = ":note/menu/copy";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
 			// 
-			// contextMenu_lock
+			// contextMenu_itemLock
 			// 
-			this.contextMenu_lock.Name = "contextMenu_lock";
-			this.contextMenu_lock.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_lock.Text = ":note/menu/lock";
+			this.contextMenu_itemLock.Name = "contextMenu_itemLock";
+			this.contextMenu_itemLock.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemLock.Text = ":note/menu/lock";
 			// 
-			// contextMenu_compact
+			// contextMenu_itemCompact
 			// 
-			this.contextMenu_compact.Name = "contextMenu_compact";
-			this.contextMenu_compact.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_compact.Text = ":note/menu/compact";
+			this.contextMenu_itemCompact.Name = "contextMenu_itemCompact";
+			this.contextMenu_itemCompact.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemCompact.Text = ":note/menu/compact";
 			// 
-			// contextMenu_hidden
+			// contextMenu_itemHidden
 			// 
-			this.contextMenu_hidden.Name = "contextMenu_hidden";
-			this.contextMenu_hidden.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_hidden.Text = ":note/menu/hidden";
+			this.contextMenu_itemHidden.Name = "contextMenu_itemHidden";
+			this.contextMenu_itemHidden.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemHidden.Text = ":note/menu/hidden";
 			// 
-			// contextMenu_remove
+			// contextMenu_itemRemove
 			// 
-			this.contextMenu_remove.Name = "contextMenu_remove";
-			this.contextMenu_remove.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_remove.Text = ":note/menu/remove";
+			this.contextMenu_itemRemove.Name = "contextMenu_itemRemove";
+			this.contextMenu_itemRemove.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemRemove.Text = ":note/menu/remove";
 			// 
 			// inputTitle
 			// 
@@ -178,16 +178,16 @@ namespace PeMain.UI
 			this.PerformLayout();
 		}
 		private System.Windows.Forms.TextBox inputTitle;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_remove;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_hidden;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_compact;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_lock;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemRemove;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemHidden;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemCompact;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemLock;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_copy;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemCopy;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_body;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBody;
 		private System.Windows.Forms.ContextMenuStrip contextMenu;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_title;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTitle;
 		private System.Windows.Forms.TextBox inputBody;
 	}
 }

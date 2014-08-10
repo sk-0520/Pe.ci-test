@@ -104,6 +104,14 @@
 		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
 		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
 		
+		<Word Name="note/menu/title"     Text="タイトル入力" />
+		<Word Name="note/menu/body"      Text="本文入力" />
+		<Word Name="note/menu/copy"      Text="コピー" />
+		<Word Name="note/menu/lock"      Text="固定" />
+		<Word Name="note/menu/compact"   Text="最小化" />
+		<Word Name="note/menu/hidden"    Text="非表示" />
+		<Word Name="note/menu/remove"    Text="削除" />
+		
 		<Word Name="stream/tab/stream"     Text="標準出力" />
 		<Word Name="stream/tab/process"    Text="プロセス" />
 		<Word Name="stream/tab/property"   Text="起動プロパティ" />
