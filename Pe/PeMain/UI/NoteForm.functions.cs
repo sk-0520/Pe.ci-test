@@ -33,6 +33,9 @@ namespace PeMain.UI
 			this._initialized = true;
 		}
 		
+		/// <summary>
+		/// TODO: bind
+		/// </summary>
 		void ApplySetting()
 		{
 			this.inputTitle.Text = NoteItem.Title;
