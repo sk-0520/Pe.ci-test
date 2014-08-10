@@ -16,24 +16,24 @@ namespace PeMain.UI
 	{
 		void ApplyLanguageMainMenu()
 		{
-			var rootMenu = this._notificationMenu.Items;
+			var rootMenu = this._contextMenu.MenuItems;
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
 
-			var windowMenu = (ToolStripMenuItem)rootMenu[menuNameWindow];
+			var windowMenu = (MenuItem)rootMenu[menuNameWindow];
 			windowMenu.Text = this._commonData.Language["main/menu/window"];
-			windowMenu.DropDownItems[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
-			windowMenu.DropDownItems[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
-			windowMenu.DropDownItems[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
+			windowMenu.MenuItems[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
+			windowMenu.MenuItems[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			windowMenu.MenuItems[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			
-			var noteMenu = (ToolStripMenuItem)windowMenu.DropDownItems[menuNameWindowNote];
-			noteMenu.DropDownItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
-			noteMenu.DropDownItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
-			noteMenu.DropDownItems[menuNameWindowNoteCompact].Text =this._commonData.Language["main/menu/window/note/compact"]; 
+			var noteMenu = (MenuItem)windowMenu.MenuItems[menuNameWindowNote];
+			noteMenu.MenuItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
+			noteMenu.MenuItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
+			noteMenu.MenuItems[menuNameWindowNoteCompact].Text =this._commonData.Language["main/menu/window/note/compact"]; 
 
-			var systemEnvMenu = (ToolStripMenuItem)rootMenu[menuNameSystemEnv];
+			var systemEnvMenu = (MenuItem)rootMenu[menuNameSystemEnv];
 			systemEnvMenu.Text = this._commonData.Language["main/menu/system-env"];
-			systemEnvMenu.DropDownItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
-			systemEnvMenu.DropDownItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
+			systemEnvMenu.MenuItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
+			systemEnvMenu.MenuItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
 		
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];

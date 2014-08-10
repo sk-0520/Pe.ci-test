@@ -21,7 +21,8 @@ namespace PeMain.UI
 	public partial class Pe
 	{
 		private NotifyIcon _notifyIcon;
-		private ContextMenuStrip _notificationMenu;
+		private ContextMenu _contextMenu;
+		//private ContextMenuStrip _notificationMenu;
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		
