@@ -33,13 +33,15 @@ namespace PeMain.UI
 			this._initialized = true;
 		}
 		
-		/// <summary>
-		/// TODO: bind
-		/// </summary>
 		void ApplySetting()
 		{
+			/*
 			this.inputTitle.Text = NoteItem.Title;
 			this.inputBody.Text = NoteItem.Body;
+			*/
+			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+
 			
 			Location = NoteItem.Location;
 			Size = NoteItem.Size;
@@ -168,7 +170,7 @@ namespace PeMain.UI
 		
 		void ShowInputTitleArea()
 		{
-			this.inputTitle.Text = NoteItem.Title;
+			//this.inputTitle.Text = NoteItem.Title;
 			this.inputTitle.Font = CommonData.MainSetting.Note.CaptionFontSetting.Font;
 			
 			if(!this.inputTitle.Visible) {
@@ -180,7 +182,7 @@ namespace PeMain.UI
 		
 		void ShowInputBodyArea()
 		{
-			this.inputBody.Text = NoteItem.Body;
+			//this.inputBody.Text = NoteItem.Body;
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
 			
 			if(!this.inputBody.Visible) {
@@ -195,7 +197,7 @@ namespace PeMain.UI
 			if(!this.inputTitle.Visible) {
 				return;
 			}
-			
+			/*
 			var value = this.inputTitle.Text.Trim();
 			if(value.Length == 0 && NoteItem.Body.Length > 0) {
 				value = TextUtility.SplitLines(NoteItem.Body).First().Trim();
@@ -205,6 +207,8 @@ namespace PeMain.UI
 				NoteItem.Title = value;
 				this._changed |= true;
 			}
+			*/
+			this._changed = true;
 			this.inputTitle.Visible = false;
 		}
 		
@@ -213,7 +217,7 @@ namespace PeMain.UI
 			if(!this.inputBody.Visible) {
 				return;
 			}
-			
+			/*
 			var value = this.inputBody.Text.Trim();
 			var change = NoteItem.Body != value;
 			if(change) {
@@ -223,7 +227,9 @@ namespace PeMain.UI
 			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
 				NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
 			}
+			*/
 			
+			this._changed = true;
 			this.inputBody.Visible = false;
 		}
 		

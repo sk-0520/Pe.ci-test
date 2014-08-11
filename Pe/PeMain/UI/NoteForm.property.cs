@@ -15,7 +15,18 @@ namespace PeMain.UI
 	partial class NoteForm
 	{
 		CommonData CommonData { get; set; }
-		public NoteItem NoteItem { get; set; }
+		
+		public NoteItem NoteItem 
+		{ 
+			get
+			{
+				return this._bindItem.NoteItem;
+			}
+			set
+			{
+				this._bindItem = new NoteBindItem(value);
+			}
+		}
 		bool Changed
 		{
 			get 

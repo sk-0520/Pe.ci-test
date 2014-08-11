@@ -85,7 +85,7 @@ namespace PeMain.UI
 									this.contextMenu_itemHidden,
 									this.contextMenu_itemRemove});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(203, 192);
+			this.contextMenu.Size = new System.Drawing.Size(203, 170);
 			// 
 			// contextMenu_itemBody
 			// 
