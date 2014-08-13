@@ -431,6 +431,9 @@
     <None Include="bat\log.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="doc\license\Pe.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="doc\readme-ja.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -486,6 +489,7 @@
     <Folder Include="Data\DB" />
     <Folder Include="Data\DB\Entity" />
     <Folder Include="Data\DB\Dto" />
+    <Folder Include="doc\license" />
     <Folder Include="etc\lang" />
     <Folder Include="Data" />
     <Folder Include="etc" />

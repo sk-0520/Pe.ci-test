@@ -120,7 +120,6 @@ namespace PeUtility
 			}
 			
 			throw new ArgumentException(option);
-			
 		}
 		
 		

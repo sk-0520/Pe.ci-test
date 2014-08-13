@@ -39,21 +39,21 @@ namespace PeMain
 			mutexName += "_debug";
 			//mutexName += new Random().Next().ToString();
 			#endif
-			using(fileLogger)
-			using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
-				if (isFirstInstance) {
-					using(var context = new UI.Pe(commandLine, fileLogger)) {
-						#if DEBUG
-						context.DebugProcess();
-						#endif
-						
-						Application.Run();
+			using(fileLogger) {
+				using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
+					if (isFirstInstance) {
+						using(var context = new UI.Pe(commandLine, fileLogger)) {
+							#if DEBUG
+							context.DebugProcess();
+							#endif
+							
+							Application.Run();
+						}
+					} else {
+						fileLogger.Puts(PeMain.Data.LogType.Warning, "Dual boot", mutexName);
 					}
-				} else {
-					// The application is already running
-					// TODO: Display message box or change focus to existing application instance
 				}
-			} // releases the Mutex
+			}
 		}
 	}
 }

@@ -65,7 +65,7 @@ namespace PeUtility
 		}
 
 		/// <summary>
-		/// min &gt;= value &lt;= max
+		/// min &lt;= value &lt;= max
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="value"></param>
