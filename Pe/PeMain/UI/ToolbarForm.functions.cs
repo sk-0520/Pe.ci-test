@@ -278,7 +278,7 @@ namespace PeMain.UI
 		
 		void OpenProperty(string path)
 		{
-			CommonData.Logger.Puts(LogType.Information, "P/Iから取ってくるのだるいんで後回し", path);
+			API.SHObjectProperties(Handle, SHOP.SHOP_FILEPATH, path, string.Empty);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)

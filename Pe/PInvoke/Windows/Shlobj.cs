@@ -36,9 +36,28 @@ namespace PInvoke.Windows
 		SHCNF_DWORD  = 0x0003,
 	}
 	
+	public enum SHOP: uint
+	{
+		/// <summary>
+		/// lpObject points to a printer friendly name
+		/// </summary>
+		SHOP_PRINTERNAME = 0x01,
+		/// <summary>
+		/// lpObject points to a fully qualified path+file name
+		/// </summary>
+		SHOP_FILEPATH = 0x02,
+		/// <summary>
+		/// lpObject points to a Volume GUID
+		/// </summary>
+		SHOP_VOLUMEGUID = 0x04,
+	}
+	
 	public static partial class API
 	{
 		[DllImport("shell32.dll")]
 		public static extern void SHChangeNotify(SHCNE wEventId, SHCNF uFlags, IntPtr dwItem1, IntPtr dwItem2);
+		
+		[DllImport("shell32.dll", SetLastError=true)]
+		public static extern bool SHObjectProperties(IntPtr hwnd, SHOP shopObjectType, [MarshalAs(UnmanagedType.LPWStr)] string pszObjectName, [MarshalAs(UnmanagedType.LPWStr)] string pszPropertyPage);
 	}
 }
