@@ -52,8 +52,8 @@ namespace PeMain.UI
 		{
 			var iconHeight = IconScale.ToHeight();
 			var fontHeight = Font.Height;
-			var itemheight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical + 1 * 2;
-			this.listLauncherItems.ItemHeight = itemheight;
+			var itemHeight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical + 1 * 2;
+			this.listLauncherItems.ItemHeight = itemHeight;
 		}
 		
 		void SetFilterType(LauncherItemSelecterType type)

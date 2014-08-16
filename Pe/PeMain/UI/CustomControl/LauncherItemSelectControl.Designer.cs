@@ -57,9 +57,9 @@ namespace PeMain.UI
 			this.listLauncherItems.FormattingEnabled = true;
 			this.listLauncherItems.IntegralHeight = false;
 			this.listLauncherItems.ItemHeight = 12;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
 			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(147, 106);
+			this.listLauncherItems.Size = new System.Drawing.Size(147, 125);
 			this.listLauncherItems.TabIndex = 4;
 			this.listLauncherItems.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListLauncherItems_DrawItem);
 			this.listLauncherItems.SelectedIndexChanged += new System.EventHandler(this.ListLauncherItemsSelectedIndexChanged);
@@ -77,7 +77,7 @@ namespace PeMain.UI
 			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(147, 44);
+			this.toolLauncherItems.Size = new System.Drawing.Size(147, 25);
 			this.toolLauncherItems.Stretch = true;
 			this.toolLauncherItems.TabIndex = 3;
 			this.toolLauncherItems.Text = "toolStrip1";

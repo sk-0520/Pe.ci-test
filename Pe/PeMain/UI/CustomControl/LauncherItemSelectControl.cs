@@ -13,9 +13,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.Logic;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -98,17 +98,19 @@ namespace PeMain.UI
 				var item = (LauncherItem)this.listLauncherItems.Items[e.Index];
 				var icon = item.GetIcon(IconScale, item.IconIndex);
 				if(icon != null) {
-					g.DrawIcon(icon, e.Bounds.X, e.Bounds.Y);
+					var padding = e.Bounds.Height / 2 - IconScale.ToHeight() / 2;
+					g.DrawIcon(icon, e.Bounds.X + padding, e.Bounds.Y + padding);
 				}
 				var textArea = new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
 				textArea.X += this.listLauncherItems.ItemHeight;
 				textArea.Width -= this.listLauncherItems.ItemHeight;
-				using(var brush = new SolidBrush(e.ForeColor))
-				using(var format = new StringFormat()) {
-					format.Alignment = StringAlignment.Near;
-					format.LineAlignment = StringAlignment.Center;
-					g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-					g.DrawString(item.Name, e.Font, brush, textArea, format);
+				using(var brush = new SolidBrush(e.ForeColor)) {
+					using(var format = new StringFormat()) {
+						format.Alignment = StringAlignment.Near;
+						format.LineAlignment = StringAlignment.Center;
+						g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+						g.DrawString(item.Name, e.Font, brush, textArea, format);
+					}
 				}
 			}
 			
