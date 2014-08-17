@@ -7,10 +7,12 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Management;
+using System.Text;
 using System.Windows.Forms;
 
 namespace PeUtility
@@ -167,10 +169,10 @@ namespace PeUtility
 			result.Items["Is64BitOperatingSystem"] = Environment.Is64BitOperatingSystem;
 			result.Items["Is64BitProcess"] = Environment.Is64BitProcess;
 			result.Items["MachineName"] = Environment.MachineName;
-			result.Items["NewLine"] = Environment.NewLine;
+			result.Items["NewLine"] =  BitConverter.ToString(Encoding.UTF8.GetBytes(Environment.NewLine));
 			result.Items["OSVersion"] = Environment.OSVersion;
 			result.Items["ProcessorCount"] = Environment.ProcessorCount;
-			result.Items["StackTrace"] = Environment.StackTrace;
+			//result.Items["StackTrace"] = Environment.StackTrace;
 			result.Items["SystemDirectory"] = Environment.SystemDirectory;
 			result.Items["SystemPageSize"] = Environment.SystemPageSize;
 			result.Items["TickCount"] = Environment.TickCount;
@@ -179,6 +181,10 @@ namespace PeUtility
 			result.Items["UserName"] = Environment.UserName;
 			result.Items["Version"] = Environment.Version;
 			result.Items["WorkingSet"] = Environment.WorkingSet;
+			
+			foreach(DictionaryEntry pair in Environment.GetEnvironmentVariables()) {
+				result.Items[(string)pair.Key] = pair.Value;
+			}
 			
 			return result;
 		}
