@@ -183,6 +183,16 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap Name {
+			get {
+				object obj = ResourceManager.GetObject("Name", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap NotFound_016 {
 			get {
 				object obj = ResourceManager.GetObject("NotFound_016", resourceCulture);
@@ -266,6 +276,16 @@ namespace PeMain.Properties {
 		public static System.Drawing.Bitmap Save {
 			get {
 				object obj = ResourceManager.GetObject("Save", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap Tag {
+			get {
+				object obj = ResourceManager.GetObject("Tag", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}

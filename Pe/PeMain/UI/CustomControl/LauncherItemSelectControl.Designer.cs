@@ -57,9 +57,9 @@ namespace PeMain.UI
 			this.listLauncherItems.FormattingEnabled = true;
 			this.listLauncherItems.IntegralHeight = false;
 			this.listLauncherItems.ItemHeight = 12;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
 			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(147, 125);
+			this.listLauncherItems.Size = new System.Drawing.Size(147, 106);
 			this.listLauncherItems.TabIndex = 4;
 			this.listLauncherItems.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListLauncherItems_DrawItem);
 			this.listLauncherItems.SelectedIndexChanged += new System.EventHandler(this.ListLauncherItemsSelectedIndexChanged);
@@ -77,7 +77,7 @@ namespace PeMain.UI
 			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(147, 25);
+			this.toolLauncherItems.Size = new System.Drawing.Size(147, 44);
 			this.toolLauncherItems.Stretch = true;
 			this.toolLauncherItems.TabIndex = 3;
 			this.toolLauncherItems.Text = "toolStrip1";
@@ -132,7 +132,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_full
 			// 
-			this.toolLauncherItems_type_full.Image = global::PeMain.Properties.Images.NotImpl;
+			this.toolLauncherItems_type_full.Image = global::PeMain.Properties.Images.Find;
 			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
 			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(292, 22);
 			this.toolLauncherItems_type_full.Text = ":item-selecter/command/type-full";
@@ -140,7 +140,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_name
 			// 
-			this.toolLauncherItems_type_name.Image = global::PeMain.Properties.Images.NotImpl;
+			this.toolLauncherItems_type_name.Image = global::PeMain.Properties.Images.Name;
 			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
 			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(292, 22);
 			this.toolLauncherItems_type_name.Text = ":item-selecter/command/type-name";
@@ -148,7 +148,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_tag
 			// 
-			this.toolLauncherItems_type_tag.Image = global::PeMain.Properties.Images.NotImpl;
+			this.toolLauncherItems_type_tag.Image = global::PeMain.Properties.Images.Tag;
 			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
 			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(292, 22);
 			this.toolLauncherItems_type_tag.Text = ":item-selecter/command/type-tag";

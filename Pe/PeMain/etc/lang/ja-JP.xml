@@ -173,7 +173,7 @@
 		<Word Name="item-selecter/command/remove"     Text="アイテム削除" />
 		<Word Name="item-selecter/command/filtering"  Text="アイテム抽出" />
 		<Word Name="item-selecter/command/type-full"  Text="自動抽出" />
-		<Word Name="item-selecter/command/type-name"  Text="アイテム名から選択" />
+		<Word Name="item-selecter/command/type-name"  Text="アイテム名から抽出" />
 		<Word Name="item-selecter/command/type-tag"   Text="タグから抽出" />
 		
 		<Word Name="env-updater/header/key"   Text="キー" />
