@@ -21,7 +21,7 @@ namespace PeUtility
 	public static class TextUtility
 	{
 		/// <summary>
-		/// 
+		/// 集合の中から単一の何かを取得する。
 		/// </summary>
 		/// <param name="target"></param>
 		/// <param name="list"></param>
@@ -80,6 +80,11 @@ namespace PeUtility
 			}
 		}
 		
+		/// <summary>
+		/// 文字列を改行で区切る。
+		/// </summary>
+		/// <param name="lines"></param>
+		/// <returns></returns>
 		public static IEnumerable<string> SplitLines(this string lines)
 		{
 			using(var stream = new StringReader(lines)) {

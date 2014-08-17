@@ -28,12 +28,17 @@ namespace PeUtility
 		{
 			byte[] buffer;
 
-			using (var stream = new BinaryReader(new FileStream(filePath, FileMode.Open, FileAccess.Read))) {
+			using (var stream = new BinaryReader(new FileStream(filePath,  FileMode.Open, FileAccess.Read, FileShare.ReadWrite))) {
 				buffer = new byte[readLength];
 				stream.Read(buffer, startIndex, readLength);
 			}
 
 			return buffer;
+		}
+		public static byte[] ToBinary(string filePath)
+		{
+			var fileInfo = new FileInfo(filePath);
+			return ToBinary(filePath, 0, (int)fileInfo.Length);
 		}
 		
 		/// <summary>
@@ -58,7 +63,7 @@ namespace PeUtility
 			return System.IO.File.Exists(path) || Directory.Exists(path);
 		}
 	}
-	
+
 	public class ShortcutFile: IWshShortcut
 	{
 		IWshShortcut _shortcut;

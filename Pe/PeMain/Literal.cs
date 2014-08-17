@@ -33,8 +33,6 @@ namespace PeMain
 		/// </summary>
 		private static string _dirRootName = programName;
 		
-		public static int fileTempBufferLength = 1024 * 4;
-		
 		private static string _settingRootDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		private static string _logRootDirPath     = Path.Combine(UserSettingDirPath, "log");
 		

@@ -32,8 +32,6 @@ namespace PeUtility
 		protected override CreateParams CreateParams {
 			get
 			{
-				const int WS_EX_TOOLWINDOW = 0x80;
-
 				var createParams = base.CreateParams;
 				// AppBar として表示するには WS_EX_TOOLWINDOW スタイルが必要
 				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;;

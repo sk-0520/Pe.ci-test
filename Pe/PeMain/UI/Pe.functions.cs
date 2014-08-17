@@ -156,6 +156,8 @@ namespace PeMain.UI
 				foreach(var filePath in enabledFiles) {
 					var entry = zip.CreateEntry(Path.GetFileName(filePath));
 					using(var entryStream = new BinaryWriter(entry.Open())) {
+						var buffer = FileUtility.ToBinary(filePath);
+						/*
 						using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
 							var buffer = new byte[Literal.fileTempBufferLength];
 							int readLength;
@@ -163,6 +165,8 @@ namespace PeMain.UI
 								entryStream.Write(buffer, 0, readLength);
 							}
 						}
+						*/
+						entryStream.Write(buffer);
 					}
 				}
 			}
