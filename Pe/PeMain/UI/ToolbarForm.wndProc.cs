@@ -23,6 +23,19 @@ namespace PeMain.UI
 		{
 			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				switch(m.Msg) {
+					case (int)WM.WM_SYSCOMMAND:
+						{
+							switch (m.WParam.ToInt32() & 0xfff0) {
+								case (int)SC.SC_MINIMIZE:
+								case (int)SC.SC_MAXIMIZE:
+								case (int)SC.SC_RESTORE:
+									return;
+								default:
+									break;
+							}
+						}
+						break;
+						
 					case (int)WM.WM_NCPAINT:
 						{
 							if(CommonData != null) {
