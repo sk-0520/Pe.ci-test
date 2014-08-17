@@ -20,46 +20,7 @@ namespace PeUtility
 	/// </summary>
 	public partial class AppbarForm
 	{
-		protected override CreateParams CreateParams {
-			get {
-				const int WS_EX_TOOLWINDOW = 0x80;
 
-				var p = base.CreateParams;
-				// AppBar として表示するには WS_EX_TOOLWINDOW スタイルが必要
-				p.ExStyle = p.ExStyle | WS_EX_TOOLWINDOW;
-
-				return p;
-			}
-		}
-		
-		protected override void OnResizeEnd(EventArgs e)
-		{
-			if(IsDocking) {
-				// AppBar のサイズを更新します。
-				switch (DesktopDockType) {
-					case DesktopDockType.Left:
-					case DesktopDockType.Right:
-						BarSize = new Size(Width, BarSize.Height);
-						break;
-					case DesktopDockType.Top:
-					case DesktopDockType.Bottom:
-						BarSize = new Size(BarSize.Width, Height);
-						break;
-				}
-				Docking(DesktopDockType);
-			}
-			base.OnResizeEnd(e);
-		}
-		
-		protected override void OnFormClosed(FormClosedEventArgs e)
-		{
-			if(IsDocking) {
-				UnResistAppBar();
-			}
-			
-			base.OnFormClosed(e);
-		}
-		
 		
 		private bool ResistAppBar()
 		{
