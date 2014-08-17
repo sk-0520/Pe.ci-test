@@ -14,89 +14,36 @@ using System.Windows.Forms;
 
 namespace PeUtility
 {
-	public struct InformationGroup
+	public class InfoGroup
 	{
-		private string _title;
-		private Dictionary<string, string> _items;
-		public InformationGroup(string title, Dictionary<string, string> items)
+		public InfoGroup(string title)
 		{
-			this._title = title;
-			this._items = items;
+			Title = title;
+			Items = new Dictionary<string, object>();
 		}
+			
+		public string Title { get; private set; }
+		public Dictionary<string, object> Items { get; private set; }
 		
-		public string Title { get { return this._title; } }
-		public Dictionary<string, string> Items { get { return this._items; } }
 	}
+	
 	/// <summary>
-	/// Description of Information.
+	/// 各種情報を取得する。
 	/// </summary>
 	public class Information
 	{
-		public Information()
+		protected virtual InfoGroup GetMemory()
 		{
-			Groups = new List<InformationGroup>();
-		}
-		
-		public List<InformationGroup> Groups { get; private set; }
-		
-		/// <summary>
-		/// メモリ情報取得
-		/// </summary>
-		public virtual void GatheringMemory()
-		{
-			var map = new Dictionary<string, string>();
+			var result = new InfoGroup("memory");
 			
-			Groups.Add(new InformationGroup("Memory", map));
+			return result;
 		}
 		
-		/// <summary>
-		/// ドライブ情報取得
-		/// </summary>
-		public virtual void GatheringDrive()
+		public virtual IEnumerable<InfoGroup> Get()
 		{
-			var map = new Dictionary<string, string>();
-			
-			Groups.Add(new InformationGroup("Drive", map));
+			return new [] {
+				GetMemory(),
+			};
 		}
-		
-		/// <summary>
-		/// CPU情報取得
-		/// </summary>
-		public virtual void GatheringCPU()
-		{
-			var map = new Dictionary<string, string>();
-			
-			Groups.Add(new InformationGroup("CPU", map));
-		}
-		
-		/// <summary>
-		/// OS情報取得
-		/// </summary>
-		public virtual void GatheringOS()
-		{
-			var map = new Dictionary<string, string>();
-			
-			Groups.Add(new InformationGroup("OS", map));
-		}
-		
-		/// <summary>
-		/// ディスプレイ情報取得
-		/// </summary>
-		public virtual void GatheringDisplay()
-		{
-			var map = new Dictionary<string, string>();
-			
-			Groups.Add(new InformationGroup("Display", map));
-		}
-		
-		public virtual void GatheringAll()
-		{
-			GatheringCPU();
-			GatheringDisplay();
-			GatheringDrive();
-			GatheringMemory();
-			GatheringOS();
-		}
-		
 	}
 }
