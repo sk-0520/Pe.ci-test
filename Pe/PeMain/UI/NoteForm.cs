@@ -36,6 +36,7 @@ namespace PeMain.UI
 			get 
 			{
 				CreateParams createParams = base.CreateParams;
+				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
 				createParams.ClassStyle |= (int)CS.CS_DROPSHADOW;
 				return createParams;
 			}

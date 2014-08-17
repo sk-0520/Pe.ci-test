@@ -33,6 +33,7 @@ namespace PInvoke.Windows
 	public enum WS_EX
 	{
 		WS_EX_NOACTIVATE = 0x8000000,
+		WS_EX_TOOLWINDOW = 0x0000080,
 	}
 	
 	public enum CS

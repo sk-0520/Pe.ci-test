@@ -10,6 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using PInvoke.Windows;
 
 namespace PeUtility
 {
@@ -27,6 +28,48 @@ namespace PeUtility
 			
 			Initialize();
 		}
+		
+		protected override CreateParams CreateParams {
+			get
+			{
+				const int WS_EX_TOOLWINDOW = 0x80;
+
+				var createParams = base.CreateParams;
+				// AppBar として表示するには WS_EX_TOOLWINDOW スタイルが必要
+				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;;
+
+				return createParams;
+			}
+		}
+		
+		protected override void OnResizeEnd(EventArgs e)
+		{
+			if(IsDocking) {
+				// AppBar のサイズを更新します。
+				switch (DesktopDockType) {
+					case DesktopDockType.Left:
+					case DesktopDockType.Right:
+						BarSize = new Size(Width, BarSize.Height);
+						break;
+					case DesktopDockType.Top:
+					case DesktopDockType.Bottom:
+						BarSize = new Size(BarSize.Width, Height);
+						break;
+				}
+				Docking(DesktopDockType);
+			}
+			base.OnResizeEnd(e);
+		}
+		
+		protected override void OnFormClosed(FormClosedEventArgs e)
+		{
+			if(IsDocking) {
+				UnResistAppBar();
+			}
+			
+			base.OnFormClosed(e);
+		}
+		
 		protected override void OnMouseLeave(EventArgs e)
 		{
 			if(AutoHide && ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {

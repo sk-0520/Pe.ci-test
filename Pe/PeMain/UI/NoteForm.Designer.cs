@@ -55,11 +55,11 @@ namespace PeMain.UI
 			// inputBody
 			// 
 			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.inputBody.Location = new System.Drawing.Point(56, 56);
+			this.inputBody.Location = new System.Drawing.Point(40, 56);
 			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
 			this.inputBody.Multiline = true;
 			this.inputBody.Name = "inputBody";
-			this.inputBody.Size = new System.Drawing.Size(160, 96);
+			this.inputBody.Size = new System.Drawing.Size(187, 120);
 			this.inputBody.TabIndex = 0;
 			this.inputBody.TabStop = false;
 			this.inputBody.Visible = false;
@@ -137,10 +137,10 @@ namespace PeMain.UI
 			// inputTitle
 			// 
 			this.inputTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.inputTitle.Location = new System.Drawing.Point(24, 24);
+			this.inputTitle.Location = new System.Drawing.Point(28, 30);
 			this.inputTitle.Margin = new System.Windows.Forms.Padding(0);
 			this.inputTitle.Name = "inputTitle";
-			this.inputTitle.Size = new System.Drawing.Size(100, 12);
+			this.inputTitle.Size = new System.Drawing.Size(117, 16);
 			this.inputTitle.TabIndex = 1;
 			this.inputTitle.TabStop = false;
 			this.inputTitle.Visible = false;
@@ -148,14 +148,16 @@ namespace PeMain.UI
 			// 
 			// NoteForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(256, 186);
+			this.ClientSize = new System.Drawing.Size(247, 187);
 			this.ContextMenuStrip = this.contextMenu;
 			this.ControlBox = false;
 			this.Controls.Add(this.inputTitle);
 			this.Controls.Add(this.inputBody);
+			this.Font = new System.Drawing.Font("Meiryo UI", 9F);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "NoteForm";
