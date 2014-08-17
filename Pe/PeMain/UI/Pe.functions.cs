@@ -84,7 +84,7 @@ namespace PeMain.UI
 			note.Show();
 			//*/
 			
-			//*
+			/*
 			var info = new Information();
 			foreach(var g in info.Get()) {
 				Debug.WriteLine(string.Format("[ {0} ]============", g.Title));
