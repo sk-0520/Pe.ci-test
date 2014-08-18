@@ -168,7 +168,7 @@ namespace PeMain.UI
 			this.inputBody.Size = bodyArea.Size;
 		}
 		
-		void ShowInputTitleArea()
+		void ShowInputTitleArea(int recursive)
 		{
 			//this.inputTitle.Text = NoteItem.Title;
 			this.inputTitle.Font = CommonData.MainSetting.Note.CaptionFontSetting.Font;
@@ -178,12 +178,12 @@ namespace PeMain.UI
 				this.inputTitle.Visible = true;
 				this.inputTitle.Focus();
 			}
-			if(!this.inputTitle.Visible) {
-				ShowInputTitleArea();
+			if(!this.inputTitle.Visible && recursive > 0) {
+				ShowInputTitleArea(recursive - 1);
 			}
 		}
 		
-		void ShowInputBodyArea()
+		void ShowInputBodyArea(int recursive)
 		{
 			//this.inputBody.Text = NoteItem.Body;
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
@@ -193,8 +193,8 @@ namespace PeMain.UI
 				this.inputBody.Visible = true;
 				this.inputBody.Focus();
 			}
-			if(!this.inputBody.Visible) {
-				ShowInputBodyArea();
+			if(!this.inputBody.Visible && recursive > 0) {
+				ShowInputBodyArea(recursive - 1);
 			}
 		}
 		

@@ -132,7 +132,7 @@ namespace PeMain.UI
 		
 		void NoteForm_DoubleClick(object sender, EventArgs e)
 		{
-			ShowInputBodyArea();
+			ShowInputBodyArea(RECURSIVE);
 		}
 		
 		void NoteForm_Resize(object sender, EventArgs e)
@@ -165,12 +165,12 @@ namespace PeMain.UI
 		
 		void ContextMenu_title_Click(object sender, EventArgs e)
 		{
-			ShowInputTitleArea();
+			ShowInputTitleArea(RECURSIVE);
 		}
 		
 		void ContextMenu_body_Click(object sender, EventArgs e)
 		{
-			ShowInputBodyArea();
+			ShowInputBodyArea(RECURSIVE);
 		}
 
 		

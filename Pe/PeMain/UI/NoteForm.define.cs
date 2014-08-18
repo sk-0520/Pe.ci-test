@@ -17,6 +17,8 @@ namespace PeMain.UI
 	/// </summary>
 	partial class NoteForm
 	{
+		const int RECURSIVE = 2;
+		
 		private class NoteBindItem: INotifyPropertyChanged
 		{
 			public event PropertyChangedEventHandler PropertyChanged;
