@@ -85,7 +85,7 @@ namespace PeMain.UI
 									this.contextMenu_itemHidden,
 									this.contextMenu_itemRemove});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(203, 170);
+			this.contextMenu.Size = new System.Drawing.Size(203, 192);
 			// 
 			// contextMenu_itemBody
 			// 
@@ -104,6 +104,7 @@ namespace PeMain.UI
 			this.contextMenu_itemCopy.Name = "contextMenu_itemCopy";
 			this.contextMenu_itemCopy.Size = new System.Drawing.Size(202, 22);
 			this.contextMenu_itemCopy.Text = ":note/menu/copy";
+			this.contextMenu_itemCopy.Click += new System.EventHandler(this.ContextMenu_itemCopy_Click);
 			// 
 			// toolStripSeparator2
 			// 

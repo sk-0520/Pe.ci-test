@@ -180,5 +180,10 @@ namespace PeMain.UI
 			// 生成前の高さがWindowsにより補正されるためここでリサイズ
 			ChangeCompact(NoteItem.Compact, NoteItem.Size);
 		}
+		
+		void ContextMenu_itemCopy_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(NoteItem.Body);
+		}
 	}
 }
