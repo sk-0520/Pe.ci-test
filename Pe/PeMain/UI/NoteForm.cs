@@ -90,6 +90,8 @@ namespace PeMain.UI
 		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
 		{
+			HiddenInputTitleArea();
+			
 			DrawCommand(
 				e.Location,
 				(isIn, nowState) => {

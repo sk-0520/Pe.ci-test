@@ -178,6 +178,9 @@ namespace PeMain.UI
 				this.inputTitle.Visible = true;
 				this.inputTitle.Focus();
 			}
+			if(!this.inputTitle.Visible) {
+				ShowInputTitleArea();
+			}
 		}
 		
 		void ShowInputBodyArea()
@@ -189,6 +192,9 @@ namespace PeMain.UI
 				ResizeInputBodyArea();
 				this.inputBody.Visible = true;
 				this.inputBody.Focus();
+			}
+			if(!this.inputBody.Visible) {
+				ShowInputBodyArea();
 			}
 		}
 		
