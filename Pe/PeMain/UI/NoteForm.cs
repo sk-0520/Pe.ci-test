@@ -188,7 +188,18 @@ namespace PeMain.UI
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)
 		{
-			
+			using(var dialog = new FontDialog()) {
+				if(NoteItem.Style.FontSetting.IsDefault) {
+					dialog.Font = NoteItem.Style.FontSetting.Font;
+				}
+				
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					var result = new FontSetting();
+					var font = dialog.Font;
+					NoteItem.Style.FontSetting.Family = font.FontFamily.Name;
+					NoteItem.Style.FontSetting.Height = font.Size;
+				}
+			}			
 		}
 		
 		void ContextMenu_font_reset_Click(object sender, EventArgs e)
