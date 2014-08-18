@@ -31,9 +31,9 @@ namespace PeMain.UI
 			Initialize();
 		}
 
-		protected override CreateParams CreateParams 
+		protected override CreateParams CreateParams
 		{
-			get 
+			get
 			{
 				CreateParams createParams = base.CreateParams;
 				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
@@ -184,6 +184,19 @@ namespace PeMain.UI
 		void ContextMenu_itemCopy_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(NoteItem.Body);
+		}
+		
+		void ContextMenu_font_change_Click(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void ContextMenu_font_reset_Click(object sender, EventArgs e)
+		{
+			if(!NoteItem.Style.FontSetting.IsDefault) {
+				NoteItem.Style.FontSetting.Dispose();
+				NoteItem.Style.FontSetting = new FontSetting();
+			}
 		}
 	}
 }
