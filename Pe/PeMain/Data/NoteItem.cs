@@ -100,8 +100,8 @@ namespace PeMain.Data
 		public NoteStyle()
 		{
 			FontSetting = new FontSetting();
-			ForeColor = Color.Black;
-			BackColor = Color.FromArgb(248, 248, 182);
+			ForeColor = Literal.noteFore;
+			BackColor = Literal.noteBack;
 		}
 		
 		public FontSetting FontSetting { get; set; }

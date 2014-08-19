@@ -76,6 +76,16 @@ namespace PeMain.Logic
 		{
 			control.Attachment(itemDatas, itemDatas.DefaultIfEmpty().First().Value);
 		}
+		
+		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<ItemData<T>> itemDatas, T defaultData)
+		{
+			control.ComboBox.Attachment(itemDatas, defaultData);
+		}
+		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<ItemData<T>> itemDatas)
+		{
+			control.ComboBox.Attachment(itemDatas);
+		}
+		
 	}
 	
 	public class IconScaleItemData: UseLanguageItemData<IconScale>

@@ -112,6 +112,17 @@
 		<Word Name="note/menu/hidden"    Text="非表示" />
 		<Word Name="note/menu/remove"    Text="削除" />
 		
+		<Word Name="note/style/color-fore"    Text="文字色" />
+		<Word Name="note/style/color-back"    Text="背景色" />
+		<Word Name="note/style/color/black"   Text="黒" />
+		<Word Name="note/style/color/white"   Text="白" />
+		<Word Name="note/style/color/red"     Text="赤" />
+		<Word Name="note/style/color/green"   Text="緑" />
+		<Word Name="note/style/color/blue"    Text="青" />
+		<Word Name="note/style/color/yellow"  Text="黄" />
+		<Word Name="note/style/color/orange"  Text="燈" />
+		<Word Name="note/style/color/purple"  Text="紫" />
+		
 		<Word Name="stream/tab/stream"     Text="標準出力" />
 		<Word Name="stream/tab/process"    Text="プロセス" />
 		<Word Name="stream/tab/property"   Text="起動プロパティ" />

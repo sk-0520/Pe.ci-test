@@ -236,6 +236,7 @@
     <Compile Include="UI\Ex\ExListBox.cs" />
     <Compile Include="UI\Ex\ExSplitButton.cs" />
     <Compile Include="UI\Ex\ExToolStrip.cs" />
+    <Compile Include="UI\Ex\ExToolStripControlHost.cs" />
     <Compile Include="UI\LogForm.cs" />
     <Compile Include="UI\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>

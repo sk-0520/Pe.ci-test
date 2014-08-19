@@ -47,8 +47,8 @@ namespace PeMain.UI
 			this.contextMenu_font = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_font_change = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_font_reset = new System.Windows.Forms.ToolStripMenuItem();
-			this.contextMenu_fore = new System.Windows.Forms.ToolStripMenuItem();
-			this.contextMenu_back = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_fore = new System.Windows.Forms.ToolStripComboBox();
+			this.contextMenu_back = new System.Windows.Forms.ToolStripComboBox();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemLock = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemCompact = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +74,7 @@ namespace PeMain.UI
 			// contextMenu_itemTitle
 			// 
 			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
-			this.contextMenu_itemTitle.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemTitle.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemTitle.Text = ":note/menu/title";
 			this.contextMenu_itemTitle.Click += new System.EventHandler(this.ContextMenu_title_Click);
 			// 
@@ -95,31 +95,31 @@ namespace PeMain.UI
 									this.contextMenu_itemHidden,
 									this.contextMenu_itemRemove});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(203, 264);
+			this.contextMenu.Size = new System.Drawing.Size(263, 280);
 			// 
 			// contextMenu_itemBody
 			// 
 			this.contextMenu_itemBody.Name = "contextMenu_itemBody";
-			this.contextMenu_itemBody.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemBody.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemBody.Text = ":note/menu/body";
 			this.contextMenu_itemBody.Click += new System.EventHandler(this.ContextMenu_body_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(259, 6);
 			// 
 			// contextMenu_itemCopy
 			// 
 			this.contextMenu_itemCopy.Name = "contextMenu_itemCopy";
-			this.contextMenu_itemCopy.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemCopy.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemCopy.Text = ":note/menu/copy";
 			this.contextMenu_itemCopy.Click += new System.EventHandler(this.ContextMenu_itemCopy_Click);
 			// 
 			// toolStripMenuItem3
 			// 
 			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(199, 6);
+			this.toolStripMenuItem3.Size = new System.Drawing.Size(259, 6);
 			// 
 			// contextMenu_font
 			// 
@@ -127,7 +127,7 @@ namespace PeMain.UI
 									this.contextMenu_font_change,
 									this.contextMenu_font_reset});
 			this.contextMenu_font.Name = "contextMenu_font";
-			this.contextMenu_font.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_font.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_font.Text = ":note/menu/font";
 			// 
 			// contextMenu_font_change
@@ -146,43 +146,45 @@ namespace PeMain.UI
 			// 
 			// contextMenu_fore
 			// 
+			this.contextMenu_fore.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.contextMenu_fore.Name = "contextMenu_fore";
-			this.contextMenu_fore.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_fore.Text = ":note/menu/fore";
+			this.contextMenu_fore.Size = new System.Drawing.Size(202, 26);
+			this.contextMenu_fore.SelectedIndexChanged += new System.EventHandler(this.ContextMenu_fore_SelectedIndexChanged);
 			// 
 			// contextMenu_back
 			// 
+			this.contextMenu_back.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.contextMenu_back.Name = "contextMenu_back";
-			this.contextMenu_back.Size = new System.Drawing.Size(202, 22);
-			this.contextMenu_back.Text = ":note/menu/back";
+			this.contextMenu_back.Size = new System.Drawing.Size(202, 26);
+			this.contextMenu_back.SelectedIndexChanged += new System.EventHandler(this.ContextMenu_back_SelectedIndexChanged);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(259, 6);
 			// 
 			// contextMenu_itemLock
 			// 
 			this.contextMenu_itemLock.Name = "contextMenu_itemLock";
-			this.contextMenu_itemLock.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemLock.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemLock.Text = ":note/menu/lock";
 			// 
 			// contextMenu_itemCompact
 			// 
 			this.contextMenu_itemCompact.Name = "contextMenu_itemCompact";
-			this.contextMenu_itemCompact.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemCompact.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemCompact.Text = ":note/menu/compact";
 			// 
 			// contextMenu_itemHidden
 			// 
 			this.contextMenu_itemHidden.Name = "contextMenu_itemHidden";
-			this.contextMenu_itemHidden.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemHidden.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemHidden.Text = ":note/menu/hidden";
 			// 
 			// contextMenu_itemRemove
 			// 
 			this.contextMenu_itemRemove.Name = "contextMenu_itemRemove";
-			this.contextMenu_itemRemove.Size = new System.Drawing.Size(202, 22);
+			this.contextMenu_itemRemove.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemRemove.Text = ":note/menu/remove";
 			// 
 			// inputTitle
@@ -232,8 +234,8 @@ namespace PeMain.UI
 		}
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_reset;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_change;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_back;
-		private System.Windows.Forms.ToolStripMenuItem contextMenu_fore;
+		private System.Windows.Forms.ToolStripComboBox contextMenu_back;
+		private System.Windows.Forms.ToolStripComboBox contextMenu_fore;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
 		private System.Windows.Forms.TextBox inputTitle;

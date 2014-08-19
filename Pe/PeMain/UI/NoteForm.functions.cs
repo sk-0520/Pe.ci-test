@@ -266,6 +266,14 @@ namespace PeMain.UI
 				#endif
 			}
 		}
+		
+		Color GetSelectedColor(ToolStripComboBox control)
+		{
+			var index = control.ComboBox.SelectedIndex;
+			Debug.Assert(index >= 0, control.ComboBox.SelectedIndex.ToString());
+			var item = control.ComboBox.Items[index] as ColorData;
+			return item.Value;
+		}
 
 	}
 }

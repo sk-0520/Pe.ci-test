@@ -63,6 +63,7 @@ namespace PeMain.UI
 			using(var bmp = new Bitmap(Width, Height, e.Graphics)) {
 				using(var memG = Graphics.FromImage(bmp)) {
 					var rect = new Rectangle(Point.Empty, Size);
+					//var rect = e.ClipRectangle;
 					DrawFull(memG, rect, this == Form.ActiveForm);
 					e.Graphics.DrawImage(bmp, 0, 0);
 				}
@@ -199,7 +200,7 @@ namespace PeMain.UI
 					NoteItem.Style.FontSetting.Family = font.FontFamily.Name;
 					NoteItem.Style.FontSetting.Height = font.Size;
 				}
-			}			
+			}
 		}
 		
 		void ContextMenu_font_reset_Click(object sender, EventArgs e)
@@ -207,6 +208,22 @@ namespace PeMain.UI
 			if(!NoteItem.Style.FontSetting.IsDefault) {
 				NoteItem.Style.FontSetting.Dispose();
 				NoteItem.Style.FontSetting = new FontSetting();
+			}
+		}
+		
+		void ContextMenu_fore_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if(this._bindItem != null) {
+				NoteItem.Style.ForeColor = GetSelectedColor(this.contextMenu_fore);
+				Refresh();
+			}
+		}
+		
+		void ContextMenu_back_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if(this._bindItem != null) {
+				NoteItem.Style.BackColor = GetSelectedColor(this.contextMenu_back);
+				Refresh();
 			}
 		}
 	}

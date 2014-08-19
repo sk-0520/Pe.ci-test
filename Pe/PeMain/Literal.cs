@@ -53,6 +53,26 @@ namespace PeMain
 		/// </summary>
 		public static readonly Size noteSize = new Size(200, 200);
 		
+		public static readonly Color noteForeColorWhite = Color.FromArgb(255, 255, 255);
+		public static readonly Color noteForeColorBlack = Color.FromArgb(0, 0, 0);
+		public static readonly Color noteForeColorRed = Color.FromArgb(255, 0, 0);
+		public static readonly Color noteForeColorGreen = Color.FromArgb(0, 255, 0);
+		public static readonly Color noteForeColorBlue = Color.FromArgb(0, 0, 255);
+		public static readonly Color noteForeColorYellow = Color.FromArgb(255, 255, 128);
+		public static readonly Color noteForeColorOrange = Color.FromArgb(255, 128, 0);
+		public static readonly Color noteForeColorPurple = Color.FromArgb(255, 128, 255);
+		
+		public static readonly Color noteBackColorWhite = Color.FromArgb(230, 230, 230);
+		public static readonly Color noteBackColorBlack = Color.FromArgb(80, 80, 80);
+		public static readonly Color noteBackColorRed = Color.FromArgb(230, 170, 170);
+		public static readonly Color noteBackColorGreen = Color.FromArgb(170, 230, 170);
+		public static readonly Color noteBackColorBlue = Color.FromArgb(170, 170, 230);
+		public static readonly Color noteBackColorYellow = Color.FromArgb(230, 230, 170);
+		public static readonly Color noteBackColorOrange = Color.FromArgb(230, 170, 80);
+		public static readonly Color noteBackColorPurple = Color.FromArgb(230, 170, 230);
+		
+		public static readonly Color noteFore = noteForeColorBlack;
+		public static readonly Color noteBack = noteBackColorYellow;
 		
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 		
