@@ -215,6 +215,7 @@ namespace PeMain.UI
 		{
 			if(this._bindItem != null) {
 				NoteItem.Style.ForeColor = GetSelectedColor(this.contextMenu_fore);
+				Changed = true;
 				Refresh();
 			}
 		}
@@ -223,7 +224,15 @@ namespace PeMain.UI
 		{
 			if(this._bindItem != null) {
 				NoteItem.Style.BackColor = GetSelectedColor(this.contextMenu_back);
+				Changed = true;
 				Refresh();
+			}
+		}
+		
+		void ContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+		{
+			if(Form.ActiveForm != this && Changed) {
+				SaveItem();
 			}
 		}
 	}

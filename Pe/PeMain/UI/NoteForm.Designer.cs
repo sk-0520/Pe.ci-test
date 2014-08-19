@@ -96,6 +96,7 @@ namespace PeMain.UI
 									this.contextMenu_itemRemove});
 			this.contextMenu.Name = "contextMenuStrip1";
 			this.contextMenu.Size = new System.Drawing.Size(263, 280);
+			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			// 
 			// contextMenu_itemBody
 			// 

@@ -122,6 +122,7 @@
 		<Word Name="note/style/color/yellow"  Text="黄" />
 		<Word Name="note/style/color/orange"  Text="燈" />
 		<Word Name="note/style/color/purple"  Text="紫" />
+		<Word Name="note/style/color/custom"  Text="カスタム" />
 		
 		<Word Name="stream/tab/stream"     Text="標準出力" />
 		<Word Name="stream/tab/process"    Text="プロセス" />
