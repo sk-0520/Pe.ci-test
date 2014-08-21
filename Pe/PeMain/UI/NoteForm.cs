@@ -240,5 +240,10 @@ namespace PeMain.UI
 		{
 			ToCompact();
 		}
+		
+		void ContextMenu_itemTopmost_Click(object sender, EventArgs e)
+		{
+			ToTopmost();
+		}
 	}
 }

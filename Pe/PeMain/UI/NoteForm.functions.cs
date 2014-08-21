@@ -81,6 +81,11 @@ namespace PeMain.UI
 			ExecCommand(NoteCommand.Compact);
 		}
 		
+		public void ToTopmost()
+		{
+			ExecCommand(NoteCommand.Topmost);
+		}
+		
 		void ExecCommand(NoteCommand noteCommand)
 		{
 			switch(noteCommand) {

@@ -110,6 +110,7 @@
 		<Word Name="note/menu/lock"      Text="固定" />
 		<Word Name="note/menu/compact"   Text="最小化" />
 		<Word Name="note/menu/hidden"    Text="非表示" />
+		<Word Name="note/menu/topmost"   Text="最前面" />
 		<Word Name="note/menu/remove"    Text="削除" />
 		
 		<Word Name="note/style/color-fore"    Text="文字色" />

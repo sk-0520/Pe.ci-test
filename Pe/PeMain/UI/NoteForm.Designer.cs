@@ -184,6 +184,7 @@ namespace PeMain.UI
 			this.contextMenu_itemTopmost.Name = "contextMenu_itemTopmost";
 			this.contextMenu_itemTopmost.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemTopmost.Text = ":note/menu/topmost";
+			this.contextMenu_itemTopmost.Click += new System.EventHandler(this.ContextMenu_itemTopmost_Click);
 			// 
 			// contextMenu_itemHidden
 			// 
