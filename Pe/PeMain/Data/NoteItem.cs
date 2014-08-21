@@ -24,6 +24,7 @@ namespace PeMain.Data
 		Close,
 		Compact,
 		Topmost,
+		Lock,
 	}
 	
 	public static class NoteTypeUtility

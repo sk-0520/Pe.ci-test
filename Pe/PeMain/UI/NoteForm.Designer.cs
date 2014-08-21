@@ -171,6 +171,7 @@ namespace PeMain.UI
 			this.contextMenu_itemLock.Name = "contextMenu_itemLock";
 			this.contextMenu_itemLock.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemLock.Text = ":note/menu/lock";
+			this.contextMenu_itemLock.Click += new System.EventHandler(this.ContextMenu_itemLock_Click);
 			// 
 			// contextMenu_itemCompact
 			// 

@@ -250,5 +250,10 @@ namespace PeMain.UI
 		{
 			ToClose();
 		}
+		
+		void ContextMenu_itemLock_Click(object sender, EventArgs e)
+		{
+			ToLock();
+		}
 	}
 }

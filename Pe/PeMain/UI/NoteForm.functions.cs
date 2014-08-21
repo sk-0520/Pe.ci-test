@@ -86,6 +86,11 @@ namespace PeMain.UI
 			ExecCommand(NoteCommand.Topmost);
 		}
 		
+		public void ToLock()
+		{
+			ExecCommand(NoteCommand.Lock);
+		}
+		
 		void ExecCommand(NoteCommand noteCommand)
 		{
 			switch(noteCommand) {
@@ -95,8 +100,8 @@ namespace PeMain.UI
 						TopMost = NoteItem.Topmost;
 						Changed = true;
 						Invalidate();
-						break;
 					}
+					break;
 					
 				case NoteCommand.Compact:
 					{
@@ -105,8 +110,8 @@ namespace PeMain.UI
 						
 						ChangeCompact(NoteItem.Compact, NoteItem.Size);
 						
-						break;
 					}
+					break;
 					
 				case NoteCommand.Close:
 					{
@@ -118,8 +123,16 @@ namespace PeMain.UI
 						} else {
 							// TODO: 削除
 						}
-						break;
 					}
+					break;
+					
+				case NoteCommand.Lock:
+					{
+						NoteItem.Locked = !NoteItem.Locked;
+						Changed = true;
+						Refresh();
+					}
+					break;
 					
 				default:
 					Debug.Assert(false, noteCommand.ToString());
