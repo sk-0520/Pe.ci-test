@@ -62,12 +62,12 @@ namespace PeMain
 		public static readonly Color noteForeColorOrange = Color.FromArgb(255, 128, 0);
 		public static readonly Color noteForeColorPurple = Color.FromArgb(255, 128, 255);
 		
-		public static readonly Color noteBackColorWhite = Color.FromArgb(230, 230, 230);
+		public static readonly Color noteBackColorWhite = Color.FromArgb(240, 240, 240);
 		public static readonly Color noteBackColorBlack = Color.FromArgb(80, 80, 80);
-		public static readonly Color noteBackColorRed = Color.FromArgb(230, 170, 170);
+		public static readonly Color noteBackColorRed = Color.FromArgb(240, 80, 80);
 		public static readonly Color noteBackColorGreen = Color.FromArgb(170, 230, 170);
 		public static readonly Color noteBackColorBlue = Color.FromArgb(170, 170, 230);
-		public static readonly Color noteBackColorYellow = Color.FromArgb(230, 230, 170);
+		public static readonly Color noteBackColorYellow = Color.FromArgb(250, 250, 180);
 		public static readonly Color noteBackColorOrange = Color.FromArgb(230, 170, 80);
 		public static readonly Color noteBackColorPurple = Color.FromArgb(230, 170, 230);
 		
