@@ -100,111 +100,117 @@ namespace PeMain.UI
 					
 				case (int)WM.WM_NCHITTEST:
 					{
-						var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
-						var hitTest = HT.HTNOWHERE;
-						
-						var edgePadding = CommonData.Skin.GetNoteWindowEdgePadding();
-						
-						var noteArea = new Rectangle(Point.Empty, Size);
-						Rectangle area;
-						var pos = new HitState();
-						// 上
-						area = noteArea;
-						area.Height = edgePadding.Top;
-						pos.Top = area.Contains(point);
-						// 下
-						area = noteArea;
-						area.Y = noteArea.Height - edgePadding.Bottom;
-						area.Height = edgePadding.Bottom;
-						pos.Bottom = area.Contains(point);
-						// 左
-						area = noteArea;
-						area.Width = edgePadding.Left;
-						pos.Left = area.Contains(point);
-						// 右
-						area = noteArea;
-						area.X = noteArea.Width - edgePadding.Right;
-						area.Width = edgePadding.Right;
-						pos.Right = area.Contains(point);
-						
-						if(pos.HasTrue && !NoteItem.Compact) {
-							if(pos.Left) {
-								if(pos.Top) {
-									hitTest = HT.HTTOPLEFT;
-								} else if(pos.Bottom) {
-									hitTest = HT.HTBOTTOMLEFT;
-								} else {
-									hitTest = HT.HTLEFT;
-								}
-							} else if(pos.Right) {
-								if(pos.Top) {
-									hitTest = HT.HTTOPRIGHT;
-								} else if(pos.Bottom) {
-									hitTest = HT.HTBOTTOMRIGHT;
-								} else {
-									hitTest = HT.HTRIGHT;
-								}
-							} else if(pos.Top) {
-								hitTest = HT.HTTOP;
-							} else if(pos.Bottom) {
-								hitTest = HT.HTBOTTOM;
-							}
-						} else {
-							var throwHittest = true;
-							DrawCommand(
-								point,
-								(isIn, nowState) => {
-									if(isIn) {
-										throwHittest = false;
-										if(nowState == ButtonState.Pressed) {
-											return ButtonState.Pressed;
-										} else {
-											return ButtonState.Selected;
-										}
+						if(!NoteItem.Locked) {
+							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
+							var hitTest = HT.HTNOWHERE;
+							
+							var edgePadding = CommonData.Skin.GetNoteWindowEdgePadding();
+							
+							var noteArea = new Rectangle(Point.Empty, Size);
+							Rectangle area;
+							var pos = new HitState();
+							// 上
+							area = noteArea;
+							area.Height = edgePadding.Top;
+							pos.Top = area.Contains(point);
+							// 下
+							area = noteArea;
+							area.Y = noteArea.Height - edgePadding.Bottom;
+							area.Height = edgePadding.Bottom;
+							pos.Bottom = area.Contains(point);
+							// 左
+							area = noteArea;
+							area.Width = edgePadding.Left;
+							pos.Left = area.Contains(point);
+							// 右
+							area = noteArea;
+							area.X = noteArea.Width - edgePadding.Right;
+							area.Width = edgePadding.Right;
+							pos.Right = area.Contains(point);
+							
+							if(pos.HasTrue && !NoteItem.Compact) {
+								if(pos.Left) {
+									if(pos.Top) {
+										hitTest = HT.HTTOPLEFT;
+									} else if(pos.Bottom) {
+										hitTest = HT.HTBOTTOMLEFT;
 									} else {
-										return ButtonState.Normal;
+										hitTest = HT.HTLEFT;
 									}
-								},
-								null,
-								() => {
-									if(throwHittest) {
-										hitTest = HT.HTCAPTION;
+								} else if(pos.Right) {
+									if(pos.Top) {
+										hitTest = HT.HTTOPRIGHT;
+									} else if(pos.Bottom) {
+										hitTest = HT.HTBOTTOMRIGHT;
+									} else {
+										hitTest = HT.HTRIGHT;
 									}
-								},
-								true
-							);
+								} else if(pos.Top) {
+									hitTest = HT.HTTOP;
+								} else if(pos.Bottom) {
+									hitTest = HT.HTBOTTOM;
+								}
+							} else {
+								var throwHittest = true;
+								DrawCommand(
+									point,
+									(isIn, nowState) => {
+										if(isIn) {
+											throwHittest = false;
+											if(nowState == ButtonState.Pressed) {
+												return ButtonState.Pressed;
+											} else {
+												return ButtonState.Selected;
+											}
+										} else {
+											return ButtonState.Normal;
+										}
+									},
+									null,
+									() => {
+										if(throwHittest) {
+											hitTest = HT.HTCAPTION;
+										}
+									},
+									true
+								);
+							}
+							
+							if(hitTest != HT.HTNOWHERE) {
+								m.Result = (IntPtr)hitTest;
+								return;
+							}
 						}
-						
-						if(hitTest != HT.HTNOWHERE) {
-							m.Result = (IntPtr)hitTest;
-							return;
-						}
-						break;
 					}
+					break;
 					
 				case (int)WM.WM_NCLBUTTONDOWN:
 					{
-						if(this.inputTitle.Visible) {
-							HiddenInputTitleArea();
+						if(!NoteItem.Locked) {
+							if(this.inputTitle.Visible) {
+								HiddenInputTitleArea();
+							}
+							if(this.inputBody.Visible) {
+								HiddenInputBodyArea();
+							}
 						}
-						if(this.inputBody.Visible) {
-							HiddenInputBodyArea();
-						}
-						break;
 					}
+					break;
 					
 				case (int)WM.WM_NCRBUTTONUP:
 					{
-						switch (m.WParam.ToInt32()) {
-							case (int)HT.HTCAPTION:
-								var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
-								ShowContextMenu(point);
-								break;
-							default:
-								break;
+						if(!NoteItem.Locked) {
+							switch (m.WParam.ToInt32()) {
+								case (int)HT.HTCAPTION:
+									var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
+									ShowContextMenu(point);
+									break;
+								default:
+									break;
+							}
 						}
-						break;
 					}
+					break;
 					
 				default:
 					break;

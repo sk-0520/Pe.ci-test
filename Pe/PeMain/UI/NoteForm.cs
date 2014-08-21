@@ -91,6 +91,10 @@ namespace PeMain.UI
 		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
 		{
+			if(NoteItem.Locked) {
+				return;
+			}
+			
 			HiddenInputTitleArea();
 			
 			DrawCommand(
@@ -111,6 +115,10 @@ namespace PeMain.UI
 		
 		void NoteForm_MouseUp(object sender, MouseEventArgs e)
 		{
+			if(NoteItem.Locked) {
+				return;
+			}
+			
 			DrawCommand(
 				e.Location,
 				(isIn, nowState) => {
@@ -133,7 +141,9 @@ namespace PeMain.UI
 		
 		void NoteForm_DoubleClick(object sender, EventArgs e)
 		{
-			ShowInputBodyArea(RECURSIVE);
+			if(!NoteItem.Locked) {
+				ShowInputBodyArea(RECURSIVE);
+			}
 		}
 		
 		void NoteForm_Resize(object sender, EventArgs e)
@@ -174,7 +184,6 @@ namespace PeMain.UI
 			ShowInputBodyArea(RECURSIVE);
 		}
 
-		
 		
 		void NoteForm_Load(object sender, EventArgs e)
 		{
