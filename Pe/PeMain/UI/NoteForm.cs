@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
@@ -197,6 +198,7 @@ namespace PeMain.UI
 		
 		void ContextMenu_itemCopy_Click(object sender, EventArgs e)
 		{
+			Debug.Assert(!string.IsNullOrEmpty(NoteItem.Body));
 			Clipboard.SetText(NoteItem.Body);
 		}
 		
@@ -276,9 +278,23 @@ namespace PeMain.UI
 		
 		void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			// クリップボード
+			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
+			
+			// 状態チェック
 			this.contextMenu_itemLock.Checked = NoteItem.Locked;
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
 			this.contextMenu_itemTopmost.Checked = NoteItem.Topmost;
+			
+			// 色
+			var foreColor = this.contextMenu_fore.ComboBox.Items.Cast<ColorData>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
+			if(foreColor != null) {
+				this.contextMenu_fore.SelectedItem = foreColor;
+			}
+			var backColor = this.contextMenu_back.ComboBox.Items.Cast<ColorData>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
+			if(backColor != null) {
+				this.contextMenu_back.SelectedItem = backColor;
+			}
 		}
 	}
 }

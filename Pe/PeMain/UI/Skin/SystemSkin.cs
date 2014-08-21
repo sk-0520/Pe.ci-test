@@ -463,6 +463,10 @@ namespace PeMain.UI
 		
 		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, ButtonState buttonState)
 		{
+			if(noteStatus.Locked) {
+				return;
+			}
+			
 			Color color = Color.Transparent;
 			var buttonMap = new Dictionary<NoteCommand, Dictionary<ButtonState, string>>() {
 				{ NoteCommand.Compact, new Dictionary<ButtonState, string>() {
