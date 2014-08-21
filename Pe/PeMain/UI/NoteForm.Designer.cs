@@ -191,6 +191,7 @@ namespace PeMain.UI
 			this.contextMenu_itemHidden.Name = "contextMenu_itemHidden";
 			this.contextMenu_itemHidden.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemHidden.Text = ":note/menu/hidden";
+			this.contextMenu_itemHidden.Click += new System.EventHandler(this.ContextMenu_itemHidden_Click);
 			// 
 			// contextMenu_itemRemove
 			// 

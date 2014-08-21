@@ -245,5 +245,10 @@ namespace PeMain.UI
 		{
 			ToTopmost();
 		}
+		
+		void ContextMenu_itemHidden_Click(object sender, EventArgs e)
+		{
+			ToClose();
+		}
 	}
 }
