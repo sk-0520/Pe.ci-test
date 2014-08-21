@@ -104,14 +104,17 @@
 		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
 		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
 		
-		<Word Name="note/menu/title"     Text="タイトル入力" />
-		<Word Name="note/menu/body"      Text="本文入力" />
-		<Word Name="note/menu/copy"      Text="コピー" />
-		<Word Name="note/menu/lock"      Text="固定" />
-		<Word Name="note/menu/compact"   Text="最小化" />
-		<Word Name="note/menu/hidden"    Text="非表示" />
-		<Word Name="note/menu/topmost"   Text="最前面" />
-		<Word Name="note/menu/remove"    Text="削除" />
+		<Word Name="note/menu/title"        Text="タイトル入力" />
+		<Word Name="note/menu/body"         Text="本文入力" />
+		<Word Name="note/menu/copy"         Text="コピー" />
+		<Word Name="note/menu/lock"         Text="固定" />
+		<Word Name="note/menu/font"         Text="${font}" />
+		<Word Name="note/menu/font/change"  Text="変更" />
+		<Word Name="note/menu/font/reset"   Text="リセット" />
+		<Word Name="note/menu/compact"      Text="最小化" />
+		<Word Name="note/menu/hidden"       Text="非表示" />
+		<Word Name="note/menu/topmost"      Text="最前面" />
+		<Word Name="note/menu/remove"       Text="削除" />
 		
 		<Word Name="note/style/color-fore"    Text="文字色" />
 		<Word Name="note/style/color-back"    Text="背景色" />

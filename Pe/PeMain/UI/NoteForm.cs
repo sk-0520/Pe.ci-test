@@ -210,12 +210,10 @@ namespace PeMain.UI
 				}
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
-					var result = new FontSetting();
-					var font = dialog.Font;
-					NoteItem.Style.FontSetting.Family = font.FontFamily.Name;
-					NoteItem.Style.FontSetting.Height = font.Size;
+					NoteItem.Style.FontSetting.Include(dialog.Font);
 				}
 			}
+			Refresh();
 		}
 		
 		void ContextMenu_font_reset_Click(object sender, EventArgs e)
@@ -224,6 +222,7 @@ namespace PeMain.UI
 				NoteItem.Style.FontSetting.Dispose();
 				NoteItem.Style.FontSetting = new FontSetting();
 			}
+			Refresh();
 		}
 		
 		void ContextMenu_fore_SelectedIndexChanged(object sender, EventArgs e)

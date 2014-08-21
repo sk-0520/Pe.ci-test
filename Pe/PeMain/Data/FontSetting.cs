@@ -21,8 +21,8 @@ namespace PeMain.Data
 		private Font _font = null;
 		
 		public FontSetting()
-		{
-		}
+		{ }
+		
 		/// <summary>
 		/// 高さ
 		/// </summary>
@@ -72,13 +72,27 @@ namespace PeMain.Data
 		{
 			if(this._font != null) {
 				this._font.Dispose();
+				this._font = null;
 			}
 		}
 		
 		public virtual void Include(FontSetting fs) 
 		{
+			Dispose();
+			
 			Height = fs.Height;
 			Family = fs.Family;
+			Bold = fs.Bold;
+			Italic = fs.Italic;
+		}
+		public virtual void Include(Font f) 
+		{
+			Dispose();
+			
+			Height = f.SizeInPoints;
+			Family = f.FontFamily.Name;
+			Bold = f.Bold;
+			Italic = f.Italic;
 		}
 	}
 }
