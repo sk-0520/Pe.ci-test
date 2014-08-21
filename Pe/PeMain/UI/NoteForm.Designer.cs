@@ -53,6 +53,7 @@ namespace PeMain.UI
 			this.contextMenu_itemLock = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemCompact = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemTopmost = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemHidden = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemRemove = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputTitle = new System.Windows.Forms.TextBox();
@@ -94,11 +95,13 @@ namespace PeMain.UI
 									this.contextMenu_itemLock,
 									this.contextMenu_itemCompact,
 									this.contextMenu_itemTopmost,
+									this.toolStripSeparator3,
 									this.contextMenu_itemHidden,
 									this.contextMenu_itemRemove});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(263, 302);
+			this.contextMenu.Size = new System.Drawing.Size(263, 308);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
+			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
 			// contextMenu_itemBody
 			// 
@@ -187,6 +190,11 @@ namespace PeMain.UI
 			this.contextMenu_itemTopmost.Text = ":note/menu/topmost";
 			this.contextMenu_itemTopmost.Click += new System.EventHandler(this.ContextMenu_itemTopmost_Click);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(259, 6);
+			// 
 			// contextMenu_itemHidden
 			// 
 			this.contextMenu_itemHidden.Name = "contextMenu_itemHidden";
@@ -246,6 +254,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTopmost;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_reset;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_change;

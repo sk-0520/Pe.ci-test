@@ -273,5 +273,12 @@ namespace PeMain.UI
 		{
 			ToClose(true);
 		}
+		
+		void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			this.contextMenu_itemLock.Checked = NoteItem.Locked;
+			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
+			this.contextMenu_itemTopmost.Checked = NoteItem.Topmost;
+		}
 	}
 }
