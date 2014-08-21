@@ -38,7 +38,7 @@ namespace PeMain.UI
 			/*
 			this.inputTitle.Text = NoteItem.Title;
 			this.inputBody.Text = NoteItem.Body;
-			*/
+			 */
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
 			this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -71,27 +71,27 @@ namespace PeMain.UI
 			return status;
 		}
 		
-		public void ToClose()
+		public void ToClose(bool removeData)
 		{
-			ExecCommand(NoteCommand.Close);
+			ExecCommand(NoteCommand.Close, removeData);
 		}
 		
 		public void ToCompact()
 		{
-			ExecCommand(NoteCommand.Compact);
+			ExecCommand(NoteCommand.Compact, false);
 		}
 		
 		public void ToTopmost()
 		{
-			ExecCommand(NoteCommand.Topmost);
+			ExecCommand(NoteCommand.Topmost, false);
 		}
 		
 		public void ToLock()
 		{
-			ExecCommand(NoteCommand.Lock);
+			ExecCommand(NoteCommand.Lock, false);
 		}
 		
-		void ExecCommand(NoteCommand noteCommand)
+		void ExecCommand(NoteCommand noteCommand, bool removeData)
 		{
 			switch(noteCommand) {
 				case NoteCommand.Topmost:
@@ -115,19 +115,23 @@ namespace PeMain.UI
 					
 				case NoteCommand.Close:
 					{
-						if(true) {
+						if(removeData) {
+							// TODO: 削除
+							Removed = true;
+							RemoveItem();
+						} else {
 							NoteItem.Visible = false;
 							Changed = true;
 							SaveItem();
-							Close();
-						} else {
-							// TODO: 削除
 						}
+						Close();
 					}
 					break;
 					
 				case NoteCommand.Lock:
 					{
+						HiddenInputTitleArea();
+						HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
 						Changed = true;
 						Refresh();
@@ -231,7 +235,7 @@ namespace PeMain.UI
 				NoteItem.Title = value;
 				this._changed |= true;
 			}
-			*/
+			 */
 			this._changed = true;
 			this.inputTitle.Visible = false;
 		}
@@ -251,7 +255,7 @@ namespace PeMain.UI
 			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
 				NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
 			}
-			*/
+			 */
 			
 			this._changed = true;
 			this.inputBody.Visible = false;
@@ -277,11 +281,27 @@ namespace PeMain.UI
 						}
 					}
 				}
-					
+				
 				this._changed = false;
 				#if DEBUG
 				CommonData.Logger.Puts(LogType.Information, "save", NoteItem);
 				#endif
+			}
+		}
+		
+		void RemoveItem()
+		{
+			lock(CommonData.Database) {
+				var noteDB = new NoteDB(CommonData.Database);
+				using(var tran = noteDB.BeginTransaction()) {
+					try {
+						noteDB.ToDisabled(new [] { NoteItem });
+						tran.Commit();
+					} catch(Exception ex) {
+						tran.Rollback();
+						CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+					}
+				}
 			}
 		}
 		
@@ -292,6 +312,5 @@ namespace PeMain.UI
 			var item = control.ComboBox.Items[index] as ColorData;
 			return item.Value;
 		}
-
 	}
 }

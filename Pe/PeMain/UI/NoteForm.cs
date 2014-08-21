@@ -131,7 +131,7 @@ namespace PeMain.UI
 				},
 				command => {
 					if(this._commandStateMap[command] == ButtonState.Pressed) {
-						ExecCommand(command);
+						ExecCommand(command, (ModifierKeys & Keys.Shift) == Keys.Shift);
 					}
 				},
 				null,
@@ -176,12 +176,16 @@ namespace PeMain.UI
 		
 		void ContextMenu_title_Click(object sender, EventArgs e)
 		{
-			ShowInputTitleArea(RECURSIVE);
+			if(!NoteItem.Locked) {
+				ShowInputTitleArea(RECURSIVE);
+			}
 		}
 		
 		void ContextMenu_body_Click(object sender, EventArgs e)
 		{
-			ShowInputBodyArea(RECURSIVE);
+			if(!NoteItem.Locked) {
+				ShowInputBodyArea(RECURSIVE);
+			}
 		}
 
 		
@@ -257,12 +261,17 @@ namespace PeMain.UI
 		
 		void ContextMenu_itemHidden_Click(object sender, EventArgs e)
 		{
-			ToClose();
+			ToClose(false);
 		}
 		
 		void ContextMenu_itemLock_Click(object sender, EventArgs e)
 		{
 			ToLock();
+		}
+		
+		void ContextMenu_itemRemove_Click(object sender, EventArgs e)
+		{
+			ToClose(true);
 		}
 	}
 }

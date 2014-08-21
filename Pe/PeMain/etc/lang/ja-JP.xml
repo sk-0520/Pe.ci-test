@@ -173,6 +173,7 @@
 		<Word Name="setting/column/note/remove"   Text="削除" />
 		<Word Name="setting/column/note/id"       Text="ID" />
 		<Word Name="setting/column/note/visible"  Text="表示" />
+		<Word Name="setting/column/note/locked"   Text="固定" />
 		<Word Name="setting/column/note/title"    Text="タイトル" />
 		<Word Name="setting/column/note/body"     Text="本文" />
 		<Word Name="setting/column/note/font"     Text="フォント" />

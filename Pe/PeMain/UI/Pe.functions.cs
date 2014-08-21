@@ -367,7 +367,7 @@ namespace PeMain.UI
 		void HiddenNote()
 		{
 			foreach(var note in this._noteWindowList.ToArray()) {
-				note.ToClose();
+				note.ToClose(false);
 			}
 		}
 		

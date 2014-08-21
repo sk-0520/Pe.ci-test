@@ -49,6 +49,11 @@ namespace PeMain.UI
 				get { return NoteItem.Visible; }
 				set { NoteItem.Visible = value; }
 			}
+			public bool Locked
+			{
+				get { return NoteItem.Locked; }
+				set { NoteItem.Locked = value; }
+			}
 			public string Title
 			{ 
 				get { return NoteItem.Title; }

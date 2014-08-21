@@ -126,6 +126,7 @@ namespace PeMain.UI
 			this.gridNoteItems_columnRemove.SetLanguage(Language);
 			this.gridNoteItems_columnId.SetLanguage(Language);
 			this.gridNoteItems_columnVisible.SetLanguage(Language);
+			this.gridNoteItems_columnLocked.SetLanguage(Language);
 			this.gridNoteItems_columnBody.SetLanguage(Language);
 			this.gridNoteItems_columnTitle.SetLanguage(Language);
 			this.gridNoteItems_columnFont.SetLanguage(Language);

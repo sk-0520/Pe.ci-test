@@ -16,6 +16,11 @@ namespace PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		
+		/// <summary>
+		/// データそのものが削除された際に真。
+		/// </summary>
+		public bool Removed { get; private set; }
+		
 		public NoteItem NoteItem 
 		{ 
 			get

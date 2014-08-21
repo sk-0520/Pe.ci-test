@@ -199,6 +199,7 @@ namespace PeMain.UI
 			this.contextMenu_itemRemove.Name = "contextMenu_itemRemove";
 			this.contextMenu_itemRemove.Size = new System.Drawing.Size(262, 22);
 			this.contextMenu_itemRemove.Text = ":note/menu/remove";
+			this.contextMenu_itemRemove.Click += new System.EventHandler(this.ContextMenu_itemRemove_Click);
 			// 
 			// inputTitle
 			// 

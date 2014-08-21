@@ -102,6 +102,7 @@ namespace PeMain.UI
 			this.gridNoteItems_columnRemove.DataPropertyName = "Remove";
 			this.gridNoteItems_columnId.DataPropertyName = "Id";
 			this.gridNoteItems_columnVisible.DataPropertyName = "Visible";
+			this.gridNoteItems_columnLocked.DataPropertyName = "Locked";
 			this.gridNoteItems_columnTitle.DataPropertyName = "Title";
 			this.gridNoteItems_columnBody.DataPropertyName = "Body";
 			this.gridNoteItems_columnFont.DataPropertyName = "Font";
