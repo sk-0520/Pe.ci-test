@@ -235,5 +235,10 @@ namespace PeMain.UI
 				SaveItem();
 			}
 		}
+		
+		void ContextMenu_itemCompact_Click(object sender, EventArgs e)
+		{
+			ToCompact();
+		}
 	}
 }
