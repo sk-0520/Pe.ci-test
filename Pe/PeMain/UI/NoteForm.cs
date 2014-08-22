@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -132,7 +133,18 @@ namespace PeMain.UI
 				},
 				command => {
 					if(this._commandStateMap[command] == ButtonState.Pressed) {
-						ExecCommand(command, (ModifierKeys & Keys.Shift) == Keys.Shift);
+						var isRemove = (ModifierKeys & Keys.Shift) == Keys.Shift;
+						if(isRemove) {
+							var map = new Dictionary<string, string>() {
+								{ "NOTE", NoteItem.Title },
+							};
+							var result = MessageBox.Show(CommonData.Language["note/dialog/message", map], CommonData.Language["note/dialog/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+							if(result == DialogResult.Cancel) {
+								return;
+							}
+							isRemove = result == DialogResult.Yes; 
+						}
+						ExecCommand(command, isRemove);
 					}
 				},
 				null,
