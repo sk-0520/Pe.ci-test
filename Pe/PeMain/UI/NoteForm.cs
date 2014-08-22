@@ -92,11 +92,11 @@ namespace PeMain.UI
 		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
 		{
+			HiddenInputTitleArea();
+			
 			if(NoteItem.Locked) {
 				return;
 			}
-			
-			HiddenInputTitleArea();
 			
 			DrawCommand(
 				e.Location,
@@ -177,16 +177,12 @@ namespace PeMain.UI
 		
 		void ContextMenu_title_Click(object sender, EventArgs e)
 		{
-			if(!NoteItem.Locked) {
-				ShowInputTitleArea(RECURSIVE);
-			}
+			ShowInputTitleArea(RECURSIVE);
 		}
 		
 		void ContextMenu_body_Click(object sender, EventArgs e)
 		{
-			if(!NoteItem.Locked) {
-				ShowInputBodyArea(RECURSIVE);
-			}
+			ShowInputBodyArea(RECURSIVE);
 		}
 
 		
