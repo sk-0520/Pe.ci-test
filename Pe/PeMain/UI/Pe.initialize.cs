@@ -135,8 +135,7 @@ namespace PeMain.UI
 		}
 		
 		void InitializeNote(CommandLine commandLine, StartupLogger logger)
-		{
-		}
+		{ }
 		
 		/// <summary>
 		/// 設定ファイル初期化
