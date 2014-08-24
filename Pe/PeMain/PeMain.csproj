@@ -478,12 +478,6 @@
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
     <None Include="packages.config" />
-    <None Include="x64\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="x86\SQLite.Interop.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">
@@ -523,8 +517,10 @@
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <PostBuildEvent>del ..\..\output\Release\System.Data.SQLite.xml
-</PostBuildEvent>
+  <PropertyGroup>
+    <PostBuildEvent>#SQLite.Interop.dll
+mkdir "$(SolutionDir)..\output\$(Configuration)\$(Platform)"
+copy "$(SolutionDir)packages\System.Data.SQLite.Core.1.0.93.0\content\net45\$(Platform)\SQLite.Interop.dll" "$(SolutionDir)..\output\$(Configuration)\$(Platform)"
+del "$(SolutionDir)..\output\$(Configuration)\System.Data.SQLite.xml"</PostBuildEvent>
   </PropertyGroup>
 </Project>
