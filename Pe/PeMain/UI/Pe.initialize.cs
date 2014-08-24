@@ -358,7 +358,7 @@ namespace PeMain.UI
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 			
-			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
+			this._notifyIcon.Icon = global::PeMain.Properties.Images.Tasktray;
 			this._notifyIcon.ContextMenu = this._contextMenu;
 		}
 		
