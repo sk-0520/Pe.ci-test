@@ -1,7 +1,8 @@
 obj/
 bin/
-/output/
+output/
 *.Settings
 packages/
-/Pe/PeMain/x86
-/Pe/PeMain/x64
+Pe/PeMain/x86
+Pe/PeMain/x64
+#*
