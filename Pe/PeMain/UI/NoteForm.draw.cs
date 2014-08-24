@@ -26,7 +26,11 @@ namespace PeMain.UI
 		{
 			ButtonState buttonState = ButtonState.Normal;
 			
-			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, CommonData.MainSetting.Note.CaptionFontSetting.Font, NoteItem.Title);
+			var title = NoteItem.Title;
+			#if DEBUG
+			title = string.Format("(DEBUG) {0}", title);
+			#endif
+			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, CommonData.MainSetting.Note.CaptionFontSetting.Font, title);
 			foreach(var command in GetCommandList()) {
 				var commandArea = CommonData.Skin.GetNoteCommandArea(drawArea, command);
 				CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, buttonState);

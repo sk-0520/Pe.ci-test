@@ -618,7 +618,20 @@ namespace PeMain.UI
 			
 			if(item == null) {
 				toolItem = new ToolStripDropDownButton();
+				#if DEBUG
+
+				var img = new Bitmap(UseToolbarItem.IconScale.ToSize().Width, UseToolbarItem.IconScale.ToSize().Height);
+				using(var g = Graphics.FromImage(img)) {
+					g.DrawImage(global::PeMain.Properties.Images.ToolbarMain, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
+						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+					}
+				}
+				toolItem.Image = img;
+				#else
 				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
+				#endif
+				
 			} else {
 				var clickItem = new ToolStripSplitButton();
 				clickItem.ButtonClick += new EventHandler(button_ButtonClick);
