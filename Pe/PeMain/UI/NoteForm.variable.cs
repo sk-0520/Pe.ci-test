@@ -19,5 +19,7 @@ namespace PeMain.UI
 		NoteBindItem _bindItem;
 		bool _initialized = true;
 		bool _changed = false;
+		string _prevTitle;
+		string _prevBody;
 	}
 }

@@ -142,7 +142,7 @@ namespace PeMain.UI
 							if(result == DialogResult.Cancel) {
 								return;
 							}
-							isRemove = result == DialogResult.Yes; 
+							isRemove = result == DialogResult.Yes;
 						}
 						ExecCommand(command, isRemove);
 					}
@@ -302,6 +302,44 @@ namespace PeMain.UI
 			if(backColor != null) {
 				this.contextMenu_back.SelectedItem = backColor;
 			}
+		}
+		
+		[System.Security.Permissions.UIPermission(
+			System.Security.Permissions.SecurityAction.Demand,
+			Window = System.Security.Permissions.UIPermissionWindow.AllWindows
+		)]
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			if(this.inputTitle.Focused) {
+				var key = keyData & Keys.KeyCode;
+				switch(key) {
+					case Keys.Enter:
+						{
+							HiddenInputTitleArea();
+							return true;
+						}
+						
+					case Keys.Escape:
+						{
+							_bindItem.Title = this._prevTitle;
+							HiddenInputTitleArea();
+							return true;
+						}
+						
+					default:
+						break;
+				}
+			}
+			if(this.inputBody.Focused) {
+				var key = keyData & Keys.KeyCode;
+				if(key == Keys.Escape) {
+					_bindItem.Body = this._prevBody;
+					HiddenInputBodyArea();
+					return true;
+				}
+			}
+			
+			return base.ProcessDialogKey(keyData);
 		}
 	}
 }

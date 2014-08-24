@@ -192,6 +192,7 @@ namespace PeMain.UI
 		
 		void ShowInputTitleArea(int recursive)
 		{
+			this._prevTitle = NoteItem.Title;
 			//this.inputTitle.Text = NoteItem.Title;
 			this.inputTitle.Font = CommonData.MainSetting.Note.CaptionFontSetting.Font;
 			
@@ -207,6 +208,7 @@ namespace PeMain.UI
 		
 		void ShowInputBodyArea(int recursive)
 		{
+			this._prevBody = NoteItem.Body;
 			//this.inputBody.Text = NoteItem.Body;
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
 			
