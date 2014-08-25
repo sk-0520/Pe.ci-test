@@ -48,6 +48,13 @@ namespace PeMain.UI
 			
 			TopMost = NoteItem.Topmost;
 			
+			// 最小サイズ
+			var parentArea = CommonData.Skin.GetNoteCaptionArea(Size);
+			var edge = CommonData.Skin.GetNoteWindowEdgePadding();
+			var commandSize = CommonData.Skin.GetNoteCommandArea(parentArea, GetCommandList().First());
+			var minSize = new Size(edge.Horizontal + commandSize.Width, edge.Vertical + commandSize.Height);
+			MinimumSize = minSize;
+			
 			ApplyLanguage();
 		}
 		
