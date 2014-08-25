@@ -22,5 +22,6 @@ namespace PeMain.UI
 		List<LogItem> _logs = new List<LogItem>();
 		ImageList _imageLogType = null;
 		FileLogger _fileLogger = null;
+		bool _refresh = false; 
 	}
 }

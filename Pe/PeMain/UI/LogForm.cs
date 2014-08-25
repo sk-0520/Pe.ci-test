@@ -47,7 +47,7 @@ namespace PeMain.UI
 		
 		void ListLog_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
 		{
-			if (e.ItemIndex < this._logs.Count) {
+			if (e.ItemIndex < this._logs.Count || this._refresh) {
 				if(e.Item == null) {
 					e.Item = new ListViewItem();
 					e.Item.SubItems.Add(new ListViewItem.ListViewSubItem());
