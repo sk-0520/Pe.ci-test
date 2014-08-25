@@ -42,7 +42,11 @@ namespace PeMain.UI
 		
 		public void PutsList(IEnumerable<LogItem> logs, bool show)
 		{
+			if(logs.Count() > Literal.logListLimit) {
+				logs = logs.Skip(logs.Count() - Literal.logListLimit);
+			}
 			this._logs.AddRange(logs);
+			
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
