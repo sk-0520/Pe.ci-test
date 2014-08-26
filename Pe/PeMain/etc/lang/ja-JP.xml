@@ -291,5 +291,7 @@
 	
 		<Word Name="log/init/ui/start"  Text="UI初期化開始" />
 		<Word Name="log/init/ui/end"    Text="UI初期化終了" />
+		
+		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 	</Words>
 </Language>

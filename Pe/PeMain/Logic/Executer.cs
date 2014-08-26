@@ -27,6 +27,8 @@ namespace PeMain.Logic
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
 			
+			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
+			
 			var process = new Process();
 			var startInfo = process.StartInfo;
 			startInfo.FileName = Environment.ExpandEnvironmentVariables(launcherItem.Command);
