@@ -39,6 +39,7 @@ namespace PeMain
 			mutexName += "_debug";
 			//mutexName += new Random().Next().ToString();
 			#endif
+			fileLogger.Puts(PeMain.Data.LogType.Information, "mutex name", mutexName);
 			using(fileLogger) {
 				using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 					if (isFirstInstance) {
@@ -50,7 +51,7 @@ namespace PeMain
 							Application.Run();
 						}
 					} else {
-						fileLogger.Puts(PeMain.Data.LogType.Warning, "Dual boot", mutexName);
+						fileLogger.Puts(PeMain.Data.LogType.Error, "dual boot", mutexName);
 					}
 				}
 			}

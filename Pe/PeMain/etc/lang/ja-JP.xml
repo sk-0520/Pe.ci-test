@@ -280,5 +280,16 @@
 		<Word Name="enum/key/keys/oem-5"              Text="\" />
 		<Word Name="enum/key/keys/oem-7"              Text="^" />
 		<Word Name="enum/key/keys/oem-question"       Text="/" />
+		
+		
+		<!-- ログ出力項目 -->
+		<Word Name="log/init/db-data/load"      Text="DB読み込み" />
+		<Word Name="log/init/db-data/mkdir"     Text="DB用ディレクトリ作成" />
+		<Word Name="log/init/db-data/version"   Text="DB用ディレクトリ作成" />
+		<Word Name="log/init/db-data/create"    Text="DB: @[TABLE-NAME] 作成" />
+		<Word Name="log/init/db-data/check"     Text="DB: @[TABLE-NAME] チェック" />
+	
+		<Word Name="log/init/ui/start"  Text="UI初期化開始" />
+		<Word Name="log/init/ui/end"    Text="UI初期化終了" />
 	</Words>
 </Language>

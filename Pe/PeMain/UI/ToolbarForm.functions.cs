@@ -278,7 +278,7 @@ namespace PeMain.UI
 		
 		void OpenProperty(string path)
 		{
-			API.SHObjectProperties(Handle, SHOP.SHOP_FILEPATH, path, string.Empty);
+			Executer.OpenProperty(path, Handle);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)

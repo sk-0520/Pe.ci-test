@@ -50,7 +50,7 @@ namespace PeMain.UI
 			}
 			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
 			if(logger != null) {
-				logger.Puts(LogType.Information, "language", languageFilePath);
+				logger.Puts(LogType.Information, "load language", languageFilePath);
 			}
 			this._commonData.Language = LoadDeserialize<Language>(languageFilePath, false);
 			if(this._commonData.Language == null) {
@@ -63,14 +63,17 @@ namespace PeMain.UI
 		
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
 		{
-			logger.Puts(LogType.Information, tableName, "CREATE");
-			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
 				{ DataTables.transactionTableNote,      global::PeMain.Properties.SQL.CreateNoteTransactionTable },
 				{ DataTables.transactionTableNoteStyle, global::PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
 			};
+			var langMap = new Dictionary<string, string>() {
+				{ "TABLE-NAME", tableName },
+			};
+			
 			var command = map[tableName];
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/create", langMap] , command);
 			this._commonData.Database.ExecuteCommand(command);
 
 			var entity = new MVersionEntity();
@@ -88,7 +91,10 @@ namespace PeMain.UI
 		/// <param name="initLog"></param>
 		void InitializeNoteTableChange(string tableName, int version, StartupLogger logger)
 		{
-			logger.Puts(LogType.Information, tableName, "CHECK");
+			var langMap = new Dictionary<string, string>() {
+				{ "TABLE-NAME", tableName },
+			};
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/check", langMap] , new { TableName = tableName, Version = version, });
 			
 			var map = new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           string.Empty },
@@ -105,10 +111,10 @@ namespace PeMain.UI
 		void InitializeDB(CommandLine commandLine, StartupLogger logger)
 		{
 			var dbFilePath = Literal.UserDBPath;
-			logger.Puts(LogType.Information, "db-file", dbFilePath);
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/load"], dbFilePath);
 
 			if(!File.Exists(dbFilePath)) {
-				logger.Puts(LogType.Information, "note-data", "dir cleate");
+				logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/mkdir"], Path.GetDirectoryName(dbFilePath));
 				
 				FileUtility.MakeFileParentDirectory(dbFilePath);
 			}
@@ -118,6 +124,7 @@ namespace PeMain.UI
 			// 
 			var enabledVersionTable = this._commonData.Database.ExistsTable(DataTables.masterTableVersion);
 			Debug.WriteLine(enabledVersionTable);
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/version"], enabledVersionTable);
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成
 				this._commonData.Database.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionMasterTable);
@@ -144,20 +151,18 @@ namespace PeMain.UI
 		void InitializeSetting(CommandLine commandLine, StartupLogger logger)
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
-			logger.Puts(LogType.Information, "main-setting", mainSettingFilePath);
+			logger.Puts(LogType.Information, "load main-setting", mainSettingFilePath);
 			
 			this._commonData.MainSetting = LoadDeserialize<MainSetting>(mainSettingFilePath, true);
 			
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
-			logger.Puts(LogType.Information, "launcher-items", launcherItemsFilePath);
+			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
 			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
 			InitializeLanguage(commandLine, logger);
 			
-			//#if DEBUG
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
-			//#endif
 		}
 		
 		void InitializeMessage(CommandLine commandLine, StartupLogger logger)
@@ -415,7 +420,7 @@ namespace PeMain.UI
 
 		void InitializeUI(CommandLine commandLine, StartupLogger logger)
 		{
-			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/start"]);
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui/start"], string.Empty);
 
 			InitializeSkin(commandLine, logger);
 			InitializeLogForm(commandLine, logger);
@@ -425,7 +430,7 @@ namespace PeMain.UI
 			InitializeToolbarForm(commandLine, logger);
 			InitializeNoteForm(commandLine, logger);
 			
-			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui"], this._commonData.Language["log/end"]);
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui/end"], string.Empty);
 		}
 		
 		/// <summary>
@@ -434,7 +439,7 @@ namespace PeMain.UI
 		/// <param name="args"></param>
 		void Initialize(CommandLine commandLine, StartupLogger logger)
 		{
-			logger.Puts(LogType.Information, "Initialize", commandLine.Options.ToArray());
+			logger.Puts(LogType.Information, "Initialize Start", commandLine.Options.ToArray());
 			
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
@@ -447,6 +452,7 @@ namespace PeMain.UI
 			SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
 			
 			this._logForm.PutsList(logger.GetList(), false);
+			logger.Puts(LogType.Information, "Initialize End", string.Empty);
 		}
 
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
