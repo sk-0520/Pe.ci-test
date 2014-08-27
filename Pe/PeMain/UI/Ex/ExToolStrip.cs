@@ -18,8 +18,8 @@ namespace PeMain.UI
 	public abstract class ExToolStrip: ToolStrip
 	{
 	}
-	
-	public class ToolbarToolStrip: ExToolStrip
+
+	public class ActiveToolStrip: ExToolStrip
 	{
 		/// <summary>
 		/// thanks: http://d.hatena.ne.jp/Kazzz/20061106/p1
@@ -33,5 +33,8 @@ namespace PeMain.UI
 			}
 		}
 	}
+	
+	public class ToolbarToolStrip: ActiveToolStrip
+	{ }
 
 }

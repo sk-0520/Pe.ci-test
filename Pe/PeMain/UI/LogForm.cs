@@ -51,8 +51,12 @@ namespace PeMain.UI
 				if(e.Item == null) {
 					e.Item = new ListViewItem();
 					e.Item.SubItems.Add(new ListViewItem.ListViewSubItem());
+				} else if(e.Item.Index == -1) {
+					return;
 				}
-				
+				if(this._logs.Count == 0) {
+					return;
+				}
 				var logItem = this._logs[e.ItemIndex];
 				e.Item.ImageIndex = LogTypeToImageIndex(logItem.LogType);
 				
@@ -76,11 +80,19 @@ namespace PeMain.UI
 		void ListLog_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ClearDetail();
-			if(this.listLog.FocusedItem != null) {
+			if(this.listLog.FocusedItem != null && 0 <= this._logs.Count && this.listLog.FocusedItem.Index <= this._logs.Count) {
 				var listItem = this.listLog.FocusedItem;
 				var logItem = this._logs[listItem.Index];
 				SetDetail(logItem);
 			}
+		}
+		
+		void ToolLog_clear_Click(object sender, EventArgs e)
+		{
+			this._logs.Clear();
+			this.listLog.VirtualListSize = 0;
+			this._refresh = true;
+			this.listLog.Refresh();
 		}
 	}
 }

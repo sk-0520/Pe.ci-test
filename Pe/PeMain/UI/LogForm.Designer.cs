@@ -48,7 +48,7 @@ namespace PeMain.UI
 			this.listStack_columnFunction = new System.Windows.Forms.ColumnHeader();
 			this.listStack_columnLine = new System.Windows.Forms.ColumnHeader();
 			this.listStack_columnFile = new System.Windows.Forms.ColumnHeader();
-			this.toolLog = new System.Windows.Forms.ToolStrip();
+			this.toolLog = new PeMain.UI.ActiveToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
@@ -236,6 +236,7 @@ namespace PeMain.UI
 			this.toolLog_clear.Size = new System.Drawing.Size(148, 22);
 			this.toolLog_clear.Text = ":log/command/clear";
 			this.toolLog_clear.ToolTipText = ":log/tips/clear";
+			this.toolLog_clear.Click += new System.EventHandler(this.ToolLog_clear_Click);
 			// 
 			// LogForm
 			// 
@@ -285,7 +286,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.ToolStripButton toolLog_clear;
 		private System.Windows.Forms.ToolStripButton toolLog_save;
-		private System.Windows.Forms.ToolStrip toolLog;
+		private PeMain.UI.ActiveToolStrip toolLog;
 		private System.Windows.Forms.StatusStrip statusLog;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 	}
