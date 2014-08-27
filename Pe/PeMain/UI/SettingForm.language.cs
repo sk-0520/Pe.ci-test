@@ -116,6 +116,8 @@ namespace PeMain.UI
 		
 		void ApplyLanguageNote()
 		{
+			this.groupNoteKey.SetLanguage(Language);
+			
 			this.inputNoteCreate.SetLanguage(Language);
 			this.inputNoteHidden.SetLanguage(Language);
 			this.inputNoteCompact.SetLanguage(Language);

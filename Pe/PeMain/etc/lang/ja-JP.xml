@@ -175,6 +175,7 @@
 		<Word Name="setting/tips/down-item"       Text="選択アイテムを下に移動" />
 		<Word Name="setting/tips/remove-item"     Text="選択アイテムを取り除く" />
 		<Word Name="setting/group/item"           Text="ノート一覧" />
+		<Word Name="setting/group/key"            Text="キー" />
 		<Word Name="setting/column/note/remove"   Text="削除" />
 		<Word Name="setting/column/note/id"       Text="ID" />
 		<Word Name="setting/column/note/visible"  Text="表示" />
