@@ -152,12 +152,6 @@ namespace PeMain.UI
 				}
 				var message = string.Format("{0}: {1}", member.Name, value);
 				result.Add(message);
-				
-				//if(!value.GetType().IsPrimitive) {
-				//	var childList = ObjectToStringList(value);
-				//	result.AddRange(childList.Select(s => "-> " + s));
-				//}
-				
 			}
 			return result;
 		}

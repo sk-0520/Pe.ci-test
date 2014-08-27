@@ -227,6 +227,7 @@ namespace PeMain.UI
 			this.toolLog_save.Size = new System.Drawing.Size(147, 22);
 			this.toolLog_save.Text = ":log/command/save";
 			this.toolLog_save.ToolTipText = ":log/tips/save";
+			this.toolLog_save.Click += new System.EventHandler(this.ToolLog_save_Click);
 			// 
 			// toolLog_clear
 			// 

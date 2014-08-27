@@ -94,5 +94,10 @@ namespace PeMain.UI
 			this._refresh = true;
 			this.listLog.Refresh();
 		}
+		
+		void ToolLog_save_Click(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
