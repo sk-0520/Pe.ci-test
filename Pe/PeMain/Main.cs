@@ -31,6 +31,7 @@ namespace PeMain
 				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.timestampFileName) + ".log");
 				PeUtility.FileUtility.MakeFileParentDirectory(logPath);
 				fileLogger = new PeMain.Logic.FileLogger(logPath);
+				fileLogger.Puts(PeMain.Data.LogType.Information, "Information", new PeMain.Logic.PeInformation().ToString());
 			}
 			
 			bool isFirstInstance;

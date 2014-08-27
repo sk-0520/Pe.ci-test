@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Management;
 using System.Text;
 using System.Windows.Forms;
@@ -27,6 +28,17 @@ namespace PeUtility
 		
 		public string Title { get; private set; }
 		public Dictionary<string, object> Items { get; private set; }
+		
+		public override string ToString()
+		{
+			var stream = new StringWriter();
+			stream.WriteLine("{0} =================", Title);
+			foreach(var pair in Items) {
+				stream.WriteLine("{0}: {1}", pair.Key, pair.Value);
+			}
+			return stream.ToString();
+		}
+
 		
 	}
 	
@@ -266,5 +278,19 @@ namespace PeUtility
 				GetEnvironment(),
 			};
 		}
+		
+		public override string ToString()
+		{
+			var list = new List<string>();
+			
+			foreach(var infoGroup in Get()) {
+				list.Add(infoGroup.ToString());
+			}
+			
+			return string.Join(Environment.NewLine, list);
+		}
+ 
+		
+		
 	}
 }
