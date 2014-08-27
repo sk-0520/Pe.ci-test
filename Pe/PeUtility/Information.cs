@@ -38,6 +38,11 @@ namespace PeUtility
 		protected ManagementClass _managementOS = new ManagementClass("Win32_OperatingSystem");
 		protected ManagementClass _managementCPU = new ManagementClass("Win32_Processor");
 		
+		public virtual FileVersionInfo GetVersionInfo
+		{
+			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
+		}
+		
 		public void Dispose()
 		{
 			this._managementOS.Dispose();
@@ -189,9 +194,73 @@ namespace PeUtility
 			return result;
 		}
 		
+		public virtual InfoGroup GetApplication()
+		{
+			var result = new InfoGroup("Application");
+			
+			var versionInfo = GetVersionInfo;
+			
+			// バージョン番号
+			result.Items["FileVersion"] = versionInfo.FileVersion;
+			// メジャーバージョン番号
+			result.Items["FileMajorPart"] = versionInfo.FileMajorPart;
+			// マイナバージョン番号
+			result.Items["FileMinorPart"] = versionInfo.FileMinorPart;
+			// プライベートパート番号
+			result.Items["FilePrivatePart"] = versionInfo.FilePrivatePart;
+			// ビルド番号
+			result.Items["FileBuildPart"] = versionInfo.FileBuildPart;
+			// プライベートバージョン
+			result.Items["PrivateBuild"] = versionInfo.PrivateBuild;
+			// スペシャルビルド
+			result.Items["SpecialBuild"] = versionInfo.SpecialBuild;
+
+			// 説明
+			result.Items["FileDescription"] = versionInfo.FileDescription;
+			// 著作権
+			result.Items["LegalCopyright"] = versionInfo.LegalCopyright;
+			// 会社名
+			result.Items["CompanyName"] = versionInfo.CompanyName;
+			// コメント
+			result.Items["Comments"] = versionInfo.Comments;
+			// 内部名
+			result.Items["InternalName"] = versionInfo.InternalName;
+			// 言語
+			result.Items["Language"] = versionInfo.Language;
+			// 商標
+			result.Items["LegalTrademarks"] = versionInfo.LegalTrademarks;
+			// オリジナルファイル名
+			result.Items["OriginalFilename"] = versionInfo.OriginalFilename;
+
+			// 製品名
+			result.Items["ProductName"] = versionInfo.ProductName;
+			// 製品バージョン
+			result.Items["ProductVersion"] = versionInfo.ProductVersion;
+			// 製品メジャーバージョン番号
+			result.Items["ProductMajorPart"] = versionInfo.ProductMajorPart;
+			// 製品マイナバージョン番号
+			result.Items["ProductMinorPart"] = versionInfo.ProductMinorPart;
+			// 製品プライベートバージョン番号
+			result.Items["ProductPrivatePart"] = versionInfo.ProductPrivatePart;
+			// 製品ビルド番号
+			result.Items["ProductBuildPart"] = versionInfo.ProductBuildPart;
+
+			// デバッグ情報があるか
+			result.Items["IsDebug"] = versionInfo.IsDebug;
+			// パッチされているか
+			result.Items["IsPatched"] = versionInfo.IsPatched;
+			// プレリリースか
+			result.Items["IsPreRelease"] = versionInfo.IsPreRelease;
+			// スペシャルビルドか
+			result.Items["IsSpecialBuild"] = versionInfo.IsSpecialBuild;
+
+			return result;
+		}
+		
 		public virtual IEnumerable<InfoGroup> Get()
 		{
 			return new [] {
+				GetApplication(),
 				GetCPU(),
 				GetMemory(),
 				GetEnvironment(),

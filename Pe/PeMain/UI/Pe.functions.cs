@@ -85,7 +85,7 @@ namespace PeMain.UI
 			//*/
 			
 			/*
-			var info = new Information();
+			var info = new PeInformation();
 			foreach(var g in info.Get()) {
 				Debug.WriteLine(string.Format("[ {0} ]============", g.Title));
 				foreach(var item in g.Items) {

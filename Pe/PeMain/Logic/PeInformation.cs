@@ -7,7 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-
+using System.Diagnostics;
 using PeUtility;
 
 namespace PeMain.Logic
@@ -17,5 +17,9 @@ namespace PeMain.Logic
 	/// </summary>
 	public class PeInformation: Information
 	{
+		public override FileVersionInfo GetVersionInfo
+		{
+			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
+		}
 	}
 }
