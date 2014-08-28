@@ -102,6 +102,7 @@ namespace PeMain.UI
 			using(var dialog = new SaveFileDialog()) {
 				dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 				dialog.FileName = Literal.NowTimestampFileName + ".log";
+				dialog.Filter = "*.log|*.log";
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					var path = dialog.FileName;
 					Debug.WriteLine(path);
@@ -124,8 +125,6 @@ namespace PeMain.UI
 					} catch(Exception ex) {
 						CommonData.Logger.Puts(LogType.Error, CommonData.Language["log/output/error"], ex);
 					}
-				} else {
-					throw new NotImplementedException();
 				}
 			}
 		}
