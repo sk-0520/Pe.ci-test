@@ -157,7 +157,7 @@ namespace PeMain.UI
 				}
 			}
 			
-			var fileName = DateTime.Now.ToString(Literal.timestampFileName) + ".zip";
+			var fileName = Literal.NowTimestampFileName + ".zip";
 			var saveFilePath = Path.Combine(saveDirPath, fileName);
 			FileUtility.MakeFileParentDirectory(saveFilePath);
 			

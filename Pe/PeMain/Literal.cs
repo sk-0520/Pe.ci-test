@@ -76,13 +76,13 @@ namespace PeMain
 		
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 		
-#if DEBUG
+		#if DEBUG
 		public const int backupCount = 3;
 		public const int logListLimit = 20;
-#else
+		#else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
-#endif
+		#endif
 		
 		/// <summary>
 		/// 起動ディレクトリ
@@ -120,9 +120,9 @@ namespace PeMain
 		/// <summary>
 		/// ユーザー設定ルートディレクトリ
 		/// </summary>
-		public static string UserSettingDirPath 
+		public static string UserSettingDirPath
 		{
-			get 
+			get
 			{
 				var path = Path.Combine(_settingRootDirPath, _dirRootName);
 				
@@ -134,7 +134,7 @@ namespace PeMain
 		/// </summary>
 		public static string UserMainSettingPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _mainSettingFileName); } 
+			get { return Path.Combine(UserSettingDirPath, _mainSettingFileName); }
 		}
 		
 		public static string UserLauncherItemsPath
@@ -151,6 +151,12 @@ namespace PeMain
 		{
 			get { return Path.Combine(UserSettingDirPath, _backupDirName);}
 		}
+		
+		public static string NowTimestampFileName
+		{
+			get { return DateTime.Now.ToString(timestampFileName); }
+		}
+
 		
 		/// <summary>
 		/// ログ保存ディレクトリ

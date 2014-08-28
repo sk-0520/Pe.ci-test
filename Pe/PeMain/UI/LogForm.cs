@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+
 using PeMain.Data;
 using PeMain.Logic;
 
@@ -35,10 +37,10 @@ namespace PeMain.UI
 		
 		static int LogTypeToImageIndex(LogType logType) {
 			switch(logType) {
-				case LogType.Information: return 0;
-				case LogType.Warning: return 1;
-				case LogType.Error: return 2;
-				default: 
+					case LogType.Information: return 0;
+					case LogType.Warning: return 1;
+					case LogType.Error: return 2;
+				default:
 					Debug.Assert(false, logType.ToString());
 					return -1;
 			}
@@ -97,7 +99,35 @@ namespace PeMain.UI
 		
 		void ToolLog_save_Click(object sender, EventArgs e)
 		{
-			throw new NotImplementedException();
+			using(var dialog = new SaveFileDialog()) {
+				dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+				dialog.FileName = Literal.NowTimestampFileName + ".log";
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					var path = dialog.FileName;
+					Debug.WriteLine(path);
+					try {
+						using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
+							stream.WriteLine(new PeMain.Logic.PeInformation().ToString());
+							foreach(var logItem in this._logs) {
+								stream.WriteLine(
+									"====================================={0}" +
+									"{1} {2}{3}" +
+									"{4}{5}" +
+									"{6}{7}",
+									Environment.NewLine,
+									logItem.DateTime, logItem.Title, Environment.NewLine,
+									logItem.Detail, Environment.NewLine,
+									logItem.StackTrace, Environment.NewLine
+								);
+							}
+						}
+					} catch(Exception ex) {
+						CommonData.Logger.Puts(LogType.Error, CommonData.Language["log/output/error"], ex);
+					}
+				} else {
+					throw new NotImplementedException();
+				}
+			}
 		}
 	}
 }
