@@ -1474,6 +1474,31 @@ namespace PInvoke.Windows
 		AW_SLIDE    = 0x00040000,
 		AW_BLEND    = 0x00080000
 	}
+
+	[Flags]
+	public enum DI
+	{
+		/// <summary>
+		/// ユーザーが指定したイメージではなく、システムの既定のイメージを使って、アイコンまたはカーソルを描画します。
+		/// </summary>
+		DI_COMPAT = 4,
+		/// <summary>
+		/// cxWidth と cyWidth の各パラメータで 0 が指定されている場合、アイコンまたはカーソル用のシステムメトリックの値で指定された幅と高さを使って、アイコンまたはカーソルをで描画します。cxWidth と cyWidth の各パラメータで 0 を指定し、このフラグを指定しなかった場合、この関数はリソースの実際のサイズを使います。
+		/// </summary>
+		DI_DEFAULTSIZE = 8,
+		/// <summary>
+		/// イメージを使ってアイコンまたはカーソルを描画します。
+		/// </summary>
+		DI_IMAGE = 2,
+		/// <summary>
+		/// マスクを使ってアイコンまたはカーソルを描画します。
+		/// </summary>
+		DI_MASK = 1,
+		/// <summary>
+		/// DI_IMAGE と DI_MASK の組み合わせです。
+		/// </summary>
+		DI_NORMAL = 3,	
+	}
 	
 	/// <summary>
 	/// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
@@ -1489,6 +1514,8 @@ namespace PInvoke.Windows
 		public int cy;
 		public SWP flags;
 	}
+	
+	
 	
 	public static partial class API
 	{
@@ -1570,7 +1597,8 @@ namespace PInvoke.Windows
 		
 		[DllImport("user32")]
 		public static extern bool AnimateWindow(IntPtr hwnd, int time, AW flags);
-
+		
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, DI diFlags);
 	}
-
 }

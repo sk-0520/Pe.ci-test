@@ -617,13 +617,13 @@ namespace PeMain.UI
 			ToolStripDropDownItem toolItem = null;
 			
 			if(item == null) {
+				var iconSize = UseToolbarItem.IconScale.ToSize();
 				toolItem = new ToolStripDropDownButton();
 				#if DEBUG
-
 				var img = new Bitmap(UseToolbarItem.IconScale.ToSize().Width, UseToolbarItem.IconScale.ToSize().Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawImage(global::PeMain.Properties.Images.ToolbarMain, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
-					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
+					using(var b = new SolidBrush(Color.FromArgb(32, Color.Red))) {
 						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					}
 				}
