@@ -366,14 +366,14 @@ namespace PeMain.UI
 			#if DEBUG
 			var img = new Bitmap(16, 16);
 			using(var g = Graphics.FromImage(img)) {
-				g.DrawIcon(global::PeMain.Properties.Images.Pe, new Rectangle(0,0, 16, 16));
+				g.DrawIcon(global::PeMain.Properties.Images.Tasktray, new Rectangle(0,0, 16, 16));
 				using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
 					g.FillRectangle(b, new Rectangle(0, 0, 16, 16));
 				}
 			}
 			this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			#else
-			this._notifyIcon.Icon = global::PeMain.Properties.Images.Pe;
+			this._notifyIcon.Icon = global::PeMain.Properties.Images.Tasktray;
 			#endif
 			this._notifyIcon.ContextMenu = this._contextMenu;
 		}

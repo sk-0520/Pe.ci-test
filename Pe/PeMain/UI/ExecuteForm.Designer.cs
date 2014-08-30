@@ -87,7 +87,7 @@ namespace PeMain.UI
 			this.inputOption.FormattingEnabled = true;
 			this.inputOption.Location = new System.Drawing.Point(117, 42);
 			this.inputOption.Name = "inputOption";
-			this.inputOption.Size = new System.Drawing.Size(483, 23);
+			this.inputOption.Size = new System.Drawing.Size(489, 23);
 			this.inputOption.TabIndex = 1;
 			// 
 			// inputWorkDirPath
@@ -97,7 +97,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath.FormattingEnabled = true;
 			this.inputWorkDirPath.Location = new System.Drawing.Point(117, 71);
 			this.inputWorkDirPath.Name = "inputWorkDirPath";
-			this.inputWorkDirPath.Size = new System.Drawing.Size(483, 23);
+			this.inputWorkDirPath.Size = new System.Drawing.Size(489, 23);
 			this.inputWorkDirPath.TabIndex = 2;
 			// 
 			// tabExecute
@@ -156,7 +156,7 @@ namespace PeMain.UI
 			// 
 			this.commandWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandWorkDirPath.Location = new System.Drawing.Point(608, 70);
+			this.commandWorkDirPath.Location = new System.Drawing.Point(614, 70);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(30, 25);
 			this.commandWorkDirPath.TabIndex = 7;
@@ -167,7 +167,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
-			this.commandOption_dir.Location = new System.Drawing.Point(644, 41);
+			this.commandOption_dir.Location = new System.Drawing.Point(650, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_dir.TabIndex = 6;
@@ -178,7 +178,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_file.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
-			this.commandOption_file.Location = new System.Drawing.Point(608, 41);
+			this.commandOption_file.Location = new System.Drawing.Point(614, 41);
 			this.commandOption_file.Name = "commandOption_file";
 			this.commandOption_file.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_file.TabIndex = 5;
