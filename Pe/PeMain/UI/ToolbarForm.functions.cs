@@ -622,7 +622,9 @@ namespace PeMain.UI
 				#if DEBUG
 				var img = new Bitmap(UseToolbarItem.IconScale.ToSize().Width, UseToolbarItem.IconScale.ToSize().Height);
 				using(var g = Graphics.FromImage(img)) {
-					g.DrawImage(global::PeMain.Properties.Images.ToolbarMain, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+					//g.DrawIcon(global::PeMain.Properties.Images.ToolbarMain, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+					var icon = new Icon(global::PeMain.Properties.Images.ToolbarMain, iconSize);
+					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					using(var b = new SolidBrush(Color.FromArgb(32, Color.Red))) {
 						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					}

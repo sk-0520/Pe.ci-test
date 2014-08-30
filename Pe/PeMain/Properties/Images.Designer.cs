@@ -301,12 +301,12 @@ namespace PeMain.Properties {
 		}
 		
 		/// <summary>
-		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
 		/// </summary>
-		public static System.Drawing.Bitmap ToolbarMain {
+		public static System.Drawing.Icon ToolbarMain {
 			get {
 				object obj = ResourceManager.GetObject("ToolbarMain", resourceCulture);
-				return ((System.Drawing.Bitmap)(obj));
+				return ((System.Drawing.Icon)(obj));
 			}
 		}
 		
