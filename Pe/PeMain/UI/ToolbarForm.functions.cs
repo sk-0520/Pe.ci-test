@@ -619,20 +619,19 @@ namespace PeMain.UI
 			if(item == null) {
 				var iconSize = UseToolbarItem.IconScale.ToSize();
 				toolItem = new ToolStripDropDownButton();
-				#if DEBUG
-				var img = new Bitmap(UseToolbarItem.IconScale.ToSize().Width, UseToolbarItem.IconScale.ToSize().Height);
-				using(var g = Graphics.FromImage(img)) {
-					//g.DrawIcon(global::PeMain.Properties.Images.ToolbarMain, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
-					var icon = new Icon(global::PeMain.Properties.Images.ToolbarMain, iconSize);
-					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
-					using(var b = new SolidBrush(Color.FromArgb(32, Color.Red))) {
-						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+				using(var icon = new Icon(global::PeMain.Properties.Images.ToolbarMain, iconSize)) {
+					var img = new Bitmap(iconSize.Width, iconSize.Height);
+					using(var g = Graphics.FromImage(img)) {
+						g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+						#if DEBUG
+						using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
+							g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+						}
+						#endif
 					}
+					toolItem.Image = img;
 				}
-				toolItem.Image = img;
-				#else
-				toolItem.Image = PeMain.Properties.Images.ToolbarMain;
-				#endif
+				
 				
 			} else {
 				var clickItem = new ToolStripSplitButton();
