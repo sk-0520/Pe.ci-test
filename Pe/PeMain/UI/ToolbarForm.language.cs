@@ -22,7 +22,7 @@ namespace PeMain.UI
 			Debug.Assert(CommonData != null);
 			Debug.Assert(CommonData.Language != null);
 			
-			DialogUtility.SetDefaultText(this, CommonData.Language);
+			UIUtility.SetDefaultText(this, CommonData.Language);
 		}
 	}
 }

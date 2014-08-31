@@ -53,21 +53,6 @@ namespace PeMain.Logic
 				}
 			}
 		}
-		
-		public static void SetDefaultText(Form target, Language language, IDictionary<string, string> map = null)
-		{
-			target.SetLanguage(language, map);
-			
-			var acceptButton = target.AcceptButton as Button;
-			if(acceptButton != null) {
-				acceptButton.Text = language["common/command/ok"];
-			}
-			
-			var cancelButton = target.CancelButton as Button;
-			if(cancelButton != null) {
-				cancelButton.Text = language["common/command/cancel"];
-			}
-		}
 	}
 	
 	public static class TreeViewUtility
@@ -227,6 +212,20 @@ namespace PeMain.Logic
 			return language[key.Substring(1), map];
 		}
 		
+		public static void SetDefaultText(Form target, Language language, IDictionary<string, string> map = null)
+		{
+			target.SetLanguage(language, map);
+			
+			var acceptButton = target.AcceptButton as Button;
+			if(acceptButton != null) {
+				acceptButton.Text = language["common/command/ok"];
+			}
+			
+			var cancelButton = target.CancelButton as Button;
+			if(cancelButton != null) {
+				cancelButton.Text = language["common/command/cancel"];
+			}
+		}
 		
 		public static void SetLanguage(this Control target, Language language, IDictionary<string, string> map = null)
 		{

@@ -16,8 +16,7 @@ namespace PeMain.UI
 	/// Description of ExToolStrip.
 	/// </summary>
 	public abstract class ExToolStrip: ToolStrip
-	{
-	}
+	{ }
 
 	public class ActiveToolStrip: ExToolStrip
 	{

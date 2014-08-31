@@ -16,8 +16,7 @@ namespace PeMain.Data
 	/// </summary>
 	[Serializable]
 	public abstract class Item
-	{
-	}
+	{ }
 	
 	/// <summary>
 	/// 名前付きアイテム

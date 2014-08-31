@@ -17,8 +17,7 @@ namespace PeMain.UI
 	/// Description of ExSplitButton.
 	/// </summary>
 	public abstract class ExSplitButton: wyDay.Controls.SplitButton
-	{
-	}
+	{ }
 	
 	public class FontSplitButton: ExSplitButton, ISetLanguage
 	{

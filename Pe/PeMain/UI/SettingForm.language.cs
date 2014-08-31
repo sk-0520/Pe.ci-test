@@ -150,7 +150,7 @@ namespace PeMain.UI
 		{
 			Debug.Assert(Language != null);
 			
-			DialogUtility.SetDefaultText(this, Language);
+			UIUtility.SetDefaultText(this, Language);
 			
 			ApplyLanguageTab();
 			ApplyLanguageMain();

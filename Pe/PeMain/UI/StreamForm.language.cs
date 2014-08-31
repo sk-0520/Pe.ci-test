@@ -24,7 +24,7 @@ namespace PeMain.UI
 				{ SystemLanguageName.itemName, LauncherItem.Name },
 			};
 			
-			DialogUtility.SetDefaultText(this, CommonData.Language, map);
+			UIUtility.SetDefaultText(this, CommonData.Language, map);
 			
 			this.tabStream_pageStream.SetLanguage(CommonData.Language);
 			this.tabStream_pageProcess.SetLanguage(CommonData.Language);

@@ -34,7 +34,7 @@ namespace PeMain.UI
 			this.listStack_columnLine.Text = CommonData.Language["log/header/line"];
 			this.listStack_columnFunction.Text = CommonData.Language["log/header/method"];
 			*/
-			DialogUtility.SetDefaultText(this, CommonData.Language);
+			UIUtility.SetDefaultText(this, CommonData.Language);
 			
 			this.toolLog_save.SetLanguage(CommonData.Language);
 			this.toolLog_clear.SetLanguage(CommonData.Language);
