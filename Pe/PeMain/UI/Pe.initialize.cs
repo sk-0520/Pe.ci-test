@@ -213,8 +213,13 @@ namespace PeMain.UI
 			// ノート作成
 			itemNoteCreate.Name = menuNameWindowNoteCreate;
 			itemNoteCreate.Click += delegate(object sender, EventArgs e) {
-				// TODO: 中心
-				CreateNote(Point.Empty);
+				var screen = ScreenUtility.GetCurrent();
+				var area = screen.Bounds;
+				var point = new Point(
+					area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
+					area.Top + area.Height / 2 - Literal.noteSize.Width / 2
+				);
+				CreateNote(point);
 			};
 			// ノート非表示
 			itemNoteHidden.Name = menuNameWindowNoteHidden;

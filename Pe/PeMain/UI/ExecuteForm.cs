@@ -7,9 +7,14 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Logic;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -54,6 +59,52 @@ namespace PeMain.UI
 		{
 			SubmitInput();
 			DialogResult = DialogResult.OK;
+		}
+		
+		void TabExecute_pageBasic_DragEnter(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				e.Effect = DragDropEffects.Copy;
+			}
+		}
+		
+		void TabExecute_pageBasic_DragDrop(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				var dragDatas = (IEnumerable<string>)e.Data.GetData(DataFormats.FileDrop);
+				var args = string.Join(" ", TextUtility.WhitespaceToQuotation(dragDatas));
+				this.inputOption.Text = args;
+			}
+		}
+		
+		void InputWorkDirPath_DragEnter(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				var dragDatas = (IEnumerable<string>)e.Data.GetData(DataFormats.FileDrop);
+				if(dragDatas.Count() == 1) {
+					var path = dragDatas.First();
+					
+					e.Effect = DragDropEffects.Copy;
+				}
+			}
+		}
+		
+		void InputWorkDirPath_DragDrop(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				var dragDatas = (IEnumerable<string>)e.Data.GetData(DataFormats.FileDrop);
+				if(dragDatas.Count() == 1) {
+					var path = dragDatas.First();
+					if(FileUtility.IsExists(path)) {
+						var isDir = Directory.Exists(path);
+						if(!isDir) {
+							this.inputWorkDirPath.Text = Path.GetDirectoryName(path);
+						} else {
+							this.inputWorkDirPath.Text = path;
+						}
+					}
+				}
+			}
 		}
 	}
 }

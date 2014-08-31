@@ -41,5 +41,10 @@ namespace PeMain.Logic
 			}
 			return screenName;
 		}
+		
+		public static Screen GetCurrent()
+		{
+			return Screen.FromPoint(Cursor.Position);
+		}
 	}
 }
