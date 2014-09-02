@@ -41,13 +41,14 @@ namespace PeMain.UI
 			this.inputWorkDirPath = new System.Windows.Forms.ComboBox();
 			this.tabExecute = new System.Windows.Forms.TabControl();
 			this.tabExecute_pageBasic = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectAdministrator = new System.Windows.Forms.CheckBox();
+			this.labelOption = new System.Windows.Forms.Label();
 			this.selectStdStream = new System.Windows.Forms.CheckBox();
+			this.labelWorkDirPath = new System.Windows.Forms.Label();
+			this.commandOption_file = new System.Windows.Forms.Button();
 			this.commandWorkDirPath = new System.Windows.Forms.Button();
 			this.commandOption_dir = new System.Windows.Forms.Button();
-			this.commandOption_file = new System.Windows.Forms.Button();
-			this.labelWorkDirPath = new System.Windows.Forms.Label();
-			this.labelOption = new System.Windows.Forms.Label();
 			this.tabExecute_pageEnv = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectEnvironment = new System.Windows.Forms.CheckBox();
@@ -61,6 +62,7 @@ namespace PeMain.UI
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.tabExecute.SuspendLayout();
 			this.tabExecute_pageBasic.SuspendLayout();
+			this.tableLayoutPanel2.SuspendLayout();
 			this.tabExecute_pageEnv.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupUpdate.SuspendLayout();
@@ -74,31 +76,31 @@ namespace PeMain.UI
 			// 
 			// viewCommand
 			// 
-			this.viewCommand.Location = new System.Drawing.Point(6, 8);
+			this.tableLayoutPanel2.SetColumnSpan(this.viewCommand, 3);
+			this.viewCommand.Dock = System.Windows.Forms.DockStyle.Top;
+			this.viewCommand.Location = new System.Drawing.Point(3, 3);
 			this.viewCommand.Name = "viewCommand";
 			this.viewCommand.ReadOnly = true;
-			this.viewCommand.Size = new System.Drawing.Size(640, 23);
+			this.viewCommand.Size = new System.Drawing.Size(648, 23);
 			this.viewCommand.TabIndex = 0;
 			// 
 			// inputOption
 			// 
-			this.inputOption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputOption.Dock = System.Windows.Forms.DockStyle.Top;
 			this.inputOption.FormattingEnabled = true;
-			this.inputOption.Location = new System.Drawing.Point(117, 42);
+			this.inputOption.Location = new System.Drawing.Point(154, 32);
 			this.inputOption.Name = "inputOption";
-			this.inputOption.Size = new System.Drawing.Size(488, 23);
+			this.inputOption.Size = new System.Drawing.Size(463, 23);
 			this.inputOption.TabIndex = 1;
 			// 
 			// inputWorkDirPath
 			// 
 			this.inputWorkDirPath.AllowDrop = true;
-			this.inputWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.inputWorkDirPath.Dock = System.Windows.Forms.DockStyle.Top;
 			this.inputWorkDirPath.FormattingEnabled = true;
-			this.inputWorkDirPath.Location = new System.Drawing.Point(117, 71);
+			this.inputWorkDirPath.Location = new System.Drawing.Point(154, 63);
 			this.inputWorkDirPath.Name = "inputWorkDirPath";
-			this.inputWorkDirPath.Size = new System.Drawing.Size(488, 23);
+			this.inputWorkDirPath.Size = new System.Drawing.Size(463, 23);
 			this.inputWorkDirPath.TabIndex = 2;
 			this.inputWorkDirPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.InputWorkDirPath_DragDrop);
 			this.inputWorkDirPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.InputWorkDirPath_DragEnter);
@@ -119,16 +121,8 @@ namespace PeMain.UI
 			// tabExecute_pageBasic
 			// 
 			this.tabExecute_pageBasic.AllowDrop = true;
-			this.tabExecute_pageBasic.Controls.Add(this.selectAdministrator);
-			this.tabExecute_pageBasic.Controls.Add(this.selectStdStream);
-			this.tabExecute_pageBasic.Controls.Add(this.commandWorkDirPath);
+			this.tabExecute_pageBasic.Controls.Add(this.tableLayoutPanel2);
 			this.tabExecute_pageBasic.Controls.Add(this.commandOption_dir);
-			this.tabExecute_pageBasic.Controls.Add(this.commandOption_file);
-			this.tabExecute_pageBasic.Controls.Add(this.labelWorkDirPath);
-			this.tabExecute_pageBasic.Controls.Add(this.labelOption);
-			this.tabExecute_pageBasic.Controls.Add(this.viewCommand);
-			this.tabExecute_pageBasic.Controls.Add(this.inputOption);
-			this.tabExecute_pageBasic.Controls.Add(this.inputWorkDirPath);
 			this.tabExecute_pageBasic.Location = new System.Drawing.Point(46, 4);
 			this.tabExecute_pageBasic.Name = "tabExecute_pageBasic";
 			this.tabExecute_pageBasic.Size = new System.Drawing.Size(654, 175);
@@ -138,33 +132,91 @@ namespace PeMain.UI
 			this.tabExecute_pageBasic.DragDrop += new System.Windows.Forms.DragEventHandler(this.TabExecute_pageBasic_DragDrop);
 			this.tabExecute_pageBasic.DragEnter += new System.Windows.Forms.DragEventHandler(this.TabExecute_pageBasic_DragEnter);
 			// 
+			// tableLayoutPanel2
+			// 
+			this.tableLayoutPanel2.ColumnCount = 3;
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+			this.tableLayoutPanel2.Controls.Add(this.viewCommand, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.selectAdministrator, 0, 4);
+			this.tableLayoutPanel2.Controls.Add(this.labelOption, 0, 1);
+			this.tableLayoutPanel2.Controls.Add(this.selectStdStream, 0, 3);
+			this.tableLayoutPanel2.Controls.Add(this.labelWorkDirPath, 0, 2);
+			this.tableLayoutPanel2.Controls.Add(this.inputOption, 1, 1);
+			this.tableLayoutPanel2.Controls.Add(this.inputWorkDirPath, 1, 2);
+			this.tableLayoutPanel2.Controls.Add(this.commandOption_file, 2, 1);
+			this.tableLayoutPanel2.Controls.Add(this.commandWorkDirPath, 2, 2);
+			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+			this.tableLayoutPanel2.RowCount = 5;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(654, 175);
+			this.tableLayoutPanel2.TabIndex = 10;
+			// 
 			// selectAdministrator
 			// 
 			this.selectAdministrator.AutoSize = true;
-			this.selectAdministrator.Location = new System.Drawing.Point(11, 135);
+			this.tableLayoutPanel2.SetColumnSpan(this.selectAdministrator, 2);
+			this.selectAdministrator.Location = new System.Drawing.Point(3, 119);
 			this.selectAdministrator.Name = "selectAdministrator";
 			this.selectAdministrator.Size = new System.Drawing.Size(163, 19);
 			this.selectAdministrator.TabIndex = 9;
 			this.selectAdministrator.Text = ":common/check/admin";
 			this.selectAdministrator.UseVisualStyleBackColor = true;
 			// 
+			// labelOption
+			// 
+			this.labelOption.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelOption.AutoSize = true;
+			this.labelOption.Location = new System.Drawing.Point(3, 37);
+			this.labelOption.Name = "labelOption";
+			this.labelOption.Size = new System.Drawing.Size(133, 15);
+			this.labelOption.TabIndex = 3;
+			this.labelOption.Text = ":execute/label/option";
+			// 
 			// selectStdStream
 			// 
 			this.selectStdStream.AutoSize = true;
-			this.selectStdStream.Location = new System.Drawing.Point(11, 110);
+			this.tableLayoutPanel2.SetColumnSpan(this.selectStdStream, 2);
+			this.selectStdStream.Location = new System.Drawing.Point(3, 94);
 			this.selectStdStream.Name = "selectStdStream";
 			this.selectStdStream.Size = new System.Drawing.Size(187, 19);
 			this.selectStdStream.TabIndex = 8;
 			this.selectStdStream.Text = ":execute/check/std-stream";
 			this.selectStdStream.UseVisualStyleBackColor = true;
 			// 
+			// labelWorkDirPath
+			// 
+			this.labelWorkDirPath.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelWorkDirPath.AutoSize = true;
+			this.labelWorkDirPath.Location = new System.Drawing.Point(3, 68);
+			this.labelWorkDirPath.Name = "labelWorkDirPath";
+			this.labelWorkDirPath.Size = new System.Drawing.Size(145, 15);
+			this.labelWorkDirPath.TabIndex = 4;
+			this.labelWorkDirPath.Text = ":execute/label/work-dir";
+			// 
+			// commandOption_file
+			// 
+			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
+			this.commandOption_file.Location = new System.Drawing.Point(623, 32);
+			this.commandOption_file.Name = "commandOption_file";
+			this.commandOption_file.Size = new System.Drawing.Size(28, 25);
+			this.commandOption_file.TabIndex = 5;
+			this.commandOption_file.UseVisualStyleBackColor = true;
+			this.commandOption_file.Click += new System.EventHandler(this.CommandOption_file_Click);
+			// 
 			// commandWorkDirPath
 			// 
-			this.commandWorkDirPath.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandWorkDirPath.Location = new System.Drawing.Point(614, 70);
+			this.commandWorkDirPath.Location = new System.Drawing.Point(623, 63);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
-			this.commandWorkDirPath.Size = new System.Drawing.Size(30, 25);
+			this.commandWorkDirPath.Size = new System.Drawing.Size(28, 25);
 			this.commandWorkDirPath.TabIndex = 7;
 			this.commandWorkDirPath.UseVisualStyleBackColor = true;
 			this.commandWorkDirPath.Click += new System.EventHandler(this.CommandWorkDirPath_Click);
@@ -173,39 +225,12 @@ namespace PeMain.UI
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
-			this.commandOption_dir.Location = new System.Drawing.Point(693, 41);
+			this.commandOption_dir.Location = new System.Drawing.Point(723, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_dir.TabIndex = 6;
 			this.commandOption_dir.UseVisualStyleBackColor = true;
 			this.commandOption_dir.Click += new System.EventHandler(this.CommandOption_dir_Click);
-			// 
-			// commandOption_file
-			// 
-			this.commandOption_file.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
-			this.commandOption_file.Location = new System.Drawing.Point(614, 41);
-			this.commandOption_file.Name = "commandOption_file";
-			this.commandOption_file.Size = new System.Drawing.Size(30, 25);
-			this.commandOption_file.TabIndex = 5;
-			this.commandOption_file.UseVisualStyleBackColor = true;
-			this.commandOption_file.Click += new System.EventHandler(this.CommandOption_file_Click);
-			// 
-			// labelWorkDirPath
-			// 
-			this.labelWorkDirPath.Location = new System.Drawing.Point(11, 73);
-			this.labelWorkDirPath.Name = "labelWorkDirPath";
-			this.labelWorkDirPath.Size = new System.Drawing.Size(101, 15);
-			this.labelWorkDirPath.TabIndex = 4;
-			this.labelWorkDirPath.Text = ":execute/label/work-dir";
-			// 
-			// labelOption
-			// 
-			this.labelOption.Location = new System.Drawing.Point(11, 44);
-			this.labelOption.Name = "labelOption";
-			this.labelOption.Size = new System.Drawing.Size(93, 20);
-			this.labelOption.TabIndex = 3;
-			this.labelOption.Text = ":execute/label/option";
 			// 
 			// tabExecute_pageEnv
 			// 
@@ -358,7 +383,8 @@ namespace PeMain.UI
 			this.Text = ":window/execute";
 			this.tabExecute.ResumeLayout(false);
 			this.tabExecute_pageBasic.ResumeLayout(false);
-			this.tabExecute_pageBasic.PerformLayout();
+			this.tableLayoutPanel2.ResumeLayout(false);
+			this.tableLayoutPanel2.PerformLayout();
 			this.tabExecute_pageEnv.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupUpdate.ResumeLayout(false);
@@ -371,6 +397,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.CheckBox selectAdministrator;
 		private PeMain.UI.EnvRemoveControl envRemove;
 		private PeMain.UI.EnvUpdateControl envUpdate;
