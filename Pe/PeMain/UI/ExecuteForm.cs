@@ -106,6 +106,5 @@ namespace PeMain.UI
 				}
 			}
 		}
-		
 	}
 }
