@@ -1,3 +1,8 @@
+@*
+#*
+~*
+$*
+#*
 obj/
 bin/
 output/
@@ -5,4 +10,4 @@ output/
 packages/
 Pe/PeMain/x86
 Pe/PeMain/x64
-#*
+*.cd
