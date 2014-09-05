@@ -293,16 +293,6 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
 		/// </summary>
-		public static System.Drawing.Icon Tasktray {
-			get {
-				object obj = ResourceManager.GetObject("Tasktray", resourceCulture);
-				return ((System.Drawing.Icon)(obj));
-			}
-		}
-		
-		/// <summary>
-		///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-		/// </summary>
 		public static System.Drawing.Icon ToolbarMain {
 			get {
 				object obj = ResourceManager.GetObject("ToolbarMain", resourceCulture);

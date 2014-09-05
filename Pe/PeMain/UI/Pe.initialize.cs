@@ -368,18 +368,21 @@ namespace PeMain.UI
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 			
-			#if DEBUG
-			var img = new Bitmap(16, 16);
-			using(var g = Graphics.FromImage(img)) {
-				g.DrawIcon(global::PeMain.Properties.Images.Tasktray, new Rectangle(0,0, 16, 16));
-				using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
-					g.FillRectangle(b, new Rectangle(0, 0, 16, 16));
+			var iconSize = IconScale.Small.ToSize();
+			var iconRect = new Rectangle(Point.Empty, iconSize);
+			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
+				using(var g = Graphics.FromImage(img)) {
+					using(var icon = new Icon(global::PeMain.Properties.Images.Pe, iconSize)) {
+						g.DrawIcon(icon, iconRect);
+					}
+					#if DEBUG
+					using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
+						g.FillRectangle(b, iconRect);
+					}
+					#endif
 				}
+				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			}
-			this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
-			#else
-			this._notifyIcon.Icon = global::PeMain.Properties.Images.Tasktray;
-			#endif
 			this._notifyIcon.ContextMenu = this._contextMenu;
 		}
 		
