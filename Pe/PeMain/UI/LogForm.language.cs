@@ -34,17 +34,20 @@ namespace PeMain.UI
 			this.listStack_columnLine.Text = CommonData.Language["log/header/line"];
 			this.listStack_columnFunction.Text = CommonData.Language["log/header/method"];
 			*/
-			UIUtility.SetDefaultText(this, CommonData.Language);
+			//UIUtility.SetDefaultText(this, CommonData.Language);
+			Text = CommonData.Language["window/log"];
 			
-			this.toolLog_save.SetLanguage(CommonData.Language);
-			this.toolLog_clear.SetLanguage(CommonData.Language);
+			this.toolLog_save.Text = CommonData.Language["log/command/save"];
+			this.toolLog_save.ToolTipText = CommonData.Language["log/tips/save"];
+			this.toolLog_clear.Text = CommonData.Language["log/command/clear"];
+			this.toolLog_clear.ToolTipText = CommonData.Language["log/tips/clear"];
 			
-			this.listLog_columnTimestamp.SetLanguage(CommonData.Language);
-			this.listLog_columnTitle.SetLanguage(CommonData.Language);
+			this.listLog_columnTimestamp.Text = CommonData.Language["log/header/timestamp"];
+			this.listLog_columnTitle.Text = CommonData.Language["log/header/title"];
 			
-			this.listStack_columnFile.SetLanguage(CommonData.Language);
-			this.listStack_columnLine.SetLanguage(CommonData.Language);
-			this.listStack_columnFunction.SetLanguage(CommonData.Language);
+			this.listStack_columnFile.Text = CommonData.Language["log/header/method"];
+			this.listStack_columnLine.Text = CommonData.Language["log/header/file"];
+			this.listStack_columnFunction.Text = CommonData.Language["log/header/title"];
 		}
 	}
 }
