@@ -285,6 +285,9 @@ namespace PeMain.UI
 		
 		void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			// 本文入力
+			this.contextMenu_itemBody.Enabled = !NoteItem.Compact;
+			
 			// クリップボード
 			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
 			
