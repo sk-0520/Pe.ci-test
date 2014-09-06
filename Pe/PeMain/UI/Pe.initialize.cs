@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -17,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+
 using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Data.DB;
@@ -390,6 +392,9 @@ namespace PeMain.UI
 		{
 			this._logForm = new LogForm(logger.FileLogger);
 			this._logForm.SetCommonData(this._commonData);
+			this._logForm.Closing += delegate(object sender, CancelEventArgs e) {
+				this._commonData.MainSetting.Log.Visible = false;
+			};
 			
 			this._commonData.Logger = this._logForm;
 		}
