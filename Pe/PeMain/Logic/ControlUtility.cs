@@ -247,16 +247,17 @@ namespace PeMain.Logic
 		
 		public static void SetLanguage(this ToolStripItem target, Language language, IDictionary<string, string> map = null)
 		{
-			if(target.Text != target.ToolTipText) {
+			if(!string.IsNullOrEmpty(target.ToolTipText) && target.Text != target.ToolTipText) {
 				target.ToolTipText = GetWord(language, target.ToolTipText, map);
 			}
 			target.Text = GetWord(language, target.Text, map);
 		}
-		
+		/*
 		public static void SetLanguage(this ToolStrip target, Language language, IDictionary<string, string> map = null)
 		{
 			target.Text = GetWord(language, target.Text, map);
 		}
+		*/
 			
 	}
 }
