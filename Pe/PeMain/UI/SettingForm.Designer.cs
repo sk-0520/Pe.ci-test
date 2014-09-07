@@ -38,8 +38,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
@@ -61,25 +61,27 @@ namespace PeMain.UI
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
 			this.tabLauncher = new System.Windows.Forms.TabControl();
 			this.tabLauncher_pageCommon = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.groupLauncherType = new System.Windows.Forms.GroupBox();
-			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
+			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
-			this.labelLauncherName = new System.Windows.Forms.Label();
-			this.labelLauncherOption = new System.Windows.Forms.Label();
+			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
 			this.inputLauncherName = new System.Windows.Forms.TextBox();
-			this.inputLauncherOption = new System.Windows.Forms.TextBox();
-			this.labelLauncherCommand = new System.Windows.Forms.Label();
 			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
+			this.inputLauncherOption = new System.Windows.Forms.TextBox();
+			this.commandLauncherDirPath = new System.Windows.Forms.Button();
 			this.commandLauncherFilePath = new System.Windows.Forms.Button();
 			this.commandLauncherOptionFilePath = new System.Windows.Forms.Button();
-			this.commandLauncherDirPath = new System.Windows.Forms.Button();
+			this.labelLauncherName = new System.Windows.Forms.Label();
+			this.labelLauncherCommand = new System.Windows.Forms.Label();
 			this.commandLauncherWorkDirPath = new System.Windows.Forms.Button();
-			this.labelLauncherIconPath = new System.Windows.Forms.Label();
+			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.commandLauncherIconPath = new System.Windows.Forms.Button();
 			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
-			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
-			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
 			this.inputLauncherIconPath = new System.Windows.Forms.TextBox();
+			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
+			this.labelLauncherIconPath = new System.Windows.Forms.Label();
+			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
 			this.tabLauncher_pageEnv = new System.Windows.Forms.TabPage();
 			this.panelEnv = new System.Windows.Forms.SplitContainer();
 			this.envLauncherUpdate = new PeMain.UI.EnvUpdateControl();
@@ -93,20 +95,23 @@ namespace PeMain.UI
 			this.inputLauncherNote = new System.Windows.Forms.TextBox();
 			this.labelLauncherNote = new System.Windows.Forms.Label();
 			this.tabSetting_pageToolbar = new System.Windows.Forms.TabPage();
+			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
 			this.groupToolbar = new System.Windows.Forms.GroupBox();
-			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
-			this.labelToolbarFont = new System.Windows.Forms.Label();
-			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
-			this.commandToolbarFont = new PeMain.UI.FontSplitButton();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
 			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
-			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
-			this.labelToolbarIcon = new System.Windows.Forms.Label();
-			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
-			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
 			this.labelToolbarPosition = new System.Windows.Forms.Label();
+			this.labelToolbarIcon = new System.Windows.Forms.Label();
+			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
+			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
+			this.labelToolbarFont = new System.Windows.Forms.Label();
+			this.commandToolbarFont = new PeMain.UI.FontSplitButton();
+			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
+			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
+			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.treeToolbarItemGroup = new System.Windows.Forms.TreeView();
@@ -130,6 +135,18 @@ namespace PeMain.UI
 			this.commandCommandFont = new PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.tabSetting_pageNote = new System.Windows.Forms.TabPage();
+			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			this.groupNoteKey = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.labelNoteCreate = new System.Windows.Forms.Label();
+			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
+			this.labelNoteHiddent = new System.Windows.Forms.Label();
+			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
+			this.labelNoteCompact = new System.Windows.Forms.Label();
+			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
+			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
+			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
 			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -141,29 +158,12 @@ namespace PeMain.UI
 			this.gridNoteItems_columnFont = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.gridNoteItems_columnFore = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.gridNoteItems_columnBack = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.groupNoteKey = new System.Windows.Forms.GroupBox();
-			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-			this.labelNoteCreate = new System.Windows.Forms.Label();
-			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
-			this.labelNoteHiddent = new System.Windows.Forms.Label();
-			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
-			this.labelNoteCompact = new System.Windows.Forms.Label();
-			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
-			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
-			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
@@ -176,7 +176,9 @@ namespace PeMain.UI
 			this.splitContainer1.SuspendLayout();
 			this.tabLauncher.SuspendLayout();
 			this.tabLauncher_pageCommon.SuspendLayout();
+			this.tableLayoutPanel4.SuspendLayout();
 			this.groupLauncherType.SuspendLayout();
+			this.flowLayoutPanel3.SuspendLayout();
 			this.tabLauncher_pageEnv.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.panelEnv)).BeginInit();
 			this.panelEnv.Panel1.SuspendLayout();
@@ -184,7 +186,13 @@ namespace PeMain.UI
 			this.panelEnv.SuspendLayout();
 			this.tabLauncher_pageOthers.SuspendLayout();
 			this.tabSetting_pageToolbar.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+			this.splitContainer3.Panel1.SuspendLayout();
+			this.splitContainer3.Panel2.SuspendLayout();
+			this.splitContainer3.SuspendLayout();
 			this.groupToolbar.SuspendLayout();
+			this.panel1.SuspendLayout();
+			this.tableLayoutPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
@@ -197,26 +205,18 @@ namespace PeMain.UI
 			this.tabSetting_pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tabSetting_pageNote.SuspendLayout();
-			this.groupNoteItem.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
-			this.groupNoteKey.SuspendLayout();
-			this.flowLayoutPanel2.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.flowLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-			this.splitContainer3.Panel1.SuspendLayout();
-			this.splitContainer3.Panel2.SuspendLayout();
-			this.splitContainer3.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
-			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
 			this.splitContainer4.Panel1.SuspendLayout();
 			this.splitContainer4.Panel2.SuspendLayout();
 			this.splitContainer4.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
-			this.tableLayoutPanel4.SuspendLayout();
-			this.flowLayoutPanel3.SuspendLayout();
+			this.groupNoteKey.SuspendLayout();
+			this.flowLayoutPanel2.SuspendLayout();
+			this.groupNoteItem.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
+			this.tableLayoutPanel1.SuspendLayout();
+			this.flowLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -476,6 +476,45 @@ namespace PeMain.UI
 			this.tabLauncher_pageCommon.Text = ":setting/tab/launcher/basic";
 			this.tabLauncher_pageCommon.UseVisualStyleBackColor = true;
 			// 
+			// tableLayoutPanel4
+			// 
+			this.tableLayoutPanel4.ColumnCount = 4;
+			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+			this.tableLayoutPanel4.Controls.Add(this.groupLauncherType, 0, 0);
+			this.tableLayoutPanel4.Controls.Add(this.commandLauncherOptionDirPath, 3, 3);
+			this.tableLayoutPanel4.Controls.Add(this.inputLauncherOption, 1, 3);
+			this.tableLayoutPanel4.Controls.Add(this.commandLauncherDirPath, 3, 2);
+			this.tableLayoutPanel4.Controls.Add(this.commandLauncherFilePath, 2, 2);
+			this.tableLayoutPanel4.Controls.Add(this.inputLauncherName, 1, 1);
+			this.tableLayoutPanel4.Controls.Add(this.commandLauncherOptionFilePath, 2, 3);
+			this.tableLayoutPanel4.Controls.Add(this.labelLauncherName, 0, 1);
+			this.tableLayoutPanel4.Controls.Add(this.labelLauncherCommand, 0, 2);
+			this.tableLayoutPanel4.Controls.Add(this.commandLauncherWorkDirPath, 2, 4);
+			this.tableLayoutPanel4.Controls.Add(this.labelLauncherOption, 0, 3);
+			this.tableLayoutPanel4.Controls.Add(this.commandLauncherIconPath, 2, 5);
+			this.tableLayoutPanel4.Controls.Add(this.labelLauncherWorkDirPath, 0, 4);
+			this.tableLayoutPanel4.Controls.Add(this.inputLauncherIconPath, 1, 5);
+			this.tableLayoutPanel4.Controls.Add(this.inputLauncherWorkDirPath, 1, 4);
+			this.tableLayoutPanel4.Controls.Add(this.labelLauncherIconPath, 0, 5);
+			this.tableLayoutPanel4.Controls.Add(this.inputLauncherCommand, 1, 2);
+			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+			this.tableLayoutPanel4.RowCount = 8;
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(525, 224);
+			this.tableLayoutPanel4.TabIndex = 11;
+			// 
 			// groupLauncherType
 			// 
 			this.tableLayoutPanel4.SetColumnSpan(this.groupLauncherType, 4);
@@ -488,17 +527,15 @@ namespace PeMain.UI
 			this.groupLauncherType.TabStop = false;
 			this.groupLauncherType.Text = ":setting/group/item-type";
 			// 
-			// selectLauncherType_uri
+			// flowLayoutPanel3
 			// 
-			this.selectLauncherType_uri.AutoSize = true;
-			this.selectLauncherType_uri.Location = new System.Drawing.Point(149, 3);
-			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
-			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
-			this.selectLauncherType_uri.TabIndex = 1;
-			this.selectLauncherType_uri.TabStop = true;
-			this.selectLauncherType_uri.Text = "#LauncherType.URI";
-			this.selectLauncherType_uri.UseVisualStyleBackColor = true;
-			this.selectLauncherType_uri.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
+			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_file);
+			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_uri);
+			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(515, 34);
+			this.flowLayoutPanel3.TabIndex = 2;
 			// 
 			// selectLauncherType_file
 			// 
@@ -512,25 +549,17 @@ namespace PeMain.UI
 			this.selectLauncherType_file.UseVisualStyleBackColor = true;
 			this.selectLauncherType_file.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
-			// labelLauncherName
+			// selectLauncherType_uri
 			// 
-			this.labelLauncherName.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherName.AutoSize = true;
-			this.labelLauncherName.Location = new System.Drawing.Point(3, 69);
-			this.labelLauncherName.Name = "labelLauncherName";
-			this.labelLauncherName.Size = new System.Drawing.Size(156, 15);
-			this.labelLauncherName.TabIndex = 4;
-			this.labelLauncherName.Text = ":setting/label/item-name";
-			// 
-			// labelLauncherOption
-			// 
-			this.labelLauncherOption.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherOption.AutoSize = true;
-			this.labelLauncherOption.Location = new System.Drawing.Point(3, 130);
-			this.labelLauncherOption.Name = "labelLauncherOption";
-			this.labelLauncherOption.Size = new System.Drawing.Size(127, 15);
-			this.labelLauncherOption.TabIndex = 10;
-			this.labelLauncherOption.Text = ":setting/label/option";
+			this.selectLauncherType_uri.AutoSize = true;
+			this.selectLauncherType_uri.Location = new System.Drawing.Point(149, 3);
+			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
+			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
+			this.selectLauncherType_uri.TabIndex = 1;
+			this.selectLauncherType_uri.TabStop = true;
+			this.selectLauncherType_uri.Text = "#LauncherType.URI";
+			this.selectLauncherType_uri.UseVisualStyleBackColor = true;
+			this.selectLauncherType_uri.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// inputLauncherName
 			// 
@@ -542,25 +571,6 @@ namespace PeMain.UI
 			this.inputLauncherName.TabIndex = 3;
 			this.inputLauncherName.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
-			// inputLauncherOption
-			// 
-			this.inputLauncherOption.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.inputLauncherOption.Location = new System.Drawing.Point(165, 125);
-			this.inputLauncherOption.Name = "inputLauncherOption";
-			this.inputLauncherOption.Size = new System.Drawing.Size(275, 23);
-			this.inputLauncherOption.TabIndex = 9;
-			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
-			// 
-			// labelLauncherCommand
-			// 
-			this.labelLauncherCommand.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherCommand.AutoSize = true;
-			this.labelLauncherCommand.Location = new System.Drawing.Point(3, 99);
-			this.labelLauncherCommand.Name = "labelLauncherCommand";
-			this.labelLauncherCommand.Size = new System.Drawing.Size(149, 15);
-			this.labelLauncherCommand.TabIndex = 4;
-			this.labelLauncherCommand.Text = ":setting/label/command";
-			// 
 			// commandLauncherOptionDirPath
 			// 
 			this.commandLauncherOptionDirPath.Image = global::PeMain.Properties.Images.Dir;
@@ -571,6 +581,26 @@ namespace PeMain.UI
 			this.commandLauncherOptionDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandLauncherOptionDirPath.UseVisualStyleBackColor = true;
 			this.commandLauncherOptionDirPath.Click += new System.EventHandler(this.CommandLauncherOptionDirPath_Click);
+			// 
+			// inputLauncherOption
+			// 
+			this.inputLauncherOption.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputLauncherOption.Location = new System.Drawing.Point(165, 125);
+			this.inputLauncherOption.Name = "inputLauncherOption";
+			this.inputLauncherOption.Size = new System.Drawing.Size(275, 23);
+			this.inputLauncherOption.TabIndex = 9;
+			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			// 
+			// commandLauncherDirPath
+			// 
+			this.commandLauncherDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherDirPath.Location = new System.Drawing.Point(486, 94);
+			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
+			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
+			this.commandLauncherDirPath.TabIndex = 2;
+			this.commandLauncherDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
+			this.commandLauncherDirPath.Click += new System.EventHandler(this.CommandLauncherDirPath_Click);
 			// 
 			// commandLauncherFilePath
 			// 
@@ -594,16 +624,25 @@ namespace PeMain.UI
 			this.commandLauncherOptionFilePath.UseVisualStyleBackColor = true;
 			this.commandLauncherOptionFilePath.Click += new System.EventHandler(this.CommandLauncherOptionFilePath_Click);
 			// 
-			// commandLauncherDirPath
+			// labelLauncherName
 			// 
-			this.commandLauncherDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherDirPath.Location = new System.Drawing.Point(486, 94);
-			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
-			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
-			this.commandLauncherDirPath.TabIndex = 2;
-			this.commandLauncherDirPath.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandLauncherDirPath.UseVisualStyleBackColor = true;
-			this.commandLauncherDirPath.Click += new System.EventHandler(this.CommandLauncherDirPath_Click);
+			this.labelLauncherName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelLauncherName.AutoSize = true;
+			this.labelLauncherName.Location = new System.Drawing.Point(3, 69);
+			this.labelLauncherName.Name = "labelLauncherName";
+			this.labelLauncherName.Size = new System.Drawing.Size(156, 15);
+			this.labelLauncherName.TabIndex = 4;
+			this.labelLauncherName.Text = ":setting/label/item-name";
+			// 
+			// labelLauncherCommand
+			// 
+			this.labelLauncherCommand.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelLauncherCommand.AutoSize = true;
+			this.labelLauncherCommand.Location = new System.Drawing.Point(3, 99);
+			this.labelLauncherCommand.Name = "labelLauncherCommand";
+			this.labelLauncherCommand.Size = new System.Drawing.Size(149, 15);
+			this.labelLauncherCommand.TabIndex = 4;
+			this.labelLauncherCommand.Text = ":setting/label/command";
 			// 
 			// commandLauncherWorkDirPath
 			// 
@@ -616,15 +655,15 @@ namespace PeMain.UI
 			this.commandLauncherWorkDirPath.UseVisualStyleBackColor = true;
 			this.commandLauncherWorkDirPath.Click += new System.EventHandler(this.CommandLauncherWorkDirPath_Click);
 			// 
-			// labelLauncherIconPath
+			// labelLauncherOption
 			// 
-			this.labelLauncherIconPath.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherIconPath.AutoSize = true;
-			this.labelLauncherIconPath.Location = new System.Drawing.Point(3, 192);
-			this.labelLauncherIconPath.Name = "labelLauncherIconPath";
-			this.labelLauncherIconPath.Size = new System.Drawing.Size(145, 15);
-			this.labelLauncherIconPath.TabIndex = 4;
-			this.labelLauncherIconPath.Text = ":setting/label/icon-path";
+			this.labelLauncherOption.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelLauncherOption.AutoSize = true;
+			this.labelLauncherOption.Location = new System.Drawing.Point(3, 130);
+			this.labelLauncherOption.Name = "labelLauncherOption";
+			this.labelLauncherOption.Size = new System.Drawing.Size(127, 15);
+			this.labelLauncherOption.TabIndex = 10;
+			this.labelLauncherOption.Text = ":setting/label/option";
 			// 
 			// commandLauncherIconPath
 			// 
@@ -647,14 +686,14 @@ namespace PeMain.UI
 			this.labelLauncherWorkDirPath.TabIndex = 4;
 			this.labelLauncherWorkDirPath.Text = ":setting/label/work-dir";
 			// 
-			// inputLauncherCommand
+			// inputLauncherIconPath
 			// 
-			this.inputLauncherCommand.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.inputLauncherCommand.Location = new System.Drawing.Point(165, 94);
-			this.inputLauncherCommand.Name = "inputLauncherCommand";
-			this.inputLauncherCommand.Size = new System.Drawing.Size(275, 23);
-			this.inputLauncherCommand.TabIndex = 3;
-			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			this.inputLauncherIconPath.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputLauncherIconPath.Location = new System.Drawing.Point(165, 187);
+			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
+			this.inputLauncherIconPath.Size = new System.Drawing.Size(275, 23);
+			this.inputLauncherIconPath.TabIndex = 3;
+			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherWorkDirPath
 			// 
@@ -665,23 +704,33 @@ namespace PeMain.UI
 			this.inputLauncherWorkDirPath.TabIndex = 3;
 			this.inputLauncherWorkDirPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
-			// inputLauncherIconPath
+			// labelLauncherIconPath
 			// 
-			this.inputLauncherIconPath.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.inputLauncherIconPath.Location = new System.Drawing.Point(165, 187);
-			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
-			this.inputLauncherIconPath.Size = new System.Drawing.Size(275, 23);
-			this.inputLauncherIconPath.TabIndex = 3;
-			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
+			this.labelLauncherIconPath.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelLauncherIconPath.AutoSize = true;
+			this.labelLauncherIconPath.Location = new System.Drawing.Point(3, 192);
+			this.labelLauncherIconPath.Name = "labelLauncherIconPath";
+			this.labelLauncherIconPath.Size = new System.Drawing.Size(145, 15);
+			this.labelLauncherIconPath.TabIndex = 4;
+			this.labelLauncherIconPath.Text = ":setting/label/icon-path";
+			// 
+			// inputLauncherCommand
+			// 
+			this.inputLauncherCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputLauncherCommand.Location = new System.Drawing.Point(165, 94);
+			this.inputLauncherCommand.Name = "inputLauncherCommand";
+			this.inputLauncherCommand.Size = new System.Drawing.Size(275, 23);
+			this.inputLauncherCommand.TabIndex = 3;
+			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// tabLauncher_pageEnv
 			// 
 			this.tabLauncher_pageEnv.Controls.Add(this.panelEnv);
 			this.tabLauncher_pageEnv.Controls.Add(this.selectLauncherEnv);
-			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 24);
+			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(531, 230);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(531, 234);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/tab/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -701,7 +750,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 120);
+			this.panelEnv.Size = new System.Drawing.Size(519, 122);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -710,7 +759,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 120);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 122);
 			this.envLauncherUpdate.TabIndex = 15;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -719,7 +768,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 120);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 122);
 			this.envLauncherRemove.TabIndex = 16;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -821,6 +870,24 @@ namespace PeMain.UI
 			this.tabSetting_pageToolbar.Text = ":setting/tab/toolbar";
 			this.tabSetting_pageToolbar.UseVisualStyleBackColor = true;
 			// 
+			// splitContainer3
+			// 
+			this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer3.IsSplitterFixed = true;
+			this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer3.Name = "splitContainer3";
+			// 
+			// splitContainer3.Panel1
+			// 
+			this.splitContainer3.Panel1.Controls.Add(this.groupToolbar);
+			// 
+			// splitContainer3.Panel2
+			// 
+			this.splitContainer3.Panel2.Controls.Add(this.splitContainer2);
+			this.splitContainer3.Size = new System.Drawing.Size(741, 266);
+			this.splitContainer3.SplitterDistance = 247;
+			this.splitContainer3.TabIndex = 19;
+			// 
 			// groupToolbar
 			// 
 			this.groupToolbar.Controls.Add(this.panel1);
@@ -833,43 +900,46 @@ namespace PeMain.UI
 			this.groupToolbar.TabStop = false;
 			this.groupToolbar.Text = "☃";
 			// 
-			// selectToolbarItem
+			// panel1
 			// 
-			this.selectToolbarItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectToolbarItem.FormattingEnabled = true;
-			this.selectToolbarItem.Location = new System.Drawing.Point(6, 0);
-			this.selectToolbarItem.Name = "selectToolbarItem";
-			this.selectToolbarItem.Size = new System.Drawing.Size(186, 23);
-			this.selectToolbarItem.TabIndex = 19;
-			this.selectToolbarItem.SelectedValueChanged += new System.EventHandler(this.SelectToolbarItem_SelectedValueChanged);
+			this.panel1.Controls.Add(this.tableLayoutPanel2);
+			this.panel1.Location = new System.Drawing.Point(6, 25);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(235, 235);
+			this.panel1.TabIndex = 21;
 			// 
-			// labelToolbarFont
+			// tableLayoutPanel2
 			// 
-			this.labelToolbarFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelToolbarFont.AutoSize = true;
-			this.labelToolbarFont.Location = new System.Drawing.Point(3, 66);
-			this.labelToolbarFont.Name = "labelToolbarFont";
-			this.labelToolbarFont.Size = new System.Drawing.Size(125, 15);
-			this.labelToolbarFont.TabIndex = 5;
-			this.labelToolbarFont.Text = ":common/label/font";
-			// 
-			// inputToolbarTextWidth
-			// 
-			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 92);
-			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
-			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
-			this.inputToolbarTextWidth.TabIndex = 17;
-			// 
-			// commandToolbarFont
-			// 
-			this.commandToolbarFont.AutoSize = true;
-			this.commandToolbarFont.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandToolbarFont.Location = new System.Drawing.Point(161, 61);
-			this.commandToolbarFont.Name = "commandToolbarFont";
-			this.commandToolbarFont.Size = new System.Drawing.Size(142, 25);
-			this.commandToolbarFont.TabIndex = 6;
-			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
-			this.commandToolbarFont.UseVisualStyleBackColor = true;
+			this.tableLayoutPanel2.ColumnCount = 2;
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarPosition, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarIcon, 0, 1);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarIcon, 1, 1);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarPosition, 1, 0);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarAutoHide, 0, 4);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarShowText, 0, 5);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarTopmost, 0, 6);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarFont, 0, 2);
+			this.tableLayoutPanel2.Controls.Add(this.commandToolbarFont, 1, 2);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarVisible, 0, 7);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarTextWidth, 0, 3);
+			this.tableLayoutPanel2.Controls.Add(this.inputToolbarTextWidth, 1, 3);
+			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+			this.tableLayoutPanel2.RowCount = 8;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(235, 235);
+			this.tableLayoutPanel2.TabIndex = 20;
 			// 
 			// selectToolbarShowText
 			// 
@@ -907,16 +977,6 @@ namespace PeMain.UI
 			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
 			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
 			// 
-			// labelToolbarTextWidth
-			// 
-			this.labelToolbarTextWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelToolbarTextWidth.AutoSize = true;
-			this.labelToolbarTextWidth.Location = new System.Drawing.Point(3, 96);
-			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
-			this.labelToolbarTextWidth.Size = new System.Drawing.Size(152, 15);
-			this.labelToolbarTextWidth.TabIndex = 12;
-			this.labelToolbarTextWidth.Text = ":setting/label/text-width";
-			// 
 			// selectToolbarVisible
 			// 
 			this.selectToolbarVisible.AutoSize = true;
@@ -928,6 +988,16 @@ namespace PeMain.UI
 			this.selectToolbarVisible.Text = ":common/label/visible";
 			this.selectToolbarVisible.UseVisualStyleBackColor = true;
 			// 
+			// labelToolbarPosition
+			// 
+			this.labelToolbarPosition.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarPosition.AutoSize = true;
+			this.labelToolbarPosition.Location = new System.Drawing.Point(3, 7);
+			this.labelToolbarPosition.Name = "labelToolbarPosition";
+			this.labelToolbarPosition.Size = new System.Drawing.Size(142, 15);
+			this.labelToolbarPosition.TabIndex = 10;
+			this.labelToolbarPosition.Text = ":enum/toolbar-position";
+			// 
 			// labelToolbarIcon
 			// 
 			this.labelToolbarIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -937,16 +1007,6 @@ namespace PeMain.UI
 			this.labelToolbarIcon.Size = new System.Drawing.Size(101, 15);
 			this.labelToolbarIcon.TabIndex = 12;
 			this.labelToolbarIcon.Text = ":enum/icon-size";
-			// 
-			// selectToolbarPosition
-			// 
-			this.selectToolbarPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.selectToolbarPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectToolbarPosition.FormattingEnabled = true;
-			this.selectToolbarPosition.Location = new System.Drawing.Point(161, 3);
-			this.selectToolbarPosition.Name = "selectToolbarPosition";
-			this.selectToolbarPosition.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarPosition.TabIndex = 9;
 			// 
 			// selectToolbarIcon
 			// 
@@ -958,15 +1018,63 @@ namespace PeMain.UI
 			this.selectToolbarIcon.Size = new System.Drawing.Size(142, 23);
 			this.selectToolbarIcon.TabIndex = 11;
 			// 
-			// labelToolbarPosition
+			// selectToolbarPosition
 			// 
-			this.labelToolbarPosition.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelToolbarPosition.AutoSize = true;
-			this.labelToolbarPosition.Location = new System.Drawing.Point(3, 7);
-			this.labelToolbarPosition.Name = "labelToolbarPosition";
-			this.labelToolbarPosition.Size = new System.Drawing.Size(142, 15);
-			this.labelToolbarPosition.TabIndex = 10;
-			this.labelToolbarPosition.Text = ":enum/toolbar-position";
+			this.selectToolbarPosition.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectToolbarPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectToolbarPosition.FormattingEnabled = true;
+			this.selectToolbarPosition.Location = new System.Drawing.Point(161, 3);
+			this.selectToolbarPosition.Name = "selectToolbarPosition";
+			this.selectToolbarPosition.Size = new System.Drawing.Size(142, 23);
+			this.selectToolbarPosition.TabIndex = 9;
+			// 
+			// labelToolbarFont
+			// 
+			this.labelToolbarFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarFont.AutoSize = true;
+			this.labelToolbarFont.Location = new System.Drawing.Point(3, 66);
+			this.labelToolbarFont.Name = "labelToolbarFont";
+			this.labelToolbarFont.Size = new System.Drawing.Size(125, 15);
+			this.labelToolbarFont.TabIndex = 5;
+			this.labelToolbarFont.Text = ":common/label/font";
+			// 
+			// commandToolbarFont
+			// 
+			this.commandToolbarFont.AutoSize = true;
+			this.commandToolbarFont.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandToolbarFont.Location = new System.Drawing.Point(161, 61);
+			this.commandToolbarFont.Name = "commandToolbarFont";
+			this.commandToolbarFont.Size = new System.Drawing.Size(142, 25);
+			this.commandToolbarFont.TabIndex = 6;
+			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
+			this.commandToolbarFont.UseVisualStyleBackColor = true;
+			// 
+			// labelToolbarTextWidth
+			// 
+			this.labelToolbarTextWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarTextWidth.AutoSize = true;
+			this.labelToolbarTextWidth.Location = new System.Drawing.Point(3, 96);
+			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
+			this.labelToolbarTextWidth.Size = new System.Drawing.Size(152, 15);
+			this.labelToolbarTextWidth.TabIndex = 12;
+			this.labelToolbarTextWidth.Text = ":setting/label/text-width";
+			// 
+			// inputToolbarTextWidth
+			// 
+			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 92);
+			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
+			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
+			this.inputToolbarTextWidth.TabIndex = 17;
+			// 
+			// selectToolbarItem
+			// 
+			this.selectToolbarItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectToolbarItem.FormattingEnabled = true;
+			this.selectToolbarItem.Location = new System.Drawing.Point(6, 0);
+			this.selectToolbarItem.Name = "selectToolbarItem";
+			this.selectToolbarItem.Size = new System.Drawing.Size(186, 23);
+			this.selectToolbarItem.TabIndex = 19;
+			this.selectToolbarItem.SelectedValueChanged += new System.EventHandler(this.SelectToolbarItem_SelectedValueChanged);
 			// 
 			// splitContainer2
 			// 
@@ -1227,107 +1335,41 @@ namespace PeMain.UI
 			this.tabSetting_pageNote.Text = ":setting/tab/note";
 			this.tabSetting_pageNote.UseVisualStyleBackColor = true;
 			// 
-			// groupNoteItem
+			// splitContainer4
 			// 
-			this.groupNoteItem.Controls.Add(this.gridNoteItems);
-			this.groupNoteItem.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupNoteItem.Location = new System.Drawing.Point(0, 0);
-			this.groupNoteItem.Name = "groupNoteItem";
-			this.groupNoteItem.Size = new System.Drawing.Size(487, 266);
-			this.groupNoteItem.TabIndex = 12;
-			this.groupNoteItem.TabStop = false;
-			this.groupNoteItem.Text = ":setting/group/item";
+			this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer4.IsSplitterFixed = true;
+			this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer4.Name = "splitContainer4";
 			// 
-			// gridNoteItems
+			// splitContainer4.Panel1
 			// 
-			this.gridNoteItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-									this.gridNoteItems_columnRemove,
-									this.gridNoteItems_columnId,
-									this.gridNoteItems_columnVisible,
-									this.gridNoteItems_columnLocked,
-									this.gridNoteItems_columnTitle,
-									this.gridNoteItems_columnBody,
-									this.gridNoteItems_columnFont,
-									this.gridNoteItems_columnFore,
-									this.gridNoteItems_columnBack});
-			this.gridNoteItems.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridNoteItems.Location = new System.Drawing.Point(3, 19);
-			this.gridNoteItems.Name = "gridNoteItems";
-			this.gridNoteItems.RowTemplate.Height = 21;
-			this.gridNoteItems.Size = new System.Drawing.Size(481, 244);
-			this.gridNoteItems.TabIndex = 0;
+			this.splitContainer4.Panel1.Controls.Add(this.tableLayoutPanel3);
 			// 
-			// gridNoteItems_columnRemove
+			// splitContainer4.Panel2
 			// 
-			this.gridNoteItems_columnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnRemove.FillWeight = 30F;
-			this.gridNoteItems_columnRemove.HeaderText = ":setting/column/note/remove";
-			this.gridNoteItems_columnRemove.Name = "gridNoteItems_columnRemove";
-			this.gridNoteItems_columnRemove.Width = 189;
+			this.splitContainer4.Panel2.Controls.Add(this.groupNoteItem);
+			this.splitContainer4.Size = new System.Drawing.Size(741, 266);
+			this.splitContainer4.SplitterDistance = 250;
+			this.splitContainer4.TabIndex = 13;
+			this.splitContainer4.TabStop = false;
 			// 
-			// gridNoteItems_columnId
+			// tableLayoutPanel3
 			// 
-			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle9;
-			this.gridNoteItems_columnId.FillWeight = 40F;
-			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
-			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
-			this.gridNoteItems_columnId.ReadOnly = true;
-			this.gridNoteItems_columnId.Width = 40;
-			// 
-			// gridNoteItems_columnVisible
-			// 
-			this.gridNoteItems_columnVisible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnVisible.FillWeight = 30F;
-			this.gridNoteItems_columnVisible.HeaderText = ":setting/column/note/visible";
-			this.gridNoteItems_columnVisible.Name = "gridNoteItems_columnVisible";
-			this.gridNoteItems_columnVisible.Width = 180;
-			// 
-			// gridNoteItems_columnLocked
-			// 
-			this.gridNoteItems_columnLocked.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnLocked.HeaderText = ":setting/column/note/locked";
-			this.gridNoteItems_columnLocked.Name = "gridNoteItems_columnLocked";
-			this.gridNoteItems_columnLocked.Width = 181;
-			// 
-			// gridNoteItems_columnTitle
-			// 
-			this.gridNoteItems_columnTitle.HeaderText = ":setting/column/note/title";
-			this.gridNoteItems_columnTitle.Name = "gridNoteItems_columnTitle";
-			// 
-			// gridNoteItems_columnBody
-			// 
-			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle10;
-			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
-			this.gridNoteItems_columnBody.MinimumWidth = 100;
-			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
-			this.gridNoteItems_columnBody.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// gridNoteItems_columnFont
-			// 
-			this.gridNoteItems_columnFont.FillWeight = 80F;
-			this.gridNoteItems_columnFont.HeaderText = ":setting/column/note/font";
-			this.gridNoteItems_columnFont.Name = "gridNoteItems_columnFont";
-			this.gridNoteItems_columnFont.Width = 80;
-			// 
-			// gridNoteItems_columnFore
-			// 
-			this.gridNoteItems_columnFore.FillWeight = 80F;
-			this.gridNoteItems_columnFore.HeaderText = ":setting/column/note/fore";
-			this.gridNoteItems_columnFore.Name = "gridNoteItems_columnFore";
-			this.gridNoteItems_columnFore.Width = 80;
-			// 
-			// gridNoteItems_columnBack
-			// 
-			this.gridNoteItems_columnBack.FillWeight = 80F;
-			this.gridNoteItems_columnBack.HeaderText = ":setting/column/note/back";
-			this.gridNoteItems_columnBack.Name = "gridNoteItems_columnBack";
-			this.gridNoteItems_columnBack.Width = 80;
+			this.tableLayoutPanel3.ColumnCount = 2;
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel3.Controls.Add(this.groupNoteKey, 0, 0);
+			this.tableLayoutPanel3.Controls.Add(this.commandNoteCaptionFont, 1, 1);
+			this.tableLayoutPanel3.Controls.Add(this.labelNoteCaptionFont, 0, 1);
+			this.tableLayoutPanel3.Location = new System.Drawing.Point(5, 3);
+			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+			this.tableLayoutPanel3.RowCount = 3;
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(242, 260);
+			this.tableLayoutPanel3.TabIndex = 12;
 			// 
 			// groupNoteKey
 			// 
@@ -1448,6 +1490,109 @@ namespace PeMain.UI
 			this.labelNoteCaptionFont.TabIndex = 9;
 			this.labelNoteCaptionFont.Text = ":common/label/font";
 			// 
+			// groupNoteItem
+			// 
+			this.groupNoteItem.Controls.Add(this.gridNoteItems);
+			this.groupNoteItem.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupNoteItem.Location = new System.Drawing.Point(0, 0);
+			this.groupNoteItem.Name = "groupNoteItem";
+			this.groupNoteItem.Size = new System.Drawing.Size(487, 266);
+			this.groupNoteItem.TabIndex = 12;
+			this.groupNoteItem.TabStop = false;
+			this.groupNoteItem.Text = ":setting/group/item";
+			// 
+			// gridNoteItems
+			// 
+			this.gridNoteItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+									this.gridNoteItems_columnRemove,
+									this.gridNoteItems_columnId,
+									this.gridNoteItems_columnVisible,
+									this.gridNoteItems_columnLocked,
+									this.gridNoteItems_columnTitle,
+									this.gridNoteItems_columnBody,
+									this.gridNoteItems_columnFont,
+									this.gridNoteItems_columnFore,
+									this.gridNoteItems_columnBack});
+			this.gridNoteItems.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridNoteItems.Location = new System.Drawing.Point(3, 19);
+			this.gridNoteItems.MultiSelect = false;
+			this.gridNoteItems.Name = "gridNoteItems";
+			this.gridNoteItems.RowTemplate.Height = 21;
+			this.gridNoteItems.Size = new System.Drawing.Size(481, 244);
+			this.gridNoteItems.TabIndex = 0;
+			// 
+			// gridNoteItems_columnRemove
+			// 
+			this.gridNoteItems_columnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnRemove.FillWeight = 30F;
+			this.gridNoteItems_columnRemove.HeaderText = ":setting/column/note/remove";
+			this.gridNoteItems_columnRemove.Name = "gridNoteItems_columnRemove";
+			this.gridNoteItems_columnRemove.Width = 189;
+			// 
+			// gridNoteItems_columnId
+			// 
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			this.gridNoteItems_columnId.FillWeight = 40F;
+			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
+			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
+			this.gridNoteItems_columnId.ReadOnly = true;
+			this.gridNoteItems_columnId.Width = 40;
+			// 
+			// gridNoteItems_columnVisible
+			// 
+			this.gridNoteItems_columnVisible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnVisible.FillWeight = 30F;
+			this.gridNoteItems_columnVisible.HeaderText = ":setting/column/note/visible";
+			this.gridNoteItems_columnVisible.Name = "gridNoteItems_columnVisible";
+			this.gridNoteItems_columnVisible.Width = 180;
+			// 
+			// gridNoteItems_columnLocked
+			// 
+			this.gridNoteItems_columnLocked.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnLocked.HeaderText = ":setting/column/note/locked";
+			this.gridNoteItems_columnLocked.Name = "gridNoteItems_columnLocked";
+			this.gridNoteItems_columnLocked.Width = 181;
+			// 
+			// gridNoteItems_columnTitle
+			// 
+			this.gridNoteItems_columnTitle.HeaderText = ":setting/column/note/title";
+			this.gridNoteItems_columnTitle.Name = "gridNoteItems_columnTitle";
+			// 
+			// gridNoteItems_columnBody
+			// 
+			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
+			this.gridNoteItems_columnBody.MinimumWidth = 100;
+			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
+			this.gridNoteItems_columnBody.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// gridNoteItems_columnFont
+			// 
+			this.gridNoteItems_columnFont.FillWeight = 80F;
+			this.gridNoteItems_columnFont.HeaderText = ":setting/column/note/font";
+			this.gridNoteItems_columnFont.Name = "gridNoteItems_columnFont";
+			this.gridNoteItems_columnFont.Width = 80;
+			// 
+			// gridNoteItems_columnFore
+			// 
+			this.gridNoteItems_columnFore.FillWeight = 80F;
+			this.gridNoteItems_columnFore.HeaderText = ":setting/column/note/fore";
+			this.gridNoteItems_columnFore.Name = "gridNoteItems_columnFore";
+			this.gridNoteItems_columnFore.Width = 80;
+			// 
+			// gridNoteItems_columnBack
+			// 
+			this.gridNoteItems_columnBack.FillWeight = 80F;
+			this.gridNoteItems_columnBack.HeaderText = ":setting/column/note/back";
+			this.gridNoteItems_columnBack.Name = "gridNoteItems_columnBack";
+			this.gridNoteItems_columnBack.Width = 80;
+			// 
 			// tabSetting_pageDisplay
 			// 
 			this.tabSetting_pageDisplay.Location = new System.Drawing.Point(4, 24);
@@ -1510,150 +1655,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// splitContainer3
-			// 
-			this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer3.IsSplitterFixed = true;
-			this.splitContainer3.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer3.Name = "splitContainer3";
-			// 
-			// splitContainer3.Panel1
-			// 
-			this.splitContainer3.Panel1.Controls.Add(this.groupToolbar);
-			// 
-			// splitContainer3.Panel2
-			// 
-			this.splitContainer3.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer3.Size = new System.Drawing.Size(741, 266);
-			this.splitContainer3.SplitterDistance = 247;
-			this.splitContainer3.TabIndex = 19;
-			// 
-			// tableLayoutPanel2
-			// 
-			this.tableLayoutPanel2.ColumnCount = 2;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarPosition, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarIcon, 0, 1);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarIcon, 1, 1);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarPosition, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarAutoHide, 0, 4);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarShowText, 0, 5);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarTopmost, 0, 6);
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarFont, 0, 2);
-			this.tableLayoutPanel2.Controls.Add(this.commandToolbarFont, 1, 2);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarVisible, 0, 7);
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarTextWidth, 0, 3);
-			this.tableLayoutPanel2.Controls.Add(this.inputToolbarTextWidth, 1, 3);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 8;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(235, 235);
-			this.tableLayoutPanel2.TabIndex = 20;
-			// 
-			// panel1
-			// 
-			this.panel1.Controls.Add(this.tableLayoutPanel2);
-			this.panel1.Location = new System.Drawing.Point(6, 25);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(235, 235);
-			this.panel1.TabIndex = 21;
-			// 
-			// splitContainer4
-			// 
-			this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer4.IsSplitterFixed = true;
-			this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer4.Name = "splitContainer4";
-			// 
-			// splitContainer4.Panel1
-			// 
-			this.splitContainer4.Panel1.Controls.Add(this.tableLayoutPanel3);
-			// 
-			// splitContainer4.Panel2
-			// 
-			this.splitContainer4.Panel2.Controls.Add(this.groupNoteItem);
-			this.splitContainer4.Size = new System.Drawing.Size(741, 266);
-			this.splitContainer4.SplitterDistance = 250;
-			this.splitContainer4.TabIndex = 13;
-			this.splitContainer4.TabStop = false;
-			// 
-			// tableLayoutPanel3
-			// 
-			this.tableLayoutPanel3.ColumnCount = 2;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.Controls.Add(this.groupNoteKey, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.commandNoteCaptionFont, 1, 1);
-			this.tableLayoutPanel3.Controls.Add(this.labelNoteCaptionFont, 0, 1);
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(5, 3);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 3;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(242, 260);
-			this.tableLayoutPanel3.TabIndex = 12;
-			// 
-			// tableLayoutPanel4
-			// 
-			this.tableLayoutPanel4.ColumnCount = 4;
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-			this.tableLayoutPanel4.Controls.Add(this.groupLauncherType, 0, 0);
-			this.tableLayoutPanel4.Controls.Add(this.commandLauncherOptionDirPath, 3, 3);
-			this.tableLayoutPanel4.Controls.Add(this.inputLauncherOption, 1, 3);
-			this.tableLayoutPanel4.Controls.Add(this.commandLauncherDirPath, 3, 2);
-			this.tableLayoutPanel4.Controls.Add(this.commandLauncherFilePath, 2, 2);
-			this.tableLayoutPanel4.Controls.Add(this.inputLauncherName, 1, 1);
-			this.tableLayoutPanel4.Controls.Add(this.commandLauncherOptionFilePath, 2, 3);
-			this.tableLayoutPanel4.Controls.Add(this.labelLauncherName, 0, 1);
-			this.tableLayoutPanel4.Controls.Add(this.labelLauncherCommand, 0, 2);
-			this.tableLayoutPanel4.Controls.Add(this.commandLauncherWorkDirPath, 2, 4);
-			this.tableLayoutPanel4.Controls.Add(this.labelLauncherOption, 0, 3);
-			this.tableLayoutPanel4.Controls.Add(this.commandLauncherIconPath, 2, 5);
-			this.tableLayoutPanel4.Controls.Add(this.labelLauncherWorkDirPath, 0, 4);
-			this.tableLayoutPanel4.Controls.Add(this.inputLauncherIconPath, 1, 5);
-			this.tableLayoutPanel4.Controls.Add(this.inputLauncherWorkDirPath, 1, 4);
-			this.tableLayoutPanel4.Controls.Add(this.labelLauncherIconPath, 0, 5);
-			this.tableLayoutPanel4.Controls.Add(this.inputLauncherCommand, 1, 2);
-			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-			this.tableLayoutPanel4.RowCount = 8;
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(525, 224);
-			this.tableLayoutPanel4.TabIndex = 11;
-			// 
-			// flowLayoutPanel3
-			// 
-			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_file);
-			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_uri);
-			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(515, 34);
-			this.flowLayoutPanel3.TabIndex = 2;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1684,7 +1685,11 @@ namespace PeMain.UI
 			this.splitContainer1.ResumeLayout(false);
 			this.tabLauncher.ResumeLayout(false);
 			this.tabLauncher_pageCommon.ResumeLayout(false);
+			this.tableLayoutPanel4.ResumeLayout(false);
+			this.tableLayoutPanel4.PerformLayout();
 			this.groupLauncherType.ResumeLayout(false);
+			this.flowLayoutPanel3.ResumeLayout(false);
+			this.flowLayoutPanel3.PerformLayout();
 			this.tabLauncher_pageEnv.ResumeLayout(false);
 			this.tabLauncher_pageEnv.PerformLayout();
 			this.panelEnv.Panel1.ResumeLayout(false);
@@ -1694,7 +1699,14 @@ namespace PeMain.UI
 			this.tabLauncher_pageOthers.ResumeLayout(false);
 			this.tabLauncher_pageOthers.PerformLayout();
 			this.tabSetting_pageToolbar.ResumeLayout(false);
+			this.splitContainer3.Panel1.ResumeLayout(false);
+			this.splitContainer3.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+			this.splitContainer3.ResumeLayout(false);
 			this.groupToolbar.ResumeLayout(false);
+			this.panel1.ResumeLayout(false);
+			this.tableLayoutPanel2.ResumeLayout(false);
+			this.tableLayoutPanel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputToolbarTextWidth)).EndInit();
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel2.ResumeLayout(false);
@@ -1711,32 +1723,21 @@ namespace PeMain.UI
 			this.tabSetting_pageCommand.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.tabSetting_pageNote.ResumeLayout(false);
-			this.groupNoteItem.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
-			this.groupNoteKey.ResumeLayout(false);
-			this.flowLayoutPanel2.ResumeLayout(false);
-			this.flowLayoutPanel2.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.flowLayoutPanel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.splitContainer3.Panel1.ResumeLayout(false);
-			this.splitContainer3.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-			this.splitContainer3.ResumeLayout(false);
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
-			this.panel1.ResumeLayout(false);
 			this.splitContainer4.Panel1.ResumeLayout(false);
 			this.splitContainer4.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
 			this.splitContainer4.ResumeLayout(false);
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tableLayoutPanel3.PerformLayout();
-			this.tableLayoutPanel4.ResumeLayout(false);
-			this.tableLayoutPanel4.PerformLayout();
-			this.flowLayoutPanel3.ResumeLayout(false);
-			this.flowLayoutPanel3.PerformLayout();
+			this.groupNoteKey.ResumeLayout(false);
+			this.flowLayoutPanel2.ResumeLayout(false);
+			this.flowLayoutPanel2.PerformLayout();
+			this.groupNoteItem.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
+			this.flowLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
