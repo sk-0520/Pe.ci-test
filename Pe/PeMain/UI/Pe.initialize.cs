@@ -326,7 +326,13 @@ namespace PeMain.UI
 			// 情報
 			itemAbout.Name = menuNameAbout;
 			itemAbout.Click += (object sender, EventArgs e) => {
-				MessageBox.Show("デュン！");
+				PauseOthers(() => {
+				            	using(var dialog = new AboutForm()) {
+				            		dialog.SetCommonData(this._commonData);
+				            		dialog.ShowDialog();
+				            	}
+				            	return null;
+				            });
 			};
 			
 			// ウィンドウ

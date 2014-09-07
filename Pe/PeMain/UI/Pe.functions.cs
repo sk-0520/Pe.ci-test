@@ -112,7 +112,7 @@ namespace PeMain.UI
 		}
 		
 		/// <summary>
-		/// TODO: 未実装
+		/// 
 		/// </summary>
 		/// <param name="func">ウィンドウ再構築を独自に行う場合は処理を返す。</param>
 		void PauseOthers(Func<Action> func)
