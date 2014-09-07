@@ -38,6 +38,7 @@
 		
 		<Word Name="window/toolbar"  Text="@[PE]" />
 		<Word Name="window/log"      Text="ログ" />
+		<Word Name="window/about"    Text="@[PE] 情報" />
 		<Word Name="window/execute"  Text="@[ITEM]を指定して実行" />
 		<Word Name="window/stream"   Text="@[ITEM]の実行出力" />
 		<Word Name="window/setting"  Text="@[PE] 設定" />
