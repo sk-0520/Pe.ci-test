@@ -11,7 +11,7 @@ using System;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// 作成・更新日時保持(UTC)
+	/// 作成・更新日時保持
 	/// </summary>
 	[Serializable]
 	public class DateHistory: Item, ICloneable
