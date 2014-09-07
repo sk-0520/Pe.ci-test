@@ -421,6 +421,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SQL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </EmbeddedResource>
