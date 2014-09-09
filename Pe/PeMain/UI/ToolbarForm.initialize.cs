@@ -22,6 +22,8 @@ namespace PeMain.UI
 		{
 			this._menuGroup = new ContextMenu();
 			ContextMenu = this._menuGroup;
+			ContextMenu.Popup += OpeningRootMenu;
+			ContextMenu.Collapse += CloseRootMenu;
 			
 			Visible = false;
 		}

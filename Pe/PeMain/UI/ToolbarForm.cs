@@ -105,6 +105,19 @@ namespace PeMain.UI
 			DrawFullActivaChanged(false);
 		}
 		
+		void OpeningRootMenu(object sender, EventArgs e)
+		{
+			this._menuOpening = true;
+			if(sender is ToolStripDropDownItem) {
+				clickItem_DropDownOpening(sender, e);
+			}
+		}
+		void CloseRootMenu(object sender, EventArgs e)
+		{
+			this._menuOpening = false;
+			SwitchHidden();
+		}
+		
 		void clickItem_DropDownOpening(object sender, EventArgs e)
 		{
 			OpeningDropDown((ToolStripDropDownItem)sender);

@@ -484,7 +484,6 @@ namespace PeMain.UI
 				var parentPath = Path.GetDirectoryName(launcherItem.Command);
 				fileItem.Enabled = Directory.Exists(parentPath);
 			};
-			
 		}
 		
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
@@ -667,16 +666,17 @@ namespace PeMain.UI
 			} else {
 				AttachmentToolbarMenu(toolItem);
 			}
+			toolItem.DropDownOpening += OpeningRootMenu;
+			toolItem.DropDownClosed += CloseRootMenu;
+
 			var hasMenuItem = (ToolStripDropDownItem)toolItem;
 			if(hasMenuItem != null) {
-				hasMenuItem.DropDownOpening += new EventHandler(clickItem_DropDownOpening);
+				hasMenuItem.DropDownOpening += clickItem_DropDownOpening;
 			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
 			return toolItem;
 		}
-
-
 		
 		// TODO: 領域ぎりぎりの場合にメニュー位置が他のディスプレイに表示される
 		void OpeningDropDown(ToolStripDropDownItem toolItem)
@@ -817,6 +817,17 @@ namespace PeMain.UI
 			// 他のツールバーから通知を受け取った場合に反映処理を行う
 			Debug.Assert(toolbarItem != UseToolbarItem);
 			SelectedGroup(SelectedGroupItem);
+		}
+		
+		protected override void HiddenView(Rectangle area)
+		{
+			if(AutoHide) {
+				if(!this._menuOpening) {
+					base.HiddenView(area);
+				} else {
+					//SwitchHidden();
+				}
+			}
 		}
 
 	}
