@@ -83,6 +83,7 @@ namespace PeMain.UI
 			this.viewCommand.ReadOnly = true;
 			this.viewCommand.Size = new System.Drawing.Size(648, 23);
 			this.viewCommand.TabIndex = 0;
+			this.viewCommand.TabStop = false;
 			// 
 			// inputOption
 			// 
@@ -91,7 +92,7 @@ namespace PeMain.UI
 			this.inputOption.Location = new System.Drawing.Point(154, 32);
 			this.inputOption.Name = "inputOption";
 			this.inputOption.Size = new System.Drawing.Size(463, 23);
-			this.inputOption.TabIndex = 1;
+			this.inputOption.TabIndex = 0;
 			// 
 			// inputWorkDirPath
 			// 
@@ -116,7 +117,7 @@ namespace PeMain.UI
 			this.tabExecute.Name = "tabExecute";
 			this.tabExecute.SelectedIndex = 0;
 			this.tabExecute.Size = new System.Drawing.Size(704, 183);
-			this.tabExecute.TabIndex = 3;
+			this.tabExecute.TabIndex = 0;
 			// 
 			// tabExecute_pageBasic
 			// 
@@ -166,7 +167,7 @@ namespace PeMain.UI
 			this.selectAdministrator.Location = new System.Drawing.Point(3, 119);
 			this.selectAdministrator.Name = "selectAdministrator";
 			this.selectAdministrator.Size = new System.Drawing.Size(163, 19);
-			this.selectAdministrator.TabIndex = 9;
+			this.selectAdministrator.TabIndex = 5;
 			this.selectAdministrator.Text = ":common/check/admin";
 			this.selectAdministrator.UseVisualStyleBackColor = true;
 			// 
@@ -187,7 +188,7 @@ namespace PeMain.UI
 			this.selectStdStream.Location = new System.Drawing.Point(3, 94);
 			this.selectStdStream.Name = "selectStdStream";
 			this.selectStdStream.Size = new System.Drawing.Size(187, 19);
-			this.selectStdStream.TabIndex = 8;
+			this.selectStdStream.TabIndex = 4;
 			this.selectStdStream.Text = ":execute/check/std-stream";
 			this.selectStdStream.UseVisualStyleBackColor = true;
 			// 
@@ -207,7 +208,7 @@ namespace PeMain.UI
 			this.commandOption_file.Location = new System.Drawing.Point(623, 32);
 			this.commandOption_file.Name = "commandOption_file";
 			this.commandOption_file.Size = new System.Drawing.Size(28, 25);
-			this.commandOption_file.TabIndex = 5;
+			this.commandOption_file.TabIndex = 1;
 			this.commandOption_file.UseVisualStyleBackColor = true;
 			this.commandOption_file.Click += new System.EventHandler(this.CommandOption_file_Click);
 			// 
@@ -217,7 +218,7 @@ namespace PeMain.UI
 			this.commandWorkDirPath.Location = new System.Drawing.Point(623, 63);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(28, 25);
-			this.commandWorkDirPath.TabIndex = 7;
+			this.commandWorkDirPath.TabIndex = 3;
 			this.commandWorkDirPath.UseVisualStyleBackColor = true;
 			this.commandWorkDirPath.Click += new System.EventHandler(this.CommandWorkDirPath_Click);
 			// 
@@ -225,7 +226,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
-			this.commandOption_dir.Location = new System.Drawing.Point(723, 41);
+			this.commandOption_dir.Location = new System.Drawing.Point(735, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_dir.TabIndex = 6;
@@ -349,7 +350,7 @@ namespace PeMain.UI
 			this.commandCancel.Location = new System.Drawing.Point(623, 3);
 			this.commandCancel.Name = "commandCancel";
 			this.commandCancel.Size = new System.Drawing.Size(78, 29);
-			this.commandCancel.TabIndex = 4;
+			this.commandCancel.TabIndex = 1;
 			this.commandCancel.Text = "{CANCEL}";
 			this.commandCancel.UseVisualStyleBackColor = true;
 			// 
