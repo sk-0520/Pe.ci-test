@@ -263,8 +263,11 @@ namespace PeMain.UI
 						this._logForm.SetCommonData(this._commonData);
 						this._messageWindow.SetCommonData(this._commonData);
 						foreach(var toolbar in this._toolbarForms.Values) {
-							toolbar.SetCommonData(this._commonData);
+							//toolbar.SetCommonData(this._commonData);
+							toolbar.Dispose();
 						}
+						this._toolbarForms.Clear();
+						InitializeToolbarForm(null, null);
 						
 						InitializeNoteForm(null, null);
 					};
