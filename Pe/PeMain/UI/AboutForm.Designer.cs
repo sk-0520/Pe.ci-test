@@ -42,6 +42,9 @@ namespace PeMain.UI
 			this.labelAppVersion = new System.Windows.Forms.Label();
 			this.linkWeb = new System.Windows.Forms.LinkLabel();
 			this.linkRepository = new System.Windows.Forms.LinkLabel();
+			this.commandExecuteDir = new System.Windows.Forms.Button();
+			this.commandDataDir = new System.Windows.Forms.Button();
+			this.commandBackupDir = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -56,7 +59,7 @@ namespace PeMain.UI
 			// commandOk
 			// 
 			this.commandOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOk.Location = new System.Drawing.Point(138, 150);
+			this.commandOk.Location = new System.Drawing.Point(252, 150);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(101, 31);
 			this.commandOk.TabIndex = 0;
@@ -106,12 +109,54 @@ namespace PeMain.UI
 			this.linkRepository.Text = "https://bitbucket.org/sk_0520/pe";
 			this.linkRepository.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
+			// commandExecuteDir
+			// 
+			this.commandExecuteDir.Image = global::PeMain.Properties.Images.Dir;
+			this.commandExecuteDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.commandExecuteDir.Location = new System.Drawing.Point(252, 12);
+			this.commandExecuteDir.Name = "commandExecuteDir";
+			this.commandExecuteDir.Size = new System.Drawing.Size(101, 27);
+			this.commandExecuteDir.TabIndex = 4;
+			this.commandExecuteDir.Text = ":about/command/execute";
+			this.commandExecuteDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandExecuteDir.UseVisualStyleBackColor = true;
+			this.commandExecuteDir.Click += new System.EventHandler(this.CommandExecuteDir_Click);
+			// 
+			// commandDataDir
+			// 
+			this.commandDataDir.Image = global::PeMain.Properties.Images.Dir;
+			this.commandDataDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.commandDataDir.Location = new System.Drawing.Point(252, 44);
+			this.commandDataDir.Name = "commandDataDir";
+			this.commandDataDir.Size = new System.Drawing.Size(101, 27);
+			this.commandDataDir.TabIndex = 5;
+			this.commandDataDir.Text = ":about/command/data";
+			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandDataDir.UseVisualStyleBackColor = true;
+			this.commandDataDir.Click += new System.EventHandler(this.CommandDataDir_Click);
+			// 
+			// commandBackupDir
+			// 
+			this.commandBackupDir.Image = global::PeMain.Properties.Images.Dir;
+			this.commandBackupDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.commandBackupDir.Location = new System.Drawing.Point(252, 76);
+			this.commandBackupDir.Name = "commandBackupDir";
+			this.commandBackupDir.Size = new System.Drawing.Size(101, 27);
+			this.commandBackupDir.TabIndex = 6;
+			this.commandBackupDir.Text = ":about/command/backup";
+			this.commandBackupDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandBackupDir.UseVisualStyleBackColor = true;
+			this.commandBackupDir.Click += new System.EventHandler(this.CommandBackupDir_Click);
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(251, 193);
+			this.ClientSize = new System.Drawing.Size(365, 193);
+			this.Controls.Add(this.commandBackupDir);
+			this.Controls.Add(this.commandDataDir);
+			this.Controls.Add(this.commandExecuteDir);
 			this.Controls.Add(this.linkRepository);
 			this.Controls.Add(this.linkWeb);
 			this.Controls.Add(this.labelAppVersion);
@@ -132,6 +177,9 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button commandBackupDir;
+		private System.Windows.Forms.Button commandDataDir;
+		private System.Windows.Forms.Button commandExecuteDir;
 		private System.Windows.Forms.LinkLabel linkRepository;
 		private System.Windows.Forms.LinkLabel linkWeb;
 		private System.Windows.Forms.Label labelAppVersion;

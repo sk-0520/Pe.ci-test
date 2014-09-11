@@ -24,6 +24,11 @@ namespace PeMain.UI
 		{
 			ApplyLanguage();
 		}
+		
+		void OpenDirectory(string path)
+		{
+			Executer.OpenDirectory(path, CommonData.Logger, CommonData.Language, null);
+		}
 
 	}
 }

@@ -187,6 +187,10 @@
 		<Word Name="setting/column/note/fore"     Text="前景色" />
 		<Word Name="setting/column/note/back"     Text="背景色" />
 		
+		<Word Name="about/command/execute"  Text="@[PE]" />
+		<Word Name="about/command/data"     Text="データ" />
+		<Word Name="about/command/backup"   Text="バックアップ" />
+		
 		<Word Name="group/new" Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
 		

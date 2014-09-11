@@ -16,6 +16,10 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
+			
+			this.commandExecuteDir.SetLanguage(CommonData.Language);
+			this.commandDataDir.SetLanguage(CommonData.Language);
+			this.commandBackupDir.SetLanguage(CommonData.Language);
 		}
 	}
 }

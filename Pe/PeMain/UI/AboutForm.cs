@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using PeMain.Logic;
 
@@ -39,6 +40,21 @@ namespace PeMain.UI
 			var linkLabel = (LinkLabel)sender;
 			linkLabel.Visible = true;
 			Process.Start(linkLabel.Text);
+		}
+		
+		void CommandExecuteDir_Click(object sender, EventArgs e)
+		{
+			OpenDirectory(Path.GetDirectoryName(Application.ExecutablePath));
+		}
+		
+		void CommandDataDir_Click(object sender, EventArgs e)
+		{
+			OpenDirectory(Literal.UserSettingDirPath);
+		}
+		
+		void CommandBackupDir_Click(object sender, EventArgs e)
+		{
+			OpenDirectory(Literal.UserBackupDirPath);
 		}
 	}
 }
