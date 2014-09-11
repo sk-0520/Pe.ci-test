@@ -92,7 +92,7 @@ namespace PeMain.UI
 			this.linkWeb.Location = new System.Drawing.Point(12, 76);
 			this.linkWeb.Name = "linkWeb";
 			this.linkWeb.Size = new System.Drawing.Size(173, 15);
-			this.linkWeb.TabIndex = 3;
+			this.linkWeb.TabIndex = 1;
 			this.linkWeb.TabStop = true;
 			this.linkWeb.Text = "http://content-type-text.net";
 			this.linkWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
@@ -104,7 +104,7 @@ namespace PeMain.UI
 			this.linkRepository.Location = new System.Drawing.Point(12, 101);
 			this.linkRepository.Name = "linkRepository";
 			this.linkRepository.Size = new System.Drawing.Size(202, 15);
-			this.linkRepository.TabIndex = 3;
+			this.linkRepository.TabIndex = 2;
 			this.linkRepository.TabStop = true;
 			this.linkRepository.Text = "https://bitbucket.org/sk_0520/pe";
 			this.linkRepository.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
@@ -116,7 +116,7 @@ namespace PeMain.UI
 			this.commandExecuteDir.Location = new System.Drawing.Point(252, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
 			this.commandExecuteDir.Size = new System.Drawing.Size(101, 27);
-			this.commandExecuteDir.TabIndex = 4;
+			this.commandExecuteDir.TabIndex = 3;
 			this.commandExecuteDir.Text = ":about/command/execute";
 			this.commandExecuteDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandExecuteDir.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@ namespace PeMain.UI
 			this.commandDataDir.Location = new System.Drawing.Point(252, 44);
 			this.commandDataDir.Name = "commandDataDir";
 			this.commandDataDir.Size = new System.Drawing.Size(101, 27);
-			this.commandDataDir.TabIndex = 5;
+			this.commandDataDir.TabIndex = 4;
 			this.commandDataDir.Text = ":about/command/data";
 			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandDataDir.UseVisualStyleBackColor = true;
@@ -142,7 +142,7 @@ namespace PeMain.UI
 			this.commandBackupDir.Location = new System.Drawing.Point(252, 76);
 			this.commandBackupDir.Name = "commandBackupDir";
 			this.commandBackupDir.Size = new System.Drawing.Size(101, 27);
-			this.commandBackupDir.TabIndex = 6;
+			this.commandBackupDir.TabIndex = 5;
 			this.commandBackupDir.Text = ":about/command/backup";
 			this.commandBackupDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandBackupDir.UseVisualStyleBackColor = true;
