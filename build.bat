@@ -2,7 +2,9 @@ cd /d %~dp0
 echo off
 
 set OUTPUT=output\Release
+set PEPATH=%OUTPUT%\x86\PeMain.exe
 set ZIP=%OUTPUT%\zip.vbs
+set GV=%OUTPUT%\get-ver.vbs
 
 set DOTNETVER=v4.0.30319
 
@@ -17,7 +19,19 @@ echo build x86
 echo build x64
 "%MB%" Pe\Pe.sln /p:Configuration=Release;Platform=x64 /t:Rebuild /m
 
-echo compression
+echo create temp script
+
+echo. 'GET VERSION ------------ >  %GV%
+echo. Dim exePath, exeVer >> %GV%
+echo. exePath = Wscript.Arguments(0) >> %GV%
+echo. With CreateObject("Scripting.FileSystemObject") >> %GV%
+echo      exePath = .GetAbsolutePathName(exePath) >> %GV%
+echo.     exeVer  = .GetFileVersion(exePath) >> %GV%
+echo. End With >> %GV%
+echo. exeVer = Left(exeVer, InStrRev(exeVer, ".") - 1) >> %GV%
+echo. exeVer = Replace(exeVer, ".", "-") >> %GV%
+echo. WScript.Echo exeVer >> %GV%
+
 echo. 'MAKE ZIP ARCHIVE ------------ >  %ZIP%
 echo. Dim inputDir, outputFile >> %ZIP%
 echo. inputDir = Wscript.Arguments(0) >> %ZIP%
@@ -38,6 +52,9 @@ echo.         WScript.Sleep 1000 >> %ZIP%
 echo.     Loop >> %ZIP%
 echo. End With >> %ZIP%
 
-cscript %ZIP% %OUTPUT%\x86 %OUTPUT%\Pe_x86.zip
-cscript %ZIP% %OUTPUT%\x64 %OUTPUT%\Pe_x64.zip
+for /F "usebackq" %%s in (`cscript %GV% %PEPATH%`) do set EXEVER=%%s
+
+echo compression
+cscript %ZIP% %OUTPUT%\x86 %OUTPUT%\Pe_%EXEVER%_x86.zip
+cscript %ZIP% %OUTPUT%\x64 %OUTPUT%\Pe_%EXEVER%_x64.zip
 
