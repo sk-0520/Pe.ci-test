@@ -1,6 +1,8 @@
 cd /d %~dp0
 if "%PROCESSOR_ARCHITECTURE%" NEQ "x86" (
- "C:\Program Files (x86)\Git\bin\sh.exe" --login -i"
+	set SHELL="C:\Program Files (x86)\Git\bin\sh.exe"
 ) else (
- "C:\Program Files\Git\bin\sh.exe" --login -i"
+	set SHELL="C:\Program Files\Git\bin\sh.exe"
 )
+%SHELL% --login -i
+
