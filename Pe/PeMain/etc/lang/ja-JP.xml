@@ -43,7 +43,7 @@
 		<Word Name="window/stream"   Text="@[ITEM]の実行出力" />
 		<Word Name="window/setting"  Text="@[PE] 設定" />
 		
-		<Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" />
+		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
 		<Word Name="main/menu/window/note"                  Text="ノート(&amp;N)" />
 		<Word Name="main/menu/window/note/create"           Text="新規作成(&amp;N)" />

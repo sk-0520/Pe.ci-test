@@ -238,6 +238,7 @@ namespace PeMain.UI
 			parentMenu.MenuItems.AddRange(menuList.ToArray());
 		}
 		
+		/*
 		void AttachmentWindowSubMenu(MenuItem parentMenu)
 		{
 			var menuList = new List<MenuItem>();
@@ -269,6 +270,7 @@ namespace PeMain.UI
 				itemLogger.Checked = this._logForm.Visible;
 			};
 		}
+		 */
 		
 		void AttachmentSystemEnvSubMenu(MenuItem parentMenu)
 		{
@@ -309,7 +311,10 @@ namespace PeMain.UI
 		private void AttachmentMainMenu()
 		{
 			var menuList = new List<MenuItem>();
-			var itemWindow = new MenuItem();
+			//var itemWindow = new MenuItem();
+			var itemToolbar = new MenuItem();
+			var itemNote = new MenuItem();
+			var itemLogger = new MenuItem();
 			var itemSystemEnv = new MenuItem();
 			var itemSetting = new MenuItem();
 			var itemAbout = new MenuItem();
@@ -317,7 +322,10 @@ namespace PeMain.UI
 			
 			menuList.Add(itemSetting);
 			menuList.Add(new MenuItem("-"));
-			menuList.Add(itemWindow);
+			menuList.Add(itemToolbar);
+			menuList.Add(itemNote);
+			menuList.Add(itemLogger);
+			menuList.Add(new MenuItem("-"));
 			menuList.Add(itemSystemEnv);
 			menuList.Add(new MenuItem("-"));
 			menuList.Add(itemAbout);
@@ -336,9 +344,26 @@ namespace PeMain.UI
 			};
 			
 			// ウィンドウ
-			itemWindow.Name = menuNameWindow;
-			AttachmentWindowSubMenu(itemWindow);
+			//itemWindow.Name = menuNameWindow;
+			//AttachmentWindowSubMenu(itemWindow);
+			itemToolbar.Name = menuNameWindowToolbar;
+			AttachmentToolbarSubMenu(itemToolbar);
+			
+			itemNote.Name = menuNameWindowNote;
+			AttachmentNoteSubMenu(itemNote);
+			
+			itemLogger.Name = menuNameWindowLogger;
+			itemLogger.Click += (object sender, EventArgs e) => {
+				this._logForm.Visible = !this._logForm.Visible;
+				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
+			};
+			
+			// ログ
+			itemLogger.Popup += (object sender, EventArgs e) => {
+				itemLogger.Checked = this._logForm.Visible;
+			};
 
+			
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
 			AttachmentSystemEnvSubMenu(itemSystemEnv);

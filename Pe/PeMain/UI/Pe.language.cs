@@ -19,13 +19,13 @@ namespace PeMain.UI
 			var rootMenu = this._contextMenu.MenuItems;
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
 
-			var windowMenu = (MenuItem)rootMenu[menuNameWindow];
-			windowMenu.Text = this._commonData.Language["main/menu/window"];
-			windowMenu.MenuItems[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
-			windowMenu.MenuItems[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
-			windowMenu.MenuItems[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
+//			var windowMenu = (MenuItem)rootMenu[menuNameWindow];
+//			windowMenu.Text = this._commonData.Language["main/menu/window"];
+			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
+			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			
-			var noteMenu = (MenuItem)windowMenu.MenuItems[menuNameWindowNote];
+			var noteMenu = (MenuItem)rootMenu[menuNameWindowNote];
 			noteMenu.MenuItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
 			noteMenu.MenuItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
 			noteMenu.MenuItems[menuNameWindowNoteCompact].Text =this._commonData.Language["main/menu/window/note/compact"]; 
