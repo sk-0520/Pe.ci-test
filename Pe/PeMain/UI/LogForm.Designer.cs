@@ -231,7 +231,7 @@ namespace PeMain.UI
 			// 
 			// toolLog_clear
 			// 
-			this.toolLog_clear.Image = global::PeMain.Properties.Images.NotImpl;
+			this.toolLog_clear.Image = global::PeMain.Properties.Images.Clear;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
 			this.toolLog_clear.Size = new System.Drawing.Size(148, 22);

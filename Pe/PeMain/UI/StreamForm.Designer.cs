@@ -36,7 +36,6 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StreamForm));
 			this.toolStream = new System.Windows.Forms.ToolStrip();
 			this.toolStream_save = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_clear = new System.Windows.Forms.ToolStripButton();
@@ -85,7 +84,7 @@ namespace PeMain.UI
 			// toolStream_clear
 			// 
 			this.toolStream_clear.Enabled = false;
-			this.toolStream_clear.Image = ((System.Drawing.Image)(resources.GetObject("toolStream_clear.Image")));
+			this.toolStream_clear.Image = global::PeMain.Properties.Images.Clear;
 			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_clear.Name = "toolStream_clear";
 			this.toolStream_clear.Size = new System.Drawing.Size(173, 22);

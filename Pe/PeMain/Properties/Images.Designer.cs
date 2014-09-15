@@ -83,6 +83,16 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap Clear {
+			get {
+				object obj = ResourceManager.GetObject("Clear", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap Comment {
 			get {
 				object obj = ResourceManager.GetObject("Comment", resourceCulture);
