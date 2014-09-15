@@ -9,6 +9,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 using PeMain.Data;
@@ -95,6 +96,17 @@ namespace PeMain.UI
 				Process.Kill();
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+			}
+		}
+		
+		/// <summary>
+		/// #22
+		/// </summary>
+		/// <param name="path"></param>
+		void SaveStream(string path)
+		{
+			using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
+				stream.Write(this.viewOutput.Text);
 			}
 		}
 	}

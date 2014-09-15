@@ -80,6 +80,7 @@ namespace PeMain.UI
 			this.toolStream_save.Size = new System.Drawing.Size(172, 22);
 			this.toolStream_save.Text = ":stream/command/save";
 			this.toolStream_save.ToolTipText = ":stream/tips/save";
+			this.toolStream_save.Click += new System.EventHandler(this.ToolStream_save_Click);
 			// 
 			// toolStream_clear
 			// 
@@ -90,6 +91,7 @@ namespace PeMain.UI
 			this.toolStream_clear.Size = new System.Drawing.Size(173, 22);
 			this.toolStream_clear.Text = ":stream/command/clear";
 			this.toolStream_clear.ToolTipText = ":stream/tips/clear";
+			this.toolStream_clear.Click += new System.EventHandler(this.ToolStream_clear_Click);
 			// 
 			// toolStripSeparator1
 			// 

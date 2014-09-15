@@ -65,5 +65,24 @@ namespace PeMain.UI
 			this.toolStream_save.Enabled = hasText;
 			this.toolStream_clear.Enabled = hasText;
 		}
+		
+		void ToolStream_clear_Click(object sender, EventArgs e)
+		{
+			// #22
+			this.viewOutput.Clear();
+		}
+		
+		void ToolStream_save_Click(object sender, EventArgs e)
+		{
+			using(var dialog = new SaveFileDialog()) {
+				dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+				dialog.FileName = Literal.NowTimestampFileName + ".output.log";
+				dialog.Filter = "*.output.log|*.output.log";
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					var path = dialog.FileName;
+					SaveStream(path);
+				}
+			}
+		}
 	}
 }
