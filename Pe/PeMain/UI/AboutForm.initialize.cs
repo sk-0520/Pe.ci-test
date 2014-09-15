@@ -30,6 +30,15 @@ namespace PeMain.UI
 			var versionInfo = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			this.labelAppName.Text = Literal.programName;
 			this.labelAppVersion.Text = versionInfo.ProductVersion;
+			this.labelConfiguration.Text = string.Format(
+				"{0}: {1}bit",
+				#if DEBUG
+				"DEBUG",
+				#else
+				"RELEASE",
+				#endif
+				Environment.Is64BitProcess ? "64": "32"
+			);
 		}
 	}
 }

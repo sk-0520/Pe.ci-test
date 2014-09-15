@@ -32,7 +32,7 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>..\..\output\Debug\</OutputPath>
+    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>True</Optimize>
@@ -43,7 +43,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\output\Release\</OutputPath>
+    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
     <DebugSymbols>False</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
@@ -540,8 +540,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>#SQLite.Interop.dll
-mkdir "$(SolutionDir)..\output\$(Configuration)\$(Platform)"
-copy "$(SolutionDir)packages\System.Data.SQLite.Core.1.0.93.0\content\net45\$(Platform)\SQLite.Interop.dll" "$(SolutionDir)..\output\$(Configuration)\$(Platform)"
-del "$(SolutionDir)..\output\$(Configuration)\System.Data.SQLite.xml"</PostBuildEvent>
+mkdir "$(SolutionDir)..\output\$(Configuration)\$(Platform)\$(Platform)"
+copy "$(SolutionDir)packages\System.Data.SQLite.Core.1.0.93.0\content\net45\$(Platform)\SQLite.Interop.dll" "$(SolutionDir)..\output\$(Configuration)\$(Platform)\$(Platform)"
+del "$(SolutionDir)..\output\$(Configuration)\$(Platform)\System.Data.SQLite.xml"</PostBuildEvent>
   </PropertyGroup>
 </Project>

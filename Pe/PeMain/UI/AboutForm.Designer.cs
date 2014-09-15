@@ -45,6 +45,7 @@ namespace PeMain.UI
 			this.commandExecuteDir = new System.Windows.Forms.Button();
 			this.commandDataDir = new System.Windows.Forms.Button();
 			this.commandBackupDir = new System.Windows.Forms.Button();
+			this.labelConfiguration = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -89,7 +90,7 @@ namespace PeMain.UI
 			// 
 			this.linkWeb.AutoEllipsis = true;
 			this.linkWeb.AutoSize = true;
-			this.linkWeb.Location = new System.Drawing.Point(12, 76);
+			this.linkWeb.Location = new System.Drawing.Point(12, 96);
 			this.linkWeb.Name = "linkWeb";
 			this.linkWeb.Size = new System.Drawing.Size(173, 15);
 			this.linkWeb.TabIndex = 1;
@@ -101,7 +102,7 @@ namespace PeMain.UI
 			// 
 			this.linkRepository.AutoEllipsis = true;
 			this.linkRepository.AutoSize = true;
-			this.linkRepository.Location = new System.Drawing.Point(12, 101);
+			this.linkRepository.Location = new System.Drawing.Point(12, 121);
 			this.linkRepository.Name = "linkRepository";
 			this.linkRepository.Size = new System.Drawing.Size(202, 15);
 			this.linkRepository.TabIndex = 2;
@@ -148,6 +149,15 @@ namespace PeMain.UI
 			this.commandBackupDir.UseVisualStyleBackColor = true;
 			this.commandBackupDir.Click += new System.EventHandler(this.CommandBackupDir_Click);
 			// 
+			// labelConfiguration
+			// 
+			this.labelConfiguration.AutoSize = true;
+			this.labelConfiguration.Location = new System.Drawing.Point(66, 60);
+			this.labelConfiguration.Name = "labelConfiguration";
+			this.labelConfiguration.Size = new System.Drawing.Size(111, 15);
+			this.labelConfiguration.TabIndex = 2;
+			this.labelConfiguration.Text = "labelConfiguration";
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
@@ -159,6 +169,7 @@ namespace PeMain.UI
 			this.Controls.Add(this.commandExecuteDir);
 			this.Controls.Add(this.linkRepository);
 			this.Controls.Add(this.linkWeb);
+			this.Controls.Add(this.labelConfiguration);
 			this.Controls.Add(this.labelAppVersion);
 			this.Controls.Add(this.labelAppName);
 			this.Controls.Add(this.imageIcon);
@@ -177,6 +188,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label labelConfiguration;
 		private System.Windows.Forms.Button commandBackupDir;
 		private System.Windows.Forms.Button commandDataDir;
 		private System.Windows.Forms.Button commandExecuteDir;
