@@ -94,5 +94,11 @@ namespace PeMain.Data
 			Bold = f.Bold;
 			Italic = f.Italic;
 		}
+		
+		public override string ToString()
+		{
+			return string.Format("{0} {1}", Family, Height);
+		}
+
 	}
 }

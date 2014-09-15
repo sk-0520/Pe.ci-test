@@ -84,7 +84,7 @@ namespace PeMain.UI
 		{
 			string viewText = Language["common/command/default-font"];
 			if(FontSetting != null && !FontSetting.IsDefault) {
-				viewText = string.Format("{0} {1}", FontSetting.Family, FontSetting.Height);
+				viewText = FontSetting.ToString();
 			}
 			Text = viewText;
 		}
