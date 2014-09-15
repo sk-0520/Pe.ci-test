@@ -95,9 +95,14 @@ namespace PeMain.Data
 			Italic = f.Italic;
 		}
 		
-		public override string ToString()
+		public string ToViewText(Language language)
 		{
-			return string.Format("{0} {1}", Family, Height);
+			string viewText = language["common/command/default-font"];
+			if(!IsDefault) {
+				viewText = string.Format("{0} {1}", Family, Height);
+			}
+			
+			return viewText;
 		}
 
 	}

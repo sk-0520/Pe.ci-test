@@ -139,14 +139,14 @@ namespace PeMain.UI
 			// contextMenu_font_change
 			// 
 			this.contextMenu_font_change.Name = "contextMenu_font_change";
-			this.contextMenu_font_change.Size = new System.Drawing.Size(222, 22);
-			this.contextMenu_font_change.Text = ":note/menu/font/change";
+			this.contextMenu_font_change.Size = new System.Drawing.Size(211, 22);
+			this.contextMenu_font_change.Text = "<FONT-CHANGE>";
 			this.contextMenu_font_change.Click += new System.EventHandler(this.ContextMenu_font_change_Click);
 			// 
 			// contextMenu_font_reset
 			// 
 			this.contextMenu_font_reset.Name = "contextMenu_font_reset";
-			this.contextMenu_font_reset.Size = new System.Drawing.Size(222, 22);
+			this.contextMenu_font_reset.Size = new System.Drawing.Size(211, 22);
 			this.contextMenu_font_reset.Text = ":note/menu/font/reset";
 			this.contextMenu_font_reset.Click += new System.EventHandler(this.ContextMenu_font_reset_Click);
 			// 

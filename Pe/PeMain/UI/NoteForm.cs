@@ -296,6 +296,9 @@ namespace PeMain.UI
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
 			this.contextMenu_itemTopmost.Checked = NoteItem.Topmost;
 			
+			// フォント
+			this.contextMenu_font_change.Text = NoteItem.Style.FontSetting.ToViewText(CommonData.Language);
+			
 			// 色
 			var foreColor = this.contextMenu_fore.ComboBox.Items.Cast<ColorData>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
 			if(foreColor != null) {

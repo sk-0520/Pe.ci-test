@@ -82,11 +82,7 @@ namespace PeMain.UI
 		
 		public void RefreshView()
 		{
-			string viewText = Language["common/command/default-font"];
-			if(FontSetting != null && !FontSetting.IsDefault) {
-				viewText = FontSetting.ToString();
-			}
-			Text = viewText;
+			Text = FontSetting.ToViewText(Language);
 		}
 
 	}

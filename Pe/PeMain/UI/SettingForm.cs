@@ -306,5 +306,15 @@ namespace PeMain.UI
 			}
 			
 		}
+		
+		void GridNoteItems_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
+				// フォント
+				var row = this._noteItemList[e.RowIndex];
+				e.Value = row.Font.ToViewText(Language);
+				e.FormattingApplied = true;
+			}
+		}
 	}
 }
