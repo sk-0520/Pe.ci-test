@@ -36,7 +36,7 @@ namespace PeMain.UI
 
 		void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
 		{
-			OutputStreamReceived(e.Data, true);
+			OutputStreamReceived(e.Data, false);
 		}
 		
 		

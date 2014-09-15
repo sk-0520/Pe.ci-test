@@ -52,6 +52,11 @@ namespace PeMain.UI
 		
 		void OutputStreamReceived(string line, bool stdOutput)
 		{
+			if(IsDisposed) {
+				// #20
+				return;
+			}
+			
 			this.viewOutput.BeginInvoke(
 				(MethodInvoker)delegate() {
 					this.viewOutput.Text += line + Environment.NewLine;
@@ -68,6 +73,11 @@ namespace PeMain.UI
 		
 		void ExitedProcess()
 		{
+			if(IsDisposed) {
+				// #20
+				return;
+			}
+			
 			this.toolStream_kill.Enabled = false;
 			this.toolStream_clear.Enabled = false;
 			this.toolStream_refresh.Enabled = false;
