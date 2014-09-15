@@ -289,7 +289,22 @@ namespace PeMain.UI
 						fontSetting.Height = font.Size;
 					}
 				}
+			} else if(e.ColumnIndex == this.gridNoteItems_columnFore.Index || e.ColumnIndex == this.gridNoteItems_columnBack.Index) {
+				// 前景色・背景色
+				var row = this._noteItemList[e.RowIndex];
+				var isFore = e.ColumnIndex == this.gridNoteItems_columnFore.Index;
+				using(var dialog = new ColorDialog()) {
+					if(dialog.ShowDialog() == DialogResult.OK) {
+						var color = dialog.Color;
+						if(isFore) {
+							row.Fore = color;
+						} else {
+							row.Back = color;
+						}
+					}
+				}
 			}
+			
 		}
 	}
 }
