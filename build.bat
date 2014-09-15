@@ -1,27 +1,43 @@
 cd /d %~dp0
+echo off
 
 set OUTPUT=output\Release
+set ZIP=%OUTPUT%\zip.vbs
+
 set DOTNETVER=v4.0.30319
+
 if "%PROCESSOR_ARCHITECTURE%" NEQ "x86" (
 	set MB=%windir%\microsoft.net\framework64\%DOTNETVER%\msbuild
 ) else (
 	set MB=%windir%\microsoft.net\framework\%DOTNETVER%\msbuild
 )
 
-echo "x86"
+echo build x86
 "%MB%" Pe\Pe.sln /p:Configuration=Release;Platform=x86 /t:Rebuild /m
-echo "x64"
+echo build x64
 "%MB%" Pe\Pe.sln /p:Configuration=Release;Platform=x64 /t:Rebuild /m
 
 echo compression
+echo. 'MAKE ZIP ARCHIVE ------------ >  %ZIP%
+echo. Dim inputDir, outputFile >> %ZIP%
+echo. inputDir = Wscript.Arguments(0) >> %ZIP%
+echo. outputFile = Wscript.Arguments(1) >> %ZIP%
+echo.  >> %ZIP%
+echo. With CreateObject("Scripting.FileSystemObject") >> %ZIP%
+echo.     outputFile = .GetAbsolutePathName(outputFile) >> %ZIP%
+echo.     inputDir   = .GetAbsolutePathName(inputDir) >> %ZIP%
+echo.     With .CreateTextFile(outputFile, True) >> %ZIP%
+echo.         .Write Chr(80) ^& Chr(75) ^& Chr(5) ^& Chr(6) ^& String(18, chr(0)) >> %ZIP%
+echo.     End With >> %ZIP%
+echo. End With >> %ZIP%
+echo.  >> %ZIP%
+echo. With CreateObject("Shell.Application") >> %ZIP%
+echo.     .NameSpace(outputFile).CopyHere .NameSpace(inputDir).Items >> %ZIP%
+echo.     Do Until .NameSpace(outputFile).Items.Count = .NameSpace(inputDir).Items.Count >> %ZIP%
+echo.         WScript.Sleep 1000 >> %ZIP%
+echo.     Loop >> %ZIP%
+echo. End With >> %ZIP%
 
-dir %OUTPUT%\x86 /s /b /a-d >%OUTPUT%\files.x86
-makecab /d "CabinetName1=Pe_x86.cab" /f %OUTPUT%\files.x86
-
-dir %OUTPUT%\x64 /s /b /a-d >%OUTPUT%\files.x64
-makecab /d "CabinetName1=Pe_x64.cab" /f %OUTPUT%\files.x64
-
-move /Y disk1\* %OUTPUT%
-move /Y setup.* %OUTPUT%
-rmdir disk1 /q
+cscript %ZIP% %OUTPUT%\x86 %OUTPUT%\Pe_x86.zip
+cscript %ZIP% %OUTPUT%\x64 %OUTPUT%\Pe_x64.zip
 
