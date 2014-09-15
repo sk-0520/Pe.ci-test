@@ -267,7 +267,29 @@ namespace PeMain.UI
 		{
 			if(this._launcherItemEvent) {
 				LauncherInputChange();
-			}	
+			}
+		}
+		
+		void GridNoteItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
+				// フォント変更
+				// TODO: ダイアログ表示を一元化する必要あり
+				using(var dialog = new FontDialog()) {
+					var row = this._noteItemList[e.RowIndex];
+					var fontSetting = row.Font;
+					if(fontSetting.IsDefault) {
+						dialog.Font = fontSetting.Font;
+					}
+					
+					if(dialog.ShowDialog() == DialogResult.OK) {
+						var result = new FontSetting();
+						var font = dialog.Font;
+						fontSetting.Family = font.FontFamily.Name;
+						fontSetting.Height = font.Size;
+					}
+				}
+			}
 		}
 	}
 }
