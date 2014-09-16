@@ -10,6 +10,19 @@ using System;
 
 namespace PeMain.Data
 {
+	public class RunningInfo: Item
+	{
+		public RunningInfo() 
+		{ }
+		
+		public bool Running { get; set; }
+		
+		public ushort VersionMajor { get; set; }
+		public ushort VersionMinor { get; set; }
+		public ushort VersionRevision { get; set; }
+		public ushort VersionBuild { get; set; }
+	}
+	
 	/// <summary>
 	/// 設定統括
 	/// </summary>
@@ -18,6 +31,8 @@ namespace PeMain.Data
 	{
 		public MainSetting()
 		{
+			RunningInfo = new RunningInfo();
+			
 			Log = new LogSetting();
 			SystemEnv = new SystemEnvSetting();
 			Launcher = new LauncherSetting();
@@ -25,6 +40,8 @@ namespace PeMain.Data
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
 		}
+		
+		public RunningInfo RunningInfo { get; set; }
 		
 		/// <summary>
 		/// 使用言語。

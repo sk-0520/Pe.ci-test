@@ -62,6 +62,24 @@ namespace PeMain.UI
 				this._commonData.Language = new Language();
 			}
 		}
+	
+		void InitializeRunningInfo(CommandLine commandLine, StartupLogger logger)
+		{
+			var prev = new {
+				VersionMajor = this._commonData.MainSetting.RunningInfo.VersionMajor,
+				VersionMinor = this._commonData.MainSetting.RunningInfo.VersionMinor,
+				VersionRevision = this._commonData.MainSetting.RunningInfo.VersionRevision
+				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild
+			};
+			var version = Application.ProductVersion.Split('.').Map(s => ushort.Parse(s)).ToArray();
+			this._commonData.MainSetting.RunningInfo.VersionMajor = version[0];
+			this._commonData.MainSetting.RunningInfo.VersionMinor = version[1];
+			this._commonData.MainSetting.RunningInfo.VersionRevision = version[2];
+			this._commonData.MainSetting.RunningInfo.VersionBuild = version[3];
+			
+			// バージョンが一定以下なら強制的に使用承諾
+			
+		}
 		
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
 		{
@@ -146,6 +164,13 @@ namespace PeMain.UI
 		void InitializeNote(CommandLine commandLine, StartupLogger logger)
 		{ }
 		
+		void PromptRunning(StartupLogger logger)
+		{
+			if(!this._commonData.MainSetting.RunningInfo.Running) {
+				// TODO: ここから
+			}
+		}
+		
 		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
@@ -162,6 +187,8 @@ namespace PeMain.UI
 			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
 			InitializeLanguage(commandLine, logger);
+			InitializeRunningInfo(commandLine, logger);
+			PromptRunning(logger);
 			
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
