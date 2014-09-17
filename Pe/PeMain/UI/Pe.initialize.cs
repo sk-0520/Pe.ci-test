@@ -68,8 +68,8 @@ namespace PeMain.UI
 			var prev = new {
 				VersionMajor = this._commonData.MainSetting.RunningInfo.VersionMajor,
 				VersionMinor = this._commonData.MainSetting.RunningInfo.VersionMinor,
-				VersionRevision = this._commonData.MainSetting.RunningInfo.VersionRevision
-				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild
+				VersionRevision = this._commonData.MainSetting.RunningInfo.VersionRevision,
+				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild,
 			};
 			var version = Application.ProductVersion.Split('.').Map(s => ushort.Parse(s)).ToArray();
 			this._commonData.MainSetting.RunningInfo.VersionMajor = version[0];
@@ -164,11 +164,20 @@ namespace PeMain.UI
 		void InitializeNote(CommandLine commandLine, StartupLogger logger)
 		{ }
 		
-		void PromptRunning(StartupLogger logger)
+		/// <summary>
+		/// Peを使用使用するかユーザーに問い合わせる。
+		/// </summary>
+		/// <param name="logger"></param>
+		/// <returns>使用する場合は真</returns>
+		bool CheckAccept(StartupLogger logger)
 		{
+			var accept = false;
 			if(!this._commonData.MainSetting.RunningInfo.Running) {
 				// TODO: ここから
+				
 			}
+			
+			return accept;
 		}
 		
 		/// <summary>
@@ -188,7 +197,15 @@ namespace PeMain.UI
 			
 			InitializeLanguage(commandLine, logger);
 			InitializeRunningInfo(commandLine, logger);
-			PromptRunning(logger);
+			var acceptProgram = CheckAccept(logger);
+			#if DEBUG
+			acceptProgram = true;
+			#endif
+			
+			if(!acceptProgram) {
+				// 使用許可が下りないのでさようなら
+				CloseApplication(false);
+			}
 			
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
