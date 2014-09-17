@@ -174,7 +174,9 @@ namespace PeMain.UI
 			var accept = false;
 			if(!this._commonData.MainSetting.RunningInfo.Running) {
 				// TODO: ここから
-				
+				var dialog = new AcceptWindow();
+				dialog.SetCommonData(this._commonData);
+				accept = dialog.ShowDialog() ?? false;
 			}
 			
 			return accept;
@@ -197,14 +199,17 @@ namespace PeMain.UI
 			
 			InitializeLanguage(commandLine, logger);
 			InitializeRunningInfo(commandLine, logger);
-			var acceptProgram = CheckAccept(logger);
-			#if DEBUG
+			var acceptProgram = false;
+			#if !DEBUG
 			acceptProgram = true;
+			#else
+			acceptProgram = CheckAccept(logger);
 			#endif
 			
 			if(!acceptProgram) {
 				// 使用許可が下りないのでさようなら
-				CloseApplication(false);
+				Initialized = false;
+				return;
 			}
 			
 			InitializeDB(commandLine, logger);
@@ -532,13 +537,20 @@ namespace PeMain.UI
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
 			
+			Debug.Assert(Initialized);
 			InitializeSetting(commandLine, logger);
+			if(!Initialized) {
+				return;
+			}
+			Debug.Assert(Initialized);
 			InitializeUI(commandLine, logger);
 			
+			Debug.Assert(Initialized);
 			ApplyLanguage();
 			
 			SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
 			
+			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
 		}

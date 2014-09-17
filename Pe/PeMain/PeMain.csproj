@@ -171,6 +171,10 @@
     <Compile Include="UI\AboutForm.property.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\AcceptWindow.xaml.cs">
+      <DependentUpon>AcceptWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.cs" />
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
@@ -323,6 +327,9 @@
     </Compile>
     <Compile Include="UI\Pe.MessageWindow.wndProc.cs">
       <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Pe.property.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.variable.cs">
       <DependentUpon>Pe.cs</DependentUpon>
@@ -536,6 +543,9 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\AcceptWindow.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

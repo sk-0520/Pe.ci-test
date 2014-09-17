@@ -233,7 +233,7 @@ namespace PeMain.UI
 			
 		}
 		
-		void CloseApplication(bool save)
+		public void CloseApplication(bool save)
 		{
 			if(save) {
 				SaveSetting();
