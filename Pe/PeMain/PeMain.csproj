@@ -160,7 +160,7 @@
     <Compile Include="UI\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AboutForm.functions.cs">
+    <Compile Include="UI\AboutForm.function.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AboutForm.initialize.cs">
@@ -172,11 +172,13 @@
     <Compile Include="UI\AboutForm.property.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AcceptForm.cs" />
+    <Compile Include="UI\AcceptForm.cs">
+      <DependentUpon>AboutForm.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\AcceptForm.Designer.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AcceptForm.functions.cs">
+    <Compile Include="UI\AcceptForm.function.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AcceptForm.initialize.cs">
@@ -255,7 +257,7 @@
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ExecuteForm.functions.cs">
+    <Compile Include="UI\ExecuteForm.function.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ExecuteForm.initialize.cs">
@@ -279,7 +281,7 @@
     <Compile Include="UI\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LogForm.functions.cs">
+    <Compile Include="UI\LogForm.function.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LogForm.language.cs">
@@ -314,7 +316,7 @@
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.cs" />
-    <Compile Include="UI\Pe.functions.cs">
+    <Compile Include="UI\Pe.function.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.initialize.cs">
@@ -385,7 +387,7 @@
     <Compile Include="UI\StreamForm.Designer.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\StreamForm.functions.cs">
+    <Compile Include="UI\StreamForm.function.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\StreamForm.initialize.cs">
@@ -410,7 +412,7 @@
     <Compile Include="UI\ToolbarForm.draw.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ToolbarForm.functions.cs">
+    <Compile Include="UI\ToolbarForm.function.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ToolbarForm.initialize.cs">
@@ -491,7 +493,7 @@
     <None Include="etc\lang\ja-JP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="UI\SettingForm.functions.cs">
+    <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LogForm.initialize.cs">
@@ -500,7 +502,7 @@
     <Compile Include="UI\Pe.define.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.functions.cs">
+    <Compile Include="UI\Pe.MessageWindow.function.cs">
       <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Pe.sender.cs">
@@ -509,7 +511,7 @@
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\NoteForm.functions.cs">
+    <Compile Include="UI\NoteForm.function.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\NoteForm.wndProc.cs">
