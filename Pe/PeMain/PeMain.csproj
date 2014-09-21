@@ -172,9 +172,7 @@
     <Compile Include="UI\AboutForm.property.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AcceptForm.cs">
-      <DependentUpon>AboutForm.resx</DependentUpon>
-    </Compile>
+    <Compile Include="UI\AcceptForm.cs" />
     <Compile Include="UI\AcceptForm.Designer.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
@@ -182,6 +180,9 @@
       <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AcceptForm.initialize.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.language.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AcceptForm.property.cs">
@@ -253,7 +254,9 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.variable.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ExecuteForm.cs" />
+    <Compile Include="UI\ExecuteForm.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>

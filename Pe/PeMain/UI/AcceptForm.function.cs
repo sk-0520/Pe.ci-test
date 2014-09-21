@@ -24,13 +24,5 @@ namespace PeMain.UI
 			
 			ApplyLanguage();
 		}
-		
-		void ApplyLanguage()
-		{
-			UIUtility.SetDefaultText(this, CommonData.Language);
-			var acceptFilePath = Path.Combine(Literal.PeLanguageDirPath, CommonData.Language.AcceptFileName);
-			//this.webDocument.DocumentText = File.ReadAllText(acceptFilePath);;
-			this.webDocument.Navigate(acceptFilePath);
-		}
 	}
 }
