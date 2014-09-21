@@ -82,6 +82,7 @@ namespace PeMain.UI
 			this.commandAccept.TabIndex = 1;
 			this.commandAccept.Text = "{OK}";
 			this.commandAccept.UseVisualStyleBackColor = true;
+			this.commandAccept.Click += new System.EventHandler(this.CommandAccept_Click);
 			// 
 			// commandCancel
 			// 
@@ -105,6 +106,7 @@ namespace PeMain.UI
 			this.ClientSize = new System.Drawing.Size(464, 322);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.Icon = global::PeMain.Properties.Images.Pe;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MinimumSize = new System.Drawing.Size(480, 360);
 			this.Name = "AcceptForm";

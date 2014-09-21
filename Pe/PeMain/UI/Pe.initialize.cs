@@ -165,8 +165,8 @@ namespace PeMain.UI
 		/// <returns>使用する場合は真</returns>
 		bool CheckAccept(StartupLogger logger)
 		{
-			var accept = false;
-			if(!this._commonData.MainSetting.RunningInfo.Running) {
+			var accept = this._commonData.MainSetting.RunningInfo.Running;
+			if(!accept) {
 				// TODO: ここから
 				var dialog = new AcceptForm();
 				dialog.SetCommonData(this._commonData);
@@ -193,18 +193,14 @@ namespace PeMain.UI
 			
 			InitializeLanguage(commandLine, logger);
 			InitializeRunningInfo(commandLine, logger);
-			var acceptProgram = false;
-			#if !DEBUG
-			acceptProgram = true;
-			#else
-			acceptProgram = CheckAccept(logger);
-			#endif
+			var acceptProgram = CheckAccept(logger);
 			
 			if(!acceptProgram) {
 				// 使用許可が下りないのでさようなら
 				Initialized = false;
 				return;
 			}
+			this._commonData.MainSetting.RunningInfo.Running = true;
 			
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
