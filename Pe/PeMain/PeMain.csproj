@@ -517,7 +517,9 @@
     <Compile Include="UI\Pe.logger.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
-    <None Include="etc\lang\ja-JP.accept.html" />
+    <None Include="etc\lang\ja-JP.accept.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

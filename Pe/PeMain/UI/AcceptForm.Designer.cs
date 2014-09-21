@@ -58,29 +58,30 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(313, 235);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 322);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// webDocument
 			// 
 			this.tableLayoutPanel1.SetColumnSpan(this.webDocument, 2);
 			this.webDocument.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.webDocument.IsWebBrowserContextMenuEnabled = false;
 			this.webDocument.Location = new System.Drawing.Point(3, 4);
 			this.webDocument.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webDocument.MinimumSize = new System.Drawing.Size(23, 25);
 			this.webDocument.Name = "webDocument";
-			this.webDocument.Size = new System.Drawing.Size(307, 194);
+			this.webDocument.Size = new System.Drawing.Size(458, 281);
 			this.webDocument.TabIndex = 0;
 			// 
 			// commandAccept
 			// 
 			this.commandAccept.AutoSize = true;
-			this.commandAccept.Location = new System.Drawing.Point(3, 206);
+			this.commandAccept.Location = new System.Drawing.Point(3, 293);
 			this.commandAccept.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandAccept.Name = "commandAccept";
 			this.commandAccept.Size = new System.Drawing.Size(150, 25);
 			this.commandAccept.TabIndex = 1;
-			this.commandAccept.Text = ":accept/command/yes";
+			this.commandAccept.Text = "{OK}";
 			this.commandAccept.UseVisualStyleBackColor = true;
 			// 
 			// commandCancel
@@ -88,12 +89,12 @@ namespace PeMain.UI
 			this.commandCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandCancel.AutoSize = true;
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandCancel.Location = new System.Drawing.Point(166, 206);
+			this.commandCancel.Location = new System.Drawing.Point(317, 293);
 			this.commandCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandCancel.Name = "commandCancel";
 			this.commandCancel.Size = new System.Drawing.Size(144, 25);
 			this.commandCancel.TabIndex = 2;
-			this.commandCancel.Text = ":accept/command/no";
+			this.commandCancel.Text = "{CANCEL}";
 			this.commandCancel.UseVisualStyleBackColor = true;
 			// 
 			// AcceptForm
@@ -102,11 +103,13 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(313, 235);
+			this.ClientSize = new System.Drawing.Size(464, 322);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.MinimumSize = new System.Drawing.Size(480, 360);
 			this.Name = "AcceptForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/accept";
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();

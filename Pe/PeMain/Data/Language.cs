@@ -45,6 +45,7 @@ namespace PeMain.Data
 		
 		[XmlIgnore]
 		public string BaseName { get; set; }
+		public string AcceptFileName { get { return string.Format("{0}.accept.html", BaseName); } }
 
 		public List<Word> Define { get; set; }
 		public List<Word> Words  { get; set; }

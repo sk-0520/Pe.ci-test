@@ -36,6 +36,7 @@
 		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
 		<Word Name="common/tab/env"                     Text="環境変数" />
 		
+		<Word Name="window/accept"   Text="@[PE] 使用許諾" />
 		<Word Name="window/toolbar"  Text="@[PE]" />
 		<Word Name="window/log"      Text="ログ" />
 		<Word Name="window/about"    Text="@[PE] 情報" />
