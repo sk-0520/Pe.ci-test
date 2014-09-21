@@ -171,6 +171,19 @@
     <Compile Include="UI\AboutForm.property.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\AcceptForm.cs" />
+    <Compile Include="UI\AcceptForm.Designer.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.functions.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.initialize.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.property.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.cs" />
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
@@ -324,6 +337,9 @@
     <Compile Include="UI\Pe.MessageWindow.wndProc.cs">
       <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Pe.property.cs">
+      <DependentUpon>Pe.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Pe.variable.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
@@ -424,6 +440,9 @@
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\AcceptForm.resx">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -498,6 +517,9 @@
     <Compile Include="UI\Pe.logger.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
+    <None Include="etc\lang\ja-JP.accept.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

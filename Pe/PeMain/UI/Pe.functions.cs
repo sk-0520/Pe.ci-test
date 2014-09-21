@@ -175,7 +175,7 @@ namespace PeMain.UI
 								entryStream.Write(buffer, 0, readLength);
 							}
 						}
-						*/
+						 */
 						entryStream.Write(buffer);
 					}
 				}
@@ -233,11 +233,13 @@ namespace PeMain.UI
 			
 		}
 		
-		void CloseApplication(bool save)
+		public void CloseApplication(bool save)
 		{
-			SaveSetting();
-			if(this._commonData.Database != null) {
-				this._commonData.Database.Close();
+			if(save) {
+				SaveSetting();
+				if(this._commonData.Database != null) {
+					this._commonData.Database.Close();
+				}
 			}
 			Application.Exit();
 		}

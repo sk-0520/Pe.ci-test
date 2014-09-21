@@ -39,17 +39,10 @@ namespace PeMain.UI
 		{
 			// 言語
 			var langName = this._commonData.MainSetting.LanguageFileName;
-			var languageFileName = "default.xml";
-			if(!string.IsNullOrEmpty(langName)) {
-				if(!Path.HasExtension(langName)) {
-					languageFileName = Path.ChangeExtension(langName, "xml");
-				} else {
-					languageFileName = langName;
-				}
-			} else {
-				var a = CultureInfo.CurrentCulture;
-				languageFileName = Path.ChangeExtension(CultureInfo.CurrentCulture.Name, "xml");
+			if(string.IsNullOrEmpty(langName)) {
+				langName = CultureInfo.CurrentCulture.Name;
 			}
+			var languageFileName = string.Format("{0}.xml", langName);
 			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
 			if(logger != null) {
 				logger.Puts(LogType.Information, "load language", languageFilePath);
@@ -61,6 +54,25 @@ namespace PeMain.UI
 				}
 				this._commonData.Language = new Language();
 			}
+			this._commonData.Language.BaseName = langName;
+		}
+	
+		void InitializeRunningInfo(CommandLine commandLine, StartupLogger logger)
+		{
+			var prev = new {
+				VersionMajor = this._commonData.MainSetting.RunningInfo.VersionMajor,
+				VersionMinor = this._commonData.MainSetting.RunningInfo.VersionMinor,
+				VersionRevision = this._commonData.MainSetting.RunningInfo.VersionRevision,
+				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild,
+			};
+			var version = Application.ProductVersion.Split('.').Map(s => ushort.Parse(s)).ToArray();
+			this._commonData.MainSetting.RunningInfo.VersionMajor = version[0];
+			this._commonData.MainSetting.RunningInfo.VersionMinor = version[1];
+			this._commonData.MainSetting.RunningInfo.VersionRevision = version[2];
+			this._commonData.MainSetting.RunningInfo.VersionBuild = version[3];
+			
+			// バージョンが一定以下なら強制的に使用承諾
+			
 		}
 		
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
@@ -147,6 +159,24 @@ namespace PeMain.UI
 		{ }
 		
 		/// <summary>
+		/// Peを使用使用するかユーザーに問い合わせる。
+		/// </summary>
+		/// <param name="logger"></param>
+		/// <returns>使用する場合は真</returns>
+		bool CheckAccept(StartupLogger logger)
+		{
+			var accept = this._commonData.MainSetting.RunningInfo.Running;
+			if(!accept) {
+				// TODO: ここから
+				var dialog = new AcceptForm();
+				dialog.SetCommonData(this._commonData);
+				accept = dialog.ShowDialog() == DialogResult.OK;
+			}
+			
+			return accept;
+		}
+		
+		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
@@ -162,6 +192,15 @@ namespace PeMain.UI
 			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
 			InitializeLanguage(commandLine, logger);
+			InitializeRunningInfo(commandLine, logger);
+			var acceptProgram = CheckAccept(logger);
+			
+			if(!acceptProgram) {
+				// 使用許可が下りないのでさようなら
+				Initialized = false;
+				return;
+			}
+			this._commonData.MainSetting.RunningInfo.Running = true;
 			
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
@@ -488,13 +527,20 @@ namespace PeMain.UI
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
 			
+			Debug.Assert(Initialized);
 			InitializeSetting(commandLine, logger);
+			if(!Initialized) {
+				return;
+			}
+			Debug.Assert(Initialized);
 			InitializeUI(commandLine, logger);
 			
+			Debug.Assert(Initialized);
 			ApplyLanguage();
 			
 			SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
 			
+			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
 		}

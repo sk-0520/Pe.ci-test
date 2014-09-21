@@ -44,12 +44,15 @@ namespace PeMain
 			using(fileLogger) {
 				using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 					if (isFirstInstance) {
-						using(var context = new UI.Pe(commandLine, fileLogger)) {
+						using(var app = new UI.Pe(commandLine, fileLogger)) {
 							#if DEBUG
-							context.DebugProcess();
+							app.DebugProcess();
 							#endif
-							
-							Application.Run();
+							if(!app.Initialized) {
+								app.CloseApplication(false);
+							} else {
+								Application.Run();
+							}
 						}
 					} else {
 						fileLogger.Puts(PeMain.Data.LogType.Error, "dual boot", mutexName);
