@@ -174,9 +174,9 @@ namespace PeMain.UI
 			var accept = false;
 			if(!this._commonData.MainSetting.RunningInfo.Running) {
 				// TODO: ここから
-				var dialog = new AcceptWindow();
+				var dialog = new AcceptForm();
 				dialog.SetCommonData(this._commonData);
-				accept = dialog.ShowDialog() ?? false;
+				accept = dialog.ShowDialog() == DialogResult.OK;
 			}
 			
 			return accept;

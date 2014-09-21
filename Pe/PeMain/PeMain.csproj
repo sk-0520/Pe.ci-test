@@ -171,9 +171,18 @@
     <Compile Include="UI\AboutForm.property.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AcceptWindow.xaml.cs">
-      <DependentUpon>AcceptWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="UI\AcceptForm.cs" />
+    <Compile Include="UI\AcceptForm.Designer.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.functions.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.initialize.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AcceptForm.property.cs">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.cs" />
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
@@ -543,9 +552,6 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="UI\AcceptWindow.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
