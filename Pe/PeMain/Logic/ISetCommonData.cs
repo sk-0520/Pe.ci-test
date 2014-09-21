@@ -14,18 +14,6 @@ using PeUtility;
 
 namespace PeMain.Logic
 {
-	public sealed class CommonData
-	{
-		public MainSetting MainSetting { get; set; }
-		public Language Language { get; set; }
-		public ISkin Skin { get; set; }
-		public ILogger Logger { get; set; }
-		public IRootSender RootSender { get; set; }
-		/// <summary>
-		/// 入れるべきじゃない気がする
-		/// </summary>
-		public PeDBManager Database { get; set; }
-	}
 	/// <summary>
 	/// Description of ISetCommonData.
 	/// </summary>

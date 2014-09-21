@@ -107,6 +107,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
     <Compile Include="Data\DB\Entity\CommonData.cs" />
@@ -127,7 +128,7 @@
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\FileLogger.cs" />
     <Compile Include="Logic\ILogger.cs" />
-    <Compile Include="Logic\CommonData.cs" />
+    <Compile Include="Logic\ISetCommonData.cs" />
     <Compile Include="Logic\PeInformation.cs" />
     <Compile Include="Logic\ISetLanguage.cs" />
     <Compile Include="Logic\ItemData.cs" />

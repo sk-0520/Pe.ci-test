@@ -3,17 +3,17 @@
 ## 概要
 
 本ソフトウェアはフリーソフトウェアです。
-使用方法等はオンラインヘルプ(https://bitbucket.org/sk_0520/pe/wiki)を参照してください。
+細かい使用方法等はオンラインヘルプ(https://bitbucket.org/sk_0520/pe/wiki)を参照してください。
 
 
 ## ライセンス
 
-<Pe>\doc\license\Pe.txt
+ファイル [<Pe>/doc/license/Pe.txt] を参照。
 
 
 ## 必要環境
 
- * Windows7 - 
+ * Windows7
  * .NET 4.5.1
 
 
