@@ -440,6 +440,9 @@
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\AcceptForm.resx">
+      <DependentUpon>AcceptForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -514,6 +517,7 @@
     <Compile Include="UI\Pe.logger.cs">
       <DependentUpon>Pe.cs</DependentUpon>
     </Compile>
+    <None Include="etc\lang\ja-JP.accept.html" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

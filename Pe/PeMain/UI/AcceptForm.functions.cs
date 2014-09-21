@@ -19,6 +19,13 @@ namespace PeMain.UI
 		public void SetCommonData(CommonData commonData)
 		{
 			CommonData = commonData;
+			
+			ApplyLanguage();
+		}
+		
+		void ApplyLanguage()
+		{
+			
 		}
 	}
 }

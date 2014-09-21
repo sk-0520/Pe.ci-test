@@ -39,17 +39,10 @@ namespace PeMain.UI
 		{
 			// 言語
 			var langName = this._commonData.MainSetting.LanguageFileName;
-			var languageFileName = "default.xml";
-			if(!string.IsNullOrEmpty(langName)) {
-				if(!Path.HasExtension(langName)) {
-					languageFileName = Path.ChangeExtension(langName, "xml");
-				} else {
-					languageFileName = langName;
-				}
-			} else {
-				var a = CultureInfo.CurrentCulture;
-				languageFileName = Path.ChangeExtension(CultureInfo.CurrentCulture.Name, "xml");
+			if(string.IsNullOrEmpty(langName)) {
+				langName = CultureInfo.CurrentCulture.Name;
 			}
+			var languageFileName = string.Format("{0}.xml", langName);
 			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
 			if(logger != null) {
 				logger.Puts(LogType.Information, "load language", languageFilePath);
@@ -61,6 +54,7 @@ namespace PeMain.UI
 				}
 				this._commonData.Language = new Language();
 			}
+			this._commonData.Language.BaseName = langName;
 		}
 	
 		void InitializeRunningInfo(CommandLine commandLine, StartupLogger logger)
