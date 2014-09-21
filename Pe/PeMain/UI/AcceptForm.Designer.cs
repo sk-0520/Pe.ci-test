@@ -65,7 +65,6 @@ namespace PeMain.UI
 			// 
 			this.tableLayoutPanel1.SetColumnSpan(this.webDocument, 2);
 			this.webDocument.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.webDocument.IsWebBrowserContextMenuEnabled = false;
 			this.webDocument.Location = new System.Drawing.Point(3, 4);
 			this.webDocument.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webDocument.MinimumSize = new System.Drawing.Size(23, 25);
