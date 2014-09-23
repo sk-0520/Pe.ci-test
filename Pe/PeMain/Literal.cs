@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -156,7 +157,6 @@ namespace PeMain
 		{
 			get { return DateTime.Now.ToString(timestampFileName); }
 		}
-
 		
 		/// <summary>
 		/// ログ保存ディレクトリ
@@ -164,6 +164,19 @@ namespace PeMain
 		public static string LogFileDirPath
 		{
 			get { return _logRootDirPath; }
+		}
+		
+		public static string AboutWebPage 
+		{
+			get { return ConfigurationManager.AppSettings["web-page"]; }
+		}
+		public static string AboutMailAddress
+		{
+			get { return ConfigurationManager.AppSettings["mail-address"]; }
+		}
+		public static string AboutDevelopPage
+		{
+			get { return ConfigurationManager.AppSettings["dev-page"]; }
 		}
 		
 		public static void Initialize(CommandLine commandLine)

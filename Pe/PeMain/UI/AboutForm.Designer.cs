@@ -36,16 +36,18 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
 			this.imageIcon = new System.Windows.Forms.PictureBox();
 			this.commandOk = new System.Windows.Forms.Button();
 			this.labelAppName = new System.Windows.Forms.Label();
 			this.labelAppVersion = new System.Windows.Forms.Label();
 			this.linkWeb = new System.Windows.Forms.LinkLabel();
-			this.linkRepository = new System.Windows.Forms.LinkLabel();
+			this.linkDev = new System.Windows.Forms.LinkLabel();
 			this.commandExecuteDir = new System.Windows.Forms.Button();
 			this.commandDataDir = new System.Windows.Forms.Button();
 			this.commandBackupDir = new System.Windows.Forms.Button();
 			this.labelConfiguration = new System.Windows.Forms.Label();
+			this.linkMail = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -92,32 +94,33 @@ namespace PeMain.UI
 			this.linkWeb.AutoSize = true;
 			this.linkWeb.Location = new System.Drawing.Point(12, 96);
 			this.linkWeb.Name = "linkWeb";
-			this.linkWeb.Size = new System.Drawing.Size(173, 15);
+			this.linkWeb.Size = new System.Drawing.Size(103, 15);
 			this.linkWeb.TabIndex = 1;
 			this.linkWeb.TabStop = true;
-			this.linkWeb.Text = "http://content-type-text.net";
+			this.linkWeb.Text = "http://web-page";
 			this.linkWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
-			// linkRepository
+			// linkDev
 			// 
-			this.linkRepository.AutoEllipsis = true;
-			this.linkRepository.AutoSize = true;
-			this.linkRepository.Location = new System.Drawing.Point(12, 121);
-			this.linkRepository.Name = "linkRepository";
-			this.linkRepository.Size = new System.Drawing.Size(202, 15);
-			this.linkRepository.TabIndex = 2;
-			this.linkRepository.TabStop = true;
-			this.linkRepository.Text = "https://bitbucket.org/sk_0520/pe";
-			this.linkRepository.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
+			this.linkDev.AutoEllipsis = true;
+			this.linkDev.AutoSize = true;
+			this.linkDev.Location = new System.Drawing.Point(12, 150);
+			this.linkDev.Name = "linkDev";
+			this.linkDev.Size = new System.Drawing.Size(100, 15);
+			this.linkDev.TabIndex = 3;
+			this.linkDev.TabStop = true;
+			this.linkDev.Text = "http://dev-page";
+			this.linkDev.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// commandExecuteDir
 			// 
+			this.commandExecuteDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandExecuteDir.Image = global::PeMain.Properties.Images.Dir;
 			this.commandExecuteDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandExecuteDir.Location = new System.Drawing.Point(252, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
 			this.commandExecuteDir.Size = new System.Drawing.Size(101, 27);
-			this.commandExecuteDir.TabIndex = 3;
+			this.commandExecuteDir.TabIndex = 4;
 			this.commandExecuteDir.Text = ":about/command/execute";
 			this.commandExecuteDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandExecuteDir.UseVisualStyleBackColor = true;
@@ -125,12 +128,13 @@ namespace PeMain.UI
 			// 
 			// commandDataDir
 			// 
+			this.commandDataDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandDataDir.Image = global::PeMain.Properties.Images.Dir;
 			this.commandDataDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandDataDir.Location = new System.Drawing.Point(252, 44);
 			this.commandDataDir.Name = "commandDataDir";
 			this.commandDataDir.Size = new System.Drawing.Size(101, 27);
-			this.commandDataDir.TabIndex = 4;
+			this.commandDataDir.TabIndex = 5;
 			this.commandDataDir.Text = ":about/command/data";
 			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandDataDir.UseVisualStyleBackColor = true;
@@ -138,12 +142,13 @@ namespace PeMain.UI
 			// 
 			// commandBackupDir
 			// 
+			this.commandBackupDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandBackupDir.Image = global::PeMain.Properties.Images.Dir;
 			this.commandBackupDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandBackupDir.Location = new System.Drawing.Point(252, 76);
 			this.commandBackupDir.Name = "commandBackupDir";
 			this.commandBackupDir.Size = new System.Drawing.Size(101, 27);
-			this.commandBackupDir.TabIndex = 5;
+			this.commandBackupDir.TabIndex = 6;
 			this.commandBackupDir.Text = ":about/command/backup";
 			this.commandBackupDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandBackupDir.UseVisualStyleBackColor = true;
@@ -158,16 +163,29 @@ namespace PeMain.UI
 			this.labelConfiguration.TabIndex = 2;
 			this.labelConfiguration.Text = "labelConfiguration";
 			// 
+			// linkMail
+			// 
+			this.linkMail.AutoEllipsis = true;
+			this.linkMail.AutoSize = true;
+			this.linkMail.Location = new System.Drawing.Point(12, 123);
+			this.linkMail.Name = "linkMail";
+			this.linkMail.Size = new System.Drawing.Size(124, 15);
+			this.linkMail.TabIndex = 2;
+			this.linkMail.TabStop = true;
+			this.linkMail.Text = "mailto:mail-address";
+			this.linkMail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(365, 193);
+			this.Controls.Add(this.linkMail);
 			this.Controls.Add(this.commandBackupDir);
 			this.Controls.Add(this.commandDataDir);
 			this.Controls.Add(this.commandExecuteDir);
-			this.Controls.Add(this.linkRepository);
+			this.Controls.Add(this.linkDev);
 			this.Controls.Add(this.linkWeb);
 			this.Controls.Add(this.labelConfiguration);
 			this.Controls.Add(this.labelAppVersion);
@@ -176,7 +194,7 @@ namespace PeMain.UI
 			this.Controls.Add(this.commandOk);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Icon = global::PeMain.Properties.Images.Pe;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -188,11 +206,12 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.LinkLabel linkMail;
 		private System.Windows.Forms.Label labelConfiguration;
 		private System.Windows.Forms.Button commandBackupDir;
 		private System.Windows.Forms.Button commandDataDir;
 		private System.Windows.Forms.Button commandExecuteDir;
-		private System.Windows.Forms.LinkLabel linkRepository;
+		private System.Windows.Forms.LinkLabel linkDev;
 		private System.Windows.Forms.LinkLabel linkWeb;
 		private System.Windows.Forms.Label labelAppVersion;
 		private System.Windows.Forms.Label labelAppName;

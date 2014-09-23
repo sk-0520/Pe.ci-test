@@ -10,7 +10,10 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Net.Mail;
 using System.Windows.Forms;
+using PeMain.Data;
 using PeMain.Logic;
 
 namespace PeMain.UI
@@ -39,7 +42,20 @@ namespace PeMain.UI
 		{
 			var linkLabel = (LinkLabel)sender;
 			linkLabel.Visible = true;
-			Process.Start(linkLabel.Text);
+			var link = linkLabel.Text;
+			if(string.IsNullOrWhiteSpace(link)) {
+				return;
+			}
+			
+			try {
+				if(link.Any(c => c == '@')) {
+					Process.Start("mailto:" + link);
+				} else {
+					Process.Start(link);
+				}
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Error, ex.Message, new { Exception = ex, Link = link});
+			}
 		}
 		
 		void CommandExecuteDir_Click(object sender, EventArgs e)

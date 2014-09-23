@@ -39,6 +39,10 @@ namespace PeMain.UI
 				#endif
 				Environment.Is64BitProcess ? "64": "32"
 			);
+			
+			this.linkWeb.Text = Literal.AboutWebPage;
+			this.linkMail.Text = Literal.AboutMailAddress;
+			this.linkDev.Text = Literal.AboutDevelopPage;
 		}
 	}
 }
