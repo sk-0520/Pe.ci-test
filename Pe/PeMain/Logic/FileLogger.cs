@@ -8,6 +8,7 @@
  */
 using System;
 using System.IO;
+using ObjectDumper;
 using PeMain.Data;
 
 namespace PeMain.Logic
@@ -47,11 +48,11 @@ namespace PeMain.Logic
 				this._stream.WriteLine(
 					"====================================={0}" +
 					"{1} {2}{3}" +
-					"{4}{5}" +
-					"{6}{7}",
+					"{4}" +
+					"{5}{6}",
 					Environment.NewLine, 
 					logItem.DateTime, logItem.Title, Environment.NewLine,
-					logItem.Detail, Environment.NewLine, 
+					logItem.Detail.DumpToString(logItem.Title),
 					logItem.StackTrace, Environment.NewLine
 				);
 				this._stream.Flush();

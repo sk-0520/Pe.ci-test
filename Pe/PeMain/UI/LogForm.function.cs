@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using ObjectDumper;
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -116,6 +117,7 @@ namespace PeMain.UI
 			return listItem;
 		}
 		
+		/*
 		IEnumerable<string> ObjectToStringList(object obj)
 		{
 			var result = new List<string>();
@@ -155,13 +157,15 @@ namespace PeMain.UI
 			}
 			return result;
 		}
-		
+		*/
+			
 		void SetDetail(LogItem logItem)
 		{
 			Debug.Assert(logItem != null);
 			
 			// 
-			this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
+			//this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
+			this.viewDetail.Text = logItem.Detail.DumpToString(logItem.Title);
 			
 			//
 			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);

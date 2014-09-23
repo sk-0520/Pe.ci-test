@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-
+using ObjectDumper;
 using PeMain.Data;
 using PeMain.Logic;
 
@@ -113,11 +113,10 @@ namespace PeMain.UI
 								stream.WriteLine(
 									"====================================={0}" +
 									"{1} {2}{3}" +
-									"{4}{5}" +
-									"{6}{7}",
-									Environment.NewLine,
-									logItem.DateTime, logItem.Title, Environment.NewLine,
-									logItem.Detail, Environment.NewLine,
+									"{4}" +
+									"{5}{6}",
+									Environment.NewLine, logItem.DateTime, logItem.Title, Environment.NewLine,
+									logItem.Detail.DumpToString(logItem.Title),
 									logItem.StackTrace, Environment.NewLine
 								);
 							}
