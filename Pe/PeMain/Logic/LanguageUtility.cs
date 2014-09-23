@@ -40,5 +40,14 @@ namespace PeMain.Logic
 			
 			return modifiers.ToText(language) + keySeparator + key.ToText(language);
 		}
+		
+		public static string ToMenuText(this Language language, string menuText, HotKeySetting hotkeySetting)
+		{
+			if(hotkeySetting.Enabled) {
+				return string.Format("{0}\t{1}", menuText, ToDisplayText(language, hotkeySetting.Modifiers, hotkeySetting.Key));
+			} else {
+				return menuText;
+			}
+		}
 	}
 }
