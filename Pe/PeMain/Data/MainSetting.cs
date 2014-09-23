@@ -7,12 +7,15 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Linq;
+using System.Windows.Forms;
+using PeUtility;
 
 namespace PeMain.Data
 {
 	public class RunningInfo: Item
 	{
-		public RunningInfo() 
+		public RunningInfo()
 		{ }
 		
 		public bool Running { get; set; }
@@ -21,6 +24,15 @@ namespace PeMain.Data
 		public ushort VersionMinor { get; set; }
 		public ushort VersionRevision { get; set; }
 		public ushort VersionBuild { get; set; }
+		
+		public void SetDefaultVersion()
+		{
+			var version = Application.ProductVersion.Split('.').Map(s => ushort.Parse(s)).ToArray();
+			VersionMajor = version[0];
+			VersionMinor = version[1];
+			VersionRevision = version[2];
+			VersionBuild = version[3];
+		}
 	}
 	
 	/// <summary>

@@ -62,6 +62,10 @@ namespace PeMain.UI
 		{
 			var mainSetting = new MainSetting();
 			
+			// 現在状況
+			mainSetting.RunningInfo.Running = true;
+			mainSetting.RunningInfo.SetDefaultVersion();
+			
 			// 本体
 			MainExportSetting(mainSetting);
 			

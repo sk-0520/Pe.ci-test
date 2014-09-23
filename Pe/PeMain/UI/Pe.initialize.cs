@@ -65,11 +65,7 @@ namespace PeMain.UI
 				VersionRevision = this._commonData.MainSetting.RunningInfo.VersionRevision,
 				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild,
 			};
-			var version = Application.ProductVersion.Split('.').Map(s => ushort.Parse(s)).ToArray();
-			this._commonData.MainSetting.RunningInfo.VersionMajor = version[0];
-			this._commonData.MainSetting.RunningInfo.VersionMinor = version[1];
-			this._commonData.MainSetting.RunningInfo.VersionRevision = version[2];
-			this._commonData.MainSetting.RunningInfo.VersionBuild = version[3];
+			this._commonData.MainSetting.RunningInfo.SetDefaultVersion();
 			
 			// バージョンが一定以下なら強制的に使用承諾
 			
