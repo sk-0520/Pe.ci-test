@@ -278,10 +278,12 @@ namespace PeMain.UI
 			ToLock();
 		}
 		
+		/*
 		void ContextMenu_itemRemove_Click(object sender, EventArgs e)
 		{
 			ToClose(true);
 		}
+		*/
 		
 		void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
 		{

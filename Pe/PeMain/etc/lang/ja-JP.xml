@@ -116,7 +116,7 @@
 		<Word Name="note/menu/compact"      Text="最小化" />
 		<Word Name="note/menu/hidden"       Text="非表示" />
 		<Word Name="note/menu/topmost"      Text="最前面" />
-		<Word Name="note/menu/remove"       Text="削除" />
+		<!-- <Word Name="note/menu/remove"       Text="削除" /> -->
 		<Word Name="note/dialog/caption"    Text="ノート削除" />
 		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;論理削除するには「はい」、非表示にするには「いいえ」を選択してください。" />
 		
