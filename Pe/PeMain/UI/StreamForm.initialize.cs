@@ -14,7 +14,7 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			
+			TopMost = false;
 		}
 	}
 }

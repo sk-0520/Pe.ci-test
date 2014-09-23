@@ -30,10 +30,11 @@ namespace PeMain.UI
 			this.tabStream_pageProcess.SetLanguage(CommonData.Language);
 			this.tabStream_pageProperty.SetLanguage(CommonData.Language);
 			
-			this.toolStream_save.SetLanguage(CommonData.Language);
-			this.toolStream_clear.SetLanguage(CommonData.Language);
-			this.toolStream_refresh.SetLanguage(CommonData.Language);
-			this.toolStream_kill.SetLanguage(CommonData.Language);
+			this.toolStream_itemSave.SetLanguage(CommonData.Language);
+			this.toolStream_itemClear.SetLanguage(CommonData.Language);
+			this.toolStream_itemRefresh.SetLanguage(CommonData.Language);
+			this.toolStream_itemTopmost.SetLanguage(CommonData.Language);
+			this.toolStream_itemKill.SetLanguage(CommonData.Language);
 		}
 	}
 }

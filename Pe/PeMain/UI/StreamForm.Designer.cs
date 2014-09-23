@@ -37,11 +37,11 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.toolStream = new System.Windows.Forms.ToolStrip();
-			this.toolStream_save = new System.Windows.Forms.ToolStripButton();
-			this.toolStream_clear = new System.Windows.Forms.ToolStripButton();
+			this.toolStream_itemSave = new System.Windows.Forms.ToolStripButton();
+			this.toolStream_itemClear = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStream_refresh = new System.Windows.Forms.ToolStripButton();
-			this.toolStream_kill = new System.Windows.Forms.ToolStripButton();
+			this.toolStream_itemRefresh = new System.Windows.Forms.ToolStripButton();
+			this.toolStream_itemKill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
 			this.tabStream_pageStream = new System.Windows.Forms.TabPage();
 			this.viewOutput = new System.Windows.Forms.TextBox();
@@ -49,6 +49,8 @@ namespace PeMain.UI
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
 			this.tabStream_pageProperty = new System.Windows.Forms.TabPage();
 			this.propertyProperty = new System.Windows.Forms.PropertyGrid();
+			this.toolStream_itemTopmost = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStream.SuspendLayout();
 			this.tabStream.SuspendLayout();
 			this.tabStream_pageStream.SuspendLayout();
@@ -60,64 +62,66 @@ namespace PeMain.UI
 			// 
 			this.toolStream.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStream.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolStream_save,
-									this.toolStream_clear,
+									this.toolStream_itemTopmost,
+									this.toolStripSeparator2,
+									this.toolStream_itemSave,
+									this.toolStream_itemClear,
 									this.toolStripSeparator1,
-									this.toolStream_refresh,
-									this.toolStream_kill});
+									this.toolStream_itemRefresh,
+									this.toolStream_itemKill});
 			this.toolStream.Location = new System.Drawing.Point(0, 0);
 			this.toolStream.Name = "toolStream";
 			this.toolStream.Size = new System.Drawing.Size(471, 25);
 			this.toolStream.TabIndex = 1;
 			this.toolStream.Text = "toolStrip1";
 			// 
-			// toolStream_save
+			// toolStream_itemSave
 			// 
-			this.toolStream_save.Enabled = false;
-			this.toolStream_save.Image = global::PeMain.Properties.Images.Save;
-			this.toolStream_save.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_save.Name = "toolStream_save";
-			this.toolStream_save.Size = new System.Drawing.Size(172, 22);
-			this.toolStream_save.Text = ":stream/command/save";
-			this.toolStream_save.ToolTipText = ":stream/tips/save";
-			this.toolStream_save.Click += new System.EventHandler(this.ToolStream_save_Click);
+			this.toolStream_itemSave.Enabled = false;
+			this.toolStream_itemSave.Image = global::PeMain.Properties.Images.Save;
+			this.toolStream_itemSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_itemSave.Name = "toolStream_itemSave";
+			this.toolStream_itemSave.Size = new System.Drawing.Size(172, 22);
+			this.toolStream_itemSave.Text = ":stream/command/save";
+			this.toolStream_itemSave.ToolTipText = ":stream/tips/save";
+			this.toolStream_itemSave.Click += new System.EventHandler(this.ToolStream_save_Click);
 			// 
-			// toolStream_clear
+			// toolStream_itemClear
 			// 
-			this.toolStream_clear.Enabled = false;
-			this.toolStream_clear.Image = global::PeMain.Properties.Images.Clear;
-			this.toolStream_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_clear.Name = "toolStream_clear";
-			this.toolStream_clear.Size = new System.Drawing.Size(173, 22);
-			this.toolStream_clear.Text = ":stream/command/clear";
-			this.toolStream_clear.ToolTipText = ":stream/tips/clear";
-			this.toolStream_clear.Click += new System.EventHandler(this.ToolStream_clear_Click);
+			this.toolStream_itemClear.Enabled = false;
+			this.toolStream_itemClear.Image = global::PeMain.Properties.Images.Clear;
+			this.toolStream_itemClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_itemClear.Name = "toolStream_itemClear";
+			this.toolStream_itemClear.Size = new System.Drawing.Size(173, 22);
+			this.toolStream_itemClear.Text = ":stream/command/clear";
+			this.toolStream_itemClear.ToolTipText = ":stream/tips/clear";
+			this.toolStream_itemClear.Click += new System.EventHandler(this.ToolStream_clear_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// toolStream_refresh
+			// toolStream_itemRefresh
 			// 
-			this.toolStream_refresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_refresh.Image = global::PeMain.Properties.Images.Refresh;
-			this.toolStream_refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_refresh.Name = "toolStream_refresh";
-			this.toolStream_refresh.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_refresh.ToolTipText = ":stream/tips/refesh";
-			this.toolStream_refresh.Click += new System.EventHandler(this.ToolStream_refresh_Click);
+			this.toolStream_itemRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_itemRefresh.Image = global::PeMain.Properties.Images.Refresh;
+			this.toolStream_itemRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_itemRefresh.Name = "toolStream_itemRefresh";
+			this.toolStream_itemRefresh.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_itemRefresh.ToolTipText = ":stream/tips/refresh";
+			this.toolStream_itemRefresh.Click += new System.EventHandler(this.ToolStream_refresh_Click);
 			// 
-			// toolStream_kill
+			// toolStream_itemKill
 			// 
-			this.toolStream_kill.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-			this.toolStream_kill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_kill.Image = global::PeMain.Properties.Images.Kill;
-			this.toolStream_kill.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_kill.Name = "toolStream_kill";
-			this.toolStream_kill.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_kill.ToolTipText = ":stream/tips/kill";
-			this.toolStream_kill.Click += new System.EventHandler(this.ToolStream_kill_Click);
+			this.toolStream_itemKill.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.toolStream_itemKill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_itemKill.Image = global::PeMain.Properties.Images.Kill;
+			this.toolStream_itemKill.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_itemKill.Name = "toolStream_itemKill";
+			this.toolStream_itemKill.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_itemKill.ToolTipText = ":stream/tips/kill";
+			this.toolStream_itemKill.Click += new System.EventHandler(this.ToolStream_kill_Click);
 			// 
 			// tabStream
 			// 
@@ -192,6 +196,21 @@ namespace PeMain.UI
 			this.propertyProperty.Size = new System.Drawing.Size(463, 227);
 			this.propertyProperty.TabIndex = 1;
 			// 
+			// toolStream_itemTopmost
+			// 
+			this.toolStream_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_itemTopmost.Image = global::PeMain.Properties.Images.Pin;
+			this.toolStream_itemTopmost.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_itemTopmost.Name = "toolStream_itemTopmost";
+			this.toolStream_itemTopmost.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_itemTopmost.Text = ":stream/command/topmost";
+			this.toolStream_itemTopmost.Click += new System.EventHandler(this.ToolStream_itemTopmost_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			// 
 			// StreamForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -217,18 +236,20 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.ToolStripButton toolStream_kill;
-		private System.Windows.Forms.ToolStripButton toolStream_refresh;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripButton toolStream_itemTopmost;
+		private System.Windows.Forms.ToolStripButton toolStream_itemKill;
+		private System.Windows.Forms.ToolStripButton toolStream_itemRefresh;
 		private System.Windows.Forms.PropertyGrid propertyProperty;
 		private System.Windows.Forms.TabPage tabStream_pageProperty;
 		private System.Windows.Forms.PropertyGrid propertyProcess;
 		private System.Windows.Forms.TextBox viewOutput;
-		private System.Windows.Forms.ToolStripButton toolStream_clear;
+		private System.Windows.Forms.ToolStripButton toolStream_itemClear;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.TabPage tabStream_pageProcess;
 		private System.Windows.Forms.TabPage tabStream_pageStream;
 		private System.Windows.Forms.TabControl tabStream;
-		private System.Windows.Forms.ToolStripButton toolStream_save;
+		private System.Windows.Forms.ToolStripButton toolStream_itemSave;
 		private System.Windows.Forms.ToolStrip toolStream;
 	}
 }

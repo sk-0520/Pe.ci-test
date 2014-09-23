@@ -62,8 +62,8 @@ namespace PeMain.UI
 		void ViewOutput_TextChanged(object sender, EventArgs e)
 		{
 			var hasText = this.viewOutput.TextLength > 0;
-			this.toolStream_save.Enabled = hasText;
-			this.toolStream_clear.Enabled = hasText;
+			this.toolStream_itemSave.Enabled = hasText;
+			this.toolStream_itemClear.Enabled = hasText;
 		}
 		
 		void ToolStream_clear_Click(object sender, EventArgs e)
@@ -84,5 +84,11 @@ namespace PeMain.UI
 				}
 			}
 		}
+		
+		void ToolStream_itemTopmost_Click(object sender, EventArgs e)
+		{
+			SwitchTopmost();
+		}
+
 	}
 }

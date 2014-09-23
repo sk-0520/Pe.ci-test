@@ -67,9 +67,8 @@ namespace PeMain.UI
 		
 		void RefreshProperty()
 		{
-			// TODO: ???
-			this.propertyProcess.SelectedObject = null;
-			this.propertyProcess.SelectedObject = Process;
+			// #21
+			Process.Refresh();
 		}
 		
 		void ExitedProcess()
@@ -79,9 +78,9 @@ namespace PeMain.UI
 				return;
 			}
 			
-			this.toolStream_kill.Enabled = false;
-			this.toolStream_clear.Enabled = false;
-			this.toolStream_refresh.Enabled = false;
+			this.toolStream_itemKill.Enabled = false;
+			this.toolStream_itemClear.Enabled = false;
+			this.toolStream_itemRefresh.Enabled = false;
 			RefreshProperty();
 			
 			Text += String.Format(": {0}", Process.ExitCode);
@@ -109,5 +108,12 @@ namespace PeMain.UI
 				stream.Write(this.viewOutput.Text);
 			}
 		}
+		
+		void SwitchTopmost()
+		{
+			this.toolStream_itemTopmost.Checked = !this.toolStream_itemTopmost.Checked;
+			TopMost = this.toolStream_itemTopmost.Checked;
+		}
+		
 	}
 }

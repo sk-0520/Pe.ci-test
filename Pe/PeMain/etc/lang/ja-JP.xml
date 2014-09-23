@@ -132,15 +132,16 @@
 		<Word Name="note/style/color/purple"  Text="紫" />
 		<Word Name="note/style/color/custom"  Text="カスタム" />
 		
-		<Word Name="stream/tab/stream"     Text="標準出力" />
-		<Word Name="stream/tab/process"    Text="プロセス" />
-		<Word Name="stream/tab/property"   Text="起動プロパティ" />
-		<Word Name="stream/command/save"   Text="出力保存" />
-		<Word Name="stream/tips/save"      Text="現在の出力をファイルに保存" />
-		<Word Name="stream/command/clear"  Text="出力クリア" />
-		<Word Name="stream/tips/clear"     Text="現在の出力をクリア" />
-		<Word Name="stream/tips/refresh"   Text="プロセス情報更新" />
-		<Word Name="stream/tips/kill"      Text="プロセスを終了" />
+		<Word Name="stream/tab/stream"      Text="標準出力" />
+		<Word Name="stream/tab/process"     Text="プロセス" />
+		<Word Name="stream/tab/property"    Text="起動プロパティ" />
+		<Word Name="stream/command/save"    Text="出力保存" />
+		<Word Name="stream/tips/save"       Text="現在の出力をファイルに保存" />
+		<Word Name="stream/command/clear"   Text="出力クリア" />
+		<Word Name="stream/tips/clear"      Text="現在の出力をクリア" />
+		<Word Name="stream/tips/refresh"    Text="プロセス情報更新" />
+		<Word Name="stream/command/topmost" Text="${topmost}" />
+		<Word Name="stream/tips/kill"       Text="プロセスを終了" />
 		
 		<Word Name="setting/tab/main"             Text="本体" />
 		<Word Name="setting/tab/launcher"         Text="ランチャ" />
