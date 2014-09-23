@@ -42,20 +42,26 @@ namespace PeMain
 			#endif
 			fileLogger.Puts(PeMain.Data.LogType.Information, "mutex name", mutexName);
 			using(fileLogger) {
-				using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
-					if (isFirstInstance) {
-						using(var app = new UI.Pe(commandLine, fileLogger)) {
-							#if DEBUG
-							app.DebugProcess();
-							#endif
-							if(!app.Initialized) {
-								app.CloseApplication(false);
-							} else {
-								Application.Run();
+				try {
+					using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
+						if (isFirstInstance) {
+							using(var app = new UI.Pe(commandLine, fileLogger)) {
+								#if DEBUG
+								app.DebugProcess();
+								#endif
+								if(!app.Initialized) {
+									app.CloseApplication(false);
+								} else {
+									Application.Run();
+								}
 							}
+						} else {
+							fileLogger.Puts(PeMain.Data.LogType.Error, "dual boot", mutexName);
 						}
-					} else {
-						fileLogger.Puts(PeMain.Data.LogType.Error, "dual boot", mutexName);
+					}
+				} catch(Exception ex) {
+					if(fileLogger != null) {
+						fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);;
 					}
 				}
 			}

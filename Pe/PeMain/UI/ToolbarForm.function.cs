@@ -342,7 +342,6 @@ namespace PeMain.UI
 				openWorkDirItem.Enabled = workDirEnabled;
 				copyWorkDirItem.Enabled = workDirEnabled;
 			};
-
 		}
 		
 		ToolStripMenuItem GetFileListItem(string path, bool isDir, bool showHiddenFile, bool showExtension)
@@ -372,7 +371,7 @@ namespace PeMain.UI
 			}
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
-					Executer.OpenDirectory(path, CommonData.Logger, CommonData.Language, null);
+					Executer.RunCommand(path);
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 				}

@@ -50,7 +50,7 @@ namespace PeMain.UI
 			try {
 				Executer.RunCommand(link);
 			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Error, ex.Message, new { Exception = ex, Link = link});
+				CommonData.Logger.Puts(LogType.Error, link, ex);
 			}
 		}
 		

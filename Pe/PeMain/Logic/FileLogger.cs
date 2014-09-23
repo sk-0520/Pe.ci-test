@@ -52,7 +52,8 @@ namespace PeMain.Logic
 					"{5}{6}",
 					Environment.NewLine, 
 					logItem.DateTime, logItem.Title, Environment.NewLine,
-					logItem.Detail.DumpToString(logItem.Title),
+					//logItem.Detail.DumpToString(logItem.Title),
+					logItem.Detail,
 					logItem.StackTrace, Environment.NewLine
 				);
 				this._stream.Flush();
