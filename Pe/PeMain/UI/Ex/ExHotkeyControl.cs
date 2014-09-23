@@ -57,13 +57,8 @@ namespace PeMain.UI
 			if(DesignMode) {
 				return base.ToValueString();
 			}
-			if (Modifiers == MOD.None) {
-				return Hotkey.ToText(Language);
-			}
 			
-			var keySeparator = Language["enum/key/separator"];
-			
-			return Modifiers.ToText(Language)+ keySeparator + Hotkey.ToText(Language);
+			return Language.ToDisplayText(Modifiers, Hotkey);
 		}
 		
 		public void SetLanguage(Language language)

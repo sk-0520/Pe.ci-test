@@ -48,11 +48,7 @@ namespace PeMain.UI
 			}
 			
 			try {
-				if(link.Any(c => c == '@')) {
-					Process.Start("mailto:" + link);
-				} else {
-					Process.Start(link);
-				}
+				Executer.RunCommand(link);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, ex.Message, new { Exception = ex, Link = link});
 			}

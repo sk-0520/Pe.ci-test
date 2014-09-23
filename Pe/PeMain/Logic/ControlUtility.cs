@@ -258,6 +258,5 @@ namespace PeMain.Logic
 			target.Text = GetWord(language, target.Text, map);
 		}
 		*/
-			
 	}
 }

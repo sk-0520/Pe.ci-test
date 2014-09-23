@@ -134,7 +134,7 @@
     <Compile Include="Logic\ILogger.cs" />
     <Compile Include="Logic\ISetCommonData.cs" />
     <Compile Include="Logic\PeInformation.cs" />
-    <Compile Include="Logic\ISetLanguage.cs" />
+    <Compile Include="Logic\LanguageUtility.cs" />
     <Compile Include="Logic\ItemData.cs" />
     <Compile Include="Logic\IRootSender.cs" />
     <Compile Include="Logic\PeDBManager.cs" />
