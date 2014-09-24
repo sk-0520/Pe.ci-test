@@ -48,5 +48,20 @@ namespace PeMain.Data
 		public object Detail { get; private set; }
 		public StackTrace StackTrace { get; private set; }
 		public DateTime DateTime { get; private set; }
+		
+		public override string ToString()
+		{
+			return string.Format(
+				"=====================================" + Environment.NewLine +
+				"{0} {1}" + Environment.NewLine +
+				"{2}" +
+				"{3}" + Environment.NewLine,
+				DateTime, Title,
+				//logItem.Detail.DumpToString(logItem.Title),
+				Detail,
+				StackTrace
+			);
+		}
+
 	}
 }

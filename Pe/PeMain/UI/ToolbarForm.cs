@@ -120,6 +120,8 @@ namespace PeMain.UI
 		
 		void clickItem_DropDownOpening(object sender, EventArgs e)
 		{
+			// TODO: 領域内に収める処理
+			
 			OpeningDropDown((ToolStripDropDownItem)sender);
 		}
 		

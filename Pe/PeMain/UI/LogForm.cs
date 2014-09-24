@@ -109,16 +109,7 @@ namespace PeMain.UI
 						using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
 							stream.WriteLine(new PeMain.Logic.PeInformation().ToString());
 							foreach(var logItem in this._logs) {
-								stream.WriteLine(
-									"====================================={0}" +
-									"{1} {2}{3}" +
-									"{4}" +
-									"{5}{6}",
-									Environment.NewLine, logItem.DateTime, logItem.Title, Environment.NewLine,
-									//logItem.Detail.DumpToString(logItem.Title),
-									logItem.Detail,
-									logItem.StackTrace, Environment.NewLine
-								);
+								stream.WriteLine(logItem.ToString());
 							}
 						}
 					} catch(Exception ex) {
