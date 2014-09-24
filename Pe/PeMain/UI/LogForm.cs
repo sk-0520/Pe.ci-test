@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using ObjectDumper;
 using PeMain.Data;
 using PeMain.Logic;
 

@@ -8,7 +8,6 @@
  */
 using System;
 using System.IO;
-using ObjectDumper;
 using PeMain.Data;
 
 namespace PeMain.Logic
