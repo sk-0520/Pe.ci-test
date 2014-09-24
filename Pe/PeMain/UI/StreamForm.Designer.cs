@@ -37,6 +37,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.toolStream = new System.Windows.Forms.ToolStrip();
+			this.toolStream_itemTopmost = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStream_itemSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_itemClear = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -49,8 +51,6 @@ namespace PeMain.UI
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
 			this.tabStream_pageProperty = new System.Windows.Forms.TabPage();
 			this.propertyProperty = new System.Windows.Forms.PropertyGrid();
-			this.toolStream_itemTopmost = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStream.SuspendLayout();
 			this.tabStream.SuspendLayout();
 			this.tabStream_pageStream.SuspendLayout();
@@ -74,6 +74,21 @@ namespace PeMain.UI
 			this.toolStream.Size = new System.Drawing.Size(471, 25);
 			this.toolStream.TabIndex = 1;
 			this.toolStream.Text = "toolStrip1";
+			// 
+			// toolStream_itemTopmost
+			// 
+			this.toolStream_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStream_itemTopmost.Image = global::PeMain.Properties.Images.Pin;
+			this.toolStream_itemTopmost.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStream_itemTopmost.Name = "toolStream_itemTopmost";
+			this.toolStream_itemTopmost.Size = new System.Drawing.Size(23, 22);
+			this.toolStream_itemTopmost.Text = ":stream/command/topmost";
+			this.toolStream_itemTopmost.Click += new System.EventHandler(this.ToolStream_itemTopmost_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStream_itemSave
 			// 
@@ -195,21 +210,6 @@ namespace PeMain.UI
 			this.propertyProperty.Name = "propertyProperty";
 			this.propertyProperty.Size = new System.Drawing.Size(463, 227);
 			this.propertyProperty.TabIndex = 1;
-			// 
-			// toolStream_itemTopmost
-			// 
-			this.toolStream_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_itemTopmost.Image = global::PeMain.Properties.Images.Pin;
-			this.toolStream_itemTopmost.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStream_itemTopmost.Name = "toolStream_itemTopmost";
-			this.toolStream_itemTopmost.Size = new System.Drawing.Size(23, 22);
-			this.toolStream_itemTopmost.Text = ":stream/command/topmost";
-			this.toolStream_itemTopmost.Click += new System.EventHandler(this.ToolStream_itemTopmost_Click);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// StreamForm
 			// 
