@@ -565,7 +565,7 @@ namespace PeMain.UI
 			// メニュー設定
 			parentItem.DropDownItems.AddRange(itemList.ToArray());
 			
-			parentItem.DropDownOpening += delegate(object sender, EventArgs e) {
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				// ウィンドウ位置
 				var windowPosNameKey = new Dictionary<ToolStripMenuItem, ToolbarPosition>() {
 					{posFloatItem,  ToolbarPosition.DesktopFloat},

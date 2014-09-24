@@ -360,7 +360,7 @@ namespace PeMain.UI
 			noteForm.NoteItem = noteItem;
 			noteForm.SetCommonData(this._commonData);
 			noteForm.Show();
-			noteForm.Closed += delegate(object sender, EventArgs e) {
+			noteForm.Closed += (object sender, EventArgs e) => {
 				if(noteForm.Visible) {
 					this._noteWindowList.Remove(noteForm);
 				}

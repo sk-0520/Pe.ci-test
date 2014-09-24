@@ -249,7 +249,7 @@ namespace PeMain.UI
 			
 			// ノート作成
 			itemNoteCreate.Name = menuNameWindowNoteCreate;
-			itemNoteCreate.Click += delegate(object sender, EventArgs e) {
+			itemNoteCreate.Click += (object sender, EventArgs e) => {
 				var screen = ScreenUtility.GetCurrent();
 				var area = screen.Bounds;
 				var point = new Point(
@@ -260,12 +260,12 @@ namespace PeMain.UI
 			};
 			// ノート非表示
 			itemNoteHidden.Name = menuNameWindowNoteHidden;
-			itemNoteHidden.Click += delegate(object sender, EventArgs e) {
+			itemNoteHidden.Click += (object sender, EventArgs e) => {
 				HiddenNote();
 			};
 			// ノート最小化
 			itemNoteCompact.Name = menuNameWindowNoteCompact;
-			itemNoteCompact.Click += delegate(object sender, EventArgs e) {
+			itemNoteCompact.Click += (object sender, EventArgs e) => {
 				CompactNote();
 			};
 			
@@ -458,7 +458,7 @@ namespace PeMain.UI
 		{
 			this._logForm = new LogForm(logger.FileLogger);
 			this._logForm.SetCommonData(this._commonData);
-			this._logForm.Closing += delegate(object sender, CancelEventArgs e) {
+			this._logForm.Closing += (object sender, CancelEventArgs e) => {
 				this._commonData.MainSetting.Log.Visible = false;
 			};
 			
