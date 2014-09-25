@@ -7,19 +7,16 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using PeUtility;
 
 namespace PeUpdater
 {
-	class Program
+	class PeUpdater
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var commandLine = new CommandLine(args);
 			
-			// TODO: Implement Functionality Here
-			
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
 		}
 	}
 }
