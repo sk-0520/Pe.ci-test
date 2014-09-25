@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pe>
+	<item version="1.0.0.0" type="rc">
+		<archive processor="x86" uri="http://~" />
+		<archive processor="x64" uri="http://~" />
+	</item>
+</pe>

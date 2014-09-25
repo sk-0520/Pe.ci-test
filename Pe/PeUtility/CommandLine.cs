@@ -18,6 +18,7 @@ namespace PeUtility
 	public class CommandLine
 	{
 		public List<string> Options { get; private set; }
+		public int Length { get { return Options.Count; } }
 		
 		public string KeyValueHeader { get; set; }
 		public string KeyValueSeparator { get; set; }
