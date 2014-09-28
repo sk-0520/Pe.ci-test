@@ -395,7 +395,11 @@ namespace PeMain.UI
 			var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 			Task.Factory.StartNew(
 				() => {
+					#if DEBUG
+					Thread.Sleep(TimeSpan.FromSeconds(1));
+					#else
 					Thread.Sleep(TimeSpan.FromSeconds(30));
+					#endif
 					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
