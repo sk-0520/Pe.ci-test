@@ -56,7 +56,7 @@ namespace PeMain.UI
 			}
 			this._commonData.Language.BaseName = langName;
 		}
-	
+		
 		void InitializeRunningInfo(CommandLine commandLine, StartupLogger logger)
 		{
 			var prev = new {
@@ -68,7 +68,17 @@ namespace PeMain.UI
 			this._commonData.MainSetting.RunningInfo.SetDefaultVersion();
 			
 			// バージョンが一定以下なら強制的に使用承諾
-			
+			var prevVersion = new[] {
+				new[] { 0, 17, 0 }
+			};
+			this._commonData.MainSetting.RunningInfo.Running = !prevVersion.All(
+				pv =>
+				pv[0] >= prev.VersionMajor
+				&&
+				pv[1] >= prev.VersionMinor
+				&&
+				pv[2] >= prev.VersionRevision
+			);
 		}
 		
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
