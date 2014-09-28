@@ -94,6 +94,7 @@
 		<Word Name="accept/check/update-check"     Text="${update-check}" />
 		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
 		
+		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
 		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
 		
 		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />

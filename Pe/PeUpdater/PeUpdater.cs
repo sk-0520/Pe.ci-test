@@ -88,7 +88,7 @@ namespace PeUpdater
 				Console.WriteLine(ex);
 			}
 			if(update != null && update.Wait) {
-				Console.WriteLine("Please key.");
+				Console.WriteLine("Press any key to continue ...");
 				Console.ReadKey(false);
 			}
 		}

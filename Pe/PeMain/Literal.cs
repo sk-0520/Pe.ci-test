@@ -185,8 +185,8 @@ namespace PeMain
 		}
 		public static string UpdateURL
 		{
-			//get { return ConfigurationManager.AppSettings["update-page"]; }
-			get { return "https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml"; }
+			get { return ConfigurationManager.AppSettings["update-page"]; }
+			//get { return "https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml"; }
 		}
 		public static string ChangeLogURL
 		{
@@ -272,10 +272,10 @@ namespace PeMain
 		static DataTables()
 		{
 			map = new Dictionary<string, int>() {
-				{ masterTableVersion,         1},
-				{ masterTableNote,            1},
-				{ transactionTableNote,       1},
-				{ transactionTableNoteStyle,  1},
+				{ masterTableVersion,         1 },
+				{ masterTableNote,            1 },
+				{ transactionTableNote,       1 },
+				{ transactionTableNoteStyle,  1 },
 			};
 		}
 		public static readonly Dictionary<string, int> map;

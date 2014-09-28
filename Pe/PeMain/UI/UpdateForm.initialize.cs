@@ -13,6 +13,8 @@ namespace PeMain.UI
 	partial class UpdateForm
 	{
 		void Initialize()
-		{ }
+		{
+			this.webUpdate.Navigate(Literal.ChangeLogURL);
+		}
 	}
 }

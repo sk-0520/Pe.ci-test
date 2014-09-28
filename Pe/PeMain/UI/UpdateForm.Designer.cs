@@ -40,6 +40,7 @@ namespace PeMain.UI
 			this.commandOk = new System.Windows.Forms.Button();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.labelVersion = new System.Windows.Forms.Label();
+			this.labelRcNote = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// webUpdate
@@ -48,11 +49,11 @@ namespace PeMain.UI
 									| System.Windows.Forms.AnchorStyles.Left) 
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.webUpdate.IsWebBrowserContextMenuEnabled = false;
-			this.webUpdate.Location = new System.Drawing.Point(12, 13);
+			this.webUpdate.Location = new System.Drawing.Point(12, 28);
 			this.webUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webUpdate.MinimumSize = new System.Drawing.Size(23, 25);
 			this.webUpdate.Name = "webUpdate";
-			this.webUpdate.Size = new System.Drawing.Size(500, 261);
+			this.webUpdate.Size = new System.Drawing.Size(500, 246);
 			this.webUpdate.TabIndex = 0;
 			// 
 			// commandOk
@@ -87,6 +88,15 @@ namespace PeMain.UI
 			this.labelVersion.TabIndex = 1;
 			this.labelVersion.Text = ":update/label/version";
 			// 
+			// labelRcNote
+			// 
+			this.labelRcNote.AutoSize = true;
+			this.labelRcNote.Location = new System.Drawing.Point(12, 9);
+			this.labelRcNote.Name = "labelRcNote";
+			this.labelRcNote.Size = new System.Drawing.Size(133, 15);
+			this.labelRcNote.TabIndex = 4;
+			this.labelRcNote.Text = ":update/label/rc-note";
+			// 
 			// UpdateForm
 			// 
 			this.AcceptButton = this.commandOk;
@@ -94,6 +104,7 @@ namespace PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
 			this.ClientSize = new System.Drawing.Size(524, 342);
+			this.Controls.Add(this.labelRcNote);
 			this.Controls.Add(this.labelVersion);
 			this.Controls.Add(this.commandCancel);
 			this.Controls.Add(this.commandOk);
@@ -108,6 +119,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Label labelRcNote;
 		private System.Windows.Forms.Label labelVersion;
 		private System.Windows.Forms.Button commandCancel;
 		private System.Windows.Forms.Button commandOk;
