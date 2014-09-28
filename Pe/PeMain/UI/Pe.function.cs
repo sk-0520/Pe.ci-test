@@ -116,7 +116,7 @@ namespace PeMain.UI
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="func">ウィンドウ再構築を独自に行う場合は処理を返す。</param>
+		/// <param name="func">ウィンドウ再構築を独自に行う場合は真を返す処理を返す。</param>
 		void PauseOthers(Func<Func<bool>> func)
 		{
 			var recursion = this._pause;
