@@ -387,24 +387,35 @@ namespace PeMain.UI
 		
 		void CheckUpdateProcess()
 		{
-			Task.Run(
+			var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+			Task.Factory.StartNew(
 				() => {
+					//Thread.Sleep(TimeSpan.FromMinutes(1));
 					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
-						Thread.Sleep(TimeSpan.FromMinutes(1));
-						var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
-						var checkInfo = update.Check();
-						if(checkInfo.IsUpdate) {
-							ShowUpdate();
-						}
+						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+						return update.Check();
 					}
+					
+					return null;
 				}
+			).ContinueWith(
+				t => {
+					if(t.Result != null && t.Result.IsUpdate) {
+						ShowUpdate(update);
+					}
+				},
+				TaskScheduler.FromCurrentSynchronizationContext()
 			);
 		}
 		
-		void ShowUpdate()
+		void ShowUpdate(Update update)
 		{
 			PauseOthers(
 				() => {
+					using(var dialog = new UpdateForm()) {
+						dialog.SetCommonData(this._commonData);
+						dialog.ShowDialog();
+					}
 					return null;
 				}
 			);
