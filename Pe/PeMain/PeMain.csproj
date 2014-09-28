@@ -435,6 +435,22 @@
     <Compile Include="UI\ToolbarForm.wndProc.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UpdateForm.cs" />
+    <Compile Include="UI\UpdateForm.Designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateForm.function.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateForm.language.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateForm.initialize.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UpdateForm.property.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Images.resx">

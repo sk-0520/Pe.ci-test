@@ -95,7 +95,6 @@ namespace PeMain.Logic
 			
 			if(lines.Count > 0) {
 				var s = lines[0];
-				Debug.WriteLine(s);
 				
 				var v = new string(s.SkipWhile(c => c != ':').Skip(1).ToArray());
 				if(s.StartsWith(">> UPDATE")) {

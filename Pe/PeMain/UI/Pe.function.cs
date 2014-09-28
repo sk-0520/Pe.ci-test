@@ -14,6 +14,8 @@ using System.IO;
 using System.IO.Compression;
 using System.IO.Packaging;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using PeMain.Data;
@@ -381,6 +383,31 @@ namespace PeMain.UI
 			foreach(var note in this._noteWindowList.Where(note => !note.NoteItem.Compact)) {
 				note.ToCompact();
 			}
+		}
+		
+		void CheckUpdateProcess()
+		{
+			Task.Run(
+				() => {
+					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+						Thread.Sleep(TimeSpan.FromMinutes(1));
+						var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+						var checkInfo = update.Check();
+						if(checkInfo.IsUpdate) {
+							ShowUpdate();
+						}
+					}
+				}
+			);
+		}
+		
+		void ShowUpdate()
+		{
+			PauseOthers(
+				() => {
+					return null;
+				}
+			);
 		}
 	}
 }

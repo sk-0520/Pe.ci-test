@@ -158,6 +158,11 @@ namespace PeMain
 			get { return DateTime.Now.ToString(timestampFileName); }
 		}
 		
+		public static string UserDownloadDirPath
+		{
+			get { return Path.Combine(UserSettingDirPath, "archive");}
+		}
+		
 		/// <summary>
 		/// ログ保存ディレクトリ
 		/// </summary>

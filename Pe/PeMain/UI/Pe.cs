@@ -8,6 +8,8 @@
  */
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using PeMain.Logic;
 using PeUtility;
@@ -25,6 +27,8 @@ namespace PeMain.UI
 			
 			var logger = new StartupLogger(fileLogger);
 			Initialize(commandLine, logger);
+			
+			CheckUpdateProcess();
 		}
 		
 		public void Dispose()
@@ -39,6 +43,7 @@ namespace PeMain.UI
 		
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
+			/*
 			var update = new Update(@"Z:temp", false);
 			var info = update.Check();
 			if(info.IsUpdate) {
@@ -47,7 +52,11 @@ namespace PeMain.UI
 					update.Execute();
 				}
 			}
+			 */
+			MessageBox.Show("PON!");
 		}
+		
+
 		
 	}
 }
