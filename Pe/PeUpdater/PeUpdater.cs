@@ -39,17 +39,52 @@ namespace PeUpdater
 	/// 	<term>expand</term>
 	/// 	<description>展開ディレクトリ。</description>
 	/// </item>
+	/// <item>
+	/// 	<term>processor</term>
+	/// 	<description>CPU種別。</description>
+	/// </item>
+	/// <item>
+	/// 	<term>rc</term>
+	/// 	<description>RC版のDL判定。</description>
+	/// </item>
+	/// <item>
+	/// 	<term>checkonly</term>
+	/// 	<description>アップデートチェックのみ行う。</description>
+	/// </item>
 	/// </list>
 	class PeUpdater
 	{
 		public static void Main(string[] args)
 		{
-			var commandLine = new CommandLine(args);
-			if(commandLine.Length == 0) {
-				throw new PeUpdaterException(PeUpdaterCode.NotFoundArgument);
+			try {
+				var commandLine = new CommandLine(args);
+				if(commandLine.Length == 0) {
+					throw new PeUpdaterException(PeUpdaterCode.NotFoundArgument);
+				}
+				
+				var update = new Update(commandLine);
+				update.Check();
+				if(update.IsVersionUp) {
+					if(update.CheckOnly) {
+						Console.WriteLine(">> UPDATE:{0} {1}", update.VersionText, update.IsRCVersion ? "RC": "RELEASE");
+					} else {
+						update.Execute();
+						Console.WriteLine(">> SUCCESS");
+					}
+				} else {
+					Console.WriteLine(">> NONE");
+				}
+			} catch(PeUpdaterException ex) {
+				Console.WriteLine(">> ERROR");
+				Console.WriteLine(">> {0}", (int)ex.PeUpdaterCode);
+				Console.WriteLine(ex);
+			} catch(Exception ex) {
+				Console.WriteLine(">> ERROR");
+				Console.WriteLine(ex);
 			}
-			
-			var update = new Update(commandLine);
+			#if DEBUG
+			Console.ReadKey(false);
+			#endif
 		}
 	}
 }
