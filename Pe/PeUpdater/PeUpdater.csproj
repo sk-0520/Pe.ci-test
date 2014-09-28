@@ -30,7 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
-    <StartArguments>/version=0.0.0.0 /rc=true /platform=x64 /uri=https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml /download=Z:\ "/expand=C:\Users\sk\Documents\Programming\SharpDevelop Project\Pe\output\Debug\x86"</StartArguments>
+    <StartArguments>/version=1.0.0.0 /rc=true /platform=x64 /uri=https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml /download=Z:\ "/expand=C:\Users\sk\Documents\Programming\SharpDevelop Project\Pe\output\Debug\x86"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>

@@ -19,7 +19,10 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/MM/DD" version="0.17.1">
+	<log date="2014/09/DD" version="0.17.1">
+		<ul type="note">
+			<li>次回バージョンアップを兼ねて少しだけバージョンアップ。</li>
+		</ul>
 		<ul type="features">
 			<li>#45: プログラムの自動更新</li>
 		</ul>
@@ -106,6 +109,9 @@
 		</ul>
 	</log>
 	<log date="2014/08/28" version="0.11.0">
+		<ul type="note">
+			<li>お小遣い帳レベルで更新履歴をつけてみる。</li>
+		</ul>
 		<ul type="features">
 			<li>#15 ログダイアログの機能実装</li>
 		</ul>

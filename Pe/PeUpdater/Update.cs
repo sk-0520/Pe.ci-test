@@ -119,18 +119,18 @@ namespace PeUpdater
 					continue;
 				}
 				var ver = version.Split('.').Select(n => ushort.Parse(n)).ToArray();
-				var versionUp
-					=  ver[0] > this._version.Data.Item1
-					|| ver[1] > this._version.Data.Item2
-					|| ver[2] > this._version.Data.Item3
-					;
-				foreach(XmlElement archive in item.GetElementsByTagName("archive")) {
-					if(archive.GetAttribute("platform") == this._platform.Data) {
-						IsRCVersion = type == "rc";
-						IsVersionUp = true;
-						VersionText = version;
-						DownloadFileUrl = archive.GetAttribute("uri");
-						break;
+				var format = "{0:000}{1:000}{2:000}";
+				var checkVer = int.Parse(string.Format(format, ver[0], ver[1], ver[2]));
+				var nowVer = int.Parse(string.Format(format, this._version.Data.Item1, this._version.Data.Item2, this._version.Data.Item3));
+				if(checkVer > nowVer) {
+					foreach(XmlElement archive in item.GetElementsByTagName("archive")) {
+						if(archive.GetAttribute("platform") == this._platform.Data) {
+							IsRCVersion = type == "rc";
+							IsVersionUp = true;
+							VersionText = version;
+							DownloadFileUrl = archive.GetAttribute("uri");
+							break;
+						}
 					}
 				}
 				if(IsVersionUp) {

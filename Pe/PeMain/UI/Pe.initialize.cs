@@ -66,18 +66,15 @@ namespace PeMain.UI
 				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild,
 			};
 			this._commonData.MainSetting.RunningInfo.SetDefaultVersion();
-			
+			var format = "{0:000}{1:000}{2:000}";
+			var prevVersion = int.Parse(string.Format(format, prev.VersionMajor, prev.VersionMinor, prev.VersionRevision));
+			Debug.WriteLine(prevVersion);
 			// バージョンが一定以下なら強制的に使用承諾
-			var prevVersion = new[] {
+			var acceptVersion = new[] {
 				new[] { 0, 17, 0 }
 			};
-			this._commonData.MainSetting.RunningInfo.Running = !prevVersion.All(
-				pv =>
-				pv[0] >= prev.VersionMajor
-				&&
-				pv[1] >= prev.VersionMinor
-				&&
-				pv[2] >= prev.VersionRevision
+			this._commonData.MainSetting.RunningInfo.Running = !acceptVersion.Any(
+				av =>  int.Parse(string.Format(format, av[0], av[1], av[2])) >= prevVersion
 			);
 		}
 		
