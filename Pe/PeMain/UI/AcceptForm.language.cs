@@ -20,8 +20,11 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
+			
+			this.selectUpdateCheck.SetLanguage(CommonData.Language);
+			this.selectUpdateCheckRC.SetLanguage(CommonData.Language);
+			
 			var acceptFilePath = Path.Combine(Literal.PeLanguageDirPath, CommonData.Language.AcceptFileName);
-			//this.webDocument.DocumentText = File.ReadAllText(acceptFilePath);;
 			this.webDocument.Navigate(acceptFilePath);
 		}
 	}

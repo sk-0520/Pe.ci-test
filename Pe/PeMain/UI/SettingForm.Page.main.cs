@@ -53,10 +53,17 @@ namespace PeMain.UI
 			systemEnvSetting.ExtensionShowHotKey  = this.inputSystemEnvExt.HotKeySetting;
 		}
 		
+		void RunningInfoExportSetting(RunningInfo setting)
+		{
+			setting.CheckUpdate = this.selectUpdateCheck.Checked;
+			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
+		}
+		
 		void MainExportSetting(MainSetting mainSetting)
 		{
 			LogExportSetting(mainSetting.Log);
 			SystemEnvExportSetting(mainSetting.SystemEnv);
+			RunningInfoExportSetting(mainSetting.RunningInfo);
 		}
 	
 	}

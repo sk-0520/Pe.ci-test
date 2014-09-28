@@ -47,10 +47,17 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
 		}
 		
+		void InitializeRunningInfo(RunningInfo setting)
+		{
+			this.selectUpdateCheck.Checked = setting.CheckUpdate;
+			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
+		}
+		
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			InitializeLog(mainSetting.Log);
 			InitializeSystemEnv(mainSetting.SystemEnv);
+			InitializeRunningInfo(mainSetting.RunningInfo);
 		}
 		
 		void InitializeLauncher(LauncherSetting launcherSetting)

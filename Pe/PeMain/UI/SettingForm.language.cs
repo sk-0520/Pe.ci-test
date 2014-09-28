@@ -43,6 +43,13 @@ namespace PeMain.UI
 			this.labelSystemEnvHiddenFile.SetLanguage(Language);
 		}
 		
+		void ApplyLanguageRunningInfo()
+		{
+			this.groupUpdateCheck.SetLanguage(Language);
+			this.selectUpdateCheck.SetLanguage(Language);
+			this.selectUpdateCheckRC.SetLanguage(Language);
+		}
+		
 		void ApplyLanguageMain()
 		{
 			this.groupMainLog.SetLanguage(Language);
@@ -51,6 +58,7 @@ namespace PeMain.UI
 			
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
+			ApplyLanguageRunningInfo();
 		}
 		
 		void ApplyLanguageLauncher()

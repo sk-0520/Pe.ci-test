@@ -19,6 +19,9 @@
 		<Word Name="font"              Text="フォント" />
 		<Word Name="auto-hide"         Text="自動的に隠す" />
 		<Word Name="admin"             Text="管理者として実行" />
+		<Word Name="update-check"      Text="アップデートをチェックする" />
+		<Word Name="update-check.RC"   Text="RC版もチェック対象とする" />
+	
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -85,6 +88,9 @@
 		<Word Name="log/header/line"      Text="行数" />
 		<Word Name="log/header/method"    Text="メソッド" />
 		
+		<Word Name="accept/check/update-check"     Text="${update-check}" />
+		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
+		
 		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
@@ -143,51 +149,54 @@
 		<Word Name="stream/command/topmost" Text="${topmost}" />
 		<Word Name="stream/tips/kill"       Text="プロセスを終了" />
 		
-		<Word Name="setting/tab/main"             Text="本体" />
-		<Word Name="setting/tab/launcher"         Text="ランチャ" />
-		<Word Name="setting/tab/launcher/basic"   Text="基本設定" />
-		<Word Name="setting/tab/launcher/others"  Text="その他" />
-		<Word Name="setting/tab/toolbar"          Text="ツールバー" />
-		<Word Name="setting/tab/command"          Text="コマンド" />
-		<Word Name="setting/tab/display"          Text="ディスプレイ" />
-		<Word Name="setting/tab/note"             Text="ノート" />
-		<Word Name="setting/label/language"       Text="使用言語" />
-		<Word Name="setting/label/hiddenfile"     Text="隠しファイル" />
-		<Word Name="setting/label/extension"      Text="拡張子" />
-		<Word Name="setting/group/log"            Text="ログ設定" />
-		<Word Name="setting/group/system-env"     Text="環境設定" />
-		<Word Name="setting/check/add-show"       Text="追加されるたびに表示する" />
-		<Word Name="setting/group/item-type"      Text="アイテムの種類" />
-		<Word Name="setting/label/item-name"      Text="アイテム名" />
-		<Word Name="setting/label/command"        Text="コマンド" />
-		<Word Name="setting/label/option"         Text="${option}" />
-		<Word Name="setting/label/work-dir"       Text="${work-dir}" />
-		<Word Name="setting/label/icon-path"      Text="アイコンパス" />
-		<Word Name="setting/label/tags"           Text="タグ" />
-		<Word Name="setting/label/note"           Text="備考" />
-		<Word Name="setting/label/note-create"    Text="作成" />
-		<Word Name="setting/label/note-hidden"    Text="隠す" />
-		<Word Name="setting/label/note-compact"   Text="最小化" />
-		<Word Name="setting/check/std-stream"     Text="${std-stream}" />
-		<Word Name="setting/check/auto-hide"      Text="${auto-hide}" />
-		<Word Name="setting/check/show-text"      Text="テキストを表示する" />
-		<Word Name="setting/label/text-width"     Text="テキストの長さ" />
-		<Word Name="setting/tips/add-group"       Text="グループの追加" />
-		<Word Name="setting/tips/add-item"        Text="ランチャーアイテムの追加" />
-		<Word Name="setting/tips/up-item"         Text="選択アイテムを上に移動" />
-		<Word Name="setting/tips/down-item"       Text="選択アイテムを下に移動" />
-		<Word Name="setting/tips/remove-item"     Text="選択アイテムを取り除く" />
-		<Word Name="setting/group/item"           Text="ノート一覧" />
-		<Word Name="setting/group/key"            Text="キー" />
-		<Word Name="setting/column/note/remove"   Text="削除" />
-		<Word Name="setting/column/note/id"       Text="ID" />
-		<Word Name="setting/column/note/visible"  Text="表示" />
-		<Word Name="setting/column/note/locked"   Text="固定" />
-		<Word Name="setting/column/note/title"    Text="タイトル" />
-		<Word Name="setting/column/note/body"     Text="本文" />
-		<Word Name="setting/column/note/font"     Text="フォント" />
-		<Word Name="setting/column/note/fore"     Text="前景色" />
-		<Word Name="setting/column/note/back"     Text="背景色" />
+		<Word Name="setting/tab/main"              Text="本体" />
+		<Word Name="setting/tab/launcher"          Text="ランチャ" />
+		<Word Name="setting/tab/launcher/basic"    Text="基本設定" />
+		<Word Name="setting/tab/launcher/others"   Text="その他" />
+		<Word Name="setting/tab/toolbar"           Text="ツールバー" />
+		<Word Name="setting/tab/command"           Text="コマンド" />
+		<Word Name="setting/tab/display"           Text="ディスプレイ" />
+		<Word Name="setting/tab/note"              Text="ノート" />
+		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
+		<Word Name="setting/check/update-check"    Text="${update-check}" />
+		<Word Name="setting/check/update-check.RC" Text="${update-check.RC}" />
+		<Word Name="setting/label/language"        Text="使用言語" />
+		<Word Name="setting/label/hiddenfile"      Text="隠しファイル" />
+		<Word Name="setting/label/extension"       Text="拡張子" />
+		<Word Name="setting/group/log"             Text="ログ設定" />
+		<Word Name="setting/group/system-env"      Text="環境設定" />
+		<Word Name="setting/check/add-show"        Text="追加されるたびに表示する" />
+		<Word Name="setting/group/item-type"       Text="アイテムの種類" />
+		<Word Name="setting/label/item-name"       Text="アイテム名" />
+		<Word Name="setting/label/command"         Text="コマンド" />
+		<Word Name="setting/label/option"          Text="${option}" />
+		<Word Name="setting/label/work-dir"        Text="${work-dir}" />
+		<Word Name="setting/label/icon-path"       Text="アイコンパス" />
+		<Word Name="setting/label/tags"            Text="タグ" />
+		<Word Name="setting/label/note"            Text="備考" />
+		<Word Name="setting/label/note-create"     Text="作成" />
+		<Word Name="setting/label/note-hidden"     Text="隠す" />
+		<Word Name="setting/label/note-compact"    Text="最小化" />
+		<Word Name="setting/check/std-stream"      Text="${std-stream}" />
+		<Word Name="setting/check/auto-hide"       Text="${auto-hide}" />
+		<Word Name="setting/check/show-text"       Text="テキストを表示する" />
+		<Word Name="setting/label/text-width"      Text="テキストの長さ" />
+		<Word Name="setting/tips/add-group"        Text="グループの追加" />
+		<Word Name="setting/tips/add-item"         Text="ランチャーアイテムの追加" />
+		<Word Name="setting/tips/up-item"          Text="選択アイテムを上に移動" />
+		<Word Name="setting/tips/down-item"        Text="選択アイテムを下に移動" />
+		<Word Name="setting/tips/remove-item"      Text="選択アイテムを取り除く" />
+		<Word Name="setting/group/item"            Text="ノート一覧" />
+		<Word Name="setting/group/key"             Text="キー" />
+		<Word Name="setting/column/note/remove"    Text="削除" />
+		<Word Name="setting/column/note/id"        Text="ID" />
+		<Word Name="setting/column/note/visible"   Text="表示" />
+		<Word Name="setting/column/note/locked"    Text="固定" />
+		<Word Name="setting/column/note/title"     Text="タイトル" />
+		<Word Name="setting/column/note/body"      Text="本文" />
+		<Word Name="setting/column/note/font"      Text="フォント" />
+		<Word Name="setting/column/note/fore"      Text="前景色" />
+		<Word Name="setting/column/note/back"      Text="背景色" />
 		
 		<Word Name="about/command/execute"  Text="@[PE]" />
 		<Word Name="about/command/data"     Text="データ" />

@@ -33,6 +33,9 @@ namespace PeMain.UI
 		
 		void CommandAccept_Click(object sender, EventArgs e)
 		{
+			CommonData.MainSetting.RunningInfo.CheckUpdate = this.selectUpdateCheck.Checked;
+			CommonData.MainSetting.RunningInfo.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
+			
 			DialogResult = DialogResult.OK;
 		}
 	}

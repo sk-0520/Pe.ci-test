@@ -36,40 +36,46 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.panelMain = new System.Windows.Forms.TableLayoutPanel();
 			this.webDocument = new System.Windows.Forms.WebBrowser();
 			this.commandAccept = new System.Windows.Forms.Button();
 			this.commandCancel = new System.Windows.Forms.Button();
-			this.tableLayoutPanel1.SuspendLayout();
+			this.panelUpdate = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectUpdateCheck = new System.Windows.Forms.CheckBox();
+			this.selectUpdateCheckRC = new System.Windows.Forms.CheckBox();
+			this.panelMain.SuspendLayout();
+			this.panelUpdate.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tableLayoutPanel1
+			// panelMain
 			// 
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Controls.Add(this.webDocument, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.commandAccept, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.commandCancel, 1, 1);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 322);
-			this.tableLayoutPanel1.TabIndex = 0;
+			this.panelMain.ColumnCount = 2;
+			this.panelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.panelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.panelMain.Controls.Add(this.webDocument, 0, 0);
+			this.panelMain.Controls.Add(this.commandAccept, 0, 2);
+			this.panelMain.Controls.Add(this.commandCancel, 1, 2);
+			this.panelMain.Controls.Add(this.panelUpdate, 0, 1);
+			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMain.Location = new System.Drawing.Point(0, 0);
+			this.panelMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.panelMain.Name = "panelMain";
+			this.panelMain.RowCount = 3;
+			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelMain.Size = new System.Drawing.Size(464, 322);
+			this.panelMain.TabIndex = 0;
 			// 
 			// webDocument
 			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.webDocument, 2);
+			this.panelMain.SetColumnSpan(this.webDocument, 2);
 			this.webDocument.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.webDocument.Location = new System.Drawing.Point(3, 4);
 			this.webDocument.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webDocument.MinimumSize = new System.Drawing.Size(23, 25);
 			this.webDocument.Name = "webDocument";
-			this.webDocument.Size = new System.Drawing.Size(458, 281);
+			this.webDocument.Size = new System.Drawing.Size(458, 241);
 			this.webDocument.TabIndex = 0;
 			// 
 			// commandAccept
@@ -97,6 +103,38 @@ namespace PeMain.UI
 			this.commandCancel.Text = "{CANCEL}";
 			this.commandCancel.UseVisualStyleBackColor = true;
 			// 
+			// panelUpdate
+			// 
+			this.panelUpdate.AutoSize = true;
+			this.panelMain.SetColumnSpan(this.panelUpdate, 2);
+			this.panelUpdate.Controls.Add(this.selectUpdateCheck);
+			this.panelUpdate.Controls.Add(this.selectUpdateCheckRC);
+			this.panelUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelUpdate.Location = new System.Drawing.Point(3, 252);
+			this.panelUpdate.Name = "panelUpdate";
+			this.panelUpdate.Size = new System.Drawing.Size(458, 34);
+			this.panelUpdate.TabIndex = 3;
+			// 
+			// selectUpdateCheck
+			// 
+			this.selectUpdateCheck.AutoSize = true;
+			this.selectUpdateCheck.Location = new System.Drawing.Point(3, 3);
+			this.selectUpdateCheck.Name = "selectUpdateCheck";
+			this.selectUpdateCheck.Size = new System.Drawing.Size(192, 19);
+			this.selectUpdateCheck.TabIndex = 0;
+			this.selectUpdateCheck.Text = ":accept/check/update-check";
+			this.selectUpdateCheck.UseVisualStyleBackColor = true;
+			// 
+			// selectUpdateCheckRC
+			// 
+			this.selectUpdateCheckRC.AutoSize = true;
+			this.selectUpdateCheckRC.Location = new System.Drawing.Point(201, 3);
+			this.selectUpdateCheckRC.Name = "selectUpdateCheckRC";
+			this.selectUpdateCheckRC.Size = new System.Drawing.Size(212, 19);
+			this.selectUpdateCheckRC.TabIndex = 1;
+			this.selectUpdateCheckRC.Text = ":accept/check/update-check.RC";
+			this.selectUpdateCheckRC.UseVisualStyleBackColor = true;
+			// 
 			// AcceptForm
 			// 
 			this.AcceptButton = this.commandAccept;
@@ -104,7 +142,7 @@ namespace PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
 			this.ClientSize = new System.Drawing.Size(464, 322);
-			this.Controls.Add(this.tableLayoutPanel1);
+			this.Controls.Add(this.panelMain);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::PeMain.Properties.Images.Pe;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -112,13 +150,18 @@ namespace PeMain.UI
 			this.Name = "AcceptForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/accept";
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
+			this.panelMain.ResumeLayout(false);
+			this.panelMain.PerformLayout();
+			this.panelUpdate.ResumeLayout(false);
+			this.panelUpdate.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectUpdateCheckRC;
+		private System.Windows.Forms.CheckBox selectUpdateCheck;
+		private System.Windows.Forms.FlowLayoutPanel panelUpdate;
 		private System.Windows.Forms.Button commandCancel;
 		private System.Windows.Forms.Button commandAccept;
 		private System.Windows.Forms.WebBrowser webDocument;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.TableLayoutPanel panelMain;
 	}
 }
