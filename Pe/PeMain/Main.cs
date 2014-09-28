@@ -63,6 +63,7 @@ namespace PeMain
 					if(fileLogger != null) {
 						fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);;
 					}
+					throw;
 				}
 			}
 		}
