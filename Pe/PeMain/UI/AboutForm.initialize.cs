@@ -27,9 +27,8 @@ namespace PeMain.UI
 				this.imageIcon.Image = image;
 			}
 			
-			var versionInfo = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			this.labelAppName.Text = Literal.programName;
-			this.labelAppVersion.Text = versionInfo.ProductVersion;
+			this.labelAppVersion.Text = Literal.PeVersion;
 			this.labelConfiguration.Text = string.Format(
 				"{0}: {1}bit",
 				#if DEBUG

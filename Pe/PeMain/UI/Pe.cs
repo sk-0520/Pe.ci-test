@@ -39,7 +39,14 @@ namespace PeMain.UI
 		
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
-			MessageBox.Show("でゅん・・・");
+			var update = new Update(@"Z:temp", false);
+			var info = update.Check();
+			if(info.IsUpdate) {
+				var s = string.Format("{0} {1}", info.Version, info.IsRcVersion ? "RC": "RELEASE");
+				if(MessageBox.Show(s, "UPDATE", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes) {
+					update.Execute();
+				}
+			}
 		}
 		
 	}

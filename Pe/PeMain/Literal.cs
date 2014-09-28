@@ -178,6 +178,24 @@ namespace PeMain
 		{
 			get { return ConfigurationManager.AppSettings["dev-page"]; }
 		}
+		public static string UpdateURL
+		{
+			//get { return ConfigurationManager.AppSettings["update-page"]; }
+			get { return "https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml"; }
+		}
+		public static string ChangeLogURL
+		{
+			get { return ConfigurationManager.AppSettings["changelog-page"]; }
+		}
+		
+		public static FileVersionInfo Version
+		{
+			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
+		}
+		public static string PeVersion
+		{
+			get { return Version.ProductVersion; }
+		}
 		
 		public static void Initialize(CommandLine commandLine)
 		{

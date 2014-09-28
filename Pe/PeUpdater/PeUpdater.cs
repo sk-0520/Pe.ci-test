@@ -40,7 +40,7 @@ namespace PeUpdater
 	/// 	<description>展開ディレクトリ。</description>
 	/// </item>
 	/// <item>
-	/// 	<term>processor</term>
+	/// 	<term>platform</term>
 	/// 	<description>CPU種別。</description>
 	/// </item>
 	/// <item>
@@ -51,18 +51,23 @@ namespace PeUpdater
 	/// 	<term>checkonly</term>
 	/// 	<description>アップデートチェックのみ行う。</description>
 	/// </item>
+	/// <item>
+	/// 	<term>wait</term>
+	/// 	<description>キー待ち。</description>
+	/// </item>
 	/// </list>
 	class PeUpdater
 	{
 		public static void Main(string[] args)
 		{
+			Update update = null;
 			try {
 				var commandLine = new CommandLine(args);
 				if(commandLine.Length == 0) {
 					throw new PeUpdaterException(PeUpdaterCode.NotFoundArgument);
 				}
 				
-				var update = new Update(commandLine);
+				update = new Update(commandLine);
 				update.Check();
 				if(update.IsVersionUp) {
 					if(update.CheckOnly) {
@@ -82,9 +87,10 @@ namespace PeUpdater
 				Console.WriteLine(">> ERROR");
 				Console.WriteLine(ex);
 			}
-			#if DEBUG
-			Console.ReadKey(false);
-			#endif
+			if(update != null && update.Wait) {
+				Console.WriteLine("Please key.");
+				Console.ReadKey(false);
+			}
 		}
 	}
 }

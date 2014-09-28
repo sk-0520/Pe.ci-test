@@ -44,8 +44,10 @@ namespace PeUpdater
 		Value<string> _platform = new Value<string>();
 		Value<bool> _getRC = new Value<bool>();
 		Value<bool> _checkOnly = new Value<bool>();
+		Value<bool> _wait = new Value<bool>();
 		
 		public bool CheckOnly { get { return this._checkOnly.Data; } }
+		public bool Wait { get { return this._wait.Data; } }
 		
 		public bool IsVersionUp { get; private set; }
 		public bool IsRCVersion { get; private set; }
@@ -69,7 +71,7 @@ namespace PeUpdater
 			Set("platform", this._platform);
 			Set("rc", this._getRC);
 			Set("checkonly", this._checkOnly);
-			
+			Set("wait", this._wait);
 		}
 		
 		void Set<T>(string key, Value<T> value)
@@ -139,34 +141,50 @@ namespace PeUpdater
 		
 		public void Execute()
 		{
-			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
-			using(var web = new WebClient()) {
-				web.DownloadFile(DownloadFileUrl, downloadPath);
-			}
-			
-			// 展開前
 			// プロセスIDが渡されていた場合は閉じる
 			var isRestart = false;
 			var restartExe = string.Empty;
 			var restartArg = string.Empty;
+			
+			Process process = null;
+			var processSw = new Stopwatch();
 			if(this._pid.HasValue) {
 				try {
-					var process = Process.GetProcessById(this._pid.Data);
-					restartExe = process.MainModule.FileName;
+					process = Process.GetProcessById(this._pid.Data);
+					restartExe = "\"" + process.MainModule.FileName + "\"";
 					restartArg = process.StartInfo.Arguments;
+					Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
+					processSw.Start();
 					process.Kill();
-					isRestart = process.WaitForExit((int)(new TimeSpan(0, 0, 15).TotalMilliseconds));
 				} catch(Exception) {
 					// 握り潰し
 				}
 			}
+
+			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
+			using(var web = new WebClient()) {
+				Console.WriteLine("Download = {0} -> {1}", DownloadFileUrl, downloadPath);
+				var downloadSw = new Stopwatch();
+				downloadSw.Start();
+				web.DownloadFile(DownloadFileUrl, downloadPath);
+				downloadSw.Stop();
+				Console.WriteLine("Download -> Size: {0} byte, Time = {1}", (new FileInfo(downloadPath)).Length, downloadSw.Elapsed);
+			}
+			
+			if(process != null) {
+				isRestart = process.WaitForExit((int)(new TimeSpan(0, 1, 0).TotalMilliseconds));
+				processSw.Stop();
+				Console.WriteLine("Kill -> {0}, Time = {1}", isRestart, processSw.Elapsed);
+			}
+			
 			// 自身の名前を切り替え
 			var myPath = Assembly.GetEntryAssembly().Location;
-			var renamePath = Path.ChangeExtension(myPath, VersionText + ".update-old");
+			var renamePath = Path.ChangeExtension(myPath, "update-old");
 			if(File.Exists(renamePath)) {
 				File.Delete(renamePath);
 			}
 			try {
+				Console.WriteLine("Rename -> {0} => {1}", myPath, renamePath);
 				File.Move(myPath, renamePath);
 				// 置き換え開始
 				using(var archive = ZipFile.OpenRead(downloadPath)) {
@@ -176,10 +194,12 @@ namespace PeUpdater
 						if(!Directory.Exists(dirPath)) {
 							Directory.CreateDirectory(dirPath);
 						}
+						Console.WriteLine("Expand -> {0}", expandPath);
 						entry.ExtractToFile(expandPath, true);
 					}
 				}
 				if(isRestart) {
+					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);
 					Process.Start(restartExe, restartArg);
 				}
 			} catch(Exception) {

@@ -18,6 +18,9 @@ namespace PeMain.Data
 		public RunningInfo()
 		{ }
 		
+		public bool CheckUpdate { get; set; }
+		public bool CheckUpdateRC { get; set; }
+		
 		public bool Running { get; set; }
 		
 		public ushort VersionMajor { get; set; }
