@@ -376,13 +376,21 @@ namespace PeMain.UI
 			// 情報
 			itemAbout.Name = menuNameAbout;
 			itemAbout.Click += (object sender, EventArgs e) => {
-				PauseOthers(() => {
-				            	using(var dialog = new AboutForm()) {
-				            		dialog.SetCommonData(this._commonData);
-				            		dialog.ShowDialog();
-				            	}
-				            	return null;
-				            });
+				PauseOthers(
+					() => {
+						var checkUpdate = false;
+						using(var dialog = new AboutForm()) {
+							dialog.SetCommonData(this._commonData);
+							dialog.ShowDialog();
+							checkUpdate = dialog.CheckUpdate;
+						}
+						if(checkUpdate) {
+							return () => CheckUpdateProcess(true);
+						} else {
+							return null;
+						}
+					}
+				);
 			};
 			
 			// ウィンドウ

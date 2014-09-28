@@ -277,7 +277,7 @@ namespace PeMain.UI
 						InitializeNoteForm(null, null);
 						
 						if(check) {
-							CheckUpdateProcess();
+							CheckUpdateProcess(false);
 						}
 					};
 				}
@@ -390,17 +390,19 @@ namespace PeMain.UI
 			}
 		}
 		
-		void CheckUpdateProcess()
+		void CheckUpdateProcess(bool force)
 		{
 			var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 			Task.Factory.StartNew(
 				() => {
-					#if DEBUG
-					Thread.Sleep(TimeSpan.FromSeconds(1));
-					#else
-					Thread.Sleep(TimeSpan.FromSeconds(30));
-					#endif
-					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+					if(!force) {
+						#if DEBUG
+						Thread.Sleep(TimeSpan.FromSeconds(1));
+						#else
+						Thread.Sleep(TimeSpan.FromSeconds(30));
+						#endif
+					}
+					if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
 						var info = update.Check();
@@ -414,7 +416,7 @@ namespace PeMain.UI
 				}
 			).ContinueWith(
 				t => {
-					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+					if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 						if(t.Result != null && t.Result.Info != null) {
 							if(t.Result.Info.IsUpdate) {
 								ShowUpdate(t.Result.Update, t.Result.Info);

@@ -68,5 +68,11 @@ namespace PeMain.UI
 		{
 			OpenDirectory(Literal.UserBackupDirPath);
 		}
+		
+		void CommandUpdate_Click(object sender, EventArgs e)
+		{
+			CheckUpdate = true;
+			Close();
+		}
 	}
 }

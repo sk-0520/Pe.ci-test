@@ -48,6 +48,7 @@ namespace PeMain.UI
 			this.commandBackupDir = new System.Windows.Forms.Button();
 			this.labelConfiguration = new System.Windows.Forms.Label();
 			this.linkMail = new System.Windows.Forms.LinkLabel();
+			this.commandUpdate = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -175,12 +176,27 @@ namespace PeMain.UI
 			this.linkMail.Text = "mailto:mail-address";
 			this.linkMail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
+			// commandUpdate
+			// 
+			this.commandUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandUpdate.Image = global::PeMain.Properties.Images.Update;
+			this.commandUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.commandUpdate.Location = new System.Drawing.Point(252, 111);
+			this.commandUpdate.Name = "commandUpdate";
+			this.commandUpdate.Size = new System.Drawing.Size(101, 27);
+			this.commandUpdate.TabIndex = 7;
+			this.commandUpdate.Text = ":about/command/update";
+			this.commandUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandUpdate.UseVisualStyleBackColor = true;
+			this.commandUpdate.Click += new System.EventHandler(this.CommandUpdate_Click);
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(365, 193);
+			this.Controls.Add(this.commandUpdate);
 			this.Controls.Add(this.linkMail);
 			this.Controls.Add(this.commandBackupDir);
 			this.Controls.Add(this.commandDataDir);
@@ -206,6 +222,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button commandUpdate;
 		private System.Windows.Forms.LinkLabel linkMail;
 		private System.Windows.Forms.Label labelConfiguration;
 		private System.Windows.Forms.Button commandBackupDir;

@@ -18,5 +18,6 @@ namespace PeMain.UI
 	public partial class AboutForm
 	{
 		CommonData CommonData { get; set; }
+		public bool CheckUpdate { get; private set; }
 	}
 }

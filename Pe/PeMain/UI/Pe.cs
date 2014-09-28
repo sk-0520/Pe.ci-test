@@ -28,7 +28,7 @@ namespace PeMain.UI
 			var logger = new StartupLogger(fileLogger);
 			Initialize(commandLine, logger);
 			
-			CheckUpdateProcess();
+			CheckUpdateProcess(false);
 		}
 		
 		public void Dispose()

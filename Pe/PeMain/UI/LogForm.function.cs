@@ -26,24 +26,29 @@ namespace PeMain.UI
 	{
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
-			var logItem = new LogItem(logType, title, detail, frame);
-			this._fileLogger.WiteItem(logItem);
-			if(this._logs.Count >= Literal.logListLimit) {
-				this._logs.RemoveAt(0);
-			}
-			this._logs.Add(logItem);
-			this.listLog.VirtualListSize = this._logs.Count;
-			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-			
-			if(!Visible && CommonData.MainSetting.Log.AddShow && ((CommonData.MainSetting.Log.AddShowTrigger & logType) == logType)) {
-				Visible = true;
-				this._refresh = true;
-			}
-			
-			this.listLog.Items[this.listLog.Items.Count - 1].Focused = true;
-			this.listLog.Items[this.listLog.Items.Count - 1].EnsureVisible();
-			
-			this.listLog.Refresh();
+			BeginInvoke(
+				(MethodInvoker)delegate()
+				{
+					var logItem = new LogItem(logType, title, detail, frame);
+					this._fileLogger.WiteItem(logItem);
+					if(this._logs.Count >= Literal.logListLimit) {
+						this._logs.RemoveAt(0);
+					}
+					this._logs.Add(logItem);
+					this.listLog.VirtualListSize = this._logs.Count;
+					this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+					
+					if(!Visible && CommonData.MainSetting.Log.AddShow && ((CommonData.MainSetting.Log.AddShowTrigger & logType) == logType)) {
+						Visible = true;
+						this._refresh = true;
+					}
+					
+					this.listLog.Items[this.listLog.Items.Count - 1].Focused = true;
+					this.listLog.Items[this.listLog.Items.Count - 1].EnsureVisible();
+					
+					this.listLog.Refresh();
+				}
+			);
 		}
 		
 		public void PutsList(IEnumerable<LogItem> logs, bool show)
@@ -132,7 +137,7 @@ namespace PeMain.UI
 				.Select(m => new { Name = m.Name, Type = m.GetType(), MemberType = m.MemberType})
 				.Where(m => m.MemberType.IsIn(MemberTypes.Property, MemberTypes.Field))
 				.OrderBy(m => m.Name)
-			;
+				;
 			
 			foreach(var member in members)  {
 				object value;
@@ -155,7 +160,7 @@ namespace PeMain.UI
 			}
 			return result;
 		}
-			
+		
 		void SetDetail(LogItem logItem)
 		{
 			Debug.Assert(logItem != null);
