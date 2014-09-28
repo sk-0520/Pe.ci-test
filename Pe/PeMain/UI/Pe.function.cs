@@ -257,6 +257,7 @@ namespace PeMain.UI
 					this._noteWindowList.Clear();
 					
 					var mainSetting = settingForm.MainSetting;
+					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveDB(this._commonData.Database);
 					SaveSetting();
@@ -274,6 +275,10 @@ namespace PeMain.UI
 						InitializeToolbarForm(null, null);
 						
 						InitializeNoteForm(null, null);
+						
+						if(check) {
+							CheckUpdateProcess();
+						}
 					};
 				}
 			}
@@ -390,7 +395,7 @@ namespace PeMain.UI
 			var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 			Task.Factory.StartNew(
 				() => {
-					//Thread.Sleep(TimeSpan.FromMinutes(1));
+					Thread.Sleep(TimeSpan.FromMinutes(1));
 					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 						var info = update.Check();
