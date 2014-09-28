@@ -119,6 +119,16 @@ namespace PeMain
 		}
 		
 		/// <summary>
+		/// doc/
+		/// </summary>
+		public static string PeDocumentDirPath
+		{
+			get
+			{
+				return Path.Combine(PeRootDirPath, "doc");
+			}
+		}		
+		/// <summary>
 		/// ユーザー設定ルートディレクトリ
 		/// </summary>
 		public static string UserSettingDirPath

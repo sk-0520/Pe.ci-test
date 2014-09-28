@@ -9,7 +9,12 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using PeUtility;
 
 namespace PeMain.UI
@@ -42,6 +47,16 @@ namespace PeMain.UI
 			this.linkWeb.Text = Literal.AboutWebPage;
 			this.linkMail.Text = Literal.AboutMailAddress;
 			this.linkDev.Text = Literal.AboutDevelopPage;
+			
+			var xml = XElement.Load(Path.Combine(Literal.PeDocumentDirPath, "components.xml"));
+			var components = xml
+				.Elements()
+				.Select(e => new { Name = e.Attribute("name").Value, URI = e.Attribute("uri").Value })
+			;
+			this.gridComponents_columnName.DataPropertyName = "Name";
+			this.gridComponents_columnURI.DataPropertyName = "URI";
+			this.gridComponents.AutoGenerateColumns = false;
+			this.gridComponents.DataSource = new BindingSource(components, string.Empty);
 		}
 	}
 }

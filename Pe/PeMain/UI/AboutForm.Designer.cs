@@ -49,7 +49,11 @@ namespace PeMain.UI
 			this.labelConfiguration = new System.Windows.Forms.Label();
 			this.linkMail = new System.Windows.Forms.LinkLabel();
 			this.commandUpdate = new System.Windows.Forms.Button();
+			this.gridComponents = new System.Windows.Forms.DataGridView();
+			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridComponents_columnURI = new System.Windows.Forms.DataGridViewLinkColumn();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// imageIcon
@@ -63,7 +67,7 @@ namespace PeMain.UI
 			// commandOk
 			// 
 			this.commandOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOk.Location = new System.Drawing.Point(252, 150);
+			this.commandOk.Location = new System.Drawing.Point(465, 208);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(101, 31);
 			this.commandOk.TabIndex = 0;
@@ -93,7 +97,7 @@ namespace PeMain.UI
 			// 
 			this.linkWeb.AutoEllipsis = true;
 			this.linkWeb.AutoSize = true;
-			this.linkWeb.Location = new System.Drawing.Point(12, 96);
+			this.linkWeb.Location = new System.Drawing.Point(208, 12);
 			this.linkWeb.Name = "linkWeb";
 			this.linkWeb.Size = new System.Drawing.Size(103, 15);
 			this.linkWeb.TabIndex = 1;
@@ -105,7 +109,7 @@ namespace PeMain.UI
 			// 
 			this.linkDev.AutoEllipsis = true;
 			this.linkDev.AutoSize = true;
-			this.linkDev.Location = new System.Drawing.Point(12, 150);
+			this.linkDev.Location = new System.Drawing.Point(208, 60);
 			this.linkDev.Name = "linkDev";
 			this.linkDev.Size = new System.Drawing.Size(100, 15);
 			this.linkDev.TabIndex = 3;
@@ -118,7 +122,7 @@ namespace PeMain.UI
 			this.commandExecuteDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandExecuteDir.Image = global::PeMain.Properties.Images.Dir;
 			this.commandExecuteDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandExecuteDir.Location = new System.Drawing.Point(252, 12);
+			this.commandExecuteDir.Location = new System.Drawing.Point(465, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
 			this.commandExecuteDir.Size = new System.Drawing.Size(101, 27);
 			this.commandExecuteDir.TabIndex = 4;
@@ -132,7 +136,7 @@ namespace PeMain.UI
 			this.commandDataDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandDataDir.Image = global::PeMain.Properties.Images.Dir;
 			this.commandDataDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandDataDir.Location = new System.Drawing.Point(252, 44);
+			this.commandDataDir.Location = new System.Drawing.Point(465, 44);
 			this.commandDataDir.Name = "commandDataDir";
 			this.commandDataDir.Size = new System.Drawing.Size(101, 27);
 			this.commandDataDir.TabIndex = 5;
@@ -146,7 +150,7 @@ namespace PeMain.UI
 			this.commandBackupDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandBackupDir.Image = global::PeMain.Properties.Images.Dir;
 			this.commandBackupDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandBackupDir.Location = new System.Drawing.Point(252, 76);
+			this.commandBackupDir.Location = new System.Drawing.Point(465, 76);
 			this.commandBackupDir.Name = "commandBackupDir";
 			this.commandBackupDir.Size = new System.Drawing.Size(101, 27);
 			this.commandBackupDir.TabIndex = 6;
@@ -168,7 +172,7 @@ namespace PeMain.UI
 			// 
 			this.linkMail.AutoEllipsis = true;
 			this.linkMail.AutoSize = true;
-			this.linkMail.Location = new System.Drawing.Point(12, 123);
+			this.linkMail.Location = new System.Drawing.Point(208, 36);
 			this.linkMail.Name = "linkMail";
 			this.linkMail.Size = new System.Drawing.Size(124, 15);
 			this.linkMail.TabIndex = 2;
@@ -181,7 +185,7 @@ namespace PeMain.UI
 			this.commandUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandUpdate.Image = global::PeMain.Properties.Images.Update;
 			this.commandUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandUpdate.Location = new System.Drawing.Point(252, 111);
+			this.commandUpdate.Location = new System.Drawing.Point(465, 109);
 			this.commandUpdate.Name = "commandUpdate";
 			this.commandUpdate.Size = new System.Drawing.Size(101, 27);
 			this.commandUpdate.TabIndex = 7;
@@ -190,12 +194,46 @@ namespace PeMain.UI
 			this.commandUpdate.UseVisualStyleBackColor = true;
 			this.commandUpdate.Click += new System.EventHandler(this.CommandUpdate_Click);
 			// 
+			// gridComponents
+			// 
+			this.gridComponents.AllowUserToAddRows = false;
+			this.gridComponents.AllowUserToDeleteRows = false;
+			this.gridComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridComponents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+									this.gridComponents_columnName,
+									this.gridComponents_columnURI});
+			this.gridComponents.Location = new System.Drawing.Point(12, 89);
+			this.gridComponents.MultiSelect = false;
+			this.gridComponents.Name = "gridComponents";
+			this.gridComponents.ReadOnly = true;
+			this.gridComponents.RowTemplate.Height = 21;
+			this.gridComponents.Size = new System.Drawing.Size(434, 150);
+			this.gridComponents.TabIndex = 8;
+			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
+			// 
+			// gridComponents_columnName
+			// 
+			this.gridComponents_columnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.gridComponents_columnName.HeaderText = ":about/column/name";
+			this.gridComponents_columnName.Name = "gridComponents_columnName";
+			this.gridComponents_columnName.ReadOnly = true;
+			this.gridComponents_columnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.gridComponents_columnName.Width = 138;
+			// 
+			// gridComponents_columnURI
+			// 
+			this.gridComponents_columnURI.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.gridComponents_columnURI.HeaderText = ":about/column/uri";
+			this.gridComponents_columnURI.Name = "gridComponents_columnURI";
+			this.gridComponents_columnURI.ReadOnly = true;
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(365, 193);
+			this.ClientSize = new System.Drawing.Size(578, 251);
+			this.Controls.Add(this.gridComponents);
 			this.Controls.Add(this.commandUpdate);
 			this.Controls.Add(this.linkMail);
 			this.Controls.Add(this.commandBackupDir);
@@ -219,9 +257,13 @@ namespace PeMain.UI
 			this.Text = ":window/about";
 			this.TopMost = true;
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.DataGridViewLinkColumn gridComponents_columnURI;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnName;
+		private System.Windows.Forms.DataGridView gridComponents;
 		private System.Windows.Forms.Button commandUpdate;
 		private System.Windows.Forms.LinkLabel linkMail;
 		private System.Windows.Forms.Label labelConfiguration;

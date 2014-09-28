@@ -256,9 +256,7 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.variable.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ExecuteForm.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UI\ExecuteForm.cs" />
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
@@ -407,7 +405,9 @@
     <Compile Include="UI\StreamForm.variable.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ToolbarForm.cs" />
+    <Compile Include="UI\ToolbarForm.cs">
+      <DependentUpon>StreamForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ToolbarForm.define.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
@@ -512,6 +512,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="doc\readme-ja.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\components.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="etc\lang\ja-JP.xml">

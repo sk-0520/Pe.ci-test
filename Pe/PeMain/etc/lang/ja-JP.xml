@@ -208,6 +208,8 @@
 		<Word Name="about/command/data"     Text="データ" />
 		<Word Name="about/command/backup"   Text="バックアップ" />
 		<Word Name="about/command/update"   Text="アップデート" />
+		<Word Name="about/column/name"      Text="コンポーネント" />
+		<Word Name="about/column/uri"       Text="WEBサイト" />
 		
 		<Word Name="group/new" Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />

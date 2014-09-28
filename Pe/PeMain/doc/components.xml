@@ -1,0 +1,4 @@
+﻿<?xml version="1.0"?>
+<components>
+	<component name="System.Data.SQLite" uri="http://www.sqlite.org/copyright.html" />
+</components>
