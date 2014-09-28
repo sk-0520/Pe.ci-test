@@ -70,7 +70,7 @@ namespace PeMain.UI
 			this.commandOk.Location = new System.Drawing.Point(465, 208);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(101, 31);
-			this.commandOk.TabIndex = 0;
+			this.commandOk.TabIndex = 8;
 			this.commandOk.Text = "{OK}";
 			this.commandOk.UseVisualStyleBackColor = true;
 			this.commandOk.Click += new System.EventHandler(this.CommandOk_Click);
@@ -100,7 +100,7 @@ namespace PeMain.UI
 			this.linkWeb.Location = new System.Drawing.Point(208, 12);
 			this.linkWeb.Name = "linkWeb";
 			this.linkWeb.Size = new System.Drawing.Size(103, 15);
-			this.linkWeb.TabIndex = 1;
+			this.linkWeb.TabIndex = 0;
 			this.linkWeb.TabStop = true;
 			this.linkWeb.Text = "http://web-page";
 			this.linkWeb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
@@ -112,7 +112,7 @@ namespace PeMain.UI
 			this.linkDev.Location = new System.Drawing.Point(208, 60);
 			this.linkDev.Name = "linkDev";
 			this.linkDev.Size = new System.Drawing.Size(100, 15);
-			this.linkDev.TabIndex = 3;
+			this.linkDev.TabIndex = 2;
 			this.linkDev.TabStop = true;
 			this.linkDev.Text = "http://dev-page";
 			this.linkDev.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
@@ -175,7 +175,7 @@ namespace PeMain.UI
 			this.linkMail.Location = new System.Drawing.Point(208, 36);
 			this.linkMail.Name = "linkMail";
 			this.linkMail.Size = new System.Drawing.Size(124, 15);
-			this.linkMail.TabIndex = 2;
+			this.linkMail.TabIndex = 1;
 			this.linkMail.TabStop = true;
 			this.linkMail.Text = "mailto:mail-address";
 			this.linkMail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
@@ -208,7 +208,7 @@ namespace PeMain.UI
 			this.gridComponents.ReadOnly = true;
 			this.gridComponents.RowTemplate.Height = 21;
 			this.gridComponents.Size = new System.Drawing.Size(434, 150);
-			this.gridComponents.TabIndex = 8;
+			this.gridComponents.TabIndex = 3;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
 			// 
 			// gridComponents_columnName

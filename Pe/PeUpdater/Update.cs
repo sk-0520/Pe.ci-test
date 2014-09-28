@@ -154,6 +154,9 @@ namespace PeUpdater
 					restartExe = "\"" + process.MainModule.FileName + "\"";
 					restartArg = process.StartInfo.Arguments;
 					Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
+					process.Exited += (object sender, EventArgs e) => {
+						processSw.Stop();
+					};
 					processSw.Start();
 					process.Kill();
 				} catch(Exception) {
@@ -173,7 +176,6 @@ namespace PeUpdater
 			
 			if(process != null) {
 				isRestart = process.WaitForExit((int)(new TimeSpan(0, 1, 0).TotalMilliseconds));
-				processSw.Stop();
 				Console.WriteLine("Kill -> {0}, Time = {1}", isRestart, processSw.Elapsed);
 			}
 			

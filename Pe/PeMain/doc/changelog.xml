@@ -19,6 +19,23 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/MM/DD" version="0.18.0">
+		<ul type="features">
+			<li>サードパーティコンポーネント一覧追加</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/09/28" version="0.17.1">
 		<ul type="note">
 			<li>次回バージョンアップを兼ねて少しだけバージョンアップ</li>
