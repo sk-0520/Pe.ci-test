@@ -395,9 +395,10 @@ namespace PeMain.UI
 			var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 			Task.Factory.StartNew(
 				() => {
-					Thread.Sleep(TimeSpan.FromMinutes(1));
+				//	Thread.Sleep(TimeSpan.FromSeconds(30));
 					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
 						var info = update.Check();
 						return new {
 							Update = update,
@@ -410,8 +411,16 @@ namespace PeMain.UI
 			).ContinueWith(
 				t => {
 					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
-						if(t.Result.Info != null && t.Result.Info.IsUpdate) {
-							ShowUpdate(t.Result.Update, t.Result.Info);
+						if(t.Result != null && t.Result.Info != null) {
+							if(t.Result.Info.IsUpdate) {
+								ShowUpdate(t.Result.Update, t.Result.Info);
+							} else if(t.Result.Info.IsError) {
+								this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], t.Result.Info.ErrorCode);
+							} else {
+								this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "unknown");
+							}
+						} else {
+							this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "info is null");
 						}
 					}
 				},

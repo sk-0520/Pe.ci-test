@@ -19,8 +19,8 @@
 		<Word Name="font"              Text="フォント" />
 		<Word Name="auto-hide"         Text="自動的に隠す" />
 		<Word Name="admin"             Text="管理者として実行" />
-		<Word Name="update-check"      Text="アップデートをチェックする" />
-		<Word Name="update-check.RC"   Text="RC版もチェック対象とする" />
+		<Word Name="update-check"      Text="アップデートを確認する" />
+		<Word Name="update-check.RC"   Text="RC版も確認対象とする" />
 		<Word Name="version-release"   Text="リリース版" />
 		<Word Name="version-rc"        Text="RC版" />
 	
@@ -311,6 +311,9 @@
 		<Word Name="log/init/db-data/version"   Text="DB用ディレクトリ作成" />
 		<Word Name="log/init/db-data/create"    Text="DB: @[TABLE-NAME] 作成" />
 		<Word Name="log/init/db-data/check"     Text="DB: @[TABLE-NAME] チェック" />
+		
+		<Word Name="log/update/check"     Text="アップデートチェック開始" />
+		<Word Name="log/update/error"     Text="アップデートチェック失敗" />
 	
 		<Word Name="log/init/ui/start"  Text="UI初期化開始" />
 		<Word Name="log/init/ui/end"    Text="UI初期化終了" />
