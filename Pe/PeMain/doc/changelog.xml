@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <changelog>
 	<!--
-	<log version="" date="">
+	<log date="" version="">
 		<ul type="features">
 			<li></li>
 			<li></li>
@@ -19,7 +19,7 @@
 		</ul>
 	</log>
 	-->
-	<log version="0.18.0" date="2014/MM/DD">
+	<log date="2014/MM/DD" version="0.18.0">
 		<ul type="features">
 			<li>change.log -&gt; changelog.xml</li>
 			<li></li>
@@ -36,7 +36,7 @@
 			<li></li>
 		</ul>
 	</log>
-	<log version="0.17.0" date="2014/09/23">
+	<log date="2014/09/23" version="0.17.0">
 		<ul type="features">
 			<li>標準出力取得ウィンドウに最前面固定の切り替え機能を追加。</li>
 			<li>#42 ホットキーの表示。</li>
@@ -50,7 +50,7 @@
 			<li>#46 設定ダイアログから設定保存後の再起動で使用許諾ダイアログ表示。</li>
 		</ul>
 	</log>
-	<log version="0.16.0" date="2014/09/21">
+	<log date="2014/09/21" version="0.16.0">
 		<ul type="features">
 			<li>64bit 対応版配布開始。</li>
 			<li>情報ダイアログにデバッグ・リリースと対象プロセッサーを表示。</li>
@@ -66,7 +66,7 @@
 			<li>配布アーカイブの圧縮形式を 7z -> zip へ変更。</li>
 		</ul>
 	</log>
-	<log version="0.15.0" date="2014/09/15">
+	<log date="2014/09/15" version="0.15.0">
 		<ul type="features">
 			<li>#22 標準出力取得ウィンドウの機能実装。</li>
 			<li>#37 本体設定時におけるノートの各種設定。</li>
@@ -79,7 +79,7 @@
 			<li>内部実装: 出力取得でエラー取得時に標準出力とマークされていた。</li>
 		</ul>
 	</log>
-	<log version="0.14.0" date="2014/09/11">
+	<log date="2014/09/11" version="0.14.0">
 		<ul type="features">
 			<li>情報ウィンドウで各種ディレクトリを開くボタンの追加。</li>
 		</ul>
@@ -90,7 +90,7 @@
 			<li>設定ウィンドウからツールバー位置変更で位置とサイズが変になる不具合の修正。</li>
 		</ul>
 	</log>
-	<log version="0.13.0" date="2014/09/07">
+	<log date="2014/09/07" version="0.13.0">
 		<ul type="features">
 			<li>指定して実行ダイアログへのD&amp;Dで値設定。</li>
 			<li>指定して実行ダイアログの作業フォルダ欄へのD&amp;Dで値設定。</li>
@@ -108,13 +108,13 @@
 			<li>ToolStripItemへの言語設定でツールチップ設定がちょっと変だったのを修正。</li>
 		</ul>
 	</log>
-	<log version="0.12.0" date="2014/08/29">
+	<log date="2014/08/29" version="0.12.0">
 		<ul type="fixes">
 			<li>#11 ツールバー メインアイコン。</li>
 			<li>タスクトレイアイコンを変更。</li>
 		</ul>
 	</log>
-	<log version="0.11.0" date="2014/08/28">
+	<log date="2014/08/28" version="0.11.0">
 		<ul type="features">
 			<li>#15 ログダイアログの機能実装。</li>
 		</ul>
