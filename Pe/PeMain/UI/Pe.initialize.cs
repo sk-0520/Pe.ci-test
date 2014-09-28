@@ -385,7 +385,10 @@ namespace PeMain.UI
 							checkUpdate = dialog.CheckUpdate;
 						}
 						if(checkUpdate) {
-							return () => CheckUpdateProcess(true);
+							return () => { 
+								CheckUpdateProcessWait(true); 
+								return false; 
+							};
 						} else {
 							return null;
 						}

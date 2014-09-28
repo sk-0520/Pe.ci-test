@@ -25,10 +25,12 @@ namespace PeMain.Logic
 		public int ErrorCode { get; set; }
 	}
 	
-	public class Update
+	public class UpdateData
 	{
 		readonly string _downloadPath;
 		readonly bool _donwloadRc;
+		
+		public UpdateInfo Info { get; private set; }
 		
 		const string updater = "PeUpdater.exe";
 		public static string UpdaterExe
@@ -36,7 +38,7 @@ namespace PeMain.Logic
 			get { return Path.Combine(Literal.PeRootDirPath, updater); }
 		}
 		
-		public Update(string downloadPath, bool donwloadRc)
+		public UpdateData(string downloadPath, bool donwloadRc)
 		{
 			this._downloadPath = downloadPath;
 			this._donwloadRc = donwloadRc;
@@ -112,7 +114,7 @@ namespace PeMain.Logic
 				info.IsError = true;
 			}
 
-			return info;
+			return Info = info;
 		}
 		
 		public void Execute()

@@ -25,7 +25,7 @@ namespace PeMain.UI
 		
 		void ApplySetting()
 		{
-			if(UpdateInfo.IsRcVersion) {
+			if(UpdateData.Info.IsRcVersion) {
 				this.labelVersion.BorderStyle = BorderStyle.FixedSingle;
 				this.labelVersion.ForeColor = Color.Red;
 				this.labelVersion.BackColor = Color.Black;

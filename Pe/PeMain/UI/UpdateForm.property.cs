@@ -15,7 +15,6 @@ namespace PeMain.UI
 	partial class UpdateForm
 	{
 		CommonData CommonData { get; set; }
-		public Update UpdateData { get; set; }
-		public UpdateInfo UpdateInfo { get; set; }
+		public UpdateData UpdateData { get; set; }
 	}
 }

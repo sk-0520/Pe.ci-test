@@ -117,28 +117,33 @@ namespace PeMain.UI
 		/// 
 		/// </summary>
 		/// <param name="func">ウィンドウ再構築を独自に行う場合は処理を返す。</param>
-		void PauseOthers(Func<Action> func)
+		void PauseOthers(Func<Func<bool>> func)
 		{
+			var recursion = this._pause;
 			var windowVisible = new Dictionary<Form, bool>();
-			foreach(var window in GetWindows()) {
-				windowVisible[window] = window.Visible;
-				window.Visible = false;
-			}
-			this._notifyIcon.Visible = false;
-			
-			this._pause = true;
-			var action = func();
-			this._pause = false;
-
-			if(action != null) {
-				action();
-			} else {
-				foreach(var pair in windowVisible) {
-					pair.Key.Visible = pair.Value;
+			if(!recursion) {
+				foreach(var window in GetWindows()) {
+					windowVisible[window] = window.Visible;
+					window.Visible = false;
 				}
+				this._notifyIcon.Visible = false;
+				
+				this._pause = true;
 			}
-			
-			this._notifyIcon.Visible = true;
+			var action = func();
+			var customWindow = false;
+			if(action != null) {
+				customWindow = action();
+			}
+			if(!recursion) {
+				if(!customWindow) {
+					foreach(var pair in windowVisible) {
+						pair.Key.Visible = pair.Value;
+					}
+				}
+				this._pause = false;
+				this._notifyIcon.Visible = true;
+			}
 		}
 		
 		void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int count)
@@ -246,7 +251,7 @@ namespace PeMain.UI
 			Application.Exit();
 		}
 		
-		Action OpenSetting()
+		Func<bool> OpenSetting()
 		{
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
@@ -264,7 +269,7 @@ namespace PeMain.UI
 					InitializeLanguage(null, null);
 					ApplyLanguage();
 					
-					return delegate() {
+					return () => {
 						this._logForm.SetCommonData(this._commonData);
 						this._messageWindow.SetCommonData(this._commonData);
 						foreach(var toolbar in this._toolbarForms.Values) {
@@ -277,8 +282,12 @@ namespace PeMain.UI
 						InitializeNoteForm(null, null);
 						
 						if(check) {
+							#if !DISABLED_UPDATE_CHECK
 							CheckUpdateProcess(false);
+							#endif
 						}
+						
+						return true;
 					};
 				}
 			}
@@ -390,9 +399,36 @@ namespace PeMain.UI
 			}
 		}
 		
+		UpdateData CheckUpdate(bool force)
+		{
+			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+				updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
+				updateData.Check();
+			}
+			return updateData;
+		}
+		
+		void CheckedUpdate(bool force, UpdateData updateData)
+		{
+			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+				if(updateData != null && updateData.Info != null) {
+					if(updateData.Info.IsUpdate) {
+						ShowUpdate(updateData);
+					} else if(updateData.Info.IsError) {
+						this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], updateData.Info.ErrorCode);
+					} else {
+						this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "unknown");
+					}
+				} else {
+					this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "info is null");
+				}
+			}
+		}
+		
 		void CheckUpdateProcess(bool force)
 		{
-			var update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 			Task.Factory.StartNew(
 				() => {
 					if(!force) {
@@ -402,45 +438,28 @@ namespace PeMain.UI
 						Thread.Sleep(TimeSpan.FromSeconds(30));
 						#endif
 					}
-					if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
-						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
-						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
-						var info = update.Check();
-						return new {
-							Update = update,
-							Info   = info,
-						};
-					}
-					
-					return null;
+					return CheckUpdate(force);
 				}
 			).ContinueWith(
 				t => {
-					if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
-						if(t.Result != null && t.Result.Info != null) {
-							if(t.Result.Info.IsUpdate) {
-								ShowUpdate(t.Result.Update, t.Result.Info);
-							} else if(t.Result.Info.IsError) {
-								this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], t.Result.Info.ErrorCode);
-							} else {
-								this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "unknown");
-							}
-						} else {
-							this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "info is null");
-						}
-					}
+					CheckedUpdate(force, t.Result);
 				},
 				TaskScheduler.FromCurrentSynchronizationContext()
 			);
 		}
 		
-		void ShowUpdate(Update updateData, UpdateInfo updateInfo)
+		void CheckUpdateProcessWait(bool force)
+		{
+			var updateData = CheckUpdate(force);
+			CheckedUpdate(force, updateData);
+		}
+		
+		void ShowUpdate(UpdateData updateData)
 		{
 			PauseOthers(
 				() => {
 					using(var dialog = new UpdateForm()) {
 						dialog.UpdateData = updateData;
-						dialog.UpdateInfo = updateInfo;
 						dialog.SetCommonData(this._commonData);
 						if(dialog.ShowDialog() == DialogResult.OK) {
 							updateData.Execute();

@@ -22,8 +22,8 @@ namespace PeMain.UI
 			
 			var map = new Dictionary<string, string>() {
 				{ SystemLanguageName.versionNow,  Literal.PeVersion },
-				{ SystemLanguageName.versionNext, UpdateInfo.Version },
-				{ SystemLanguageName.versionType, UpdateInfo.IsRcVersion ? "${version-rc}": "${version-release}" },
+				{ SystemLanguageName.versionNext, UpdateData.Info.Version },
+				{ SystemLanguageName.versionType, UpdateData.Info.IsRcVersion ? "${version-rc}": "${version-release}" },
 			};
 			var version = CommonData.Language[this.labelVersion.Text.Substring(1)];
 			version = CommonData.Language[version, map];
