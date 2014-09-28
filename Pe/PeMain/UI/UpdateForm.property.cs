@@ -8,11 +8,14 @@
  */
 using System;
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
 	partial class UpdateForm
 	{
 		CommonData CommonData { get; set; }
+		public Update UpdateData { get; set; }
+		public UpdateInfo UpdateInfo { get; set; }
 	}
 }

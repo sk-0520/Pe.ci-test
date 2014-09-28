@@ -60,7 +60,7 @@ namespace PeMain.Data
 			if(word == null) {
 				word = new Word();
 				word.Name = key;
-				word.Text = "<" + key + ">";
+				word.Text = key;
 			}
 			
 			return word;
@@ -106,10 +106,7 @@ namespace PeMain.Data
 			get
 			{
 				var text = GetPlain(key);
-				if(text.Any(c => c == '$')) {
-					// ${...}
-					text = text.ReplaceRange("${", "}", s => GetWord(Define, s).Text);
-				}
+
 				if(text.Any(c => c == '@')) {
 					var systemMap = GetSystemMap();
 					IDictionary<string, string> useMap;
@@ -122,6 +119,11 @@ namespace PeMain.Data
 						}
 					}
 					text = text.ReplaceRangeFromDictionary("@[", "]", useMap);
+				}
+				
+				if(text.Any(c => c == '$')) {
+					// ${...}
+					text = text.ReplaceRange("${", "}", s => GetWord(Define, s).Text);
 				}
 				
 				return text;

@@ -26,7 +26,12 @@
 		<ul type="features">
 			<li>#45: プログラムの自動更新</li>
 		</ul>
+		<ul type="fixes">
+			<li>言語適用順を ${...} -&gt; @[...] から @[...] -&gt; ${...} に変更</li>
+			<li>言語設定のキーが存在しなかった場合に&lt;key&gt;としていた処理から&lt;&gt;を付与しないように変更</li>
+		</ul>
 		<ul type="developer">
+			<li>/Pe/changelog.js 追加。 changelog.xml から最新バージョンを取得して /Pe/Update/update.html を作成</li>
 			<li>change.log -&gt; changelog.xml</li>
 		</ul>
 	</log>

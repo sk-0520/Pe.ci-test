@@ -393,28 +393,38 @@ namespace PeMain.UI
 					//Thread.Sleep(TimeSpan.FromMinutes(1));
 					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 						update = new Update(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
-						return update.Check();
+						var info = update.Check();
+						return new {
+							Update = update,
+							Info   = info,
+						};
 					}
 					
 					return null;
 				}
 			).ContinueWith(
 				t => {
-					if(t.Result != null && t.Result.IsUpdate) {
-						ShowUpdate(update);
+					if(!this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+						if(t.Result.Info != null && t.Result.Info.IsUpdate) {
+							ShowUpdate(t.Result.Update, t.Result.Info);
+						}
 					}
 				},
 				TaskScheduler.FromCurrentSynchronizationContext()
 			);
 		}
 		
-		void ShowUpdate(Update update)
+		void ShowUpdate(Update updateData, UpdateInfo updateInfo)
 		{
 			PauseOthers(
 				() => {
 					using(var dialog = new UpdateForm()) {
+						dialog.UpdateData = updateData;
+						dialog.UpdateInfo = updateInfo;
 						dialog.SetCommonData(this._commonData);
-						dialog.ShowDialog();
+						if(dialog.ShowDialog() == DialogResult.OK) {
+							updateData.Execute();
+						}
 					}
 					return null;
 				}

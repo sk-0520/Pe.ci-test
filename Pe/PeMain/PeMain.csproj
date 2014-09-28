@@ -494,6 +494,9 @@
     <EmbeddedResource Include="UI\ToolbarForm.resx">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

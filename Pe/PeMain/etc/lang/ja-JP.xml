@@ -21,6 +21,8 @@
 		<Word Name="admin"             Text="管理者として実行" />
 		<Word Name="update-check"      Text="アップデートをチェックする" />
 		<Word Name="update-check.RC"   Text="RC版もチェック対象とする" />
+		<Word Name="version-release"   Text="リリース版" />
+		<Word Name="version-rc"        Text="RC版" />
 	
 	</Define>
 	<Words>
@@ -40,6 +42,7 @@
 		<Word Name="common/tab/env"                     Text="環境変数" />
 		
 		<Word Name="window/accept"   Text="@[PE] 使用許諾" />
+		<Word Name="window/update"   Text="アップデート" />
 		<Word Name="window/toolbar"  Text="@[PE]" />
 		<Word Name="window/log"      Text="ログ" />
 		<Word Name="window/about"    Text="@[PE] 情報" />
@@ -91,6 +94,8 @@
 		<Word Name="accept/check/update-check"     Text="${update-check}" />
 		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
 		
+		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
+		
 		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
@@ -124,7 +129,7 @@
 		<Word Name="note/menu/topmost"      Text="最前面" />
 		<!-- <Word Name="note/menu/remove"       Text="削除" /> -->
 		<Word Name="note/dialog/caption"    Text="ノート削除" />
-		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;論理削除するには「はい」、非表示にするには「いいえ」を選択してください。" />
+		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;削除するには「はい」、非表示にするには「いいえ」を選択してください。" />
 		
 		<Word Name="note/style/color-fore"    Text="文字色" />
 		<Word Name="note/style/color-back"    Text="背景色" />

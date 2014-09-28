@@ -30,5 +30,10 @@ namespace PeMain.UI
 			//
 			Initialize();
 		}
+		
+		void CommandOk_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+		}
 	}
 }

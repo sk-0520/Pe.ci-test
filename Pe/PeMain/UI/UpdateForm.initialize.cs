@@ -13,8 +13,6 @@ namespace PeMain.UI
 	partial class UpdateForm
 	{
 		void Initialize()
-		{
-			
-		}
+		{ }
 	}
 }
