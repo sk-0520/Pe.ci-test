@@ -96,7 +96,7 @@ namespace PeMain.Logic
 			var info = new UpdateInfo();
 			
 			if(lines.Count > 0) {
-				var s = lines[0];
+				var s = lines.SingleOrDefault(line => !string.IsNullOrEmpty(line) && line.StartsWith(">> "));
 				
 				var v = new string(s.SkipWhile(c => c != ':').Skip(1).ToArray());
 				if(s.StartsWith(">> UPDATE")) {
@@ -105,8 +105,13 @@ namespace PeMain.Logic
 					info.IsUpdate = true;
 					info.Version = version;
 					info.IsRcVersion = isRc;
-				} else {
-					info.ErrorCode = int.Parse(v);
+				} else if(string.IsNullOrEmpty(s) || !s.StartsWith(">> NONE")) {
+					int r;
+					if(int.TryParse(v, out r)) {
+						info.ErrorCode = r;
+					} else {
+						info.ErrorCode = -2;
+					}
 					info.IsError = true;
 				}
 			} else {

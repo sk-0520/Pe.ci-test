@@ -419,7 +419,7 @@ namespace PeMain.UI
 					} else if(updateData.Info.IsError) {
 						this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], updateData.Info.ErrorCode);
 					} else {
-						this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "unknown");
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/newest"], "");
 					}
 				} else {
 					this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "info is null");
