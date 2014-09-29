@@ -14,6 +14,7 @@ using System.IO;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
+using PInvoke.Windows;
 
 namespace PeMain.UI
 {
@@ -34,6 +35,15 @@ namespace PeMain.UI
 			Initialize();
 		}
 		
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams createParams = base.CreateParams;
+				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
+				return createParams;
+			}
+		}
 		static int LogTypeToImageIndex(LogType logType) {
 			switch(logType) {
 					case LogType.Information: return 0;

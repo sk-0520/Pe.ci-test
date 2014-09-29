@@ -402,17 +402,12 @@ namespace PeMain.UI
 			itemNote.Name = menuNameWindowNote;
 			AttachmentNoteSubMenu(itemNote);
 			
+			// ログ
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
 			};
-			
-			// ログ
-			itemLogger.Popup += (object sender, EventArgs e) => {
-				itemLogger.Checked = this._logForm.Visible;
-			};
-
 			
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
@@ -428,6 +423,11 @@ namespace PeMain.UI
 			itemExit.Name = menuNameExit;
 			itemExit.Click += (object sender, EventArgs e) => {
 				CloseApplication(true);
+			};
+			
+			// メインメニュー
+			this._contextMenu.Popup += (object sender, EventArgs e) => { 
+				itemLogger.Checked = this._logForm.Visible;
 			};
 
 			this._contextMenu.MenuItems.AddRange(menuList.ToArray());
