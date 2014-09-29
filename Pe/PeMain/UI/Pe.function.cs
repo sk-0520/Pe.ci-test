@@ -424,6 +424,8 @@ namespace PeMain.UI
 				} else {
 					this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "info is null");
 				}
+			} else if(this._pause) {
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check-stop"], "this._pause => true");
 			}
 		}
 		
