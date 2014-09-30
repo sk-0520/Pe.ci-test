@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using PInvoke.Windows;
@@ -20,10 +21,12 @@ namespace PeUtility
 	{
 		public static void Over(Control target)
 		{
+			//Debug.WriteLine(((Form)sender).PointToScreen(((Button)((Form)sender).AcceptButton).Location));
 			var targetSize = target.Size;
-			var targetPos = target.PointToScreen(target.Location);
-			var pointingPos = new Point(targetPos.X + targetSize.Width / 2, targetPos.Y + targetSize.Width / 2);
-			
+			var targetPos = target.Parent.PointToScreen(target.Location);
+
+			var pointingPos = new Point(targetPos.X + targetSize.Width / 2, targetPos.Y + targetSize.Height / 2);
+			Debug.WriteLine(pointingPos);
 			Cursor.Position = pointingPos;
 		}
 		

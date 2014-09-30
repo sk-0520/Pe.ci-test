@@ -16,7 +16,6 @@ namespace PeMain.UI
 		void Initialize()
 		{
 			PointingUtility.AttachmentDefaultButton(this);
-			
 		}
 	}
 }
