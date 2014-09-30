@@ -15,7 +15,7 @@ using PeUtility;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of ISetCommonData.
+	/// CommonDataを受信可能とする。
 	/// </summary>
 	public interface ISetCommonData
 	{

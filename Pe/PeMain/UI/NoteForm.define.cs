@@ -66,36 +66,5 @@ namespace PeMain.UI
 				}
 			}
 		}
-		
-		class ColorData: ItemData<Color>, ISetLanguage
-		{
-			private string _displayTitle;
-			private string _displayValue;
-			Language Language { get; set; }
-				
-			public ColorData(Color value, string displayTitle, string displayValue): base(value)
-			{
-				this._displayTitle = displayTitle;
-				this._displayValue = displayValue;
-			}
-			
-			public override string Display {
-				get 
-				{
-					var title = this._displayTitle;
-					var value = this._displayValue;
-					if(Language != null) {
-						title = Language[title];
-						value = Language[value];
-					}
-					return string.Format("{0}: {1}", title, value);
-				}
-			}
-			
-			public void SetLanguage(Language language)
-			{
-				Language = language;
-			}
-		}
 	}
 }

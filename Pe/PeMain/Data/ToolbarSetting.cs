@@ -98,14 +98,6 @@ namespace PeMain.Data
 		
 	}
 	
-	public class ToolbarPositionItem: UseLanguageItemData<ToolbarPosition>
-	{
-		public ToolbarPositionItem(ToolbarPosition value): base(value) { }
-		public ToolbarPositionItem(ToolbarPosition value, Language lang): base(value, lang) { }
-		
-		public override string Display { get { return Value.ToText(Language); } }
-	}
-	
 	/// <summary>
 	/// ツールバーグループとして名前を管理。
 	/// </summary>

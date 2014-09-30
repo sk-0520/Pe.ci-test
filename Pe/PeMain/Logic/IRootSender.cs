@@ -16,7 +16,7 @@ using PInvoke.Windows;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of RootCommunication.
+	/// 送信機。
 	/// </summary>
 	public interface IRootSender
 	{

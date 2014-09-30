@@ -45,17 +45,6 @@ namespace PeMain.Data
 	}
 	
 	/// <summary>
-	/// ランチャ種別のUI用ラッパ。
-	/// </summary>
-	public class LauncherTypeItem: UseLanguageItemData<LauncherType>
-	{
-		public LauncherTypeItem(LauncherType value): base(value) { }
-		public LauncherTypeItem(LauncherType value, Language lang): base(value, lang) { }
-		
-		public override string Display { get { return Value.ToText(Language); } }
-	}
-	
-	/// <summary>
 	/// 実行履歴
 	/// </summary>
 	[Serializable]
