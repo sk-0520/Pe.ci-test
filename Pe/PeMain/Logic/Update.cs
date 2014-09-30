@@ -53,7 +53,7 @@ namespace PeMain.Logic
 			var defaultMap = new Dictionary<string,string>() {
 				{ "pid",      string.Format("{0}", Process.GetCurrentProcess().Id) },
 				{ "version",  Literal.PeVersion },
-				{ "uri",      Literal.UpdateURL },
+				{ "uri",      Literal.UpdateReleaseURL },
 				{ "platform", Environment.Is64BitProcess ? "x64": "x86" },
 				{ "rc",       this._donwloadRc ? "true": "false" },
 			};

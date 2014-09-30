@@ -193,10 +193,13 @@ namespace PeMain
 		{
 			get { return ConfigurationManager.AppSettings["dev-page"]; }
 		}
-		public static string UpdateURL
+		public static string UpdateReleaseURL
 		{
-			get { return ConfigurationManager.AppSettings["update-page"]; }
-			//get { return "https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml"; }
+			get { return ConfigurationManager.AppSettings["update-release-page"]; }
+		}
+		public static string RcUpdateURL
+		{
+			get { return ConfigurationManager.AppSettings["update-rc-page"]; }
 		}
 		public static string ChangeLogURL
 		{
