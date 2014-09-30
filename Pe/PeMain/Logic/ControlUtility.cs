@@ -258,9 +258,12 @@ namespace PeMain.Logic
 			var parentScreen = Screen.FromControl(owner.Owner);
 			// #34, とりあえず右側だけ対処で行ける気がする
 			if(showScreen.DeviceName != parentScreen.DeviceName) {
-				//Debug.WriteLine("{2} > {0} - {1}", showScreen, parentScreen, DateTime.Now);
-				//Debug.WriteLine(toolMenu.DropDownDirection);
+				//Debug.WriteLine("{2} > {0}:{3} - {1}{4}", showScreen.DeviceName, parentScreen.DeviceName, DateTime.Now, toolMenu.DropDown.Location, owner.Owner.Location);
+				toolMenu.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
+				toolMenu.HideDropDown();
 				toolMenu.DropDownDirection = ToolStripDropDownDirection.Left;
+				toolMenu.ShowDropDown();
+				toolMenu.DropDownOpening += EventDropDownItemOpeningMenuInScreen;
 			}
 		}
 		
