@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <changelog>
 	<!--
-	<log date="" version="">
+	<log date="" version="" type="rc">
 		<ul type="features">
 			<li></li>
 			<li></li>
@@ -19,6 +19,23 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/10/DD" version="0.18.1" type="rc">
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/10/01" version="0.18.0">
 		<ul type="features">
 			<li>サードパーティコンポーネント一覧追加</li>
