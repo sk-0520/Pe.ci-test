@@ -193,17 +193,17 @@ namespace PeMain
 		{
 			get { return ConfigurationManager.AppSettings["dev-page"]; }
 		}
-		public static string UpdateReleaseURL
+		public static string UpdateURL
 		{
-			get { return ConfigurationManager.AppSettings["update-release-page"]; }
-		}
-		public static string RcUpdateURL
-		{
-			get { return ConfigurationManager.AppSettings["update-rc-page"]; }
+			get { return ConfigurationManager.AppSettings["update-page"]; }
 		}
 		public static string ChangeLogURL
 		{
-			get { return ConfigurationManager.AppSettings["changelog-page"]; }
+			get { return ConfigurationManager.AppSettings["changelog-release-page"]; }
+		}
+		public static string ChangeLogRcURL
+		{
+			get { return ConfigurationManager.AppSettings["changelog-rc-page"]; }
 		}
 		
 		public static FileVersionInfo Version

@@ -8,6 +8,8 @@
  */
 using System;
 using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using PeMain.Data;
 
@@ -21,6 +23,8 @@ namespace PeMain.UI
 			
 			ApplyLanguage();
 			ApplySetting();
+			
+			ApplyUpdate();
 		}
 		
 		void ApplySetting()
@@ -30,6 +34,16 @@ namespace PeMain.UI
 				this.labelVersion.ForeColor = Color.Red;
 				this.labelVersion.BackColor = Color.Black;
 			}
+		}
+		
+		void ApplyUpdate()
+		{
+			byte[] httpData = null;
+			using(var web = new WebClient()) {
+				var url = UpdateData.Info.IsRcVersion ? Literal.ChangeLogRcURL: Literal.ChangeLogURL; 
+				httpData = web.DownloadData(url);
+			}
+			this.webUpdate.DocumentStream = new MemoryStream(httpData);
 		}
 	}
 }

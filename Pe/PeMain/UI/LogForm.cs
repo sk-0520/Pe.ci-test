@@ -114,7 +114,7 @@ namespace PeMain.UI
 				dialog.Filter = "*.log|*.log";
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					var path = dialog.FileName;
-					Debug.WriteLine(path);
+					//Debug.WriteLine(path);
 					try {
 						using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
 							stream.WriteLine(new PeMain.Logic.PeInformation().ToString());

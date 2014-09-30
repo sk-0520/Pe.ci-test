@@ -18,8 +18,6 @@ namespace PeMain.UI
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
 			
-			this.labelRcNote.SetLanguage(CommonData.Language);
-			
 			var map = new Dictionary<string, string>() {
 				{ SystemLanguageName.versionNow,  Literal.PeVersion },
 				{ SystemLanguageName.versionNext, UpdateData.Info.Version },

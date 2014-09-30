@@ -68,9 +68,10 @@ namespace PeMain.UI
 			this._commonData.MainSetting.RunningInfo.SetDefaultVersion();
 			var format = "{0:000}{1:000}{2:000}";
 			var prevVersion = int.Parse(string.Format(format, prev.VersionMajor, prev.VersionMinor, prev.VersionRevision));
-			Debug.WriteLine(prevVersion);
+			//Debug.WriteLine(prevVersion);
 			// バージョンが一定以下なら強制的に使用承諾
 			var acceptVersion = new[] {
+				new[] { 0, 17, 1 },
 				new[] { 0, 17, 0 }
 			};
 			this._commonData.MainSetting.RunningInfo.Running = !acceptVersion.Any(
@@ -140,7 +141,7 @@ namespace PeMain.UI
 
 			// 
 			var enabledVersionTable = this._commonData.Database.ExistsTable(DataTables.masterTableVersion);
-			Debug.WriteLine(enabledVersionTable);
+			//Debug.WriteLine(enabledVersionTable);
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/version"], enabledVersionTable);
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成

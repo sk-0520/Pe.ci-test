@@ -19,7 +19,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/MM/DD" version="0.18.0">
+	<log date="2014/10/01" version="0.18.0">
 		<ul type="features">
 			<li>サードパーティコンポーネント一覧追加</li>
 			<li>ノートのタイトル描画フォントをデフォルトではシステムのキャプションバーフォントに変更</li>
@@ -34,7 +34,7 @@
 		</ul>
 		<ul type="developer">
 			<li>PeMain.Data.Item関連のDisposeをあれやこれや。</li>
-			<li></li>
+			<li>アップデート用チェンジログをリリース/RC版で分離、0.20.0で現行チェンジログ削除予定</li>
 		</ul>
 	</log>
 	<log date="2014/09/28" version="0.17.1">

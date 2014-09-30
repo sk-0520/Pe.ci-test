@@ -404,7 +404,7 @@ namespace PeMain.UI
 			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateReleaseURL);
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
 				updateData.Check();
 			}
 			return updateData;
