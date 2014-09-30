@@ -32,7 +32,7 @@ namespace PeMain.Data
 			HiddenHotKey = new HotKeySetting();
 			CompactHotKey = new HotKeySetting();
 			
-			CaptionFontSetting = new FontSetting();
+			CaptionFontSetting = new FontSetting(SystemFonts.CaptionFont);
 		}
 		
 		/// <summary>

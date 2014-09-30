@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
@@ -19,9 +20,17 @@ namespace PeMain.Data
 	public class FontSetting: Item, IDisposable
 	{
 		private Font _font = null;
+		private readonly Font _defaultFont;
 		
 		public FontSetting()
-		{ }
+		{
+			this._defaultFont = null;
+		}
+		
+		public FontSetting(Font defaultFont)
+		{
+			this._defaultFont = defaultFont;
+		}
 		
 		/// <summary>
 		/// 高さ
@@ -45,16 +54,18 @@ namespace PeMain.Data
 			get
 			{
 				if(this._font == null) {
+					var defaultFont = this._defaultFont ?? SystemFonts.MessageBoxFont;
+					
 					FontFamily family = null;
 					if(!string.IsNullOrWhiteSpace(Family)) {
 						family = FontFamily.Families.SingleOrDefault(f => f.Name == Family);
 					}
 					if(family == null) {
-						family = FontFamily.GenericMonospace;
+						family = defaultFont.FontFamily;
 					}
 					var size = Height;
 					if(float.IsNaN(size) || size == 0.0) {
-						size = SystemFonts.DefaultFont.Size;
+						size = defaultFont.SizeInPoints;
 					}
 					this._font = new Font(family, size);
 				}
@@ -65,7 +76,7 @@ namespace PeMain.Data
 		
 		public bool IsDefault
 		{
-			get { return string.IsNullOrWhiteSpace(this.Family); } 
+			get { return string.IsNullOrWhiteSpace(this.Family); }
 		}
 		
 		public void Dispose()
@@ -76,7 +87,7 @@ namespace PeMain.Data
 			}
 		}
 		
-		public virtual void Include(FontSetting fs) 
+		public virtual void Include(FontSetting fs)
 		{
 			Dispose();
 			
@@ -85,7 +96,7 @@ namespace PeMain.Data
 			Bold = fs.Bold;
 			Italic = fs.Italic;
 		}
-		public virtual void Include(Font f) 
+		public virtual void Include(Font f)
 		{
 			Dispose();
 			

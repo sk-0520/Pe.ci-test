@@ -39,7 +39,6 @@ namespace PeMain.UI
 			
 			// フォント
 			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
-			
 		}
 		
 		void SaveNoteItems(PeDBManager db)
