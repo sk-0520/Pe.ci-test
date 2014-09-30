@@ -203,7 +203,45 @@ namespace PeMain.Logic
 	
 	public static class ToolStripUtility
 	{
-		public static void EventOpeningMenuInScreen(object sender, object e)
+		/// <summary>
+		/// コンテキストメニュー用イベント。
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public static void EventDropDownOpeningMenuInScreen(object sender, object e)
+		{
+			var toolMenu = sender as ToolStripDropDown;
+			if(toolMenu == null) {
+				return;
+			}
+			var parent = (Control)toolMenu.Tag;
+			//Debug.WriteLine(toolMenu.Location);
+			var showScreen = Screen.FromPoint(toolMenu.Location);
+			var parentScreen = Screen.FromControl(parent);
+			
+			if(toolMenu.HasChildren) {
+				foreach(ToolStripItem childItem in toolMenu.Items) {
+					var childDropItem = childItem as ToolStripDropDownItem;
+					if(childDropItem != null) {
+						AttachmentOpeningMenuInScreen(childDropItem);
+					}
+				}
+			}
+
+			if(showScreen.DeviceName != parentScreen.DeviceName) {
+				parent.ContextMenuStrip.Opening -= EventDropDownOpeningMenuInScreen;
+				parent.ContextMenuStrip.Close();
+				parent.ContextMenuStrip.Show(parent, parent.PointToClient(Cursor.Position), ToolStripDropDownDirection.Left);
+				parent.ContextMenuStrip.Opening += EventDropDownOpeningMenuInScreen;
+			}
+		}
+		
+		/// <summary>
+		/// 汎用イベント。
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public static void EventDropDownItemOpeningMenuInScreen(object sender, object e)
 		{
 			var toolMenu = sender as ToolStripDropDownItem;
 			if(toolMenu == null) {
@@ -221,7 +259,7 @@ namespace PeMain.Logic
 			// #34, とりあえず右側だけ対処で行ける気がする
 			if(showScreen.DeviceName != parentScreen.DeviceName) {
 				//Debug.WriteLine("{2} > {0} - {1}", showScreen, parentScreen, DateTime.Now);
-				toolMenu.HideDropDown();
+				//Debug.WriteLine(toolMenu.DropDownDirection);
 				toolMenu.DropDownDirection = ToolStripDropDownDirection.Left;
 			}
 		}
@@ -234,8 +272,8 @@ namespace PeMain.Logic
 		}
 		public static void AttachmentOpeningMenuInScreen(ToolStripDropDownItem toolItem)
 		{
-			toolItem.DropDownOpening -= EventOpeningMenuInScreen;
-			toolItem.DropDownOpening += EventOpeningMenuInScreen;
+			toolItem.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
+			toolItem.DropDownOpening += EventDropDownItemOpeningMenuInScreen;
 			if(toolItem.HasDropDownItems) {
 				foreach(ToolStripItem childItem in toolItem.DropDownItems) {
 					var childDropItem = childItem as ToolStripDropDownItem;
@@ -245,6 +283,20 @@ namespace PeMain.Logic
 				}
 			}
 		}
+		
+		/// <summary>
+		/// コンテキストメニュー
+		/// </summary>
+		/// <param name="toolItem"></param>
+		public static void AttachmentOpeningMenuInScreen(Control parent)
+		{
+			var toolItem = parent.ContextMenuStrip;
+			Debug.Assert(toolItem.Tag == null);
+			toolItem.Tag = parent;
+			toolItem.Opening -= EventDropDownOpeningMenuInScreen;
+			toolItem.Opening += EventDropDownOpeningMenuInScreen;
+		}
+
 	}
 
 	public static class UIUtility

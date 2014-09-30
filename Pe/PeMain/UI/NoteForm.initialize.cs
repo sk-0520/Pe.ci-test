@@ -43,7 +43,7 @@ namespace PeMain.UI
 				control.Control.ComboBox.BindingContext = BindingContext;
 				control.Control.Attachment(colorList, control.Default);
 			}
-			this.inputTitle.AutoSize = false;
+			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
 		}
 	}
 }

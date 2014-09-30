@@ -676,7 +676,7 @@ namespace PeMain.UI
 
 			var hasMenuItem = (ToolStripDropDownItem)toolItem;
 			if(hasMenuItem != null) {
-				hasMenuItem.DropDownOpening += ToolStripUtility.EventOpeningMenuInScreen;
+				hasMenuItem.DropDownOpening += ToolStripUtility.EventDropDownItemOpeningMenuInScreen;
 			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
