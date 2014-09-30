@@ -23,7 +23,6 @@
 		<Word Name="update-check.RC"   Text="RC版も確認対象とする" />
 		<Word Name="version-release"   Text="リリース版" />
 		<Word Name="version-rc"        Text="RC版" />
-	
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -97,7 +96,7 @@
 		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
 		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
 		
-		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />
+		<Word Name="toolbar/main/tips"               Text="現在選${version-release}択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
 		<Word Name="toolbar/menu/file/execute-ex"    Text="指定して実行(&amp;E)" />
