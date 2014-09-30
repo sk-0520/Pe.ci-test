@@ -272,6 +272,8 @@ namespace PeMain
 		public const string groupName   = "GROUP";
 		public const string itemName    = "ITEM";
 		
+		public const string noteTitle   = "NOTE";
+		
 		public const string versionNow    = "NOW";
 		public const string versionNext   = "NEXT";
 		public const string versionType   = "TYPE";

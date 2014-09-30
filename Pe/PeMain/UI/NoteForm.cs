@@ -349,5 +349,10 @@ namespace PeMain.UI
 			
 			return base.ProcessDialogKey(keyData);
 		}
+		
+		void NoteForm_MouseLeave(object sender, EventArgs e)
+		{
+			Refresh();
+		}
 	}
 }

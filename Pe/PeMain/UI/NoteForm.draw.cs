@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -75,8 +75,6 @@ namespace PeMain.UI
 			}
 		}
 		
-		
-		
 		void DrawCommand(Point point, Func<bool, ButtonState, ButtonState> inFirstDg, Action<NoteCommand> prevDrawDg, Action lastInDg, bool elseProcess)
 		{
 			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
@@ -112,6 +110,8 @@ namespace PeMain.UI
 								if(pair.Value != ButtonState.Normal) {
 									var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
 									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, ButtonState.Normal);
+									this._commandStateMap[pair.Key] = ButtonState.Normal;
+									Debug.WriteLine(DateTime.Now);
 								}
 							}
 						}

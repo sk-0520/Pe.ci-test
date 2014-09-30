@@ -160,7 +160,6 @@ namespace PeMain.UI
 			} else {
 				Size = size;
 			}
-
 		}
 		
 		Rectangle GetTitleArea()
@@ -293,7 +292,10 @@ namespace PeMain.UI
 				
 				this._changed = false;
 				#if DEBUG
-				CommonData.Logger.Puts(LogType.Information, "save", NoteItem);
+				var map = new Dictionary<string,string>() {
+					{ SystemLanguageName.noteTitle, NoteItem.Title },
+				};
+				CommonData.Logger.Puts(LogType.Information, CommonData.Language["note/save", map], NoteItem);
 				#endif
 			}
 		}
