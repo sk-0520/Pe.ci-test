@@ -17,7 +17,7 @@ namespace PeMain.Data
 	/// フォント設定。
 	/// </summary>
 	[Serializable]
-	public class FontSetting: Item, IDisposable
+	public class FontSetting: DisposableItem, IDisposable
 	{
 		/// <summary>
 		/// 保持用フォント。
@@ -84,7 +84,7 @@ namespace PeMain.Data
 			get { return string.IsNullOrWhiteSpace(this.Family); }
 		}
 		
-		public void Dispose()
+		public override void Dispose()
 		{
 			if(this._font != null) {
 				this._font.Dispose();
@@ -100,6 +100,8 @@ namespace PeMain.Data
 			Family = fs.Family;
 			Bold = fs.Bold;
 			Italic = fs.Italic;
+			
+			IsDisposed = false;
 		}
 		public virtual void Include(Font f)
 		{
@@ -109,6 +111,8 @@ namespace PeMain.Data
 			Family = f.FontFamily.Name;
 			Bold = f.Bold;
 			Italic = f.Italic;
+			
+			IsDisposed = false;
 		}
 		
 		public string ToViewText(Language language)

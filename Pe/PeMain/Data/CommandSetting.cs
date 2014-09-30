@@ -20,7 +20,7 @@ namespace PeMain.Data
 	/// コマンドランチャー設定
 	/// </summary>
 	[Serializable]
-	public class CommandSetting: Item, IDisposable
+	public class CommandSetting: DisposableItem, IDisposable
 	{
 		//private Font _font = null;
 		
@@ -60,7 +60,7 @@ namespace PeMain.Data
 		
 		public HotKeySetting HotKey { get; set; }
 		
-		public void Dispose()
+		public override void Dispose()
 		{
 			if(FontSetting != null) {
 				FontSetting.Dispose();
