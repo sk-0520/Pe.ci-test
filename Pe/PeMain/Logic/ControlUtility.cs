@@ -200,6 +200,14 @@ namespace PeMain.Logic
 			ToSelect(targetNode, toSelect);
 		}
 	}
+	
+	public static class ToolStripUtility
+	{
+		public static void OpeningMenuInScreen(object sender, object e)
+		{
+			
+		}
+	}
 
 	public static class UIUtility
 	{

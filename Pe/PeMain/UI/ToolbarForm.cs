@@ -109,7 +109,7 @@ namespace PeMain.UI
 		{
 			this._menuOpening = true;
 			if(sender is ToolStripDropDownItem) {
-				clickItem_DropDownOpening(sender, e);
+				OpeningDropDown((ToolStripDropDownItem)sender);
 			}
 		}
 		void CloseRootMenu(object sender, EventArgs e)
@@ -122,7 +122,6 @@ namespace PeMain.UI
 		{
 			// TODO: 領域内に収める処理
 			
-			OpeningDropDown((ToolStripDropDownItem)sender);
 		}
 		
 		void toolItem_MouseHover(object sender, EventArgs e)

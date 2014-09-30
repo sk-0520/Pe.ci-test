@@ -670,14 +670,18 @@ namespace PeMain.UI
 
 			var hasMenuItem = (ToolStripDropDownItem)toolItem;
 			if(hasMenuItem != null) {
-				hasMenuItem.DropDownOpening += clickItem_DropDownOpening;
+				hasMenuItem.DropDownOpening += ToolStripUtility.OpeningMenuInScreen;
 			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			
 			return toolItem;
 		}
 		
-		// TODO: 領域ぎりぎりの場合にメニュー位置が他のディスプレイに表示される
+		
+		/// <summary>
+		/// ルートメニューはうまいこと反対へ表示させる
+		/// </summary>
+		/// <param name="toolItem"></param>
 		void OpeningDropDown(ToolStripDropDownItem toolItem)
 		{
 			switch(UseToolbarItem.ToolbarPosition) {
