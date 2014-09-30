@@ -108,20 +108,38 @@ namespace PeMain.UI
 		void OpeningRootMenu(object sender, EventArgs e)
 		{
 			this._menuOpening = true;
-			if(sender is ToolStripDropDownItem) {
-				OpeningDropDown((ToolStripDropDownItem)sender);
+			var toolItem = sender as ToolStripDropDownItem;
+			switch(UseToolbarItem.ToolbarPosition) {
+				case ToolbarPosition.DesktopFloat:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
+					break;
+					
+				case ToolbarPosition.DesktopTop:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
+					break;
+					
+				case ToolbarPosition.DesktopBottom:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
+					break;
+					
+				case ToolbarPosition.DesktopLeft:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Right;
+					break;
+					
+				case ToolbarPosition.DesktopRight:
+					toolItem.DropDownDirection = ToolStripDropDownDirection.Left;
+					break;
+					
+				default:
+					Debug.Assert(false, UseToolbarItem.ToolbarPosition.ToString());
+					break;
 			}
 		}
+		
 		void CloseRootMenu(object sender, EventArgs e)
 		{
 			this._menuOpening = false;
 			SwitchHidden();
-		}
-		
-		void clickItem_DropDownOpening(object sender, EventArgs e)
-		{
-			// TODO: 領域内に収める処理
-			
 		}
 		
 		void toolItem_MouseHover(object sender, EventArgs e)

@@ -677,41 +677,6 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
-		
-		/// <summary>
-		/// ルートメニューはうまいこと反対へ表示させる
-		/// </summary>
-		/// <param name="toolItem"></param>
-		void OpeningDropDown(ToolStripDropDownItem toolItem)
-		{
-			switch(UseToolbarItem.ToolbarPosition) {
-				case ToolbarPosition.DesktopFloat:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
-					break;
-					
-				case ToolbarPosition.DesktopTop:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
-					break;
-					
-				case ToolbarPosition.DesktopBottom:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
-					break;
-					
-				case ToolbarPosition.DesktopLeft:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.Right;
-					break;
-					
-				case ToolbarPosition.DesktopRight:
-					toolItem.DropDownDirection = ToolStripDropDownDirection.Left;
-					break;
-					
-				default:
-					Debug.Assert(false, UseToolbarItem.ToolbarPosition.ToString());
-					break;
-			}
-		}
-		
-		
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
