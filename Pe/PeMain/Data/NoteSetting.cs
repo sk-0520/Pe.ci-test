@@ -21,10 +21,12 @@ namespace PeMain.Data
 {
 	
 	/// <summary>
+	/// ノートの設定。
 	/// 
+	/// ノート一つ一つではなくノートという機能に対する設定。
 	/// </summary>
 	[Serializable]
-	public class NoteSetting: Item, IDisposable
+	public class NoteSetting: DisposableItem, IDisposable
 	{
 		public NoteSetting()
 		{
@@ -44,8 +46,10 @@ namespace PeMain.Data
 		
 		public FontSetting CaptionFontSetting { get; set; }
 		
-		public void Dispose()
+		public override void Dispose()
 		{
+			base.Dispose();
+			
 			CaptionFontSetting.Dispose();
 		}
 		

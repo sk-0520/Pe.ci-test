@@ -11,7 +11,7 @@ using System;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// Description of ShortcutKeySetting.
+	/// システム環境に対する操作設定。
 	/// </summary>
 	[Serializable]
 	public class SystemEnvSetting: Item

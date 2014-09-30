@@ -8,6 +8,7 @@
  */
 using System;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace PeMain.Data
 {
@@ -19,10 +20,63 @@ namespace PeMain.Data
 	{ }
 	
 	/// <summary>
+	/// 解放が必要なアイテムのインターフェイス。
+	/// </summary>
+	public interface IDisposableItem: IDisposable
+	{
+		bool IsDisposed { get; set; }
+	}
+	
+	/// <summary>
+	/// 解放が必要なアイテムの基底。
+	/// </summary>
+	public abstract class DisposableItem
+	{
+		public DisposableItem()
+		{
+			IsDisposed = false;
+		}
+		
+		/// <summary>
+		/// 破棄されたか。
+		/// </summary>
+		[XmlIgnore]
+		public bool IsDisposed { get; protected set; }
+		
+		/// <summary>
+		/// 解放。
+		/// </summary>
+		public virtual void Dispose()
+		{
+			IsDisposed = true;
+		}
+	}
+	
+	public interface INameItem
+	{
+		/// <summary>
+		/// 名前
+		/// </summary>
+		string Name { get; set; }
+	}
+	
+	/// <summary>
 	/// 名前付きアイテム
 	/// </summary>
 	[Serializable]
-	public abstract class NameItem: Item
+	public abstract class NameItem: Item, INameItem
+	{
+		/// <summary>
+		/// 名前
+		/// </summary>
+		[System.Xml.Serialization.XmlAttribute("Name")]
+		public string Name { get; set; }
+	}
+	
+	/// <summary>
+	/// 解放が必要な名前月アイテム
+	/// </summary>
+	public abstract class DisposableNameItem: DisposableItem, INameItem, IDisposable
 	{
 		/// <summary>
 		/// 名前

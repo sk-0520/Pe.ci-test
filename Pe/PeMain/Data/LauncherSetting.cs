@@ -31,6 +31,10 @@ namespace PeMain.Data
 		/// </summary>
 		File,
 		/// <summary>
+		/// ディレクトリ。
+		/// </summary>
+		Directory,
+		/// <summary>
 		/// URI。
 		/// </summary>
 		URI,
@@ -40,6 +44,9 @@ namespace PeMain.Data
 		Pe
 	}
 	
+	/// <summary>
+	/// ランチャ種別のUI用ラッパ。
+	/// </summary>
 	public class LauncherTypeItem: UseLanguageItemData<LauncherType>
 	{
 		public LauncherTypeItem(LauncherType value): base(value) { }
@@ -99,23 +106,20 @@ namespace PeMain.Data
 	/// 名前をキーとする。
 	/// </summary>
 	[Serializable]
-	public class LauncherItem: NameItem, IDisposable, ICloneable
+	public class LauncherItem: DisposableNameItem, IDisposable, ICloneable
 	{
-		private static Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
+		/// <summary>
+		/// 見つからなかった時用アイコン。
+		/// </summary>
+		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
 			{ IconScale.Small,  Icon.FromHandle(PeMain.Properties.Images.NotFound_016.GetHicon()) },
 			{ IconScale.Normal, Icon.FromHandle(PeMain.Properties.Images.NotFound_032.GetHicon()) },
 			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
-			/*
-			{ IconScale.Small,  new Icon(typeof(Bitmap), "NotFound_016") },
-			{ IconScale.Normal, new Icon(typeof(Bitmap), "NotFound_032") },
-			{ IconScale.Big,    new Icon(typeof(Bitmap), "NotFound_048") },
-			{ IconScale.Large,  new Icon(typeof(Bitmap), "NotFound_256") },
-			*/
 		};
 			
 		/// <summary>
-		/// 
+		/// 現在のアイテムが保持するアイコン一覧。
 		/// </summary>
 		private Dictionary<IconScale, Icon> _iconMap;
 		
@@ -265,8 +269,10 @@ namespace PeMain.Data
 		[XmlIgnoreAttribute()]
 		public bool HasError { get; set; }
 		
-		public void Dispose()
+		public override void Dispose()
 		{
+			base.Dispose();
+			
 			foreach(var icon in _iconMap.Values) {
 				if(icon != null) {
 					icon.Dispose();
@@ -296,17 +302,22 @@ namespace PeMain.Data
 			result.StdOutputWatch = StdOutputWatch;
 			result.Administrator = Administrator;
 			
-			// アイコンは再読み込みかったるいのでこぴっておく
 			foreach(KeyValuePair<IconScale, Icon> pair in this._iconMap) {
-				result._iconMap.Add(pair.Key, pair.Value);
+				result._iconMap.Add(pair.Key, (Icon)pair.Value.Clone());
 			}
 			
 			return result;
 		}
 		
-		public Icon GetIcon(IconScale iconSize, int iconIndex)
+		/// <summary>
+		/// アイコン取得。
+		/// </summary>
+		/// <param name="iconSize">アイコンサイズ</param>
+		/// <param name="iconIndex">アイコンインデックス</param>
+		/// <returns>アイコン</returns>
+		public Icon GetIcon(IconScale iconScale, int iconIndex)
 		{
-			var hasIcon = this._iconMap.ContainsKey(iconSize);
+			var hasIcon = this._iconMap.ContainsKey(iconScale);
 			if(!hasIcon) {
 				string useIconPath = null;
 				if(!string.IsNullOrWhiteSpace(IconPath)) {
@@ -324,14 +335,14 @@ namespace PeMain.Data
 				if(hasIcon) {
 					Debug.Assert(useIconPath != null);
 					
-					var icon = IconUtility.Load(useIconPath, iconSize, iconIndex);
-					this._iconMap[iconSize] = icon;
+					var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
+					this._iconMap[iconScale] = icon;
 				}
 			}
 			if(hasIcon) {
-				return this._iconMap[iconSize];
+				return this._iconMap[iconScale];
 			} else {
-				return _notfoundIconMap[iconSize];
+				return _notfoundIconMap[iconScale];
 			}
 		}
 		
@@ -340,6 +351,12 @@ namespace PeMain.Data
 			this._iconMap.Clear();
 		}
 		
+		/// <summary>
+		/// ファイルパスからランチャーアイテムの生成。
+		/// </summary>
+		/// <param name="filePath"></param>
+		/// <param name="useShortcut"></param>
+		/// <returns></returns>
 		public static LauncherItem FileLoad(string filePath, bool useShortcut = false)
 		{
 			var item = new LauncherItem();
@@ -428,6 +445,11 @@ namespace PeMain.Data
 			;
 		}
 		
+		/// <summary>
+		/// リスト構造の整理。
+		/// </summary>
+		/// <param name="list"></param>
+		/// <param name="value"></param>
 		void IncrementList(List<string> list, string value)
 		{
 			if(!string.IsNullOrEmpty(value)) {
@@ -438,6 +460,11 @@ namespace PeMain.Data
 				list.Insert(0, value);
 			}
 		}
+		/// <summary>
+		/// 使用回数をインクリメント。
+		/// </summary>
+		/// <param name="option">オプション履歴に追加する文字列</param>
+		/// <param name="workDirPath">作業ディレクトリに追加する文字列</param>
 		public void Increment(string option = null, string workDirPath = null)
 		{
 			LauncherHistory.ExecuteCount += 1;
@@ -451,7 +478,7 @@ namespace PeMain.Data
 	/// ランチャーアイテム統括。
 	/// </summary>
 	[Serializable]
-	public class LauncherSetting: Item, IDisposable
+	public class LauncherSetting: DisposableItem, IDisposable
 	{
 		public LauncherSetting()
 		{
@@ -464,8 +491,10 @@ namespace PeMain.Data
 		[XmlIgnoreAttribute()]
 		public HashSet<LauncherItem> Items { get; set; }
 		
-		public void Dispose()
+		public override void Dispose()
 		{
+			base.Dispose();
+			
 			foreach(var item in Items) {
 				item.Dispose();
 			}

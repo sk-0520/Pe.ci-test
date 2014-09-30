@@ -14,7 +14,7 @@ using System.Windows.Forms;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// Description of LogSetting.
+	/// ログ設定。
 	/// </summary>
 	[Serializable]
 	public class LogSetting: Item
@@ -31,13 +31,25 @@ namespace PeMain.Data
 			AddShowTrigger = LogType.Warning | LogType.Error;
 		}
 		
+		/// <summary>
+		/// ログダイアログの表示状態。
+		/// </summary>
 		public bool Visible { get; set; }
+		/// <summary>
+		/// ログダイアログの位置。
+		/// </summary>
 		public Point Point { get; set; }
+		/// <summary>
+		/// ログダイアログのサイズ。
+		/// </summary>
 		public Size Size { get; set; }
 		/// <summary>
-		/// ログ追加時に画面表示
+		/// ログ追加時にログダイアログを表示するか。
 		/// </summary>
 		public bool AddShow { get; set; }
+		/// <summary>
+		/// ログダイアログを表示する際にどの種別で表示するか。
+		/// </summary>
 		public LogType AddShowTrigger { get; set; }
 	}
 }

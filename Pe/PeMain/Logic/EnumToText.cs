@@ -17,7 +17,7 @@ using PInvoke.Windows;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of EnumLang.
+	/// 列挙体メンバ名を言語に合わせて文字列化する。
 	/// </summary>
 	public static class EnumToText
 	{

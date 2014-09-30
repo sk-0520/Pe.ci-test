@@ -15,6 +15,9 @@ using PeUtility;
 
 namespace PeMain.Data
 {
+	/// <summary>
+	/// ツールバーの位置。
+	/// </summary>
 	public enum ToolbarPosition
 	{
 		/// <summary>
@@ -55,6 +58,9 @@ namespace PeMain.Data
 		WindowBottom,
 	}
 	
+	/// <summary>
+	/// 
+	/// </summary>
 	public static class ToolbarPositionUtility
 	{
 		public static ToolbarPosition ToToolbarPosition(DesktopDockType value)
@@ -101,7 +107,7 @@ namespace PeMain.Data
 	}
 	
 	/// <summary>
-	/// 
+	/// ツールバーグループとして名前を管理。
 	/// </summary>
 	[Serializable]
 	public class ToolbarGroupItem: NameItem
@@ -115,7 +121,7 @@ namespace PeMain.Data
 	}
 
 	/// <summary>
-	/// 
+	/// ツールバーの各グループを統括。
 	/// </summary>
 	[Serializable]
 	public class ToolbarGroup: Item
@@ -128,7 +134,10 @@ namespace PeMain.Data
 		public List<ToolbarGroupItem> Groups { get; set; }
 	}
 	
-	public class ToolbarItem: NameItem
+	/// <summary>
+	/// ツールバーの設定。
+	/// </summary>
+	public class ToolbarItem: DisposableNameItem, IDisposable
 	{
 		#region Equals and GetHashCode implementation !![ operator == ]!!
 		public override bool Equals(object obj)
@@ -218,6 +227,13 @@ namespace PeMain.Data
 		public bool IsNameEqual(string name)
 		{
 			return Name == name;
+		}
+		
+		public override void Dispose()
+		{
+			base.Dispose();
+			
+			FontSetting.Dispose();
 		}
 	}
 	

@@ -15,7 +15,7 @@ using PeUtility;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// ランチャアイテム起動時の環境変数設定
+	/// ランチャアイテム起動時の環境変数設定。
 	/// 
 	/// デフォルト環境変数(ON/OFF)に追加・変更を適用してから削除する。
 	/// </summary>
@@ -28,7 +28,9 @@ namespace PeMain.Data
 			Update = new List<TPair<string, string>>();
 			Remove = new List<string>();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool EditEnvironment { get; set; }
 		/// <summary>
 		/// 追加・変更対象

@@ -205,7 +205,10 @@ namespace PeMain.Logic
 	{
 		public static void OpeningMenuInScreen(object sender, object e)
 		{
-			
+			var toolMenu = sender as ToolStripDropDownItem;
+			if(toolMenu == null) {
+				return;
+			}
 		}
 	}
 

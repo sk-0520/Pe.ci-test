@@ -21,9 +21,19 @@ namespace PeMain.Data
 			Create = DateTime.Now;
 			Update = DateTime.Now;
 		}
+		/// <summary>
+		/// 作成日。
+		/// </summary>
 		public DateTime Create { get; set; }
+		/// <summary>
+		/// 更新日。
+		/// </summary>
 		public DateTime Update { get; set; }
 		
+		/// <summary>
+		/// コピー。
+		/// </summary>
+		/// <returns>コピーされたオブジェクト</returns>
 		public object Clone()
 		{
 			var result = new DateHistory();

@@ -13,20 +13,43 @@ using System.Drawing;
 
 namespace PeMain.Data
 {
+	/// <summary>
+	/// ログ内容種別。
+	/// 
+	/// NOTE: べつにこれといって
+	/// </summary>
 	public enum NoteType
 	{
 		Text,
 		Rtf,
 	}
 	
+	/// <summary>
+	/// ノートアイテムに対して目に見えてなんかする。
+	/// </summary>
 	public enum NoteCommand
 	{
+		/// <summary>
+		/// 閉じる。
+		/// </summary>
 		Close,
+		/// <summary>
+		/// 最小化。
+		/// </summary>
 		Compact,
+		/// <summary>
+		/// 最前面。
+		/// </summary>
 		Topmost,
+		/// <summary>
+		/// 固定。
+		/// </summary>
 		Lock,
 	}
 	
+	/// <summary>
+	/// NoteTypeに対してなんかする用ユーティリティだが現状死んでますしおすし。
+	/// </summary>
 	public static class NoteTypeUtility
 	{
 		public static int ToNumber(this NoteType type)
@@ -113,11 +136,5 @@ namespace PeMain.Data
 		{
 			FontSetting.Dispose();
 		}
-	}
-	
-	public class NoteGroup
-	{
-		public long GroupId { get; set; }
-		public string Title { get; set; }
 	}
 }

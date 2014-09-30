@@ -13,14 +13,22 @@ using PeUtility;
 
 namespace PeMain.Data
 {
+	/// <summary>
+	/// 実行情報。
+	/// </summary>
 	public class RunningInfo: Item
 	{
-		public RunningInfo()
-		{ }
-		
+		/// <summary>
+		/// 自動アップデートチェック。
+		/// </summary>
 		public bool CheckUpdate { get; set; }
+		/// <summary>
+		/// RC版もアップデーチェック対象とする。
+		/// </summary>
 		public bool CheckUpdateRC { get; set; }
-		
+		/// <summary>
+		/// Peの実行許可。
+		/// </summary>
 		public bool Running { get; set; }
 		
 		public ushort VersionMajor { get; set; }
@@ -42,7 +50,7 @@ namespace PeMain.Data
 	/// 設定統括
 	/// </summary>
 	[Serializable]
-	public class MainSetting: Item, IDisposable
+	public class MainSetting: DisposableItem, IDisposable
 	{
 		public MainSetting()
 		{
@@ -87,7 +95,7 @@ namespace PeMain.Data
 		/// </summary>
 		public NoteSetting Note { get; set; }
 		
-		public void Dispose()
+		public override void Dispose()
 		{
 			if(Command != null) {
 				Command.Dispose();

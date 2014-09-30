@@ -19,40 +19,63 @@ using PeUtility;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// NonSerializedAttribute
+	/// ワード。
 	/// </summary>
 	[Serializable]
 	public class Word: NameItem
 	{
 		/// <summary>
-		/// 
+		/// 名前(キー)に対するテキスト。
 		/// </summary>
 		[System.Xml.Serialization.XmlAttribute]
 		public string Text { get; set; }
 	}
 	
 	/// <summary>
-	/// Description of Language.
+	/// 言語データ。
 	/// </summary>
 	[Serializable]
 	public class Language: NameItem
 	{
 		public Language()
 		{
+			BaseName = "unknown";
+			
 			Define = new List<Word>();
 			Words = new List<Word>();
 		}
 		
+		/// <summary>
+		/// 現在の言語を指す名称。
+		/// </summary>
 		[XmlIgnore]
 		public string BaseName { get; set; }
+		/// <summary>
+		/// 許諾ダイアログで使用するHTMLファイル名。
+		/// </summary>
 		public string AcceptFileName { get { return string.Format("{0}.accept.html", BaseName); } }
 
+		/// <summary>
+		/// 定義済みワード一覧。
+		/// </summary>
 		public List<Word> Define { get; set; }
+		/// <summary>
+		/// ワード一覧。
+		/// </summary>
 		public List<Word> Words  { get; set; }
 		
+		/// <summary>
+		/// 言語コード。
+		/// </summary>
 		[System.Xml.Serialization.XmlAttribute]
 		public string Code { get; set; }
 		
+		/// <summary>
+		/// キーからワードを取得。
+		/// </summary>
+		/// <param name="list"></param>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		private Word GetWord(IEnumerable<Word> list, string key)
 		{
 			var word = list.SingleOrDefault(item => item.Name == key);
@@ -66,13 +89,21 @@ namespace PeMain.Data
 			return word;
 		}
 		
+		/// <summary>
+		/// キーからテキスト取得。
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		public string GetPlain(string key)
 		{
 			var word = GetWord(Words, key);
 			
 			return word.Text;
 		}
-		
+		/// <summary>
+		/// システム定義済み置き換えマップ。
+		/// </summary>
+		/// <returns></returns>
 		private Dictionary<string, string> GetSystemMap()
 		{
 			var nowDateTime = DateTime.Now;

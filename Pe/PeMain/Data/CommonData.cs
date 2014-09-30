@@ -12,15 +12,35 @@ using PeMain.UI;
 
 namespace PeMain.Data
 {
+	/// <summary>
+	/// 持ち運び用共通データ。
+	/// </summary>
 	public sealed class CommonData
 	{
+		/// <summary>
+		/// 主設定。
+		/// </summary>
 		public MainSetting MainSetting { get; set; }
+		/// <summary>
+		/// 言語設定。
+		/// </summary>
 		public Language Language { get; set; }
+		/// <summary>
+		/// スキン。
+		/// </summary>
 		public ISkin Skin { get; set; }
+		/// <summary>
+		/// ロガー。
+		/// </summary>
 		public ILogger Logger { get; set; }
+		/// <summary>
+		/// メッセージ送信。
+		/// </summary>
 		public IRootSender RootSender { get; set; }
 		/// <summary>
-		/// 入れるべきじゃない気がする
+		/// データベースコネクション。
+		/// 
+		/// 入れるべきじゃない気がする。
 		/// </summary>
 		public PeDBManager Database { get; set; }
 	}

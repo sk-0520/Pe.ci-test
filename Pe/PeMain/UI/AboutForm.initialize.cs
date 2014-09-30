@@ -23,6 +23,8 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
+			PointingUtility.AppendEventFormLoad(this);
+			
 			var iconSize = IconScale.Big.ToSize();
 			using(var icon = new Icon(global::PeMain.Properties.Images.Pe, iconSize)) {
 				var image = new Bitmap(iconSize.Width, iconSize.Height);

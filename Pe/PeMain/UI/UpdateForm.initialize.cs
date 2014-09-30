@@ -9,6 +9,7 @@
 using System;
 using System.IO;
 using System.Net;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -16,6 +17,8 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
+			PointingUtility.AppendEventFormLoad(this);
+			
 			byte[] httpData = null;
 			using(var web = new WebClient()) {
 				httpData = web.DownloadData(Literal.ChangeLogURL);

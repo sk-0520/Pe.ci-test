@@ -14,17 +14,23 @@ using System.Linq;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// Description of Font.
+	/// フォント設定。
 	/// </summary>
 	[Serializable]
 	public class FontSetting: Item, IDisposable
 	{
+		/// <summary>
+		/// 保持用フォント。
+		/// </summary>
 		private Font _font = null;
+		/// <summary>
+		/// デフォルト値としてのフォント。
+		/// </summary>
 		private readonly Font _defaultFont;
 		
 		public FontSetting()
 		{
-			this._defaultFont = null;
+			this._defaultFont = SystemFonts.MessageBoxFont;
 		}
 		
 		public FontSetting(Font defaultFont)
@@ -54,19 +60,18 @@ namespace PeMain.Data
 			get
 			{
 				if(this._font == null) {
-					var defaultFont = this._defaultFont ?? SystemFonts.MessageBoxFont;
-					
 					FontFamily family = null;
 					if(!string.IsNullOrWhiteSpace(Family)) {
 						family = FontFamily.Families.SingleOrDefault(f => f.Name == Family);
 					}
 					if(family == null) {
-						family = defaultFont.FontFamily;
+						family = this._defaultFont.FontFamily;
 					}
 					var size = Height;
 					if(float.IsNaN(size) || size == 0.0) {
-						size = defaultFont.SizeInPoints;
+						size = this._defaultFont.SizeInPoints;
 					}
+					
 					this._font = new Font(family, size);
 				}
 				
