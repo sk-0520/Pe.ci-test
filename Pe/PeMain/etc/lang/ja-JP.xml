@@ -209,6 +209,7 @@
 		<Word Name="about/command/backup"   Text="バックアップ" />
 		<Word Name="about/command/update"   Text="アップデート" />
 		<Word Name="about/column/name"      Text="コンポーネント" />
+		<Word Name="about/column/type"      Text="種別" />
 		<Word Name="about/column/uri"       Text="WEBサイト" />
 		
 		<Word Name="group/new" Text="新規グループ" />
@@ -307,6 +308,9 @@
 		<Word Name="enum/key/keys/oem-7"              Text="^" />
 		<Word Name="enum/key/keys/oem-question"       Text="/" />
 		
+		<Word Name="enum/about-component-type/Library"   Text="ライブラリ" />
+		<Word Name="enum/about-component-type/Image"     Text="画像" />
+		<Word Name="enum/about-component-type/Unknown"   Text="なんか" />
 		
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />

@@ -33,8 +33,7 @@
 			<li>ダイアログのカーソル自動移動処理がバグってた</li>
 		</ul>
 		<ul type="developer">
-			<li></li>
-			<li></li>
+			<li>PeMain.Data.Item関連のDisposeをあれやこれや。</li>
 			<li></li>
 		</ul>
 	</log>

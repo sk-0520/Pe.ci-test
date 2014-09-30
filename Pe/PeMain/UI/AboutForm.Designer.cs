@@ -51,6 +51,7 @@ namespace PeMain.UI
 			this.commandUpdate = new System.Windows.Forms.Button();
 			this.gridComponents = new System.Windows.Forms.DataGridView();
 			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridComponents_columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.gridComponents_columnURI = new System.Windows.Forms.DataGridViewLinkColumn();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
@@ -201,6 +202,7 @@ namespace PeMain.UI
 			this.gridComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridComponents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
 									this.gridComponents_columnName,
+									this.gridComponents_columnType,
 									this.gridComponents_columnURI});
 			this.gridComponents.Location = new System.Drawing.Point(12, 89);
 			this.gridComponents.MultiSelect = false;
@@ -219,6 +221,15 @@ namespace PeMain.UI
 			this.gridComponents_columnName.ReadOnly = true;
 			this.gridComponents_columnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.gridComponents_columnName.Width = 138;
+			// 
+			// gridComponents_columnType
+			// 
+			this.gridComponents_columnType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.gridComponents_columnType.HeaderText = ":about/column/type";
+			this.gridComponents_columnType.Name = "gridComponents_columnType";
+			this.gridComponents_columnType.ReadOnly = true;
+			this.gridComponents_columnType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.gridComponents_columnType.Width = 131;
 			// 
 			// gridComponents_columnURI
 			// 
@@ -261,6 +272,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnType;
 		private System.Windows.Forms.DataGridViewLinkColumn gridComponents_columnURI;
 		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnName;
 		private System.Windows.Forms.DataGridView gridComponents;
