@@ -154,14 +154,12 @@ namespace PeUtility
 		
 		/// <summary>
 		/// メモリ情報取得
-		/// 
-		/// TODO: 64bit プラットフォームでも 32bit 値
 		/// </summary>
 		/// <returns></returns>
 		protected virtual InfoGroup GetMemory()
 		{
 			var keys = new [] {
-				// 物理メモリ(合計)
+				// 物理メモリ(合計:KB)
 				"TotalVisibleMemorySize",
 				// 物理メモリ(空き)
 				"FreePhysicalMemory",

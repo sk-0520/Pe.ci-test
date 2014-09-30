@@ -10,6 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 
@@ -110,9 +111,10 @@ namespace PeMain.UI
 								if(pair.Value != ButtonState.Normal) {
 									var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
 									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, ButtonState.Normal);
-									this._commandStateMap[pair.Key] = ButtonState.Normal;
-									Debug.WriteLine(DateTime.Now);
 								}
+							}
+							foreach(var key in this._commandStateMap.Keys.ToArray()) {
+								this._commandStateMap[key] = ButtonState.Normal;
 							}
 						}
 					}

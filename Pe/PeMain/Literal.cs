@@ -32,6 +32,11 @@ namespace PeMain
 		public const string updateProgramName = "PeUpdater.exe";
 		
 		/// <summary>
+		/// 前回バージョンがこれ未満なら使用許諾を表示
+		/// </summary>
+		public static readonly Tuple<ushort, ushort, ushort> AcceptVersion = new Tuple<ushort, ushort, ushort>(0, 19, 0);
+
+		/// <summary>
 		/// このプログラムが使用するディレクトリ名
 		/// </summary>
 		private static string _dirRootName = programName;

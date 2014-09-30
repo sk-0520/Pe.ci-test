@@ -229,10 +229,12 @@ namespace PeMain.Logic
 			}
 
 			if(showScreen.DeviceName != parentScreen.DeviceName) {
-				parent.ContextMenuStrip.Opening -= EventDropDownOpeningMenuInScreen;
-				parent.ContextMenuStrip.Close();
-				parent.ContextMenuStrip.Show(parent, parent.PointToClient(Cursor.Position), ToolStripDropDownDirection.Left);
-				parent.ContextMenuStrip.Opening += EventDropDownOpeningMenuInScreen;
+				if(parentScreen.Bounds.Left - showScreen.Bounds.Left < 0) {
+					parent.ContextMenuStrip.Opening -= EventDropDownOpeningMenuInScreen;
+					parent.ContextMenuStrip.Close();
+					parent.ContextMenuStrip.Show(parent, parent.PointToClient(Cursor.Position), ToolStripDropDownDirection.Left);
+					parent.ContextMenuStrip.Opening += EventDropDownOpeningMenuInScreen;
+				}
 			}
 		}
 		
@@ -253,30 +255,42 @@ namespace PeMain.Logic
 			while(owner.OwnerItem != null) {
 				owner = owner.OwnerItem;
 			}
-			
+
 			var showScreen = Screen.FromPoint(toolMenu.DropDown.Location);
 			var parentScreen = Screen.FromControl(owner.Owner);
 			// #34, とりあえず右側だけ対処で行ける気がする
+			//Debug.WriteLine("{0} > {1}:{2} - {3}:{4}", DateTime.Now, parentScreen.DeviceName, owner.Owner.Location, showScreen.DeviceName, toolMenu.DropDown.Location);
 			if(showScreen.DeviceName != parentScreen.DeviceName) {
-				//Debug.WriteLine("{2} > {0}:{3} - {1}{4}", showScreen.DeviceName, parentScreen.DeviceName, DateTime.Now, toolMenu.DropDown.Location, owner.Owner.Location);
-				toolMenu.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
-				toolMenu.HideDropDown();
-				toolMenu.DropDownDirection = ToolStripDropDownDirection.Left;
-				toolMenu.ShowDropDown();
-				toolMenu.DropDownOpening += EventDropDownItemOpeningMenuInScreen;
+				if(parentScreen.Bounds.Left - showScreen.Bounds.Left < 0) {
+					toolMenu.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
+					toolMenu.DropDown.Close();
+					toolMenu.DropDownDirection = ToolStripDropDownDirection.Left;
+					toolMenu.ShowDropDown();
+					toolMenu.DropDownOpening += EventDropDownItemOpeningMenuInScreen;
+				}
 			}
 		}
 		
+		/// <summary>
+		/// 汎用。
+		/// </summary>
 		public static void AttachmentOpeningMenuInScreen(IEnumerable<ToolStripItem> toolItems)
 		{
 			foreach(var toolItem in toolItems.Select(t => t as ToolStripDropDownItem).Where(t => t != null)) {
 				AttachmentOpeningMenuInScreen(toolItem);
 			}
 		}
+		/// <summary>
+		/// 汎用。
+		/// </summary>
 		public static void AttachmentOpeningMenuInScreen(ToolStripDropDownItem toolItem)
 		{
+			// HACK: 一体何をどう信じればいいのか。。。
 			toolItem.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
 			toolItem.DropDownOpening += EventDropDownItemOpeningMenuInScreen;
+			toolItem.DropDownOpened -= EventDropDownItemOpeningMenuInScreen;
+			toolItem.DropDownOpened += EventDropDownItemOpeningMenuInScreen;
+			
 			if(toolItem.HasDropDownItems) {
 				foreach(ToolStripItem childItem in toolItem.DropDownItems) {
 					var childDropItem = childItem as ToolStripDropDownItem;
