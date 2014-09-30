@@ -13,7 +13,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Xml;
+using System.Xml.Linq;
 using PeUtility;
 
 namespace PeUpdater
@@ -36,7 +36,7 @@ namespace PeUpdater
 		
 		Value<int> _pid = new Value<int>();
 		
-		Value<Tuple<ushort, ushort, ushort, ushort>> _version = new Value<Tuple<ushort, ushort, ushort, ushort>>();
+		Value<Tuple<ushort, ushort, ushort>> _version = new Value<Tuple<ushort, ushort, ushort>>();
 		
 		Value<string> _uri = new Value<string>();
 		Value<string> _downloadDir = new Value<string>();
@@ -63,7 +63,7 @@ namespace PeUpdater
 			Set("pid", this._pid);
 			Set("version", this._version, (value, s) => {
 			    	var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
-			    	value.Data = new Tuple<ushort, ushort, ushort, ushort>(v[0], v[1], v[2], v[3]);
+			    	value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
 			    });
 			Set("uri", this._uri);
 			Set("download", this._downloadDir);
@@ -106,33 +106,51 @@ namespace PeUpdater
 		
 		public void Check()
 		{
-			var xml = new XmlDocument();
+			XElement xml = null;
 			using(var web = new WebClient()) {
-				var text = web.DownloadString(this._uri.Data);
-				Console.WriteLine(text);
-				xml.LoadXml(text);
+				xml = XElement.Parse(web.DownloadString(this._uri.Data));
 			}
-			var items = xml.DocumentElement.GetElementsByTagName("item");
-			var downloadFileUrl = string.Empty;
-			foreach(XmlElement item in items) {
-				var version = item.GetAttribute("version");
-				var type    = item.GetAttribute("type");
-				if(type == "rc" && !this._getRC.Data) {
+			Console.WriteLine(xml.ToString());
+			
+			var items = xml
+				.Elements()
+				.Select(
+					x => new {
+						PlainVersion = x.Attribute("version").Value
+							.Split('.')
+							.Select(n => ushort.Parse(n))
+							.ToArray(),
+						PlainType = x.Attribute("type").Value,
+						ArchiveElements = x.Elements()
+					}
+				)
+				.Select(
+					x => new {
+						Version  = new Tuple<ushort,ushort,ushort>(x.PlainVersion[0], x.PlainVersion[1], x.PlainVersion[2]),
+						IsRC     = x.PlainType == "rc",
+						ArchiveElements = x.ArchiveElements
+					}
+				)
+				.OrderBy(
+					x => new {
+						x.Version.Item1,
+						x.Version.Item2,
+						x.Version.Item3
+					}
+				)
+				.Where(x => Functions.VersionCheck(x.Version, this._version.Data) > 0)
+			;
+			
+			foreach(var item in items) {
+				if(item.IsRC && !this._getRC.Data) {
 					continue;
 				}
-				var ver = version.Split('.').Select(n => ushort.Parse(n)).ToArray();
-				var format = "{0:000}{1:000}{2:000}";
-				var checkVer = int.Parse(string.Format(format, ver[0], ver[1], ver[2]));
-				var nowVer = int.Parse(string.Format(format, this._version.Data.Item1, this._version.Data.Item2, this._version.Data.Item3));
-				if(checkVer > nowVer) {
-					foreach(XmlElement archive in item.GetElementsByTagName("archive")) {
-						if(archive.GetAttribute("platform") == this._platform.Data) {
-							IsRCVersion = type == "rc";
-							IsVersionUp = true;
-							VersionText = version;
-							DownloadFileUrl = archive.GetAttribute("uri");
-							break;
-						}
+				foreach(var archive in item.ArchiveElements) {
+					if(archive.Attribute("platform").Value == this._platform.Data) {
+						IsRCVersion = item.IsRC;
+						IsVersionUp = true;
+						DownloadFileUrl = archive.Attribute("uri").Value;
+						break;
 					}
 				}
 				if(IsVersionUp) {

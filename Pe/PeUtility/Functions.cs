@@ -134,6 +134,25 @@ namespace PeUtility
 			return seq.Skip(fromIndex).Take(takeCount);
 		}
 		
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <returns>
+		/// +: a &gt; b
+		/// 0: a = b
+		/// -: a &lt; b
+		/// </returns>
+		public static int VersionCheck(Tuple<ushort,ushort,ushort> a, Tuple<ushort,ushort,ushort> b)
+		{
+			const string format = "{0:000}{1:000}{2:000}";
+			var sa = string.Format(format, a.Item1, a.Item2, a.Item3);
+			var sb = string.Format(format, b.Item1, b.Item2, b.Item3);
+			var na = int.Parse(sa);
+			var nb = int.Parse(sb);
+			//Debug.WriteLine("{0}:{1}",sa, sb);
+			return na - nb;
+		}
 	}
 }

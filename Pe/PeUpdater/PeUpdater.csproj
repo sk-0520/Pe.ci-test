@@ -30,7 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
-    <StartArguments>/version=1.0.0.0 /rc=true /platform=x64 /uri=https://bitbucket.org/sk_0520/pe/raw/c9047f309053054d991cfd8671af438b177a9778/Update/update.xml /download=Z:\ "/expand=C:\Users\sk\Documents\Programming\SharpDevelop Project\Pe\output\Debug\x86"</StartArguments>
+    <StartArguments>/wait=true /checkonly=true /version=0.17.0.0 /rc=true /platform=x64 /uri=https://bitbucket.org/sk_0520/pe/raw/HEAD/Update/update.xml /download=Z:\ "/expand=C:\Users\sk\Documents\Programming\SharpDevelop Project\Pe\output\Debug\x86"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
@@ -74,6 +74,9 @@
   <ItemGroup>
     <Compile Include="..\PeUtility\CommandLine.cs">
       <Link>CommandLine.cs</Link>
+    </Compile>
+    <Compile Include="..\PeUtility\Functions.cs">
+      <Link>Functions.cs</Link>
     </Compile>
     <Compile Include="PeUpdater.cs" />
     <Compile Include="PeUpdaterException.cs" />
