@@ -323,6 +323,7 @@
 		<Word Name="log/update/error"      Text="アップデートチェック失敗" />
 		<Word Name="log/update/check-stop" Text="アップデートチェック中止" />
 		<Word Name="log/update/newest"     Text="最新版です" />
+		<Word Name="log/update/check-log"  Text="アップデートチェックログ" />
 	
 		<Word Name="log/init/ui/start"  Text="UI初期化開始" />
 		<Word Name="log/init/ui/end"    Text="UI初期化終了" />

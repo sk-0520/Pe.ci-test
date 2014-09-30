@@ -18,11 +18,26 @@ namespace PeMain.Logic
 {
 	public class UpdateInfo
 	{
+		IEnumerable<string> _log;
+		
+		public UpdateInfo(IEnumerable<string> log)
+		{
+			this._log = log;
+		}
+		
 		public string Version { get; set; }
 		public bool IsUpdate { get; set; }
 		public bool IsRcVersion { get; set; }
 		public bool IsError { get; set; }
 		public int ErrorCode { get; set; }
+		
+		public string Log
+		{
+			get
+			{
+				return string.Join(Environment.NewLine, this._log);
+			}
+		}
 	}
 	
 	public class UpdateData
@@ -32,10 +47,9 @@ namespace PeMain.Logic
 		
 		public UpdateInfo Info { get; private set; }
 		
-		const string updater = "PeUpdater.exe";
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.PeRootDirPath, updater); }
+			get { return Path.Combine(Literal.PeRootDirPath, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc)
@@ -93,7 +107,7 @@ namespace PeMain.Logic
 			
 			process.WaitForExit();
 			
-			var info = new UpdateInfo();
+			var info = new UpdateInfo(lines);
 			
 			if(lines.Count > 0) {
 				var s = lines.SingleOrDefault(line => !string.IsNullOrEmpty(line) && line.StartsWith(">> "));

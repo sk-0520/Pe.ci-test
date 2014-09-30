@@ -108,7 +108,9 @@ namespace PeUpdater
 		{
 			var xml = new XmlDocument();
 			using(var web = new WebClient()) {
-				xml.LoadXml(web.DownloadString(this._uri.Data));
+				var text = web.DownloadString(this._uri.Data);
+				Console.WriteLine(text);
+				xml.LoadXml(text);
 			}
 			var items = xml.DocumentElement.GetElementsByTagName("item");
 			var downloadFileUrl = string.Empty;

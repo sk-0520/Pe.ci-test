@@ -29,6 +29,8 @@ namespace PeMain
 		#endif
 		
 		public const string programName = "Pe";
+		public const string updateProgramName = "PeUpdater.exe";
+		
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
 		/// </summary>
