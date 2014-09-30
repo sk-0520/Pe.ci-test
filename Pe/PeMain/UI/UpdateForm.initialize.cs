@@ -17,7 +17,7 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			PointingUtility.AppendEventFormLoad(this);
+			PointingUtility.AttachmentDefaultButton(this);
 			
 			byte[] httpData = null;
 			using(var web = new WebClient()) {

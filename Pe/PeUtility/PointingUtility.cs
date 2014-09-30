@@ -29,9 +29,9 @@ namespace PeUtility
 		
 		private static bool IsAutoMove()
 		{
-			var result = new IntPtr();
-			var funcReturn = API.SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, result,SPIF.None);
-			return funcReturn && result.ToInt32() != 0;
+			int result = 0;
+			var funcReturn = API.SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref result, SPIF.None);
+			return funcReturn && result != 0;
 		}
 		
 		public static void OverAuto(Control target)
@@ -43,19 +43,25 @@ namespace PeUtility
 		
 		public static void OverForm(Form form)
 		{
-			OverAuto((Control)form.AcceptButton);
+			var accept = form.AcceptButton as Control;
+			var cancel = form.AcceptButton as Control;
+			if(accept != null) {
+				OverAuto(accept);
+			} else if(cancel != null) {
+				OverAuto(cancel);
+			} else {
+				OverAuto(form);
+			}
 		}
 		
-		public static void AppendEventFormLoad(Form form)
-		{
-			form.Load += new EventHandler(form_Load);
-		}
-
-		static void form_Load(object sender, EventArgs e)
+		static void EventDefaultButton(object sender, EventArgs e)
 		{
 			OverForm((Form)sender);
 		}
 		
-		
+		public static void AttachmentDefaultButton(Form form)
+		{
+			form.Shown += EventDefaultButton;
+		}
 	}
 }

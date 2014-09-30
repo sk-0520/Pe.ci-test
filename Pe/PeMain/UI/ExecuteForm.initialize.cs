@@ -15,7 +15,7 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			PointingUtility.AppendEventFormLoad(this);
+			PointingUtility.AttachmentDefaultButton(this);
 			
 		}
 	}

@@ -23,7 +23,7 @@ namespace PeMain.UI
 	{
 		void Initialize()
 		{
-			PointingUtility.AppendEventFormLoad(this);
+			PointingUtility.AttachmentDefaultButton(this);
 			
 			var iconSize = IconScale.Big.ToSize();
 			using(var icon = new Icon(global::PeMain.Properties.Images.Pe, iconSize)) {

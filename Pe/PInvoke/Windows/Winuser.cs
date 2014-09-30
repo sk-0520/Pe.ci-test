@@ -1575,7 +1575,7 @@ namespace PInvoke.Windows
 
 		[DllImport("user32.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, IntPtr pvParam, SPIF fWinIni);
+		public static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, ref int pvParam, SPIF fWinIni);
 
 		// For setting a string parameter
 		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
