@@ -401,9 +401,7 @@
     <Compile Include="UI\StreamForm.variable.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ToolbarForm.cs">
-      <DependentUpon>StreamForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="UI\ToolbarForm.cs" />
     <Compile Include="UI\ToolbarForm.define.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
