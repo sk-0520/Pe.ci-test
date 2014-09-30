@@ -418,6 +418,7 @@ namespace PeMain.UI
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				}
+				
 				parentItem.DropDownItems.AddRange(menuList.ToArray());
 			} catch(UnauthorizedAccessException ex) {
 				var menuItem = new ToolStripMenuItem();
@@ -426,6 +427,8 @@ namespace PeMain.UI
 				menuItem.Enabled = false;
 				parentItem.DropDownItems.Add(menuItem);
 			}
+			
+			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
 		}
 		
 		void AttachmentFileLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
@@ -467,9 +470,12 @@ namespace PeMain.UI
 				var showExtension = SystemEnv.IsExtensionShow();
 				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command), showHiddenFile, showExtension);
 			};
+			ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
 			
 			// メニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			var menuItems = menuList.ToArray();
+			ToolStripUtility.AttachmentOpeningMenuInScreen(menuItems);
+			parentItem.DropDownItems.AddRange(menuItems);
 			
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				if(launcherItem.IsExists) {
@@ -670,7 +676,7 @@ namespace PeMain.UI
 
 			var hasMenuItem = (ToolStripDropDownItem)toolItem;
 			if(hasMenuItem != null) {
-				hasMenuItem.DropDownOpening += ToolStripUtility.OpeningMenuInScreen;
+				hasMenuItem.DropDownOpening += ToolStripUtility.EventOpeningMenuInScreen;
 			}
 			//button.DropDownItemClicked += new ToolStripItemClickedEventHandler(button_DropDownItemClicked);
 			

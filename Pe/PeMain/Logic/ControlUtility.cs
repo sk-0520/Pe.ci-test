@@ -171,7 +171,7 @@ namespace PeMain.Logic
 		{
 			var parentNode = targetNode.Parent;
 			var prevNode = targetNode.PrevNode;
-			var nodes = parentNode != null ? parentNode.Nodes: targetNode.TreeView.Nodes; 
+			var nodes = parentNode != null ? parentNode.Nodes: targetNode.TreeView.Nodes;
 			if(prevNode == null) {
 				return;
 			}
@@ -190,7 +190,7 @@ namespace PeMain.Logic
 		{
 			var parentNode = targetNode.Parent;
 			var nextNode = targetNode.NextNode;
-			var nodes = parentNode != null ? parentNode.Nodes: targetNode.TreeView.Nodes; 
+			var nodes = parentNode != null ? parentNode.Nodes: targetNode.TreeView.Nodes;
 			if(nextNode == null) {
 				return;
 			}
@@ -203,11 +203,46 @@ namespace PeMain.Logic
 	
 	public static class ToolStripUtility
 	{
-		public static void OpeningMenuInScreen(object sender, object e)
+		public static void EventOpeningMenuInScreen(object sender, object e)
 		{
 			var toolMenu = sender as ToolStripDropDownItem;
 			if(toolMenu == null) {
 				return;
+			}
+			
+			ToolStripItem owner = toolMenu;
+			//owner.Bounds;
+			while(owner.OwnerItem != null) {
+				owner = owner.OwnerItem;
+			}
+			
+			var showScreen = Screen.FromPoint(toolMenu.DropDown.Location);
+			var parentScreen = Screen.FromControl(owner.Owner);
+			// #34, とりあえず右側だけ対処で行ける気がする
+			if(showScreen.DeviceName != parentScreen.DeviceName) {
+				//Debug.WriteLine("{2} > {0} - {1}", showScreen, parentScreen, DateTime.Now);
+				toolMenu.HideDropDown();
+				toolMenu.DropDownDirection = ToolStripDropDownDirection.Left;
+			}
+		}
+		
+		public static void AttachmentOpeningMenuInScreen(IEnumerable<ToolStripItem> toolItems)
+		{
+			foreach(var toolItem in toolItems.Select(t => t as ToolStripDropDownItem).Where(t => t != null)) {
+				AttachmentOpeningMenuInScreen(toolItem);
+			}
+		}
+		public static void AttachmentOpeningMenuInScreen(ToolStripDropDownItem toolItem)
+		{
+			toolItem.DropDownOpening -= EventOpeningMenuInScreen;
+			toolItem.DropDownOpening += EventOpeningMenuInScreen;
+			if(toolItem.HasDropDownItems) {
+				foreach(ToolStripItem childItem in toolItem.DropDownItems) {
+					var childDropItem = childItem as ToolStripDropDownItem;
+					if(childDropItem != null) {
+						AttachmentOpeningMenuInScreen(childDropItem);
+					}
+				}
 			}
 		}
 	}
@@ -268,6 +303,6 @@ namespace PeMain.Logic
 		{
 			target.Text = GetWord(language, target.Text, map);
 		}
-		*/
+		 */
 	}
 }
