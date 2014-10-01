@@ -16,7 +16,7 @@ using PeMain.Logic;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of EnvRemoveControl.
+	///環境変数削除用コントロール。
 	/// </summary>
 	public partial class EnvRemoveControl : UserControl, ISetLanguage
 	{

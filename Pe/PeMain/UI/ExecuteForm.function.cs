@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -19,9 +20,10 @@ namespace PeMain.UI
 {
 	public partial class ExecuteForm
 	{
-		public void SetParameter(LauncherItem launcherItem)
+		public void SetParameter(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
 			LauncherItem = launcherItem;
+			ExOptions = exOptions;
 		}
 		
 		public void SetCommonData(CommonData commonData)
@@ -52,6 +54,11 @@ namespace PeMain.UI
 			this.selectEnvironment.Checked = LauncherItem.EnvironmentSetting.EditEnvironment;
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.First, pair => pair.Second));
 			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
+			
+			if(ExOptions != null && ExOptions.Count() > 0) {
+				var args = string.Join(" ", TextUtility.WhitespaceToQuotation(ExOptions));
+				this.inputOption.Text = args;
+			}
 		}
 		
 		void SubmitInput()

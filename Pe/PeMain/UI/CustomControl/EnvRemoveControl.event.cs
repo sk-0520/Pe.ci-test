@@ -10,9 +10,6 @@ using System;
 
 namespace PeMain.UI
 {
-	/// <summary>
-	/// Description of EnvRemoveControl_event.
-	/// </summary>
 	partial class EnvRemoveControl
 	{
 		public event EventHandler<EventArgs> ValueChanged;

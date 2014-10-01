@@ -16,7 +16,7 @@ using PeMain.Logic;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of EnvUpdateControl.
+	/// 環境変数更新用コントロール。
 	/// </summary>
 	public partial class EnvUpdateControl : UserControl, ISetLanguage
 	{

@@ -37,7 +37,7 @@ namespace PeMain.UI
 				
 				result.Key = Hotkey;
 				result.Modifiers = Modifiers;
-				result.Registered = Registered;
+				result.IsRegistered = Registered;
 				
 				return result;
 			}
@@ -48,7 +48,7 @@ namespace PeMain.UI
 				}
 				Hotkey = value.Key;
 				Modifiers = value.Modifiers;
-				Registered = value.Registered;
+				Registered = value.IsRegistered;
 			}
 		}
 		

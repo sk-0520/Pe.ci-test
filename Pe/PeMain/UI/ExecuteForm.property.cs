@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using PeMain.Data;
@@ -18,6 +19,7 @@ namespace PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		LauncherItem LauncherItem { get; set;}
+		IEnumerable<string> ExOptions { get; set; }
 
 		public LauncherItem EditedLauncherItem { get; private set; }
 	}

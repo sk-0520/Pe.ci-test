@@ -15,13 +15,19 @@ using System.Windows.Forms;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of ScreenUtility.
+	/// スクリーン共通処理。
 	/// </summary>
 	public static class ScreenUtility
 	{
+		/// <summary>
+		/// スクリーンの名前を取得。
+		/// 
+		/// TODO: 名称がダサい。
+		/// </summary>
+		/// <param name="screen"></param>
+		/// <returns></returns>
 		public static string ToScreenName(Screen screen)
 		{
-			// TODO: ディスプレイ名称
 			/*
 			using(var searcher = new ManagementObjectSearcher("SELECT * FROM Win32_DesktopMonitor")) {
 				foreach(var currentObj in searcher.Get()) {

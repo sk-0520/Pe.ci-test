@@ -455,7 +455,7 @@ namespace PeMain.UI
 			executeExItem.Name = menuNameExecuteEx;
 			executeExItem.Text = CommonData.Language["toolbar/menu/file/execute-ex"];
 			executeExItem.Click += (object sender, EventArgs e) => {
-				ExecuteExItem(launcherItem);
+				ExecuteExItem(launcherItem, null);
 			};
 			// パス関係
 			pathItem.Name = menuNamePath;
@@ -698,10 +698,10 @@ namespace PeMain.UI
 			return false;
 		}
 		
-		void ExecuteExItem(LauncherItem launcherItem)
+		void ExecuteExItem(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
 			using(var form = new ExecuteForm()) {
-				form.SetParameter(launcherItem);
+				form.SetParameter(launcherItem, exOptions);
 				form.SetCommonData(CommonData);
 				form.TopMost = TopMost;
 				if(form.ShowDialog(this) == DialogResult.OK) {
@@ -763,6 +763,8 @@ namespace PeMain.UI
 		{
 			if(dropData.ToolStripItem != null) {
 				// ボタン上
+				Debug.Assert(dropData.Files.Count() > 0);
+				ExecuteExItem(dropData.LauncherItem, dropData.Files);
 			} else {
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
