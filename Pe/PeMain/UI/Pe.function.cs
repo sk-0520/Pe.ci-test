@@ -406,7 +406,6 @@ namespace PeMain.UI
 				updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
 				var updateInfo = updateData.Check();
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check-log"], updateInfo.Log);
 			}
 			return updateData;
 		}
@@ -418,9 +417,9 @@ namespace PeMain.UI
 					if(updateData.Info.IsUpdate) {
 						ShowUpdate(updateData);
 					} else if(updateData.Info.IsError) {
-						this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], updateData.Info.ErrorCode);
+						this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], updateData.Info.Log);
 					} else {
-						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/newest"], "");
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/newest"], updateData.Info.Log);
 					}
 				} else {
 					this._commonData.Logger.Puts(LogType.Error, this._commonData.Language["log/update/error"], "info is null");

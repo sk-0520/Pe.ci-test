@@ -24,6 +24,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/MM/DD" version="0.19.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li>アップデートの結果ログとログ出力内容をまとめた</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/10/01" version="0.19.0">
 		<ul type="note">
 			<li>0.18.0対応としての高速リリース</li>
