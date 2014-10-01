@@ -68,7 +68,9 @@ namespace PeMain.UI
 			this._commonData.MainSetting.RunningInfo.SetDefaultVersion();
 			var prevVersion = new Tuple<ushort,ushort,ushort>(prev.VersionMajor, prev.VersionMinor, prev.VersionRevision);
 			// バージョンが一定未満なら強制的に使用承諾
-			this._commonData.MainSetting.RunningInfo.Running = Functions.VersionCheck(prevVersion, Literal.AcceptVersion) >= 0;
+			if(Functions.VersionCheck(prevVersion, Literal.AcceptVersion) < 0) {
+				this._commonData.MainSetting.RunningInfo.Running = false;
+			}
 		}
 		
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
@@ -419,7 +421,7 @@ namespace PeMain.UI
 			};
 			
 			// メインメニュー
-			this._contextMenu.Popup += (object sender, EventArgs e) => { 
+			this._contextMenu.Popup += (object sender, EventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
 			};
 

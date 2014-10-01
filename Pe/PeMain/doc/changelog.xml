@@ -37,7 +37,7 @@
 		</ul>
 		<ul type="fixes">
 			<li>使用許諾ダイアログ内の文言がU他のUIテキストと異なっていた</li>
-			<li></li>
+			<li>過去バージョンからの強制使用許諾表示が使用設定より優先される不具合</li>
 			<li></li>
 		</ul>
 		<ul type="developer">
