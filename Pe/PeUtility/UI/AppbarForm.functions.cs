@@ -252,7 +252,7 @@ namespace PeUtility
 					size.Width = screeanSize.Width;
 					size.Height = HiddenSize.Bottom;
 					pos.X = screeanPos.X;
-					pos.Y = screeanPos.Y - size.Height;
+					pos.Y = screeanPos.Y + screeanSize.Height - size.Height;
 					break;
 					
 				case DesktopDockType.Left:
@@ -265,7 +265,7 @@ namespace PeUtility
 				case DesktopDockType.Right:
 					size.Width = HiddenSize.Right;
 					size.Height = screeanSize.Height;
-					pos.X = screeanSize.Width - HiddenSize.Right;
+					pos.X = screeanPos.X + screeanSize.Width - HiddenSize.Right;
 					pos.Y = screeanPos.Y;
 					break;
 					
@@ -298,7 +298,7 @@ namespace PeUtility
 					//size.Width = screeanSize.Width;
 					//size.Height = HiddenSize.Bottom;
 					pos.X = screeanPos.X;
-					pos.Y = screeanPos.Y - size.Height;
+					pos.Y = screeanPos.Y + screeanSize.Height - size.Height;
 					break;
 					
 				case DesktopDockType.Left:
@@ -311,7 +311,7 @@ namespace PeUtility
 				case DesktopDockType.Right:
 					//size.Width = HiddenSize.Right;
 					//size.Height = screeanSize.Height;
-					pos.X = screeanSize.Width - size.Width;
+					pos.X = screeanPos.X + screeanSize.Width - size.Width;
 					pos.Y = screeanPos.Y;
 					break;
 					
