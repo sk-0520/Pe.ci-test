@@ -51,5 +51,10 @@ namespace PeMain.Data
 		/// ログダイアログを表示する際にどの種別で表示するか。
 		/// </summary>
 		public LogType AddShowTrigger { get; set; }
+		
+		/// <summary>
+		/// 詳細部を全面表示。
+		/// </summary>
+		public bool FullDetail { get; set; }
 	}
 }

@@ -26,6 +26,7 @@ namespace PeMain.UI
 		{
 			this.selectLogVisible.Checked = logSetting.Visible;
 			this.selectLogAddShow.Checked = logSetting.AddShow;
+			this.selectLogFullDetail.Checked = logSetting.FullDetail;
 			
 			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
 			this.selectLogTrigger_warning.Checked     = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;

@@ -89,6 +89,8 @@
 		<Word Name="log/header/file"      Text="ソース" />
 		<Word Name="log/header/line"      Text="行数" />
 		<Word Name="log/header/method"    Text="メソッド" />
+		<Word Name="log/label/detail-full"  Text="詳細最大化表示" />
+		<Word Name="log/label/detail-split" Text="詳細分割表示" />
 		
 		<Word Name="accept/check/update-check"     Text="${update-check}" />
 		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
@@ -172,6 +174,7 @@
 		<Word Name="setting/group/log"             Text="ログ設定" />
 		<Word Name="setting/group/system-env"      Text="環境設定" />
 		<Word Name="setting/check/add-show"        Text="追加されるたびに表示する" />
+		<Word Name="setting/check/full-detail"    Text="詳細部分を最大化表示する" />
 		<Word Name="setting/group/item-type"       Text="アイテムの種類" />
 		<Word Name="setting/label/item-name"       Text="アイテム名" />
 		<Word Name="setting/label/command"         Text="コマンド" />

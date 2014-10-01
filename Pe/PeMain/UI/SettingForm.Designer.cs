@@ -38,10 +38,14 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
+			this.groupUpdateCheck = new System.Windows.Forms.GroupBox();
+			this.panelUpdate = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectUpdateCheck = new System.Windows.Forms.CheckBox();
+			this.selectUpdateCheckRC = new System.Windows.Forms.CheckBox();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
 			this.labelSystemEnvExt = new System.Windows.Forms.Label();
 			this.inputSystemEnvExt = new PeMain.UI.PeHotkeyControl();
@@ -164,12 +168,11 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.groupUpdateCheck = new System.Windows.Forms.GroupBox();
-			this.panelUpdate = new System.Windows.Forms.FlowLayoutPanel();
-			this.selectUpdateCheck = new System.Windows.Forms.CheckBox();
-			this.selectUpdateCheckRC = new System.Windows.Forms.CheckBox();
+			this.selectLogFullDetail = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
+			this.groupUpdateCheck.SuspendLayout();
+			this.panelUpdate.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
 			this.groupLogTrigger.SuspendLayout();
@@ -221,8 +224,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			this.groupUpdateCheck.SuspendLayout();
-			this.panelUpdate.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -257,6 +258,47 @@ namespace PeMain.UI
 			this.tabSetting_pageMain.TabIndex = 0;
 			this.tabSetting_pageMain.Text = ":setting/tab/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
+			// 
+			// groupUpdateCheck
+			// 
+			this.groupUpdateCheck.Controls.Add(this.panelUpdate);
+			this.groupUpdateCheck.Location = new System.Drawing.Point(234, 177);
+			this.groupUpdateCheck.Name = "groupUpdateCheck";
+			this.groupUpdateCheck.Size = new System.Drawing.Size(458, 48);
+			this.groupUpdateCheck.TabIndex = 3;
+			this.groupUpdateCheck.TabStop = false;
+			this.groupUpdateCheck.Text = ":setting/group/update-check";
+			// 
+			// panelUpdate
+			// 
+			this.panelUpdate.AutoSize = true;
+			this.panelUpdate.Controls.Add(this.selectUpdateCheck);
+			this.panelUpdate.Controls.Add(this.selectUpdateCheckRC);
+			this.panelUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelUpdate.Location = new System.Drawing.Point(3, 19);
+			this.panelUpdate.Name = "panelUpdate";
+			this.panelUpdate.Size = new System.Drawing.Size(452, 26);
+			this.panelUpdate.TabIndex = 4;
+			// 
+			// selectUpdateCheck
+			// 
+			this.selectUpdateCheck.AutoSize = true;
+			this.selectUpdateCheck.Location = new System.Drawing.Point(3, 3);
+			this.selectUpdateCheck.Name = "selectUpdateCheck";
+			this.selectUpdateCheck.Size = new System.Drawing.Size(194, 19);
+			this.selectUpdateCheck.TabIndex = 0;
+			this.selectUpdateCheck.Text = ":setting/check/update-check";
+			this.selectUpdateCheck.UseVisualStyleBackColor = true;
+			// 
+			// selectUpdateCheckRC
+			// 
+			this.selectUpdateCheckRC.AutoSize = true;
+			this.selectUpdateCheckRC.Location = new System.Drawing.Point(203, 3);
+			this.selectUpdateCheckRC.Name = "selectUpdateCheckRC";
+			this.selectUpdateCheckRC.Size = new System.Drawing.Size(214, 19);
+			this.selectUpdateCheckRC.TabIndex = 1;
+			this.selectUpdateCheckRC.Text = ":setting/check/update-check.RC";
+			this.selectUpdateCheckRC.UseVisualStyleBackColor = true;
 			// 
 			// groupMainSystemEnv
 			// 
@@ -321,12 +363,13 @@ namespace PeMain.UI
 			// 
 			// groupMainLog
 			// 
+			this.groupMainLog.Controls.Add(this.selectLogFullDetail);
 			this.groupMainLog.Controls.Add(this.selectLogAddShow);
 			this.groupMainLog.Controls.Add(this.groupLogTrigger);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
 			this.groupMainLog.Location = new System.Drawing.Point(15, 62);
 			this.groupMainLog.Name = "groupMainLog";
-			this.groupMainLog.Size = new System.Drawing.Size(200, 163);
+			this.groupMainLog.Size = new System.Drawing.Size(200, 186);
 			this.groupMainLog.TabIndex = 1;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
@@ -758,7 +801,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 110);
+			this.panelEnv.Size = new System.Drawing.Size(519, 108);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -767,7 +810,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 110);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 108);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -776,7 +819,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 110);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 108);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -1542,8 +1585,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle7;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1573,9 +1616,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle8;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1665,46 +1708,15 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// groupUpdateCheck
+			// selectLogFullDetail
 			// 
-			this.groupUpdateCheck.Controls.Add(this.panelUpdate);
-			this.groupUpdateCheck.Location = new System.Drawing.Point(234, 177);
-			this.groupUpdateCheck.Name = "groupUpdateCheck";
-			this.groupUpdateCheck.Size = new System.Drawing.Size(458, 48);
-			this.groupUpdateCheck.TabIndex = 3;
-			this.groupUpdateCheck.TabStop = false;
-			this.groupUpdateCheck.Text = ":setting/group/update-check";
-			// 
-			// panelUpdate
-			// 
-			this.panelUpdate.AutoSize = true;
-			this.panelUpdate.Controls.Add(this.selectUpdateCheck);
-			this.panelUpdate.Controls.Add(this.selectUpdateCheckRC);
-			this.panelUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelUpdate.Location = new System.Drawing.Point(3, 19);
-			this.panelUpdate.Name = "panelUpdate";
-			this.panelUpdate.Size = new System.Drawing.Size(452, 26);
-			this.panelUpdate.TabIndex = 4;
-			// 
-			// selectUpdateCheck
-			// 
-			this.selectUpdateCheck.AutoSize = true;
-			this.selectUpdateCheck.Location = new System.Drawing.Point(3, 3);
-			this.selectUpdateCheck.Name = "selectUpdateCheck";
-			this.selectUpdateCheck.Size = new System.Drawing.Size(194, 19);
-			this.selectUpdateCheck.TabIndex = 0;
-			this.selectUpdateCheck.Text = ":setting/check/update-check";
-			this.selectUpdateCheck.UseVisualStyleBackColor = true;
-			// 
-			// selectUpdateCheckRC
-			// 
-			this.selectUpdateCheckRC.AutoSize = true;
-			this.selectUpdateCheckRC.Location = new System.Drawing.Point(203, 3);
-			this.selectUpdateCheckRC.Name = "selectUpdateCheckRC";
-			this.selectUpdateCheckRC.Size = new System.Drawing.Size(214, 19);
-			this.selectUpdateCheckRC.TabIndex = 1;
-			this.selectUpdateCheckRC.Text = ":setting/check/update-check.RC";
-			this.selectUpdateCheckRC.UseVisualStyleBackColor = true;
+			this.selectLogFullDetail.AutoSize = true;
+			this.selectLogFullDetail.Location = new System.Drawing.Point(16, 158);
+			this.selectLogFullDetail.Name = "selectLogFullDetail";
+			this.selectLogFullDetail.Size = new System.Drawing.Size(170, 19);
+			this.selectLogFullDetail.TabIndex = 3;
+			this.selectLogFullDetail.Text = ":setting/check/full-detail";
+			this.selectLogFullDetail.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -1723,6 +1735,10 @@ namespace PeMain.UI
 			this.tabSetting.ResumeLayout(false);
 			this.tabSetting_pageMain.ResumeLayout(false);
 			this.tabSetting_pageMain.PerformLayout();
+			this.groupUpdateCheck.ResumeLayout(false);
+			this.groupUpdateCheck.PerformLayout();
+			this.panelUpdate.ResumeLayout(false);
+			this.panelUpdate.PerformLayout();
 			this.groupMainSystemEnv.ResumeLayout(false);
 			this.groupMainSystemEnv.PerformLayout();
 			this.groupMainLog.ResumeLayout(false);
@@ -1789,12 +1805,9 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.groupUpdateCheck.ResumeLayout(false);
-			this.groupUpdateCheck.PerformLayout();
-			this.panelUpdate.ResumeLayout(false);
-			this.panelUpdate.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectLogFullDetail;
 		private System.Windows.Forms.CheckBox selectUpdateCheckRC;
 		private System.Windows.Forms.CheckBox selectUpdateCheck;
 		private System.Windows.Forms.FlowLayoutPanel panelUpdate;

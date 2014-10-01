@@ -29,6 +29,7 @@ namespace PeMain.UI
 		{
 			this.selectLogVisible.SetLanguage(Language);
 			this.selectLogAddShow.SetLanguage(Language);
+			this.selectLogFullDetail.SetLanguage(Language);
 			this.selectLogTrigger_information.Text = LogType.Information.ToText(Language);
 			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(Language);
 			this.selectLogTrigger_error.Text = LogType.Error.ToText(Language);

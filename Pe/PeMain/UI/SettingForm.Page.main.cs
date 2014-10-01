@@ -23,6 +23,7 @@ namespace PeMain.UI
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
 			logSetting.AddShow = this.selectLogAddShow.Checked;
+			logSetting.FullDetail = this.selectLogFullDetail.Checked;
 			
 			var trigger = new Dictionary<CheckBox, LogType>() {
 				{ this.selectLogTrigger_information, LogType.Information },

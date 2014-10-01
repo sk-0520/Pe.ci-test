@@ -472,6 +472,8 @@ namespace PeMain.Data
 		public LauncherSetting()
 		{
 			Items = new HashSet<LauncherItem>();
+			
+			StreamFontSetting = new FontSetting();
 		}
 		
 		/// <summary>
@@ -479,6 +481,11 @@ namespace PeMain.Data
 		/// </summary>
 		[XmlIgnoreAttribute()]
 		public HashSet<LauncherItem> Items { get; set; }
+		
+		/// <summary>
+		/// 標準出力フォント。
+		/// </summary>
+		public FontSetting StreamFontSetting { get; set; }
 		
 		public override void Dispose()
 		{

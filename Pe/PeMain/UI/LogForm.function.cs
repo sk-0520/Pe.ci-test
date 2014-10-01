@@ -78,6 +78,8 @@ namespace PeMain.UI
 			Size = CommonData.MainSetting.Log.Size;
 			Location = CommonData.MainSetting.Log.Point;
 			Visible = CommonData.MainSetting.Log.Visible;
+			
+			ChangeDetail(CommonData.MainSetting.Log.FullDetail);
 		}
 		
 		void ApplySetting()
@@ -177,5 +179,25 @@ namespace PeMain.UI
 			
 			this.listStack.Items.AddRange(listitemList.ToArray());
 		}
+		
+		void ChangeDetail(bool fullDetail)
+		{
+			if(fullDetail) {
+				statusLog_itemDetail.Image = PeMain.Properties.Images.SideContract;
+				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-full"];
+			} else {
+				statusLog_itemDetail.Image = PeMain.Properties.Images.SideExpand;
+				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-split"];
+			}
+			
+			CommonData.MainSetting.Log.FullDetail = fullDetail;
+			this.panelDetail.Panel2Collapsed = fullDetail;
+		}
+
+		void SwitchDetail()
+		{
+			ChangeDetail(!CommonData.MainSetting.Log.FullDetail);
+		}
+		
 	}
 }

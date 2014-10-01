@@ -38,11 +38,12 @@ namespace PeMain.UI
 		{
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.statusLog = new System.Windows.Forms.StatusStrip();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.statusLog_itemDetail = new System.Windows.Forms.ToolStripStatusLabel();
+			this.panelMain = new System.Windows.Forms.SplitContainer();
 			this.listLog = new System.Windows.Forms.ListView();
 			this.listLog_columnTimestamp = new System.Windows.Forms.ColumnHeader();
 			this.listLog_columnTitle = new System.Windows.Forms.ColumnHeader();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.panelDetail = new System.Windows.Forms.SplitContainer();
 			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.listStack = new System.Windows.Forms.ListView();
 			this.listStack_columnFunction = new System.Windows.Forms.ColumnHeader();
@@ -55,14 +56,15 @@ namespace PeMain.UI
 			this.toolStripContainer1.ContentPanel.SuspendLayout();
 			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
 			this.toolStripContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-			this.splitContainer2.Panel1.SuspendLayout();
-			this.splitContainer2.Panel2.SuspendLayout();
-			this.splitContainer2.SuspendLayout();
+			this.statusLog.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.panelMain)).BeginInit();
+			this.panelMain.Panel1.SuspendLayout();
+			this.panelMain.Panel2.SuspendLayout();
+			this.panelMain.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.panelDetail)).BeginInit();
+			this.panelDetail.Panel1.SuspendLayout();
+			this.panelDetail.Panel2.SuspendLayout();
+			this.panelDetail.SuspendLayout();
 			this.toolLog.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -75,9 +77,9 @@ namespace PeMain.UI
 			// 
 			// toolStripContainer1.ContentPanel
 			// 
-			this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
+			this.toolStripContainer1.ContentPanel.Controls.Add(this.panelMain);
 			this.toolStripContainer1.ContentPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(436, 229);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(436, 228);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
@@ -95,29 +97,39 @@ namespace PeMain.UI
 			// statusLog
 			// 
 			this.statusLog.Dock = System.Windows.Forms.DockStyle.None;
+			this.statusLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.statusLog_itemDetail});
 			this.statusLog.Location = new System.Drawing.Point(0, 0);
 			this.statusLog.Name = "statusLog";
-			this.statusLog.Size = new System.Drawing.Size(436, 22);
+			this.statusLog.Size = new System.Drawing.Size(436, 23);
 			this.statusLog.TabIndex = 0;
 			this.statusLog.Text = "statusStrip1";
 			// 
-			// splitContainer1
+			// statusLog_itemDetail
 			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer1.Name = "splitContainer1";
-			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.statusLog_itemDetail.Image = global::PeMain.Properties.Images.NotImpl;
+			this.statusLog_itemDetail.Name = "statusLog_itemDetail";
+			this.statusLog_itemDetail.Size = new System.Drawing.Size(36, 18);
+			this.statusLog_itemDetail.Text = "☃";
+			this.statusLog_itemDetail.Click += new System.EventHandler(this.StatusLog_itemDetail_Click);
 			// 
-			// splitContainer1.Panel1
+			// panelMain
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.listLog);
+			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMain.Location = new System.Drawing.Point(0, 0);
+			this.panelMain.Name = "panelMain";
+			this.panelMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// splitContainer1.Panel2
+			// panelMain.Panel1
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(436, 229);
-			this.splitContainer1.SplitterDistance = 135;
-			this.splitContainer1.TabIndex = 0;
+			this.panelMain.Panel1.Controls.Add(this.listLog);
+			// 
+			// panelMain.Panel2
+			// 
+			this.panelMain.Panel2.Controls.Add(this.panelDetail);
+			this.panelMain.Size = new System.Drawing.Size(436, 228);
+			this.panelMain.SplitterDistance = 134;
+			this.panelMain.TabIndex = 0;
 			// 
 			// listLog
 			// 
@@ -130,7 +142,7 @@ namespace PeMain.UI
 			this.listLog.Location = new System.Drawing.Point(0, 0);
 			this.listLog.MultiSelect = false;
 			this.listLog.Name = "listLog";
-			this.listLog.Size = new System.Drawing.Size(436, 135);
+			this.listLog.Size = new System.Drawing.Size(436, 134);
 			this.listLog.TabIndex = 0;
 			this.listLog.UseCompatibleStateImageBehavior = false;
 			this.listLog.View = System.Windows.Forms.View.Details;
@@ -146,22 +158,22 @@ namespace PeMain.UI
 			// 
 			this.listLog_columnTitle.Text = ":log/header/title";
 			// 
-			// splitContainer2
+			// panelDetail
 			// 
-			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Name = "splitContainer2";
+			this.panelDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelDetail.Location = new System.Drawing.Point(0, 0);
+			this.panelDetail.Name = "panelDetail";
 			// 
-			// splitContainer2.Panel1
+			// panelDetail.Panel1
 			// 
-			this.splitContainer2.Panel1.Controls.Add(this.viewDetail);
+			this.panelDetail.Panel1.Controls.Add(this.viewDetail);
 			// 
-			// splitContainer2.Panel2
+			// panelDetail.Panel2
 			// 
-			this.splitContainer2.Panel2.Controls.Add(this.listStack);
-			this.splitContainer2.Size = new System.Drawing.Size(436, 90);
-			this.splitContainer2.SplitterDistance = 196;
-			this.splitContainer2.TabIndex = 0;
+			this.panelDetail.Panel2.Controls.Add(this.listStack);
+			this.panelDetail.Size = new System.Drawing.Size(436, 90);
+			this.panelDetail.SplitterDistance = 196;
+			this.panelDetail.TabIndex = 0;
 			// 
 			// viewDetail
 			// 
@@ -262,20 +274,23 @@ namespace PeMain.UI
 			this.toolStripContainer1.TopToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ResumeLayout(false);
 			this.toolStripContainer1.PerformLayout();
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-			this.splitContainer1.ResumeLayout(false);
-			this.splitContainer2.Panel1.ResumeLayout(false);
-			this.splitContainer2.Panel1.PerformLayout();
-			this.splitContainer2.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-			this.splitContainer2.ResumeLayout(false);
+			this.statusLog.ResumeLayout(false);
+			this.statusLog.PerformLayout();
+			this.panelMain.Panel1.ResumeLayout(false);
+			this.panelMain.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.panelMain)).EndInit();
+			this.panelMain.ResumeLayout(false);
+			this.panelDetail.Panel1.ResumeLayout(false);
+			this.panelDetail.Panel1.PerformLayout();
+			this.panelDetail.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.panelDetail)).EndInit();
+			this.panelDetail.ResumeLayout(false);
 			this.toolLog.ResumeLayout(false);
 			this.toolLog.PerformLayout();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.SplitContainer splitContainer2;
+		private System.Windows.Forms.ToolStripStatusLabel statusLog_itemDetail;
+		private System.Windows.Forms.SplitContainer panelDetail;
 		private System.Windows.Forms.TextBox viewDetail;
 		private System.Windows.Forms.ColumnHeader listStack_columnFunction;
 		private System.Windows.Forms.ColumnHeader listStack_columnLine;
@@ -284,7 +299,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.ColumnHeader listLog_columnTitle;
 		private System.Windows.Forms.ColumnHeader listLog_columnTimestamp;
 		private System.Windows.Forms.ListView listLog;
-		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.SplitContainer panelMain;
 		private System.Windows.Forms.ToolStripButton toolLog_clear;
 		private System.Windows.Forms.ToolStripButton toolLog_save;
 		private PeMain.UI.ActiveToolStrip toolLog;

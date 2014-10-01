@@ -128,5 +128,10 @@ namespace PeMain.UI
 				}
 			}
 		}
+		
+		void StatusLog_itemDetail_Click(object sender, EventArgs e)
+		{
+			SwitchDetail();
+		}
 	}
 }
