@@ -18,8 +18,16 @@ using PeUtility;
 
 namespace PeMain.Logic
 {
+	/// <summary>
+	/// コモンダイアログ共通処理。
+	/// </summary>
 	public static class DialogUtility
 	{
+		/// <summary>
+		/// コントロールに対してファイルダイアログを適用する。
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="whitespaceIsQuotation"></param>
 		public static void OpenDialogFilePath(Control input, bool whitespaceIsQuotation = true)
 		{
 			var path = input.Text.Trim();
@@ -38,6 +46,10 @@ namespace PeMain.Logic
 			}
 		}
 		
+		/// <summary>
+		/// コントロールに対してフォルダダイアログを適用する。
+		/// </summary>
+		/// <param name="input"></param>
 		public static void OpenDialogDirPath(Control input)
 		{
 			var path = input.Text.Trim();
@@ -55,8 +67,16 @@ namespace PeMain.Logic
 		}
 	}
 	
+	/// <summary>
+	/// ツリービュー共通処理。
+	/// </summary>
 	public static class TreeViewUtility
 	{
+		/// <summary>
+		/// ツリービューから全ノードを取得する。
+		/// </summary>
+		/// <param name="treeView"></param>
+		/// <returns></returns>
 		public static IList<TreeNode> GetChildrenNodes(this TreeView treeView)
 		{
 			var result = new List<TreeNode>();
@@ -72,6 +92,9 @@ namespace PeMain.Logic
 		}
 	}
 	
+	/// <summary>
+	/// ツリーノード共通処理。
+	/// </summary>
 	public static class TreeNodeUtility
 	{
 		/// <summary>
@@ -99,7 +122,7 @@ namespace PeMain.Logic
 		/// <summary>
 		/// ノード選択。
 		/// 
-		/// ユーザーコードでは基本的に使用しない
+		/// ユーザーコードでは基本的に使用しない。
 		/// </summary>
 		/// <param name="node"></param>
 		/// <param name="toSelect"></param>
@@ -201,10 +224,15 @@ namespace PeMain.Logic
 		}
 	}
 	
+	/// <summary>
+	/// ツールストリップ共通処理
+	/// </summary>
 	public static class ToolStripUtility
 	{
 		/// <summary>
-		/// コンテキストメニュー用イベント。
+		/// コンテキストメニュー用位置補正イベント。
+		/// 
+		/// ユーザーコードでは使用しない。
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -239,7 +267,9 @@ namespace PeMain.Logic
 		}
 		
 		/// <summary>
-		/// 汎用イベント。
+		/// メニュー用位置補正イベント。
+		/// 
+		/// ユーザーコードでは使用しない。
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -272,7 +302,7 @@ namespace PeMain.Logic
 		}
 		
 		/// <summary>
-		/// 汎用。
+		/// 位置補正イベントのアタッチ。
 		/// </summary>
 		public static void AttachmentOpeningMenuInScreen(IEnumerable<ToolStripItem> toolItems)
 		{
@@ -281,7 +311,7 @@ namespace PeMain.Logic
 			}
 		}
 		/// <summary>
-		/// 汎用。
+		/// 位置補正イベントのアタッチ。
 		/// </summary>
 		public static void AttachmentOpeningMenuInScreen(ToolStripDropDownItem toolItem)
 		{
@@ -302,9 +332,9 @@ namespace PeMain.Logic
 		}
 		
 		/// <summary>
-		/// コンテキストメニュー
+		/// コンテキストメニュー用位置補正イベントのアタッチ。
 		/// </summary>
-		/// <param name="toolItem"></param>
+		/// <param name="toolItem">コンテキストメニューを持つ親コントロール</param>
 		public static void AttachmentOpeningMenuInScreen(Control parent)
 		{
 			var toolItem = parent.ContextMenuStrip;
@@ -316,6 +346,9 @@ namespace PeMain.Logic
 
 	}
 
+	/// <summary>
+	/// ユーザーインターフェイス共通処理。
+	/// </summary>
 	public static class UIUtility
 	{
 		private static string GetWord(Language language, string key, IDictionary<string, string> map)

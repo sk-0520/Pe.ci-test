@@ -14,7 +14,7 @@ using PInvoke.Windows;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// Description of HotkeySetting.
+	/// ホットキー設定。
 	/// </summary>
 	[Serializable]
 	public class HotKeySetting: Item
@@ -24,15 +24,27 @@ namespace PeMain.Data
 			Key = Keys.None;
 			Modifiers = MOD.None;
 			
-			Registered = false;
+			IsRegistered = false;
 		}
 		
+		/// <summary>
+		/// キー
+		/// </summary>
 		public Keys Key { get; set; }
+		/// <summary>
+		/// 装飾キー。
+		/// </summary>
 		public MOD  Modifiers { get; set; }
 		
+		/// <summary>
+		/// 登録済みか。
+		/// </summary>
 		[XmlIgnore()]
-		public bool Registered { get; set; }
+		public bool IsRegistered { get; set; }
 		
+		/// <summary>
+		/// 有効なキー設定か。
+		/// </summary>
 		public bool Enabled
 		{
 			get
