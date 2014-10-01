@@ -19,7 +19,7 @@ using PInvoke.Windows;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of NoteForm.
+	/// ノート。
 	/// </summary>
 	public partial class NoteForm : Form, ISetCommonData
 	{

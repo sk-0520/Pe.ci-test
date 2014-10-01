@@ -14,7 +14,9 @@ using PeMain.Logic;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of UpdateForm.
+	/// アップデートチェック。
+	/// 
+	/// 実行は PeUpdater にお任せ。
 	/// </summary>
 	public partial class UpdateForm : Form, ISetCommonData
 	{

@@ -18,7 +18,7 @@ using PeMain.Data;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of SettingForm.
+	/// 設定。
 	/// </summary>
 	public partial class SettingForm : Form
 	{

@@ -17,7 +17,7 @@ namespace PeMain.UI
 	public partial class Pe
 	{
 		/// <summary>
-		/// Description of Pe_MessageWindow.
+		/// メッセージ受信用。
 		/// </summary>
 		public partial class MessageWindow : Form, ISetCommonData
 		{

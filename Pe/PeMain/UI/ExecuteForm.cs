@@ -19,7 +19,7 @@ using PeUtility;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of ExecuteForm.
+	/// 指定して実行。
 	/// </summary>
 	public partial class ExecuteForm : Form, ISetCommonData
 	{

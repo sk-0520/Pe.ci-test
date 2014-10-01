@@ -19,7 +19,7 @@ using PeMain.Logic;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of AboutForm.
+	/// 情報。
 	/// </summary>
 	public partial class AboutForm : Form, ISetCommonData
 	{

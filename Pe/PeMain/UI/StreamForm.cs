@@ -15,7 +15,7 @@ using PeMain.Logic;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of StreamForm.
+	/// 標準出力取得。
 	/// </summary>
 	public partial class StreamForm : Form, ISetCommonData
 	{

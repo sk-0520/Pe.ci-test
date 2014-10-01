@@ -14,7 +14,7 @@ using PeMain.Logic;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of AcceptForm.
+	/// 使用許諾。
 	/// </summary>
 	public partial class AcceptForm : Form, ISetCommonData
 	{

@@ -19,7 +19,7 @@ using PInvoke.Windows;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of LogForm.
+	/// ログ。
 	/// </summary>
 	public partial class LogForm : Form, ILogger, ISetCommonData
 	{

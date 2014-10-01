@@ -19,7 +19,7 @@ using PInvoke.Windows;
 namespace PeMain.UI
 {
 	/// <summary>
-	/// Description of ToolbarForm.
+	/// ツールバー。
 	/// </summary>
 	public partial class ToolbarForm : AppbarForm, ISetCommonData
 	{
