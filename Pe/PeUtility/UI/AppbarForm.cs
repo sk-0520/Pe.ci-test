@@ -15,7 +15,7 @@ using PInvoke.Windows;
 namespace PeUtility
 {
 	/// <summary>
-	/// Description of ToolbarForm.
+	/// アプリケーションデスクトップツールバー。
 	/// </summary>
 	public partial class AppbarForm : Form
 	{
