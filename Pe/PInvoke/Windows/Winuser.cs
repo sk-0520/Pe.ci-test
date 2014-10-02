@@ -1600,5 +1600,8 @@ namespace PInvoke.Windows
 		
 		[DllImport("user32.dll", SetLastError = true)]
 		public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, DI diFlags);
+		
+		[DllImport("user32.dll")]
+		public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 	}
 }

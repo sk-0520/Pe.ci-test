@@ -234,7 +234,7 @@ namespace PeMain.Data
 		public ToolbarItemData(ToolbarItem value): base(value) { }
 		public ToolbarItemData(ToolbarItem value, Language language): base(value, language) { }
 		
-		public override string Display { get { return ScreenUtility.ToScreenName(Value.Name); } }
+		public override string Display { get { return ScreenUtility.ToScreenName(Value.Name, null); } }
 	}
 	
 	/// <summary>

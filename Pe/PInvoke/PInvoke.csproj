@@ -61,6 +61,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -68,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\WMI\CIMWin32.cs" />
     <Compile Include="Windows\Commctrl.cs" />
     <Compile Include="Windows\CommonControls.cs" />
     <Compile Include="Windows\Dwmapi.cs" />
@@ -78,10 +80,13 @@
     <Compile Include="Windows\Winbase.cs" />
     <Compile Include="Windows\Windef.cs" />
     <Compile Include="Windows\Winerror.cs" />
+    <Compile Include="Windows\Wingdi.cs" />
     <Compile Include="Windows\Winuser.cs" />
+    <Compile Include="Windows\WMI\WMIUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Windows" />
+    <Folder Include="Windows\WMI" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

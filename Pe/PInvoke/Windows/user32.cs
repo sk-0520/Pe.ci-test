@@ -31,6 +31,7 @@ namespace PInvoke.Windows
 		
 		[DllImport( "user32", SetLastError = true )]
 		[return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool UnregisterHotKey (IntPtr hwnd, int id);
+		public static extern bool UnregisterHotKey (IntPtr hwnd, int id);
+		
 	}
 }
