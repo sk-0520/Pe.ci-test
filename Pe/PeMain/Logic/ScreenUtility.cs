@@ -73,7 +73,7 @@ namespace PeMain.Logic
 		{
 			var screen = Screen.AllScreens.SingleOrDefault(s => s.DeviceName == screenName);
 			if(screen != null) {
-				ToScreenName(screen, logger);
+				return ToScreenName(screen, logger);
 			}
 			return screenName;
 		}

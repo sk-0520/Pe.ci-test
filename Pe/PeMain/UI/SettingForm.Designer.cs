@@ -52,6 +52,7 @@ namespace PeMain.UI
 			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
 			this.inputSystemEnvHiddenFile = new PeMain.UI.PeHotkeyControl();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
+			this.selectLogFullDetail = new System.Windows.Forms.CheckBox();
 			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
 			this.groupLogTrigger = new System.Windows.Forms.GroupBox();
 			this.selectLogTrigger_error = new System.Windows.Forms.CheckBox();
@@ -168,7 +169,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selectLogFullDetail = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupUpdateCheck.SuspendLayout();
@@ -373,6 +373,16 @@ namespace PeMain.UI
 			this.groupMainLog.TabIndex = 1;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
+			// 
+			// selectLogFullDetail
+			// 
+			this.selectLogFullDetail.AutoSize = true;
+			this.selectLogFullDetail.Location = new System.Drawing.Point(16, 158);
+			this.selectLogFullDetail.Name = "selectLogFullDetail";
+			this.selectLogFullDetail.Size = new System.Drawing.Size(170, 19);
+			this.selectLogFullDetail.TabIndex = 3;
+			this.selectLogFullDetail.Text = ":setting/check/full-detail";
+			this.selectLogFullDetail.UseVisualStyleBackColor = true;
 			// 
 			// selectLogAddShow
 			// 
@@ -801,7 +811,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 108);
+			this.panelEnv.Size = new System.Drawing.Size(519, 104);
 			this.panelEnv.SplitterDistance = 339;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -810,7 +820,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 108);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 104);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -819,7 +829,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 108);
+			this.envLauncherRemove.Size = new System.Drawing.Size(176, 104);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -1707,16 +1717,6 @@ namespace PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// selectLogFullDetail
-			// 
-			this.selectLogFullDetail.AutoSize = true;
-			this.selectLogFullDetail.Location = new System.Drawing.Point(16, 158);
-			this.selectLogFullDetail.Name = "selectLogFullDetail";
-			this.selectLogFullDetail.Size = new System.Drawing.Size(170, 19);
-			this.selectLogFullDetail.TabIndex = 3;
-			this.selectLogFullDetail.Text = ":setting/check/full-detail";
-			this.selectLogFullDetail.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 

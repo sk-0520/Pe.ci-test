@@ -150,4 +150,13 @@ namespace PeMain.Logic
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 	
+	public class ToolbarDisplayValue: UseLanguageDisplayValue<ToolbarItem>
+	{
+		public ToolbarDisplayValue(ToolbarItem value): base(value) { }
+		public ToolbarDisplayValue(ToolbarItem value, Language language): base(value, language) { }
+		
+		public override string Display { get { return ScreenUtility.ToScreenName(Value.Name, null); } }
+	}
+	
+
 }

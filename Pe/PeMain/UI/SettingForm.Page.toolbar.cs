@@ -146,7 +146,7 @@ namespace PeMain.UI
 		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
 		{
 			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarItemData>()) {
+			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
 				var item = itemData.Value;
 				if(toolbarSetting.Items.Contains(item)) {
 					toolbarSetting.Items.Remove(item);

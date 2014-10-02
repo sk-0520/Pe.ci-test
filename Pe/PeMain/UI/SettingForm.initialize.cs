@@ -138,12 +138,12 @@ namespace PeMain.UI
 			AttachmentIconScale(this.selectToolbarIcon, IconScale.Small);
 
 			ToolbarItem initToolbarItem = null;
-			var toolbarItemDataList = new List<ToolbarItemData>();
+			var toolbarItemDataList = new List<ToolbarDisplayValue>();
 			foreach(var toolbarItem in toolbarSetting.Items) {
 				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
 					initToolbarItem = toolbarItem;
 				}
-				var toolbarItemData = new ToolbarItemData(toolbarItem, Language);
+				var toolbarItemData = new ToolbarDisplayValue(toolbarItem, Language);
 				toolbarItemDataList.Add(toolbarItemData);
 			}
 			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
