@@ -83,6 +83,8 @@ namespace PInvoke.Windows.root.CIMV2
 		
 		public override void Import(ManagementObject obj)
 		{
+			base.Import(obj);
+			
 			Bandwidth = (uint?)obj["Bandwidth"];
 			DisplayType = (ushort?)obj["DisplayType"];
 			MonitorManufacturer = (string)obj["MonitorManufacturer"];

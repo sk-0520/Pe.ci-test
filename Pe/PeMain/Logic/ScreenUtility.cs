@@ -35,8 +35,6 @@ namespace PeMain.Logic
 		
 		/// <summary>
 		/// スクリーンの名前を取得。
-		/// 
-		/// TODO: 名称がダサい。
 		/// </summary>
 		/// <param name="screen"></param>
 		/// <returns></returns>
@@ -50,7 +48,7 @@ namespace PeMain.Logic
 						var item = new Win32_DesktopMonitor();
 						item.Import(mng);
 						if(!string.IsNullOrWhiteSpace(item.Name)) {
-							return item.Name;
+							return string.Format("{0}({1})", item.Name, id);
 						}
 					} catch(Exception ex) {
 						if(logger != null) {
