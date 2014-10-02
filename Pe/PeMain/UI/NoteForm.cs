@@ -302,11 +302,11 @@ namespace PeMain.UI
 			this.contextMenu_font_change.Text = NoteItem.Style.FontSetting.ToViewText(CommonData.Language);
 			
 			// 色
-			var foreColor = this.contextMenu_fore.ComboBox.Items.Cast<ColorData>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
+			var foreColor = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
 			if(foreColor != null) {
 				this.contextMenu_fore.SelectedItem = foreColor;
 			}
-			var backColor = this.contextMenu_back.ComboBox.Items.Cast<ColorData>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
+			var backColor = this.contextMenu_back.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
 			if(backColor != null) {
 				this.contextMenu_back.SelectedItem = backColor;
 			}

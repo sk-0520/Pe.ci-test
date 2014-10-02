@@ -21,10 +21,10 @@ namespace PeMain.UI
 	{
 		void AttachmentIconScale(ComboBox control, IconScale defaultData)
 		{
-			var iconSizeDataList = new List<IconScaleItemData>();
+			var iconSizeDataList = new List<IconScaleDisplayValue>();
 			//foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big, IconScale.Large }) {
 			foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big }) {
-				var data = new IconScaleItemData(value, Language);
+				var data = new IconScaleDisplayValue(value, Language);
 				iconSizeDataList.Add(data);
 			}
 			control.Attachment(iconSizeDataList, defaultData);

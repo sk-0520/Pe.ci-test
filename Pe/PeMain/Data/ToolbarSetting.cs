@@ -229,7 +229,7 @@ namespace PeMain.Data
 		}
 	}
 	
-	public class ToolbarItemData: UseLanguageItemData<ToolbarItem>
+	public class ToolbarItemData: UseLanguageDisplayValue<ToolbarItem>
 	{
 		public ToolbarItemData(ToolbarItem value): base(value) { }
 		public ToolbarItemData(ToolbarItem value, Language language): base(value, language) { }

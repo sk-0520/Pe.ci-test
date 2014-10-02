@@ -127,9 +127,9 @@ namespace PeMain.UI
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
 			// ツールーバー位置の項目構築
-			var toolbarPosList = new List<ToolbarPositionItem>();
+			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
 			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
-				var data = new ToolbarPositionItem(value, Language);
+				var data = new ToolbarPositionDisplayValue(value, Language);
 				toolbarPosList.Add(data);
 			}
 			this.selectToolbarPosition.Attachment(toolbarPosList);

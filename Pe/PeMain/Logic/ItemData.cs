@@ -20,11 +20,11 @@ namespace PeMain.Logic
 	/// <summary>
 	/// UIに対して項目と名称を設定する。
 	/// </summary>
-	public class ItemData<T>
+	public class DisplayValue<T>
 	{
 		private T _value;
 		
-		public ItemData(T value)
+		public DisplayValue(T value)
 		{
 			this._value = value;
 		}
@@ -50,7 +50,7 @@ namespace PeMain.Logic
 		}
 	}
 	
-	public static class ItemDataUtility
+	public static class DisplayValueUtility
 	{
 		private static void SetValueAndDisplay(ListControl control)
 		{
@@ -58,32 +58,32 @@ namespace PeMain.Logic
 			control.DisplayMember  = "Display";
 		}
 		
-		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas, T defaultData)
+		public static void Attachment<T>(this ComboBox control, IEnumerable<DisplayValue<T>> itemDatas, T defaultData)
 		{
 			SetValueAndDisplay(control);
 			control.DataSource = itemDatas;
 			control.SelectedValue = defaultData;
 		}
-		public static void Attachment<T>(this ComboBox control, IEnumerable<ItemData<T>> itemDatas)
+		public static void Attachment<T>(this ComboBox control, IEnumerable<DisplayValue<T>> itemDatas)
 		{
 			control.Attachment(itemDatas, itemDatas.DefaultIfEmpty().First().Value);
 		}
 		
-		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<ItemData<T>> itemDatas, T defaultData)
+		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<DisplayValue<T>> itemDatas, T defaultData)
 		{
 			control.ComboBox.Attachment(itemDatas, defaultData);
 		}
-		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<ItemData<T>> itemDatas)
+		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<DisplayValue<T>> itemDatas)
 		{
 			control.ComboBox.Attachment(itemDatas);
 		}
 		
 	}
 	
-	public class UseLanguageItemData<T>: ItemData<T>
+	public class UseLanguageDisplayValue<T>: DisplayValue<T>
 	{
-		public UseLanguageItemData(T value): base(value) { }
-		public UseLanguageItemData(T value, Language language): base(value)
+		public UseLanguageDisplayValue(T value): base(value) { }
+		public UseLanguageDisplayValue(T value, Language language): base(value)
 		{
 			Language = language;
 		}
@@ -91,29 +91,29 @@ namespace PeMain.Logic
 	}
 	
 	
-	public class ToolbarPositionItem: UseLanguageItemData<ToolbarPosition>
+	public class ToolbarPositionDisplayValue: UseLanguageDisplayValue<ToolbarPosition>
 	{
-		public ToolbarPositionItem(ToolbarPosition value): base(value) { }
-		public ToolbarPositionItem(ToolbarPosition value, Language lang): base(value, lang) { }
+		public ToolbarPositionDisplayValue(ToolbarPosition value): base(value) { }
+		public ToolbarPositionDisplayValue(ToolbarPosition value, Language lang): base(value, lang) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 	
-	public class IconScaleItemData: UseLanguageItemData<IconScale>
+	public class IconScaleDisplayValue: UseLanguageDisplayValue<IconScale>
 	{
-		public IconScaleItemData(IconScale value): base(value) { }
-		public IconScaleItemData(IconScale value, Language language): base(value, language) { }
+		public IconScaleDisplayValue(IconScale value): base(value) { }
+		public IconScaleDisplayValue(IconScale value, Language language): base(value, language) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 
-	class ColorData: ItemData<Color>, ISetLanguage
+	class ColorDisplayValue: DisplayValue<Color>, ISetLanguage
 	{
 		private string _displayTitle;
 		private string _displayValue;
 		Language Language { get; set; }
 		
-		public ColorData(Color value, string displayTitle, string displayValue): base(value)
+		public ColorDisplayValue(Color value, string displayTitle, string displayValue): base(value)
 		{
 			this._displayTitle = displayTitle;
 			this._displayValue = displayValue;
@@ -142,10 +142,10 @@ namespace PeMain.Logic
 	/// <summary>
 	/// ランチャ種別のUI用ラッパ。
 	/// </summary>
-	public class LauncherTypeItem: UseLanguageItemData<LauncherType>
+	public class LauncherTypeDisplayValue: UseLanguageDisplayValue<LauncherType>
 	{
-		public LauncherTypeItem(LauncherType value): base(value) { }
-		public LauncherTypeItem(LauncherType value, Language lang): base(value, lang) { }
+		public LauncherTypeDisplayValue(LauncherType value): base(value) { }
+		public LauncherTypeDisplayValue(LauncherType value, Language lang): base(value, lang) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}

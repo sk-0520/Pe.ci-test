@@ -320,7 +320,7 @@ namespace PeMain.UI
 		{
 			var index = control.ComboBox.SelectedIndex;
 			Debug.Assert(index >= 0, control.ComboBox.SelectedIndex.ToString());
-			var item = control.ComboBox.Items[index] as ColorData;
+			var item = control.ComboBox.Items[index] as ColorDisplayValue;
 			return item.Value;
 		}
 	}

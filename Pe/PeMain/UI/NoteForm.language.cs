@@ -35,7 +35,7 @@ namespace PeMain.UI
 		{
 			ApplyLanguageMenuItems(this.contextMenu.Items);
 			foreach(var combo in new [] { this.contextMenu_fore, this.contextMenu_back } ) {
-				foreach(var item in (IEnumerable<ColorData>)combo.ComboBox.DataSource) {
+				foreach(var item in (IEnumerable<ColorDisplayValue>)combo.ComboBox.DataSource) {
 					item.SetLanguage(CommonData.Language);
 				}
 			}
