@@ -45,7 +45,7 @@ namespace PeUtility
 			return null;
 		}
 		/// <summary>
-		/// 
+		/// 数値へ変換。
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="source"></param>
@@ -79,7 +79,8 @@ namespace PeUtility
 		}
 
 		/// <summary>
-		/// 丸め
+		/// 丸め。
+		/// 
 		/// valueがmin未満かmaxより多ければminかmaxの適応する方に丸める。
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -100,7 +101,9 @@ namespace PeUtility
 		}
 		
 		/// <summary>
+		/// データの存在。
 		/// 
+		/// Anyでいいなこれ。
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="value"></param>
@@ -116,7 +119,7 @@ namespace PeUtility
 		}
 
 		/// <summary>
-		/// 集合の処理
+		/// 集合の処理。
 		/// </summary>
 		/// <param name="seq"></param>
 		/// <param name="pred"></param>
@@ -128,10 +131,37 @@ namespace PeUtility
 			}
 		}
 		
+		/// <summary>
+		/// スライス。
+		/// </summary>
+		/// <param name="seq"></param>
+		/// <param name="fromIndex"></param>
+		/// <param name="toIndex"></param>
+		/// <returns></returns>
 		public static IEnumerable<T> Slice<T>(this IList<T> seq, int fromIndex, int toIndex)
 		{
 			var takeCount = fromIndex - toIndex - 1;
 			return seq.Skip(fromIndex).Take(takeCount);
+		}
+		
+		/// <summary>
+		/// バージョン文字列をタプルに変換。
+		/// 
+		/// *.*.* までが対象となる。
+		/// </summary>
+		/// <param name="versionText"></param>
+		/// <returns></returns>
+		public static Tuple<ushort, ushort, ushort> ConvertVersionTuple(string versionText)
+		{
+			var v = versionText
+				.Split('.')
+				.Select(n => ushort.Parse(n))
+				.ToArray()
+			;
+			if(v.Length < 3) {
+				throw new ArgumentException(string.Format("src = {0}, split = {1}", versionText, v));
+			}
+			return new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
 		}
 		
 		/// <summary>

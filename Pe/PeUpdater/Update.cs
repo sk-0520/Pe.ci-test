@@ -116,19 +116,9 @@ namespace PeUpdater
 				.Elements()
 				.Select(
 					x => new {
-						PlainVersion = x.Attribute("version").Value
-							.Split('.')
-							.Select(n => ushort.Parse(n))
-							.ToArray(),
-						PlainType = x.Attribute("type").Value,
-						ArchiveElements = x.Elements()
-					}
-				)
-				.Select(
-					x => new {
-						Version  = new Tuple<ushort,ushort,ushort>(x.PlainVersion[0], x.PlainVersion[1], x.PlainVersion[2]),
-						IsRC     = x.PlainType == "rc",
-						ArchiveElements = x.ArchiveElements
+						Version = Functions.ConvertVersionTuple(x.Attribute("version").Value),
+						IsRC    = x.Attribute("type").Value == "rc",
+						ArchiveElements = x.Elements(),
 					}
 				)
 				.OrderBy(

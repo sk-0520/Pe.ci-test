@@ -17,6 +17,9 @@ namespace PeUtility
 	/// </summary>
 	public class CommandLine
 	{
+		/// <summary>
+		/// 渡されたコマンドラインを統括。
+		/// </summary>
 		public List<string> Options { get; private set; }
 		public int Length { get { return Options.Count; } }
 		
@@ -59,6 +62,15 @@ namespace PeUtility
 			}
 			
 			throw new ArgumentException(string.Format("pair = {0}, header = {1}", pair, KeyValueHeader));
+		}
+		
+		private IEnumerable<string> Find(string keyOption)
+		{
+			return Options
+				.Where(s => s.Length >= keyOption.Length)
+				.Where(s => s.StartsWith(keyOption))
+				.Where(s => s == keyOption || s.StartsWith(keyOption + this.KeyValueSeparator))
+			;
 		}
 		
 		private string KeyToValue(string keyOption, int index)
