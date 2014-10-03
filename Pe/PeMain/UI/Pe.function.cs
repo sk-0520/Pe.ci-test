@@ -386,14 +386,21 @@ namespace PeMain.UI
 		
 		void HiddenNote()
 		{
-			foreach(var note in this._noteWindowList.ToArray()) {
+			var list = this._noteWindowList
+				.Where(note => !note.NoteItem.Locked)
+			;
+			foreach(var note in list.ToArray()) {
 				note.ToClose(false);
 			}
 		}
 		
 		void CompactNote()
 		{
-			foreach(var note in this._noteWindowList.Where(note => !note.NoteItem.Compact)) {
+			var list = this._noteWindowList
+				.Where(note => !note.NoteItem.Compact)
+				.Where(note => !note.NoteItem.Locked)
+			;
+			foreach(var note in list) {
 				note.ToCompact();
 			}
 		}
