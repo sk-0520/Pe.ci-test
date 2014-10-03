@@ -74,7 +74,9 @@ namespace PeMain.UI
 			
 			this.groupLauncherType.SetLanguage(Language);
 			this.selectLauncherType_file.Text = LauncherType.File.ToText(Language);
+			this.selectLauncherType_directory.Text = LauncherType.Directory.ToText(Language);
 			this.selectLauncherType_uri.Text = LauncherType.URI.ToText(Language);
+			this.selectLauncherType_pe.Text = LauncherType.Pe.ToText(Language);
 			
 			this.labelLauncherName.SetLanguage(Language);
 			this.labelLauncherCommand.SetLanguage(Language);

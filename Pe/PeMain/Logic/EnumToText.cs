@@ -24,9 +24,10 @@ namespace PeMain.Logic
 		public static string ToText(this LauncherType value, Language language)
 		{
 			var key = "enum/launcher-type/" + new Dictionary<LauncherType, string>() {
-				{ LauncherType.File, "file"},
-				{ LauncherType.URI,  "uri"},
-				{ LauncherType.Pe,   "pe"},
+				{ LauncherType.File,      "file"},
+				{ LauncherType.Directory, "directory"},
+				{ LauncherType.URI,       "uri"},
+				{ LauncherType.Pe,        "pe"},
 			}[value];
 			
 			return language[key];

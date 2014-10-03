@@ -38,8 +38,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupUpdateCheck = new System.Windows.Forms.GroupBox();
@@ -70,7 +70,9 @@ namespace PeMain.UI
 			this.groupLauncherType = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
+			this.selectLauncherType_directory = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
+			this.selectLauncherType_pe = new System.Windows.Forms.RadioButton();
 			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
 			this.commandLauncherDirPath = new System.Windows.Forms.Button();
@@ -239,7 +241,7 @@ namespace PeMain.UI
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(749, 302);
+			this.tabSetting.Size = new System.Drawing.Size(755, 302);
 			this.tabSetting.TabIndex = 0;
 			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
@@ -254,7 +256,7 @@ namespace PeMain.UI
 			this.tabSetting_pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting_pageMain.Name = "tabSetting_pageMain";
 			this.tabSetting_pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tabSetting_pageMain.Size = new System.Drawing.Size(741, 274);
+			this.tabSetting_pageMain.Size = new System.Drawing.Size(747, 274);
 			this.tabSetting_pageMain.TabIndex = 0;
 			this.tabSetting_pageMain.Text = ":setting/tab/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
@@ -472,7 +474,7 @@ namespace PeMain.UI
 			this.tabSetting_pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting_pageLauncher.Name = "tabSetting_pageLauncher";
 			this.tabSetting_pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tabSetting_pageLauncher.Size = new System.Drawing.Size(741, 274);
+			this.tabSetting_pageLauncher.Size = new System.Drawing.Size(747, 274);
 			this.tabSetting_pageLauncher.TabIndex = 1;
 			this.tabSetting_pageLauncher.Text = ":setting/tab/launcher";
 			this.tabSetting_pageLauncher.UseVisualStyleBackColor = true;
@@ -494,8 +496,8 @@ namespace PeMain.UI
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.tabLauncher);
 			this.splitContainer1.Panel2.Enabled = false;
-			this.splitContainer1.Size = new System.Drawing.Size(735, 266);
-			this.splitContainer1.SplitterDistance = 192;
+			this.splitContainer1.Size = new System.Drawing.Size(741, 266);
+			this.splitContainer1.SplitterDistance = 193;
 			this.splitContainer1.TabIndex = 0;
 			// 
 			// selecterLauncher
@@ -509,7 +511,7 @@ namespace PeMain.UI
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
 			this.selecterLauncher.SelectedItem = null;
-			this.selecterLauncher.Size = new System.Drawing.Size(192, 266);
+			this.selecterLauncher.Size = new System.Drawing.Size(193, 266);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
@@ -523,7 +525,7 @@ namespace PeMain.UI
 			this.tabLauncher.Location = new System.Drawing.Point(0, 0);
 			this.tabLauncher.Name = "tabLauncher";
 			this.tabLauncher.SelectedIndex = 0;
-			this.tabLauncher.Size = new System.Drawing.Size(539, 266);
+			this.tabLauncher.Size = new System.Drawing.Size(544, 266);
 			this.tabLauncher.TabIndex = 0;
 			// 
 			// tabLauncher_pageCommon
@@ -532,7 +534,7 @@ namespace PeMain.UI
 			this.tabLauncher_pageCommon.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageCommon.Name = "tabLauncher_pageCommon";
 			this.tabLauncher_pageCommon.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageCommon.Size = new System.Drawing.Size(531, 238);
+			this.tabLauncher_pageCommon.Size = new System.Drawing.Size(536, 238);
 			this.tabLauncher_pageCommon.TabIndex = 0;
 			this.tabLauncher_pageCommon.Text = ":setting/tab/launcher/basic";
 			this.tabLauncher_pageCommon.UseVisualStyleBackColor = true;
@@ -573,7 +575,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(525, 232);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(530, 232);
 			this.tableLayoutPanel4.TabIndex = 11;
 			// 
 			// groupLauncherType
@@ -583,7 +585,7 @@ namespace PeMain.UI
 			this.groupLauncherType.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupLauncherType.Location = new System.Drawing.Point(3, 3);
 			this.groupLauncherType.Name = "groupLauncherType";
-			this.groupLauncherType.Size = new System.Drawing.Size(519, 56);
+			this.groupLauncherType.Size = new System.Drawing.Size(524, 56);
 			this.groupLauncherType.TabIndex = 0;
 			this.groupLauncherType.TabStop = false;
 			this.groupLauncherType.Text = ":setting/group/item-type";
@@ -591,11 +593,14 @@ namespace PeMain.UI
 			// flowLayoutPanel3
 			// 
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_file);
+			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_directory);
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_uri);
+			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_pe);
 			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel3.Enabled = false;
 			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
 			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(513, 34);
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(518, 34);
 			this.flowLayoutPanel3.TabIndex = 2;
 			// 
 			// selectLauncherType_file
@@ -610,22 +615,44 @@ namespace PeMain.UI
 			this.selectLauncherType_file.UseVisualStyleBackColor = true;
 			this.selectLauncherType_file.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
+			// selectLauncherType_directory
+			// 
+			this.selectLauncherType_directory.AutoSize = true;
+			this.selectLauncherType_directory.Location = new System.Drawing.Point(149, 3);
+			this.selectLauncherType_directory.Name = "selectLauncherType_directory";
+			this.selectLauncherType_directory.Size = new System.Drawing.Size(137, 19);
+			this.selectLauncherType_directory.TabIndex = 1;
+			this.selectLauncherType_directory.TabStop = true;
+			this.selectLauncherType_directory.Text = "#LauncherType.Dir";
+			this.selectLauncherType_directory.UseVisualStyleBackColor = true;
+			// 
 			// selectLauncherType_uri
 			// 
 			this.selectLauncherType_uri.AutoSize = true;
-			this.selectLauncherType_uri.Location = new System.Drawing.Point(149, 3);
+			this.selectLauncherType_uri.Location = new System.Drawing.Point(292, 3);
 			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
 			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
-			this.selectLauncherType_uri.TabIndex = 1;
+			this.selectLauncherType_uri.TabIndex = 2;
 			this.selectLauncherType_uri.TabStop = true;
 			this.selectLauncherType_uri.Text = "#LauncherType.URI";
 			this.selectLauncherType_uri.UseVisualStyleBackColor = true;
 			this.selectLauncherType_uri.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
+			// selectLauncherType_pe
+			// 
+			this.selectLauncherType_pe.AutoSize = true;
+			this.selectLauncherType_pe.Location = new System.Drawing.Point(3, 28);
+			this.selectLauncherType_pe.Name = "selectLauncherType_pe";
+			this.selectLauncherType_pe.Size = new System.Drawing.Size(134, 19);
+			this.selectLauncherType_pe.TabIndex = 3;
+			this.selectLauncherType_pe.TabStop = true;
+			this.selectLauncherType_pe.Text = "#LauncherType.Pe";
+			this.selectLauncherType_pe.UseVisualStyleBackColor = true;
+			// 
 			// commandLauncherOptionDirPath
 			// 
 			this.commandLauncherOptionDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(484, 125);
+			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(489, 125);
 			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
 			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherOptionDirPath.TabIndex = 7;
@@ -638,14 +665,14 @@ namespace PeMain.UI
 			this.inputLauncherOption.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherOption.Location = new System.Drawing.Point(165, 125);
 			this.inputLauncherOption.Name = "inputLauncherOption";
-			this.inputLauncherOption.Size = new System.Drawing.Size(269, 23);
+			this.inputLauncherOption.Size = new System.Drawing.Size(274, 23);
 			this.inputLauncherOption.TabIndex = 5;
 			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// commandLauncherDirPath
 			// 
 			this.commandLauncherDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherDirPath.Location = new System.Drawing.Point(484, 94);
+			this.commandLauncherDirPath.Location = new System.Drawing.Point(489, 94);
 			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
 			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherDirPath.TabIndex = 4;
@@ -656,7 +683,7 @@ namespace PeMain.UI
 			// commandLauncherFilePath
 			// 
 			this.commandLauncherFilePath.Image = global::PeMain.Properties.Images.File;
-			this.commandLauncherFilePath.Location = new System.Drawing.Point(440, 94);
+			this.commandLauncherFilePath.Location = new System.Drawing.Point(445, 94);
 			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
 			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherFilePath.TabIndex = 3;
@@ -670,14 +697,14 @@ namespace PeMain.UI
 			this.inputLauncherName.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherName.Location = new System.Drawing.Point(165, 65);
 			this.inputLauncherName.Name = "inputLauncherName";
-			this.inputLauncherName.Size = new System.Drawing.Size(357, 23);
+			this.inputLauncherName.Size = new System.Drawing.Size(362, 23);
 			this.inputLauncherName.TabIndex = 1;
 			this.inputLauncherName.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// commandLauncherOptionFilePath
 			// 
 			this.commandLauncherOptionFilePath.Image = global::PeMain.Properties.Images.File;
-			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(440, 125);
+			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(445, 125);
 			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
 			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherOptionFilePath.TabIndex = 6;
@@ -708,7 +735,7 @@ namespace PeMain.UI
 			// commandLauncherWorkDirPath
 			// 
 			this.commandLauncherWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
-			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(440, 156);
+			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(445, 156);
 			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
 			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherWorkDirPath.TabIndex = 9;
@@ -729,7 +756,7 @@ namespace PeMain.UI
 			// commandLauncherIconPath
 			// 
 			this.commandLauncherIconPath.Image = global::PeMain.Properties.Images.File;
-			this.commandLauncherIconPath.Location = new System.Drawing.Point(440, 187);
+			this.commandLauncherIconPath.Location = new System.Drawing.Point(445, 187);
 			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
 			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherIconPath.TabIndex = 11;
@@ -752,7 +779,7 @@ namespace PeMain.UI
 			this.inputLauncherIconPath.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherIconPath.Location = new System.Drawing.Point(165, 187);
 			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
-			this.inputLauncherIconPath.Size = new System.Drawing.Size(269, 23);
+			this.inputLauncherIconPath.Size = new System.Drawing.Size(274, 23);
 			this.inputLauncherIconPath.TabIndex = 10;
 			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -761,7 +788,7 @@ namespace PeMain.UI
 			this.inputLauncherWorkDirPath.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherWorkDirPath.Location = new System.Drawing.Point(165, 156);
 			this.inputLauncherWorkDirPath.Name = "inputLauncherWorkDirPath";
-			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(269, 23);
+			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(274, 23);
 			this.inputLauncherWorkDirPath.TabIndex = 8;
 			this.inputLauncherWorkDirPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -780,7 +807,7 @@ namespace PeMain.UI
 			this.inputLauncherCommand.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherCommand.Location = new System.Drawing.Point(165, 94);
 			this.inputLauncherCommand.Name = "inputLauncherCommand";
-			this.inputLauncherCommand.Size = new System.Drawing.Size(269, 23);
+			this.inputLauncherCommand.Size = new System.Drawing.Size(274, 23);
 			this.inputLauncherCommand.TabIndex = 2;
 			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -791,7 +818,7 @@ namespace PeMain.UI
 			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(531, 242);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 242);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/tab/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -811,8 +838,8 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(519, 104);
-			this.panelEnv.SplitterDistance = 339;
+			this.panelEnv.Size = new System.Drawing.Size(524, 98);
+			this.panelEnv.SplitterDistance = 341;
 			this.panelEnv.TabIndex = 18;
 			// 
 			// envLauncherUpdate
@@ -820,7 +847,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(339, 104);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 98);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -829,7 +856,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(176, 104);
+			this.envLauncherRemove.Size = new System.Drawing.Size(179, 98);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -854,7 +881,7 @@ namespace PeMain.UI
 			this.tabLauncher_pageOthers.Controls.Add(this.labelLauncherNote);
 			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(531, 242);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 242);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/tab/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -896,7 +923,7 @@ namespace PeMain.UI
 									| System.Windows.Forms.AnchorStyles.Right)));
 			this.inputLauncherTag.Location = new System.Drawing.Point(84, 62);
 			this.inputLauncherTag.Name = "inputLauncherTag";
-			this.inputLauncherTag.Size = new System.Drawing.Size(433, 23);
+			this.inputLauncherTag.Size = new System.Drawing.Size(438, 23);
 			this.inputLauncherTag.TabIndex = 2;
 			this.inputLauncherTag.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -908,7 +935,7 @@ namespace PeMain.UI
 			this.inputLauncherNote.Location = new System.Drawing.Point(84, 91);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(433, 98);
+			this.inputLauncherNote.Size = new System.Drawing.Size(438, 98);
 			this.inputLauncherNote.TabIndex = 4;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -926,7 +953,7 @@ namespace PeMain.UI
 			this.tabSetting_pageToolbar.Controls.Add(this.splitContainer3);
 			this.tabSetting_pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageToolbar.Name = "tabSetting_pageToolbar";
-			this.tabSetting_pageToolbar.Size = new System.Drawing.Size(741, 274);
+			this.tabSetting_pageToolbar.Size = new System.Drawing.Size(747, 274);
 			this.tabSetting_pageToolbar.TabIndex = 3;
 			this.tabSetting_pageToolbar.Text = ":setting/tab/toolbar";
 			this.tabSetting_pageToolbar.UseVisualStyleBackColor = true;
@@ -945,8 +972,8 @@ namespace PeMain.UI
 			// splitContainer3.Panel2
 			// 
 			this.splitContainer3.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer3.Size = new System.Drawing.Size(741, 274);
-			this.splitContainer3.SplitterDistance = 247;
+			this.splitContainer3.Size = new System.Drawing.Size(747, 274);
+			this.splitContainer3.SplitterDistance = 249;
 			this.splitContainer3.TabIndex = 19;
 			// 
 			// groupToolbar
@@ -956,7 +983,7 @@ namespace PeMain.UI
 			this.groupToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupToolbar.Location = new System.Drawing.Point(0, 0);
 			this.groupToolbar.Name = "groupToolbar";
-			this.groupToolbar.Size = new System.Drawing.Size(247, 274);
+			this.groupToolbar.Size = new System.Drawing.Size(249, 274);
 			this.groupToolbar.TabIndex = 0;
 			this.groupToolbar.TabStop = false;
 			this.groupToolbar.Text = "☃";
@@ -1151,8 +1178,8 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(490, 274);
-			this.splitContainer2.SplitterDistance = 291;
+			this.splitContainer2.Size = new System.Drawing.Size(494, 274);
+			this.splitContainer2.SplitterDistance = 293;
 			this.splitContainer2.TabIndex = 15;
 			// 
 			// toolStripContainer1
@@ -1162,13 +1189,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(291, 249);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(293, 249);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(291, 274);
+			this.toolStripContainer1.Size = new System.Drawing.Size(293, 274);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -1184,7 +1211,7 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(291, 249);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(293, 249);
 			this.treeToolbarItemGroup.TabIndex = 0;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
@@ -1204,7 +1231,7 @@ namespace PeMain.UI
 									this.toolToolbarGroup_remove});
 			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
-			this.toolToolbarGroup.Size = new System.Drawing.Size(291, 25);
+			this.toolToolbarGroup.Size = new System.Drawing.Size(293, 25);
 			this.toolToolbarGroup.Stretch = true;
 			this.toolToolbarGroup.TabIndex = 0;
 			this.toolToolbarGroup.Text = "toolStrip1";
@@ -1280,7 +1307,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(195, 274);
+			this.selecterToolbar.Size = new System.Drawing.Size(197, 274);
 			this.selecterToolbar.TabIndex = 0;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -1298,7 +1325,7 @@ namespace PeMain.UI
 			this.tabSetting_pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageCommand.Name = "tabSetting_pageCommand";
 			this.tabSetting_pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSetting_pageCommand.Size = new System.Drawing.Size(741, 274);
+			this.tabSetting_pageCommand.Size = new System.Drawing.Size(747, 274);
 			this.tabSetting_pageCommand.TabIndex = 2;
 			this.tabSetting_pageCommand.Text = ":setting/tab/command";
 			this.tabSetting_pageCommand.UseVisualStyleBackColor = true;
@@ -1391,7 +1418,7 @@ namespace PeMain.UI
 			this.tabSetting_pageNote.Controls.Add(this.splitContainer4);
 			this.tabSetting_pageNote.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageNote.Name = "tabSetting_pageNote";
-			this.tabSetting_pageNote.Size = new System.Drawing.Size(741, 274);
+			this.tabSetting_pageNote.Size = new System.Drawing.Size(747, 274);
 			this.tabSetting_pageNote.TabIndex = 6;
 			this.tabSetting_pageNote.Text = ":setting/tab/note";
 			this.tabSetting_pageNote.UseVisualStyleBackColor = true;
@@ -1410,8 +1437,8 @@ namespace PeMain.UI
 			// splitContainer4.Panel2
 			// 
 			this.splitContainer4.Panel2.Controls.Add(this.groupNoteItem);
-			this.splitContainer4.Size = new System.Drawing.Size(741, 274);
-			this.splitContainer4.SplitterDistance = 250;
+			this.splitContainer4.Size = new System.Drawing.Size(747, 274);
+			this.splitContainer4.SplitterDistance = 251;
 			this.splitContainer4.TabIndex = 13;
 			this.splitContainer4.TabStop = false;
 			// 
@@ -1557,7 +1584,7 @@ namespace PeMain.UI
 			this.groupNoteItem.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupNoteItem.Location = new System.Drawing.Point(0, 0);
 			this.groupNoteItem.Name = "groupNoteItem";
-			this.groupNoteItem.Size = new System.Drawing.Size(487, 274);
+			this.groupNoteItem.Size = new System.Drawing.Size(492, 274);
 			this.groupNoteItem.TabIndex = 12;
 			this.groupNoteItem.TabStop = false;
 			this.groupNoteItem.Text = ":setting/group/item";
@@ -1580,7 +1607,7 @@ namespace PeMain.UI
 			this.gridNoteItems.MultiSelect = false;
 			this.gridNoteItems.Name = "gridNoteItems";
 			this.gridNoteItems.RowTemplate.Height = 21;
-			this.gridNoteItems.Size = new System.Drawing.Size(481, 252);
+			this.gridNoteItems.Size = new System.Drawing.Size(486, 252);
 			this.gridNoteItems.TabIndex = 0;
 			this.gridNoteItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridNoteItems_CellContentClick);
 			this.gridNoteItems.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridNoteItems_CellFormatting);
@@ -1595,8 +1622,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1626,9 +1653,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1660,7 +1687,7 @@ namespace PeMain.UI
 			// 
 			this.tabSetting_pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageDisplay.Name = "tabSetting_pageDisplay";
-			this.tabSetting_pageDisplay.Size = new System.Drawing.Size(741, 274);
+			this.tabSetting_pageDisplay.Size = new System.Drawing.Size(747, 274);
 			this.tabSetting_pageDisplay.TabIndex = 5;
 			this.tabSetting_pageDisplay.Text = ":setting/tab/display";
 			this.tabSetting_pageDisplay.UseVisualStyleBackColor = true;
@@ -1700,7 +1727,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 9F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(755, 362);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(761, 362);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
 			// flowLayoutPanel1
@@ -1709,7 +1736,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.Controls.Add(this.commandSubmit);
 			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(566, 313);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(572, 313);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(186, 37);
 			this.flowLayoutPanel1.TabIndex = 3;
@@ -1724,7 +1751,7 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(755, 362);
+			this.ClientSize = new System.Drawing.Size(761, 362);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::PeMain.Properties.Images.Pe;
@@ -1807,6 +1834,8 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.RadioButton selectLauncherType_pe;
+		private System.Windows.Forms.RadioButton selectLauncherType_directory;
 		private System.Windows.Forms.CheckBox selectLogFullDetail;
 		private System.Windows.Forms.CheckBox selectUpdateCheckRC;
 		private System.Windows.Forms.CheckBox selectUpdateCheck;

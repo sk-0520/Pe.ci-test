@@ -35,7 +35,9 @@ namespace PeMain.UI
 		void LauncherSetSelectedType(LauncherType type)
 		{
 			this.selectLauncherType_file.Checked = type == LauncherType.File;
+			this.selectLauncherType_directory.Checked  = type == LauncherType.Directory;
 			this.selectLauncherType_uri.Checked  = type == LauncherType.URI;
+			this.selectLauncherType_pe.Checked  = type == LauncherType.Pe;
 		}
 		
 		void LauncherInputClear()

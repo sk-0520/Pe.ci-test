@@ -239,10 +239,11 @@
 		<Word Name="enum/toolbar-position/window/right"   Text="ウィンドウ: 右" />
 		<Word Name="enum/toolbar-position/window/bottom"  Text="ウィンドウ: 下" />
 		
-		<Word Name="enum/launcher-type"      Text="アイテムの種類" />
-		<Word Name="enum/launcher-type/file" Text="ファイル" />
-		<Word Name="enum/launcher-type/uri"  Text="URI" />
-		<Word Name="enum/launcher-type/pe"   Text="組み込み" />
+		<Word Name="enum/launcher-type"           Text="アイテムの種類" />
+		<Word Name="enum/launcher-type/file"      Text="ファイル" />
+		<Word Name="enum/launcher-type/directory" Text="ディレクトリ" />
+		<Word Name="enum/launcher-type/uri"       Text="URI" />
+		<Word Name="enum/launcher-type/pe"        Text="組み込み" />
 		
 		<Word Name="enum/icon-size"        Text="アイコンサイズ" />
 		<Word Name="enum/icon-size/small"  Text="小" />
