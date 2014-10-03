@@ -123,6 +123,7 @@ namespace PeMain.UI
 			return listItem;
 		}
 		
+		/*
 		IEnumerable<string> ObjectToStringList(object obj)
 		{
 			var result = new List<string>();
@@ -162,6 +163,7 @@ namespace PeMain.UI
 			}
 			return result;
 		}
+		*/
 		
 		void SetDetail(LogItem logItem)
 		{
@@ -169,7 +171,7 @@ namespace PeMain.UI
 			
 			// 
 			//this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
-			if(logItem.Detail is Exception) {
+			if(logItem.Detail is Exception || logItem.Detail is string) {
 				this.viewDetail.Text = logItem.Detail.ToString();
 			} else {
 				this.viewDetail.Text = logItem.Detail.DumpToString(logItem.Title);

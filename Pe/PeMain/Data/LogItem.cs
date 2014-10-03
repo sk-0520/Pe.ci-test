@@ -81,7 +81,7 @@ namespace PeMain.Data
 				"{2}" +
 				"{3}" + Environment.NewLine,
 				DateTime, Title,
-				Detail is Exception ? Detail: Detail.DumpToString(Title),
+				(Detail is Exception || Detail is string) ? Detail: Detail.DumpToString(Title),
 				StackTrace
 			);
 		}
