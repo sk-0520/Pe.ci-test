@@ -31,7 +31,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class Pe
 	{
-		#if DEBUG
+		[Conditional("DEBUG")]
 		public void DebugProcess()
 		{
 			/*
@@ -96,7 +96,6 @@ namespace PeMain.UI
 			}
 			//*/
 		}
-		#endif
 		
 		IEnumerable<Form> GetWindows()
 		{

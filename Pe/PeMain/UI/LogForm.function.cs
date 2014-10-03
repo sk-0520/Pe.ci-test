@@ -183,10 +183,10 @@ namespace PeMain.UI
 		void ChangeDetail(bool fullDetail)
 		{
 			if(fullDetail) {
-				statusLog_itemDetail.Image = PeMain.Properties.Images.SideContract;
+				statusLog_itemDetail.Image = PeMain.Properties.Images.SideExpand;
 				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-full"];
 			} else {
-				statusLog_itemDetail.Image = PeMain.Properties.Images.SideExpand;
+				statusLog_itemDetail.Image = PeMain.Properties.Images.SideContract;
 				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-split"];
 			}
 			

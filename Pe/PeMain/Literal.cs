@@ -34,7 +34,8 @@ namespace PeMain
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
-		public static readonly Tuple<ushort, ushort, ushort> AcceptVersion = new Tuple<ushort, ushort, ushort>(0, 19, 0);
+		//public static readonly Tuple<ushort, ushort, ushort> AcceptVersion = new Tuple<ushort, ushort, ushort>(0, 19, 0);
+		public static readonly Tuple<ushort, ushort, ushort> AcceptVersion = Functions.ConvertVersionTuple("0.19.0");
 
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
