@@ -8,9 +8,11 @@
  */
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using PeMain.Logic;
 using PeUtility;
 
@@ -35,12 +37,12 @@ namespace PeMain.UI
 		
 		public void Dispose()
 		{
-			if(this._messageWindow != null) {
-				this._messageWindow.Dispose();
-			}
-			if(this._notifyIcon != null) {
-				this._notifyIcon.Dispose();
-			}
+			this._commonData.ToDispose();
+			this._messageWindow.ToDispose();
+			this._logForm.ToDispose();
+			this._noteWindowList.ForEach(w => w.ToDispose());
+			this._toolbarForms.Values.ToList().ForEach(w => w.ToDispose());
+			this._notifyIcon.ToDispose();
 		}
 		
 		private void IconDoubleClick(object sender, EventArgs e)

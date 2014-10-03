@@ -236,17 +236,14 @@ namespace PeMain.UI
 				var serializer = new XmlSerializer(typeof(T));
 				serializer.Serialize(stream, saveData);
 			}
-			
 		}
 		
 		public void CloseApplication(bool save)
 		{
 			if(save) {
 				SaveSetting();
-				if(this._commonData.Database != null) {
-					this._commonData.Database.Close();
-				}
 			}
+			
 			Application.Exit();
 		}
 		
@@ -388,7 +385,7 @@ namespace PeMain.UI
 		{
 			var list = this._noteWindowList
 				.Where(note => !note.NoteItem.Locked)
-			;
+				;
 			foreach(var note in list.ToArray()) {
 				note.ToClose(false);
 			}
@@ -399,7 +396,7 @@ namespace PeMain.UI
 			var list = this._noteWindowList
 				.Where(note => !note.NoteItem.Compact)
 				.Where(note => !note.NoteItem.Locked)
-			;
+				;
 			foreach(var note in list) {
 				note.ToCompact();
 			}

@@ -55,13 +55,14 @@ namespace PeMain
 									Application.Run();
 								}
 							}
+							fileLogger.Puts(PeMain.Data.LogType.Information, "Close", Process.GetCurrentProcess());
 						} else {
 							fileLogger.Puts(PeMain.Data.LogType.Error, "dual boot", mutexName);
 						}
 					}
 				} catch(Exception ex) {
 					if(fileLogger != null) {
-						fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);;
+						fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);
 					}
 					throw;
 				}

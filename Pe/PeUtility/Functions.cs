@@ -184,5 +184,12 @@ namespace PeUtility
 			//Debug.WriteLine("{0}:{1}",sa, sb);
 			return na - nb;
 		}
+		
+		public static void ToDispose(this IDisposable target)
+		{
+			if(target != null) {
+				target.Dispose();
+			}
+		}
 	}
 }

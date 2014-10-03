@@ -242,7 +242,7 @@ namespace PeUtility
 	/// 
 	/// *これ、つっかいにくいなぁ...*
 	/// </summary>
-	public abstract class DBManager
+	public abstract class DBManager: IDisposable
 	{
 		/// <summary>
 		/// 生成。
@@ -758,9 +758,8 @@ namespace PeUtility
 		/// <summary>
 		/// とじるん。
 		/// </summary>
-		public void Close()
+		public virtual void Dispose()
 		{
-			Connection.Close();
 			Connection.Dispose();
 		}
 		

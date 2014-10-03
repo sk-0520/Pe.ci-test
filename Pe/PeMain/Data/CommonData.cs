@@ -15,7 +15,7 @@ namespace PeMain.Data
 	/// <summary>
 	/// 持ち運び用共通データ。
 	/// </summary>
-	public sealed class CommonData
+	public sealed class CommonData: IDisposable
 	{
 		/// <summary>
 		/// 主設定。
@@ -43,5 +43,12 @@ namespace PeMain.Data
 		/// 入れるべきじゃない気がする。
 		/// </summary>
 		public PeDBManager Database { get; set; }
+		
+		public void Dispose()
+		{
+			if(Database != null) {
+				Database.Dispose();
+			}
+		}
 	}
 }
