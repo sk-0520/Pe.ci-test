@@ -26,7 +26,7 @@ namespace PeUtility
 			var targetPos = target.Parent.PointToScreen(target.Location);
 
 			var pointingPos = new Point(targetPos.X + targetSize.Width / 2, targetPos.Y + targetSize.Height / 2);
-			Debug.WriteLine(pointingPos);
+			//Debug.WriteLine(pointingPos);
 			Cursor.Position = pointingPos;
 		}
 		
