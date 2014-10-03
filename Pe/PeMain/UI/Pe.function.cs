@@ -306,6 +306,7 @@ namespace PeMain.UI
 					messageName = hiddenMessageName;
 				}
 				icon = ToolTipIcon.Info;
+				ResetLauncherFileList();
 			} else {
 				messageName = errorMessageName;
 				icon = ToolTipIcon.Error;
@@ -315,8 +316,8 @@ namespace PeMain.UI
 			if(icon == ToolTipIcon.Error) {
 				this._commonData.Logger.Puts(LogType.Error, title, message);
 			}
-			ShowBalloon(icon, title, message);
 			
+			ShowBalloon(icon, title, message);
 		}
 		
 		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
@@ -474,5 +475,11 @@ namespace PeMain.UI
 				}
 			);
 		}
+		
+		void ResetLauncherFileList()
+		{
+			// なんかこれそもそもが変な気がするんです
+		}
+		
 	}
 }

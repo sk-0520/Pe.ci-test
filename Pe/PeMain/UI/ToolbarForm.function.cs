@@ -381,9 +381,12 @@ namespace PeMain.UI
 		
 		void LoadFileList(ToolStripMenuItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
 		{
+			
 			if(parentItem.HasDropDownItems) {
 				return;
 			}
+			
+			Cursor = Cursors.WaitCursor;
 			
 			try {
 				var dirList = Directory.GetDirectories(parentDirPath);
@@ -429,6 +432,7 @@ namespace PeMain.UI
 			}
 			
 			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
+			parentItem.ShowDropDown();
 		}
 		
 		void AttachmentFileLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
@@ -664,6 +668,8 @@ namespace PeMain.UI
 				toolItem.Image = icon.ToBitmap();
 			}
 			
+			AttachmentFileLauncherMenu(toolItem, item);
+			
 			return toolItem;
 		}
 		
@@ -680,10 +686,6 @@ namespace PeMain.UI
 			toolItem = CreateFileItemLauncherButton(item);
 			
 			toolItem.Tag = item;
-			
-			if(item.LauncherType == LauncherType.File) {
-				AttachmentFileLauncherMenu((ToolStripDropDownItem)toolItem, item);
-			}
 			
 			return toolItem;
 		}
