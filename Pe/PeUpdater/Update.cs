@@ -121,13 +121,9 @@ namespace PeUpdater
 						ArchiveElements = x.Elements(),
 					}
 				)
-				.OrderBy(
-					x => new {
-						x.Version.Item1,
-						x.Version.Item2,
-						x.Version.Item3
-					}
-				)
+				.OrderByDescending(x => x.Version.Item1)
+				.ThenByDescending(x => x.Version.Item2)
+				.ThenByDescending(x => x.Version.Item3)
 				.Where(x => Functions.VersionCheck(x.Version, this._version.Data) > 0)
 			;
 			
