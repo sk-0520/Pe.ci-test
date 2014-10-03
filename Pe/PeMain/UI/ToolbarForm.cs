@@ -40,7 +40,7 @@ namespace PeMain.UI
 			SelectedGroup(group);
 		}
 		
-		void button_ButtonClick(object sender, EventArgs e)
+		void LauncherTypeFile_ButtonClick(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
 			var launcherItem = (LauncherItem)toolItem.Tag;

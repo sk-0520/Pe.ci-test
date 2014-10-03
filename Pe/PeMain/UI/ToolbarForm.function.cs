@@ -569,7 +569,12 @@ namespace PeMain.UI
 			};
 			
 			// メニュー設定
-			parentItem.DropDownItems.AddRange(itemList.ToArray());
+			var items = itemList.ToArray();
+			// #3
+			foreach(var item in items) {
+				item.ImageScaling = ToolStripItemImageScaling.None;
+			}
+			parentItem.DropDownItems.AddRange(items);
 			
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				// ウィンドウ位置
@@ -651,7 +656,7 @@ namespace PeMain.UI
 		ToolStripSplitButton CreateFileItemLauncherButton(LauncherItem item)
 		{
 			var toolItem = new ToolStripSplitButton();
-			toolItem.ButtonClick += button_ButtonClick;
+			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 			toolItem.Text = item.Name;
 			toolItem.ToolTipText = item.Name;
 			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
