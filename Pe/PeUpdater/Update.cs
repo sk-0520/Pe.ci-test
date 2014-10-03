@@ -135,6 +135,7 @@ namespace PeUpdater
 					if(archive.Attribute("platform").Value == this._platform.Data) {
 						IsRCVersion = item.IsRC;
 						IsVersionUp = true;
+						VersionText = string.Format("{0}.{1}.{2}", item.Version.Item1, item.Version.Item2, item.Version.Item3);
 						DownloadFileUrl = archive.Attribute("uri").Value;
 						break;
 					}

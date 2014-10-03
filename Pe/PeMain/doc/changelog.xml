@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <changelog>
 	<!--
-	<log date="" version="" type="rc">
+	<log date="YYYY/MM/DD" version="0.xx.0" type="rc">
 		<ul type="note">
 			<li></li>
 			<li></li>
@@ -24,6 +24,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/10/DD" version="0.20.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li>アップデート確認ダイアログに最新バージョンが表示されない不具合</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/10/03" version="0.20.0">
 		<ul type="note">
 			<li>#49未対応版が本バージョンを正常に落とせるように一時的にRC版をアップデート確認リソースから外す。そのためバージョン0.22.0までRC版は配布しない</li>
