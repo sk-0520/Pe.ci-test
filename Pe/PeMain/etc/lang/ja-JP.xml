@@ -58,7 +58,7 @@
 		<Word Name="main/menu/window/logger"                Text="ログ(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[PE] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[PE] 情報(&amp;A) ${open-ui}" />
-		<Word Name="main/menu/system-env"                   Text="環境設定(&amp;E)" />
+		<Word Name="main/menu/system-env"                   Text="システム環境(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
 		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
 		
@@ -172,7 +172,7 @@
 		<Word Name="setting/label/hiddenfile"      Text="隠しファイル" />
 		<Word Name="setting/label/extension"       Text="拡張子" />
 		<Word Name="setting/group/log"             Text="ログ設定" />
-		<Word Name="setting/group/system-env"      Text="環境設定" />
+		<Word Name="setting/group/system-env"      Text="システム環境" />
 		<Word Name="setting/check/add-show"        Text="追加されるたびに表示する" />
 		<Word Name="setting/check/full-detail"    Text="詳細部分を最大化表示する" />
 		<Word Name="setting/group/item-type"       Text="アイテムの種類" />

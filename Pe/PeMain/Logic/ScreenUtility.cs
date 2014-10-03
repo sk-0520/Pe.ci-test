@@ -48,7 +48,7 @@ namespace PeMain.Logic
 						var item = new Win32_DesktopMonitor();
 						item.Import(mng);
 						if(!string.IsNullOrWhiteSpace(item.Name)) {
-							return string.Format("{0}({1})", item.Name, id);
+							return string.Format("{0}. {1}", id, item.Name);
 						}
 					} catch(Exception ex) {
 						if(logger != null) {
