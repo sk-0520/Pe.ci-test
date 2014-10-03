@@ -135,7 +135,7 @@ namespace PeMain
 			{
 				return Path.Combine(PeRootDirPath, "doc");
 			}
-		}		
+		}
 		/// <summary>
 		/// ユーザー設定ルートディレクトリ
 		/// </summary>
@@ -189,7 +189,7 @@ namespace PeMain
 			get { return _logRootDirPath; }
 		}
 		
-		public static string AboutWebPage 
+		public static string AboutWebPage
 		{
 			get { return ConfigurationManager.AppSettings["web-page"]; }
 		}
@@ -203,15 +203,15 @@ namespace PeMain
 		}
 		public static string UpdateURL
 		{
-			get { return ConfigurationManager.AppSettings["update-page"]; }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["update-page"]); }
 		}
 		public static string ChangeLogURL
 		{
-			get { return ConfigurationManager.AppSettings["changelog-release-page"]; }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["changelog-release-page"]); }
 		}
 		public static string ChangeLogRcURL
 		{
-			get { return ConfigurationManager.AppSettings["changelog-rc-page"]; }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["changelog-rc-page"]); }
 		}
 		
 		public static FileVersionInfo Version
@@ -242,6 +242,33 @@ namespace PeMain
 			#if DEBUG
 			_initialized = true;
 			#endif
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		private static string ReplaceLiteralText(string src)
+		{
+			var macroText = src
+				.ReplaceRange("[", "]", s => s)
+				.ReplaceRange(
+					"{", "}",
+					s => {
+						switch(s) {
+							case "TIMESTAMP":
+								{
+									return NowTimestampFileName;
+								}
+						}
+						
+						return s;
+					}
+				)
+			;
+			
+			return macroText;
 		}
 	}
 	
