@@ -355,6 +355,7 @@ namespace PeMain.UI
 			using(var icon = IconUtility.Load(path, UseToolbarItem.IconScale, 0)) {
 				//using(var icon = IconUtility.Load(path, IconScale.Small, 0)) {
 				menuItem.Image = icon.ToBitmap();
+				menuItem.ImageScaling = ToolStripItemImageScaling.None;
 			}
 			
 			// アクセス権から使用可・不可
@@ -385,8 +386,6 @@ namespace PeMain.UI
 			if(parentItem.HasDropDownItems) {
 				return;
 			}
-			
-			Cursor = Cursors.WaitCursor;
 			
 			try {
 				var dirList = Directory.GetDirectories(parentDirPath);
@@ -419,6 +418,9 @@ namespace PeMain.UI
 					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
 					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
+			
+					menuItem.ImageScaling = ToolStripItemImageScaling.SizeToFit;
+					
 					menuList.Add(menuItem);
 				}
 				
