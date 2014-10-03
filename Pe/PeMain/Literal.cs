@@ -245,13 +245,17 @@ namespace PeMain
 		}
 		
 		/// <summary>
+		/// 文字列リテラルを書式で変換。
 		/// 
+		/// [...] -> []を外す。
+		/// {...} -> 動的な置き換え。
+		/// * TIMESTAMP: そんとき
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
 		private static string ReplaceLiteralText(string src)
 		{
-			var macroText = src
+			var replacedText = src
 				.ReplaceRange("[", "]", s => s)
 				.ReplaceRange(
 					"{", "}",
@@ -268,7 +272,7 @@ namespace PeMain
 				)
 			;
 			
-			return macroText;
+			return replacedText;
 		}
 	}
 	
