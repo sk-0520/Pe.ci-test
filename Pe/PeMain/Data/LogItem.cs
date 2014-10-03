@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Xml.Serialization;
+using ObjectDumper;
 
 namespace PeMain.Data
 {
@@ -80,8 +81,7 @@ namespace PeMain.Data
 				"{2}" +
 				"{3}" + Environment.NewLine,
 				DateTime, Title,
-				//logItem.Detail.DumpToString(logItem.Title),
-				Detail,
+				Detail is Exception ? Detail: Detail.DumpToString(Title),
 				StackTrace
 			);
 		}

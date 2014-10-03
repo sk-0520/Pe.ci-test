@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using ObjectDumper;
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -167,8 +168,12 @@ namespace PeMain.UI
 			Debug.Assert(logItem != null);
 			
 			// 
-			this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
-			//this.viewDetail.Text = logItem.Detail.DumpToString(logItem.Title);
+			//this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
+			if(logItem.Detail is Exception) {
+				this.viewDetail.Text = logItem.Detail.ToString();
+			} else {
+				this.viewDetail.Text = logItem.Detail.DumpToString(logItem.Title);
+			}
 			
 			//
 			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);
