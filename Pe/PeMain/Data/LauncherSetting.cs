@@ -106,7 +106,7 @@ namespace PeMain.Data
 			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
-			
+		
 		/// <summary>
 		/// 現在のアイテムが保持するアイコン一覧。
 		/// </summary>
@@ -363,39 +363,53 @@ namespace PeMain.Data
 			item.Command = filePath;
 			item.IconPath = filePath;
 			item.IconIndex = 0;
-			item.LauncherType = LauncherType.File;
 			
-			var dotExt = Path.GetExtension(filePath);
-			switch(dotExt.ToLower()) {
-				case ".lnk":
-					var shortcut = new ShortcutFile(filePath);
-					item.Command = shortcut.TargetPath;
-					item.Option = shortcut.Arguments;
-					item.WorkDirPath = shortcut.WorkingDirectory;
+			if(Directory.Directory.Exists(path)) {
+				// ディレクトリ
+				item.LauncherType = LauncherType.Directory;
+			} else {
+				// ファイルとかもろもろ
+				item.LauncherType = LauncherType.File;
+				
+				var dotExt = Path.GetExtension(filePath);
+				switch(dotExt.ToLower()) {
+					case ".lnk":
+						{
+							var shortcut = new ShortcutFile(filePath);
+							item.Command = shortcut.TargetPath;
+							item.Option = shortcut.Arguments;
+							item.WorkDirPath = shortcut.WorkingDirectory;
 
-					item.IconPath = shortcut.IconPath;
-					item.IconIndex = shortcut.IconIndex;
-					item.Note = shortcut.Description;
-					break;
-					
-				case ".url":
-					item.LauncherType = LauncherType.URI;
-					break;
-					
-				case ".exe":
-					var verInfo = FileVersionInfo.GetVersionInfo(item.Command);
-					if(!string.IsNullOrEmpty(verInfo.ProductName)) {
-						item.Name = verInfo.ProductName;
-					}
-					item.Note = verInfo.Comments;
-					if(!string.IsNullOrEmpty(verInfo.CompanyName)) {
-						item.Tag.Add(verInfo.CompanyName);
-					}
-					break;
-					
-				default:
-					break;
+							item.IconPath = shortcut.IconPath;
+							item.IconIndex = shortcut.IconIndex;
+							item.Note = shortcut.Description;
+						}
+						break;
+						
+						/*
+					case ".url":
+						item.LauncherType = LauncherType.URI;
+						break;
+						 */
+						
+					case ".exe":
+						{
+							var verInfo = FileVersionInfo.GetVersionInfo(item.Command);
+							if(!string.IsNullOrEmpty(verInfo.ProductName)) {
+								item.Name = verInfo.ProductName;
+							}
+							item.Note = verInfo.Comments;
+							if(!string.IsNullOrEmpty(verInfo.CompanyName)) {
+								item.Tag.Add(verInfo.CompanyName);
+							}
+						}
+						break;
+						
+					default:
+						break;
+				}
 			}
+			
 			
 			Debug.Assert(item.Name.Length > 0);
 			
@@ -431,7 +445,7 @@ namespace PeMain.Data
 				&& Tag.SequenceEqual(target.Tag)
 				&& EnvironmentSetting.Remove.SequenceEqual(target.EnvironmentSetting.Remove)
 				&& EnvironmentSetting.Update.SequenceEqual(target.EnvironmentSetting.Update)
-			;
+				;
 		}
 		
 		/// <summary>
