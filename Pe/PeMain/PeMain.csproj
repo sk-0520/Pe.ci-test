@@ -503,8 +503,11 @@
     <None Include="bat\log.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="doc\changelog.xml">
+    <None Include="doc\changelog.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="doc\changelog.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Include="doc\license\Pe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

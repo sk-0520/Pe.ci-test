@@ -41,7 +41,7 @@
 			<li></li>
 		</ul>
 		<ul type="developer">
-			<li></li>
+			<li>changelog.xmlを原本とし、出力データであるchangelog.htmlをアーカイブに含めるように変更</li>
 			<li></li>
 			<li></li>
 		</ul>
