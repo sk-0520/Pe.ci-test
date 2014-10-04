@@ -55,6 +55,10 @@ namespace PeUpdater
 	/// 	<term>wait</term>
 	/// 	<description>キー待ち。</description>
 	/// </item>
+	/// <item>
+	/// 	<term>no-wait-update</term>
+	/// 	<description>アップデート成功後にキー待ちでも待たない。</description>
+	/// </item>
 	/// </list>
 	class PeUpdater
 	{
@@ -87,7 +91,7 @@ namespace PeUpdater
 				Console.WriteLine(">> ERROR");
 				Console.WriteLine(ex);
 			}
-			if(update != null && update.Wait) {
+			if(update != null && update.Wait && !update.WaitSkip)  {
 				Console.WriteLine("Press any key to continue ...");
 				Console.ReadKey(false);
 			}

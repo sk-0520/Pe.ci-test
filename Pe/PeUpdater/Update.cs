@@ -45,9 +45,11 @@ namespace PeUpdater
 		Value<bool> _getRC = new Value<bool>();
 		Value<bool> _checkOnly = new Value<bool>();
 		Value<bool> _wait = new Value<bool>();
+		Value<bool> _noWaitUpdate = new Value<bool>();
 		
 		public bool CheckOnly { get { return this._checkOnly.Data; } }
 		public bool Wait { get { return this._wait.Data; } }
+		public bool WaitSkip { get; private set; }
 		
 		public bool IsVersionUp { get; private set; }
 		public bool IsRCVersion { get; private set; }
@@ -72,6 +74,7 @@ namespace PeUpdater
 			Set("rc", this._getRC);
 			Set("checkonly", this._checkOnly);
 			Set("wait", this._wait);
+			Set("no-wait-update", this._noWaitUpdate);
 		}
 		
 		void Set<T>(string key, Value<T> value)
@@ -210,6 +213,9 @@ namespace PeUpdater
 				if(isRestart) {
 					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);
 					Process.Start(restartExe, restartArg);
+				}
+				if(_noWaitUpdate.Data) {
+					WaitSkip = true;
 				}
 			} catch(Exception) {
 				File.Move(renamePath, myPath);
