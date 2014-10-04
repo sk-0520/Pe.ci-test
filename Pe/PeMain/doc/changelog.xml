@@ -24,7 +24,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/DD" version="0.20.1" type="rc">
+	<log date="2014/10/DD" version="0.21.0">
 		<ul type="note">
 			<li>ObjectDumper使用</li>
 			<li></li>
