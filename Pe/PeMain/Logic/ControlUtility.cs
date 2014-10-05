@@ -306,6 +306,14 @@ namespace PeMain.Logic
 			}
 		}
 		
+		/*
+		public static void EventDropDownMouseWheel(object sender, MouseEventArgs e)
+		{
+			Debug.WriteLine(sender);
+			Debug.WriteLine(e);
+		}
+		*/
+		
 		/// <summary>
 		/// 位置補正イベントのアタッチ。
 		/// </summary>
@@ -320,6 +328,11 @@ namespace PeMain.Logic
 		/// </summary>
 		public static void AttachmentOpeningMenuInScreen(ToolStripDropDownItem toolItem)
 		{
+			/*
+			toolItem.DropDown.MouseWheel -= EventDropDownMouseWheel;
+			toolItem.DropDown.MouseWheel += EventDropDownMouseWheel;
+			*/
+			
 			// HACK: 一体何をどう信じればいいのか。。。
 			toolItem.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
 			toolItem.DropDownOpening += EventDropDownItemOpeningMenuInScreen;
@@ -344,6 +357,10 @@ namespace PeMain.Logic
 		{
 			var toolItem = parent.ContextMenuStrip;
 			Debug.Assert(toolItem.Tag == null);
+			/*
+			toolItem.MouseWheel -= EventDropDownMouseWheel;
+			toolItem.MouseWheel += EventDropDownMouseWheel;
+			*/
 			toolItem.Tag = parent;
 			toolItem.Opening -= EventDropDownOpeningMenuInScreen;
 			toolItem.Opening += EventDropDownOpeningMenuInScreen;

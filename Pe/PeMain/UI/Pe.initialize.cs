@@ -355,6 +355,7 @@ namespace PeMain.UI
 			var itemSystemEnv = new MenuItem();
 			var itemSetting = new MenuItem();
 			var itemAbout = new MenuItem();
+			var itemHelp = new MenuItem();
 			var itemExit = new MenuItem();
 			
 			menuList.Add(itemSetting);
@@ -366,27 +367,10 @@ namespace PeMain.UI
 			menuList.Add(itemSystemEnv);
 			menuList.Add(new MenuItem("-"));
 			menuList.Add(itemAbout);
+			#if false
+			menuList.Add(itemHelp);
+			#endif
 			menuList.Add(itemExit);
-			
-			// 情報
-			itemAbout.Name = menuNameAbout;
-			itemAbout.Click += (object sender, EventArgs e) => {
-				PauseOthers(
-					() => {
-						var checkUpdate = false;
-						using(var dialog = new AboutForm()) {
-							dialog.SetCommonData(this._commonData);
-							dialog.ShowDialog();
-							checkUpdate = dialog.CheckUpdate;
-						}
-						if(checkUpdate) {
-							CheckUpdateProcessWait(true);
-						}
-						
-						return null;
-					}
-				);
-			};
 			
 			// ウィンドウ
 			//itemWindow.Name = menuNameWindow;
@@ -412,6 +396,31 @@ namespace PeMain.UI
 			itemSetting.Name = menuNameSetting;
 			itemSetting.Click += (object sender, EventArgs e) => {
 				PauseOthers(() => OpenSetting());
+			};
+			
+			// 情報
+			itemAbout.Name = menuNameAbout;
+			itemAbout.Click += (object sender, EventArgs e) => {
+				PauseOthers(
+					() => {
+						var checkUpdate = false;
+						using(var dialog = new AboutForm()) {
+							dialog.SetCommonData(this._commonData);
+							dialog.ShowDialog();
+							checkUpdate = dialog.CheckUpdate;
+						}
+						if(checkUpdate) {
+							CheckUpdateProcessWait(true);
+						}
+						
+						return null;
+					}
+				);
+			};
+			
+			itemHelp.Name = menuNameHelp;
+			itemHelp.Click += (object sender, EventArgs e) => { 
+				Executer.RunCommand(Literal.HelpDocumentURI);
 			};
 			
 			// 終了

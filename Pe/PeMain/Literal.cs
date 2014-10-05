@@ -214,6 +214,11 @@ namespace PeMain
 			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["changelog-rc-page"]); }
 		}
 		
+		public static string HelpDocumentURI
+		{
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["help-document"]); }
+		}
+		
 		public static FileVersionInfo Version
 		{
 			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }

@@ -71,8 +71,19 @@ namespace PeMain.UI
 		
 		void CommandUpdate_Click(object sender, EventArgs e)
 		{
-			CheckUpdate = true;
-			Close();
+			var caption = CommonData.Language["about/update/check/dialog/caption"];
+			var message = CommonData.Language["about/update/check/dialog/message"];
+			var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+			if(result == DialogResult.Yes) {
+				CheckUpdate = true;
+				Close();
+			}
+		}
+		
+		void CommandChangelog_Click(object sender, EventArgs e)
+		{
+			var path = Path.Combine(Literal.PeDocumentDirPath, "changelog.xml");
+			Executer.OpenFile(path, CommonData);
 		}
 		
 		void GridComponents_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)

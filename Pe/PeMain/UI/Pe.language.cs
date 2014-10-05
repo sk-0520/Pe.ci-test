@@ -18,7 +18,6 @@ namespace PeMain.UI
 		void ApplyLanguageMainMenu()
 		{
 			var rootMenu = this._contextMenu.MenuItems;
-			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
 
 //			var windowMenu = (MenuItem)rootMenu[menuNameWindow];
 //			windowMenu.Text = this._commonData.Language["main/menu/window"];
@@ -37,6 +36,10 @@ namespace PeMain.UI
 			systemEnvMenu.MenuItems[menuNameSystemEnvExtension].Text = LanguageUtility.ToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-extension"], this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey);
 		
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
+			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
+			#if false
+			rootMenu[menuNameHelp].Text = this._commonData.Language["main/menu/help"];
+			#endif
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];
 		}
 		

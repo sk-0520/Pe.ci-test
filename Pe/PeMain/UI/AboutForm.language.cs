@@ -21,6 +21,7 @@ namespace PeMain.UI
 			this.commandExecuteDir.SetLanguage(CommonData.Language);
 			this.commandDataDir.SetLanguage(CommonData.Language);
 			this.commandBackupDir.SetLanguage(CommonData.Language);
+			this.commandChangelog.SetLanguage(CommonData.Language);
 			this.commandUpdate.SetLanguage(CommonData.Language);
 			
 			this.gridComponents_columnName.SetLanguage(CommonData.Language);

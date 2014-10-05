@@ -53,6 +53,7 @@ namespace PeMain.UI
 			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.gridComponents_columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.gridComponents_columnURI = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.commandChangelog = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.SuspendLayout();
@@ -71,7 +72,7 @@ namespace PeMain.UI
 			this.commandOk.Location = new System.Drawing.Point(465, 208);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(101, 31);
-			this.commandOk.TabIndex = 8;
+			this.commandOk.TabIndex = 9;
 			this.commandOk.Text = "{OK}";
 			this.commandOk.UseVisualStyleBackColor = true;
 			this.commandOk.Click += new System.EventHandler(this.CommandOk_Click);
@@ -126,7 +127,7 @@ namespace PeMain.UI
 			this.commandExecuteDir.Location = new System.Drawing.Point(465, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
 			this.commandExecuteDir.Size = new System.Drawing.Size(101, 27);
-			this.commandExecuteDir.TabIndex = 4;
+			this.commandExecuteDir.TabIndex = 3;
 			this.commandExecuteDir.Text = ":about/command/execute";
 			this.commandExecuteDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandExecuteDir.UseVisualStyleBackColor = true;
@@ -140,7 +141,7 @@ namespace PeMain.UI
 			this.commandDataDir.Location = new System.Drawing.Point(465, 44);
 			this.commandDataDir.Name = "commandDataDir";
 			this.commandDataDir.Size = new System.Drawing.Size(101, 27);
-			this.commandDataDir.TabIndex = 5;
+			this.commandDataDir.TabIndex = 4;
 			this.commandDataDir.Text = ":about/command/data";
 			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandDataDir.UseVisualStyleBackColor = true;
@@ -154,7 +155,7 @@ namespace PeMain.UI
 			this.commandBackupDir.Location = new System.Drawing.Point(465, 76);
 			this.commandBackupDir.Name = "commandBackupDir";
 			this.commandBackupDir.Size = new System.Drawing.Size(101, 27);
-			this.commandBackupDir.TabIndex = 6;
+			this.commandBackupDir.TabIndex = 5;
 			this.commandBackupDir.Text = ":about/command/backup";
 			this.commandBackupDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandBackupDir.UseVisualStyleBackColor = true;
@@ -186,7 +187,7 @@ namespace PeMain.UI
 			this.commandUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandUpdate.Image = global::PeMain.Properties.Images.Update;
 			this.commandUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandUpdate.Location = new System.Drawing.Point(465, 109);
+			this.commandUpdate.Location = new System.Drawing.Point(465, 156);
 			this.commandUpdate.Name = "commandUpdate";
 			this.commandUpdate.Size = new System.Drawing.Size(101, 27);
 			this.commandUpdate.TabIndex = 7;
@@ -210,7 +211,7 @@ namespace PeMain.UI
 			this.gridComponents.ReadOnly = true;
 			this.gridComponents.RowTemplate.Height = 21;
 			this.gridComponents.Size = new System.Drawing.Size(434, 150);
-			this.gridComponents.TabIndex = 3;
+			this.gridComponents.TabIndex = 8;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
 			// 
 			// gridComponents_columnName
@@ -238,12 +239,27 @@ namespace PeMain.UI
 			this.gridComponents_columnURI.Name = "gridComponents_columnURI";
 			this.gridComponents_columnURI.ReadOnly = true;
 			// 
+			// commandChangelog
+			// 
+			this.commandChangelog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandChangelog.Image = global::PeMain.Properties.Images.Changelog;
+			this.commandChangelog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.commandChangelog.Location = new System.Drawing.Point(465, 123);
+			this.commandChangelog.Name = "commandChangelog";
+			this.commandChangelog.Size = new System.Drawing.Size(101, 27);
+			this.commandChangelog.TabIndex = 6;
+			this.commandChangelog.Text = ":about/command/changelog";
+			this.commandChangelog.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.commandChangelog.UseVisualStyleBackColor = true;
+			this.commandChangelog.Click += new System.EventHandler(this.CommandChangelog_Click);
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(578, 251);
+			this.Controls.Add(this.commandChangelog);
 			this.Controls.Add(this.gridComponents);
 			this.Controls.Add(this.commandUpdate);
 			this.Controls.Add(this.linkMail);
@@ -272,6 +288,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.Button commandChangelog;
 		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnType;
 		private System.Windows.Forms.DataGridViewLinkColumn gridComponents_columnURI;
 		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnName;

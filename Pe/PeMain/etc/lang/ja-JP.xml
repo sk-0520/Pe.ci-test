@@ -60,6 +60,7 @@
 		<Word Name="main/menu/window/logger"                Text="ログ(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[PE] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[PE] 情報(&amp;A) ${open-ui}" />
+		<Word Name="main/menu/help"                         Text="ヘルプ(&amp;H) ${open-ui}" />
 		<Word Name="main/menu/system-env"                   Text="システム環境(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
 		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
@@ -211,13 +212,16 @@
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
 		
-		<Word Name="about/command/execute"  Text="@[PE]" />
-		<Word Name="about/command/data"     Text="データ" />
-		<Word Name="about/command/backup"   Text="バックアップ" />
-		<Word Name="about/command/update"   Text="アップデート" />
+		<Word Name="about/command/execute"   Text="@[PE]" />
+		<Word Name="about/command/data"      Text="データ" />
+		<Word Name="about/command/backup"    Text="バックアップ" />
+		<Word Name="about/command/update"    Text="アップデート" />
+		<Word Name="about/command/changelog" Text="更新履歴" />
 		<Word Name="about/column/name"      Text="コンポーネント" />
 		<Word Name="about/column/type"      Text="種別" />
 		<Word Name="about/column/uri"       Text="WEBサイト" />
+		<Word Name="about/update/check/dialog/caption"   Text="アップデートチェック" />
+		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
 		
 		<Word Name="group/new" Text="新規グループ" />
 		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
