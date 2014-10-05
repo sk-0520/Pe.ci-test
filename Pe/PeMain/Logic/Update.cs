@@ -140,9 +140,10 @@ namespace PeMain.Logic
 		{
 			var lines = new List<string>();
 			var map = new Dictionary<string,string>() {
-				{ "download", this._downloadPath },
-				{ "expand",   Literal.PeRootDirPath },
-				{ "wait",     "true" },
+				{ "download",       this._downloadPath },
+				{ "expand",         Literal.PeRootDirPath },
+				{ "wait",           "true" },
+				{ "no-wait-update", "true" },
 			};
 			FileUtility.MakeFileParentDirectory(this._downloadPath);
 			if(!Directory.Exists(this._downloadPath)) {
