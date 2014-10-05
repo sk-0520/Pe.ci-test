@@ -112,6 +112,8 @@
 		<Word Name="toolbar/menu/file/path/copy-work-dir"   Text="作業フォルダパスをコピー(&amp;W)" />
 		<Word Name="toolbar/menu/file/path/property"        Text="プロパティ(&amp;P)" />
 		<Word Name="toolbar/menu/file/ls/not-child-files"   Text="下位ファイルなし" />
+		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
+		
 		
 		<Word Name="execute/tab/basic"         Text="基本指定" />
 		<Word Name="execute/label/option"      Text="${option}" />

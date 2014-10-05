@@ -265,7 +265,7 @@ namespace PeMain.UI
 		void OpenDir(string path)
 		{
 			try {
-				Executer.OpenDirectory(path, CommonData.Logger, CommonData.Language, null);
+				Executer.OpenDirectory(path, CommonData, null);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
@@ -372,7 +372,11 @@ namespace PeMain.UI
 			}
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
-					Executer.RunCommand(path);
+					if(File.Exists(path)) {
+						Executer.OpenFile(path, CommonData);
+					} else {
+						Executer.OpenDirectory(path, CommonData, null);
+					}
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 				}
@@ -380,17 +384,18 @@ namespace PeMain.UI
 			return menuItem;
 		}
 		
-		void LoadFileList(ToolStripDropDownItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
+		bool LoadFileList(ToolStripDropDownItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
 		{
-			
 			if(parentItem.HasDropDownItems) {
-				return;
+				return false;
 			}
+			
+			IList<ToolStripItem> menuList;
 			
 			try {
 				var dirList = Directory.GetDirectories(parentDirPath);
 				var fileList = Directory.GetFiles(parentDirPath);
-				var menuList = new List<ToolStripMenuItem>(dirList.Length + fileList.Length);
+				menuList = new List<ToolStripItem>(dirList.Length + fileList.Length);
 				if(dirList.Length + fileList.Length > 0) {
 					// TODO: ディレクトリとファイルで処理重複
 					foreach(var path in dirList) {
@@ -419,22 +424,22 @@ namespace PeMain.UI
 					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
 					
-					menuItem.ImageScaling = ToolStripItemImageScaling.SizeToFit;
-					
 					menuList.Add(menuItem);
 				}
 				
-				parentItem.DropDownItems.AddRange(menuList.ToArray());
 			} catch(UnauthorizedAccessException ex) {
 				var menuItem = new ToolStripMenuItem();
 				menuItem.Text = ex.Message;
 				menuItem.Image = SystemIcons.Warning.ToBitmap();
 				menuItem.Enabled = false;
-				parentItem.DropDownItems.Add(menuItem);
+				menuList = new [] { menuItem };
 			}
+			
+			parentItem.DropDownItems.AddRange(menuList.ToArray());
 			
 			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
 			parentItem.ShowDropDown();
+			return true;
 		}
 		
 		void AttachmentFileLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
@@ -685,10 +690,20 @@ namespace PeMain.UI
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}
+			
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
 				var showHiddenFile = SystemEnv.IsHiddenFileShow();
 				var showExtension = SystemEnv.IsExtensionShow();
-				LoadFileList(toolItem, item.Command, showHiddenFile, showExtension);
+				if(LoadFileList(toolItem, item.Command, showHiddenFile, showExtension)) {
+					var openItem = new ToolStripMenuItem();
+					openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
+					openItem.Image = toolItem.Image;
+					openItem.Click += (object child_sender, EventArgs child_e) => {
+						ExecuteItem(item);
+					};
+					toolItem.DropDownItems.Insert(0, openItem);
+					toolItem.DropDownItems.Insert(1, new ToolStripSeparator());
+				}
 			};
 
 			return toolItem;
@@ -742,11 +757,9 @@ namespace PeMain.UI
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
-				if(launcherItem.LauncherType == LauncherType.File) {
-					launcherItem.Execute(CommonData, this);
-					launcherItem.Increment();
-					return true;
-				}
+				Executer.RunItem(launcherItem, CommonData, this);
+				launcherItem.Increment();
+				return true;
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}

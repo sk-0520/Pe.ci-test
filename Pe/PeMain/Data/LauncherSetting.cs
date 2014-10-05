@@ -421,14 +421,6 @@ namespace PeMain.Data
 			return item.Name.ToUnique(seq.Select(i => i.Name));
 		}
 		
-		
-		public void Execute(CommonData commonData, Form parentForm)
-		{
-			if(LauncherType == LauncherType.File) {
-				Executer.RunFileItem(commonData, this, parentForm);
-			}
-		}
-		
 		public bool IsValueEqual(LauncherItem target)
 		{
 			return

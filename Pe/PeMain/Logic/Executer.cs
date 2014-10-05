@@ -23,11 +23,9 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class Executer
 	{
-		public static void RunFileItem(CommonData commonData, LauncherItem launcherItem, Form parentForm)
+		private static void RunFileItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
-			
-			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
 			
 			var process = new Process();
 			var startInfo = process.StartInfo;
@@ -80,6 +78,28 @@ namespace PeMain.Logic
 				process.BeginErrorReadLine();
 			}
 		}
+		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		{
+			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
+			
+			OpenDirectory(launcherItem.Command, commonData, null);
+		}
+		
+		public static void RunItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		{
+			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
+			
+			switch(launcherItem.LauncherType) {
+				case LauncherType.File:
+					RunFileItem(launcherItem, commonData, parentForm);
+					break;
+				case LauncherType.Directory:
+					RunDirectoryItem(launcherItem, commonData, parentForm);
+					break;
+				default:
+					throw new NotImplementedException();
+			}
+		}
 		
 		public static Process RunCommand(string command)
 		{
@@ -91,7 +111,12 @@ namespace PeMain.Logic
 			return Process.Start(exCommand);
 		}
 		
-		public static void OpenDirectory(string path, ILogger logger, Language language, LauncherItem openItem)
+		public static Process OpenFile(string path, CommonData commonData)
+		{
+			return Process.Start(path);
+		}
+		
+		public static void OpenDirectory(string path, CommonData commonData, LauncherItem openItem)
 		{
 			Process.Start(path);
 		}
