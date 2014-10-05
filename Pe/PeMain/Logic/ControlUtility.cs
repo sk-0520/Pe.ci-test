@@ -385,6 +385,9 @@ namespace PeMain.Logic
 		public static void SetDefaultText(Form target, Language language, IDictionary<string, string> map = null)
 		{
 			target.SetLanguage(language, map);
+			#if DEBUG
+			target.Text = "(DEBUG) " + target.Text; 
+			#endif
 			
 			var acceptButton = target.AcceptButton as Button;
 			if(acceptButton != null) {
