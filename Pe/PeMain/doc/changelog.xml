@@ -25,7 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/DD" version="0.21.0">
+	<log date="2014/10/05" version="0.21.0">
 		<ul type="note">
 			<li>ObjectDumper使用</li>
 		</ul>
@@ -41,7 +41,7 @@
 		</ul>
 		<ul type="developer">
 			<li>紆余曲折あった更新履歴の原本はXMLで統一</li>
-			<li></li>
+			<li>SQLiteのx86/x64切り替え処理が自動化されたのかなんか知らんけど両方のDLLが含まれるようになってデブくなった</li>
 		</ul>
 	</log>
 	<log date="2014/10/03" version="0.20.0">
