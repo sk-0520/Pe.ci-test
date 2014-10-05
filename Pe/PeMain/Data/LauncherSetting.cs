@@ -41,7 +41,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// 組み込み
 		/// </summary>
-		Pe
+		Embedded
 	}
 	
 	/// <summary>

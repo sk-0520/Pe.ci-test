@@ -29,7 +29,7 @@ namespace PeMain.UI
 				{ this.selectLauncherType_file, LauncherType.File },
 				{ this.selectLauncherType_directory, LauncherType.Directory },
 				{ this.selectLauncherType_uri, LauncherType.URI },
-				{ this.selectLauncherType_pe, LauncherType.Pe },
+				{ this.selectLauncherType_embedded, LauncherType.Embedded },
 			};
 			return map.Single(m => m.Key.Checked).Value;
 			/*
@@ -47,7 +47,7 @@ namespace PeMain.UI
 			this.selectLauncherType_file.Checked = type == LauncherType.File;
 			this.selectLauncherType_directory.Checked  = type == LauncherType.Directory;
 			this.selectLauncherType_uri.Checked  = type == LauncherType.URI;
-			this.selectLauncherType_pe.Checked  = type == LauncherType.Pe;
+			this.selectLauncherType_embedded.Checked  = type == LauncherType.Embedded;
 			
 			LauncherApplyType(type);
 		}
@@ -179,7 +179,7 @@ namespace PeMain.UI
 					break;
 					
 				case LauncherType.URI:
-				case LauncherType.Pe:
+				case LauncherType.Embedded:
 					Debug.Assert(false, type.ToString());
 					break;
 			}

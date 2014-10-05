@@ -42,14 +42,14 @@
 		<Word Name="common/message/notfound-file"       Text="ファイルが見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="ディレクトリが見つかりません" />
 		
-		<Word Name="window/accept"   Text="@[PE] 使用許諾" />
+		<Word Name="window/accept"   Text="@[APPLICATION] 使用許諾" />
 		<Word Name="window/update"   Text="アップデート" />
-		<Word Name="window/toolbar"  Text="@[PE]" />
+		<Word Name="window/toolbar"  Text="@[APPLICATION]" />
 		<Word Name="window/log"      Text="ログ" />
-		<Word Name="window/about"    Text="@[PE] 情報" />
+		<Word Name="window/about"    Text="@[APPLICATION] 情報" />
 		<Word Name="window/execute"  Text="@[ITEM]を指定して実行" />
 		<Word Name="window/stream"   Text="@[ITEM]の実行出力" />
-		<Word Name="window/setting"  Text="@[PE] 設定" />
+		<Word Name="window/setting"  Text="@[APPLICATION] 設定" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
@@ -58,8 +58,8 @@
 		<Word Name="main/menu/window/note/hidden"           Text="非表示(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/logger"                Text="ログ(&amp;L)" />
-		<Word Name="main/menu/setting"                      Text="@[PE] 設定(&amp;S) ${open-ui}" />
-		<Word Name="main/menu/about"                        Text="@[PE] 情報(&amp;A) ${open-ui}" />
+		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
+		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />
 		<Word Name="main/menu/help"                         Text="ヘルプ(&amp;H) ${open-ui}" />
 		<Word Name="main/menu/system-env"                   Text="システム環境(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
@@ -212,7 +212,7 @@
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
 		
-		<Word Name="about/command/execute"   Text="@[PE]" />
+		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
 		<Word Name="about/command/backup"    Text="バックアップ" />
 		<Word Name="about/command/update"    Text="アップデート" />
@@ -251,7 +251,7 @@
 		<Word Name="enum/launcher-type/file"      Text="ファイル" />
 		<Word Name="enum/launcher-type/directory" Text="ディレクトリ" />
 		<Word Name="enum/launcher-type/uri"       Text="URI" />
-		<Word Name="enum/launcher-type/pe"        Text="組み込み" />
+		<Word Name="enum/launcher-type/embedded"  Text="組み込み" />
 		
 		<Word Name="enum/icon-size"        Text="アイコンサイズ" />
 		<Word Name="enum/icon-size/small"  Text="小" />

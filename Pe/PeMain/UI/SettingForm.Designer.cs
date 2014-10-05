@@ -38,8 +38,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupUpdateCheck = new System.Windows.Forms.GroupBox();
@@ -72,7 +72,7 @@ namespace PeMain.UI
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_directory = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
-			this.selectLauncherType_pe = new System.Windows.Forms.RadioButton();
+			this.selectLauncherType_embedded = new System.Windows.Forms.RadioButton();
 			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
 			this.commandLauncherDirPath = new System.Windows.Forms.Button();
@@ -595,7 +595,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_file);
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_directory);
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_uri);
-			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_pe);
+			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_embedded);
 			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
 			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
@@ -639,17 +639,17 @@ namespace PeMain.UI
 			this.selectLauncherType_uri.UseVisualStyleBackColor = true;
 			this.selectLauncherType_uri.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
-			// selectLauncherType_pe
+			// selectLauncherType_embedded
 			// 
-			this.selectLauncherType_pe.AutoSize = true;
-			this.selectLauncherType_pe.Enabled = false;
-			this.selectLauncherType_pe.Location = new System.Drawing.Point(3, 28);
-			this.selectLauncherType_pe.Name = "selectLauncherType_pe";
-			this.selectLauncherType_pe.Size = new System.Drawing.Size(134, 19);
-			this.selectLauncherType_pe.TabIndex = 3;
-			this.selectLauncherType_pe.TabStop = true;
-			this.selectLauncherType_pe.Text = "#LauncherType.Pe";
-			this.selectLauncherType_pe.UseVisualStyleBackColor = true;
+			this.selectLauncherType_embedded.AutoSize = true;
+			this.selectLauncherType_embedded.Enabled = false;
+			this.selectLauncherType_embedded.Location = new System.Drawing.Point(3, 28);
+			this.selectLauncherType_embedded.Name = "selectLauncherType_embedded";
+			this.selectLauncherType_embedded.Size = new System.Drawing.Size(181, 19);
+			this.selectLauncherType_embedded.TabIndex = 3;
+			this.selectLauncherType_embedded.TabStop = true;
+			this.selectLauncherType_embedded.Text = "#LauncherType.Embedded";
+			this.selectLauncherType_embedded.UseVisualStyleBackColor = true;
 			// 
 			// commandLauncherOptionDirPath
 			// 
@@ -840,7 +840,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(524, 88);
+			this.panelEnv.Size = new System.Drawing.Size(524, 86);
 			this.panelEnv.SplitterDistance = 341;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -849,7 +849,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 88);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 86);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -858,7 +858,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(179, 88);
+			this.envLauncherRemove.Size = new System.Drawing.Size(179, 86);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -1624,8 +1624,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1655,9 +1655,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1836,7 +1836,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private System.Windows.Forms.RadioButton selectLauncherType_pe;
+		private System.Windows.Forms.RadioButton selectLauncherType_embedded;
 		private System.Windows.Forms.RadioButton selectLauncherType_directory;
 		private System.Windows.Forms.CheckBox selectLogFullDetail;
 		private System.Windows.Forms.CheckBox selectUpdateCheckRC;

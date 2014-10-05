@@ -27,7 +27,7 @@ namespace PeMain.Logic
 				{ LauncherType.File,      "file"},
 				{ LauncherType.Directory, "directory"},
 				{ LauncherType.URI,       "uri"},
-				{ LauncherType.Pe,        "pe"},
+				{ LauncherType.Embedded,        "pe"},
 			}[value];
 			
 			return language[key];

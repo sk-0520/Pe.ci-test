@@ -300,7 +300,7 @@ namespace PeMain
 	
 	public static class SystemLanguageName
 	{
-		public const string application = "PE";
+		public const string application = "APPLICATION";
 		public const string version     = "VER";
 		
 		public const string year        = "Y";
