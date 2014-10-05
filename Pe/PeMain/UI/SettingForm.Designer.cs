@@ -597,7 +597,6 @@ namespace PeMain.UI
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_uri);
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_pe);
 			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel3.Enabled = false;
 			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
 			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
 			this.flowLayoutPanel3.Size = new System.Drawing.Size(518, 34);
@@ -625,10 +624,12 @@ namespace PeMain.UI
 			this.selectLauncherType_directory.TabStop = true;
 			this.selectLauncherType_directory.Text = "#LauncherType.Dir";
 			this.selectLauncherType_directory.UseVisualStyleBackColor = true;
+			this.selectLauncherType_directory.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// selectLauncherType_uri
 			// 
 			this.selectLauncherType_uri.AutoSize = true;
+			this.selectLauncherType_uri.Enabled = false;
 			this.selectLauncherType_uri.Location = new System.Drawing.Point(292, 3);
 			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
 			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
@@ -641,6 +642,7 @@ namespace PeMain.UI
 			// selectLauncherType_pe
 			// 
 			this.selectLauncherType_pe.AutoSize = true;
+			this.selectLauncherType_pe.Enabled = false;
 			this.selectLauncherType_pe.Location = new System.Drawing.Point(3, 28);
 			this.selectLauncherType_pe.Name = "selectLauncherType_pe";
 			this.selectLauncherType_pe.Size = new System.Drawing.Size(134, 19);
@@ -838,7 +840,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(524, 98);
+			this.panelEnv.Size = new System.Drawing.Size(524, 88);
 			this.panelEnv.SplitterDistance = 341;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -847,7 +849,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 98);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 88);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -856,7 +858,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(179, 98);
+			this.envLauncherRemove.Size = new System.Drawing.Size(179, 88);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 

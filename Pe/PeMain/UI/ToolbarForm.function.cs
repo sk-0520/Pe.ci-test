@@ -380,7 +380,7 @@ namespace PeMain.UI
 			return menuItem;
 		}
 		
-		void LoadFileList(ToolStripMenuItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
+		void LoadFileList(ToolStripDropDownItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
 		{
 			
 			if(parentItem.HasDropDownItems) {
@@ -418,7 +418,7 @@ namespace PeMain.UI
 					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
 					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
-			
+					
 					menuItem.ImageScaling = ToolStripItemImageScaling.SizeToFit;
 					
 					menuList.Add(menuItem);
@@ -675,6 +675,25 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
+		ToolStripDropDownButton CreateDirectoryItemLauncherButton(LauncherItem item)
+		{
+			var toolItem = new ToolStripDropDownButton();
+			
+			toolItem.Text = item.Name;
+			toolItem.ToolTipText = item.Name;
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
+			if(icon != null) {
+				toolItem.Image = icon.ToBitmap();
+			}
+			toolItem.DropDownOpening += (object sender, EventArgs e) => {
+				var showHiddenFile = SystemEnv.IsHiddenFileShow();
+				var showExtension = SystemEnv.IsExtensionShow();
+				LoadFileList(toolItem, item.Command, showHiddenFile, showExtension);
+			};
+
+			return toolItem;
+		}
+		
 		/// <summary>
 		/// ランチャーアイテムボタンの生成。
 		/// </summary>
@@ -685,7 +704,11 @@ namespace PeMain.UI
 			Debug.Assert(item != null);
 			ToolStripItem toolItem;
 			
-			toolItem = CreateFileItemLauncherButton(item);
+			if(item.LauncherType == LauncherType.Directory) {
+				toolItem = CreateDirectoryItemLauncherButton(item);
+			} else {
+				toolItem = CreateFileItemLauncherButton(item);
+			}
 			
 			toolItem.Tag = item;
 			

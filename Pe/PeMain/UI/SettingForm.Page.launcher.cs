@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -24,12 +25,21 @@ namespace PeMain.UI
 	{
 		LauncherType LauncherGetSelectedType()
 		{
+			var map = new Dictionary<RadioButton, LauncherType>() {
+				{ this.selectLauncherType_file, LauncherType.File },
+				{ this.selectLauncherType_directory, LauncherType.Directory },
+				{ this.selectLauncherType_uri, LauncherType.URI },
+				{ this.selectLauncherType_pe, LauncherType.Pe },
+			};
+			return map.Single(m => m.Key.Checked).Value;
+			/*
 			if(this.selectLauncherType_file.Checked) {
 				return LauncherType.File;
 			} else {
 				Debug.Assert(this.selectLauncherType_uri.Checked);
 				return LauncherType.URI;
 			}
+			 */
 		}
 		
 		void LauncherSetSelectedType(LauncherType type)
@@ -38,6 +48,8 @@ namespace PeMain.UI
 			this.selectLauncherType_directory.Checked  = type == LauncherType.Directory;
 			this.selectLauncherType_uri.Checked  = type == LauncherType.URI;
 			this.selectLauncherType_pe.Checked  = type == LauncherType.Pe;
+			
+			LauncherApplyType(type);
 		}
 		
 		void LauncherInputClear()
@@ -126,6 +138,59 @@ namespace PeMain.UI
 			item.HasError = this.selecterLauncher.Items.Where(i => i != item).Any(i => i.Equals(item));
 			if(oldIcon.Index != item.IconIndex || oldIcon.Path != item.IconPath) {
 				item.ClearIcon();
+			}
+			
+			LauncherApplyType(item.LauncherType);
+		}
+		
+		void LauncherApplyType(LauncherType type)
+		{
+			var enabledControls = new Control [] {
+				this.inputLauncherName,
+				this.inputLauncherCommand,
+				this.inputLauncherOption,
+				this.inputLauncherWorkDirPath,
+				this.inputLauncherIconPath,
+				this.inputLauncherTag,
+				this.inputLauncherNote,
+				this.selectLauncherStdStream,
+				this.selectLauncherAdmin,
+				this.selectLauncherEnv,
+				this.envLauncherUpdate,
+				this.envLauncherRemove,
+			};
+			Control[] disabledControls = new Control[]{};
+			switch(type) {
+				case LauncherType.File:
+					break;
+					
+				case LauncherType.Directory:
+					{
+						disabledControls = new Control[] {
+							this.inputLauncherOption,
+							this.inputLauncherWorkDirPath,
+							this.selectLauncherStdStream,
+							this.selectLauncherAdmin,
+							this.selectLauncherEnv,
+							this.envLauncherUpdate,
+							this.envLauncherRemove,
+						};
+					}
+					break;
+					
+				case LauncherType.URI:
+				case LauncherType.Pe:
+					Debug.Assert(false, type.ToString());
+					break;
+			}
+			
+			foreach(var control in enabledControls) {
+				control.Enabled = true;
+			}
+			if(disabledControls != null) {
+				foreach(var control in disabledControls) {
+					control.Enabled = false;
+				}
 			}
 		}
 		

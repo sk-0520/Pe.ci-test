@@ -364,7 +364,7 @@ namespace PeMain.Data
 			item.IconPath = filePath;
 			item.IconIndex = 0;
 			
-			if(Directory.Directory.Exists(path)) {
+			if(Directory.Exists(filePath)) {
 				// ディレクトリ
 				item.LauncherType = LauncherType.Directory;
 			} else {
