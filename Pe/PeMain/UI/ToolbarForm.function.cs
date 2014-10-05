@@ -691,7 +691,14 @@ namespace PeMain.UI
 				toolItem.Image = icon.ToBitmap();
 			}
 			
+			toolItem.Enabled = Directory.Exists(item.Command); 
+			
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
+				if(!Directory.Exists(item.Command)) {
+					CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-dir"], item);;
+					return;
+				}
+				
 				var showHiddenFile = SystemEnv.IsHiddenFileShow();
 				var showExtension = SystemEnv.IsExtensionShow();
 				if(LoadFileList(toolItem, item.Command, showHiddenFile, showExtension)) {

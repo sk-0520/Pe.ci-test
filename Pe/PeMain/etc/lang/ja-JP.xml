@@ -39,6 +39,8 @@
 		<Word Name="common/command/default-font-reset"  Text="フォントをリセットする" />
 		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
 		<Word Name="common/tab/env"                     Text="環境変数" />
+		<Word Name="common/message/notfound-file"       Text="ファイルが見つかりません" />
+		<Word Name="common/message/notfound-dir"        Text="ディレクトリが見つかりません" />
 		
 		<Word Name="window/accept"   Text="@[PE] 使用許諾" />
 		<Word Name="window/update"   Text="アップデート" />
