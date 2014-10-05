@@ -42,7 +42,7 @@
 						var li = itemList[i];
 						var text = li.innerHTML;
 						
-						text = text.replace(/#([0-9}]+)/g, '<a href="' + issueLink + '$1" target="' + targetName + '">#$1</a>');
+						text = text.replace(/#([0-9]+)/g, "&lt;a href='" + issueLink + "$1' target='" + targetName + "'&gt;#$1&lt;/a&gt;");
 						li.innerHTML = text;
 					}
 				}
@@ -66,7 +66,7 @@
 		
 	</xsl:template>
 	
-	<xsl:template match="ul">
+	<xsl:template match="log/ul">
 		<dt class="{@type}">
 			<xsl:choose>
 				<xsl:when test="@type='note'">
@@ -90,7 +90,7 @@
 		</dd>
 	</xsl:template>
 
-	<xsl:template match="li">
+	<xsl:template match="log/ul/li">
 		<li>
 			<xsl:value-of select="." />
 		</li>
