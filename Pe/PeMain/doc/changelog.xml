@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="changelog.xsl"?>
 <changelog>
 	<!--
 	<log date="YYYY/MM/DD" version="0.xx.0" type="rc">
@@ -41,7 +42,6 @@
 			<li></li>
 		</ul>
 		<ul type="developer">
-			<li>changelog.xmlを原本とし、出力データであるchangelog.htmlをアーカイブに含めるように変更</li>
 			<li></li>
 			<li></li>
 		</ul>
