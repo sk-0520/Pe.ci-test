@@ -50,6 +50,9 @@
 			</head>
 			<body>
 				<h1>Pe更新履歴</h1>
+				<noscript>
+					<p>Issueへのリンクを有効にするにはブロックを解除してください。</p>
+				</noscript>
 				<xsl:apply-templates />
 			</body>
 		</html>
