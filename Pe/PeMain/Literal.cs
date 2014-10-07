@@ -260,22 +260,10 @@ namespace PeMain
 		/// <returns></returns>
 		private static string ReplaceLiteralText(string src)
 		{
-			var replacedText = src
-				.ReplaceRange("[", "]", s => s)
-				.ReplaceRange(
-					"{", "}",
-					s => {
-						switch(s) {
-							case "TIMESTAMP":
-								{
-									return NowTimestampFileName;
-								}
-						}
-						
-						return s;
-					}
-				)
-			;
+			var map = new Dictionary<string, string>() {
+				{ "TIMESTAMP", NowTimestampFileName }
+			};
+			var replacedText = src.ReplaceRangeFromDictionary("{", "}", map);
 			
 			return replacedText;
 		}
