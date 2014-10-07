@@ -47,7 +47,7 @@ namespace PeUtility
 		public static void OverForm(Form form)
 		{
 			var accept = form.AcceptButton as Control;
-			var cancel = form.AcceptButton as Control;
+			var cancel = form.CancelButton as Control;
 			if(accept != null) {
 				OverAuto(accept);
 			} else if(cancel != null) {
