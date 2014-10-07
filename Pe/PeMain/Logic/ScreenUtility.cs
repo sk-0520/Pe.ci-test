@@ -28,9 +28,9 @@ namespace PeMain.Logic
 		/// </summary>
 		/// <param name="screen"></param>
 		/// <returns></returns>
-		public static string ToScreenName(Screen screen)
+		public static string GetScreenName(Screen screen)
 		{
-			return ToScreenName(screen, null);
+			return GetScreenName(screen, null);
 		}
 		
 		/// <summary>
@@ -38,7 +38,7 @@ namespace PeMain.Logic
 		/// </summary>
 		/// <param name="screen"></param>
 		/// <returns></returns>
-		public static string ToScreenName(Screen screen, ILogger logger)
+		public static string GetScreenName(Screen screen, ILogger logger)
 		{
 			var id = new string(screen.DeviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
 			var query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
@@ -69,13 +69,13 @@ namespace PeMain.Logic
 			//return screen.DeviceName;
 			return device.DeviceString;
 		}
-		public static string ToScreenName(string screenName, ILogger logger)
+		public static string GetScreenName(string screenDeviceName, ILogger logger)
 		{
-			var screen = Screen.AllScreens.SingleOrDefault(s => s.DeviceName == screenName);
+			var screen = Screen.AllScreens.SingleOrDefault(s => s.DeviceName == screenDeviceName);
 			if(screen != null) {
-				return ToScreenName(screen, logger);
+				return GetScreenName(screen, logger);
 			}
-			return screenName;
+			return screenDeviceName;
 		}
 		
 		public static Screen GetCurrent()

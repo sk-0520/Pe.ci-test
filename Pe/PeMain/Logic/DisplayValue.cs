@@ -155,7 +155,7 @@ namespace PeMain.Logic
 		public ToolbarDisplayValue(ToolbarItem value): base(value) { }
 		public ToolbarDisplayValue(ToolbarItem value, Language language): base(value, language) { }
 		
-		public override string Display { get { return ScreenUtility.ToScreenName(Value.Name, null); } }
+		public override string Display { get { return ScreenUtility.GetScreenName(Value.Name, null); } }
 	}
 	
 

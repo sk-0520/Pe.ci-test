@@ -217,7 +217,7 @@ namespace PeMain.UI
 			foreach(var screen in Screen.AllScreens) {
 				var menuItem = new MenuItem();
 				menuItem.Name = screen.DeviceName;
-				menuItem.Text = ScreenUtility.ToScreenName(screen);
+				menuItem.Text = ScreenUtility.GetScreenName(screen);
 				menuItem.Click += (object sender, EventArgs e) => {
 					var toolbar = this._toolbarForms[screen];
 					toolbar.Visible = !toolbar.Visible;

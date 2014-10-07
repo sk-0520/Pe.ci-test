@@ -14,7 +14,7 @@ using PInvoke.Windows;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of ISetLanguage.
+	/// 言語設定を外部から実施するためのインターフェイス。
 	/// </summary>
 	public interface ISetLanguage
 	{
