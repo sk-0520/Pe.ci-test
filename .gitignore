@@ -8,7 +8,5 @@ bin/
 /output/
 *.Settings
 /Pe/packages/
-/Pe/PeMain/x86
-/Pe/PeMain/x64
 *.cd
-/disk1
+ProfilingSessions/
