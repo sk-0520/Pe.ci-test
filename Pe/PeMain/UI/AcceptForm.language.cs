@@ -24,7 +24,7 @@ namespace PeMain.UI
 			this.selectUpdateCheck.SetLanguage(CommonData.Language);
 			this.selectUpdateCheckRC.SetLanguage(CommonData.Language);
 			
-			var acceptFilePath = Path.Combine(Literal.PeLanguageDirPath, CommonData.Language.AcceptFileName);
+			var acceptFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.AcceptFileName);
 			this.webDocument.Navigate(acceptFilePath);
 		}
 	}

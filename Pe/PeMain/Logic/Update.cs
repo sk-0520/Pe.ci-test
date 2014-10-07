@@ -49,7 +49,7 @@ namespace PeMain.Logic
 		
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.PeRootDirPath, Literal.updateProgramName); }
+			get { return Path.Combine(Literal.ApplicationRootDirPath, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc)
@@ -66,7 +66,7 @@ namespace PeMain.Logic
 			
 			var defaultMap = new Dictionary<string,string>() {
 				{ "pid",      string.Format("{0}", Process.GetCurrentProcess().Id) },
-				{ "version",  Literal.PeVersion },
+				{ "version",  Literal.ApplicationVersion },
 				{ "uri",      Literal.UpdateURL },
 				{ "platform", Environment.Is64BitProcess ? "x64": "x86" },
 				{ "rc",       this._donwloadRc ? "true": "false" },
@@ -141,7 +141,7 @@ namespace PeMain.Logic
 			var lines = new List<string>();
 			var map = new Dictionary<string,string>() {
 				{ "download",       this._downloadPath },
-				{ "expand",         Literal.PeRootDirPath },
+				{ "expand",         Literal.ApplicationRootDirPath },
 				{ "wait",           "true" },
 				{ "no-wait-update", "true" },
 			};

@@ -43,7 +43,7 @@ namespace PeMain.UI
 				langName = CultureInfo.CurrentCulture.Name;
 			}
 			var languageFileName = string.Format("{0}.xml", langName);
-			var languageFilePath = Path.Combine(Literal.PeLanguageDirPath, languageFileName);
+			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, languageFileName);
 			if(logger != null) {
 				logger.Puts(LogType.Information, "load language", languageFilePath);
 			}

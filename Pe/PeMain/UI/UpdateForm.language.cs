@@ -19,7 +19,7 @@ namespace PeMain.UI
 			UIUtility.SetDefaultText(this, CommonData.Language);
 			
 			var map = new Dictionary<string, string>() {
-				{ SystemLanguageName.versionNow,  Literal.PeVersion },
+				{ SystemLanguageName.versionNow,  Literal.ApplicationVersion },
 				{ SystemLanguageName.versionNext, UpdateData.Info.Version },
 				{ SystemLanguageName.versionType, UpdateData.Info.IsRcVersion ? "${version-rc}": "${version-release}" },
 			};

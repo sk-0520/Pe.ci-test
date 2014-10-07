@@ -96,7 +96,7 @@ namespace PeMain
 		/// <summary>
 		/// 起動ディレクトリ
 		/// </summary>
-		public static string PeRootDirPath
+		public static string ApplicationRootDirPath
 		{
 			get
 			{
@@ -107,33 +107,33 @@ namespace PeMain
 		/// <summary>
 		/// etc/
 		/// </summary>
-		public static string PeEtcDirPath
+		public static string ApplicationEtcDirPath
 		{
 			get
 			{
-				return Path.Combine(PeRootDirPath, "etc");
+				return Path.Combine(ApplicationRootDirPath, "etc");
 			}
 		}
 		
 		/// <summary>
 		/// etc/lang/
 		/// </summary>
-		public static string PeLanguageDirPath
+		public static string ApplicationLanguageDirPath
 		{
 			get
 			{
-				return Path.Combine(PeEtcDirPath, "lang");
+				return Path.Combine(ApplicationEtcDirPath, "lang");
 			}
 		}
 		
 		/// <summary>
 		/// doc/
 		/// </summary>
-		public static string PeDocumentDirPath
+		public static string ApplicationDocumentDirPath
 		{
 			get
 			{
-				return Path.Combine(PeRootDirPath, "doc");
+				return Path.Combine(ApplicationRootDirPath, "doc");
 			}
 		}
 		/// <summary>
@@ -223,7 +223,7 @@ namespace PeMain
 		{
 			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
 		}
-		public static string PeVersion
+		public static string ApplicationVersion
 		{
 			get { return Version.ProductVersion; }
 		}

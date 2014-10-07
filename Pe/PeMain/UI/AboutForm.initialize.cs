@@ -35,7 +35,7 @@ namespace PeMain.UI
 			}
 			
 			this.labelAppName.Text = Literal.programName;
-			this.labelAppVersion.Text = Literal.PeVersion;
+			this.labelAppVersion.Text = Literal.ApplicationVersion;
 			this.labelConfiguration.Text = string.Format(
 				"{0}: {1}bit",
 				#if DEBUG
@@ -50,7 +50,7 @@ namespace PeMain.UI
 			this.linkMail.Text = Literal.AboutMailAddress;
 			this.linkDev.Text = Literal.AboutDevelopPage;
 			
-			var xml = XElement.Load(Path.Combine(Literal.PeDocumentDirPath, "components.xml"));
+			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));
 			var components = xml
 				.Elements()
 				.Select(

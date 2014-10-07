@@ -82,7 +82,7 @@ namespace PeMain.UI
 		
 		void CommandChangelog_Click(object sender, EventArgs e)
 		{
-			var path = Path.Combine(Literal.PeDocumentDirPath, "changelog.xml");
+			var path = Path.Combine(Literal.ApplicationDocumentDirPath, "changelog.xml");
 			Executer.OpenFile(path, CommonData);
 		}
 		
