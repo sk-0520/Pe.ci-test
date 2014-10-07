@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
+using PeUtility;
+
 namespace PeMain.Data
 {
 	/// <summary>
@@ -86,10 +88,8 @@ namespace PeMain.Data
 		
 		public override void Dispose()
 		{
-			if(this._font != null) {
-				this._font.Dispose();
-				this._font = null;
-			}
+			this._font.ToDispose();
+			this._font = null;
 		}
 		
 		public virtual void Include(FontSetting fs)

@@ -97,9 +97,7 @@ namespace PeMain.Data
 		
 		public override void Dispose()
 		{
-			if(Command != null) {
-				Command.Dispose();
-			}
+			Command.ToDispose();
 		}
 	}
 }

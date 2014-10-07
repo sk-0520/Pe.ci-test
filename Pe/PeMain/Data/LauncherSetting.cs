@@ -263,9 +263,7 @@ namespace PeMain.Data
 			base.Dispose();
 			
 			foreach(var icon in _iconMap.Values) {
-				if(icon != null) {
-					icon.Dispose();
-				}
+				icon.ToDispose();
 			}
 		}
 		
@@ -498,7 +496,7 @@ namespace PeMain.Data
 			base.Dispose();
 			
 			foreach(var item in Items) {
-				item.Dispose();
+				item.ToDispose();
 			}
 		}
 	}

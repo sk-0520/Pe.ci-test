@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 
+using PeUtility;
+
 namespace PeMain.Data
 {
 	/// <summary>
@@ -115,7 +117,7 @@ namespace PeMain.Data
 		
 		public void Dispose()
 		{
-			Style.Dispose();
+			Style.ToDispose();
 		}		
 	}
 	
@@ -134,7 +136,7 @@ namespace PeMain.Data
 		
 		public void Dispose()
 		{
-			FontSetting.Dispose();
+			FontSetting.ToDispose();
 		}
 	}
 }

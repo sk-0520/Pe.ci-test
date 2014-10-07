@@ -62,9 +62,9 @@ namespace PeMain.Data
 		
 		public override void Dispose()
 		{
-			if(FontSetting != null) {
-				FontSetting.Dispose();
-			}
+			base.Dispose();
+			
+			FontSetting.ToDispose();
 		}
 	}
 }

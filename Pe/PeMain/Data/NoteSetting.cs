@@ -50,7 +50,7 @@ namespace PeMain.Data
 		{
 			base.Dispose();
 			
-			CaptionFontSetting.Dispose();
+			CaptionFontSetting.ToDispose();
 		}
 		
 	}
