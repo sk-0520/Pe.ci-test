@@ -23,7 +23,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LogForm_functions.
 	/// </summary>
-	public partial class LogForm
+	partial class LogForm
 	{
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{

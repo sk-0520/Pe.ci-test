@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_define.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		const int TREE_LEVEL_GROUP = 0;
 		const int TREE_LEVEL_ITEM = 1;

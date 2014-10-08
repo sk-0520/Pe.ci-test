@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of AboutForm_property.
 	/// </summary>
-	public partial class AboutForm
+	partial class AboutForm
 	{
 		CommonData CommonData { get; set; }
 		public bool CheckUpdate { get; private set; }

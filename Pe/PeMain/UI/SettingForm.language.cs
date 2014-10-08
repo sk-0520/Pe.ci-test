@@ -13,7 +13,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		void ApplyLanguageTab()
 		{

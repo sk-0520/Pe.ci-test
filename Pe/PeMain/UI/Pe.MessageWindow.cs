@@ -14,7 +14,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class Pe
+	partial class Pe
 	{
 		/// <summary>
 		/// メッセージ受信用。

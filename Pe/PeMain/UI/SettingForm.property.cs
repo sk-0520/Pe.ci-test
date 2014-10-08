@@ -14,7 +14,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_property.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		/// <summary>
 		/// 使用言語データ

@@ -10,7 +10,7 @@ using System;
 
 namespace PeMain.UI
 {
-	public partial class EnvUpdateControl
+	partial class EnvUpdateControl
 	{
 		void Initialize()
 		{

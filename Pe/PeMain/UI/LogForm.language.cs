@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LogForm_language.
 	/// </summary>
-	public partial class LogForm
+	partial class LogForm
 	{
 		void ApplyLanguage()
 		{

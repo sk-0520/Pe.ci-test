@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LogForm_variable.
 	/// </summary>
-	public partial class LogForm
+	partial class LogForm
 	{
 		List<LogItem> _logs = new List<LogItem>();
 		ImageList _imageLogType = null;

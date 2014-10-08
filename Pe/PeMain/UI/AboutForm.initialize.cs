@@ -19,7 +19,7 @@ using PeUtility;
 
 namespace PeMain.UI
 {
-	public partial class AboutForm
+	partial class AboutForm
 	{
 		void Initialize()
 		{

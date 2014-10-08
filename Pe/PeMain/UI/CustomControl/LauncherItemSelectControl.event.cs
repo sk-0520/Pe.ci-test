@@ -30,7 +30,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LauncherItemSelectControl_event.
 	/// </summary>
-	public partial class LauncherItemSelectControl
+	partial class LauncherItemSelectControl
 	{
 		public event EventHandler<CreateItemEventArg> CreateItem;
 		public event EventHandler<RemovedItemEventArg> RemovedItem;

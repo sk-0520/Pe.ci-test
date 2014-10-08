@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_draw.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		void DrawEdge(Graphics g, Rectangle drawArea, bool active)
 		{

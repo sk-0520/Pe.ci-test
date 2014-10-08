@@ -14,7 +14,7 @@ using PeUtility;
 
 namespace PeMain.UI
 {
-	public partial class EnvUpdateControl
+	partial class EnvUpdateControl
 	{
 		public IEnumerable<TPair<string, string>> Items
 		{

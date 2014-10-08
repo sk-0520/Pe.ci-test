@@ -12,7 +12,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class AboutForm
+	partial class AboutForm
 	{
 		public void SetCommonData(CommonData commonData)
 		{

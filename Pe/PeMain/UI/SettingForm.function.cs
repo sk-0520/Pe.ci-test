@@ -17,7 +17,7 @@ using PeUtility;
 
 namespace PeMain.UI
 {
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		void AttachmentIconScale(ComboBox control, IconScale defaultData)
 		{

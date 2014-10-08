@@ -18,7 +18,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_define.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		const string menuNameMainPosDesktopFloat = "desktop_float";
 		const string menuNameMainPosDesktopTop = "desktop_top";

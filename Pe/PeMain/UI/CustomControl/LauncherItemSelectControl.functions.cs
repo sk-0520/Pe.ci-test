@@ -21,7 +21,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LauncherItemSelectControl_functions.
 	/// </summary>
-	public partial class LauncherItemSelectControl
+	partial class LauncherItemSelectControl
 	{
 		IEnumerable<ToolStripItem> GetEditToolItem()
 		{

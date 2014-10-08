@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_language.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		void ApplyLanguage()
 		{

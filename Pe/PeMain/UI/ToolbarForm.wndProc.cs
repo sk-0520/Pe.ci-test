@@ -17,7 +17,7 @@ using PInvoke.Windows;
 
 namespace PeMain.UI
 {
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		protected override void WndProc(ref Message m)
 		{

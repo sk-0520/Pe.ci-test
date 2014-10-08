@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_Page_main.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		void LogExportSetting(LogSetting logSetting)
 		{

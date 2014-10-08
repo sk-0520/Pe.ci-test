@@ -20,7 +20,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_initialize.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		void InitializeLog(LogSetting logSetting)
 		{

@@ -14,7 +14,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class StreamForm
+	partial class StreamForm
 	{
 		CommonData CommonData { get; set; }
 		Process Process { get; set;}

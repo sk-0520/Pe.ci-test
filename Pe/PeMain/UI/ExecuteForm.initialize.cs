@@ -11,7 +11,7 @@ using PeUtility;
 
 namespace PeMain.UI
 {
-	public partial class ExecuteForm
+	partial class ExecuteForm
 	{
 		void Initialize()
 		{

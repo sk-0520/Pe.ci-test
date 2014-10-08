@@ -21,12 +21,10 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_Page_note.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		bool NoteValid()
 		{
-			
-			
 			return true;
 		}
 

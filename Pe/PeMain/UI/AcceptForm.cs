@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// 使用許諾。
 	/// </summary>
-	public partial class AcceptForm : Form, ISetCommonData
+	partial class AcceptForm : Form, ISetCommonData
 	{
 		public AcceptForm()
 		{

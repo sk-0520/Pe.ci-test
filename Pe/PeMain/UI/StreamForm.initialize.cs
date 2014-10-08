@@ -10,7 +10,7 @@ using System;
 
 namespace PeMain.UI
 {
-	public partial class StreamForm
+	partial class StreamForm
 	{
 		void Initialize()
 		{

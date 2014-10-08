@@ -8,7 +8,7 @@
  */
 namespace PeMain.UI
 {
-	public partial class Pe
+	partial class Pe
 	{
 		partial class MessageWindow
 		{

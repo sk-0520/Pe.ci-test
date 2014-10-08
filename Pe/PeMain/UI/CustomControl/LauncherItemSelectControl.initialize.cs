@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LauncherItemSelectControl_initialize.
 	/// </summary>
-	public partial class LauncherItemSelectControl
+	partial class LauncherItemSelectControl
 	{
 		void InitializeUI()
 		{

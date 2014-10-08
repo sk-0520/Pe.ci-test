@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_initialize.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		void InitializeUI()
 		{

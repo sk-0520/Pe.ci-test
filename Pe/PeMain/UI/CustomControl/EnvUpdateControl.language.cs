@@ -13,7 +13,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class EnvUpdateControl
+	partial class EnvUpdateControl
 	{
 		void ApplyLanguage(Language language)
 		{

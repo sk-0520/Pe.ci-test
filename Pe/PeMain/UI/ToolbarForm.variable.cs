@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_variable.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		ContextMenu _menuGroup = null;
 		bool _isRunning = false;

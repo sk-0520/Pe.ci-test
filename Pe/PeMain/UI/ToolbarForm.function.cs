@@ -25,7 +25,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_functions.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		public void SetCommonData(CommonData commonData)
 		{

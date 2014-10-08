@@ -18,7 +18,7 @@ using PeUtility;
 
 namespace PeMain.UI
 {
-	public partial class StreamForm
+	partial class StreamForm
 	{
 		public void SetParameter(Process process, LauncherItem launcherItem)
 		{

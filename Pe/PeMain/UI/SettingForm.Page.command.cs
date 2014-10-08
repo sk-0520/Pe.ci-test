@@ -14,7 +14,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_Page_command.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		void CommandExportSetting(CommandSetting commandSetting)
 		{

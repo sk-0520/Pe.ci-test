@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ToolbarForm_property.
 	/// </summary>
-	public partial class ToolbarForm
+	partial class ToolbarForm
 	{
 		CommonData CommonData { get; set; }
 		

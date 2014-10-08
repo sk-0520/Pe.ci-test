@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LogForm_property.
 	/// </summary>
-	public partial class LogForm
+	partial class LogForm
 	{
 		CommonData CommonData { get; set; }
 	}

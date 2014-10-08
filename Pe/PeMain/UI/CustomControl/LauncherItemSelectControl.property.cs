@@ -16,7 +16,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LauncherItemSelectControl_property.
 	/// </summary>
-	public partial class LauncherItemSelectControl
+	partial class LauncherItemSelectControl
 	{
 		public bool ItemEdit
 		{

@@ -21,7 +21,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_Page_launcher.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		LauncherType LauncherGetSelectedType()
 		{

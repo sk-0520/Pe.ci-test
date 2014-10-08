@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of SettingForm_variable.
 	/// </summary>
-	public partial class SettingForm
+	partial class SettingForm
 	{
 		HashSet<LauncherItem> _launcherItems = null;
 		//FontSetting _commandFont = null;

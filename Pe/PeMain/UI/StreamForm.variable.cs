@@ -11,7 +11,7 @@ using PeMain.Data;
 
 namespace PeMain.UI
 {
-	public partial class StreamForm
+	partial class StreamForm
 	{
 	}
 }

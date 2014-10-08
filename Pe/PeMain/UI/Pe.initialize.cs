@@ -33,7 +33,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe_initialize.
 	/// </summary>
-	public partial class Pe
+	partial class Pe
 	{
 		void InitializeLanguage(CommandLine commandLine, StartupLogger logger)
 		{

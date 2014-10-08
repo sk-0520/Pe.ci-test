@@ -18,7 +18,7 @@ using PeUtility;
 
 namespace PeMain.UI
 {
-	public partial class ExecuteForm
+	partial class ExecuteForm
 	{
 		public void SetParameter(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{

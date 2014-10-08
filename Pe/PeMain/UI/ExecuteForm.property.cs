@@ -15,7 +15,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class ExecuteForm
+	partial class ExecuteForm
 	{
 		CommonData CommonData { get; set; }
 		LauncherItem LauncherItem { get; set;}

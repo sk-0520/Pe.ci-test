@@ -14,7 +14,7 @@ using PeMain.Data;
 
 namespace PeMain.UI
 {
-	public partial class EnvUpdateControl
+	partial class EnvUpdateControl
 	{
 		public void SetLanguage(Language language)
 		{

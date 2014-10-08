@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LauncherItemSelectControl_language.
 	/// </summary>
-	public partial class LauncherItemSelectControl
+	partial class LauncherItemSelectControl
 	{
 		void ApplyLanguage(Language language)
 		{

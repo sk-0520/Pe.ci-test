@@ -18,7 +18,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe_variable.
 	/// </summary>
-	public partial class Pe
+	partial class Pe
 	{
 		private NotifyIcon _notifyIcon;
 		private ContextMenu _contextMenu;

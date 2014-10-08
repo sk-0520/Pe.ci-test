@@ -13,7 +13,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	public partial class StreamForm
+	partial class StreamForm
 	{
 		void ApplyLanguage()
 		{

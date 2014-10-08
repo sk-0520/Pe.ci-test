@@ -15,7 +15,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of LauncherItemSelecterControl_variable.
 	/// </summary>
-	public partial class LauncherItemSelectControl
+	partial class LauncherItemSelectControl
 	{
 		private Language _language;
 		private bool _itemEdit;
