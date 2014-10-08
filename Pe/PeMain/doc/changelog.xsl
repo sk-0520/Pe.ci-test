@@ -7,13 +7,15 @@
 			<head>
 				<title>Pe更新履歴</title>
 				<style>
-				body{
+				body
+				{
 					font-family: "Meiryo UI";
 				}
-				h1{
+				
+				h1
+				{
 					border-bottom: 3px double #888;
 				}
-				
 				
 				dt.features
 				{
