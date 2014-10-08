@@ -105,16 +105,16 @@ namespace PeMain.Logic
 		
 	}
 	
-	public class UseLanguageDisplayValue<T>: DisplayValue<T>, ISetLanguage
+	public abstract class UseLanguageDisplayValue<T>: DisplayValue<T>, ISetLanguage
 	{
 		public UseLanguageDisplayValue(T value): base(value) { }
+		
+		public Language Language { get; private set; }
 		
 		public void SetLanguage(Language language)
 		{
 			Language = language;
 		}
-		
-		public Language Language { get; private set; }
 	}
 	
 	
