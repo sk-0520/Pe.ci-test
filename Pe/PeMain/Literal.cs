@@ -252,8 +252,7 @@ namespace PeMain
 		/// <summary>
 		/// 文字列リテラルを書式で変換。
 		/// 
-		/// [...] -> []を外す。
-		/// {...} -> 動的な置き換え。
+		/// {...} を置き換える。
 		/// * TIMESTAMP: そんとき
 		/// </summary>
 		/// <param name="src"></param>

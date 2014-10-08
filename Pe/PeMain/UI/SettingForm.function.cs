@@ -24,7 +24,8 @@ namespace PeMain.UI
 			var iconSizeDataList = new List<IconScaleDisplayValue>();
 			//foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big, IconScale.Large }) {
 			foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big }) {
-				var data = new IconScaleDisplayValue(value, Language);
+				var data = new IconScaleDisplayValue(value);
+				data.SetLanguage(Language);
 				iconSizeDataList.Add(data);
 			}
 			control.Attachment(iconSizeDataList, defaultData);

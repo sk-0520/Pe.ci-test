@@ -79,7 +79,6 @@ namespace PeMain.Logic
 		}
 		
 		/// <summary>
-		/// TODO: 外部化
 		/// </summary>
 		/// <param name="hParentWnd"></param>
 		private static void RefreshShell(IntPtr hParentWnd)

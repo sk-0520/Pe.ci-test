@@ -129,7 +129,8 @@ namespace PeMain.UI
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
 			foreach(var value in new [] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
-				var data = new ToolbarPositionDisplayValue(value, Language);
+				var data = new ToolbarPositionDisplayValue(value);
+				data.SetLanguage(Language);
 				toolbarPosList.Add(data);
 			}
 			this.selectToolbarPosition.Attachment(toolbarPosList);
@@ -143,7 +144,8 @@ namespace PeMain.UI
 				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
 					initToolbarItem = toolbarItem;
 				}
-				var toolbarItemData = new ToolbarDisplayValue(toolbarItem, Language);
+				var toolbarItemData = new ToolbarDisplayValue(toolbarItem);
+				//toolbarItemData.SetLanguage(Language);
 				toolbarItemDataList.Add(toolbarItemData);
 			}
 			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);

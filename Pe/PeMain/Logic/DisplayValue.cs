@@ -50,6 +50,9 @@ namespace PeMain.Logic
 		}
 	}
 	
+	/// <summary>
+	/// DisplayValue共通処理。
+	/// </summary>
 	public static class DisplayValueUtility
 	{
 		private static void SetValueAndDisplay(ListControl control)
@@ -58,21 +61,43 @@ namespace PeMain.Logic
 			control.DisplayMember  = "Display";
 		}
 		
+		/// <summary>
+		/// 接続。
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="itemDatas"></param>
+		/// <param name="defaultData"></param>
 		public static void Attachment<T>(this ComboBox control, IEnumerable<DisplayValue<T>> itemDatas, T defaultData)
 		{
 			SetValueAndDisplay(control);
 			control.DataSource = itemDatas;
 			control.SelectedValue = defaultData;
 		}
+		/// <summary>
+		/// 接続。
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="itemDatas"></param>
 		public static void Attachment<T>(this ComboBox control, IEnumerable<DisplayValue<T>> itemDatas)
 		{
 			control.Attachment(itemDatas, itemDatas.DefaultIfEmpty().First().Value);
 		}
 		
+		/// <summary>
+		/// 接続。
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="itemDatas"></param>
+		/// <param name="defaultData"></param>
 		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<DisplayValue<T>> itemDatas, T defaultData)
 		{
 			control.ComboBox.Attachment(itemDatas, defaultData);
 		}
+		/// <summary>
+		/// 接続。
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="itemDatas"></param>
 		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<DisplayValue<T>> itemDatas)
 		{
 			control.ComboBox.Attachment(itemDatas);
@@ -80,21 +105,22 @@ namespace PeMain.Logic
 		
 	}
 	
-	public class UseLanguageDisplayValue<T>: DisplayValue<T>
+	public class UseLanguageDisplayValue<T>: DisplayValue<T>, ISetLanguage
 	{
 		public UseLanguageDisplayValue(T value): base(value) { }
-		public UseLanguageDisplayValue(T value, Language language): base(value)
+		
+		public void SetLanguage(Language language)
 		{
 			Language = language;
 		}
-		public Language Language { get; set; }
+		
+		public Language Language { get; private set; }
 	}
 	
 	
 	public class ToolbarPositionDisplayValue: UseLanguageDisplayValue<ToolbarPosition>
 	{
 		public ToolbarPositionDisplayValue(ToolbarPosition value): base(value) { }
-		public ToolbarPositionDisplayValue(ToolbarPosition value, Language lang): base(value, lang) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
@@ -102,16 +128,14 @@ namespace PeMain.Logic
 	public class IconScaleDisplayValue: UseLanguageDisplayValue<IconScale>
 	{
 		public IconScaleDisplayValue(IconScale value): base(value) { }
-		public IconScaleDisplayValue(IconScale value, Language language): base(value, language) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 
-	class ColorDisplayValue: DisplayValue<Color>, ISetLanguage
+	class ColorDisplayValue: UseLanguageDisplayValue<Color>
 	{
 		private string _displayTitle;
 		private string _displayValue;
-		Language Language { get; set; }
 		
 		public ColorDisplayValue(Color value, string displayTitle, string displayValue): base(value)
 		{
@@ -131,11 +155,6 @@ namespace PeMain.Logic
 				return string.Format("{0}: {1}", title, value);
 			}
 		}
-		
-		public void SetLanguage(Language language)
-		{
-			Language = language;
-		}
 	}
 	
 		
@@ -145,15 +164,13 @@ namespace PeMain.Logic
 	public class LauncherTypeDisplayValue: UseLanguageDisplayValue<LauncherType>
 	{
 		public LauncherTypeDisplayValue(LauncherType value): base(value) { }
-		public LauncherTypeDisplayValue(LauncherType value, Language lang): base(value, lang) { }
 		
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 	
-	public class ToolbarDisplayValue: UseLanguageDisplayValue<ToolbarItem>
+	public class ToolbarDisplayValue: DisplayValue<ToolbarItem>
 	{
 		public ToolbarDisplayValue(ToolbarItem value): base(value) { }
-		public ToolbarDisplayValue(ToolbarItem value, Language language): base(value, language) { }
 		
 		public override string Display { get { return ScreenUtility.GetScreenName(Value.Name, null); } }
 	}
