@@ -61,9 +61,7 @@ namespace PeMain
 						}
 					}
 				} catch(Exception ex) {
-					if(fileLogger != null) {
-						fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);
-					}
+					fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);
 					throw;
 				}
 			}
