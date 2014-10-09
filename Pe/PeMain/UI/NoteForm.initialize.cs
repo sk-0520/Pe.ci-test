@@ -9,6 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
 
@@ -16,14 +18,8 @@ namespace PeMain.UI
 {
 	partial class NoteForm
 	{
-		void Initialize()
+		void InitializeUI()
 		{
-			this._commandStateMap = new Dictionary<NoteCommand, ButtonState>() {
-				{ NoteCommand.Close, ButtonState.Normal },
-				{ NoteCommand.Compact, ButtonState.Normal },
-				{ NoteCommand.Topmost, ButtonState.Normal },
-			};
-			
 			var colorControls = new [] {
 				new { Control = contextMenu_fore, Title = "note/style/color-fore", Default = Literal.noteFore },
 				new { Control = contextMenu_back, Title = "note/style/color-back", Default = Literal.noteBack },
@@ -43,7 +39,19 @@ namespace PeMain.UI
 				control.Control.ComboBox.BindingContext = BindingContext;
 				control.Control.Attachment(colorList, control.Default);
 			}
+			
 			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
+		}
+		
+		void Initialize()
+		{
+			this._commandStateMap = new Dictionary<NoteCommand, ButtonState>() {
+				{ NoteCommand.Close, ButtonState.Normal },
+				{ NoteCommand.Compact, ButtonState.Normal },
+				{ NoteCommand.Topmost, ButtonState.Normal },
+			};
+			
+			InitializeUI();
 		}
 	}
 }
