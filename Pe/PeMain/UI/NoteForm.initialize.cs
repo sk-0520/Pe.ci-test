@@ -35,6 +35,7 @@ namespace PeMain.UI
 					new ColorDisplayValue(isFore ? Literal.noteForeColorYellow: Literal.noteBackColorYellow, control.Title, "note/style/color/yellow"),
 					new ColorDisplayValue(isFore ? Literal.noteForeColorOrange: Literal.noteBackColorOrange, control.Title, "note/style/color/orange"),
 					new ColorDisplayValue(isFore ? Literal.noteForeColorPurple: Literal.noteBackColorPurple, control.Title, "note/style/color/purple"),
+					new ColorDisplayValue(Color.Transparent, control.Title, "note/style/color/custom"),
 				};
 				control.Control.ComboBox.BindingContext = BindingContext;
 				control.Control.Attachment(colorList, control.Default);

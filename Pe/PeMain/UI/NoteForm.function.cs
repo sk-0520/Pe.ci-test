@@ -41,7 +41,6 @@ namespace PeMain.UI
 			 */
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
 			this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
-
 			
 			Location = NoteItem.Location;
 			Size = NoteItem.Size;
@@ -54,6 +53,12 @@ namespace PeMain.UI
 			var commandSize = CommonData.Skin.GetNoteCommandArea(parentArea, GetCommandList().First());
 			var minSize = new Size(edge.Horizontal + commandSize.Width, edge.Vertical + commandSize.Height);
 			MinimumSize = minSize;
+			
+			//NoteItem.Style.ForeColor;
+//			if(!this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Any(cd => cd.Value == NoteItem.Style.ForeColor)) {
+//				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Single(cd => cd.Value == Color.Transparent).Value;
+//			}
+			//NoteItem.Style.BackColor;
 			
 			ApplyLanguage();
 		}
@@ -322,6 +327,33 @@ namespace PeMain.UI
 			Debug.Assert(index >= 0, control.ComboBox.SelectedIndex.ToString());
 			var item = control.ComboBox.Items[index] as ColorDisplayValue;
 			return item.Value;
+		}
+		
+		bool IsCustomColor(Color color)
+		{
+			return color == Color.Transparent;
+		}
+		
+		Color SetAcceptColor(Color color, Color revertColor)
+		{
+			var resultColor = color;
+			var accept = false;
+			if(IsCustomColor(color)) {
+				using(var dialog = new ColorDialog()) {
+					if(dialog.ShowDialog() == DialogResult.OK) {
+						resultColor = dialog.Color;
+						accept = true;
+					} else {
+						resultColor = revertColor;
+					}
+				}
+			} else {
+				accept = true;
+			}
+			if(accept) {
+				Changed = true;
+			}
+			return resultColor;
 		}
 	}
 }

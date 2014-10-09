@@ -42,6 +42,17 @@ namespace PeMain.UI
 			 */
 		}
 		
+		void TuneRect(ref Rectangle r)
+		{
+			if (r.Width % 2 == 1)
+			{
+				r.Width += 1;
+			}
+			if (r.Height % 2 == 1)
+			{
+				r.Height += 1;
+			}
+		}
 		
 		Color VisualColor { get; set;}
 		
@@ -427,24 +438,30 @@ namespace PeMain.UI
 			var edge = GetNoteWindowEdgePadding();
 			Rectangle edgeArea;
 			
+			const byte alpha = 128;
+			
 			// 左
 			edgeArea = new Rectangle(drawArea.Left, drawArea.Top, edge.Left, drawArea.Bottom);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.FromArgb(128, Color.White), Color.Transparent, LinearGradientMode.Horizontal)) {
+			TuneRect(ref edgeArea);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.FromArgb(alpha, Color.White), Color.Transparent, LinearGradientMode.Horizontal)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 			// 上
 			edgeArea = new Rectangle(drawArea.Left, drawArea.Top, drawArea.Width, edge.Top);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.FromArgb(128, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
+			TuneRect(ref edgeArea);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.FromArgb(alpha, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 			// 右
 			edgeArea = new Rectangle(drawArea.Right - edge.Right, drawArea.Top, edge.Right, drawArea.Bottom);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.FromArgb(128, Color.Black), LinearGradientMode.Horizontal)) {
+			TuneRect(ref edgeArea);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.FromArgb(alpha, Color.Black), LinearGradientMode.Horizontal)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 			// 下
 			edgeArea = new Rectangle(drawArea.Left, drawArea.Bottom - edge.Bottom, drawArea.Width, edge.Bottom);
-			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.FromArgb(128, Color.Black), LinearGradientMode.Vertical)) {
+			TuneRect(ref edgeArea);
+			using(var brush = new LinearGradientBrush(edgeArea, Color.Transparent, Color.FromArgb(alpha, Color.Black), LinearGradientMode.Vertical)) {
 				g.FillRectangle(brush, edgeArea);
 			}
 		}

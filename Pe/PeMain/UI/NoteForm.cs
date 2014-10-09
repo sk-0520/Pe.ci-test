@@ -235,18 +235,29 @@ namespace PeMain.UI
 		
 		void ContextMenu_fore_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(this._bindItem != null) {
-				NoteItem.Style.ForeColor = GetSelectedColor(this.contextMenu_fore);
-				Changed = true;
-				Refresh();
+			if(contextMenu.Created) {
+				var color = GetSelectedColor(this.contextMenu_fore);
+				var result = SetAcceptColor(color, this._prevForeColor);
+				if(result != this._prevForeColor) {
+					NoteItem.Style.ForeColor = result;
+					Refresh();
+				} else {
+					contextMenu.Close();
+				}
 			}
 		}
 		
 		void ContextMenu_back_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if(this._bindItem != null) {
-				NoteItem.Style.BackColor = GetSelectedColor(this.contextMenu_back);
-				Changed = true;
+			if(contextMenu.Created) {
+				var color = GetSelectedColor(this.contextMenu_back);
+				var result = SetAcceptColor(color, this._prevBackColor);
+				if(result != this._prevBackColor) {
+					NoteItem.Style.BackColor = result;
+					Refresh();
+				} else {
+					contextMenu.Close();
+				}
 				Refresh();
 			}
 		}
@@ -283,7 +294,7 @@ namespace PeMain.UI
 		{
 			ToClose(true);
 		}
-		*/
+		 */
 		
 		void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
@@ -302,13 +313,19 @@ namespace PeMain.UI
 			this.contextMenu_font_change.Text = NoteItem.Style.FontSetting.ToViewText(CommonData.Language);
 			
 			// 色
+			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_fore.ComboBox.SelectedItem).Value;
+			this._prevBackColor = ((ColorDisplayValue)this.contextMenu_back.ComboBox.SelectedItem).Value;
 			var foreColor = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
 			if(foreColor != null) {
 				this.contextMenu_fore.SelectedItem = foreColor;
+			} else {
+				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
 			var backColor = this.contextMenu_back.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
 			if(backColor != null) {
 				this.contextMenu_back.SelectedItem = backColor;
+			} else {
+				this.contextMenu_back.SelectedItem = this.contextMenu_back.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
 		}
 		

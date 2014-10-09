@@ -8,8 +8,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -21,5 +24,7 @@ namespace PeMain.UI
 		bool _changed = false;
 		string _prevTitle;
 		string _prevBody;
+		Color _prevForeColor;
+		Color _prevBackColor;
 	}
 }
