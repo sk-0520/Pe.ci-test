@@ -37,7 +37,7 @@
 			<li></li>
 		</ul>
 		<ul type="fixes">
-			<li></li>
+			<li>ノート最小化時の描画処理で本文が描画されないように修正</li>
 			<li></li>
 			<li></li>
 		</ul>
