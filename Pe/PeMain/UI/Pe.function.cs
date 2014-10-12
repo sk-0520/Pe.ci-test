@@ -137,7 +137,10 @@ namespace PeMain.UI
 			if(!recursion) {
 				if(!customWindow) {
 					foreach(var pair in windowVisible) {
-						pair.Key.Visible = pair.Value;
+						// すでに表示している場合はポーズ中に処理が走ったため復帰は無視する
+						if(!pair.Key.Visible) {
+							pair.Key.Visible = pair.Value;
+						}
 					}
 				}
 				this._pause = false;
@@ -211,6 +214,12 @@ namespace PeMain.UI
 		}
 		
 		
+		/// <summary>
+		/// デシリアイズ。
+		/// </summary>
+		/// <param name="path">読み込むファイルパス</param>
+		/// <param name="failToNew">読み込み失敗時にデフォルトコンストラクタで生成するか</param>
+		/// <returns>読み込んだデータ</returns>
 		static T LoadDeserialize<T>(string path, bool failToNew)
 			where T: new()
 		{
@@ -227,6 +236,11 @@ namespace PeMain.UI
 			}
 		}
 
+		/// <summary>
+		/// シリアライズ。
+		/// </summary>
+		/// <param name="saveData">保存データ</param>
+		/// <param name="savePath">保存ファイルパス</param>
 		static void SaveSerialize<T>(T saveData, string savePath)
 		{
 			Debug.Assert(saveData != null);
