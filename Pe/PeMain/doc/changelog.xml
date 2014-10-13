@@ -25,12 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/DD" version="0.22.0">
-		<ul type="note">
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
+	<log date="2014/10/13" version="0.22.0">
 		<ul type="features">
 			<li>ノートの前景色・背景色をノートコンテキストメニューから変更可能に</li>
 			<li>全ウィンドウ非表示状態で非表示ウィンドウから表示された場合に復帰させないようにした</li>
@@ -38,13 +33,9 @@
 		</ul>
 		<ul type="fixes">
 			<li>ノート最小化時の描画処理で本文が描画されないように修正</li>
-			<li></li>
-			<li></li>
 		</ul>
 		<ul type="developer">
 			<li>デバッグ時のデバッグ設定見直し</li>
-			<li></li>
-			<li></li>
 		</ul>
 	</log>
 	<log date="2014/10/05" version="0.21.0">
