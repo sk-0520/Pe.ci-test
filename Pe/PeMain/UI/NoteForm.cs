@@ -12,7 +12,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.IF;
 using PeMain.Logic;
 using PInvoke.Windows;
 
@@ -104,9 +106,9 @@ namespace PeMain.UI
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
 					if(left && isIn) {
-						return ButtonState.Pressed;
+						return PeMain.IF.ButtonState.Pressed;
 					} else {
-						return ButtonState.Normal;
+						return PeMain.IF.ButtonState.Normal;
 					}
 				},
 				null,
@@ -126,13 +128,13 @@ namespace PeMain.UI
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
 					if(left && isIn) {
-						return ButtonState.Selected;
+						return PeMain.IF.ButtonState.Selected;
 					} else {
-						return ButtonState.Normal;
+						return PeMain.IF.ButtonState.Normal;
 					}
 				},
 				command => {
-					if(this._commandStateMap[command] == ButtonState.Pressed) {
+					if(this._commandStateMap[command] == PeMain.IF.ButtonState.Pressed) {
 						var isRemove = (ModifierKeys & Keys.Shift) == Keys.Shift;
 						if(isRemove) {
 							var map = new Dictionary<string, string>() {

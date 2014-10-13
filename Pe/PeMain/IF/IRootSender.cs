@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using PeMain.Data;
 using PInvoke.Windows;
 
-namespace PeMain.Logic
+namespace PeMain.IF
 {
 	/// <summary>
 	/// 送信機。

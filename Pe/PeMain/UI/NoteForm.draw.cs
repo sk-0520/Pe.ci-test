@@ -12,7 +12,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.IF;
 
 namespace PeMain.UI
 {
@@ -25,7 +27,7 @@ namespace PeMain.UI
 		
 		void DrawCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
-			ButtonState buttonState = ButtonState.Normal;
+			PeMain.IF.ButtonState buttonState = PeMain.IF.ButtonState.Normal;
 			
 			var title = NoteItem.Title;
 			#if DEBUG
@@ -78,7 +80,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		void DrawCommand(Point point, Func<bool, ButtonState, ButtonState> inFirstDg, Action<NoteCommand> prevDrawDg, Action lastInDg, bool elseProcess)
+		void DrawCommand(Point point, Func<bool, PeMain.IF.ButtonState, PeMain.IF.ButtonState> inFirstDg, Action<NoteCommand> prevDrawDg, Action lastInDg, bool elseProcess)
 		{
 			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
 			if(!captionArea.Size.IsEmpty) {
@@ -88,11 +90,11 @@ namespace PeMain.UI
 					using(var g = CreateGraphics()) {
 						foreach(var command in GetCommandList()) {
 							var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
-							var nowState = ButtonState.None;
+							var nowState = PeMain.IF.ButtonState.None;
 							var prevState = this._commandStateMap[command];
 							nowState = inFirstDg(commandArea.Contains(point), prevState);
 							
-							if(nowState != ButtonState.None) {
+							if(nowState != PeMain.IF.ButtonState.None) {
 								if(prevDrawDg != null) {
 									prevDrawDg(command);
 								}
@@ -110,13 +112,13 @@ namespace PeMain.UI
 					if(elseProcess) {
 						using(var g = CreateGraphics()) {
 							foreach(var pair in this._commandStateMap) {
-								if(pair.Value != ButtonState.Normal) {
+								if(pair.Value != PeMain.IF.ButtonState.Normal) {
 									var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
-									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, ButtonState.Normal);
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, PeMain.IF.ButtonState.Normal);
 								}
 							}
 							foreach(var key in this._commandStateMap.Keys.ToArray()) {
-								this._commandStateMap[key] = ButtonState.Normal;
+								this._commandStateMap[key] = PeMain.IF.ButtonState.Normal;
 							}
 						}
 					}

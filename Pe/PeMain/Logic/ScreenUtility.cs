@@ -12,7 +12,9 @@ using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.IF;
 using PInvoke.Windows;
 using PInvoke.Windows.root.CIMV2;
 

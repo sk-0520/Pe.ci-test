@@ -10,6 +10,8 @@ using System;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using PeMain.IF;
+
 namespace PeMain.Data
 {
 	/// <summary>
@@ -18,14 +20,6 @@ namespace PeMain.Data
 	[Serializable]
 	public abstract class Item
 	{ }
-	
-	/// <summary>
-	/// 解放が必要なアイテムのインターフェイス。
-	/// </summary>
-	public interface IDisposableItem: IDisposable
-	{
-		bool IsDisposed { get; set; }
-	}
 	
 	/// <summary>
 	/// 解放が必要なアイテムの基底。
@@ -50,14 +44,6 @@ namespace PeMain.Data
 		{
 			IsDisposed = true;
 		}
-	}
-	
-	public interface INameItem
-	{
-		/// <summary>
-		/// 名前
-		/// </summary>
-		string Name { get; set; }
 	}
 	
 	/// <summary>

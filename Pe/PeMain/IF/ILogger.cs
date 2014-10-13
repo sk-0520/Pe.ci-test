@@ -9,7 +9,7 @@
 using System;
 using PeMain.Data;
 
-namespace PeMain.Logic
+namespace PeMain.IF
 {
 	/// <summary>
 	/// ログ取インターフェイス。

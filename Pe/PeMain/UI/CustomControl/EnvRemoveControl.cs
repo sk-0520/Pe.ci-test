@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using PeMain.IF;
 using PeMain.Logic;
 
 namespace PeMain.UI

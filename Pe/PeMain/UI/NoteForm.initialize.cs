@@ -46,10 +46,10 @@ namespace PeMain.UI
 		
 		void Initialize()
 		{
-			this._commandStateMap = new Dictionary<NoteCommand, ButtonState>() {
-				{ NoteCommand.Close, ButtonState.Normal },
-				{ NoteCommand.Compact, ButtonState.Normal },
-				{ NoteCommand.Topmost, ButtonState.Normal },
+			this._commandStateMap = new Dictionary<NoteCommand, PeMain.IF.ButtonState>() {
+				{ NoteCommand.Close, PeMain.IF.ButtonState.Normal },
+				{ NoteCommand.Compact, PeMain.IF.ButtonState.Normal },
+				{ NoteCommand.Topmost, PeMain.IF.ButtonState.Normal },
 			};
 			
 			InitializeUI();

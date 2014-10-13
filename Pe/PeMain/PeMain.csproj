@@ -121,6 +121,12 @@
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="IF\IItem.cs" />
+    <Compile Include="IF\ILogger.cs" />
+    <Compile Include="IF\IRootSender.cs" />
+    <Compile Include="IF\ISetCommonData.cs" />
+    <Compile Include="IF\ISetLanguage.cs" />
+    <Compile Include="IF\ISkin.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\DB\DBWrapper.cs" />
@@ -128,12 +134,9 @@
     <Compile Include="Logic\EnumToText.cs" />
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\FileLogger.cs" />
-    <Compile Include="Logic\ILogger.cs" />
-    <Compile Include="Logic\ISetCommonData.cs" />
     <Compile Include="Logic\PeInformation.cs" />
     <Compile Include="Logic\LanguageUtility.cs" />
     <Compile Include="Logic\DisplayValue.cs" />
-    <Compile Include="Logic\IRootSender.cs" />
     <Compile Include="Logic\PeDBManager.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\SystemEnv.cs" />
@@ -579,6 +582,7 @@
     <Folder Include="UI\Skin" />
     <Folder Include="doc" />
     <Folder Include="bat" />
+    <Folder Include="IF" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">

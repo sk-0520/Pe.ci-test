@@ -1,24 +1,21 @@
 ﻿/*
  * SharpDevelopによって生成
  * ユーザ: sk
- * 日付: 2014/01/29
- * 時刻: 22:00
+ * 日付: 2014/10/13
+ * 時刻: 11:32
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Data.Common;
 using PeMain.Data;
-using PeMain.UI;
-using PeUtility;
 
-namespace PeMain.Logic
+namespace PeMain.IF
 {
 	/// <summary>
-	/// CommonDataを受信可能とする。
+	/// 言語設定を外部から実施するためのインターフェイス。
 	/// </summary>
-	public interface ISetCommonData
+	public interface ISetLanguage
 	{
-		void SetCommonData(CommonData commonData);
+		void SetLanguage(Language language);
 	}
 }
