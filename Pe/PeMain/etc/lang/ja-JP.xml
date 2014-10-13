@@ -127,6 +127,8 @@
 		<Word Name="note/menu/title"        Text="タイトル入力" />
 		<Word Name="note/menu/body"         Text="本文入力" />
 		<Word Name="note/menu/copy"         Text="コピー" />
+		<Word Name="note/menu/import"       Text="入力" />
+		<Word Name="note/menu/export"       Text="出力" />
 		<Word Name="note/menu/lock"         Text="固定" />
 		<Word Name="note/menu/font"         Text="${font}" />
 		<!-- <Word Name="note/menu/font/change"  Text="変更" /> -->

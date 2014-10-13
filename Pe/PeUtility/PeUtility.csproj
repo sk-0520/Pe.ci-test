@@ -67,6 +67,7 @@
     <Compile Include="CommandLine.cs" />
     <Compile Include="DataUtility.cs" />
     <Compile Include="DBManager.cs" />
+    <Compile Include="DialogUtility.cs" />
     <Compile Include="FileUtility.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="IconUtility.cs" />

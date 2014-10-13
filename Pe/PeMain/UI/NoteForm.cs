@@ -10,12 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
+using PeUtility;
 using PInvoke.Windows;
 
 namespace PeMain.UI
@@ -329,6 +331,9 @@ namespace PeMain.UI
 			} else {
 				this.contextMenu_back.SelectedItem = this.contextMenu_back.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
+			
+			// 入出力
+			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
 		}
 		
 		[System.Security.Permissions.UIPermission(
@@ -372,6 +377,24 @@ namespace PeMain.UI
 		void NoteForm_MouseLeave(object sender, EventArgs e)
 		{
 			Refresh();
+		}
+		
+		void NotemenuexportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using(var dialog = new SaveFileDialog()) {
+				var filter = new DialogFilter();
+				filter.Items.Add(new DialogFilterItem("*.txt", "*.txt"));
+				filter.Attachment(dialog);
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					var path = dialog.FileName;
+					File.WriteAllText(path, NoteItem.Body, Encoding.UTF8);
+				}
+			}
+		}
+		
+		void NotemenuimportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			
 		}
 	}
 }

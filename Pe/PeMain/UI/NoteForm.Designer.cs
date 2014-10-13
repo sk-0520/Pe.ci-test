@@ -55,6 +55,9 @@ namespace PeMain.UI
 			this.contextMenu_itemTopmost = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemHidden = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.contextMenu_itemExport = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemImport = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputTitle = new System.Windows.Forms.TextBox();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -95,9 +98,12 @@ namespace PeMain.UI
 									this.contextMenu_itemCompact,
 									this.contextMenu_itemTopmost,
 									this.toolStripSeparator3,
-									this.contextMenu_itemHidden});
+									this.contextMenu_itemHidden,
+									this.toolStripSeparator4,
+									this.contextMenu_itemExport,
+									this.contextMenu_itemImport});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(263, 286);
+			this.contextMenu.Size = new System.Drawing.Size(263, 336);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
@@ -200,6 +206,26 @@ namespace PeMain.UI
 			this.contextMenu_itemHidden.Text = ":note/menu/hidden";
 			this.contextMenu_itemHidden.Click += new System.EventHandler(this.ContextMenu_itemHidden_Click);
 			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(259, 6);
+			// 
+			// contextMenu_itemExport
+			// 
+			this.contextMenu_itemExport.Name = "contextMenu_itemExport";
+			this.contextMenu_itemExport.Size = new System.Drawing.Size(262, 22);
+			this.contextMenu_itemExport.Text = ":note/menu/export";
+			this.contextMenu_itemExport.Click += new System.EventHandler(this.NotemenuexportToolStripMenuItem_Click);
+			// 
+			// contextMenu_itemImport
+			// 
+			this.contextMenu_itemImport.Enabled = false;
+			this.contextMenu_itemImport.Name = "contextMenu_itemImport";
+			this.contextMenu_itemImport.Size = new System.Drawing.Size(262, 22);
+			this.contextMenu_itemImport.Text = ":note/menu/import";
+			this.contextMenu_itemImport.Click += new System.EventHandler(this.NotemenuimportToolStripMenuItem_Click);
+			// 
 			// inputTitle
 			// 
 			this.inputTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -246,6 +272,9 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemImport;
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemExport;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTopmost;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_reset;
