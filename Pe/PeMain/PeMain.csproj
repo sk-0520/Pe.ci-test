@@ -134,10 +134,10 @@
     <Compile Include="Logic\EnumToText.cs" />
     <Compile Include="Logic\Executer.cs" />
     <Compile Include="Logic\FileLogger.cs" />
-    <Compile Include="Logic\PeInformation.cs" />
+    <Compile Include="Logic\AppInformation.cs" />
     <Compile Include="Logic\LanguageUtility.cs" />
     <Compile Include="Logic\DisplayValue.cs" />
-    <Compile Include="Logic\PeDBManager.cs" />
+    <Compile Include="Logic\AppDBManager.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\SystemEnv.cs" />
     <Compile Include="Logic\Update.cs" />
@@ -321,36 +321,36 @@
     <Compile Include="UI\NoteForm.variable.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.cs" />
-    <Compile Include="UI\Pe.function.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.cs" />
+    <Compile Include="UI\App.function.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.initialize.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.initialize.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.language.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.language.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.MessageWindow.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.Designer.cs">
-      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    <Compile Include="UI\App.MessageWindow.Designer.cs">
+      <DependentUpon>App.MessageWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.language.cs">
-      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    <Compile Include="UI\App.MessageWindow.language.cs">
+      <DependentUpon>App.MessageWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.property.cs">
-      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    <Compile Include="UI\App.MessageWindow.property.cs">
+      <DependentUpon>App.MessageWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.wndProc.cs">
-      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    <Compile Include="UI\App.MessageWindow.wndProc.cs">
+      <DependentUpon>App.MessageWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.property.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.property.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.variable.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.variable.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.cs" />
     <Compile Include="UI\SettingForm.define.cs">
@@ -530,14 +530,14 @@
     <Compile Include="UI\LogForm.initialize.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.define.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.define.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.MessageWindow.function.cs">
-      <DependentUpon>Pe.MessageWindow.cs</DependentUpon>
+    <Compile Include="UI\App.MessageWindow.function.cs">
+      <DependentUpon>App.MessageWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.sender.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.sender.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
@@ -548,8 +548,8 @@
     <Compile Include="UI\NoteForm.wndProc.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Pe.logger.cs">
-      <DependentUpon>Pe.cs</DependentUpon>
+    <Compile Include="UI\App.logger.cs">
+      <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <None Include="etc\lang\ja-JP.accept.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
