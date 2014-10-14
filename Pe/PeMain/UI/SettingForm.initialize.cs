@@ -88,7 +88,7 @@ namespace PeMain.UI
 			this.inputCommandHotkey.HotKeySetting = commandSetting.HotKey;
 		}
 		
-		void InitializeNote(NoteSetting noteSetting, PeDBManager db)
+		void InitializeNote(NoteSetting noteSetting, AppDBManager db)
 		{
 			// ホットキー
 			this.inputNoteCreate.HotKeySetting = noteSetting.CreateHotKey;
@@ -171,7 +171,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		void InitializeUI(MainSetting mainSetting, PeDBManager db)
+		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			ApplyLanguage();
 			
@@ -189,7 +189,7 @@ namespace PeMain.UI
 #endif
 		}
 		
-		void Initialize(Language language, MainSetting mainSetting, PeDBManager db)
+		void Initialize(Language language, MainSetting mainSetting, AppDBManager db)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 			

@@ -22,7 +22,7 @@ namespace PeMain.UI
 	/// </summary>
 	public partial class SettingForm : Form
 	{
-		public SettingForm(Language language, MainSetting setting, PeDBManager db)
+		public SettingForm(Language language, MainSetting setting, AppDBManager db)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.

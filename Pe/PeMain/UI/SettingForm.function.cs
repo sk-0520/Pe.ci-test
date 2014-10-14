@@ -47,7 +47,7 @@ namespace PeMain.UI
 			return checkResult;
 		}
 		
-		public void SaveDB(PeDBManager db)
+		public void SaveDB(AppDBManager db)
 		{
 			using(var tran = db.BeginTransaction()) {
 				try {

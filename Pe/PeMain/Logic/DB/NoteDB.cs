@@ -22,7 +22,7 @@ namespace PeMain.Logic.DB
 	/// </summary>
 	public class NoteDB: DBWrapper
 	{
-		public NoteDB(PeDBManager db): base(db)
+		public NoteDB(AppDBManager db): base(db)
 		{ }
 		
 		/// <summary>

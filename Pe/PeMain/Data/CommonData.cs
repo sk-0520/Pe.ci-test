@@ -43,7 +43,7 @@ namespace PeMain.Data
 		/// 
 		/// 入れるべきじゃない気がする。
 		/// </summary>
-		public PeDBManager Database { get; set; }
+		public AppDBManager Database { get; set; }
 		
 		public void Dispose()
 		{

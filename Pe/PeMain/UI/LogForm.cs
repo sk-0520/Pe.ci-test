@@ -119,7 +119,7 @@ namespace PeMain.UI
 					//Debug.WriteLine(path);
 					try {
 						using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
-							stream.WriteLine(new PeMain.Logic.PeInformation().ToString());
+							stream.WriteLine(new PeMain.Logic.AppInformation().ToString());
 							foreach(var logItem in this._logs) {
 								stream.WriteLine(logItem.ToString());
 							}

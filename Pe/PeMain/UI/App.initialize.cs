@@ -131,7 +131,7 @@ namespace PeMain.UI
 				FileUtility.MakeFileParentDirectory(dbFilePath);
 			}
 			var connection = new SQLiteConnection("Data Source=" + dbFilePath);
-			this._commonData.Database = new PeDBManager(connection, false);
+			this._commonData.Database = new AppDBManager(connection, false);
 
 			// 
 			var enabledVersionTable = this._commonData.Database.ExistsTable(DataTables.masterTableVersion);

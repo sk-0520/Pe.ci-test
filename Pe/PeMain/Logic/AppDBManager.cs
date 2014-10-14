@@ -19,9 +19,9 @@ namespace PeMain.Logic
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
 	/// </summary>
-	public class PeDBManager: SQLiteDBManager
+	public class AppDBManager: SQLiteDBManager
 	{
-		public PeDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
+		public AppDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
 		{ }
 		
 		public bool ExistsTable(string tableName)

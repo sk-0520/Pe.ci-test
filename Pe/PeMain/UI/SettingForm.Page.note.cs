@@ -39,7 +39,7 @@ namespace PeMain.UI
 			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
 		}
 		
-		void SaveNoteItems(PeDBManager db)
+		void SaveNoteItems(AppDBManager db)
 		{
 			if(this._noteItemList.Count > 0) {
 				var removeList = this._noteItemList.Where(note => note.Remove).Select(note => note.NoteItem);
