@@ -45,7 +45,7 @@ namespace PeMain
 				try {
 					using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 						if (isFirstInstance) {
-							using(var app = new UI.Pe(commandLine, fileLogger)) {
+							using(var app = new UI.App(commandLine, fileLogger)) {
 								#if DEBUG
 								app.DebugProcess();
 								#endif

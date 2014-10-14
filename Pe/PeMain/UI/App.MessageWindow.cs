@@ -15,16 +15,16 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	partial class Pe
+	partial class App
 	{
 		/// <summary>
 		/// メッセージ受信用。
 		/// </summary>
 		public partial class MessageWindow : Form, ISetCommonData
 		{
-			private Pe _parent;
+			private App _parent;
 			
-			public MessageWindow(Pe parent)
+			public MessageWindow(App parent)
 			{
 				//
 				// The InitializeComponent() call is required for Windows Forms designer support.

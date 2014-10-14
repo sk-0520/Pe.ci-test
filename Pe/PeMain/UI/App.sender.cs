@@ -20,7 +20,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	partial class Pe
+	partial class App
 	{
 		public void ShowBalloon(ToolTipIcon icon, string title, string message)
 		{

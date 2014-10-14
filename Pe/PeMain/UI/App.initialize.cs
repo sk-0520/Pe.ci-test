@@ -33,7 +33,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe_initialize.
 	/// </summary>
-	partial class Pe
+	partial class App
 	{
 		void InitializeLanguage(CommandLine commandLine, StartupLogger logger)
 		{
@@ -459,7 +459,7 @@ namespace PeMain.UI
 			var iconRect = new Rectangle(Point.Empty, iconSize);
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
-					using(var icon = new Icon(global::PeMain.Properties.Images.Pe, iconSize)) {
+					using(var icon = new Icon(global::PeMain.Properties.Images.App, iconSize)) {
 						g.DrawIcon(icon, iconRect);
 					}
 					#if DEBUG

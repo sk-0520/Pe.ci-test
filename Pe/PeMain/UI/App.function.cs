@@ -29,7 +29,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe_functions.
 	/// </summary>
-	partial class Pe
+	partial class App
 	{
 		[Conditional("DEBUG")]
 		public void DebugProcess()

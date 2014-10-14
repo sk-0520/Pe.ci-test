@@ -13,7 +13,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	partial class Pe
+	partial class App
 	{
 		//const string menuNameWindow = "menu_window";
 		const string menuNameNote = "menu_note";

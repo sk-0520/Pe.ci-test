@@ -13,7 +13,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	partial class Pe
+	partial class App
 	{
 		void ApplyLanguageMainMenu()
 		{

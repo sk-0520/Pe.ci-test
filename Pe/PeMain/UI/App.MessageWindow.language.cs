@@ -10,7 +10,7 @@ using System;
 
 namespace PeMain.UI
 {
-	partial class Pe
+	partial class App
 	{
 		partial class MessageWindow
 		{

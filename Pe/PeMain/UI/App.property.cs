@@ -1,6 +1,6 @@
 ﻿namespace PeMain.UI
 {
-	partial class Pe
+	partial class App
 	{
 		public bool Initialized { get; private set; }
 	}

@@ -81,6 +81,16 @@ namespace PeMain.Properties {
 		}
 		
 		/// <summary>
+		///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Icon App {
+			get {
+				object obj = ResourceManager.GetObject("App", resourceCulture);
+				return ((System.Drawing.Icon)(obj));
+			}
+		}
+		
+		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
 		public static System.Drawing.Bitmap Changelog {
@@ -257,16 +267,6 @@ namespace PeMain.Properties {
 			get {
 				object obj = ResourceManager.GetObject("NotImpl", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
-			}
-		}
-		
-		/// <summary>
-		///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-		/// </summary>
-		public static System.Drawing.Icon Pe {
-			get {
-				object obj = ResourceManager.GetObject("Pe", resourceCulture);
-				return ((System.Drawing.Icon)(obj));
 			}
 		}
 		

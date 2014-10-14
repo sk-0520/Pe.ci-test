@@ -12,7 +12,7 @@ using PInvoke.Windows;
 
 namespace PeMain.UI
 {
-	partial class Pe
+	partial class App
 	{
 		/// <summary>
 		/// Description of Pe_MessageWindow_wndProc.

@@ -14,7 +14,7 @@ using PeMain.Logic;
 
 namespace PeMain.UI
 {
-	partial class Pe
+	partial class App
 	{
 		/// <summary>
 		/// Description of Pe_MessageWindow_property.

@@ -17,7 +17,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	partial class Pe
+	partial class App
 	{
 		class StartupLogger: ILogger
 		{
