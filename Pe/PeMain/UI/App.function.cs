@@ -274,6 +274,7 @@ namespace PeMain.UI
 					var mainSetting = settingForm.MainSetting;
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;
+					settingForm.SaveFiles();
 					settingForm.SaveDB(this._commonData.Database);
 					SaveSetting();
 					InitializeLanguage(null, null);

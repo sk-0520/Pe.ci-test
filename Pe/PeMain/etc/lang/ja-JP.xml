@@ -172,6 +172,7 @@
 		<Word Name="setting/tab/command"           Text="コマンド" />
 		<Word Name="setting/tab/display"           Text="ディスプレイ" />
 		<Word Name="setting/tab/note"              Text="ノート" />
+		<Word Name="setting/check/startup"        Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />
 		<Word Name="setting/check/update-check.RC" Text="${update-check.RC}" />

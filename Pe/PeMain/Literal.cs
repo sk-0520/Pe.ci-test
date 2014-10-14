@@ -30,6 +30,11 @@ namespace PeMain
 		
 		public const string programName = "Pe";
 		public const string updateProgramName = "PeUpdater.exe";
+		#if DEBUG
+		public const string shortcutName = "Pe(DEBUG).lnk";
+		#else
+		public const string shortcutName = "Pe.lnk";
+		#endif
 		
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
@@ -92,6 +97,17 @@ namespace PeMain
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
 		#endif
+		
+		/// <summary>
+		/// 実行パス
+		/// </summary>
+		public static string ApplicationExecutablePath
+		{
+			get
+			{
+				return Application.ExecutablePath;
+			}
+		}
 		
 		/// <summary>
 		/// 起動ディレクトリ

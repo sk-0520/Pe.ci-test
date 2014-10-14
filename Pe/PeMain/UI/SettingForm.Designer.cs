@@ -171,6 +171,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.selectMainStartup = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupUpdateCheck.SuspendLayout();
@@ -247,6 +248,7 @@ namespace PeMain.UI
 			// 
 			// tabSetting_pageMain
 			// 
+			this.tabSetting_pageMain.Controls.Add(this.selectMainStartup);
 			this.tabSetting_pageMain.Controls.Add(this.groupUpdateCheck);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainSystemEnv);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainLog);
@@ -267,7 +269,7 @@ namespace PeMain.UI
 			this.groupUpdateCheck.Location = new System.Drawing.Point(234, 177);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
 			this.groupUpdateCheck.Size = new System.Drawing.Size(458, 48);
-			this.groupUpdateCheck.TabIndex = 3;
+			this.groupUpdateCheck.TabIndex = 4;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
 			// 
@@ -311,7 +313,7 @@ namespace PeMain.UI
 			this.groupMainSystemEnv.Location = new System.Drawing.Point(248, 62);
 			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
 			this.groupMainSystemEnv.Size = new System.Drawing.Size(379, 100);
-			this.groupMainSystemEnv.TabIndex = 2;
+			this.groupMainSystemEnv.TabIndex = 3;
 			this.groupMainSystemEnv.TabStop = false;
 			this.groupMainSystemEnv.Text = ":setting/group/system-env";
 			// 
@@ -372,7 +374,7 @@ namespace PeMain.UI
 			this.groupMainLog.Location = new System.Drawing.Point(15, 62);
 			this.groupMainLog.Name = "groupMainLog";
 			this.groupMainLog.Size = new System.Drawing.Size(200, 186);
-			this.groupMainLog.TabIndex = 1;
+			this.groupMainLog.TabIndex = 2;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
 			// 
@@ -840,7 +842,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(524, 84);
+			this.panelEnv.Size = new System.Drawing.Size(524, 82);
 			this.panelEnv.SplitterDistance = 341;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -849,7 +851,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 84);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 82);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -858,7 +860,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(179, 84);
+			this.envLauncherRemove.Size = new System.Drawing.Size(179, 82);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -1747,6 +1749,16 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// selectMainStartup
+			// 
+			this.selectMainStartup.AutoSize = true;
+			this.selectMainStartup.Location = new System.Drawing.Point(281, 19);
+			this.selectMainStartup.Name = "selectMainStartup";
+			this.selectMainStartup.Size = new System.Drawing.Size(158, 19);
+			this.selectMainStartup.TabIndex = 1;
+			this.selectMainStartup.Text = ":setting/check/startup";
+			this.selectMainStartup.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1836,6 +1848,7 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.CheckBox selectMainStartup;
 		private System.Windows.Forms.RadioButton selectLauncherType_embedded;
 		private System.Windows.Forms.RadioButton selectLauncherType_directory;
 		private System.Windows.Forms.CheckBox selectLogFullDetail;

@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.IO;
 using IWshRuntimeLibrary;
 
@@ -68,10 +69,18 @@ namespace PeUtility
 	{
 		IWshShortcut _shortcut;
 		
-		public ShortcutFile(string path)
+		public ShortcutFile(string path, bool isCreste)
 		{
-			Load(path);
+			IsCreate = isCreste;
+			if(IsCreate) {
+				var wshShell = CreateShell();
+				this._shortcut = (IWshShortcut)wshShell.CreateShortcut(path);
+			} else {
+				Load(path);
+			}
 		}
+		
+		public bool IsCreate { get; private set; }
 		
 		public string FullName
 		{
@@ -145,17 +154,21 @@ namespace PeUtility
 			set { this._shortcut.WorkingDirectory = value; }
 		}
 		
-		public string IconPath { get; private set; }
-		public int IconIndex { get; private set; }
+		public string IconPath { get; set; }
+		public int IconIndex { get; set; }
+		
+		protected IWshRuntimeLibrary.WshShell CreateShell()
+		{
+			if(Environment.Is64BitOperatingSystem) {
+				return new IWshRuntimeLibrary.WshShell();
+			} else {
+				return new IWshRuntimeLibrary.WshShellClass();
+			}
+		}
 		
 		public void Load(string path)
 		{
-			IWshRuntimeLibrary.WshShell wshShell;
-			if(Environment.Is64BitOperatingSystem) {
-				wshShell = new IWshRuntimeLibrary.WshShell();
-			} else {
-				wshShell = new IWshRuntimeLibrary.WshShellClass();
-			}
+			var wshShell = CreateShell();
 			this._shortcut = (IWshShortcut)wshShell.CreateShortcut(path);
 			
 			var iconPath = this._shortcut.IconLocation;
@@ -167,12 +180,13 @@ namespace PeUtility
 				IconPath = iconPath.Substring(0, index);
 				IconIndex = int.Parse(iconPath.Substring(index + 1));
 			}
-
 		}
 		
 		public void Save()
 		{
-			throw new NotImplementedException();
+			Debug.Assert(IsCreate);
+			this._shortcut.IconLocation = string.Format("{0},{1}", IconPath, IconIndex);
+			this._shortcut.Save();
 		}
 	}
 }

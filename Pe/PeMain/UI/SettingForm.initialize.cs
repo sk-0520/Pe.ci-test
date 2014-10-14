@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
@@ -56,6 +57,9 @@ namespace PeMain.UI
 		
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
+			var linkPath = GetStartupAppLinkPath();
+			this.selectMainStartup.Checked = File.Exists(linkPath);
+			
 			InitializeLog(mainSetting.Log);
 			InitializeSystemEnv(mainSetting.SystemEnv);
 			InitializeRunningInfo(mainSetting.RunningInfo);

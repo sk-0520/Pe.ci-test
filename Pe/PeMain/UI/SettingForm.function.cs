@@ -47,6 +47,29 @@ namespace PeMain.UI
 			return checkResult;
 		}
 		
+		public void SaveFiles()
+		{
+			var linkPath = GetStartupAppLinkPath();
+			if(this.selectMainStartup.Checked) {
+				if(!File.Exists(linkPath)) {
+					// 生成
+					//
+					var shortcut = new ShortcutFile(linkPath, true);
+					shortcut.TargetPath = Literal.ApplicationExecutablePath; 
+					shortcut.IconPath = Literal.ApplicationExecutablePath;
+					shortcut.IconIndex = 0;
+					shortcut.WorkingDirectory = Literal.ApplicationRootDirPath; 
+					shortcut.Save();
+				}
+			} else {
+				if(File.Exists(linkPath)) {
+					// 削除
+					File.Delete(linkPath);
+				}
+			}
+
+		}
+		
 		public void SaveDB(AppDBManager db)
 		{
 			using(var tran = db.BeginTransaction()) {
@@ -86,6 +109,14 @@ namespace PeMain.UI
 			
 			// プロパティ設定
 			MainSetting = mainSetting;
+		}
+		
+		string GetStartupAppLinkPath()
+		{
+			var startupDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+			var appLinkPath = Path.Combine(startupDirPath, Literal.shortcutName);
+
+			return appLinkPath;
 		}
 	}
 }

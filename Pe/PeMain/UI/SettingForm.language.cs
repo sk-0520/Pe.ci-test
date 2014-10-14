@@ -56,6 +56,7 @@ namespace PeMain.UI
 			this.groupMainLog.SetLanguage(Language);
 			this.groupMainSystemEnv.SetLanguage(Language);
 			this.labelMainLanguage.SetLanguage(Language);
+			this.selectMainStartup.SetLanguage(Language);
 			
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
