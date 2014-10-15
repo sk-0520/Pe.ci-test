@@ -43,7 +43,7 @@ namespace PeMain.UI
 		void Link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			var linkLabel = (LinkLabel)sender;
-			linkLabel.Visible = true;
+			linkLabel.LinkVisited = true;
 			var link = linkLabel.Text;
 			if(string.IsNullOrWhiteSpace(link)) {
 				return;

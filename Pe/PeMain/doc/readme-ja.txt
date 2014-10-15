@@ -25,5 +25,6 @@
 
 ## 連絡先
 
- * http://content-type-text.net/
- * content.type.text.net@gmail.com
+ * WEBサイト:  http://content-type-text.net/
+ * メール:     content.type.text.net@gmail.com
+ * フォーラム: https://groups.google.com/d/forum/pe_development

@@ -367,9 +367,7 @@ namespace PeMain.UI
 			menuList.Add(itemSystemEnv);
 			menuList.Add(new MenuItem("-"));
 			menuList.Add(itemAbout);
-			#if false
 			menuList.Add(itemHelp);
-			#endif
 			menuList.Add(itemExit);
 			
 			// ウィンドウ

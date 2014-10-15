@@ -104,9 +104,6 @@ namespace PeMain.Logic
 		public static Process RunCommand(string command)
 		{
 			string exCommand = command;
-			if(command.Any(c => c == '@')) {
-				exCommand = "mailto:" + command;
-			}
 			
 			return Process.Start(exCommand);
 		}

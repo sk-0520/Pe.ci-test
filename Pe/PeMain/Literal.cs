@@ -205,35 +205,41 @@ namespace PeMain
 			get { return _logRootDirPath; }
 		}
 		
-		public static string AboutWebPage
+		#region PAGE
+		public static string AboutWebURL
 		{
-			get { return ConfigurationManager.AppSettings["web-page"]; }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-about"]); }
 		}
 		public static string AboutMailAddress
 		{
-			get { return ConfigurationManager.AppSettings["mail-address"]; }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["mail-address"]); }
 		}
-		public static string AboutDevelopPage
+		public static string AboutDevelopURL
 		{
-			get { return ConfigurationManager.AppSettings["dev-page"]; }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-development"]); }
 		}
 		public static string UpdateURL
 		{
-			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["update-page"]); }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-update"]); }
 		}
 		public static string ChangeLogURL
 		{
-			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["changelog-release-page"]); }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-changelog-release"]); }
 		}
 		public static string ChangeLogRcURL
 		{
-			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["changelog-rc-page"]); }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-changelog-rc"]); }
+		}
+		public static string DiscussionURL
+		{
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-discussion"]); }
 		}
 		
 		public static string HelpDocumentURI
 		{
-			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["help-document"]); }
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-help"]); }
 		}
+		#endregion
 		
 		public static FileVersionInfo Version
 		{

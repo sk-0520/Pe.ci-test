@@ -46,9 +46,10 @@ namespace PeMain.UI
 				Environment.Is64BitProcess ? "64": "32"
 			);
 			
-			this.linkWeb.Text = Literal.AboutWebPage;
-			this.linkMail.Text = Literal.AboutMailAddress;
-			this.linkDev.Text = Literal.AboutDevelopPage;
+			this.linkAbout.Text = Literal.AboutWebURL;
+			this.linkMail.Text = "mailto:" + Literal.AboutMailAddress;
+			this.linkDevelopment.Text = Literal.AboutDevelopURL;
+			this.linkDiscussion.Text = Literal.DiscussionURL;
 			
 			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));
 			var components = xml

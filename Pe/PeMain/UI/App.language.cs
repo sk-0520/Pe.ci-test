@@ -37,9 +37,7 @@ namespace PeMain.UI
 		
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
-			#if false
 			rootMenu[menuNameHelp].Text = this._commonData.Language["main/menu/help"];
-			#endif
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];
 		}
 		

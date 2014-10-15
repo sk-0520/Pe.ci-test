@@ -33,16 +33,16 @@
 		</ul>
 		<ul type="features">
 			<li>スタートアップへの登録機能を設定画面に追加</li>
-			<li></li>
+			<li>情報ダイアログのリンクにグループを追加</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
-			<li></li>
+			<li>情報ダイアログのリンク押下時に訪問済みに色変更されていなかった</li>
 			<li></li>
 			<li></li>
 		</ul>
 		<ul type="developer">
-			<li></li>
+			<li>app.config の key 変更</li>
 			<li></li>
 			<li></li>
 		</ul>
