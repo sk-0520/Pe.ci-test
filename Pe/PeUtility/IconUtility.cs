@@ -38,6 +38,39 @@ namespace PeUtility
 		Large = 256,
 	}
 	
+	public class IconPath
+	{
+		public IconPath()
+		{ }
+		
+		public IconPath(string iconPath)
+		{
+			var index = iconPath.LastIndexOf(',');
+			if(index == -1) {
+				Path = iconPath;
+				Index = 0;
+			} else {
+				Path = iconPath.Substring(0, index);
+				Index = int.Parse(iconPath.Substring(index + 1));
+			}
+		}
+		
+		public IconPath(string path, int index)
+		{
+			Path = path;
+			Index = index;
+		}
+		
+		public string Path { get; set; }
+		public int Index { get; set; }
+		
+		public override string ToString()
+		{
+			return string.Format("{0},{1}", Path, Index);
+		}
+
+	}
+	
 	public static class IconUtility
 	{
 		public static int ToHeight(this IconScale iconScale)
@@ -106,7 +139,7 @@ namespace PeUtility
 				iIcon = iconIndex,
 			};
 			
-			var infoFlags = SHGFI.SHGFI_SYSICONINDEX ;//| SHGFI.SHGFI_USEFILEATTRIBUTES; 
+			var infoFlags = SHGFI.SHGFI_SYSICONINDEX ;//| SHGFI.SHGFI_USEFILEATTRIBUTES;
 			//var hImgSmall = API.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 			var hImgSmall = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 
