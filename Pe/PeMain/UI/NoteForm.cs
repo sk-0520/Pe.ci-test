@@ -222,7 +222,7 @@ namespace PeMain.UI
 				}
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
-					NoteItem.Style.FontSetting.Include(dialog.Font);
+					NoteItem.Style.FontSetting.Import(dialog.Font);
 				}
 			}
 			Refresh();
@@ -314,7 +314,7 @@ namespace PeMain.UI
 			this.contextMenu_itemTopmost.Checked = NoteItem.Topmost;
 			
 			// フォント
-			this.contextMenu_font_change.Text = NoteItem.Style.FontSetting.ToViewText(CommonData.Language);
+			this.contextMenu_font_change.Text = LanguageUtility.FontSettingToDisplayText(CommonData.Language, NoteItem.Style.FontSetting);
 			
 			// 色
 			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_fore.ComboBox.SelectedItem).Value;

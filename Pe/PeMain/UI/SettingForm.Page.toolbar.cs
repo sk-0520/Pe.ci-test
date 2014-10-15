@@ -66,7 +66,7 @@ namespace PeMain.UI
 			
 			this.selectToolbarPosition.SelectedValue = toolbarItem.ToolbarPosition;
 			this.selectToolbarIcon.SelectedValue = toolbarItem.IconScale;
-			this.commandToolbarFont.FontSetting.Include(toolbarItem.FontSetting);
+			this.commandToolbarFont.FontSetting.Import(toolbarItem.FontSetting);
 			this.commandToolbarFont.RefreshView();
 			
 			this.inputToolbarTextWidth.Value = toolbarItem.TextWidth;

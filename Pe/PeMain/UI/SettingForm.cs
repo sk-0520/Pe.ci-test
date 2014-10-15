@@ -312,7 +312,7 @@ namespace PeMain.UI
 			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
 				// フォント
 				var row = this._noteItemList[e.RowIndex];
-				e.Value = row.Font.ToViewText(Language);
+				e.Value = LanguageUtility.FontSettingToDisplayText(Language, row.Font);
 				e.FormattingApplied = true;
 			}
 		}

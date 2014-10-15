@@ -83,7 +83,7 @@ namespace PeMain.UI
 		
 		public void RefreshView()
 		{
-			Text = FontSetting.ToViewText(Language);
+			Text = LanguageUtility.FontSettingToDisplayText(Language, FontSetting);
 		}
 
 	}

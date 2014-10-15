@@ -59,7 +59,7 @@ namespace PeMain.UI
 				return base.ToValueString();
 			}
 			
-			return Language.ToDisplayText(Modifiers, Hotkey);
+			return LanguageUtility.HotkeyToDisplayText(Language, Modifiers, Hotkey);
 		}
 		
 		public void SetLanguage(Language language)

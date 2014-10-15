@@ -26,14 +26,14 @@ namespace PeMain.UI
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			
 			var noteMenu = (MenuItem)rootMenu[menuNameWindowNote];
-			noteMenu.MenuItems[menuNameWindowNoteCreate].Text = LanguageUtility.ToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/create"], this._commonData.MainSetting.Note.CreateHotKey);
-			noteMenu.MenuItems[menuNameWindowNoteHidden].Text = LanguageUtility.ToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/hidden"], this._commonData.MainSetting.Note.HiddenHotKey);
-			noteMenu.MenuItems[menuNameWindowNoteCompact].Text =LanguageUtility.ToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/compact"], this._commonData.MainSetting.Note.CompactHotKey);
+			noteMenu.MenuItems[menuNameWindowNoteCreate].Text = LanguageUtility.HotkeyToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/create"], this._commonData.MainSetting.Note.CreateHotKey);
+			noteMenu.MenuItems[menuNameWindowNoteHidden].Text = LanguageUtility.HotkeyToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/hidden"], this._commonData.MainSetting.Note.HiddenHotKey);
+			noteMenu.MenuItems[menuNameWindowNoteCompact].Text =LanguageUtility.HotkeyToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/compact"], this._commonData.MainSetting.Note.CompactHotKey);
 
 			var systemEnvMenu = (MenuItem)rootMenu[menuNameSystemEnv];
 			systemEnvMenu.Text = this._commonData.Language["main/menu/system-env"];
-			systemEnvMenu.MenuItems[menuNameSystemEnvHiddenFile].Text = LanguageUtility.ToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-hiddne-file"], this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey);
-			systemEnvMenu.MenuItems[menuNameSystemEnvExtension].Text = LanguageUtility.ToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-extension"], this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey);
+			systemEnvMenu.MenuItems[menuNameSystemEnvHiddenFile].Text = LanguageUtility.HotkeyToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-hiddne-file"], this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey);
+			systemEnvMenu.MenuItems[menuNameSystemEnvExtension].Text = LanguageUtility.HotkeyToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-extension"], this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey);
 		
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];

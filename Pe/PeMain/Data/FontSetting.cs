@@ -92,7 +92,7 @@ namespace PeMain.Data
 			this._font = null;
 		}
 		
-		public virtual void Include(FontSetting fs)
+		public virtual void Import(FontSetting fs)
 		{
 			Dispose();
 			
@@ -103,7 +103,7 @@ namespace PeMain.Data
 			
 			IsDisposed = false;
 		}
-		public virtual void Include(Font f)
+		public virtual void Import(Font f)
 		{
 			Dispose();
 			
@@ -114,16 +114,5 @@ namespace PeMain.Data
 			
 			IsDisposed = false;
 		}
-		
-		public string ToViewText(Language language)
-		{
-			string viewText = language["common/command/default-font"];
-			if(!IsDefault) {
-				viewText = string.Format("{0} {1}", Family, Height);
-			}
-			
-			return viewText;
-		}
-
 	}
 }

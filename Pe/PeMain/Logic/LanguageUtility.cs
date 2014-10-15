@@ -13,8 +13,9 @@ using PInvoke.Windows;
 
 namespace PeMain.Logic
 {
-
-	
+	/// <summary>
+	/// 言語共通処理。
+	/// </summary>
 	public static class LanguageUtility
 	{
 		/// <summary>
@@ -24,7 +25,7 @@ namespace PeMain.Logic
 		/// <param name="modifiers"></param>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		public static string ToDisplayText(this Language language, MOD modifiers, Keys key)
+		public static string HotkeyToDisplayText(Language language, MOD modifiers, Keys key)
 		{
 			if (modifiers == MOD.None) {
 				return key.ToText(language);
@@ -35,13 +36,24 @@ namespace PeMain.Logic
 			return modifiers.ToText(language) + keySeparator + key.ToText(language);
 		}
 		
-		public static string ToMenuText(this Language language, string menuText, HotKeySetting hotkeySetting)
+		public static string HotkeyToMenuText(Language language, string menuText, HotKeySetting hotkeySetting)
 		{
 			if(hotkeySetting.Enabled) {
-				return string.Format("{0}\t{1}", menuText, ToDisplayText(language, hotkeySetting.Modifiers, hotkeySetting.Key));
+				return string.Format("{0}\t{1}", menuText, HotkeyToDisplayText(language, hotkeySetting.Modifiers, hotkeySetting.Key));
 			} else {
 				return menuText;
 			}
 		}
+		
+		public static string FontSettingToDisplayText(Language language, FontSetting font)
+		{
+			string viewText = language["common/command/default-font"];
+			if(!font.IsDefault) {
+				viewText = string.Format("{0} {1}", font.Family, font.Height);
+			}
+			
+			return viewText;
+		}
+		
 	}
 }

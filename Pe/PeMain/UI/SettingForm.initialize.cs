@@ -77,7 +77,7 @@ namespace PeMain.UI
 		void InitializeCommand(CommandSetting commandSetting)
 		{
 			//this._commandFont = commandSetting.FontSetting;
-			this.commandCommandFont.FontSetting.Include(commandSetting.FontSetting);
+			this.commandCommandFont.FontSetting.Import(commandSetting.FontSetting);
 			this.commandCommandFont.RefreshView();
 			
 			// アイコンサイズ文言の項目構築
@@ -99,7 +99,7 @@ namespace PeMain.UI
 			this.inputNoteCompact.HotKeySetting = noteSetting.CompactHotKey;
 			this.inputNoteHidden.HotKeySetting = noteSetting.HiddenHotKey;
 			
-			this.commandNoteCaptionFont.FontSetting.Include(noteSetting.CaptionFontSetting);
+			this.commandNoteCaptionFont.FontSetting.Import(noteSetting.CaptionFontSetting);
 			this.commandNoteCaptionFont.RefreshView();
 			
 			// 全リスト
