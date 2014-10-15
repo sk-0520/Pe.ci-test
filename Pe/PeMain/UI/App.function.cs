@@ -204,52 +204,13 @@ namespace PeMain.UI
 			
 			// 保存開始
 			// メインデータ
-			SaveSerialize(this._commonData.MainSetting, Literal.UserMainSettingPath);
+			Serializer.Save(this._commonData.MainSetting, Literal.UserMainSettingPath);
 			//ランチャーデータ
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
 			}
-			SaveSerialize(sortedSet, Literal.UserLauncherItemsPath);
-		}
-		
-		
-		/// <summary>
-		/// デシリアイズ。
-		/// </summary>
-		/// <param name="path">読み込むファイルパス</param>
-		/// <param name="failToNew">読み込み失敗時にデフォルトコンストラクタで生成するか</param>
-		/// <returns>読み込んだデータ</returns>
-		static T LoadDeserialize<T>(string path, bool failToNew)
-			where T: new()
-		{
-			if(File.Exists(path)) {
-				var serializer = new XmlSerializer(typeof(T));
-				using(var stream = new FileStream(path, FileMode.Open)) {
-					return (T)serializer.Deserialize(stream);
-				}
-			}
-			if(failToNew) {
-				return new T();
-			} else {
-				return default(T);
-			}
-		}
-
-		/// <summary>
-		/// シリアライズ。
-		/// </summary>
-		/// <param name="saveData">保存データ</param>
-		/// <param name="savePath">保存ファイルパス</param>
-		static void SaveSerialize<T>(T saveData, string savePath)
-		{
-			Debug.Assert(saveData != null);
-			FileUtility.MakeFileParentDirectory(savePath);
-
-			using(var stream = new FileStream(savePath, FileMode.Create)) {
-				var serializer = new XmlSerializer(typeof(T));
-				serializer.Serialize(stream, saveData);
-			}
+			Serializer.Save(sortedSet, Literal.UserLauncherItemsPath);
 		}
 		
 		public void CloseApplication(bool save)

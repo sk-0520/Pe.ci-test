@@ -176,5 +176,19 @@ namespace PeMain.Logic
 		public override string Display { get { return ScreenUtility.GetScreenName(Value.Name, null); } }
 	}
 	
+	public class LanguageDisplayValue: DisplayValue<Language>
+	{
+		public LanguageDisplayValue(Language value): base(value) { }
+		
+		public override string Display 
+		{ 
+			get 
+			{ 
+				return string.Format("{0}({1})", Value.Name, Value.Code);
+			}
+		}
+	}
+	
+	
 
 }

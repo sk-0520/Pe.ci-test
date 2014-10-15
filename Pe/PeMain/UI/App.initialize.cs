@@ -47,7 +47,7 @@ namespace PeMain.UI
 			if(logger != null) {
 				logger.Puts(LogType.Information, "load language", languageFilePath);
 			}
-			this._commonData.Language = LoadDeserialize<Language>(languageFilePath, false);
+			this._commonData.Language = Serializer.Load<Language>(languageFilePath, false);
 			if(this._commonData.Language == null) {
 				if(logger != null) {
 					logger.Puts(LogType.Warning, "not found language", languageFilePath);
@@ -183,11 +183,11 @@ namespace PeMain.UI
 			var mainSettingFilePath = Literal.UserMainSettingPath;
 			logger.Puts(LogType.Information, "load main-setting", mainSettingFilePath);
 			
-			this._commonData.MainSetting = LoadDeserialize<MainSetting>(mainSettingFilePath, true);
+			this._commonData.MainSetting = Serializer.Load<MainSetting>(mainSettingFilePath, true);
 			
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
 			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
-			this._commonData.MainSetting.Launcher.Items = LoadDeserialize<HashSet<LauncherItem>>(launcherItemsFilePath, true);
+			this._commonData.MainSetting.Launcher.Items = Serializer.Load<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			
 			InitializeLanguage(commandLine, logger);
 			InitializeRunningInfo(commandLine, logger);
