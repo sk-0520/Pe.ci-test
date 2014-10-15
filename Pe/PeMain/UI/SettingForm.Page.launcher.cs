@@ -210,13 +210,13 @@ namespace PeMain.UI
 			var iconIndex= this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
 			using(var dialog = new OpenIconDialog()) {
 				if(iconPath.Length > 0 && File.Exists(iconPath)) {
-					dialog.IconPath  = iconPath;
-					dialog.IconIndex = iconIndex;
+					dialog.IconPath.Path  = iconPath;
+					dialog.IconPath.Index = iconIndex;
 				}
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
-					this.inputLauncherIconPath.Text = dialog.IconPath;
-					this.inputLauncherIconPath.Tag = dialog.IconIndex;
+					this.inputLauncherIconPath.Text = dialog.IconPath.Path;
+					this.inputLauncherIconPath.Tag = dialog.IconPath.Index;
 				}
 			}
 		}

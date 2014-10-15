@@ -18,6 +18,9 @@ using PInvoke.Windows;
 
 namespace PeUtility
 {
+	/// <summary>
+	/// アイコンサイズ。
+	/// </summary>
 	public enum IconScale
 	{
 		/// <summary>
@@ -38,11 +41,23 @@ namespace PeUtility
 		Large = 256,
 	}
 	
+	/// <summary>
+	/// アイコンのファイルパス。
+	/// </summary>
 	public class IconPath
 	{
+		/// <summary>
+		/// アイコンのファイルパスを作成。
+		/// </summary>
 		public IconPath()
-		{ }
+		{
+			Path = string.Empty;
+		}
 		
+		/// <summary>
+		/// アイコンのファイルパスを作成。
+		/// </summary>
+		/// <param name="iconPath"></param>
 		public IconPath(string iconPath)
 		{
 			var index = iconPath.LastIndexOf(',');
@@ -55,13 +70,24 @@ namespace PeUtility
 			}
 		}
 		
+		/// <summary>
+		/// アイコンのファイルパスを作成。
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="index"></param>
 		public IconPath(string path, int index)
 		{
 			Path = path;
 			Index = index;
 		}
 		
+		/// <summary>
+		/// ファイルパス。
+		/// </summary>
 		public string Path { get; set; }
+		/// <summary>
+		/// アイコンインデックス。
+		/// </summary>
 		public int Index { get; set; }
 		
 		public override string ToString()
@@ -161,8 +187,7 @@ namespace PeUtility
 				result = (Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
 				API.DestroyIcon(hIcon);
 			}
-
-
+			
 			return result;
 		}
 		
@@ -178,35 +203,43 @@ namespace PeUtility
 				result = LoadLargeIcon(iconPath, iconScale, iconIndex, hasIcon);
 			}
 			
-
 			return result;
 		}
 	}
 	
 	public class OpenIconDialog: CommonDialog
 	{
+		public OpenIconDialog(): base()
+		{
+			IconPath = new IconPath();
+		}
+		/*
 		public string IconPath { set; get; }
 		public int IconIndex { set; get; }
+		 */
+		
+		public IconPath IconPath { set; get; }
 		
 		//表示
 		protected override bool RunDialog(IntPtr hwndOwner)
 		{
-			const int MAX_PATH = 260;
-			
-			int iconIndex = 0;
-			var sb = new StringBuilder(IconPath,MAX_PATH);
-			bool result = API.SHChangeIconDialog(hwndOwner, sb , MAX_PATH, ref iconIndex);
+			var iconIndex = IconPath.Index;
+			var sb = new StringBuilder(IconPath.Path, (int)MAX.MAX_PATH);
+			var result = API.SHChangeIconDialog(hwndOwner, sb, sb.Capacity, ref iconIndex);
 			if (result) {
-				IconIndex = iconIndex;
-				IconPath = sb.ToString();
+				IconPath.Index = iconIndex;
+				IconPath.Path = sb.ToString();
 			}
+			
 			return result;
 		}
 		//ダイアログを初期化する。
 		public override void Reset()
 		{
+			/*
 			IconPath = string.Empty;
 			IconIndex = 0;
+			 */
 		}
 	}
 }

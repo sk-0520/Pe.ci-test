@@ -11,6 +11,10 @@ using System.Runtime.InteropServices;
 
 namespace PInvoke.Windows
 {
+	public enum MAX
+	{
+		MAX_PATH = 260,
+	}
 	/// <summary>
 	/// http://www.pinvoke.net/default.aspx/Structures/rect.html
 	/// </summary>
