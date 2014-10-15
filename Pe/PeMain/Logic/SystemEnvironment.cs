@@ -20,7 +20,7 @@ namespace PeMain.Logic
 	/// <summary>
 	/// システムというかなんというか、ね。
 	/// </summary>
-	public static class SystemEnv
+	public static class SystemEnvironment
 	{
 		const string hiddenFileRootPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
 		const string extensionRootPath = hiddenFileRootPath;

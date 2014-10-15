@@ -271,7 +271,7 @@ namespace PeMain.UI
 			var prevValue = nowValueDg();
 			changeValueDg(!prevValue);
 			var nowValue = nowValueDg();
-			SystemEnv.RefreshShell();
+			SystemEnvironment.RefreshShell();
 			
 			ToolTipIcon icon;
 			string messageName;
@@ -304,11 +304,11 @@ namespace PeMain.UI
 			
 			switch(hotKeyId) {
 				case HotKeyId.HiddenFile:
-					ChangeShowSysEnv(SystemEnv.IsHiddenFileShow, SystemEnv.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
+					ChangeShowSysEnv(SystemEnvironment.IsHiddenFileShow, SystemEnvironment.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
 					break;
 					
 				case HotKeyId.Extension:
-					ChangeShowSysEnv(SystemEnv.IsExtensionShow, SystemEnv.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
+					ChangeShowSysEnv(SystemEnvironment.IsExtensionShow, SystemEnvironment.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
 					break;
 					
 				case HotKeyId.CreateNote:

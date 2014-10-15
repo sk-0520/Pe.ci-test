@@ -320,23 +320,23 @@ namespace PeMain.UI
 			// 隠しファイル
 			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
 			itemHiddenFile.Click += (object sender, EventArgs e) => {
-				SystemEnv.SetHiddenFileShow(!SystemEnv.IsHiddenFileShow());
-				SystemEnv.RefreshShell();
+				SystemEnvironment.SetHiddenFileShow(!SystemEnvironment.IsHiddenFileShow());
+				SystemEnvironment.RefreshShell();
 			};
 			
 			// 拡張子
 			itemExtension.Name  = menuNameSystemEnvExtension;
 			itemExtension.Click += (object sender, EventArgs e) => {
-				SystemEnv.SetExtensionShow(!SystemEnv.IsExtensionShow());
-				SystemEnv.RefreshShell();
+				SystemEnvironment.SetExtensionShow(!SystemEnvironment.IsExtensionShow());
+				SystemEnvironment.RefreshShell();
 			};
 			
 			// サブメニュー設定
 			parentMenu.MenuItems.AddRange(menuList.ToArray());
 			
 			parentMenu.Popup += (object sender, EventArgs e) => {
-				itemHiddenFile.Checked = SystemEnv.IsHiddenFileShow();
-				itemExtension.Checked = SystemEnv.IsExtensionShow();
+				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
+				itemExtension.Checked = SystemEnvironment.IsExtensionShow();
 			};
 
 		}

@@ -139,7 +139,7 @@
     <Compile Include="Logic\DisplayValue.cs" />
     <Compile Include="Logic\AppDBManager.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
-    <Compile Include="Logic\SystemEnv.cs" />
+    <Compile Include="Logic\SystemEnvironment.cs" />
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

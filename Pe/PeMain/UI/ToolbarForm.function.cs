@@ -483,8 +483,8 @@ namespace PeMain.UI
 			fileItem.Name = menuNameFiles;
 			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
 			fileItem.DropDownOpening += (object sender, EventArgs e) => {
-				var showHiddenFile = SystemEnv.IsHiddenFileShow();
-				var showExtension = SystemEnv.IsExtensionShow();
+				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+				var showExtension = SystemEnvironment.IsExtensionShow();
 				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command), showHiddenFile, showExtension);
 			};
 			ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
@@ -699,8 +699,8 @@ namespace PeMain.UI
 			
 
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
-				var showHiddenFile = SystemEnv.IsHiddenFileShow();
-				var showExtension = SystemEnv.IsExtensionShow();
+				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+				var showExtension = SystemEnvironment.IsExtensionShow();
 				if(LoadFileList(toolItem, item.Command, showHiddenFile, showExtension)) {
 					var openItem = new ToolStripMenuItem();
 					openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
