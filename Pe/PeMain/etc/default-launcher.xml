@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<default>
+	<items>
+		<LauncherItem Name="InternetExplorer">
+			<LauncherType>File</LauncherType>
+			<Command>iexplorer.exe</Command>
+		</LauncherItem>
+	</items>
+</default>
