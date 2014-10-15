@@ -27,13 +27,14 @@
 	-->
 	<log date="2014/10/DD" version="0.22.1" type="rc">
 		<ul type="note">
-			<li></li>
+			<li>フォーラム(https://groups.google.com/d/forum/pe_development)が追加されました。</li>
 			<li></li>
 			<li></li>
 		</ul>
 		<ul type="features">
 			<li>スタートアップへの登録機能を設定画面に追加</li>
 			<li>情報ダイアログのリンクにグループを追加</li>
+			<li>タスクトレイアイコンのコンテキストメニューにヘルプ追加</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
