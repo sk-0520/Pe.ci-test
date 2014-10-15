@@ -10,6 +10,7 @@ using System;
 using PeMain.IF;
 using PeMain.Logic;
 using PeMain.UI;
+using PeUtility;
 
 namespace PeMain.Data
 {
@@ -47,9 +48,7 @@ namespace PeMain.Data
 		
 		public void Dispose()
 		{
-			if(Database != null) {
-				Database.Dispose();
-			}
+			Database.ToDispose();
 		}
 	}
 }
