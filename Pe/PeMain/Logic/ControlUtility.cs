@@ -84,7 +84,7 @@ namespace PeMain.Logic
 				result.Add(node);
 				var nodes = node.GetChildrenNodes();
 				if(nodes.Count > 0) {
-					nodes.AddRange(nodes);
+					result.AddRange(nodes);
 				}
 			}
 			
