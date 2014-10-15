@@ -38,7 +38,7 @@ namespace PeMain.UI
 		void InitializeLanguage(CommandLine commandLine, StartupLogger logger)
 		{
 			// 言語
-			var langName = this._commonData.MainSetting.LanguageFileName;
+			var langName = this._commonData.MainSetting.LanguageName;
 			if(string.IsNullOrEmpty(langName)) {
 				langName = CultureInfo.CurrentCulture.Name;
 			}

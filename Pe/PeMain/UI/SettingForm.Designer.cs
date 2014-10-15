@@ -42,6 +42,7 @@ namespace PeMain.UI
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
+			this.selectMainStartup = new System.Windows.Forms.CheckBox();
 			this.groupUpdateCheck = new System.Windows.Forms.GroupBox();
 			this.panelUpdate = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectUpdateCheck = new System.Windows.Forms.CheckBox();
@@ -171,7 +172,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selectMainStartup = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupUpdateCheck.SuspendLayout();
@@ -262,6 +262,16 @@ namespace PeMain.UI
 			this.tabSetting_pageMain.TabIndex = 0;
 			this.tabSetting_pageMain.Text = ":setting/tab/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
+			// 
+			// selectMainStartup
+			// 
+			this.selectMainStartup.AutoSize = true;
+			this.selectMainStartup.Location = new System.Drawing.Point(281, 19);
+			this.selectMainStartup.Name = "selectMainStartup";
+			this.selectMainStartup.Size = new System.Drawing.Size(158, 19);
+			this.selectMainStartup.TabIndex = 1;
+			this.selectMainStartup.Text = ":setting/check/startup";
+			this.selectMainStartup.UseVisualStyleBackColor = true;
 			// 
 			// groupUpdateCheck
 			// 
@@ -452,7 +462,6 @@ namespace PeMain.UI
 			// selectMainLanguage
 			// 
 			this.selectMainLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectMainLanguage.Enabled = false;
 			this.selectMainLanguage.FormattingEnabled = true;
 			this.selectMainLanguage.Location = new System.Drawing.Point(108, 16);
 			this.selectMainLanguage.Name = "selectMainLanguage";
@@ -842,7 +851,7 @@ namespace PeMain.UI
 			// panelEnv.Panel2
 			// 
 			this.panelEnv.Panel2.Controls.Add(this.envLauncherRemove);
-			this.panelEnv.Size = new System.Drawing.Size(524, 82);
+			this.panelEnv.Size = new System.Drawing.Size(524, 80);
 			this.panelEnv.SplitterDistance = 341;
 			this.panelEnv.TabIndex = 18;
 			// 
@@ -851,7 +860,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherUpdate.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 82);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(341, 80);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -860,7 +869,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.envLauncherRemove.Location = new System.Drawing.Point(0, 0);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(179, 82);
+			this.envLauncherRemove.Size = new System.Drawing.Size(179, 80);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -1748,16 +1757,6 @@ namespace PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// selectMainStartup
-			// 
-			this.selectMainStartup.AutoSize = true;
-			this.selectMainStartup.Location = new System.Drawing.Point(281, 19);
-			this.selectMainStartup.Name = "selectMainStartup";
-			this.selectMainStartup.Size = new System.Drawing.Size(158, 19);
-			this.selectMainStartup.TabIndex = 1;
-			this.selectMainStartup.Text = ":setting/check/startup";
-			this.selectMainStartup.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 

@@ -44,7 +44,7 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotKey.Key;
 			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
 			this.inputSystemEnvExt.Registered = systemEnvSetting.ExtensionShowHotKey.Registered;
-			*/
+			 */
 			this.inputSystemEnvHiddenFile.HotKeySetting = systemEnvSetting.HiddenFileShowHotKey;
 			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
 		}
@@ -55,6 +55,47 @@ namespace PeMain.UI
 			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
 		}
 		
+		void InitializeLanguage(string languageName, Language language)
+		{
+			var langFileName = string.Format("{0}.xml", languageName);
+			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
+			
+			var p = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml");
+			
+			// TODO: 泥臭い
+			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
+				.Select(
+					f => new {
+						Language = Serializer.Load<Language>(f, false),
+						BaseName = Path.GetFileNameWithoutExtension(f),
+					}
+				)
+			;
+			var languagePairList = new List<Language>();
+			foreach(var lang in languageTempList) {
+				lang.Language.BaseName = lang.BaseName; 
+				languagePairList.Add(lang.Language);
+			}
+			var langList = languagePairList
+				.Select(
+					l => new {
+						DisplayValue = new LanguageDisplayValue(l),
+						Language = l,
+					}
+				)
+			;
+			var selectedItem = langList.SingleOrDefault(l => l.Language.BaseName == languageName);
+			Language selectedLang = null;
+			if(selectedItem != null) {
+				selectedLang = selectedItem.Language;
+			}
+			if(selectedLang != null) {
+				this.selectMainLanguage.Attachment(langList.Select(l => l.DisplayValue), selectedLang);
+			} else {
+				this.selectMainLanguage.Attachment(langList.Select(l => l.DisplayValue));
+			}
+		}
+		
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			var linkPath = GetStartupAppLinkPath();
@@ -63,6 +104,7 @@ namespace PeMain.UI
 			InitializeLog(mainSetting.Log);
 			InitializeSystemEnv(mainSetting.SystemEnv);
 			InitializeRunningInfo(mainSetting.RunningInfo);
+			InitializeLanguage(mainSetting.LanguageName, Language);
 		}
 		
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -88,7 +130,7 @@ namespace PeMain.UI
 			this.inputCommandHotkey.Hotkey = commandSetting.HotKey.Key;
 			this.inputCommandHotkey.Modifiers = commandSetting.HotKey.Modifiers;
 			this.inputCommandHotkey.Registered = commandSetting.HotKey.Registered;
-			*/
+			 */
 			this.inputCommandHotkey.HotKeySetting = commandSetting.HotKey;
 		}
 		
@@ -120,8 +162,8 @@ namespace PeMain.UI
 			this.gridNoteItems_columnFont.DataPropertyName = "Font";
 			this.gridNoteItems_columnFore.DataPropertyName = "Fore";
 			this.gridNoteItems_columnBack.DataPropertyName = "Back";
-            this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty); 
-            
+			this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty);
+			
 //			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}
 		
@@ -185,12 +227,12 @@ namespace PeMain.UI
 			InitializeCommand(mainSetting.Command);
 			InitializeNote(mainSetting.Note, db);
 
-#if RELEASE
+			#if RELEASE
 			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
 			foreach(var page in debugPage) {
 				this.tabSetting.TabPages.Remove(page);
 			}
-#endif
+			#endif
 		}
 		
 		void Initialize(Language language, MainSetting mainSetting, AppDBManager db)

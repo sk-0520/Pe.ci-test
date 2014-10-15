@@ -49,7 +49,7 @@ namespace PeMain.UI
 			systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
 			systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
 			systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
-			*/
+			 */
 			systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
 			systemEnvSetting.ExtensionShowHotKey  = this.inputSystemEnvExt.HotKeySetting;
 		}
@@ -60,12 +60,22 @@ namespace PeMain.UI
 			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
 		}
 		
+		void ExportLanguageSetting(MainSetting  setting)
+		{
+			var lang = this.selectMainLanguage.SelectedValue as Language;
+			if(lang != null) {
+				setting.LanguageName = lang.BaseName;
+			}
+		}
+		
 		void MainExportSetting(MainSetting mainSetting)
 		{
 			LogExportSetting(mainSetting.Log);
 			SystemEnvExportSetting(mainSetting.SystemEnv);
 			RunningInfoExportSetting(mainSetting.RunningInfo);
+			
+			ExportLanguageSetting(mainSetting);
 		}
-	
+		
 	}
 }

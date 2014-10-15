@@ -69,7 +69,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// 使用言語。
 		/// </summary>
-		public string LanguageFileName { get; set; }
+		public string LanguageName { get; set; }
 		/// <summary>
 		/// ランチャアイテム統括。
 		/// </summary>
