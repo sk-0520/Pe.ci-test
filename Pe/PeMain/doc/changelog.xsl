@@ -103,7 +103,7 @@
 
 	<xsl:template match="log/ul/li">
 		<li>
-			<xsl:value-of select="." />
+			<xsl:value-of select="." />。
 		</li>
 	</xsl:template>
 	

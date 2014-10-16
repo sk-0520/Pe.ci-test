@@ -124,34 +124,34 @@
 		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
 		<Word Name="execute/check/edit-env"    Text="${edit-env}" />
 		
-		<Word Name="note/menu/title"        Text="タイトル入力" />
-		<Word Name="note/menu/body"         Text="本文入力" />
-		<Word Name="note/menu/copy"         Text="コピー" />
-		<Word Name="note/menu/import"       Text="入力" />
-		<Word Name="note/menu/export"       Text="出力" />
-		<Word Name="note/menu/lock"         Text="固定" />
-		<Word Name="note/menu/font"         Text="${font}" />
+		<Word Name="note/menu/title"        Text="タイトル入力(&amp;T)" />
+		<Word Name="note/menu/body"         Text="本文入力(&amp;B)" />
+		<Word Name="note/menu/copy"         Text="コピー(&amp;C)" />
+		<Word Name="note/menu/import"       Text="入力(&amp;I)" />
+		<Word Name="note/menu/export"       Text="出力(&amp;E)" />
+		<Word Name="note/menu/lock"         Text="固定(&amp;L)" />
+		<Word Name="note/menu/font"         Text="${font}(&amp;F)" />
 		<!-- <Word Name="note/menu/font/change"  Text="変更" /> -->
-		<Word Name="note/menu/font/reset"   Text="リセット" />
-		<Word Name="note/menu/compact"      Text="最小化" />
-		<Word Name="note/menu/hidden"       Text="非表示" />
-		<Word Name="note/menu/topmost"      Text="最前面" />
+		<Word Name="note/menu/font/reset"   Text="リセット(&amp;R)" />
+		<Word Name="note/menu/compact"      Text="最小化(&amp;N)" />
+		<Word Name="note/menu/hidden"       Text="非表示(&amp;X)" />
+		<Word Name="note/menu/topmost"      Text="最前面(&amp;T)" />
 		<!-- <Word Name="note/menu/remove"       Text="削除" /> -->
 		<Word Name="note/dialog/caption"    Text="ノート削除" />
 		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;よろしければ「はい」を、非表示にするには「いいえ」を選択してください。" />
 		<Word Name="note/save"              Text="@[NOTE]を保存しました" />
 		
-		<Word Name="note/style/color-fore"    Text="文字色" />
-		<Word Name="note/style/color-back"    Text="背景色" />
-		<Word Name="note/style/color/black"   Text="黒" />
-		<Word Name="note/style/color/white"   Text="白" />
-		<Word Name="note/style/color/red"     Text="赤" />
-		<Word Name="note/style/color/green"   Text="緑" />
-		<Word Name="note/style/color/blue"    Text="青" />
-		<Word Name="note/style/color/yellow"  Text="黄" />
-		<Word Name="note/style/color/orange"  Text="燈" />
-		<Word Name="note/style/color/purple"  Text="紫" />
-		<Word Name="note/style/color/custom"  Text="カスタム" />
+		<Word Name="note/menu/color-fore"    Text="文字色(&amp;T)" />
+		<Word Name="note/menu/color-back"    Text="背景色(&amp;B)" />
+		<Word Name="note/menu/color/black"   Text="黒(&amp;B)" />
+		<Word Name="note/menu/color/white"   Text="白(&amp;W)" />
+		<Word Name="note/menu/color/red"     Text="赤(&amp;R)" />
+		<Word Name="note/menu/color/green"   Text="緑(&amp;G)" />
+		<Word Name="note/menu/color/blue"    Text="青(&amp;B)" />
+		<Word Name="note/menu/color/yellow"  Text="黄(&amp;Y)" />
+		<Word Name="note/menu/color/orange"  Text="燈(&amp;O)" />
+		<Word Name="note/menu/color/purple"  Text="紫(&amp;P)" />
+		<Word Name="note/menu/color/custom"  Text="カスタム(&amp;C) ${open-ui}" />
 		
 		<Word Name="stream/tab/stream"      Text="標準出力" />
 		<Word Name="stream/tab/process"     Text="プロセス" />

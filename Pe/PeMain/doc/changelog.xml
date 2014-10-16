@@ -27,7 +27,7 @@
 	-->
 	<log date="2014/10/DD" version="0.22.1" type="rc">
 		<ul type="note">
-			<li>フォーラム(https://groups.google.com/d/forum/pe_development)作成。</li>
+			<li>フォーラム(https://groups.google.com/d/forum/pe_development)作成</li>
 			<li></li>
 			<li></li>
 		</ul>
@@ -46,7 +46,7 @@
 		</ul>
 		<ul type="developer">
 			<li>app.config の key 変更</li>
-			<li></li>
+			<li>言語設定 [note/style/color] を [note/menu/color] に変更</li>
 			<li></li>
 		</ul>
 	</log>

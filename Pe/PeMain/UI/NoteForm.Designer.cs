@@ -189,62 +189,62 @@ namespace PeMain.UI
 									this.contextMenu_itemForeColor_itemCustom});
 			this.contextMenu_itemForeColor.Name = "contextMenu_itemForeColor";
 			this.contextMenu_itemForeColor.Size = new System.Drawing.Size(207, 22);
-			this.contextMenu_itemForeColor.Text = ":note/style/color-fore";
+			this.contextMenu_itemForeColor.Text = ":note/menu/color-fore";
 			// 
 			// contextMenu_itemForeColor_itemBlack
 			// 
 			this.contextMenu_itemForeColor_itemBlack.Name = "contextMenu_itemForeColor_itemBlack";
 			this.contextMenu_itemForeColor_itemBlack.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemBlack.Text = ":note/style/color/black";
+			this.contextMenu_itemForeColor_itemBlack.Text = ":note/menu/color/black";
 			this.contextMenu_itemForeColor_itemBlack.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemWhite
 			// 
 			this.contextMenu_itemForeColor_itemWhite.Name = "contextMenu_itemForeColor_itemWhite";
 			this.contextMenu_itemForeColor_itemWhite.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemWhite.Text = ":note/style/color/white";
+			this.contextMenu_itemForeColor_itemWhite.Text = ":note/menu/color/white";
 			this.contextMenu_itemForeColor_itemWhite.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemRed
 			// 
 			this.contextMenu_itemForeColor_itemRed.Name = "contextMenu_itemForeColor_itemRed";
 			this.contextMenu_itemForeColor_itemRed.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemRed.Text = ":note/style/color/red";
+			this.contextMenu_itemForeColor_itemRed.Text = ":note/menu/color/red";
 			this.contextMenu_itemForeColor_itemRed.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemGreen
 			// 
 			this.contextMenu_itemForeColor_itemGreen.Name = "contextMenu_itemForeColor_itemGreen";
 			this.contextMenu_itemForeColor_itemGreen.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemGreen.Text = ":note/style/color/green";
+			this.contextMenu_itemForeColor_itemGreen.Text = ":note/menu/color/green";
 			this.contextMenu_itemForeColor_itemGreen.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemBlue
 			// 
 			this.contextMenu_itemForeColor_itemBlue.Name = "contextMenu_itemForeColor_itemBlue";
 			this.contextMenu_itemForeColor_itemBlue.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemBlue.Text = ":note/style/color/blue";
+			this.contextMenu_itemForeColor_itemBlue.Text = ":note/menu/color/blue";
 			this.contextMenu_itemForeColor_itemBlue.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemYellow
 			// 
 			this.contextMenu_itemForeColor_itemYellow.Name = "contextMenu_itemForeColor_itemYellow";
 			this.contextMenu_itemForeColor_itemYellow.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemYellow.Text = ":note/style/color/yellow";
+			this.contextMenu_itemForeColor_itemYellow.Text = ":note/menu/color/yellow";
 			this.contextMenu_itemForeColor_itemYellow.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemOrange
 			// 
 			this.contextMenu_itemForeColor_itemOrange.Name = "contextMenu_itemForeColor_itemOrange";
 			this.contextMenu_itemForeColor_itemOrange.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemOrange.Text = ":note/style/color/orange";
+			this.contextMenu_itemForeColor_itemOrange.Text = ":note/menu/color/orange";
 			this.contextMenu_itemForeColor_itemOrange.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// contextMenu_itemForeColor_itemPurple
 			// 
 			this.contextMenu_itemForeColor_itemPurple.Name = "contextMenu_itemForeColor_itemPurple";
 			this.contextMenu_itemForeColor_itemPurple.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemPurple.Text = ":note/style/color/purple";
+			this.contextMenu_itemForeColor_itemPurple.Text = ":note/menu/color/purple";
 			this.contextMenu_itemForeColor_itemPurple.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemClick);
 			// 
 			// toolStripSeparator5
@@ -256,7 +256,7 @@ namespace PeMain.UI
 			// 
 			this.contextMenu_itemForeColor_itemCustom.Name = "contextMenu_itemForeColor_itemCustom";
 			this.contextMenu_itemForeColor_itemCustom.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemForeColor_itemCustom.Text = ":note/style/color/custom";
+			this.contextMenu_itemForeColor_itemCustom.Text = ":note/menu/color/custom";
 			this.contextMenu_itemForeColor_itemCustom.Click += new System.EventHandler(this.ContextMenu_itemForeColor_itemCustom_Click);
 			// 
 			// contextMenu_itemBackColor
@@ -274,62 +274,62 @@ namespace PeMain.UI
 									this.contextMenu_itemBackColor_itemCustom});
 			this.contextMenu_itemBackColor.Name = "contextMenu_itemBackColor";
 			this.contextMenu_itemBackColor.Size = new System.Drawing.Size(207, 22);
-			this.contextMenu_itemBackColor.Text = ":note/style/color-back";
+			this.contextMenu_itemBackColor.Text = ":note/menu/color-back";
 			// 
 			// contextMenu_itemBackColor_itemBlack
 			// 
 			this.contextMenu_itemBackColor_itemBlack.Name = "contextMenu_itemBackColor_itemBlack";
 			this.contextMenu_itemBackColor_itemBlack.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemBlack.Text = ":note/style/color/black";
+			this.contextMenu_itemBackColor_itemBlack.Text = ":note/menu/color/black";
 			this.contextMenu_itemBackColor_itemBlack.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemWhite
 			// 
 			this.contextMenu_itemBackColor_itemWhite.Name = "contextMenu_itemBackColor_itemWhite";
 			this.contextMenu_itemBackColor_itemWhite.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemWhite.Text = ":note/style/color/white";
+			this.contextMenu_itemBackColor_itemWhite.Text = ":note/menu/color/white";
 			this.contextMenu_itemBackColor_itemWhite.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemRed
 			// 
 			this.contextMenu_itemBackColor_itemRed.Name = "contextMenu_itemBackColor_itemRed";
 			this.contextMenu_itemBackColor_itemRed.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemRed.Text = ":note/style/color/red";
+			this.contextMenu_itemBackColor_itemRed.Text = ":note/menu/color/red";
 			this.contextMenu_itemBackColor_itemRed.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemGreen
 			// 
 			this.contextMenu_itemBackColor_itemGreen.Name = "contextMenu_itemBackColor_itemGreen";
 			this.contextMenu_itemBackColor_itemGreen.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemGreen.Text = ":note/style/color/green";
+			this.contextMenu_itemBackColor_itemGreen.Text = ":note/menu/color/green";
 			this.contextMenu_itemBackColor_itemGreen.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemBlue
 			// 
 			this.contextMenu_itemBackColor_itemBlue.Name = "contextMenu_itemBackColor_itemBlue";
 			this.contextMenu_itemBackColor_itemBlue.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemBlue.Text = ":note/style/color/blue";
+			this.contextMenu_itemBackColor_itemBlue.Text = ":note/menu/color/blue";
 			this.contextMenu_itemBackColor_itemBlue.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemYellow
 			// 
 			this.contextMenu_itemBackColor_itemYellow.Name = "contextMenu_itemBackColor_itemYellow";
 			this.contextMenu_itemBackColor_itemYellow.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemYellow.Text = ":note/style/color/yellow";
+			this.contextMenu_itemBackColor_itemYellow.Text = ":note/menu/color/yellow";
 			this.contextMenu_itemBackColor_itemYellow.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemOrange
 			// 
 			this.contextMenu_itemBackColor_itemOrange.Name = "contextMenu_itemBackColor_itemOrange";
 			this.contextMenu_itemBackColor_itemOrange.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemOrange.Text = ":note/style/color/orange";
+			this.contextMenu_itemBackColor_itemOrange.Text = ":note/menu/color/orange";
 			this.contextMenu_itemBackColor_itemOrange.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// contextMenu_itemBackColor_itemPurple
 			// 
 			this.contextMenu_itemBackColor_itemPurple.Name = "contextMenu_itemBackColor_itemPurple";
 			this.contextMenu_itemBackColor_itemPurple.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemPurple.Text = ":note/style/color/purple";
+			this.contextMenu_itemBackColor_itemPurple.Text = ":note/menu/color/purple";
 			this.contextMenu_itemBackColor_itemPurple.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemClick);
 			// 
 			// toolStripSeparator6
@@ -341,7 +341,7 @@ namespace PeMain.UI
 			// 
 			this.contextMenu_itemBackColor_itemCustom.Name = "contextMenu_itemBackColor_itemCustom";
 			this.contextMenu_itemBackColor_itemCustom.Size = new System.Drawing.Size(223, 22);
-			this.contextMenu_itemBackColor_itemCustom.Text = ":note/style/color/custom";
+			this.contextMenu_itemBackColor_itemCustom.Text = ":note/menu/color/custom";
 			this.contextMenu_itemBackColor_itemCustom.Click += new System.EventHandler(this.ContextMenu_itemBackColor_itemCustom_Click);
 			// 
 			// toolStripSeparator2
