@@ -37,18 +37,58 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.commandAccept = new System.Windows.Forms.Button();
+			this.tabHome = new System.Windows.Forms.TabControl();
+			this.tabHome_pageMain = new System.Windows.Forms.TabPage();
+			this.panelHome = new System.Windows.Forms.TableLayoutPanel();
+			this.tabHome.SuspendLayout();
+			this.panelHome.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// commandAccept
 			// 
-			this.commandAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandAccept.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.commandAccept.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandAccept.Location = new System.Drawing.Point(433, 230);
+			this.commandAccept.Location = new System.Drawing.Point(442, 239);
 			this.commandAccept.Name = "commandAccept";
 			this.commandAccept.Size = new System.Drawing.Size(99, 31);
 			this.commandAccept.TabIndex = 0;
 			this.commandAccept.Text = "{OK}";
 			this.commandAccept.UseVisualStyleBackColor = true;
+			// 
+			// tabHome
+			// 
+			this.tabHome.Controls.Add(this.tabHome_pageMain);
+			this.tabHome.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabHome.Location = new System.Drawing.Point(3, 3);
+			this.tabHome.Name = "tabHome";
+			this.tabHome.SelectedIndex = 0;
+			this.tabHome.Size = new System.Drawing.Size(538, 230);
+			this.tabHome.TabIndex = 1;
+			// 
+			// tabHome_pageMain
+			// 
+			this.tabHome_pageMain.Location = new System.Drawing.Point(4, 24);
+			this.tabHome_pageMain.Name = "tabHome_pageMain";
+			this.tabHome_pageMain.Padding = new System.Windows.Forms.Padding(3);
+			this.tabHome_pageMain.Size = new System.Drawing.Size(530, 202);
+			this.tabHome_pageMain.TabIndex = 0;
+			this.tabHome_pageMain.Text = ":home/page/main";
+			this.tabHome_pageMain.UseVisualStyleBackColor = true;
+			// 
+			// panelHome
+			// 
+			this.panelHome.ColumnCount = 1;
+			this.panelHome.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelHome.Controls.Add(this.commandAccept, 0, 1);
+			this.panelHome.Controls.Add(this.tabHome, 0, 0);
+			this.panelHome.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelHome.Location = new System.Drawing.Point(0, 0);
+			this.panelHome.Name = "panelHome";
+			this.panelHome.RowCount = 2;
+			this.panelHome.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelHome.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelHome.Size = new System.Drawing.Size(544, 273);
+			this.panelHome.TabIndex = 2;
 			// 
 			// HomeForm
 			// 
@@ -56,15 +96,20 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(544, 273);
-			this.Controls.Add(this.commandAccept);
+			this.Controls.Add(this.panelHome);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::PeMain.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "HomeForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/home";
+			this.tabHome.ResumeLayout(false);
+			this.panelHome.ResumeLayout(false);
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TableLayoutPanel panelHome;
+		private System.Windows.Forms.TabPage tabHome_pageMain;
+		private System.Windows.Forms.TabControl tabHome;
 		private System.Windows.Forms.Button commandAccept;
 	}
 }

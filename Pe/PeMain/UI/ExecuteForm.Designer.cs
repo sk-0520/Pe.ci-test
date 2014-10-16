@@ -128,7 +128,7 @@ namespace PeMain.UI
 			this.tabExecute_pageBasic.Name = "tabExecute_pageBasic";
 			this.tabExecute_pageBasic.Size = new System.Drawing.Size(654, 175);
 			this.tabExecute_pageBasic.TabIndex = 0;
-			this.tabExecute_pageBasic.Text = ":execute/tab/basic";
+			this.tabExecute_pageBasic.Text = ":execute/page/basic";
 			this.tabExecute_pageBasic.UseVisualStyleBackColor = true;
 			this.tabExecute_pageBasic.DragDrop += new System.Windows.Forms.DragEventHandler(this.TabExecute_pageBasic_DragDrop);
 			this.tabExecute_pageBasic.DragEnter += new System.Windows.Forms.DragEventHandler(this.TabExecute_pageBasic_DragEnter);
@@ -226,7 +226,7 @@ namespace PeMain.UI
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
-			this.commandOption_dir.Location = new System.Drawing.Point(735, 41);
+			this.commandOption_dir.Location = new System.Drawing.Point(741, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
 			this.commandOption_dir.TabIndex = 6;
@@ -236,11 +236,11 @@ namespace PeMain.UI
 			// tabExecute_pageEnv
 			// 
 			this.tabExecute_pageEnv.Controls.Add(this.tableLayoutPanel1);
-			this.tabExecute_pageEnv.Location = new System.Drawing.Point(40, 4);
+			this.tabExecute_pageEnv.Location = new System.Drawing.Point(46, 4);
 			this.tabExecute_pageEnv.Name = "tabExecute_pageEnv";
-			this.tabExecute_pageEnv.Size = new System.Drawing.Size(660, 175);
+			this.tabExecute_pageEnv.Size = new System.Drawing.Size(654, 175);
 			this.tabExecute_pageEnv.TabIndex = 1;
-			this.tabExecute_pageEnv.Text = ":common/tab/env";
+			this.tabExecute_pageEnv.Text = ":common/page/env";
 			this.tabExecute_pageEnv.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel1
@@ -257,7 +257,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(660, 175);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(654, 175);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
 			// selectEnvironment
@@ -266,7 +266,7 @@ namespace PeMain.UI
 			this.selectEnvironment.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selectEnvironment.Location = new System.Drawing.Point(3, 3);
 			this.selectEnvironment.Name = "selectEnvironment";
-			this.selectEnvironment.Size = new System.Drawing.Size(654, 24);
+			this.selectEnvironment.Size = new System.Drawing.Size(648, 24);
 			this.selectEnvironment.TabIndex = 0;
 			this.selectEnvironment.Text = ":execute/check/edit-env";
 			this.selectEnvironment.UseVisualStyleBackColor = true;
@@ -278,7 +278,7 @@ namespace PeMain.UI
 			this.groupUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupUpdate.Location = new System.Drawing.Point(3, 33);
 			this.groupUpdate.Name = "groupUpdate";
-			this.groupUpdate.Size = new System.Drawing.Size(400, 139);
+			this.groupUpdate.Size = new System.Drawing.Size(397, 139);
 			this.groupUpdate.TabIndex = 1;
 			this.groupUpdate.TabStop = false;
 			this.groupUpdate.Text = ":common/label/edit";
@@ -289,16 +289,16 @@ namespace PeMain.UI
 			this.envUpdate.Location = new System.Drawing.Point(3, 19);
 			this.envUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.envUpdate.Name = "envUpdate";
-			this.envUpdate.Size = new System.Drawing.Size(394, 117);
+			this.envUpdate.Size = new System.Drawing.Size(391, 117);
 			this.envUpdate.TabIndex = 0;
 			// 
 			// groupRemove
 			// 
 			this.groupRemove.Controls.Add(this.envRemove);
 			this.groupRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupRemove.Location = new System.Drawing.Point(409, 33);
+			this.groupRemove.Location = new System.Drawing.Point(406, 33);
 			this.groupRemove.Name = "groupRemove";
-			this.groupRemove.Size = new System.Drawing.Size(248, 139);
+			this.groupRemove.Size = new System.Drawing.Size(245, 139);
 			this.groupRemove.TabIndex = 2;
 			this.groupRemove.TabStop = false;
 			this.groupRemove.Text = ":common/label/remove";
@@ -309,7 +309,7 @@ namespace PeMain.UI
 			this.envRemove.Location = new System.Drawing.Point(3, 19);
 			this.envRemove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.envRemove.Name = "envRemove";
-			this.envRemove.Size = new System.Drawing.Size(242, 117);
+			this.envRemove.Size = new System.Drawing.Size(239, 117);
 			this.envRemove.TabIndex = 0;
 			// 
 			// splitContainer1

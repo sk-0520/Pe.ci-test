@@ -236,7 +236,10 @@ namespace PeMain.UI
 				LauncherInputChange();
 			}
 			if(sender == this.selectLauncherEnv) {
-				this.panelEnv.Enabled = this.selectLauncherEnv.Checked;
+				//this.panelEnv.Enabled = this.selectLauncherEnv.Checked;
+				var enabled = this.selectLauncherEnv.Checked;
+				this.envLauncherUpdate.Enabled = enabled;
+				this.envLauncherRemove.Enabled = enabled;
 			}
 		}
 		
