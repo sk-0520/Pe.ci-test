@@ -58,7 +58,6 @@ namespace PeMain.UI
 				}
 			}
 			
-			
 			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
 		}
 		

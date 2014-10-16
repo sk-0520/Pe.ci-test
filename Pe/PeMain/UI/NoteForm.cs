@@ -265,7 +265,7 @@ namespace PeMain.UI
 				Refresh();
 			}
 		}
-		*/
+		 */
 		
 		void ContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
@@ -318,7 +318,6 @@ namespace PeMain.UI
 			this.contextMenu_font_change.Text = LanguageUtility.FontSettingToDisplayText(CommonData.Language, NoteItem.Style.FontSetting);
 			
 			// 色
-			//Literal.GetNoteForeColorList()
 			/*
 			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_itemForeColor.ComboBox.SelectedItem).Value;
 			this._prevBackColor = ((ColorDisplayValue)this.contextMenu_itemBackColor.ComboBox.SelectedItem).Value;
@@ -334,7 +333,29 @@ namespace PeMain.UI
 			} else {
 				this.contextMenu_itemBackColor.SelectedItem = this.contextMenu_itemBackColor.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
-			*/
+			 */
+			Action<IList<ColorMenuItem>, ToolStripItem, Color> checkColor = (colorItemList, customItem, nowColor) => {
+				var plainColor = false;
+				
+				foreach(var colorItem in colorItemList) {
+					var menuItem = colorItem.Item as ToolStripMenuItem;
+					if(menuItem != null) {
+						plainColor |= menuItem.Checked = colorItem.Color == nowColor;
+					}
+				}
+				var customMenuItem = customItem as ToolStripMenuItem;
+				if(customMenuItem != null) {
+					customMenuItem.Checked = !plainColor;
+					if(customMenuItem.Checked) {
+						customMenuItem.Image = CreateColorImage(nowColor);
+					}
+				}
+			};
+			
+			var foreMenuList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
+			var backMenuList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
+			checkColor(foreMenuList, this.contextMenu_itemForeColor, NoteItem.Style.ForeColor);
+			checkColor(backMenuList, this.contextMenu_itemBackColor, NoteItem.Style.BackColor);
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
