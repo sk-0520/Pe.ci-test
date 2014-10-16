@@ -98,7 +98,7 @@ namespace PeMain.UI
 		
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
-			var linkPath = GetStartupAppLinkPath();
+			var linkPath = Literal.StartupShortcutPath;
 			this.selectMainStartup.Checked = File.Exists(linkPath);
 			
 			InitializeLog(mainSetting.Log);

@@ -10,6 +10,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using PeMain.IF;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -26,6 +27,18 @@ namespace PeMain.UI
 			InitializeComponent();
 			
 			Initialize();
+		}
+		
+		
+		void CommandNotify_Click(object sender, EventArgs e)
+		{
+			SystemExecuter.OpenNotificationAreaHistory(CommonData);
+		}
+		
+		void CommandStartup_Click(object sender, EventArgs e)
+		{
+			var path = Literal.StartupShortcutPath;
+			AppUtility.MakeAppShortcut(path);
 		}
 	}
 }

@@ -128,6 +128,7 @@
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISkin.cs" />
     <Compile Include="Literal.cs" />
+    <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\DB\DBWrapper.cs" />
     <Compile Include="Logic\DB\NoteDB.cs" />

@@ -26,10 +26,5 @@ namespace PeMain.UI
 			}
 			
 		}
-		
-		void CommandNotify_Click(object sender, EventArgs e)
-		{
-			SystemExecuter.OpenNotificationAreaHistory(CommonData);
-		}
 	}
 }

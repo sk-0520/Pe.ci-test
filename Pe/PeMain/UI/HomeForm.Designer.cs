@@ -134,6 +134,7 @@ namespace PeMain.UI
 			this.commandStartup.Text = ":home/command/startup";
 			this.commandStartup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commandStartup.UseVisualStyleBackColor = true;
+			this.commandStartup.Click += new System.EventHandler(this.CommandStartup_Click);
 			// 
 			// labelLauncher
 			// 

@@ -129,9 +129,9 @@ namespace PeMain.Logic
 		public static Process RunDLL(string command, CommonData commonData)
 		{
 			var rundll = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "rundll32.exe");
-			var path = string.Format("{0} \"{1}\"", rundll, command);
-			commonData.Logger.Puts(LogType.Information, rundll, path);
-			return Executer.OpenFile(path, commonData);
+			var startupInfo = new ProcessStartInfo(rundll, command);
+			
+			return Process.Start(startupInfo);
 		}
 		
 		/// <summary>
