@@ -64,7 +64,7 @@ namespace PeMain.UI
 			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelMain.Size = new System.Drawing.Size(464, 322);
+			this.panelMain.Size = new System.Drawing.Size(624, 442);
 			this.panelMain.TabIndex = 0;
 			// 
 			// webDocument
@@ -75,13 +75,13 @@ namespace PeMain.UI
 			this.webDocument.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webDocument.MinimumSize = new System.Drawing.Size(23, 25);
 			this.webDocument.Name = "webDocument";
-			this.webDocument.Size = new System.Drawing.Size(458, 241);
+			this.webDocument.Size = new System.Drawing.Size(618, 361);
 			this.webDocument.TabIndex = 0;
 			// 
 			// commandAccept
 			// 
 			this.commandAccept.AutoSize = true;
-			this.commandAccept.Location = new System.Drawing.Point(3, 293);
+			this.commandAccept.Location = new System.Drawing.Point(3, 413);
 			this.commandAccept.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandAccept.Name = "commandAccept";
 			this.commandAccept.Size = new System.Drawing.Size(150, 25);
@@ -95,7 +95,7 @@ namespace PeMain.UI
 			this.commandCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandCancel.AutoSize = true;
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandCancel.Location = new System.Drawing.Point(317, 293);
+			this.commandCancel.Location = new System.Drawing.Point(477, 413);
 			this.commandCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandCancel.Name = "commandCancel";
 			this.commandCancel.Size = new System.Drawing.Size(144, 25);
@@ -110,9 +110,9 @@ namespace PeMain.UI
 			this.panelUpdate.Controls.Add(this.selectUpdateCheck);
 			this.panelUpdate.Controls.Add(this.selectUpdateCheckRC);
 			this.panelUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelUpdate.Location = new System.Drawing.Point(3, 252);
+			this.panelUpdate.Location = new System.Drawing.Point(3, 372);
 			this.panelUpdate.Name = "panelUpdate";
-			this.panelUpdate.Size = new System.Drawing.Size(458, 34);
+			this.panelUpdate.Size = new System.Drawing.Size(618, 34);
 			this.panelUpdate.TabIndex = 1;
 			// 
 			// selectUpdateCheck
@@ -141,12 +141,12 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(464, 322);
+			this.ClientSize = new System.Drawing.Size(624, 442);
 			this.Controls.Add(this.panelMain);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::PeMain.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.MinimumSize = new System.Drawing.Size(480, 360);
+			this.MinimumSize = new System.Drawing.Size(640, 480);
 			this.Name = "AcceptForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/accept";

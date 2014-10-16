@@ -245,7 +245,7 @@ namespace PeMain
 		{
 			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["mail-address"]); }
 		}
-		public static string AboutDevelopURL
+		public static string AboutDevelopmentURL
 		{
 			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-development"]); }
 		}

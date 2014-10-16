@@ -48,6 +48,7 @@
 		<ul type="developer">
 			<li>app.config の key 変更</li>
 			<li>言語設定 [note/style/color] を [note/menu/color] に変更</li>
+			<li>使用許諾の各URIを app.config で置き換える</li>
 			<li></li>
 		</ul>
 	</log>

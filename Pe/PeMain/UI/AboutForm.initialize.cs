@@ -48,7 +48,7 @@ namespace PeMain.UI
 			
 			this.linkAbout.Text = Literal.AboutWebURL;
 			this.linkMail.Text = "mailto:" + Literal.AboutMailAddress;
-			this.linkDevelopment.Text = Literal.AboutDevelopURL;
+			this.linkDevelopment.Text = Literal.AboutDevelopmentURL;
 			this.linkDiscussion.Text = Literal.DiscussionURL;
 			
 			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));

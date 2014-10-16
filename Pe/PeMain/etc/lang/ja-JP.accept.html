@@ -8,6 +8,10 @@
 		{
 			font-family: "Meiryo UI"
 		}
+		span.uri
+		{
+			font-size: 80%;
+		}
 		</style>
 	</head>
 	<body>
@@ -39,12 +43,14 @@
 		</ul>
 		
 		<p>
-			手動でのバージョンアップやバグ報告などに関しては下記サイトやメールアドレスにアクセスしてください。
+			手動でのバージョンアップやバグ報告、オンラインヘルプなどに関しては下記サイトやメールアドレスにアクセスしてください。
 		</p>
 		<ul>
-			<li><a href="https://bitbucket.org/sk_0520/pe" target="PE_BROWSER">https://bitbucket.org/sk_0520/pe/</a></li>
-			<li><a href="http://content-type-text.net/" target="PE_BROWSER">http://content-type-text.net/</a></li>
-			<li><a href="mailto:content.type.text.net@gmail.com">content.type.text.net@gmail.com</a></li>
+			<li><a href="${WEB}" target="PE_BROWSER">WEBサイト</a> <span class="uri">${WEB}</span></li>
+			<li><a href="${DEVELOPMENT}" target="PE_BROWSER">開発リポジトリ</a> <span class="uri">${DEVELOPMENT}</span></li>
+			<li><a href="mailto:${MAIL}">メール</a> <span class="uri">${MAIL}</span></li>
+			<li><a href="${DISCUSSION}" target="PE_BROWSER">フォーラム</a> <span class="uri">${DISCUSSION}</span></li>
+			<li><a href="${HELP}" target="PE_BROWSER">オンラインヘルプ</a> <span class="uri">${HELP}</span></li>
 		</ul>
 	</body>
 </html>

@@ -7,8 +7,11 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using PeMain.Logic;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -26,7 +29,18 @@ namespace PeMain.UI
 			this.selectUpdateCheckRC.SetLanguage(CommonData.Language);
 			
 			var acceptFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.AcceptFileName);
-			this.webDocument.Navigate(acceptFilePath);
+			var acceptFileSource = File.ReadAllText(acceptFilePath);
+			var acceptMap = new Dictionary<string,string>() {
+				{"WEB", Literal.AboutWebURL },
+				{"DEVELOPMENT", Literal.AboutDevelopmentURL },
+				{"MAIL", Literal.AboutMailAddress },
+				{"DISCUSSION", Literal.DiscussionURL },
+				{"HELP", Literal.HelpDocumentURI },
+			};
+			var acceptFileReplaced = acceptFileSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
+			this.webDocument.DocumentStream = new MemoryStream(Encoding.Unicode.GetBytes(acceptFileReplaced));
+			//this.webDocument.Navigate(acceptFilePath);
+			
 		}
 	}
 }
