@@ -8,9 +8,9 @@
  */
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.UI;
 using PeUtility;
@@ -128,8 +128,10 @@ namespace PeMain.Logic
 	{
 		public static Process RunDLL(string command, CommonData commonData)
 		{
-			var s = string.Format("rundll32.exe {0}", command);
-			return Executer.OpenFile(s, commonData);
+			var rundll = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "rundll32.exe");
+			var path = string.Format("{0} \"{1}\"", rundll, command);
+			commonData.Logger.Puts(LogType.Information, rundll, path);
+			return Executer.OpenFile(path, commonData);
 		}
 		
 		/// <summary>

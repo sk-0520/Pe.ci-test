@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using PeMain.Logic;
 
 namespace PeMain.UI
@@ -10,9 +11,25 @@ namespace PeMain.UI
 			UIUtility.SetDefaultText(this, CommonData.Language);
 			AcceptButton = this.commandClose;
 			CancelButton = this.commandClose;
-			commandClose.SetLanguage(CommonData.Language);
+			this.commandClose.SetLanguage(CommonData.Language);
 			
-			this.tabHome_pageMain.SetLanguage(CommonData.Language);
+			var controls = new Control[] {
+				this.commandLauncher,
+				this.labelLauncher,
+				this.commandNotify,
+				this.labelNotify,
+				this.commandStartup,
+				this.labelStartup,
+			};
+			foreach(var control in controls) {
+				control.SetLanguage(CommonData.Language);
+			}
+			
+		}
+		
+		void CommandNotify_Click(object sender, EventArgs e)
+		{
+			SystemExecuter.OpenNotificationAreaHistory(CommonData);
 		}
 	}
 }
