@@ -7,6 +7,7 @@
 		<Word Name="ok"                Text="OK" />
 		<Word Name="retry"             Text="再試行" />
 		<Word Name="exit"              Text="終了" />
+		<Word Name="close"             Text="閉じる" />
 		<Word Name="open-ui"           Text="..." />
 		<Word Name="remove"            Text="削除" />
 		<Word Name="edit"              Text="編集" />
@@ -27,6 +28,7 @@
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
 		<Word Name="common/command/cancel"              Text="${cancel}" />
+		<Word Name="common/command/close"               Text="${close}" />
 		<Word Name="common/command/exit"                Text="${exit}" />
 		<Word Name="common/menu/exit"                   Text="${exit}(&amp;X)" />
 		<Word Name="common/label/topmost"               Text="${topmost}" />
@@ -98,6 +100,8 @@
 		
 		<Word Name="accept/check/update-check"     Text="${update-check}" />
 		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
+		
+		<Word Name="home/page/main" Text="ホーム" />
 		
 		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
 		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />

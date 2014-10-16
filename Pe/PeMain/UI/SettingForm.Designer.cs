@@ -92,9 +92,9 @@ namespace PeMain.UI
 			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
 			this.tabLauncher_pageEnv = new System.Windows.Forms.TabPage();
 			this.panelLauncherEnv = new System.Windows.Forms.TableLayoutPanel();
-			this.selectLauncherEnv = new System.Windows.Forms.CheckBox();
 			this.envLauncherRemove = new PeMain.UI.EnvRemoveControl();
 			this.envLauncherUpdate = new PeMain.UI.EnvUpdateControl();
+			this.selectLauncherEnv = new System.Windows.Forms.CheckBox();
 			this.tabLauncher_pageOthers = new System.Windows.Forms.TabPage();
 			this.selectLauncherAdmin = new System.Windows.Forms.CheckBox();
 			this.labelLauncherTag = new System.Windows.Forms.Label();
@@ -849,19 +849,6 @@ namespace PeMain.UI
 			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 241);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
-			// selectLauncherEnv
-			// 
-			this.selectLauncherEnv.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectLauncherEnv.AutoSize = true;
-			this.panelLauncherEnv.SetColumnSpan(this.selectLauncherEnv, 2);
-			this.selectLauncherEnv.Location = new System.Drawing.Point(3, 5);
-			this.selectLauncherEnv.Name = "selectLauncherEnv";
-			this.selectLauncherEnv.Size = new System.Drawing.Size(170, 19);
-			this.selectLauncherEnv.TabIndex = 0;
-			this.selectLauncherEnv.Text = ":execute/check/edit-env";
-			this.selectLauncherEnv.UseVisualStyleBackColor = true;
-			this.selectLauncherEnv.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
-			// 
 			// envLauncherRemove
 			// 
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -882,6 +869,19 @@ namespace PeMain.UI
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
+			// selectLauncherEnv
+			// 
+			this.selectLauncherEnv.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectLauncherEnv.AutoSize = true;
+			this.panelLauncherEnv.SetColumnSpan(this.selectLauncherEnv, 2);
+			this.selectLauncherEnv.Location = new System.Drawing.Point(3, 5);
+			this.selectLauncherEnv.Name = "selectLauncherEnv";
+			this.selectLauncherEnv.Size = new System.Drawing.Size(170, 19);
+			this.selectLauncherEnv.TabIndex = 0;
+			this.selectLauncherEnv.Text = ":execute/check/edit-env";
+			this.selectLauncherEnv.UseVisualStyleBackColor = true;
+			this.selectLauncherEnv.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
+			// 
 			// tabLauncher_pageOthers
 			// 
 			this.tabLauncher_pageOthers.Controls.Add(this.selectLauncherAdmin);
@@ -890,9 +890,9 @@ namespace PeMain.UI
 			this.tabLauncher_pageOthers.Controls.Add(this.inputLauncherTag);
 			this.tabLauncher_pageOthers.Controls.Add(this.inputLauncherNote);
 			this.tabLauncher_pageOthers.Controls.Add(this.labelLauncherNote);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 251);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 247);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;

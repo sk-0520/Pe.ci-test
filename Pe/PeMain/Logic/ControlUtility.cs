@@ -373,13 +373,22 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class UIUtility
 	{
+		private static bool CanReplaceWord(string s)
+		{
+			return !(string.IsNullOrWhiteSpace(s) || s.Length > 0 && s[0] != ':');
+		}
 		private static string GetWord(Language language, string key, IDictionary<string, string> map)
 		{
+			/*
 			if(string.IsNullOrEmpty(key) || key[0] != ':') {
 				return "{" + key + "}";
 			}
+			*/
+			if(CanReplaceWord(key)) {
+				return language[key.Substring(1), map];
+			}
 			
-			return language[key.Substring(1), map];
+			return "{" + key + "}";
 		}
 		
 		public static void SetDefaultText(Form target, Language language, IDictionary<string, string> map = null)

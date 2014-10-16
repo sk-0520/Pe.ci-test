@@ -36,7 +36,7 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.commandAccept = new System.Windows.Forms.Button();
+			this.commandClose = new System.Windows.Forms.Button();
 			this.tabHome = new System.Windows.Forms.TabControl();
 			this.tabHome_pageMain = new System.Windows.Forms.TabPage();
 			this.panelHome = new System.Windows.Forms.TableLayoutPanel();
@@ -44,22 +44,24 @@ namespace PeMain.UI
 			this.panelHome.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// commandAccept
+			// commandClose
 			// 
-			this.commandAccept.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.commandAccept.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandAccept.Location = new System.Drawing.Point(442, 239);
-			this.commandAccept.Name = "commandAccept";
-			this.commandAccept.Size = new System.Drawing.Size(99, 31);
-			this.commandAccept.TabIndex = 0;
-			this.commandAccept.Text = "{OK}";
-			this.commandAccept.UseVisualStyleBackColor = true;
+			this.commandClose.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.commandClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.commandClose.Location = new System.Drawing.Point(442, 239);
+			this.commandClose.Name = "commandClose";
+			this.commandClose.Size = new System.Drawing.Size(99, 31);
+			this.commandClose.TabIndex = 0;
+			this.commandClose.Text = ":common/command/close";
+			this.commandClose.UseVisualStyleBackColor = true;
 			// 
 			// tabHome
 			// 
 			this.tabHome.Controls.Add(this.tabHome_pageMain);
 			this.tabHome.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabHome.HotTrack = true;
 			this.tabHome.Location = new System.Drawing.Point(3, 3);
+			this.tabHome.Multiline = true;
 			this.tabHome.Name = "tabHome";
 			this.tabHome.SelectedIndex = 0;
 			this.tabHome.Size = new System.Drawing.Size(538, 230);
@@ -79,7 +81,7 @@ namespace PeMain.UI
 			// 
 			this.panelHome.ColumnCount = 1;
 			this.panelHome.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.panelHome.Controls.Add(this.commandAccept, 0, 1);
+			this.panelHome.Controls.Add(this.commandClose, 0, 1);
 			this.panelHome.Controls.Add(this.tabHome, 0, 0);
 			this.panelHome.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelHome.Location = new System.Drawing.Point(0, 0);
@@ -92,7 +94,6 @@ namespace PeMain.UI
 			// 
 			// HomeForm
 			// 
-			this.AcceptButton = this.commandAccept;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(544, 273);
@@ -110,6 +111,6 @@ namespace PeMain.UI
 		private System.Windows.Forms.TableLayoutPanel panelHome;
 		private System.Windows.Forms.TabPage tabHome_pageMain;
 		private System.Windows.Forms.TabControl tabHome;
-		private System.Windows.Forms.Button commandAccept;
+		private System.Windows.Forms.Button commandClose;
 	}
 }
