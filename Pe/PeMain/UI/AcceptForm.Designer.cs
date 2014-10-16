@@ -113,7 +113,7 @@ namespace PeMain.UI
 			this.panelUpdate.Location = new System.Drawing.Point(3, 252);
 			this.panelUpdate.Name = "panelUpdate";
 			this.panelUpdate.Size = new System.Drawing.Size(458, 34);
-			this.panelUpdate.TabIndex = 3;
+			this.panelUpdate.TabIndex = 1;
 			// 
 			// selectUpdateCheck
 			// 

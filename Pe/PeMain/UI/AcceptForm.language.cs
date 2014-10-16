@@ -20,6 +20,7 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
+			this.AcceptButton = null;
 			
 			this.selectUpdateCheck.SetLanguage(CommonData.Language);
 			this.selectUpdateCheckRC.SetLanguage(CommonData.Language);

@@ -17,6 +17,7 @@ namespace PeMain.UI
 		void ApplyLanguage()
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
+			this.AcceptButton = null;
 			
 			var map = new Dictionary<string, string>() {
 				{ SystemLanguageName.versionNow,  Literal.ApplicationVersion },
