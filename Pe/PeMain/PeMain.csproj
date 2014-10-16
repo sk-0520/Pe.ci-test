@@ -496,6 +496,9 @@
     <EmbeddedResource Include="UI\ExecuteForm.resx">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\HomeForm.resx">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
