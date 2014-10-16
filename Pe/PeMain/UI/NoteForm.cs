@@ -236,11 +236,11 @@ namespace PeMain.UI
 			}
 			Refresh();
 		}
-		
+		/*
 		void ContextMenu_fore_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if(contextMenu.Created) {
-				var color = GetSelectedColor(this.contextMenu_fore);
+				var color = GetSelectedColor(this.contextMenu_itemForeColor);
 				var result = SetAcceptColor(color, this._prevForeColor);
 				if(result != this._prevForeColor) {
 					NoteItem.Style.ForeColor = result;
@@ -254,7 +254,7 @@ namespace PeMain.UI
 		void ContextMenu_back_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if(contextMenu.Created) {
-				var color = GetSelectedColor(this.contextMenu_back);
+				var color = GetSelectedColor(this.contextMenu_itemBackColor);
 				var result = SetAcceptColor(color, this._prevBackColor);
 				if(result != this._prevBackColor) {
 					NoteItem.Style.BackColor = result;
@@ -265,6 +265,7 @@ namespace PeMain.UI
 				Refresh();
 			}
 		}
+		*/
 		
 		void ContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
@@ -317,20 +318,22 @@ namespace PeMain.UI
 			this.contextMenu_font_change.Text = LanguageUtility.FontSettingToDisplayText(CommonData.Language, NoteItem.Style.FontSetting);
 			
 			// 色
-			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_fore.ComboBox.SelectedItem).Value;
-			this._prevBackColor = ((ColorDisplayValue)this.contextMenu_back.ComboBox.SelectedItem).Value;
-			var foreColor = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
+			/*
+			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_itemForeColor.ComboBox.SelectedItem).Value;
+			this._prevBackColor = ((ColorDisplayValue)this.contextMenu_itemBackColor.ComboBox.SelectedItem).Value;
+			var foreColor = this.contextMenu_itemForeColor.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
 			if(foreColor != null) {
-				this.contextMenu_fore.SelectedItem = foreColor;
+				this.contextMenu_itemForeColor.SelectedItem = foreColor;
 			} else {
-				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
+				this.contextMenu_itemForeColor.SelectedItem = this.contextMenu_itemForeColor.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
-			var backColor = this.contextMenu_back.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
+			var backColor = this.contextMenu_itemBackColor.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
 			if(backColor != null) {
-				this.contextMenu_back.SelectedItem = backColor;
+				this.contextMenu_itemBackColor.SelectedItem = backColor;
 			} else {
-				this.contextMenu_back.SelectedItem = this.contextMenu_back.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
+				this.contextMenu_itemBackColor.SelectedItem = this.contextMenu_itemBackColor.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
+			*/
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;

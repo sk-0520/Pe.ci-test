@@ -20,12 +20,13 @@ namespace PeMain.UI
 	{
 		void InitializeUI()
 		{
+			/*
 			var colorControls = new [] {
-				new { Control = contextMenu_fore, Title = "note/style/color-fore", Default = Literal.noteFore },
-				new { Control = contextMenu_back, Title = "note/style/color-back", Default = Literal.noteBack },
+				new { Control = contextMenu_itemForeColor, Title = "note/style/color-fore", Default = Literal.noteFore },
+				new { Control = contextMenu_itemBackColor, Title = "note/style/color-back", Default = Literal.noteBack },
 			};
 			foreach(var control in colorControls) {
-				var isFore = control.Control == contextMenu_fore;
+				var isFore = control.Control == contextMenu_itemForeColor;
 				var colorList = new [] {
 					new ColorDisplayValue(isFore ? Literal.noteForeColorBlack:  Literal.noteBackColorBlack , control.Title, "note/style/color/black"),
 					new ColorDisplayValue(isFore ? Literal.noteForeColorWhite:  Literal.noteBackColorWhite , control.Title, "note/style/color/white"),
@@ -40,6 +41,7 @@ namespace PeMain.UI
 				control.Control.ComboBox.BindingContext = BindingContext;
 				control.Control.Attachment(colorList, control.Default);
 			}
+			*/
 			
 			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
 		}

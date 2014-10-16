@@ -24,7 +24,7 @@ namespace PeMain.UI
 		bool _changed = false;
 		string _prevTitle;
 		string _prevBody;
-		Color _prevForeColor;
-		Color _prevBackColor;
+		//Color _prevForeColor;
+		//Color _prevBackColor;
 	}
 }
