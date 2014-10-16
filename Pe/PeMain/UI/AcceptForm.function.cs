@@ -22,12 +22,13 @@ namespace PeMain.UI
 		{
 			CommonData = commonData;
 			
-			ApplyLanguage();
 			ApplySetting();
 		}
 		
 		void ApplySetting()
 		{
+			ApplyLanguage();
+			
 			this.selectUpdateCheck.Checked = CommonData.MainSetting.RunningInfo.CheckUpdate;
 			this.selectUpdateCheckRC.Checked = CommonData.MainSetting.RunningInfo.CheckUpdateRC;
 		}

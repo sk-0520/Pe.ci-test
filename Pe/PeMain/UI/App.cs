@@ -58,7 +58,11 @@ namespace PeMain.UI
 				}
 			}
 			 */
-			MessageBox.Show("PON!");
+			//MessageBox.Show("PON!");
+			using(var dialog = new HomeForm()) {
+				dialog.SetCommonData(this._commonData);
+				dialog.ShowDialog();
+			}
 		}
 		
 
