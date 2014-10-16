@@ -43,6 +43,7 @@
 		<Word Name="common/message/notfound-dir"        Text="ディレクトリが見つかりません" />
 		
 		<Word Name="window/accept"   Text="@[APPLICATION] 使用許諾" />
+		<Word Name="window/home"     Text="@[APPLICATION] ホーム" />
 		<Word Name="window/update"   Text="アップデート" />
 		<Word Name="window/toolbar"  Text="@[APPLICATION]" />
 		<Word Name="window/log"      Text="ログ" />

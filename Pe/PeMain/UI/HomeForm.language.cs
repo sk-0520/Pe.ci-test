@@ -1,4 +1,5 @@
 ﻿using System;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -6,7 +7,7 @@ namespace PeMain.UI
 	{
 		void ApplyLanguage()
 		{
-			
+			UIUtility.SetDefaultText(this, CommonData.Language);
 		}
 	}
 }
