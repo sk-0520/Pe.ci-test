@@ -122,6 +122,25 @@ namespace PeMain.Logic
 		{
 			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, path, string.Empty);
 		}
-		
 	}
+	
+	public static class SystemExecuter
+	{
+		public static Process RunDLL(string command, CommonData commonData)
+		{
+			var s = string.Format("rundll32.exe {0}", command);
+			return Executer.OpenFile(s, commonData);
+		}
+		
+		/// <summary>
+		/// タスクトレイ通知領域履歴を開く。
+		/// </summary>
+		/// <param name="commonData"></param>
+		public static void OpenNotificationAreaHistory(CommonData commonData)
+		{
+			RunDLL("shell32.dll,Options_RunDLL 5", commonData);
+		}
+	}
+	
+	
 }
