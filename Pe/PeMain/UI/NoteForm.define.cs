@@ -9,7 +9,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-
+using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
 using PeUtility;
@@ -68,6 +68,18 @@ namespace PeMain.UI
 					PropertyChanged(this, new PropertyChangedEventArgs(s));
 				}
 			}
+		}
+
+		class ColorMenuItem
+		{
+			public ColorMenuItem(ToolStripItem item, Color color)
+			{
+				Item = item;
+				Color = color;
+			}
+			
+			public ToolStripItem Item { get; private set; }
+			public Color Color { get; private set; }
 		}
 	}
 }

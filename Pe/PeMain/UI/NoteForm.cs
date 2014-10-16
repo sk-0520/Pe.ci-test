@@ -318,6 +318,7 @@ namespace PeMain.UI
 			this.contextMenu_font_change.Text = LanguageUtility.FontSettingToDisplayText(CommonData.Language, NoteItem.Style.FontSetting);
 			
 			// 色
+			//Literal.GetNoteForeColorList()
 			/*
 			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_itemForeColor.ComboBox.SelectedItem).Value;
 			this._prevBackColor = ((ColorDisplayValue)this.contextMenu_itemBackColor.ComboBox.SelectedItem).Value;

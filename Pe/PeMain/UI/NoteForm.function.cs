@@ -358,6 +358,20 @@ namespace PeMain.UI
 			return resultColor;
 		}
 		
+		IList<ColorMenuItem> GetColorMenuList(ToolStripMenuItem parentItem, IList<Color> colorList)
+		{
+			return colorList
+				.Zip(
+					parentItem.DropDownItems
+						.Cast<ToolStripItem>()
+						.Where(i => i is ToolStripMenuItem)
+						.Take(colorList.Count),
+					(color, item) => new ColorMenuItem(item, color)
+				)
+				.ToList()
+			;
+		}
+		
 		Image CreateColorImage(Color color)
 		{
 			var image = new Bitmap(menuIconSize.Width, menuIconSize.Height);

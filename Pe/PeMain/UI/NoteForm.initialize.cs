@@ -46,19 +46,13 @@ namespace PeMain.UI
 			*/
 			
 			var colorItems = new [] {
-				new { Items = contextMenu_itemForeColor.DropDownItems.Cast<ToolStripItem>(), Default = Literal.noteFore, IsFore = true, },
-				new { Items = contextMenu_itemBackColor.DropDownItems.Cast<ToolStripItem>(), Default = Literal.noteBack, IsFore = false, },
+				new { Menu = contextMenu_itemForeColor, Default = Literal.noteFore, IsFore = true, },
+				new { Menu = contextMenu_itemBackColor, Default = Literal.noteBack, IsFore = false, },
 			};
 			
 			foreach(var colorItem in colorItems) {
 				var colors = colorItem.IsFore ? Literal.GetNoteForeColorList(): Literal.GetNoteBackColorList();
-				var pairs = colors.Zip(
-					colorItem.Items.Where(i => i is ToolStripMenuItem).Take(colors.Count),
-					(color, item) => new {
-						Color = color,
-						Item  = item
-					}
-				);
+				var pairs = GetColorMenuList(colorItem.Menu, colors);
 				foreach(var pair in pairs) {
 					pair.Item.Image = CreateColorImage(pair.Color);
 				}
