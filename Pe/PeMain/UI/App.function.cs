@@ -255,7 +255,7 @@ namespace PeMain.UI
 						
 						if(check) {
 							#if !DISABLED_UPDATE_CHECK
-							CheckUpdateProcess(false);
+							CheckUpdateProcessAsync(false);
 							#endif
 						}
 						
@@ -409,7 +409,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		void CheckUpdateProcess(bool force)
+		void CheckUpdateProcessAsync(bool force)
 		{
 			Task.Factory.StartNew(
 				() => {

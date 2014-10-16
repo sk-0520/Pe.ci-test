@@ -32,7 +32,7 @@ namespace PeMain.UI
 			Initialize(commandLine, logger);
 			
 			#if !DISABLED_UPDATE_CHECK
-			CheckUpdateProcess(false);
+			CheckUpdateProcessAsync(false);
 			#endif
 		}
 		
