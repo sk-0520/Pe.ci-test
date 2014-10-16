@@ -40,5 +40,10 @@ namespace PeMain.UI
 			var path = Literal.StartupShortcutPath;
 			AppUtility.MakeAppShortcut(path);
 		}
+		
+		void CommandLauncher_Click(object sender, EventArgs e)
+		{
+			// TODO: がんばろう
+		}
 	}
 }

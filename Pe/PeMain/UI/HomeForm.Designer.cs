@@ -109,6 +109,7 @@ namespace PeMain.UI
 			this.commandLauncher.Text = ":home/command/launcher";
 			this.commandLauncher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commandLauncher.UseVisualStyleBackColor = true;
+			this.commandLauncher.Click += new System.EventHandler(this.CommandLauncher_Click);
 			// 
 			// commandNotify
 			// 
