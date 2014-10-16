@@ -357,5 +357,17 @@ namespace PeMain.UI
 			}
 			return resultColor;
 		}
+		
+		Image CreateColorImage(Color color)
+		{
+			var image = new Bitmap(menuIconSize.Width, menuIconSize.Height);
+			
+			// TODO: とりあえずのイメージ生成、周辺処理が終わればもうちっとまともにする
+			using(var g = Graphics.FromImage(image)) {
+				g.Clear(color);
+			}
+			
+			return image;
+		}
 	}
 }

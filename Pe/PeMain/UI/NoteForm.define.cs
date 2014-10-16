@@ -9,8 +9,10 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+
 using PeMain.Data;
 using PeMain.Logic;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -20,6 +22,7 @@ namespace PeMain.UI
 	partial class NoteForm
 	{
 		const int RECURSIVE = 2;
+		static readonly Size menuIconSize = IconScale.Small.ToSize();
 		
 		private class NoteBindItem: INotifyPropertyChanged
 		{

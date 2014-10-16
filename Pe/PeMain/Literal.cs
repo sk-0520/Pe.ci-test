@@ -62,6 +62,8 @@ namespace PeMain
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
 		
+		#region NOTE
+		
 		/// <summary>
 		/// ノートサイズ
 		/// </summary>
@@ -87,6 +89,35 @@ namespace PeMain
 		
 		public static readonly Color noteFore = noteForeColorBlack;
 		public static readonly Color noteBack = noteBackColorYellow;
+		
+		public static IList<Color> GetNoteForeColorList()
+		{
+			return new [] {
+				noteForeColorWhite,
+				noteForeColorBlack,
+				noteForeColorRed,
+				noteForeColorGreen,
+				noteForeColorBlue,
+				noteForeColorYellow,
+				noteForeColorOrange,
+				noteForeColorPurple,
+			};
+		}
+		public static IList<Color> GetNoteBackColorList()
+		{
+			return new [] {
+				noteBackColorWhite,
+				noteBackColorBlack,
+				noteBackColorRed,
+				noteBackColorGreen,
+				noteBackColorBlue,
+				noteBackColorYellow,
+				noteBackColorOrange,
+				noteBackColorPurple,
+			};
+		}
+		
+		#endregion
 		
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 		
