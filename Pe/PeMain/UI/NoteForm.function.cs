@@ -11,8 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
@@ -323,6 +323,7 @@ namespace PeMain.UI
 			}
 		}
 		
+		/*
 		Color GetSelectedColor(ToolStripComboBox control)
 		{
 			var index = control.ComboBox.SelectedIndex;
@@ -357,19 +358,20 @@ namespace PeMain.UI
 			}
 			return resultColor;
 		}
+		 */
 		
 		IList<ColorMenuItem> GetColorMenuList(ToolStripMenuItem parentItem, IList<Color> colorList)
 		{
 			return colorList
 				.Zip(
 					parentItem.DropDownItems
-						.Cast<ToolStripItem>()
-						.Where(i => i is ToolStripMenuItem)
-						.Take(colorList.Count),
+					.Cast<ToolStripItem>()
+					.Where(i => i is ToolStripMenuItem)
+					.Take(colorList.Count),
 					(color, item) => new ColorMenuItem(item, color)
 				)
 				.ToList()
-			;
+				;
 		}
 		
 		Image CreateColorImage(Color color)
@@ -382,6 +384,24 @@ namespace PeMain.UI
 			}
 			
 			return image;
+		}
+		
+		Color SelectedPlainColor(ToolStripItem selectItem,  IList<ColorMenuItem> colorItemList)
+		{
+			return colorItemList.Single(c => c.Item == selectItem).Color;
+		}
+		
+		Color SelectedCustomColor(Color nowColor)
+		{
+			var resultColor = nowColor;
+			using(var dialog = new ColorDialog()) {
+				dialog.CustomColors[0] = nowColor.ToArgb();
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					resultColor = dialog.Color;
+				}
+			}
+			
+			return resultColor;
 		}
 	}
 }

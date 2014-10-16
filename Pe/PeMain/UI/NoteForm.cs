@@ -354,8 +354,8 @@ namespace PeMain.UI
 			
 			var foreMenuList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
 			var backMenuList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
-			checkColor(foreMenuList, this.contextMenu_itemForeColor, NoteItem.Style.ForeColor);
-			checkColor(backMenuList, this.contextMenu_itemBackColor, NoteItem.Style.BackColor);
+			checkColor(foreMenuList, this.contextMenu_itemForeColor_itemCustom, NoteItem.Style.ForeColor);
+			checkColor(backMenuList, this.contextMenu_itemBackColor_itemCustom, NoteItem.Style.BackColor);
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
@@ -417,9 +417,30 @@ namespace PeMain.UI
 			}
 		}
 		
-		void NotemenuimportToolStripMenuItem_Click(object sender, EventArgs e)
+		void ContextMenu_itemForeColor_itemClick(object sender, EventArgs e)
 		{
-			
+			var colorItemList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
+			NoteItem.Style.ForeColor = SelectedPlainColor((ToolStripItem)sender, colorItemList);
+			Refresh();
+		}
+		
+		void ContextMenu_itemBackColor_itemClick(object sender, EventArgs e)
+		{
+			var colorItemList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
+			NoteItem.Style.BackColor = SelectedPlainColor((ToolStripItem)sender, colorItemList);
+			Refresh();
+		}
+		
+		void ContextMenu_itemForeColor_itemCustom_Click(object sender, EventArgs e)
+		{
+			NoteItem.Style.ForeColor = SelectedCustomColor(NoteItem.Style.ForeColor);
+			Refresh();
+		}
+		
+		void ContextMenu_itemBackColor_itemCustom_Click(object sender, EventArgs e)
+		{
+			NoteItem.Style.BackColor = SelectedCustomColor(NoteItem.Style.BackColor);
+			Refresh();
 		}
 	}
 }
