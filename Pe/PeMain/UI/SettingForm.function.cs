@@ -73,19 +73,19 @@ namespace PeMain.UI
 			mainSetting.RunningInfo.SetDefaultVersion();
 			
 			// 本体
-			MainExportSetting(mainSetting);
+			ExportMainSetting(mainSetting);
 			
 			// ランチャ
-			LauncherExportSetting(mainSetting.Launcher);
+			ExportLauncherSetting(mainSetting.Launcher);
 			
 			// コマンド
-			CommandExportSetting(mainSetting.Command);
+			ExportCommandSetting(mainSetting.Command);
 			
 			// ツールバー
-			ToolbarExportSetting(mainSetting.Toolbar);
+			ExportToolbarSetting(mainSetting.Toolbar);
 			
 			// ノート
-			NoteExportSetting(mainSetting.Note);
+			ExportNoteSetting(mainSetting.Note);
 			
 			// ディスプレイ
 			

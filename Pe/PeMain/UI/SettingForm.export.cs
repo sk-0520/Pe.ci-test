@@ -18,7 +18,7 @@ namespace PeMain.UI
 {
 	partial class SettingForm
 	{
-		void CommandExportSetting(CommandSetting commandSetting)
+		void ExportCommandSetting(CommandSetting commandSetting)
 		{
 			/*
 			commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
@@ -30,14 +30,14 @@ namespace PeMain.UI
 			commandSetting.FontSetting = this.commandCommandFont.FontSetting;
 		}
 		
-		void LauncherExportSetting(LauncherSetting setting)
+		void ExportLauncherSetting(LauncherSetting setting)
 		{
 			setting.Items.Clear();
 			foreach(var item in this.selecterLauncher.Items) {
 				setting.Items.Add(item);
 			}
 		}
-		void LogExportSetting(LogSetting logSetting)
+		void ExportLogSetting(LogSetting logSetting)
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
 			logSetting.AddShow = this.selectLogAddShow.Checked;
@@ -55,7 +55,9 @@ namespace PeMain.UI
 				}
 			}
 			logSetting.AddShowTrigger = logType;
-		}	void SystemEnvExportSetting(SystemEnvSetting systemEnvSetting)
+		}	
+		
+		void ExportSystemEnvSetting(SystemEnvSetting systemEnvSetting)
 		{
 			/*
 			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
@@ -69,7 +71,8 @@ namespace PeMain.UI
 			systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
 			systemEnvSetting.ExtensionShowHotKey  = this.inputSystemEnvExt.HotKeySetting;
 		}
-		void RunningInfoExportSetting(RunningInfo setting)
+		
+		void ExportRunningInfoSetting(RunningInfo setting)
 		{
 			setting.CheckUpdate = this.selectUpdateCheck.Checked;
 			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
@@ -83,16 +86,16 @@ namespace PeMain.UI
 			}
 		}
 		
-		void MainExportSetting(MainSetting mainSetting)
+		void ExportMainSetting(MainSetting mainSetting)
 		{
-			LogExportSetting(mainSetting.Log);
-			SystemEnvExportSetting(mainSetting.SystemEnv);
-			RunningInfoExportSetting(mainSetting.RunningInfo);
+			ExportLogSetting(mainSetting.Log);
+			ExportSystemEnvSetting(mainSetting.SystemEnv);
+			ExportRunningInfoSetting(mainSetting.RunningInfo);
 			
 			ExportLanguageSetting(mainSetting);
 		}
 		
-		void NoteExportSetting(NoteSetting noteSetting)
+		void ExportNoteSetting(NoteSetting noteSetting)
 		{
 			// ホットキー
 			noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
@@ -103,7 +106,8 @@ namespace PeMain.UI
 			// フォント
 			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
 		}
-		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
+		
+		void ExportToolbarSetting(ToolbarSetting toolbarSetting)
 		{
 			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
 			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
@@ -113,8 +117,6 @@ namespace PeMain.UI
 				}
 				toolbarSetting.Items.Add(item);
 			}
-			
-			
 			
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
