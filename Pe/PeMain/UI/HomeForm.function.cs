@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using PeMain.Data;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -20,6 +23,14 @@ namespace PeMain.UI
 		void MakeDefaultLauncherItem()
 		{
 			var path = Literal.ApplicationDefaultLauncherItemPath;
+			var xml = XElement.Load(path);
+			
+			// アイテム取得
+			var itemList = new List<LauncherItem>();
+			var itemElements = xml.Elements("items").Elements("LauncherItem");
+			foreach(var itemElement in itemElements) {
+				var item = Serializer.LoadString<LauncherItem>(itemElement.ToString());
+			}
 		}
 	}
 }

@@ -381,5 +381,9 @@
 		
 		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 		<Word Name="log/output/error"   Text="ログ出力異常" />
+	
+		<!-- デフォルトランチャーアイテム -->
+		<Word Name="default/group/main"     Text="メイングループ" />
+		<Word Name="default/item/iexplorer" Text="InternetExplorer" />
 	</Words>
 </Language>

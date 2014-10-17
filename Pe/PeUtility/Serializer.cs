@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace PeUtility
@@ -22,7 +23,7 @@ namespace PeUtility
 		/// <param name="path">読み込むファイルパス</param>
 		/// <param name="failToNew">読み込み失敗時にデフォルトコンストラクタで生成するか</param>
 		/// <returns>読み込んだデータ</returns>
-		public static T Load<T>(string path, bool failToNew)
+		public static T LoadFile<T>(string path, bool failToNew)
 			where T: new()
 		{
 			if(File.Exists(path)) {
@@ -37,13 +38,21 @@ namespace PeUtility
 				return default(T);
 			}
 		}
+		
+		public static T LoadString<T>(string buffer)
+		{
+			var serializer = new XmlSerializer(typeof(T));
+			using(var stream = new MemoryStream(Encoding.Unicode.GetBytes(buffer))) {
+				return (T)serializer.Deserialize(stream);
+			}
+		}
 
 		/// <summary>
 		/// シリアライズ。
 		/// </summary>
 		/// <param name="saveData">保存データ</param>
 		/// <param name="savePath">保存ファイルパス</param>
-		public static void Save<T>(T saveData, string savePath)
+		public static void SaveFile<T>(T saveData, string savePath)
 		{
 			Debug.Assert(saveData != null);
 			FileUtility.MakeFileParentDirectory(savePath);

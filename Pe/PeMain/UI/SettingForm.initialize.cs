@@ -66,7 +66,7 @@ namespace PeMain.UI
 			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
 				.Select(
 					f => new {
-						Language = Serializer.Load<Language>(f, false),
+						Language = Serializer.LoadFile<Language>(f, false),
 						BaseName = Path.GetFileNameWithoutExtension(f),
 					}
 				)

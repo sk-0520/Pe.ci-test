@@ -204,13 +204,13 @@ namespace PeMain.UI
 			
 			// 保存開始
 			// メインデータ
-			Serializer.Save(this._commonData.MainSetting, Literal.UserMainSettingPath);
+			Serializer.SaveFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
 			//ランチャーデータ
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
 			}
-			Serializer.Save(sortedSet, Literal.UserLauncherItemsPath);
+			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
 		}
 		
 		public void CloseApplication(bool save)
