@@ -93,8 +93,8 @@ namespace PeMain
 		public static IList<Color> GetNoteForeColorList()
 		{
 			return new [] {
-				noteForeColorWhite,
 				noteForeColorBlack,
+				noteForeColorWhite,
 				noteForeColorRed,
 				noteForeColorGreen,
 				noteForeColorBlue,
@@ -106,8 +106,8 @@ namespace PeMain
 		public static IList<Color> GetNoteBackColorList()
 		{
 			return new [] {
-				noteBackColorWhite,
 				noteBackColorBlack,
+				noteBackColorWhite,
 				noteBackColorRed,
 				noteBackColorGreen,
 				noteBackColorBlue,
