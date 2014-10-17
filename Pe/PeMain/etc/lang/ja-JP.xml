@@ -97,6 +97,12 @@
 		<Word Name="balloon/extension/show"    Text="拡張子を表示" />
 		<Word Name="balloon/extension/hide"    Text="拡張子を非表示" />
 		<Word Name="balloon/extension/error"   Text="拡張子操作表示失敗" />
+		<Word Name="balloon/note/title"        Text="ノート" />
+		<Word Name="balloon/note/create"       Text="ノートを新規作成" />
+		<Word Name="balloon/note/hidden"       Text="編集可能ノートの非表示" />
+		<Word Name="balloon/note/compact"      Text="編集可能ノートの最小化" />
+		<Word Name="balloon/note/show-front"   Text="表示中ノートの前面表示" />
+		
 		
 		<Word Name="log/command/save"     Text="ログ保存" />
 		<Word Name="log/tips/save"        Text="現在のログをファイルに保存" />

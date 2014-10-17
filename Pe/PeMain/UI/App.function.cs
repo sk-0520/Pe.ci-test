@@ -312,15 +312,19 @@ namespace PeMain.UI
 					break;
 					
 				case HotKeyId.CreateNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/create"]);
 					CreateNote(Point.Empty);
 					break;
 				case HotKeyId.HiddenNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/hidden"]);
 					HiddenNote();
 					break;
 				case HotKeyId.CompactNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/compact"]);
 					CompactNote();
 					break;
 				case HotKeyId.ShowFrontNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/show-front"]);
 					ShowFrontNote();
 					break;
 					
