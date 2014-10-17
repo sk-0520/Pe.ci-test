@@ -1597,7 +1597,7 @@ namespace PeMain.UI
 			this.labelNoteShowFront.Name = "labelNoteShowFront";
 			this.labelNoteShowFront.Size = new System.Drawing.Size(172, 15);
 			this.labelNoteShowFront.TabIndex = 5;
-			this.labelNoteShowFront.Text = ":setting/label/note-compact";
+			this.labelNoteShowFront.Text = ":setting/label/note-show-front";
 			// 
 			// inputNoteShowFront
 			// 

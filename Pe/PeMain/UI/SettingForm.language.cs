@@ -133,6 +133,7 @@ namespace PeMain.UI
 			this.inputNoteCreate.SetLanguage(Language);
 			this.inputNoteHidden.SetLanguage(Language);
 			this.inputNoteCompact.SetLanguage(Language);
+			this.inputNoteShowFront.SetLanguage(Language);
 			
 			this.commandNoteCaptionFont.SetLanguage(Language);
 
@@ -150,6 +151,7 @@ namespace PeMain.UI
 			this.labelNoteCreate.SetLanguage(Language);
 			this.labelNoteHiddent.SetLanguage(Language);
 			this.labelNoteCompact.SetLanguage(Language);
+			this.labelNoteShowFront.SetLanguage(Language);
 			this.labelNoteCaptionFont.SetLanguage(Language);
 		}
 		

@@ -34,6 +34,7 @@ namespace PeMain.UI
 			noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
 			noteSetting.HiddenHotKey = this.inputNoteHidden.HotKeySetting;
 			noteSetting.CompactHotKey= this.inputNoteCompact.HotKeySetting;
+			noteSetting.ShowFrontHotKey= this.inputNoteShowFront.HotKeySetting;
 			
 			// フォント
 			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;

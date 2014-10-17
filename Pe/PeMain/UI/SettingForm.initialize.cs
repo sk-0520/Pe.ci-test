@@ -140,6 +140,7 @@ namespace PeMain.UI
 			this.inputNoteCreate.HotKeySetting = noteSetting.CreateHotKey;
 			this.inputNoteCompact.HotKeySetting = noteSetting.CompactHotKey;
 			this.inputNoteHidden.HotKeySetting = noteSetting.HiddenHotKey;
+			this.inputNoteShowFront.HotKeySetting = noteSetting.ShowFrontHotKey;
 			
 			this.commandNoteCaptionFont.FontSetting.Import(noteSetting.CaptionFontSetting);
 			this.commandNoteCaptionFont.RefreshView();
