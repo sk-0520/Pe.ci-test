@@ -28,7 +28,7 @@
 	<log date="2014/10/DD" version="0.22.1" type="rc">
 		<ul type="note">
 			<li>フォーラム(https://groups.google.com/d/forum/pe_development)作成</li>
-			<li></li>
+			<li>PeUpdate.exe のパスが &gt;Pe:&lt;/PeUpdate.exe から &gt;Pe:&lt;/bin/ 以下へ移動しました。ファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
 			<li></li>
 		</ul>
 		<ul type="features">
