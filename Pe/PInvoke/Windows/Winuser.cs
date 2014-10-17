@@ -28,6 +28,7 @@ namespace PInvoke.Windows
 		WM_SYSCOMMAND = 0x112,
 		WM_NCRBUTTONDOWN = 0xA4,
 		WM_NCRBUTTONUP = 0x00A5,
+		WM_DEVICECHANGE = 0x0219,
 	}
 	
 	public enum WS_EX
