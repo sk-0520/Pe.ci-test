@@ -70,8 +70,9 @@ namespace PeMain.UI
 						BaseName = Path.GetFileNameWithoutExtension(f),
 					}
 				)
+				.ToArray()
 			;
-			var languagePairList = new List<Language>();
+			var languagePairList = new List<Language>(languageTempList.Length);
 			foreach(var lang in languageTempList) {
 				lang.Language.BaseName = lang.BaseName; 
 				languagePairList.Add(lang.Language);

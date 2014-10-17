@@ -22,6 +22,5 @@ namespace PeMain.UI
 	/// </summary>
 	partial class SettingForm
 	{
-
 	}
 }

@@ -27,8 +27,5 @@ namespace PeMain.UI
 		{
 			return true;
 		}
-
-		
-	
 	}
 }
