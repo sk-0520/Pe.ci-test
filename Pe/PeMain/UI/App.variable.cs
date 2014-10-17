@@ -32,6 +32,5 @@ namespace PeMain.UI
 		private bool _pause = false;
 		
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
-		
 	}
 }

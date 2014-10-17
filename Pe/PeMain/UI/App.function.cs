@@ -222,6 +222,27 @@ namespace PeMain.UI
 			Application.Exit();
 		}
 		
+		void ResetToolbar()
+		{
+			Debug.WriteLine("ResetToolbar");
+			foreach(var toolbar in this._toolbarForms.Values) {
+				//toolbar.SetCommonData(this._commonData);
+				toolbar.Dispose();
+			}
+			this._toolbarForms.Clear();
+			
+			InitializeToolbarForm(null, null);
+			
+			// メニュー構築
+			var menuItem = this._contextMenu.MenuItems[menuNameWindowToolbar];
+			foreach(MenuItem subItem in menuItem.MenuItems) {
+				subItem.ToDispose();
+			}
+			menuItem.MenuItems.Clear();
+			
+			AttachmentToolbarSubMenu(menuItem);
+		}
+		
 		Func<bool> OpenSetting()
 		{
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database)) {
@@ -244,12 +265,15 @@ namespace PeMain.UI
 					return () => {
 						this._logForm.SetCommonData(this._commonData);
 						this._messageWindow.SetCommonData(this._commonData);
+						/*
 						foreach(var toolbar in this._toolbarForms.Values) {
 							//toolbar.SetCommonData(this._commonData);
 							toolbar.Dispose();
 						}
 						this._toolbarForms.Clear();
 						InitializeToolbarForm(null, null);
+						 */
+						ResetToolbar();
 						
 						InitializeNoteForm(null, null);
 						
@@ -470,6 +494,12 @@ namespace PeMain.UI
 		void ResetLauncherFileList()
 		{
 			// なんかこれそもそもが変な気がするんです
+		}
+		
+		void ChangedScreenCount()
+		{
+			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/screen/count-change"], string.Empty);
+			ResetToolbar();
 		}
 		
 	}

@@ -8,7 +8,9 @@
  */
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+
 using PeMain.Data;
 using PInvoke.Windows;
 
@@ -34,7 +36,8 @@ namespace PeMain.UI
 						
 					case (int)WM.WM_DEVICECHANGE:
 						{
-							CommonData.Logger.Puts(LogType.Information, "WM_DEVICECHANGE", m);
+							var changeDevice = new ChangeDevice(m);
+							CommonData.RootSender.ReceiveDeviceChanged(changeDevice);
 						}
 						break;
 						

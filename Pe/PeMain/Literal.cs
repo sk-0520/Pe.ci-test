@@ -61,6 +61,7 @@ namespace PeMain
 		public static readonly Size toolbarFloatSize = new Size(SystemInformation.WorkingArea.Width / 10, 0);
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
+		public const int waitCountForGetScreenCount = 10;
 		
 		#region NOTE
 		

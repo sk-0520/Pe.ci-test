@@ -25,5 +25,7 @@ namespace PeMain.IF
 		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
 		
 		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
+		
+		void ReceiveDeviceChanged(ChangeDevice changeDevice);
 	}
 }

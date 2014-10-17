@@ -509,6 +509,7 @@ namespace PeMain.UI
 				toolbar.SetCommonData(this._commonData);
 				this._toolbarForms.Add(screen, toolbar);
 			}
+			
 			/*
 			this._toolbarForms = new ToolbarForm();
 			this._toolbarForms.Logger = this._logForm;

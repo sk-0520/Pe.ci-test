@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ChnageDevice.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
@@ -548,9 +549,6 @@
     </Compile>
     <Compile Include="UI\NoteForm.wndProc.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\App.logger.cs">
-      <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <None Include="etc\lang\ja-JP.accept.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
