@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -378,9 +379,13 @@ namespace PeMain.UI
 		{
 			var image = new Bitmap(menuIconSize.Width, menuIconSize.Height);
 			
-			// TODO: とりあえずのイメージ生成、周辺処理が終わればもうちっとまともにする
 			using(var g = Graphics.FromImage(image)) {
-				g.Clear(color);
+				using(var brush = new SolidBrush(color)) {
+					using(var pen = new Pen(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)))) {
+						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(menuIconSize.Width - 2, menuIconSize.Height - 2)));
+						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(menuIconSize.Width - 1, menuIconSize.Height - 1)));
+					}
+				}
 			}
 			
 			return image;
