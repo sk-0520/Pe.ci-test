@@ -19,7 +19,7 @@ namespace PeMain.UI
 		
 		void MakeDefaultLauncherItem()
 		{
-			
+			var path = Literal.ApplicationDefaultLauncherItemPath;
 		}
 	}
 }

@@ -174,6 +174,18 @@ namespace PeMain
 		}
 		
 		/// <summary>
+		/// デフォルトのの
+		/// </summary>
+		public static string ApplicationDefaultLauncherItemPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationEtcDirPath, "default-launcher.xml");
+			}
+		}
+		
+		
+		/// <summary>
 		/// etc/lang/
 		/// </summary>
 		public static string ApplicationLanguageDirPath
