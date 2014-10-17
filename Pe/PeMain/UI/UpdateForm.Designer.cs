@@ -40,25 +40,27 @@ namespace PeMain.UI
 			this.commandOk = new System.Windows.Forms.Button();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.labelVersion = new System.Windows.Forms.Label();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.flowLayoutPanel1.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// webUpdate
 			// 
-			this.webUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			this.webUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.webUpdate.IsWebBrowserContextMenuEnabled = false;
-			this.webUpdate.Location = new System.Drawing.Point(12, 13);
+			this.webUpdate.Location = new System.Drawing.Point(3, 4);
 			this.webUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webUpdate.MinimumSize = new System.Drawing.Size(23, 25);
 			this.webUpdate.Name = "webUpdate";
-			this.webUpdate.Size = new System.Drawing.Size(500, 261);
+			this.webUpdate.Size = new System.Drawing.Size(518, 277);
 			this.webUpdate.TabIndex = 0;
 			// 
 			// commandOk
 			// 
 			this.commandOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOk.Location = new System.Drawing.Point(320, 300);
+			this.commandOk.Location = new System.Drawing.Point(3, 3);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(92, 30);
 			this.commandOk.TabIndex = 2;
@@ -70,7 +72,7 @@ namespace PeMain.UI
 			// 
 			this.commandCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandCancel.Location = new System.Drawing.Point(420, 300);
+			this.commandCancel.Location = new System.Drawing.Point(101, 3);
 			this.commandCancel.Name = "commandCancel";
 			this.commandCancel.Size = new System.Drawing.Size(92, 30);
 			this.commandCancel.TabIndex = 3;
@@ -79,13 +81,41 @@ namespace PeMain.UI
 			// 
 			// labelVersion
 			// 
-			this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.labelVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelVersion.AutoSize = true;
-			this.labelVersion.Location = new System.Drawing.Point(12, 278);
+			this.labelVersion.Location = new System.Drawing.Point(3, 285);
 			this.labelVersion.Name = "labelVersion";
 			this.labelVersion.Size = new System.Drawing.Size(133, 15);
 			this.labelVersion.TabIndex = 1;
 			this.labelVersion.Text = ":update/label/version";
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.flowLayoutPanel1.AutoSize = true;
+			this.flowLayoutPanel1.Controls.Add(this.commandOk);
+			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(325, 303);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(196, 36);
+			this.flowLayoutPanel1.TabIndex = 4;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Controls.Add(this.webUpdate, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.labelVersion, 0, 1);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 3;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(524, 342);
+			this.tableLayoutPanel1.TabIndex = 5;
 			// 
 			// UpdateForm
 			// 
@@ -94,10 +124,7 @@ namespace PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
 			this.ClientSize = new System.Drawing.Size(524, 342);
-			this.Controls.Add(this.labelVersion);
-			this.Controls.Add(this.commandCancel);
-			this.Controls.Add(this.commandOk);
-			this.Controls.Add(this.webUpdate);
+			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::PeMain.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -105,9 +132,13 @@ namespace PeMain.UI
 			this.Name = "UpdateForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/update";
+			this.flowLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 		}
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.Label labelVersion;
 		private System.Windows.Forms.Button commandCancel;
 		private System.Windows.Forms.Button commandOk;

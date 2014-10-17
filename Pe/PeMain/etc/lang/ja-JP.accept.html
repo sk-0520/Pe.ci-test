@@ -8,8 +8,9 @@
 		{
 			font-family: "Meiryo UI"
 		}
-		span.uri
+		p.uri
 		{
+			margin-top: 0;
 			font-size: 80%;
 		}
 		</style>
@@ -46,11 +47,26 @@
 			手動でのバージョンアップやバグ報告、オンラインヘルプなどに関しては下記サイトやメールアドレスにアクセスしてください。
 		</p>
 		<ul>
-			<li><a href="${WEB}" target="PE_BROWSER">WEBサイト</a> <span class="uri">${WEB}</span></li>
-			<li><a href="${DEVELOPMENT}" target="PE_BROWSER">開発リポジトリ</a> <span class="uri">${DEVELOPMENT}</span></li>
-			<li><a href="mailto:${MAIL}">メール</a> <span class="uri">${MAIL}</span></li>
-			<li><a href="${DISCUSSION}" target="PE_BROWSER">フォーラム</a> <span class="uri">${DISCUSSION}</span></li>
-			<li><a href="${HELP}" target="PE_BROWSER">オンラインヘルプ</a> <span class="uri">${HELP}</span></li>
+			<li>
+				<a href="${WEB}" target="PE_BROWSER">WEBサイト</a>
+				<p class="uri">${WEB}</p>
+			</li>
+			<li>
+				<a href="${DEVELOPMENT}" target="PE_BROWSER">開発リポジトリ</a>
+				<p class="uri">${DEVELOPMENT}</p>
+			</li>
+			<li>
+				<a href="mailto:${MAIL}">メール</a>
+				<p class="uri">${MAIL}</p>
+			</li>
+			<li>
+				<a href="${DISCUSSION}" target="PE_BROWSER">フォーラム</a>
+				<p class="uri">${DISCUSSION}</p>
+			</li>
+			<li>
+				<a href="${HELP}" target="PE_BROWSER">オンラインヘルプ</a>
+				<p class="uri">${HELP}</p>
+			</li>
 		</ul>
 	</body>
 </html>

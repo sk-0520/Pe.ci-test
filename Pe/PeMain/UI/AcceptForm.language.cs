@@ -39,8 +39,6 @@ namespace PeMain.UI
 			};
 			var acceptFileReplaced = acceptFileSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
 			this.webDocument.DocumentStream = new MemoryStream(Encoding.Unicode.GetBytes(acceptFileReplaced));
-			//this.webDocument.Navigate(acceptFilePath);
-			
 		}
 	}
 }
