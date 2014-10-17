@@ -49,27 +49,7 @@ namespace PeMain.UI
 		
 		public void SaveFiles()
 		{
-			var linkPath = Literal.StartupShortcutPath;
-			if(this.selectMainStartup.Checked) {
-				if(!File.Exists(linkPath)) {
-					// 生成
-					//
-					/*
-					var shortcut = new ShortcutFile(linkPath, true);
-					shortcut.TargetPath = Literal.ApplicationExecutablePath; 
-					shortcut.IconPath = Literal.ApplicationExecutablePath;
-					shortcut.IconIndex = 0;
-					shortcut.WorkingDirectory = Literal.ApplicationRootDirPath; 
-					shortcut.Save();
-					*/
-					AppUtility.MakeAppShortcut(linkPath);
-				}
-			} else {
-				if(File.Exists(linkPath)) {
-					// 削除
-					File.Delete(linkPath);
-				}
-			}
+			SaveMainStartupFile();
 
 		}
 		

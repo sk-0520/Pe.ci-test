@@ -8,9 +8,12 @@
  */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -19,63 +22,30 @@ namespace PeMain.UI
 	/// </summary>
 	partial class SettingForm
 	{
-		void LogExportSetting(LogSetting logSetting)
+
+		void SaveMainStartupFile()
 		{
-			logSetting.Visible = this.selectLogVisible.Checked;
-			logSetting.AddShow = this.selectLogAddShow.Checked;
-			logSetting.FullDetail = this.selectLogFullDetail.Checked;
-			
-			var trigger = new Dictionary<CheckBox, LogType>() {
-				{ this.selectLogTrigger_information, LogType.Information },
-				{ this.selectLogTrigger_warning,     LogType.Warning },
-				{ this.selectLogTrigger_error,       LogType.Error },
-			};
-			var logType = LogType.None;
-			foreach(var t in trigger) {
-				if(t.Key.Checked) {
-					logType |= t.Value;
+			var linkPath = Literal.StartupShortcutPath;
+			if(this.selectMainStartup.Checked) {
+				if(!File.Exists(linkPath)) {
+					// 生成
+					//
+					/*
+					var shortcut = new ShortcutFile(linkPath, true);
+					shortcut.TargetPath = Literal.ApplicationExecutablePath; 
+					shortcut.IconPath = Literal.ApplicationExecutablePath;
+					shortcut.IconIndex = 0;
+					shortcut.WorkingDirectory = Literal.ApplicationRootDirPath; 
+					shortcut.Save();
+					*/
+					AppUtility.MakeAppShortcut(linkPath);
+				}
+			} else {
+				if(File.Exists(linkPath)) {
+					// 削除
+					File.Delete(linkPath);
 				}
 			}
-			logSetting.AddShowTrigger = logType;
 		}
-		
-		void SystemEnvExportSetting(SystemEnvSetting systemEnvSetting)
-		{
-			/*
-			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
-			systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
-			systemEnvSetting.HiddenFileShowHotKey.Registered = this.inputSystemEnvHiddenFile.Registered;
-			
-			systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
-			systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
-			systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
-			 */
-			systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
-			systemEnvSetting.ExtensionShowHotKey  = this.inputSystemEnvExt.HotKeySetting;
-		}
-		
-		void RunningInfoExportSetting(RunningInfo setting)
-		{
-			setting.CheckUpdate = this.selectUpdateCheck.Checked;
-			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
-		}
-		
-		void ExportLanguageSetting(MainSetting  setting)
-		{
-			var lang = this.selectMainLanguage.SelectedValue as Language;
-			if(lang != null) {
-				setting.LanguageName = lang.BaseName;
-			}
-		}
-		
-		void MainExportSetting(MainSetting mainSetting)
-		{
-			LogExportSetting(mainSetting.Log);
-			SystemEnvExportSetting(mainSetting.SystemEnv);
-			RunningInfoExportSetting(mainSetting.RunningInfo);
-			
-			ExportLanguageSetting(mainSetting);
-		}
-		
 	}
 }

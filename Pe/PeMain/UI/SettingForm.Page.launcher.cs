@@ -237,12 +237,5 @@ namespace PeMain.UI
 			}
 		}
 		
-		void LauncherExportSetting(LauncherSetting setting)
-		{
-			setting.Items.Clear();
-			foreach(var item in this.selecterLauncher.Items) {
-				setting.Items.Add(item);
-			}
-		}
 	}
 }

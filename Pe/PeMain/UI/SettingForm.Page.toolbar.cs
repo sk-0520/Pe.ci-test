@@ -143,32 +143,5 @@ namespace PeMain.UI
 			this.selecterToolbar.SelectedItem = item;
 		}
 		
-		void ToolbarExportSetting(ToolbarSetting toolbarSetting)
-		{
-			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
-				var item = itemData.Value;
-				if(toolbarSetting.Items.Contains(item)) {
-					toolbarSetting.Items.Remove(item);
-				}
-				toolbarSetting.Items.Add(item);
-			}
-			
-				
-			
-			// ツリーからグループ項目構築
-			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
-				var toolbarGroupItem = new ToolbarGroupItem();
-				
-				// グループ項目
-				var groupName = groupNode.Text;
-				toolbarGroupItem.Name = groupName;
-				
-				// グループに紐付くアイテム名
-				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
-
-				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
-			}
-		}
 	}
 }

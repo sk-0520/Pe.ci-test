@@ -16,16 +16,5 @@ namespace PeMain.UI
 	/// </summary>
 	partial class SettingForm
 	{
-		void CommandExportSetting(CommandSetting commandSetting)
-		{
-			/*
-			commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
-			commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
-			commandSetting.HotKey.Registered = this.inputCommandHotkey.Registered;
-			*/
-			commandSetting.HotKey = this.inputCommandHotkey.HotKeySetting;
-			
-			commandSetting.FontSetting = this.commandCommandFont.FontSetting;
-		}
 	}
 }

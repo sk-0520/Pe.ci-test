@@ -378,6 +378,9 @@
     <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SettingForm.export.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingForm.initialize.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
