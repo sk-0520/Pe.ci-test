@@ -16,5 +16,10 @@ namespace PeMain.UI
 		{
 			ApplyLanguage();
 		}
+		
+		void MakeDefaultLauncherItem()
+		{
+			
+		}
 	}
 }

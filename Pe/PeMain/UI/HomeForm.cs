@@ -44,6 +44,7 @@ namespace PeMain.UI
 		void CommandLauncher_Click(object sender, EventArgs e)
 		{
 			// TODO: がんばろう
+			MakeDefaultLauncherItem();
 		}
 	}
 }
