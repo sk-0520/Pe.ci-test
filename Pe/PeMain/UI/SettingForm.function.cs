@@ -49,15 +49,14 @@ namespace PeMain.UI
 		
 		public void SaveFiles()
 		{
-			SaveMainStartupFile();
-
+			SaveFileMainStartup();
 		}
 		
 		public void SaveDB(AppDBManager db)
 		{
 			using(var tran = db.BeginTransaction()) {
 				try {
-					SaveNoteItems(db);
+					SaveDBNoteItems(db);
 					tran.Commit();
 				} catch(Exception) {
 					tran.Rollback();

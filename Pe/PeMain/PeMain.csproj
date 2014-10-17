@@ -405,6 +405,9 @@
     <Compile Include="UI\SettingForm.property.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SettingForm.save.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>

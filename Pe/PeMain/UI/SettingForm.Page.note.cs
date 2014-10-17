@@ -29,17 +29,6 @@ namespace PeMain.UI
 		}
 
 		
-		void SaveNoteItems(AppDBManager db)
-		{
-			if(this._noteItemList.Count > 0) {
-				var removeList = this._noteItemList.Where(note => note.Remove).Select(note => note.NoteItem);
-				var saveList = this._noteItemList.Where(note => !note.Remove).Select(note => note.NoteItem);
-				
-				var noteDB = new NoteDB(db);
-				noteDB.ToDisabled(removeList);
-				noteDB.Resist(saveList);
-			}
-		}
-		
+	
 	}
 }
