@@ -7,6 +7,8 @@
 		<Word Name="ok"                Text="OK" />
 		<Word Name="retry"             Text="再試行" />
 		<Word Name="exit"              Text="終了" />
+		<Word Name="success"           Text="成功" />
+		<Word Name="failure"           Text="失敗" />
 		<Word Name="open-ui"           Text="..." />
 		<Word Name="remove"            Text="削除" />
 		<Word Name="edit"              Text="編集" />
@@ -23,6 +25,9 @@
 		<Word Name="update-check.RC"   Text="RC版も確認対象とする" />
 		<Word Name="version-release"   Text="リリース版" />
 		<Word Name="version-rc"        Text="RC版" />
+		<Word Name="hotkey"            Text="ホットキー" />
+		<Word Name="regist"            Text="登録" />
+		<Word Name="unregist"          Text="解除" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -57,6 +62,7 @@
 		<Word Name="main/menu/window/note/create"           Text="新規作成(&amp;N)" />
 		<Word Name="main/menu/window/note/hidden"           Text="非表示(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
+		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
 		<Word Name="main/menu/window/logger"                Text="ログ(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />
@@ -65,15 +71,24 @@
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
 		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
 		
-		<Word Name="hotkey/unregist/fail"         Text="ホットキー解除失敗" />
-		<Word Name="hotkey/unregist/command"      Text="ホットキー解除: コマンド" />
-		<Word Name="hotkey/unregist/hidden-file"  Text="ホットキー解除: 隠しファイル" />
-		<Word Name="hotkey/unregist/extension"    Text="ホットキー解除: 拡張子" />
-		<Word Name="hotkey/regist/fail"           Text="ホットキー登録失敗" />
-		<Word Name="hotkey/regist/command"        Text="ホットキー登録: コマンド" />
-		<Word Name="hotkey/regist/hidden-file"    Text="ホットキー登録: 隠しファイル" />
-		<Word Name="hotkey/regist/extension"      Text="ホットキー登録: 拡張子" />
+		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
+		<Word Name="hotkey/unregist/command"         Text="ホットキー解除: コマンド" />
+		<Word Name="hotkey/unregist/hidden-file"     Text="ホットキー解除: 隠しファイル" />
+		<Word Name="hotkey/unregist/extension"       Text="ホットキー解除: 拡張子" />
+		<Word Name="hotkey/unregist/create-note"     Text="${hotkey}${unregist}: ノート作成" />
+		<Word Name="hotkey/unregist/hidden-note"     Text="${hotkey}${unregist}: ノート非表示" />
+		<Word Name="hotkey/unregist/compact-note"    Text="${hotkey}${unregist}: ノート最小化" />
+		<Word Name="hotkey/unregist/show-front-note" Text="${hotkey}${unregist}: ノート前面表示" />
 		
+		<Word Name="hotkey/regist/fail"            Text="${hotkey}${regist} ${failure}" />
+		<Word Name="hotkey/regist/command"         Text="ホットキー登録: コマンド" />
+		<Word Name="hotkey/regist/hidden-file"     Text="ホットキー登録: 隠しファイル" />
+		<Word Name="hotkey/regist/extension"       Text="ホットキー登録: 拡張子" />
+		<Word Name="hotkey/regist/create-note"     Text="${hotkey}${regist}: ノート作成" />
+		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ノート非表示" />
+		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ノート最小化" />
+		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ノート前面表示" />
+
 		<Word Name="balloon/hidden-file/title" Text="隠しファイル" />
 		<Word Name="balloon/hidden-file/show"  Text="隠しファイルを表示" />
 		<Word Name="balloon/hidden-file/hide"  Text="隠しファイルを非表示" />

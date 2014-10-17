@@ -242,12 +242,15 @@ namespace PeMain.UI
 		void AttachmentNoteSubMenu(MenuItem parentMenu)
 		{
 			var menuList = new List<MenuItem>();
-			var itemNoteCreate = new MenuItem();
-			var itemNoteHidden = new MenuItem();
-			var itemNoteCompact= new MenuItem();
+			var itemNoteCreate  = new MenuItem();
+			var itemNoteHidden  = new MenuItem();
+			var itemNoteCompact = new MenuItem();
+			var itemNoteShowFront   = new MenuItem();
 			menuList.Add(itemNoteCreate);
 			menuList.Add(itemNoteHidden);
 			menuList.Add(itemNoteCompact);
+			menuList.Add(new MenuItem("-"));
+			menuList.Add(itemNoteShowFront);
 			
 			// ノート作成
 			itemNoteCreate.Name = menuNameWindowNoteCreate;
@@ -270,6 +273,13 @@ namespace PeMain.UI
 			itemNoteCompact.Click += (object sender, EventArgs e) => {
 				CompactNote();
 			};
+			
+			// ノートを前面へ
+			itemNoteShowFront.Name = menuNameWindowNoteShowFront;
+			itemNoteShowFront.Click += (object sender, EventArgs e) => {
+				ShowFrontNote();
+			};
+			
 			
 			// サブメニュー設定
 			parentMenu.MenuItems.AddRange(menuList.ToArray());

@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Windows.Navigation;
 using PeMain.Data;
 using PeUtility;
+using PInvoke.Windows;
 
 namespace PeMain.Logic
 {
@@ -431,5 +432,16 @@ namespace PeMain.Logic
 			target.Text = GetWord(language, target.Text, map);
 		}
 		 */
+		
+		/// <summary>
+		/// 指定ウィンドウを全面へ表示する。
+		/// 
+		/// 最前面への固定ではなく前面に移動させるだけであることに注意。
+		/// </summary>
+		/// <param name="target"></param>
+		public static void ShowFront(Form target)
+		{
+			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOPMOST, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+		}
 	}
 }

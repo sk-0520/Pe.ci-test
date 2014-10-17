@@ -320,6 +320,9 @@ namespace PeMain.UI
 				case HotKeyId.CompactNote:
 					CompactNote();
 					break;
+				case HotKeyId.ShowFrontNote:
+					ShowFrontNote();
+					break;
 					
 				default:
 					break;
@@ -376,6 +379,14 @@ namespace PeMain.UI
 				;
 			foreach(var note in list) {
 				note.ToCompact();
+			}
+		}
+		
+		void ShowFrontNote()
+		{
+			var list = this._noteWindowList;
+			foreach(var note in list) {
+				UIUtility.ShowFront(note);
 			}
 		}
 		

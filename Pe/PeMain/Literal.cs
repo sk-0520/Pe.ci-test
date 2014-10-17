@@ -336,6 +336,7 @@ namespace PeMain
 		CreateNote,
 		HiddenNote,
 		CompactNote,
+		ShowFrontNote,
 	}
 	
 	public static class SystemLanguageName

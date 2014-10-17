@@ -27,9 +27,10 @@ namespace PeMain.UI
 		const string menuNameWindowNote  = "menu_window_note";
 		const string menuNameWindowLogger = "menu_window_logger";
 
-		const string menuNameWindowNoteCreate = "menu_window_note_create";
-		const string menuNameWindowNoteHidden = "menu_window_note_hidden";
-		const string menuNameWindowNoteCompact= "menu_window_note_compact";
+		const string menuNameWindowNoteCreate    = "menu_window_note_create";
+		const string menuNameWindowNoteHidden    = "menu_window_note_hidden";
+		const string menuNameWindowNoteCompact   = "menu_window_note_compact";
+		const string menuNameWindowNoteShowFront = "menu_window_note_show_front";
 		
 		const string menuNameSystemEnvHiddenFile = "menu_systemenv_hidden";
 		const string menuNameSystemEnvExtension = "menu_systemenv_ext";

@@ -29,6 +29,8 @@ namespace PeMain.UI
 			noteMenu.MenuItems[menuNameWindowNoteCreate].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/create"], this._commonData.MainSetting.Note.CreateHotKey);
 			noteMenu.MenuItems[menuNameWindowNoteHidden].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/hidden"], this._commonData.MainSetting.Note.HiddenHotKey);
 			noteMenu.MenuItems[menuNameWindowNoteCompact].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/compact"], this._commonData.MainSetting.Note.CompactHotKey);
+			noteMenu.MenuItems[menuNameWindowNoteShowFront].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/show-front"], this._commonData.MainSetting.Note.ShowFrontHotKey);
+			
 
 			var systemEnvMenu = (MenuItem)rootMenu[menuNameSystemEnv];
 			systemEnvMenu.Text = this._commonData.Language["main/menu/system-env"];
