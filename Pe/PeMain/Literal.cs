@@ -282,6 +282,17 @@ namespace PeMain
 			get { return Version.ProductVersion; }
 		}
 		
+		public static string StartupShortcutPath
+		{
+			get
+			{
+				var startupDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+				var appLinkPath = Path.Combine(startupDirPath, Literal.shortcutName);
+
+				return appLinkPath;
+			}
+		}
+		
 		public static void Initialize(CommandLine commandLine)
 		{
 			#if DEBUG

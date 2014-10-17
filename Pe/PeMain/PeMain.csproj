@@ -129,6 +129,7 @@
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISkin.cs" />
     <Compile Include="Literal.cs" />
+    <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\DB\DBWrapper.cs" />
     <Compile Include="Logic\DB\NoteDB.cs" />
@@ -285,6 +286,22 @@
     <Compile Include="UI\Ex\ExSplitButton.cs" />
     <Compile Include="UI\Ex\ExToolStrip.cs" />
     <Compile Include="UI\Ex\ExToolStripControlHost.cs" />
+    <Compile Include="UI\HomeForm.cs" />
+    <Compile Include="UI\HomeForm.Designer.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\HomeForm.function.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\HomeForm.initialize.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\HomeForm.language.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\HomeForm.property.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\LogForm.cs" />
     <Compile Include="UI\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
@@ -482,6 +499,9 @@
     <EmbeddedResource Include="UI\ExecuteForm.resx">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\HomeForm.resx">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -523,6 +543,7 @@
     <None Include="doc\components.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="etc\default-launcher.xml" />
     <None Include="etc\lang\ja-JP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

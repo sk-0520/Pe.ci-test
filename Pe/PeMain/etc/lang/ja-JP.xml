@@ -7,6 +7,7 @@
 		<Word Name="ok"                Text="OK" />
 		<Word Name="retry"             Text="再試行" />
 		<Word Name="exit"              Text="終了" />
+		<Word Name="close"             Text="閉じる" />
 		<Word Name="success"           Text="成功" />
 		<Word Name="failure"           Text="失敗" />
 		<Word Name="open-ui"           Text="..." />
@@ -32,6 +33,7 @@
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
 		<Word Name="common/command/cancel"              Text="${cancel}" />
+		<Word Name="common/command/close"               Text="${close}" />
 		<Word Name="common/command/exit"                Text="${exit}" />
 		<Word Name="common/menu/exit"                   Text="${exit}(&amp;X)" />
 		<Word Name="common/label/topmost"               Text="${topmost}" />
@@ -43,11 +45,12 @@
 		<Word Name="common/command/default-font"        Text="デフォルトのフォント" />
 		<Word Name="common/command/default-font-reset"  Text="フォントをリセットする" />
 		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
-		<Word Name="common/tab/env"                     Text="環境変数" />
+		<Word Name="common/page/env"                    Text="環境変数" />
 		<Word Name="common/message/notfound-file"       Text="ファイルが見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="ディレクトリが見つかりません" />
 		
 		<Word Name="window/accept"   Text="@[APPLICATION] 使用許諾" />
+		<Word Name="window/home"     Text="@[APPLICATION] ホーム" />
 		<Word Name="window/update"   Text="アップデート" />
 		<Word Name="window/toolbar"  Text="@[APPLICATION]" />
 		<Word Name="window/log"      Text="ログ" />
@@ -121,6 +124,16 @@
 		<Word Name="accept/check/update-check"     Text="${update-check}" />
 		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
 		
+		<Word Name="home/page/main" Text="ホーム" />
+		<Word Name="home/command/launcher"  Text="ランチャアイテム自動登録" />
+		<Word Name="home/label/launcher"    Text="せつめい" />
+		<Word Name="home/command/startup" Text="スタートアップ登録" />
+		<Word Name="home/label/startup"   Text="せつめい" />
+		<Word Name="home/startup/dialog/caption"    Text="スタートアップ登録結果" />
+		<Word Name="home/startup/dialog/message"    Text="かんりょう" />
+		<Word Name="home/command/notify"  Text="通知領域設定" />
+		<Word Name="home/label/notify"    Text="せつめい" />
+		
 		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
 		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
 		
@@ -141,7 +154,7 @@
 		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
 		
 		
-		<Word Name="execute/tab/basic"         Text="基本指定" />
+		<Word Name="execute/page/basic"         Text="基本指定" />
 		<Word Name="execute/label/option"      Text="${option}" />
 		<Word Name="execute/label/work-dir"    Text="${work-dir}" />
 		<Word Name="execute/check/std-stream"  Text="${std-stream}" />
@@ -176,9 +189,9 @@
 		<Word Name="note/menu/color/purple"  Text="紫(&amp;P)" />
 		<Word Name="note/menu/color/custom"  Text="カスタム(&amp;C) ${open-ui}" />
 		
-		<Word Name="stream/tab/stream"      Text="標準出力" />
-		<Word Name="stream/tab/process"     Text="プロセス" />
-		<Word Name="stream/tab/property"    Text="起動プロパティ" />
+		<Word Name="stream/page/stream"      Text="標準出力" />
+		<Word Name="stream/page/process"     Text="プロセス" />
+		<Word Name="stream/page/property"    Text="起動プロパティ" />
 		<Word Name="stream/command/save"    Text="出力保存" />
 		<Word Name="stream/tips/save"       Text="現在の出力をファイルに保存" />
 		<Word Name="stream/command/clear"   Text="出力クリア" />
@@ -187,14 +200,14 @@
 		<Word Name="stream/command/topmost" Text="${topmost}" />
 		<Word Name="stream/tips/kill"       Text="プロセスを終了" />
 		
-		<Word Name="setting/tab/main"              Text="本体" />
-		<Word Name="setting/tab/launcher"          Text="ランチャ" />
-		<Word Name="setting/tab/launcher/basic"    Text="基本設定" />
-		<Word Name="setting/tab/launcher/others"   Text="その他" />
-		<Word Name="setting/tab/toolbar"           Text="ツールバー" />
-		<Word Name="setting/tab/command"           Text="コマンド" />
-		<Word Name="setting/tab/display"           Text="ディスプレイ" />
-		<Word Name="setting/tab/note"              Text="ノート" />
+		<Word Name="setting/page/main"              Text="本体" />
+		<Word Name="setting/page/launcher"          Text="ランチャ" />
+		<Word Name="setting/page/launcher/basic"    Text="基本設定" />
+		<Word Name="setting/page/launcher/others"   Text="その他" />
+		<Word Name="setting/page/toolbar"           Text="ツールバー" />
+		<Word Name="setting/page/command"           Text="コマンド" />
+		<Word Name="setting/page/display"           Text="ディスプレイ" />
+		<Word Name="setting/page/note"              Text="ノート" />
 		<Word Name="setting/check/startup"        Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />

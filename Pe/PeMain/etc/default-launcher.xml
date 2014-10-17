@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<default>
+	<items>
+		<LauncherItem Name=":item/iexplorer">
+			<LauncherType>File</LauncherType>
+			<Command>iexplorer.exe</Command>
+		</LauncherItem>
+	</items>
+	<groups>
+		<group name=":group/main">
+		</group>
+		<group name=":item/iexplorer">
+		</group>
+	</groups>
+</default>

@@ -4,4 +4,5 @@
 	<component name="ObjectDumper" uri="http://objectdumper.codeplex.com/" type="Library" />
 	<component name="LED Icon Set" uri="http://http://led24.de/" type="Image" />
 	<component name="iconeden" uri="http://www.iconeden.com/" type="Image" />
+	<component name="ionicons" uri="http://ionicons.com/" type="Image" />
 </components>

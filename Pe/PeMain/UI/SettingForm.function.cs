@@ -49,17 +49,20 @@ namespace PeMain.UI
 		
 		public void SaveFiles()
 		{
-			var linkPath = GetStartupAppLinkPath();
+			var linkPath = Literal.StartupShortcutPath;
 			if(this.selectMainStartup.Checked) {
 				if(!File.Exists(linkPath)) {
 					// 生成
 					//
+					/*
 					var shortcut = new ShortcutFile(linkPath, true);
 					shortcut.TargetPath = Literal.ApplicationExecutablePath; 
 					shortcut.IconPath = Literal.ApplicationExecutablePath;
 					shortcut.IconIndex = 0;
 					shortcut.WorkingDirectory = Literal.ApplicationRootDirPath; 
 					shortcut.Save();
+					*/
+					AppUtility.MakeAppShortcut(linkPath);
 				}
 			} else {
 				if(File.Exists(linkPath)) {
@@ -111,6 +114,7 @@ namespace PeMain.UI
 			MainSetting = mainSetting;
 		}
 		
+		/*
 		string GetStartupAppLinkPath()
 		{
 			var startupDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
@@ -118,5 +122,6 @@ namespace PeMain.UI
 
 			return appLinkPath;
 		}
+		*/
 	}
 }

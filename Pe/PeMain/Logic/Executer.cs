@@ -8,9 +8,9 @@
  */
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.UI;
 using PeUtility;
@@ -122,6 +122,27 @@ namespace PeMain.Logic
 		{
 			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, path, string.Empty);
 		}
-		
 	}
+	
+	public static class SystemExecuter
+	{
+		public static Process RunDLL(string command, CommonData commonData)
+		{
+			var rundll = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "rundll32.exe");
+			var startupInfo = new ProcessStartInfo(rundll, command);
+			
+			return Process.Start(startupInfo);
+		}
+		
+		/// <summary>
+		/// タスクトレイ通知領域履歴を開く。
+		/// </summary>
+		/// <param name="commonData"></param>
+		public static void OpenNotificationAreaHistory(CommonData commonData)
+		{
+			RunDLL("shell32.dll,Options_RunDLL 5", commonData);
+		}
+	}
+	
+	
 }

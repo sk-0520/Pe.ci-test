@@ -183,6 +183,26 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap Finder {
+			get {
+				object obj = ResourceManager.GetObject("Finder", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap Flag {
+			get {
+				object obj = ResourceManager.GetObject("Flag", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap Group {
 			get {
 				object obj = ResourceManager.GetObject("Group", resourceCulture);
@@ -376,6 +396,16 @@ namespace PeMain.Properties {
 		public static System.Drawing.Bitmap Warning {
 			get {
 				object obj = ResourceManager.GetObject("Warning", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap Windows {
+			get {
+				object obj = ResourceManager.GetObject("Windows", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
