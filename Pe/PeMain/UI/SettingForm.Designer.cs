@@ -143,18 +143,20 @@ namespace PeMain.UI
 			this.commandCommandFont = new PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.tabSetting_pageNote = new System.Windows.Forms.TabPage();
-			this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			this.panelNote = new System.Windows.Forms.TableLayoutPanel();
+			this.panelNoteOthers = new System.Windows.Forms.TableLayoutPanel();
+			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
+			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.groupNoteKey = new System.Windows.Forms.GroupBox();
-			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.panelNoteKey = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelNoteCreate = new System.Windows.Forms.Label();
 			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
 			this.labelNoteHiddent = new System.Windows.Forms.Label();
 			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
 			this.labelNoteCompact = new System.Windows.Forms.Label();
 			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
-			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
-			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
+			this.labelNoteShowFront = new System.Windows.Forms.Label();
+			this.inputNoteShowFront = new PeMain.UI.PeHotkeyControl();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
 			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -212,13 +214,10 @@ namespace PeMain.UI
 			this.tabSetting_pageCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tabSetting_pageNote.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
-			this.splitContainer4.Panel1.SuspendLayout();
-			this.splitContainer4.Panel2.SuspendLayout();
-			this.splitContainer4.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
+			this.panelNote.SuspendLayout();
+			this.panelNoteOthers.SuspendLayout();
 			this.groupNoteKey.SuspendLayout();
-			this.flowLayoutPanel2.SuspendLayout();
+			this.panelNoteKey.SuspendLayout();
 			this.groupNoteItem.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
 			this.panelSetting.SuspendLayout();
@@ -492,6 +491,7 @@ namespace PeMain.UI
 			// splitContainer1
 			// 
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.splitContainer1.IsSplitterFixed = true;
 			this.splitContainer1.Location = new System.Drawing.Point(3, 4);
 			this.splitContainer1.Name = "splitContainer1";
@@ -824,10 +824,10 @@ namespace PeMain.UI
 			// tabLauncher_pageEnv
 			// 
 			this.tabLauncher_pageEnv.Controls.Add(this.panelLauncherEnv);
-			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 24);
+			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 247);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 251);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/page/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -846,7 +846,7 @@ namespace PeMain.UI
 			this.panelLauncherEnv.RowCount = 2;
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 241);
+			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 245);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
 			// envLauncherRemove
@@ -855,7 +855,7 @@ namespace PeMain.UI
 			this.envLauncherRemove.Location = new System.Drawing.Point(374, 32);
 			this.envLauncherRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(153, 207);
+			this.envLauncherRemove.Size = new System.Drawing.Size(153, 211);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -865,7 +865,7 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Location = new System.Drawing.Point(3, 32);
 			this.envLauncherUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(365, 207);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(365, 211);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -890,9 +890,9 @@ namespace PeMain.UI
 			this.tabLauncher_pageOthers.Controls.Add(this.inputLauncherTag);
 			this.tabLauncher_pageOthers.Controls.Add(this.inputLauncherNote);
 			this.tabLauncher_pageOthers.Controls.Add(this.labelLauncherNote);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 247);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 251);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -972,6 +972,7 @@ namespace PeMain.UI
 			// splitContainer3
 			// 
 			this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.splitContainer3.IsSplitterFixed = true;
 			this.splitContainer3.Location = new System.Drawing.Point(0, 0);
 			this.splitContainer3.Name = "splitContainer3";
@@ -1426,7 +1427,7 @@ namespace PeMain.UI
 			// 
 			// tabSetting_pageNote
 			// 
-			this.tabSetting_pageNote.Controls.Add(this.splitContainer4);
+			this.tabSetting_pageNote.Controls.Add(this.panelNote);
 			this.tabSetting_pageNote.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageNote.Name = "tabSetting_pageNote";
 			this.tabSetting_pageNote.Size = new System.Drawing.Size(747, 283);
@@ -1434,67 +1435,88 @@ namespace PeMain.UI
 			this.tabSetting_pageNote.Text = ":setting/page/note";
 			this.tabSetting_pageNote.UseVisualStyleBackColor = true;
 			// 
-			// splitContainer4
+			// panelNote
 			// 
-			this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer4.IsSplitterFixed = true;
-			this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer4.Name = "splitContainer4";
+			this.panelNote.ColumnCount = 2;
+			this.panelNote.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelNote.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelNote.Controls.Add(this.panelNoteOthers, 0, 1);
+			this.panelNote.Controls.Add(this.groupNoteKey, 0, 0);
+			this.panelNote.Controls.Add(this.groupNoteItem, 1, 0);
+			this.panelNote.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelNote.Location = new System.Drawing.Point(0, 0);
+			this.panelNote.Name = "panelNote";
+			this.panelNote.RowCount = 2;
+			this.panelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelNote.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelNote.Size = new System.Drawing.Size(747, 283);
+			this.panelNote.TabIndex = 14;
 			// 
-			// splitContainer4.Panel1
+			// panelNoteOthers
 			// 
-			this.splitContainer4.Panel1.Controls.Add(this.tableLayoutPanel3);
+			this.panelNoteOthers.ColumnCount = 2;
+			this.panelNoteOthers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelNoteOthers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelNoteOthers.Controls.Add(this.commandNoteCaptionFont, 1, 1);
+			this.panelNoteOthers.Controls.Add(this.labelNoteCaptionFont, 0, 1);
+			this.panelNoteOthers.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelNoteOthers.Location = new System.Drawing.Point(3, 230);
+			this.panelNoteOthers.Name = "panelNoteOthers";
+			this.panelNoteOthers.RowCount = 3;
+			this.panelNoteOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelNoteOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelNoteOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelNoteOthers.Size = new System.Drawing.Size(229, 50);
+			this.panelNoteOthers.TabIndex = 12;
 			// 
-			// splitContainer4.Panel2
+			// commandNoteCaptionFont
 			// 
-			this.splitContainer4.Panel2.Controls.Add(this.groupNoteItem);
-			this.splitContainer4.Size = new System.Drawing.Size(747, 283);
-			this.splitContainer4.SplitterDistance = 251;
-			this.splitContainer4.TabIndex = 13;
-			this.splitContainer4.TabStop = false;
+			this.commandNoteCaptionFont.AutoSize = true;
+			this.commandNoteCaptionFont.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandNoteCaptionFont.Location = new System.Drawing.Point(134, 3);
+			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
+			this.commandNoteCaptionFont.Size = new System.Drawing.Size(141, 25);
+			this.commandNoteCaptionFont.TabIndex = 1;
+			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
+			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
 			// 
-			// tableLayoutPanel3
+			// labelNoteCaptionFont
 			// 
-			this.tableLayoutPanel3.ColumnCount = 2;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.Controls.Add(this.groupNoteKey, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.commandNoteCaptionFont, 1, 1);
-			this.tableLayoutPanel3.Controls.Add(this.labelNoteCaptionFont, 0, 1);
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(5, 3);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 3;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(242, 260);
-			this.tableLayoutPanel3.TabIndex = 12;
+			this.labelNoteCaptionFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelNoteCaptionFont.AutoSize = true;
+			this.labelNoteCaptionFont.Location = new System.Drawing.Point(3, 8);
+			this.labelNoteCaptionFont.Name = "labelNoteCaptionFont";
+			this.labelNoteCaptionFont.Size = new System.Drawing.Size(125, 15);
+			this.labelNoteCaptionFont.TabIndex = 9;
+			this.labelNoteCaptionFont.Text = ":common/label/font";
 			// 
 			// groupNoteKey
 			// 
-			this.tableLayoutPanel3.SetColumnSpan(this.groupNoteKey, 2);
-			this.groupNoteKey.Controls.Add(this.flowLayoutPanel2);
+			this.groupNoteKey.Controls.Add(this.panelNoteKey);
+			this.groupNoteKey.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupNoteKey.Location = new System.Drawing.Point(3, 3);
 			this.groupNoteKey.Name = "groupNoteKey";
-			this.groupNoteKey.Size = new System.Drawing.Size(239, 168);
+			this.groupNoteKey.Size = new System.Drawing.Size(229, 221);
 			this.groupNoteKey.TabIndex = 0;
 			this.groupNoteKey.TabStop = false;
 			this.groupNoteKey.Text = ":setting/group/key";
 			// 
-			// flowLayoutPanel2
+			// panelNoteKey
 			// 
-			this.flowLayoutPanel2.Controls.Add(this.labelNoteCreate);
-			this.flowLayoutPanel2.Controls.Add(this.inputNoteCreate);
-			this.flowLayoutPanel2.Controls.Add(this.labelNoteHiddent);
-			this.flowLayoutPanel2.Controls.Add(this.inputNoteHidden);
-			this.flowLayoutPanel2.Controls.Add(this.labelNoteCompact);
-			this.flowLayoutPanel2.Controls.Add(this.inputNoteCompact);
-			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
-			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(233, 146);
-			this.flowLayoutPanel2.TabIndex = 8;
+			this.panelNoteKey.Controls.Add(this.labelNoteCreate);
+			this.panelNoteKey.Controls.Add(this.inputNoteCreate);
+			this.panelNoteKey.Controls.Add(this.labelNoteHiddent);
+			this.panelNoteKey.Controls.Add(this.inputNoteHidden);
+			this.panelNoteKey.Controls.Add(this.labelNoteCompact);
+			this.panelNoteKey.Controls.Add(this.inputNoteCompact);
+			this.panelNoteKey.Controls.Add(this.labelNoteShowFront);
+			this.panelNoteKey.Controls.Add(this.inputNoteShowFront);
+			this.panelNoteKey.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelNoteKey.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.panelNoteKey.Location = new System.Drawing.Point(3, 19);
+			this.panelNoteKey.Name = "panelNoteKey";
+			this.panelNoteKey.Size = new System.Drawing.Size(223, 199);
+			this.panelNoteKey.TabIndex = 8;
 			// 
 			// labelNoteCreate
 			// 
@@ -1568,34 +1590,38 @@ namespace PeMain.UI
 			this.inputNoteCompact.TabIndex = 2;
 			this.inputNoteCompact.Text = "None";
 			// 
-			// commandNoteCaptionFont
+			// labelNoteShowFront
 			// 
-			this.commandNoteCaptionFont.AutoSize = true;
-			this.commandNoteCaptionFont.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandNoteCaptionFont.Location = new System.Drawing.Point(134, 177);
-			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
-			this.commandNoteCaptionFont.Size = new System.Drawing.Size(141, 25);
-			this.commandNoteCaptionFont.TabIndex = 1;
-			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
-			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
+			this.labelNoteShowFront.AutoSize = true;
+			this.labelNoteShowFront.Location = new System.Drawing.Point(3, 132);
+			this.labelNoteShowFront.Name = "labelNoteShowFront";
+			this.labelNoteShowFront.Size = new System.Drawing.Size(172, 15);
+			this.labelNoteShowFront.TabIndex = 5;
+			this.labelNoteShowFront.Text = ":setting/label/note-compact";
 			// 
-			// labelNoteCaptionFont
+			// inputNoteShowFront
 			// 
-			this.labelNoteCaptionFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelNoteCaptionFont.AutoSize = true;
-			this.labelNoteCaptionFont.Location = new System.Drawing.Point(3, 182);
-			this.labelNoteCaptionFont.Name = "labelNoteCaptionFont";
-			this.labelNoteCaptionFont.Size = new System.Drawing.Size(125, 15);
-			this.labelNoteCaptionFont.TabIndex = 9;
-			this.labelNoteCaptionFont.Text = ":common/label/font";
+			this.inputNoteShowFront.BackColor = System.Drawing.Color.White;
+			this.inputNoteShowFront.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputNoteShowFront.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputNoteShowFront.HotKeySetting = null;
+			this.inputNoteShowFront.Location = new System.Drawing.Point(3, 150);
+			this.inputNoteShowFront.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteShowFront.Name = "inputNoteShowFront";
+			this.inputNoteShowFront.ReadOnly = true;
+			this.inputNoteShowFront.Registered = false;
+			this.inputNoteShowFront.Size = new System.Drawing.Size(211, 23);
+			this.inputNoteShowFront.TabIndex = 6;
+			this.inputNoteShowFront.Text = "None";
 			// 
 			// groupNoteItem
 			// 
 			this.groupNoteItem.Controls.Add(this.gridNoteItems);
 			this.groupNoteItem.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupNoteItem.Location = new System.Drawing.Point(0, 0);
+			this.groupNoteItem.Location = new System.Drawing.Point(238, 3);
 			this.groupNoteItem.Name = "groupNoteItem";
-			this.groupNoteItem.Size = new System.Drawing.Size(492, 283);
+			this.panelNote.SetRowSpan(this.groupNoteItem, 2);
+			this.groupNoteItem.Size = new System.Drawing.Size(506, 277);
 			this.groupNoteItem.TabIndex = 12;
 			this.groupNoteItem.TabStop = false;
 			this.groupNoteItem.Text = ":setting/group/item";
@@ -1618,7 +1644,7 @@ namespace PeMain.UI
 			this.gridNoteItems.MultiSelect = false;
 			this.gridNoteItems.Name = "gridNoteItems";
 			this.gridNoteItems.RowTemplate.Height = 21;
-			this.gridNoteItems.Size = new System.Drawing.Size(486, 261);
+			this.gridNoteItems.Size = new System.Drawing.Size(500, 255);
 			this.gridNoteItems.TabIndex = 0;
 			this.gridNoteItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridNoteItems_CellContentClick);
 			this.gridNoteItems.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridNoteItems_CellFormatting);
@@ -1825,15 +1851,12 @@ namespace PeMain.UI
 			this.tabSetting_pageCommand.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.tabSetting_pageNote.ResumeLayout(false);
-			this.splitContainer4.Panel1.ResumeLayout(false);
-			this.splitContainer4.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
-			this.splitContainer4.ResumeLayout(false);
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.tableLayoutPanel3.PerformLayout();
+			this.panelNote.ResumeLayout(false);
+			this.panelNoteOthers.ResumeLayout(false);
+			this.panelNoteOthers.PerformLayout();
 			this.groupNoteKey.ResumeLayout(false);
-			this.flowLayoutPanel2.ResumeLayout(false);
-			this.flowLayoutPanel2.PerformLayout();
+			this.panelNoteKey.ResumeLayout(false);
+			this.panelNoteKey.PerformLayout();
 			this.groupNoteItem.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
 			this.panelSetting.ResumeLayout(false);
@@ -1842,6 +1865,9 @@ namespace PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
+		private PeMain.UI.PeHotkeyControl inputNoteShowFront;
+		private System.Windows.Forms.Label labelNoteShowFront;
+		private System.Windows.Forms.TableLayoutPanel panelNote;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherEnv;
 		private System.Windows.Forms.CheckBox selectMainStartup;
 		private System.Windows.Forms.RadioButton selectLauncherType_embedded;
@@ -1853,8 +1879,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.GroupBox groupUpdateCheck;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-		private System.Windows.Forms.SplitContainer splitContainer4;
+		private System.Windows.Forms.TableLayoutPanel panelNoteOthers;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.SplitContainer splitContainer3;
@@ -1872,7 +1897,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.GroupBox groupNoteKey;
 		private System.Windows.Forms.Label labelNoteCaptionFont;
 		private PeMain.UI.FontSplitButton commandNoteCaptionFont;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+		private System.Windows.Forms.FlowLayoutPanel panelNoteKey;
 		private System.Windows.Forms.Label labelNoteCompact;
 		private PeMain.UI.PeHotkeyControl inputNoteCompact;
 		private System.Windows.Forms.Label labelNoteHiddent;
