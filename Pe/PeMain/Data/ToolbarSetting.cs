@@ -153,7 +153,7 @@ namespace PeMain.Data
 		public ToolbarItem()
 		{
 			FontSetting = new FontSetting();
-			ToolbarPosition = ToolbarPosition.DesktopFloat;
+			ToolbarPosition = ToolbarPosition.DesktopRight;
 			IconScale = IconScale.Small;
 			ShowText = false;
 			Visible = true;
