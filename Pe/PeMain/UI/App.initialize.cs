@@ -211,7 +211,7 @@ namespace PeMain.UI
 			this._messageWindow.SetCommonData(this._commonData);
 		}
 		
-		void AttachmentToolbarSubMenu(MenuItem parentMenu)
+		void AttachmentToolbarSubMenu(MenuItem parentItem)
 		{
 			var menuList = new List<MenuItem>();
 			foreach(var screen in Screen.AllScreens) {
@@ -227,19 +227,19 @@ namespace PeMain.UI
 			}
 			
 			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			parentItem.MenuItems.AddRange(menuList.ToArray());
 			
-			parentMenu.Popup += (object sender, EventArgs e) => {
+			parentItem.Popup += (object sender, EventArgs e) => {
 				foreach(var screen in Screen.AllScreens) {
-					if(parentMenu.MenuItems.ContainsKey(screen.DeviceName)) {
-						var menuItem = (MenuItem)parentMenu.MenuItems[screen.DeviceName];
+					if(parentItem.MenuItems.ContainsKey(screen.DeviceName)) {
+						var menuItem = (MenuItem)parentItem.MenuItems[screen.DeviceName];
 						menuItem.Checked = this._toolbarForms[screen].Visible;
 					}
 				}
 			};
 		}
 		
-		void AttachmentNoteSubMenu(MenuItem parentMenu)
+		void AttachmentNoteSubMenu(MenuItem parentItem)
 		{
 			var menuList = new List<MenuItem>();
 			var itemNoteCreate  = new MenuItem();
@@ -282,7 +282,7 @@ namespace PeMain.UI
 			
 			
 			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			parentItem.MenuItems.AddRange(menuList.ToArray());
 		}
 		
 		/*
@@ -319,7 +319,7 @@ namespace PeMain.UI
 		}
 		 */
 		
-		void AttachmentSystemEnvSubMenu(MenuItem parentMenu)
+		void AttachmentSystemEnvSubMenu(MenuItem parentItem)
 		{
 			var menuList = new List<MenuItem>();
 			var itemHiddenFile = new MenuItem();
@@ -342,9 +342,9 @@ namespace PeMain.UI
 			};
 			
 			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
+			parentItem.MenuItems.AddRange(menuList.ToArray());
 			
-			parentMenu.Popup += (object sender, EventArgs e) => {
+			parentItem.Popup += (object sender, EventArgs e) => {
 				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
 				itemExtension.Checked = SystemEnvironment.IsExtensionShow();
 			};
