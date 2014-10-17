@@ -7,7 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
+using PeMain.Data;
 using PInvoke.Windows;
 
 namespace PeMain.UI
@@ -20,11 +22,24 @@ namespace PeMain.UI
 		partial class MessageWindow
 		{
 			protected override void WndProc(ref Message m) {
-				if(m.Msg == (int)WM.WM_HOTKEY) {
-					var id = (HotKeyId)m.WParam;
-					var mod = (MOD)unchecked((short)(long)m.LParam);
-					var key = (Keys)unchecked((ushort)((long)m.LParam >> 16));
-					CommonData.RootSender.ReceiveHotKey(id, mod, key);
+				switch(m.Msg) {
+					case (int)WM.WM_HOTKEY:
+						{
+							var id = (HotKeyId)m.WParam;
+							var mod = (MOD)unchecked((short)(long)m.LParam);
+							var key = (Keys)unchecked((ushort)((long)m.LParam >> 16));
+							CommonData.RootSender.ReceiveHotKey(id, mod, key);
+						}
+						break;
+						
+					case (int)WM.WM_DEVICECHANGE:
+						{
+							CommonData.Logger.Puts(LogType.Information, "WM_DEVICECHANGE", m);
+						}
+						break;
+						
+					default:
+						break;
 				}
 				base.WndProc(ref m);
 			}
