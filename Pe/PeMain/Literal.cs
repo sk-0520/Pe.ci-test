@@ -151,6 +151,16 @@ namespace PeMain
 				return Path.GetDirectoryName(Application.ExecutablePath);
 			}
 		}
+		/// <summary>
+		/// bin/
+		/// </summary>
+		public static string ApplicationBinDirPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationRootDirPath, "bin");
+			}
+		}
 		
 		/// <summary>
 		/// etc/

@@ -49,7 +49,7 @@ namespace PeMain.Logic
 		
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.ApplicationRootDirPath, Literal.updateProgramName); }
+			get { return Path.Combine(Literal.ApplicationBinDirPath, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc)
