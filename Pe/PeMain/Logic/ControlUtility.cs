@@ -450,7 +450,7 @@ namespace PeMain.Logic
 		/// <param name="target"></param>
 		public static void ShowFront(Form target)
 		{
-			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOPMOST, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
 		}
 	}
 }

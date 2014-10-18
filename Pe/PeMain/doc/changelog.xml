@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/10/DD" version="0.23.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li>ノートの前面表示が常時最前面表示となっていた</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/10/18" version="0.23.0">
 		<ul type="note">
 			<li>フォーラム(https://groups.google.com/d/forum/pe_development)作成</li>
