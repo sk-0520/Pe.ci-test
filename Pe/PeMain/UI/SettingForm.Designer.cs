@@ -38,8 +38,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.selectMainStartup = new System.Windows.Forms.CheckBox();
@@ -175,6 +175,7 @@ namespace PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.panelMainSystemEnv = new System.Windows.Forms.TableLayoutPanel();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupUpdateCheck.SuspendLayout();
@@ -225,6 +226,7 @@ namespace PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			this.panelMainSystemEnv.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -273,10 +275,11 @@ namespace PeMain.UI
 			// 
 			// groupUpdateCheck
 			// 
+			this.groupUpdateCheck.AutoSize = true;
 			this.groupUpdateCheck.Controls.Add(this.panelUpdate);
-			this.groupUpdateCheck.Location = new System.Drawing.Point(234, 177);
+			this.groupUpdateCheck.Location = new System.Drawing.Point(224, 160);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
-			this.groupUpdateCheck.Size = new System.Drawing.Size(458, 48);
+			this.groupUpdateCheck.Size = new System.Drawing.Size(291, 81);
 			this.groupUpdateCheck.TabIndex = 4;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
@@ -287,9 +290,10 @@ namespace PeMain.UI
 			this.panelUpdate.Controls.Add(this.selectUpdateCheck);
 			this.panelUpdate.Controls.Add(this.selectUpdateCheckRC);
 			this.panelUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelUpdate.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelUpdate.Location = new System.Drawing.Point(3, 19);
 			this.panelUpdate.Name = "panelUpdate";
-			this.panelUpdate.Size = new System.Drawing.Size(452, 26);
+			this.panelUpdate.Size = new System.Drawing.Size(285, 59);
 			this.panelUpdate.TabIndex = 4;
 			// 
 			// selectUpdateCheck
@@ -305,7 +309,7 @@ namespace PeMain.UI
 			// selectUpdateCheckRC
 			// 
 			this.selectUpdateCheckRC.AutoSize = true;
-			this.selectUpdateCheckRC.Location = new System.Drawing.Point(203, 3);
+			this.selectUpdateCheckRC.Location = new System.Drawing.Point(3, 28);
 			this.selectUpdateCheckRC.Name = "selectUpdateCheckRC";
 			this.selectUpdateCheckRC.Size = new System.Drawing.Size(214, 19);
 			this.selectUpdateCheckRC.TabIndex = 1;
@@ -314,21 +318,20 @@ namespace PeMain.UI
 			// 
 			// groupMainSystemEnv
 			// 
-			this.groupMainSystemEnv.Controls.Add(this.labelSystemEnvExt);
-			this.groupMainSystemEnv.Controls.Add(this.inputSystemEnvExt);
-			this.groupMainSystemEnv.Controls.Add(this.labelSystemEnvHiddenFile);
-			this.groupMainSystemEnv.Controls.Add(this.inputSystemEnvHiddenFile);
-			this.groupMainSystemEnv.Location = new System.Drawing.Point(248, 62);
+			this.groupMainSystemEnv.AutoSize = true;
+			this.groupMainSystemEnv.Controls.Add(this.panelMainSystemEnv);
+			this.groupMainSystemEnv.Location = new System.Drawing.Point(221, 62);
 			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
-			this.groupMainSystemEnv.Size = new System.Drawing.Size(379, 100);
+			this.groupMainSystemEnv.Size = new System.Drawing.Size(288, 95);
 			this.groupMainSystemEnv.TabIndex = 3;
 			this.groupMainSystemEnv.TabStop = false;
 			this.groupMainSystemEnv.Text = ":setting/group/system-env";
 			// 
 			// labelSystemEnvExt
 			// 
+			this.labelSystemEnvExt.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelSystemEnvExt.AutoSize = true;
-			this.labelSystemEnvExt.Location = new System.Drawing.Point(6, 53);
+			this.labelSystemEnvExt.Location = new System.Drawing.Point(3, 36);
 			this.labelSystemEnvExt.Name = "labelSystemEnvExt";
 			this.labelSystemEnvExt.Size = new System.Drawing.Size(147, 15);
 			this.labelSystemEnvExt.TabIndex = 17;
@@ -336,23 +339,25 @@ namespace PeMain.UI
 			// 
 			// inputSystemEnvExt
 			// 
+			this.inputSystemEnvExt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.inputSystemEnvExt.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvExt.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvExt.HotKeySetting = null;
-			this.inputSystemEnvExt.Location = new System.Drawing.Point(112, 50);
+			this.inputSystemEnvExt.Location = new System.Drawing.Point(156, 32);
 			this.inputSystemEnvExt.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
 			this.inputSystemEnvExt.ReadOnly = true;
 			this.inputSystemEnvExt.Registered = false;
-			this.inputSystemEnvExt.Size = new System.Drawing.Size(252, 23);
+			this.inputSystemEnvExt.Size = new System.Drawing.Size(123, 23);
 			this.inputSystemEnvExt.TabIndex = 2;
 			this.inputSystemEnvExt.Text = "None";
 			// 
 			// labelSystemEnvHiddenFile
 			// 
+			this.labelSystemEnvHiddenFile.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelSystemEnvHiddenFile.AutoSize = true;
-			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(6, 26);
+			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(3, 7);
 			this.labelSystemEnvHiddenFile.Name = "labelSystemEnvHiddenFile";
 			this.labelSystemEnvHiddenFile.Size = new System.Drawing.Size(146, 15);
 			this.labelSystemEnvHiddenFile.TabIndex = 17;
@@ -360,28 +365,30 @@ namespace PeMain.UI
 			// 
 			// inputSystemEnvHiddenFile
 			// 
+			this.inputSystemEnvHiddenFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.inputSystemEnvHiddenFile.BackColor = System.Drawing.Color.White;
 			this.inputSystemEnvHiddenFile.Cursor = System.Windows.Forms.Cursors.Arrow;
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvHiddenFile.HotKeySetting = null;
-			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(112, 20);
+			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(156, 3);
 			this.inputSystemEnvHiddenFile.Modifiers = PInvoke.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
 			this.inputSystemEnvHiddenFile.ReadOnly = true;
 			this.inputSystemEnvHiddenFile.Registered = false;
-			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(252, 23);
+			this.inputSystemEnvHiddenFile.Size = new System.Drawing.Size(123, 23);
 			this.inputSystemEnvHiddenFile.TabIndex = 0;
 			this.inputSystemEnvHiddenFile.Text = "None";
 			// 
 			// groupMainLog
 			// 
+			this.groupMainLog.AutoSize = true;
 			this.groupMainLog.Controls.Add(this.selectLogFullDetail);
 			this.groupMainLog.Controls.Add(this.selectLogAddShow);
 			this.groupMainLog.Controls.Add(this.groupLogTrigger);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
 			this.groupMainLog.Location = new System.Drawing.Point(15, 62);
 			this.groupMainLog.Name = "groupMainLog";
-			this.groupMainLog.Size = new System.Drawing.Size(200, 186);
+			this.groupMainLog.Size = new System.Drawing.Size(200, 199);
 			this.groupMainLog.TabIndex = 2;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
@@ -826,10 +833,10 @@ namespace PeMain.UI
 			// tabLauncher_pageEnv
 			// 
 			this.tabLauncher_pageEnv.Controls.Add(this.panelLauncherEnv);
-			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 24);
+			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 247);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 251);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/page/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -848,7 +855,7 @@ namespace PeMain.UI
 			this.panelLauncherEnv.RowCount = 2;
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 241);
+			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 245);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
 			// envLauncherRemove
@@ -887,9 +894,9 @@ namespace PeMain.UI
 			// tabLauncher_pageOthers
 			// 
 			this.tabLauncher_pageOthers.Controls.Add(this.panelLauncherOthers);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 247);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 251);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -914,7 +921,7 @@ namespace PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 247);
+			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 251);
 			this.panelLauncherOthers.TabIndex = 7;
 			// 
 			// selectLauncherStdStream
@@ -1683,8 +1690,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle11;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1714,9 +1721,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle12;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1806,6 +1813,25 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// panelMainSystemEnv
+			// 
+			this.panelMainSystemEnv.ColumnCount = 2;
+			this.panelMainSystemEnv.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelMainSystemEnv.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelMainSystemEnv.Controls.Add(this.inputSystemEnvExt, 1, 1);
+			this.panelMainSystemEnv.Controls.Add(this.labelSystemEnvExt, 0, 1);
+			this.panelMainSystemEnv.Controls.Add(this.inputSystemEnvHiddenFile, 1, 0);
+			this.panelMainSystemEnv.Controls.Add(this.labelSystemEnvHiddenFile, 0, 0);
+			this.panelMainSystemEnv.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMainSystemEnv.Location = new System.Drawing.Point(3, 19);
+			this.panelMainSystemEnv.Name = "panelMainSystemEnv";
+			this.panelMainSystemEnv.RowCount = 3;
+			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelMainSystemEnv.Size = new System.Drawing.Size(282, 73);
+			this.panelMainSystemEnv.TabIndex = 5;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1828,7 +1854,6 @@ namespace PeMain.UI
 			this.panelUpdate.ResumeLayout(false);
 			this.panelUpdate.PerformLayout();
 			this.groupMainSystemEnv.ResumeLayout(false);
-			this.groupMainSystemEnv.PerformLayout();
 			this.groupMainLog.ResumeLayout(false);
 			this.groupMainLog.PerformLayout();
 			this.groupLogTrigger.ResumeLayout(false);
@@ -1888,8 +1913,11 @@ namespace PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.panelMainSystemEnv.ResumeLayout(false);
+			this.panelMainSystemEnv.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.TableLayoutPanel panelMainSystemEnv;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherOthers;
 		private PeMain.UI.PeHotkeyControl inputNoteShowFront;
 		private System.Windows.Forms.Label labelNoteShowFront;
