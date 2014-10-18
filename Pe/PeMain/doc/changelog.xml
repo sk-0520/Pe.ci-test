@@ -25,10 +25,10 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/18" version="0.23.0" type="rc">
+	<log date="2014/10/18" version="0.23.0">
 		<ul type="note">
 			<li>フォーラム(https://groups.google.com/d/forum/pe_development)作成</li>
-			<li>PeUpdate.exe のパスが &gt;Pe:&lt;/PeUpdate.exe から &gt;Pe:&lt;/bin/ 以下へ移動しました。ファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
+			<li>PeUpdate.exe のパスが [Pe]/PeUpdate.exe から [Pe]/bin/ 以下へ移動しました。ファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
 		</ul>
 		<ul type="features">
 			<li>スタートアップへの登録機能を設定画面に追加</li>
@@ -41,7 +41,6 @@
 			<li>#56: マルチディスプレイ環境の切り替え, 位置は知らんけどディスプレイ数を検知するよう修正</li>
 			<li>#51: タスクトレイダブルクリック機能実装</li>
 			<li>初回起動時(使用許諾ダイアログとは別ロジック)にホームダイアログを表示</li>
-			<li></li>
 		</ul>
 		<ul type="fixes">
 			<li>情報ダイアログのリンク押下時に訪問済みに色変更されていなかった</li>
@@ -56,7 +55,6 @@
 			<li>app.config の key 変更</li>
 			<li>言語設定 [note/style/color] を [note/menu/color] に変更</li>
 			<li>使用許諾の各URIを app.config で置き換える</li>
-			<li></li>
 		</ul>
 	</log>
 	<log date="2014/10/13" version="0.22.0">

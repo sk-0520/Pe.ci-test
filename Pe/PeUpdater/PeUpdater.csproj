@@ -33,7 +33,7 @@
     <StartArguments>/wait=true /checkonly=true /version=0.17.0.0 /rc=true /platform=x64 /uri=https://bitbucket.org/sk_0520/pe/raw/HEAD/Update/update.xml /download=Z:\ "/expand=C:\Users\sk\Documents\Programming\SharpDevelop Project\Pe\output\Debug\x86"</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
+    <OutputPath>..\..\output\$(Configuration)\$(Platform)\bin</OutputPath>
     <DebugSymbols>False</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
@@ -50,7 +50,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
     <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <FileAlignment>4096</FileAlignment>
