@@ -282,8 +282,8 @@ namespace PeUtility
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
 			Debug.Assert(AutoHide);
 			
-			var screeanPos = DockScreen.Bounds.Location;
-			var screeanSize = DockScreen.Bounds.Size;
+			var screeanPos = DockScreen.WorkingArea.Location;
+			var screeanSize = DockScreen.WorkingArea.Size;
 			var size = ShowBarSize;
 			var pos = Location;
 			switch(DesktopDockType) {

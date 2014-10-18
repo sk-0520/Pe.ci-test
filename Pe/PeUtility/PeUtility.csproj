@@ -88,7 +88,7 @@
     <Compile Include="UI\AppbarForm.event.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AppbarForm.functions.cs">
+    <Compile Include="UI\AppbarForm.function.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AppbarForm.initialize.cs">
