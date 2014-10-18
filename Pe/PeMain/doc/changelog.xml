@@ -25,20 +25,22 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/DD" version="0.22.1" type="rc">
+	<log date="2014/10/18" version="0.23.0" type="rc">
 		<ul type="note">
 			<li>フォーラム(https://groups.google.com/d/forum/pe_development)作成</li>
 			<li>PeUpdate.exe のパスが &gt;Pe:&lt;/PeUpdate.exe から &gt;Pe:&lt;/bin/ 以下へ移動しました。ファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
-			<li></li>
 		</ul>
 		<ul type="features">
 			<li>スタートアップへの登録機能を設定画面に追加</li>
+			<li>ホームダイアログの実装。アイテム検索機能は煮詰まるまで無効化</li>
 			<li>情報ダイアログのリンクにグループを追加</li>
 			<li>タスクトレイアイコンのコンテキストメニューにヘルプ追加</li>
 			<li>#6: 言語設定</li>
 			<li>ノートを一括で前面表示する機能追加</li>
 			<li>ホットキー操作で行われる処理内容をバルーン表示する</li>
 			<li>#56: マルチディスプレイ環境の切り替え, 位置は知らんけどディスプレイ数を検知するよう修正</li>
+			<li>#51: タスクトレイダブルクリック機能実装</li>
+			<li>初回起動時(使用許諾ダイアログとは別ロジック)にホームダイアログを表示</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">

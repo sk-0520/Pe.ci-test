@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0"?>
 <default>
 	<items>
-		<LauncherItem Name="@[default/item/iexplorer]">
+		<LauncherItem Name="${default/item/iexplorer}">
 			<LauncherType>File</LauncherType>
-			<Command>iexplorer.exe</Command>
+			<Command>%PROGRAMFILES%\Internet Explorer\iexplore.exe	%PROGRAMFILES(X86)%\Internet Explorer\iexplore.exe</Command>
+			<WorkDirPath>%HOMEDRIVE%%HOMEPATH%</WorkDirPath>
+		</LauncherItem>
+		<LauncherItem Name="${default/item/firefox}">
+			<LauncherType>File</LauncherType>
+			<Command>%PROGRAMFILES%\Mozilla Firefox\firefox.exe	%PROGRAMFILES(X86)%\Mozilla Firefox\firefox.exe</Command>
+		</LauncherItem>
+		<LauncherItem Name="${default/item/opera}">
+			<LauncherType>File</LauncherType>
+			<Command>%PROGRAMFILES%\Opera x64\opera.exe	%PROGRAMFILES%\Opera\opera.exe	%PROGRAMFILES(X86)%\Opera\opera.exe</Command>
 		</LauncherItem>
 	</items>
 	<groups>
-		<group name="@[default/group/main]">
-			<item name="@[default/item/iexplorer]" /> 
+		<group name="${default/group/main}">
+			<item name="${default/item/iexplorer}" /> 
 		</group>
 	</groups>
 </default>

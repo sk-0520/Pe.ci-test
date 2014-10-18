@@ -384,6 +384,8 @@
 	
 		<!-- デフォルトランチャーアイテム -->
 		<Word Name="default/group/main"     Text="メイングループ" />
-		<Word Name="default/item/iexplorer" Text="InternetExplorer" />
+		<Word Name="default/item/iexplorer" Text="Internet Explorer" />
+		<Word Name="default/item/firefox"   Text="FireFox" />
+		<Word Name="default/item/opera"     Text="Opera" />
 	</Words>
 </Language>

@@ -37,6 +37,9 @@ namespace PeMain.Data
 	[Serializable]
 	public class Language: NameItem
 	{
+		Tuple<string, string> _rangeApp = new Tuple<string, string>("@[", "]");
+		Tuple<string, string> _rangeReplace = new Tuple<string, string>("${", "}");
+		
 		public Language()
 		{
 			BaseName = "unknown";
@@ -44,6 +47,9 @@ namespace PeMain.Data
 			Define = new List<Word>();
 			Words = new List<Word>();
 		}
+		
+		public Tuple<string, string> RangeApp { get { return this._rangeApp; } }
+		public Tuple<string, string> RangeReplace { get { return this._rangeReplace; } }
 		
 		/// <summary>
 		/// 現在の言語を指す名称。
@@ -104,24 +110,24 @@ namespace PeMain.Data
 		/// システム定義済み置き換えマップ。
 		/// </summary>
 		/// <returns></returns>
-		private Dictionary<string, string> GetSystemMap()
+		private Dictionary<string, string> GetAppMap()
 		{
 			var nowDateTime = DateTime.Now;
 			var systemMap = new Dictionary<string, string>() {
-				{ SystemLanguageName.application,  Literal.programName },
-				{ SystemLanguageName.version,      Application.ProductVersion },
-				{ SystemLanguageName.year,         nowDateTime.Year.ToString() },
-				{ SystemLanguageName.year04,       nowDateTime.Year.ToString("D4") },
-				{ SystemLanguageName.month,        nowDateTime.Month.ToString() },
-				{ SystemLanguageName.month02,      nowDateTime.Month.ToString("D2") },
-				{ SystemLanguageName.day,          nowDateTime.Day.ToString() },
-				{ SystemLanguageName.day02,        nowDateTime.Day.ToString("D2") },
-				{ SystemLanguageName.hour,         nowDateTime.Hour.ToString() },
-				{ SystemLanguageName.hour02,       nowDateTime.Hour.ToString("D2") },
-				{ SystemLanguageName.minute,       nowDateTime.Minute.ToString() },
-				{ SystemLanguageName.minute02,     nowDateTime.Minute.ToString("D2") },
-				{ SystemLanguageName.second,       nowDateTime.Second.ToString() },
-				{ SystemLanguageName.second02,     nowDateTime.Second.ToString("D2") },
+				{ AppLanguageName.application,  Literal.programName },
+				{ AppLanguageName.version,      Application.ProductVersion },
+				{ AppLanguageName.year,         nowDateTime.Year.ToString() },
+				{ AppLanguageName.year04,       nowDateTime.Year.ToString("D4") },
+				{ AppLanguageName.month,        nowDateTime.Month.ToString() },
+				{ AppLanguageName.month02,      nowDateTime.Month.ToString("D2") },
+				{ AppLanguageName.day,          nowDateTime.Day.ToString() },
+				{ AppLanguageName.day02,        nowDateTime.Day.ToString("D2") },
+				{ AppLanguageName.hour,         nowDateTime.Hour.ToString() },
+				{ AppLanguageName.hour02,       nowDateTime.Hour.ToString("D2") },
+				{ AppLanguageName.minute,       nowDateTime.Minute.ToString() },
+				{ AppLanguageName.minute02,     nowDateTime.Minute.ToString("D2") },
+				{ AppLanguageName.second,       nowDateTime.Second.ToString() },
+				{ AppLanguageName.second02,     nowDateTime.Second.ToString("D2") },
 			};
 			
 			return systemMap;
@@ -138,8 +144,8 @@ namespace PeMain.Data
 			{
 				var text = GetPlain(key);
 
-				if(text.Any(c => c == '@')) {
-					var systemMap = GetSystemMap();
+				//if(text.Any(c => c == '@')) {
+					var systemMap = GetAppMap();
 					IDictionary<string, string> useMap;
 					if(map == null) {
 						useMap = systemMap;
@@ -149,16 +155,21 @@ namespace PeMain.Data
 							useMap[pair.Key] = pair.Value;
 						}
 					}
-					text = text.ReplaceRangeFromDictionary("@[", "]", useMap);
-				}
+					text = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, useMap);
+				//}
 				
-				if(text.Any(c => c == '$')) {
+				//if(text.Any(c => c == '$')) {
 					// ${...}
-					text = text.ReplaceRange("${", "}", s => GetWord(Define, s).Text);
-				}
+					text = text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Define, s).Text);
+				//}
 				
 				return text;
 			}
+		}
+		
+		public string ReplaceAll(string text)
+		{
+			return text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Words, s).Text);
 		}
 	}
 }

@@ -101,6 +101,7 @@ namespace PeMain.UI
 			// commandLauncher
 			// 
 			this.commandLauncher.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.commandLauncher.Enabled = false;
 			this.commandLauncher.Image = global::PeMain.Properties.Images.Finder;
 			this.commandLauncher.Location = new System.Drawing.Point(11, 5);
 			this.commandLauncher.Name = "commandLauncher";

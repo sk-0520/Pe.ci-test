@@ -502,5 +502,21 @@ namespace PeMain.UI
 			ResetToolbar();
 		}
 		
+		void ShowHomeDialog()
+		{
+			PauseOthers(
+				() => {
+					using(var dialog = new HomeForm()) {
+						dialog.SetCommonData(this._commonData);
+						dialog.ShowDialog();
+						if(dialog.ItemFinded) {
+							// TODO: 初期化
+						}
+					}
+					
+					return null;
+				}
+			);
+		}
 	}
 }

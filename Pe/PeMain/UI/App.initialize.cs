@@ -178,11 +178,12 @@ namespace PeMain.UI
 		/// 設定ファイル初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void InitializeSetting(CommandLine commandLine, StartupLogger logger)
+		bool InitializeSetting(CommandLine commandLine, StartupLogger logger)
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;
 			logger.Puts(LogType.Information, "load main-setting", mainSettingFilePath);
 			
+			var existsSettingFilePath = File.Exists(mainSettingFilePath);
 			this._commonData.MainSetting = Serializer.LoadFile<MainSetting>(mainSettingFilePath, true);
 			
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
@@ -196,12 +197,14 @@ namespace PeMain.UI
 			if(!acceptProgram) {
 				// 使用許可が下りないのでさようなら
 				Initialized = false;
-				return;
+				return existsSettingFilePath;
 			}
 			this._commonData.MainSetting.RunningInfo.Running = true;
 			
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
+			
+			return existsSettingFilePath;
 		}
 		
 		void InitializeMessage(CommandLine commandLine, StartupLogger logger)
@@ -552,8 +555,9 @@ namespace PeMain.UI
 			this._commonData.RootSender = this;
 			
 			Debug.Assert(Initialized);
-			InitializeSetting(commandLine, logger);
+			var existsSettingFilePath = InitializeSetting(commandLine, logger);
 			if(!Initialized) {
+				logger.Puts(LogType.Information, "Initialize Cancel", string.Empty);
 				return;
 			}
 			Debug.Assert(Initialized);
@@ -567,6 +571,10 @@ namespace PeMain.UI
 			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
+			
+			if(!existsSettingFilePath) {
+				ShowHomeDialog();
+			}
 		}
 
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)

@@ -21,7 +21,7 @@ namespace PeMain.UI
 			Debug.Assert(CommonData.Language != null);
 			
 			var map = new Dictionary<string, string>() {
-				{ SystemLanguageName.itemName, LauncherItem.Name },
+				{ AppLanguageName.itemName, LauncherItem.Name },
 			};
 			
 			UIUtility.SetDefaultText(this, CommonData.Language, map);

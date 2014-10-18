@@ -20,9 +20,9 @@ namespace PeMain.UI
 			this.AcceptButton = null;
 			
 			var map = new Dictionary<string, string>() {
-				{ SystemLanguageName.versionNow,  Literal.ApplicationVersion },
-				{ SystemLanguageName.versionNext, UpdateData.Info.Version },
-				{ SystemLanguageName.versionType, UpdateData.Info.IsRcVersion ? "${version-rc}": "${version-release}" },
+				{ AppLanguageName.versionNow,  Literal.ApplicationVersion },
+				{ AppLanguageName.versionNext, UpdateData.Info.Version },
+				{ AppLanguageName.versionType, UpdateData.Info.IsRcVersion ? "${version-rc}": "${version-release}" },
 			};
 			var version = CommonData.Language[this.labelVersion.Text.Substring(1)];
 			version = CommonData.Language[version, map];

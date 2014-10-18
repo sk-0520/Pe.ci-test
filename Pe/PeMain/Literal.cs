@@ -373,7 +373,7 @@ namespace PeMain
 		ShowFrontNote,
 	}
 	
-	public static class SystemLanguageName
+	public static class AppLanguageName
 	{
 		public const string application = "APPLICATION";
 		public const string version     = "VER";
