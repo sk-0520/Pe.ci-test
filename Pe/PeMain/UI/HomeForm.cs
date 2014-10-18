@@ -8,7 +8,9 @@
  */
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
 
@@ -29,7 +31,6 @@ namespace PeMain.UI
 			Initialize();
 		}
 		
-		
 		void CommandNotify_Click(object sender, EventArgs e)
 		{
 			SystemExecuter.OpenNotificationAreaHistory(CommonData);
@@ -38,13 +39,34 @@ namespace PeMain.UI
 		void CommandStartup_Click(object sender, EventArgs e)
 		{
 			var path = Literal.StartupShortcutPath;
-			AppUtility.MakeAppShortcut(path);
+			var icon = MessageBoxIcon.Information;
+			string message;
+			if(!File.Exists(path)) {
+				try {
+					AppUtility.MakeAppShortcut(path);
+					message = CommonData.Language["home/startup/dialog/message"];
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+					message = ex.Message;
+					icon = MessageBoxIcon.Error;
+				}
+			} else {
+				message = CommonData.Language["home/startup/exists"];
+				CommonData.Logger.Puts(LogType.Information, message, path);
+			}
+			MessageBox.Show(message, CommonData.Language["home/startup/dialog/caption"], MessageBoxButtons.OK, icon);
 		}
 		
 		void CommandLauncher_Click(object sender, EventArgs e)
 		{
 			// TODO: がんばろう
 			MakeDefaultLauncherItem();
+		}
+		
+		void HomeForm_Shown(object sender, EventArgs e)
+		{
+			UIUtility.ShowFront(this);
+			this.Activate();
 		}
 	}
 }
