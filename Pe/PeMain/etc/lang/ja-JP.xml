@@ -126,7 +126,7 @@
 		
 		<Word Name="home/page/main" Text="ホーム" />
 		<Word Name="home/command/launcher"  Text="ランチャアイテム自動登録" />
-		<Word Name="home/label/launcher"    Text="(⊙◞౪◟⊙)&#x0d;&#x0a;☆みじっそう☆" />
+		<Word Name="home/label/launcher"    Text="✌(⊙◞౪◟⊙)✌&#x0d;&#x0a;☆みじっそう☆" />
 		<Word Name="home/command/notify"  Text="通知領域設定" />
 		<Word Name="home/label/notify"    Text="通知領域の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
 		<Word Name="home/command/startup" Text="スタートアップ登録" />
