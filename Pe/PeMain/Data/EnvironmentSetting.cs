@@ -41,6 +41,10 @@ namespace PeMain.Data
 		/// </summary>
 		public List<string> Remove { get; set; }
 		
+		/// <summary>
+		/// コピー。
+		/// </summary>
+		/// <returns>コピーされたオブジェクト</returns>
 		public object Clone()
 		{
 			var result = new EnvironmentSetting();

@@ -13,12 +13,19 @@ using PInvoke.Windows;
 namespace PeMain.Data
 {
 	/// <summary>
-	/// デバイス情報変更
+	/// デバイス情報変更。
 	/// </summary>
 	public class ChangeDevice
 	{
-		private Message _message;
+		/// <summary>
+		/// メッセージデータ。
+		/// </summary>
+		private readonly Message _message;
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="message"></param>
 		public ChangeDevice(Message message)
 		{
 			this._message = message;
@@ -26,6 +33,9 @@ namespace PeMain.Data
 			DBT = (DBT)this._message.WParam.ToInt32();
 		}
 		
+		/// <summary>
+		/// DBT! DBT!
+		/// </summary>
 		public DBT DBT { get; private set; }
 		
 		
