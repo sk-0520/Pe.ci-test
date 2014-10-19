@@ -38,20 +38,24 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
+			this.panelMainOthers = new System.Windows.Forms.FlowLayoutPanel();
+			this.labelMainLanguage = new System.Windows.Forms.Label();
+			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
 			this.selectMainStartup = new System.Windows.Forms.CheckBox();
 			this.groupUpdateCheck = new System.Windows.Forms.GroupBox();
 			this.panelUpdate = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectUpdateCheck = new System.Windows.Forms.CheckBox();
 			this.selectUpdateCheckRC = new System.Windows.Forms.CheckBox();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
-			this.labelSystemEnvExt = new System.Windows.Forms.Label();
+			this.panelMainSystemEnv = new System.Windows.Forms.TableLayoutPanel();
 			this.inputSystemEnvExt = new PeMain.UI.PeHotkeyControl();
-			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
+			this.labelSystemEnvExt = new System.Windows.Forms.Label();
 			this.inputSystemEnvHiddenFile = new PeMain.UI.PeHotkeyControl();
+			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
 			this.selectLogFullDetail = new System.Windows.Forms.CheckBox();
 			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
@@ -60,8 +64,6 @@ namespace PeMain.UI
 			this.selectLogTrigger_warning = new System.Windows.Forms.CheckBox();
 			this.selectLogTrigger_information = new System.Windows.Forms.CheckBox();
 			this.selectLogVisible = new System.Windows.Forms.CheckBox();
-			this.selectMainLanguage = new System.Windows.Forms.ComboBox();
-			this.labelMainLanguage = new System.Windows.Forms.Label();
 			this.tabSetting_pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
@@ -175,12 +177,13 @@ namespace PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.panelMainSystemEnv = new System.Windows.Forms.TableLayoutPanel();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
+			this.panelMainOthers.SuspendLayout();
 			this.groupUpdateCheck.SuspendLayout();
 			this.panelUpdate.SuspendLayout();
 			this.groupMainSystemEnv.SuspendLayout();
+			this.panelMainSystemEnv.SuspendLayout();
 			this.groupMainLog.SuspendLayout();
 			this.groupLogTrigger.SuspendLayout();
 			this.tabSetting_pageLauncher.SuspendLayout();
@@ -226,7 +229,6 @@ namespace PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			this.panelMainSystemEnv.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -248,12 +250,10 @@ namespace PeMain.UI
 			// 
 			// tabSetting_pageMain
 			// 
-			this.tabSetting_pageMain.Controls.Add(this.selectMainStartup);
+			this.tabSetting_pageMain.Controls.Add(this.panelMainOthers);
 			this.tabSetting_pageMain.Controls.Add(this.groupUpdateCheck);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainSystemEnv);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainLog);
-			this.tabSetting_pageMain.Controls.Add(this.selectMainLanguage);
-			this.tabSetting_pageMain.Controls.Add(this.labelMainLanguage);
 			this.tabSetting_pageMain.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting_pageMain.Name = "tabSetting_pageMain";
@@ -263,10 +263,42 @@ namespace PeMain.UI
 			this.tabSetting_pageMain.Text = ":setting/page/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
 			// 
+			// panelMainOthers
+			// 
+			this.panelMainOthers.AutoSize = true;
+			this.panelMainOthers.Controls.Add(this.labelMainLanguage);
+			this.panelMainOthers.Controls.Add(this.selectMainLanguage);
+			this.panelMainOthers.Controls.Add(this.selectMainStartup);
+			this.panelMainOthers.Location = new System.Drawing.Point(15, 7);
+			this.panelMainOthers.Name = "panelMainOthers";
+			this.panelMainOthers.Size = new System.Drawing.Size(559, 29);
+			this.panelMainOthers.TabIndex = 0;
+			// 
+			// labelMainLanguage
+			// 
+			this.labelMainLanguage.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelMainLanguage.AutoSize = true;
+			this.labelMainLanguage.Location = new System.Drawing.Point(3, 7);
+			this.labelMainLanguage.Name = "labelMainLanguage";
+			this.labelMainLanguage.Size = new System.Drawing.Size(143, 15);
+			this.labelMainLanguage.TabIndex = 0;
+			this.labelMainLanguage.Text = ":setting/label/language";
+			// 
+			// selectMainLanguage
+			// 
+			this.selectMainLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectMainLanguage.FormattingEnabled = true;
+			this.selectMainLanguage.Location = new System.Drawing.Point(152, 3);
+			this.selectMainLanguage.Name = "selectMainLanguage";
+			this.selectMainLanguage.Size = new System.Drawing.Size(121, 23);
+			this.selectMainLanguage.TabIndex = 0;
+			// 
 			// selectMainStartup
 			// 
+			this.selectMainStartup.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.selectMainStartup.AutoSize = true;
-			this.selectMainStartup.Location = new System.Drawing.Point(281, 19);
+			this.selectMainStartup.Location = new System.Drawing.Point(336, 5);
+			this.selectMainStartup.Margin = new System.Windows.Forms.Padding(60, 3, 3, 3);
 			this.selectMainStartup.Name = "selectMainStartup";
 			this.selectMainStartup.Size = new System.Drawing.Size(158, 19);
 			this.selectMainStartup.TabIndex = 1;
@@ -277,10 +309,10 @@ namespace PeMain.UI
 			// 
 			this.groupUpdateCheck.AutoSize = true;
 			this.groupUpdateCheck.Controls.Add(this.panelUpdate);
-			this.groupUpdateCheck.Location = new System.Drawing.Point(224, 160);
+			this.groupUpdateCheck.Location = new System.Drawing.Point(221, 160);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
 			this.groupUpdateCheck.Size = new System.Drawing.Size(291, 81);
-			this.groupUpdateCheck.TabIndex = 4;
+			this.groupUpdateCheck.TabIndex = 3;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
 			// 
@@ -320,22 +352,31 @@ namespace PeMain.UI
 			// 
 			this.groupMainSystemEnv.AutoSize = true;
 			this.groupMainSystemEnv.Controls.Add(this.panelMainSystemEnv);
-			this.groupMainSystemEnv.Location = new System.Drawing.Point(221, 62);
+			this.groupMainSystemEnv.Location = new System.Drawing.Point(221, 42);
 			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
-			this.groupMainSystemEnv.Size = new System.Drawing.Size(288, 95);
-			this.groupMainSystemEnv.TabIndex = 3;
+			this.groupMainSystemEnv.Size = new System.Drawing.Size(288, 89);
+			this.groupMainSystemEnv.TabIndex = 2;
 			this.groupMainSystemEnv.TabStop = false;
 			this.groupMainSystemEnv.Text = ":setting/group/system-env";
 			// 
-			// labelSystemEnvExt
+			// panelMainSystemEnv
 			// 
-			this.labelSystemEnvExt.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelSystemEnvExt.AutoSize = true;
-			this.labelSystemEnvExt.Location = new System.Drawing.Point(3, 36);
-			this.labelSystemEnvExt.Name = "labelSystemEnvExt";
-			this.labelSystemEnvExt.Size = new System.Drawing.Size(147, 15);
-			this.labelSystemEnvExt.TabIndex = 17;
-			this.labelSystemEnvExt.Text = ":setting/label/extension";
+			this.panelMainSystemEnv.ColumnCount = 2;
+			this.panelMainSystemEnv.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelMainSystemEnv.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.panelMainSystemEnv.Controls.Add(this.inputSystemEnvExt, 1, 1);
+			this.panelMainSystemEnv.Controls.Add(this.labelSystemEnvExt, 0, 1);
+			this.panelMainSystemEnv.Controls.Add(this.inputSystemEnvHiddenFile, 1, 0);
+			this.panelMainSystemEnv.Controls.Add(this.labelSystemEnvHiddenFile, 0, 0);
+			this.panelMainSystemEnv.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelMainSystemEnv.Location = new System.Drawing.Point(3, 19);
+			this.panelMainSystemEnv.Name = "panelMainSystemEnv";
+			this.panelMainSystemEnv.RowCount = 3;
+			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+			this.panelMainSystemEnv.Size = new System.Drawing.Size(282, 67);
+			this.panelMainSystemEnv.TabIndex = 5;
 			// 
 			// inputSystemEnvExt
 			// 
@@ -353,15 +394,15 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.TabIndex = 2;
 			this.inputSystemEnvExt.Text = "None";
 			// 
-			// labelSystemEnvHiddenFile
+			// labelSystemEnvExt
 			// 
-			this.labelSystemEnvHiddenFile.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelSystemEnvHiddenFile.AutoSize = true;
-			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(3, 7);
-			this.labelSystemEnvHiddenFile.Name = "labelSystemEnvHiddenFile";
-			this.labelSystemEnvHiddenFile.Size = new System.Drawing.Size(146, 15);
-			this.labelSystemEnvHiddenFile.TabIndex = 17;
-			this.labelSystemEnvHiddenFile.Text = ":setting/label/hiddenfile";
+			this.labelSystemEnvExt.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelSystemEnvExt.AutoSize = true;
+			this.labelSystemEnvExt.Location = new System.Drawing.Point(3, 36);
+			this.labelSystemEnvExt.Name = "labelSystemEnvExt";
+			this.labelSystemEnvExt.Size = new System.Drawing.Size(147, 15);
+			this.labelSystemEnvExt.TabIndex = 17;
+			this.labelSystemEnvExt.Text = ":setting/label/extension";
 			// 
 			// inputSystemEnvHiddenFile
 			// 
@@ -379,6 +420,16 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.TabIndex = 0;
 			this.inputSystemEnvHiddenFile.Text = "None";
 			// 
+			// labelSystemEnvHiddenFile
+			// 
+			this.labelSystemEnvHiddenFile.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelSystemEnvHiddenFile.AutoSize = true;
+			this.labelSystemEnvHiddenFile.Location = new System.Drawing.Point(3, 7);
+			this.labelSystemEnvHiddenFile.Name = "labelSystemEnvHiddenFile";
+			this.labelSystemEnvHiddenFile.Size = new System.Drawing.Size(146, 15);
+			this.labelSystemEnvHiddenFile.TabIndex = 17;
+			this.labelSystemEnvHiddenFile.Text = ":setting/label/hiddenfile";
+			// 
 			// groupMainLog
 			// 
 			this.groupMainLog.AutoSize = true;
@@ -386,10 +437,10 @@ namespace PeMain.UI
 			this.groupMainLog.Controls.Add(this.selectLogAddShow);
 			this.groupMainLog.Controls.Add(this.groupLogTrigger);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
-			this.groupMainLog.Location = new System.Drawing.Point(15, 62);
+			this.groupMainLog.Location = new System.Drawing.Point(15, 42);
 			this.groupMainLog.Name = "groupMainLog";
 			this.groupMainLog.Size = new System.Drawing.Size(200, 199);
-			this.groupMainLog.TabIndex = 2;
+			this.groupMainLog.TabIndex = 1;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
 			// 
@@ -421,7 +472,7 @@ namespace PeMain.UI
 			this.groupLogTrigger.Location = new System.Drawing.Point(6, 45);
 			this.groupLogTrigger.Name = "groupLogTrigger";
 			this.groupLogTrigger.Size = new System.Drawing.Size(188, 106);
-			this.groupLogTrigger.TabIndex = 2;
+			this.groupLogTrigger.TabIndex = 0;
 			this.groupLogTrigger.TabStop = false;
 			// 
 			// selectLogTrigger_error
@@ -463,24 +514,6 @@ namespace PeMain.UI
 			this.selectLogVisible.TabIndex = 0;
 			this.selectLogVisible.Text = ":common/label/visible";
 			this.selectLogVisible.UseVisualStyleBackColor = true;
-			// 
-			// selectMainLanguage
-			// 
-			this.selectMainLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectMainLanguage.FormattingEnabled = true;
-			this.selectMainLanguage.Location = new System.Drawing.Point(108, 16);
-			this.selectMainLanguage.Name = "selectMainLanguage";
-			this.selectMainLanguage.Size = new System.Drawing.Size(121, 23);
-			this.selectMainLanguage.TabIndex = 0;
-			// 
-			// labelMainLanguage
-			// 
-			this.labelMainLanguage.AutoSize = true;
-			this.labelMainLanguage.Location = new System.Drawing.Point(15, 19);
-			this.labelMainLanguage.Name = "labelMainLanguage";
-			this.labelMainLanguage.Size = new System.Drawing.Size(143, 15);
-			this.labelMainLanguage.TabIndex = 0;
-			this.labelMainLanguage.Text = ":setting/label/language";
 			// 
 			// tabSetting_pageLauncher
 			// 
@@ -1690,8 +1723,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle11;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1721,9 +1754,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle12;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1813,25 +1846,6 @@ namespace PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// panelMainSystemEnv
-			// 
-			this.panelMainSystemEnv.ColumnCount = 2;
-			this.panelMainSystemEnv.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.panelMainSystemEnv.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.panelMainSystemEnv.Controls.Add(this.inputSystemEnvExt, 1, 1);
-			this.panelMainSystemEnv.Controls.Add(this.labelSystemEnvExt, 0, 1);
-			this.panelMainSystemEnv.Controls.Add(this.inputSystemEnvHiddenFile, 1, 0);
-			this.panelMainSystemEnv.Controls.Add(this.labelSystemEnvHiddenFile, 0, 0);
-			this.panelMainSystemEnv.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelMainSystemEnv.Location = new System.Drawing.Point(3, 19);
-			this.panelMainSystemEnv.Name = "panelMainSystemEnv";
-			this.panelMainSystemEnv.RowCount = 3;
-			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelMainSystemEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.panelMainSystemEnv.Size = new System.Drawing.Size(282, 73);
-			this.panelMainSystemEnv.TabIndex = 5;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -1849,11 +1863,15 @@ namespace PeMain.UI
 			this.tabSetting.ResumeLayout(false);
 			this.tabSetting_pageMain.ResumeLayout(false);
 			this.tabSetting_pageMain.PerformLayout();
+			this.panelMainOthers.ResumeLayout(false);
+			this.panelMainOthers.PerformLayout();
 			this.groupUpdateCheck.ResumeLayout(false);
 			this.groupUpdateCheck.PerformLayout();
 			this.panelUpdate.ResumeLayout(false);
 			this.panelUpdate.PerformLayout();
 			this.groupMainSystemEnv.ResumeLayout(false);
+			this.panelMainSystemEnv.ResumeLayout(false);
+			this.panelMainSystemEnv.PerformLayout();
 			this.groupMainLog.ResumeLayout(false);
 			this.groupMainLog.PerformLayout();
 			this.groupLogTrigger.ResumeLayout(false);
@@ -1913,10 +1931,9 @@ namespace PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.panelMainSystemEnv.ResumeLayout(false);
-			this.panelMainSystemEnv.PerformLayout();
 			this.ResumeLayout(false);
 		}
+		private System.Windows.Forms.FlowLayoutPanel panelMainOthers;
 		private System.Windows.Forms.TableLayoutPanel panelMainSystemEnv;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherOthers;
 		private PeMain.UI.PeHotkeyControl inputNoteShowFront;
