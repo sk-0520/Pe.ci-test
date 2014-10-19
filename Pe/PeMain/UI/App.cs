@@ -10,6 +10,8 @@ using System;
 using System.IO;
 using System.Linq;
 
+using Microsoft.Win32;
+using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
 using PeUtility;
@@ -65,7 +67,19 @@ namespace PeMain.UI
 			ShowHomeDialog();
 		}
 		
-
+		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+		{
+			this._logForm.Puts(LogType.Information, "SessionEnding", e);
+			SaveSetting();
+		}
+		
+		void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+		{
+			if(e.Mode == PowerModes.Resume) {
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
+				CheckUpdateProcessAsync(false);
+			}
+		}
 		
 	}
 }

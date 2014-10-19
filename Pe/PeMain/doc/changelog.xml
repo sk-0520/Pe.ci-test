@@ -33,7 +33,7 @@
 		</ul>
 		<ul type="features">
 			<li>ノートの現在選択色を親メニューにも表示</li>
-			<li></li>
+			<li>システムレジューム時にアップデートチェック実施</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">

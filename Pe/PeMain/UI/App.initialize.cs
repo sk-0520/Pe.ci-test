@@ -562,7 +562,8 @@ namespace PeMain.UI
 			Debug.Assert(Initialized);
 			ApplyLanguage();
 			
-			SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
+			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			
 			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);
@@ -573,10 +574,6 @@ namespace PeMain.UI
 			}
 		}
 
-		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
-		{
-			this._logForm.Puts(LogType.Information, "SessionEnding", e);
-			SaveSetting();
-		}
+
 	}
 }
