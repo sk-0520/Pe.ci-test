@@ -18,6 +18,7 @@ namespace PeUtility
 	/// </summary>
 	public static class FileUtility
 	{
+		/*
 		/// <summary>
 		/// ファイルをバイナリとして読み込む
 		/// </summary>
@@ -41,6 +42,7 @@ namespace PeUtility
 			var fileInfo = new FileInfo(filePath);
 			return ToBinary(filePath, 0, (int)fileInfo.Length);
 		}
+		*/
 		
 		/// <summary>
 		/// ファイルパスを元にディレクトリを作成

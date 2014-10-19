@@ -406,7 +406,7 @@ namespace PeMain.UI
 			// 設定
 			itemSetting.Name = menuNameSetting;
 			itemSetting.Click += (object sender, EventArgs e) => {
-				PauseOthers(() => OpenSetting());
+				PauseOthers(() => OpenSettingDialog());
 			};
 			
 			// 情報

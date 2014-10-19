@@ -97,6 +97,10 @@ namespace PeMain.UI
 			//*/
 		}
 		
+		/// <summary>
+		/// 保持するウィンドウ(Form)をすべて取得する。
+		/// </summary>
+		/// <returns></returns>
 		IEnumerable<Form> GetWindows()
 		{
 			var result = new List<Form>();
@@ -175,7 +179,8 @@ namespace PeMain.UI
 				foreach(var filePath in enabledFiles) {
 					var entry = zip.CreateEntry(Path.GetFileName(filePath));
 					using(var entryStream = new BinaryWriter(entry.Open())) {
-						var buffer = FileUtility.ToBinary(filePath);
+						//var buffer = FileUtility.ToBinary(filePath);
+						var buffer = File.ReadAllBytes(filePath);
 						/*
 						using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
 							var buffer = new byte[Literal.fileTempBufferLength];
@@ -192,6 +197,9 @@ namespace PeMain.UI
 
 		}
 		
+		/// <summary>
+		/// 現在の設定データを保存する。
+		/// </summary>
 		void SaveSetting()
 		{
 			// バックアップ
@@ -213,6 +221,10 @@ namespace PeMain.UI
 			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
 		}
 		
+		/// <summary>
+		/// 終了する。
+		/// </summary>
+		/// <param name="save"></param>
 		public void CloseApplication(bool save)
 		{
 			if(save) {
@@ -222,6 +234,9 @@ namespace PeMain.UI
 			Application.Exit();
 		}
 		
+		/// <summary>
+		/// ツール―バー状態のリセット。
+		/// </summary>
 		void ResetToolbar()
 		{
 			Debug.WriteLine("ResetToolbar");
@@ -243,7 +258,11 @@ namespace PeMain.UI
 			AttachmentToolbarSubMenu(menuItem);
 		}
 		
-		Func<bool> OpenSetting()
+		/// <summary>
+		/// 設定ダイアログを開く。
+		/// </summary>
+		/// <returns></returns>
+		Func<bool> OpenSettingDialog()
 		{
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
@@ -290,7 +309,16 @@ namespace PeMain.UI
 			return null;
 		}
 		
-		void ChangeShowSysEnv(Func<bool> nowValueDg, Action<bool> changeValueDg, string messageTitleName, string showMessageName, string hiddenMessageName, string errorMessageName)
+		/// <summary>
+		/// システム環境を変更する。
+		/// </summary>
+		/// <param name="nowValueDg"></param>
+		/// <param name="changeValueDg"></param>
+		/// <param name="messageTitleName"></param>
+		/// <param name="showMessageName"></param>
+		/// <param name="hiddenMessageName"></param>
+		/// <param name="errorMessageName"></param>
+		void ChangeShowSystemEnvironment(Func<bool> nowValueDg, Action<bool> changeValueDg, string messageTitleName, string showMessageName, string hiddenMessageName, string errorMessageName)
 		{
 			var prevValue = nowValueDg();
 			changeValueDg(!prevValue);
@@ -320,6 +348,12 @@ namespace PeMain.UI
 			ShowBalloon(icon, title, message);
 		}
 		
+		/// <summary>
+		/// ホットキー受信。
+		/// </summary>
+		/// <param name="hotKeyId"></param>
+		/// <param name="mod"></param>
+		/// <param name="key"></param>
 		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
 		{
 			if(this._pause) {
@@ -328,11 +362,11 @@ namespace PeMain.UI
 			
 			switch(hotKeyId) {
 				case HotKeyId.HiddenFile:
-					ChangeShowSysEnv(SystemEnvironment.IsHiddenFileShow, SystemEnvironment.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
+					ChangeShowSystemEnvironment(SystemEnvironment.IsHiddenFileShow, SystemEnvironment.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
 					break;
 					
 				case HotKeyId.Extension:
-					ChangeShowSysEnv(SystemEnvironment.IsExtensionShow, SystemEnvironment.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
+					ChangeShowSystemEnvironment(SystemEnvironment.IsExtensionShow, SystemEnvironment.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
 					break;
 					
 				case HotKeyId.CreateNote:
