@@ -468,7 +468,7 @@ namespace PeMain.UI
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				if(updateData != null && updateData.Info != null) {
 					if(updateData.Info.IsUpdate) {
-						ShowUpdate(updateData);
+						ShowUpdateDialog(updateData);
 					} else if(updateData.Info.IsError) {
 						this._commonData.Logger.Puts(LogType.Warning, this._commonData.Language["log/update/error"], updateData.Info.Log);
 					} else {
@@ -505,7 +505,11 @@ namespace PeMain.UI
 			CheckedUpdate(force, updateData);
 		}
 		
-		void ShowUpdate(UpdateData updateData)
+		/// <summary>
+		/// アップデートダイアログ表示。
+		/// </summary>
+		/// <param name="updateData"></param>
+		void ShowUpdateDialog(UpdateData updateData)
 		{
 			PauseOthers(
 				() => {
@@ -526,12 +530,18 @@ namespace PeMain.UI
 			// なんかこれそもそもが変な気がするんです
 		}
 		
+		/// <summary>
+		/// ディスプレイ数に変更があった。
+		/// </summary>
 		void ChangedScreenCount()
 		{
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/screen/count-change"], string.Empty);
 			ResetToolbar();
 		}
 		
+		/// <summary>
+		/// ホームダイアログ表示。
+		/// </summary>
 		void ShowHomeDialog()
 		{
 			PauseOthers(
