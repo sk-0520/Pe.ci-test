@@ -16,6 +16,7 @@ namespace PeMain.Data
 	/// <summary>
 	/// 実行情報。
 	/// </summary>
+	[Serializable]
 	public class RunningInfo: Item
 	{
 		/// <summary>
