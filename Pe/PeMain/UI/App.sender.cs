@@ -62,7 +62,7 @@ namespace PeMain.UI
 								//isTimeout = true;
 								break;
 							}
-							Thread.Sleep(TimeSpan.FromMilliseconds(250));
+							Thread.Sleep(Literal.screenCountWaitTime);
 							managedScreenCount = Screen.AllScreens.Count();
 						}
 					}

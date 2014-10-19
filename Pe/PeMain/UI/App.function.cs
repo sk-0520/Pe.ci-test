@@ -227,7 +227,7 @@ namespace PeMain.UI
 			Debug.WriteLine("ResetToolbar");
 			foreach(var toolbar in this._toolbarForms.Values) {
 				//toolbar.SetCommonData(this._commonData);
-				toolbar.Dispose();
+				toolbar.ToDispose();
 			}
 			this._toolbarForms.Clear();
 			
@@ -453,11 +453,7 @@ namespace PeMain.UI
 			Task.Factory.StartNew(
 				() => {
 					if(!force) {
-						#if DEBUG
-						Thread.Sleep(TimeSpan.FromSeconds(1));
-						#else
-						Thread.Sleep(TimeSpan.FromSeconds(30));
-						#endif
+						Thread.Sleep(Literal.updateWaitTime);
 					}
 					return CheckUpdate(force);
 				}

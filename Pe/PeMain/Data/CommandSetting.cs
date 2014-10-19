@@ -29,7 +29,7 @@ namespace PeMain.Data
 			Width = 200;
 			Height = 200;
 			IconScale = IconScale.Small;
-			HiddenTime = new TimeSpan(0, 0, 0, 1, 500);
+			HiddenTime = TimeSpan.FromSeconds(1.5);
 			FontSetting = new FontSetting();
 			HotKey = new HotKeySetting();
 		}

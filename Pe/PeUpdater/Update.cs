@@ -185,7 +185,7 @@ namespace PeUpdater
 			}
 			
 			if(process != null) {
-				isRestart = process.WaitForExit((int)(new TimeSpan(0, 1, 0).TotalMilliseconds));
+				isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
 				Console.WriteLine("Kill -> {0}, Time = {1}", isRestart, processSw.Elapsed);
 			}
 			

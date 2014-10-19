@@ -55,6 +55,12 @@ namespace PeMain
 		private static string _dbFileName            = "db.sqlite3";
 		private static string _backupDirName         = "backup";
 		
+		#if DEBUG
+		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
+		#else
+		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(30);
+		#endif
+
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
 		/// </summary>
@@ -62,6 +68,7 @@ namespace PeMain
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
 		public const int waitCountForGetScreenCount = 10;
+		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
 		
 		#region NOTE
 		
