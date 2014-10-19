@@ -104,6 +104,7 @@ namespace PeMain.UI
 			// commandLauncher
 			// 
 			this.commandLauncher.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.commandLauncher.Enabled = false;
 			this.commandLauncher.Image = global::PeMain.Properties.Images.Finder;
 			this.commandLauncher.Location = new System.Drawing.Point(20, 10);
 			this.commandLauncher.Margin = new System.Windows.Forms.Padding(4);
