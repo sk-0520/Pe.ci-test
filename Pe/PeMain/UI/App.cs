@@ -44,6 +44,12 @@ namespace PeMain.UI
 			this._noteWindowList.ForEach(w => w.ToDispose());
 			this._toolbarForms.Values.ToList().ForEach(w => w.ToDispose());
 			this._notifyIcon.ToDispose();
+			
+			#if DEBUG
+			if(File.Exists(Literal.StartupShortcutPath)) {
+				File.Delete(Literal.StartupShortcutPath);
+			}
+			#endif
 		}
 		
 		private void IconDoubleClick(object sender, EventArgs e)
