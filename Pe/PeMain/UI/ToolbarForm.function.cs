@@ -401,9 +401,13 @@ namespace PeMain.UI
 			try {
 				var dirList = Directory.GetDirectories(parentDirPath);
 				var fileList = Directory.GetFiles(parentDirPath);
+				var pathItemList = new [] {
+					new { PathList = dirList,  IsDirectory = true, },
+					new { PathList = fileList, IsDirectory = false, },
+				};
 				menuList = new List<ToolStripItem>(dirList.Length + fileList.Length);
 				if(dirList.Length + fileList.Length > 0) {
-					// TODO: ディレクトリとファイルで処理重複
+					/*
 					foreach(var path in dirList) {
 						var use = true;
 						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
@@ -424,6 +428,20 @@ namespace PeMain.UI
 							menuList.Add(menuItem);
 						}
 					}
+					 */
+					foreach(var pathItem in pathItemList) {
+						foreach(var path in pathItem.PathList) {
+							var use = true;
+							if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
+								use = false;
+							}
+							if(use) {
+								var menuItem = GetFileListItem(path, pathItem.IsDirectory, showHiddenFile, showExtension);
+								menuList.Add(menuItem);
+							}
+						}
+					}
+					
 				} else {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
