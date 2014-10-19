@@ -7,14 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
-using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.Logic;
-using PeMain.Logic.DB;
 
 namespace PeMain.UI
 {

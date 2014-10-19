@@ -9,12 +9,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Text;
-using System.Windows.Forms;
 
 namespace PeUtility
 {

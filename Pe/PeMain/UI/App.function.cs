@@ -12,12 +12,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.IO.Packaging;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
+
 using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;

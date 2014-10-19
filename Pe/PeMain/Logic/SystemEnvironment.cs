@@ -7,11 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
-
 using Microsoft.Win32;
 using PInvoke.Windows;
 

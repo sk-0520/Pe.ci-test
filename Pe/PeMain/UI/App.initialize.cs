@@ -9,7 +9,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Common;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing;
@@ -17,16 +16,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.Logic;
 using PeMain.Logic.DB;
-using PeMain.Properties;
 using PeUtility;
-using PInvoke.Windows;
 
 namespace PeMain.UI
 {

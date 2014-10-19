@@ -17,9 +17,7 @@ using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
-using PeMain.Properties;
 using PeUtility;
-using PInvoke.Windows;
 
 namespace PeMain.UI
 {

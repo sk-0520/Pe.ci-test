@@ -9,7 +9,6 @@
 using System;
 using System.Windows.Forms;
 using PeMain.Data;
-using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI

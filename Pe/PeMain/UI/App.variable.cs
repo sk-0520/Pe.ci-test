@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using PeMain.Data;
-using PeMain.Logic;
 
 namespace PeMain.UI
 {

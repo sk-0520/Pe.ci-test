@@ -8,11 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
-using PeMain.Logic;
 using PeMain.Data;
+using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI

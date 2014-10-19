@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 
-using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.Data

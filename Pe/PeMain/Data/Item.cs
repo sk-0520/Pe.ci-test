@@ -7,9 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Runtime.Serialization;
 using System.Xml.Serialization;
-
 using PeMain.IF;
 
 namespace PeMain.Data

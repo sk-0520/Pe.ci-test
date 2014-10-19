@@ -8,7 +8,6 @@
  */
 using System;
 using System.Diagnostics;
-using PeMain.Logic;
 
 namespace PeMain.UI
 {

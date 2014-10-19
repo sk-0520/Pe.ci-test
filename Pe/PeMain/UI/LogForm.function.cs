@@ -11,12 +11,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
+
 using ObjectDumper;
 using PeMain.Data;
-using PeMain.Logic;
-using PeUtility;
 
 namespace PeMain.UI
 {

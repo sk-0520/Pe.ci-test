@@ -10,8 +10,8 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+
 using PeMain.Data;
-using PeMain.Logic;
 using PInvoke.Windows;
 
 namespace PeMain.UI

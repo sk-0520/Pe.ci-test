@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
+
 using PeMain.Data;
-using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI

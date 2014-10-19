@@ -7,14 +7,11 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
 using PeMain.Data;
-using PeMain.Logic;
-using PeUtility;
 
 namespace PeMain.UI
 {

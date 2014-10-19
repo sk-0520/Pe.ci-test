@@ -8,8 +8,6 @@
  */
 using System;
 using System.Windows.Forms;
-using PeMain.Data;
-using PInvoke.Windows;
 
 namespace PeMain.UI
 {

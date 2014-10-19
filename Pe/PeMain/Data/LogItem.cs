@@ -8,7 +8,6 @@
  */
 using System;
 using System.Diagnostics;
-using System.Xml.Serialization;
 using ObjectDumper;
 
 namespace PeMain.Data

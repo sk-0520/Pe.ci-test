@@ -7,15 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ObjectDumper;
+
 using PeMain.Data;
-using PeMain.Logic;
 using PInvoke.Windows;
 
 namespace PeMain.UI

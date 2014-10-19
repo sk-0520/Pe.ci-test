@@ -14,7 +14,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 using PeMain.Data;
 using PeMain.IF;

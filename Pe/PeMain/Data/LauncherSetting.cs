@@ -12,11 +12,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Xml.Serialization;
 
-using PeMain.Logic;
-using PeMain.UI;
 using PeUtility;
 
 namespace PeMain.Data

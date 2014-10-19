@@ -7,14 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Xml.Serialization;
-using PeMain.Data.DB;
-using PeMain.Logic;
-using PeMain.Logic.DB;
+
 using PeUtility;
 
 namespace PeMain.Data

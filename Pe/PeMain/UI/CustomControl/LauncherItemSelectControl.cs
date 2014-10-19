@@ -8,15 +8,12 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
 using PeMain.Data;
 using PeMain.IF;
-using PeMain.Logic;
 using PeUtility;
 
 namespace PeMain.UI

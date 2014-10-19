@@ -5,7 +5,6 @@
  * Removal of this copyright is prohibited
  */
 using System;
-using System.Collections;
 using System.Windows.Forms;
 using PInvoke.Windows;
 
