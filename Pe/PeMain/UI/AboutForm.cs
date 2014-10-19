@@ -50,7 +50,7 @@ namespace PeMain.UI
 			}
 			
 			try {
-				Executer.RunCommand(link);
+				Executer.RunCommand(link, CommonData);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, link, ex);
 			}
@@ -94,7 +94,7 @@ namespace PeMain.UI
 				var cell = this.gridComponents.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewLinkCell;
 				if(cell != null) {
 					var link = (string)cell.Value;
-					Executer.RunCommand(link);
+					Executer.RunCommand(link, CommonData);
 					cell.LinkVisited = true;
 				}
 			}

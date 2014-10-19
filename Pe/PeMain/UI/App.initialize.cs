@@ -431,7 +431,7 @@ namespace PeMain.UI
 			
 			itemHelp.Name = menuNameHelp;
 			itemHelp.Click += (object sender, EventArgs e) => { 
-				Executer.RunCommand(Literal.HelpDocumentURI);
+				Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			};
 			
 			// 終了

@@ -101,7 +101,7 @@ namespace PeMain.Logic
 			}
 		}
 		
-		public static Process RunCommand(string command)
+		public static Process RunCommand(string command, CommonData commonData)
 		{
 			string exCommand = command;
 			
