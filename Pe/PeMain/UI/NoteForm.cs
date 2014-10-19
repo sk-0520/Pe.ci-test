@@ -334,8 +334,11 @@ namespace PeMain.UI
 				this.contextMenu_itemBackColor.SelectedItem = this.contextMenu_itemBackColor.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
 			}
 			 */
-			Action<IList<ColorMenuItem>, ToolStripItem, Color> checkColor = (colorItemList, customItem, nowColor) => {
+			Action<ToolStripItem, IList<ColorMenuItem>, ToolStripItem, Color> checkColor = (parentItem, colorItemList, customItem, nowColor) => {
 				var plainColor = false;
+				
+				parentItem.Image.ToDispose();
+				parentItem.Image = CreateColorImage(nowColor);
 				
 				foreach(var colorItem in colorItemList) {
 					var menuItem = colorItem.Item as ToolStripMenuItem;
@@ -354,8 +357,8 @@ namespace PeMain.UI
 			
 			var foreMenuList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
 			var backMenuList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
-			checkColor(foreMenuList, this.contextMenu_itemForeColor_itemCustom, NoteItem.Style.ForeColor);
-			checkColor(backMenuList, this.contextMenu_itemBackColor_itemCustom, NoteItem.Style.BackColor);
+			checkColor(this.contextMenu_itemForeColor, foreMenuList, this.contextMenu_itemForeColor_itemCustom, NoteItem.Style.ForeColor);
+			checkColor(this.contextMenu_itemBackColor, backMenuList, this.contextMenu_itemBackColor_itemCustom, NoteItem.Style.BackColor);
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
