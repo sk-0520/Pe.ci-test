@@ -9,6 +9,7 @@
 using System;
 using System.Windows.Forms;
 using PeMain.IF;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -35,6 +36,11 @@ namespace PeMain.UI
 		void CommandOk_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;
+		}
+		
+		void UpdateForm_Shown(object sender, EventArgs e)
+		{
+			UIUtility.ShowFrontActive(this);
 		}
 	}
 }

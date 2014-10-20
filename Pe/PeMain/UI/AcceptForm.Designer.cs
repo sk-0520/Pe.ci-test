@@ -150,6 +150,7 @@ namespace PeMain.UI
 			this.Name = "AcceptForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/accept";
+			this.Shown += new System.EventHandler(this.AcceptForm_Shown);
 			this.panelMain.ResumeLayout(false);
 			this.panelMain.PerformLayout();
 			this.panelUpdate.ResumeLayout(false);

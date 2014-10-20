@@ -313,7 +313,7 @@ namespace PeMain.Logic
 			Debug.WriteLine(sender);
 			Debug.WriteLine(e);
 		}
-		*/
+		 */
 		
 		/// <summary>
 		/// 位置補正イベントのアタッチ。
@@ -332,7 +332,7 @@ namespace PeMain.Logic
 			/*
 			toolItem.DropDown.MouseWheel -= EventDropDownMouseWheel;
 			toolItem.DropDown.MouseWheel += EventDropDownMouseWheel;
-			*/
+			 */
 			
 			// HACK: 一体何をどう信じればいいのか。。。
 			toolItem.DropDownOpening -= EventDropDownItemOpeningMenuInScreen;
@@ -361,7 +361,7 @@ namespace PeMain.Logic
 			/*
 			toolItem.MouseWheel -= EventDropDownMouseWheel;
 			toolItem.MouseWheel += EventDropDownMouseWheel;
-			*/
+			 */
 			toolItem.Tag = parent;
 			toolItem.Opening -= EventDropDownOpeningMenuInScreen;
 			toolItem.Opening += EventDropDownOpeningMenuInScreen;
@@ -384,7 +384,7 @@ namespace PeMain.Logic
 			if(string.IsNullOrEmpty(key) || key[0] != ':') {
 				return "{" + key + "}";
 			}
-			*/
+			 */
 			if(CanReplaceWord(key)) {
 				return language[key.Substring(1), map];
 			}
@@ -396,7 +396,7 @@ namespace PeMain.Logic
 		{
 			target.SetLanguage(language, map);
 			#if DEBUG
-			target.Text = "(DEBUG) " + target.Text; 
+			target.Text = "(DEBUG) " + target.Text;
 			#endif
 			
 			var acceptButton = target.AcceptButton as Button;
@@ -451,6 +451,12 @@ namespace PeMain.Logic
 		public static void ShowFront(Form target)
 		{
 			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+		}
+		
+		public static void ShowFrontActive(Form target)
+		{
+			ShowFront(target);
+			target.Activate();
 		}
 	}
 }

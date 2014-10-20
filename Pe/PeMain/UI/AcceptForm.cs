@@ -9,6 +9,7 @@
 using System;
 using System.Windows.Forms;
 using PeMain.IF;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -36,6 +37,11 @@ namespace PeMain.UI
 			CommonData.MainSetting.RunningInfo.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
 			
 			DialogResult = DialogResult.OK;
+		}
+		
+		void AcceptForm_Shown(object sender, EventArgs e)
+		{
+			UIUtility.ShowFrontActive(this);
 		}
 	}
 }

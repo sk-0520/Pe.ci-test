@@ -65,8 +65,7 @@ namespace PeMain.UI
 		
 		void HomeForm_Shown(object sender, EventArgs e)
 		{
-			UIUtility.ShowFront(this);
-			this.Activate();
+			UIUtility.ShowFrontActive(this);
 		}
 	}
 }

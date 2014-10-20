@@ -132,6 +132,7 @@ namespace PeMain.UI
 			this.Name = "UpdateForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/update";
+			this.Shown += new System.EventHandler(this.UpdateForm_Shown);
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
