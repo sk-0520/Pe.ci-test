@@ -455,7 +455,7 @@ namespace PeMain.Data
 		/// </summary>
 		/// <param name="option">オプション履歴に追加する文字列</param>
 		/// <param name="workDirPath">作業ディレクトリに追加する文字列</param>
-		public void Increment(string option = null, string workDirPath = null)
+		public void Increment(string option, string workDirPath)
 		{
 			LauncherHistory.ExecuteCount += 1;
 			LauncherHistory.DateHistory.Update = DateTime.UtcNow;

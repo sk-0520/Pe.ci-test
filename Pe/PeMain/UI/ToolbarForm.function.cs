@@ -781,7 +781,7 @@ namespace PeMain.UI
 		{
 			try {
 				Executer.RunItem(launcherItem, CommonData, this);
-				launcherItem.Increment();
+				launcherItem.Increment(null, null);
 				return true;
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
