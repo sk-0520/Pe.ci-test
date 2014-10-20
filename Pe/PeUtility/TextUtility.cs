@@ -24,9 +24,9 @@ namespace PeUtility
 		/// </summary>
 		/// <param name="target"></param>
 		/// <param name="list"></param>
-		/// <param name="dg"></param>
+		/// <param name="dg">nullの場合はデフォルト動作</param>
 		/// <returns></returns>
-		public static string ToUnique(this string target, IEnumerable<string> list, Func<string, int, string> dg = null)
+		public static string ToUnique(string target, IEnumerable<string> list, Func<string, int, string> dg)
 		{
 			if(dg == null) {
 				dg = (string source, int index) => string.Format("{0}({1})", source, index);
@@ -42,7 +42,10 @@ namespace PeUtility
 			}
 			return changeName;
 		}
-		
+		public static string ToUniqueDefault(string target, IEnumerable<string> list)
+		{
+			return ToUnique(target, list, null);
+		}
 		
 		public static string RegexPatternToWildcard(string regPattern) 
 		{

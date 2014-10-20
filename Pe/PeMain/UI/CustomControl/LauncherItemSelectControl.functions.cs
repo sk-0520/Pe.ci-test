@@ -90,8 +90,8 @@ namespace PeMain.UI
 		void CreateLauncherItem()
 		{
 			var itemName = this._language["control/launcher-selecter/new-item"];
-			if(_items.Count > 0) {
-				itemName = itemName.ToUnique(_items.Select(i => i.Name));
+			if(this._items.Count > 0) {
+				itemName = TextUtility.ToUniqueDefault(itemName, this._items.Select(i => i.Name));
 			}
 			var item = new LauncherItem();
 			item.Name = itemName;

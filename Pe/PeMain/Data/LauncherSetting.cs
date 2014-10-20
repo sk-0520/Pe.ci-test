@@ -413,7 +413,7 @@ namespace PeMain.Data
 		
 		static public string GetUniqueName(LauncherItem item, IEnumerable<LauncherItem> seq)
 		{
-			return item.Name.ToUnique(seq.Select(i => i.Name));
+			return TextUtility.ToUniqueDefault(item.Name, seq.Select(i => i.Name));
 		}
 		
 		public bool IsValueEqual(LauncherItem target)
