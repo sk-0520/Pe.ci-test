@@ -72,7 +72,7 @@ namespace PeMain
 							}
 							fileLogger.Puts(PeMain.Data.LogType.Information, "Close", Process.GetCurrentProcess());
 						} else {
-							fileLogger.Puts(PeMain.Data.LogType.Error, "dual boot", mutexName);
+							fileLogger.Puts(PeMain.Data.LogType.Error, "duplicate boot", mutexName);
 						}
 					}
 				} catch(Exception ex) {
