@@ -404,7 +404,7 @@ namespace PeMain.UI
 			noteDB.InsertMaster(item);
 			
 			var noteForm = CreateNote(item);
-			noteForm.Activate();
+			UIUtility.ShowFrontActive(noteForm);
 		}
 		
 		Form CreateNote(NoteItem noteItem)
