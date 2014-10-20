@@ -58,7 +58,7 @@ namespace PeMain
 									if(!app.ExistsSettingFilePath) {
 										Task.Factory.StartNew(
 											() => {
-												Thread.Sleep(TimeSpan.FromSeconds(1.5));
+												Thread.Sleep(Literal.startHomeDialogWaitTime);
 											}
 										).ContinueWith(
 											t => {

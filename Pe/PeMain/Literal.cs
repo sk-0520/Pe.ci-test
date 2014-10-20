@@ -61,6 +61,7 @@ namespace PeMain
 		#else
 		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(30);
 		#endif
+		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
