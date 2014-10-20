@@ -60,7 +60,7 @@ namespace PeUtility
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		public static bool IsExists(string path)
+		public static bool Exists(string path)
 		{
 			return System.IO.File.Exists(path) || Directory.Exists(path);
 		}
@@ -94,7 +94,7 @@ namespace PeUtility
 			{
 				var path = this._shortcut.TargetPath;
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
-				if(FileUtility.IsExists(expandPath)) {
+				if(FileUtility.Exists(expandPath)) {
 					return expandPath;
 				}
 				var dirPath = Path.GetDirectoryName(expandPath);
@@ -107,7 +107,7 @@ namespace PeUtility
 					// x86指定の場合にx64を考慮(なんかへんだこれ)
 					var relationPath = dirPath.Substring(x86pfPath.Length);
 					var x64TargetPath = Path.Combine(x64pfPath, relationPath);
-					if(FileUtility.IsExists(x64TargetPath)) {
+					if(FileUtility.Exists(x64TargetPath)) {
 						return x64TargetPath;
 					}
 				}

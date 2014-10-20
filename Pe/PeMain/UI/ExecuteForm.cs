@@ -95,7 +95,7 @@ namespace PeMain.UI
 				var dragDatas = (IEnumerable<string>)e.Data.GetData(DataFormats.FileDrop);
 				if(dragDatas.Count() == 1) {
 					var path = dragDatas.First();
-					if(FileUtility.IsExists(path)) {
+					if(FileUtility.Exists(path)) {
 						var isDir = Directory.Exists(path);
 						if(!isDir) {
 							this.inputWorkDirPath.Text = Path.GetDirectoryName(path);
