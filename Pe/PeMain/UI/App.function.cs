@@ -541,7 +541,7 @@ namespace PeMain.UI
 		/// <summary>
 		/// ホームダイアログ表示。
 		/// </summary>
-		void ShowHomeDialog()
+		public void ShowHomeDialog()
 		{
 			PauseOthers(
 				() => {

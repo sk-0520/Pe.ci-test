@@ -543,7 +543,7 @@ namespace PeMain.UI
 		/// 初期化
 		/// </summary>
 		/// <param name="args"></param>
-		void Initialize(CommandLine commandLine, StartupLogger logger)
+		bool Initialize(CommandLine commandLine, StartupLogger logger)
 		{
 			logger.Puts(LogType.Information, "Initialize Start", commandLine.Options.ToArray());
 			
@@ -554,7 +554,7 @@ namespace PeMain.UI
 			var existsSettingFilePath = InitializeSetting(commandLine, logger);
 			if(!Initialized) {
 				logger.Puts(LogType.Information, "Initialize Cancel", string.Empty);
-				return;
+				return existsSettingFilePath;
 			}
 			Debug.Assert(Initialized);
 			InitializeUI(commandLine, logger);
@@ -569,9 +569,7 @@ namespace PeMain.UI
 			this._logForm.PutsList(logger.GetList(), false);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
 			
-			if(!existsSettingFilePath) {
-				ShowHomeDialog();
-			}
+			return existsSettingFilePath;
 		}
 
 

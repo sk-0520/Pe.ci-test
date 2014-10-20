@@ -28,7 +28,8 @@ namespace PeMain.UI
 			Initialized = true;
 			
 			var logger = new StartupLogger(fileLogger);
-			Initialize(commandLine, logger);
+
+			ExistsSettingFilePath = Initialize(commandLine, logger);
 			
 			#if !DISABLED_UPDATE_CHECK
 			CheckUpdateProcessAsync(false);

@@ -10,12 +10,17 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PeMain
 {
 	public static class Startup
 	{
+		/// <summary>
+		/// TODO: ちょっと分けたい^^;
+		/// </summary>
+		/// <param name="args"></param>
 		[STAThread]
 		public static void Main(string[] args)
 		{
@@ -50,6 +55,18 @@ namespace PeMain
 								if(!app.Initialized) {
 									app.CloseApplication(false);
 								} else {
+									if(!app.ExistsSettingFilePath) {
+										Task.Factory.StartNew(
+											() => {
+												Thread.Sleep(TimeSpan.FromSeconds(1.5));
+											}
+										).ContinueWith(
+											t => {
+												app.ShowHomeDialog();
+											},
+											TaskScheduler.FromCurrentSynchronizationContext()
+										);
+									}
 									Application.Run();
 								}
 							}
