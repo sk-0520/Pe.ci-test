@@ -10,6 +10,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using PeMain.Data;
 using PeMain.IF;
 
 namespace PeMain.UI
@@ -103,6 +104,14 @@ namespace PeMain.UI
 		void StreamForm_Shown(object sender, EventArgs e)
 		{
 			this.inputOutput.Focus();
+		}
+		
+		void StreamForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(!Process.HasExited) {
+				e.Cancel = true;
+				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["stream/running-close"], Process.ToString());
+			}
 		}
 	}
 }

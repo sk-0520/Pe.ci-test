@@ -53,10 +53,12 @@ namespace PeMain.UI
 		
 		void OutputStreamReceived(string line, bool stdOutput)
 		{
+			/* //#20 retry
 			if(IsDisposed) {
 				// #20
 				return;
 			}
+			*/
 			
 			this.inputOutput.BeginInvoke(
 				(MethodInvoker)delegate() {
@@ -75,10 +77,12 @@ namespace PeMain.UI
 		
 		void ExitedProcess()
 		{
+			/* //#20 retry
 			if(IsDisposed) {
 				// #20
 				return;
 			}
+			*/
 			
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;

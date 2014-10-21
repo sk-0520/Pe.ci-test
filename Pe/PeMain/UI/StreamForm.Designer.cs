@@ -226,6 +226,7 @@ namespace PeMain.UI
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/stream";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StreamForm_FormClosing);
 			this.Shown += new System.EventHandler(this.StreamForm_Shown);
 			this.toolStream.ResumeLayout(false);
 			this.toolStream.PerformLayout();

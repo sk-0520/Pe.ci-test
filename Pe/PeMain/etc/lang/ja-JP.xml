@@ -201,6 +201,7 @@
 		<Word Name="stream/tips/refresh"    Text="プロセス情報更新" />
 		<Word Name="stream/command/topmost" Text="${topmost}" />
 		<Word Name="stream/tips/kill"       Text="プロセスを終了" />
+		<Word Name="stream/running-close"   Text="実行中プロセスを閉じることはできません" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャ" />
