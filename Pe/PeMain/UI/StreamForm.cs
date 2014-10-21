@@ -7,9 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-
 using PeMain.IF;
 
 namespace PeMain.UI
@@ -90,5 +90,19 @@ namespace PeMain.UI
 			SwitchTopmost();
 		}
 
+		void ViewOutput_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			Debug.WriteLine((int)e.KeyChar);
+			if(e.KeyChar == 0x0a || e.KeyChar == 0x0d) {
+				Process.StandardInput.WriteLine();
+			} else {
+				Process.StandardInput.Write(e.KeyChar);
+			}
+		}
+		
+		void StreamForm_Shown(object sender, EventArgs e)
+		{
+			this.viewOutput.Focus();
+		}
 	}
 }

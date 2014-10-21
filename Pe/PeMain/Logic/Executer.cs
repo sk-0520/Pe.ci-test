@@ -63,6 +63,7 @@ namespace PeMain.Logic
 						getOutput = true;
 						startInfo.RedirectStandardOutput = true;
 						startInfo.RedirectStandardError = true;
+						startInfo.RedirectStandardInput = true;
 						var streamForm = new StreamForm();
 						streamForm.SetParameter(process, launcherItem);
 						streamForm.SetCommonData(commonData);

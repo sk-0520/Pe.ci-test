@@ -168,12 +168,12 @@ namespace PeMain.UI
 			this.viewOutput.Location = new System.Drawing.Point(0, 0);
 			this.viewOutput.Multiline = true;
 			this.viewOutput.Name = "viewOutput";
-			this.viewOutput.ReadOnly = true;
 			this.viewOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.viewOutput.Size = new System.Drawing.Size(463, 227);
 			this.viewOutput.TabIndex = 0;
 			this.viewOutput.WordWrap = false;
 			this.viewOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
+			this.viewOutput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ViewOutput_KeyPress);
 			// 
 			// tabStream_pageProcess
 			// 
@@ -226,6 +226,7 @@ namespace PeMain.UI
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/stream";
+			this.Shown += new System.EventHandler(this.StreamForm_Shown);
 			this.toolStream.ResumeLayout(false);
 			this.toolStream.PerformLayout();
 			this.tabStream.ResumeLayout(false);

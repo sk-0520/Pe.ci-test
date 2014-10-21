@@ -46,6 +46,9 @@ namespace PeMain.UI
 
 			Process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
 			Process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
+			
+			//this._inputStream = Process.StandardInput;
+			
 		}
 		
 		void OutputStreamReceived(string line, bool stdOutput)
@@ -58,6 +61,8 @@ namespace PeMain.UI
 			this.viewOutput.BeginInvoke(
 				(MethodInvoker)delegate() {
 					this.viewOutput.Text += line + Environment.NewLine;
+					this.viewOutput.SelectionStart = this.viewOutput.TextLength;
+        			this.viewOutput.ScrollToCaret();
 				}
 			);
 		}
@@ -78,6 +83,7 @@ namespace PeMain.UI
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
 			this.toolStream_itemRefresh.Enabled = false;
+			this.viewOutput.ReadOnly = true;
 			RefreshProperty();
 			
 			Text += String.Format(": {0}", Process.ExitCode);
