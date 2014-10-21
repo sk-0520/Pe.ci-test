@@ -25,12 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/DD" version="0.23.1" type="rc">
-		<ul type="note">
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
+	<log date="2014/10/DD" version="0.24.0">
 		<ul type="features">
 			<li>ノートの現在選択色を親メニューにも表示</li>
 			<li>システムレジューム時にアップデートチェック実施</li>
@@ -47,8 +42,6 @@
 		</ul>
 		<ul type="developer">
 			<li>#53: デフォルト引数なくしたい, ﾋｬｯﾎｰｲ!!</li>
-			<li></li>
-			<li></li>
 		</ul>
 	</log>
 	<log date="2014/10/18" version="0.23.0">
