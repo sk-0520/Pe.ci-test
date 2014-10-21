@@ -46,7 +46,7 @@ namespace PeMain.UI
 			this.toolStream_itemKill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
 			this.tabStream_pageStream = new System.Windows.Forms.TabPage();
-			this.viewOutput = new System.Windows.Forms.TextBox();
+			this.inputOutput = new System.Windows.Forms.TextBox();
 			this.tabStream_pageProcess = new System.Windows.Forms.TabPage();
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
 			this.tabStream_pageProperty = new System.Windows.Forms.TabPage();
@@ -153,7 +153,7 @@ namespace PeMain.UI
 			// 
 			// tabStream_pageStream
 			// 
-			this.tabStream_pageStream.Controls.Add(this.viewOutput);
+			this.tabStream_pageStream.Controls.Add(this.inputOutput);
 			this.tabStream_pageStream.Location = new System.Drawing.Point(4, 24);
 			this.tabStream_pageStream.Name = "tabStream_pageStream";
 			this.tabStream_pageStream.Size = new System.Drawing.Size(463, 227);
@@ -161,19 +161,19 @@ namespace PeMain.UI
 			this.tabStream_pageStream.Text = ":stream/tab/stream";
 			this.tabStream_pageStream.UseVisualStyleBackColor = true;
 			// 
-			// viewOutput
+			// inputOutput
 			// 
-			this.viewOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.viewOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewOutput.Location = new System.Drawing.Point(0, 0);
-			this.viewOutput.Multiline = true;
-			this.viewOutput.Name = "viewOutput";
-			this.viewOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.viewOutput.Size = new System.Drawing.Size(463, 227);
-			this.viewOutput.TabIndex = 0;
-			this.viewOutput.WordWrap = false;
-			this.viewOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
-			this.viewOutput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ViewOutput_KeyPress);
+			this.inputOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.inputOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputOutput.Location = new System.Drawing.Point(0, 0);
+			this.inputOutput.Multiline = true;
+			this.inputOutput.Name = "inputOutput";
+			this.inputOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.inputOutput.Size = new System.Drawing.Size(463, 227);
+			this.inputOutput.TabIndex = 0;
+			this.inputOutput.WordWrap = false;
+			this.inputOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
+			this.inputOutput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ViewOutput_KeyPress);
 			// 
 			// tabStream_pageProcess
 			// 
@@ -244,7 +244,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.PropertyGrid propertyProperty;
 		private System.Windows.Forms.TabPage tabStream_pageProperty;
 		private System.Windows.Forms.PropertyGrid propertyProcess;
-		private System.Windows.Forms.TextBox viewOutput;
+		private System.Windows.Forms.TextBox inputOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_itemClear;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.TabPage tabStream_pageProcess;

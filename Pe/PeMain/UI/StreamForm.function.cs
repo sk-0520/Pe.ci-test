@@ -58,11 +58,11 @@ namespace PeMain.UI
 				return;
 			}
 			
-			this.viewOutput.BeginInvoke(
+			this.inputOutput.BeginInvoke(
 				(MethodInvoker)delegate() {
-					this.viewOutput.Text += line + Environment.NewLine;
-					this.viewOutput.SelectionStart = this.viewOutput.TextLength;
-        			this.viewOutput.ScrollToCaret();
+					this.inputOutput.Text += line + Environment.NewLine;
+					this.inputOutput.SelectionStart = this.inputOutput.TextLength;
+        			this.inputOutput.ScrollToCaret();
 				}
 			);
 		}
@@ -83,7 +83,7 @@ namespace PeMain.UI
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
 			this.toolStream_itemRefresh.Enabled = false;
-			this.viewOutput.ReadOnly = true;
+			this.inputOutput.ReadOnly = true;
 			RefreshProperty();
 			
 			Text += String.Format(": {0}", Process.ExitCode);
@@ -108,7 +108,7 @@ namespace PeMain.UI
 		void SaveStream(string path)
 		{
 			using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
-				stream.Write(this.viewOutput.Text);
+				stream.Write(this.inputOutput.Text);
 			}
 		}
 		

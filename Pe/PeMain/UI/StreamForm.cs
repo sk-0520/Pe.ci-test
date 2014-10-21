@@ -61,7 +61,7 @@ namespace PeMain.UI
 		
 		void ViewOutput_TextChanged(object sender, EventArgs e)
 		{
-			var hasText = this.viewOutput.TextLength > 0;
+			var hasText = this.inputOutput.TextLength > 0;
 			this.toolStream_itemSave.Enabled = hasText;
 			this.toolStream_itemClear.Enabled = hasText;
 		}
@@ -69,7 +69,7 @@ namespace PeMain.UI
 		void ToolStream_clear_Click(object sender, EventArgs e)
 		{
 			// #22
-			this.viewOutput.Clear();
+			this.inputOutput.Clear();
 		}
 		
 		void ToolStream_save_Click(object sender, EventArgs e)
@@ -102,7 +102,7 @@ namespace PeMain.UI
 		
 		void StreamForm_Shown(object sender, EventArgs e)
 		{
-			this.viewOutput.Focus();
+			this.inputOutput.Focus();
 		}
 	}
 }
