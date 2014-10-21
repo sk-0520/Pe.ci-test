@@ -158,7 +158,7 @@ namespace PeMain.UI
 			this.tabStream_pageStream.Name = "tabStream_pageStream";
 			this.tabStream_pageStream.Size = new System.Drawing.Size(463, 227);
 			this.tabStream_pageStream.TabIndex = 0;
-			this.tabStream_pageStream.Text = ":stream/tab/stream";
+			this.tabStream_pageStream.Text = ":stream/page/stream";
 			this.tabStream_pageStream.UseVisualStyleBackColor = true;
 			// 
 			// inputOutput
@@ -182,7 +182,7 @@ namespace PeMain.UI
 			this.tabStream_pageProcess.Name = "tabStream_pageProcess";
 			this.tabStream_pageProcess.Size = new System.Drawing.Size(463, 227);
 			this.tabStream_pageProcess.TabIndex = 1;
-			this.tabStream_pageProcess.Text = ":stream/tab/process";
+			this.tabStream_pageProcess.Text = ":stream/page/process";
 			this.tabStream_pageProcess.UseVisualStyleBackColor = true;
 			// 
 			// propertyProcess
@@ -200,7 +200,7 @@ namespace PeMain.UI
 			this.tabStream_pageProperty.Name = "tabStream_pageProperty";
 			this.tabStream_pageProperty.Size = new System.Drawing.Size(463, 227);
 			this.tabStream_pageProperty.TabIndex = 2;
-			this.tabStream_pageProperty.Text = ":stream/tab/property";
+			this.tabStream_pageProperty.Text = ":stream/page/property";
 			this.tabStream_pageProperty.UseVisualStyleBackColor = true;
 			// 
 			// propertyProperty
