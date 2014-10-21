@@ -474,7 +474,7 @@ namespace PeMain.Data
 		{
 			Items = new HashSet<LauncherItem>();
 			
-			StreamFontSetting = new FontSetting();
+			StreamFontSetting = new FontSetting(SystemFonts.DefaultFont);
 		}
 		
 		/// <summary>

@@ -103,6 +103,7 @@ namespace PeMain.UI
 		
 		void StreamForm_Shown(object sender, EventArgs e)
 		{
+			//this.toolStream_itemTopmost.Checked = TopMost;
 			this.inputOutput.Focus();
 		}
 		

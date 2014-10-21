@@ -8,10 +8,11 @@
  */
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-
 using PeMain.Data;
+using PeUtility;
 
 namespace PeMain.UI
 {
@@ -24,6 +25,19 @@ namespace PeMain.UI
 			
 			Process.EnableRaisingEvents = true;
 			Process.Exited += new EventHandler(Process_Exited);
+			
+			// アイコン設定、アイテムに設定されているアイコンとは別に実行プロセスのアイコンを指定する
+			try {
+				var iconPath = Environment.ExpandEnvironmentVariables(LauncherItem.Command);
+				if(PathUtility.HasIconPath(iconPath)) {
+					Icon = IconUtility.Load(iconPath, IconScale.Normal, 0);
+				} else {
+					Icon = new Icon(iconPath);
+				}
+			} catch(Exception ex) {
+				Debug.WriteLine(ex);
+				Icon = global::PeMain.Properties.Images.App;
+			}
 		}
 
 		public void SetCommonData(CommonData commonData)
@@ -49,6 +63,7 @@ namespace PeMain.UI
 			
 			//this._inputStream = Process.StandardInput;
 			
+			this.inputOutput.Font = CommonData.MainSetting.Launcher.StreamFontSetting.Font;
 		}
 		
 		void OutputStreamReceived(string line, bool stdOutput)
