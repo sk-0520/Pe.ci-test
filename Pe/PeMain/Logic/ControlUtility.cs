@@ -443,14 +443,17 @@ namespace PeMain.Logic
 		 */
 		
 		/// <summary>
-		/// 指定ウィンドウを全面へ表示する。
+		/// 指定ウィンドウを前面へ表示する。
 		/// 
 		/// 最前面への固定ではなく前面に移動させるだけであることに注意。
 		/// </summary>
 		/// <param name="target"></param>
 		public static void ShowFront(Form target)
 		{
+			var topmost = target.TopMost;
+			target.TopMost = true;
 			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+			target.TopMost = topmost;
 		}
 		
 		public static void ShowFrontActive(Form target)

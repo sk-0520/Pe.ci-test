@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/10/DD" version="0.24.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li>前面表示処理が死んでた</li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/10/21" version="0.24.0">
 		<ul type="features">
 			<li>ノートの現在選択色を親メニューにも表示</li>
