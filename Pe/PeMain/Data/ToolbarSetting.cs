@@ -128,6 +128,7 @@ namespace PeMain.Data
 	/// <summary>
 	/// ツールバーの設定。
 	/// </summary>
+	[Serializable]
 	public class ToolbarItem: DisposableNameItem, IDisposable
 	{
 		#region Equals and GetHashCode implementation !![ operator == ]!!
@@ -231,6 +232,7 @@ namespace PeMain.Data
 	/// <summary>
 	/// 
 	/// </summary>
+	[Serializable]
 	public class ToolbarSetting: Item
 	{
 		public ToolbarSetting()
