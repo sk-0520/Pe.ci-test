@@ -23,7 +23,7 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class Executer
 	{
-		private static void RunFileItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		private static Process RunFileItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
 			
@@ -78,6 +78,8 @@ namespace PeMain.Logic
 				process.BeginOutputReadLine();
 				process.BeginErrorReadLine();
 			}
+			
+			return process;
 		}
 		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{

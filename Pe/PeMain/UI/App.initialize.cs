@@ -228,6 +228,7 @@ namespace PeMain.UI
 			// サブメニュー設定
 			parentItem.MenuItems.AddRange(menuList.ToArray());
 			
+			// 表示
 			parentItem.Popup += (object sender, EventArgs e) => {
 				foreach(var screen in Screen.AllScreens) {
 					if(parentItem.MenuItems.ContainsKey(screen.DeviceName)) {
@@ -279,9 +280,16 @@ namespace PeMain.UI
 				ShowFrontNote();
 			};
 			
-			
 			// サブメニュー設定
 			parentItem.MenuItems.AddRange(menuList.ToArray());
+			
+			// 表示
+			parentItem.Popup += (object sender, EventArgs e) => { 
+				var hasNote = this._noteWindowList.Count > 0;
+				itemNoteHidden.Enabled = hasNote;
+				itemNoteCompact.Enabled = hasNote;
+				itemNoteShowFront.Enabled = hasNote;
+			};
 		}
 		
 		/*
