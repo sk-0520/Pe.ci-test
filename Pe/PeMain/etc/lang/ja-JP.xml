@@ -29,6 +29,10 @@
 		<Word Name="hotkey"            Text="ホットキー" />
 		<Word Name="regist"            Text="登録" />
 		<Word Name="unregist"          Text="解除" />
+		<Word Name="file"              Text="ファイル" />
+		<Word Name="dir"               Text="ディレクトリ" />
+		<Word Name="log"               Text="ログ" />
+		<Word Name="unknown"           Text="なんか" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -46,14 +50,14 @@
 		<Word Name="common/command/default-font-reset"  Text="フォントをリセットする" />
 		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
 		<Word Name="common/page/env"                    Text="環境変数" />
-		<Word Name="common/message/notfound-file"       Text="ファイルが見つかりません" />
-		<Word Name="common/message/notfound-dir"        Text="ディレクトリが見つかりません" />
+		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
+		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
 		
 		<Word Name="window/accept"   Text="@[APPLICATION] 使用許諾" />
 		<Word Name="window/home"     Text="@[APPLICATION] ホーム" />
 		<Word Name="window/update"   Text="アップデート" />
 		<Word Name="window/toolbar"  Text="@[APPLICATION]" />
-		<Word Name="window/log"      Text="ログ" />
+		<Word Name="window/log"      Text="${log}" />
 		<Word Name="window/about"    Text="@[APPLICATION] 情報" />
 		<Word Name="window/execute"  Text="@[ITEM]を指定して実行" />
 		<Word Name="window/stream"   Text="@[ITEM]の実行出力" />
@@ -66,7 +70,7 @@
 		<Word Name="main/menu/window/note/hidden"           Text="非表示(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
-		<Word Name="main/menu/window/logger"                Text="ログ(&amp;L)" />
+		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />
 		<Word Name="main/menu/help"                         Text="ヘルプ(&amp;H) ${open-ui}" />
@@ -78,18 +82,18 @@
 		<Word Name="main/event/power/resume"                Text="レジューム" />
 		
 		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
-		<Word Name="hotkey/unregist/command"         Text="ホットキー解除: コマンド" />
-		<Word Name="hotkey/unregist/hidden-file"     Text="ホットキー解除: 隠しファイル" />
-		<Word Name="hotkey/unregist/extension"       Text="ホットキー解除: 拡張子" />
+		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />
+		<Word Name="hotkey/unregist/hidden-file"     Text="${hotkey}${unregist}: 隠しファイル" />
+		<Word Name="hotkey/unregist/extension"       Text="${hotkey}${unregist}: 拡張子" />
 		<Word Name="hotkey/unregist/create-note"     Text="${hotkey}${unregist}: ノート作成" />
 		<Word Name="hotkey/unregist/hidden-note"     Text="${hotkey}${unregist}: ノート非表示" />
 		<Word Name="hotkey/unregist/compact-note"    Text="${hotkey}${unregist}: ノート最小化" />
 		<Word Name="hotkey/unregist/show-front-note" Text="${hotkey}${unregist}: ノート前面表示" />
 		
 		<Word Name="hotkey/regist/fail"            Text="${hotkey}${regist} ${failure}" />
-		<Word Name="hotkey/regist/command"         Text="ホットキー登録: コマンド" />
-		<Word Name="hotkey/regist/hidden-file"     Text="ホットキー登録: 隠しファイル" />
-		<Word Name="hotkey/regist/extension"       Text="ホットキー登録: 拡張子" />
+		<Word Name="hotkey/regist/command"         Text="${hotkey}${regist}: コマンド" />
+		<Word Name="hotkey/regist/hidden-file"     Text="${hotkey}${regist}: 隠しファイル" />
+		<Word Name="hotkey/regist/extension"       Text="${hotkey}${regist}: 拡張子" />
 		<Word Name="hotkey/regist/create-note"     Text="${hotkey}${regist}: ノート作成" />
 		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ノート非表示" />
 		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ノート最小化" />
@@ -365,7 +369,7 @@
 		
 		<Word Name="enum/about-component-type/Library"   Text="ライブラリ" />
 		<Word Name="enum/about-component-type/Image"     Text="画像" />
-		<Word Name="enum/about-component-type/Unknown"   Text="なんか" />
+		<Word Name="enum/about-component-type/Unknown"   Text="${unknown}" />
 		
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />
