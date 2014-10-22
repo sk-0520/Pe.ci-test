@@ -284,7 +284,7 @@ namespace PeMain.UI
 			parentItem.MenuItems.AddRange(menuList.ToArray());
 			
 			// 表示
-			parentItem.Popup += (object sender, EventArgs e) => { 
+			parentItem.Popup += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
 				itemNoteHidden.Enabled = hasNote;
 				itemNoteCompact.Enabled = hasNote;
@@ -434,7 +434,7 @@ namespace PeMain.UI
 			};
 			
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Click += (object sender, EventArgs e) => { 
+			itemHelp.Click += (object sender, EventArgs e) => {
 				Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			};
 			
@@ -478,9 +478,12 @@ namespace PeMain.UI
 						g.DrawIcon(icon, iconRect);
 					}
 					#if DEBUG
+					/*
 					using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
 						g.FillRectangle(b, iconRect);
 					}
+					 */
+					DrawUtility.MarkingDebug(g, iconRect);
 					#endif
 				}
 				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());

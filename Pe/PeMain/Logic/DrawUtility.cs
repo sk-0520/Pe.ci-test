@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
@@ -17,6 +18,20 @@ namespace PeMain.Logic
 	/// </summary>
 	public class DrawUtility
 	{
+		/// <summary>
+		/// デバッグ時にデバッグ用と分かるように印付け。
+		/// </summary>
+		/// <param name="g">描画対象</param>
+		/// <param name="drawArea">描画領域</param>
+		[Conditional("DEBUG")]
+		public static void MarkingDebug(Graphics g, Rectangle drawArea)
+		{
+			using(var brush = new SolidBrush(Color.FromArgb(90, Color.Red))) {
+				g.FillRectangle(brush, drawArea);
+			}
+		}
+		
+		
 		/// <summary>
 		/// RGB反転。
 		/// </summary>

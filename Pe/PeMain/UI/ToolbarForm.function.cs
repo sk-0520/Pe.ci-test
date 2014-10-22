@@ -668,9 +668,12 @@ namespace PeMain.UI
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#if DEBUG
+					/*
 					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
 						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					}
+					*/
+					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#endif
 				}
 				toolItem.Image = img;
