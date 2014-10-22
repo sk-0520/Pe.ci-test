@@ -41,7 +41,7 @@ namespace PeMain.UI
 				{"HELP", Literal.HelpDocumentURI },
 			};
 			var acceptFileReplaced = acceptFileSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
-			this.webDocument.DocumentStream = new MemoryStream(Encoding.Unicode.GetBytes(acceptFileReplaced));
+			this.webDocument.DocumentStream = new MemoryStream(Encoding.UTF8.GetBytes(acceptFileReplaced));
 		}
 	}
 }
