@@ -13,6 +13,10 @@ namespace PeMain.Logic
 {
 	public static class AppUtility
 	{
+		/// <summary>
+		/// 自身のショートカットを作成。
+		/// </summary>
+		/// <param name="savePath"></param>
 		public static void MakeAppShortcut(string savePath)
 		{
 			var shortcut = new ShortcutFile(savePath, true);
