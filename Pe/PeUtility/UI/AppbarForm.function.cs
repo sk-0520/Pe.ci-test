@@ -51,7 +51,6 @@ namespace PeUtility
 			return unregistResult.ToInt32() != 0;
 		}
 		
-		
 		private RECT CalcWantBarArea(DesktopDockType dockType)
 		{
 			Debug.Assert(dockType != DesktopDockType.None);
@@ -85,6 +84,7 @@ namespace PeUtility
 			
 			return barArea;
 		}
+		
 		private void TuneSystemBarArea(ref APPBARDATA appBar)
 		{
 			// 現在の希望するサイズから実際のサイズ要求する
@@ -164,6 +164,7 @@ namespace PeUtility
 		{
 			DockingFromParameter(DesktopDockType, AutoHide);
 		}
+		
 		/// <summary>
 		/// ドッキングの実行
 		/// 
@@ -218,6 +219,7 @@ namespace PeUtility
 			}
 			ToShow();
 		}
+		
 		void WaitHidden()
 		{
 			Debug.Assert(AutoHide);
@@ -278,7 +280,7 @@ namespace PeUtility
 			HiddenView(new Rectangle(pos, size));
 		}
 		
-		protected void ToShow()
+		protected virtual void ToShow()
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
 			Debug.Assert(AutoHide);

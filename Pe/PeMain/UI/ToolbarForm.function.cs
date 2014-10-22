@@ -890,11 +890,19 @@ namespace PeMain.UI
 			SelectedGroup(SelectedGroupItem);
 		}
 		
+		protected override void ToShow()
+		{
+			base.ToShow();
+			UIUtility.ShowFront(this);
+			ApplySettingTopmost();
+		}
+		
 		protected override void HiddenView(Rectangle area)
 		{
 			if(AutoHide) {
 				if(!this._menuOpening) {
 					base.HiddenView(area);
+					TopMost = true;
 				} else {
 					//SwitchHidden();
 				}
