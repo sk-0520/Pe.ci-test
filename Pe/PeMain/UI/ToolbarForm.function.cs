@@ -627,6 +627,7 @@ namespace PeMain.UI
 				
 				// 自動的に隠す
 				autoHideItem.Checked = AutoHide;
+				autoHideItem.Enabled = IsDocking;
 			};
 		}
 

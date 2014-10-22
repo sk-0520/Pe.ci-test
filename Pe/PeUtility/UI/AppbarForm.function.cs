@@ -136,6 +136,7 @@ namespace PeUtility
 			if(autoHide) {
 				var hideWnd = ExistsHideWindow(dockType);
 				if(hideWnd.ToInt32() == 0 || hideWnd == Handle) {
+				//if(hideWnd == null || hideWnd == Handle) {
 					// 自動的に隠す
 					var result = API.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
 					autoHideResult = result.ToInt32() != 0;
