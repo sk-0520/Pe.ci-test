@@ -1,18 +1,28 @@
 ﻿<?xml version="1.0"?>
 <default>
 	<items>
+		<!-- ブラウザ -->
 		<LauncherItem Name="${default/item/iexplorer}">
 			<LauncherType>File</LauncherType>
 			<Command>%PROGRAMFILES%\Internet Explorer\iexplore.exe	%PROGRAMFILES(X86)%\Internet Explorer\iexplore.exe</Command>
 			<WorkDirPath>%HOMEDRIVE%%HOMEPATH%</WorkDirPath>
+			<Tag>
+				<string>${default/tag/web-browser}</string>
+			</Tag>
 		</LauncherItem>
 		<LauncherItem Name="${default/item/firefox}">
 			<LauncherType>File</LauncherType>
 			<Command>%PROGRAMFILES%\Mozilla Firefox\firefox.exe	%PROGRAMFILES(X86)%\Mozilla Firefox\firefox.exe</Command>
+			<Tag>
+				<string>${default/tag/web-browser}</string>
+			</Tag>
 		</LauncherItem>
 		<LauncherItem Name="${default/item/opera}">
 			<LauncherType>File</LauncherType>
 			<Command>%PROGRAMFILES%\Opera x64\opera.exe	%PROGRAMFILES%\Opera\opera.exe	%PROGRAMFILES(X86)%\Opera\opera.exe</Command>
+			<Tag>
+				<string>${default/tag/web-browser}</string>
+			</Tag>
 		</LauncherItem>
 	</items>
 	<groups>
