@@ -166,6 +166,7 @@ namespace PeMain.UI
 			// 
 			// contextMenu_font_change
 			// 
+			this.contextMenu_font_change.Image = global::PeMain.Properties.Images.FontStyle;
 			this.contextMenu_font_change.Name = "contextMenu_font_change";
 			this.contextMenu_font_change.Size = new System.Drawing.Size(211, 22);
 			this.contextMenu_font_change.Text = "<FONT-CHANGE>";

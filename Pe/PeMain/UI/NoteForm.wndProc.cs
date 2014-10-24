@@ -190,6 +190,8 @@ namespace PeMain.UI
 						if(hittest == HT.HTCAPTION) {
 							API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 							return;
+						} else {
+							
 						}
 					}
 					break;
