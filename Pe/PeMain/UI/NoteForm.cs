@@ -311,6 +311,8 @@ namespace PeMain.UI
 			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
 			
 			// 状態チェック
+			var lockImage = NoteItem.Locked ? global::PeMain.Properties.Images.Lock: global::PeMain.Properties.Images.Unlock;
+			this.contextMenu_itemLock.Image = lockImage;
 			this.contextMenu_itemLock.Checked = NoteItem.Locked;
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
 			this.contextMenu_itemTopmost.Checked = NoteItem.Topmost;
