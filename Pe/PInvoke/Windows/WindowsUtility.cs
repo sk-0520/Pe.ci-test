@@ -16,12 +16,37 @@ namespace PInvoke.Windows
 	/// </summary>
 	public static class WindowsUtility
 	{
-		public static Point ScreenPointFromLParam(IntPtr lParam)
+		public static int GetIntUnchecked(IntPtr value)
 		{
+			return IntPtr.Size == 8 ? unchecked((int)value.ToInt64()) : value.ToInt32();
+		}
+		public static int LOWORD(IntPtr value)
+		{
+			return unchecked((short)GetIntUnchecked(value));
+		}
+		public static int HIWORD(IntPtr value)
+		{
+			return unchecked((short)(((uint)GetIntUnchecked(value)) >> 16));
+		}
+		
+		public static Point ScreenPointFromLParam(IntPtr param)
+		{
+			/*
 			return new Point(
 				(int)(lParam.ToInt64() & 0xFFFF),
 				(int)((lParam.ToInt64() & 0xFFFF0000) >> 16)
 			);
+			 */
+			/*
+			uint xy = unchecked(IntPtr.Size == 8 ? (uint)param.ToInt64() : (uint)param.ToInt32());
+			int x = unchecked((short)xy);
+			int y = unchecked((short)(xy >> 16));
+			*/
+			return new Point(LOWORD(param), HIWORD(param));
+		}
+		public static HT HTFromLParam(IntPtr param)
+		{
+			return (HT)LOWORD(param);
 		}
 	}
 }

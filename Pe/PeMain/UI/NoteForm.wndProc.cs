@@ -184,6 +184,16 @@ namespace PeMain.UI
 					}
 					break;
 					
+				case (int)WM.WM_SETCURSOR:
+					{
+						var hittest = WindowsUtility.HTFromLParam(m.LParam);
+						if(hittest == HT.HTCAPTION) {
+							API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+							return;
+						}
+					}
+					break;
+					
 				case (int)WM.WM_NCLBUTTONDOWN:
 					{
 						if(!NoteItem.Locked) {

@@ -29,6 +29,7 @@ namespace PInvoke.Windows
 		WM_NCRBUTTONDOWN = 0xA4,
 		WM_NCRBUTTONUP = 0x00A5,
 		WM_DEVICECHANGE = 0x0219,
+		WM_SETCURSOR = 0x0020,
 	}
 	
 	public enum WS_EX
@@ -1498,7 +1499,7 @@ namespace PInvoke.Windows
 		/// <summary>
 		/// DI_IMAGE と DI_MASK の組み合わせです。
 		/// </summary>
-		DI_NORMAL = 3,	
+		DI_NORMAL = 3,
 	}
 	
 	/// <summary>
@@ -1516,7 +1517,26 @@ namespace PInvoke.Windows
 		public SWP flags;
 	}
 	
-	
+	public enum IDC
+	{
+		IDC_ARROW       = 32512,
+		IDC_IBEAM       = 32513,
+		IDC_WAIT        = 32514,
+		IDC_CROSS       = 32515,
+		IDC_UPARROW     = 32516,
+		IDC_SIZE        = 32640,
+		IDC_ICON        = 32641,
+		IDC_SIZENWSE    = 32642,
+		IDC_SIZENESW    = 32643,
+		IDC_SIZEWE      = 32644,
+		IDC_SIZENS      = 32645,
+		IDC_SIZEALL     = 32646,
+		IDC_NO          = 32648,
+		IDC_HAND        = 32649,
+		IDC_APPSTARTING = 32650,
+		IDC_HELP        = 32651,
+	}
+
 	
 	public static partial class API
 	{
@@ -1604,5 +1624,21 @@ namespace PInvoke.Windows
 		
 		[DllImport("user32.dll")]
 		public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
+		
+		[DllImport("user32.dll")]
+		public static extern IntPtr LoadCursorFromFile(string lpFileName);
+
+		[DllImport("user32.dll")]
+		public static extern IntPtr SetCursor(IntPtr hCursor);
+
+		[DllImport("user32.dll")]
+		public static extern bool SetSystemCursor(IntPtr hcur, uint id);
+		
+		[DllImport("user32.dll")]
+		public static extern IntPtr LoadCursor(IntPtr hInstance, IDC lpCursorName);
+		
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		public static extern IntPtr LoadCursor(IntPtr hInstance, string lpCursorName);
+		
 	}
 }

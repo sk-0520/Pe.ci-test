@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PInvoke.Windows;
 
@@ -71,6 +71,16 @@ namespace PeMain.UI
 							}
 							if(hitTest != HT.HTNOWHERE) {
 								m.Result = (IntPtr)hitTest;
+								return;
+							}
+						}
+						break;
+						
+					case (int)WM.WM_SETCURSOR:
+						{
+							var hittest = WindowsUtility.HTFromLParam(m.LParam);
+							if(hittest == HT.HTCAPTION) {
+								API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 								return;
 							}
 						}
