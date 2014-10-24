@@ -619,6 +619,8 @@ namespace PeMain.UI
 					{posRightItem,  ToolbarPosition.DesktopRight},
 				};
 				foreach(var pair in windowPosNameKey) {
+					pair.Key.CheckState = CheckState.Indeterminate;
+					
 					pair.Key.Checked = UseToolbarItem.ToolbarPosition == pair.Value;
 				}
 				
