@@ -255,7 +255,7 @@ namespace PeMain.UI
 			// ノート作成
 			itemNoteCreate.Name = menuNameWindowNoteCreate;
 			itemNoteCreate.Click += (object sender, EventArgs e) => {
-				var screen = ScreenUtility.GetCurrent();
+				var screen = ScreenUtility.GetCurrentCursor();
 				var area = screen.Bounds;
 				var point = new Point(
 					area.Left + area.Width / 2 - Literal.noteSize.Width / 2,

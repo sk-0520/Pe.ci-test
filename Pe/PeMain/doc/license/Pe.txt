@@ -1,1 +1,2 @@
-﻿license: GPLv3
+﻿PeMain, PeUpdater, PeUtility, PInvoke:
+license: GPLv3

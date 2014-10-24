@@ -80,7 +80,7 @@ namespace PeMain.Logic
 			return screenDeviceName;
 		}
 		
-		public static Screen GetCurrent()
+		public static Screen GetCurrentCursor()
 		{
 			return Screen.FromPoint(Cursor.Position);
 		}

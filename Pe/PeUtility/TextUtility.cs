@@ -31,6 +31,7 @@ namespace PeUtility
 			if(dg == null) {
 				dg = (string source, int index) => string.Format("{0}({1})", source, index);
 			}
+			
 			var changeName = target;
 			int n = 1;
 			RETRY:
@@ -40,6 +41,7 @@ namespace PeUtility
 					goto RETRY;
 				}
 			}
+			
 			return changeName;
 		}
 		public static string ToUniqueDefault(string target, IEnumerable<string> list)
