@@ -453,10 +453,8 @@ namespace PeMain.UI
 		
 		UpdateData CheckUpdate(bool force)
 		{
-			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
+			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC, this._commonData);
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
-				updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC);
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], Literal.UpdateURL);
 				var updateInfo = updateData.Check();
 			}
 			return updateData;

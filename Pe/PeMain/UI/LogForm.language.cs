@@ -8,6 +8,7 @@
  */
 using System;
 using System.Diagnostics;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -33,8 +34,8 @@ namespace PeMain.UI
 			this.listStack_columnLine.Text = CommonData.Language["log/header/line"];
 			this.listStack_columnFunction.Text = CommonData.Language["log/header/method"];
 			*/
-			//UIUtility.SetDefaultText(this, CommonData.Language);
-			Text = CommonData.Language["window/log"];
+			UIUtility.SetDefaultText(this, CommonData.Language);
+			//Text = CommonData.Language["window/log"];
 			
 			this.toolLog_save.Text = CommonData.Language["log/command/save"];
 			this.toolLog_save.ToolTipText = CommonData.Language["log/tips/save"];

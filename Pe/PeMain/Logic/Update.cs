@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-
+using PeMain.Data;
 using PeUtility;
 
 namespace PeMain.Logic
@@ -44,6 +44,7 @@ namespace PeMain.Logic
 	{
 		readonly string _downloadPath;
 		readonly bool _donwloadRc;
+		readonly CommonData _commonData;
 		
 		public UpdateInfo Info { get; private set; }
 		
@@ -52,10 +53,11 @@ namespace PeMain.Logic
 			get { return Path.Combine(Literal.ApplicationBinDirPath, Literal.updateProgramName); }
 		}
 		
-		public UpdateData(string downloadPath, bool donwloadRc)
+		public UpdateData(string downloadPath, bool donwloadRc, CommonData commonData)
 		{
 			this._downloadPath = downloadPath;
 			this._donwloadRc = donwloadRc;
+			this._commonData = commonData;
 		}
 		
 		Process CreateProcess(Dictionary<string,string> map)
@@ -87,6 +89,7 @@ namespace PeMain.Logic
 				{ "checkonly", "true" }
 			};
 			var process = CreateProcess(map);
+			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], process.StartInfo.Arguments);
 			
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.CreateNoWindow = true;
@@ -151,7 +154,8 @@ namespace PeMain.Logic
 			}
 			
 			var process = CreateProcess(map);
-			
+			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
+
 			process.Start();
 		}
 	}

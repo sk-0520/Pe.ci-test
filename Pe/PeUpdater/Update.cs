@@ -160,19 +160,15 @@ namespace PeUpdater
 			Process process = null;
 			var processSw = new Stopwatch();
 			if(this._pid.HasValue) {
-				try {
-					process = Process.GetProcessById(this._pid.Data);
-					restartExe = "\"" + process.MainModule.FileName + "\"";
-					restartArg = process.StartInfo.Arguments;
-					Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
-					process.Exited += (object sender, EventArgs e) => {
-						processSw.Stop();
-					};
-					processSw.Start();
-					process.Kill();
-				} catch(Exception) {
-					// 握り潰し
-				}
+				process = Process.GetProcessById(this._pid.Data);
+				restartExe = "\"" + process.MainModule.FileName + "\"";
+				restartArg = process.StartInfo.Arguments;
+				Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
+				process.Exited += (object sender, EventArgs e) => {
+					processSw.Stop();
+				};
+				processSw.Start();
+				process.Kill();
 			}
 
 			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
