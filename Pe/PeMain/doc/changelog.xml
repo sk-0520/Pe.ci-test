@@ -25,6 +25,18 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/10/25" version="0.26.0">
+		<ul type="note">
+			<li>バージョン 0.23.0, 0.24.0, 0.25.0 の 64bit版を使用している場合、アップデートは下記URLから手動で行ってください</li>
+			<li>https://bitbucket.org/sk_0520/pe/downloads/Pe_0-25-0_x64.zip</li>
+		</ul>
+		<ul type="fixes">
+			<li>64bit版 PeUpdater が 32bit で生成されていたため旧プロセスを殺せなかった</li>
+		</ul>
+		<ul type="developer">
+			<li>PeUodaterプロジェクト設定見直し</li>
+		</ul>
+	</log>
 	<log date="2014/10/25" version="0.25.0">
 		<ul type="features">
 			<li>ノートの有無によってタスクトレイPeコンテキストメニュー内容の有効・無効切り替え</li>

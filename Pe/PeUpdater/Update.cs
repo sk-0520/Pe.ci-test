@@ -129,7 +129,7 @@ namespace PeUpdater
 				.ThenByDescending(x => x.Version.Item2)
 				.ThenByDescending(x => x.Version.Item3)
 				.Where(x => Functions.VersionCheck(x.Version, this._version.Data) > 0)
-			;
+				;
 			
 			foreach(var item in items) {
 				if(item.IsRC && !this._getRC.Data) {
@@ -150,6 +150,12 @@ namespace PeUpdater
 			}
 		}
 		
+		void KillProcess(Process process)
+		{
+			Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
+			process.Kill();
+		}
+		
 		public void Execute()
 		{
 			// プロセスIDが渡されていた場合は閉じる
@@ -163,12 +169,11 @@ namespace PeUpdater
 				process = Process.GetProcessById(this._pid.Data);
 				restartExe = "\"" + process.MainModule.FileName + "\"";
 				restartArg = process.StartInfo.Arguments;
-				Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
 				process.Exited += (object sender, EventArgs e) => {
 					processSw.Stop();
 				};
 				processSw.Start();
-				process.Kill();
+				KillProcess(process);
 			}
 
 			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
@@ -183,6 +188,9 @@ namespace PeUpdater
 			
 			if(process != null) {
 				isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
+				if(isRestart && !process.HasExited) {
+					KillProcess(process);
+				}
 				Console.WriteLine("Kill -> {0}, Time = {1}", isRestart, processSw.Elapsed);
 			}
 			
