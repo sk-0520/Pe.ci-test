@@ -78,12 +78,22 @@ namespace PeMain.UI
 						
 					case (int)WM.WM_SETCURSOR:
 						{
-							var hittest = WindowsUtility.HTFromLParam(m.LParam);
-							if(hittest == HT.HTCAPTION) {
-								API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
-								return;
+							if(!this._menuOpening) {
+								var hittest = WindowsUtility.HTFromLParam(m.LParam);
+								if(hittest == HT.HTCAPTION) {
+									API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+									return;
+								}
 							}
 						}
+						break;
+						
+					case (int)WM.WM_CONTEXTMENU:
+						{
+							Debug.WriteLine(m.WParam);
+							//API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
+						}
+						//return;
 						break;
 						
 					case (int)WM.WM_MOVING:

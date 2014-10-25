@@ -108,6 +108,8 @@ namespace PeMain.UI
 		
 		void OpeningRootMenu(object sender, EventArgs e)
 		{
+			Cursor = Cursors.Default;
+			
 			this._menuOpening = true;
 			var toolItem = sender as ToolStripDropDownItem;
 			if(toolItem != null) {

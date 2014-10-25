@@ -30,6 +30,7 @@ namespace PInvoke.Windows
 		WM_NCRBUTTONUP = 0x00A5,
 		WM_DEVICECHANGE = 0x0219,
 		WM_SETCURSOR = 0x0020,
+		WM_CONTEXTMENU = 0x007b,
 	}
 	
 	public enum WS_EX

@@ -38,7 +38,7 @@
 		</ul>
 		<ul type="fixes">
 			<li>ログフォームのタイトルがアホになっていた</li>
-			<li></li>
+			<li>#57: ツールバーのコンテキストメニューでカーソルが移動用</li>
 			<li></li>
 		</ul>
 		<ul type="developer">
