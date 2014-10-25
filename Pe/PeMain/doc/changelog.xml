@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/MM/DD" version="0.26.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/10/25" version="0.26.0">
 		<ul type="note">
 			<li>バージョン 0.23.0, 0.24.0, 0.25.0 の 64bit版を使用している場合、アップデートは下記URLから手動で行ってください</li>
