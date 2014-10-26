@@ -124,7 +124,7 @@ namespace PeMain.UI
 				this.toolLauncher.Font = UseToolbarItem.FontSetting.Font;
 			}
 		}
-		void ApplySettingVisible()
+		public void ApplySettingVisible()
 		{
 			var floatSize = UseToolbarItem.FloatSize;
 			if(!Visible && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
@@ -535,6 +535,7 @@ namespace PeMain.UI
 			var posRightItem = new ToolStripMenuItem();
 			var topmostItem = new ToolStripMenuItem();
 			var autoHideItem = new ToolStripMenuItem();
+			var hiddenItem = new ToolStripMenuItem();
 			itemList.Add(posFloatItem);
 			itemList.Add(posTopItem);
 			itemList.Add(posBottomItem);
@@ -543,6 +544,8 @@ namespace PeMain.UI
 			itemList.Add(new ToolStripSeparator());
 			itemList.Add(topmostItem);
 			itemList.Add(autoHideItem);
+			itemList.Add(new ToolStripSeparator());
+			itemList.Add(hiddenItem);
 			
 			// フロート
 			posFloatItem.Name = menuNameMainPosDesktopFloat;
@@ -599,6 +602,11 @@ namespace PeMain.UI
 				} else {
 					UseToolbarItem.AutoHide = false;
 				}
+			};
+			hiddenItem.Text = CommonData.Language["toolbar/menu/main/hidden"];
+			hiddenItem.Click += (object sender, EventArgs e) => {
+				UseToolbarItem.Visible = false;
+				ApplySettingVisible();
 			};
 			
 			// メニュー設定

@@ -219,8 +219,12 @@ namespace PeMain.UI
 				menuItem.Text = ScreenUtility.GetScreenName(screen);
 				menuItem.Click += (object sender, EventArgs e) => {
 					var toolbar = this._toolbarForms[screen];
+					/*
 					toolbar.Visible = !toolbar.Visible;
 					toolbar.UseToolbarItem.Visible = toolbar.Visible;
+					*/
+					toolbar.UseToolbarItem.Visible = !toolbar.Visible; 
+					toolbar.ApplySettingVisible();
 				};
 				menuList.Add(menuItem);
 			}

@@ -14,6 +14,7 @@
 		<Word Name="remove"            Text="削除" />
 		<Word Name="edit"              Text="編集" />
 		<Word Name="visible"           Text="表示する" />
+		<Word Name="hidden"            Text="非表示" />
 		<Word Name="topmost"           Text="最前面で表示する" />
 		<Word Name="option"            Text="オプション" />
 		<Word Name="work-dir"          Text="作業フォルダ" />
@@ -67,7 +68,7 @@
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
 		<Word Name="main/menu/window/note"                  Text="ノート(&amp;N)" />
 		<Word Name="main/menu/window/note/create"           Text="新規作成(&amp;N)" />
-		<Word Name="main/menu/window/note/hidden"           Text="非表示(&amp;H)" />
+		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
 		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
@@ -145,6 +146,7 @@
 		
 		<Word Name="toolbar/main/tips"               Text="現在選${version-release}択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
+		<Word Name="toolbar/menu/main/hidden"        Text="${hidden}(&amp;N)" />
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
 		<Word Name="toolbar/menu/file/execute-ex"    Text="指定して実行(&amp;E)" />
 		<Word Name="toolbar/menu/file/execute-admin" Text="${admin}(&amp;A) ${open-ui}" />
@@ -176,7 +178,7 @@
 		<!-- <Word Name="note/menu/font/change"  Text="変更" /> -->
 		<Word Name="note/menu/font/reset"   Text="リセット(&amp;R)" />
 		<Word Name="note/menu/compact"      Text="最小化(&amp;N)" />
-		<Word Name="note/menu/hidden"       Text="非表示(&amp;X)" />
+		<Word Name="note/menu/hidden"       Text="${hidden}(&amp;X)" />
 		<Word Name="note/menu/topmost"      Text="最前面(&amp;T)" />
 		<!-- <Word Name="note/menu/remove"       Text="削除" /> -->
 		<Word Name="note/dialog/caption"    Text="ノート削除" />
