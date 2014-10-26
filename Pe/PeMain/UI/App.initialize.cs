@@ -237,6 +237,16 @@ namespace PeMain.UI
 			parentItem.Image = global::PeMain.Properties.Images.Toolbar;
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
+				/*
+				var screens = Screen.AllScreens;
+				var area = new Rectangle(
+					screens.Min(s => s.Bounds.Left),
+					screens.Min(s => s.Bounds.Top),
+					screens.Max(s => s.Bounds.Right),
+					screens.Max(s => s.Bounds.Bottom)
+				);
+				var iconSize = IconScale.Small.ToSize();
+				*/
 				foreach(var screen in Screen.AllScreens) {
 					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
 						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
