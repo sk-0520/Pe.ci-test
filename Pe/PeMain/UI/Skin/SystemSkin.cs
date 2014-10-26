@@ -14,9 +14,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.IF;
+using PeMain.Logic;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -624,6 +624,18 @@ namespace PeMain.UI
 					}
 				}
 			}
+			/*
+			var color = new Dictionary<PeMain.IF.ButtonState, float[]>() {
+				{ PeMain.IF.ButtonState.Normal,   new float[] { 1, 0, 0 } },
+				{ PeMain.IF.ButtonState.Selected, new float[] { 0, 1, 0 } },
+				{ PeMain.IF.ButtonState.Pressed,  new float[] { 0, 0, 1 } },
+			}[buttonState];
+			using(var img = new Bitmap(@"Z:\download\rgbedit\alpha.png")) {
+				using(var alpha = DrawUtility.Coloring(img, color[0], color[1], color[2])) {
+					g.DrawImage(alpha, drawArea.Location);
+				}
+			}
+			*/
 		}
 		
 		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body)

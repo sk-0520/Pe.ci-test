@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 
 namespace PeMain.Logic
@@ -91,6 +92,34 @@ namespace PeMain.Logic
 			} else {
 				return Color.White;
 			}
+		}
+		
+		public static Image Coloring(Image srcImage, float r, float g, float b)
+		{
+			var matrixData = new float[5][] {
+				new float[] { 1, 0, 0, 0, 0 },
+				new float[] { 0, 1, 0, 0, 0 },
+				new float[] { 0, 0, 1, 0, 0 },
+				new float[] { 0, 0, 0, 1, 0 },
+				new float[] { r, g, b, 0, 1 },
+			};
+			
+			var colorMatrix = new ColorMatrix(matrixData);
+			var imageAttribute = new ImageAttributes();
+			imageAttribute.SetColorMatrix(colorMatrix);
+			var imageSize = new Size(srcImage.Width, srcImage.Height);
+			var alphaImage = new Bitmap(imageSize.Width, imageSize.Height);
+			using(var graphics = Graphics.FromImage(alphaImage)) {
+				graphics.DrawImage(
+					srcImage,
+					new Rectangle(Point.Empty, imageSize),
+					0, 0, imageSize.Width, imageSize.Height,
+					GraphicsUnit.Pixel,
+					imageAttribute
+				);
+			}
+			
+			return alphaImage;
 		}
 	}
 }
