@@ -25,7 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/MM/DD" version="0.26.1" type="rc">
+	<log date="2014/MM/DD" version="0.26.4" type="rc">
 		<ul type="note">
 			<li></li>
 			<li></li>
@@ -42,6 +42,7 @@
 			<li>ログフォームのタイトルがアホになっていた</li>
 			<li>#57: ツールバーのコンテキストメニューでカーソルが移動用</li>
 			<li>通常スキンでノートのキャプションボタンを密着するよう変更</li>
+			<li>Windowsからのユーザー切り替え時に表示UIの再描画処理を見直し</li>
 			<li></li>
 		</ul>
 		<ul type="developer">

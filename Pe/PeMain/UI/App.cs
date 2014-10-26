@@ -65,15 +65,26 @@ namespace PeMain.UI
 			}
 			 */
 			//MessageBox.Show("PON!");
-			ShowHomeDialog();
+			//ShowHomeDialog();
+			ResetUI();
 		}
 		
-
+		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+		{
+			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
+			if(e.Reason == SessionSwitchReason.ConsoleConnect) {
+				ResetUI();
+			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
+				SaveSetting();
+			}
+		}
 
 		void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
 		{
-			this._logForm.Puts(LogType.Information, "UserPreferenceChanged", e);
-			ResetUI();
+			if(e.Category.IsIn(UserPreferenceCategory.VisualStyle, UserPreferenceCategory.Color)) {
+				this._logForm.Puts(LogType.Information, "UserPreferenceChanged", e);
+				ResetUI();
+			}
 		}
 
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
