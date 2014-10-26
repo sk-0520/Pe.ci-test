@@ -25,30 +25,22 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/MM/DD" version="0.26.4" type="rc">
-		<ul type="note">
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
+	<log date="2014/10/25" version="0.27.0">
 		<ul type="features">
 			<li>ツールバーメインメニューに非表示を追加</li>
 			<li>#8, #34とかの成果として、タスクトレイのコンテキストメニューを .NET Framework の推奨である ContextMenuStrip に変更(Forms非推奨？ 聞こえんなぁ)</li>
 			<li>ContextMenuStrip への変更にあたりアイコンを設定</li>
 			<li>ノートのカスタムカラーアイコンを非選択時は固定のアイコンを表示するように変更</li>
-			<li></li>
 		</ul>
 		<ul type="fixes">
 			<li>ログフォームのタイトルがアホになっていた</li>
 			<li>#57: ツールバーのコンテキストメニューでカーソルが移動用</li>
 			<li>通常スキンでノートのキャプションボタンを密着するよう変更</li>
 			<li>Windowsからのユーザー切り替え時に表示UIの再描画処理を見直し</li>
-			<li></li>
 		</ul>
 		<ul type="developer">
 			<li>SystemEvents.UserPreferenceChanged イベントを受信</li>
-			<li></li>
-			<li></li>
+			<li>SystemEvents.SessionSwitch イベントを受信</li>
 		</ul>
 	</log>
 	<log date="2014/10/25" version="0.26.0">
