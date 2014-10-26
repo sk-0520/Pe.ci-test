@@ -124,7 +124,7 @@ namespace PeMain.UI
 									this.contextMenu_itemExport,
 									this.contextMenu_itemImport});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(213, 298);
+			this.contextMenu.Size = new System.Drawing.Size(213, 320);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
@@ -383,7 +383,7 @@ namespace PeMain.UI
 			// 
 			// contextMenu_itemHidden
 			// 
-			this.contextMenu_itemHidden.Image = global::PeMain.Properties.Images.Remove;
+			this.contextMenu_itemHidden.Image = global::PeMain.Properties.Images.Close;
 			this.contextMenu_itemHidden.Name = "contextMenu_itemHidden";
 			this.contextMenu_itemHidden.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemHidden.Text = ":note/menu/hidden";

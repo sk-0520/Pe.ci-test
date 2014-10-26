@@ -7,6 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Drawing;
 using PeUtility;
 
 namespace PeMain.Logic
@@ -25,6 +26,14 @@ namespace PeMain.Logic
 			shortcut.IconIndex = 0;
 			shortcut.WorkingDirectory = Literal.ApplicationRootDirPath; 
 			shortcut.Save();
+		}
+		
+		public static Image GetAppIcon(IconScale iconScale)
+		{
+			var iconSize = iconScale.ToSize();
+			using(var icon = new Icon(global::PeMain.Properties.Images.App, iconSize)) {
+				return icon.ToBitmap();
+			}
 		}
 	}
 }

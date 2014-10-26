@@ -222,8 +222,8 @@ namespace PeMain.UI
 					/*
 					toolbar.Visible = !toolbar.Visible;
 					toolbar.UseToolbarItem.Visible = toolbar.Visible;
-					*/
-					toolbar.UseToolbarItem.Visible = !toolbar.Visible; 
+					 */
+					toolbar.UseToolbarItem.Visible = !toolbar.Visible;
 					toolbar.ApplySettingVisible();
 				};
 				menuList.Add(menuItem);
@@ -232,6 +232,9 @@ namespace PeMain.UI
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 			
+			// 親アイテム
+			parentItem.Name = menuNameWindowToolbar;
+			parentItem.Image = global::PeMain.Properties.Images.Toolbar;
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				foreach(var screen in Screen.AllScreens) {
@@ -287,6 +290,9 @@ namespace PeMain.UI
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 			
+			// 親アイテム
+			parentItem.Name = menuNameWindowNote;
+			parentItem.Image = global::PeMain.Properties.Images.Note;
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -394,14 +400,13 @@ namespace PeMain.UI
 			// ウィンドウ
 			//itemWindow.Name = menuNameWindow;
 			//AttachmentWindowSubMenu(itemWindow);
-			itemToolbar.Name = menuNameWindowToolbar;
 			AttachmentToolbarSubMenu(itemToolbar);
 			
-			itemNote.Name = menuNameWindowNote;
 			AttachmentNoteSubMenu(itemNote);
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
+			itemLogger.Image = global::PeMain.Properties.Images.Log;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -409,16 +414,19 @@ namespace PeMain.UI
 			
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
+			itemSystemEnv.Image = global::PeMain.Properties.Images.SystemEnvironment;
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
+			itemSetting.Image = global::PeMain.Properties.Images.Config;
 			itemSetting.Click += (object sender, EventArgs e) => {
 				PauseOthers(() => OpenSettingDialog());
 			};
 			
 			// 情報
 			itemAbout.Name = menuNameAbout;
+			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
 			itemAbout.Click += (object sender, EventArgs e) => {
 				PauseOthers(
 					() => {
@@ -437,13 +445,16 @@ namespace PeMain.UI
 				);
 			};
 			
+			// ヘルプ
 			itemHelp.Name = menuNameHelp;
+			itemHelp.Image = global::PeMain.Properties.Images.Help;
 			itemHelp.Click += (object sender, EventArgs e) => {
 				Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			};
 			
 			// 終了
 			itemExit.Name = menuNameExit;
+			itemExit.Image = global::PeMain.Properties.Images.Close;
 			itemExit.Click += (object sender, EventArgs e) => {
 				CloseApplication(true);
 			};
@@ -478,8 +489,8 @@ namespace PeMain.UI
 			var iconRect = new Rectangle(Point.Empty, iconSize);
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
-					using(var icon = new Icon(global::PeMain.Properties.Images.App, iconSize)) {
-						g.DrawIcon(icon, iconRect);
+					using(var icon = AppUtility.GetAppIcon(IconScale.Small)) {
+						g.DrawImage(icon, iconRect);
 					}
 					#if DEBUG
 					/*
@@ -493,7 +504,7 @@ namespace PeMain.UI
 				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			}
 			foreach(ToolStripMenuItem toolItem in this._contextMenu.Items.Cast<ToolStripItem>().Where(t => t is ToolStripMenuItem)) {
-			ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
+				ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
 			}
 			this._notifyIcon.ContextMenuStrip = this._contextMenu;
 			
