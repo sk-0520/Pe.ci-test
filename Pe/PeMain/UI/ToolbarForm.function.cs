@@ -369,6 +369,7 @@ namespace PeMain.UI
 					LoadFileList(menuItem, path, showHiddenFile, showExtension);
 				};
 			}
+			
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
 					if(File.Exists(path)) {
@@ -380,6 +381,7 @@ namespace PeMain.UI
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 				}
 			};
+			
 			return menuItem;
 		}
 		

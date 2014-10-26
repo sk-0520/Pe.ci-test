@@ -249,12 +249,34 @@ namespace PeMain.UI
 			
 			// メニュー構築
 			var menuItem = (ToolStripMenuItem)this._contextMenu.Items[menuNameWindowToolbar];
-			foreach(ToolStripMenuItem subItem in menuItem.DropDownItems) {
+			foreach(var subItem in menuItem.DropDownItems.Cast<ToolStripItem>().ToArray()) {
 				subItem.ToDispose();
 			}
 			menuItem.DropDownItems.Clear();
 			
 			AttachmentToolbarSubMenu(menuItem);
+		}
+		
+		/// <summary>
+		/// ノート状態をリセット。
+		/// </summary>
+		void ResetNote()
+		{
+			foreach(var note in this._noteWindowList) {
+				note.Close();
+				note.Dispose();
+			}
+			this._noteWindowList.Clear();
+			InitializeNoteForm(null, null);
+		}
+		
+		/// <summary>
+		/// 表示コンポーネントをリセット。
+		/// </summary>
+		void ResetUI()
+		{
+			ResetToolbar();
+			ResetNote();
 		}
 		
 		/// <summary>
@@ -265,11 +287,14 @@ namespace PeMain.UI
 		{
 			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
+					/*
 					foreach(var note in this._noteWindowList) {
 						note.Close();
 						note.Dispose();
 					}
 					this._noteWindowList.Clear();
+					InitializeNoteForm(null, null);
+					*/
 					
 					var mainSetting = settingForm.MainSetting;
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
@@ -291,9 +316,7 @@ namespace PeMain.UI
 						this._toolbarForms.Clear();
 						InitializeToolbarForm(null, null);
 						 */
-						ResetToolbar();
-						
-						InitializeNoteForm(null, null);
+						ResetUI();
 						
 						if(check) {
 							#if !DISABLED_UPDATE_CHECK
@@ -533,7 +556,7 @@ namespace PeMain.UI
 		void ChangedScreenCount()
 		{
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/screen/count-change"], string.Empty);
-			ResetToolbar();
+			ResetUI();
 		}
 		
 		/// <summary>

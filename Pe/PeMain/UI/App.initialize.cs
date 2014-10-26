@@ -603,6 +603,8 @@ namespace PeMain.UI
 			Debug.Assert(Initialized);
 			ApplyLanguage();
 			
+			//SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			

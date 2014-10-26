@@ -7,9 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-
 using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.IF;
@@ -68,6 +68,14 @@ namespace PeMain.UI
 			ShowHomeDialog();
 		}
 		
+
+
+		void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+		{
+			this._logForm.Puts(LogType.Information, "UserPreferenceChanged", e);
+			ResetUI();
+		}
+
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
 		{
 			this._logForm.Puts(LogType.Information, "SessionEnding", e);
