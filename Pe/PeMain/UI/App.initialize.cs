@@ -405,6 +405,7 @@ namespace PeMain.UI
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemAbout);
 			menuList.Add(itemHelp);
+			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemExit);
 			
 			// ウィンドウ
