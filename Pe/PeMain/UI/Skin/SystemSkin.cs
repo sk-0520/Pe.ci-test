@@ -247,7 +247,7 @@ namespace PeMain.UI
 			}
 			var size = new Size(parentArea.Height, parentArea.Height);
 			return new Rectangle(
-				new Point(parentArea.Right - size.Width * pos - pos*2, parentArea.Top),
+				new Point(parentArea.Right - size.Width * pos, parentArea.Top),
 				size
 			);
 		}
