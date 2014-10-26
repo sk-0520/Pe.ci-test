@@ -20,8 +20,8 @@ namespace PeMain.UI
 	partial class App
 	{
 		private NotifyIcon _notifyIcon;
-		private ContextMenu _contextMenu;
-		//private ContextMenuStrip _notificationMenu;
+		//private ContextMenu _contextMenu;
+		private ContextMenuStrip _contextMenu;
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		

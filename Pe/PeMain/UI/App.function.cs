@@ -248,11 +248,11 @@ namespace PeMain.UI
 			InitializeToolbarForm(null, null);
 			
 			// メニュー構築
-			var menuItem = this._contextMenu.MenuItems[menuNameWindowToolbar];
-			foreach(MenuItem subItem in menuItem.MenuItems) {
+			var menuItem = (ToolStripMenuItem)this._contextMenu.Items[menuNameWindowToolbar];
+			foreach(ToolStripMenuItem subItem in menuItem.DropDownItems) {
 				subItem.ToDispose();
 			}
-			menuItem.MenuItems.Clear();
+			menuItem.DropDownItems.Clear();
 			
 			AttachmentToolbarSubMenu(menuItem);
 		}

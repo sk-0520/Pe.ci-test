@@ -16,32 +16,33 @@ namespace PeMain.UI
 {
 	partial class App
 	{
-		void ApplyLanguageNoteMenu(MenuItem parentItem)
+		void ApplyLanguageNoteMenu(ToolStripMenuItem parentItem)
 		{
-			parentItem.MenuItems[menuNameWindowNoteCreate].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/create"], this._commonData.MainSetting.Note.CreateHotKey);
-			parentItem.MenuItems[menuNameWindowNoteHidden].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/hidden"], this._commonData.MainSetting.Note.HiddenHotKey);
-			parentItem.MenuItems[menuNameWindowNoteCompact].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/compact"], this._commonData.MainSetting.Note.CompactHotKey);
-			parentItem.MenuItems[menuNameWindowNoteShowFront].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/show-front"], this._commonData.MainSetting.Note.ShowFrontHotKey);
+			parentItem.DropDownItems[menuNameWindowNoteCreate].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/create"], this._commonData.MainSetting.Note.CreateHotKey);
+			parentItem.DropDownItems[menuNameWindowNoteHidden].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/hidden"], this._commonData.MainSetting.Note.HiddenHotKey);
+			parentItem.DropDownItems[menuNameWindowNoteCompact].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/compact"], this._commonData.MainSetting.Note.CompactHotKey);
+			parentItem.DropDownItems[menuNameWindowNoteShowFront].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/show-front"], this._commonData.MainSetting.Note.ShowFrontHotKey);
 		}
 		
-		void ApplyLanguageSystemEnvMenu(MenuItem parentItem)
+		void ApplyLanguageSystemEnvMenu(ToolStripMenuItem parentItem)
 		{
-			parentItem.MenuItems[menuNameSystemEnvHiddenFile].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-hiddne-file"], this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey);
-			parentItem.MenuItems[menuNameSystemEnvExtension].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-extension"], this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey);
+			parentItem.DropDownItems[menuNameSystemEnvHiddenFile].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-hiddne-file"], this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey);
+			parentItem.DropDownItems[menuNameSystemEnvExtension].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-extension"], this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey);
 		}
+		
 		void ApplyLanguageMainMenu()
 		{
-			var rootMenu = this._contextMenu.MenuItems;
+			var rootMenu = this._contextMenu.Items;
 
 			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
 			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];
 			
-			var noteMenu = (MenuItem)rootMenu[menuNameWindowNote];
+			var noteMenu = (ToolStripMenuItem)rootMenu[menuNameWindowNote];
 			ApplyLanguageNoteMenu(noteMenu);
 
-			var systemEnvMenu = (MenuItem)rootMenu[menuNameSystemEnv];
+			var systemEnvMenu = (ToolStripMenuItem)rootMenu[menuNameSystemEnv];
 			ApplyLanguageSystemEnvMenu(systemEnvMenu);
 			
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
