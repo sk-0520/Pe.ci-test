@@ -352,8 +352,11 @@ namespace PeMain.UI
 				var customMenuItem = customItem as ToolStripMenuItem;
 				if(customMenuItem != null) {
 					customMenuItem.Checked = !plainColor;
+					customMenuItem.Image.ToDispose();
 					if(customMenuItem.Checked) {
 						customMenuItem.Image = CreateColorImage(nowColor);
+					} else {
+						customMenuItem.Image = global::PeMain.Properties.Images.CustomColor;
 					}
 				}
 			};

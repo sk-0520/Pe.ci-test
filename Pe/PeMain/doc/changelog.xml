@@ -33,7 +33,9 @@
 		</ul>
 		<ul type="features">
 			<li>ツールバーメインメニューに非表示を追加</li>
-			<li></li>
+			<li>#8, #34とかの成果として、タスクトレイのコンテキストメニューを .NET Framework の推奨である ContextMenuStrip に変更(Forms非推奨？ 聞こえんなぁ)</li>
+			<li>ContextMenuStrip への変更にあたりアイコンを設定</li>
+			<li>ノートのカスタムカラーアイコンを非選択時は固定のアイコンを表示するように変更</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
