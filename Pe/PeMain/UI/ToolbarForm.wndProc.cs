@@ -88,13 +88,15 @@ namespace PeMain.UI
 						}
 						break;
 						
+						/*
 					case (int)WM.WM_CONTEXTMENU:
 						{
-							Debug.WriteLine(m.WParam);
+							//Debug.WriteLine(m.WParam);
 							//API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
 						}
 						//return;
 						break;
+						*/
 						
 					case (int)WM.WM_MOVING:
 						{

@@ -54,7 +54,7 @@ namespace PeMain.UI
 						
 						var managedScreenCount = Screen.AllScreens.Count();
 						while(rawScreenCount != managedScreenCount) {
-							Debug.WriteLine("waitCount" + waitCount);
+							//Debug.WriteLine("waitCount" + waitCount);
 							if(waitMax < ++waitCount) {
 								// タイムアウト
 								//isTimeout = true;

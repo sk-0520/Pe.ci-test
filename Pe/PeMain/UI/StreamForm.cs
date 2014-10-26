@@ -93,7 +93,7 @@ namespace PeMain.UI
 
 		void ViewOutput_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			Debug.WriteLine((int)e.KeyChar);
+			//Debug.WriteLine((int)e.KeyChar);
 			if(e.KeyChar == 0x0a || e.KeyChar == 0x0d) {
 				Process.StandardInput.WriteLine();
 			} else {
