@@ -65,8 +65,8 @@ namespace PeMain.UI
 			}
 			 */
 			//MessageBox.Show("PON!");
-			//ShowHomeDialog();
-			ResetUI();
+			ShowHomeDialog();
+			//ResetUI();
 		}
 		
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
