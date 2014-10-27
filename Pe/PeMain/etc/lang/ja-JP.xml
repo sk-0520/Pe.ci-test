@@ -13,13 +13,15 @@
 		<Word Name="open-ui"           Text="..." />
 		<Word Name="remove"            Text="削除" />
 		<Word Name="edit"              Text="編集" />
+		<Word Name="show"              Text="表示" />
 		<Word Name="visible"           Text="表示する" />
 		<Word Name="hidden"            Text="非表示" />
 		<Word Name="topmost"           Text="最前面で表示する" />
+		<Word Name="show-front"        Text="前面表示" />
 		<Word Name="option"            Text="オプション" />
 		<Word Name="work-dir"          Text="作業フォルダ" />
 		<Word Name="std-stream"        Text="標準入出力を取得する" />
-		<Word Name="edit-env"          Text="環境変数を編集する" />
+		<Word Name="edit-env"          Text="${env}を編集する" />
 		<Word Name="font"              Text="フォント" />
 		<Word Name="auto-hide"         Text="自動的に隠す" />
 		<Word Name="admin"             Text="管理者として実行" />
@@ -27,13 +29,20 @@
 		<Word Name="update-check.RC"   Text="RC版も確認対象とする" />
 		<Word Name="version-release"   Text="リリース版" />
 		<Word Name="version-rc"        Text="RC版" />
+		<Word Name="note"              Text="ノート" />
 		<Word Name="hotkey"            Text="ホットキー" />
 		<Word Name="regist"            Text="登録" />
 		<Word Name="unregist"          Text="解除" />
 		<Word Name="file"              Text="ファイル" />
+		<Word Name="hidden-file"       Text="隠しファイル" />
+		<Word Name="extension"         Text="拡張子" />
 		<Word Name="dir"               Text="ディレクトリ" />
 		<Word Name="log"               Text="ログ" />
 		<Word Name="unknown"           Text="なんか" />
+		<Word Name="tasktray"          Text="通知領域" />
+		<Word Name="env"               Text="環境変数" />
+		<Word Name="copy"              Text="コピー" />
+		<Word Name="create"            Text="作成" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -47,10 +56,10 @@
 		<Word Name="common/label/visible"               Text="${visible}" />
 		<Word Name="common/label/remove"                Text="${remove}" />
 		<Word Name="common/label/edit"                  Text="${edit}" />
-		<Word Name="common/command/default-font"        Text="デフォルトのフォント" />
-		<Word Name="common/command/default-font-reset"  Text="フォントをリセットする" />
+		<Word Name="common/command/default-font"        Text="デフォルトの${font}" />
+		<Word Name="common/command/default-font-reset"  Text="${font}をリセットする" />
 		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
-		<Word Name="common/page/env"                    Text="環境変数" />
+		<Word Name="common/page/env"                    Text="${env}" />
 		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
 		
@@ -66,7 +75,7 @@
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
-		<Word Name="main/menu/window/note"                  Text="ノート(&amp;N)" />
+		<Word Name="main/menu/window/note"                  Text="${note}(&amp;N)" />
 		<Word Name="main/menu/window/note/create"           Text="新規作成(&amp;N)" />
 		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
@@ -84,35 +93,35 @@
 		
 		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
 		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />
-		<Word Name="hotkey/unregist/hidden-file"     Text="${hotkey}${unregist}: 隠しファイル" />
-		<Word Name="hotkey/unregist/extension"       Text="${hotkey}${unregist}: 拡張子" />
-		<Word Name="hotkey/unregist/create-note"     Text="${hotkey}${unregist}: ノート作成" />
-		<Word Name="hotkey/unregist/hidden-note"     Text="${hotkey}${unregist}: ノート非表示" />
-		<Word Name="hotkey/unregist/compact-note"    Text="${hotkey}${unregist}: ノート最小化" />
-		<Word Name="hotkey/unregist/show-front-note" Text="${hotkey}${unregist}: ノート前面表示" />
+		<Word Name="hotkey/unregist/hidden-file"     Text="${hotkey}${unregist}: ${hidden-file}" />
+		<Word Name="hotkey/unregist/extension"       Text="${hotkey}${unregist}: ${extension}" />
+		<Word Name="hotkey/unregist/create-note"     Text="${hotkey}${unregist}: ${note}${create}" />
+		<Word Name="hotkey/unregist/hidden-note"     Text="${hotkey}${unregist}: ${note}${hidden}" />
+		<Word Name="hotkey/unregist/compact-note"    Text="${hotkey}${unregist}: ${note}最小化" />
+		<Word Name="hotkey/unregist/show-front-note" Text="${hotkey}${unregist}: ${note}${show-front}" />
 		
 		<Word Name="hotkey/regist/fail"            Text="${hotkey}${regist} ${failure}" />
 		<Word Name="hotkey/regist/command"         Text="${hotkey}${regist}: コマンド" />
-		<Word Name="hotkey/regist/hidden-file"     Text="${hotkey}${regist}: 隠しファイル" />
-		<Word Name="hotkey/regist/extension"       Text="${hotkey}${regist}: 拡張子" />
-		<Word Name="hotkey/regist/create-note"     Text="${hotkey}${regist}: ノート作成" />
-		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ノート非表示" />
-		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ノート最小化" />
-		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ノート前面表示" />
+		<Word Name="hotkey/regist/hidden-file"     Text="${hotkey}${regist}: ${hidden-file}" />
+		<Word Name="hotkey/regist/extension"       Text="${hotkey}${regist}: ${extension}" />
+		<Word Name="hotkey/regist/create-note"     Text="${hotkey}${regist}: ${note}${create}" />
+		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ${note}${hidden}" />
+		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ${note}最小化" />
+		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ${note}${show-front}" />
 
-		<Word Name="balloon/hidden-file/title" Text="隠しファイル" />
-		<Word Name="balloon/hidden-file/show"  Text="隠しファイルを表示" />
-		<Word Name="balloon/hidden-file/hide"  Text="隠しファイルを非表示" />
-		<Word Name="balloon/hidden-file/error" Text="隠しファイル表示操作失敗" />
-		<Word Name="balloon/extension/title"   Text="拡張子" />
-		<Word Name="balloon/extension/show"    Text="拡張子を表示" />
-		<Word Name="balloon/extension/hide"    Text="拡張子を非表示" />
-		<Word Name="balloon/extension/error"   Text="拡張子操作表示失敗" />
-		<Word Name="balloon/note/title"        Text="ノート" />
-		<Word Name="balloon/note/create"       Text="ノートを新規作成" />
-		<Word Name="balloon/note/hidden"       Text="編集可能ノートの非表示" />
-		<Word Name="balloon/note/compact"      Text="編集可能ノートの最小化" />
-		<Word Name="balloon/note/show-front"   Text="表示中ノートの前面表示" />
+		<Word Name="balloon/hidden-file/title" Text="${hidden-file}" />
+		<Word Name="balloon/hidden-file/show"  Text="${hidden-file}を${show}" />
+		<Word Name="balloon/hidden-file/hide"  Text="${hidden-file}を${hidden}" />
+		<Word Name="balloon/hidden-file/error" Text="${hidden-file}表示操作失敗" />
+		<Word Name="balloon/extension/title"   Text="${extension}" />
+		<Word Name="balloon/extension/show"    Text="${extension}を${show}" />
+		<Word Name="balloon/extension/hide"    Text="${extension}を${hidden}" />
+		<Word Name="balloon/extension/error"   Text="${extension}操作表示失敗" />
+		<Word Name="balloon/note/title"        Text="${note}" />
+		<Word Name="balloon/note/create"       Text="${note}を新規作成" />
+		<Word Name="balloon/note/hidden"       Text="編集可能${note}の非表示" />
+		<Word Name="balloon/note/compact"      Text="編集可能${note}の最小化" />
+		<Word Name="balloon/note/show-front"   Text="表示中${note}の${show-front}" />
 		
 		
 		<Word Name="log/command/save"     Text="ログ保存" />
@@ -133,8 +142,8 @@
 		<Word Name="home/page/main" Text="ホーム" />
 		<Word Name="home/command/launcher"  Text="ランチャアイテム自動登録" />
 		<Word Name="home/label/launcher"    Text="✌(⊙◞౪◟⊙)✌&#x0d;&#x0a;☆みじっそう☆" />
-		<Word Name="home/command/notify"  Text="通知領域設定" />
-		<Word Name="home/label/notify"    Text="通知領域の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
+		<Word Name="home/command/notify"  Text="${tasktray}設定" />
+		<Word Name="home/label/notify"    Text="${tasktray}の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
 		<Word Name="home/command/startup" Text="スタートアップ登録" />
 		<Word Name="home/label/startup"   Text="Windowsログオン時に@[APPLICATION]を起動するようします。" />
 		<Word Name="home/startup/dialog/caption"  Text="スタートアップ登録結果" />
@@ -154,9 +163,9 @@
 		<Word Name="toolbar/menu/file/ls"            Text="ファイル(&amp;F)" />
 		<Word Name="toolbar/menu/file/path/open-parent-dir" Text="親フォルダを開く(&amp;O)" />
 		<Word Name="toolbar/menu/file/path/open-work-dir"   Text="作業フォルダを開く(&amp;W)" />
-		<Word Name="toolbar/menu/file/path/copy-command"    Text="コマンドをコピー(&amp;C)" />
-		<Word Name="toolbar/menu/file/path/copy-parent-dir" Text="親フォルダパスをコピー(&amp;O)" />
-		<Word Name="toolbar/menu/file/path/copy-work-dir"   Text="作業フォルダパスをコピー(&amp;W)" />
+		<Word Name="toolbar/menu/file/path/copy-command"    Text="コマンドを${copy}(&amp;C)" />
+		<Word Name="toolbar/menu/file/path/copy-parent-dir" Text="親フォルダパスを${copy}(&amp;O)" />
+		<Word Name="toolbar/menu/file/path/copy-work-dir"   Text="作業フォルダパスを${copy}(&amp;W)" />
 		<Word Name="toolbar/menu/file/path/property"        Text="プロパティ(&amp;P)" />
 		<Word Name="toolbar/menu/file/ls/not-child-files"   Text="下位ファイルなし" />
 		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
@@ -170,7 +179,7 @@
 		
 		<Word Name="note/menu/title"        Text="タイトル入力(&amp;T)" />
 		<Word Name="note/menu/body"         Text="本文入力(&amp;B)" />
-		<Word Name="note/menu/copy"         Text="コピー(&amp;C)" />
+		<Word Name="note/menu/copy"         Text="${copy}(&amp;C)" />
 		<Word Name="note/menu/import"       Text="入力(&amp;I)" />
 		<Word Name="note/menu/export"       Text="出力(&amp;E)" />
 		<Word Name="note/menu/lock"         Text="固定(&amp;L)" />
@@ -181,7 +190,7 @@
 		<Word Name="note/menu/hidden"       Text="${hidden}(&amp;X)" />
 		<Word Name="note/menu/topmost"      Text="最前面(&amp;T)" />
 		<!-- <Word Name="note/menu/remove"       Text="削除" /> -->
-		<Word Name="note/dialog/caption"    Text="ノート削除" />
+		<Word Name="note/dialog/caption"    Text="${note}削除" />
 		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;よろしければ「はい」を、非表示にするには「いいえ」を選択してください。" />
 		<Word Name="note/save"              Text="@[NOTE]を保存しました" />
 		
@@ -216,18 +225,18 @@
 		<Word Name="setting/page/toolbar"           Text="ツールバー" />
 		<Word Name="setting/page/command"           Text="コマンド" />
 		<Word Name="setting/page/display"           Text="ディスプレイ" />
-		<Word Name="setting/page/note"              Text="ノート" />
+		<Word Name="setting/page/note"              Text="${note}" />
 		<Word Name="setting/check/startup"        Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />
 		<Word Name="setting/check/update-check.RC" Text="${update-check.RC}" />
 		<Word Name="setting/label/language"        Text="使用言語" />
-		<Word Name="setting/label/hiddenfile"      Text="隠しファイル" />
-		<Word Name="setting/label/extension"       Text="拡張子" />
+		<Word Name="setting/label/hiddenfile"      Text="${hidden-file}" />
+		<Word Name="setting/label/extension"       Text="${extension}" />
 		<Word Name="setting/group/log"             Text="ログ設定" />
 		<Word Name="setting/group/system-env"      Text="システム環境" />
 		<Word Name="setting/check/add-show"        Text="追加されるたびに表示する" />
-		<Word Name="setting/check/full-detail"    Text="詳細部分を最大化表示する" />
+		<Word Name="setting/check/full-detail"     Text="詳細部分を最大化表示する" />
 		<Word Name="setting/group/item-type"       Text="アイテムの種類" />
 		<Word Name="setting/label/item-name"       Text="アイテム名" />
 		<Word Name="setting/label/command"         Text="コマンド" />
@@ -236,10 +245,10 @@
 		<Word Name="setting/label/icon-path"       Text="アイコンパス" />
 		<Word Name="setting/label/tags"            Text="タグ" />
 		<Word Name="setting/label/note"            Text="備考" />
-		<Word Name="setting/label/note-create"     Text="作成" />
+		<Word Name="setting/label/note-create"     Text="${create}" />
 		<Word Name="setting/label/note-hidden"     Text="隠す" />
 		<Word Name="setting/label/note-compact"    Text="最小化" />
-		<Word Name="setting/label/note-show-front" Text="前面表示" />
+		<Word Name="setting/label/note-show-front" Text="${show-front}" />
 		<Word Name="setting/check/std-stream"      Text="${std-stream}" />
 		<Word Name="setting/check/auto-hide"       Text="${auto-hide}" />
 		<Word Name="setting/check/show-text"       Text="テキストを表示する" />
@@ -249,7 +258,7 @@
 		<Word Name="setting/tips/up-item"          Text="選択アイテムを上に移動" />
 		<Word Name="setting/tips/down-item"        Text="選択アイテムを下に移動" />
 		<Word Name="setting/tips/remove-item"      Text="選択アイテムを取り除く" />
-		<Word Name="setting/group/item"            Text="ノート一覧" />
+		<Word Name="setting/group/item"            Text="${note}一覧" />
 		<Word Name="setting/group/key"             Text="キー" />
 		<Word Name="setting/column/note/remove"    Text="削除" />
 		<Word Name="setting/column/note/id"        Text="ID" />
@@ -257,7 +266,7 @@
 		<Word Name="setting/column/note/locked"    Text="固定" />
 		<Word Name="setting/column/note/title"     Text="タイトル" />
 		<Word Name="setting/column/note/body"      Text="本文" />
-		<Word Name="setting/column/note/font"      Text="フォント" />
+		<Word Name="setting/column/note/font"      Text="${font}" />
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
 		
@@ -376,7 +385,7 @@
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />
 		<Word Name="log/init/db-data/mkdir"     Text="DB用ディレクトリ作成" />
-		<Word Name="log/init/db-data/version"   Text="DB用ディレクトリ作成" />
+		<Word Name="log/init/db-data/version"   Text="バージョンテーブル確認" />
 		<Word Name="log/init/db-data/create"    Text="DB: @[TABLE-NAME] 作成" />
 		<Word Name="log/init/db-data/check"     Text="DB: @[TABLE-NAME] チェック" />
 		
@@ -394,7 +403,9 @@
 	
 		<!-- デフォルトランチャーアイテム -->
 		<Word Name="default/group/main"      Text="メイングループ" />
+		<!-- デフォルトランチャータグ -->
 		<Word Name="default/tag/web-browser" Text="ブラウザ" />
+		<!-- デフォルトランチャーグループ -->
 		<Word Name="default/item/iexplorer"  Text="Internet Explorer" />
 		<Word Name="default/item/firefox"    Text="FireFox" />
 		<Word Name="default/item/opera"      Text="Opera" />
