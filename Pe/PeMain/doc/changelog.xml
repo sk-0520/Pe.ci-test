@@ -25,7 +25,29 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/10/25" version="0.27.0">
+	<log date="2014/MM/DD" version="0.27.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li>changelog.xml の 0.27.0 公開日が10/25になっていたので10/26に直した</li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
+	<log date="2014/10/26" version="0.27.0">
 		<ul type="features">
 			<li>ツールバーメインメニューに非表示を追加</li>
 			<li>#8, #34とかの成果として、タスクトレイのコンテキストメニューを .NET Framework の推奨である ContextMenuStrip に変更(Forms非推奨？ 聞こえんなぁ)</li>
