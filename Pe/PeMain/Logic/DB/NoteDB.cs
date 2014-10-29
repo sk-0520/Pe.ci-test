@@ -28,7 +28,7 @@ namespace PeMain.Logic.DB
 		/// <summary>
 		/// TODO: Dataから別のどこかへ委譲。
 		/// </summary>
-		/// <param name="enabledOnly"></param>
+		/// <param name="enabledOnly">有効アイテムのみ取得するか</param>
 		/// <returns></returns>
 		public IEnumerable<NoteItem> GetNoteItemList(bool enabledOnly)
 		{

@@ -246,7 +246,7 @@ namespace PeMain.UI
 					screens.Max(s => s.Bounds.Bottom)
 				);
 				var iconSize = IconScale.Small.ToSize();
-				*/
+				 */
 				foreach(var screen in Screen.AllScreens) {
 					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
 						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
@@ -309,6 +309,8 @@ namespace PeMain.UI
 				itemNoteHidden.Enabled = hasNote;
 				itemNoteCompact.Enabled = hasNote;
 				itemNoteShowFront.Enabled = hasNote;
+				
+				OpeningNoteMenu();
 			};
 		}
 		

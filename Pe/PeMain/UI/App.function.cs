@@ -294,7 +294,7 @@ namespace PeMain.UI
 					}
 					this._noteWindowList.Clear();
 					InitializeNoteForm(null, null);
-					*/
+					 */
 					
 					var mainSetting = settingForm.MainSetting;
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
@@ -413,7 +413,7 @@ namespace PeMain.UI
 			}
 		}
 
-		void CreateNote(Point point)
+		NoteForm CreateNote(Point point)
 		{
 			// アイテムをデータ設定
 			var item = new NoteItem();
@@ -428,9 +428,11 @@ namespace PeMain.UI
 			
 			var noteForm = CreateNote(item);
 			UIUtility.ShowFrontActive(noteForm);
+			
+			return noteForm;
 		}
 		
-		Form CreateNote(NoteItem noteItem)
+		NoteForm CreateNote(NoteItem noteItem)
 		{
 			var noteForm = new NoteForm();
 			noteForm.NoteItem = noteItem;
@@ -577,6 +579,63 @@ namespace PeMain.UI
 					return null;
 				}
 			);
+		}
+		
+		void OpeningNoteMenu()
+		{
+			var parentItem = (ToolStripMenuItem)this._contextMenu.Items[menuNameWindowNote];
+			
+			if(parentItem.DropDownItems.ContainsKey(menuNameWindowNoteSeparator)) {
+				var separatorItem = parentItem.DropDownItems[menuNameWindowNoteSeparator];
+				var itemMenus = parentItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem);
+				foreach(var itemMenu in itemMenus.ToArray()) {
+					parentItem.DropDownItems.Remove(itemMenu);
+					itemMenu.ToDispose();
+				}
+			}
+			var noteDB = new NoteDB(this._commonData.Database);
+			var noteImtes = noteDB.GetNoteItemList(true);
+			var isStart = true;
+			var itemNoteMenuList = new List<ToolStripItem>();
+			var iconSize = IconScale.Small.ToSize();
+			foreach(var noteItem in noteImtes) {
+				ToolStripItem appendItem = null;
+				if(isStart) {
+					var menuItem = new ToolStripSeparator();
+					menuItem.Name = menuNameWindowNoteSeparator;
+					isStart = false;
+					
+					appendItem = menuItem;
+				} else {
+					var menuItem = new ToolStripMenuItem();
+					menuItem.Text = noteItem.Title;
+					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, iconSize);
+					menuItem.Checked = noteItem.Visible;
+					menuItem.Click += (object sender, EventArgs e) => {
+						if(noteItem.Visible) {
+							_noteWindowList.Single(n => n.NoteItem.NoteId == noteItem.NoteId).ToClose(false);
+						} else {
+							noteItem.Visible = true;
+							var noteWindow = CreateNote(noteItem);
+							noteWindow.SaveItem();
+						}
+					};
+					
+					appendItem = menuItem;
+				}
+				
+				itemNoteMenuList.Add(appendItem);
+			}
+			if(itemNoteMenuList.Count > 0) {
+				parentItem.DropDownItems.AddRange(itemNoteMenuList.ToArray());
+			}
+			/*
+				var noteDB = new NoteDB(this._commonData.Database);
+					Debug.WriteLine(noteDB);
+				foreach(var item in noteDB.GetNoteItemList(true).Where(item => item.Visible)) {
+					Debug.WriteLine(item);
+				}
+			 */
 		}
 	}
 }

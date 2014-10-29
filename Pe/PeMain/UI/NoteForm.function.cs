@@ -129,7 +129,7 @@ namespace PeMain.UI
 				case NoteCommand.Close:
 					{
 						if(removeData) {
-							// TODO: 削除
+							// TODO: 論理削除
 							Removed = true;
 							RemoveItem();
 						} else {
@@ -371,22 +371,6 @@ namespace PeMain.UI
 				)
 				.ToList()
 				;
-		}
-		
-		Image CreateColorImage(Color color)
-		{
-			var image = new Bitmap(menuIconSize.Width, menuIconSize.Height);
-			
-			using(var g = Graphics.FromImage(image)) {
-				using(var brush = new SolidBrush(color)) {
-					using(var pen = new Pen(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)))) {
-						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(menuIconSize.Width - 2, menuIconSize.Height - 2)));
-						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(menuIconSize.Width - 1, menuIconSize.Height - 1)));
-					}
-				}
-			}
-			
-			return image;
 		}
 		
 		Color SelectedPlainColor(ToolStripItem selectItem,  IList<ColorMenuItem> colorItemList)

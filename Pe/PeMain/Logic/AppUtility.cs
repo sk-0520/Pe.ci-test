@@ -24,10 +24,10 @@ namespace PeMain.Logic
 		public static void MakeAppShortcut(string savePath)
 		{
 			var shortcut = new ShortcutFile(savePath, true);
-			shortcut.TargetPath = Literal.ApplicationExecutablePath; 
+			shortcut.TargetPath = Literal.ApplicationExecutablePath;
 			shortcut.IconPath = Literal.ApplicationExecutablePath;
 			shortcut.IconIndex = 0;
-			shortcut.WorkingDirectory = Literal.ApplicationRootDirPath; 
+			shortcut.WorkingDirectory = Literal.ApplicationRootDirPath;
 			shortcut.Save();
 		}
 		
@@ -47,5 +47,27 @@ namespace PeMain.Logic
 		{
 			return Control.ModifierKeys == Keys.Shift;
 		}
+		
+		public static Image CreateBoxColorImage(Color borderColor, Color backColor, Size size)
+		{
+			var image = new Bitmap(size.Width, size.Height);
+			
+			using(var g = Graphics.FromImage(image)) {
+				using(var brush = new SolidBrush(backColor)) {
+					using(var pen = new Pen(borderColor)) {
+						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
+						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
+					}
+				}
+			}
+			
+			return image;
+		}
+		
+		public static Image CreateNoteBoxImage(Color color, Size size)
+		{
+			return CreateBoxColorImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
+		}
+
 	}
 }

@@ -341,7 +341,7 @@ namespace PeMain.UI
 				var plainColor = false;
 				
 				parentItem.Image.ToDispose();
-				parentItem.Image = CreateColorImage(nowColor);
+				parentItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
 				
 				foreach(var colorItem in colorItemList) {
 					var menuItem = colorItem.Item as ToolStripMenuItem;
@@ -354,7 +354,7 @@ namespace PeMain.UI
 					customMenuItem.Checked = !plainColor;
 					customMenuItem.Image.ToDispose();
 					if(customMenuItem.Checked) {
-						customMenuItem.Image = CreateColorImage(nowColor);
+						customMenuItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
 					} else {
 						customMenuItem.Image = global::PeMain.Properties.Images.CustomColor;
 					}

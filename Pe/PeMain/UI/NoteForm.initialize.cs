@@ -51,7 +51,7 @@ namespace PeMain.UI
 				var colors = colorItem.IsFore ? Literal.GetNoteForeColorList(): Literal.GetNoteBackColorList();
 				var pairs = GetColorMenuList(colorItem.Menu, colors);
 				foreach(var pair in pairs) {
-					pair.Item.Image = CreateColorImage(pair.Color);
+					pair.Item.Image = AppUtility.CreateNoteBoxImage(pair.Color, menuIconSize);
 				}
 			}
 			

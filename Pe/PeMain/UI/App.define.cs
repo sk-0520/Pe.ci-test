@@ -35,6 +35,7 @@ namespace PeMain.UI
 		const string menuNameWindowNoteHidden    = "menu_window_note_hidden";
 		const string menuNameWindowNoteCompact   = "menu_window_note_compact";
 		const string menuNameWindowNoteShowFront = "menu_window_note_show_front";
+		const string menuNameWindowNoteSeparator = "menu_window_note_separator";
 		
 		const string menuNameSystemEnvHiddenFile = "menu_systemenv_hidden";
 		const string menuNameSystemEnvExtension = "menu_systemenv_ext";

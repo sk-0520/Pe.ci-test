@@ -101,5 +101,12 @@ namespace PeMain.UI
 			}
 		}
 		
+		void NoteMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			OpeningNoteMenu();
+		}
+
 	}
+	
 }
+
