@@ -365,6 +365,10 @@ namespace PeMain.UI
 			var backMenuList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
 			checkColor(this.contextMenu_itemForeColor, foreMenuList, this.contextMenu_itemForeColor_itemCustom, NoteItem.Style.ForeColor);
 			checkColor(this.contextMenu_itemBackColor, backMenuList, this.contextMenu_itemBackColor_itemCustom, NoteItem.Style.BackColor);
+			// 最小化状態
+			this.contextMenu_itemCompact.ImageScaling = ToolStripItemImageScaling.None;
+			this.contextMenu_itemCompact.Image.ToDispose();
+			this.contextMenu_itemCompact.Image = AppUtility.CreateNoteBoxImage(NoteItem.Style.BackColor, new Size(menuIconSize.Width, menuIconSize.Height / 2));
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
