@@ -594,38 +594,41 @@ namespace PeMain.UI
 				}
 			}
 			var noteDB = new NoteDB(this._commonData.Database);
-			var noteImtes = noteDB.GetNoteItemList(true);
+			var noteItems = noteDB.GetNoteItemList(true);
 			var isStart = true;
 			var itemNoteMenuList = new List<ToolStripItem>();
-			var iconSize = IconScale.Small.ToSize();
-			foreach(var noteItem in noteImtes) {
-				ToolStripItem appendItem = null;
+			var noteImageSize = IconScale.Small.ToSize();
+			var noteSmallSize = new Size(noteImageSize.Width, noteImageSize.Height / 2);
+			foreach(var noteItem in noteItems) {
 				if(isStart) {
-					var menuItem = new ToolStripSeparator();
-					menuItem.Name = menuNameWindowNoteSeparator;
+					var itemSeparator = new ToolStripSeparator();
+					itemSeparator.Name = menuNameWindowNoteSeparator;
+					itemNoteMenuList.Add(itemSeparator);
 					isStart = false;
-					
-					appendItem = menuItem;
-				} else {
-					var menuItem = new ToolStripMenuItem();
-					menuItem.Text = noteItem.Title;
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, iconSize);
-					menuItem.Checked = noteItem.Visible;
-					menuItem.Click += (object sender, EventArgs e) => {
-						if(noteItem.Visible) {
-							_noteWindowList.Single(n => n.NoteItem.NoteId == noteItem.NoteId).ToClose(false);
-						} else {
-							noteItem.Visible = true;
-							var noteWindow = CreateNote(noteItem);
-							noteWindow.SaveItem();
-						}
-					};
-					
-					appendItem = menuItem;
 				}
 				
-				itemNoteMenuList.Add(appendItem);
+				var menuItem = new ToolStripMenuItem();
+				menuItem.Text = noteItem.Title;
+				if(noteItem.Compact) {
+					menuItem.ImageScaling = ToolStripItemImageScaling.None;
+					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
+				} else {
+					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
+				}
+				menuItem.Checked = noteItem.Visible;
+				menuItem.Click += (object sender, EventArgs e) => {
+					if(noteItem.Visible) {
+						_noteWindowList.Single(n => n.NoteItem.NoteId == noteItem.NoteId).ToClose(false);
+					} else {
+						noteItem.Visible = true;
+						var noteWindow = CreateNote(noteItem);
+						noteWindow.SaveItem();
+					}
+				};
+				
+				itemNoteMenuList.Add(menuItem);
 			}
+			
 			if(itemNoteMenuList.Count > 0) {
 				parentItem.DropDownItems.AddRange(itemNoteMenuList.ToArray());
 			}
