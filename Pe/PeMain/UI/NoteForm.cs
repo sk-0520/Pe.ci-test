@@ -138,7 +138,7 @@ namespace PeMain.UI
 				},
 				command => {
 					if(this._commandStateMap[command] == PeMain.IF.ButtonState.Pressed) {
-						var isRemove = (ModifierKeys & Keys.Shift) == Keys.Shift;
+						var isRemove = AppUtility.IsExtension();
 						if(isRemove) {
 							var map = new Dictionary<string, string>() {
 								{ "NOTE", NoteItem.Title },
@@ -368,6 +368,10 @@ namespace PeMain.UI
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
+			
+			// 拡張メニュー
+			var extension = AppUtility.IsExtension();
+			this.contextMenu_itemRemove.Visible = extension;
 		}
 		
 		[System.Security.Permissions.UIPermission(
@@ -450,6 +454,11 @@ namespace PeMain.UI
 		{
 			NoteItem.Style.BackColor = SelectedCustomColor(NoteItem.Style.BackColor);
 			Refresh();
+		}
+		
+		void ContextMenu_itemRemove_Click(object sender, EventArgs e)
+		{
+			ExecCommand(NoteCommand.Close, true);
 		}
 	}
 }

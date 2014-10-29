@@ -75,6 +75,7 @@ namespace PeMain.UI
 			this.contextMenu_itemTopmost = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemHidden = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenu_itemRemove = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemExport = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemImport = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,11 +121,12 @@ namespace PeMain.UI
 									this.contextMenu_itemTopmost,
 									this.toolStripSeparator3,
 									this.contextMenu_itemHidden,
+									this.contextMenu_itemRemove,
 									this.toolStripSeparator4,
 									this.contextMenu_itemExport,
 									this.contextMenu_itemImport});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(213, 320);
+			this.contextMenu.Size = new System.Drawing.Size(213, 342);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
@@ -389,6 +391,14 @@ namespace PeMain.UI
 			this.contextMenu_itemHidden.Text = ":note/menu/hidden";
 			this.contextMenu_itemHidden.Click += new System.EventHandler(this.ContextMenu_itemHidden_Click);
 			// 
+			// contextMenu_itemRemove
+			// 
+			this.contextMenu_itemRemove.Image = global::PeMain.Properties.Images.Remove;
+			this.contextMenu_itemRemove.Name = "contextMenu_itemRemove";
+			this.contextMenu_itemRemove.Size = new System.Drawing.Size(212, 22);
+			this.contextMenu_itemRemove.Text = ":note/menu/remove";
+			this.contextMenu_itemRemove.Click += new System.EventHandler(this.ContextMenu_itemRemove_Click);
+			// 
 			// toolStripSeparator4
 			// 
 			this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -456,6 +466,7 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemRemove;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemCustom;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemPurple;

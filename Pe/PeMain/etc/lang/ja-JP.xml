@@ -189,7 +189,7 @@
 		<Word Name="note/menu/compact"      Text="最小化(&amp;N)" />
 		<Word Name="note/menu/hidden"       Text="${hidden}(&amp;X)" />
 		<Word Name="note/menu/topmost"      Text="最前面(&amp;T)" />
-		<!-- <Word Name="note/menu/remove"       Text="削除" /> -->
+		<Word Name="note/menu/remove"       Text="${remove}(&amp;D)" />
 		<Word Name="note/dialog/caption"    Text="${note}削除" />
 		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;よろしければ「はい」を、非表示にするには「いいえ」を選択してください。" />
 		<Word Name="note/save"              Text="@[NOTE]を保存しました" />
