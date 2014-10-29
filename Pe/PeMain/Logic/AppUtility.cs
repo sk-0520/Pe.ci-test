@@ -7,8 +7,11 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Windows.Forms;
 using PeUtility;
+using PInvoke.Windows;
 
 namespace PeMain.Logic
 {
@@ -34,6 +37,15 @@ namespace PeMain.Logic
 			using(var icon = new Icon(global::PeMain.Properties.Images.App, iconSize)) {
 				return icon.ToBitmap();
 			}
+		}
+		
+		/// <summary>
+		/// 拡張状態か。
+		/// </summary>
+		/// <returns></returns>
+		public static bool IsExtension()
+		{
+			return Control.ModifierKeys == Keys.Shift;
 		}
 	}
 }

@@ -1641,5 +1641,7 @@ namespace PInvoke.Windows
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr LoadCursor(IntPtr hInstance, string lpCursorName);
 		
+		[DllImport("user32.dll")]
+		public static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 	}
 }
