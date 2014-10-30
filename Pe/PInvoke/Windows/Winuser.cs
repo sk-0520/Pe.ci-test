@@ -1617,6 +1617,9 @@ namespace PInvoke.Windows
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SWP uFlags);
 		
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+		
 		[DllImport("user32")]
 		public static extern bool AnimateWindow(IntPtr hwnd, int time, AW flags);
 		
