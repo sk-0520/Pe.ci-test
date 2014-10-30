@@ -348,13 +348,35 @@ namespace PeMain.UI
 		}
 		 */
 		
+		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
+		{
+			var menuList = new List<ToolStripItem>();
+			var itemSave = new ToolStripMenuItem();
+			var itemLoad = new ToolStripMenuItem();
+			var itemSeparator = new ToolStripSeparator();
+			menuList.Add(itemSave);
+			menuList.Add(itemLoad);
+			menuList.Add(itemSeparator);
+			
+			// 保存
+			itemSave.Name = menuNameSystemEnvWindowSave;
+			
+			// 読込
+			itemLoad.Name = menuNameSystemEnvWindowLoad;
+			
+			// サブメニュー設定
+			parentItem.DropDownItems.AddRange(menuList.ToArray());
+		}
+		
 		void AttachmentSystemEnvSubMenu(ToolStripMenuItem parentItem)
 		{
 			var menuList = new List<ToolStripItem>();
 			var itemHiddenFile = new ToolStripMenuItem();
 			var itemExtension = new ToolStripMenuItem();
+			var itemWindow = new ToolStripMenuItem();
 			menuList.Add(itemHiddenFile);
 			menuList.Add(itemExtension);
+			menuList.Add(itemWindow);
 			
 			// 隠しファイル
 			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
@@ -369,6 +391,10 @@ namespace PeMain.UI
 				SystemEnvironment.SetExtensionShow(!SystemEnvironment.IsExtensionShow());
 				SystemEnvironment.RefreshShell();
 			};
+			
+			// ウィンドウ
+			itemWindow.Name = menuNameSystemEnvWindow;
+			AttachmentSystemEnvWindowSubMenu(itemWindow);
 			
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());

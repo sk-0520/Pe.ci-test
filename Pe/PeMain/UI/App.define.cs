@@ -39,6 +39,10 @@ namespace PeMain.UI
 		
 		const string menuNameSystemEnvHiddenFile = "menu_systemenv_hidden";
 		const string menuNameSystemEnvExtension = "menu_systemenv_ext";
+		const string menuNameSystemEnvWindow = "menu_systemenv_window";
+		const string menuNameSystemEnvWindowSave = "menu_systemenv_window_save";
+		const string menuNameSystemEnvWindowLoad = "menu_systemenv_window_load";
+		const string menuNameSystemEnvWindowSeparator = "menu_systemenv_window_separator";
 		
 
 		class StartupLogger: ILogger
