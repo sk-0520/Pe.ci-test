@@ -360,6 +360,7 @@ namespace PeMain.UI
 			
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
+			itemSave.Image = global::PeMain.Properties.Images.WindowSave;
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -367,6 +368,7 @@ namespace PeMain.UI
 			
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
+			itemLoad.Image = global::PeMain.Properties.Images.WindowLoad;
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				this._tempWindowListItem = null;
@@ -374,6 +376,7 @@ namespace PeMain.UI
 			
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.Image = global::PeMain.Properties.Images.WindowList;
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 				

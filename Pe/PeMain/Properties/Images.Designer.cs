@@ -573,9 +573,39 @@ namespace PeMain.Properties {
 		/// <summary>
 		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
 		/// </summary>
+		public static System.Drawing.Bitmap WindowList {
+			get {
+				object obj = ResourceManager.GetObject("WindowList", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap WindowLoad {
+			get {
+				object obj = ResourceManager.GetObject("WindowLoad", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
 		public static System.Drawing.Bitmap Windows {
 			get {
 				object obj = ResourceManager.GetObject("Windows", resourceCulture);
+				return ((System.Drawing.Bitmap)(obj));
+			}
+		}
+		
+		/// <summary>
+		///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+		/// </summary>
+		public static System.Drawing.Bitmap WindowSave {
+			get {
+				object obj = ResourceManager.GetObject("WindowSave", resourceCulture);
 				return ((System.Drawing.Bitmap)(obj));
 			}
 		}
