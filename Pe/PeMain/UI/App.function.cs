@@ -13,10 +13,10 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;
@@ -640,5 +640,81 @@ namespace PeMain.UI
 				}
 			 */
 		}
+		
+		/// <summary>
+		/// ウィンドウ位置を取得する。
+		/// </summary>
+		/// <param name="getAppWindow"></param>
+		/// <returns></returns>
+		WindowListItem GetWindowItem(bool getAppWindow)
+		{
+			var windowItemList = new WindowListItem();
+			
+			// http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx
+			var skipClassName = new [] {
+				"Shell_TrayWnd", // タスクバー
+				"Button", 
+				"Progman", // プログラムマネージャ
+				"#32769", // デスクトップ
+				"WorkerW", 
+				"SysShadow",
+				"SideBar_HTMLHostWindow",
+			};
+
+			API.EnumWindows(
+				(hWnd, lParam) => {
+					int processId;
+					API.GetWindowThreadProcessId(hWnd, out processId);
+					var process = Process.GetProcessById(processId);
+					if(!getAppWindow) {
+						if(Process.GetCurrentProcess() == process) {
+							return true;
+						}
+					}
+					
+					if(!API.IsWindowVisible(hWnd)) {
+						return true;
+					}
+					
+					var classBuffer = new StringBuilder(WindowsUtility.classNameLength);
+					API.GetClassName(hWnd, classBuffer, classBuffer.Capacity);
+					var className = classBuffer.ToString();
+					if(skipClassName.Any(s => s == className)) {
+						return true;
+					}
+					
+					var titleLength = API.GetWindowTextLength(hWnd);
+					var titleBuffer = new StringBuilder(titleLength + 1);
+					API.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
+					var rawRect = new RECT();
+					API.GetWindowRect(hWnd, out rawRect);
+					var windowItem = new WindowItem();
+					windowItem.Name = titleBuffer.ToString();
+					windowItem.Process = process;
+					windowItem.WindowHandle = hWnd;
+					windowItem.Rectangle = new Rectangle(rawRect.X, rawRect.Y, rawRect.Width, rawRect.Height);
+					//Debug.WriteLine("{0}, {1}, {2}", className, windowItem.Name, windowItem.Rectangle);
+					windowItemList.Items.Add(windowItem);
+					return true;
+				},
+				IntPtr.Zero
+			);
+			
+			windowItemList.Name = DateTime.Now.ToString();
+			
+			return windowItemList;
+		}
+		
+		/// <summary>
+		/// ウィンドウ位置を設定。
+		/// </summary>
+		/// <param name="windowListItem"></param>
+		void ChangeWindow(WindowListItem windowListItem)
+		{
+			foreach(var windowItem in windowListItem.Items) {
+				var reslut = API.MoveWindow(windowItem.WindowHandle, windowItem.Rectangle.X, windowItem.Rectangle.Y, windowItem.Rectangle.Width, windowItem.Rectangle.Height, true);
+			}
+		}
+		
 	}
 }

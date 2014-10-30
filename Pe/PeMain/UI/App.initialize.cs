@@ -353,19 +353,29 @@ namespace PeMain.UI
 			var menuList = new List<ToolStripItem>();
 			var itemSave = new ToolStripMenuItem();
 			var itemLoad = new ToolStripMenuItem();
-			var itemSeparator = new ToolStripSeparator();
+			//var itemSeparator = new ToolStripSeparator();
 			menuList.Add(itemSave);
 			menuList.Add(itemLoad);
-			menuList.Add(itemSeparator);
+			//menuList.Add(itemSeparator);
 			
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
+			itemSave.Click += (object sender, EventArgs e) => {
+				this._tempWindowListItem = GetWindowItem(false);
+			};
 			
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
+			itemLoad.Click += (object sender, EventArgs e) => {
+				ChangeWindow(this._tempWindowListItem);
+				this._tempWindowListItem = null;
+			};
 			
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownOpened += (object sender, EventArgs e) => {
+				itemLoad.Enabled = this._tempWindowListItem != null;
+			};
 		}
 		
 		void AttachmentSystemEnvSubMenu(ToolStripMenuItem parentItem)

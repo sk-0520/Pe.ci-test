@@ -122,6 +122,7 @@
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\WindowItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IRootSender.cs" />

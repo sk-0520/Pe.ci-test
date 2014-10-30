@@ -45,7 +45,9 @@ namespace PeMain
 			#endif
 			fileLogger.Puts(PeMain.Data.LogType.Information, "mutex name", mutexName);
 			using(fileLogger) {
+				#if RELEASE
 				try {
+				#endif
 					using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 						if (isFirstInstance) {
 							using(var app = new UI.App(commandLine, fileLogger)) {
@@ -75,10 +77,12 @@ namespace PeMain
 							fileLogger.Puts(PeMain.Data.LogType.Error, "duplicate boot", mutexName);
 						}
 					}
+				#if RELEASE
 				} catch(Exception ex) {
 					fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);
 					throw;
 				}
+				#endif
 			}
 		}
 	}

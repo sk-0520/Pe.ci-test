@@ -16,6 +16,8 @@ namespace PInvoke.Windows
 	/// </summary>
 	public static class WindowsUtility
 	{
+		public const int classNameLength = 260;
+		
 		public static int GetIntUnchecked(IntPtr value)
 		{
 			return IntPtr.Size == 8 ? unchecked((int)value.ToInt64()) : value.ToInt32();

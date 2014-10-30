@@ -81,7 +81,7 @@ namespace PeMain.Logic
 		{
 			var targetClassName = "SHELLDLL_DefView";
 			var hWnd = IntPtr.Zero;
-			var workClassName = new StringBuilder(256);
+			var workClassName = new StringBuilder(WindowsUtility.classNameLength);
 			while(true) {
 				hWnd = API.FindWindowEx(hParentWnd, hWnd, null, null);
 				if(hWnd == IntPtr.Zero) {
