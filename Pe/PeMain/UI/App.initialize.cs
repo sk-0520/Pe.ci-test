@@ -361,7 +361,8 @@ namespace PeMain.UI
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
 			itemSave.Click += (object sender, EventArgs e) => {
-				this._tempWindowListItem = GetWindowItem(false);
+				var windowListItem = GetWindowListItem(false);
+				this._tempWindowListItem = windowListItem;
 			};
 			
 			// 読込
@@ -375,6 +376,8 @@ namespace PeMain.UI
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
+				
+				OpeningWindowMenu();
 			};
 		}
 		

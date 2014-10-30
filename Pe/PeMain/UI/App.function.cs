@@ -646,17 +646,17 @@ namespace PeMain.UI
 		/// </summary>
 		/// <param name="getAppWindow"></param>
 		/// <returns></returns>
-		WindowListItem GetWindowItem(bool getAppWindow)
+		WindowListItem GetWindowListItem(bool getAppWindow)
 		{
 			var windowItemList = new WindowListItem();
 			
 			// http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx
 			var skipClassName = new [] {
 				"Shell_TrayWnd", // タスクバー
-				"Button", 
+				"Button",
 				"Progman", // プログラムマネージャ
 				"#32769", // デスクトップ
-				"WorkerW", 
+				"WorkerW",
 				"SysShadow",
 				"SideBar_HTMLHostWindow",
 			};
@@ -714,6 +714,48 @@ namespace PeMain.UI
 			foreach(var windowItem in windowListItem.Items) {
 				var reslut = API.MoveWindow(windowItem.WindowHandle, windowItem.Rectangle.X, windowItem.Rectangle.Y, windowItem.Rectangle.Width, windowItem.Rectangle.Height, true);
 			}
+		}
+		
+		void OpeningWindowMenu()
+		{
+			var parentItem = (ToolStripMenuItem)((ToolStripMenuItem)this._contextMenu.Items[menuNameSystemEnv]).DropDownItems[menuNameSystemEnvWindow];
+			//_windowListItems
+			if(parentItem.DropDownItems.ContainsKey(menuNameSystemEnvWindowSeparator)) {
+				var separatorItem = parentItem.DropDownItems[menuNameSystemEnvWindowSeparator];
+				var itemMenus = parentItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem);
+				foreach(var itemMenu in itemMenus.ToArray()) {
+					parentItem.DropDownItems.Remove(itemMenu);
+					itemMenu.ToDispose();
+				}
+			}
+			
+			var itemWindowMenuList = new List<ToolStripItem>();
+			var isStart = true;
+			foreach(var windowList in this._windowListItems) {
+				if(isStart) {
+					var itemSeparator = new ToolStripSeparator();
+					itemSeparator.Name = menuNameSystemEnvWindowSeparator;
+					itemWindowMenuList.Add(itemSeparator);
+					isStart = false;
+				}
+				
+				var menuItem = new ToolStripMenuItem();
+				menuItem.Text = windowList.Name;
+				itemWindowMenuList.Add(menuItem);
+				
+				if(itemWindowMenuList.Count > 0) {
+					parentItem.DropDownItems.AddRange(itemWindowMenuList.ToArray());
+				}
+			}
+		}
+		
+		public void PushWindowListItem(WindowListItem windowListItem)
+		{
+			if(Literal.windowSaveCount == this._windowListItems.Count) {
+				this._windowListItems.RemoveAt(0);
+			}
+			this._windowListItems.Add(windowListItem);
+
 		}
 		
 	}

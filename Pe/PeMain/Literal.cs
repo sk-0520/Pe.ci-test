@@ -63,6 +63,12 @@ namespace PeMain
 		#endif
 		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
+		#if DEBUG
+		public const int windowSaveCount = 3;
+		#else
+		public const int windowSaveCount = 10;
+		#endif
+		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
 		/// </summary>

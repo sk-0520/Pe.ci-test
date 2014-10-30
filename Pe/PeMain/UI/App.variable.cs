@@ -33,6 +33,7 @@ namespace PeMain.UI
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 		
 		private WindowListItem _tempWindowListItem;
-		private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
+		List<WindowListItem> _windowListItems = new List<WindowListItem>();
+		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
 	}
 }
