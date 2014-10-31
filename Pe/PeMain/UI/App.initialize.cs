@@ -22,6 +22,7 @@ using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.Logic;
 using PeMain.Logic.DB;
+using PeMain.UI;
 using PeUtility;
 
 namespace PeMain.UI
@@ -181,6 +182,7 @@ namespace PeMain.UI
 			
 			var existsSettingFilePath = File.Exists(mainSettingFilePath);
 			this._commonData.MainSetting = Serializer.LoadFile<MainSetting>(mainSettingFilePath, true);
+			this._commonData.MainSetting.CorrectionValue();
 			
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
 			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
@@ -534,7 +536,7 @@ namespace PeMain.UI
 		void InitializeMain(CommandLine commandLine, StartupLogger logger)
 		{
 			this._notifyIcon = new NotifyIcon();
-			this._contextMenu = new ContextMenuStrip();
+			this._contextMenu = new AppContextMenuStrip();
 			AttachmentMainMenu();
 			
 			this._notifyIcon.DoubleClick += IconDoubleClick;
@@ -624,6 +626,21 @@ namespace PeMain.UI
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui/end"], string.Empty);
 		}
 		
+		void InitializeTimer(CommandLine commandLine, StartupLogger logger)
+		{
+			Debug.Assert(this._commonData != null);
+				
+			// ウィンドウ一覧取得
+			if(this._windowTimer == null) {
+				this._windowTimer = new System.Timers.Timer();
+				this._windowTimer.Elapsed += Timer_Elapsed;
+			}
+			this._windowTimer.Enabled = false;
+			this._windowTimer.Interval = this._commonData.MainSetting.WindowSaveTime.TotalMilliseconds;
+			this._windowTimer.Enabled = true;
+		}
+
+		
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -646,6 +663,8 @@ namespace PeMain.UI
 			
 			Debug.Assert(Initialized);
 			ApplyLanguage();
+			
+			InitializeTimer(commandLine, logger);
 			
 			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;

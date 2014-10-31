@@ -63,13 +63,23 @@ namespace PeMain
 		#endif
 		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
+		public static readonly TripleRange<int> windowSaveCount = 
 		#if DEBUG
-		public const int windowSaveCount = 3;
-		public static readonly TimeSpan windowSaveTime = TimeSpan.FromSeconds(10);
+			new TripleRange<int>(1, 2, 3);
 		#else
-		public const int windowSaveCount = 10;
-		public static readonly TimeSpan windowSaveTime = TimeSpan.FromMinutes(5);
+			new TripleRange<int>(3, 5, 10);
 		#endif
+		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
+		#if DEBUG
+			TimeSpan.FromSeconds(1),
+			TimeSpan.FromSeconds(2),
+			TimeSpan.FromSeconds(30)
+		#else
+			TimeSpan.FromMinutes(30),
+			TimeSpan.FromMinutes(5),
+			TimeSpan.FromMinutes(15)
+		#endif
+		);
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ

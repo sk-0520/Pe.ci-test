@@ -16,18 +16,30 @@ namespace PeMain.Data
 	/// なんかを保持するアイテムの基底。
 	/// </summary>
 	[Serializable]
-	public abstract class Item
-	{ }
+	public abstract class Item: ICorrectionItem
+	{
+		/// <summary>
+		/// データ補正を行う。
+		/// </summary>
+		public virtual void CorrectionValue()
+		{ }
+	}
 	
 	/// <summary>
 	/// 解放が必要なアイテムの基底。
 	/// </summary>
-	public abstract class DisposableItem
+	public abstract class DisposableItem: ICorrectionItem
 	{
 		public DisposableItem()
 		{
 			IsDisposed = false;
 		}
+		
+		/// <summary>
+		/// データ補正を行う。
+		/// </summary>
+		public virtual void CorrectionValue()
+		{ }
 		
 		/// <summary>
 		/// 破棄されたか。

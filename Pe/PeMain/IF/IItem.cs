@@ -11,11 +11,11 @@ using System;
 namespace PeMain.IF
 {
 	/// <summary>
-	/// 解放が必要なアイテムのインターフェイス。
+	/// データ補正関係処理
 	/// </summary>
-	public interface IDisposableItem: IDisposable
+	public interface ICorrectionItem
 	{
-		bool IsDisposed { get; set; }
+		void CorrectionValue();
 	}
 
 	public interface INameItem

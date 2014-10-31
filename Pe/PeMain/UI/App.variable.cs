@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using PeMain.Data;
+using PeMain.UI;
 
 namespace PeMain.UI
 {
@@ -21,7 +22,7 @@ namespace PeMain.UI
 	{
 		private NotifyIcon _notifyIcon;
 		//private ContextMenu _contextMenu;
-		private ContextMenuStrip _contextMenu;
+		private AppContextMenuStrip _contextMenu;
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		
@@ -35,5 +36,7 @@ namespace PeMain.UI
 		private WindowListItem _tempWindowListItem;
 		List<WindowListItem> _windowListItems = new List<WindowListItem>();
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
+		
+		System.Timers.Timer _windowTimer;
 	}
 }

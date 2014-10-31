@@ -282,6 +282,7 @@
     <Compile Include="UI\ExecuteForm.variable.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Ex\ExContextMenuStrip.cs" />
     <Compile Include="UI\Ex\ExHotkeyControl.cs" />
     <Compile Include="UI\Ex\ExListBox.cs" />
     <Compile Include="UI\Ex\ExSplitButton.cs" />

@@ -7,9 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
-
 using PeUtility;
 
 namespace PeMain.Data
@@ -65,7 +66,14 @@ namespace PeMain.Data
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
 			
-			WindowSaveTime = Literal.windowSaveTime;
+			WindowSaveTime = Literal.windowSaveTime.median;
+			WindowSaveCount = Literal.windowSaveCount.median;
+		}
+		
+		public override void CorrectionValue()
+		{
+			WindowSaveTime = WindowSaveTime.Rounding(Literal.windowSaveTime.minimum, Literal.windowSaveTime.maxim);
+			WindowSaveCount = WindowSaveCount.Rounding(Literal.windowSaveCount.minimum, Literal.windowSaveCount.maxim);
 		}
 		
 		public RunningInfo RunningInfo { get; set; }
@@ -100,6 +108,10 @@ namespace PeMain.Data
 		public NoteSetting Note { get; set; }
 		
 		/// <summary>
+		/// ウィンドウ一覧保持数。
+		/// </summary>
+		public int WindowSaveCount { get; set; }
+		/// <summary>
 		/// ウィンドウ一覧取得時間。
 		/// </summary>
 		public TimeSpan WindowSaveTime { get; set; }
@@ -108,5 +120,6 @@ namespace PeMain.Data
 		{
 			Command.ToDispose();
 		}
+
 	}
 }

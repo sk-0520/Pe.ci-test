@@ -10,6 +10,8 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Timers;
+
 using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.IF;
@@ -38,6 +40,8 @@ namespace PeMain.UI
 		
 		public void Dispose()
 		{
+			this._windowTimer.ToDispose();
+			
 			this._commonData.ToDispose();
 			this._messageWindow.ToDispose();
 			this._logForm.ToDispose();
@@ -104,6 +108,32 @@ namespace PeMain.UI
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
 		{
 			OpeningNoteMenu();
+		}
+		
+		/// <summary>
+		/// タイマー関連はここにまとめておこうと思う。
+		/// 
+		/// よって将来的な拡張に対応できるよう実装。
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void Timer_Elapsed(object sender, ElapsedEventArgs e)
+		{
+			var timer = (System.Timers.Timer)sender;
+			try {
+				timer.Enabled = false;
+				if(timer == this._windowTimer) {
+					// 停止状態やメニュー表示状態では無視しとく
+					if(!(this._pause || this._contextMenu.ShowContextMenu)) {
+						var windowItemList = GetWindowListItem(false);
+						PushWindowListItem(windowItemList);
+					}
+				}
+			} finally {
+				if(timer.AutoReset) {
+					timer.Enabled = true;
+				}
+			}
 		}
 
 	}

@@ -32,4 +32,16 @@ namespace PeUtility
 	{
 		public T Result { get; set; }
 	}
+	
+	public struct TripleRange<T>
+	{
+		public readonly T minimum, median, maxim;
+		
+		public TripleRange(T min, T median, T max)
+		{
+			this.minimum = min;
+			this.median = median;
+			this.maxim = max;
+		}
+	}
 }

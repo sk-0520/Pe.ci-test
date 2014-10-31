@@ -733,7 +733,7 @@ namespace PeMain.UI
 			
 			var itemWindowMenuList = new List<ToolStripItem>();
 			var isStart = true;
-			foreach(var windowList in this._windowListItems) {
+			foreach(var windowListItem in this._windowListItems) {
 				if(isStart) {
 					var itemSeparator = new ToolStripSeparator();
 					itemSeparator.Name = menuNameSystemEnvWindowSeparator;
@@ -742,7 +742,10 @@ namespace PeMain.UI
 				}
 				
 				var menuItem = new ToolStripMenuItem();
-				menuItem.Text = windowList.Name;
+				menuItem.Text = windowListItem.Name;
+				menuItem.Click += (object sender, EventArgs e) => {
+					ChangeWindow(windowListItem);
+				};
 				itemWindowMenuList.Add(menuItem);
 				
 				if(itemWindowMenuList.Count > 0) {
@@ -753,11 +756,10 @@ namespace PeMain.UI
 		
 		public void PushWindowListItem(WindowListItem windowListItem)
 		{
-			if(Literal.windowSaveCount == this._windowListItems.Count) {
-				this._windowListItems.RemoveAt(0);
+			if(this._commonData.MainSetting.WindowSaveCount < this._windowListItems.Count) {
+				this._windowListItems.RemoveRange(0, this._commonData.MainSetting.WindowSaveCount - this._windowListItems.Count);
 			}
 			this._windowListItems.Add(windowListItem);
-
 		}
 		
 	}
