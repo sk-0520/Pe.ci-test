@@ -64,6 +64,8 @@ namespace PeMain.Data
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
+			
+			WindowSaveTime = Literal.windowSaveTime;
 		}
 		
 		public RunningInfo RunningInfo { get; set; }
@@ -96,6 +98,11 @@ namespace PeMain.Data
 		/// ノード
 		/// </summary>
 		public NoteSetting Note { get; set; }
+		
+		/// <summary>
+		/// ウィンドウ一覧取得時間。
+		/// </summary>
+		public TimeSpan WindowSaveTime { get; set; }
 		
 		public override void Dispose()
 		{

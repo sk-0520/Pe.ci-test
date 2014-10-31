@@ -65,8 +65,10 @@ namespace PeMain
 
 		#if DEBUG
 		public const int windowSaveCount = 3;
+		public static readonly TimeSpan windowSaveTime = TimeSpan.FromSeconds(10);
 		#else
 		public const int windowSaveCount = 10;
+		public static readonly TimeSpan windowSaveTime = TimeSpan.FromMinutes(5);
 		#endif
 		
 		/// <summary>
