@@ -660,6 +660,8 @@ namespace PeMain.UI
 				"SysShadow",
 				"SideBar_HTMLHostWindow",
 			};
+			
+			var myProcess = Process.GetCurrentProcess();
 
 			API.EnumWindows(
 				(hWnd, lParam) => {
@@ -667,7 +669,7 @@ namespace PeMain.UI
 					API.GetWindowThreadProcessId(hWnd, out processId);
 					var process = Process.GetProcessById(processId);
 					if(!getAppWindow) {
-						if(Process.GetCurrentProcess() == process) {
+						if(myProcess.Id == process.Id) {
 							return true;
 						}
 					}
