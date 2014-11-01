@@ -63,23 +63,21 @@ namespace PeMain
 		#endif
 		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
-		public static readonly TripleRange<int> windowSaveCount = 
 		#if DEBUG
-			new TripleRange<int>(1, 2, 3);
-		#else
-			new TripleRange<int>(3, 5, 10);
-		#endif
+		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(1, 2, 3);
 		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
-		#if DEBUG
 			TimeSpan.FromSeconds(1),
 			TimeSpan.FromSeconds(2),
 			TimeSpan.FromSeconds(30)
+		);
 		#else
+		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(3, 5, 10);
+		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMinutes(30),
 			TimeSpan.FromMinutes(5),
 			TimeSpan.FromMinutes(15)
-		#endif
 		);
+		#endif
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -87,8 +85,13 @@ namespace PeMain
 		public static readonly Size toolbarFloatSize = new Size(SystemInformation.WorkingArea.Width / 10, 0);
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
 		public const int toolbarTextWidth = 80;
+		public static readonly TripleRange<TimeSpan> toolbarHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(10));
+		public static readonly TripleRange<TimeSpan> toolbarAnimateTime = new TripleRange<TimeSpan>(TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(500), TimeSpan.FromSeconds(1000));
+			
 		public const int waitCountForGetScreenCount = 10;
 		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
+		
+		public static readonly TripleRange<TimeSpan> commandHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(20));
 		
 		#region NOTE
 		

@@ -9,6 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml;
+using System.Xml.Serialization;
 
 using PeUtility;
 
@@ -162,7 +164,17 @@ namespace PeMain.Data
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;
 			TextWidth = Literal.toolbarTextWidth;
+			
+			HiddenWaitTime = Literal.toolbarHiddenTime.median;
+			HiddenAnimateTime = Literal.toolbarAnimateTime.median;
 		}
+		
+		public override void CorrectionValue()
+		{
+			HiddenWaitTime = Literal.toolbarHiddenTime.ToRounding(HiddenWaitTime);
+			HiddenAnimateTime = Literal.toolbarAnimateTime.ToRounding(HiddenAnimateTime);
+		}
+		
 		/// <summary>
 		/// 表示
 		/// </summary>
@@ -210,11 +222,35 @@ namespace PeMain.Data
 		/// <summary>
 		/// 非表示までの時間
 		/// </summary>
+		[XmlIgnore]
 		public TimeSpan HiddenWaitTime { get; set; }
+		[XmlElement("HiddenWaitTime", DataType = "duration")]
+		public string _HiddenWaitTime
+		{
+			get { return XmlConvert.ToString(HiddenWaitTime); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					HiddenWaitTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
 		/// <summary>
 		/// 非表示のアニメーション時間
 		/// </summary>
+		[XmlIgnore]
 		public TimeSpan HiddenAnimateTime { get; set; }
+		[XmlElement("HiddenAnimateTime", DataType = "duration")]
+		public string _HiddenAnimateTime
+		{
+			get { return XmlConvert.ToString(HiddenAnimateTime); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					HiddenAnimateTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
 		
 		public bool IsNameEqual(string name)
 		{

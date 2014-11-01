@@ -34,6 +34,7 @@ namespace PeUtility
 	}
 	
 	public struct TripleRange<T>
+		where T: IComparable
 	{
 		public readonly T minimum, median, maxim;
 		
@@ -42,6 +43,11 @@ namespace PeUtility
 			this.minimum = min;
 			this.median = median;
 			this.maxim = max;
+		}
+		
+		public T ToRounding(T value)
+		{
+			return value.Rounding(this.minimum, this.maxim);
 		}
 	}
 }

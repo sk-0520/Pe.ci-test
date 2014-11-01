@@ -8,6 +8,9 @@
  */
 using System;
 using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
+
 using PeUtility;
 
 namespace PeMain.Data
@@ -25,10 +28,16 @@ namespace PeMain.Data
 			Width = 200;
 			Height = 200;
 			IconScale = IconScale.Small;
-			HiddenTime = TimeSpan.FromSeconds(1.5);
+			HiddenTime = Literal.commandHiddenTime.median;
 			FontSetting = new FontSetting();
 			HotKey = new HotKeySetting();
 		}
+		
+		public override void CorrectionValue()
+		{
+			HiddenTime = Literal.commandHiddenTime.ToRounding(HiddenTime);
+		}
+		
 		/// <summary>
 		/// アイコンサイズ
 		/// </summary>
@@ -48,7 +57,17 @@ namespace PeMain.Data
 		/// <summary>
 		/// 非アクティブからの非表示猶予。
 		/// </summary>
+		[XmlIgnore]
 		public TimeSpan HiddenTime { get; set; }
+		/*
+		[XmlElement("HiddenTime", DataType = "duration")]
+		public string _HiddenTime
+		{
+			get { return XmlConvert.ToString(HiddenTime); }
+			set { HiddenTime = XmlConvert.ToTimeSpan(value); }
+		}
+		//*/
+
 		/// <summary>
 		/// 最前面表示。
 		/// </summary>

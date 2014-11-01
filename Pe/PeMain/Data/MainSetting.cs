@@ -11,6 +11,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
+
 using PeUtility;
 
 namespace PeMain.Data
@@ -72,8 +75,8 @@ namespace PeMain.Data
 		
 		public override void CorrectionValue()
 		{
-			WindowSaveTime = WindowSaveTime.Rounding(Literal.windowSaveTime.minimum, Literal.windowSaveTime.maxim);
-			WindowSaveCount = WindowSaveCount.Rounding(Literal.windowSaveCount.minimum, Literal.windowSaveCount.maxim);
+			WindowSaveTime = Literal.windowSaveTime.ToRounding(WindowSaveTime);
+			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
 		}
 		
 		public RunningInfo RunningInfo { get; set; }
@@ -114,7 +117,19 @@ namespace PeMain.Data
 		/// <summary>
 		/// ウィンドウ一覧取得時間。
 		/// </summary>
+		[XmlIgnore]
 		public TimeSpan WindowSaveTime { get; set; }
+		[XmlElement("WindowSaveTime", DataType = "duration")]
+		public string _WindowSaveTime
+		{
+			get { return XmlConvert.ToString(WindowSaveTime); }
+			set 
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					WindowSaveTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
 		
 		public override void Dispose()
 		{
