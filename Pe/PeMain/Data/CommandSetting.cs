@@ -59,14 +59,17 @@ namespace PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public TimeSpan HiddenTime { get; set; }
-		/*
 		[XmlElement("HiddenTime", DataType = "duration")]
 		public string _HiddenTime
 		{
 			get { return XmlConvert.ToString(HiddenTime); }
-			set { HiddenTime = XmlConvert.ToTimeSpan(value); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					HiddenTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
 		}
-		//*/
 
 		/// <summary>
 		/// 最前面表示。
