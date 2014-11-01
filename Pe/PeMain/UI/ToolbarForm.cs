@@ -147,7 +147,7 @@ namespace PeMain.UI
 			SwitchHidden();
 		}
 		
-		void toolItem_MouseHover(object sender, EventArgs e)
+		void ToolItem_MouseHover(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
 			/*

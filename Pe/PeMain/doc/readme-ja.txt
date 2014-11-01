@@ -13,7 +13,7 @@
 
 ## 必要環境
 
- * Windows7
+ * Windows7(x86/x64)
  * .NET Framework 4.5.1
 
 

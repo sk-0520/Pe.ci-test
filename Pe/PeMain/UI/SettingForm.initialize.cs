@@ -173,6 +173,9 @@ namespace PeMain.UI
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
+			this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
+			this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
+				
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
 			// ツールーバー位置の項目構築

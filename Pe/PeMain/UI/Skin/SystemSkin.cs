@@ -199,7 +199,7 @@ namespace PeMain.UI
 			
 			buttonSize.Width = iconBox.Width + padding.Right + padding.Horizontal + menuWidth;
 			if(showText) {
-				buttonSize.Width += textWidth > 0 ? textWidth: Literal.toolbarTextWidth;
+				buttonSize.Width += Literal.toolbarTextWidth.ToRounding(textWidth);
 			}
 			buttonSize.Height = iconBox.Height + padding.Vertical;
 			

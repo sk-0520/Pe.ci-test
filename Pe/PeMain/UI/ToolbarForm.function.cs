@@ -170,6 +170,9 @@ namespace PeMain.UI
 			ApplySettingPosition();
 			ApplySettingVisible();
 			ApplySettingTopmost();
+			
+			HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
+			HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
 		}
 		
 		protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -782,7 +785,7 @@ namespace PeMain.UI
 			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
 			toolItem.Visible = true;
 
-			toolItem.MouseHover += toolItem_MouseHover;
+			toolItem.MouseHover += ToolItem_MouseHover;
 			var dropdownItem = toolItem as ToolStripDropDownItem;
 			if(dropdownItem != null) {
 				dropdownItem.DropDownOpening += OpeningRootMenu;
@@ -906,8 +909,8 @@ namespace PeMain.UI
 		protected override void ToShow()
 		{
 			base.ToShow();
-			UIUtility.ShowFront(this);
 			ApplySettingTopmost();
+			UIUtility.ShowFront(this);
 		}
 		
 		protected override void HiddenView(Rectangle area)
@@ -916,6 +919,7 @@ namespace PeMain.UI
 				if(!this._menuOpening) {
 					base.HiddenView(area);
 					TopMost = true;
+					UIUtility.ShowFront(this);
 				} else {
 					//SwitchHidden();
 				}

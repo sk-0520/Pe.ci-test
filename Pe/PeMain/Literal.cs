@@ -75,7 +75,7 @@ namespace PeMain
 		/// </summary>
 		public static readonly Size toolbarFloatSize = new Size(SystemInformation.WorkingArea.Width / 10, 0);
 		public static readonly Size toolbarDesktopSize = new Size(0, 0);
-		public const int toolbarTextWidth = 80;
+		public static readonly TripleRange<int> toolbarTextWidth = new TripleRange<int>(40, 80, 200);
 		public static readonly TripleRange<TimeSpan> toolbarHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(10));
 		public static readonly TripleRange<TimeSpan> toolbarAnimateTime = new TripleRange<TimeSpan>(TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(500), TimeSpan.FromSeconds(1000));
 			

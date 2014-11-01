@@ -1,2 +1,48 @@
 ﻿<!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>Pe Update: 最新バージョン更新情報</title><script>window.onload = function(){	var list = document.getElementsByTagName("a");	for(var i = 0; i < list.length; i++) {		list[i].setAttribute("target", "PE_BROWSER");	}}</script><style>body{	font-family: "Meiryo UI";}h1{	border-bottom: 3px double #888;}dt.features{}dt.fixes{}dt.developer{}dt.note{}dd{	margin-left: 0;}</style></head><body><h1>2014/10/25, 0.27.0</h1><dl><dt class='features'>機能</dt><dd><ul><li>ツールバーメインメニューに非表示を追加。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/8">#8</a>, <a href="https://bitbucket.org/sk_0520/pe/issue/34">#34</a>とかの成果として、タスクトレイのコンテキストメニューを .NET Framework の推奨である ContextMenuStrip に変更(Forms非推奨？ 聞こえんなぁ)。</li><li>ContextMenuStrip への変更にあたりアイコンを設定。</li><li>ノートのカスタムカラーアイコンを非選択時は固定のアイコンを表示するように変更。</li></ul></dd><dt class='fixes'>修正</dt><dd><ul><li>ログフォームのタイトルがアホになっていた。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/57">#57</a>: ツールバーのコンテキストメニューでカーソルが移動用。</li><li>通常スキンでノートのキャプションボタンを密着するよう変更。</li><li>Windowsからのユーザー切り替え時に表示UIの再描画処理を見直し。</li></ul></dd><dt class='developer'>開発</dt><dd><ul><li>SystemEvents.UserPreferenceChanged イベントを受信。</li><li>SystemEvents.SessionSwitch イベントを受信。</li></ul></dd></dl></body></html>
+<html><head><meta charset="utf-8"><title>Pe Update: 最新バージョン更新情報</title><script>window.onload = function()var targetName = 'PE_BROWSER';
+var issueLink = 'https://bitbucket.org/sk_0520/pe/issue/';
+
+window.onload = function()
+{
+	var itemList = document.getElementsByTagName('li');
+	for(var i = 0; i < itemList.length; i++) {
+		var li = itemList[i];
+		var text = li.innerHTML;
+		
+		text = text.replace(/#([0-9]+)/g, "<a href='" + issueLink + "$1' target='" + targetName + "'>#$1</a>");
+		li.innerHTML = text;
+	}
+}
+</script><style>body
+{
+font-family: "Meiryo UI";
+}
+
+h1
+{
+border-bottom: 3px double #888;
+}
+
+dt.features
+{
+}
+
+dt.fixes
+{
+}
+
+dt.developer
+{
+}
+
+dt.note
+{
+}
+
+p.uri
+{
+	margin-top: 0;
+	font-size: 80%;
+}
+
+</style></head><body><h1>2014/11/01, 0.28.0</h1><dl><dt class='features'>機能</dt><dd><ul><li>システム環境のアイコンを Windows ちっくに置き換え。</li><li>タスクトレイコンテキストのノートに現在有効なノート一覧を表示する。</li><li>ノートのコンテキストメニューに拡張メニュー実装。</li><li>ノートのコンテキストメニュー項目、最小化にアイコン設定。</li><li>画面上のウィンドウ表示位置を保存・復帰させる機能の追加。</li></ul></dd><dt class='fixes'>修正</dt><dd><ul><li>タスクトレイ Pe アイコンダブルクリック時の処理がデバッグコードのままだった。</li><li>タスクトレイ Pe アイコンコンテキストメニューのツールバーアイコンを変更。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/59">#59</a>: TimeSpanがシリアライズされない。</li><li>システムイベントのメモリリークを修正。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/58">#58</a>: メニューに表示するホットキーが近い。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/17">#17</a>: Aero描画の切り替え。</li><li>ツールバーの文字列幅を制限。</li></ul></dd><dt class='developer'>開発</dt><dd><ul><li>changelog.xml の 0.27.0 公開日が10/25になっていたので10/26に直した。</li><li>[PE]/etc/style, [PE]/etc/script を追加、それに伴い関連部分を色々と変更。</li></ul></dd></dl></body></html>

@@ -163,7 +163,7 @@ namespace PeMain.Data
 			AutoHide = false;
 			FloatSize = Literal.toolbarFloatSize;
 			DesktopSize = Literal.toolbarDesktopSize;
-			TextWidth = Literal.toolbarTextWidth;
+			TextWidth = Literal.toolbarTextWidth.median;
 			
 			HiddenWaitTime = Literal.toolbarHiddenTime.median;
 			HiddenAnimateTime = Literal.toolbarAnimateTime.median;
@@ -171,6 +171,7 @@ namespace PeMain.Data
 		
 		public override void CorrectionValue()
 		{
+			TextWidth = Literal.toolbarTextWidth.ToRounding(TextWidth);
 			HiddenWaitTime = Literal.toolbarHiddenTime.ToRounding(HiddenWaitTime);
 			HiddenAnimateTime = Literal.toolbarAnimateTime.ToRounding(HiddenAnimateTime);
 		}
