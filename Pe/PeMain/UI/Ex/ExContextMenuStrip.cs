@@ -8,6 +8,7 @@
  */
 using System;
 using System.Windows.Forms;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -23,12 +24,14 @@ namespace PeMain.UI
 		/// メニューは表示されているか。
 		/// </summary>
 		public bool ShowContextMenu { get; private set; }
+		public bool IsExtension { get; private set; }
 		
 		protected override void OnOpening(System.ComponentModel.CancelEventArgs e)
 		{
 			base.OnOpening(e);
 			if(!e.Cancel) {
 				ShowContextMenu = true;
+				IsExtension = AppUtility.IsExtension();
 			}
 		}
 		
