@@ -96,7 +96,7 @@ namespace PeMain.UI
 						}
 						//return;
 						break;
-						*/
+						 */
 						
 					case (int)WM.WM_MOVING:
 						{
@@ -120,6 +120,12 @@ namespace PeMain.UI
 							}
 							
 							Marshal.StructureToPtr(rect, m.LParam, false);
+						}
+						break;
+						
+					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+						{
+							CommonData.Skin.Refresh(this);
 						}
 						break;
 				}

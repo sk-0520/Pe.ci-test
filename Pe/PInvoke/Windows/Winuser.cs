@@ -31,6 +31,7 @@ namespace PInvoke.Windows
 		WM_DEVICECHANGE = 0x0219,
 		WM_SETCURSOR = 0x0020,
 		WM_CONTEXTMENU = 0x007b,
+		WM_DWMCOMPOSITIONCHANGED = 0x031e,
 	}
 	
 	public enum WS_EX

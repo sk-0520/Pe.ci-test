@@ -45,6 +45,7 @@
 			<li>#59: TimeSpanがシリアライズされない</li>
 			<li>システムイベントのメモリリークを修正</li>
 			<li>#58: メニューに表示するホットキーが近い</li>
+			<li>#17: Aero描画の切り替え</li>
 			<li></li>
 		</ul>
 		<ul type="developer">

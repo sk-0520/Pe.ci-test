@@ -133,11 +133,13 @@ namespace PeMain.UI
 		{
 			EnabledVisualStyle = IsEnabledVisualStyle();
 		}
-		public virtual void Refresh(Form target)
-		{
-			EnabledVisualStyle = IsEnabledVisualStyle();
-		}
 		public abstract void Close(Form target);
+		
+		public void Refresh(Form target)
+		{
+			Close(target);
+			Start(target);
+		}
 		
 #region Layout Toolbar
 
