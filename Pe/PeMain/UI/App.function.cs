@@ -17,6 +17,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;
@@ -94,6 +96,24 @@ namespace PeMain.UI
 				}
 			}
 			//*/
+		}
+		
+		void AttachmentSystemEvent()
+		{
+			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
+			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
+			
+		}
+		void DetachmentSystemEvent()
+		{
+			SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+			SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
+			SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+			SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
+			SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
 		}
 		
 		/// <summary>
@@ -701,8 +721,6 @@ namespace PeMain.UI
 				},
 				IntPtr.Zero
 			);
-			
-			windowItemList.Name = DateTime.Now.ToString();
 			
 			return windowItemList;
 		}

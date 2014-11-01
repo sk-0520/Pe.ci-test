@@ -40,6 +40,8 @@ namespace PeMain.UI
 		
 		public void Dispose()
 		{
+			DetachmentSystemEvent();
+			
 			this._windowTimer.ToDispose();
 			
 			this._commonData.ToDispose();
@@ -105,6 +107,14 @@ namespace PeMain.UI
 			}
 		}
 		
+		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)
+		{
+			var windowItemList = GetWindowListItem(false);
+			windowItemList.Name = this._commonData.Language["save-window/display"];
+			PushWindowListItem(windowItemList);
+			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
+		}
+		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
 		{
 			OpeningNoteMenu();
@@ -126,7 +136,9 @@ namespace PeMain.UI
 					// 停止状態やメニュー表示状態では無視しとく
 					if(!(this._pause || this._contextMenu.ShowContextMenu)) {
 						var windowItemList = GetWindowListItem(false);
+						windowItemList.Name = this._commonData.Language["save-window/timer"];
 						PushWindowListItem(windowItemList);
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/timer"], windowItemList);
 					}
 				}
 			} finally {

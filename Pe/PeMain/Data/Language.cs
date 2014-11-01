@@ -114,6 +114,7 @@ namespace PeMain.Data
 			var systemMap = new Dictionary<string, string>() {
 				{ AppLanguageName.application,  Literal.programName },
 				{ AppLanguageName.version,      Application.ProductVersion },
+				{ AppLanguageName.timestamp,    nowDateTime.ToString() },
 				{ AppLanguageName.year,         nowDateTime.Year.ToString() },
 				{ AppLanguageName.year04,       nowDateTime.Year.ToString("D4") },
 				{ AppLanguageName.month,        nowDateTime.Month.ToString() },

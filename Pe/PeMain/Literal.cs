@@ -65,19 +65,14 @@ namespace PeMain
 
 		#if DEBUG
 		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(1, 2, 3);
-		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
-			TimeSpan.FromSeconds(1),
-			TimeSpan.FromSeconds(2),
-			TimeSpan.FromSeconds(30)
-		);
 		#else
 		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(3, 5, 10);
+		#endif
 		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
-			TimeSpan.FromMinutes(30),
+			TimeSpan.FromSeconds(30),
 			TimeSpan.FromMinutes(5),
 			TimeSpan.FromMinutes(15)
 		);
-		#endif
 		
 		/// <summary>
 		/// ツールバー フロート状態 設定サイズ
@@ -408,6 +403,7 @@ namespace PeMain
 		public const string application = "APPLICATION";
 		public const string version     = "VER";
 		
+		public const string timestamp   = "TIMESTAMP";
 		public const string year        = "Y";
 		public const string year04      = "Y:04";
 		public const string month       = "M";

@@ -17,12 +17,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.Logic;
 using PeMain.Logic.DB;
-using PeMain.UI;
 using PeUtility;
 
 namespace PeMain.UI
@@ -666,10 +664,7 @@ namespace PeMain.UI
 			
 			InitializeTimer(commandLine, logger);
 			
-			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
-			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
-			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+			AttachmentSystemEvent();
 			
 			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);
@@ -677,6 +672,7 @@ namespace PeMain.UI
 			
 			return existsSettingFilePath;
 		}
+
 
 	}
 }
