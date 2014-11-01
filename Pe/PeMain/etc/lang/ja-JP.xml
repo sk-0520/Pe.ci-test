@@ -88,13 +88,14 @@
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
 		<Word Name="main/menu/system-env/show-extension"    Text="拡張子を表示する(&amp;E)" />
 		<Word Name="main/menu/system-env/window"            Text="ウィンドウ(&amp;W)" />
-		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保持(&amp;S)" />
-		<Word Name="main/menu/system-env/window/load"       Text="保持しているウィンドウ状態を復帰(&amp;L)" />
+		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保存(&amp;S)" />
+		<Word Name="main/menu/system-env/window/load"       Text="保存しているウィンドウ状態を復帰(&amp;L)" />
 		
 		<Word Name="main/event/screen/count-change"    Text="ディスプレイ数変更検知" />
 		<Word Name="main/event/power/resume"           Text="レジューム" />
 		<Word Name="main/event/save-window/timer"      Text="ウィンドウ一覧取得" />
 		<Word Name="main/event/save-window/display"    Text="ディスプレイ設定変更によるウィンドウ一覧取得" />
+		<Word Name="main/event/save-window/skip"       Text="ウィンドウ一覧取得スキップ" />
 		
 		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
 		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />

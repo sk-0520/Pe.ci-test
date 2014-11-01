@@ -139,6 +139,8 @@ namespace PeMain.UI
 						windowItemList.Name = this._commonData.Language["save-window/timer"];
 						PushWindowListItem(windowItemList);
 						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/timer"], windowItemList);
+					} else {
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/skip"], new { Pause = this._pause, ShowContextMenu = this._contextMenu.ShowContextMenu});
 					}
 				}
 			} finally {

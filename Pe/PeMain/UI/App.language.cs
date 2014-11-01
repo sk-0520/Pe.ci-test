@@ -18,10 +18,10 @@ namespace PeMain.UI
 	{
 		void ApplyLanguageNoteMenu(ToolStripMenuItem parentItem)
 		{
-			parentItem.DropDownItems[menuNameWindowNoteCreate].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/create"], this._commonData.MainSetting.Note.CreateHotKey);
-			parentItem.DropDownItems[menuNameWindowNoteHidden].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/hidden"], this._commonData.MainSetting.Note.HiddenHotKey);
-			parentItem.DropDownItems[menuNameWindowNoteCompact].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/compact"], this._commonData.MainSetting.Note.CompactHotKey);
-			parentItem.DropDownItems[menuNameWindowNoteShowFront].Text =LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/window/note/show-front"], this._commonData.MainSetting.Note.ShowFrontHotKey);
+			parentItem.DropDownItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
+			parentItem.DropDownItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
+			parentItem.DropDownItems[menuNameWindowNoteCompact].Text =this._commonData.Language["main/menu/window/note/compact"];
+			parentItem.DropDownItems[menuNameWindowNoteShowFront].Text =this._commonData.Language["main/menu/window/note/show-front"];
 		}
 		
 		void ApplyLanguageSystemEnvWindowMenu(ToolStripMenuItem parentItem)
@@ -32,8 +32,8 @@ namespace PeMain.UI
 		
 		void ApplyLanguageSystemEnvMenu(ToolStripMenuItem parentItem)
 		{
-			parentItem.DropDownItems[menuNameSystemEnvHiddenFile].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-hiddne-file"], this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey);
-			parentItem.DropDownItems[menuNameSystemEnvExtension].Text = LanguageUtility.HotKeySettingToMenuText(this._commonData.Language, this._commonData.Language["main/menu/system-env/show-extension"], this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey);
+			parentItem.DropDownItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
+			parentItem.DropDownItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
 			
 			// ウィンドウ
 			var itemWindow = (ToolStripMenuItem)parentItem.DropDownItems[menuNameSystemEnvWindow];

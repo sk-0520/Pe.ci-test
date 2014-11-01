@@ -53,5 +53,28 @@ namespace PeMain.Data
 				return Key != Keys.None && Modifiers != MOD.None;
 			}
 		}
+		
+		public Keys GetShorcutKey()
+		{
+			if(Enabled) {
+				var mod = Keys.None;
+				if((Modifiers & MOD.MOD_ALT) == MOD.MOD_ALT) {
+					mod |= Keys.Alt;
+				}
+				if((Modifiers & MOD.MOD_CONTROL) == MOD.MOD_CONTROL) {
+					mod |= Keys.Control;
+				}
+				if((Modifiers & MOD.MOD_SHIFT) == MOD.MOD_SHIFT) {
+					mod |= Keys.Shift;
+				}
+				if((Modifiers & MOD.MOD_WIN) == MOD.MOD_WIN) {
+					mod |= Keys.LWin | Keys.RWin;
+				}
+				
+				return Key | mod;
+			} else {
+				return Keys.None;
+			}
+		}
 	}
 }

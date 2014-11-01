@@ -36,6 +36,7 @@ namespace PeMain.Logic
 			return modifiers.ToText(language) + keySeparator + key.ToText(language);
 		}
 		
+		/*
 		public static string HotKeySettingToMenuText(Language language, string menuText, HotKeySetting hotkeySetting)
 		{
 			if(hotkeySetting.Enabled) {
@@ -44,6 +45,7 @@ namespace PeMain.Logic
 				return menuText;
 			}
 		}
+		*/
 		
 		public static string FontSettingToDisplayText(Language language, FontSetting font)
 		{

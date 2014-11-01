@@ -63,15 +63,11 @@ namespace PeMain
 		#endif
 		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
-		#if DEBUG
-		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(1, 2, 3);
-		#else
-		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(3, 5, 10);
-		#endif
+		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(3, 10, 20);
 		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
-			TimeSpan.FromSeconds(30),
-			TimeSpan.FromMinutes(5),
-			TimeSpan.FromMinutes(15)
+			TimeSpan.FromMinutes(1),
+			TimeSpan.FromMinutes(10),
+			TimeSpan.FromMinutes(30)
 		);
 		
 		/// <summary>

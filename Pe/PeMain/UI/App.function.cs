@@ -774,8 +774,8 @@ namespace PeMain.UI
 		
 		public void PushWindowListItem(WindowListItem windowListItem)
 		{
-			if(this._commonData.MainSetting.WindowSaveCount < this._windowListItems.Count) {
-				this._windowListItems.RemoveRange(0, this._commonData.MainSetting.WindowSaveCount - this._windowListItems.Count);
+			if(this._commonData.MainSetting.WindowSaveCount <= this._windowListItems.Count) {
+				this._windowListItems.RemoveRange(0, this._windowListItems.Count - this._commonData.MainSetting.WindowSaveCount + 1);
 			}
 			this._windowListItems.Add(windowListItem);
 		}
