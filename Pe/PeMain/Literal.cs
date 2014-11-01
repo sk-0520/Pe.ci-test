@@ -199,6 +199,27 @@ namespace PeMain
 		}
 		
 		/// <summary>
+		/// etc/style
+		/// </summary>
+		public static string ApplicationStyleDirPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationEtcDirPath, "style");
+			}
+		}
+		/// <summary>
+		/// etc/script
+		/// </summary>
+		public static string ApplicationScriptDirPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationEtcDirPath, "script");
+			}
+		}
+		
+		/// <summary>
 		/// デフォルトのの
 		/// </summary>
 		public static string ApplicationDefaultLauncherItemPath

@@ -39,6 +39,7 @@ namespace PeMain.UI
 				{"MAIL", Literal.AboutMailAddress },
 				{"DISCUSSION", Literal.DiscussionURL },
 				{"HELP", Literal.HelpDocumentURI },
+				{"STYLE", File.ReadAllText(Path.Combine(Literal.ApplicationStyleDirPath, "common.css"), Encoding.UTF8) },
 			};
 			var acceptFileReplaced = acceptFileSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
 			this.webDocument.DocumentStream = new MemoryStream(Encoding.UTF8.GetBytes(acceptFileReplaced));

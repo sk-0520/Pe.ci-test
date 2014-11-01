@@ -1,0 +1,32 @@
+﻿body
+{
+font-family: "Meiryo UI";
+}
+
+h1
+{
+border-bottom: 3px double #888;
+}
+
+dt.features
+{
+}
+
+dt.fixes
+{
+}
+
+dt.developer
+{
+}
+
+dt.note
+{
+}
+
+p.uri
+{
+	margin-top: 0;
+	font-size: 80%;
+}
+

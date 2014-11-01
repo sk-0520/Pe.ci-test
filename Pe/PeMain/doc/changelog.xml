@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="changelog.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../etc/style/changelog.xsl"?>
 <changelog>
 	<!--
 	<log date="YYYY/MM/DD" version="0.xx.0" type="rc">
@@ -48,7 +48,7 @@
 		</ul>
 		<ul type="developer">
 			<li>changelog.xml の 0.27.0 公開日が10/25になっていたので10/26に直した</li>
-			<li></li>
+			<li>[PE]/etc/style, [PE]/etc/script を追加、それに伴い関連部分を色々と変更</li>
 			<li></li>
 		</ul>
 	</log>
