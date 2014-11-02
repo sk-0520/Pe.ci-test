@@ -484,7 +484,7 @@ namespace PeMain.UI
 			itemSetting.Name = menuNameSetting;
 			itemSetting.Image = global::PeMain.Properties.Images.Config;
 			itemSetting.Click += (object sender, EventArgs e) => {
-				PauseOthers(() => OpenSettingDialog());
+				PauseOthers(OpenSettingDialog);
 			};
 			
 			// 情報
