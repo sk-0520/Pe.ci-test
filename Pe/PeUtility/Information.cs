@@ -64,7 +64,7 @@ namespace PeUtility
 			var result = new InfoGroup(groupName);
 			if(keys != null) {
 				using(var mc = managementClass.GetInstances()) {
-					foreach(ManagementObject mo in mc) {
+					foreach(var mo in mc) {
 						foreach(var key in keys) {
 							try {
 								result.Items[key] = mo[key];

@@ -559,6 +559,8 @@ namespace PeMain.UI
 						dialog.UpdateData = updateData;
 						dialog.SetCommonData(this._commonData);
 						if(dialog.ShowDialog() == DialogResult.OK) {
+							// 現在設定を保持する
+							SaveSetting();
 							updateData.Execute();
 						}
 					}
