@@ -12,7 +12,7 @@ using System.Drawing;
 namespace PInvoke.Windows
 {
 	/// <summary>
-	/// Description of Utility.
+	/// PInvoke.Windows.API 関連の便利処理。
 	/// </summary>
 	public static class WindowsUtility
 	{

@@ -61,6 +61,7 @@ namespace PeMain.Logic
 		/// スクリーンの名前を取得。
 		/// </summary>
 		/// <param name="screen"></param>
+		/// <param name = "logger"></param>
 		/// <returns></returns>
 		public static string GetScreenName(Screen screen, ILogger logger)
 		{

@@ -47,8 +47,12 @@ namespace PeMain.UI
 			this._commonData.ToDispose();
 			this._messageWindow.ToDispose();
 			this._logForm.ToDispose();
-			this._noteWindowList.ForEach(w => w.ToDispose());
-			this._toolbarForms.Values.ToList().ForEach(w => w.ToDispose());
+			foreach(var w in this._noteWindowList) {
+				w.ToDispose();
+			}
+			foreach(var w in this._toolbarForms.Values) {
+				w.ToDispose();
+			}
 			this._notifyIcon.ToDispose();
 			
 			#if DEBUG

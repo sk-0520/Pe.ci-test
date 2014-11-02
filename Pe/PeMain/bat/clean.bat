@@ -7,4 +7,6 @@ del PeUpdater.exe.config
 del PeUpdater.update-old
 del bin\PeUpdater.update-old
 
+del doc\changelog.xsl
+
 pause

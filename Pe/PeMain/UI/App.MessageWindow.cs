@@ -19,7 +19,7 @@ namespace PeMain.UI
 		/// </summary>
 		public partial class MessageWindow : Form, ISetCommonData
 		{
-			private App _parent;
+			private readonly App _parent;
 			
 			public MessageWindow(App parent)
 			{

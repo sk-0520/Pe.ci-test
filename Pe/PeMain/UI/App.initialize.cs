@@ -19,6 +19,7 @@ using System.Windows.Forms;
 
 using PeMain.Data;
 using PeMain.Data.DB;
+using PeMain.IF;
 using PeMain.Logic;
 using PeMain.Logic.DB;
 using PeUtility;
@@ -95,7 +96,7 @@ namespace PeMain.UI
 		/// </summary>
 		/// <param name="tableName"></param>
 		/// <param name="version"></param>
-		/// <param name="initLog"></param>
+		/// <param name="logger"></param>
 		void InitializeNoteTableChange(string tableName, int version, StartupLogger logger)
 		{
 			var langMap = new Dictionary<string, string>() {
@@ -114,7 +115,7 @@ namespace PeMain.UI
 		/// テーブル一覧の確認と不足分作成・バージョン修正
 		/// </summary>
 		/// <param name="commandLine"></param>
-		/// <param name="initLog"></param>
+		/// <param name="logger"></param>
 		void InitializeDB(CommandLine commandLine, StartupLogger logger)
 		{
 			var dbFilePath = Literal.UserDBPath;
@@ -148,7 +149,7 @@ namespace PeMain.UI
 			
 		}
 		
-		void InitializeNote(CommandLine commandLine, StartupLogger logger)
+		void InitializeNote(CommandLine commandLine, ILogger logger)
 		{ }
 		
 		/// <summary>
@@ -172,7 +173,9 @@ namespace PeMain.UI
 		/// <summary>
 		/// 設定ファイル初期化
 		/// </summary>
-		/// <param name="args"></param>
+		/// <param name="commandLine"></param>
+		/// <param name="logger"></param>
+		/// <returns></returns>
 		bool InitializeSetting(CommandLine commandLine, StartupLogger logger)
 		{
 			var mainSettingFilePath = Literal.UserMainSettingPath;

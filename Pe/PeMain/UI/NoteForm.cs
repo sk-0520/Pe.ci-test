@@ -38,10 +38,8 @@ namespace PeMain.UI
 			Initialize();
 		}
 
-		protected override CreateParams CreateParams
-		{
-			get
-			{
+		protected override CreateParams CreateParams {
+			get {
 				CreateParams createParams = base.CreateParams;
 				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
 				createParams.ClassStyle |= (int)CS.CS_DROPSHADOW;
@@ -49,8 +47,7 @@ namespace PeMain.UI
 			}
 		}
 		
-		protected override bool ShowWithoutActivation
-		{
+		protected override bool ShowWithoutActivation {
 			get { return true; }
 		}
 
@@ -67,8 +64,8 @@ namespace PeMain.UI
 		
 		void NoteForm_Paint(object sender, PaintEventArgs e)
 		{
-			using(var bmp = new Bitmap(Width, Height, e.Graphics)) {
-				using(var memG = Graphics.FromImage(bmp)) {
+			using (var bmp = new Bitmap(Width, Height, e.Graphics)) {
+				using (var memG = Graphics.FromImage(bmp)) {
 					var rect = new Rectangle(Point.Empty, Size);
 					//var rect = e.ClipRectangle;
 					DrawFull(memG, rect, this == Form.ActiveForm);
@@ -84,7 +81,7 @@ namespace PeMain.UI
 		
 		void NoteForm_Deactivate(object sender, EventArgs e)
 		{
-			if(this._initialized) {
+			if (this._initialized) {
 				HiddenInputTitleArea();
 				HiddenInputBodyArea();
 			}
@@ -100,7 +97,7 @@ namespace PeMain.UI
 		{
 			HiddenInputTitleArea();
 			
-			if(NoteItem.Locked) {
+			if (NoteItem.Locked) {
 				return;
 			}
 			
@@ -108,7 +105,7 @@ namespace PeMain.UI
 				e.Location,
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
-					if(left && isIn) {
+					if (left && isIn) {
 						return PeMain.IF.ButtonState.Pressed;
 					} else {
 						return PeMain.IF.ButtonState.Normal;
@@ -122,7 +119,7 @@ namespace PeMain.UI
 		
 		void NoteForm_MouseUp(object sender, MouseEventArgs e)
 		{
-			if(NoteItem.Locked) {
+			if (NoteItem.Locked) {
 				return;
 			}
 			
@@ -130,21 +127,21 @@ namespace PeMain.UI
 				e.Location,
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
-					if(left && isIn) {
+					if (left && isIn) {
 						return PeMain.IF.ButtonState.Selected;
 					} else {
 						return PeMain.IF.ButtonState.Normal;
 					}
 				},
 				command => {
-					if(this._commandStateMap[command] == PeMain.IF.ButtonState.Pressed) {
+					if (this._commandStateMap[command] == PeMain.IF.ButtonState.Pressed) {
 						var isRemove = AppUtility.IsExtension();
-						if(isRemove) {
+						if (isRemove) {
 							var map = new Dictionary<string, string>() {
 								{ "NOTE", NoteItem.Title },
 							};
 							var result = MessageBox.Show(CommonData.Language["note/dialog/message", map], CommonData.Language["note/dialog/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-							if(result == DialogResult.Cancel) {
+							if (result == DialogResult.Cancel) {
 								return;
 							}
 							isRemove = result == DialogResult.Yes;
@@ -159,21 +156,21 @@ namespace PeMain.UI
 		
 		void NoteForm_DoubleClick(object sender, EventArgs e)
 		{
-			if(!NoteItem.Locked) {
+			if (!NoteItem.Locked) {
 				ShowInputBodyArea(RECURSIVE);
 			}
 		}
 		
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
-			if(!this._initialized && NoteItem.Compact) {
+			if (!this._initialized && NoteItem.Compact) {
 				//ChangeCompact(true, Size.Empty);
 				Height = 20;
 			} else {
 				ResizeInputTitleArea();
 				ResizeInputBodyArea();
 				
-				if(!NoteItem.Compact) {
+				if (!NoteItem.Compact) {
 					NoteItem.Size = Size;
 					Changed = true;
 				}
@@ -217,12 +214,12 @@ namespace PeMain.UI
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)
 		{
-			using(var dialog = new FontDialog()) {
-				if(NoteItem.Style.FontSetting.IsDefault) {
+			using (var dialog = new FontDialog()) {
+				if (NoteItem.Style.FontSetting.IsDefault) {
 					dialog.Font = NoteItem.Style.FontSetting.Font;
 				}
 				
-				if(dialog.ShowDialog() == DialogResult.OK) {
+				if (dialog.ShowDialog() == DialogResult.OK) {
 					NoteItem.Style.FontSetting.Import(dialog.Font);
 				}
 			}
@@ -231,7 +228,7 @@ namespace PeMain.UI
 		
 		void ContextMenu_font_reset_Click(object sender, EventArgs e)
 		{
-			if(!NoteItem.Style.FontSetting.IsDefault) {
+			if (!NoteItem.Style.FontSetting.IsDefault) {
 				NoteItem.Style.FontSetting.Dispose();
 				NoteItem.Style.FontSetting = new FontSetting();
 			}
@@ -270,7 +267,7 @@ namespace PeMain.UI
 		
 		void ContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
-			if(Form.ActiveForm != this && Changed) {
+			if (Form.ActiveForm != this && Changed) {
 				SaveItem();
 			}
 		}
@@ -311,7 +308,7 @@ namespace PeMain.UI
 			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
 			
 			// 状態チェック
-			var lockImage = NoteItem.Locked ? global::PeMain.Properties.Images.Lock: global::PeMain.Properties.Images.Unlock;
+			var lockImage = NoteItem.Locked ? global::PeMain.Properties.Images.Lock : global::PeMain.Properties.Images.Unlock;
 			this.contextMenu_itemLock.Image = lockImage;
 			this.contextMenu_itemLock.Checked = NoteItem.Locked;
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
@@ -343,17 +340,17 @@ namespace PeMain.UI
 				parentItem.Image.ToDispose();
 				parentItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
 				
-				foreach(var colorItem in colorItemList) {
+				foreach (var colorItem in colorItemList) {
 					var menuItem = colorItem.Item as ToolStripMenuItem;
-					if(menuItem != null) {
+					if (menuItem != null) {
 						plainColor |= menuItem.Checked = colorItem.Color == nowColor;
 					}
 				}
 				var customMenuItem = customItem as ToolStripMenuItem;
-				if(customMenuItem != null) {
+				if (customMenuItem != null) {
 					customMenuItem.Checked = !plainColor;
 					customMenuItem.Image.ToDispose();
-					if(customMenuItem.Checked) {
+					if (customMenuItem.Checked) {
 						customMenuItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
 					} else {
 						customMenuItem.Image = global::PeMain.Properties.Images.CustomColor;
@@ -384,9 +381,9 @@ namespace PeMain.UI
 		)]
 		protected override bool ProcessDialogKey(Keys keyData)
 		{
-			if(this.inputTitle.Focused) {
+			if (this.inputTitle.Focused) {
 				var key = keyData & Keys.KeyCode;
-				switch(key) {
+				switch (key) {
 					case Keys.Enter:
 						{
 							HiddenInputTitleArea();
@@ -404,9 +401,9 @@ namespace PeMain.UI
 						break;
 				}
 			}
-			if(this.inputBody.Focused) {
+			if (this.inputBody.Focused) {
 				var key = keyData & Keys.KeyCode;
-				if(key == Keys.Escape) {
+				if (key == Keys.Escape) {
 					_bindItem.Body = this._prevBody;
 					HiddenInputBodyArea();
 					return true;
@@ -423,11 +420,11 @@ namespace PeMain.UI
 		
 		void NotemenuexportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using(var dialog = new SaveFileDialog()) {
+			using (var dialog = new SaveFileDialog()) {
 				var filter = new DialogFilter();
 				filter.Items.Add(new DialogFilterItem("*.txt", "*.txt"));
 				filter.Attachment(dialog);
-				if(dialog.ShowDialog() == DialogResult.OK) {
+				if (dialog.ShowDialog() == DialogResult.OK) {
 					var path = dialog.FileName;
 					File.WriteAllText(path, NoteItem.Body, Encoding.UTF8);
 				}

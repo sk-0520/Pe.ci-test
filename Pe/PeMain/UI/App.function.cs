@@ -173,8 +173,8 @@ namespace PeMain.UI
 		
 		void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int count)
 		{
-			var enabledFiles = targetFiles.Where(s => File.Exists(s));
-			if(enabledFiles.Count() == 0) {
+			var enabledFiles = targetFiles.Where(File.Exists);
+			if (!enabledFiles.Any()) {
 				return;
 			}
 			
@@ -763,9 +763,7 @@ namespace PeMain.UI
 				
 				var menuItem = new ToolStripMenuItem();
 				menuItem.Text = windowListItem.Name;
-				menuItem.Click += (object sender, EventArgs e) => {
-					ChangeWindow(windowListItem);
-				};
+				menuItem.Click += (object sender, EventArgs e) => ChangeWindow(windowListItem);
 				itemWindowMenuList.Add(menuItem);
 				
 				if(itemWindowMenuList.Count > 0) {

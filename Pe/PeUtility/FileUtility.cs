@@ -20,7 +20,9 @@ namespace PeUtility
 	public static class FileUtility
 	{
 		/// <summary>
-		/// ファイルをバイナリとして読み込む
+		/// ファイルをバイナリとして読み込む。
+		/// 
+		/// File.ReadAllBytes は開いているファイルを読めないのでこちらを使用する。
 		/// </summary>
 		/// <param name="filePath">展開済みファイルパス</param>
 		/// <param name="startIndex">読み出し位置</param>
