@@ -39,7 +39,7 @@ namespace PeMain.Logic
 				query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
 			}
 			using(var searcher = new ManagementObjectSearcher(query)) {
-				foreach(ManagementObject mng in searcher.Get()) {
+				foreach(ManagementBaseObject mng in searcher.Get()) {
 					var item = new Win32_DesktopMonitor();
 					try {
 						item.Import(mng);

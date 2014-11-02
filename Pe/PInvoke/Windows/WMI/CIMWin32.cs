@@ -36,7 +36,7 @@ namespace PInvoke.Windows.root.CIMV2
 		public string   SystemCreationClassName { get; set; }
 		public string   SystemName { get; set; }
 
-		public virtual void Import(ManagementObject obj)
+		public virtual void Import(ManagementBaseObject obj)
 		{
 			Availability = (ushort?)obj["Availability"];
 			Caption = (string)obj["Caption"];
@@ -64,7 +64,7 @@ namespace PInvoke.Windows.root.CIMV2
 	
 	public class CIM_Display: CIM_UserDevice, IImportWMI
 	{
-		public override void Import(ManagementObject obj)
+		public override void Import(ManagementBaseObject obj)
 		{
 			base.Import(obj);
 		}
@@ -81,7 +81,7 @@ namespace PInvoke.Windows.root.CIMV2
 		public uint? ScreenHeight { get; set; }
 		public uint? ScreenWidth { get; set; }
 		
-		public override void Import(ManagementObject obj)
+		public override void Import(ManagementBaseObject obj)
 		{
 			base.Import(obj);
 			

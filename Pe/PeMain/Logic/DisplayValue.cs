@@ -66,7 +66,7 @@ namespace PeMain.Logic
 		/// 接続。
 		/// </summary>
 		/// <param name="control"></param>
-		/// <param name="itemDatas"></param>
+		/// <param name = "values"></param>
 		/// <param name="defaultData"></param>
 		public static void Attachment<T>(this ComboBox control, IEnumerable<DisplayValue<T>> values, T defaultData)
 		{
@@ -78,7 +78,7 @@ namespace PeMain.Logic
 		/// 接続。
 		/// </summary>
 		/// <param name="control"></param>
-		/// <param name="itemDatas"></param>
+		/// <param name="values"></param>
 		public static void Attachment<T>(this ComboBox control, IEnumerable<DisplayValue<T>> values)
 		{
 			control.Attachment(values, values.DefaultIfEmpty().First().Value);
@@ -88,7 +88,7 @@ namespace PeMain.Logic
 		/// 接続。
 		/// </summary>
 		/// <param name="control"></param>
-		/// <param name="itemDatas"></param>
+		/// <param name="values"></param>
 		/// <param name="defaultData"></param>
 		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<DisplayValue<T>> values, T defaultData)
 		{
@@ -98,7 +98,7 @@ namespace PeMain.Logic
 		/// 接続。
 		/// </summary>
 		/// <param name="control"></param>
-		/// <param name="itemDatas"></param>
+		/// <param name="values"></param>
 		public static void Attachment<T>(this ToolStripComboBox control, IEnumerable<DisplayValue<T>> values)
 		{
 			control.ComboBox.Attachment(values);

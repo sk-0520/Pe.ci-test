@@ -483,44 +483,36 @@ namespace PeMain.UI
 			// 設定
 			itemSetting.Name = menuNameSetting;
 			itemSetting.Image = global::PeMain.Properties.Images.Config;
-			itemSetting.Click += (object sender, EventArgs e) => {
-				PauseOthers(OpenSettingDialog);
-			};
+			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 			
 			// 情報
 			itemAbout.Name = menuNameAbout;
 			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
-			itemAbout.Click += (object sender, EventArgs e) => {
-				PauseOthers(
-					() => {
-						var checkUpdate = false;
-						using(var dialog = new AboutForm()) {
-							dialog.SetCommonData(this._commonData);
-							dialog.ShowDialog();
-							checkUpdate = dialog.CheckUpdate;
-						}
-						if(checkUpdate) {
-							CheckUpdateProcessWait(true);
-						}
-						
-						return null;
+			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(
+				() => {
+					var checkUpdate = false;
+					using(var dialog = new AboutForm()) {
+						dialog.SetCommonData(this._commonData);
+						dialog.ShowDialog();
+						checkUpdate = dialog.CheckUpdate;
 					}
-				);
-			};
+					if(checkUpdate) {
+						CheckUpdateProcessWait(true);
+					}
+					
+					return null;
+				}
+			);
 			
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
 			itemHelp.Image = global::PeMain.Properties.Images.Help;
-			itemHelp.Click += (object sender, EventArgs e) => {
-				Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
-			};
+			itemHelp.Click += (object sender, EventArgs e) => Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			
 			// 終了
 			itemExit.Name = menuNameExit;
 			itemExit.Image = global::PeMain.Properties.Images.Close;
-			itemExit.Click += (object sender, EventArgs e) => {
-				CloseApplication(true);
-			};
+			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 			
 			// メインメニュー
 			this._contextMenu.Opening += (object sender, CancelEventArgs e) => {
@@ -635,7 +627,7 @@ namespace PeMain.UI
 		void InitializeTimer(CommandLine commandLine, StartupLogger logger)
 		{
 			Debug.Assert(this._commonData != null);
-				
+			
 			// ウィンドウ一覧取得
 			if(this._windowTimer == null) {
 				this._windowTimer = new System.Timers.Timer();

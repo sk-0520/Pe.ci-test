@@ -13,7 +13,7 @@ namespace PInvoke.Windows.root.CIMV2
 {
 	public interface IImportWMI
 	{
-		void Import(ManagementObject obj);
+		void Import(ManagementBaseObject obj);
 	}
 	/*
 	public static class WMIUtility
