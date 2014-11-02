@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/MM/DD" version="0.28.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li>開発環境を SharpDevelop 4.4 から SharpDevelop 5.0 に変更</li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/11/01" version="0.28.0">
 		<ul type="features">
 			<li>システム環境のアイコンを Windows ちっくに置き換え</li>
