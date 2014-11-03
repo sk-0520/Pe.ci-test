@@ -29,7 +29,7 @@ namespace PeMain.UI
 		private List<NoteForm> _noteWindowList = new List<NoteForm>();
 		
 		private CommonData _commonData;
-		private bool _pause = false;
+		private bool _pause;
 		
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 		

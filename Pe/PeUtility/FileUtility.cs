@@ -15,7 +15,7 @@ using IWshRuntimeLibrary;
 namespace PeUtility
 {
 	/// <summary>
-	/// Description of FileUtility.
+	/// ファイル関連の共通処理。
 	/// </summary>
 	public static class FileUtility
 	{
@@ -24,7 +24,7 @@ namespace PeUtility
 		/// 
 		/// File.ReadAllBytes は開いているファイルを読めないのでこちらを使用する。
 		/// </summary>
-		/// <param name="filePath">展開済みファイルパス</param>
+		/// <param name="filePath">ファイルパス</param>
 		/// <param name="startIndex">読み出し位置</param>
 		/// <param name="readLength">読み出しサイズ</param>
 		/// <returns></returns>
@@ -39,6 +39,11 @@ namespace PeUtility
 
 			return buffer;
 		}
+		/// <summary>
+		/// ファイルをバイナリとして読み込む。
+		/// </summary>
+		/// <param name="filePath">ファイルパス</param>
+		/// <returns></returns>
 		public static byte[] ToBinary(string filePath)
 		{
 			var fileInfo = new FileInfo(filePath);
@@ -68,6 +73,9 @@ namespace PeUtility
 		}
 	}
 
+	/// <summary>
+	/// ショートカット。
+	/// </summary>
 	public class ShortcutFile: IWshShortcut
 	{
 		IWshShortcut _shortcut;

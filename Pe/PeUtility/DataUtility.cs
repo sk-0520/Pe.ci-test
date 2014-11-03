@@ -33,6 +33,9 @@ namespace PeUtility
 		public T Result { get; set; }
 	}
 	
+	/// <summary>
+	/// 最小値・中間値・最大値を保持する。
+	/// </summary>
 	public struct TripleRange<T>
 		where T: IComparable
 	{

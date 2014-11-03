@@ -16,7 +16,7 @@ namespace PeMain.UI
 {
 	partial class App
 	{
-		void ApplyLanguageNoteMenu(ToolStripMenuItem parentItem)
+		void ApplyLanguageNoteMenu(ToolStripDropDownItem parentItem)
 		{
 			parentItem.DropDownItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
 			parentItem.DropDownItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
@@ -24,19 +24,19 @@ namespace PeMain.UI
 			parentItem.DropDownItems[menuNameWindowNoteShowFront].Text =this._commonData.Language["main/menu/window/note/show-front"];
 		}
 		
-		void ApplyLanguageSystemEnvWindowMenu(ToolStripMenuItem parentItem)
+		void ApplyLanguageSystemEnvWindowMenu(ToolStripDropDownItem parentItem)
 		{
 			parentItem.DropDownItems[menuNameSystemEnvWindowSave].Text =  this._commonData.Language["main/menu/system-env/window/save"];
 			parentItem.DropDownItems[menuNameSystemEnvWindowLoad].Text =  this._commonData.Language["main/menu/system-env/window/load"];
 		}
 		
-		void ApplyLanguageSystemEnvMenu(ToolStripMenuItem parentItem)
+		void ApplyLanguageSystemEnvMenu(ToolStripDropDownItem parentItem)
 		{
 			parentItem.DropDownItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
 			parentItem.DropDownItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
 			
 			// ウィンドウ
-			var itemWindow = (ToolStripMenuItem)parentItem.DropDownItems[menuNameSystemEnvWindow];
+			var itemWindow = (ToolStripDropDownItem)parentItem.DropDownItems[menuNameSystemEnvWindow];
 			itemWindow.Text = this._commonData.Language["main/menu/system-env/window"];
 			ApplyLanguageSystemEnvWindowMenu(itemWindow);
 		}
@@ -50,10 +50,10 @@ namespace PeMain.UI
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];
 			
-			var noteMenu = (ToolStripMenuItem)rootMenu[menuNameWindowNote];
+			var noteMenu = (ToolStripDropDownItem)rootMenu[menuNameWindowNote];
 			ApplyLanguageNoteMenu(noteMenu);
 
-			var systemEnvMenu = (ToolStripMenuItem)rootMenu[menuNameSystemEnv];
+			var systemEnvMenu = (ToolStripDropDownItem)rootMenu[menuNameSystemEnv];
 			ApplyLanguageSystemEnvMenu(systemEnvMenu);
 			
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];

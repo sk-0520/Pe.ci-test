@@ -650,6 +650,8 @@ namespace PeMain.UI
 		{
 			logger.Puts(LogType.Information, "Initialize Start", commandLine.Options.ToArray());
 			
+			this._pause = false;
+			
 			this._commonData = new CommonData();
 			this._commonData.RootSender = this;
 			
