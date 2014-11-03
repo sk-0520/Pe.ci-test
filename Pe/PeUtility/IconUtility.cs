@@ -85,11 +85,11 @@ namespace PeUtility
 		/// <summary>
 		/// ファイルパス。
 		/// </summary>
-		public string Path { get; set; }
+		public virtual string Path { get; set; }
 		/// <summary>
 		/// アイコンインデックス。
 		/// </summary>
-		public int Index { get; set; }
+		public virtual int Index { get; set; }
 		
 		public override string ToString()
 		{

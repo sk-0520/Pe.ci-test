@@ -705,7 +705,7 @@ namespace PeMain.UI
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 			toolItem.Text = item.Name;
 			toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}
@@ -721,7 +721,7 @@ namespace PeMain.UI
 			
 			toolItem.Text = item.Name;
 			toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconIndex);
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}

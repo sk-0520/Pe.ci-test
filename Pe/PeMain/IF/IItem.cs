@@ -10,6 +10,8 @@ using System;
 
 namespace PeMain.IF
 {
+	public interface IItem { }
+	
 	/// <summary>
 	/// データ補正関係処理
 	/// </summary>
@@ -18,7 +20,7 @@ namespace PeMain.IF
 		void CorrectionValue();
 	}
 
-	public interface INameItem
+	public interface INameItem: IItem
 	{
 		/// <summary>
 		/// 名前

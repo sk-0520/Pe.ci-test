@@ -16,7 +16,7 @@ namespace PeMain.Data
 	/// なんかを保持するアイテムの基底。
 	/// </summary>
 	[Serializable]
-	public abstract class Item: ICorrectionItem
+	public abstract class Item: IItem, ICorrectionItem
 	{
 		/// <summary>
 		/// データ補正を行う。
@@ -30,7 +30,7 @@ namespace PeMain.Data
 	/// </summary>
 	public abstract class DisposableItem: ICorrectionItem
 	{
-		public DisposableItem()
+		protected DisposableItem()
 		{
 			IsDisposed = false;
 		}
