@@ -27,7 +27,7 @@
 	-->
 	<log date="2014/MM/DD" version="0.28.1" type="rc">
 		<ul type="note">
-			<li></li>
+			<li class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath, IconIndex 要素は IconItem/Path, Index 要素に置き換わります。古い各要素は互換性のため一時的に保持されます</li>
 			<li></li>
 			<li></li>
 		</ul>
@@ -37,7 +37,7 @@
 			<li></li>
 		</ul>
 		<ul type="fixes">
-			<li></li>
+			<li>ランチャーアイテムのアイコンデータ整理</li>
 			<li></li>
 			<li></li>
 		</ul>

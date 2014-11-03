@@ -134,10 +134,22 @@ namespace PeMain.Data
 			
 			HasError = false;
 			
+			IconItem = new IconItem();
+			
 			LauncherHistory = new LauncherHistory();
 			EnvironmentSetting = new EnvironmentSetting();
 			Tag = new List<string>();
 		}
+		
+		public override void CorrectionValue()
+		{
+			base.CorrectionValue();
+			
+			if(IconItem == null) {
+				IconItem = new IconItem();
+			}
+		}
+		
 		/// <summary>
 		/// 登録データ種別。
 		/// </summary>
@@ -154,14 +166,41 @@ namespace PeMain.Data
 		/// 実行時に渡されるオプション。
 		/// </summary>
 		public string Option { get; set; }
+		
+		#region アイコンデータ: 0.29.0未満対応
 		/// <summary>
 		/// 表示アイコンパス
 		/// </summary>
-		public string IconPath { get; set; }
+		//[Obsolete("use property IconItem.Path")]
+		[XmlElement("IconPath", DataType = "string")]
+		public string IconPath {
+			get { return IconItem.Path; }
+			set {
+				if(string.IsNullOrWhiteSpace(IconItem.Path)) {
+					IconItem.Path = value;
+				}
+			}
+		}
 		/// <summary>
 		/// 表示アイコンインデックス
 		/// </summary>
-		public int IconIndex { get; set; }
+		//[Obsolete("use property IconItem.Index")]
+		[XmlElement("IconIndex", DataType = "int")]
+		public int IconIndex {
+			get { return IconItem.Index; }
+			set {
+				if(IconItem.Index == 0 && value != 0) {
+					IconItem.Index = value;
+				}
+			}
+		}
+		#endregion
+		
+		/// <summary>
+		/// 表示アイコンパス。
+		/// </summary>
+		public IconItem IconItem { get; set; }
+		
 		/// <summary>
 		/// 実行履歴
 		/// </summary>
@@ -277,8 +316,11 @@ namespace PeMain.Data
 			result.Command = Command;
 			result.WorkDirPath = WorkDirPath;
 			result.Option = Option;
+			/*
 			result.IconPath = IconPath;
 			result.IconIndex = IconIndex;
+			 */
+			result.IconItem = (IconItem)IconItem.Clone();
 			result.LauncherHistory = (LauncherHistory)LauncherHistory.Clone();
 			result.EnvironmentSetting = (EnvironmentSetting)EnvironmentSetting.Clone();
 			result.Note = Note;
@@ -296,7 +338,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// アイコン取得。
 		/// </summary>
-		/// <param name="iconSize">アイコンサイズ</param>
+		/// <param name = "iconScale">アイコンサイズ</param>
 		/// <param name="iconIndex">アイコンインデックス</param>
 		/// <returns>アイコン</returns>
 		public Icon GetIcon(IconScale iconScale, int iconIndex)
@@ -304,8 +346,8 @@ namespace PeMain.Data
 			var hasIcon = this._iconMap.ContainsKey(iconScale);
 			if(!hasIcon) {
 				string useIconPath = null;
-				if(!string.IsNullOrWhiteSpace(IconPath)) {
-					var expandIconPath = Environment.ExpandEnvironmentVariables(IconPath);
+				if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
+					var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
 					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
 					useIconPath = expandIconPath;
 				}
@@ -356,8 +398,12 @@ namespace PeMain.Data
 				item.Name = filePath;
 			}
 			item.Command = filePath;
+			/*
 			item.IconPath = filePath;
 			item.IconIndex = 0;
+			 */
+			item.IconItem.Path = filePath;
+			item.IconItem.Index = 0;
 			
 			if(Directory.Exists(filePath)) {
 				// ディレクトリ
@@ -374,9 +420,12 @@ namespace PeMain.Data
 							item.Command = shortcut.TargetPath;
 							item.Option = shortcut.Arguments;
 							item.WorkDirPath = shortcut.WorkingDirectory;
-
+							/*
 							item.IconPath = shortcut.IconPath;
 							item.IconIndex = shortcut.IconIndex;
+							 */
+							item.IconItem.Path = shortcut.IconPath;
+							item.IconItem.Index = shortcut.IconIndex;
 							item.Note = shortcut.Description;
 						}
 						break;
@@ -421,12 +470,13 @@ namespace PeMain.Data
 			return
 				LauncherType == target.LauncherType
 				&& Administrator == target.Administrator
-				&& IconIndex == target.IconIndex
+				//&& IconIndex == target.IconIndex
 				&& StdOutputWatch == target.StdOutputWatch
 				&& Command == target.Command
 				&& WorkDirPath == target.WorkDirPath
 				&& Option == target.Option
-				&& IconPath == target.IconPath
+				//&& IconPath == target.IconPath
+				&& IconItem.Equals(target.IconItem)
 				&& EnvironmentSetting.EditEnvironment == target.EnvironmentSetting.EditEnvironment
 				&& Note == target.Note
 				&& Tag.SequenceEqual(target.Tag)

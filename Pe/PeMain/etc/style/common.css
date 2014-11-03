@@ -1,11 +1,14 @@
 ﻿body
 {
-font-family: "Meiryo UI";
+	font-family: "Meiryo UI";
+	
+	color: #111; 
+	background: #fff;
 }
 
 h1
 {
-border-bottom: 3px double #888;
+	border-bottom: 3px double #888;
 }
 
 dt.features
@@ -30,3 +33,11 @@ p.uri
 	font-size: 80%;
 }
 
+*.compatibility:before
+{
+	content: "[互換性]";
+}
+*.compatibility
+{
+	color: #f00;
+}

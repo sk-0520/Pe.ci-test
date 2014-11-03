@@ -97,8 +97,12 @@ namespace PeMain.UI
 			this.inputLauncherCommand.Text = item.Command;
 			this.inputLauncherOption.Text = item.Option;
 			this.inputLauncherWorkDirPath.Text = item.WorkDirPath;
+			/*
 			this.inputLauncherIconPath.Text = item.IconPath;
 			this.inputLauncherIconPath.Tag = item.IconIndex;
+			*/
+			this.inputLauncherIconPath.Text = item.IconItem.Path;
+			this.inputLauncherIconPath.Tag = item.IconItem.Index;
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
 			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
@@ -114,17 +118,25 @@ namespace PeMain.UI
 		void LauncherInputValueToItem(LauncherItem item)
 		{
 			Debug.Assert(item != null);
+			/*
 			var oldIcon = new {
 				Path = item.IconPath,
 				Index= item.IconIndex
 			};
+			*/
+			var oldIcon = new IconItem(item.IconItem.Path, item.IconItem.Index);
 			item.LauncherType = LauncherGetSelectedType();
 			item.Name = this.inputLauncherName.Text.Trim();
 			item.Command = this.inputLauncherCommand.Text.Trim();
 			item.Option = this.inputLauncherOption.Text.Trim();
 			item.WorkDirPath = this.inputLauncherWorkDirPath.Text.Trim();
+			/*
 			item.IconPath = this.inputLauncherIconPath.Text.Trim();
 			item.IconIndex = this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
+			*/
+			item.IconItem.Path = this.inputLauncherIconPath.Text.Trim();
+			item.IconItem.Index = this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
+			
 			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
 			item.Note = this.inputLauncherNote.Text.Trim();
 			item.StdOutputWatch = this.selectLauncherStdStream.Checked;
@@ -136,7 +148,8 @@ namespace PeMain.UI
 			item.EnvironmentSetting.Remove.AddRange(this.envLauncherRemove.Items);
 
 			item.HasError = this.selecterLauncher.Items.Where(i => i != item).Any(i => i.Equals(item));
-			if(oldIcon.Index != item.IconIndex || oldIcon.Path != item.IconPath) {
+			
+			if(!oldIcon.Equals(item)) {
 				item.ClearIcon();
 			}
 			
