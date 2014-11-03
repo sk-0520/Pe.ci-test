@@ -110,7 +110,7 @@ namespace PeMain.UI
 		/// <summary>
 		/// TODO: システムからの領域無視
 		/// </summary>
-		/// <param name="itemArea"></param>
+		/// <param name="item"></param>
 		/// <param name="menuWidth"></param>
 		/// <returns></returns>
 		protected static Rectangle GetMenuArea(ToolStripItem item, int menuWidth)
@@ -168,7 +168,7 @@ namespace PeMain.UI
 			return padding;
 		}
 		
-		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
+		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth);
 		
 #endregion
 		
@@ -182,11 +182,11 @@ namespace PeMain.UI
 #endregion
 
 #region Draw Toolbar
-		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
-		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
+		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
+		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
+		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
+		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
+		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 

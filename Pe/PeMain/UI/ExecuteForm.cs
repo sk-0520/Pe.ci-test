@@ -72,7 +72,7 @@ namespace PeMain.UI
 		{
 			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
 				var dragDatas = (IEnumerable<string>)e.Data.GetData(DataFormats.FileDrop);
-				var args = string.Join(" ", TextUtility.WhitespaceToQuotation(dragDatas));
+				var args = string.Join(" ", dragDatas.WhitespaceToQuotation());
 				this.inputOption.Text = args;
 			}
 		}

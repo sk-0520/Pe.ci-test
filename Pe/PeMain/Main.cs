@@ -29,7 +29,7 @@ namespace PeMain
 			
 			var commandLine = new PeUtility.CommandLine(args);
 			Literal.Initialize(commandLine);
-			PeMain.Logic.FileLogger fileLogger = new PeMain.Logic.FileLogger();
+			var fileLogger = new PeMain.Logic.FileLogger();
 			if(commandLine.HasOption("log")) {
 				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.NowTimestampFileName) + ".log");
 				PeUtility.FileUtility.MakeFileParentDirectory(logPath);
@@ -48,7 +48,7 @@ namespace PeMain
 				#if RELEASE
 				try {
 				#endif
-					using (Mutex mtx = new Mutex(true, mutexName, out isFirstInstance)) {
+					using (var mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 						if (isFirstInstance) {
 							using(var app = new UI.App(commandLine, fileLogger)) {
 								#if DEBUG

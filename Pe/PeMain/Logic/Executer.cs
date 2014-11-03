@@ -51,7 +51,7 @@ namespace PeMain.Logic
 							envs[pair.First] = pair.Second;
 						}
 						// 削除
-						var removeList = launcherItem.EnvironmentSetting.Remove.Where(s => envs.ContainsKey(s));
+						var removeList = launcherItem.EnvironmentSetting.Remove.Where(envs.ContainsKey);
 						foreach(var key in removeList) {
 							envs.Remove(key);
 						}

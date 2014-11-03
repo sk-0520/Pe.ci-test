@@ -56,11 +56,11 @@ namespace PeMain.IF
 		Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
 		Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, NoteCommand noteCommand);
 		
-		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position);
-		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
-		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position);
+		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
+		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
+		void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
+		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
+		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
 		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);

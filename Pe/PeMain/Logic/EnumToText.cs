@@ -79,7 +79,7 @@ namespace PeMain.Logic
 				return string.Empty;
 			}
 			
-			var preKey = "enum/key/mod/";
+			const string preKey = "enum/key/mod/";
 			var map = new Dictionary<MOD, string>() {
 				{ MOD.MOD_ALT,     "alt" },
 				{ MOD.MOD_CONTROL, "control" },
@@ -102,7 +102,7 @@ namespace PeMain.Logic
 		
 		public static string ToText(this Keys value, Language language)
 		{
-			var preKey = "enum/key/keys/"; 
+			const string preKey = "enum/key/keys/"; 
 			var map = new Dictionary<Keys, string>() {
 				{ Keys.D1,      "k-1" }, { Keys.D2,      "k-2" }, { Keys.D3,      "k-3" }, { Keys.D4,      "k-4" }, { Keys.D5,      "k-5" }, { Keys.D6,      "k-6" }, { Keys.D7,      "k-7" }, { Keys.D8,      "k-8" }, { Keys.D9,      "k-9" }, { Keys.D0,      "k-0" },
 				{ Keys.NumPad1, "n-1" }, { Keys.NumPad2, "n-2" }, { Keys.NumPad3, "n-3" }, { Keys.NumPad4, "n-4" }, { Keys.NumPad5, "n-5" }, { Keys.NumPad6, "n-6" }, { Keys.NumPad7, "n-7" }, { Keys.NumPad8, "n-8" }, { Keys.NumPad9, "n-9" }, { Keys.NumPad0, "n-0" },

@@ -49,7 +49,7 @@ namespace PeMain.UI
 				//bool isTimeout = false;
 				Task.Factory.StartNew(
 					() => {
-						var waitMax = Literal.waitCountForGetScreenCount;
+						const int waitMax = Literal.waitCountForGetScreenCount;
 						int waitCount = 0;
 						
 						var managedScreenCount = Screen.AllScreens.Count();

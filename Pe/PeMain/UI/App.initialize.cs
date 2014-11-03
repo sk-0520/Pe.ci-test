@@ -645,7 +645,8 @@ namespace PeMain.UI
 		/// <summary>
 		/// 初期化
 		/// </summary>
-		/// <param name="args"></param>
+		/// <param name = "commandLine"></param>
+		/// <param name = "logger"></param>
 		bool Initialize(CommandLine commandLine, StartupLogger logger)
 		{
 			logger.Puts(LogType.Information, "Initialize Start", commandLine.Options.ToArray());

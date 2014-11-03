@@ -79,7 +79,7 @@ namespace PeMain.Logic
 		/// <param name="hParentWnd"></param>
 		private static void RefreshShell(IntPtr hParentWnd)
 		{
-			var targetClassName = "SHELLDLL_DefView";
+			const string targetClassName = "SHELLDLL_DefView";
 			var hWnd = IntPtr.Zero;
 			var workClassName = new StringBuilder(WindowsUtility.classNameLength);
 			while(true) {

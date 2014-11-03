@@ -175,13 +175,13 @@ namespace PeMain.UI
 			HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
 		}
 		
-		protected override void OnPaintBackground(PaintEventArgs pevent)
+		protected override void OnPaintBackground(PaintEventArgs e)
 		{
 			//pevent.Graphics.Clear()
 			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
-				base.OnPaintBackground(pevent);
+				base.OnPaintBackground(e);
 			} else {
-				CommonData.Skin.DrawToolbarWindowBackground(pevent.Graphics, pevent.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
+				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
 			}
 		}
 		
@@ -305,27 +305,27 @@ namespace PeMain.UI
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += (object sender, EventArgs e) => { OpenDir(Path.GetDirectoryName(launcherItem.Command)); };
+			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(Path.GetDirectoryName(launcherItem.Command));
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += (object sender, EventArgs e) => { OpenDir(Path.GetDirectoryName(launcherItem.WorkDirPath)); };
+			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(Path.GetDirectoryName(launcherItem.WorkDirPath));
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
-			copyCommandItem.Click += (object sender, EventArgs e) => { CopyText(launcherItem.Command); };
+			copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
 			// 親ディレクトリをコピー
 			copyParentDirItem.Name = menuNamePath_copyParentDir;
 			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
-			copyParentDirItem.Click += (object sender, EventArgs e) => { CopyText(Path.GetDirectoryName(launcherItem.Command)); };
+			copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
 			// 作業ディレクトリをコピー
 			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
 			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
-			copyWorkDirItem.Click += (object sender, EventArgs e) => { CopyText(launcherItem.WorkDirPath); };
+			copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
-			propertyItem.Click += (object sender, EventArgs e) => { OpenProperty(launcherItem.Command); };
+			propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
 			
 			// メニュー構築
 			parentItem.DropDownItems.AddRange(itemList.ToArray());
@@ -368,9 +368,7 @@ namespace PeMain.UI
 			//}
 			
 			if(isDir) {
-				menuItem.DropDownOpening += (object sender, EventArgs e) => {
-					LoadFileList(menuItem, path, showHiddenFile, showExtension);
-				};
+				menuItem.DropDownOpening += (object sender, EventArgs e) => LoadFileList(menuItem, path, showHiddenFile, showExtension);
 			}
 			
 			menuItem.Click += (object sender, EventArgs e) => {
@@ -486,15 +484,11 @@ namespace PeMain.UI
 			// 通常実行
 			executeItem.Name = menuNameExecute;
 			executeItem.Text = CommonData.Language["toolbar/menu/file/execute"];
-			executeItem.Click += (object sender, EventArgs e) => {
-				ExecuteItem(launcherItem);
-			};
+			executeItem.Click += (object sender, EventArgs e) => ExecuteItem(launcherItem);
 			// 指定実行
 			executeExItem.Name = menuNameExecuteEx;
 			executeExItem.Text = CommonData.Language["toolbar/menu/file/execute-ex"];
-			executeExItem.Click += (object sender, EventArgs e) => {
-				ExecuteExItem(launcherItem, null);
-			};
+			executeExItem.Click += (object sender, EventArgs e) => ExecuteExItem(launcherItem, null);
 			// パス関係
 			pathItem.Name = menuNamePath;
 			pathItem.Text = CommonData.Language["toolbar/menu/file/path"];
@@ -740,9 +734,7 @@ namespace PeMain.UI
 					var openItem = new ToolStripMenuItem();
 					openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
 					openItem.Image = toolItem.Image;
-					openItem.Click += (object child_sender, EventArgs child_e) => {
-						ExecuteItem(item);
-					};
+					openItem.Click += (object child_sender, EventArgs child_e) => ExecuteItem(item);
 					toolItem.DropDownItems.Insert(0, openItem);
 					toolItem.DropDownItems.Insert(1, new ToolStripSeparator());
 				}
@@ -874,7 +866,7 @@ namespace PeMain.UI
 		{
 			if(dropData.ToolStripItem != null) {
 				// ボタン上
-				Debug.Assert(dropData.Files.Count() > 0);
+				Debug.Assert(dropData.Files.Any());
 				ExecuteExItem(dropData.LauncherItem, dropData.Files);
 			} else {
 				// 追加

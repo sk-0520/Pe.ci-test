@@ -136,7 +136,7 @@ namespace PeMain.Data
 		#region Equals and GetHashCode implementation !![ operator == ]!!
 		public override bool Equals(object obj)
 		{
-			LauncherItem item = obj as LauncherItem;
+			var item = obj as LauncherItem;
 			if(item == null) {
 				return false;
 			}

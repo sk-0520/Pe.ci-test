@@ -77,7 +77,7 @@ namespace PeMain.Logic.DB
 		
 		public void ToDisabled(IEnumerable<NoteItem> noteItemList)
 		{
-			if(noteItemList == null || noteItemList.Count() == 0) {
+			if(noteItemList == null || !noteItemList.Any()) {
 				return;
 			}
 			
@@ -97,7 +97,7 @@ namespace PeMain.Logic.DB
 		
 		public void ResistMasterNote(IEnumerable<NoteItem> noteItemList, DateTime timestamp)
 		{
-			if(noteItemList == null || noteItemList.Count() == 0) {
+			if(noteItemList == null || !noteItemList.Any()) {
 				return;
 			}
 			
@@ -118,7 +118,7 @@ namespace PeMain.Logic.DB
 				entity.CommonUpdate = timestamp;
 				
 				entity.Title = item.Title;
-				entity.RawType = NoteTypeUtility.ToNumber(NoteType.Text);
+				entity.RawType = NoteType.Text.ToNumber();
 				entity.Title = item.Title;
 				
 				if(isUpdate) {
@@ -138,7 +138,7 @@ namespace PeMain.Logic.DB
 
 		public void ResistTransactionNote(IEnumerable<NoteItem> noteItemList, DateTime timestamp)
 		{
-			if(noteItemList == null || noteItemList.Count() == 0) {
+			if(noteItemList == null || !noteItemList.Any()) {
 				return;
 			}
 			
@@ -175,7 +175,7 @@ namespace PeMain.Logic.DB
 		
 		public void ResistTransactionNoteStyle(IEnumerable<NoteItem> noteItemList, DateTime timestamp)
 		{
-			if(noteItemList == null || noteItemList.Count() == 0) {
+			if(noteItemList == null || !noteItemList.Any()) {
 				return;
 			}
 			

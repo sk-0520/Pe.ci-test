@@ -353,7 +353,7 @@ namespace PeMain.Logic
 		/// <summary>
 		/// コンテキストメニュー用位置補正イベントのアタッチ。
 		/// </summary>
-		/// <param name="toolItem">コンテキストメニューを持つ親コントロール</param>
+		/// <param name="parent">コンテキストメニューを持つ親コントロール</param>
 		public static void AttachmentOpeningMenuInScreen(Control parent)
 		{
 			var toolItem = parent.ContextMenuStrip;

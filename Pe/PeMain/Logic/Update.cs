@@ -113,16 +113,16 @@ namespace PeMain.Logic
 			var info = new UpdateInfo(lines);
 			
 			if(lines.Count > 0) {
-				var s = lines.SingleOrDefault(line => !string.IsNullOrEmpty(line) && line.StartsWith(">> "));
+				var s = lines.SingleOrDefault(line => !string.IsNullOrEmpty(line) && line.StartsWith(">> ", StringComparison.OrdinalIgnoreCase));
 				
 				var v = new string(s.SkipWhile(c => c != ':').Skip(1).ToArray());
-				if(s.StartsWith(">> UPDATE")) {
+				if(s.StartsWith(">> UPDATE", StringComparison.OrdinalIgnoreCase)) {
 					var version = new string(v.TakeWhile(c => c != ' ').ToArray());
 					var isRc = v.Substring(version.Length + 1) == "RC";
 					info.IsUpdate = true;
 					info.Version = version;
 					info.IsRcVersion = isRc;
-				} else if(string.IsNullOrEmpty(s) || !s.StartsWith(">> NONE")) {
+				} else if(string.IsNullOrEmpty(s) || !s.StartsWith(">> NONE", StringComparison.OrdinalIgnoreCase)) {
 					int r;
 					if(int.TryParse(v, out r)) {
 						info.ErrorCode = r;

@@ -54,8 +54,8 @@ namespace PeMain.UI
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.First, pair => pair.Second));
 			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
 			
-			if(ExOptions != null && ExOptions.Count() > 0) {
-				var args = string.Join(" ", TextUtility.WhitespaceToQuotation(ExOptions));
+			if(ExOptions != null && ExOptions.Any()) {
+				var args = string.Join(" ", ExOptions.WhitespaceToQuotation());
 				this.inputOption.Text = args;
 			}
 		}

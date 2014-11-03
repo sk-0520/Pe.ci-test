@@ -49,7 +49,7 @@ namespace PeMain.UI
 		void Process_Exited(object sender, EventArgs e)
 		{
 			if(InvokeRequired) {
-				Invoke((MethodInvoker)delegate() { ExitedProcess(); });
+				Invoke((MethodInvoker)ExitedProcess);
 			} else {
 				ExitedProcess();
 			}

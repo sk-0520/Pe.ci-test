@@ -46,15 +46,15 @@ namespace PeMain
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
 		/// </summary>
-		private static string _dirRootName = programName;
+		private const string _dirRootName = programName;
 		
 		private static string _settingRootDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		private static string _logRootDirPath     = Path.Combine(UserSettingDirPath, "log");
 		
-		private static string _mainSettingFileName   = "mainsetting.xml";
-		private static string _launcherItemsFileName = "launcher-items.xml";
-		private static string _dbFileName            = "db.sqlite3";
-		private static string _backupDirName         = "backup";
+		private const string _mainSettingFileName   = "mainsetting.xml";
+		private const string _launcherItemsFileName = "launcher-items.xml";
+		private const string _dbFileName            = "db.sqlite3";
+		private const string _backupDirName         = "backup";
 		
 		#if DEBUG
 		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);

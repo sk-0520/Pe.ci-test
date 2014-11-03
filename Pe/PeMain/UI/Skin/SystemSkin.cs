@@ -195,7 +195,7 @@ namespace PeMain.UI
 				systemBorderSize.Height + systemPaddingSize.Height / 2
 			);
 			var buttonSize = new Size();
-			var menuWidth = 12;
+			const int menuWidth = 12;
 			
 			buttonSize.Width = iconBox.Width + padding.Right + padding.Horizontal + menuWidth;
 			if(showText) {
@@ -255,19 +255,19 @@ namespace PeMain.UI
 		#endregion
 		
 		#region Draw Toolbar
-		public override void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition position)
+		public override void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
 			g.Clear(VisualColor);
 		}
 		
-		public override void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolPosition)
+		public override void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
-			var edgePadding = GetToolbarWindowEdgePadding(toolPosition);
+			var edgePadding = GetToolbarWindowEdgePadding(toolbarPosition);
 			Color startColor = Color.FromArgb(150, Color.White);
 			Color endColor = Color.FromArgb(70, Color.White);
 			
 			Rectangle headArea, tailArea;
-			if(ToolbarPositionUtility.IsHorizonMode(toolPosition)) {
+			if(ToolbarPositionUtility.IsHorizonMode(toolbarPosition)) {
 				headArea = new Rectangle(drawArea.Location, new Size(edgePadding.Left, drawArea.Height));
 				tailArea = new Rectangle(new Point(drawArea.Width - edgePadding.Right, 0), new Size(edgePadding.Right, drawArea.Height));
 			} else {
@@ -285,10 +285,10 @@ namespace PeMain.UI
 					g.FillRectangle(brush, tailArea);
 				}
 				
-				if(ToolbarPositionUtility.IsDockingMode(toolPosition)) {
+				if(ToolbarPositionUtility.IsDockingMode(toolbarPosition)) {
 					Point startPoint, endPoint;
-					var lineWidth = 1;
-					switch(toolPosition) {
+					const int lineWidth = 1;
+					switch(toolbarPosition) {
 						case ToolbarPosition.DesktopTop:
 							startPoint = new Point(drawArea.Left, drawArea.Bottom - lineWidth);
 							endPoint = new Point(drawArea.Right, drawArea.Bottom - lineWidth);
@@ -311,7 +311,7 @@ namespace PeMain.UI
 							
 						default:
 							startPoint = endPoint = Point.Empty;
-							Debug.Assert(false, toolPosition.ToString());
+							Debug.Assert(false, toolbarPosition.ToString());
 							break;
 					}
 					using(var pen = new Pen(Color.FromArgb(180, Color.White))) {
@@ -355,12 +355,12 @@ namespace PeMain.UI
 		}
 		
 		
-		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
+		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition)
 		{
 			e.Graphics.Clear(VisualColor);
 		}
 		
-		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition position)
+		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition)
 		{
 		}
 		
@@ -440,7 +440,7 @@ namespace PeMain.UI
 				new PointF(arrowArea.Right, arrowArea.Top),
 				new PointF(arrowArea.Left + arrowArea.Width / 2, arrowArea.Bottom),
 			};
-			byte alpha = 170;
+			const byte alpha = 170;
 			Color startColor, endColor;
 			if(toolbarButtonData.MenuState == PeMain.IF.ButtonState.Pressed) {
 				startColor = Color.FromArgb(alpha, Color.White);
