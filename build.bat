@@ -59,6 +59,10 @@ echo. End With >> "%ZIP%"
 
 for /F "usebackq" %%s in (`cscript "%GV%" "%PEPATH%"`) do set EXEVER=%%s
 
+echo remove
+rmdir /S /Q "%OUTPUTx86%\x64"
+rmdir /S /Q "%OUTPUTx64%\x86"
+
 echo compression
 cscript "%ZIP%" "%OUTPUTx86%" "%OUTPUT%\Pe_%EXEVER%_x86.zip"
 cscript "%ZIP%" "%OUTPUTx64%" "%OUTPUT%\Pe_%EXEVER%_x64.zip"

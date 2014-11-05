@@ -34,6 +34,7 @@
 		<ul type="features">
 			<li>アップデート処理前に設定データを保存</li>
 			<li>#61: ${env}を編集する</li>
+			<li>リリースビルドのバッチを修正。x86版で[Pe]/x64, x64版で[Pe]/x86を除外した</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
