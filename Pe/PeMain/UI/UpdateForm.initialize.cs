@@ -8,6 +8,7 @@
  */
 using System;
 using PeUtility;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -16,6 +17,7 @@ namespace PeMain.UI
 		void Initialize()
 		{
 			PointingUtility.AttachmentDefaultButton(this);
+			WebBrowserUtility.AttachmentNewWindow(this.webUpdate);
 		}
 	}
 }

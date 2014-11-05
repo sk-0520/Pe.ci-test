@@ -43,5 +43,10 @@ namespace PeMain.UI
 		{
 			UIUtility.ShowFrontActive(this);
 		}
+		
+		void webDocument_NewWindow(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			
+		}
 	}
 }

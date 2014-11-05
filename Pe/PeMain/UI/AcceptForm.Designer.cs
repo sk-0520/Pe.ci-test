@@ -77,6 +77,7 @@ namespace PeMain.UI
 			this.webDocument.Name = "webDocument";
 			this.webDocument.Size = new System.Drawing.Size(618, 361);
 			this.webDocument.TabIndex = 0;
+			this.webDocument.NewWindow += new System.ComponentModel.CancelEventHandler(this.webDocument_NewWindow);
 			// 
 			// commandAccept
 			// 
@@ -156,6 +157,7 @@ namespace PeMain.UI
 			this.panelUpdate.ResumeLayout(false);
 			this.panelUpdate.PerformLayout();
 			this.ResumeLayout(false);
+
 		}
 		private System.Windows.Forms.CheckBox selectUpdateCheckRC;
 		private System.Windows.Forms.CheckBox selectUpdateCheck;

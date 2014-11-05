@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -367,6 +368,22 @@ namespace PeMain.Logic
 			toolItem.Opening += EventDropDownOpeningMenuInScreen;
 		}
 
+	}
+	
+	public static class WebBrowserUtility
+	{
+		static void EventNewWindow(object sender, CancelEventArgs e)
+		{
+			var webBrowser = (WebBrowser)sender;
+			var link = webBrowser.StatusText;
+			e.Cancel = true;
+			Executer.RunCommand(link, null);
+		}
+		
+		public static void AttachmentNewWindow(WebBrowser target)
+		{
+			target.NewWindow += EventNewWindow;
+		}
 	}
 
 	/// <summary>

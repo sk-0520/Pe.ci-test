@@ -13,6 +13,7 @@ using System.Net;
 using System.Windows.Forms;
 
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -45,6 +46,7 @@ namespace PeMain.UI
 				httpData = web.DownloadData(url);
 			}
 			this.webUpdate.DocumentStream = new MemoryStream(httpData);
+//			WebBrowserUtility.AttachmentNavigating(this.webUpdate);
 		}
 	}
 }

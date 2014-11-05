@@ -15,12 +15,15 @@ window.onload = function()
 }
 </script><style>body
 {
-font-family: "Meiryo UI";
+	font-family: "Meiryo UI";
+	
+	color: #111; 
+	background: #fff;
 }
 
 h1
 {
-border-bottom: 3px double #888;
+	border-bottom: 3px double #888;
 }
 
 dt.features
@@ -45,4 +48,12 @@ p.uri
 	font-size: 80%;
 }
 
-</style></head><body><h1>2014/11/01, 0.28.0</h1><dl><dt class='features'>機能</dt><dd><ul><li>システム環境のアイコンを Windows ちっくに置き換え。</li><li>タスクトレイコンテキストのノートに現在有効なノート一覧を表示する。</li><li>ノートのコンテキストメニューに拡張メニュー実装。</li><li>ノートのコンテキストメニュー項目、最小化にアイコン設定。</li><li>画面上のウィンドウ表示位置を保存・復帰させる機能の追加。</li></ul></dd><dt class='fixes'>修正</dt><dd><ul><li>タスクトレイ Pe アイコンダブルクリック時の処理がデバッグコードのままだった。</li><li>タスクトレイ Pe アイコンコンテキストメニューのツールバーアイコンを変更。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/59">#59</a>: TimeSpanがシリアライズされない。</li><li>システムイベントのメモリリークを修正。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/58">#58</a>: メニューに表示するホットキーが近い。</li><li><a href="https://bitbucket.org/sk_0520/pe/issue/17">#17</a>: Aero描画の切り替え。</li><li>ツールバーの文字列幅を制限。</li></ul></dd><dt class='developer'>開発</dt><dd><ul><li>changelog.xml の 0.27.0 公開日が10/25になっていたので10/26に直した。</li><li>[PE]/etc/style, [PE]/etc/script を追加、それに伴い関連部分を色々と変更。</li></ul></dd></dl></body></html>
+*.compatibility:before
+{
+	content: "[互換性]";
+}
+*.compatibility
+{
+	color: #f00;
+}
+</style></head><body><h1>2014/11/05, 0.29.0</h1><dl><dt class='note'>メモ</dt><dd><ul><li class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath, IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます。</li></ul></dd><dt class='features'>機能</dt><dd><ul><li>アップデート処理前に設定データを保存。</li><li>#61: ${env}を編集する。</li><li>リリースビルドのバッチを修正。x86版で[Pe]/x64, x64版で[Pe]/x86を除外した。</li></ul></dd><dt class='fixes'>修正</dt><dd><ul><li>ランチャーアイテムのアイコンデータ整理。</li><li>使用許諾、アップデートチェック画面のリンク選択時にIEでなくシステムの標準のブラウザでリンクを開くように変更。</li></ul></dd><dt class='developer'>開発</dt><dd><ul><li>開発環境を SharpDevelop 4.4 から SharpDevelop 5.0 に変更。</li></ul></dd></dl></body></html>
