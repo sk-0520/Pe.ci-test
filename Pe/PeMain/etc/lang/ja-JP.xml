@@ -21,7 +21,7 @@
 		<Word Name="option"            Text="オプション" />
 		<Word Name="work-dir"          Text="作業フォルダ" />
 		<Word Name="std-stream"        Text="標準入出力を取得する" />
-		<Word Name="edit-env"          Text="${env}を編集する" />
+		<Word Name="edit-env"          Text="環境変数を編集する" />
 		<Word Name="font"              Text="フォント" />
 		<Word Name="auto-hide"         Text="自動的に隠す" />
 		<Word Name="admin"             Text="管理者として実行" />
@@ -258,6 +258,7 @@
 		<Word Name="setting/check/std-stream"      Text="${std-stream}" />
 		<Word Name="setting/check/auto-hide"       Text="${auto-hide}" />
 		<Word Name="setting/check/show-text"       Text="テキストを表示する" />
+		<Word Name="setting/check/edit-env"        Text="${edit-env}" />
 		<Word Name="setting/label/text-width"      Text="テキストの長さ" />
 		<Word Name="setting/tips/add-group"        Text="グループの追加" />
 		<Word Name="setting/tips/add-item"         Text="ランチャーアイテムの追加" />

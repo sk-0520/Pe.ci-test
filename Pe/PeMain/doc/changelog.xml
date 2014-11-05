@@ -27,13 +27,13 @@
 	-->
 	<log date="2014/MM/DD" version="0.28.1" type="rc">
 		<ul type="note">
-			<li class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath, IconIndex 要素は IconItem/Path, IconItem/Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</li>
+			<li class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath, IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</li>
 			<li></li>
 			<li></li>
 		</ul>
 		<ul type="features">
 			<li>アップデート処理前に設定データを保存</li>
-			<li></li>
+			<li>#61: ${env}を編集する</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
