@@ -38,7 +38,7 @@
 		</ul>
 		<ul type="fixes">
 			<li>#66: UNC 環境での SQLite オープン</li>
-			<li></li>
+			<li>ランチャー種別切り替え時の挙動を修正</li>
 			<li></li>
 		</ul>
 		<ul type="developer">

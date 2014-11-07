@@ -233,12 +233,15 @@ namespace PeMain.UI
 			if(this._launcherItemEvent) {
 				LauncherInputChange();
 			}
+
+			/*
 			if(sender == this.selectLauncherEnv) {
 				//this.panelEnv.Enabled = this.selectLauncherEnv.Checked;
 				var enabled = this.selectLauncherEnv.Checked;
 				this.envLauncherUpdate.Enabled = enabled;
 				this.envLauncherRemove.Enabled = enabled;
 			}
+			 */
 		}
 		
 		void InputLauncherIconIndex_ValueChanged(object sender, EventArgs e)
@@ -316,6 +319,13 @@ namespace PeMain.UI
 				e.Value = LanguageUtility.FontSettingToDisplayText(Language, row.Font);
 				e.FormattingApplied = true;
 			}
+		}
+		
+		void selectLauncherEnv_CheckedChanged(object sender, EventArgs e)
+		{
+			var enabled = this.selectLauncherEnv.Checked;
+			this.envLauncherUpdate.Enabled = enabled;
+			this.envLauncherRemove.Enabled = enabled;
 		}
 	}
 }
