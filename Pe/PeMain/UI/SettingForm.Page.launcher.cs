@@ -202,10 +202,30 @@ namespace PeMain.UI
 					break;
 					
 				case LauncherType.URI:
+					{
+						disabledControls = new Control[] {
+							this.commandLauncherFilePath,
+							this.commandLauncherDirPath,
+							this.commandLauncherOptionFilePath,
+							this.commandLauncherOptionDirPath,
+							this.commandLauncherWorkDirPath,
+							this.inputLauncherOption,
+							this.inputLauncherWorkDirPath,
+							this.selectLauncherStdStream,
+							this.selectLauncherAdmin,
+							this.selectLauncherEnv,
+							this.envLauncherUpdate,
+							this.envLauncherRemove,
+						};
+					}
+					break;
+					
 				case LauncherType.Embedded:
 					Debug.Assert(false, type.ToString());
 					break;
 			}
+			
+			SuspendLayout();
 			
 			foreach(var control in enabledControls) {
 				control.Enabled = true;
@@ -215,6 +235,8 @@ namespace PeMain.UI
 					control.Enabled = false;
 				}
 			}
+			
+			ResumeLayout(false);
 		}
 		
 		bool LauncherItemValid()
