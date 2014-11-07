@@ -411,13 +411,28 @@
 		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 		<Word Name="log/output/error"   Text="ログ出力異常" />
 	
-		<!-- デフォルトランチャーアイテム -->
+		<!-- デフォルトランチャーグループ -->
 		<Word Name="default/group/main"      Text="メイングループ" />
+		<Word Name="default/group/programs"  Text="プログラム" />
 		<!-- デフォルトランチャータグ -->
 		<Word Name="default/tag/web-browser" Text="ブラウザ" />
-		<!-- デフォルトランチャーグループ -->
+		<Word Name="default/tag/office"      Text="オフィス" />
+		<Word Name="default/tag/editor"      Text="エディタ" />
+		<Word Name="default/tag/development" Text="開発" />
+		<Word Name="default/tag/file"        Text="ファイル操作" />
+		<Word Name="default/tag/image"       Text="画像関連" />
+		
+		<!-- デフォルトランチャーアイテム -->
 		<Word Name="default/item/iexplorer"  Text="Internet Explorer" />
 		<Word Name="default/item/firefox"    Text="FireFox" />
+		<Word Name="default/item/waterfox"   Text="Waterfox" />
 		<Word Name="default/item/opera"      Text="Opera" />
+	
+		<Word Name="default/item/ms-excel"     Text="Microsoft Excel" />
+		<Word Name="default/item/ms-word"      Text="Microsoft Word" />
+		<Word Name="default/item/ms-power"     Text="Microsoft PowerPoint" />
+		<Word Name="default/item/ms-outlook"   Text="Microsoft Outlook" />
+		
+		<Word Name="default/item/sakura"       Text="サクラエディタ" />
 	</Words>
 </Language>

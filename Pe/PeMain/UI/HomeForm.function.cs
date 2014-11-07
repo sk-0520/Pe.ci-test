@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Xml.Linq;
-
-using PeMain.Data;
-using PeUtility;
-
-namespace PeMain.UI
+﻿namespace PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Xml.Linq;
+
+	using PeUtility;
+	using PeMain.Data;
+
 	partial class HomeForm
 	{
 		public void SetCommonData(CommonData commonData)
@@ -23,9 +24,9 @@ namespace PeMain.UI
 			ApplyLanguage();
 		}
 		
-		IEnumerable<string> SplitLauncherItem(string s)
+		IEnumerable<string> SplitLauncherItemText(string text)
 		{
-			return s.Split('\t');
+			return text.SplitLines().Select(s => s.Trim()).Where(s => !s.StartsWith("#", StringComparison.Ordinal));
 		}
 		
 		void MakeDefaultLauncherItem()
@@ -44,7 +45,7 @@ namespace PeMain.UI
 				// データの補正
 				if(item.LauncherType.IsIn(LauncherType.File, LauncherType.Directory)) {
 					// コマンド修正
-					foreach(var command in SplitLauncherItem(item.Command)) {
+					foreach(var command in SplitLauncherItemText(item.Command)) {
 						var expandPath = Environment.ExpandEnvironmentVariables(command);
 						if(item.LauncherType == LauncherType.File) {
 							if(File.Exists(expandPath)) {
@@ -61,6 +62,13 @@ namespace PeMain.UI
 							}
 						}
 					}
+					// アイコン修正
+					foreach(var iconPath in SplitLauncherItemText(item.IconItem.Path)) {
+						var expandPath = Environment.ExpandEnvironmentVariables(iconPath);
+						if(File.Exists(expandPath)) {
+							item.IconItem.Path = iconPath;
+						}
+					}
 				}
 				
 				if(isAdd) {
@@ -68,6 +76,23 @@ namespace PeMain.UI
 				}
 			}
 			
+			// ユーザーのシステムから取得
+			var allUsersFiles = 
+				Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu))
+				.Concat(Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms)))
+			;
+			var nowUserFiles = 
+				Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))
+				.Concat(Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.Programs)))
+			;
+			var mergeFiles = nowUserFiles
+				.Concat(allUsersFiles)
+				.Where(s => PathUtility.IsShortcutPath(s) || PathUtility.IsExecutePath(s))
+				.Distinct()
+			;
+			foreach(var mergeFile in mergeFiles)
+				Debug.WriteLine(mergeFile);
+				
 			ItemFinded = true;
 			Serializer.SaveFile(itemList, "Z:\\a.xml");
 		}
