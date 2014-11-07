@@ -39,7 +39,7 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
-    <StartArguments>/setting-root=z:\%USERNAME%\debug /log=z:\%USERNAME%\debug\log</StartArguments>
+    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
     <DefineConstants>DEBUG;TRACE;DISABLED_UPDATE_CHECK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -49,7 +49,7 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-    <StartArguments>/setting-root=z:\%USERNAME%\release  /log=z:\%USERNAME%\release\log</StartArguments>
+    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
     <DefineConstants>RELEASE;TRACE;</DefineConstants>
     <StartAction>Project</StartAction>
   </PropertyGroup>

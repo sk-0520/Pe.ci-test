@@ -37,7 +37,7 @@
 			<li></li>
 		</ul>
 		<ul type="fixes">
-			<li></li>
+			<li>#66: UNC 環境での SQLite オープン</li>
 			<li></li>
 			<li></li>
 		</ul>
