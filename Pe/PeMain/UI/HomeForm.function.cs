@@ -37,7 +37,7 @@
 			var xml = XElement.Parse(lngBuffer);
 			
 			// アイテム取得
-			var itemList = new List<LauncherItem>();
+			var defaultItemList = new List<LauncherItem>();
 			var itemElements = xml.Elements("items").Elements("LauncherItem");
 			foreach(var itemElement in itemElements) {
 				var item = Serializer.LoadString<LauncherItem>(itemElement.ToString());
@@ -72,29 +72,71 @@
 				}
 				
 				if(isAdd) {
-					itemList.Add(item);
+					defaultItemList.Add(item);
 				}
 			}
 			
 			// ユーザーのシステムから取得
-			var allUsersFiles = 
+			var allUsersFiles =
 				Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu))
 				.Concat(Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms)))
-			;
-			var nowUserFiles = 
+				;
+			var nowUserFiles =
 				Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu))
 				.Concat(Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.Programs)))
-			;
+				;
 			var mergeFiles = nowUserFiles
 				.Concat(allUsersFiles)
 				.Where(s => PathUtility.IsShortcutPath(s) || PathUtility.IsExecutePath(s))
 				.Distinct()
-			;
-			foreach(var mergeFile in mergeFiles)
-				Debug.WriteLine(mergeFile);
-				
+				;
+			
+			var userItemList = new List<LauncherItem>(mergeFiles.Count());
+			foreach(var mergeFile in mergeFiles) {
+				try {
+					var item = LauncherItem.FileLoad(mergeFile, false);
+					userItemList.Add(item);
+				}catch(Exception ex) {
+					// #68 暫定回避
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+			}
+			
+			// アイテムマージ
+			// TODO: マージに何も考えてない
+			var mergeItemList = defaultItemList.Union(userItemList).ToArray();
+			
+			// グループ作成
+			var toolbarGroupItemList = new List<ToolbarGroupItem>();
+			var groupElements = xml.Elements("groups").Elements("group");
+			foreach(var groupElement in groupElements) {
+				var groupName = groupElement.Attribute("Name").Value;
+				var toolbarGroupItem = new ToolbarGroupItem();
+				toolbarGroupItem.Name = groupName;
+				var useGroup = false;
+				foreach(var itemName in groupElement.Elements("item").Select(node => node.Attribute("Name").Value)) {
+					if(mergeItemList.Any(item => item.Name == itemName)) {
+						toolbarGroupItem.ItemNames.Add(itemName);
+						useGroup = true;
+					}
+				}
+				if(useGroup) {
+					toolbarGroupItemList.Add(toolbarGroupItem);
+				}
+			}
+			// ユーザーのシステムからグループ構築
+			if(userItemList.Any()) {
+				var toolbarGroupItem = new ToolbarGroupItem();
+				toolbarGroupItem.Name = CommonData.Language["default/group/programs"];
+				foreach(var name in userItemList.Select(item => item.Name)) {
+					toolbarGroupItem.ItemNames.Add(name);
+				}
+				toolbarGroupItemList.Add(toolbarGroupItem);
+			}
+			
 			ItemFinded = true;
-			Serializer.SaveFile(itemList, "Z:\\a.xml");
+			Serializer.SaveFile(mergeItemList, "Z:\\a.xml");
+			Serializer.SaveFile(toolbarGroupItemList, "Z:\\b.xml");
 		}
 	}
 }

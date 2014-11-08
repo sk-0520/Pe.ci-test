@@ -170,7 +170,7 @@ namespace PeUtility
 		
 		protected IWshRuntimeLibrary.WshShell CreateShell()
 		{
-			if(Environment.Is64BitOperatingSystem) {
+			if(Environment.Is64BitOperatingSystem && Environment.Is64BitProcess) {
 				return new IWshRuntimeLibrary.WshShell();
 			} else {
 				return new IWshRuntimeLibrary.WshShellClass();

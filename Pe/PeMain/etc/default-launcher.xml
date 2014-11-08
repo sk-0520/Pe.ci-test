@@ -140,8 +140,8 @@
 	</items>
 	
 	<groups>
-		<group name="${default/group/main}">
-			<item name="${default/item/iexplorer}" />
+		<group Name="${default/group/main}">
+			<item Name="${default/item/iexplorer}" />
 		</group>
 	</groups>
 </default>
