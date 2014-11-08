@@ -134,6 +134,7 @@
 				toolbarGroupItemList.Add(toolbarGroupItem);
 			}
 			
+			// とうろく！
 			ItemFinded = true;
 			Serializer.SaveFile(mergeItemList, "Z:\\a.xml");
 			Serializer.SaveFile(toolbarGroupItemList, "Z:\\b.xml");

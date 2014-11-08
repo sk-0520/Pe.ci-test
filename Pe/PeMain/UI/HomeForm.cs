@@ -59,7 +59,14 @@ namespace PeMain.UI
 		
 		void CommandLauncher_Click(object sender, EventArgs e)
 		{
-			// TODO: がんばろう
+			#if !DEBUG
+			if(CommonData.MainSetting.Launcher.Items.Count != 0) {
+				var dialogResult = MessageBox.Show(CommonData.Language["home/launcher/dialog/message"], CommonData.Language["home/launcher/dialog/caption"], MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+				if(dialogResult != DialogResult.OK) {
+					return;
+				}
+			}
+			#endif
 			MakeDefaultLauncherItem();
 		}
 		
