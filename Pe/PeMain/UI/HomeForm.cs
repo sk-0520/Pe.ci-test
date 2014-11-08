@@ -65,6 +65,7 @@ namespace PeMain.UI
 				if(dialogResult != DialogResult.OK) {
 					return;
 				}
+				AppUtility.SaveSetting(CommonData);
 			}
 			#endif
 			MakeDefaultLauncherItem();
