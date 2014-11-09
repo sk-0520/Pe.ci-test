@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/11/DD" version="0.30.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/11/09" version="0.30.0">
 		<ul type="features">
 			<li>#67: ランチャアイテムの自動登録, 基盤処理実装、細かい修正や default-launcher.xml の定義が必要</li>
