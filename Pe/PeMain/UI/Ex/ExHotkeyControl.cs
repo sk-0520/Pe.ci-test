@@ -17,9 +17,8 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of ExHotkeyControl.
 	/// </summary>
-	public abstract class ExHotkeyControl: HotKeyControl
-	{
-	}
+	public abstract class ExHotkeyControl: Hot_Key_Settings.HotKeyControl
+	{ }
 	
 	public class PeHotkeyControl: ExHotkeyControl, ISetLanguage
 	{

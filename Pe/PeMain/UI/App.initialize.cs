@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using PInvoke.Windows;
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.IF;
@@ -119,14 +120,18 @@ namespace PeMain.UI
 		void InitializeDB(CommandLine commandLine, StartupLogger logger)
 		{
 			var dbFilePath = Literal.UserDBPath;
-			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/load"], dbFilePath);
+			var usePath = dbFilePath;
+			if(API.PathIsUNC(usePath)) {
+				usePath = @"\\" + usePath;
+			}
+			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/load"], usePath);
 
 			if(!File.Exists(dbFilePath)) {
 				logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/mkdir"], Path.GetDirectoryName(dbFilePath));
 				
 				FileUtility.MakeFileParentDirectory(dbFilePath);
 			}
-			var connection = new SQLiteConnection("Data Source=" + dbFilePath);
+			var connection = new SQLiteConnection("Data Source=" + usePath);
 			this._commonData.Database = new AppDBManager(connection, false);
 
 			// 

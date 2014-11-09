@@ -171,74 +171,9 @@ namespace PeMain.UI
 			}
 		}
 		
-		void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int count)
-		{
-			var enabledFiles = targetFiles.Where(File.Exists);
-			if (!enabledFiles.Any()) {
-				return;
-			}
-			
-			// バックアップ世代交代
-			if(Directory.Exists(saveDirPath)) {
-				foreach(var path in Directory.GetFileSystemEntries(saveDirPath).OrderByDescending(s => Path.GetFileName(s)).Skip(count - 1)) {
-					try {
-						File.Delete(path);
-					} catch(Exception ex) {
-						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-					}
-				}
-			}
-			
-			var fileName = Literal.NowTimestampFileName + ".zip";
-			var saveFilePath = Path.Combine(saveDirPath, fileName);
-			FileUtility.MakeFileParentDirectory(saveFilePath);
-			
-			// zip
-			using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
-				foreach(var filePath in enabledFiles) {
-					var entry = zip.CreateEntry(Path.GetFileName(filePath));
-					using(var entryStream = new BinaryWriter(entry.Open())) {
-						var buffer = FileUtility.ToBinary(filePath);
-						//var buffer = File.ReadAllBytes(filePath);
-						/*
-						using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
-							var buffer = new byte[Literal.fileTempBufferLength];
-							int readLength;
-							while((readLength = fileStream.Read(buffer, 0, buffer.Length)) > 0) {
-								entryStream.Write(buffer, 0, readLength);
-							}
-						}
-						 */
-						entryStream.Write(buffer);
-					}
-				}
-			}
-
-		}
 		
-		/// <summary>
-		/// 現在の設定データを保存する。
-		/// </summary>
-		void SaveSetting()
-		{
-			// バックアップ
-			var backupFiles = new [] {
-				Literal.UserMainSettingPath,
-				Literal.UserLauncherItemsPath,
-				Literal.UserDBPath,
-			};
-			BackupSetting(backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
-			
-			// 保存開始
-			// メインデータ
-			Serializer.SaveFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
-			//ランチャーデータ
-			var sortedSet = new HashSet<LauncherItem>();
-			foreach(var item in this._commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
-				sortedSet.Add(item);
-			}
-			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
-		}
+		
+
 		
 		/// <summary>
 		/// 終了する。
@@ -247,7 +182,7 @@ namespace PeMain.UI
 		public void CloseApplication(bool save)
 		{
 			if(save) {
-				SaveSetting();
+				AppUtility.SaveSetting(this._commonData);
 			}
 			
 			Application.Exit();
@@ -321,7 +256,7 @@ namespace PeMain.UI
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveFiles();
 					settingForm.SaveDB(this._commonData.Database);
-					SaveSetting();
+					AppUtility.SaveSetting(this._commonData);
 					InitializeLanguage(null, null);
 					ApplyLanguage();
 					
@@ -560,7 +495,7 @@ namespace PeMain.UI
 						dialog.SetCommonData(this._commonData);
 						if(dialog.ShowDialog() == DialogResult.OK) {
 							// 現在設定を保持する
-							SaveSetting();
+							AppUtility.SaveSetting(this._commonData);
 							updateData.Execute();
 						}
 					}
@@ -593,12 +528,20 @@ namespace PeMain.UI
 					using(var dialog = new HomeForm()) {
 						dialog.SetCommonData(this._commonData);
 						dialog.ShowDialog();
-						if(dialog.ItemFinded) {
-							// TODO: 初期化
+						if(dialog.ItemFound) {
+							return () => {
+								// ログがあれば構築
+								if(dialog.LogList.Count != 0) {
+									this._logForm.PutsList(dialog.LogList, true);
+								}
+								// 初期化
+								ResetUI();
+								return true;
+							};
+						} else {
+							return null;
 						}
 					}
-					
-					return null;
 				}
 			);
 		}

@@ -446,6 +446,7 @@ namespace PeMain.Data
 							if(!string.IsNullOrEmpty(verInfo.CompanyName)) {
 								item.Tag.Add(verInfo.CompanyName);
 							}
+							
 						}
 						break;
 						

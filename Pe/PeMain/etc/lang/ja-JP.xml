@@ -146,8 +146,12 @@
 		<Word Name="accept/check/update-check.RC"  Text="${update-check.RC}" />
 		
 		<Word Name="home/page/main" Text="ホーム" />
-		<Word Name="home/command/launcher"  Text="ランチャアイテム自動登録" />
-		<Word Name="home/label/launcher"    Text="✌(⊙◞౪◟⊙)✌&#x0d;&#x0a;☆みじっそう☆" />
+		<Word Name="home/launcher/dialog/merge/caption"  Text="ランチャーアイテムマージ確認" />
+		<Word Name="home/launcher/dialog/merge/message"  Text="ランチャーアイテムとグループに既存データが存在します。&#x0d;&#x0a;既存データが自動登録データとマージされます。" />
+		<Word Name="home/launcher/dialog/found/caption"    Text="登録処理が完了しました。" />
+		<Word Name="home/launcher/dialog/found/message"    Text="登録処理が完了しました。" />
+		<Word Name="home/command/launcher"  Text="ランチャーアイテム自動登録" />
+		<Word Name="home/label/launcher"    Text="使用環境から自動的にランチャーアイテムを構築します&#x0d;&#x0a;※実装中機能になります。" />
 		<Word Name="home/command/notify"  Text="${tasktray}設定" />
 		<Word Name="home/label/notify"    Text="${tasktray}の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
 		<Word Name="home/command/startup" Text="スタートアップ登録" />
@@ -411,13 +415,28 @@
 		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 		<Word Name="log/output/error"   Text="ログ出力異常" />
 	
-		<!-- デフォルトランチャーアイテム -->
+		<!-- デフォルトランチャーグループ -->
 		<Word Name="default/group/main"      Text="メイングループ" />
+		<Word Name="default/group/programs"  Text="プログラム" />
 		<!-- デフォルトランチャータグ -->
 		<Word Name="default/tag/web-browser" Text="ブラウザ" />
-		<!-- デフォルトランチャーグループ -->
+		<Word Name="default/tag/office"      Text="オフィス" />
+		<Word Name="default/tag/editor"      Text="エディタ" />
+		<Word Name="default/tag/development" Text="開発" />
+		<Word Name="default/tag/file"        Text="ファイル操作" />
+		<Word Name="default/tag/image"       Text="画像関連" />
+		
+		<!-- デフォルトランチャーアイテム -->
 		<Word Name="default/item/iexplorer"  Text="Internet Explorer" />
 		<Word Name="default/item/firefox"    Text="FireFox" />
+		<Word Name="default/item/waterfox"   Text="Waterfox" />
 		<Word Name="default/item/opera"      Text="Opera" />
+	
+		<Word Name="default/item/ms-excel"     Text="Microsoft Excel" />
+		<Word Name="default/item/ms-word"      Text="Microsoft Word" />
+		<Word Name="default/item/ms-power"     Text="Microsoft PowerPoint" />
+		<Word Name="default/item/ms-outlook"   Text="Microsoft Outlook" />
+		
+		<Word Name="default/item/sakura"       Text="サクラエディタ" />
 	</Words>
 </Language>

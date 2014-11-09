@@ -104,7 +104,6 @@ namespace PeMain.UI
 			// commandLauncher
 			// 
 			this.commandLauncher.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.commandLauncher.Enabled = false;
 			this.commandLauncher.Image = global::PeMain.Properties.Images.Finder;
 			this.commandLauncher.Location = new System.Drawing.Point(20, 10);
 			this.commandLauncher.Margin = new System.Windows.Forms.Padding(4);
@@ -189,12 +188,13 @@ namespace PeMain.UI
 			this.Icon = global::PeMain.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.Name = "HomeForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/home";
 			this.Shown += new System.EventHandler(this.HomeForm_Shown);
 			this.panelHome.ResumeLayout(false);
 			this.panelCommand.ResumeLayout(false);
 			this.ResumeLayout(false);
+
 		}
 		private System.Windows.Forms.Label labelStartup;
 		private System.Windows.Forms.Label labelNotify;

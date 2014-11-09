@@ -8,7 +8,7 @@ using System;
 using System.Windows.Forms;
 using PInvoke.Windows;
 
-namespace PeUtility
+namespace Hot_Key_Settings
 {
 	public class HotKeyControl : TextBox
 	{

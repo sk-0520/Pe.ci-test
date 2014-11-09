@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -7,6 +8,7 @@ namespace PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		
-		public bool ItemFinded { get; private set; }
+		public bool ItemFound { get; private set; }
+		public IReadOnlyList<LogItem> LogList { get { return this._logList; } }
 	}
 }

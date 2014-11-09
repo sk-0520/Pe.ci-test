@@ -59,8 +59,17 @@ namespace PeMain.UI
 		
 		void CommandLauncher_Click(object sender, EventArgs e)
 		{
-			// TODO: がんばろう
+			if(CommonData.MainSetting.Launcher.Items.Count != 0) {
+				var dialogResult = MessageBox.Show(CommonData.Language["home/launcher/dialog/merge/message"], CommonData.Language["home/launcher/dialog/merge/caption"], MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+				if(dialogResult != DialogResult.OK) {
+					return;
+				}
+				AppUtility.SaveSetting(CommonData);
+			}
 			MakeDefaultLauncherItem();
+			if(ItemFound) {
+				MessageBox.Show(CommonData.Language["home/launcher/dialog/found/message"], CommonData.Language["home/launcher/dialog/found/caption"], MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
 		}
 		
 		void HomeForm_Shown(object sender, EventArgs e)

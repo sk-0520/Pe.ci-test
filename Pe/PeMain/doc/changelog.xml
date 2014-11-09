@@ -25,6 +25,20 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/11/DD" version="0.30.0" type="rc">
+		<ul type="features">
+			<li>#67: ランチャアイテムの自動登録, 基盤処理実装、細かい修正や default-launcher.xml の定義が必要</li>
+			<li>設定ダイアログで新規グループ作成時の初期グループ名に連番を設定する</li>
+		</ul>
+		<ul type="fixes">
+			<li>#66: UNC 環境での SQLite オープン</li>
+			<li>ランチャー種別切り替え時の挙動を修正</li>
+			<li>マルチディスプレイ環境でホームダイアログが非プライマリディスプレイに表示されることがあったためプライマリディスプレイに固定表示するように変更</li>
+		</ul>
+		<ul type="developer">
+			<li>すっかり忘れていた Hotkey Control, SplitButton をコンポーネント情報に追加と名前空間整理</li>
+		</ul>
+	</log>
 	<log date="2014/11/05" version="0.29.0">
 		<ul type="note">
 			<li class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath, IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</li>

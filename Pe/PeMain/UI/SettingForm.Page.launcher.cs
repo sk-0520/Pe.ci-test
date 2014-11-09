@@ -159,6 +159,12 @@ namespace PeMain.UI
 		void LauncherApplyType(LauncherType type)
 		{
 			var enabledControls = new Control [] {
+				this.commandLauncherFilePath,
+				this.commandLauncherDirPath,
+				this.commandLauncherOptionDirPath,
+				this.commandLauncherOptionFilePath,
+				this.commandLauncherWorkDirPath,
+				this.commandLauncherIconPath,
 				this.inputLauncherName,
 				this.inputLauncherCommand,
 				this.inputLauncherOption,
@@ -172,7 +178,7 @@ namespace PeMain.UI
 				this.envLauncherUpdate,
 				this.envLauncherRemove,
 			};
-			Control[] disabledControls = new Control[]{};
+			var disabledControls = new Control[]{};
 			switch(type) {
 				case LauncherType.File:
 					break;
@@ -180,6 +186,10 @@ namespace PeMain.UI
 				case LauncherType.Directory:
 					{
 						disabledControls = new Control[] {
+							this.commandLauncherFilePath,
+							this.commandLauncherOptionFilePath,
+							this.commandLauncherOptionDirPath,
+							this.commandLauncherWorkDirPath,
 							this.inputLauncherOption,
 							this.inputLauncherWorkDirPath,
 							this.selectLauncherStdStream,
@@ -192,10 +202,30 @@ namespace PeMain.UI
 					break;
 					
 				case LauncherType.URI:
+					{
+						disabledControls = new Control[] {
+							this.commandLauncherFilePath,
+							this.commandLauncherDirPath,
+							this.commandLauncherOptionFilePath,
+							this.commandLauncherOptionDirPath,
+							this.commandLauncherWorkDirPath,
+							this.inputLauncherOption,
+							this.inputLauncherWorkDirPath,
+							this.selectLauncherStdStream,
+							this.selectLauncherAdmin,
+							this.selectLauncherEnv,
+							this.envLauncherUpdate,
+							this.envLauncherRemove,
+						};
+					}
+					break;
+					
 				case LauncherType.Embedded:
 					Debug.Assert(false, type.ToString());
 					break;
 			}
+			
+			SuspendLayout();
 			
 			foreach(var control in enabledControls) {
 				control.Enabled = true;
@@ -205,6 +235,8 @@ namespace PeMain.UI
 					control.Enabled = false;
 				}
 			}
+			
+			ResumeLayout(false);
 		}
 		
 		bool LauncherItemValid()
@@ -249,6 +281,5 @@ namespace PeMain.UI
 				this.selecterLauncher.Refresh();
 			}
 		}
-		
 	}
 }

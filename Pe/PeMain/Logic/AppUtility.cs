@@ -7,11 +7,16 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Windows.Forms;
 using PeUtility;
 using PInvoke.Windows;
+using PeMain.Data;
 
 namespace PeMain.Logic
 {
@@ -68,6 +73,74 @@ namespace PeMain.Logic
 		{
 			return CreateBoxColorImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
 		}
+		
+		public static void BackupSetting(CommonData commonData, IEnumerable<string> targetFiles, string saveDirPath, int count)
+		{
+			var enabledFiles = targetFiles.Where(File.Exists);
+			if (!enabledFiles.Any()) {
+				return;
+			}
+			
+			// バックアップ世代交代
+			if(Directory.Exists(saveDirPath)) {
+				foreach(var path in Directory.GetFileSystemEntries(saveDirPath).OrderByDescending(s => Path.GetFileName(s)).Skip(count - 1)) {
+					try {
+						File.Delete(path);
+					} catch(Exception ex) {
+						commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+					}
+				}
+			}
+			
+			var fileName = Literal.NowTimestampFileName + ".zip";
+			var saveFilePath = Path.Combine(saveDirPath, fileName);
+			FileUtility.MakeFileParentDirectory(saveFilePath);
+			
+			// zip
+			using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
+				foreach(var filePath in enabledFiles) {
+					var entry = zip.CreateEntry(Path.GetFileName(filePath));
+					using(var entryStream = new BinaryWriter(entry.Open())) {
+						var buffer = FileUtility.ToBinary(filePath);
+						//var buffer = File.ReadAllBytes(filePath);
+						/*
+						using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
+							var buffer = new byte[Literal.fileTempBufferLength];
+							int readLength;
+							while((readLength = fileStream.Read(buffer, 0, buffer.Length)) > 0) {
+								entryStream.Write(buffer, 0, readLength);
+							}
+						}
+						 */
+						entryStream.Write(buffer);
+					}
+				}
+			}
 
+		}
+
+		/// <summary>
+		/// 現在の設定データを保存する。
+		/// </summary>
+		public static void SaveSetting(CommonData commonData)
+		{
+			// バックアップ
+			var backupFiles = new [] {
+				Literal.UserMainSettingPath,
+				Literal.UserLauncherItemsPath,
+				Literal.UserDBPath,
+			};
+			BackupSetting(commonData, backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
+			
+			// 保存開始
+			// メインデータ
+			Serializer.SaveFile(commonData.MainSetting, Literal.UserMainSettingPath);
+			//ランチャーデータ
+			var sortedSet = new HashSet<LauncherItem>();
+			foreach(var item in commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
+				sortedSet.Add(item);
+			}
+			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
+		}
 	}
 }

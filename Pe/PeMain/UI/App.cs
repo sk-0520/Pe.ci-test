@@ -85,7 +85,7 @@ namespace PeMain.UI
 			if(e.Reason == SessionSwitchReason.ConsoleConnect) {
 				ResetUI();
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
-				SaveSetting();
+				AppUtility.SaveSetting(this._commonData);
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace PeMain.UI
 		void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
 		{
 			this._logForm.Puts(LogType.Information, "SessionEnding", e);
-			SaveSetting();
+			AppUtility.SaveSetting(this._commonData);
 		}
 		
 		void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
