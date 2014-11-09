@@ -43,7 +43,7 @@
 			<li></li>
 		</ul>
 		<ul type="developer">
-			<li></li>
+			<li>すっかり忘れていた Hotkey Control, SplitButton をコンポーネント情報に追加と名前空間整理</li>
 			<li></li>
 			<li></li>
 		</ul>

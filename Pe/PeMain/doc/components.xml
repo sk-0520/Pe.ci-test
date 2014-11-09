@@ -2,10 +2,11 @@
 <components>
 	<component name="System.Data.SQLite" uri="http://www.sqlite.org/copyright.html" type="Library" />
 	<component name="ObjectDumper" uri="http://objectdumper.codeplex.com/" type="Library" />
+	<component name="Hotkey Control" uri="http://tech.reboot.pro/showthread.php?tid=2582" type="Library" />
+	<component name="SplitButton" uri="http://wyday.com/splitbutton/" type="Library" />
 	<component name="LED Icon Set" uri="http://http://led24.de/" type="Image" />
 	<component name="iconeden" uri="http://www.iconeden.com/" type="Image" />
 	<component name="ionicons" uri="http://ionicons.com/" type="Image" />
 	<component name="sa-ki (Alexandre Moore) on deviantART" uri="http://sa-ki.deviantart.com/" type="Image" />
 	<component name="Lynx Black" uri="https://www.iconfinder.com/iconsets/lynx" type="Image" />
- 	
 </components>
