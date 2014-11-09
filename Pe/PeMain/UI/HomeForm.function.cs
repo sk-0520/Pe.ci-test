@@ -29,6 +29,11 @@
 			return text.SplitLines().Select(s => s.Trim()).Where(s => !s.StartsWith("#", StringComparison.Ordinal));
 		}
 		
+		/// <summary>
+		/// なっがいなこれ。
+		/// 
+		/// TODO: default-launcher.xml の定義が必要
+		/// </summary>
 		void MakeDefaultLauncherItem()
 		{
 			var path = Literal.ApplicationDefaultLauncherItemPath;
@@ -98,13 +103,13 @@
 					userItemList.Add(item);
 				}catch(Exception ex) {
 					// #68 暫定回避
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					this._logList.Add(new LogItem(LogType.Warning, string.Format("{0}: {1}", ex.Message, mergeFile), ex));
 				}
 			}
 			
 			// アイテムマージ
 			// TODO: マージに何も考えてない
-			var mergeItemList = defaultItemList.Union(userItemList).ToArray();
+			var mergedItemList = defaultItemList.Union(userItemList).ToArray();
 			
 			// グループ作成
 			var toolbarGroupItemList = new List<ToolbarGroupItem>();
@@ -115,7 +120,7 @@
 				toolbarGroupItem.Name = groupName;
 				var useGroup = false;
 				foreach(var itemName in groupElement.Elements("item").Select(node => node.Attribute("Name").Value)) {
-					if(mergeItemList.Any(item => item.Name == itemName)) {
+					if(mergedItemList.Any(item => item.Name == itemName)) {
 						toolbarGroupItem.ItemNames.Add(itemName);
 						useGroup = true;
 					}
@@ -134,10 +139,39 @@
 				toolbarGroupItemList.Add(toolbarGroupItem);
 			}
 			
-			// とうろく！
-			ItemFinded = true;
-			Serializer.SaveFile(mergeItemList, "Z:\\a.xml");
-			Serializer.SaveFile(toolbarGroupItemList, "Z:\\b.xml");
+			// 登録処理をマージで実行
+			// アイテムマージ, TODO: Linqでできそう
+			foreach(var item in mergedItemList) {
+				if(CommonData.MainSetting.Launcher.Items.Any(i => i.IsNameEqual(item.Name))) {
+					continue;
+				}
+				CommonData.MainSetting.Launcher.Items.Add(item);
+			}
+			// グループマージ
+			foreach(var groupItem in toolbarGroupItemList) {
+				var aliveGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => g.Name == groupItem.Name);
+				if(aliveGroup != null) {
+					// マージ
+					var unionItems = aliveGroup.ItemNames.Union(groupItem.ItemNames).ToArray();
+					aliveGroup.ItemNames.Clear();
+					aliveGroup.ItemNames.AddRange(unionItems);
+				} else {
+					// 追加
+					CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Add(groupItem);
+				}
+			}
+			
+			// 既存グループのうち「新規グループ」に何も格納されていなければ消しちゃう
+			var removeGroupItem = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.SingleOrDefault(g => g.Name == CommonData.Language["group/new"]);
+			if(removeGroupItem != null && !removeGroupItem.ItemNames.Any()) {
+				CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Remove(removeGroupItem);
+			}
+				
+				
+			//Serializer.SaveFile(mergeItemList, "Z:\\a.xml");
+			//Serializer.SaveFile(toolbarGroupItemList, "Z:\\b.xml");
+			
+			ItemFound = true;
 		}
 	}
 }

@@ -142,6 +142,7 @@
 	<groups>
 		<group Name="${default/group/main}">
 			<item Name="${default/item/iexplorer}" />
+			<item Name="${default/item/firefox}" />
 		</group>
 	</groups>
 </default>

@@ -305,6 +305,9 @@
     <Compile Include="UI\HomeForm.property.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\HomeForm.variable.cs">
+      <DependentUpon>HomeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\LogForm.cs" />
     <Compile Include="UI\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>

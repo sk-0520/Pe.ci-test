@@ -171,7 +171,7 @@ namespace PeMain.UI
 			}
 		}
 		
-	
+		
 		
 
 		
@@ -528,12 +528,20 @@ namespace PeMain.UI
 					using(var dialog = new HomeForm()) {
 						dialog.SetCommonData(this._commonData);
 						dialog.ShowDialog();
-						if(dialog.ItemFinded) {
-							// TODO: 初期化
+						if(dialog.ItemFound) {
+							return () => {
+								// ログがあれば構築
+								if(dialog.LogList.Count != 0) {
+									this._logForm.PutsList(dialog.LogList, true);
+								}
+								// 初期化
+								ResetUI();
+								return true;
+							};
+						} else {
+							return null;
 						}
 					}
-					
-					return null;
 				}
 			);
 		}
