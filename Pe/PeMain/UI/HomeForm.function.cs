@@ -136,7 +136,7 @@
 				foreach(var name in userItemList.Select(item => item.Name)) {
 					toolbarGroupItem.ItemNames.Add(name);
 				}
-				toolbarGroupItemList.Add(toolbarGroupItem);
+				toolbarGroupItemList.Insert(0, toolbarGroupItem);
 			}
 			
 			// 登録処理をマージで実行

@@ -81,7 +81,7 @@ namespace PeMain.UI
 		TreeNode ToolbarAddGroup(string groupName)
 		{
 			var node = new TreeNode();
-			node.Text = groupName;
+			node.Text = TextUtility.ToUnique(groupName, this.treeToolbarItemGroup.Nodes.Cast<TreeNode>().Select(n => n.Text), null);
 			node.ImageIndex = TREE_TYPE_GROUP;
 			node.SelectedImageIndex = TREE_TYPE_GROUP;
 			this.treeToolbarItemGroup.Nodes.Add(node);
