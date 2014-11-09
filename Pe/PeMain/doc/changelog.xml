@@ -25,27 +25,18 @@
 		</ul>
 	</log>
 	-->
-	<log date="2014/11/DD" version="0.29.1" type="rc">
-		<ul type="note">
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
+	<log date="2014/11/DD" version="0.30.0" type="rc">
 		<ul type="features">
 			<li>#67: ランチャアイテムの自動登録, 基盤処理実装、細かい修正や default-launcher.xml の定義が必要</li>
 			<li>設定ダイアログで新規グループ作成時の初期グループ名に連番を設定する</li>
-			<li></li>
 		</ul>
 		<ul type="fixes">
 			<li>#66: UNC 環境での SQLite オープン</li>
 			<li>ランチャー種別切り替え時の挙動を修正</li>
 			<li>マルチディスプレイ環境でホームダイアログが非プライマリディスプレイに表示されることがあったためプライマリディスプレイに固定表示するように変更</li>
-			<li></li>
 		</ul>
 		<ul type="developer">
 			<li>すっかり忘れていた Hotkey Control, SplitButton をコンポーネント情報に追加と名前空間整理</li>
-			<li></li>
-			<li></li>
 		</ul>
 	</log>
 	<log date="2014/11/05" version="0.29.0">
