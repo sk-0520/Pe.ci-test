@@ -14,10 +14,6 @@
 		
 		void Initialize()
 		{
-			#if DEBUG
-			this.commandLauncher.Enabled = true;
-			#endif
-			
 			InitializeUI();
 		}
 	}
