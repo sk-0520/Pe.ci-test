@@ -3,16 +3,13 @@
 	using System;
 	using System.Drawing;
 	using System.Windows.Forms;
+	using PeMain.Logic;
 
 	partial class HomeForm
 	{
 		void InitializeUI()
 		{
-			var primaryArea = Screen.PrimaryScreen.Bounds;
-			Location = new Point(
-				primaryArea.Width / 2 - Width / 2,
-				primaryArea.Height / 2 - Height / 2
-			);
+			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 		
 		void Initialize()

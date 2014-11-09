@@ -239,6 +239,7 @@ namespace PeMain.UI
 				this.tabSetting.TabPages.Remove(page);
 			}
 			#endif
+			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 		
 		void Initialize(Language language, MainSetting mainSetting, AppDBManager db)

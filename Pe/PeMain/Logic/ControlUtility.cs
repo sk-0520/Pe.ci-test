@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -477,6 +478,19 @@ namespace PeMain.Logic
 		{
 			ShowFront(target);
 			target.Activate();
+		}
+		
+		/// <summary>
+		/// プライマリウィンドウの中央に移動させる。
+		/// </summary>
+		/// <param name="target"></param>
+		public static void ShowCenterInPrimaryScreen(Form target)
+		{
+			var primaryArea = Screen.PrimaryScreen.Bounds;
+			target.Location = new Point(
+				primaryArea.Width / 2 - target.Width / 2,
+				primaryArea.Height / 2 - target.Height / 2
+			);
 		}
 	}
 }

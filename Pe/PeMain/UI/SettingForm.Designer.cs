@@ -1857,7 +1857,7 @@ namespace PeMain.UI
 			this.Icon = global::PeMain.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "SettingForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/setting";
 			this.tabSetting.ResumeLayout(false);
 			this.tabSetting_pageMain.ResumeLayout(false);
