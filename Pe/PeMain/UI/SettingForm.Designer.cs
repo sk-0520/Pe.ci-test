@@ -38,8 +38,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.panelMainOthers = new System.Windows.Forms.FlowLayoutPanel();
@@ -88,7 +88,7 @@ namespace PeMain.UI
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.commandLauncherIconPath = new System.Windows.Forms.Button();
 			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
-			this.inputLauncherIconPath = new System.Windows.Forms.TextBox();
+			this.inputLauncherIconPath = new PeMain.UI.IconTextBox();
 			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
 			this.labelLauncherIconPath = new System.Windows.Forms.Label();
 			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
@@ -828,10 +828,12 @@ namespace PeMain.UI
 			// inputLauncherIconPath
 			// 
 			this.inputLauncherIconPath.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputLauncherIconPath.IconIndex = 0;
 			this.inputLauncherIconPath.Location = new System.Drawing.Point(165, 187);
 			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
 			this.inputLauncherIconPath.Size = new System.Drawing.Size(274, 23);
 			this.inputLauncherIconPath.TabIndex = 10;
+			this.inputLauncherIconPath.IconIndexChanged += new System.EventHandler(this.inputLauncherIconPath_IconIndexChanged);
 			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherWorkDirPath
@@ -1722,8 +1724,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1753,9 +1755,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -2033,7 +2035,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.TextBox inputLauncherCommand;
 		private System.Windows.Forms.TextBox inputLauncherName;
 		private System.Windows.Forms.TextBox inputLauncherWorkDirPath;
-		private System.Windows.Forms.TextBox inputLauncherIconPath;
+		private PeMain.UI.IconTextBox inputLauncherIconPath;
 		private System.Windows.Forms.Label labelLauncherCommand;
 		private System.Windows.Forms.Label labelLauncherName;
 		private System.Windows.Forms.Label labelLauncherWorkDirPath;

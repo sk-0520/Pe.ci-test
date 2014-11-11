@@ -327,5 +327,12 @@ namespace PeMain.UI
 			this.envLauncherUpdate.Enabled = enabled;
 			this.envLauncherRemove.Enabled = enabled;
 		}
+		
+		void inputLauncherIconPath_IconIndexChanged(object sender, EventArgs e)
+		{
+			if(this._launcherItemEvent) {
+				LauncherInputChange();
+			}	
+		}
 	}
 }
