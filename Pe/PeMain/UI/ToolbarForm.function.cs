@@ -877,7 +877,7 @@ namespace PeMain.UI
 				var forceLauncherType = false;
 				var forceType = LauncherType.None;
 				if(Directory.Exists(path)) {
-					var result = MessageBox.Show(CommonData.Language[""], CommonData.Language[""], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/directory/message"], CommonData.Language["toolbar/dialog/d-d/directory/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 					switch(result) {
 						case DialogResult.Yes:
 							forceLauncherType = false;

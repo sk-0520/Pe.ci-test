@@ -27,7 +27,7 @@
 	-->
 	<log date="2014/11/DD" version="0.30.1" type="rc">
 		<ul type="note">
-			<li></li>
+			<li>#72: ディレクトリのD&D登録時にアイテム種別の選択</li>
 			<li></li>
 			<li></li>
 		</ul>
