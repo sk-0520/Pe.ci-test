@@ -27,13 +27,13 @@
 	-->
 	<log date="2014/11/DD" version="0.30.1" type="rc">
 		<ul type="note">
-			<li>#72: ディレクトリのD&D登録時にアイテム種別の選択</li>
+			<li></li>
 			<li></li>
 			<li></li>
 		</ul>
 		<ul type="features">
 			<li>#71: 環境情報出力時にディスプレイ情報を出力する</li>
-			<li></li>
+			<li>#72: ディレクトリのD&D登録時にアイテム種別の選択</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
