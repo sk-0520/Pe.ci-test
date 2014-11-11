@@ -872,7 +872,27 @@ namespace PeMain.UI
 			} else {
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
-				var item = LauncherItem.FileLoad(dropData.Files.First(), true);
+				
+				var path = dropData.Files.First();
+				var forceLauncherType = false;
+				var forceType = LauncherType.None;
+				if(Directory.Exists(path)) {
+					var result = MessageBox.Show(CommonData.Language[""], CommonData.Language[""], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+					switch(result) {
+						case DialogResult.Yes:
+							forceLauncherType = false;
+							break;
+							
+						case DialogResult.No:
+							forceLauncherType = true;
+							forceType = LauncherType.File;
+							break;
+							
+						default:
+							return;
+					}
+				}
+				var item = LauncherItem.FileLoad(path, true, forceLauncherType, forceType);
 				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {

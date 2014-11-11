@@ -23,6 +23,7 @@ namespace PeMain.Data
 	/// </summary>
 	public enum LauncherType
 	{
+		None,
 		/// <summary>
 		/// 何かのファイル。
 		/// </summary>
@@ -380,43 +381,59 @@ namespace PeMain.Data
 		/// <summary>
 		/// ファイルパスからランチャーアイテムの生成。
 		/// </summary>
-		/// <param name="filePath"></param>
+		/// <param name="expandPath"></param>
 		/// <param name="useShortcut"></param>
+		/// <param name = "forceLauncherType"></param>
+		/// <param name = "forceType"></param>
 		/// <returns></returns>
-		public static LauncherItem FileLoad(string filePath, bool useShortcut)
+		public static LauncherItem FileLoad(string expandPath, bool useShortcut, bool forceLauncherType, LauncherType forceType)
 		{
+			#if DEBUG
+			if(forceLauncherType) {
+				Debug.Assert(forceType != LauncherType.None);
+			}
+			#endif
+			
 			var item = new LauncherItem();
 			
-			item.Name = Path.GetFileNameWithoutExtension(filePath);
-			if(item.Name.Length == 0 && filePath.Length >= @"C:\".Length) {
-				var drive = DriveInfo.GetDrives().SingleOrDefault(d => d.Name == filePath);
+			item.Name = Path.GetFileNameWithoutExtension(expandPath);
+			if(item.Name.Length == 0 && expandPath.Length >= @"C:\".Length) {
+				var drive = DriveInfo.GetDrives().SingleOrDefault(d => d.Name == expandPath);
 				if(drive != null) {
 					item.Name = drive.VolumeLabel;
 				}
 			}
 			if(item.Name.Length == 0) {
-				item.Name = filePath;
+				item.Name = expandPath;
 			}
-			item.Command = filePath;
+			item.Command = expandPath;
 			/*
 			item.IconPath = filePath;
 			item.IconIndex = 0;
 			 */
-			item.IconItem.Path = filePath;
+			item.IconItem.Path = expandPath;
 			item.IconItem.Index = 0;
 			
-			if(Directory.Exists(filePath)) {
+			if(Directory.Exists(expandPath)) {
 				// ディレクトリ
-				item.LauncherType = LauncherType.Directory;
+				if(forceLauncherType) {
+					item.LauncherType = forceType;
+				} else {
+					item.LauncherType = LauncherType.Directory;
+				}
 			} else {
 				// ファイルとかもろもろ
-				item.LauncherType = LauncherType.File;
+				if(forceLauncherType) {
+					item.LauncherType = forceType;
+				} else {
+					item.LauncherType = LauncherType.File;
+				}
 				
-				var dotExt = Path.GetExtension(filePath);
+				var dotExt = Path.GetExtension(expandPath);
 				switch(dotExt.ToLower()) {
 					case ".lnk":
 						{
-							var shortcut = new ShortcutFile(filePath, false);
+							var shortcut = new ShortcutFile(expandPath, false);
 							item.Command = shortcut.TargetPath;
 							item.Option = shortcut.Arguments;
 							item.WorkDirPath = shortcut.WorkingDirectory;
@@ -461,6 +478,11 @@ namespace PeMain.Data
 			return item;
 		}
 		
+		public static LauncherItem FileLoad(string expandPath, bool useShortcut)
+		{
+			return FileLoad(expandPath, useShortcut, false, LauncherType.None);
+		}
+	
 		static public string GetUniqueName(LauncherItem item, IEnumerable<LauncherItem> seq)
 		{
 			return TextUtility.ToUniqueDefault(item.Name, seq.Select(i => i.Name));
