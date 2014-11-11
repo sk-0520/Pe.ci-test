@@ -730,7 +730,8 @@ namespace PeMain.UI
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
-				if(LoadFileList(toolItem, item.Command, showHiddenFile, showExtension)) {
+				var expandPath = Environment.ExpandEnvironmentVariables(item.Command);
+				if(LoadFileList(toolItem, expandPath, showHiddenFile, showExtension)) {
 					var openItem = new ToolStripMenuItem();
 					openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
 					openItem.Image = toolItem.Image;

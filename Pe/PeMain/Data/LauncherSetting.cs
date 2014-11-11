@@ -351,11 +351,11 @@ namespace PeMain.Data
 					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
 					useIconPath = expandIconPath;
 				}
-				if(!hasIcon &&  LauncherType == LauncherType.File) {
+				if(!hasIcon &&  new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
 					if(!string.IsNullOrWhiteSpace(Command)) {
-						var expandFilePath = Environment.ExpandEnvironmentVariables(Command);
-						hasIcon = File.Exists(expandFilePath) || Directory.Exists(expandFilePath);
-						useIconPath = expandFilePath;
+						var expandPath = Environment.ExpandEnvironmentVariables(Command);
+						hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
+						useIconPath = expandPath;
 					}
 				}
 				if(hasIcon) {
