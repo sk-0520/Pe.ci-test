@@ -383,7 +383,7 @@ namespace PeMain.Data
 		/// <param name="filePath"></param>
 		/// <param name="useShortcut"></param>
 		/// <returns></returns>
-		public static LauncherItem FileLoad(string filePath, bool useShortcut = false)
+		public static LauncherItem FileLoad(string filePath, bool useShortcut)
 		{
 			var item = new LauncherItem();
 			

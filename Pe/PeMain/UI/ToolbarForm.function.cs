@@ -872,7 +872,7 @@ namespace PeMain.UI
 			} else {
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
-				var item = LauncherItem.FileLoad(dropData.Files.First());
+				var item = LauncherItem.FileLoad(dropData.Files.First(), true);
 				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {
