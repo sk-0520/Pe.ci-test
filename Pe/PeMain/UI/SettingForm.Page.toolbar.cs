@@ -78,7 +78,7 @@ namespace PeMain.UI
 			this.selectToolbarTopmost.Checked = toolbarItem.Topmost;
 			this.selectToolbarShowText.Checked = toolbarItem.ShowText;
 			
-			this.selectToolbarGroup.SelectedValue = toolbarItem.DefaultGroup;
+			this.selectToolbarGroup.SelectedValue = toolbarItem.DefaultGroup ?? string.Empty;
 			
 			this._toolbarSelectedToolbarItem = toolbarItem;
 		}
