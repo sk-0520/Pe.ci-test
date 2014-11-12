@@ -42,16 +42,6 @@ namespace PeMain.UI
 			// イメージリスト再設定
 			this.treeToolbarItemGroup.ImageList = this._imageToolbarItemGroup;
 			this.treeToolbarItemGroup.StateImageList = this._imageToolbarItemGroup;
-			
-			// グループ情報設定
-			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
-			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
-			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
-			foreach(var node in rootNode) {
-				var displayValue = new ToolbarGroupNameDisplayValue(node.Text);
-				toolbarGroupList.Add(displayValue);
-			}
-			this.selectToolbarGroup.Attachment(toolbarGroupList);
 		}
 		
 		void ToolbarSetSelectedItem(ToolbarItem toolbarItem)
@@ -65,6 +55,8 @@ namespace PeMain.UI
 			toolbarItem.FontSetting = this.commandToolbarFont.FontSetting;
 			
 			toolbarItem.IconScale = (IconScale)this.selectToolbarIcon.SelectedValue;
+			
+			toolbarItem.DefaultGroup = this.selectToolbarGroup.SelectedValue as string;
 		}
 		
 		void ToolbarSelectedChangeToolbarItem(ToolbarItem toolbarItem)
@@ -85,6 +77,8 @@ namespace PeMain.UI
 			this.selectToolbarVisible.Checked = toolbarItem.Visible;
 			this.selectToolbarTopmost.Checked = toolbarItem.Topmost;
 			this.selectToolbarShowText.Checked = toolbarItem.ShowText;
+			
+			this.selectToolbarGroup.SelectedValue = toolbarItem.DefaultGroup;
 			
 			this._toolbarSelectedToolbarItem = toolbarItem;
 		}

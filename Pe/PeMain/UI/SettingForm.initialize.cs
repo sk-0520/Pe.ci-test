@@ -72,10 +72,10 @@ namespace PeMain.UI
 					}
 				)
 				.ToArray()
-			;
+				;
 			var languagePairList = new List<Language>(languageTempList.Length);
 			foreach(var lang in languageTempList) {
-				lang.Language.BaseName = lang.BaseName; 
+				lang.Language.BaseName = lang.BaseName;
 				languagePairList.Add(lang.Language);
 			}
 			var langList = languagePairList
@@ -85,7 +85,7 @@ namespace PeMain.UI
 						Language = l,
 					}
 				)
-			;
+				;
 			var selectedItem = langList.SingleOrDefault(l => l.Language.BaseName == languageName);
 			Language selectedLang = null;
 			if(selectedItem != null) {
@@ -175,7 +175,7 @@ namespace PeMain.UI
 		{
 			this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
 			this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
-				
+			
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
 			// ツールーバー位置の項目構築
@@ -221,6 +221,16 @@ namespace PeMain.UI
 					}
 				}
 			}
+			
+			// グループ情報設定
+			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var node in rootNode) {
+				var displayValue = new ToolbarGroupNameDisplayValue(node.Text);
+				toolbarGroupList.Add(displayValue);
+			}
+			this.selectToolbarGroup.Attachment(toolbarGroupList);
 		}
 		
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
