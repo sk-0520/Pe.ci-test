@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 using PeMain.Data;
 using PeUtility;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -41,6 +42,16 @@ namespace PeMain.UI
 			// イメージリスト再設定
 			this.treeToolbarItemGroup.ImageList = this._imageToolbarItemGroup;
 			this.treeToolbarItemGroup.StateImageList = this._imageToolbarItemGroup;
+			
+			// グループ情報設定
+			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var node in rootNode) {
+				var displayValue = new ToolbarGroupNameDisplayValue(node.Text);
+				toolbarGroupList.Add(displayValue);
+			}
+			this.selectToolbarGroup.Attachment(toolbarGroupList);
 		}
 		
 		void ToolbarSetSelectedItem(ToolbarItem toolbarItem)

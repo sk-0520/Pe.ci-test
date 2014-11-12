@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 using PeMain.Data;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -39,6 +40,7 @@ namespace PeMain.UI
 		Dictionary<string, FontSetting> _toolbarFont = new Dictionary<string, FontSetting>();
 		*/
 		ToolbarItem _toolbarSelectedToolbarItem = null;
+		
 		
 	}
 }

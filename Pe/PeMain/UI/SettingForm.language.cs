@@ -103,6 +103,7 @@ namespace PeMain.UI
 			this.selectToolbarVisible.SetLanguage(Language);
 			this.selectToolbarAutoHide.SetLanguage(Language);
 			this.selectToolbarShowText.SetLanguage(Language);
+			this.labelToolbarGroup.SetLanguage(Language);
 			this.labelToolbarTextWidth.SetLanguage(Language);
 			this.labelToolbarPosition.SetLanguage(Language);
 			this.labelToolbarIcon.SetLanguage(Language);
