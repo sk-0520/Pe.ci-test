@@ -133,6 +133,11 @@ namespace PeMain.Data
 	[Serializable]
 	public class ToolbarItem: DisposableNameItem, IDisposable
 	{
+		public static bool CheckNameEqual(string a, string b)
+		{
+			return a == b;
+		}
+			
 		#region Equals and GetHashCode implementation !![ operator == ]!!
 		public override bool Equals(object obj)
 		{
@@ -167,6 +172,8 @@ namespace PeMain.Data
 			
 			HiddenWaitTime = Literal.toolbarHiddenTime.median;
 			HiddenAnimateTime = Literal.toolbarAnimateTime.median;
+			
+			DefaultGroup = string.Empty;
 		}
 		
 		public override void CorrectionValue()
@@ -253,9 +260,14 @@ namespace PeMain.Data
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		public string DefaultGroup { get; set; }
+		
 		public bool IsNameEqual(string name)
 		{
-			return Name == name;
+			return CheckNameEqual(Name, name);
 		}
 		
 		public override void Dispose()
