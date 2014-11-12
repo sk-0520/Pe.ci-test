@@ -19,6 +19,8 @@
 
 Bitbucket へログイン可能なアカウントを持っていれば課題を作成して頂いてもかまいません。
 
+[Issues](https://bitbucket.org/sk_0520/pe/issues?status=new&status=open)を参照。
+
 
 ## 注意
 
