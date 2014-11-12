@@ -109,6 +109,7 @@ namespace PeMain.UI
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
 			ToolbarAddGroup(Language["group/new"]);
+			ToolbarChangedGroupCount();
 		}
 		
 		void ToolToolbarGroup_addItem_Click(object sender, EventArgs e)
@@ -152,6 +153,7 @@ namespace PeMain.UI
 			var node = this.treeToolbarItemGroup.SelectedNode;
 			if(node != null) {
 				node.Remove();
+				ToolbarChangedGroupCount();
 			}
 		}
 		
@@ -338,6 +340,7 @@ namespace PeMain.UI
 				LauncherInputChange();
 			}	
 		}
+		
 		void treeToolbarItemGroup_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
 		{
 			Debug.Assert(e.Node.Level == TREE_LEVEL_GROUP);

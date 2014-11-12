@@ -146,5 +146,26 @@ namespace PeMain.UI
 			this.selecterToolbar.SelectedItem = item;
 		}
 		
+		void ToolbarChangedGroupCount()
+		{
+			var toolbarItems = this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>().Select(dv => dv.Value);
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			var groupNames = rootNode.Select(n => n.Text);
+			foreach(var toolbarItem in toolbarItems) {
+				if(!groupNames.Any(g => ToolbarItem.CheckNameEqual(g, toolbarItem.DefaultGroup))) {
+					toolbarItem.DefaultGroup = string.Empty;
+				}
+			}
+			
+			var groupList = new List<ToolbarGroupNameDisplayValue>();
+			groupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var node in rootNode) {
+				groupList.Add(new ToolbarGroupNameDisplayValue(node.Text));
+			}
+			
+			this.selectToolbarGroup.Attachment(groupList);
+			this.selectToolbarGroup.SelectedValue = _toolbarSelectedToolbarItem.DefaultGroup;
+		}
+		
 	}
 }

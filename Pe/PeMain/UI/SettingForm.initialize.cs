@@ -203,6 +203,17 @@ namespace PeMain.UI
 			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
 			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
 			this.selectToolbarItem.SelectedIndex = 0;
+			
+			// グループ情報設定
+			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var groupItem in toolbarSetting.ToolbarGroup.Groups) {
+				var displayValue = new ToolbarGroupNameDisplayValue(groupItem.Name);
+				toolbarGroupList.Add(displayValue);
+			}
+			this.selectToolbarGroup.Attachment(toolbarGroupList);
+			
 			ToolbarSelectedChangeToolbarItem(initToolbarItem);
 			
 			// グループ用項目
@@ -221,16 +232,6 @@ namespace PeMain.UI
 					}
 				}
 			}
-			
-			// グループ情報設定
-			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
-			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
-			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
-			foreach(var node in rootNode) {
-				var displayValue = new ToolbarGroupNameDisplayValue(node.Text);
-				toolbarGroupList.Add(displayValue);
-			}
-			this.selectToolbarGroup.Attachment(toolbarGroupList);
 		}
 		
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
