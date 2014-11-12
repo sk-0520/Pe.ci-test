@@ -7,9 +7,12 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
+using PeUtility;
 using PeMain.Data;
 using PeMain.Logic;
 
@@ -106,6 +109,7 @@ namespace PeMain.UI
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
 			ToolbarAddGroup(Language["group/new"]);
+			ToolbarChangedGroupCount();
 		}
 		
 		void ToolToolbarGroup_addItem_Click(object sender, EventArgs e)
@@ -149,6 +153,7 @@ namespace PeMain.UI
 			var node = this.treeToolbarItemGroup.SelectedNode;
 			if(node != null) {
 				node.Remove();
+				ToolbarChangedGroupCount();
 			}
 		}
 		
@@ -195,6 +200,7 @@ namespace PeMain.UI
 			var node = this.treeToolbarItemGroup.SelectedNode;
 			if(node == null) {
 				// 到達不可のはず
+				Debug.Assert(false);
 				return;
 			}
 			e.CancelEdit = node.Level != TREE_LEVEL_GROUP;
@@ -333,6 +339,58 @@ namespace PeMain.UI
 			if(this._launcherItemEvent) {
 				LauncherInputChange();
 			}	
+		}
+		
+		void treeToolbarItemGroup_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+		{
+			Debug.Assert(e.Node.Level == TREE_LEVEL_GROUP);
+			if(e.Label == null) {
+				// なんもしてない
+				return;
+			}
+			// 編集されたのでラベル名が変更されているか
+			if(e.Node.Text.Trim() == e.Label.Trim()) {
+				e.CancelEdit = true;
+				return;
+			}
+			
+			// グループ名が空白は変更対象としない
+			if(string.IsNullOrWhiteSpace(e.Label)) {
+				e.CancelEdit = true;
+				return;
+			}
+			
+			var oldName = e.Node.Text;
+			var nodes = this.treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			//var changedNowSelectedToolbarItem = ToolbarItem.CheckNameEqual(this._toolbarSelectedToolbarItem.DefaultGroup, e.Node.Text);
+			// グループ名重複は色々まずい
+			var uniqName = TextUtility.ToUniqueDefault(e.Label.Trim(), nodes.Where(n => n != e.Node).Select(n => n.Text.Trim()));
+			var useName = e.Label.Trim();
+			if(uniqName != useName) {
+				// 変更データを無視して採番値を設定
+				e.CancelEdit = true;
+				useName = e.Node.Text = uniqName;
+			}
+			
+			
+			// 変更値をツールバーの初期グループ名に反映
+			var toolbarItems = this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>().Select(dv => dv.Value);
+			var groupList = new List<ToolbarGroupNameDisplayValue>();
+			var changedGroupToolbarItem = toolbarItems.SingleOrDefault(t => t.DefaultGroup == oldName);
+			if(changedGroupToolbarItem != null) {
+				changedGroupToolbarItem.DefaultGroup = e.CancelEdit ? uniqName:  e.Label.Trim();
+			}
+			groupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var node in nodes) {
+				if(node == e.Node) {
+					groupList.Add(new ToolbarGroupNameDisplayValue(useName));
+				} else {
+					groupList.Add(new ToolbarGroupNameDisplayValue(node.Text));
+				}
+			}
+			var nowIndex = this.selectToolbarGroup.SelectedIndex;
+			this.selectToolbarGroup.Attachment(groupList);
+			this.selectToolbarGroup.SelectedIndex = nowIndex;
 		}
 	}
 }

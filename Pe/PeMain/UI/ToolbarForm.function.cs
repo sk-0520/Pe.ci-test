@@ -163,8 +163,10 @@ namespace PeMain.UI
 				
 				this._menuGroup.MenuItems.Add(menuItem);
 			}
+			var firstGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First();
+			var initGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => ToolbarItem.CheckNameEqual(g.Name, UseToolbarItem.DefaultGroup));
 			
-			SelectedGroup(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First());
+			SelectedGroup(initGroup ?? firstGroup);
 			
 			// 表示
 			ApplySettingPosition();
