@@ -519,9 +519,15 @@ namespace PeMain.UI
 					executeItem.Enabled = false;
 					executeExItem.Enabled = false;
 				}
-				
-				var parentPath = Path.GetDirectoryName(launcherItem.Command);
-				fileItem.Enabled = Directory.Exists(parentPath);
+				try {
+					var parentPath = Path.GetDirectoryName(launcherItem.Command);
+					fileItem.Enabled = Directory.Exists(parentPath);
+				} catch(ArgumentException ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					pathItem.Enabled = false;
+					fileItem.Enabled = false;
+					executeItem.Enabled = true;
+				}
 			};
 		}
 		
