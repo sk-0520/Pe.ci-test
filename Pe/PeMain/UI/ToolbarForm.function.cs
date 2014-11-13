@@ -163,8 +163,10 @@ namespace PeMain.UI
 				
 				this._menuGroup.MenuItems.Add(menuItem);
 			}
+			var firstGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First();
+			var initGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => ToolbarItem.CheckNameEqual(g.Name, UseToolbarItem.DefaultGroup));
 			
-			SelectedGroup(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First());
+			SelectedGroup(initGroup ?? firstGroup);
 			
 			// 表示
 			ApplySettingPosition();
@@ -517,9 +519,15 @@ namespace PeMain.UI
 					executeItem.Enabled = false;
 					executeExItem.Enabled = false;
 				}
-				
-				var parentPath = Path.GetDirectoryName(launcherItem.Command);
-				fileItem.Enabled = Directory.Exists(parentPath);
+				try {
+					var parentPath = Path.GetDirectoryName(launcherItem.Command);
+					fileItem.Enabled = Directory.Exists(parentPath);
+				} catch(ArgumentException ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					pathItem.Enabled = false;
+					fileItem.Enabled = false;
+					executeItem.Enabled = true;
+				}
 			};
 		}
 		
@@ -730,7 +738,8 @@ namespace PeMain.UI
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
-				if(LoadFileList(toolItem, item.Command, showHiddenFile, showExtension)) {
+				var expandPath = Environment.ExpandEnvironmentVariables(item.Command);
+				if(LoadFileList(toolItem, expandPath, showHiddenFile, showExtension)) {
 					var openItem = new ToolStripMenuItem();
 					openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
 					openItem.Image = toolItem.Image;
@@ -871,7 +880,27 @@ namespace PeMain.UI
 			} else {
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
-				var item = LauncherItem.FileLoad(dropData.Files.First());
+				
+				var path = dropData.Files.First();
+				var forceLauncherType = false;
+				var forceType = LauncherType.None;
+				if(Directory.Exists(path)) {
+					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/directory/message"], CommonData.Language["toolbar/dialog/d-d/directory/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+					switch(result) {
+						case DialogResult.Yes:
+							forceLauncherType = false;
+							break;
+							
+						case DialogResult.No:
+							forceLauncherType = true;
+							forceType = LauncherType.File;
+							break;
+							
+						default:
+							return;
+					}
+				}
+				var item = LauncherItem.LoadFile(path, true, forceLauncherType, forceType);
 				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {

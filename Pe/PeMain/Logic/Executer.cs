@@ -85,7 +85,8 @@ namespace PeMain.Logic
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
 			
-			OpenDirectory(launcherItem.Command, commonData, null);
+			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+			OpenDirectory(expandPath, commonData, null);
 		}
 		
 		public static void RunItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
@@ -104,26 +105,26 @@ namespace PeMain.Logic
 			}
 		}
 		
-		public static Process RunCommand(string command, CommonData commonData)
+		public static Process RunCommand(string expandPath, CommonData commonData)
 		{
-			string exCommand = command;
+			string exCommand = expandPath;
 			
 			return Process.Start(exCommand);
 		}
 		
-		public static Process OpenFile(string path, CommonData commonData)
+		public static Process OpenFile(string expandPath, CommonData commonData)
 		{
-			return Process.Start(path);
+			return Process.Start(expandPath);
 		}
 		
-		public static void OpenDirectory(string path, CommonData commonData, LauncherItem openItem)
+		public static void OpenDirectory(string expandPath, CommonData commonData, LauncherItem openItem)
 		{
-			Process.Start(path);
+			Process.Start(expandPath);
 		}
 		
-		public static void OpenProperty(string path, IntPtr hWnd)
+		public static void OpenProperty(string expandPath, IntPtr hWnd)
 		{
-			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, path, string.Empty);
+			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, expandPath, string.Empty);
 		}
 	}
 	

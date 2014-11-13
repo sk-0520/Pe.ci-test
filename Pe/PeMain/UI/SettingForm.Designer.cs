@@ -88,7 +88,7 @@ namespace PeMain.UI
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.commandLauncherIconPath = new System.Windows.Forms.Button();
 			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
-			this.inputLauncherIconPath = new System.Windows.Forms.TextBox();
+			this.inputLauncherIconPath = new PeMain.UI.IconTextBox();
 			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
 			this.labelLauncherIconPath = new System.Windows.Forms.Label();
 			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
@@ -110,18 +110,20 @@ namespace PeMain.UI
 			this.groupToolbar = new System.Windows.Forms.GroupBox();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.labelToolbarPosition = new System.Windows.Forms.Label();
-			this.labelToolbarIcon = new System.Windows.Forms.Label();
-			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
-			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
-			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
-			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
-			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
-			this.labelToolbarFont = new System.Windows.Forms.Label();
-			this.commandToolbarFont = new PeMain.UI.FontSplitButton();
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
+			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
+			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
+			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
 			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
+			this.labelToolbarFont = new System.Windows.Forms.Label();
+			this.commandToolbarFont = new PeMain.UI.FontSplitButton();
+			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
+			this.labelToolbarIcon = new System.Windows.Forms.Label();
+			this.labelToolbarPosition = new System.Windows.Forms.Label();
+			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
+			this.labelToolbarGroup = new System.Windows.Forms.Label();
+			this.selectToolbarGroup = new System.Windows.Forms.ComboBox();
 			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -679,6 +681,7 @@ namespace PeMain.UI
 			// selectLauncherType_uri
 			// 
 			this.selectLauncherType_uri.AutoSize = true;
+			this.selectLauncherType_uri.Enabled = false;
 			this.selectLauncherType_uri.Location = new System.Drawing.Point(292, 3);
 			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
 			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
@@ -828,10 +831,12 @@ namespace PeMain.UI
 			// inputLauncherIconPath
 			// 
 			this.inputLauncherIconPath.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputLauncherIconPath.IconIndex = 0;
 			this.inputLauncherIconPath.Location = new System.Drawing.Point(165, 187);
 			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
 			this.inputLauncherIconPath.Size = new System.Drawing.Size(274, 23);
 			this.inputLauncherIconPath.TabIndex = 10;
+			this.inputLauncherIconPath.IconIndexChanged += new System.EventHandler(this.inputLauncherIconPath_IconIndexChanged);
 			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherWorkDirPath
@@ -1048,7 +1053,7 @@ namespace PeMain.UI
 			// 
 			this.splitContainer3.Panel2.Controls.Add(this.splitContainer2);
 			this.splitContainer3.Size = new System.Drawing.Size(747, 283);
-			this.splitContainer3.SplitterDistance = 249;
+			this.splitContainer3.SplitterDistance = 270;
 			this.splitContainer3.TabIndex = 19;
 			// 
 			// groupToolbar
@@ -1058,7 +1063,7 @@ namespace PeMain.UI
 			this.groupToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupToolbar.Location = new System.Drawing.Point(0, 0);
 			this.groupToolbar.Name = "groupToolbar";
-			this.groupToolbar.Size = new System.Drawing.Size(249, 283);
+			this.groupToolbar.Size = new System.Drawing.Size(270, 283);
 			this.groupToolbar.TabIndex = 0;
 			this.groupToolbar.TabStop = false;
 			this.groupToolbar.Text = "☃";
@@ -1076,22 +1081,23 @@ namespace PeMain.UI
 			this.tableLayoutPanel2.ColumnCount = 2;
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarPosition, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarIcon, 0, 1);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarIcon, 1, 1);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarPosition, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarAutoHide, 0, 4);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarShowText, 0, 5);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarTopmost, 0, 6);
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarFont, 0, 2);
-			this.tableLayoutPanel2.Controls.Add(this.commandToolbarFont, 1, 2);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarVisible, 0, 7);
-			this.tableLayoutPanel2.Controls.Add(this.labelToolbarTextWidth, 0, 3);
-			this.tableLayoutPanel2.Controls.Add(this.inputToolbarTextWidth, 1, 3);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarVisible, 0, 8);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarTopmost, 0, 7);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarShowText, 0, 6);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarAutoHide, 0, 5);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarTextWidth, 0, 4);
+			this.tableLayoutPanel2.Controls.Add(this.inputToolbarTextWidth, 1, 4);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarFont, 0, 3);
+			this.tableLayoutPanel2.Controls.Add(this.commandToolbarFont, 1, 3);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarIcon, 1, 2);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarIcon, 0, 2);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarPosition, 0, 1);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarPosition, 1, 1);
+			this.tableLayoutPanel2.Controls.Add(this.labelToolbarGroup, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarGroup, 1, 0);
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 8;
+			this.tableLayoutPanel2.RowCount = 10;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1100,91 +1106,80 @@ namespace PeMain.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(235, 235);
 			this.tableLayoutPanel2.TabIndex = 20;
 			// 
-			// labelToolbarPosition
+			// selectToolbarVisible
 			// 
-			this.labelToolbarPosition.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelToolbarPosition.AutoSize = true;
-			this.labelToolbarPosition.Location = new System.Drawing.Point(3, 7);
-			this.labelToolbarPosition.Name = "labelToolbarPosition";
-			this.labelToolbarPosition.Size = new System.Drawing.Size(142, 15);
-			this.labelToolbarPosition.TabIndex = 10;
-			this.labelToolbarPosition.Text = ":enum/toolbar-position";
-			// 
-			// labelToolbarIcon
-			// 
-			this.labelToolbarIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelToolbarIcon.AutoSize = true;
-			this.labelToolbarIcon.Location = new System.Drawing.Point(3, 36);
-			this.labelToolbarIcon.Name = "labelToolbarIcon";
-			this.labelToolbarIcon.Size = new System.Drawing.Size(101, 15);
-			this.labelToolbarIcon.TabIndex = 12;
-			this.labelToolbarIcon.Text = ":enum/icon-size";
-			// 
-			// selectToolbarIcon
-			// 
-			this.selectToolbarIcon.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.selectToolbarIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectToolbarIcon.FormattingEnabled = true;
-			this.selectToolbarIcon.Location = new System.Drawing.Point(161, 32);
-			this.selectToolbarIcon.Name = "selectToolbarIcon";
-			this.selectToolbarIcon.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarIcon.TabIndex = 1;
-			// 
-			// selectToolbarPosition
-			// 
-			this.selectToolbarPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.selectToolbarPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectToolbarPosition.FormattingEnabled = true;
-			this.selectToolbarPosition.Location = new System.Drawing.Point(161, 3);
-			this.selectToolbarPosition.Name = "selectToolbarPosition";
-			this.selectToolbarPosition.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarPosition.TabIndex = 0;
-			// 
-			// selectToolbarAutoHide
-			// 
-			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectToolbarAutoHide.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
-			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 121);
-			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
-			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
-			this.selectToolbarAutoHide.TabIndex = 4;
-			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
-			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
-			// 
-			// selectToolbarShowText
-			// 
-			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectToolbarShowText.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
-			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 146);
-			this.selectToolbarShowText.Name = "selectToolbarShowText";
-			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
-			this.selectToolbarShowText.TabIndex = 5;
-			this.selectToolbarShowText.Text = ":setting/check/show-text";
-			this.selectToolbarShowText.UseVisualStyleBackColor = true;
+			this.selectToolbarVisible.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarVisible, 2);
+			this.selectToolbarVisible.Location = new System.Drawing.Point(3, 225);
+			this.selectToolbarVisible.Name = "selectToolbarVisible";
+			this.selectToolbarVisible.Size = new System.Drawing.Size(157, 19);
+			this.selectToolbarVisible.TabIndex = 7;
+			this.selectToolbarVisible.Text = ":common/label/visible";
+			this.selectToolbarVisible.UseVisualStyleBackColor = true;
 			// 
 			// selectToolbarTopmost
 			// 
 			this.selectToolbarTopmost.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.selectToolbarTopmost.AutoSize = true;
 			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarTopmost, 2);
-			this.selectToolbarTopmost.Location = new System.Drawing.Point(3, 171);
+			this.selectToolbarTopmost.Location = new System.Drawing.Point(3, 200);
 			this.selectToolbarTopmost.Name = "selectToolbarTopmost";
 			this.selectToolbarTopmost.Size = new System.Drawing.Size(170, 19);
 			this.selectToolbarTopmost.TabIndex = 6;
 			this.selectToolbarTopmost.Text = ":common/label/topmost";
 			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
 			// 
+			// selectToolbarShowText
+			// 
+			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectToolbarShowText.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
+			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 175);
+			this.selectToolbarShowText.Name = "selectToolbarShowText";
+			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
+			this.selectToolbarShowText.TabIndex = 5;
+			this.selectToolbarShowText.Text = ":setting/check/show-text";
+			this.selectToolbarShowText.UseVisualStyleBackColor = true;
+			// 
+			// selectToolbarAutoHide
+			// 
+			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectToolbarAutoHide.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
+			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 150);
+			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
+			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
+			this.selectToolbarAutoHide.TabIndex = 4;
+			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
+			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
+			// 
+			// labelToolbarTextWidth
+			// 
+			this.labelToolbarTextWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarTextWidth.AutoSize = true;
+			this.labelToolbarTextWidth.Location = new System.Drawing.Point(3, 125);
+			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
+			this.labelToolbarTextWidth.Size = new System.Drawing.Size(152, 15);
+			this.labelToolbarTextWidth.TabIndex = 12;
+			this.labelToolbarTextWidth.Text = ":setting/label/text-width";
+			// 
+			// inputToolbarTextWidth
+			// 
+			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 121);
+			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
+			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
+			this.inputToolbarTextWidth.TabIndex = 3;
+			// 
 			// labelToolbarFont
 			// 
 			this.labelToolbarFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelToolbarFont.AutoSize = true;
-			this.labelToolbarFont.Location = new System.Drawing.Point(3, 66);
+			this.labelToolbarFont.Location = new System.Drawing.Point(3, 95);
 			this.labelToolbarFont.Name = "labelToolbarFont";
 			this.labelToolbarFont.Size = new System.Drawing.Size(125, 15);
 			this.labelToolbarFont.TabIndex = 5;
@@ -1194,40 +1189,72 @@ namespace PeMain.UI
 			// 
 			this.commandToolbarFont.AutoSize = true;
 			this.commandToolbarFont.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandToolbarFont.Location = new System.Drawing.Point(161, 61);
+			this.commandToolbarFont.Location = new System.Drawing.Point(161, 90);
 			this.commandToolbarFont.Name = "commandToolbarFont";
 			this.commandToolbarFont.Size = new System.Drawing.Size(142, 25);
 			this.commandToolbarFont.TabIndex = 2;
 			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
 			this.commandToolbarFont.UseVisualStyleBackColor = true;
 			// 
-			// selectToolbarVisible
+			// selectToolbarIcon
 			// 
-			this.selectToolbarVisible.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarVisible, 2);
-			this.selectToolbarVisible.Location = new System.Drawing.Point(3, 196);
-			this.selectToolbarVisible.Name = "selectToolbarVisible";
-			this.selectToolbarVisible.Size = new System.Drawing.Size(157, 19);
-			this.selectToolbarVisible.TabIndex = 7;
-			this.selectToolbarVisible.Text = ":common/label/visible";
-			this.selectToolbarVisible.UseVisualStyleBackColor = true;
+			this.selectToolbarIcon.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectToolbarIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectToolbarIcon.FormattingEnabled = true;
+			this.selectToolbarIcon.Location = new System.Drawing.Point(161, 61);
+			this.selectToolbarIcon.Name = "selectToolbarIcon";
+			this.selectToolbarIcon.Size = new System.Drawing.Size(142, 23);
+			this.selectToolbarIcon.TabIndex = 1;
 			// 
-			// labelToolbarTextWidth
+			// labelToolbarIcon
 			// 
-			this.labelToolbarTextWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelToolbarTextWidth.AutoSize = true;
-			this.labelToolbarTextWidth.Location = new System.Drawing.Point(3, 96);
-			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
-			this.labelToolbarTextWidth.Size = new System.Drawing.Size(152, 15);
-			this.labelToolbarTextWidth.TabIndex = 12;
-			this.labelToolbarTextWidth.Text = ":setting/label/text-width";
+			this.labelToolbarIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarIcon.AutoSize = true;
+			this.labelToolbarIcon.Location = new System.Drawing.Point(3, 65);
+			this.labelToolbarIcon.Name = "labelToolbarIcon";
+			this.labelToolbarIcon.Size = new System.Drawing.Size(101, 15);
+			this.labelToolbarIcon.TabIndex = 12;
+			this.labelToolbarIcon.Text = ":enum/icon-size";
 			// 
-			// inputToolbarTextWidth
+			// labelToolbarPosition
 			// 
-			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 92);
-			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
-			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
-			this.inputToolbarTextWidth.TabIndex = 3;
+			this.labelToolbarPosition.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarPosition.AutoSize = true;
+			this.labelToolbarPosition.Location = new System.Drawing.Point(3, 36);
+			this.labelToolbarPosition.Name = "labelToolbarPosition";
+			this.labelToolbarPosition.Size = new System.Drawing.Size(142, 15);
+			this.labelToolbarPosition.TabIndex = 10;
+			this.labelToolbarPosition.Text = ":enum/toolbar-position";
+			// 
+			// selectToolbarPosition
+			// 
+			this.selectToolbarPosition.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectToolbarPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectToolbarPosition.FormattingEnabled = true;
+			this.selectToolbarPosition.Location = new System.Drawing.Point(161, 32);
+			this.selectToolbarPosition.Name = "selectToolbarPosition";
+			this.selectToolbarPosition.Size = new System.Drawing.Size(142, 23);
+			this.selectToolbarPosition.TabIndex = 0;
+			// 
+			// labelToolbarGroup
+			// 
+			this.labelToolbarGroup.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelToolbarGroup.AutoSize = true;
+			this.labelToolbarGroup.Location = new System.Drawing.Point(3, 7);
+			this.labelToolbarGroup.Name = "labelToolbarGroup";
+			this.labelToolbarGroup.Size = new System.Drawing.Size(124, 15);
+			this.labelToolbarGroup.TabIndex = 13;
+			this.labelToolbarGroup.Text = ":setting/label/group";
+			// 
+			// selectToolbarGroup
+			// 
+			this.selectToolbarGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectToolbarGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectToolbarGroup.FormattingEnabled = true;
+			this.selectToolbarGroup.Location = new System.Drawing.Point(161, 3);
+			this.selectToolbarGroup.Name = "selectToolbarGroup";
+			this.selectToolbarGroup.Size = new System.Drawing.Size(142, 23);
+			this.selectToolbarGroup.TabIndex = 14;
 			// 
 			// selectToolbarItem
 			// 
@@ -1253,8 +1280,8 @@ namespace PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(494, 283);
-			this.splitContainer2.SplitterDistance = 293;
+			this.splitContainer2.Size = new System.Drawing.Size(473, 283);
+			this.splitContainer2.SplitterDistance = 280;
 			this.splitContainer2.TabIndex = 15;
 			// 
 			// toolStripContainer1
@@ -1264,13 +1291,13 @@ namespace PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(293, 258);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(280, 258);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(293, 283);
+			this.toolStripContainer1.Size = new System.Drawing.Size(280, 283);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -1286,9 +1313,10 @@ namespace PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(293, 258);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(280, 258);
 			this.treeToolbarItemGroup.TabIndex = 0;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
+			this.treeToolbarItemGroup.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeToolbarItemGroup_AfterLabelEdit);
 			this.treeToolbarItemGroup.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeToolbarItemGroup_AfterSelect);
 			this.treeToolbarItemGroup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TreeToolbarItemGroup_KeyDown);
 			// 
@@ -1306,7 +1334,7 @@ namespace PeMain.UI
 			this.toolToolbarGroup_remove});
 			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
-			this.toolToolbarGroup.Size = new System.Drawing.Size(293, 25);
+			this.toolToolbarGroup.Size = new System.Drawing.Size(280, 25);
 			this.toolToolbarGroup.Stretch = true;
 			this.toolToolbarGroup.TabIndex = 0;
 			this.toolToolbarGroup.Text = "toolStrip1";
@@ -1382,7 +1410,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(197, 283);
+			this.selecterToolbar.Size = new System.Drawing.Size(189, 283);
 			this.selecterToolbar.TabIndex = 0;
 			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
@@ -2033,7 +2061,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.TextBox inputLauncherCommand;
 		private System.Windows.Forms.TextBox inputLauncherName;
 		private System.Windows.Forms.TextBox inputLauncherWorkDirPath;
-		private System.Windows.Forms.TextBox inputLauncherIconPath;
+		private PeMain.UI.IconTextBox inputLauncherIconPath;
 		private System.Windows.Forms.Label labelLauncherCommand;
 		private System.Windows.Forms.Label labelLauncherName;
 		private System.Windows.Forms.Label labelLauncherWorkDirPath;
@@ -2070,5 +2098,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.TabPage tabSetting_pageLauncher;
 		private System.Windows.Forms.TabPage tabSetting_pageMain;
 		private System.Windows.Forms.TabControl tabSetting;
+		private System.Windows.Forms.Label labelToolbarGroup;
+		private System.Windows.Forms.ComboBox selectToolbarGroup;
 	}
 }

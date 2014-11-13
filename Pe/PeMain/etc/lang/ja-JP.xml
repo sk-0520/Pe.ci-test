@@ -179,6 +179,8 @@
 		<Word Name="toolbar/menu/file/path/property"        Text="プロパティ(&amp;P)" />
 		<Word Name="toolbar/menu/file/ls/not-child-files"   Text="下位ファイルなし" />
 		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
+		<Word Name="toolbar/dialog/d-d/directory/caption"  Text="ディレクトリ登録方法" />
+		<Word Name="toolbar/dialog/d-d/directory/message"  Text="D&amp;Dされたパスをディレクトリアイテム(フォルダ)として登録します。&#x0d;&#x0a;&#x0d;&#x0a;ディレクトリ内容を一覧表示するには「${yes}」を、&#x0d;&#x0a;ディレクトリそのものを開く場合は「${no}」を選択してください。&#x0d;&#x0a;これは設定ダイアログで再度変更できます。" />
 		
 		
 		<Word Name="execute/page/basic"         Text="基本指定" />
@@ -260,6 +262,7 @@
 		<Word Name="setting/label/note-compact"    Text="最小化" />
 		<Word Name="setting/label/note-show-front" Text="${show-front}" />
 		<Word Name="setting/check/std-stream"      Text="${std-stream}" />
+		<Word Name="setting/label/group"           Text="初期グループ" />
 		<Word Name="setting/check/auto-hide"       Text="${auto-hide}" />
 		<Word Name="setting/check/show-text"       Text="テキストを表示する" />
 		<Word Name="setting/check/edit-env"        Text="${edit-env}" />

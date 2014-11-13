@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 using PeMain.Data;
 using PeUtility;
+using PeMain.Logic;
 
 namespace PeMain.UI
 {
@@ -54,6 +55,8 @@ namespace PeMain.UI
 			toolbarItem.FontSetting = this.commandToolbarFont.FontSetting;
 			
 			toolbarItem.IconScale = (IconScale)this.selectToolbarIcon.SelectedValue;
+			
+			toolbarItem.DefaultGroup = this.selectToolbarGroup.SelectedValue as string;
 		}
 		
 		void ToolbarSelectedChangeToolbarItem(ToolbarItem toolbarItem)
@@ -74,6 +77,8 @@ namespace PeMain.UI
 			this.selectToolbarVisible.Checked = toolbarItem.Visible;
 			this.selectToolbarTopmost.Checked = toolbarItem.Topmost;
 			this.selectToolbarShowText.Checked = toolbarItem.ShowText;
+			
+			this.selectToolbarGroup.SelectedValue = toolbarItem.DefaultGroup ?? string.Empty;
 			
 			this._toolbarSelectedToolbarItem = toolbarItem;
 		}
@@ -139,6 +144,27 @@ namespace PeMain.UI
 				this.selecterToolbar.Filtering = false;
 			}
 			this.selecterToolbar.SelectedItem = item;
+		}
+		
+		void ToolbarChangedGroupCount()
+		{
+			var toolbarItems = this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>().Select(dv => dv.Value);
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			var groupNames = rootNode.Select(n => n.Text);
+			foreach(var toolbarItem in toolbarItems) {
+				if(!groupNames.Any(g => ToolbarItem.CheckNameEqual(g, toolbarItem.DefaultGroup))) {
+					toolbarItem.DefaultGroup = string.Empty;
+				}
+			}
+			
+			var groupList = new List<ToolbarGroupNameDisplayValue>();
+			groupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var node in rootNode) {
+				groupList.Add(new ToolbarGroupNameDisplayValue(node.Text));
+			}
+			
+			this.selectToolbarGroup.Attachment(groupList);
+			this.selectToolbarGroup.SelectedValue = _toolbarSelectedToolbarItem.DefaultGroup;
 		}
 		
 	}

@@ -25,6 +25,31 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/11/DD" version="0.30.1" type="rc">
+		<ul type="note">
+			<li class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</li>
+			<li>設定ファイルのバックアップアーカイブから戻しを行う場合はグループ名の重複に注意してください</li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li>#71: 環境情報出力時にディスプレイ情報を出力する</li>
+			<li>#72: ディレクトリのD&amp;D登録時にアイテム種別の選択</li>
+			<li>#73: ツールバーに対する初期グループの設定</li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li>#70: ディレクトリアイテムで環境変数が展開されない</li>
+			<li>設定ダイアログのランチャーアイコン設定処理のインデックス関連を改善</li>
+			<li>#73の影響によりグループ名の重複時に連番を自動採番するように変更</li>
+			<li>#73の影響によりグループ名編集時に trim</li>
+			<li>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, 暫定対応により例外握り潰し</li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/11/09" version="0.30.0">
 		<ul type="features">
 			<li>#67: ランチャアイテムの自動登録, 基盤処理実装、細かい修正や default-launcher.xml の定義が必要</li>

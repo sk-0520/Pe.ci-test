@@ -69,7 +69,7 @@ namespace PeMain.UI
 			foreach(var text in textList) {
 				text.Text = string.Empty;
 			}
-			this.inputLauncherIconPath.Tag = 0;
+			this.inputLauncherIconPath.IconIndex = 0;
 			LauncherSetSelectedType(LauncherType.File);
 			var checkList = new CheckBox[] {
 				this.selectLauncherStdStream,
@@ -102,7 +102,9 @@ namespace PeMain.UI
 			this.inputLauncherIconPath.Tag = item.IconIndex;
 			*/
 			this.inputLauncherIconPath.Text = item.IconItem.Path;
-			this.inputLauncherIconPath.Tag = item.IconItem.Index;
+			//this.inputLauncherIconPath.Tag = item.IconItem.Index;
+			this.inputLauncherIconPath.IconIndex = item.IconItem.Index;
+			
 			this.inputLauncherTag.Text = string.Join(", ", item.Tag.ToArray());
 			this.inputLauncherNote.Text = item.Note;
 			this.selectLauncherStdStream.Checked = item.StdOutputWatch;
@@ -135,7 +137,7 @@ namespace PeMain.UI
 			item.IconIndex = this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
 			*/
 			item.IconItem.Path = this.inputLauncherIconPath.Text.Trim();
-			item.IconItem.Index = this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
+			item.IconItem.Index = this.inputLauncherIconPath.IconIndex;
 			
 			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
 			item.Note = this.inputLauncherNote.Text.Trim();
@@ -252,7 +254,7 @@ namespace PeMain.UI
 		void LauncherOpenIcon()
 		{
 			var iconPath = Environment.ExpandEnvironmentVariables(this.inputLauncherIconPath.Text.Trim());
-			var iconIndex= this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
+			var iconIndex= this.inputLauncherIconPath.IconIndex;
 			using(var dialog = new OpenIconDialog()) {
 				if(iconPath.Length > 0 && File.Exists(iconPath)) {
 					dialog.IconPath.Path  = iconPath;
@@ -261,14 +263,14 @@ namespace PeMain.UI
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					this.inputLauncherIconPath.Text = dialog.IconPath.Path;
-					this.inputLauncherIconPath.Tag = dialog.IconPath.Index;
+					this.inputLauncherIconPath.IconIndex = dialog.IconPath.Index;
 				}
 			}
 		}
 		
 		void LauncherAddFile(string filePath)
 		{
-			var item = LauncherItem.FileLoad(filePath, false);
+			var item = LauncherItem.LoadFile(filePath, false);
 			var uniqueName = LauncherItem.GetUniqueName(item, this.selecterLauncher.Items);
 			item.Name = uniqueName;
 			this.selecterLauncher.AddItem(item);

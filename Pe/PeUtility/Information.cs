@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Text;
+using System.Windows.Forms;
 
 namespace PeUtility
 {
@@ -265,6 +266,24 @@ namespace PeUtility
 			return result;
 		}
 		
+
+		public virtual InfoGroup GetScreen()
+		{
+			var result = new InfoGroup("Screen");
+			var screens = Screen.AllScreens;
+			for(var i = 0; i < screens.Length; i++) {
+				var screen = screens[i];
+				var head = string.Format("screen[{0}].", i);
+				result.Items.Add(head + "BitsPerPixel", screen.BitsPerPixel);
+				result.Items.Add(head + "Bounds", screen.Bounds);
+				result.Items.Add(head + "DeviceName", screen.DeviceName);
+				result.Items.Add(head + "Primary", screen.Primary);
+				result.Items.Add(head + "WorkingArea", screen.WorkingArea);
+			}
+			
+			return result;
+		}
+
 		public virtual IEnumerable<InfoGroup> Get()
 		{
 			return new [] {
@@ -272,8 +291,10 @@ namespace PeUtility
 				GetCPU(),
 				GetMemory(),
 				GetEnvironment(),
+				GetScreen(),
 			};
 		}
+		
 		
 		public override string ToString()
 		{
@@ -285,8 +306,5 @@ namespace PeUtility
 			
 			return string.Join(Environment.NewLine, list);
 		}
- 
-		
-		
 	}
 }
