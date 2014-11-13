@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../etc/style/changelog.xsl"?>
 <changelog>
 	<!--
-	<log date="YYYY/MM/DD" version="0.xx.0" type="rc">
+	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
 		<ul type="note">
 			<li></li>
 			<li></li>
@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/11/DD" version="0.31.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/11/13" version="0.31.0">
 		<ul type="note">
 			<li class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</li>
