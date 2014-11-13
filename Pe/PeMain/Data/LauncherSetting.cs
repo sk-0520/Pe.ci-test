@@ -136,7 +136,7 @@ namespace PeMain.Data
 			HasError = false;
 			
 			IconItem = new IconItem();
-			
+			LauncherType = LauncherType.File;
 			LauncherHistory = new LauncherHistory();
 			EnvironmentSetting = new EnvironmentSetting();
 			Tag = new List<string>();
