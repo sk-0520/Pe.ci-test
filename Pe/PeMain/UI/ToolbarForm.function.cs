@@ -900,7 +900,7 @@ namespace PeMain.UI
 							return;
 					}
 				}
-				var item = LauncherItem.FileLoad(path, true, forceLauncherType, forceType);
+				var item = LauncherItem.LoadFile(path, true, forceLauncherType, forceType);
 				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {

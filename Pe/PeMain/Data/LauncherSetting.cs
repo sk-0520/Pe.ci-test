@@ -386,7 +386,7 @@ namespace PeMain.Data
 		/// <param name = "forceLauncherType"></param>
 		/// <param name = "forceType"></param>
 		/// <returns></returns>
-		public static LauncherItem FileLoad(string expandPath, bool useShortcut, bool forceLauncherType, LauncherType forceType)
+		public static LauncherItem LoadFile(string expandPath, bool useShortcut, bool forceLauncherType, LauncherType forceType)
 		{
 			#if DEBUG
 			if(forceLauncherType) {
@@ -478,9 +478,9 @@ namespace PeMain.Data
 			return item;
 		}
 		
-		public static LauncherItem FileLoad(string expandPath, bool useShortcut)
+		public static LauncherItem LoadFile(string expandPath, bool useShortcut)
 		{
-			return FileLoad(expandPath, useShortcut, false, LauncherType.None);
+			return LoadFile(expandPath, useShortcut, false, LauncherType.None);
 		}
 	
 		static public string GetUniqueName(LauncherItem item, IEnumerable<LauncherItem> seq)
