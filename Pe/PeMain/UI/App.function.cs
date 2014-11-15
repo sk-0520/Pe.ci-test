@@ -148,8 +148,9 @@ namespace PeMain.UI
 					windowVisible[window] = window.Visible;
 					window.Visible = false;
 				}
-				this._notifyIcon.Visible = false;
-				
+				// #82
+				//this._notifyIcon.Visible = false;
+				this._notifyIcon.ContextMenuStrip = null;
 				this._pause = true;
 			}
 			var action = func();
@@ -167,7 +168,9 @@ namespace PeMain.UI
 					}
 				}
 				this._pause = false;
-				this._notifyIcon.Visible = true;
+				// #82
+				//this._notifyIcon.Visible = true;
+				this._notifyIcon.ContextMenuStrip = this._contextMenu;
 			}
 		}
 		
