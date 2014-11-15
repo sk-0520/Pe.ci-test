@@ -163,7 +163,7 @@
 		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
 		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
 		
-		<Word Name="toolbar/main/tips"               Text="現在選${version-release}択中グループ: @[GROUP]" />
+		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
 		<Word Name="toolbar/menu/main/hidden"        Text="${hidden}(&amp;N)" />
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
