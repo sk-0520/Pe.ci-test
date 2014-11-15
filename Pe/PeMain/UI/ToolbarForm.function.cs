@@ -690,7 +690,7 @@ namespace PeMain.UI
 					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
 						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					}
-					*/
+					 */
 					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#endif
 				}
@@ -752,6 +752,16 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
+		/*
+		void LauncherButton_MouseDown(object sender, MouseEventArgs e)
+		{
+			if(Control.ModifierKeys == Keys.Alt) {
+				Debug.WriteLine(sender);
+				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
+			}
+		}
+		 */
+		
 		/// <summary>
 		/// ランチャーアイテムボタンの生成。
 		/// </summary>
@@ -769,6 +779,14 @@ namespace PeMain.UI
 			}
 			
 			toolItem.Tag = item;
+			
+			//toolItem.MouseDown += LauncherButton_MouseDown;
+			toolItem.MouseDown += (object sender, MouseEventArgs e) => {
+				if(Control.ModifierKeys == Keys.Alt) {
+					Debug.WriteLine("[{0}]", toolItem);
+					this.toolLauncher.DoDragDrop(toolItem, DragDropEffects.Move);
+				}
+			};
 			
 			return toolItem;
 		}
@@ -844,28 +862,43 @@ namespace PeMain.UI
 			var result = new DropData();
 			var localPoint = this.toolLauncher.PointToClient(new Point(e.X, e.Y));
 			
-			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-				result.Files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-				result.ToolStripItem = GetOverButton(localPoint);
-				if(result.ToolStripItem != null) {
-					result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
-				}
-				
-				if(result.ToolStripItem != null) {
-					if(result.LauncherItem.IsExtExec && result.LauncherItem.IsExecteFile) {
-						e.Effect = DragDropEffects.Move;
+			var dropObject = e.Data.GetData(typeof(ToolStripItem));
+			
+			result.ToolStripItem = GetOverButton(localPoint);
+			result.DropType = DropType.None;
+			Debug.WriteLine("<{0}>", dropObject);
+
+			if(dropObject == null) {
+				if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+					result.DropType = DropType.Files;
+					result.Files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+					if(result.ToolStripItem != null) {
+						result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
+					}
+					
+					if(result.ToolStripItem != null) {
+						if(result.LauncherItem.IsExtExec && result.LauncherItem.IsExecteFile) {
+							e.Effect = DragDropEffects.Move;
+						} else {
+							e.Effect = DragDropEffects.None;
+						}
 					} else {
-						e.Effect = DragDropEffects.None;
+						if(result.Files.Count() == 1) {
+							e.Effect = DragDropEffects.Copy;
+						} else {
+							e.Effect = DragDropEffects.None;
+						}
 					}
 				} else {
-					if(result.Files.Count() == 1) {
-						e.Effect = DragDropEffects.Copy;
-					} else {
-						e.Effect = DragDropEffects.None;
-					}
+					e.Effect = DragDropEffects.None;
 				}
 			} else {
-				e.Effect = DragDropEffects.None;
+				Debug.Assert(dropObject is ToolStripDropDownItem);
+				e.Effect = DragDropEffects.Move;
+				Debug.WriteLine(dropObject);
+				
+				result.DropType = DropType.Button;
+				result.SrcToolStripItem = (ToolStripItem)dropObject;
 			}
 			
 			return result;

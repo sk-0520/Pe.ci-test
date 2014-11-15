@@ -68,18 +68,23 @@ namespace PeMain.UI
 		
 		void ToolLauncherDragEnter(object sender, DragEventArgs e)
 		{
+			Debug.WriteLine("Enter: {0}, {1}", sender, e);
 			ProcessDropEffect(e);
 		}
 		
 		void ToolLauncherDragOver(object sender, DragEventArgs e)
 		{
+			Debug.WriteLine("Over: {0}, {1}", sender, e);
 			ProcessDropEffect(e);
 		}
 		
 		void ToolLauncherDragDrop(object sender, DragEventArgs e)
 		{
+			Debug.WriteLine("Drop: {0}, {1}", sender, e);
 			var dropData = ProcessDropEffect(e);
-			ExecuteDropData(dropData);
+			if(dropData.DropType == DropType.Files) {
+				ExecuteDropData(dropData);
+			}
 		}
 		
 		void ToolbarFormFormClosing(object sender, FormClosingEventArgs e)
