@@ -19,5 +19,7 @@ namespace PeMain.UI
 		ContextMenu _menuGroup = null;
 		bool _isRunning = false;
 		bool _menuOpening = false;
+		
+		ToolStripItem _dragStartItem;
 	}
 }

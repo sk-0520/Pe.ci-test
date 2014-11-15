@@ -68,18 +68,24 @@ namespace PeMain.UI
 		
 		void ToolLauncherDragEnter(object sender, DragEventArgs e)
 		{
-			ProcessDropEffect(e);
+			ProcessDropEffect(sender, e);
 		}
 		
 		void ToolLauncherDragOver(object sender, DragEventArgs e)
 		{
-			ProcessDropEffect(e);
+			ProcessDropEffect(sender, e);
 		}
 		
 		void ToolLauncherDragDrop(object sender, DragEventArgs e)
 		{
-			var dropData = ProcessDropEffect(e);
-			ExecuteDropData(dropData);
+			var dropData = ProcessDropEffect(sender, e);
+			if(dropData.DropType == DropType.Files) {
+				ExecuteDropData(dropData);
+			} else {
+				Debug.Assert(dropData.DropType == DropType.Button);
+				ChnageDropDataLauncherItemPosition(dropData);
+				this._dragStartItem = null;
+			}
 		}
 		
 		void ToolbarFormFormClosing(object sender, FormClosingEventArgs e)
@@ -184,5 +190,14 @@ namespace PeMain.UI
 				ApplySettingTopmost();
 			}
 		}
+		
+		void LauncherButton_MouseDown(object sender, MouseEventArgs e)
+		{
+			if(Control.ModifierKeys == Keys.Alt) {
+				this._dragStartItem = (ToolStripItem)sender;
+				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
+			}
+		}
+
 	}
 }
