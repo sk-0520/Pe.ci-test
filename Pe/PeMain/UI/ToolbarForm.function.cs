@@ -940,7 +940,7 @@ namespace PeMain.UI
 				Debug.Assert(dropData.Files.Count() == 1);
 				
 				var path = dropData.Files.First();
-				var useShortcut = true;
+				var useShortcut = false;
 				var forceLauncherType = false;
 				var forceType = LauncherType.None;
 				var checkDirectory = false;
@@ -959,7 +959,7 @@ namespace PeMain.UI
 							break;
 							
 						case DialogResult.No:
-							useShortcut = false;
+							useShortcut = true;
 							break;
 							
 						default:

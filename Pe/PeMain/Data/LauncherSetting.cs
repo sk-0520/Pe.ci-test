@@ -433,7 +433,7 @@ namespace PeMain.Data
 				switch(dotExt.ToLower()) {
 					case ".lnk":
 						{
-							if(useShortcut) {
+							if(!useShortcut) {
 								var shortcut = new ShortcutFile(expandPath, false);
 								item.Command = shortcut.TargetPath;
 								item.Option = shortcut.Arguments;
