@@ -57,10 +57,15 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.linkDiscussion = new System.Windows.Forms.LinkLabel();
 			this.panelWeb = new System.Windows.Forms.FlowLayoutPanel();
+			this.panelEnv = new System.Windows.Forms.FlowLayoutPanel();
+			this.labelUserenv = new System.Windows.Forms.Label();
+			this.linkCopyShort = new System.Windows.Forms.LinkLabel();
+			this.linkCopyLong = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panelWeb.SuspendLayout();
+			this.panelEnv.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// imageIcon
@@ -216,15 +221,15 @@ namespace PeMain.UI
 			this.gridComponents.AllowUserToDeleteRows = false;
 			this.gridComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridComponents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-									this.gridComponents_columnName,
-									this.gridComponents_columnType,
-									this.gridComponents_columnURI});
-			this.gridComponents.Location = new System.Drawing.Point(12, 109);
+			this.gridComponents_columnName,
+			this.gridComponents_columnType,
+			this.gridComponents_columnURI});
+			this.gridComponents.Location = new System.Drawing.Point(12, 137);
 			this.gridComponents.MultiSelect = false;
 			this.gridComponents.Name = "gridComponents";
 			this.gridComponents.ReadOnly = true;
 			this.gridComponents.RowTemplate.Height = 21;
-			this.gridComponents.Size = new System.Drawing.Size(505, 149);
+			this.gridComponents.Size = new System.Drawing.Size(505, 121);
 			this.gridComponents.TabIndex = 1;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
 			// 
@@ -311,12 +316,57 @@ namespace PeMain.UI
 			this.panelWeb.Size = new System.Drawing.Size(338, 91);
 			this.panelWeb.TabIndex = 0;
 			// 
+			// panelEnv
+			// 
+			this.panelEnv.Controls.Add(this.labelUserenv);
+			this.panelEnv.Controls.Add(this.linkCopyShort);
+			this.panelEnv.Controls.Add(this.linkCopyLong);
+			this.panelEnv.Location = new System.Drawing.Point(12, 109);
+			this.panelEnv.Name = "panelEnv";
+			this.panelEnv.Size = new System.Drawing.Size(505, 22);
+			this.panelEnv.TabIndex = 11;
+			// 
+			// labelUserenv
+			// 
+			this.labelUserenv.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelUserenv.AutoSize = true;
+			this.labelUserenv.Location = new System.Drawing.Point(3, 0);
+			this.labelUserenv.Name = "labelUserenv";
+			this.labelUserenv.Size = new System.Drawing.Size(135, 15);
+			this.labelUserenv.TabIndex = 1;
+			this.labelUserenv.Text = ":about/label/user-env";
+			// 
+			// linkCopyShort
+			// 
+			this.linkCopyShort.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.linkCopyShort.AutoSize = true;
+			this.linkCopyShort.Location = new System.Drawing.Point(144, 0);
+			this.linkCopyShort.Name = "linkCopyShort";
+			this.linkCopyShort.Size = new System.Drawing.Size(133, 15);
+			this.linkCopyShort.TabIndex = 0;
+			this.linkCopyShort.TabStop = true;
+			this.linkCopyShort.Text = ":about/link/short-env";
+			this.linkCopyShort.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkCopyShort_LinkClicked);
+			// 
+			// linkCopyLong
+			// 
+			this.linkCopyLong.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.linkCopyLong.AutoSize = true;
+			this.linkCopyLong.Location = new System.Drawing.Point(283, 0);
+			this.linkCopyLong.Name = "linkCopyLong";
+			this.linkCopyLong.Size = new System.Drawing.Size(131, 15);
+			this.linkCopyLong.TabIndex = 0;
+			this.linkCopyLong.TabStop = true;
+			this.linkCopyLong.Text = ":about/long/long-env";
+			this.linkCopyLong.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkCopyLong_LinkClicked);
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(636, 270);
+			this.Controls.Add(this.panelEnv);
 			this.Controls.Add(this.panelWeb);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.commandChangelog);
@@ -342,7 +392,10 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.PerformLayout();
 			this.panelWeb.ResumeLayout(false);
 			this.panelWeb.PerformLayout();
+			this.panelEnv.ResumeLayout(false);
+			this.panelEnv.PerformLayout();
 			this.ResumeLayout(false);
+
 		}
 		private System.Windows.Forms.FlowLayoutPanel panelWeb;
 		private System.Windows.Forms.LinkLabel linkDiscussion;
@@ -364,5 +417,9 @@ namespace PeMain.UI
 		private System.Windows.Forms.Label labelAppName;
 		private System.Windows.Forms.Button commandOk;
 		private System.Windows.Forms.PictureBox imageIcon;
+		private System.Windows.Forms.FlowLayoutPanel panelEnv;
+		private System.Windows.Forms.Label labelUserenv;
+		private System.Windows.Forms.LinkLabel linkCopyShort;
+		private System.Windows.Forms.LinkLabel linkCopyLong;
 	}
 }

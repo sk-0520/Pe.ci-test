@@ -7,10 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using PeUtility;
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
@@ -95,6 +98,31 @@ namespace PeMain.UI
 					cell.LinkVisited = true;
 				}
 			}
+		}
+		
+		void linkCopyShort_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			var list = new List<string>();
+			list.Add("Software: " + Literal.Version.FileDescription);
+			list.Add("Version: " + Literal.Version.ProductVersion);
+			list.Add("Type: " +
+				#if DEBUG
+				"DEBUG"
+				#else
+				"RELEASE"
+				#endif
+			);
+			list.Add("Process: " + (Environment.Is64BitProcess ? "64": "32"));
+			list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64": "32"));
+			list.Add("OS: " + System.Environment.OSVersion);
+			list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
+			
+			Clipboard.SetText(Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
+		}
+		
+		void linkCopyLong_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			Clipboard.SetText(Environment.NewLine + string.Join(Environment.NewLine, new PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
 		}
 	}
 }
