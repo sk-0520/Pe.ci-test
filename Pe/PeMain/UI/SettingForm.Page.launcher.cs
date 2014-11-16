@@ -274,7 +274,7 @@ namespace PeMain.UI
 			var useShortcut = false;
 			// TODO: 処理重複
 			if(PathUtility.IsShortcutPath(filePath)) {
-				var result = MessageBox.Show(Language["toolbar/dialog/d-d/shortcut/message"], Language["toolbar/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+				var result = MessageBox.Show(Language["common/dialog/d-d/shortcut/message"], Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 				switch(result) {
 					case DialogResult.Yes:
 						try {

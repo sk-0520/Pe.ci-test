@@ -945,7 +945,7 @@ namespace PeMain.UI
 				var forceType = LauncherType.None;
 				var checkDirectory = false;
 				if(PathUtility.IsShortcutPath(path)) {
-					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/shortcut/message"], CommonData.Language["toolbar/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+					var result = MessageBox.Show(CommonData.Language["common/dialog/d-d/shortcut/message"], CommonData.Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 					switch(result) {
 						case DialogResult.Yes:
 							try {
