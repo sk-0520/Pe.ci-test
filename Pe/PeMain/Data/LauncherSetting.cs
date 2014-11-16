@@ -98,19 +98,35 @@ namespace PeMain.Data
 		/// <summary>
 		/// 見つからなかった時用アイコン。
 		/// </summary>
+		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap;
+		/*
 		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
 			{ IconScale.Small,  Icon.FromHandle(PeMain.Properties.Images.NotFound_016.GetHicon()) },
 			{ IconScale.Normal, Icon.FromHandle(PeMain.Properties.Images.NotFound_032.GetHicon()) },
 			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
+		*/
 		private static readonly Dictionary<IconScale, Icon> _uriIconMap;
 		
 		static LauncherItem()
 		{
-			// URIアイコン構築
 			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
-			var iconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			// NotFound 
+			var notfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			foreach(var iconScale in iconScaleList) {
+				var iconSize = iconScale.ToSize();
+				var icon = new Icon(global::PeMain.Properties.Images.NotFound, iconSize);
+				var image = new Bitmap(iconSize.Width, iconSize.Height);
+				using(var g = Graphics.FromImage(image)) {
+					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
+				}
+				notfoundIconMap[iconScale] = icon;
+			}
+			_notfoundIconMap = notfoundIconMap;
+			
+			// URIアイコン構築
+			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
 				var icon = new Icon(global::PeMain.Properties.Images.URI, iconSize);
@@ -118,9 +134,9 @@ namespace PeMain.Data
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
 				}
-				iconMap[iconScale] = icon;
+				uriIconMap[iconScale] = icon;
 			}
-			_uriIconMap = iconMap;
+			_uriIconMap = uriIconMap;
 		}
 
 		/// <summary>
