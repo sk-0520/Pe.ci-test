@@ -195,9 +195,8 @@ namespace PeMain.UI
 				systemBorderSize.Height + systemPaddingSize.Height / 2
 			);
 			var buttonSize = new Size();
-			const int menuWidth = 12;
 			
-			buttonSize.Width = iconBox.Width + padding.Right + padding.Horizontal + menuWidth;
+			buttonSize.Width = iconBox.Width + padding.Right + padding.Horizontal + MenuWidth * 2;
 			if(showText) {
 				buttonSize.Width += Literal.toolbarTextWidth.ToRounding(textWidth);
 			}
@@ -206,7 +205,7 @@ namespace PeMain.UI
 			var buttonLayout = new SkinToolbarButtonLayout();
 			buttonLayout.Size = buttonSize;
 			buttonLayout.Padding = padding;
-			buttonLayout.MenuWidth = menuWidth;
+			buttonLayout.MenuWidth = MenuWidth;
 			return buttonLayout;
 		}
 		#endregion
@@ -371,7 +370,7 @@ namespace PeMain.UI
 			
 			var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconScale, false, 0);
 			var iconSize = toolbarItem.IconScale.ToSize();
-			e.Graphics.DrawImage(e.Image, buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
+			e.Graphics.DrawImage(e.Image, MenuWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
 		}
 		
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem)
@@ -387,9 +386,9 @@ namespace PeMain.UI
 						var buttonLayout = GetToolbarButtonLayout(toolbarItem.IconScale, toolbarItem.ShowText, toolbarItem.TextWidth);
 						var iconSize = toolbarItem.IconScale.ToSize();
 						var textArea = new Rectangle(
-							buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
+							buttonLayout.Padding.Vertical + iconSize.Width + offset.X + MenuWidth,
 							buttonLayout.Padding.Top + offset.Y,
-							buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth,
+							buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth - MenuWidth,
 							buttonLayout.Size.Height - buttonLayout.Padding.Vertical
 						);
 						var prevTextRenderingHint = e.Graphics.TextRenderingHint;
@@ -417,7 +416,6 @@ namespace PeMain.UI
 								e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, tempArea, format);
 							}
 						} finally {
-							
 							e.Graphics.TextRenderingHint = prevTextRenderingHint;
 						}
 					}
@@ -663,6 +661,7 @@ namespace PeMain.UI
 
 		#endregion
 		
+		public override int MenuWidth { get { return 12 ;} }
 		#region IsDefaultDrawToolbar
 		public override bool IsDefaultDrawToolbarWindowBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarWindowEdge { get { return !EnabledVisualStyle; } }
@@ -674,6 +673,7 @@ namespace PeMain.UI
 		public override bool IsDefaultDrawToolbarButtonText { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarButtonBackground { get { return !EnabledVisualStyle; } }
 		#endregion
 
 	}
