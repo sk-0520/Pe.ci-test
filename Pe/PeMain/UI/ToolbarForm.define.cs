@@ -26,6 +26,8 @@ namespace PeMain.UI
 		const string menuNameMainPosDesktopRight = "desktop_right";
 		const string menuNameMainTopmost = "topmost";
 		const string menuNameMainAutoHide = "autohide";
+		const string menuNameMainGroupSeparator = "group_sep";
+		const string menuNameMainGroupItem = "group_item_";
 			
 		const string menuNameExecute = "exec";
 		const string menuNameExecuteEx = "ex";

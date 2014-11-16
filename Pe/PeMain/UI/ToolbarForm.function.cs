@@ -531,6 +531,11 @@ namespace PeMain.UI
 			};
 		}
 		
+		string MakeGroupItemName(string groupName)
+		{
+			return menuNameMainGroupItem + groupName;
+		}
+		
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
 		{
 			var itemList = new List<ToolStripItem>();
@@ -543,6 +548,7 @@ namespace PeMain.UI
 			var topmostItem = new ToolStripMenuItem();
 			var autoHideItem = new ToolStripMenuItem();
 			var hiddenItem = new ToolStripMenuItem();
+			var groupSeparator = new ToolStripSeparator();
 			itemList.Add(posFloatItem);
 			itemList.Add(posTopItem);
 			itemList.Add(posBottomItem);
@@ -615,6 +621,19 @@ namespace PeMain.UI
 				UseToolbarItem.Visible = false;
 				ApplySettingVisible();
 			};
+			
+			// グループ関連メニュー
+			var itemGroupSeparator = new ToolStripSeparator();
+			groupSeparator.Name = menuNameMainGroupSeparator;
+			itemList.Add(itemGroupSeparator);
+			foreach(var group in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var itemGroup = new ToolStripMenuItem();
+				itemGroup.Text = group.Name;
+				itemGroup.Name = MakeGroupItemName(group.Name);
+				itemGroup.Tag = group;
+				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
+				itemList.Add(itemGroup);
+			}
 			
 			// メニュー設定
 			var items = itemList.ToArray();
