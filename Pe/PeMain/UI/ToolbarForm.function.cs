@@ -631,6 +631,7 @@ namespace PeMain.UI
 				itemGroup.Text = group.Name;
 				itemGroup.Name = MakeGroupItemName(group.Name);
 				itemGroup.Tag = group;
+				itemGroup.CheckState = CheckState.Indeterminate;
 				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
 				itemList.Add(itemGroup);
 			}
@@ -664,6 +665,11 @@ namespace PeMain.UI
 				// 自動的に隠す
 				autoHideItem.Checked = AutoHide;
 				autoHideItem.Enabled = IsDocking;
+				
+				// グループ
+				foreach(var groupItem in parentItem.DropDownItems.Cast<ToolStripItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal)).Cast<ToolStripMenuItem>()) {
+					groupItem.Checked = groupItem.Tag == SelectedGroupItem;
+				}
 			};
 		}
 
