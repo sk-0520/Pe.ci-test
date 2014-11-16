@@ -307,6 +307,7 @@ namespace PeMain.UI
 #endregion
 
 		public virtual int MenuWidth { get { throw new NotImplementedException(); } }
+		public virtual int PaddingWidth { get { throw new NotImplementedException(); } }
 
 		public virtual bool IsDefaultDrawToolbarWindowBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarWindowEdge { get { return true; } }

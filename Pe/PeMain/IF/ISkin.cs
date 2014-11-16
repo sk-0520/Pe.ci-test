@@ -75,6 +75,7 @@ namespace PeMain.IF
 		void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
 		int MenuWidth { get; }
+		int PaddingWidth { get; }
 		
 		bool IsDefaultDrawToolbarWindowBackground { get; }
 		bool IsDefaultDrawToolbarWindowCaption { get; }
