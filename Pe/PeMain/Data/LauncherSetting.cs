@@ -367,30 +367,36 @@ namespace PeMain.Data
 				string useIconPath = null;
 				if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
 					var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
-					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					hasIcon = FileUtility.Exists(expandIconPath);
 					useIconPath = expandIconPath;
 				}
-				if(!hasIcon &&  new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
-					if(!string.IsNullOrWhiteSpace(Command)) {
-						var expandPath = Environment.ExpandEnvironmentVariables(Command);
-						hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
-						useIconPath = expandPath;
+				if(!hasIcon) {
+					if(new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
+						if(!string.IsNullOrWhiteSpace(Command)) {
+							var expandPath = Environment.ExpandEnvironmentVariables(Command);
+							//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
+							hasIcon = FileUtility.Exists(expandPath);
+							useIconPath = expandPath;
+						}
 					}
-					if(hasIcon) {
-						Debug.Assert(useIconPath != null);
-						
-						var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
-						this._iconMap[iconScale] = icon;
-					}
-				} else if(!hasIcon && LauncherType == LauncherType.URI) {
-					// URI は若干特殊なのでここで返す
-					return _uriIconMap[iconScale];
+				}
+				if(hasIcon) {
+					Debug.Assert(useIconPath != null);
+					
+					var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
+					this._iconMap[iconScale] = icon;
 				}
 			}
+			
 			if(hasIcon) {
 				return this._iconMap[iconScale];
 			} else {
-				return _notfoundIconMap[iconScale];
+				if(LauncherType == LauncherType.URI) {
+					return _uriIconMap[iconScale];
+				} else {
+					return _notfoundIconMap[iconScale];
+				}
 			}
 		}
 		
