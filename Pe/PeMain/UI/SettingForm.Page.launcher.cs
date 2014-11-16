@@ -100,7 +100,7 @@ namespace PeMain.UI
 			/*
 			this.inputLauncherIconPath.Text = item.IconPath;
 			this.inputLauncherIconPath.Tag = item.IconIndex;
-			*/
+			 */
 			this.inputLauncherIconPath.Text = item.IconItem.Path;
 			//this.inputLauncherIconPath.Tag = item.IconItem.Index;
 			this.inputLauncherIconPath.IconIndex = item.IconItem.Index;
@@ -125,7 +125,7 @@ namespace PeMain.UI
 				Path = item.IconPath,
 				Index= item.IconIndex
 			};
-			*/
+			 */
 			var oldIcon = new IconItem(item.IconItem.Path, item.IconItem.Index);
 			item.LauncherType = LauncherGetSelectedType();
 			item.Name = this.inputLauncherName.Text.Trim();
@@ -135,7 +135,7 @@ namespace PeMain.UI
 			/*
 			item.IconPath = this.inputLauncherIconPath.Text.Trim();
 			item.IconIndex = this.inputLauncherIconPath.Tag != null ? (int)this.inputLauncherIconPath.Tag: 0;
-			*/
+			 */
 			item.IconItem.Path = this.inputLauncherIconPath.Text.Trim();
 			item.IconItem.Index = this.inputLauncherIconPath.IconIndex;
 			
@@ -270,7 +270,30 @@ namespace PeMain.UI
 		
 		void LauncherAddFile(string filePath)
 		{
-			var item = LauncherItem.LoadFile(filePath, false);
+			var path = filePath;
+			var useShortcut = false;
+			// TODO: 処理重複
+			if(PathUtility.IsShortcutPath(filePath)) {
+				var result = MessageBox.Show(Language["common/dialog/d-d/shortcut/message"], Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+				switch(result) {
+					case DialogResult.Yes:
+						try {
+							var sf = new ShortcutFile(filePath, false);
+							path = sf.TargetPath;
+						} catch(ArgumentException ex) {
+							Debug.WriteLine(ex);
+						}
+						break;
+						
+					case DialogResult.No:
+						useShortcut = true;
+						break;
+						
+					default:
+						return;
+				}
+			}
+			var item = LauncherItem.LoadFile(path, useShortcut);
 			var uniqueName = LauncherItem.GetUniqueName(item, this.selecterLauncher.Items);
 			item.Name = uniqueName;
 			this.selecterLauncher.AddItem(item);

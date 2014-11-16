@@ -433,17 +433,19 @@ namespace PeMain.Data
 				switch(dotExt.ToLower()) {
 					case ".lnk":
 						{
-							var shortcut = new ShortcutFile(expandPath, false);
-							item.Command = shortcut.TargetPath;
-							item.Option = shortcut.Arguments;
-							item.WorkDirPath = shortcut.WorkingDirectory;
-							/*
-							item.IconPath = shortcut.IconPath;
-							item.IconIndex = shortcut.IconIndex;
-							 */
-							item.IconItem.Path = shortcut.IconPath;
-							item.IconItem.Index = shortcut.IconIndex;
-							item.Note = shortcut.Description;
+							if(!useShortcut) {
+								var shortcut = new ShortcutFile(expandPath, false);
+								item.Command = shortcut.TargetPath;
+								item.Option = shortcut.Arguments;
+								item.WorkDirPath = shortcut.WorkingDirectory;
+								/*
+								item.IconPath = shortcut.IconPath;
+								item.IconIndex = shortcut.IconIndex;
+								 */
+								item.IconItem.Path = shortcut.IconPath;
+								item.IconItem.Index = shortcut.IconIndex;
+								item.Note = shortcut.Description;
+							}
 						}
 						break;
 						
@@ -482,7 +484,7 @@ namespace PeMain.Data
 		{
 			return LoadFile(expandPath, useShortcut, false, LauncherType.None);
 		}
-	
+		
 		static public string GetUniqueName(LauncherItem item, IEnumerable<LauncherItem> seq)
 		{
 			return TextUtility.ToUniqueDefault(item.Name, seq.Select(i => i.Name));
