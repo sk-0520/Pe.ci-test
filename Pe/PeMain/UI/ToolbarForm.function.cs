@@ -523,7 +523,8 @@ namespace PeMain.UI
 					var parentPath = Path.GetDirectoryName(launcherItem.Command);
 					fileItem.Enabled = Directory.Exists(parentPath);
 				} catch(ArgumentException ex) {
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					// #41の影響により#77考慮不要
+					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
 					pathItem.Enabled = false;
 					fileItem.Enabled = false;
 					executeItem.Enabled = true;

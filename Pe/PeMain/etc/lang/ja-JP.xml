@@ -183,6 +183,7 @@
 		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
 		<Word Name="toolbar/dialog/d-d/directory/caption"  Text="ディレクトリ登録方法" />
 		<Word Name="toolbar/dialog/d-d/directory/message"  Text="D&amp;Dされたパスをディレクトリアイテム(フォルダ)として登録します。&#x0d;&#x0a;&#x0d;&#x0a;ディレクトリ内容を一覧表示するには「${yes}」を、&#x0d;&#x0a;ディレクトリそのものを開く場合は「${no}」を選択してください。&#x0d;&#x0a;これは設定ダイアログで再度変更できます。" />
+		<Word Name="toolbar/loging/unfile"  Text="非ファイル形式のパス選択: ランチャー種別URIの使用を推奨します" />
 		
 		<Word Name="execute/page/basic"         Text="基本指定" />
 		<Word Name="execute/label/option"      Text="${option}" />

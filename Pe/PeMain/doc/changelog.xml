@@ -36,11 +36,12 @@
 			<li>#74: ランチャーアイテムをツールバー上で移動させる</li>
 			<li>#84: ツールバーメインボタンでグループ切り替え</li>
 			<li>#85: ショートカットファイルの登録処理</li>
+			<li>#41: アイテムの種類, URI追加</li>
 			<li></li>
 		</ul>
 		<ul type="fixes">
 			<li>#80: toolbar/main/tips の ${version-release}</li>
-			<li></li>
+			<li>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, #41により対応不要</li>
 			<li></li>
 		</ul>
 		<ul type="developer">
