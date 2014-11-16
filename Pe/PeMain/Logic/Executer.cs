@@ -81,12 +81,20 @@ namespace PeMain.Logic
 			
 			return process;
 		}
+		
 		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
 			
 			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 			OpenDirectory(expandPath, commonData, null);
+		}
+		
+		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		{
+			Debug.Assert(launcherItem.LauncherType == LauncherType.URI);
+			
+			RunCommand(launcherItem.Command, commonData);
 		}
 		
 		public static void RunItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
@@ -97,9 +105,15 @@ namespace PeMain.Logic
 				case LauncherType.File:
 					RunFileItem(launcherItem, commonData, parentForm);
 					break;
+					
 				case LauncherType.Directory:
 					RunDirectoryItem(launcherItem, commonData, parentForm);
 					break;
+					
+				case LauncherType.URI:
+					RunUriItem(launcherItem, commonData, parentForm);
+					break;
+					
 				default:
 					throw new NotImplementedException();
 			}

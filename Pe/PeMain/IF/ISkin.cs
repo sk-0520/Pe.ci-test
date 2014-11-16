@@ -66,6 +66,7 @@ namespace PeMain.IF
 		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
+		void DrawToolbarButtonBackground(ToolStripItemRenderEventArgs e, ToolStripButton item, bool active, Rectangle itemArea);
 		
 		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
@@ -73,6 +74,9 @@ namespace PeMain.IF
 		void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, ButtonState buttonState);
 		void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
+		int MenuWidth { get; }
+		int PaddingWidth { get; }
+		
 		bool IsDefaultDrawToolbarWindowBackground { get; }
 		bool IsDefaultDrawToolbarWindowCaption { get; }
 		bool IsDefaultDrawToolbarWindowEdge { get; }
@@ -83,6 +87,7 @@ namespace PeMain.IF
 		bool IsDefaultDrawToolbarButtonText { get; }
 		bool IsDefaultDrawToolbarDropDownButtonBackground { get; }
 		bool IsDefaultDrawToolbarSplitButtonBackground { get; }
+		bool IsDefaultDrawToolbarButtonBackground { get; }
 	}
 	
 }

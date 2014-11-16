@@ -265,6 +265,33 @@ namespace PeMain.UI
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
+		
+		public virtual void DrawToolbarButtonBackground(ToolStripItemRenderEventArgs e, ToolStripButton item, bool active, Rectangle itemArea)
+		{
+			var toolbarButtonData = new ToolbarButtonData();
+			toolbarButtonData.Graphics = e.Graphics;
+			toolbarButtonData.Active = active;
+			toolbarButtonData.HasArrow = false;
+			//toolbarButtonData.ArrowDirection = ArrowDirection.Down;
+			//toolbarButtonData.HasMenuSplit = true;
+			toolbarButtonData.ButtonArea = itemArea;
+			//toolbarButtonData.MenuArea = GetMenuArea(e.Item, item.DropDownButtonWidth);
+			
+			if(item.Pressed) {
+				// ボタンが押されている
+				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+			} else if(item.Selected) {
+				// ボタンが選ばれている
+				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+			} else {
+				// 通常
+				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+			}
+			DrawToolbarButton(toolbarButtonData);
+		}
 
 #endregion
 			
@@ -279,6 +306,8 @@ namespace PeMain.UI
 
 #endregion
 
+		public virtual int MenuWidth { get { throw new NotImplementedException(); } }
+		public virtual int PaddingWidth { get { throw new NotImplementedException(); } }
 
 		public virtual bool IsDefaultDrawToolbarWindowBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarWindowEdge { get { return true; } }
@@ -290,6 +319,7 @@ namespace PeMain.UI
 		public virtual bool IsDefaultDrawToolbarButtonText { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarDropDownButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
+		public virtual bool IsDefaultDrawToolbarButtonBackground { get { return true; } }
 		
 		protected virtual void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{

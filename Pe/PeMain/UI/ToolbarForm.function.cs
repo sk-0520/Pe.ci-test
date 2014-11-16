@@ -736,12 +736,6 @@ namespace PeMain.UI
 		{
 			var toolItem = new ToolStripSplitButton();
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
-			toolItem.Text = item.Name;
-			toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
-			if(icon != null) {
-				toolItem.Image = icon.ToBitmap();
-			}
 			
 			AttachmentFileLauncherMenu(toolItem, item);
 			
@@ -752,14 +746,6 @@ namespace PeMain.UI
 		{
 			var toolItem = new ToolStripDropDownButton();
 			
-			toolItem.Text = item.Name;
-			toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
-			if(icon != null) {
-				toolItem.Image = icon.ToBitmap();
-			}
-			
-
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
@@ -777,6 +763,15 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
+		ToolStripButton CreateURIItemLauncherButton(LauncherItem item)
+		{
+			var toolItem = new ToolStripButton();
+			
+			toolItem.Click += LauncherTypeFile_ButtonClick;
+			
+			return toolItem;
+		}
+			
 		/// <summary>
 		/// ランチャーアイテムボタンの生成。
 		/// </summary>
@@ -787,13 +782,31 @@ namespace PeMain.UI
 			Debug.Assert(item != null);
 			ToolStripItem toolItem;
 			
-			if(item.LauncherType == LauncherType.Directory) {
-				toolItem = CreateDirectoryItemLauncherButton(item);
-			} else {
-				toolItem = CreateFileItemLauncherButton(item);
+			switch(item.LauncherType) {
+				case LauncherType.File:
+					toolItem = CreateFileItemLauncherButton(item);
+					break;
+				
+				case LauncherType.Directory:
+					toolItem = CreateDirectoryItemLauncherButton(item);
+					break;
+					
+				case LauncherType.URI:
+					toolItem = CreateURIItemLauncherButton(item);
+					break;
+					
+				default:
+					throw new NotImplementedException(item.LauncherType.ToString());
 			}
 			
 			toolItem.Tag = item;
+			
+			toolItem.Text = item.Name;
+			toolItem.ToolTipText = item.Name;
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
+			if(icon != null) {
+				toolItem.Image = icon.ToBitmap();
+			}
 			
 			toolItem.MouseDown += LauncherButton_MouseDown;
 			/*

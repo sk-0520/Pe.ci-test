@@ -104,7 +104,25 @@ namespace PeMain.Data
 			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
+		private static readonly Dictionary<IconScale, Icon> _uriIconMap;
 		
+		static LauncherItem()
+		{
+			// URIアイコン構築
+			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
+			var iconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			foreach(var iconScale in iconScaleList) {
+				var iconSize = iconScale.ToSize();
+				var icon = new Icon(global::PeMain.Properties.Images.URI, iconSize);
+				var image = new Bitmap(iconSize.Width, iconSize.Height);
+				using(var g = Graphics.FromImage(image)) {
+					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
+				}
+				iconMap[iconScale] = icon;
+			}
+			_uriIconMap = iconMap;
+		}
+
 		/// <summary>
 		/// 現在のアイテムが保持するアイコン一覧。
 		/// </summary>
@@ -349,14 +367,18 @@ namespace PeMain.Data
 				string useIconPath = null;
 				if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
 					var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
-					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					hasIcon = FileUtility.Exists(expandIconPath);
 					useIconPath = expandIconPath;
 				}
-				if(!hasIcon &&  new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
-					if(!string.IsNullOrWhiteSpace(Command)) {
-						var expandPath = Environment.ExpandEnvironmentVariables(Command);
-						hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
-						useIconPath = expandPath;
+				if(!hasIcon) {
+					if(new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
+						if(!string.IsNullOrWhiteSpace(Command)) {
+							var expandPath = Environment.ExpandEnvironmentVariables(Command);
+							//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
+							hasIcon = FileUtility.Exists(expandPath);
+							useIconPath = expandPath;
+						}
 					}
 				}
 				if(hasIcon) {
@@ -366,10 +388,15 @@ namespace PeMain.Data
 					this._iconMap[iconScale] = icon;
 				}
 			}
+			
 			if(hasIcon) {
 				return this._iconMap[iconScale];
 			} else {
-				return _notfoundIconMap[iconScale];
+				if(LauncherType == LauncherType.URI) {
+					return _uriIconMap[iconScale];
+				} else {
+					return _notfoundIconMap[iconScale];
+				}
 			}
 		}
 		
