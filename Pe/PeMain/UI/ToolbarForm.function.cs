@@ -940,9 +940,34 @@ namespace PeMain.UI
 				Debug.Assert(dropData.Files.Count() == 1);
 				
 				var path = dropData.Files.First();
+				var useShortcut = true;
 				var forceLauncherType = false;
 				var forceType = LauncherType.None;
-				if(Directory.Exists(path)) {
+				var checkDirectory = false;
+				if(PathUtility.IsShortcutPath(path)) {
+					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/shortcut/message"], CommonData.Language["toolbar/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+					switch(result) {
+						case DialogResult.Yes:
+							try {
+								var sf = new ShortcutFile(path, false);
+								var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
+								checkDirectory = Directory.Exists(expandPath);
+								path = sf.TargetPath;
+							} catch(ArgumentException ex) {
+								CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+							}
+							break;
+							
+						case DialogResult.No:
+							useShortcut = false;
+							break;
+							
+						default:
+							return;
+					}
+				}
+				
+				if(checkDirectory || Directory.Exists(path)) {
 					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/directory/message"], CommonData.Language["toolbar/dialog/d-d/directory/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 					switch(result) {
 						case DialogResult.Yes:
@@ -958,7 +983,7 @@ namespace PeMain.UI
 							return;
 					}
 				}
-				var item = LauncherItem.LoadFile(path, true, forceLauncherType, forceType);
+				var item = LauncherItem.LoadFile(path, useShortcut, forceLauncherType, forceType);
 				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {
