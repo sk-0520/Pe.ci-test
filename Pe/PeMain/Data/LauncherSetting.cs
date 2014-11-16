@@ -104,7 +104,25 @@ namespace PeMain.Data
 			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
+		private static readonly Dictionary<IconScale, Icon> _uriIconMap;
 		
+		static LauncherItem()
+		{
+			// URIアイコン構築
+			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
+			var iconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			foreach(var iconScale in iconScaleList) {
+				var iconSize = iconScale.ToSize();
+				var icon = new Icon(global::PeMain.Properties.Images.URI, iconSize);
+				var image = new Bitmap(iconSize.Width, iconSize.Height);
+				using(var g = Graphics.FromImage(image)) {
+					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
+				}
+				iconMap[iconScale] = icon;
+			}
+			_uriIconMap = iconMap;
+		}
+
 		/// <summary>
 		/// 現在のアイテムが保持するアイコン一覧。
 		/// </summary>
@@ -358,12 +376,15 @@ namespace PeMain.Data
 						hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
 						useIconPath = expandPath;
 					}
-				}
-				if(hasIcon) {
-					Debug.Assert(useIconPath != null);
-					
-					var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
-					this._iconMap[iconScale] = icon;
+					if(hasIcon) {
+						Debug.Assert(useIconPath != null);
+						
+						var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
+						this._iconMap[iconScale] = icon;
+					}
+				} else if(!hasIcon && LauncherType == LauncherType.URI) {
+					// URI は若干特殊なのでここで返す
+					return _uriIconMap[iconScale];
 				}
 			}
 			if(hasIcon) {

@@ -681,7 +681,6 @@ namespace PeMain.UI
 			// selectLauncherType_uri
 			// 
 			this.selectLauncherType_uri.AutoSize = true;
-			this.selectLauncherType_uri.Enabled = false;
 			this.selectLauncherType_uri.Location = new System.Drawing.Point(292, 3);
 			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
 			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
