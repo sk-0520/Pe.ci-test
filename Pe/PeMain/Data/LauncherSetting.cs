@@ -306,6 +306,14 @@ namespace PeMain.Data
 			}
 		}
 		
+		public bool IsExexuteFile
+		{
+			get 
+			{
+				return Path.GetExtension(Command).ToLower() == ".exe";
+			}
+		}
+		
 		public bool IsDirectory
 		{
 			get
