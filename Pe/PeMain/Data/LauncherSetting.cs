@@ -289,32 +289,23 @@ namespace PeMain.Data
 				return result;
 			}
 		}
-
+		
 		/// <summary>
-		/// アイテムは実行形式か
+		/// 現在アイテムが管理者として実行可能か
 		/// </summary>
-		public bool IsExecteFile
+		public bool CanAdministratorExecute
 		{
 			get
 			{
-				if(IsExtExec && IsExists) {
-					return Path.GetExtension(Command).ToLower() == ".exe";
+				if(IsDirectory) {
+					return false;
 				}
-				return false;
+				
+				var dotExt = Path.GetExtension(Command).ToLower();
+				return new [] { ".exe", ".bat", ".cmd" }.Any(ext => ext == dotExt);
 			}
 		}
-		/*
-		public bool IsNormalFile
-		{
-			get
-			{
-				if(IsExists) {
-					return !IsExecteFile;
-				}
-				return false;
-			}
-		}
-		*/
+		
 		public bool IsDirectory
 		{
 			get
