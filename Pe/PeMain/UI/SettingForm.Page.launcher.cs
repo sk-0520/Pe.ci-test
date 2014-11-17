@@ -115,6 +115,10 @@ namespace PeMain.UI
 			this.envLauncherRemove.SetItem(item.EnvironmentSetting.Remove);
 			
 			this._launcherItemEvent = true;
+			
+			if(item.LauncherType == LauncherType.File) {
+				this.selectLauncherAdmin.Enabled = item.CanAdministratorExecute;
+			}
 		}
 		
 		void LauncherInputValueToItem(LauncherItem item)
@@ -156,6 +160,10 @@ namespace PeMain.UI
 			}
 			
 			LauncherApplyType(item.LauncherType);
+			
+			if(item.LauncherType == LauncherType.File) {
+				this.selectLauncherAdmin.Enabled = item.CanAdministratorExecute;
+			}
 		}
 		
 		void LauncherApplyType(LauncherType type)
