@@ -43,6 +43,7 @@
 		<ul type="fixes">
 			<li>#80: toolbar/main/tips の ${version-release}</li>
 			<li>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, #41により対応不要</li>
+			<li>#83: バッチ ファイルにパラメタが渡らない</li>
 			<li></li>
 		</ul>
 		<ul type="developer">
