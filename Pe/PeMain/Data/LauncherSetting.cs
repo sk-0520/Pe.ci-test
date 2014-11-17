@@ -261,6 +261,7 @@ namespace PeMain.Data
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
+		/*
 		public bool IsExtExec
 		{
 			get
@@ -272,6 +273,7 @@ namespace PeMain.Data
 				return Path.GetExtension(Command).ToLower() == ".exe";
 			}
 		}
+		*/
 		
 		/// <summary>
 		/// 存在するか

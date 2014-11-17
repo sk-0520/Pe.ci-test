@@ -33,15 +33,18 @@ namespace PeMain.Logic
 			var getOutput = false;
 
 			startInfo.Arguments = launcherItem.Option;
-			if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
-				startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
-			}
-			
+
 			if(launcherItem.CanAdministratorExecute && launcherItem.Administrator) {
 				startInfo.Verb = "runas";
 			} else {
+				// 作業ディレクトリ
+				if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
+					startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+				}
+				
 				// 環境変数
 				if(launcherItem.EnvironmentSetting.EditEnvironment) {
+					startInfo.UseShellExecute = false;
 					var envs = startInfo.EnvironmentVariables;
 					// 追加・更新
 					foreach(var pair in launcherItem.EnvironmentSetting.Update) {

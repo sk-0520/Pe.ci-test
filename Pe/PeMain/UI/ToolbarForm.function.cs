@@ -906,10 +906,10 @@ namespace PeMain.UI
 
 					
 					if(result.ToolStripItem != null) {
-						if(result.LauncherItem.IsExtExec) {
-							e.Effect = DragDropEffects.Move;
-						} else {
+						if(result.LauncherItem.IsDirectory) {
 							e.Effect = DragDropEffects.None;
+						} else {
+							e.Effect = DragDropEffects.Move;
 						}
 					} else {
 						if(result.Files.Count() == 1) {
