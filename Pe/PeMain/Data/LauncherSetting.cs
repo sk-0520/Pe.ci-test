@@ -289,7 +289,7 @@ namespace PeMain.Data
 				return result;
 			}
 		}
-		
+
 		/// <summary>
 		/// アイテムは実行形式か
 		/// </summary>
@@ -303,6 +303,7 @@ namespace PeMain.Data
 				return false;
 			}
 		}
+		/*
 		public bool IsNormalFile
 		{
 			get
@@ -313,11 +314,12 @@ namespace PeMain.Data
 				return false;
 			}
 		}
+		*/
 		public bool IsDirectory
 		{
 			get
 			{
-				if(LauncherType != LauncherType.File) {
+				if((new [] { LauncherType.File, LauncherType.Directory}).All(lt => lt != LauncherType)) {
 					return false;
 				}
 				var expandCommand = Environment.ExpandEnvironmentVariables(Command);
