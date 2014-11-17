@@ -261,6 +261,7 @@ namespace PeMain.Data
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
+		/*
 		public bool IsExtExec
 		{
 			get
@@ -272,6 +273,7 @@ namespace PeMain.Data
 				return Path.GetExtension(Command).ToLower() == ".exe";
 			}
 		}
+		*/
 		
 		/// <summary>
 		/// 存在するか
@@ -291,33 +293,34 @@ namespace PeMain.Data
 		}
 		
 		/// <summary>
-		/// アイテムは実行形式か
+		/// 現在アイテムが管理者として実行可能か
 		/// </summary>
-		public bool IsExecteFile
+		public bool CanAdministratorExecute
 		{
 			get
 			{
-				if(IsExtExec && IsExists) {
-					return Path.GetExtension(Command).ToLower() == ".exe";
+				if(IsDirectory) {
+					return false;
 				}
-				return false;
+				
+				var dotExt = Path.GetExtension(Command).ToLower();
+				return new [] { ".exe", ".bat", ".cmd" }.Any(ext => ext == dotExt);
 			}
 		}
-		public bool IsNormalFile
+		
+		public bool IsExexuteFile
 		{
-			get
+			get 
 			{
-				if(IsExists) {
-					return !IsExecteFile;
-				}
-				return false;
+				return Path.GetExtension(Command).ToLower() == ".exe";
 			}
 		}
+		
 		public bool IsDirectory
 		{
 			get
 			{
-				if(LauncherType != LauncherType.File) {
+				if((new [] { LauncherType.File, LauncherType.Directory}).All(lt => lt != LauncherType)) {
 					return false;
 				}
 				var expandCommand = Environment.ExpandEnvironmentVariables(Command);

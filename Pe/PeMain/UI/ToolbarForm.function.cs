@@ -514,10 +514,10 @@ namespace PeMain.UI
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				if(launcherItem.IsExists) {
 					executeItem.Enabled = true;
-					executeExItem.Enabled = launcherItem.IsExecteFile;
+					//executeExItem.Enabled = launcherItem.IsExecteFile;
 				} else {
 					executeItem.Enabled = false;
-					executeExItem.Enabled = false;
+					//executeExItem.Enabled = false;
 				}
 				try {
 					var parentPath = Path.GetDirectoryName(launcherItem.Command);
@@ -906,10 +906,10 @@ namespace PeMain.UI
 
 					
 					if(result.ToolStripItem != null) {
-						if(result.LauncherItem.IsExtExec && result.LauncherItem.IsExecteFile) {
-							e.Effect = DragDropEffects.Move;
-						} else {
+						if(result.LauncherItem.IsDirectory) {
 							e.Effect = DragDropEffects.None;
+						} else {
+							e.Effect = DragDropEffects.Move;
 						}
 					} else {
 						if(result.Files.Count() == 1) {

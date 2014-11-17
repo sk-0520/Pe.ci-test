@@ -31,46 +31,47 @@ namespace PeMain.Logic
 			var startInfo = process.StartInfo;
 			startInfo.FileName = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 			var getOutput = false;
-			if(launcherItem.IsExecteFile) {
-				startInfo.Arguments = launcherItem.Option;
+
+			startInfo.Arguments = launcherItem.Option;
+
+			if(launcherItem.CanAdministratorExecute && launcherItem.Administrator) {
+				startInfo.Verb = "runas";
+			} else {
+				// 作業ディレクトリ
+				if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
+					startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+				}
 				
-				if(launcherItem.Administrator) {
-					startInfo.Verb = "runas";
-				} else {
+				// 環境変数
+				if(launcherItem.EnvironmentSetting.EditEnvironment) {
 					startInfo.UseShellExecute = false;
-					
-					if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
-						startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+					var envs = startInfo.EnvironmentVariables;
+					// 追加・更新
+					foreach(var pair in launcherItem.EnvironmentSetting.Update) {
+						envs[pair.First] = pair.Second;
 					}
-					
-					// 環境変数
-					if(launcherItem.EnvironmentSetting.EditEnvironment) {
-						var envs = startInfo.EnvironmentVariables;
-						// 追加・更新
-						foreach(var pair in launcherItem.EnvironmentSetting.Update) {
-							envs[pair.First] = pair.Second;
-						}
-						// 削除
-						var removeList = launcherItem.EnvironmentSetting.Remove.Where(envs.ContainsKey);
-						foreach(var key in removeList) {
-							envs.Remove(key);
-						}
-					}
-					
-					// 出力取得
-					startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
-					if(launcherItem.StdOutputWatch) {
-						getOutput = true;
-						startInfo.RedirectStandardOutput = true;
-						startInfo.RedirectStandardError = true;
-						startInfo.RedirectStandardInput = true;
-						var streamForm = new StreamForm();
-						streamForm.SetParameter(process, launcherItem);
-						streamForm.SetCommonData(commonData);
-						streamForm.Show(parentForm);
+					// 削除
+					var removeList = launcherItem.EnvironmentSetting.Remove.Where(envs.ContainsKey);
+					foreach(var key in removeList) {
+						envs.Remove(key);
 					}
 				}
+				
+				// 出力取得
+				startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
+				if(launcherItem.StdOutputWatch) {
+					getOutput = true;
+					startInfo.UseShellExecute = false;
+					startInfo.RedirectStandardOutput = true;
+					startInfo.RedirectStandardError = true;
+					startInfo.RedirectStandardInput = true;
+					var streamForm = new StreamForm();
+					streamForm.SetParameter(process, launcherItem);
+					streamForm.SetCommonData(commonData);
+					streamForm.Show(parentForm);
+				}
 			}
+			
 			
 			process.Start();
 			
@@ -141,7 +142,7 @@ namespace PeMain.Logic
 			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, expandPath, string.Empty);
 		}
 	}
-	
+
 	public static class SystemExecuter
 	{
 		public static Process RunDLL(string command, CommonData commonData)
@@ -161,6 +162,6 @@ namespace PeMain.Logic
 			RunDLL("shell32.dll,Options_RunDLL 5", commonData);
 		}
 	}
-	
-	
+
+
 }
