@@ -662,7 +662,7 @@ namespace PeMain.UI
 		#endregion
 		
 		public override int MenuWidth { get { return 12 ;} }
-		public override int PaddingWidth { get { return MenuWidth; } }
+		public override int PaddingWidth { get { return MenuWidth / 2; } }
 		//public override int PaddingWidth { get { return 0; } }
 		
 		#region IsDefaultDrawToolbar
