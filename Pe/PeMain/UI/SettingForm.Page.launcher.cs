@@ -117,7 +117,7 @@ namespace PeMain.UI
 			this._launcherItemEvent = true;
 			
 			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = item.CanAdministratorExecute;
+				this.selectLauncherAdmin.Enabled = true;
 			}
 		}
 		
@@ -162,7 +162,7 @@ namespace PeMain.UI
 			LauncherApplyType(item.LauncherType);
 			
 			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = item.CanAdministratorExecute;
+				this.selectLauncherAdmin.Enabled = true;
 			}
 		}
 		

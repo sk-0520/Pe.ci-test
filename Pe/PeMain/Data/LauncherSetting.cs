@@ -295,6 +295,7 @@ namespace PeMain.Data
 		/// <summary>
 		/// 現在アイテムが管理者として実行可能か
 		/// </summary>
+		[Obsolete("ちょっと隠居してくれ")]
 		public bool CanAdministratorExecute
 		{
 			get

@@ -48,11 +48,7 @@ namespace PeMain.UI
 			this.inputWorkDirPath.Items.AddRange(LauncherItem.LauncherHistory.WorkDirs.ToArray());
 			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
 			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
-			if(LauncherItem.CanAdministratorExecute) {
-				this.selectAdministrator.Checked = LauncherItem.Administrator;
-			} else {
-				this.selectAdministrator.Enabled = false;
-			}
+			this.selectAdministrator.Checked = LauncherItem.Administrator;
 			this.selectEnvironment.Checked = !this.selectEnvironment.Checked;
 			this.selectEnvironment.Checked = LauncherItem.EnvironmentSetting.EditEnvironment;
 			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.First, pair => pair.Second));
