@@ -7,11 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.UI;
 using PInvoke.Windows;
@@ -59,6 +61,7 @@ namespace PeMain.Logic
 			}
 			
 			// 出力取得
+			StreamForm streamForm = null;
 			startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
 			if(launcherItem.StdOutputWatch) {
 				getOutput = true;
@@ -66,15 +69,23 @@ namespace PeMain.Logic
 				startInfo.RedirectStandardOutput = true;
 				startInfo.RedirectStandardError = true;
 				startInfo.RedirectStandardInput = true;
-				var streamForm = new StreamForm();
+			}
+			
+			try {
+				process.Start();
+			} catch(Win32Exception) {
+				if(streamForm != null) {
+					streamForm.Dispose();
+				}
+				throw;
+			}
+			
+			if(getOutput) {
+				streamForm = new StreamForm();
 				streamForm.SetParameter(process, launcherItem);
 				streamForm.SetCommonData(commonData);
 				streamForm.Show(parentForm);
-			}
-			
-			process.Start();
-			
-			if(getOutput) {
+				
 				process.BeginOutputReadLine();
 				process.BeginErrorReadLine();
 			}

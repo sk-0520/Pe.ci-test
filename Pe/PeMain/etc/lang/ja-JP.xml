@@ -58,7 +58,7 @@
 		<Word Name="common/label/edit"                  Text="${edit}" />
 		<Word Name="common/command/default-font"        Text="デフォルトの${font}" />
 		<Word Name="common/command/default-font-reset"  Text="${font}をリセットする" />
-		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
+		<Word Name="common/check/admin"                 Text="${admin} (ユーザーの責任下で実行してください)" />
 		<Word Name="common/page/env"                    Text="${env}" />
 		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
