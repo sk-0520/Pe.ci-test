@@ -19,7 +19,7 @@ using PInvoke.Windows;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of Executer.
+	/// 実行処理共通化。
 	/// </summary>
 	public static class Executer
 	{
