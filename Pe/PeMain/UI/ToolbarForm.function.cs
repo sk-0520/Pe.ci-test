@@ -1026,7 +1026,7 @@ namespace PeMain.UI
 		void ChnageDropDataLauncherItemPosition(DropData dropData)
 		{
 			Debug.Assert(dropData.DropType == DropType.Button);
-			Debug.WriteLine("{0} * {1}", dropData.SrcToolStripItem, dropData.ToolStripItem);
+			//Debug.WriteLine("{0} * {1}", dropData.SrcToolStripItem, dropData.ToolStripItem);
 			
 			try {
 				this.toolLauncher.SuspendLayout();

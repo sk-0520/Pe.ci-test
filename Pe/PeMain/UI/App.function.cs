@@ -196,7 +196,7 @@ namespace PeMain.UI
 		/// </summary>
 		void ResetToolbar()
 		{
-			Debug.WriteLine("ResetToolbar");
+			//Debug.WriteLine("ResetToolbar");
 			foreach(var toolbar in this._toolbarForms.Values) {
 				//toolbar.SetCommonData(this._commonData);
 				toolbar.ToDispose();

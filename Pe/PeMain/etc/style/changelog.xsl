@@ -26,7 +26,7 @@
 			<xsl:value-of select="@date" />, <xsl:value-of select="@version" />
 			<xsl:if test="@type='rc'"><em>RC版</em></xsl:if>
 		</h2>
-		<dl>
+		<dl class="changelog">
 			<xsl:apply-templates />
 		</dl>
 	
@@ -49,7 +49,7 @@
 				</xsl:when>
 			</xsl:choose>
 		</dt>
-		<dd>
+		<dd class="{@type}">
 			<ul>
 				<xsl:apply-templates />
 			</ul>
