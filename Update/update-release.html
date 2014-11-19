@@ -26,19 +26,24 @@ h1
 	border-bottom: 3px double #888;
 }
 
-dt.features
+*.changelog dd
+{
+	margin-left: 0;
+}
+
+*.changelog dt.features
 {
 }
 
-dt.fixes
+*.changelog dt.fixes
 {
 }
 
-dt.developer
+*.changelog dt.developer
 {
 }
 
-dt.note
+*.changelog dt.note
 {
 }
 
@@ -56,4 +61,4 @@ p.uri
 {
 	color: #f00;
 }
-</style></head><body><h1>2014/11/13, 0.31.0</h1><dl><dt class='note'>メモ</dt><dd><ul><li class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります。</li><li>設定ファイルのバックアップアーカイブから戻しを行う場合はグループ名の重複に注意してください。</li></ul></dd><dt class='features'>機能</dt><dd><ul><li>#71: 環境情報出力時にディスプレイ情報を出力する。</li><li>#72: ディレクトリのD&D登録時にアイテム種別の選択。</li><li>#73: ツールバーに対する初期グループの設定。</li></ul></dd><dt class='fixes'>修正</dt><dd><ul><li>#70: ディレクトリアイテムで環境変数が展開されない。</li><li>設定ダイアログのランチャーアイコン設定処理のインデックス関連を改善。</li><li>#73の影響によりグループ名の重複時に連番を自動採番するように変更。</li><li>#73の影響によりグループ名編集時に trim。</li><li>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, 暫定対応により例外握り潰し。</li></ul></dd></dl></body></html>
+</style></head><body><h1>2014/11/19, 0.32.0</h1><dl class="changelog"><dt class='features'>機能</dt><dd class='features'><ul><li>#82: ポーズ時のタスクトレイアイコン。</li><li>#74: ランチャーアイテムをツールバー上で移動させる。</li><li>#84: ツールバーメインボタンでグループ切り替え。</li><li>#85: ショートカットファイルの登録処理。</li><li>#41: アイテムの種類, URI追加。</li><li>#86: 使用者の環境情報を定型として出力。</li></ul></dd><dt class='fixes'>修正</dt><dd class='fixes'><ul><li>#80: toolbar/main/tips の ${version-release}。</li><li>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, #41により対応不要。</li><li>#83: バッチ ファイルにパラメタが渡らない。</li><li>ツールバーのボタンサイズに左側余白を若干追加しました。</li></ul></dd><dt class='developer'>開発</dt><dd class='developer'><ul><li>Visual Studio Community使いたいでありんす。</li></ul></dd></dl></body></html>
