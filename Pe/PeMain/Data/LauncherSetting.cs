@@ -98,13 +98,47 @@ namespace PeMain.Data
 		/// <summary>
 		/// 見つからなかった時用アイコン。
 		/// </summary>
+		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap;
+		/*
 		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
 			{ IconScale.Small,  Icon.FromHandle(PeMain.Properties.Images.NotFound_016.GetHicon()) },
 			{ IconScale.Normal, Icon.FromHandle(PeMain.Properties.Images.NotFound_032.GetHicon()) },
 			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
+		*/
+		private static readonly Dictionary<IconScale, Icon> _uriIconMap;
 		
+		static LauncherItem()
+		{
+			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
+			// NotFound 
+			var notfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			foreach(var iconScale in iconScaleList) {
+				var iconSize = iconScale.ToSize();
+				var icon = new Icon(global::PeMain.Properties.Images.NotFound, iconSize);
+				var image = new Bitmap(iconSize.Width, iconSize.Height);
+				using(var g = Graphics.FromImage(image)) {
+					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
+				}
+				notfoundIconMap[iconScale] = icon;
+			}
+			_notfoundIconMap = notfoundIconMap;
+			
+			// URIアイコン構築
+			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			foreach(var iconScale in iconScaleList) {
+				var iconSize = iconScale.ToSize();
+				var icon = new Icon(global::PeMain.Properties.Images.URI, iconSize);
+				var image = new Bitmap(iconSize.Width, iconSize.Height);
+				using(var g = Graphics.FromImage(image)) {
+					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
+				}
+				uriIconMap[iconScale] = icon;
+			}
+			_uriIconMap = uriIconMap;
+		}
+
 		/// <summary>
 		/// 現在のアイテムが保持するアイコン一覧。
 		/// </summary>
@@ -227,6 +261,7 @@ namespace PeMain.Data
 		/// </summary>
 		public EnvironmentSetting EnvironmentSetting { get; set; }
 		
+		/*
 		public bool IsExtExec
 		{
 			get
@@ -238,6 +273,7 @@ namespace PeMain.Data
 				return Path.GetExtension(Command).ToLower() == ".exe";
 			}
 		}
+		*/
 		
 		/// <summary>
 		/// 存在するか
@@ -257,33 +293,35 @@ namespace PeMain.Data
 		}
 		
 		/// <summary>
-		/// アイテムは実行形式か
+		/// 現在アイテムが管理者として実行可能か
 		/// </summary>
-		public bool IsExecteFile
+		[Obsolete("ちょっと隠居してくれ")]
+		public bool CanAdministratorExecute
 		{
 			get
 			{
-				if(IsExtExec && IsExists) {
-					return Path.GetExtension(Command).ToLower() == ".exe";
+				if(IsDirectory) {
+					return false;
 				}
-				return false;
+				
+				var dotExt = Path.GetExtension(Command).ToLower();
+				return new [] { ".exe", ".bat", ".cmd" }.Any(ext => ext == dotExt);
 			}
 		}
-		public bool IsNormalFile
+		
+		public bool IsExexuteFile
 		{
-			get
+			get 
 			{
-				if(IsExists) {
-					return !IsExecteFile;
-				}
-				return false;
+				return Path.GetExtension(Command).ToLower() == ".exe";
 			}
 		}
+		
 		public bool IsDirectory
 		{
 			get
 			{
-				if(LauncherType != LauncherType.File) {
+				if((new [] { LauncherType.File, LauncherType.Directory}).All(lt => lt != LauncherType)) {
 					return false;
 				}
 				var expandCommand = Environment.ExpandEnvironmentVariables(Command);
@@ -349,14 +387,18 @@ namespace PeMain.Data
 				string useIconPath = null;
 				if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
 					var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
-					hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+					hasIcon = FileUtility.Exists(expandIconPath);
 					useIconPath = expandIconPath;
 				}
-				if(!hasIcon &&  new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
-					if(!string.IsNullOrWhiteSpace(Command)) {
-						var expandPath = Environment.ExpandEnvironmentVariables(Command);
-						hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
-						useIconPath = expandPath;
+				if(!hasIcon) {
+					if(new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
+						if(!string.IsNullOrWhiteSpace(Command)) {
+							var expandPath = Environment.ExpandEnvironmentVariables(Command);
+							//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
+							hasIcon = FileUtility.Exists(expandPath);
+							useIconPath = expandPath;
+						}
 					}
 				}
 				if(hasIcon) {
@@ -366,10 +408,15 @@ namespace PeMain.Data
 					this._iconMap[iconScale] = icon;
 				}
 			}
+			
 			if(hasIcon) {
 				return this._iconMap[iconScale];
 			} else {
-				return _notfoundIconMap[iconScale];
+				if(LauncherType == LauncherType.URI) {
+					return _uriIconMap[iconScale];
+				} else {
+					return _notfoundIconMap[iconScale];
+				}
 			}
 		}
 		
@@ -433,17 +480,19 @@ namespace PeMain.Data
 				switch(dotExt.ToLower()) {
 					case ".lnk":
 						{
-							var shortcut = new ShortcutFile(expandPath, false);
-							item.Command = shortcut.TargetPath;
-							item.Option = shortcut.Arguments;
-							item.WorkDirPath = shortcut.WorkingDirectory;
-							/*
-							item.IconPath = shortcut.IconPath;
-							item.IconIndex = shortcut.IconIndex;
-							 */
-							item.IconItem.Path = shortcut.IconPath;
-							item.IconItem.Index = shortcut.IconIndex;
-							item.Note = shortcut.Description;
+							if(!useShortcut) {
+								var shortcut = new ShortcutFile(expandPath, false);
+								item.Command = shortcut.TargetPath;
+								item.Option = shortcut.Arguments;
+								item.WorkDirPath = shortcut.WorkingDirectory;
+								/*
+								item.IconPath = shortcut.IconPath;
+								item.IconIndex = shortcut.IconIndex;
+								 */
+								item.IconItem.Path = shortcut.IconPath;
+								item.IconItem.Index = shortcut.IconIndex;
+								item.Note = shortcut.Description;
+							}
 						}
 						break;
 						
@@ -482,7 +531,7 @@ namespace PeMain.Data
 		{
 			return LoadFile(expandPath, useShortcut, false, LauncherType.None);
 		}
-	
+		
 		static public string GetUniqueName(LauncherItem item, IEnumerable<LauncherItem> seq)
 		{
 			return TextUtility.ToUniqueDefault(item.Name, seq.Select(i => i.Name));

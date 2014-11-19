@@ -75,7 +75,9 @@ namespace PeMain.UI
 			}
 			 */
 			//MessageBox.Show("PON!");
-			ShowHomeDialog();
+			if(!this._pause) {
+				ShowHomeDialog();
+			}
 			//ResetUI();
 		}
 		

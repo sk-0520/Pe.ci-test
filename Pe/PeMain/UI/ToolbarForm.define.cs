@@ -26,6 +26,8 @@ namespace PeMain.UI
 		const string menuNameMainPosDesktopRight = "desktop_right";
 		const string menuNameMainTopmost = "topmost";
 		const string menuNameMainAutoHide = "autohide";
+		const string menuNameMainGroupSeparator = "group_sep";
+		const string menuNameMainGroupItem = "group_item_";
 			
 		const string menuNameExecute = "exec";
 		const string menuNameExecuteEx = "ex";
@@ -39,11 +41,20 @@ namespace PeMain.UI
 		const string menuNamePath_copyWorkDir = "copy_work_dir";
 		const string menuNamePath_property = "property";
 		
+		enum DropType
+		{
+			None,
+			Files,
+			Button
+		}
+		
 		struct DropData
 		{
+			public DropType DropType { get; set; }
 			public ToolStripItem ToolStripItem { get; set; }
 			public LauncherItem LauncherItem  { get; set; }
 			public IEnumerable<string> Files { get; set; }
+			public ToolStripItem SrcToolStripItem { get; set; }
 		}
 		
 	}

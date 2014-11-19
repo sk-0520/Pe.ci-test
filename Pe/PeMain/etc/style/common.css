@@ -11,19 +11,24 @@ h1
 	border-bottom: 3px double #888;
 }
 
-dt.features
+*.changelog dd
+{
+	margin-left: 0;
+}
+
+*.changelog dt.features
 {
 }
 
-dt.fixes
+*.changelog dt.fixes
 {
 }
 
-dt.developer
+*.changelog dt.developer
 {
 }
 
-dt.note
+*.changelog dt.note
 {
 }
 

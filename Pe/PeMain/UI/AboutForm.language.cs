@@ -23,6 +23,10 @@ namespace PeMain.UI
 			this.commandChangelog.SetLanguage(CommonData.Language);
 			this.commandUpdate.SetLanguage(CommonData.Language);
 			
+			this.labelUserenv.SetLanguage(CommonData.Language);
+			this.linkCopyShort.SetLanguage(CommonData.Language);
+			this.linkCopyLong.SetLanguage(CommonData.Language);
+			
 			this.gridComponents_columnName.SetLanguage(CommonData.Language);
 			this.gridComponents_columnType.SetLanguage(CommonData.Language);
 			this.gridComponents_columnURI.SetLanguage(CommonData.Language);

@@ -73,13 +73,13 @@ namespace PeMain.UI
 				// #20
 				return;
 			}
-			*/
+			 */
 			
 			this.inputOutput.BeginInvoke(
 				(MethodInvoker)delegate() {
 					this.inputOutput.Text += line + Environment.NewLine;
 					this.inputOutput.SelectionStart = this.inputOutput.TextLength;
-        			this.inputOutput.ScrollToCaret();
+					this.inputOutput.ScrollToCaret();
 				}
 			);
 		}
@@ -97,7 +97,7 @@ namespace PeMain.UI
 				// #20
 				return;
 			}
-			*/
+			 */
 			
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
@@ -110,10 +110,10 @@ namespace PeMain.UI
 		
 		void KillProcess()
 		{
-			if(Process.HasExited) {
-				return;
-			}
 			try {
+				if(Process.HasExited) {
+					return;
+				}
 				Process.Kill();
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, ex.Message, ex);

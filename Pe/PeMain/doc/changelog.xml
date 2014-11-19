@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../etc/style/changelog.xsl"?>
 <changelog>
 	<!--
-	<log date="YYYY/MM/DD" version="0.xx.0" type="rc">
+	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
 		<ul type="note">
 			<li></li>
 			<li></li>
@@ -25,6 +25,25 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/11/19" version="0.32.0">
+		<ul type="features">
+			<li>#82: ポーズ時のタスクトレイアイコン</li>
+			<li>#74: ランチャーアイテムをツールバー上で移動させる</li>
+			<li>#84: ツールバーメインボタンでグループ切り替え</li>
+			<li>#85: ショートカットファイルの登録処理</li>
+			<li>#41: アイテムの種類, URI追加</li>
+			<li>#86: 使用者の環境情報を定型として出力</li>
+		</ul>
+		<ul type="fixes">
+			<li>#80: toolbar/main/tips の ${version-release}</li>
+			<li>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, #41により対応不要</li>
+			<li>#83: バッチ ファイルにパラメタが渡らない</li>
+			<li>ツールバーのボタンサイズに左側余白を若干追加しました</li>
+		</ul>
+		<ul type="developer">
+			<li>Visual Studio Community使いたいでありんす</li>
+		</ul>
+	</log>
 	<log date="2014/11/13" version="0.31.0">
 		<ul type="note">
 			<li class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</li>

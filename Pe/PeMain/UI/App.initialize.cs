@@ -538,7 +538,8 @@ namespace PeMain.UI
 		/// <summary>
 		/// 本体UI初期化
 		/// </summary>
-		/// <param name="args"></param>
+		/// <param name = "commandLine"></param>
+		/// <param name = "logger"></param>
 		void InitializeMain(CommandLine commandLine, StartupLogger logger)
 		{
 			this._notifyIcon = new NotifyIcon();

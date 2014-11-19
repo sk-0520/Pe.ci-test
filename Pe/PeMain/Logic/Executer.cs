@@ -7,11 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.UI;
 using PInvoke.Windows;
@@ -19,7 +21,7 @@ using PInvoke.Windows;
 namespace PeMain.Logic
 {
 	/// <summary>
-	/// Description of Executer.
+	/// 実行処理共通化。
 	/// </summary>
 	public static class Executer
 	{
@@ -31,62 +33,79 @@ namespace PeMain.Logic
 			var startInfo = process.StartInfo;
 			startInfo.FileName = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 			var getOutput = false;
-			if(launcherItem.IsExecteFile) {
-				startInfo.Arguments = launcherItem.Option;
-				
-				if(launcherItem.Administrator) {
-					startInfo.Verb = "runas";
-				} else {
-					startInfo.UseShellExecute = false;
-					
-					if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
-						startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
-					}
-					
-					// 環境変数
-					if(launcherItem.EnvironmentSetting.EditEnvironment) {
-						var envs = startInfo.EnvironmentVariables;
-						// 追加・更新
-						foreach(var pair in launcherItem.EnvironmentSetting.Update) {
-							envs[pair.First] = pair.Second;
-						}
-						// 削除
-						var removeList = launcherItem.EnvironmentSetting.Remove.Where(envs.ContainsKey);
-						foreach(var key in removeList) {
-							envs.Remove(key);
-						}
-					}
-					
-					// 出力取得
-					startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
-					if(launcherItem.StdOutputWatch) {
-						getOutput = true;
-						startInfo.RedirectStandardOutput = true;
-						startInfo.RedirectStandardError = true;
-						startInfo.RedirectStandardInput = true;
-						var streamForm = new StreamForm();
-						streamForm.SetParameter(process, launcherItem);
-						streamForm.SetCommonData(commonData);
-						streamForm.Show(parentForm);
-					}
+
+			startInfo.Arguments = launcherItem.Option;
+
+			if(launcherItem.Administrator) {
+				startInfo.Verb = "runas";
+			}
+			
+			// 作業ディレクトリ
+			if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
+				startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+			}
+			
+			// 環境変数
+			if(launcherItem.EnvironmentSetting.EditEnvironment) {
+				startInfo.UseShellExecute = false;
+				var envs = startInfo.EnvironmentVariables;
+				// 追加・更新
+				foreach(var pair in launcherItem.EnvironmentSetting.Update) {
+					envs[pair.First] = pair.Second;
+				}
+				// 削除
+				var removeList = launcherItem.EnvironmentSetting.Remove.Where(envs.ContainsKey);
+				foreach(var key in removeList) {
+					envs.Remove(key);
 				}
 			}
 			
-			process.Start();
+			// 出力取得
+			StreamForm streamForm = null;
+			startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
+			if(launcherItem.StdOutputWatch) {
+				getOutput = true;
+				startInfo.UseShellExecute = false;
+				startInfo.RedirectStandardOutput = true;
+				startInfo.RedirectStandardError = true;
+				startInfo.RedirectStandardInput = true;
+			}
+			
+			try {
+				process.Start();
+			} catch(Win32Exception) {
+				if(streamForm != null) {
+					streamForm.Dispose();
+				}
+				throw;
+			}
 			
 			if(getOutput) {
+				streamForm = new StreamForm();
+				streamForm.SetParameter(process, launcherItem);
+				streamForm.SetCommonData(commonData);
+				streamForm.Show(parentForm);
+				
 				process.BeginOutputReadLine();
 				process.BeginErrorReadLine();
 			}
 			
 			return process;
 		}
+		
 		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
 			
 			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 			OpenDirectory(expandPath, commonData, null);
+		}
+		
+		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		{
+			Debug.Assert(launcherItem.LauncherType == LauncherType.URI);
+			
+			RunCommand(launcherItem.Command, commonData);
 		}
 		
 		public static void RunItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
@@ -97,9 +116,15 @@ namespace PeMain.Logic
 				case LauncherType.File:
 					RunFileItem(launcherItem, commonData, parentForm);
 					break;
+					
 				case LauncherType.Directory:
 					RunDirectoryItem(launcherItem, commonData, parentForm);
 					break;
+					
+				case LauncherType.URI:
+					RunUriItem(launcherItem, commonData, parentForm);
+					break;
+					
 				default:
 					throw new NotImplementedException();
 			}
@@ -127,7 +152,7 @@ namespace PeMain.Logic
 			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, expandPath, string.Empty);
 		}
 	}
-	
+
 	public static class SystemExecuter
 	{
 		public static Process RunDLL(string command, CommonData commonData)
@@ -147,6 +172,6 @@ namespace PeMain.Logic
 			RunDLL("shell32.dll,Options_RunDLL 5", commonData);
 		}
 	}
-	
-	
+
+
 }

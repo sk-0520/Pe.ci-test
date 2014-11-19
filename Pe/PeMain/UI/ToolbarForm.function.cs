@@ -514,21 +514,27 @@ namespace PeMain.UI
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				if(launcherItem.IsExists) {
 					executeItem.Enabled = true;
-					executeExItem.Enabled = launcherItem.IsExecteFile;
+					//executeExItem.Enabled = launcherItem.IsExecteFile;
 				} else {
 					executeItem.Enabled = false;
-					executeExItem.Enabled = false;
+					//executeExItem.Enabled = false;
 				}
 				try {
 					var parentPath = Path.GetDirectoryName(launcherItem.Command);
 					fileItem.Enabled = Directory.Exists(parentPath);
 				} catch(ArgumentException ex) {
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					// #41の影響により#77考慮不要
+					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
 					pathItem.Enabled = false;
 					fileItem.Enabled = false;
 					executeItem.Enabled = true;
 				}
 			};
+		}
+		
+		string MakeGroupItemName(string groupName)
+		{
+			return menuNameMainGroupItem + groupName;
 		}
 		
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
@@ -543,6 +549,7 @@ namespace PeMain.UI
 			var topmostItem = new ToolStripMenuItem();
 			var autoHideItem = new ToolStripMenuItem();
 			var hiddenItem = new ToolStripMenuItem();
+			var groupSeparator = new ToolStripSeparator();
 			itemList.Add(posFloatItem);
 			itemList.Add(posTopItem);
 			itemList.Add(posBottomItem);
@@ -616,6 +623,20 @@ namespace PeMain.UI
 				ApplySettingVisible();
 			};
 			
+			// グループ関連メニュー
+			var itemGroupSeparator = new ToolStripSeparator();
+			groupSeparator.Name = menuNameMainGroupSeparator;
+			itemList.Add(itemGroupSeparator);
+			foreach(var group in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var itemGroup = new ToolStripMenuItem();
+				itemGroup.Text = group.Name;
+				itemGroup.Name = MakeGroupItemName(group.Name);
+				itemGroup.Tag = group;
+				itemGroup.CheckState = CheckState.Indeterminate;
+				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
+				itemList.Add(itemGroup);
+			}
+			
 			// メニュー設定
 			var items = itemList.ToArray();
 			// #3
@@ -645,6 +666,11 @@ namespace PeMain.UI
 				// 自動的に隠す
 				autoHideItem.Checked = AutoHide;
 				autoHideItem.Enabled = IsDocking;
+				
+				// グループ
+				foreach(var groupItem in parentItem.DropDownItems.Cast<ToolStripItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal)).Cast<ToolStripMenuItem>()) {
+					groupItem.Checked = groupItem.Tag == SelectedGroupItem;
+				}
 			};
 		}
 
@@ -690,7 +716,7 @@ namespace PeMain.UI
 					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
 						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					}
-					*/
+					 */
 					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#endif
 				}
@@ -711,12 +737,6 @@ namespace PeMain.UI
 		{
 			var toolItem = new ToolStripSplitButton();
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
-			toolItem.Text = item.Name;
-			toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
-			if(icon != null) {
-				toolItem.Image = icon.ToBitmap();
-			}
 			
 			AttachmentFileLauncherMenu(toolItem, item);
 			
@@ -727,14 +747,6 @@ namespace PeMain.UI
 		{
 			var toolItem = new ToolStripDropDownButton();
 			
-			toolItem.Text = item.Name;
-			toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
-			if(icon != null) {
-				toolItem.Image = icon.ToBitmap();
-			}
-			
-
 			toolItem.DropDownOpening += (object sender, EventArgs e) => {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
@@ -752,6 +764,15 @@ namespace PeMain.UI
 			return toolItem;
 		}
 		
+		ToolStripButton CreateURIItemLauncherButton(LauncherItem item)
+		{
+			var toolItem = new ToolStripButton();
+			
+			toolItem.Click += LauncherTypeFile_ButtonClick;
+			
+			return toolItem;
+		}
+			
 		/// <summary>
 		/// ランチャーアイテムボタンの生成。
 		/// </summary>
@@ -762,14 +783,42 @@ namespace PeMain.UI
 			Debug.Assert(item != null);
 			ToolStripItem toolItem;
 			
-			if(item.LauncherType == LauncherType.Directory) {
-				toolItem = CreateDirectoryItemLauncherButton(item);
-			} else {
-				toolItem = CreateFileItemLauncherButton(item);
+			switch(item.LauncherType) {
+				case LauncherType.File:
+					toolItem = CreateFileItemLauncherButton(item);
+					break;
+				
+				case LauncherType.Directory:
+					toolItem = CreateDirectoryItemLauncherButton(item);
+					break;
+					
+				case LauncherType.URI:
+					toolItem = CreateURIItemLauncherButton(item);
+					break;
+					
+				default:
+					throw new NotImplementedException(item.LauncherType.ToString());
 			}
 			
 			toolItem.Tag = item;
 			
+			toolItem.Text = item.Name;
+			toolItem.ToolTipText = item.Name;
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
+			if(icon != null) {
+				toolItem.Image = icon.ToBitmap();
+			}
+			
+			toolItem.MouseDown += LauncherButton_MouseDown;
+			/*
+			toolItem.MouseDown += (object sender, MouseEventArgs e) => {
+				if(Control.ModifierKeys == Keys.Alt) {
+					this._dragStartItem = toolItem;
+					Debug.WriteLine(this._dragStartItem);
+					this.toolLauncher.DoDragDrop(toolItem, DragDropEffects.Copy);
+				}
+			};
+			 */
 			return toolItem;
 		}
 		
@@ -839,33 +888,56 @@ namespace PeMain.UI
 			return overItem;
 		}
 
-		DropData ProcessDropEffect(DragEventArgs e)
+		DropData ProcessDropEffect(object sender, DragEventArgs e)
 		{
 			var result = new DropData();
 			var localPoint = this.toolLauncher.PointToClient(new Point(e.X, e.Y));
 			
-			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
-				result.Files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-				result.ToolStripItem = GetOverButton(localPoint);
-				if(result.ToolStripItem != null) {
-					result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
-				}
-				
-				if(result.ToolStripItem != null) {
-					if(result.LauncherItem.IsExtExec && result.LauncherItem.IsExecteFile) {
-						e.Effect = DragDropEffects.Move;
+			result.ToolStripItem = GetOverButton(localPoint);
+			if(result.ToolStripItem != null) {
+				result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
+			}
+			result.DropType = DropType.None;
+			
+			if(this._dragStartItem == null) {
+				if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+					result.DropType = DropType.Files;
+					result.Files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+					
+					if(result.ToolStripItem != null) {
+						if(result.LauncherItem.IsDirectory) {
+							e.Effect = DragDropEffects.None;
+						} else {
+							e.Effect = DragDropEffects.Move;
+						}
 					} else {
-						e.Effect = DragDropEffects.None;
+						if(result.Files.Count() == 1) {
+							e.Effect = DragDropEffects.Copy;
+						} else {
+							e.Effect = DragDropEffects.None;
+						}
 					}
 				} else {
-					if(result.Files.Count() == 1) {
-						e.Effect = DragDropEffects.Copy;
-					} else {
-						e.Effect = DragDropEffects.None;
-					}
+					e.Effect = DragDropEffects.None;
 				}
 			} else {
-				e.Effect = DragDropEffects.None;
+				Debug.Assert(this._dragStartItem != null);
+				
+				e.Effect = DragDropEffects.Move;
+				
+				result.DropType = DropType.Button;
+				result.SrcToolStripItem = this._dragStartItem;
+				if(result.ToolStripItem is ToolStripOverflowButton) {
+					// 表示領域外への入口
+					e.Effect = DragDropEffects.None;
+				} else if(result.ToolStripItem == null) {
+					// ツールバー上のアイテムなし領域
+					e.Effect = DragDropEffects.Move;
+				} else if(result.ToolStripItem == result.SrcToolStripItem || result.LauncherItem == null) {
+					// 同一アイテム or メインメニュー
+					e.Effect = DragDropEffects.None;
+				}
 			}
 			
 			return result;
@@ -882,9 +954,34 @@ namespace PeMain.UI
 				Debug.Assert(dropData.Files.Count() == 1);
 				
 				var path = dropData.Files.First();
+				var useShortcut = false;
 				var forceLauncherType = false;
 				var forceType = LauncherType.None;
-				if(Directory.Exists(path)) {
+				var checkDirectory = false;
+				if(PathUtility.IsShortcutPath(path)) {
+					var result = MessageBox.Show(CommonData.Language["common/dialog/d-d/shortcut/message"], CommonData.Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+					switch(result) {
+						case DialogResult.Yes:
+							try {
+								var sf = new ShortcutFile(path, false);
+								var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
+								checkDirectory = Directory.Exists(expandPath);
+								path = sf.TargetPath;
+							} catch(ArgumentException ex) {
+								CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+							}
+							break;
+							
+						case DialogResult.No:
+							useShortcut = true;
+							break;
+							
+						default:
+							return;
+					}
+				}
+				
+				if(checkDirectory || Directory.Exists(path)) {
 					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/directory/message"], CommonData.Language["toolbar/dialog/d-d/directory/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 					switch(result) {
 						case DialogResult.Yes:
@@ -900,7 +997,7 @@ namespace PeMain.UI
 							return;
 					}
 				}
-				var item = LauncherItem.LoadFile(path, true, forceLauncherType, forceType);
+				var item = LauncherItem.LoadFile(path, useShortcut, forceLauncherType, forceType);
 				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {
@@ -918,6 +1015,60 @@ namespace PeMain.UI
 				// 他のツールバーにアイテム変更を教える
 				CommonData.RootSender.ChangeLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
 			}
+		}
+		
+		/// <summary>
+		/// 該当のインデックスに挿入する形で処理する。
+		/// 
+		/// 例外として自身の次アイテムに挿入する場合は位置が変わらないためその次に挿入する。
+		/// </summary>
+		/// <param name="dropData"></param>
+		void ChnageDropDataLauncherItemPosition(DropData dropData)
+		{
+			Debug.Assert(dropData.DropType == DropType.Button);
+			//Debug.WriteLine("{0} * {1}", dropData.SrcToolStripItem, dropData.ToolStripItem);
+			
+			try {
+				this.toolLauncher.SuspendLayout();
+				
+				if(dropData.ToolStripItem == null) {
+					// 最終項目
+					this.toolLauncher.Items.Remove(dropData.SrcToolStripItem);
+					this.toolLauncher.Items.Add(dropData.SrcToolStripItem);
+				} else {
+					Debug.Assert(dropData.ToolStripItem != null);
+					Debug.Assert(dropData.SrcToolStripItem != null);
+					
+					// 次の項目か
+					var arrow = ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition) ? ArrowDirection.Right: ArrowDirection.Down;
+					var nextItem = this.toolLauncher.GetNextItem(dropData.SrcToolStripItem, arrow);
+					var isNext = nextItem == dropData.ToolStripItem;
+					var itemList = this.toolLauncher.Items.Cast<ToolStripItem>().ToList();
+					var newIndex = itemList.IndexOf(dropData.ToolStripItem);
+					var srcIndex = itemList.IndexOf(dropData.SrcToolStripItem);
+					if(isNext) {
+						// 入れ替えっこ
+						this.toolLauncher.Items.Insert(newIndex, dropData.SrcToolStripItem);
+					} else {
+						// 指定位置に挿入
+						this.toolLauncher.Items.RemoveAt(srcIndex);
+						this.toolLauncher.Items.Insert(newIndex, dropData.SrcToolStripItem);
+					}
+				}
+			} finally {
+				this.toolLauncher.ResumeLayout();
+			}
+			
+			// 現在の並びをデータとして取得
+			var groupItemNames = new List<string>(SelectedGroupItem.ItemNames.Count);
+			foreach(var item in this.toolLauncher.Items.Cast<ToolStripItem>()) {
+				var launcherItem = item.Tag as LauncherItem;
+				if(launcherItem == null) {
+					continue;
+				}
+				groupItemNames.Add(launcherItem.Name);
+			}
+			SelectedGroupItem.ItemNames = groupItemNames;
 		}
 		
 		public void ReceiveChangedLauncherItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
@@ -946,6 +1097,5 @@ namespace PeMain.UI
 				}
 			}
 		}
-
 	}
 }

@@ -213,7 +213,7 @@ namespace PeUtility
 		
 		void StopHidden()
 		{
-			Debug.WriteLine("StopHidden");
+			//Debug.WriteLine("StopHidden");
 			Debug.Assert(AutoHide);
 			if(this.timerAutoHidden.Enabled) {
 				this.timerAutoHidden.Stop();

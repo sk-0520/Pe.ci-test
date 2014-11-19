@@ -93,6 +93,16 @@ namespace PeMain.UI
 				Skin.DrawToolbarSplitButtonBackground(e, (ToolStripSplitButton)e.Item, IsActive(e.ToolStrip), itemArea);
 			}
 		}
+
+		protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e)
+		{
+			if(Skin.IsDefaultDrawToolbarButtonBackground) {
+				base.OnRenderButtonBackground(e);
+			} else {
+				var itemArea = new Rectangle(Point.Empty, e.Item.Size);
+				Skin.DrawToolbarButtonBackground(e, (ToolStripButton)e.Item, IsActive(e.ToolStrip), itemArea);
+			}
+		}
 		
 	}
 }

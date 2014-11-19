@@ -58,11 +58,13 @@
 		<Word Name="common/label/edit"                  Text="${edit}" />
 		<Word Name="common/command/default-font"        Text="デフォルトの${font}" />
 		<Word Name="common/command/default-font-reset"  Text="${font}をリセットする" />
-		<Word Name="common/check/admin"                 Text="${admin} (オプション以外の設定は無効)" />
+		<Word Name="common/check/admin"                 Text="${admin} (ユーザーの責任下で実行してください)" />
 		<Word Name="common/page/env"                    Text="${env}" />
 		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
-		
+		<Word Name="common/dialog/d-d/shortcut/caption"  Text="ショートカット登録方法" />
+		<Word Name="common/dialog/d-d/shortcut/message"  Text="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />
+
 		<Word Name="window/accept"   Text="@[APPLICATION] 使用許諾" />
 		<Word Name="window/home"     Text="@[APPLICATION] ホーム" />
 		<Word Name="window/update"   Text="アップデート" />
@@ -163,7 +165,7 @@
 		<Word Name="update/label/rc-note"  Text="更新履歴は${version-release}を対象としています。" />
 		<Word Name="update/label/version"  Text="バージョン @[NOW] → @[NEXT] @[TYPE] へ更新しますか？" />
 		
-		<Word Name="toolbar/main/tips"               Text="現在選${version-release}択中グループ: @[GROUP]" />
+		<Word Name="toolbar/main/tips"               Text="現在選択中グループ: @[GROUP]" />
 		<Word Name="toolbar/menu/main/auto-hide"     Text="${auto-hide}(&amp;H)" />
 		<Word Name="toolbar/menu/main/hidden"        Text="${hidden}(&amp;N)" />
 		<Word Name="toolbar/menu/file/execute"       Text="実行(&amp;S)" />
@@ -181,7 +183,7 @@
 		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
 		<Word Name="toolbar/dialog/d-d/directory/caption"  Text="ディレクトリ登録方法" />
 		<Word Name="toolbar/dialog/d-d/directory/message"  Text="D&amp;Dされたパスをディレクトリアイテム(フォルダ)として登録します。&#x0d;&#x0a;&#x0d;&#x0a;ディレクトリ内容を一覧表示するには「${yes}」を、&#x0d;&#x0a;ディレクトリそのものを開く場合は「${no}」を選択してください。&#x0d;&#x0a;これは設定ダイアログで再度変更できます。" />
-		
+		<Word Name="toolbar/loging/unfile"  Text="非ファイル形式のパス選択: ランチャー種別URIの使用を推奨します" />
 		
 		<Word Name="execute/page/basic"         Text="基本指定" />
 		<Word Name="execute/label/option"      Text="${option}" />
@@ -203,7 +205,7 @@
 		<Word Name="note/menu/topmost"      Text="最前面(&amp;T)" />
 		<Word Name="note/menu/remove"       Text="${remove}(&amp;D)" />
 		<Word Name="note/dialog/caption"    Text="${note}削除" />
-		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;よろしければ「はい」を、非表示にするには「いいえ」を選択してください。" />
+		<Word Name="note/dialog/message"    Text="@[NOTE]は非表示ではなく論理削除されます。&#x0d;&#x0a;よろしければ「${yes}」を、非表示にするには「${no}」を選択してください。" />
 		<Word Name="note/save"              Text="@[NOTE]を保存しました" />
 		
 		<Word Name="note/menu/color-fore"    Text="文字色(&amp;T)" />
@@ -289,9 +291,12 @@
 		<Word Name="about/command/backup"    Text="バックアップ" />
 		<Word Name="about/command/update"    Text="アップデート" />
 		<Word Name="about/command/changelog" Text="更新履歴" />
-		<Word Name="about/column/name"      Text="コンポーネント" />
-		<Word Name="about/column/type"      Text="種別" />
-		<Word Name="about/column/uri"       Text="WEBサイト" />
+		<Word Name="about/label/user-env"    Text="報告用情報をクリップボードへコピーする:" />
+		<Word Name="about/link/short-env"    Text="短い情報" />
+		<Word Name="about/long/long-env"     Text="長い情報" />
+		<Word Name="about/column/name"       Text="コンポーネント" />
+		<Word Name="about/column/type"       Text="種別" />
+		<Word Name="about/column/uri"        Text="WEBサイト" />
 		<Word Name="about/update/check/dialog/caption"   Text="アップデートチェック" />
 		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
 		
