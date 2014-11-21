@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
+using PeSkin;
 using PeUtility;
 using PInvoke.Windows;
 

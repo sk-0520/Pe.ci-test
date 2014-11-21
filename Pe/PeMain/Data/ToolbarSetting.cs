@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Xml;
 using System.Xml.Serialization;
-
+using PeSkin;
 using PeUtility;
 
 namespace PeMain.Data

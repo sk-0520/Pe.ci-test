@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUpdater", "PeUpdater\PeUp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{E65232E9-77B5-41E3-A550-2001717AEEB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeSkin", "PeSkin\PeSkin.csproj", "{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -83,6 +85,18 @@ Global
 		{E65232E9-77B5-41E3-A550-2001717AEEB1}.Unittest|x64.Build.0 = Release|x64
 		{E65232E9-77B5-41E3-A550-2001717AEEB1}.Unittest|x86.ActiveCfg = Release|x86
 		{E65232E9-77B5-41E3-A550-2001717AEEB1}.Unittest|x86.Build.0 = Release|x86
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Debug|x64.ActiveCfg = Debug|x64
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Debug|x64.Build.0 = Debug|x64
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Debug|x86.ActiveCfg = Debug|x86
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Debug|x86.Build.0 = Debug|x86
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Release|x64.ActiveCfg = Release|x64
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Release|x64.Build.0 = Release|x64
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Release|x86.ActiveCfg = Release|x86
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Release|x86.Build.0 = Release|x86
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Unittest|x64.ActiveCfg = Release|x64
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Unittest|x64.Build.0 = Release|x64
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Unittest|x86.ActiveCfg = Release|x86
+		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Unittest|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

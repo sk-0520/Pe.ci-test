@@ -24,6 +24,7 @@ using PeMain.IF;
 using PeMain.Logic;
 using PeMain.Logic.DB;
 using PeUtility;
+using PeSkin;
 
 namespace PeMain.UI
 {

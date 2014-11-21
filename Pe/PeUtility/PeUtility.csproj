@@ -145,6 +145,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\PeSkin\PeSkin.csproj">
+      <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
+      <Name>PeSkin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
       <Name>PInvoke</Name>

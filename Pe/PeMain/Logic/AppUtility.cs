@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using PeUtility;
 using PInvoke.Windows;
 using PeMain.Data;
+using PeSkin;
 
 namespace PeMain.Logic
 {
