@@ -101,6 +101,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
@@ -166,80 +167,109 @@
       <DependentUpon>SQL.resx</DependentUpon>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="UI\AboutForm.cs" />
+    <Compile Include="UI\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AboutForm.function.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AboutForm.initialize.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AboutForm.language.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AboutForm.property.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\AcceptForm.cs" />
+    <Compile Include="UI\AcceptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\AcceptForm.Designer.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AcceptForm.function.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AcceptForm.initialize.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AcceptForm.language.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AcceptForm.property.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.cs" />
+    <Compile Include="UI\CustomControl\EnvRemoveControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.event.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.functions.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.initialize.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.language.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.property.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.variable.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.Designer.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.cs" />
+    <Compile Include="UI\CustomControl\EnvUpdateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.functions.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.initialize.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.language.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.property.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.variable.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.cs" />
+    <Compile Include="UI\CustomControl\LauncherItemSelectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.define.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
@@ -248,104 +278,152 @@
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.event.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.functions.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.initialize.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.language.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.property.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.variable.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\ExecuteForm.cs" />
+    <Compile Include="UI\ExecuteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ExecuteForm.function.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.initialize.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.language.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.property.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.variable.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Ex\ExContextMenuStrip.cs" />
-    <Compile Include="UI\Ex\ExHotkeyControl.cs" />
-    <Compile Include="UI\Ex\ExListBox.cs" />
-    <Compile Include="UI\Ex\ExSplitButton.cs" />
-    <Compile Include="UI\Ex\ExTextBox.cs" />
-    <Compile Include="UI\Ex\ExToolStrip.cs" />
-    <Compile Include="UI\Ex\ExToolStripControlHost.cs" />
-    <Compile Include="UI\HomeForm.cs" />
+    <Compile Include="UI\Ex\ExContextMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExHotkeyControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExSplitButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStripControlHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\HomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\HomeForm.Designer.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\HomeForm.function.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\HomeForm.initialize.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\HomeForm.language.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\HomeForm.property.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\HomeForm.variable.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\LogForm.cs" />
+    <Compile Include="UI\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LogForm.function.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\LogForm.language.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\LogForm.property.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\LogForm.variable.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\NoteForm.cs" />
+    <Compile Include="UI\NoteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\NoteForm.define.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.Designer.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\NoteForm.draw.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.initialize.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.language.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.property.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.variable.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\App.cs" />
     <Compile Include="UI\App.function.cs">
@@ -378,111 +456,148 @@
     <Compile Include="UI\App.variable.cs">
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\SettingForm.cs" />
+    <Compile Include="UI\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\SettingForm.define.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\SettingForm.export.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.initialize.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.language.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.Page.command.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.Page.launcher.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.Page.main.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.Page.note.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.Page.toolbar.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.property.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.save.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SettingForm.variable.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Skin\Skin.cs" />
     <Compile Include="UI\Skin\SystemSkin.cs" />
     <Compile Include="UI\Skin\ToolbarRenderer.cs" />
-    <Compile Include="UI\StreamForm.cs" />
+    <Compile Include="UI\StreamForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\StreamForm.Designer.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\StreamForm.function.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\StreamForm.initialize.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\StreamForm.language.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\StreamForm.property.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\StreamForm.variable.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ToolbarForm.cs" />
+    <Compile Include="UI\ToolbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ToolbarForm.define.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.Designer.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ToolbarForm.draw.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.function.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.initialize.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.language.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.property.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.variable.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ToolbarForm.wndProc.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\UpdateForm.cs" />
+    <Compile Include="UI\UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\UpdateForm.function.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UpdateForm.language.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UpdateForm.initialize.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UpdateForm.property.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -565,9 +680,11 @@
     </None>
     <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\LogForm.initialize.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\App.define.cs">
       <DependentUpon>App.cs</DependentUpon>
@@ -580,12 +697,15 @@
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.function.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\NoteForm.wndProc.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <None Include="etc\lang\ja-JP.accept.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -611,26 +731,7 @@
       <Name>PInvoke</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\DB" />
-    <Folder Include="Data\DB\Entity" />
-    <Folder Include="Data\DB\Dto" />
-    <Folder Include="doc\license" />
-    <Folder Include="etc\lang" />
-    <Folder Include="Data" />
-    <Folder Include="etc" />
-    <Folder Include="etc\style" />
-    <Folder Include="etc\script" />
-    <Folder Include="Logic\DB" />
-    <Folder Include="UI" />
-    <Folder Include="UI\Ex" />
-    <Folder Include="Logic" />
-    <Folder Include="UI\CustomControl" />
-    <Folder Include="UI\Skin" />
-    <Folder Include="doc" />
-    <Folder Include="bat" />
-    <Folder Include="IF" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
