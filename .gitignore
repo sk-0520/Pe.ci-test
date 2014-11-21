@@ -11,3 +11,4 @@ bin/
 *.cd
 ProfilingSessions/
 *.suo
+*.user
