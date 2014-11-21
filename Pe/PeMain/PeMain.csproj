@@ -646,5 +646,16 @@
     <PostBuildEvent>#SQLite.xml
 del "$(SolutionDir)..\output\$(Configuration)\$(Platform)\System.Data.SQLite.xml"</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Unittest' ">
+    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
+    <DefineConstants>RELEASE;TRACE;</DefineConstants>
+    <StartAction>Project</StartAction>
+  </PropertyGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets')" />
 </Project>
