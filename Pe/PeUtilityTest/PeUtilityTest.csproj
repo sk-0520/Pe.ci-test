@@ -16,7 +16,7 @@
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <WarningLevel>4</WarningLevel>
-    <OutputPath>bin\(Configuration)\$(Platform)</OutputPath>
+    <OutputPath>bin\$(Configuration)\$(Platform)</OutputPath>
     <DebugType>Full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
@@ -33,6 +33,7 @@
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' " />
   <ItemGroup>
     <Reference Include="Microsoft.CSharp">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
