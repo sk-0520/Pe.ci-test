@@ -53,17 +53,6 @@
     <DefineConstants>RELEASE;TRACE;</DefineConstants>
     <StartAction>Project</StartAction>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Unittest' ">
-    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
-    <DebugSymbols>False</DebugSymbols>
-    <DebugType>None</DebugType>
-    <Optimize>True</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
-    <DefineConstants>RELEASE;TRACE;</DefineConstants>
-    <StartAction>Project</StartAction>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
     <PlatformTarget>x64</PlatformTarget>
     <BaseAddress>4194304</BaseAddress>
