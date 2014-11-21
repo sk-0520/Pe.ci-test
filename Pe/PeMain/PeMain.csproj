@@ -722,6 +722,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Library\Library.csproj">
+      <Project>{e65232e9-77b5-41e3-a550-2001717aeeb1}</Project>
+      <Name>Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PeUtility\PeUtility.csproj">
       <Project>{863C2A90-A386-4F98-9D0B-EFB839168293}</Project>
       <Name>PeUtility</Name>
