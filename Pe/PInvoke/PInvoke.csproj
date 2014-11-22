@@ -83,9 +83,6 @@
     <Compile Include="Windows\Winuser.cs" />
     <Compile Include="Windows\WMI\WMIUtility.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows" />
-    <Folder Include="Windows\WMI" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
