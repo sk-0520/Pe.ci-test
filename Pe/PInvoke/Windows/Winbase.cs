@@ -14,8 +14,7 @@ namespace PInvoke.Windows
 	{
 		FILE_ATTRIBUTE_NORMAL = 0x00000080,
 	}
-	public static partial class API
-	{
-		
-	}
+
+	partial class API
+	{ }
 }

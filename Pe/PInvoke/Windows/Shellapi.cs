@@ -125,7 +125,8 @@ namespace PInvoke.Windows
 		SHIL_LAST       = SHIL_SYSSMALL,
 		SHIL_JUMBO      = 0x04,
 	}
-	public partial class API
+
+	partial class API
 	{
 		[DllImport("shell32.dll", CharSet = CharSet.Auto , EntryPoint = "#62")]
 		public extern static bool SHChangeIconDialog(IntPtr hOwner, StringBuilder szFilename, int Reserved, ref int lpIconIndex);

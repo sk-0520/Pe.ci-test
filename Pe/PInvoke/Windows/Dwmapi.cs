@@ -67,7 +67,7 @@ namespace PInvoke.Windows
 		}
 	}
 	
-	public static partial class API
+	partial class API
 	{
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/dwmapi.dwmiscompositionenabled

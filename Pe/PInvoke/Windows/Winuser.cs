@@ -1540,7 +1540,7 @@ namespace PInvoke.Windows
 	}
 
 	
-	public static partial class API
+	partial class API
 	{
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/user32.sendmessage
@@ -1672,4 +1672,6 @@ namespace PInvoke.Windows
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool IsWindowVisible(IntPtr hWnd);
 	}
+
+
 }

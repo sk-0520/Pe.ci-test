@@ -11,6 +11,8 @@ using System.Drawing;
 
 namespace PInvoke.Windows
 {
+	public static partial class API { }
+
 	/// <summary>
 	/// PInvoke.Windows.API 関連の便利処理。
 	/// </summary>
