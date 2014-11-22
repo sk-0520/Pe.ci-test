@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2014/MM/DD" version="0.33.1" type="rc">
+		<ul type="note">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="features">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="fixes">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul type="developer">
+			<li>#69: ユニットテスト書こうぜ！</li>
+			<li></li>
+			<li></li>
+		</ul>
+	</log>
 	<log date="2014/11/19" version="0.32.0">
 		<ul type="features">
 			<li>#82: ポーズ時のタスクトレイアイコン</li>
