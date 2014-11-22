@@ -14,7 +14,7 @@ namespace PeMain.UI
 {
 	partial class NoteForm
 	{
-		Dictionary<NoteCommand, PeMain.IF.ButtonState> _commandStateMap;
+		Dictionary<NoteCommand, PeMain.IF.SkinButtonState> _commandStateMap;
 		NoteBindItem _bindItem;
 		bool _initialized = true;
 		bool _changed = false;

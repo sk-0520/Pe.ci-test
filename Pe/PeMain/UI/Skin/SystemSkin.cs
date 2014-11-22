@@ -441,7 +441,7 @@ namespace PeMain.UI
 			};
 			const byte alpha = 170;
 			Color startColor, endColor;
-			if(toolbarButtonData.MenuState == PeMain.IF.ButtonState.Pressed) {
+			if(toolbarButtonData.MenuState == PeMain.IF.SkinButtonState.Pressed) {
 				startColor = Color.FromArgb(alpha, Color.White);
 				endColor = Color.FromArgb(alpha, Color.Gray);
 			} else {
@@ -460,7 +460,7 @@ namespace PeMain.UI
 			var drawArea = toolbarButtonData.ButtonArea;
 			var correction = new Padding(1);// 幅・高さの補正px
 			
-			if(toolbarButtonData.ButtonState != PeMain.IF.ButtonState.None) {
+			if(toolbarButtonData.ButtonState != PeMain.IF.SkinButtonState.None) {
 				// ボタン全体の境界線を描画する
 				using(var path = new GraphicsPath()) {
 					// 領域作成
@@ -473,9 +473,9 @@ namespace PeMain.UI
 					path.CloseFigure();
 					byte alpha = 0;
 					switch(toolbarButtonData.ButtonState) {
-							case PeMain.IF.ButtonState.Normal:   alpha = 70;  break;
-						case PeMain.IF.ButtonState.Selected:
-							case PeMain.IF.ButtonState.Pressed:  alpha = 210; break;
+							case PeMain.IF.SkinButtonState.Normal:   alpha = 70;  break;
+						case PeMain.IF.SkinButtonState.Selected:
+							case PeMain.IF.SkinButtonState.Pressed:  alpha = 210; break;
 						default:
 							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
 							break;
@@ -483,7 +483,7 @@ namespace PeMain.UI
 					
 					RectangleF fillArea = drawArea;
 					Color startColor, endColor;
-					if(toolbarButtonData.ButtonState == PeMain.IF.ButtonState.Pressed) {
+					if(toolbarButtonData.ButtonState == PeMain.IF.SkinButtonState.Pressed) {
 						startColor = Color.FromArgb(0, Color.White);
 						endColor = Color.FromArgb(alpha, Color.White);
 					} else {
@@ -509,7 +509,7 @@ namespace PeMain.UI
 							g.DrawLine(pen, menuArea.Left, menuArea.Top + correction.Top, menuArea.Left, menuArea.Bottom - correction.Vertical);
 						}
 						// ボタン内メニューボタンあり
-						if(toolbarButtonData.ButtonState == PeMain.IF.ButtonState.Selected && toolbarButtonData.MenuState == PeMain.IF.ButtonState.Pressed) {
+						if(toolbarButtonData.ButtonState == PeMain.IF.SkinButtonState.Selected && toolbarButtonData.MenuState == PeMain.IF.SkinButtonState.Pressed) {
 							g.SetClip(new Rectangle(menuArea.Left + correction.Left, menuArea.Top + correction.Top, menuArea.Left - correction.Horizontal, menuArea.Bottom - correction.Vertical));
 							using(var brush = new LinearGradientBrush(menuArea, endColor, startColor, LinearGradientMode.Vertical)) {
 								g.FillPath(brush, path);
@@ -519,7 +519,7 @@ namespace PeMain.UI
 					}
 				}
 			}
-			if(toolbarButtonData.HasArrow && toolbarButtonData.MenuState != PeMain.IF.ButtonState.None) {
+			if(toolbarButtonData.HasArrow && toolbarButtonData.MenuState != PeMain.IF.SkinButtonState.None) {
 				// 矢印描画
 				DrawToolbarArrowImage(toolbarButtonData);
 			}
@@ -578,28 +578,28 @@ namespace PeMain.UI
 			}
 		}
 		
-		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, PeMain.IF.ButtonState buttonState)
+		public override void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, PeMain.IF.SkinButtonState buttonState)
 		{
 			if(noteStatus.Locked) {
 				return;
 			}
 			
 			Color color = Color.Transparent;
-			var buttonMap = new Dictionary<NoteCommand, Dictionary<PeMain.IF.ButtonState, string>>() {
-				{ NoteCommand.Compact, new Dictionary<PeMain.IF.ButtonState, string>() {
-						{ PeMain.IF.ButtonState.Normal,   noteStatus.Compact ? "1": "0" },
-						{ PeMain.IF.ButtonState.Selected, noteStatus.Compact ? "1": "0" },
-						{ PeMain.IF.ButtonState.Pressed,  noteStatus.Compact ? "1": "0" },
+			var buttonMap = new Dictionary<NoteCommand, Dictionary<PeMain.IF.SkinButtonState, string>>() {
+				{ NoteCommand.Compact, new Dictionary<PeMain.IF.SkinButtonState, string>() {
+						{ PeMain.IF.SkinButtonState.Normal,   noteStatus.Compact ? "1": "0" },
+						{ PeMain.IF.SkinButtonState.Selected, noteStatus.Compact ? "1": "0" },
+						{ PeMain.IF.SkinButtonState.Pressed,  noteStatus.Compact ? "1": "0" },
 					}},
-				{ NoteCommand.Topmost, new Dictionary<PeMain.IF.ButtonState, string>() {
-						{ PeMain.IF.ButtonState.Normal,   "ë" },
-						{ PeMain.IF.ButtonState.Selected, "ë" },
-						{ PeMain.IF.ButtonState.Pressed,  "ë" },
+				{ NoteCommand.Topmost, new Dictionary<PeMain.IF.SkinButtonState, string>() {
+						{ PeMain.IF.SkinButtonState.Normal,   "ë" },
+						{ PeMain.IF.SkinButtonState.Selected, "ë" },
+						{ PeMain.IF.SkinButtonState.Pressed,  "ë" },
 					}},
-				{ NoteCommand.Close, new Dictionary<PeMain.IF.ButtonState, string>() {
-						{ PeMain.IF.ButtonState.Normal,   "r" },
-						{ PeMain.IF.ButtonState.Selected, "r" },
-						{ PeMain.IF.ButtonState.Pressed,  "r" },
+				{ NoteCommand.Close, new Dictionary<PeMain.IF.SkinButtonState, string>() {
+						{ PeMain.IF.SkinButtonState.Normal,   "r" },
+						{ PeMain.IF.SkinButtonState.Selected, "r" },
+						{ PeMain.IF.SkinButtonState.Pressed,  "r" },
 					}},
 			};
 			var button = buttonMap[noteCommand][buttonState];

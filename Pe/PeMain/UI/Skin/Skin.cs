@@ -32,8 +32,8 @@ namespace PeMain.UI
 				Active = false;
 				HasArrow = false;
 				HasMenuSplit = false;
-				ButtonState = PeMain.IF.ButtonState.None;
-				MenuState = PeMain.IF.ButtonState.None;
+				ButtonState = PeMain.IF.SkinButtonState.None;
+				MenuState = PeMain.IF.SkinButtonState.None;
 			}
 			
 			public Graphics Graphics { get; set; }
@@ -41,8 +41,8 @@ namespace PeMain.UI
 			public bool HasArrow { get; set; }
 			public ArrowDirection ArrowDirection { get; set; }
 			public bool HasMenuSplit { get; set; }
-			public PeMain.IF.ButtonState ButtonState { get; set; }
-			public PeMain.IF.ButtonState MenuState { get; set; }
+			public PeMain.IF.SkinButtonState ButtonState { get; set; }
+			public PeMain.IF.SkinButtonState MenuState { get; set; }
 			public Rectangle ButtonArea { get; set; }
 			public Rectangle MenuArea { get; set; }
 		}
@@ -201,13 +201,13 @@ namespace PeMain.UI
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Pressed;
 			} else if(e.Item.Selected) {
 				// 選ばれている
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Normal;
 			}
 			
 			DrawToolbarButton(toolbarButtonData);
@@ -224,13 +224,13 @@ namespace PeMain.UI
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Pressed;
 			} else if(item.Selected) {
 				// 選ばれている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Normal;
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
@@ -248,20 +248,20 @@ namespace PeMain.UI
 			
 			if(item.DropDownButtonPressed) {
 				// ドロップダウンが押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Selected;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Pressed;
 			} else if(item.ButtonPressed) {
 				// ボタンが押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Pressed;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Pressed;
 			} else if(item.Selected) {
 				// ボタンが選ばれている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Selected;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Normal;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Normal;
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
@@ -279,16 +279,16 @@ namespace PeMain.UI
 			
 			if(item.Pressed) {
 				// ボタンが押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Pressed;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Pressed;
 			} else if(item.Selected) {
 				// ボタンが選ばれている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Selected;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.ButtonState = PeMain.IF.SkinButtonState.Normal;
+				toolbarButtonData.MenuState = PeMain.IF.SkinButtonState.Normal;
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
@@ -300,7 +300,7 @@ namespace PeMain.UI
 		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
 		public abstract void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption);
-		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, PeMain.IF.ButtonState buttonState);
+		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, PeMain.IF.SkinButtonState buttonState);
 		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
 

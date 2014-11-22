@@ -157,13 +157,13 @@ namespace PeMain.UI
 									(isIn, nowState) => {
 										if(isIn) {
 											throwHittest = false;
-											if(nowState == PeMain.IF.ButtonState.Pressed) {
-												return PeMain.IF.ButtonState.Pressed;
+											if(nowState == PeMain.IF.SkinButtonState.Pressed) {
+												return PeMain.IF.SkinButtonState.Pressed;
 											} else {
-												return PeMain.IF.ButtonState.Selected;
+												return PeMain.IF.SkinButtonState.Selected;
 											}
 										} else {
-											return PeMain.IF.ButtonState.Normal;
+											return PeMain.IF.SkinButtonState.Normal;
 										}
 									},
 									null,

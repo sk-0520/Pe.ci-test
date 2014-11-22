@@ -106,9 +106,9 @@ namespace PeMain.UI
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
 					if (left && isIn) {
-						return PeMain.IF.ButtonState.Pressed;
+						return PeMain.IF.SkinButtonState.Pressed;
 					} else {
-						return PeMain.IF.ButtonState.Normal;
+						return PeMain.IF.SkinButtonState.Normal;
 					}
 				},
 				null,
@@ -128,13 +128,13 @@ namespace PeMain.UI
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
 					if (left && isIn) {
-						return PeMain.IF.ButtonState.Selected;
+						return PeMain.IF.SkinButtonState.Selected;
 					} else {
-						return PeMain.IF.ButtonState.Normal;
+						return PeMain.IF.SkinButtonState.Normal;
 					}
 				},
 				command => {
-					if (this._commandStateMap[command] == PeMain.IF.ButtonState.Pressed) {
+					if (this._commandStateMap[command] == PeMain.IF.SkinButtonState.Pressed) {
 						var isRemove = AppUtility.IsExtension();
 						if (isRemove) {
 							var map = new Dictionary<string, string>() {
