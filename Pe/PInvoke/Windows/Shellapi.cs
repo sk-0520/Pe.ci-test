@@ -128,7 +128,8 @@ namespace PInvoke.Windows
 
 	partial class NativeMethods
 	{
-		[DllImport("shell32.dll", CharSet = CharSet.Auto , EntryPoint = "#62")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("shell32.dll", CharSet = CharSet.Auto, EntryPoint = "#62")]
 		public extern static bool SHChangeIconDialog(IntPtr hOwner, StringBuilder szFilename, int Reserved, ref int lpIconIndex);
 		
 		/// <summary>
@@ -137,6 +138,7 @@ namespace PInvoke.Windows
 		/// <param name="dwMessage"></param>
 		/// <param name="pData"></param>
 		/// <returns></returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("shell32.dll")]
 		public static extern IntPtr SHAppBarMessage(ABM dwMessage, ref APPBARDATA pData);
 		
@@ -149,7 +151,8 @@ namespace PInvoke.Windows
 		/// <param name="cbFileInfo"></param>
 		/// <param name="uFlags"></param>
 		/// <returns></returns>
-		[DllImport("shell32.dll", CharSet=CharSet.Auto)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, SHGFI uFlags);
 		
 		/// <summary>
@@ -159,10 +162,12 @@ namespace PInvoke.Windows
 		/// <param name="riid"></param>
 		/// <param name="ppv"></param>
 		/// <returns></returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("shell32.dll", EntryPoint = "#727")]
 		public extern static ComResult SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
-		
-		[DllImport("shell32.dll", CharSet=CharSet.Auto)]
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
 		public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIc);
 	}
 }

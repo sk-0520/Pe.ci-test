@@ -14,7 +14,8 @@ namespace PInvoke.Windows
 
 	partial class NativeMethods
 	{
-		[DllImport("shlwapi.dll", EntryPoint = "PathIsUNCW",  SetLastError = true, CharSet = CharSet.Unicode)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("shlwapi.dll", EntryPoint = "PathIsUNCW", SetLastError = true, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool PathIsUNC([MarshalAs(UnmanagedType.LPTStr)]string pszPath);
 	}

@@ -74,12 +74,15 @@ namespace PInvoke.Windows
 		/// </summary>
 		/// <param name="enabled"></param>
 		/// <returns></returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll")]
 		public static extern int DwmIsCompositionEnabled(out bool enabled);
-		
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll", PreserveSig = true)]
 		public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
-		
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll")]
 		public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
 		
@@ -88,6 +91,7 @@ namespace PInvoke.Windows
 		/// </summary>
 		/// <param name="ColorizationColor"></param>
 		/// <param name="ColorizationOpaqueBlend"></param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll", PreserveSig = false)]
 		public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out bool ColorizationOpaqueBlend);
 	}

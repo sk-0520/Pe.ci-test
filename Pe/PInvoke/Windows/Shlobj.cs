@@ -54,10 +54,12 @@ namespace PInvoke.Windows
 
 	partial class NativeMethods
 	{
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("shell32.dll")]
 		public static extern void SHChangeNotify(SHCNE wEventId, SHCNF uFlags, IntPtr dwItem1, IntPtr dwItem2);
-		
-		[DllImport("shell32.dll", SetLastError=true)]
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("shell32.dll", SetLastError = true)]
 		public static extern bool SHObjectProperties(IntPtr hwnd, SHOP shopObjectType, [MarshalAs(UnmanagedType.LPWStr)] string pszObjectName, [MarshalAs(UnmanagedType.LPWStr)] string pszPropertyPage);
 	}
 }
