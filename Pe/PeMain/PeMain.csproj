@@ -665,7 +665,9 @@
     <None Include="doc\license\Pe.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="doc\license\SplitButton.txt" />
+    <None Include="doc\license\SplitButton.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="doc\readme-ja.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
