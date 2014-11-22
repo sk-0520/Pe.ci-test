@@ -1510,7 +1510,9 @@ namespace PInvoke.Windows
 	[StructLayout(LayoutKind.Sequential)]
 	public struct WINDOWPOS
 	{
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hwnd;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hwndInsertAfter;
 		public int x;
 		public int y;

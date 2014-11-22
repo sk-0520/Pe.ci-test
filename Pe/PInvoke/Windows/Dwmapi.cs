@@ -34,6 +34,7 @@ namespace PInvoke.Windows
 	{
 		public DWM_BB dwFlags;
 		public bool fEnable;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security","CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hRgnBlur;
 		public int fTransitionOnMaximized;
 

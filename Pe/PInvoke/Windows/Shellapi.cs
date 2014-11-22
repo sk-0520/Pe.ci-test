@@ -62,6 +62,7 @@ namespace PInvoke.Windows
 		//        LPARAM lParam;
 		//      } APPBARDATA, *PAPPBARDATA;
 		public int cbSize;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hWnd;
 		public uint uCallbackMessage;
 		public ABE uEdge;
@@ -81,6 +82,7 @@ namespace PInvoke.Windows
 	
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 	public struct SHFILEINFO {
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hIcon;
 		public int iIcon;
 		public uint dwAttributes;
