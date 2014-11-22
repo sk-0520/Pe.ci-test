@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeSkin", "PeSkin\PeSkin.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUtilityTest", "PeUtilityTest\PeUtilityTest.csproj", "{C8E24195-1156-48D5-BE17-48D55DF30A98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMainTest", "PeMainTest\PeMainTest.csproj", "{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -100,13 +102,29 @@ Global
 		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Unittest|x86.ActiveCfg = Release|x86
 		{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}.Unittest|x86.Build.0 = Release|x86
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Debug|x64.ActiveCfg = Debug|x64
+		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Debug|x64.Build.0 = Debug|x64
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Debug|x86.ActiveCfg = Debug|x86
+		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Debug|x86.Build.0 = Debug|x86
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Release|x64.ActiveCfg = Release|x64
+		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Release|x64.Build.0 = Release|x64
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Release|x86.ActiveCfg = Release|x86
+		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Release|x86.Build.0 = Release|x86
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Unittest|x64.ActiveCfg = Release|x64
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Unittest|x64.Build.0 = Release|x64
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Unittest|x86.ActiveCfg = Release|x86
 		{C8E24195-1156-48D5-BE17-48D55DF30A98}.Unittest|x86.Build.0 = Release|x86
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Debug|x64.ActiveCfg = Debug|x64
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Debug|x64.Build.0 = Debug|x64
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Debug|x86.ActiveCfg = Debug|x86
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Debug|x86.Build.0 = Debug|x86
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Release|x64.ActiveCfg = Release|x64
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Release|x64.Build.0 = Release|x64
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Release|x86.ActiveCfg = Release|x86
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Release|x86.Build.0 = Release|x86
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Unittest|x64.ActiveCfg = Release|x64
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Unittest|x64.Build.0 = Release|x64
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Unittest|x86.ActiveCfg = Release|x86
+		{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}.Unittest|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
