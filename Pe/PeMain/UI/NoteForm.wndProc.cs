@@ -10,8 +10,8 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
+using PeSkin;
 using PInvoke.Windows;
 
 namespace PeMain.UI
@@ -157,13 +157,13 @@ namespace PeMain.UI
 									(isIn, nowState) => {
 										if(isIn) {
 											throwHittest = false;
-											if(nowState == PeMain.IF.SkinButtonState.Pressed) {
-												return PeMain.IF.SkinButtonState.Pressed;
+											if(nowState == SkinButtonState.Pressed) {
+												return SkinButtonState.Pressed;
 											} else {
-												return PeMain.IF.SkinButtonState.Selected;
+												return SkinButtonState.Selected;
 											}
 										} else {
-											return PeMain.IF.SkinButtonState.Normal;
+											return SkinButtonState.Normal;
 										}
 									},
 									null,

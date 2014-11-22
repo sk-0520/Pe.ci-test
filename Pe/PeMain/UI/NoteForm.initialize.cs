@@ -12,6 +12,7 @@ using System.Linq;
 
 using PeMain.Data;
 using PeMain.Logic;
+using PeSkin;
 
 namespace PeMain.UI
 {
@@ -60,10 +61,10 @@ namespace PeMain.UI
 		
 		void Initialize()
 		{
-			this._commandStateMap = new Dictionary<NoteCommand, PeMain.IF.SkinButtonState>() {
-				{ NoteCommand.Close, PeMain.IF.SkinButtonState.Normal },
-				{ NoteCommand.Compact, PeMain.IF.SkinButtonState.Normal },
-				{ NoteCommand.Topmost, PeMain.IF.SkinButtonState.Normal },
+			this._commandStateMap = new Dictionary<SkinNoteCommand, SkinButtonState>() {
+				{ SkinNoteCommand.Close, SkinButtonState.Normal },
+				{ SkinNoteCommand.Compact, SkinButtonState.Normal },
+				{ SkinNoteCommand.Topmost, SkinButtonState.Normal },
 			};
 			
 			InitializeUI();

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 using PeMain.Data;
 using PeMain.IF;
+using PeSkin;
 
 namespace PeMain.UI
 {
@@ -61,7 +62,7 @@ namespace PeMain.UI
 			if(Skin.IsDefaultDrawToolbarButtonImage) {
 				base.OnRenderItemImage(e);
 			} else {
-				Skin.DrawToolbarButtonImage(e, IsActive(e.ToolStrip), ToolbarItem);
+				Skin.DrawToolbarButtonImage(e, IsActive(e.ToolStrip), ToolbarItem.IconScale);
 			}
 		}
 		
@@ -70,7 +71,7 @@ namespace PeMain.UI
 			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarButtonText) {
 				base.OnRenderItemText(e);
 			} else {
-				Skin.DrawToolbarButtonText(e, IsActive(e.ToolStrip), ToolbarItem);
+				Skin.DrawToolbarButtonText(e, IsActive(e.ToolStrip), ToolbarItem.IconScale, ToolbarItem.ShowText, ToolbarItem.TextWidth);
 			}
 		}
 		

@@ -25,28 +25,7 @@ namespace PeMain.Data
 		Rtf,
 	}
 	
-	/// <summary>
-	/// ノートアイテムに対して目に見えてなんかする。
-	/// </summary>
-	public enum NoteCommand
-	{
-		/// <summary>
-		/// 閉じる。
-		/// </summary>
-		Close,
-		/// <summary>
-		/// 最小化。
-		/// </summary>
-		Compact,
-		/// <summary>
-		/// 最前面。
-		/// </summary>
-		Topmost,
-		/// <summary>
-		/// 固定。
-		/// </summary>
-		Lock,
-	}
+
 	
 	/// <summary>
 	/// NoteTypeに対してなんかする用ユーティリティだが現状死んでますしおすし。

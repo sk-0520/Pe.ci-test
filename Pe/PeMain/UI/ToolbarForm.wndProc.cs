@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using PeMain.Data;
+using PeSkin;
 using PInvoke.Windows;
 
 namespace PeMain.UI
