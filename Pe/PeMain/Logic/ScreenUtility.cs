@@ -97,7 +97,7 @@ namespace PeMain.Logic
 			
 			var device = new DISPLAY_DEVICE();
 			device.cb = Marshal.SizeOf(device);
-			API.EnumDisplayDevices(screen.DeviceName, 0, ref device, 1);
+			NativeMethods.EnumDisplayDevices(screen.DeviceName, 0, ref device, 1);
 			
 			//return screen.DeviceName;
 			return device.DeviceString;

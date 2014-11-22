@@ -15,7 +15,7 @@ namespace PInvoke.Windows
 	/// <summary>
 	/// Description of MyClass.
 	/// </summary>
-	partial class API
+	partial class NativeMethods
 	{
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/user32.registerhotkey

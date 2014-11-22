@@ -11,7 +11,8 @@ using System.Drawing;
 
 namespace PInvoke.Windows
 {
-	public static partial class API { }
+	public static partial class NativeMethods { }
+	//internal static partial class NativeMethods { }
 
 	/// <summary>
 	/// PInvoke.Windows.API 関連の便利処理。

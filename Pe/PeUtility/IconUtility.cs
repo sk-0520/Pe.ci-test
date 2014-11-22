@@ -48,14 +48,14 @@ namespace PeUtility
             if(hasIcon) {
                 var iconHandle = new IntPtr[1];
                 if(iconScale == IconScale.Small) {
-                    API.ExtractIconEx(iconPath, iconIndex, null, iconHandle, 1);
+                    NativeMethods.ExtractIconEx(iconPath, iconIndex, null, iconHandle, 1);
                 } else {
                     Debug.Assert(iconScale == IconScale.Normal);
-                    API.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
+                    NativeMethods.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
                 }
                 if(iconHandle[0] != IntPtr.Zero) {
                     result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
-                    API.DestroyIcon(iconHandle[0]);
+                    NativeMethods.DestroyIcon(iconHandle[0]);
                 }
             }
             if(result == null) {
@@ -67,10 +67,10 @@ namespace PeUtility
                     Debug.Assert(iconScale == IconScale.Normal);
                     flag |= SHGFI.SHGFI_LARGEICON;
                 }
-                var fileInfoResult = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
+                var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
                 if(fileInfoResult != IntPtr.Zero) {
                     result = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
-                    API.DestroyIcon(fileInfo.hIcon);
+                    NativeMethods.DestroyIcon(fileInfo.hIcon);
                 }
             }
             return result;
@@ -88,11 +88,11 @@ namespace PeUtility
             };
 
             var infoFlags = SHGFI.SHGFI_SYSICONINDEX;//| SHGFI.SHGFI_USEFILEATTRIBUTES;
-            //var hImgSmall = API.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
-            var hImgSmall = API.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
+            //var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
+            var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 
             IImageList imageList = null;
-            var getImageListResult = API.SHGetImageList((int)shellImageList, ref API.IID_IImageList, out imageList);
+            var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
 
             if(getImageListResult == ComResult.S_OK) {
                 IntPtr hIcon = IntPtr.Zero;
@@ -107,7 +107,7 @@ namespace PeUtility
                 }
 
                 result = (Icon)System.Drawing.Icon.FromHandle(hIcon).Clone();
-                API.DestroyIcon(hIcon);
+                NativeMethods.DestroyIcon(hIcon);
             }
 
             return result;

@@ -12,7 +12,7 @@ namespace PInvoke.Windows
 	using System;
 	using System.Runtime.InteropServices;
 
-	partial class API
+	partial class NativeMethods
 	{
 		[DllImport("shlwapi.dll", EntryPoint = "PathIsUNCW",  SetLastError = true, CharSet = CharSet.Unicode)]
 		[return: MarshalAs(UnmanagedType.Bool)]

@@ -52,7 +52,7 @@ namespace PInvoke.Windows
 		SHOP_VOLUMEGUID = 0x04,
 	}
 
-	partial class API
+	partial class NativeMethods
 	{
 		[DllImport("shell32.dll")]
 		public static extern void SHChangeNotify(SHCNE wEventId, SHCNF uFlags, IntPtr dwItem1, IntPtr dwItem2);

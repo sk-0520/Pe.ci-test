@@ -25,12 +25,12 @@ namespace PeMain.UI
 		{
 			bool RegisterHotKey(HotKeyId hotKeyId, MOD modKey, Keys key)
 			{
-				return API.RegisterHotKey(Handle, (int)hotKeyId, modKey, (uint)key);
+				return NativeMethods.RegisterHotKey(Handle, (int)hotKeyId, modKey, (uint)key);
 			}
 			
 			bool UnRegisterHotKey(HotKeyId hotKeyId)
 			{
-				return API.UnregisterHotKey(Handle, (int)hotKeyId);
+				return NativeMethods.UnregisterHotKey(Handle, (int)hotKeyId);
 			}
 			
 			public void SetCommonData(CommonData commonData)

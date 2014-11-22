@@ -125,7 +125,7 @@ namespace PeMain.UI
 		protected static bool IsEnabledVisualStyle()
 		{
 			bool isAero;
-			API.DwmIsCompositionEnabled(out isAero);
+			NativeMethods.DwmIsCompositionEnabled(out isAero);
 			return isAero;
 		}
 		

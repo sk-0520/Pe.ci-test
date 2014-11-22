@@ -221,7 +221,7 @@ namespace PInvoke.Windows
 	}
 
 	
-	partial class API
+	partial class NativeMethods
 	{
 		public static Guid IID_IImageList = new Guid("{46EB5926-582E-4017-9FDF-E8998DAA0950}");
 		

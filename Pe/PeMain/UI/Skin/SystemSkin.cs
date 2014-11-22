@@ -66,12 +66,12 @@ namespace PeMain.UI
 			blurHehind.fEnable = true;
 			blurHehind.hRgnBlur = IntPtr.Zero;
 			blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
-			API.DwmEnableBlurBehindWindow(target.Handle, ref blurHehind);
+			NativeMethods.DwmEnableBlurBehindWindow(target.Handle, ref blurHehind);
 			
 			// 設定色を取得
 			uint rawColor;
 			bool blend;
-			API.DwmGetColorizationColor(out rawColor, out blend);
+			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
 			VisualColor = Color.FromArgb(Convert.ToInt32(rawColor));
 		}
 		
@@ -92,7 +92,7 @@ namespace PeMain.UI
 				margin.rightWidth = 0;
 				margin.topHeight = 0;
 				margin.bottomHeight = 0;
-				API.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
+				NativeMethods.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
 			}
 		}
 		

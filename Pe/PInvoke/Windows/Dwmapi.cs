@@ -67,10 +67,10 @@ namespace PInvoke.Windows
 		}
 	}
 	
-	partial class API
+	partial class NativeMethods
 	{
 		/// <summary>
-		/// http://www.pinvoke.net/default.aspx/dwmapi.dwmiscompositionenabled
+		/// http://www.pinvoke.net/default.aspx/dwmNativeMethods.dwmiscompositionenabled
 		/// </summary>
 		/// <param name="enabled"></param>
 		/// <returns></returns>
@@ -84,7 +84,7 @@ namespace PInvoke.Windows
 		public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
 		
 		/// <summary>
-		/// http://www.pinvoke.net/default.aspx/dwmapi.dwmgetcolorizationcolor
+		/// http://www.pinvoke.net/default.aspx/dwmNativeMethods.dwmgetcolorizationcolor
 		/// </summary>
 		/// <param name="ColorizationColor"></param>
 		/// <param name="ColorizationOpaqueBlend"></param>

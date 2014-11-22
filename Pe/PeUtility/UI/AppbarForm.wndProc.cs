@@ -18,10 +18,10 @@ namespace PeUtility
 			if(IsDocking) {
 				if(m.Msg == (int)WM.WM_ACTIVATE) {
 					var appBar = new APPBARDATA(Handle);
-					API.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
+					NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
 				} else if(m.Msg == (int)WM.WM_WINDOWPOSCHANGED) {
 				var appBar = new APPBARDATA(Handle);
-					API.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
+					NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
 				}
 				
 				if(this.callbackMessage != 0 && m.Msg == this.callbackMessage) {

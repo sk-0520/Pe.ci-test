@@ -15,6 +15,6 @@ namespace PInvoke.Windows
 		FILE_ATTRIBUTE_NORMAL = 0x00000080,
 	}
 
-	partial class API
+	partial class NativeMethods
 	{ }
 }
