@@ -1521,7 +1521,7 @@ namespace PInvoke.Windows
 		public SWP flags;
 	}
 	
-	public enum IDC
+	public enum IDC: int
 	{
 		IDC_ARROW       = 32512,
 		IDC_IBEAM       = 32513,
@@ -1556,8 +1556,10 @@ namespace PInvoke.Windows
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		public static extern IntPtr PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 		
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/user32.registerwindowmessage
@@ -1664,12 +1666,12 @@ namespace PInvoke.Windows
 		public static extern bool SetSystemCursor(IntPtr hcur, uint id);
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-		[DllImport("user32.dll")]
-		public static extern IntPtr LoadCursor(IntPtr hInstance, IDC lpCursorName);
-
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr LoadCursor(IntPtr hInstance, string lpCursorName);
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("user32.dll")]
+		public static extern IntPtr LoadCursor(IntPtr hInstance, [In, MarshalAs(UnmanagedType.SysInt)]IDC lpCursorName);
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32.dll")]
