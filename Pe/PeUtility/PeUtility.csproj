@@ -87,7 +87,7 @@
     <Compile Include="Functions.cs" />
     <Compile Include="IconPath.cs" />
     <Compile Include="IconUtility.cs" />
-    <Compile Include="Information.cs" />
+    <Compile Include="InformationCollection.cs" />
     <Compile Include="InformationGroup.cs" />
     <Compile Include="OpenIconDialog.cs">
       <SubType>Component</SubType>
