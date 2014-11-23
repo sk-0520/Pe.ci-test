@@ -282,7 +282,8 @@ namespace PeMain.UI
 		
 		void OpenProperty(string path)
 		{
-			Executer.OpenProperty(path, Handle);
+			var expandPath = Environment.ExpandEnvironmentVariables(path);
+			Executer.OpenProperty(expandPath, Handle);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)

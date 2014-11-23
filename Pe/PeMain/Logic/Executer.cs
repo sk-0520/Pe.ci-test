@@ -25,6 +25,13 @@ namespace PeMain.Logic
 	/// </summary>
 	public static class Executer
 	{
+		/// <summary>
+		/// ファイルアイテムの実行。
+		/// </summary>
+		/// <param name="launcherItem">ファイルアイテム</param>
+		/// <param name="commonData">共通データ</param>
+		/// <param name="parentForm">親ウィンドウ</param>
+		/// <returns></returns>
 		private static Process RunFileItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
@@ -93,6 +100,12 @@ namespace PeMain.Logic
 			return process;
 		}
 		
+		/// <summary>
+		/// ディレクトリアイテム実行。
+		/// </summary>
+		/// <param name="launcherItem">ディレクトリアイテム</param>
+		/// <param name="commonData"></param>
+		/// <param name="parentForm"></param>
 		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
@@ -101,6 +114,12 @@ namespace PeMain.Logic
 			OpenDirectory(expandPath, commonData, null);
 		}
 		
+		/// <summary>
+		/// URIアイテム実行。
+		/// </summary>
+		/// <param name="launcherItem">URIアイテム</param>
+		/// <param name="commonData">共通データ</param>
+		/// <param name="parentForm">親ウィンドウ</param>
 		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI);
@@ -108,6 +127,12 @@ namespace PeMain.Logic
 			RunCommand(launcherItem.Command, commonData);
 		}
 		
+		/// <summary>
+		/// ランチャーアイテム実行。
+		/// </summary>
+		/// <param name="launcherItem">ランチャーアイテム</param>
+		/// <param name="commonData">共通データ</param>
+		/// <param name="parentForm">親ウィンドウ</param>
 		public static void RunItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
 		{
 			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
@@ -130,6 +155,12 @@ namespace PeMain.Logic
 			}
 		}
 		
+		/// <summary>
+		/// コマンド文字列の実行。
+		/// </summary>
+		/// <param name="expandPath">環境変数展開済みコマンド文字列。</param>
+		/// <param name="commonData"></param>
+		/// <returns></returns>
 		public static Process RunCommand(string expandPath, CommonData commonData)
 		{
 			string exCommand = expandPath;
@@ -137,16 +168,33 @@ namespace PeMain.Logic
 			return Process.Start(exCommand);
 		}
 		
+		/// <summary>
+		/// ファイルパスを規定プログラムで開く。
+		/// </summary>
+		/// <param name="expandPath">展開済みファイルパス</param>
+		/// <param name="commonData"></param>
+		/// <returns></returns>
 		public static Process OpenFile(string expandPath, CommonData commonData)
 		{
 			return Process.Start(expandPath);
 		}
 		
+		/// <summary>
+		/// ディレクトリを開く。
+		/// </summary>
+		/// <param name="expandPath">展開済みディレクトリパス</param>
+		/// <param name="commonData"></param>
+		/// <param name="openItem"></param>
 		public static void OpenDirectory(string expandPath, CommonData commonData, LauncherItem openItem)
 		{
 			Process.Start(expandPath);
 		}
-		
+
+		/// <summary>
+		/// プロパティを表示。
+		/// </summary>
+		/// <param name="expandPath">展開済みパス</param>
+		/// <param name="hWnd"></param>
 		public static void OpenProperty(string expandPath, IntPtr hWnd)
 		{
 			NativeMethods.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, expandPath, string.Empty);
