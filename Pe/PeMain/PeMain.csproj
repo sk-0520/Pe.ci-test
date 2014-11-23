@@ -39,7 +39,8 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
-    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
+    <StartArguments>
+    </StartArguments>
     <DefineConstants>DEBUG;TRACE;DISABLED_UPDATE_CHECK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -49,7 +50,8 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
+    <StartArguments>
+    </StartArguments>
     <DefineConstants>RELEASE;TRACE;</DefineConstants>
     <StartAction>Project</StartAction>
   </PropertyGroup>
@@ -777,8 +779,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>#SQLite.xml
-del "$(SolutionDir)..\output\$(Configuration)\$(Platform)\System.Data.SQLite.xml"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets')" />
 </Project>
