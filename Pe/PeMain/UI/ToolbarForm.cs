@@ -164,7 +164,8 @@ namespace PeMain.UI
 			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
 			 */
 			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
-			Debug.WriteLine("ToolItem_MouseHover");
+			this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
+			Debug.WriteLine("ToolItem_MouseHover" + DateTime.Now);
 		}
 
 		/*
