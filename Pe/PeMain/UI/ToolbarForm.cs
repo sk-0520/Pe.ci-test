@@ -165,7 +165,7 @@ namespace PeMain.UI
 			 */
 			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
 			//this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
-			this.tipsLauncher.RemoveAll();
+			//this.tipsLauncher.RemoveAll();
 			//this.tipsLauncher.SetToolTip(this, "#");
 			this.tipsLauncher.ShowItem(UseToolbarItem, toolItem);
 		}
@@ -173,7 +173,7 @@ namespace PeMain.UI
 		void toolItem_MouseLeave(object sender, EventArgs e)
 		{
 			this.tipsLauncher.HideItem();
-			this.tipsLauncher.RemoveAll();
+			//this.tipsLauncher.RemoveAll();
 		}
 		
 

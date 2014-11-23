@@ -109,6 +109,7 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ChangeDevice.cs" />
@@ -302,6 +303,12 @@
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UI\Custom\CustomToolTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Custom\CustomToolTipForm.Designer.cs">
+      <DependentUpon>CustomToolTipForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,9 +354,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExToolStripControlHost.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Ex\ExToolTip.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\HomeForm.cs">
