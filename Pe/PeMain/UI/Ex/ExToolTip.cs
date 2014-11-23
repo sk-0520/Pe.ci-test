@@ -17,14 +17,4 @@ namespace PeMain.UI
 		public ExToolTip(IContainer cont): base(cont)
 		{ }
 	}
-
-	public class ToolbarToolTip: ExToolTip
-	{
-		public ToolbarToolTip(): base()
-		{ }
-
-		public ToolbarToolTip(IContainer cont)
-			: base(cont)
-		{ }
-	}
 }

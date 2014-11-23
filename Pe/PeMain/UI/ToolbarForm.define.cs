@@ -8,8 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
-
 using PeMain.Data;
 
 namespace PeMain.UI
@@ -56,7 +57,22 @@ namespace PeMain.UI
 			public IEnumerable<string> Files { get; set; }
 			public ToolStripItem SrcToolStripItem { get; set; }
 		}
-		
+
+		public class ToolbarToolTip: ExToolTip
+		{
+			public ToolbarToolTip()
+				: base()
+			{ }
+
+			public ToolbarToolTip(IContainer cont)
+				: base(cont)
+			{ }
+
+			public void ShowItem(ToolbarItem toolbarItem, ToolStripItem toolStripItem)
+			{
+				Debug.WriteLine(string.Format("{0}, {1} - {2}", DateTime.Now, toolbarItem, toolStripItem));
+			}
+		}
 	}
 }
 
