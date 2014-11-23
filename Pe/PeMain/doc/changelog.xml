@@ -45,6 +45,7 @@
 		<ul type="developer">
 			<li rev="288f2be6be13360028f79515eb571ed5e6e33b36">#69: ユニットテスト書こうぜ！</li>
 			<li rev="a70ce895c81d7261a93e3345ea0299a3121ce737">#89: ソース整理</li>
+			<li rev="ef51dcde150cff0a4c3e7b781c43f31312f999a9">#94: 変更履歴にコミットのリビジョンを含める</li>
 			<li rev=""></li>
 		</ul>
 	</log>
