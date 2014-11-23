@@ -228,12 +228,12 @@ namespace PeMain.Data
 		{
 			return CheckNameEqual(Name, name);
 		}
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
-			base.Dispose();
-			
 			FontSetting.Dispose();
+
+			base.Dispose(disposing);
 		}
 	}
 	

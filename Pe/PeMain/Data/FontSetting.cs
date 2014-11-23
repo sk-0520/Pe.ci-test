@@ -84,11 +84,13 @@ namespace PeMain.Data
 		{
 			get { return string.IsNullOrWhiteSpace(this.Family); }
 		}
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
 			this._font.ToDispose();
 			this._font = null;
+
+			base.Dispose(disposing);
 		}
 		
 		public virtual void Import(FontSetting fs)

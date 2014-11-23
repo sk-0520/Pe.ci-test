@@ -221,7 +221,7 @@ namespace PeMain.UI
 		void ResetNote()
 		{
 			foreach(var note in this._noteWindowList.ToArray()) {
-				note.Close();
+				//note.Close();
 				note.Dispose();
 			}
 			this._noteWindowList.Clear();

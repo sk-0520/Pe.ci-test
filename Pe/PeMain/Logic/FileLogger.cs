@@ -27,13 +27,19 @@ namespace PeMain.Logic
 			this._stream = new StreamWriter(new FileStream(path, FileMode.CreateNew));
 			Puts(LogType.None, "FileLogger", "Start");
 		}
-		
-		public void Dispose()
+
+		protected virtual void Dispose(bool disposing)
 		{
-			Puts(LogType.None, "FileLogger", "End");
+			Puts(LogType.None, "FileLogger", "Dispose");
+
 			if(this._stream != null) {
 				this._stream.Dispose();
 			}
+		}
+		
+		public void Dispose()
+		{
+			Dispose(true);
 		}
 		
 		public void Puts(LogType logType, string title, object detail, int frame = 2)

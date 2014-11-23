@@ -130,11 +130,12 @@ namespace PeMain.Data
 				}
 			}
 		}
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
 			Command.ToDispose();
-		}
 
+			base.Dispose(disposing);
+		}
 	}
 }

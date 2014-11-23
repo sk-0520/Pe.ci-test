@@ -59,7 +59,7 @@ namespace PeMain.Data
 	/// 
 	/// 主要データはDBに格納するためシリアライズ処理は行わない
 	/// </summary>
-	public class NoteItem: IDisposable
+	public class NoteItem: DisposableItem, IDisposable
 	{
 		public NoteItem()
 		{
@@ -92,14 +92,16 @@ namespace PeMain.Data
 		public bool Compact { get; set; }
 		public Point Location { get; set; }
 		public Size Size { get; set; }
-		
-		public void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
 			Style.ToDispose();
-		}		
+
+			base.Dispose(disposing);
+		}
 	}
-	
-	public class NoteStyle: IDisposable
+
+	public class NoteStyle: DisposableItem, IDisposable
 	{
 		public NoteStyle()
 		{
@@ -111,10 +113,12 @@ namespace PeMain.Data
 		public FontSetting FontSetting { get; set; }
 		public Color ForeColor { get; set; }
 		public Color BackColor { get; set; }
-		
-		public void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
 			FontSetting.ToDispose();
+
+			base.Dispose(disposing);
 		}
 	}
 }
