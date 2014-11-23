@@ -60,11 +60,17 @@
 		<xsl:choose>
 			<xsl:when test="@class != ''">
 				<li class="{@class}">
+					<xsl:if test="@rev != ''">
+						<a class="rev"><xsl:value-of select="@rev" /></a>
+					</xsl:if>
 					<xsl:value-of select="." />。
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
 				<li>
+					<xsl:if test="@rev != ''">
+						<a class="rev"><xsl:value-of select="@rev" /></a>
+					</xsl:if>
 					<xsl:value-of select="." />。
 				</li>
 			</xsl:otherwise>
