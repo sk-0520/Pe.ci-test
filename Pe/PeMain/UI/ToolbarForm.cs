@@ -169,7 +169,6 @@ namespace PeMain.UI
 		
 		void ToolLauncher_MouseHover(object sender, EventArgs e)
 		{
-			
 			var cursorPoint = Cursor.Position;
 			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
 			var point = this.PointToClient(cursorPoint);
