@@ -15,7 +15,7 @@ namespace PInvoke.Windows
 	/// <summary>
 	/// Description of MyClass.
 	/// </summary>
-	public static partial class API
+	partial class NativeMethods
 	{
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/user32.registerhotkey
@@ -25,11 +25,13 @@ namespace PInvoke.Windows
 		/// <param name="fsModifiers"></param>
 		/// <param name="vk"></param>
 		/// <returns></returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool RegisterHotKey(IntPtr hWnd, int id, MOD fsModifiers, uint vk);
-		
-		[DllImport( "user32", SetLastError = true )]
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("user32", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool UnregisterHotKey (IntPtr hwnd, int id);
 		

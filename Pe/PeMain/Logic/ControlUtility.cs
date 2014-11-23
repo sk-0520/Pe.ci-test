@@ -470,7 +470,7 @@ namespace PeMain.Logic
 		{
 			var topmost = target.TopMost;
 			target.TopMost = true;
-			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+			NativeMethods.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
 			target.TopMost = topmost;
 		}
 		

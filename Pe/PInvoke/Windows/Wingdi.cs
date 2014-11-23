@@ -42,7 +42,6 @@ namespace PInvoke.Windows
 		public string DeviceKey;
 	}
 
-	static partial class API
-	{
-	}
+	partial class NativeMethods
+	{ }
 }

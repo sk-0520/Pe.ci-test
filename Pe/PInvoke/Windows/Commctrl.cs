@@ -18,8 +18,10 @@ namespace PInvoke.Windows
 	public struct IMAGELISTDRAWPARAMS
 	{
 		public int cbSize;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security","CA2111:PointersShouldNotBeVisible")]
 		public IntPtr himl;
 		public int i;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hdcDst;
 		public int x;
 		public int y;
@@ -42,7 +44,9 @@ namespace PInvoke.Windows
 	[StructLayout(LayoutKind.Sequential)]
 	public struct IMAGEINFO
 	{
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hbmImage;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hbmMask;
 		public int Unused1;
 		public int Unused2;

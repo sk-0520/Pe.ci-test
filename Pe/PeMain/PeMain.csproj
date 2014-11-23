@@ -39,7 +39,8 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
     <StartAction>Project</StartAction>
-    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
+    <StartArguments>
+    </StartArguments>
     <DefineConstants>DEBUG;TRACE;DISABLED_UPDATE_CHECK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -49,7 +50,8 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
-    <StartArguments>/setting-root=z:\%USERNAME%\$(Configuration)  /log=z:\%USERNAME%\$(Configuration)\log</StartArguments>
+    <StartArguments>
+    </StartArguments>
     <DefineConstants>RELEASE;TRACE;</DefineConstants>
     <StartAction>Project</StartAction>
   </PropertyGroup>
@@ -130,7 +132,6 @@
     <Compile Include="IF\IRootSender.cs" />
     <Compile Include="IF\ISetCommonData.cs" />
     <Compile Include="IF\ISetLanguage.cs" />
-    <Compile Include="IF\ISkin.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Properties\SQL.Designer.cs">
       <DependentUpon>SQL.resx</DependentUpon>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
@@ -741,7 +743,6 @@
       <Name>PInvoke</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
@@ -752,10 +753,34 @@
       <Isolated>False</Isolated>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\GetId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\GetNoteItemList.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateNoteMasterTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateNoteStyleTransactionTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateNoteTransactionTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CreateVersionMasterTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\EnabledSwitch.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SQL\CheckTable.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>#SQLite.xml
-del "$(SolutionDir)..\output\$(Configuration)\$(Platform)\System.Data.SQLite.xml"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets')" />
 </Project>

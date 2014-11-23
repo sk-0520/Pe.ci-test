@@ -23,7 +23,7 @@ namespace PeMain.UI
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
-	public partial class App: IDisposable, IRootSender
+	public sealed partial class App: IDisposable, IRootSender
 	{
 		public App(CommandLine commandLine, FileLogger fileLogger)
 		{
@@ -37,11 +37,11 @@ namespace PeMain.UI
 			CheckUpdateProcessAsync(false);
 			#endif
 		}
-		
+
 		public void Dispose()
 		{
 			DetachmentSystemEvent();
-			
+
 			this._windowTimer.ToDispose();
 			
 			this._commonData.ToDispose();
@@ -53,6 +53,7 @@ namespace PeMain.UI
 			foreach(var w in this._toolbarForms.Values) {
 				w.ToDispose();
 			}
+			this._contextMenu.ToDispose();
 			this._notifyIcon.ToDispose();
 			
 			#if DEBUG

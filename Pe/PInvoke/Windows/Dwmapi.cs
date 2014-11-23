@@ -34,6 +34,7 @@ namespace PInvoke.Windows
 	{
 		public DWM_BB dwFlags;
 		public bool fEnable;
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security","CA2111:PointersShouldNotBeVisible")]
 		public IntPtr hRgnBlur;
 		public int fTransitionOnMaximized;
 
@@ -67,27 +68,31 @@ namespace PInvoke.Windows
 		}
 	}
 	
-	public static partial class API
+	partial class NativeMethods
 	{
 		/// <summary>
-		/// http://www.pinvoke.net/default.aspx/dwmapi.dwmiscompositionenabled
+		/// http://www.pinvoke.net/default.aspx/dwmNativeMethods.dwmiscompositionenabled
 		/// </summary>
 		/// <param name="enabled"></param>
 		/// <returns></returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll")]
 		public static extern int DwmIsCompositionEnabled(out bool enabled);
-		
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll", PreserveSig = true)]
 		public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
-		
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll")]
 		public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
 		
 		/// <summary>
-		/// http://www.pinvoke.net/default.aspx/dwmapi.dwmgetcolorizationcolor
+		/// http://www.pinvoke.net/default.aspx/dwmNativeMethods.dwmgetcolorizationcolor
 		/// </summary>
 		/// <param name="ColorizationColor"></param>
 		/// <param name="ColorizationOpaqueBlend"></param>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll", PreserveSig = false)]
 		public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out bool ColorizationOpaqueBlend);
 	}

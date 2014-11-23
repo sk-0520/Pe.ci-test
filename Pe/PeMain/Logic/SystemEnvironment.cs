@@ -83,13 +83,13 @@ namespace PeMain.Logic
 			var hWnd = IntPtr.Zero;
 			var workClassName = new StringBuilder(WindowsUtility.classNameLength);
 			while(true) {
-				hWnd = API.FindWindowEx(hParentWnd, hWnd, null, null);
+				hWnd = NativeMethods.FindWindowEx(hParentWnd, hWnd, null, null);
 				if(hWnd == IntPtr.Zero) {
 					break;
 				}
-				API.GetClassName(hWnd, workClassName, workClassName.Capacity);
+				NativeMethods.GetClassName(hWnd, workClassName, workClassName.Capacity);
 				if(workClassName.ToString() == targetClassName) {
-					API.PostMessage(hWnd, WM.WM_COMMAND, new IntPtr((int)WM_COMMAND_SUB.Refresh), IntPtr.Zero);
+					NativeMethods.PostMessage(hWnd, WM.WM_COMMAND, new IntPtr((int)WM_COMMAND_SUB.Refresh), IntPtr.Zero);
 				} else {
 					RefreshShell(hWnd);
 				}

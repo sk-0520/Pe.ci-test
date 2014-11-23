@@ -27,7 +27,7 @@ namespace PeUtility
         {
             var iconIndex = IconPath.Index;
             var sb = new StringBuilder(IconPath.Path, (int)MAX.MAX_PATH);
-            var result = API.SHChangeIconDialog(hwndOwner, sb, sb.Capacity, ref iconIndex);
+            var result = NativeMethods.SHChangeIconDialog(hwndOwner, sb, sb.Capacity, ref iconIndex);
             if(result) {
                 IconPath.Index = iconIndex;
                 IconPath.Path = sb.ToString();

@@ -10,8 +10,8 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
+using PeSkin;
 using PInvoke.Windows;
 
 namespace PeMain.UI
@@ -86,13 +86,13 @@ namespace PeMain.UI
 					{
 						//if(CommonData != null && (!this.inputBody.Visible || !this.inputTitle.Visible)) {
 						if(CommonData != null) {
-							var hDC = API.GetWindowDC(Handle);
+							var hDC = NativeMethods.GetWindowDC(Handle);
 							try {
 								using(var g = Graphics.FromHdc(hDC)) {
 									DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
 								}
 							} finally {
-								API.ReleaseDC(Handle, hDC);
+								NativeMethods.ReleaseDC(Handle, hDC);
 							}
 						}
 					}
@@ -157,13 +157,13 @@ namespace PeMain.UI
 									(isIn, nowState) => {
 										if(isIn) {
 											throwHittest = false;
-											if(nowState == PeMain.IF.ButtonState.Pressed) {
-												return PeMain.IF.ButtonState.Pressed;
+											if(nowState == SkinButtonState.Pressed) {
+												return SkinButtonState.Pressed;
 											} else {
-												return PeMain.IF.ButtonState.Selected;
+												return SkinButtonState.Selected;
 											}
 										} else {
-											return PeMain.IF.ButtonState.Normal;
+											return SkinButtonState.Normal;
 										}
 									},
 									null,
@@ -188,7 +188,7 @@ namespace PeMain.UI
 					{
 						var hittest = WindowsUtility.HTFromLParam(m.LParam);
 						if(hittest == HT.HTCAPTION) {
-							API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 							return;
 						} else {
 							

@@ -117,112 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CheckTable" xml:space="preserve">
-    <value>select
-    count(*) NUM
-from
-    SQLITE_MASTER
-where
-    NAME = :table_name
-    and
-    TYPE = 'table'
-</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CheckTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CheckTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateVersionMasterTable" xml:space="preserve">
-    <value>create table M_VERSION
-(
-    NAME     text primary key,
-    VERSION  integer not null
-)
-</value>
+  <data name="CreateNoteMasterTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CreateNoteMasterTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateNoteMasterTable" xml:space="preserve">
-    <value>create table M_NOTE (
-    NOTE_ID      integer  primary key,
-    CMN_ENABLED  integer  not null,
-    CMN_CREATE   text     not null,
-    CMN_UPDATE   text     not null,
-    NOTE_TITLE   text,
-    NOTE_TYPE    integer  not null
-)</value>
+  <data name="CreateNoteStyleTransactionTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CreateNoteStyleTransactionTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateNoteTransactionTable" xml:space="preserve">
-    <value>create table T_NOTE (
-    NOTE_ID      integer  primary key,
-    CMN_CREATE   text     not null,
-    CMN_UPDATE   text     not null,
-    NOTE_BODY    text
-)</value>
+  <data name="CreateNoteTransactionTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CreateNoteTransactionTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateNoteStyleTransactionTable" xml:space="preserve">
-    <value>create table T_NOTE_STYLE (
-    NOTE_ID         integer  primary key,
-    CMN_CREATE      text     not null,
-    CMN_UPDATE      text     not null,
-    FONT_FAMILY     text     not null,
-    FONT_SIZE       real     not null,
-    FONT_ITALIC     integer  not null,
-    FONT_BOLD       integer  not null,
-    COLOR_FORE      text     not null,
-    COLOR_BACK      text     not null,
-    WINDOW_VISIBLED integer  not null,
-    WINDOW_LOCKED   integer  not null,
-    WINDOW_TOPMOST  integer  not null,
-    WINDOW_COMPACT  integer  not null,
-    WINDOW_POS_X    integer  not null,
-    WINDOW_POS_Y    integer  not null,
-    WINDOW_SIZE_W   integer  not null,
-    WINDOW_SIZE_H   integer  not null
-)
-</value>
+  <data name="CreateVersionMasterTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\CreateVersionMasterTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GetId" xml:space="preserve">
-    <value>select
-    coalesce(max({id_column_name}), 0) MAX_ID,
-    coalesce(min({id_column_name}), 0) MIN_ID
-from
-    {table_name}
-</value>
+  <data name="EnabledSwitch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SQL\EnabledSwitch.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GetNoteItemList" xml:space="preserve">
-    <value>select
-	CMN_ENABLED,
-	NOTE_ID,
-	NOTE_TITLE,
-	NOTE_TYPE,
-	NOTE_BODY,
-	WINDOW_VISIBLED,
-	WINDOW_LOCKED,
-	WINDOW_TOPMOST,
-	WINDOW_COMPACT,
-	WINDOW_POS_X,
-	WINDOW_POS_Y,
-	WINDOW_SIZE_W,
-	WINDOW_SIZE_H,
-	FONT_FAMILY,
-	FONT_SIZE,
-	FONT_ITALIC,
-	FONT_BOLD,
-	COLOR_FORE,
-	COLOR_BACK
-from
-	M_NOTE
-	inner join T_NOTE using(NOTE_ID)
-	inner join T_NOTE_STYLE using(NOTE_ID)
-order by
-	M_NOTE.CMN_CREATE
-
-</value>
+  <data name="GetId" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\sql\getid.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EnabledSwitch" xml:space="preserve">
-    <value>update
-	M_NOTE
-set
-	CMN_ENABLED = :enabled,
-	CMN_UPDATE  = :update
-where
-	({ID_LIST})
-
-</value>
+  <data name="GetNoteItemList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\sql\getnoteitemlist.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

@@ -25,28 +25,7 @@ namespace PeMain.Data
 		Rtf,
 	}
 	
-	/// <summary>
-	/// ノートアイテムに対して目に見えてなんかする。
-	/// </summary>
-	public enum NoteCommand
-	{
-		/// <summary>
-		/// 閉じる。
-		/// </summary>
-		Close,
-		/// <summary>
-		/// 最小化。
-		/// </summary>
-		Compact,
-		/// <summary>
-		/// 最前面。
-		/// </summary>
-		Topmost,
-		/// <summary>
-		/// 固定。
-		/// </summary>
-		Lock,
-	}
+
 	
 	/// <summary>
 	/// NoteTypeに対してなんかする用ユーティリティだが現状死んでますしおすし。
@@ -80,7 +59,7 @@ namespace PeMain.Data
 	/// 
 	/// 主要データはDBに格納するためシリアライズ処理は行わない
 	/// </summary>
-	public class NoteItem: IDisposable
+	public class NoteItem: DisposableItem, IDisposable
 	{
 		public NoteItem()
 		{
@@ -113,14 +92,16 @@ namespace PeMain.Data
 		public bool Compact { get; set; }
 		public Point Location { get; set; }
 		public Size Size { get; set; }
-		
-		public void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
 			Style.ToDispose();
-		}		
+
+			base.Dispose(disposing);
+		}
 	}
-	
-	public class NoteStyle: IDisposable
+
+	public class NoteStyle: DisposableItem, IDisposable
 	{
 		public NoteStyle()
 		{
@@ -132,10 +113,12 @@ namespace PeMain.Data
 		public FontSetting FontSetting { get; set; }
 		public Color ForeColor { get; set; }
 		public Color BackColor { get; set; }
-		
-		public void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
 			FontSetting.ToDispose();
+
+			base.Dispose(disposing);
 		}
 	}
 }

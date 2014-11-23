@@ -149,7 +149,7 @@ namespace PeMain.Logic
 		
 		public static void OpenProperty(string expandPath, IntPtr hWnd)
 		{
-			API.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, expandPath, string.Empty);
+			NativeMethods.SHObjectProperties(hWnd, SHOP.SHOP_FILEPATH, expandPath, string.Empty);
 		}
 	}
 

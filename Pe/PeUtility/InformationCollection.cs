@@ -20,7 +20,7 @@ namespace PeUtility
 	/// <summary>
 	/// 各種情報を取得する。
 	/// </summary>
-	public class Information: IDisposable
+	public class InformationCollection: IDisposable
 	{
 		protected ManagementClass _managementOS = new ManagementClass("Win32_OperatingSystem");
 		protected ManagementClass _managementCPU = new ManagementClass("Win32_Processor");
@@ -29,11 +29,16 @@ namespace PeUtility
 		{
 			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
 		}
-		
-		public void Dispose()
+
+		protected virtual void Dispose(bool disposing)
 		{
 			this._managementOS.Dispose();
 			this._managementCPU.Dispose();
+		}
+		
+		public void Dispose()
+		{
+			Dispose(true);
 		}
 		
 		protected virtual InformationGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> keys)

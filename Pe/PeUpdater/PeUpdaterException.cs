@@ -19,6 +19,7 @@ namespace PeUpdater
 	/// <summary>
 	/// Desctiption of PeUpdaterException.
 	/// </summary>
+	[Serializable]
 	public class PeUpdaterException : Exception, ISerializable
 	{
 		public PeUpdaterException(): base(PeUpdaterCode.Unknown.ToString())
@@ -32,5 +33,10 @@ namespace PeUpdater
 		}
 	 	
 	 	public PeUpdaterCode PeUpdaterCode { get; private set; }
+
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			base.GetObjectData(info, context);
+		}
 	}
 }

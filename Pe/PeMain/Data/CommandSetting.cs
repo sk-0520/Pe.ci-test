@@ -77,12 +77,12 @@ namespace PeMain.Data
 		public bool TopMost { get; set; }
 		
 		public HotKeySetting HotKey { get; set; }
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
-			base.Dispose();
-			
 			FontSetting.ToDispose();
+
+			base.Dispose(disposing);
 		}
 	}
 }

@@ -332,14 +332,14 @@ namespace PeMain.Data
 		
 		[XmlIgnoreAttribute()]
 		public bool HasError { get; set; }
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
-			base.Dispose();
-			
 			foreach(var icon in _iconMap.Values) {
 				icon.ToDispose();
 			}
+
+			base.Dispose(disposing);
 		}
 		
 		public bool IsNameEqual(string name)
@@ -609,14 +609,14 @@ namespace PeMain.Data
 		/// 標準出力フォント。
 		/// </summary>
 		public FontSetting StreamFontSetting { get; set; }
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
-			base.Dispose();
-			
 			foreach(var item in Items) {
 				item.ToDispose();
 			}
+
+			base.Dispose(disposing);
 		}
 	}
 }

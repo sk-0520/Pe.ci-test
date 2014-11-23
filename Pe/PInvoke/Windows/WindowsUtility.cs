@@ -8,9 +8,13 @@
  */
 using System;
 using System.Drawing;
+using System.Security;
 
 namespace PInvoke.Windows
 {
+	public static partial class NativeMethods { }
+	//internal static partial class NativeMethods { }
+
 	/// <summary>
 	/// PInvoke.Windows.API 関連の便利処理。
 	/// </summary>

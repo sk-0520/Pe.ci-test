@@ -753,13 +753,18 @@ namespace PeUtility
 			}
 			return keyEntity;
 		}
-		
+
+		protected virtual void Dispose(bool disposing)
+		{
+			Connection.Dispose();
+		}
+
 		/// <summary>
 		/// とじるん。
 		/// </summary>
-		public virtual void Dispose()
+		public void Dispose()
 		{
-			Connection.Dispose();
+			Dispose(true);
 		}
 		
 		

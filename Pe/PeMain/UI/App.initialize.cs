@@ -122,7 +122,7 @@ namespace PeMain.UI
 		{
 			var dbFilePath = Literal.UserDBPath;
 			var usePath = dbFilePath;
-			if(API.PathIsUNC(usePath)) {
+			if(NativeMethods.PathIsUNC(usePath)) {
 				usePath = @"\\" + usePath;
 			}
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/load"], usePath);
