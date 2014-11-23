@@ -4,48 +4,48 @@
 	<!--
 	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
 		<ul type="note">
-			<li></li>
-			<li></li>
-			<li></li>
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
 		</ul>
 		<ul type="features">
-			<li></li>
-			<li></li>
-			<li></li>
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li></li>
-			<li></li>
-			<li></li>
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
 		</ul>
 		<ul type="developer">
-			<li></li>
-			<li></li>
-			<li></li>
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
 		</ul>
 	</log>
 	-->
 	<log date="2014/MM/DD" version="0.33.1" type="rc">
 		<ul type="note">
-			<li></li>
-			<li></li>
-			<li></li>
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
 		</ul>
 		<ul type="features">
-			<li></li>
-			<li></li>
-			<li></li>
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li>#92: 環境変数で指定したファイル アイテムのプロパティが表示されない</li>
-			<li>#93: ァイルアイテムが環境変数を含む場合にファイルメニューが非活性</li>
-			<li>#92, #93に関連して環境変数を含む親ディレクトリ、作業ディレクトリのパスコピー・表示の不具合修正</li>
-			<li></li>
+			<li rev="65c905ae5b74109082263b1972aead5d7a6cda30">#92: 環境変数で指定したファイル アイテムのプロパティが表示されない</li>
+			<li rev="2d6a501969e86fb4776b31777b61731cf725b713">#93: ファイルアイテムが環境変数を含む場合にファイルメニューが非活性</li>
+			<li rev="">#92, #93に関連して環境変数を含む親ディレクトリ、作業ディレクトリのパスコピー・表示の不具合修正</li>
+			<li rev=""></li>
 		</ul>
 		<ul type="developer">
-			<li>#69: ユニットテスト書こうぜ！</li>
-			<li>#89: ソース整理</li>
-			<li></li>
+			<li rev="288f2be6be13360028f79515eb571ed5e6e33b36">#69: ユニットテスト書こうぜ！</li>
+			<li rev="a70ce895c81d7261a93e3345ea0299a3121ce737">#89: ソース整理</li>
+			<li rev=""></li>
 		</ul>
 	</log>
 	<log date="2014/11/19" version="0.32.0">

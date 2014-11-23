@@ -32,6 +32,27 @@ h1
 {
 }
 
+*.changelog dd li
+{
+}
+
+*.changelog *.rev
+{
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 2px;
+	border: 1px solid #888;
+	padding: 1px;
+	font-size: 70%;
+	width: 8ex;
+	white-space: nowrap;
+	overflow: hidden;
+	
+	font-family: Consolas;
+	text-overflow: ellipsis;
+	text-decoration: none;
+}
+
 p.uri
 {
 	margin-top: 0;
