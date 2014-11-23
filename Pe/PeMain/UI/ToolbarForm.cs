@@ -163,10 +163,11 @@ namespace PeMain.UI
 			Debug.WriteLine(toolItem.ToolTipText);
 			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
 			 */
-			this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			Debug.WriteLine("ToolItem_MouseHover");
 		}
 
-		
+		/*
 		void ToolLauncher_MouseHover(object sender, EventArgs e)
 		{
 			var cursorPoint = Cursor.Position;
@@ -174,11 +175,13 @@ namespace PeMain.UI
 			var point = this.PointToClient(cursorPoint);
 			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().FirstOrDefault(i => i.Bounds.Contains(point));
 			if(toolItem != null) {
-				this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+				//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+				Debug.WriteLine("ToolLauncher_MouseHover");
 			} else {
 				this.tipsLauncher.RemoveAll();
 			}
 		}
+		 * */
 		
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
 		{
