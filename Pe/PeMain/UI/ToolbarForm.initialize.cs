@@ -25,6 +25,9 @@ namespace PeMain.UI
 			ContextMenu.Collapse += CloseRootMenu;
 			
 			Visible = false;
+
+			this.tipsLauncher.Initialize(this.toolLauncher);
+			//this.tipsLauncher.SetToolTip(this.toolLauncher, "#");
 		}
 		
 		void Initialize()

@@ -60,17 +60,37 @@ namespace PeMain.UI
 
 		public class ToolbarToolTip: ExToolTip
 		{
-			public ToolbarToolTip()
-				: base()
+			Control _parent;
+
+			public ToolbarToolTip(): base()
 			{ }
 
-			public ToolbarToolTip(IContainer cont)
-				: base(cont)
+			public ToolbarToolTip(IContainer cont) : base(cont)
 			{ }
 
+			public void Initialize(Control parent)
+			{
+				this._parent = parent;
+
+				ShowAlways = true;
+				this.AutomaticDelay = 0;
+				this.AutoPopDelay = 0;
+				this.InitialDelay = 0;
+				this.ReshowDelay = 0;
+				//OwnerDraw = true;
+			}
+
+			public void HideItem()
+			{
+				Debug.WriteLine(string.Format("{0}, {1}", DateTime.Now, "HIDE"));
+				//Hide(this._parent);
+			}
 			public void ShowItem(ToolbarItem toolbarItem, ToolStripItem toolStripItem)
 			{
 				Debug.WriteLine(string.Format("{0}, {1} - {2}", DateTime.Now, toolbarItem, toolStripItem));
+				Active = false;
+				Active = true;
+				Show(toolStripItem.Text, toolStripItem.Owner);
 			}
 		}
 	}
