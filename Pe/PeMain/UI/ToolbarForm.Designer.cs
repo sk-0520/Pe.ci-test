@@ -38,7 +38,6 @@ namespace PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolLauncher = new PeMain.UI.ToolbarToolStrip();
-			this.tipsLauncher = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// toolLauncher
@@ -58,11 +57,6 @@ namespace PeMain.UI
 			this.toolLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragDrop);
 			this.toolLauncher.DragEnter += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragEnter);
 			this.toolLauncher.DragOver += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragOver);
-			this.toolLauncher.MouseHover += new System.EventHandler(this.ToolLauncher_MouseHover);
-			// 
-			// tipsLauncher
-			// 
-			this.tipsLauncher.ShowAlways = true;
 			// 
 			// ToolbarForm
 			// 
@@ -86,8 +80,8 @@ namespace PeMain.UI
 			this.SizeChanged += new System.EventHandler(this.ToolbarForm_SizeChanged);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
 			this.ResumeLayout(false);
+
 		}
-		private System.Windows.Forms.ToolTip tipsLauncher;
 		private PeMain.UI.ToolbarToolStrip toolLauncher;
 	}
 }

@@ -30,7 +30,8 @@ namespace PeMain.UI
 		{
 			CommonData = commonData;
 			this._isRunning = false;
-			
+
+			this.tipsLauncher.SetCommonData(CommonData);
 			ApplySetting();
 			
 			this._isRunning = true;
@@ -840,6 +841,7 @@ namespace PeMain.UI
 			toolItem.Visible = true;
 
 			toolItem.MouseHover += ToolItem_MouseHover;
+			toolItem.MouseLeave += toolItem_MouseLeave;
 			var dropdownItem = toolItem as ToolStripDropDownItem;
 			if(dropdownItem != null) {
 				dropdownItem.DropDownOpening += OpeningRootMenu;
@@ -849,7 +851,7 @@ namespace PeMain.UI
 			
 			return toolItem;
 		}
-		
+
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {

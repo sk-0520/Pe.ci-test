@@ -21,5 +21,6 @@ namespace PeMain.UI
 		bool _menuOpening = false;
 		
 		ToolStripItem _dragStartItem;
+		CustomToolTipForm tipsLauncher;
 	}
 }

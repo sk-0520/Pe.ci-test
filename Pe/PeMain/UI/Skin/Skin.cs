@@ -10,6 +10,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.IF;
 using PeSkin;
@@ -167,7 +168,18 @@ namespace PeMain.UI
 			
 			return padding;
 		}
-		
+
+		public virtual void ApplyToolbarToolTipRegion(Form target)
+		{
+			if(EnabledVisualStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
+				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
+
+				using(Graphics g = Graphics.FromHwnd(IntPtr.Zero)) {
+					target.Region = visualStyleRenderer.GetBackgroundRegion(g, new Rectangle(Point.Empty, target.Size));
+				}
+			}
+		}
+
 		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth);
 		
 #endregion
@@ -293,6 +305,13 @@ namespace PeMain.UI
 			DrawToolbarButton(toolbarButtonData);
 		}
 
+		public virtual void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea)
+		{
+			if(EnabledVisualStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
+				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
+				visualStyleRenderer.DrawBackground(g, drawArea);
+			}
+		}
 #endregion
 			
 #region Draw Note
@@ -320,6 +339,7 @@ namespace PeMain.UI
 		public virtual bool IsDefaultDrawToolbarDropDownButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarButtonBackground { get { return true; } }
+		public virtual bool IsDefaultDrawToolbarToolTipBackground { get{ return true; } }
 		
 		protected virtual void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{

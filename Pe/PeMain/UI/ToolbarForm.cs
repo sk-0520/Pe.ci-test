@@ -117,6 +117,7 @@ namespace PeMain.UI
 			Cursor = Cursors.Default;
 			
 			this._menuOpening = true;
+			this.tipsLauncher.Hide();
 			var toolItem = sender as ToolStripDropDownItem;
 			if(toolItem != null) {
 				switch(UseToolbarItem.ToolbarPosition) {
@@ -163,23 +164,42 @@ namespace PeMain.UI
 			Debug.WriteLine(toolItem.ToolTipText);
 			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
 			 */
-			this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			//this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
+			//this.tipsLauncher.RemoveAll();
+			//this.tipsLauncher.SetToolTip(this, "#");
+			//if(toolItem.OwnerItem == this.toolLauncher)
+			//if(toolItem.OwnerItem == null)
+			//var menuItem = toolItem as ToolStripDropDownItem;
+			if(this._menuOpening) {
+				// メニュー表示中はなんもしない
+				return;
+			}
+			this.tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UseToolbarItem);
 		}
 
+		void toolItem_MouseLeave(object sender, EventArgs e)
+		{
+			this.tipsLauncher.HideItem();
+			//this.tipsLauncher.RemoveAll();
+		}
 		
+
+		/*
 		void ToolLauncher_MouseHover(object sender, EventArgs e)
 		{
-			
 			var cursorPoint = Cursor.Position;
 			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
 			var point = this.PointToClient(cursorPoint);
 			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().FirstOrDefault(i => i.Bounds.Contains(point));
 			if(toolItem != null) {
-				this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+				//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+				Debug.WriteLine("ToolLauncher_MouseHover");
 			} else {
 				this.tipsLauncher.RemoveAll();
 			}
 		}
+		 * */
 		
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
 		{

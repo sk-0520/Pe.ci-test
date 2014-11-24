@@ -22,6 +22,7 @@ namespace PeSkin
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
+		void ApplyToolbarToolTipRegion(Form target);
 
 		Padding GetNoteWindowEdgePadding();
 		Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
@@ -38,6 +39,7 @@ namespace PeSkin
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		void DrawToolbarButtonBackground(ToolStripItemRenderEventArgs e, ToolStripButton item, bool active, Rectangle itemArea);
+		void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea);
 
 		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
@@ -59,5 +61,6 @@ namespace PeSkin
 		bool IsDefaultDrawToolbarDropDownButtonBackground { get; }
 		bool IsDefaultDrawToolbarSplitButtonBackground { get; }
 		bool IsDefaultDrawToolbarButtonBackground { get; }
+		bool IsDefaultDrawToolbarToolTipBackground { get; }
 	}
 }
