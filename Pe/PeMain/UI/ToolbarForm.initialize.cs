@@ -26,7 +26,7 @@ namespace PeMain.UI
 			
 			Visible = false;
 
-			this.tipsLauncher = new CustomToolTipForm();
+			this._tipsLauncher = new CustomToolTipForm();
 			
 			//this.tipsLauncher.SetToolTip(this.toolLauncher, "#");
 		}

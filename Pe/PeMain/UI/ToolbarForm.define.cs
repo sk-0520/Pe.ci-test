@@ -110,6 +110,13 @@ namespace PeMain.UI
 				MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
 				IconScale = IconScale.Normal;
 			}
+
+			protected override void Dispose(bool disposing)
+			{
+				_imageIcon.ToDispose();
+
+				base.Dispose(disposing);
+			}
 			
 			protected override bool ShowWithoutActivation { get { return true; } }
 
@@ -202,17 +209,6 @@ namespace PeMain.UI
 
 			void ToShow()
 			{
-				//this._fadeState = FadeState.In;
-				//Task.Factory.StartNew(() => {
-				//	for(var i = Opacity; i < 1; i += 0.1) {
-				//		this.BeginInvoke((MethodInvoker)delegate() { Opacity = i; });
-				//		if(_fadeState != FadeState.In) {
-				//			return;
-				//		}
-				//	}
-				//});
-				
-				//Visible = true;
 				NativeMethods.SetWindowPos(
 					Handle,
 					IntPtr.Zero,
@@ -224,22 +220,11 @@ namespace PeMain.UI
 
 			void ToHide()
 			{
-				//this._fadeState = FadeState.Out;
-				//Task.Factory.StartNew(() => {
-				//	for(var i = Opacity; i > 0; i -= 0.1) {
-				//		this.BeginInvoke((MethodInvoker)delegate() { Opacity = i; });
-				//		if(_fadeState != FadeState.Out) {
-				//			return;
-				//		}
-				//	}
-				//});
-
 				Visible = false;
 			}
 
 			public void HideItem()
 			{
-				Debug.WriteLine(string.Format("{0}, {1}", DateTime.Now, "HIDE"));
 				ToHide();
 			}
 
@@ -249,8 +234,7 @@ namespace PeMain.UI
 				Debug.Assert(CommonData != null);
 
 				var launcherItem = toolStripItem.Tag as LauncherItem;
-				Debug.WriteLine(string.Format("{0}, {1} - {2} - {3}", DateTime.Now, toolbarItem, groupItem, launcherItem));
-				//Show(toolStripItem.Text, toolStripItem.Owner);
+
 				if(launcherItem != null) {
 					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index).ToBitmap();
 					this._title = launcherItem.Name;
@@ -263,9 +247,11 @@ namespace PeMain.UI
 
 				// 描画サイズ生成
 				using(var g = CreateGraphics()) 
-					using(var titleFormat = CreateTitleFormat()) {
-					var titleSize = g.MeasureString(this._title, TitleFontSetting.Font, screen.WorkingArea.Size, titleFormat);
-					var messageSize = HasMessage() ? g.MeasureString(this._message, MessageFontSetting.Font) : SizeF.Empty;
+				using(var titleFormat = CreateTitleFormat())
+				using(var messageFormat = CreateTitleFormat()) {
+					var maxShowSize = new Size(screen.WorkingArea.Size.Width / 2, screen.WorkingArea.Size.Height / 2);
+					var titleSize = g.MeasureString(this._title, TitleFontSetting.Font, maxShowSize, titleFormat);
+					var messageSize = HasMessage() ? g.MeasureString(this._message, MessageFontSetting.Font, maxShowSize, messageFormat) : SizeF.Empty;
 
 					this._titleHeight = Math.Max((float)IconScale.ToHeight(), titleSize.Height) + (float)(HasMessage() ? Padding.Top: 0);
 
@@ -274,19 +260,14 @@ namespace PeMain.UI
 						(int)(Math.Max(IconScale.ToHeight(), titleSize.Height) + messageSize.Height) + Padding.Vertical
 					);
 				}
-				//Region = System.Drawing.Region.FromHrgn(NativeMethods.CreateRoundRectRgn(0, 0, Width, Height, 2, 2));
+
 				CommonData.Skin.ApplyToolbarToolTipRegion(this);
 
 				// 表示位置設定
 				var itemArea = toolStripItem.Bounds;
-				Debug.WriteLine(itemArea);
 				if(toolStripItem.OwnerItem != null) {
 					var ownerItemLocation = toolStripItem.OwnerItem.Bounds.Location;
-					//var overflowPosition = toolStripItem.Owner.PointToScreen(ownerItemLocation);
-					//itemArea.Offset(0, toolStripItem.OwnerItem.Bounds.Location.Y);
 					itemArea.Offset(ownerItemLocation);
-					
-					//itemArea.X = ownerItemLocation.X;
 				}
 				var screenPoint = toolStripItem.Owner.PointToScreen(itemArea.Location);
 				switch(toolbarItem.ToolbarPosition) {
@@ -296,12 +277,12 @@ namespace PeMain.UI
 						Location = new Point(screenPoint.X, screenPoint.Y + itemArea.Height + TipPadding.Height);
 						if(toolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 							if(Location.Y + Size.Height > screen.WorkingArea.Height) {
-								goto _TOP_;
+								goto LABEL_TOP;
 							}
 						}
 						break;
 
-					case ToolbarPosition.DesktopBottom: _TOP_:
+					case ToolbarPosition.DesktopBottom: LABEL_TOP:
 						// 上に表示
 						Location = new Point(screenPoint.X, screenPoint.Y - Height - TipPadding.Height);
 						break;
@@ -313,7 +294,7 @@ namespace PeMain.UI
 
 					case ToolbarPosition.DesktopRight:
 						// 左に表示
-						Location = new Point(screenPoint.X - itemArea.Width - TipPadding.Width, screenPoint.Y);
+						Location = new Point(screenPoint.X - Width - TipPadding.Width, screenPoint.Y);
 						break;
 
 					default:
