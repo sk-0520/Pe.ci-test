@@ -109,6 +109,7 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ChangeDevice.cs" />
@@ -347,9 +348,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExToolStripControlHost.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Ex\ExToolTip.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\HomeForm.cs">

@@ -38,7 +38,6 @@ namespace PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolLauncher = new PeMain.UI.ToolbarToolStrip();
-			this.tipsLauncher = new PeMain.UI.ToolbarForm.ToolbarToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// toolLauncher
@@ -83,7 +82,6 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 
 		}
-		private ToolbarToolTip tipsLauncher;
 		private PeMain.UI.ToolbarToolStrip toolLauncher;
 	}
 }

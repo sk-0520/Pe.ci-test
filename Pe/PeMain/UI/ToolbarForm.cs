@@ -165,15 +165,17 @@ namespace PeMain.UI
 			 */
 			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
 			//this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
-			this.tipsLauncher.RemoveAll();
+			//this.tipsLauncher.RemoveAll();
 			//this.tipsLauncher.SetToolTip(this, "#");
-			this.tipsLauncher.ShowItem(UseToolbarItem, toolItem);
+			//if(toolItem.OwnerItem == this.toolLauncher)
+			if(toolItem.OwnerItem == null)
+			this.tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UseToolbarItem);
 		}
 
 		void toolItem_MouseLeave(object sender, EventArgs e)
 		{
 			this.tipsLauncher.HideItem();
-			this.tipsLauncher.RemoveAll();
+			//this.tipsLauncher.RemoveAll();
 		}
 		
 
