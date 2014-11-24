@@ -432,7 +432,7 @@ namespace PeMain.UI
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
 				itemExtension.Checked = SystemEnvironment.IsExtensionShow();
-				
+
 				itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 				itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
 			};
