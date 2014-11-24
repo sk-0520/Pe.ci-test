@@ -678,6 +678,7 @@ namespace PeMain.UI
 		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
 		public override bool IsDefaultDrawToolbarButtonBackground { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarToolTipBackground { get { return !EnabledVisualStyle; } }
 		#endregion
 
 	}

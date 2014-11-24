@@ -30,7 +30,8 @@ namespace PeMain.UI
 		{
 			CommonData = commonData;
 			this._isRunning = false;
-			
+
+			this.tipsLauncher.SetCommonData(CommonData);
 			ApplySetting();
 			
 			this._isRunning = true;

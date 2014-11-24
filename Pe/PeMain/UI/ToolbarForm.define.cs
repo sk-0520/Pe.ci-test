@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
@@ -64,6 +65,9 @@ namespace PeMain.UI
 			public ToolStripItem SrcToolStripItem { get; set; }
 		}
 
+		/// <summary>
+		/// TODO: スキンと内部描画が入り混じっている。描画処理は整理出来たら全部スキンに回す。
+		/// </summary>
 		public partial class CustomToolTipForm: Form, ISetCommonData
 		{
 			CommonData CommonData { get; set; }
@@ -84,8 +88,11 @@ namespace PeMain.UI
 				ShowInTaskbar = false;
 				TopMost = true;
 				Padding = new Padding(3);
-				TipPadding = new Size(4, 4);
 
+				BackColor = SystemColors.Info;
+				ForeColor = SystemColors.InfoText;
+
+				TipPadding = new Size(4, 4);
 				TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
 				MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
 				IconScale = IconScale.Normal;
@@ -114,7 +121,7 @@ namespace PeMain.UI
 
 			public void SetCommonData(CommonData commonData)
 			{
-				CommonData = CommonData;
+				CommonData = commonData;
 
 				ApplySetting();
 			}
@@ -147,8 +154,14 @@ namespace PeMain.UI
 
 			protected override void OnPaintBackground(PaintEventArgs e)
 			{
-				base.OnPaintBackground(e);
+				if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
+					base.OnPaintBackground(e);
+					e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+				} else {
+					CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
+				}
 			}
+
 			protected override void OnPaint(PaintEventArgs e)
 			{
 				var iconTop = this._titleHeight / 2 - IconScale.ToHeight() / 2;
@@ -168,16 +181,26 @@ namespace PeMain.UI
 				}
 			}
 
+			void ToShow()
+			{
+				Visible = true;
+			}
+
+			void ToHide()
+			{
+				Visible = false;
+			}
+
 			public void HideItem()
 			{
 				Debug.WriteLine(string.Format("{0}, {1}", DateTime.Now, "HIDE"));
-				//Hide(this._parent);
-				Visible = false;
+				ToHide();
 			}
 
 			public void ShowItem(Screen screen, ToolStripItem toolStripItem, ToolbarGroupItem groupItem, ToolbarItem toolbarItem)
 			{
 				Debug.Assert(toolStripItem != null);
+				Debug.Assert(CommonData != null);
 
 				var launcherItem = toolStripItem.Tag as LauncherItem;
 				Debug.WriteLine(string.Format("{0}, {1} - {2} - {3}", DateTime.Now, toolbarItem, groupItem, launcherItem));
@@ -205,7 +228,8 @@ namespace PeMain.UI
 						(int)(Math.Max(IconScale.ToHeight(), titleSize.Height) + messageSize.Height) + Padding.Vertical
 					);
 				}
-				Region = System.Drawing.Region.FromHrgn(NativeMethods.CreateRoundRectRgn(0, 0, Width, Height, 2, 2));
+				//Region = System.Drawing.Region.FromHrgn(NativeMethods.CreateRoundRectRgn(0, 0, Width, Height, 2, 2));
+				CommonData.Skin.ApplyToolbarToolTipRegion(this);
 
 				// 表示位置設定
 				var itemArea = toolStripItem.Bounds;
@@ -242,7 +266,7 @@ namespace PeMain.UI
 						throw new NotImplementedException();
 				}
 
-				Visible = true;
+				ToShow();
 			}
 		}
 
