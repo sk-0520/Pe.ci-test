@@ -209,13 +209,7 @@ namespace PeMain.UI
 
 			void ToShow()
 			{
-				NativeMethods.SetWindowPos(
-					Handle,
-					IntPtr.Zero,
-					0, 0,
-					0, 0,
-					SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
-				);
+				WindowsUtility.ShowNoActive(this);
 			}
 
 			void ToHide()

@@ -65,7 +65,6 @@ namespace PInvoke.Windows
 				0, 0,
 				SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
 			);
-			target.Visible = true;
 		}
 	}
 }

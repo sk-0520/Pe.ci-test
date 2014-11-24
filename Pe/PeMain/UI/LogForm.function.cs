@@ -41,6 +41,7 @@ namespace PeMain.UI
 			
 			if(!Visible && CommonData.MainSetting.Log.AddShow && ((CommonData.MainSetting.Log.AddShowTrigger & logType) == logType)) {
 				WindowsUtility.ShowNoActive(this);
+				Visible = true;
 				this._refresh = true;
 			}
 			
