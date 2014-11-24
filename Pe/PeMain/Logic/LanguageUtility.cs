@@ -35,6 +35,11 @@ namespace PeMain.Logic
 			
 			return modifiers.ToText(language) + keySeparator + key.ToText(language);
 		}
+
+		public static string HotkeySettingToDisplayText(Language language, HotKeySetting hotkeySetting)
+		{
+			return HotkeyToDisplayText(language, hotkeySetting.Modifiers, hotkeySetting.Key);
+		}
 		
 		/*
 		public static string HotKeySettingToMenuText(Language language, string menuText, HotKeySetting hotkeySetting)
