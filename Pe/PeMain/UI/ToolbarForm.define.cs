@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
@@ -82,8 +83,18 @@ namespace PeMain.UI
 
 			float _titleHeight;
 
+			//enum FadeState
+			//{
+			//	None,
+			//	In,
+			//	Out,
+			//}
+			//FadeState _fadeState;
+
 			public CustomToolTipForm()
 			{
+				//Opacity = 0;
+				//Visible = true;
 				FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 				ShowInTaskbar = false;
 				TopMost = true;
@@ -91,6 +102,8 @@ namespace PeMain.UI
 
 				BackColor = SystemColors.Info;
 				ForeColor = SystemColors.InfoText;
+
+				//this._fadeState = FadeState.None;
 
 				TipPadding = new Size(4, 4);
 				TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
@@ -154,11 +167,15 @@ namespace PeMain.UI
 
 			protected override void OnPaintBackground(PaintEventArgs e)
 			{
-				if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
-					base.OnPaintBackground(e);
-					e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+				if(CommonData != null && CommonData.Skin != null) {
+					if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
+						base.OnPaintBackground(e);
+						e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+					} else {
+						CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
+					}
 				} else {
-					CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
+					base.OnPaintBackground(e);
 				}
 			}
 
@@ -183,11 +200,31 @@ namespace PeMain.UI
 
 			void ToShow()
 			{
+				//this._fadeState = FadeState.In;
+				//Task.Factory.StartNew(() => {
+				//	for(var i = Opacity; i < 1; i += 0.1) {
+				//		this.BeginInvoke((MethodInvoker)delegate() { Opacity = i; });
+				//		if(_fadeState != FadeState.In) {
+				//			return;
+				//		}
+				//	}
+				//});
+				
 				Visible = true;
 			}
 
 			void ToHide()
 			{
+				//this._fadeState = FadeState.Out;
+				//Task.Factory.StartNew(() => {
+				//	for(var i = Opacity; i > 0; i -= 0.1) {
+				//		this.BeginInvoke((MethodInvoker)delegate() { Opacity = i; });
+				//		if(_fadeState != FadeState.Out) {
+				//			return;
+				//		}
+				//	}
+				//});
+
 				Visible = false;
 			}
 
