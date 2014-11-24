@@ -94,7 +94,7 @@ namespace PeMain.UI
 			public CustomToolTipForm()
 			{
 				//Opacity = 0;
-				//Visible = true;
+				Visible = false;
 				FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 				ShowInTaskbar = false;
 				TopMost = true;
@@ -110,6 +110,8 @@ namespace PeMain.UI
 				MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
 				IconScale = IconScale.Normal;
 			}
+			
+			protected override bool ShowWithoutActivation { get { return true; } }
 
 			protected override CreateParams CreateParams
 			{
@@ -210,7 +212,14 @@ namespace PeMain.UI
 				//	}
 				//});
 				
-				Visible = true;
+				//Visible = true;
+				NativeMethods.SetWindowPos(
+					Handle,
+					IntPtr.Zero,
+					0, 0,
+					0, 0,
+					SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
+				);
 			}
 
 			void ToHide()
