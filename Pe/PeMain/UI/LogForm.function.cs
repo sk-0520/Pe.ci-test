@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 using ObjectDumper;
 using PeMain.Data;
+using PInvoke.Windows;
 
 namespace PeMain.UI
 {
@@ -39,6 +40,7 @@ namespace PeMain.UI
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 			
 			if(!Visible && CommonData.MainSetting.Log.AddShow && ((CommonData.MainSetting.Log.AddShowTrigger & logType) == logType)) {
+				WindowsUtility.ShowNoActive(this);
 				Visible = true;
 				this._refresh = true;
 			}

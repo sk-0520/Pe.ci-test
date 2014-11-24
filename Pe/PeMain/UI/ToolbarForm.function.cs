@@ -13,10 +13,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
+using PeSkin;
 using PeUtility;
 
 namespace PeMain.UI
@@ -30,7 +30,8 @@ namespace PeMain.UI
 		{
 			CommonData = commonData;
 			this._isRunning = false;
-			
+
+			this._tipsLauncher.SetCommonData(CommonData);
 			ApplySetting();
 			
 			this._isRunning = true;
@@ -269,7 +270,8 @@ namespace PeMain.UI
 		void OpenDir(string path)
 		{
 			try {
-				Executer.OpenDirectory(path, CommonData, null);
+				var expandPath = Environment.ExpandEnvironmentVariables(path);
+				Executer.OpenDirectory(expandPath, CommonData, null);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
@@ -282,7 +284,8 @@ namespace PeMain.UI
 		
 		void OpenProperty(string path)
 		{
-			Executer.OpenProperty(path, Handle);
+			var expandPath = Environment.ExpandEnvironmentVariables(path);
+			Executer.OpenProperty(expandPath, Handle);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
@@ -337,12 +340,12 @@ namespace PeMain.UI
 				copyCommandItem.Enabled = commandEnabled;
 				propertyItem.Enabled = commandEnabled;
 				// 親ディレクトリ有無
-				var parentDirPath = Path.GetDirectoryName(launcherItem.Command);
+				var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
 				var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
 				openParentDirItem.Enabled = parentDirEnabled;
 				copyParentDirItem.Enabled = parentDirEnabled;
 				// 作業ディレクトリ有無
-				var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(launcherItem.WorkDirPath);
+				var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
 				openWorkDirItem.Enabled = workDirEnabled;
 				copyWorkDirItem.Enabled = workDirEnabled;
 			};
@@ -502,7 +505,8 @@ namespace PeMain.UI
 			fileItem.DropDownOpening += (object sender, EventArgs e) => {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
-				LoadFileList(fileItem, Path.GetDirectoryName(launcherItem.Command), showHiddenFile, showExtension);
+				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+				LoadFileList(fileItem, Path.GetDirectoryName(expandPath), showHiddenFile, showExtension);
 			};
 			ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
 			
@@ -520,8 +524,9 @@ namespace PeMain.UI
 					//executeExItem.Enabled = false;
 				}
 				try {
-					var parentPath = Path.GetDirectoryName(launcherItem.Command);
-					fileItem.Enabled = Directory.Exists(parentPath);
+					var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+					var expandParentPath = Path.GetDirectoryName(expandPath);
+					fileItem.Enabled = Directory.Exists(expandParentPath);
 				} catch(ArgumentException ex) {
 					// #41の影響により#77考慮不要
 					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
@@ -836,6 +841,7 @@ namespace PeMain.UI
 			toolItem.Visible = true;
 
 			toolItem.MouseHover += ToolItem_MouseHover;
+			toolItem.MouseLeave += toolItem_MouseLeave;
 			var dropdownItem = toolItem as ToolStripDropDownItem;
 			if(dropdownItem != null) {
 				dropdownItem.DropDownOpening += OpeningRootMenu;
@@ -845,7 +851,7 @@ namespace PeMain.UI
 			
 			return toolItem;
 		}
-		
+
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {

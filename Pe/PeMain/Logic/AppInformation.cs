@@ -15,7 +15,7 @@ namespace PeMain.Logic
 	/// <summary>
 	/// Description of Information.
 	/// </summary>
-	public class AppInformation: Information
+	public class AppInformation:InformationCollection
 	{
 		public override FileVersionInfo GetVersionInfo
 		{

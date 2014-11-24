@@ -9,12 +9,13 @@
 using System;
 using System.Collections.Generic;
 using PeMain.Data;
+using PeSkin;
 
 namespace PeMain.UI
 {
 	partial class NoteForm
 	{
-		Dictionary<NoteCommand, PeMain.IF.ButtonState> _commandStateMap;
+		Dictionary<SkinNoteCommand, SkinButtonState> _commandStateMap;
 		NoteBindItem _bindItem;
 		bool _initialized = true;
 		bool _changed = false;

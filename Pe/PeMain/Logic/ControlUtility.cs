@@ -14,8 +14,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
+using PeMain.IF;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -369,6 +369,15 @@ namespace PeMain.Logic
 			toolItem.Opening += EventDropDownOpeningMenuInScreen;
 		}
 
+		public static void SetSafeShortcutKeys(ToolStripMenuItem toolItem, Keys key, ILogger logger) 
+		{
+			try {
+				toolItem.ShortcutKeys = key;
+			} catch(InvalidEnumArgumentException ex) {
+				logger.Puts(LogType.Warning, key.ToString(), ex);
+			}
+		}
+		
 	}
 	
 	public static class WebBrowserUtility
@@ -470,7 +479,7 @@ namespace PeMain.Logic
 		{
 			var topmost = target.TopMost;
 			target.TopMost = true;
-			API.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+			NativeMethods.SetWindowPos(target.Handle, (IntPtr)HWND.HWND_TOP, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
 			target.TopMost = topmost;
 		}
 		

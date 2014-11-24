@@ -1,0 +1,19 @@
+create table T_NOTE_STYLE (
+    NOTE_ID         integer  primary key,
+    CMN_CREATE      text     not null,
+    CMN_UPDATE      text     not null,
+    FONT_FAMILY     text     not null,
+    FONT_SIZE       real     not null,
+    FONT_ITALIC     integer  not null,
+    FONT_BOLD       integer  not null,
+    COLOR_FORE      text     not null,
+    COLOR_BACK      text     not null,
+    WINDOW_VISIBLED integer  not null,
+    WINDOW_LOCKED   integer  not null,
+    WINDOW_TOPMOST  integer  not null,
+    WINDOW_COMPACT  integer  not null,
+    WINDOW_POS_X    integer  not null,
+    WINDOW_POS_Y    integer  not null,
+    WINDOW_SIZE_W   integer  not null,
+    WINDOW_SIZE_H   integer  not null
+)

@@ -11,9 +11,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.IF;
+using PeSkin;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -117,6 +117,7 @@ namespace PeMain.UI
 			Cursor = Cursors.Default;
 			
 			this._menuOpening = true;
+			this._tipsLauncher.Hide();
 			var toolItem = sender as ToolStripDropDownItem;
 			if(toolItem != null) {
 				switch(UseToolbarItem.ToolbarPosition) {
@@ -163,29 +164,48 @@ namespace PeMain.UI
 			Debug.WriteLine(toolItem.ToolTipText);
 			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
 			 */
-			this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+			//this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
+			//this.tipsLauncher.RemoveAll();
+			//this.tipsLauncher.SetToolTip(this, "#");
+			//if(toolItem.OwnerItem == this.toolLauncher)
+			//if(toolItem.OwnerItem == null)
+			//var menuItem = toolItem as ToolStripDropDownItem;
+			if(this._menuOpening) {
+				// メニュー表示中はなんもしない
+				return;
+			}
+			this._tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UseToolbarItem);
 		}
 
+		void toolItem_MouseLeave(object sender, EventArgs e)
+		{
+			this._tipsLauncher.HideItem();
+			//this.tipsLauncher.RemoveAll();
+		}
 		
+
+		/*
 		void ToolLauncher_MouseHover(object sender, EventArgs e)
 		{
-			
 			var cursorPoint = Cursor.Position;
 			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
 			var point = this.PointToClient(cursorPoint);
 			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().FirstOrDefault(i => i.Bounds.Contains(point));
 			if(toolItem != null) {
-				this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+				//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
+				Debug.WriteLine("ToolLauncher_MouseHover");
 			} else {
 				this.tipsLauncher.RemoveAll();
 			}
 		}
+		 * */
 		
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
 		{
 			if(e.FullScreen) {
 				TopMost = false;
-				API.SetWindowPos(Handle, (IntPtr)HWND.HWND_BOTTOM, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+				NativeMethods.SetWindowPos(Handle, (IntPtr)HWND.HWND_BOTTOM, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
 			} else {
 				ApplySettingTopmost();
 			}

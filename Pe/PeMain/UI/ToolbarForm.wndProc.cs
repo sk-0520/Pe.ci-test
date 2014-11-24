@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using PeMain.Data;
+using PeSkin;
 using PInvoke.Windows;
 
 namespace PeMain.UI
@@ -38,13 +39,13 @@ namespace PeMain.UI
 					case (int)WM.WM_NCPAINT:
 						{
 							if(CommonData != null) {
-								var hDC = API.GetWindowDC(Handle);
+								var hDC = NativeMethods.GetWindowDC(Handle);
 								try {
 									using(var g = Graphics.FromHdc(hDC)) {
 										DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
 									}
 								} finally {
-									API.ReleaseDC(Handle, hDC);
+									NativeMethods.ReleaseDC(Handle, hDC);
 								}
 							}
 						}
@@ -81,7 +82,7 @@ namespace PeMain.UI
 							if(!this._menuOpening) {
 								var hittest = WindowsUtility.HTFromLParam(m.LParam);
 								if(hittest == HT.HTCAPTION) {
-									API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+									NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 									return;
 								}
 							}
@@ -92,7 +93,7 @@ namespace PeMain.UI
 					case (int)WM.WM_CONTEXTMENU:
 						{
 							//Debug.WriteLine(m.WParam);
-							//API.SetCursor(API.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
+							//NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
 						}
 						//return;
 						break;

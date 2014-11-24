@@ -11,7 +11,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-    <NoWin32Manifest>False</NoWin32Manifest>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
@@ -49,13 +48,20 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Unittest' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DebugSymbols>False</DebugSymbols>
-    <DebugType>None</DebugType>
-    <Optimize>True</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DefineConstants>TRACE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,18 +81,27 @@
     <Compile Include="CommandLine.cs" />
     <Compile Include="DataUtility.cs" />
     <Compile Include="DBManager.cs" />
+    <Compile Include="DialogFilter.cs" />
     <Compile Include="DialogUtility.cs" />
     <Compile Include="FileUtility.cs" />
     <Compile Include="Functions.cs" />
+    <Compile Include="IconPath.cs" />
     <Compile Include="IconUtility.cs" />
-    <Compile Include="Information.cs" />
+    <Compile Include="InformationCollection.cs" />
+    <Compile Include="InformationGroup.cs" />
+    <Compile Include="OpenIconDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PathUtility.cs" />
     <Compile Include="PointingUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
+    <Compile Include="ShortcutFile.cs" />
     <Compile Include="SQLiteDBManager.cs" />
     <Compile Include="TextUtility.cs" />
-    <Compile Include="UI\AppbarForm.cs" />
+    <Compile Include="UI\AppbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\AppbarForm.define.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
@@ -95,24 +110,28 @@
     </Compile>
     <Compile Include="UI\AppbarForm.event.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AppbarForm.function.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AppbarForm.initialize.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AppbarForm.property.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AppbarForm.variable.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\AppbarForm.wndProc.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\HotkeyControl.cs" />
-    <Compile Include="UI\SplitButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\AppbarForm.resx">
@@ -130,9 +149,10 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UI" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\PeSkin\PeSkin.csproj">
+      <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
+      <Name>PeSkin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
       <Name>PInvoke</Name>

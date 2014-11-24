@@ -10,3 +10,7 @@ bin/
 /Pe/packages/
 *.cd
 ProfilingSessions/
+*.suo
+*.user
+*.psess
+*.vsp

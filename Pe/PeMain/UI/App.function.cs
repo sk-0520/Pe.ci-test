@@ -17,11 +17,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;
+using PeSkin;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -221,7 +221,7 @@ namespace PeMain.UI
 		void ResetNote()
 		{
 			foreach(var note in this._noteWindowList.ToArray()) {
-				note.Close();
+				//note.Close();
 				note.Dispose();
 			}
 			this._noteWindowList.Clear();
@@ -493,14 +493,19 @@ namespace PeMain.UI
 		{
 			PauseOthers(
 				() => {
-					using(var dialog = new UpdateForm()) {
-						dialog.UpdateData = updateData;
-						dialog.SetCommonData(this._commonData);
-						if(dialog.ShowDialog() == DialogResult.OK) {
-							// 現在設定を保持する
-							AppUtility.SaveSetting(this._commonData);
-							updateData.Execute();
+					try {
+						using(var dialog = new UpdateForm()) {
+							dialog.UpdateData = updateData;
+							dialog.SetCommonData(this._commonData);
+							if(dialog.ShowDialog() == DialogResult.OK) {
+								// 現在設定を保持する
+								AppUtility.SaveSetting(this._commonData);
+								updateData.Execute();
+							}
 						}
+					} catch(Exception ex) {
+						// #96
+						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
 					return null;
 				}
@@ -631,10 +636,10 @@ namespace PeMain.UI
 			
 			var myProcess = Process.GetCurrentProcess();
 
-			API.EnumWindows(
+			NativeMethods.EnumWindows(
 				(hWnd, lParam) => {
 					int processId;
-					API.GetWindowThreadProcessId(hWnd, out processId);
+					NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
 					var process = Process.GetProcessById(processId);
 					if(!getAppWindow) {
 						if(myProcess.Id == process.Id) {
@@ -642,22 +647,22 @@ namespace PeMain.UI
 						}
 					}
 					
-					if(!API.IsWindowVisible(hWnd)) {
+					if(!NativeMethods.IsWindowVisible(hWnd)) {
 						return true;
 					}
 					
 					var classBuffer = new StringBuilder(WindowsUtility.classNameLength);
-					API.GetClassName(hWnd, classBuffer, classBuffer.Capacity);
+					NativeMethods.GetClassName(hWnd, classBuffer, classBuffer.Capacity);
 					var className = classBuffer.ToString();
 					if(skipClassName.Any(s => s == className)) {
 						return true;
 					}
 					
-					var titleLength = API.GetWindowTextLength(hWnd);
+					var titleLength = NativeMethods.GetWindowTextLength(hWnd);
 					var titleBuffer = new StringBuilder(titleLength + 1);
-					API.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
+					NativeMethods.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
 					var rawRect = new RECT();
-					API.GetWindowRect(hWnd, out rawRect);
+					NativeMethods.GetWindowRect(hWnd, out rawRect);
 					var windowItem = new WindowItem();
 					windowItem.Name = titleBuffer.ToString();
 					windowItem.Process = process;
@@ -680,7 +685,7 @@ namespace PeMain.UI
 		void ChangeWindow(WindowListItem windowListItem)
 		{
 			foreach(var windowItem in windowListItem.Items) {
-				var reslut = API.MoveWindow(windowItem.WindowHandle, windowItem.Rectangle.X, windowItem.Rectangle.Y, windowItem.Rectangle.Width, windowItem.Rectangle.Height, true);
+				var reslut = NativeMethods.MoveWindow(windowItem.WindowHandle, windowItem.Rectangle.X, windowItem.Rectangle.Y, windowItem.Rectangle.Width, windowItem.Rectangle.Height, true);
 			}
 		}
 		

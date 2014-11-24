@@ -33,7 +33,7 @@ namespace PeUtility
 		private static bool IsAutoMove()
 		{
 			int result = 0;
-			var funcReturn = API.SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref result, SPIF.None);
+			var funcReturn = NativeMethods.SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref result, SPIF.None);
 			return funcReturn && result != 0;
 		}
 		

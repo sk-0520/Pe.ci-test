@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using PeMain.Data;
+using PeSkin;
 
 namespace PeMain.UI
 {
@@ -27,7 +28,7 @@ namespace PeMain.UI
 			
 			ItemEdit = true;
 			FilterType = LauncherItemSelecterType.Full;
-			IconScale = PeUtility.IconScale.Normal;
+			IconScale = IconScale.Normal;
 			
 			InitializeUI();
 			TuneItemHeight();

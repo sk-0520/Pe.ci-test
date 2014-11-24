@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using PeMain.Data;
 using PeUtility;
 using PeMain.Logic;
+using PeSkin;
 
 namespace PeMain.UI
 {

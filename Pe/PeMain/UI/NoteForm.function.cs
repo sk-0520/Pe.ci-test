@@ -17,6 +17,7 @@ using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
 using PeMain.Logic.DB;
+using PeSkin;
 
 namespace PeMain.UI
 {
@@ -64,12 +65,12 @@ namespace PeMain.UI
 			ApplyLanguage();
 		}
 		
-		IEnumerable<NoteCommand> GetCommandList()
+		IEnumerable<SkinNoteCommand> GetCommandList()
 		{
 			return new [] {
-				NoteCommand.Topmost,
-				NoteCommand.Compact,
-				NoteCommand.Close,
+				SkinNoteCommand.Topmost,
+				SkinNoteCommand.Compact,
+				SkinNoteCommand.Close,
 			};
 		}
 		
@@ -86,28 +87,28 @@ namespace PeMain.UI
 		
 		public void ToClose(bool removeData)
 		{
-			ExecCommand(NoteCommand.Close, removeData);
+			ExecCommand(SkinNoteCommand.Close, removeData);
 		}
 		
 		public void ToCompact()
 		{
-			ExecCommand(NoteCommand.Compact, false);
+			ExecCommand(SkinNoteCommand.Compact, false);
 		}
 		
 		public void ToTopmost()
 		{
-			ExecCommand(NoteCommand.Topmost, false);
+			ExecCommand(SkinNoteCommand.Topmost, false);
 		}
 		
 		public void ToLock()
 		{
-			ExecCommand(NoteCommand.Lock, false);
+			ExecCommand(SkinNoteCommand.Lock, false);
 		}
 		
-		void ExecCommand(NoteCommand noteCommand, bool removeData)
+		void ExecCommand(SkinNoteCommand noteCommand, bool removeData)
 		{
 			switch(noteCommand) {
-				case NoteCommand.Topmost:
+				case SkinNoteCommand.Topmost:
 					{
 						NoteItem.Topmost = !NoteItem.Topmost;
 						TopMost = NoteItem.Topmost;
@@ -116,7 +117,7 @@ namespace PeMain.UI
 					}
 					break;
 					
-				case NoteCommand.Compact:
+				case SkinNoteCommand.Compact:
 					{
 						NoteItem.Compact = !NoteItem.Compact;
 						Changed = true;
@@ -126,7 +127,7 @@ namespace PeMain.UI
 					}
 					break;
 					
-				case NoteCommand.Close:
+				case SkinNoteCommand.Close:
 					{
 						if(removeData) {
 							// TODO: 論理削除
@@ -141,7 +142,7 @@ namespace PeMain.UI
 					}
 					break;
 					
-				case NoteCommand.Lock:
+				case SkinNoteCommand.Lock:
 					{
 						HiddenInputTitleArea();
 						HiddenInputBodyArea();

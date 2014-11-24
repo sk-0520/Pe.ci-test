@@ -10,9 +10,10 @@ using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
-
+using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.IF;
+using PeSkin;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -32,8 +33,8 @@ namespace PeMain.UI
 				Active = false;
 				HasArrow = false;
 				HasMenuSplit = false;
-				ButtonState = PeMain.IF.ButtonState.None;
-				MenuState = PeMain.IF.ButtonState.None;
+				ButtonState = SkinButtonState.None;
+				MenuState = SkinButtonState.None;
 			}
 			
 			public Graphics Graphics { get; set; }
@@ -41,8 +42,8 @@ namespace PeMain.UI
 			public bool HasArrow { get; set; }
 			public ArrowDirection ArrowDirection { get; set; }
 			public bool HasMenuSplit { get; set; }
-			public PeMain.IF.ButtonState ButtonState { get; set; }
-			public PeMain.IF.ButtonState MenuState { get; set; }
+			public SkinButtonState ButtonState { get; set; }
+			public SkinButtonState MenuState { get; set; }
 			public Rectangle ButtonArea { get; set; }
 			public Rectangle MenuArea { get; set; }
 		}
@@ -125,7 +126,7 @@ namespace PeMain.UI
 		protected static bool IsEnabledVisualStyle()
 		{
 			bool isAero;
-			API.DwmIsCompositionEnabled(out isAero);
+			NativeMethods.DwmIsCompositionEnabled(out isAero);
 			return isAero;
 		}
 		
@@ -167,7 +168,18 @@ namespace PeMain.UI
 			
 			return padding;
 		}
-		
+
+		public virtual void ApplyToolbarToolTipRegion(Form target)
+		{
+			if(EnabledVisualStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
+				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
+
+				using(Graphics g = Graphics.FromHwnd(IntPtr.Zero)) {
+					target.Region = visualStyleRenderer.GetBackgroundRegion(g, new Rectangle(Point.Empty, target.Size));
+				}
+			}
+		}
+
 		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth);
 		
 #endregion
@@ -176,7 +188,7 @@ namespace PeMain.UI
 
 		public abstract Padding GetNoteWindowEdgePadding();
 		public abstract Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
-		public abstract Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, NoteCommand noteCommand);
+		public abstract Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, SkinNoteCommand noteCommand);
 
 		
 #endregion
@@ -187,8 +199,8 @@ namespace PeMain.UI
 		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
-		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, ToolbarItem toolbarItem);
-		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, ToolbarItem toolbarItem);
+		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, IconScale iconScale);
+		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth);
 
 		public virtual void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth)
 		{
@@ -201,13 +213,13 @@ namespace PeMain.UI
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.MenuState = SkinButtonState.Pressed;
 			} else if(e.Item.Selected) {
 				// 選ばれている
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.MenuState = SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.MenuState = SkinButtonState.Normal;
 			}
 			
 			DrawToolbarButton(toolbarButtonData);
@@ -224,13 +236,13 @@ namespace PeMain.UI
 			
 			if(e.Item.Pressed) {
 				// 押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = SkinButtonState.Pressed;
 			} else if(item.Selected) {
 				// 選ばれている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.ButtonState = SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.ButtonState = SkinButtonState.Normal;
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
@@ -248,20 +260,20 @@ namespace PeMain.UI
 			
 			if(item.DropDownButtonPressed) {
 				// ドロップダウンが押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = SkinButtonState.Selected;
+				toolbarButtonData.MenuState = SkinButtonState.Pressed;
 			} else if(item.ButtonPressed) {
 				// ボタンが押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = SkinButtonState.Pressed;
+				toolbarButtonData.MenuState = SkinButtonState.Pressed;
 			} else if(item.Selected) {
 				// ボタンが選ばれている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.ButtonState = SkinButtonState.Selected;
+				toolbarButtonData.MenuState = SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.ButtonState = SkinButtonState.Normal;
+				toolbarButtonData.MenuState = SkinButtonState.Normal;
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
@@ -279,20 +291,27 @@ namespace PeMain.UI
 			
 			if(item.Pressed) {
 				// ボタンが押されている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Pressed;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Pressed;
+				toolbarButtonData.ButtonState = SkinButtonState.Pressed;
+				toolbarButtonData.MenuState = SkinButtonState.Pressed;
 			} else if(item.Selected) {
 				// ボタンが選ばれている
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Selected;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Selected;
+				toolbarButtonData.ButtonState = SkinButtonState.Selected;
+				toolbarButtonData.MenuState = SkinButtonState.Selected;
 			} else {
 				// 通常
-				toolbarButtonData.ButtonState = PeMain.IF.ButtonState.Normal;
-				toolbarButtonData.MenuState = PeMain.IF.ButtonState.Normal;
+				toolbarButtonData.ButtonState = SkinButtonState.Normal;
+				toolbarButtonData.MenuState = SkinButtonState.Normal;
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
 
+		public virtual void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea)
+		{
+			if(EnabledVisualStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
+				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
+				visualStyleRenderer.DrawBackground(g, drawArea);
+			}
+		}
 #endregion
 			
 #region Draw Note
@@ -300,7 +319,7 @@ namespace PeMain.UI
 		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
 		public abstract void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption);
-		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, NoteCommand noteCommand, PeMain.IF.ButtonState buttonState);
+		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, SkinNoteCommand noteCommand, SkinButtonState buttonState);
 		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
 
@@ -320,6 +339,7 @@ namespace PeMain.UI
 		public virtual bool IsDefaultDrawToolbarDropDownButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarButtonBackground { get { return true; } }
+		public virtual bool IsDefaultDrawToolbarToolTipBackground { get{ return true; } }
 		
 		protected virtual void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{

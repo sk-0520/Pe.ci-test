@@ -42,13 +42,12 @@ namespace PeMain.Data
 		public HotKeySetting ShowFrontHotKey { get; set; }
 		
 		public FontSetting CaptionFontSetting { get; set; }
-		
-		public override void Dispose()
+
+		protected override void Dispose(bool disposing)
 		{
-			base.Dispose();
-			
 			CaptionFontSetting.ToDispose();
+
+			base.Dispose(disposing);
 		}
-		
 	}
 }

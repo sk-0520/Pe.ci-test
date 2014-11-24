@@ -44,7 +44,7 @@ namespace PeMain.UI
 				// 現在生成されているツールバーの数が前回ディスプレイ数となる
 				
 				// 変更通知から現在数をAPIでまともに取得する
-				var rawScreenCount = API.GetSystemMetrics(SM.SM_CMONITORS);
+				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
 				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
 				//bool isTimeout = false;
 				Task.Factory.StartNew(

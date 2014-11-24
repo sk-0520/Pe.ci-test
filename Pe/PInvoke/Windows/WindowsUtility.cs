@@ -8,9 +8,14 @@
  */
 using System;
 using System.Drawing;
+using System.Security;
+using System.Windows.Forms;
 
 namespace PInvoke.Windows
 {
+	public static partial class NativeMethods { }
+	//internal static partial class NativeMethods { }
+
 	/// <summary>
 	/// PInvoke.Windows.API 関連の便利処理。
 	/// </summary>
@@ -49,6 +54,17 @@ namespace PInvoke.Windows
 		public static HT HTFromLParam(IntPtr param)
 		{
 			return (HT)LOWORD(param);
+		}
+
+		public static void ShowNoActive(Form target)
+		{
+			NativeMethods.SetWindowPos(
+				target.Handle,
+				IntPtr.Zero,
+				0, 0,
+				0, 0,
+				SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
+			);
 		}
 	}
 }

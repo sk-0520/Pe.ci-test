@@ -27,11 +27,11 @@ namespace PeUtility
 		{
 			Debug.Assert(!this.DesignMode);
 
-			this.callbackMessage = API.RegisterWindowMessage(MessageString);
+			this.callbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
 			var appBar = new APPBARDATA(Handle);
 			appBar.uCallbackMessage = this.callbackMessage;
 			
-			var registResult = API.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
+			var registResult = NativeMethods.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
 			IsDocking = registResult.ToInt32() != 0;
 			
 			return IsDocking;
@@ -43,7 +43,7 @@ namespace PeUtility
 
 			var appBar = new APPBARDATA(Handle);
 
-			var unregistResult = API.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
+			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
 			
 			IsDocking = false;
 			this.callbackMessage = 0;
@@ -88,7 +88,7 @@ namespace PeUtility
 		private void TuneSystemBarArea(ref APPBARDATA appBar)
 		{
 			// 現在の希望するサイズから実際のサイズ要求する
-			API.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
+			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 			switch(appBar.uEdge) {
 				case ABE.ABE_LEFT:
 					appBar.rc.Right = appBar.rc.Left + BarSize.Width;
@@ -118,7 +118,7 @@ namespace PeUtility
 			
 			var appBar = new APPBARDATA(Handle);
 			appBar.uEdge = desktopDockType.ToABE();
-			var nowWnd = API.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
+			var nowWnd = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
 			
 			return nowWnd;
 		}
@@ -138,12 +138,12 @@ namespace PeUtility
 				if(hideWnd.ToInt32() == 0 || hideWnd == Handle) {
 				//if(hideWnd == null || hideWnd == Handle) {
 					// 自動的に隠す
-					var result = API.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
+					var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
 					autoHideResult = result.ToInt32() != 0;
 				}
 			}
 			if(!autoHideResult) {
-				var appbarResult = API.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+				var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
 			}
 			
 			AutoHide = autoHideResult;
@@ -348,7 +348,7 @@ namespace PeUtility
 		{
 			var prevVisible = Visible;
 			if(Visible) {
-				API.AnimateWindow(Handle, (int)HiddenAnimateTime.TotalMilliseconds, ToAW(DesktopDockType, false));
+				NativeMethods.AnimateWindow(Handle, (int)HiddenAnimateTime.TotalMilliseconds, ToAW(DesktopDockType, false));
 				Bounds = area;
 				Visible = prevVisible;
 			}

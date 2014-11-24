@@ -46,13 +46,18 @@ namespace PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public bool IsDisposed { get; protected set; }
-		
+
+		protected virtual void Dispose(bool disposing)
+		{
+			IsDisposed = true;
+		}
+
 		/// <summary>
 		/// 解放。
 		/// </summary>
-		public virtual void Dispose()
+		public void Dispose()
 		{
-			IsDisposed = true;
+			Dispose(true);
 		}
 	}
 	

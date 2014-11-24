@@ -17,34 +17,10 @@ using System.Windows.Forms;
 
 namespace PeUtility
 {
-	public class InfoGroup
-	{
-		public InfoGroup(string title)
-		{
-			Title = title;
-			Items = new Dictionary<string, object>();
-		}
-		
-		public string Title { get; private set; }
-		public Dictionary<string, object> Items { get; private set; }
-		
-		public override string ToString()
-		{
-			var stream = new StringWriter();
-			stream.WriteLine("{0} =================", Title);
-			foreach(var pair in Items) {
-				stream.WriteLine("{0}: {1}", pair.Key, pair.Value);
-			}
-			return stream.ToString();
-		}
-
-		
-	}
-	
 	/// <summary>
 	/// 各種情報を取得する。
 	/// </summary>
-	public class Information: IDisposable
+	public class InformationCollection: IDisposable
 	{
 		protected ManagementClass _managementOS = new ManagementClass("Win32_OperatingSystem");
 		protected ManagementClass _managementCPU = new ManagementClass("Win32_Processor");
@@ -53,16 +29,21 @@ namespace PeUtility
 		{
 			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
 		}
-		
-		public void Dispose()
+
+		protected virtual void Dispose(bool disposing)
 		{
 			this._managementOS.Dispose();
 			this._managementCPU.Dispose();
 		}
 		
-		protected virtual InfoGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> keys)
+		public void Dispose()
 		{
-			var result = new InfoGroup(groupName);
+			Dispose(true);
+		}
+		
+		protected virtual InformationGroup GetInfo(ManagementClass managementClass, string groupName, IEnumerable<string> keys)
+		{
+			var result = new InformationGroup(groupName);
 			if(keys != null) {
 				using(var mc = managementClass.GetInstances()) {
 					foreach(var mo in mc) {
@@ -84,7 +65,7 @@ namespace PeUtility
 		/// http://www.wmifun.net/library/win32_processor.html
 		/// </summary>
 		/// <returns></returns>
-		protected virtual InfoGroup GetCPU()
+		protected virtual InformationGroup GetCPU()
 		{
 			var keys = new [] {
 				// アドレス幅
@@ -155,7 +136,7 @@ namespace PeUtility
 		/// メモリ情報取得
 		/// </summary>
 		/// <returns></returns>
-		protected virtual InfoGroup GetMemory()
+		protected virtual InformationGroup GetMemory()
 		{
 			var keys = new [] {
 				// 物理メモリ(合計:KB)
@@ -171,9 +152,9 @@ namespace PeUtility
 			return result;
 		}
 		
-		public virtual InfoGroup GetEnvironment()
+		public virtual InformationGroup GetEnvironment()
 		{
-			var result = new InfoGroup("Environment");
+			var result = new InformationGroup("Environment");
 			
 			result.Items["CommandLine"] = Environment.CommandLine;
 			result.Items["CurrentDirectory"] = Environment.CurrentDirectory;
@@ -203,9 +184,9 @@ namespace PeUtility
 			return result;
 		}
 		
-		public virtual InfoGroup GetApplication()
+		public virtual InformationGroup GetApplication()
 		{
-			var result = new InfoGroup("Application");
+			var result = new InformationGroup("Application");
 			
 			var versionInfo = GetVersionInfo;
 			
@@ -267,9 +248,9 @@ namespace PeUtility
 		}
 		
 
-		public virtual InfoGroup GetScreen()
+		public virtual InformationGroup GetScreen()
 		{
-			var result = new InfoGroup("Screen");
+			var result = new InformationGroup("Screen");
 			var screens = Screen.AllScreens;
 			for(var i = 0; i < screens.Length; i++) {
 				var screen = screens[i];
@@ -284,7 +265,7 @@ namespace PeUtility
 			return result;
 		}
 
-		public virtual IEnumerable<InfoGroup> Get()
+		public virtual IEnumerable<InformationGroup> Get()
 		{
 			return new [] {
 				GetApplication(),

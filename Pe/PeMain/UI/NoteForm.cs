@@ -14,10 +14,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
+using PeSkin;
 using PeUtility;
 using PInvoke.Windows;
 
@@ -106,9 +106,9 @@ namespace PeMain.UI
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
 					if (left && isIn) {
-						return PeMain.IF.ButtonState.Pressed;
+						return SkinButtonState.Pressed;
 					} else {
-						return PeMain.IF.ButtonState.Normal;
+						return SkinButtonState.Normal;
 					}
 				},
 				null,
@@ -128,13 +128,13 @@ namespace PeMain.UI
 				(isIn, nowState) => {
 					var left = (MouseButtons & MouseButtons.Left) == MouseButtons.Left;
 					if (left && isIn) {
-						return PeMain.IF.ButtonState.Selected;
+						return SkinButtonState.Selected;
 					} else {
-						return PeMain.IF.ButtonState.Normal;
+						return SkinButtonState.Normal;
 					}
 				},
 				command => {
-					if (this._commandStateMap[command] == PeMain.IF.ButtonState.Pressed) {
+					if (this._commandStateMap[command] == SkinButtonState.Pressed) {
 						var isRemove = AppUtility.IsExtension();
 						if (isRemove) {
 							var map = new Dictionary<string, string>() {
@@ -459,7 +459,7 @@ namespace PeMain.UI
 		
 		void ContextMenu_itemRemove_Click(object sender, EventArgs e)
 		{
-			ExecCommand(NoteCommand.Close, true);
+			ExecCommand(SkinNoteCommand.Close, true);
 		}
 	}
 }
