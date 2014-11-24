@@ -1669,9 +1669,9 @@ namespace PInvoke.Windows
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr LoadCursor(IntPtr hInstance, string lpCursorName);
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1901:PInvokeDeclarationsShouldBePortable"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32.dll")]
-		public static extern IntPtr LoadCursor(IntPtr hInstance, [In, MarshalAs(UnmanagedType.SysInt)]IDC lpCursorName);
+		public static extern IntPtr LoadCursor(IntPtr hInstance, IDC lpCursorName);
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32.dll")]
