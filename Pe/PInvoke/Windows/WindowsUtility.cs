@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Security;
+using System.Windows.Forms;
 
 namespace PInvoke.Windows
 {
@@ -53,6 +54,18 @@ namespace PInvoke.Windows
 		public static HT HTFromLParam(IntPtr param)
 		{
 			return (HT)LOWORD(param);
+		}
+
+		public static void ShowNoActive(Form target)
+		{
+			NativeMethods.SetWindowPos(
+				target.Handle,
+				IntPtr.Zero,
+				0, 0,
+				0, 0,
+				SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
+			);
+			target.Visible = true;
 		}
 	}
 }

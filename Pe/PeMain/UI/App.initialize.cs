@@ -318,11 +318,15 @@ namespace PeMain.UI
 				itemNoteHidden.Enabled = hasNote;
 				itemNoteCompact.Enabled = hasNote;
 				itemNoteShowFront.Enabled = hasNote;
-				
-				itemNoteCreate.ShortcutKeys = this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey();
-				itemNoteHidden.ShortcutKeys = this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey();
-				itemNoteCompact.ShortcutKeys = this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey();
-				itemNoteShowFront.ShortcutKeys = this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey();
+
+				//itemNoteCreate.ShortcutKeys = this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey();
+				//itemNoteHidden.ShortcutKeys = this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey();
+				//itemNoteCompact.ShortcutKeys = this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey();
+				//itemNoteShowFront.ShortcutKeys = this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey();
+				ToolStripUtility.SetSafeShortcutKeys(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeys(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeys(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeys(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey(), this._commonData.Logger);
 				
 				OpeningNoteMenu();
 			};
@@ -433,8 +437,10 @@ namespace PeMain.UI
 				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
 				itemExtension.Checked = SystemEnvironment.IsExtensionShow();
 
-				itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
-				itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
+				//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
+				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
+				ToolStripUtility.SetSafeShortcutKeys(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeys(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey(), this._commonData.Logger);
 			};
 
 		}
