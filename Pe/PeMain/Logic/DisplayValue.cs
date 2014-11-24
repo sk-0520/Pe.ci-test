@@ -6,7 +6,6 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,7 +13,6 @@ using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
 using PeSkin;
-using PeUtility;
 
 namespace PeMain.Logic
 {
