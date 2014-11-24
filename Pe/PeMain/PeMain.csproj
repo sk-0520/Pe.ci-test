@@ -303,12 +303,6 @@
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Custom\CustomToolTipForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Custom\CustomToolTipForm.Designer.cs">
-      <DependentUpon>CustomToolTipForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>
     </Compile>
