@@ -35,6 +35,6 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 ## CI
 
- * **Mater** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/master)
- * **RC-0.33.0** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/rc-0.33.0?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/rc-0.33.0)
+ * **mater** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/master)
+ * **develop** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/develop?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/develop)
 
