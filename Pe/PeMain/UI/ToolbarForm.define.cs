@@ -205,6 +205,7 @@ namespace PeMain.UI
 						(int)(Math.Max(IconScale.ToHeight(), titleSize.Height) + messageSize.Height) + Padding.Vertical
 					);
 				}
+				Region = System.Drawing.Region.FromHrgn(NativeMethods.CreateRoundRectRgn(0, 0, Width, Height, 2, 2));
 
 				// 表示位置設定
 				var itemArea = toolStripItem.Bounds;
