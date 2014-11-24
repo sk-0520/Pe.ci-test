@@ -18,10 +18,36 @@ namespace PeMain.UI
 	{
 		void ApplyLanguageNoteMenu(ToolStripDropDownItem parentItem)
 		{
-			parentItem.DropDownItems[menuNameWindowNoteCreate].Text = this._commonData.Language["main/menu/window/note/create"];
-			parentItem.DropDownItems[menuNameWindowNoteHidden].Text = this._commonData.Language["main/menu/window/note/hidden"];
-			parentItem.DropDownItems[menuNameWindowNoteCompact].Text =this._commonData.Language["main/menu/window/note/compact"];
-			parentItem.DropDownItems[menuNameWindowNoteShowFront].Text =this._commonData.Language["main/menu/window/note/show-front"];
+			var keyItems = new[] {
+				new {
+					Name = menuNameWindowNoteCreate,
+					Lang = "main/menu/window/note/create",
+					Key  = this._commonData.MainSetting.Note.CreateHotKey
+				},
+				new {
+					Name = menuNameWindowNoteHidden,
+					Lang = "main/menu/window/note/hidden",
+					Key  = this._commonData.MainSetting.Note.HiddenHotKey
+				},
+				new {
+					Name = menuNameWindowNoteCompact,
+					Lang = "main/menu/window/note/compact",
+					Key  = this._commonData.MainSetting.Note.CompactHotKey
+				},
+				new {
+					Name = menuNameWindowNoteShowFront,
+					Lang = "main/menu/window/note/show-front",
+					Key  = this._commonData.MainSetting.Note.ShowFrontHotKey
+				},
+			};
+
+			foreach(var keyItem in keyItems) {
+				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
+				menuItem.Text = this._commonData.Language[keyItem.Lang];
+				if(keyItem.Key.Enabled) {
+					menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
+				}
+			}
 		}
 		
 		void ApplyLanguageSystemEnvWindowMenu(ToolStripDropDownItem parentItem)
@@ -32,9 +58,26 @@ namespace PeMain.UI
 		
 		void ApplyLanguageSystemEnvMenu(ToolStripDropDownItem parentItem)
 		{
-			parentItem.DropDownItems[menuNameSystemEnvHiddenFile].Text = this._commonData.Language["main/menu/system-env/show-hiddne-file"];
-			parentItem.DropDownItems[menuNameSystemEnvExtension].Text = this._commonData.Language["main/menu/system-env/show-extension"];
-			
+			var keyItems = new [] {
+				new {
+					Name = menuNameSystemEnvHiddenFile,
+					Lang = "main/menu/system-env/show-hiddne-file",
+					Key  = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey
+				},
+				new {
+					Name = menuNameSystemEnvExtension,
+					Lang = "main/menu/system-env/show-extension",
+					Key  = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey
+				},
+			};
+			foreach(var keyItem in keyItems) {
+				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
+				menuItem.Text = this._commonData.Language[keyItem.Lang];
+				if(keyItem.Key.Enabled) {
+					menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
+				}
+			}
+
 			// ウィンドウ
 			var itemWindow = (ToolStripDropDownItem)parentItem.DropDownItems[menuNameSystemEnvWindow];
 			itemWindow.Text = this._commonData.Language["main/menu/system-env/window"];
