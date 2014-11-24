@@ -117,6 +117,7 @@ namespace PeMain.UI
 			Cursor = Cursors.Default;
 			
 			this._menuOpening = true;
+			this.tipsLauncher.Hide();
 			var toolItem = sender as ToolStripDropDownItem;
 			if(toolItem != null) {
 				switch(UseToolbarItem.ToolbarPosition) {
@@ -168,7 +169,12 @@ namespace PeMain.UI
 			//this.tipsLauncher.RemoveAll();
 			//this.tipsLauncher.SetToolTip(this, "#");
 			//if(toolItem.OwnerItem == this.toolLauncher)
-			if(toolItem.OwnerItem == null)
+			//if(toolItem.OwnerItem == null)
+			//var menuItem = toolItem as ToolStripDropDownItem;
+			if(this._menuOpening) {
+				// メニュー表示中はなんもしない
+				return;
+			}
 			this.tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UseToolbarItem);
 		}
 
