@@ -275,7 +275,7 @@ namespace PeMain.UI
 					case ToolbarPosition.DesktopFloat: 
 					case ToolbarPosition.DesktopTop:
 						// 下に表示
-						Location = new Point(screenPoint.X + TipPadding.Width, screenPoint.Y + itemArea.Height + TipPadding.Height);
+						Location = new Point(screenPoint.X, screenPoint.Y + itemArea.Height + TipPadding.Height);
 						if(toolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 							if(Location.Y + Size.Height > screen.WorkingArea.Height) {
 								goto _TOP_;
@@ -285,17 +285,17 @@ namespace PeMain.UI
 
 					case ToolbarPosition.DesktopBottom: _TOP_:
 						// 上に表示
-						Location = new Point(screenPoint.X + TipPadding.Width, screenPoint.Y - Height - TipPadding.Height);
+						Location = new Point(screenPoint.X, screenPoint.Y - Height - TipPadding.Height);
 						break;
 
 					case ToolbarPosition.DesktopLeft:
 						// 右に表示
-						Location = new Point(screenPoint.X + itemArea.Width - TipPadding.Width, screenPoint.Y + TipPadding.Height);
+						Location = new Point(screenPoint.X + itemArea.Width + TipPadding.Width, screenPoint.Y);
 						break;
 
 					case ToolbarPosition.DesktopRight:
 						// 左に表示
-						Location = new Point(screenPoint.X - itemArea.Width - TipPadding.Width, screenPoint.Y + TipPadding.Height);
+						Location = new Point(screenPoint.X - itemArea.Width - TipPadding.Width, screenPoint.Y);
 						break;
 
 					default:
