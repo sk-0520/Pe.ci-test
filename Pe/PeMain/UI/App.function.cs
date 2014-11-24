@@ -493,14 +493,19 @@ namespace PeMain.UI
 		{
 			PauseOthers(
 				() => {
-					using(var dialog = new UpdateForm()) {
-						dialog.UpdateData = updateData;
-						dialog.SetCommonData(this._commonData);
-						if(dialog.ShowDialog() == DialogResult.OK) {
-							// 現在設定を保持する
-							AppUtility.SaveSetting(this._commonData);
-							updateData.Execute();
+					try {
+						using(var dialog = new UpdateForm()) {
+							dialog.UpdateData = updateData;
+							dialog.SetCommonData(this._commonData);
+							if(dialog.ShowDialog() == DialogResult.OK) {
+								// 現在設定を保持する
+								AppUtility.SaveSetting(this._commonData);
+								updateData.Execute();
+							}
 						}
+					} catch(Exception ex) {
+						// #96
+						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
 					return null;
 				}
