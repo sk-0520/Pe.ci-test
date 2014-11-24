@@ -279,6 +279,15 @@ namespace PeMain.UI
 
 				// 表示位置設定
 				var itemArea = toolStripItem.Bounds;
+				Debug.WriteLine(itemArea);
+				if(toolStripItem.OwnerItem != null) {
+					var ownerItemLocation = toolStripItem.OwnerItem.Bounds.Location;
+					//var overflowPosition = toolStripItem.Owner.PointToScreen(ownerItemLocation);
+					//itemArea.Offset(0, toolStripItem.OwnerItem.Bounds.Location.Y);
+					itemArea.Offset(ownerItemLocation);
+					
+					//itemArea.X = ownerItemLocation.X;
+				}
 				var screenPoint = toolStripItem.Owner.PointToScreen(itemArea.Location);
 				switch(toolbarItem.ToolbarPosition) {
 					case ToolbarPosition.DesktopFloat: 
