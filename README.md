@@ -2,6 +2,12 @@
 
 プログラムランチャー。
 
+ * **Mater** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/master)
+
+# ダウンロード
+
+[ダウンロード](https://bitbucket.org/sk_0520/pe/downloads)を参照。
+
 
 # オンラインヘルプ
 
