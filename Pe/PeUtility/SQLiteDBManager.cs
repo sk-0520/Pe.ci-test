@@ -14,7 +14,7 @@ using System.Drawing;
 
 namespace PeUtility
 {
-	public abstract class SQLiteDBManager: DBManager
+	public class SQLiteDBManager: DBManager
 	{
 		public SQLiteDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
 		{ }
