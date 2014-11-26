@@ -84,12 +84,16 @@ namespace PeMain.UI
 			
 			var command = map[tableName];
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/create", langMap] , command);
-			this._commonData.Database.ExecuteCommand(command);
+			using(var query = this._commonData.Database.CreateQuery()) {
+				query.ExecuteCommand(command);
+			}
 
 			var entity = new MVersionEntity();
 			entity.Name = tableName;
 			entity.Version = DataTables.map[tableName];
-			this._commonData.Database.ExecuteInsert(new [] { entity });
+			using(var query = this._commonData.Database.CreateQuery()) {
+				query.ExecuteInsert(new[] { entity });
+			}
 		}
 		
 		
@@ -141,7 +145,9 @@ namespace PeMain.UI
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/version"], enabledVersionTable);
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成
-				this._commonData.Database.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionMasterTable);
+				using(var query = this._commonData.Database.CreateQuery()) {
+					query.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionMasterTable);
+				}
 			}
 			
 			// プログラムの知っているテーブルが存在しない、またはバージョンが異なる場合に調整する
