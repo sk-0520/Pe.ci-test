@@ -86,19 +86,6 @@ namespace PeUtility
 		}
 		
 		/// <summary>
-		/// 条件式を指定値で生成。
-		/// </summary>
-		/// <param name="condition">条件</param>
-		/// <param name="trueCommand">真の場合のコマンド</param>
-		/// <param name="commandExpression">偽の場合の条件式</param>
-		public CommandExpression(bool condition, string trueCommand, CommandExpression commandExpression): this()
-		{
-			Condition = condition;
-			TrueCommand = trueCommand;
-			FalseCondition = FalseCondition.Expression;
-			FalseExpression = commandExpression;
-		}
-		/// <summary>
 		/// 条件
 		/// </summary>
 		public bool Condition { get; private set; }
@@ -262,7 +249,7 @@ namespace PeUtility
 		/// <summary>
 		/// 条件式。
 		/// </summary>
-		public IDictionary<string, CommandExpression> Expression { get; private set; }
+		protected IDictionary<string, CommandExpression> Expression { get; private set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -276,6 +263,38 @@ namespace PeUtility
 			set { CompiledPattern = new Regex(value, RegexOptions.Singleline | RegexOptions.Compiled); }
 		}
 
+		public bool HasExpression(string name)
+		{
+			return Expression.ContainsKey(name);
+		}
+
+		public CommandExpression GetExpression(string exprName)
+		{
+			return Expression[exprName];
+		}
+
+		public CommandExpression SetExpression(string exprName, CommandExpression expr)
+		{
+			return Expression[exprName] = expr;
+		}
+
+		public CommandExpression SetExpression(string exprName, string trueCommand)
+		{
+			var expr = new CommandExpression(trueCommand);
+			return SetExpression(exprName, expr);
+		}
+
+		public CommandExpression SetExpression(string exprName, bool condition, string trueCommand)
+		{
+			var expr = new CommandExpression(condition, trueCommand);
+			return SetExpression(exprName, expr);
+		}
+
+		public CommandExpression SetExpression(string exprName, bool condition, string trueCommand, string falseCommand)
+		{
+			var expr = new CommandExpression(condition, trueCommand, falseCommand);
+			return SetExpression(exprName, expr);
+		}
 
 		/// <summary>
 		/// パラメータの生成。
@@ -354,9 +373,9 @@ namespace PeUtility
 		/// <returns></returns>
 		private T Executer<T>(Func<DbCommand, T> func, string code)
 		{
-				DbCommand.CommandText = ExpressionReplace(code);
-				SetParameter(DbCommand);
-				return func(DbCommand);
+			DbCommand.CommandText = ExpressionReplace(code);
+			SetParameter(DbCommand);
+			return func(DbCommand);
 		}
 		/// <summary>
 		/// 現在の指定値からコマンド実行。
@@ -630,8 +649,6 @@ namespace PeUtility
 	/// DB接続・操作の一元化
 	/// 
 	/// すんごいとろくない限り処理速度は考えない。
-	/// 
-	/// *これ、つっかいにくいなぁ...*
 	/// </summary>
 	public abstract class DBManager: IDisposable
 	{
@@ -668,31 +685,6 @@ namespace PeUtility
 			return tran;
 		}
 		
-		
-
-		
-		///// <summary>
-		///// パラメータ。
-		///// </summary>
-		//public Dictionary<string, object> Parameter { get; private set; }
-		///// <summary>
-		///// 条件式。
-		///// </summary>
-		//public Dictionary<string, CommandExpression> Expression { get; private set; }
-
-		/// <summary>
-		/// 条件式の生成。
-		/// </summary>
-		/// <returns></returns>
-		public virtual CommandExpression CreateExpresstion()
-		{
-			return new CommandExpression();
-		}
-		public CommandExpression CreateExpresstion(string trueCommand)
-		{
-			return new CommandExpression(trueCommand);
-		}
-
 		/// <summary>
 		/// コマンド生成。
 		/// 

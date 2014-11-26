@@ -95,7 +95,7 @@ namespace PeMain.Logic.DB
 					query.Parameter[key] = note.NoteId;
 					idList.Add(item);
 				}
-				query.Expression["ID_LIST"] = new CommandExpression(string.Join(" or ", idList));
+				query.SetExpression("ID_LIST", string.Join(" or ", idList));
 				query.ExecuteCommand(global::PeMain.Properties.SQL.EnabledSwitch);
 			}
 		}

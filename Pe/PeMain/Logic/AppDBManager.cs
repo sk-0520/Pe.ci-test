@@ -32,8 +32,8 @@ namespace PeMain.Logic
 		public SingleIdDto GetTableId(string tableName, string idColumnName)
 		{
 			using(var query = CreateQuery()) {
-				query.Expression["table_name"] = CreateExpresstion(tableName);
-				query.Expression["id_column_name"] = CreateExpresstion(idColumnName);
+				query.SetExpression("table_name", tableName);
+				query.SetExpression("id_column_name", idColumnName);
 
 				return query.GetResultSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
 			}
