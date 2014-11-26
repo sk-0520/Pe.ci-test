@@ -234,7 +234,7 @@ namespace PeUtility
 	public abstract class Dto: DbData
 	{ }
 
-	public class DbQuery
+	public class DbQuery: IDisposable
 	{
 		public DbQuery(DBManager dbManager)
 		{
@@ -615,6 +615,15 @@ namespace PeUtility
 			return keyEntity;
 		}
 
+		protected virtual void Dispose(bool disposing)
+		{
+			DbCommand.Dispose();
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
 	}
 
 	/// <summary>
@@ -679,6 +688,10 @@ namespace PeUtility
 		{
 			return new CommandExpression();
 		}
+		public CommandExpression CreateExpresstion(string trueCommand)
+		{
+			return new CommandExpression(trueCommand);
+		}
 
 		/// <summary>
 		/// コマンド生成。
@@ -686,7 +699,7 @@ namespace PeUtility
 		/// ユーザーコードでは多分出番ない、はず。
 		/// </summary>
 		/// <returns></returns>
-		protected virtual DbQuery CreateQuery()
+		public virtual DbQuery CreateQuery()
 		{
 			return new DbQuery(this);
 		}
