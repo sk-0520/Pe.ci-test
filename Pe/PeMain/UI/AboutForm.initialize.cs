@@ -63,7 +63,6 @@ namespace PeMain.UI
 			;
 			this.gridComponents_columnName.DataPropertyName = "Name";
 			this.gridComponents_columnType.DataPropertyName = "Type";
-			this.gridComponents_columnURI.DataPropertyName = "URI";
 			this.gridComponents.AutoGenerateColumns = false;
 			this.gridComponents.DataSource = new BindingSource(ComponentInfoList, string.Empty);
 		}

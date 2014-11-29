@@ -29,7 +29,6 @@ namespace PeMain.UI
 			
 			this.gridComponents_columnName.SetLanguage(CommonData.Language);
 			this.gridComponents_columnType.SetLanguage(CommonData.Language);
-			this.gridComponents_columnURI.SetLanguage(CommonData.Language);
 		}
 	}
 }

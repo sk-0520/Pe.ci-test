@@ -50,9 +50,6 @@ namespace PeMain.UI
 			this.linkMail = new System.Windows.Forms.LinkLabel();
 			this.commandUpdate = new System.Windows.Forms.Button();
 			this.gridComponents = new System.Windows.Forms.DataGridView();
-			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridComponents_columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridComponents_columnURI = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.commandChangelog = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.linkDiscussion = new System.Windows.Forms.LinkLabel();
@@ -61,6 +58,8 @@ namespace PeMain.UI
 			this.labelUserenv = new System.Windows.Forms.Label();
 			this.linkCopyShort = new System.Windows.Forms.LinkLabel();
 			this.linkCopyLong = new System.Windows.Forms.LinkLabel();
+			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.gridComponents_columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -221,9 +220,8 @@ namespace PeMain.UI
 			this.gridComponents.AllowUserToDeleteRows = false;
 			this.gridComponents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridComponents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.gridComponents_columnName,
-			this.gridComponents_columnType,
-			this.gridComponents_columnURI});
+            this.gridComponents_columnName,
+            this.gridComponents_columnType});
 			this.gridComponents.Location = new System.Drawing.Point(12, 137);
 			this.gridComponents.MultiSelect = false;
 			this.gridComponents.Name = "gridComponents";
@@ -232,31 +230,6 @@ namespace PeMain.UI
 			this.gridComponents.Size = new System.Drawing.Size(505, 121);
 			this.gridComponents.TabIndex = 1;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
-			// 
-			// gridComponents_columnName
-			// 
-			this.gridComponents_columnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.gridComponents_columnName.HeaderText = ":about/column/name";
-			this.gridComponents_columnName.Name = "gridComponents_columnName";
-			this.gridComponents_columnName.ReadOnly = true;
-			this.gridComponents_columnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.gridComponents_columnName.Width = 138;
-			// 
-			// gridComponents_columnType
-			// 
-			this.gridComponents_columnType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.gridComponents_columnType.HeaderText = ":about/column/type";
-			this.gridComponents_columnType.Name = "gridComponents_columnType";
-			this.gridComponents_columnType.ReadOnly = true;
-			this.gridComponents_columnType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.gridComponents_columnType.Width = 131;
-			// 
-			// gridComponents_columnURI
-			// 
-			this.gridComponents_columnURI.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.gridComponents_columnURI.HeaderText = ":about/column/uri";
-			this.gridComponents_columnURI.Name = "gridComponents_columnURI";
-			this.gridComponents_columnURI.ReadOnly = true;
 			// 
 			// commandChangelog
 			// 
@@ -360,6 +333,24 @@ namespace PeMain.UI
 			this.linkCopyLong.Text = ":about/long/long-env";
 			this.linkCopyLong.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkCopyLong_LinkClicked);
 			// 
+			// gridComponents_columnName
+			// 
+			this.gridComponents_columnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.gridComponents_columnName.HeaderText = ":about/column/name";
+			this.gridComponents_columnName.Name = "gridComponents_columnName";
+			this.gridComponents_columnName.ReadOnly = true;
+			this.gridComponents_columnName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridComponents_columnName.Width = 138;
+			// 
+			// gridComponents_columnType
+			// 
+			this.gridComponents_columnType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.gridComponents_columnType.HeaderText = ":about/column/type";
+			this.gridComponents_columnType.Name = "gridComponents_columnType";
+			this.gridComponents_columnType.ReadOnly = true;
+			this.gridComponents_columnType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.gridComponents_columnType.Width = 131;
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
@@ -401,9 +392,6 @@ namespace PeMain.UI
 		private System.Windows.Forms.LinkLabel linkDiscussion;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Button commandChangelog;
-		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnType;
-		private System.Windows.Forms.DataGridViewLinkColumn gridComponents_columnURI;
-		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnName;
 		private System.Windows.Forms.DataGridView gridComponents;
 		private System.Windows.Forms.Button commandUpdate;
 		private System.Windows.Forms.LinkLabel linkMail;
@@ -421,5 +409,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.Label labelUserenv;
 		private System.Windows.Forms.LinkLabel linkCopyShort;
 		private System.Windows.Forms.LinkLabel linkCopyLong;
+		private System.Windows.Forms.DataGridViewLinkColumn gridComponents_columnName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridComponents_columnType;
 	}
 }
