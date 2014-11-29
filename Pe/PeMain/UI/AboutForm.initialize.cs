@@ -50,21 +50,16 @@ namespace PeMain.UI
 			this.linkDiscussion.Text = Literal.DiscussionURL;
 			
 			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));
-			var components = xml
+			ComponentInfoList = xml
 				.Elements()
-				.Select(
-					e => new { 
-						Name = e.Attribute("name").Value,
-						Type = e.Attribute("type").Value,
-						URI = e.Attribute("uri").Value 
-					}
-				);
+				.Select(e => new ComponentInfo(e))
+				.ToList()
 			;
 			this.gridComponents_columnName.DataPropertyName = "Name";
 			this.gridComponents_columnType.DataPropertyName = "Type";
-			this.gridComponents_columnURI.DataPropertyName = "URI";
+			this.gridComponents_columnLicense.DataPropertyName = "License";
 			this.gridComponents.AutoGenerateColumns = false;
-			this.gridComponents.DataSource = new BindingSource(components, string.Empty);
+			this.gridComponents.DataSource = new BindingSource(ComponentInfoList, string.Empty);
 		}
 	}
 }

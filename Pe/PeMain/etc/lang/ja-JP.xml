@@ -296,7 +296,7 @@
 		<Word Name="about/long/long-env"     Text="長い情報" />
 		<Word Name="about/column/name"       Text="コンポーネント" />
 		<Word Name="about/column/type"       Text="種別" />
-		<Word Name="about/column/uri"        Text="WEBサイト" />
+		<Word Name="about/column/license"    Text="ライセンス" />
 		<Word Name="about/update/check/dialog/caption"   Text="アップデートチェック" />
 		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
 		

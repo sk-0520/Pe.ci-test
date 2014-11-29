@@ -176,6 +176,10 @@
     <Compile Include="UI\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\AboutForm.define.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\AboutForm.function.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
       <SubType>Form</SubType>

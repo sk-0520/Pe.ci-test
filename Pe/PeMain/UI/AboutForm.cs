@@ -90,12 +90,16 @@ namespace PeMain.UI
 		
 		void GridComponents_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
 		{
-			if(e.ColumnIndex == this.gridComponents_columnURI.Index && e.RowIndex != -1) {
+			if(e.ColumnIndex == this.gridComponents_columnName.Index && e.RowIndex != -1) {
 				var cell = this.gridComponents.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewLinkCell;
 				if(cell != null) {
-					var link = (string)cell.Value;
-					Executer.RunCommand(link, CommonData);
-					cell.LinkVisited = true;
+					var rowIndex = cell.RowIndex;
+					if(0 <= rowIndex && rowIndex < ComponentInfoList.Count) {
+						var componentInfo = ComponentInfoList[rowIndex];
+						var link = componentInfo.URI;
+						Executer.RunCommand(link, CommonData);
+						cell.LinkVisited = true;
+					}
 				}
 			}
 		}
