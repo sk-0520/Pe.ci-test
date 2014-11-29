@@ -18,5 +18,7 @@ namespace PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		public bool CheckUpdate { get; private set; }
+
+		string Separator { get { return "____________"; } }
 	}
 }
