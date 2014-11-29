@@ -38,8 +38,8 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.panelMainOthers = new System.Windows.Forms.FlowLayoutPanel();
@@ -872,7 +872,7 @@ namespace PeMain.UI
 			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 251);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 249);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/page/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -891,7 +891,7 @@ namespace PeMain.UI
 			this.panelLauncherEnv.RowCount = 2;
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 245);
+			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 243);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
 			// envLauncherRemove
@@ -930,9 +930,9 @@ namespace PeMain.UI
 			// tabLauncher_pageOthers
 			// 
 			this.tabLauncher_pageOthers.Controls.Add(this.panelLauncherOthers);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 251);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 247);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -940,8 +940,8 @@ namespace PeMain.UI
 			// panelLauncherOthers
 			// 
 			this.panelLauncherOthers.ColumnCount = 2;
-			this.panelLauncherOthers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelLauncherOthers.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.Controls.Add(this.selectLauncherStdStream, 0, 0);
 			this.panelLauncherOthers.Controls.Add(this.inputLauncherNote, 1, 3);
 			this.panelLauncherOthers.Controls.Add(this.inputLauncherTag, 1, 2);
@@ -957,7 +957,7 @@ namespace PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 251);
+			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 247);
 			this.panelLauncherOthers.TabIndex = 7;
 			// 
 			// selectLauncherStdStream
@@ -975,22 +975,20 @@ namespace PeMain.UI
 			// inputLauncherNote
 			// 
 			this.inputLauncherNote.AcceptsReturn = true;
-			this.inputLauncherNote.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherNote.Location = new System.Drawing.Point(95, 83);
+			this.inputLauncherNote.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputLauncherNote.Location = new System.Drawing.Point(126, 82);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(438, 98);
+			this.inputLauncherNote.Size = new System.Drawing.Size(407, 142);
 			this.inputLauncherNote.TabIndex = 4;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherTag
 			// 
-			this.inputLauncherTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.inputLauncherTag.Location = new System.Drawing.Point(95, 53);
+			this.inputLauncherTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.inputLauncherTag.Location = new System.Drawing.Point(126, 53);
 			this.inputLauncherTag.Name = "inputLauncherTag";
-			this.inputLauncherTag.Size = new System.Drawing.Size(438, 23);
+			this.inputLauncherTag.Size = new System.Drawing.Size(407, 23);
 			this.inputLauncherTag.TabIndex = 2;
 			this.inputLauncherTag.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -998,9 +996,9 @@ namespace PeMain.UI
 			// 
 			this.labelLauncherTag.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelLauncherTag.AutoSize = true;
-			this.labelLauncherTag.Location = new System.Drawing.Point(3, 50);
+			this.labelLauncherTag.Location = new System.Drawing.Point(3, 57);
 			this.labelLauncherTag.Name = "labelLauncherTag";
-			this.labelLauncherTag.Size = new System.Drawing.Size(85, 30);
+			this.labelLauncherTag.Size = new System.Drawing.Size(116, 15);
 			this.labelLauncherTag.TabIndex = 4;
 			this.labelLauncherTag.Text = ":setting/label/tags";
 			// 
@@ -1019,10 +1017,10 @@ namespace PeMain.UI
 			// labelLauncherNote
 			// 
 			this.labelLauncherNote.AutoSize = true;
-			this.labelLauncherNote.Location = new System.Drawing.Point(3, 83);
+			this.labelLauncherNote.Location = new System.Drawing.Point(3, 82);
 			this.labelLauncherNote.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
 			this.labelLauncherNote.Name = "labelLauncherNote";
-			this.labelLauncherNote.Size = new System.Drawing.Size(85, 30);
+			this.labelLauncherNote.Size = new System.Drawing.Size(117, 15);
 			this.labelLauncherNote.TabIndex = 6;
 			this.labelLauncherNote.Text = ":setting/label/note";
 			// 
@@ -1324,13 +1322,13 @@ namespace PeMain.UI
 			this.toolToolbarGroup.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolToolbarGroup.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolToolbarGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolToolbarGroup_addGroup,
-			this.toolToolbarGroup_addItem,
-			this.toolStripSeparator1,
-			this.toolToolbarGroup_up,
-			this.toolToolbarGroup_down,
-			this.toolStripSeparator2,
-			this.toolToolbarGroup_remove});
+            this.toolToolbarGroup_addGroup,
+            this.toolToolbarGroup_addItem,
+            this.toolStripSeparator1,
+            this.toolToolbarGroup_up,
+            this.toolToolbarGroup_down,
+            this.toolStripSeparator2,
+            this.toolToolbarGroup_remove});
 			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
 			this.toolToolbarGroup.Size = new System.Drawing.Size(280, 25);
@@ -1720,15 +1718,15 @@ namespace PeMain.UI
 			// 
 			this.gridNoteItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.gridNoteItems_columnRemove,
-			this.gridNoteItems_columnId,
-			this.gridNoteItems_columnVisible,
-			this.gridNoteItems_columnLocked,
-			this.gridNoteItems_columnTitle,
-			this.gridNoteItems_columnBody,
-			this.gridNoteItems_columnFont,
-			this.gridNoteItems_columnFore,
-			this.gridNoteItems_columnBack});
+            this.gridNoteItems_columnRemove,
+            this.gridNoteItems_columnId,
+            this.gridNoteItems_columnVisible,
+            this.gridNoteItems_columnLocked,
+            this.gridNoteItems_columnTitle,
+            this.gridNoteItems_columnBody,
+            this.gridNoteItems_columnFont,
+            this.gridNoteItems_columnFore,
+            this.gridNoteItems_columnBack});
 			this.gridNoteItems.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gridNoteItems.Location = new System.Drawing.Point(3, 19);
 			this.gridNoteItems.MultiSelect = false;
@@ -1749,8 +1747,8 @@ namespace PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1780,9 +1778,9 @@ namespace PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle6;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
