@@ -8,10 +8,10 @@
  */
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-
 using PeUtility;
 
 namespace PeMain.Data
@@ -42,11 +42,11 @@ namespace PeMain.Data
 		
 		public void SetDefaultVersion()
 		{
-			var version = Application.ProductVersion.Split('.').Map(s => ushort.Parse(s)).ToArray();
-			VersionMajor = version[0];
-			VersionMinor = version[1];
-			VersionRevision = version[2];
-			VersionBuild = version[3];
+			var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+			VersionMajor = (ushort)assemblyVersion.Major;
+			VersionMinor = (ushort)assemblyVersion.Minor;
+			VersionRevision = (ushort)assemblyVersion.Revision;
+			VersionBuild = (ushort)assemblyVersion.Build;
 		}
 	}
 	
