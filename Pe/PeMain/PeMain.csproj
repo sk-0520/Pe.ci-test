@@ -112,6 +112,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bat\accept.bat" />
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
