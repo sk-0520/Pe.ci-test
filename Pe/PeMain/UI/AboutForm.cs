@@ -107,8 +107,8 @@ namespace PeMain.UI
 		void linkCopyShort_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			var list = new List<string>();
-			list.Add("Software: " + Literal.Version.FileDescription);
-			list.Add("Version: " + Literal.Version.ProductVersion);
+			list.Add("Software: " + Literal.Version.ProductName);
+			list.Add("Version: " + Literal.ApplicationVersion);
 			list.Add("Type: " +
 				#if DEBUG
 				"DEBUG"

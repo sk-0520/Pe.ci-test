@@ -54,7 +54,7 @@ namespace PeMain.UI
 			this.webUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.webUpdate.MinimumSize = new System.Drawing.Size(23, 25);
 			this.webUpdate.Name = "webUpdate";
-			this.webUpdate.Size = new System.Drawing.Size(518, 277);
+			this.webUpdate.Size = new System.Drawing.Size(682, 296);
 			this.webUpdate.TabIndex = 0;
 			// 
 			// commandOk
@@ -83,7 +83,7 @@ namespace PeMain.UI
 			// 
 			this.labelVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelVersion.AutoSize = true;
-			this.labelVersion.Location = new System.Drawing.Point(3, 285);
+			this.labelVersion.Location = new System.Drawing.Point(3, 304);
 			this.labelVersion.Name = "labelVersion";
 			this.labelVersion.Size = new System.Drawing.Size(133, 15);
 			this.labelVersion.TabIndex = 1;
@@ -95,7 +95,7 @@ namespace PeMain.UI
 			this.flowLayoutPanel1.AutoSize = true;
 			this.flowLayoutPanel1.Controls.Add(this.commandOk);
 			this.flowLayoutPanel1.Controls.Add(this.commandCancel);
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(325, 303);
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(489, 322);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(196, 36);
 			this.flowLayoutPanel1.TabIndex = 4;
@@ -114,7 +114,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(524, 342);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(688, 361);
 			this.tableLayoutPanel1.TabIndex = 5;
 			// 
 			// UpdateForm
@@ -123,7 +123,7 @@ namespace PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(524, 342);
+			this.ClientSize = new System.Drawing.Size(688, 361);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::PeMain.Properties.Images.App;
@@ -137,6 +137,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
+
 		}
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

@@ -50,6 +50,9 @@ namespace PeMain.UI
 			this.linkMail = new System.Windows.Forms.LinkLabel();
 			this.commandUpdate = new System.Windows.Forms.Button();
 			this.gridComponents = new System.Windows.Forms.DataGridView();
+			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.gridComponents_columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridComponents_columnLicense = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.commandChangelog = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.linkDiscussion = new System.Windows.Forms.LinkLabel();
@@ -58,9 +61,6 @@ namespace PeMain.UI
 			this.labelUserenv = new System.Windows.Forms.Label();
 			this.linkCopyShort = new System.Windows.Forms.LinkLabel();
 			this.linkCopyLong = new System.Windows.Forms.LinkLabel();
-			this.gridComponents_columnName = new System.Windows.Forms.DataGridViewLinkColumn();
-			this.gridComponents_columnType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridComponents_columnLicense = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -102,13 +102,16 @@ namespace PeMain.UI
 			// 
 			// labelAppVersion
 			// 
-			this.labelAppVersion.AutoSize = true;
-			this.labelAppVersion.Location = new System.Drawing.Point(63, 32);
+			this.labelAppVersion.AutoEllipsis = true;
+			this.tableLayoutPanel1.SetColumnSpan(this.labelAppVersion, 2);
+			this.labelAppVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labelAppVersion.Location = new System.Drawing.Point(3, 62);
 			this.labelAppVersion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
 			this.labelAppVersion.Name = "labelAppVersion";
-			this.labelAppVersion.Size = new System.Drawing.Size(98, 15);
+			this.labelAppVersion.Size = new System.Drawing.Size(171, 29);
 			this.labelAppVersion.TabIndex = 2;
 			this.labelAppVersion.Text = "labelAppVersion";
+			this.labelAppVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// linkAbout
 			// 
@@ -181,8 +184,7 @@ namespace PeMain.UI
 			// labelConfiguration
 			// 
 			this.labelConfiguration.AutoSize = true;
-			this.tableLayoutPanel1.SetColumnSpan(this.labelConfiguration, 2);
-			this.labelConfiguration.Location = new System.Drawing.Point(3, 60);
+			this.labelConfiguration.Location = new System.Drawing.Point(63, 30);
 			this.labelConfiguration.Name = "labelConfiguration";
 			this.labelConfiguration.Size = new System.Drawing.Size(111, 15);
 			this.labelConfiguration.TabIndex = 2;
@@ -233,6 +235,32 @@ namespace PeMain.UI
 			this.gridComponents.TabIndex = 1;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
 			// 
+			// gridComponents_columnName
+			// 
+			this.gridComponents_columnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.gridComponents_columnName.HeaderText = ":about/column/name";
+			this.gridComponents_columnName.Name = "gridComponents_columnName";
+			this.gridComponents_columnName.ReadOnly = true;
+			this.gridComponents_columnName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridComponents_columnName.Width = 138;
+			// 
+			// gridComponents_columnType
+			// 
+			this.gridComponents_columnType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.gridComponents_columnType.HeaderText = ":about/column/type";
+			this.gridComponents_columnType.Name = "gridComponents_columnType";
+			this.gridComponents_columnType.ReadOnly = true;
+			this.gridComponents_columnType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.gridComponents_columnType.Width = 131;
+			// 
+			// gridComponents_columnLicense
+			// 
+			this.gridComponents_columnLicense.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.gridComponents_columnLicense.HeaderText = ":about/column/license";
+			this.gridComponents_columnLicense.Name = "gridComponents_columnLicense";
+			this.gridComponents_columnLicense.ReadOnly = true;
+			this.gridComponents_columnLicense.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
 			// commandChangelog
 			// 
 			this.commandChangelog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -254,14 +282,15 @@ namespace PeMain.UI
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.Controls.Add(this.imageIcon, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.labelAppName, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.labelAppVersion, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelConfiguration, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.labelAppVersion, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.labelConfiguration, 1, 1);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 3;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(161, 91);
 			this.tableLayoutPanel1.TabIndex = 10;
 			// 
@@ -334,32 +363,6 @@ namespace PeMain.UI
 			this.linkCopyLong.TabStop = true;
 			this.linkCopyLong.Text = ":about/long/long-env";
 			this.linkCopyLong.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkCopyLong_LinkClicked);
-			// 
-			// gridComponents_columnName
-			// 
-			this.gridComponents_columnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.gridComponents_columnName.HeaderText = ":about/column/name";
-			this.gridComponents_columnName.Name = "gridComponents_columnName";
-			this.gridComponents_columnName.ReadOnly = true;
-			this.gridComponents_columnName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridComponents_columnName.Width = 138;
-			// 
-			// gridComponents_columnType
-			// 
-			this.gridComponents_columnType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.gridComponents_columnType.HeaderText = ":about/column/type";
-			this.gridComponents_columnType.Name = "gridComponents_columnType";
-			this.gridComponents_columnType.ReadOnly = true;
-			this.gridComponents_columnType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.gridComponents_columnType.Width = 131;
-			// 
-			// gridComponents_columnLicense
-			// 
-			this.gridComponents_columnLicense.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.gridComponents_columnLicense.HeaderText = ":about/column/license";
-			this.gridComponents_columnLicense.Name = "gridComponents_columnLicense";
-			this.gridComponents_columnLicense.ReadOnly = true;
-			this.gridComponents_columnLicense.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// AboutForm
 			// 

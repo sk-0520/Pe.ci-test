@@ -343,7 +343,10 @@ namespace PeMain
 		}
 		public static string ApplicationVersion
 		{
-			get { return Version.ProductVersion; }
+			get 
+			{
+				return string.Format("{0}-{1}", Version.FileVersion, Version.ProductVersion);
+			}
 		}
 		
 		public static string StartupShortcutPath
