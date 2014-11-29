@@ -116,13 +116,13 @@ namespace PeMain.UI
 			list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64": "32"));
 			list.Add("OS: " + System.Environment.OSVersion);
 			list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
-			
-			Clipboard.SetText(Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
+
+			Clipboard.SetText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
 		}
 		
 		void linkCopyLong_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Clipboard.SetText(Environment.NewLine + string.Join(Environment.NewLine, new PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
+			Clipboard.SetText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, new PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
 		}
 	}
 }
