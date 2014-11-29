@@ -33,7 +33,7 @@
 		</ul>
 		<ul type="features">
 			<li rev="57ce440b369426c073965b71c49a2141398ffe53">#100: 情報ダイアログからコピーする報告用情報に罫線</li>
-			<li rev=""></li>
+			<li rev="7f5a04985721d44741030dd699fdca68749c3265">ログ表示処理が非リリース構成で例外になる不具合の修正</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
