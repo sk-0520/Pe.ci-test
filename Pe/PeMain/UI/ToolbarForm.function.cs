@@ -254,7 +254,7 @@ namespace PeMain.UI
 			var toolButtonList = new List<ToolStripItem>();
 			var mainButton = CreateLauncherButton(null);
 			mainButton.Text = groupItem.Name;
-			mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
+			//mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
 
 			toolButtonList.Add(mainButton);
 			foreach(var itemName in groupItem.ItemNames) {
@@ -804,11 +804,12 @@ namespace PeMain.UI
 				default:
 					throw new NotImplementedException(item.LauncherType.ToString());
 			}
-			
+
+			toolItem.AutoToolTip = false;
 			toolItem.Tag = item;
 			
 			toolItem.Text = item.Name;
-			toolItem.ToolTipText = item.Name;
+			//toolItem.ToolTipText = item.Name;
 			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
