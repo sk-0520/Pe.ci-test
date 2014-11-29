@@ -27,7 +27,7 @@
 	-->
 	<log date="YYYY/MM/DD" version="0.33.1" type="rc">
 		<ul type="note">
-			<li rev=""></li>
+			<li rev="">#26対応によりバージョン表記が a.b.c.d から a.b.c.d-xxxx... へ変更しました。ユーザー操作に影響はありませんが報告用情報の内容が変更されます</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
@@ -35,6 +35,7 @@
 			<li rev="57ce440b369426c073965b71c49a2141398ffe53">#100: 情報ダイアログからコピーする報告用情報に罫線</li>
 			<li rev="5a519d4305a269af7bdf505c2ca4e1834e0b9972">#97: コンポーネント情報整理</li>
 			<li rev="">#102: 使用許諾ダイアログをユーザー意志で再表示</li>
+			<li rev="8c9b33f16ba69bad9036abbd934d3191e035ae65">#26: git commit hash</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
