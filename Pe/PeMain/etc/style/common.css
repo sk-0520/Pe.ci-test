@@ -11,25 +11,46 @@ h1
 	border-bottom: 3px double #888;
 }
 
-*.changelog dd
+h2
 {
-	margin-left: 0;
+	padding: 0.2ex 0.5ex;
+	background: #ccc;
 }
 
-*.changelog dt.features
+*.changelog
 {
+	margin-left: 0.5ex;
 }
 
-*.changelog dt.fixes
+*.changelog dt
 {
-}
-
-*.changelog dt.developer
-{
+	padding: 0.3ex 1ex;
+	font-weight: bold;
 }
 
 *.changelog dt.note
 {
+	background: #ffc;
+}
+
+*.changelog dt.features
+{
+	background: #cfc;
+}
+
+*.changelog dt.fixes
+{
+	background: #fcc;
+}
+
+*.changelog dt.developer
+{
+	background: #ccf;
+}
+
+*.changelog dd
+{
+	margin-left: 0;
 }
 
 *.changelog dd li
