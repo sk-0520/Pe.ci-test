@@ -39,7 +39,7 @@
 		</ul>
 		<ul type="fixes">
 			<li rev="0d8c9432db5b921669eb6a0343f1ff8cb2460c9b">#98: 「現在選択中グループ」のツールチップ文字列</li>
-			<li rev=""></li>
+			<li rev="022e666df7daddb560dc3319bce175c798ddfb0c">#103: 更新履歴のリビジョンを行末に。ついでにスタイルシートちょこっと設定</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
