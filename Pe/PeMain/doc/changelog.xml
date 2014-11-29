@@ -43,7 +43,7 @@
 		</ul>
 		<ul type="developer">
 			<li rev="4f56e98cbfa2680ffb7ed2b7ebcbca8af6b3557f">#87: DBManager使用時のスパゲッティ具合</li>
-			<li rev=""></li>
+			<li rev="5c6d563da2cb6a30ce3cadbc9176628e881b0f12">#64: app.config の切り替え</li>
 			<li rev=""></li>
 		</ul>
 	</log>
