@@ -133,5 +133,10 @@ namespace PeMain.UI
 		{
 			SwitchDetail();
 		}
+
+		private void LogForm_Shown(object sender, EventArgs e)
+		{
+			ShowLast();
+		}
 	}
 }
