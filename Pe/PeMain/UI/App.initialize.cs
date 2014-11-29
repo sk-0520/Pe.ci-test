@@ -69,6 +69,12 @@ namespace PeMain.UI
 			if(Functions.VersionCheck(prevVersion, Literal.AcceptVersion) < 0) {
 				this._commonData.MainSetting.RunningInfo.Running = false;
 			}
+
+			if(commandLine.HasOption("accept") && commandLine.GetValue("accept") == "force") {
+				// 強制的に使用許諾を表示し、次回実行時も使用許諾を表示できるようデータ保存
+				this._commonData.MainSetting.RunningInfo.Running = false;
+				Serializer.SaveFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
+			}
 		}
 		
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
