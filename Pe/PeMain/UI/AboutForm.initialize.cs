@@ -56,14 +56,14 @@ namespace PeMain.UI
 					e => new ComponentInfo(
 						e.Attribute("name").Value,
 						e.Attribute("type").Value,
-						e.Attribute("uri").Value 
+						e.Attribute("uri").Value
 					)
 				)
 				.ToList()
 			;
 			this.gridComponents_columnName.DataPropertyName = "Name";
 			this.gridComponents_columnType.DataPropertyName = "Type";
-			this.gridComponents_columnLicense.DataPropertyName = "Type";
+			this.gridComponents_columnLicense.DataPropertyName = "License";
 			this.gridComponents.AutoGenerateColumns = false;
 			this.gridComponents.DataSource = new BindingSource(ComponentInfoList, string.Empty);
 		}
