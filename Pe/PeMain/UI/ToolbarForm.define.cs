@@ -235,7 +235,7 @@ namespace PeMain.UI
 					this._message = launcherItem.Note;
 				} else {
 					this._imageIcon = AppUtility.GetAppIcon(IconScale.Normal);
-					this._title = groupItem.Name;
+					this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
 					this._message = string.Empty;
 				}
 
