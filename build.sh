@@ -10,7 +10,7 @@ sed -E -i "s/^\[\s*assembly\s*:\s*\AssemblyInformationalVersion\s*\(\s*\"\s*(rev
 cmd.exe //c  build.bat
 
 # ƒo[ƒWƒ‡ƒ“–ß‚µ
-git revert HEAD
+git reset --hard
 
 read a
 
