@@ -52,13 +52,7 @@ namespace PeMain.UI
 			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));
 			ComponentInfoList = xml
 				.Elements()
-				.Select(
-					e => new ComponentInfo(
-						e.Attribute("name").Value,
-						e.Attribute("type").Value,
-						e.Attribute("uri").Value
-					)
-				)
+				.Select(e => new ComponentInfo(e))
 				.ToList()
 			;
 			this.gridComponents_columnName.DataPropertyName = "Name";
