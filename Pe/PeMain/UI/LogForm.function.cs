@@ -26,7 +26,7 @@ namespace PeMain.UI
 	{
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
-			if(InvokeRequired && Created) {
+			if(InvokeRequired) {
 				BeginInvoke((MethodInvoker)delegate() { Puts(logType, title, detail, frame); });
 				return;
 			}
@@ -36,19 +36,15 @@ namespace PeMain.UI
 				this._logs.RemoveAt(0);
 			}
 			this._logs.Add(logItem);
-			this.listLog.VirtualListSize = this._logs.Count;
-			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-			
+			var isCreated = Created;
+
 			if(!Visible && CommonData.MainSetting.Log.AddShow && ((CommonData.MainSetting.Log.AddShowTrigger & logType) == logType)) {
 				WindowsUtility.ShowNoActive(this);
 				Visible = true;
 				this._refresh = true;
 			}
-			
-			this.listLog.Items[this.listLog.Items.Count - 1].Focused = true;
-			this.listLog.Items[this.listLog.Items.Count - 1].EnsureVisible();
-			
-			this.listLog.Refresh();
+
+			ShowLast();
 		}
 		
 		public void PutsList(IEnumerable<LogItem> logs, bool show)
@@ -65,6 +61,20 @@ namespace PeMain.UI
 
 			if(CommonData.MainSetting.Log.AddShow && !Visible) {
 				Visible = show;
+			}
+		}
+
+		void ShowLast()
+		{
+
+			if(Created) {
+				this.listLog.VirtualListSize = this._logs.Count;
+				this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+				this.listLog.Items[this.listLog.Items.Count - 1].Focused = true;
+				this.listLog.Items[this.listLog.Items.Count - 1].EnsureVisible();
+
+				this.listLog.Refresh();
 			}
 		}
 		

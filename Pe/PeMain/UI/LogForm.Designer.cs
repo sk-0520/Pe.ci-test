@@ -41,14 +41,14 @@ namespace PeMain.UI
 			this.statusLog_itemDetail = new System.Windows.Forms.ToolStripStatusLabel();
 			this.panelMain = new System.Windows.Forms.SplitContainer();
 			this.listLog = new System.Windows.Forms.ListView();
-			this.listLog_columnTimestamp = new System.Windows.Forms.ColumnHeader();
-			this.listLog_columnTitle = new System.Windows.Forms.ColumnHeader();
+			this.listLog_columnTimestamp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.listLog_columnTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.panelDetail = new System.Windows.Forms.SplitContainer();
 			this.viewDetail = new System.Windows.Forms.TextBox();
 			this.listStack = new System.Windows.Forms.ListView();
-			this.listStack_columnFunction = new System.Windows.Forms.ColumnHeader();
-			this.listStack_columnLine = new System.Windows.Forms.ColumnHeader();
-			this.listStack_columnFile = new System.Windows.Forms.ColumnHeader();
+			this.listStack_columnFunction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.listStack_columnLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.listStack_columnFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.toolLog = new PeMain.UI.ActiveToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
@@ -98,7 +98,7 @@ namespace PeMain.UI
 			// 
 			this.statusLog.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.statusLog_itemDetail});
+            this.statusLog_itemDetail});
 			this.statusLog.Location = new System.Drawing.Point(0, 0);
 			this.statusLog.Name = "statusLog";
 			this.statusLog.Size = new System.Drawing.Size(436, 23);
@@ -134,8 +134,8 @@ namespace PeMain.UI
 			// listLog
 			// 
 			this.listLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.listLog_columnTimestamp,
-									this.listLog_columnTitle});
+            this.listLog_columnTimestamp,
+            this.listLog_columnTitle});
 			this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listLog.FullRowSelect = true;
 			this.listLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -190,9 +190,9 @@ namespace PeMain.UI
 			// listStack
 			// 
 			this.listStack.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.listStack_columnFunction,
-									this.listStack_columnLine,
-									this.listStack_columnFile});
+            this.listStack_columnFunction,
+            this.listStack_columnLine,
+            this.listStack_columnFile});
 			this.listStack.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listStack.FullRowSelect = true;
 			this.listStack.GridLines = true;
@@ -223,8 +223,8 @@ namespace PeMain.UI
 			this.toolLog.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolLog.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLog_save,
-									this.toolLog_clear});
+            this.toolLog_save,
+            this.toolLog_clear});
 			this.toolLog.Location = new System.Drawing.Point(0, 0);
 			this.toolLog.Name = "toolLog";
 			this.toolLog.Size = new System.Drawing.Size(436, 25);
@@ -267,6 +267,7 @@ namespace PeMain.UI
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/log";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
+			this.Shown += new System.EventHandler(this.LogForm_Shown);
 			this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -288,6 +289,7 @@ namespace PeMain.UI
 			this.toolLog.ResumeLayout(false);
 			this.toolLog.PerformLayout();
 			this.ResumeLayout(false);
+
 		}
 		private System.Windows.Forms.ToolStripStatusLabel statusLog_itemDetail;
 		private System.Windows.Forms.SplitContainer panelDetail;
