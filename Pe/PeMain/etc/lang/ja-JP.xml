@@ -413,6 +413,7 @@
 		
 		<Word Name="log/update/check"      Text="アップデートチェック開始" />
 		<Word Name="log/update/exec"       Text="アップデート処理開始" />
+		<Word Name="log/update/exit"       Text="アップデートのため終了" />
 		<Word Name="log/update/error"      Text="アップデートチェック失敗" />
 		<Word Name="log/update/check-stop" Text="アップデートチェック中止" />
 		<Word Name="log/update/newest"     Text="最新版です" />
