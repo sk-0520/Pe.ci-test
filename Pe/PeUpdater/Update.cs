@@ -13,8 +13,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Xml.Linq;
-
 using PeUtility;
 
 namespace PeUpdater
@@ -47,6 +47,7 @@ namespace PeUpdater
 		Value<bool> _checkOnly = new Value<bool>();
 		Value<bool> _wait = new Value<bool>();
 		Value<bool> _noWaitUpdate = new Value<bool>();
+		Value<string> _eventName = new Value<string>();
 		
 		public bool CheckOnly { get { return this._checkOnly.Data; } }
 		public bool Wait { get { return this._wait.Data; } }
@@ -76,6 +77,7 @@ namespace PeUpdater
 			Set("checkonly", this._checkOnly);
 			Set("wait", this._wait);
 			Set("no-wait-update", this._noWaitUpdate);
+			Set("event", this._eventName);
 		}
 		
 		void Set<T>(string key, Value<T> value)
@@ -149,11 +151,36 @@ namespace PeUpdater
 				}
 			}
 		}
+
+		void ChangeTempColor(string s, ConsoleColor fore, ConsoleColor back)
+		{
+			var tempFore = Console.ForegroundColor;
+			var tempBack = Console.BackgroundColor;
+
+			Console.ForegroundColor = fore;
+			Console.BackgroundColor = back;
+			Console.WriteLine(s);
+
+			Console.ForegroundColor = tempFore;
+			Console.BackgroundColor = tempBack;
+		}
 		
 		void KillProcess(Process process)
 		{
-			Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
-			process.Kill();
+			EventWaitHandle eventHandle = null;
+			if(this._eventName.HasValue) {
+				eventHandle = EventWaitHandle.OpenExisting(this._eventName.Data);
+				ChangeTempColor(string.Format("PID = {0}, Event = {1}, kill wait...", this._pid.Data, this._eventName.Data), ConsoleColor.Black, ConsoleColor.Green);
+			} else {
+				ChangeTempColor(string.Format("PID = {0}, kill wait...", this._pid.Data), ConsoleColor.Black, ConsoleColor.Yellow);
+			}
+			if(eventHandle != null) {
+				Console.WriteLine("event set");
+				eventHandle.Set();
+			} else {
+				Console.WriteLine("process kill");
+				process.Kill();
+			}
 		}
 		
 		public void Execute()

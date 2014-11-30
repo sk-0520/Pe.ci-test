@@ -90,12 +90,16 @@ namespace PeMain.UI
 		
 		void GridComponents_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
 		{
-			if(e.ColumnIndex == this.gridComponents_columnURI.Index && e.RowIndex != -1) {
+			if(e.ColumnIndex == this.gridComponents_columnName.Index && e.RowIndex != -1) {
 				var cell = this.gridComponents.Rows[e.RowIndex].Cells[e.ColumnIndex] as DataGridViewLinkCell;
 				if(cell != null) {
-					var link = (string)cell.Value;
-					Executer.RunCommand(link, CommonData);
-					cell.LinkVisited = true;
+					var rowIndex = cell.RowIndex;
+					if(0 <= rowIndex && rowIndex < ComponentInfoList.Count) {
+						var componentInfo = ComponentInfoList[rowIndex];
+						var link = componentInfo.URI;
+						Executer.RunCommand(link, CommonData);
+						cell.LinkVisited = true;
+					}
 				}
 			}
 		}
@@ -103,8 +107,8 @@ namespace PeMain.UI
 		void linkCopyShort_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			var list = new List<string>();
-			list.Add("Software: " + Literal.Version.FileDescription);
-			list.Add("Version: " + Literal.Version.ProductVersion);
+			list.Add("Software: " + Literal.Version.ProductName);
+			list.Add("Version: " + Literal.ApplicationVersion);
 			list.Add("Type: " +
 				#if DEBUG
 				"DEBUG"
@@ -116,13 +120,13 @@ namespace PeMain.UI
 			list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64": "32"));
 			list.Add("OS: " + System.Environment.OSVersion);
 			list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
-			
-			Clipboard.SetText(Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
+
+			Clipboard.SetText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
 		}
 		
 		void linkCopyLong_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Clipboard.SetText(Environment.NewLine + string.Join(Environment.NewLine, new PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
+			Clipboard.SetText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, new PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
 		}
 	}
 }

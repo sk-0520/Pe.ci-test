@@ -6,7 +6,6 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-using System;
 using System.Data.Common;
 using PeMain.Data.DB;
 using PeUtility;
@@ -23,28 +22,21 @@ namespace PeMain.Logic
 		
 		public bool ExistsTable(string tableName)
 		{
-			Clear();
-			
-			Parameter["table_name"] = tableName;
-
-			/*
-			using(var reader = ExecuteReader(global::PeMain.Properties.SQL.CheckTable)) {
-				reader.Read();
-				return To<long>(reader["NUM"]) == 1;
+			using(var query = CreateQuery()) {
+				query.Parameter["table_name"] = tableName;
+				var count = query.GetResultSingle<CountDto>(global::PeMain.Properties.SQL.CheckTable);
+				return count.Has;
 			}
-			*/
-			var count = GetResultSingle<CountDto>(global::PeMain.Properties.SQL.CheckTable);
-			return count.Has;
 		}
 		
 		public SingleIdDto GetTableId(string tableName, string idColumnName)
 		{
-			Clear();
-			
-			Expression["table_name"] = new CommandExpression(tableName);
-			Expression["id_column_name"] = new CommandExpression(idColumnName);
-			
-			return GetResultSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
+			using(var query = CreateQuery()) {
+				query.SetExpression("table_name", tableName);
+				query.SetExpression("id_column_name", idColumnName);
+
+				return query.GetResultSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
+			}
 		}
 		
 	}

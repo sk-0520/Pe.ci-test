@@ -14,12 +14,12 @@ using System.Drawing;
 
 namespace PeUtility
 {
-	public abstract class SQLiteDBManager: DBManager
+	public class SQLiteDBManager: DBManager
 	{
 		public SQLiteDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
 		{ }
 		
-		protected override object To(object value, Type toType)
+		public override object To(object value, Type toType)
 		{
 			var map = new Dictionary<Type, Func<object>>() {
 				{ typeof(bool),     () => Convert.ToBoolean(value) },
@@ -35,8 +35,8 @@ namespace PeUtility
 			
 			return base.To(value, toType);
 		}
-		
-		protected override DbType DbTypeFromType(Type type)
+
+		public override DbType DbTypeFromType(Type type)
 		{
 			var map = new Dictionary<Type, DbType>() {
 				{ typeof(bool),     DbType.Int32 },
@@ -49,8 +49,8 @@ namespace PeUtility
 			
 			return base.DbTypeFromType(type);
 		}
-		
-		protected override object DbValueFromValue(object value, Type type)
+
+		public override object DbValueFromValue(object value, Type type)
 		{
 			var map = new Dictionary<Type, Func<object>>() {
 				{ typeof(bool),     () => Convert.ToInt32(value) },

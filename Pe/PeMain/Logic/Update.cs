@@ -10,7 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
+using System.Threading;
+using Microsoft.Win32.SafeHandles;
 using PeMain.Data;
 using PeUtility;
 
@@ -68,7 +71,7 @@ namespace PeMain.Logic
 			
 			var defaultMap = new Dictionary<string,string>() {
 				{ "pid",      string.Format("{0}", Process.GetCurrentProcess().Id) },
-				{ "version",  Literal.ApplicationVersion },
+				{ "version",  Literal.Version.FileVersion },
 				{ "uri",      Literal.UpdateURL },
 				{ "platform", Environment.Is64BitProcess ? "x64": "x86" },
 				{ "rc",       this._donwloadRc ? "true": "false" },
@@ -139,24 +142,39 @@ namespace PeMain.Logic
 			return Info = info;
 		}
 		
-		public void Execute()
+		public bool Execute()
 		{
+			var eventName = "pe-event";
+
 			var lines = new List<string>();
 			var map = new Dictionary<string,string>() {
 				{ "download",       this._downloadPath },
 				{ "expand",         Literal.ApplicationRootDirPath },
 				{ "wait",           "true" },
 				{ "no-wait-update", "true" },
+				{ "event",           eventName },
 			};
 			FileUtility.MakeFileParentDirectory(this._downloadPath);
 			if(!Directory.Exists(this._downloadPath)) {
 				Directory.CreateDirectory(this._downloadPath);
 			}
+
+			//var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
+			var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
 			
 			var process = CreateProcess(map);
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
 
 			process.Start();
+			//pipe.WaitForConnection();
+			if(waitEvent.WaitOne(TimeSpan.FromMinutes(3))) {
+				// 終了
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exit"], process.StartInfo.Arguments);
+
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

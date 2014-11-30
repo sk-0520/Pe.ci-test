@@ -153,6 +153,7 @@ namespace PeUtility
 		{
 			var v = versionText
 				.Split('.')
+				.Take(3)
 				.Select(n => ushort.Parse(n))
 				.ToArray()
 			;

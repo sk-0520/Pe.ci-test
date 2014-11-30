@@ -6,7 +6,6 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-using System;
 using System.Data.Common;
 
 namespace PeMain.Logic.DB
