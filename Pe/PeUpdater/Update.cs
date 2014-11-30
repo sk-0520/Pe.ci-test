@@ -151,15 +151,28 @@ namespace PeUpdater
 				}
 			}
 		}
+
+		void ChangeTempColor(string s, ConsoleColor fore, ConsoleColor back)
+		{
+			var tempFore = Console.ForegroundColor;
+			var tempBack = Console.BackgroundColor;
+
+			Console.ForegroundColor = fore;
+			Console.BackgroundColor = back;
+			Console.WriteLine(s);
+
+			Console.ForegroundColor = tempFore;
+			Console.BackgroundColor = tempBack;
+		}
 		
 		void KillProcess(Process process)
 		{
 			EventWaitHandle eventHandle = null;
 			if(this._eventName.HasValue) {
 				eventHandle = EventWaitHandle.OpenExisting(this._eventName.Data);
-				Console.WriteLine("PID = {0}, Event = {1}, kill wait...", this._pid.Data, this._eventName.Data);
+				ChangeTempColor(string.Format("PID = {0}, Event = {1}, kill wait...", this._pid.Data, this._eventName.Data), ConsoleColor.Black, ConsoleColor.Green);
 			} else {
-				Console.WriteLine("PID = {0}, kill wait...", this._pid.Data);
+				ChangeTempColor(string.Format("PID = {0}, kill wait...", this._pid.Data), ConsoleColor.Black, ConsoleColor.Yellow);
 			}
 			if(eventHandle != null) {
 				Console.WriteLine("event set");
