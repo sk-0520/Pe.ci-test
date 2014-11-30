@@ -25,19 +25,16 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.33.1" type="rc">
+	<log date="2014/11/30" version="0.34.0">
 		<ul type="note">
-			<li rev="">#26対応によりバージョン表記が a.b.c.d から a.b.c.d-xxxx... へ変更しました。ユーザー操作に影響はありませんが報告用情報の内容が変更されます</li>
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="">#26対応によりバージョン表記を a.b.c.d から a.b.c.d-xxxx... に変更しました。ユーザー操作に影響はありませんが報告用情報の内容が変更されます</li>
 		</ul>
 		<ul type="features">
 			<li rev="57ce440b369426c073965b71c49a2141398ffe53">#100: 情報ダイアログからコピーする報告用情報に罫線</li>
 			<li rev="5a519d4305a269af7bdf505c2ca4e1834e0b9972">#97: コンポーネント情報整理</li>
-			<li rev="">#102: 使用許諾ダイアログをユーザー意志で再表示</li>
+			<li rev="bcb2155a0c7905a65b3d4e33756c43a0743bb631">#102: 使用許諾ダイアログをユーザー意志で再表示</li>
 			<li rev="8c9b33f16ba69bad9036abbd934d3191e035ae65">#26: git commit hash</li>
 			<li rev="05fb65035835bc4fad48885c3fd3ca0f8109712c">#63: 自動アップデート時に優しく殺す</li>
-			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
 			<li rev="0d8c9432db5b921669eb6a0343f1ff8cb2460c9b">#98: 「現在選択中グループ」のツールチップ文字列</li>
@@ -45,13 +42,11 @@
 			<li rev="7f5a04985721d44741030dd699fdca68749c3265">ログ表示処理が非リリース構成で例外になる不具合の修正</li>
 			<li rev="2a01315de61388e0b99bb26f01ba4c9bcfb826e6">設定→ランチャ→その他の入力項目をウィンドウサイズ可変に対応できていなった不具合の修正</li>
 			<li rev="8c9b33f16ba69bad9036abbd934d3191e035ae65">#26によりバージョン情報ダイアログの表示項目順、バージョン情報・構成情報を入れ替え</li>
-			<li rev=""></li>
 		</ul>
 		<ul type="developer">
 			<li rev="4f56e98cbfa2680ffb7ed2b7ebcbca8af6b3557f">#87: DBManager使用時のスパゲッティ具合</li>
 			<li rev="5c6d563da2cb6a30ce3cadbc9176628e881b0f12">#64: app.config の切り替え</li>
 			<li rev="82d8307979942b749d0e3607464c5d6a1aee5c8f">PeMain以外の各種アセンブリバージョン修正</li>
-			<li rev=""></li>
 		</ul>
 	</log>
 	<log date="2014/11/24" version="0.33.0">
