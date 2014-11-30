@@ -160,7 +160,7 @@ namespace PeMain.Logic
 			}
 
 			//var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
-			var waitEvent = new EventWaitHandle(true, EventResetMode.AutoReset, eventName);
+			var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
 			
 			var process = CreateProcess(map);
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
