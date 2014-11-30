@@ -500,7 +500,12 @@ namespace PeMain.UI
 							if(dialog.ShowDialog() == DialogResult.OK) {
 								// 現在設定を保持する
 								AppUtility.SaveSetting(this._commonData);
-								updateData.Execute();
+								if(updateData.Execute()) {
+									return () => {
+										CloseApplication(false);
+										return false;
+									};
+								}
 							}
 						}
 					} catch(Exception ex) {
