@@ -930,9 +930,9 @@ namespace PeMain.UI
 			// tabLauncher_pageOthers
 			// 
 			this.tabLauncher_pageOthers.Controls.Add(this.panelLauncherOthers);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 247);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 249);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -957,7 +957,7 @@ namespace PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 247);
+			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 249);
 			this.panelLauncherOthers.TabIndex = 7;
 			// 
 			// selectLauncherStdStream
@@ -979,7 +979,7 @@ namespace PeMain.UI
 			this.inputLauncherNote.Location = new System.Drawing.Point(126, 82);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(407, 142);
+			this.inputLauncherNote.Size = new System.Drawing.Size(407, 144);
 			this.inputLauncherNote.TabIndex = 4;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -1080,8 +1080,6 @@ namespace PeMain.UI
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.Controls.Add(this.selectToolbarVisible, 0, 8);
 			this.tableLayoutPanel2.Controls.Add(this.selectToolbarTopmost, 0, 7);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarShowText, 0, 6);
-			this.tableLayoutPanel2.Controls.Add(this.selectToolbarAutoHide, 0, 5);
 			this.tableLayoutPanel2.Controls.Add(this.labelToolbarTextWidth, 0, 4);
 			this.tableLayoutPanel2.Controls.Add(this.inputToolbarTextWidth, 1, 4);
 			this.tableLayoutPanel2.Controls.Add(this.labelToolbarFont, 0, 3);
@@ -1092,6 +1090,8 @@ namespace PeMain.UI
 			this.tableLayoutPanel2.Controls.Add(this.selectToolbarPosition, 1, 1);
 			this.tableLayoutPanel2.Controls.Add(this.labelToolbarGroup, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.selectToolbarGroup, 1, 0);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarAutoHide, 0, 6);
+			this.tableLayoutPanel2.Controls.Add(this.selectToolbarShowText, 0, 5);
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 10;
@@ -1106,7 +1106,7 @@ namespace PeMain.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(235, 235);
-			this.tableLayoutPanel2.TabIndex = 20;
+			this.tableLayoutPanel2.TabIndex = 0;
 			// 
 			// selectToolbarVisible
 			// 
@@ -1115,7 +1115,7 @@ namespace PeMain.UI
 			this.selectToolbarVisible.Location = new System.Drawing.Point(3, 225);
 			this.selectToolbarVisible.Name = "selectToolbarVisible";
 			this.selectToolbarVisible.Size = new System.Drawing.Size(157, 19);
-			this.selectToolbarVisible.TabIndex = 7;
+			this.selectToolbarVisible.TabIndex = 13;
 			this.selectToolbarVisible.Text = ":common/label/visible";
 			this.selectToolbarVisible.UseVisualStyleBackColor = true;
 			// 
@@ -1127,7 +1127,7 @@ namespace PeMain.UI
 			this.selectToolbarTopmost.Location = new System.Drawing.Point(3, 200);
 			this.selectToolbarTopmost.Name = "selectToolbarTopmost";
 			this.selectToolbarTopmost.Size = new System.Drawing.Size(170, 19);
-			this.selectToolbarTopmost.TabIndex = 6;
+			this.selectToolbarTopmost.TabIndex = 11;
 			this.selectToolbarTopmost.Text = ":common/label/topmost";
 			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
 			// 
@@ -1136,10 +1136,10 @@ namespace PeMain.UI
 			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.selectToolbarShowText.AutoSize = true;
 			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
-			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 175);
+			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 150);
 			this.selectToolbarShowText.Name = "selectToolbarShowText";
 			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
-			this.selectToolbarShowText.TabIndex = 5;
+			this.selectToolbarShowText.TabIndex = 9;
 			this.selectToolbarShowText.Text = ":setting/check/show-text";
 			this.selectToolbarShowText.UseVisualStyleBackColor = true;
 			// 
@@ -1148,10 +1148,10 @@ namespace PeMain.UI
 			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.selectToolbarAutoHide.AutoSize = true;
 			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
-			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 150);
+			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 175);
 			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
 			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
-			this.selectToolbarAutoHide.TabIndex = 4;
+			this.selectToolbarAutoHide.TabIndex = 10;
 			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
 			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
 			// 
@@ -1162,7 +1162,7 @@ namespace PeMain.UI
 			this.labelToolbarTextWidth.Location = new System.Drawing.Point(3, 125);
 			this.labelToolbarTextWidth.Name = "labelToolbarTextWidth";
 			this.labelToolbarTextWidth.Size = new System.Drawing.Size(152, 15);
-			this.labelToolbarTextWidth.TabIndex = 12;
+			this.labelToolbarTextWidth.TabIndex = 7;
 			this.labelToolbarTextWidth.Text = ":setting/label/text-width";
 			// 
 			// inputToolbarTextWidth
@@ -1170,7 +1170,7 @@ namespace PeMain.UI
 			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 121);
 			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
 			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
-			this.inputToolbarTextWidth.TabIndex = 3;
+			this.inputToolbarTextWidth.TabIndex = 8;
 			// 
 			// labelToolbarFont
 			// 
@@ -1189,7 +1189,7 @@ namespace PeMain.UI
 			this.commandToolbarFont.Location = new System.Drawing.Point(161, 90);
 			this.commandToolbarFont.Name = "commandToolbarFont";
 			this.commandToolbarFont.Size = new System.Drawing.Size(142, 25);
-			this.commandToolbarFont.TabIndex = 2;
+			this.commandToolbarFont.TabIndex = 6;
 			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
 			this.commandToolbarFont.UseVisualStyleBackColor = true;
 			// 
@@ -1201,7 +1201,7 @@ namespace PeMain.UI
 			this.selectToolbarIcon.Location = new System.Drawing.Point(161, 61);
 			this.selectToolbarIcon.Name = "selectToolbarIcon";
 			this.selectToolbarIcon.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarIcon.TabIndex = 1;
+			this.selectToolbarIcon.TabIndex = 4;
 			// 
 			// labelToolbarIcon
 			// 
@@ -1210,7 +1210,7 @@ namespace PeMain.UI
 			this.labelToolbarIcon.Location = new System.Drawing.Point(3, 65);
 			this.labelToolbarIcon.Name = "labelToolbarIcon";
 			this.labelToolbarIcon.Size = new System.Drawing.Size(101, 15);
-			this.labelToolbarIcon.TabIndex = 12;
+			this.labelToolbarIcon.TabIndex = 3;
 			this.labelToolbarIcon.Text = ":enum/icon-size";
 			// 
 			// labelToolbarPosition
@@ -1220,7 +1220,7 @@ namespace PeMain.UI
 			this.labelToolbarPosition.Location = new System.Drawing.Point(3, 36);
 			this.labelToolbarPosition.Name = "labelToolbarPosition";
 			this.labelToolbarPosition.Size = new System.Drawing.Size(142, 15);
-			this.labelToolbarPosition.TabIndex = 10;
+			this.labelToolbarPosition.TabIndex = 1;
 			this.labelToolbarPosition.Text = ":enum/toolbar-position";
 			// 
 			// selectToolbarPosition
@@ -1231,7 +1231,7 @@ namespace PeMain.UI
 			this.selectToolbarPosition.Location = new System.Drawing.Point(161, 32);
 			this.selectToolbarPosition.Name = "selectToolbarPosition";
 			this.selectToolbarPosition.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarPosition.TabIndex = 0;
+			this.selectToolbarPosition.TabIndex = 2;
 			// 
 			// labelToolbarGroup
 			// 
@@ -1251,7 +1251,7 @@ namespace PeMain.UI
 			this.selectToolbarGroup.Location = new System.Drawing.Point(161, 3);
 			this.selectToolbarGroup.Name = "selectToolbarGroup";
 			this.selectToolbarGroup.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarGroup.TabIndex = 14;
+			this.selectToolbarGroup.TabIndex = 0;
 			// 
 			// selectToolbarItem
 			// 
