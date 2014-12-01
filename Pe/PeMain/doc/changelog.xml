@@ -32,12 +32,12 @@
 			<li rev=""></li>
 		</ul>
 		<ul type="features">
-			<li rev=""></li>
+			<li rev="d85cf3d12e420d65babf6e64599eaab83b60ed48">#79: メニューからのツールバー位置を視覚化</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li rev=""></li>
+			<li rev="93ac22d2e9902221af0cdd36c61b576a5e5e9209">#56: マルチディスプレイ環境の切り替え, ディスプレイ位置変更時に一応追従</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
