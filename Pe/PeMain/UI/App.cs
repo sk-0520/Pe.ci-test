@@ -120,6 +120,8 @@ namespace PeMain.UI
 			windowItemList.Name = this._commonData.Language["save-window/display"];
 			PushWindowListItem(windowItemList);
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
+			// #56
+			ResetToolbar();
 		}
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
