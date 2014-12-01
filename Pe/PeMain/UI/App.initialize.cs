@@ -258,19 +258,51 @@ namespace PeMain.UI
 			parentItem.Image = global::PeMain.Properties.Images.Toolbar;
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
-				/*
-				var screens = Screen.AllScreens;
-				var area = new Rectangle(
-					screens.Min(s => s.Bounds.Left),
-					screens.Min(s => s.Bounds.Top),
-					screens.Max(s => s.Bounds.Right),
-					screens.Max(s => s.Bounds.Bottom)
-				);
+				var screens = Screen.AllScreens.ToArray();
+				var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
 				var iconSize = IconScale.Small.ToSize();
-				 */
-				foreach(var screen in Screen.AllScreens) {
+				var drawSize = (SizeF)iconSize;
+				var maxArea = new RectangleF() {
+					X = screens.Min(s => s.Bounds.Left),
+					Y = screens.Min(s => s.Bounds.Top)
+				};
+				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
+				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
+
+				var percentage = new SizeF(
+					drawSize.Width / maxArea.Width * 100.0f,
+					drawSize.Height / maxArea.Height * 100.0f
+				);
+
+				foreach(var screen in screens) {
 					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
 						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
+						// 各エリアの描画
+						var alpha = 80;
+						var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
+						using(var g = Graphics.FromImage(baseImage)) {
+							foreach(var inScreen in screens) {
+								var useScreen = inScreen == screen;
+								var backColor = useScreen ? SystemColors.ActiveCaption: Color.FromArgb(alpha, SystemColors.InactiveCaption);
+								var foreColor = useScreen ? SystemColors.ActiveCaptionText: Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+								using(var brush = new SolidBrush(backColor))
+								using(var pen = new Pen(foreColor)) {
+									var baseArea = inScreen.Bounds;
+									baseArea.Offset(basePos);
+
+									var drawArea = new RectangleF(
+										baseArea.X / 100.0f * percentage.Width + 1,
+										baseArea.Y / 100.0f * percentage.Height + 1,
+										baseArea.Width / 100.0f * percentage.Width - 1,
+										baseArea.Height / 100.0f * percentage.Height - 1
+									);
+									g.FillRectangle(brush, drawArea);
+									g.DrawRectangle(pen, drawArea.X - 1, drawArea.Y - 1, drawArea.Width, drawArea.Height);
+								}
+							}
+						}
+						menuItem.Image.ToDispose();
+						menuItem.Image = baseImage;
 						menuItem.Checked = this._toolbarForms[screen].Visible;
 					}
 				}

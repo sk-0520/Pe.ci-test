@@ -34,69 +34,7 @@ namespace PeMain.UI
 	{
 		[Conditional("DEBUG")]
 		public void DebugProcess()
-		{
-			/*
-			var db = this._commonData.Database;
-			
-			using(var tran = db.BeginTransaction()) {
-				var entity = new PeMain.Data.DB.MNoteEntity();
-				db.ExecuteDelete(new [] { entity } );
-				db.ExecuteInsert(new [] { entity } );
-				tran.Commit();
-			}
-			
-			using(var reader = db.ExecuteReader("select * from M_NOTE")) {
-				while(reader.Read()) {
-					for(var i=0; i < reader.FieldCount;i ++) {
-						var name = reader.GetName(i);
-						var value= reader[name];
-						Debug.WriteLine("{0} = {1}", name, value);
-					}
-				}
-			}
-			using(var tran = db.BeginTransaction()) {
-				var entity = new PeMain.Data.DB.MNoteEntity();
-				entity.Title = "a'b--c";
-				db.ExecuteUpdate(new [] { entity } );
-				tran.Commit();
-			}
-			using(var tran = db.BeginTransaction()) {
-				var entity = new PeMain.Data.DB.MNoteEntity();
-				entity.Id = 1;
-				db.ExecuteInsert(new [] { entity } );
-				tran.Rollback();
-			}
-			using(var reader = db.ExecuteReader("select * from M_NOTE")) {
-				while(reader.Read()) {
-					for(var i=0; i < reader.FieldCount;i ++) {
-						var name = reader.GetName(i);
-						var value= reader[name];
-						Debug.WriteLine("{0} = {1}", name, value);
-					}
-				}
-			}
-			var e2 = new PeMain.Data.DB.MNoteEntity();
-			var e3 = db.GetEntity(e2);
-			Debug.WriteLine(e2.Title);
-			Debug.WriteLine(e3.Title);
-			//*/
-			
-			/*
-			var note = new NoteForm();
-			note.SetCommonData(this._commonData);
-			note.Show();
-			//*/
-			
-			/*
-			var info = new PeInformation();
-			foreach(var g in info.Get()) {
-				Debug.WriteLine(string.Format("[ {0} ]============", g.Title));
-				foreach(var item in g.Items) {
-					Debug.WriteLine(string.Format("{0} = {1}", item.Key, item.Value));
-				}
-			}
-			//*/
-		}
+		{ }
 		
 		void AttachmentSystemEvent()
 		{
