@@ -21,8 +21,6 @@ namespace PeUtility
 	/// </summary>
 	public partial class AppbarForm
 	{
-
-		
 		private bool ResistAppBar()
 		{
 			Debug.Assert(!this.DesignMode);

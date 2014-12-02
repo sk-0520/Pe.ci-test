@@ -18,23 +18,6 @@ namespace PeUtility
 	public class CommandLine
 	{
 		/// <summary>
-		/// 渡されたコマンドラインを統括。
-		/// </summary>
-		public List<string> Options { get; private set; }
-		public int Length { get { return Options.Count; } }
-		
-		public string KeyValueHeader { get; set; }
-		public string KeyValueSeparator { get; set; }
-		
-		private void Initialize()
-		{
-			Options = new List<string>();
-			
-			KeyValueHeader = "/";
-			KeyValueSeparator = "=";
-		}
-		
-		/// <summary>
 		/// 起動時のオプションから呼び出されることを想定
 		/// </summary>
 		public CommandLine()
@@ -53,7 +36,33 @@ namespace PeUtility
 			
 			Options.AddRange(args);
 		}
-		
+
+		private void Initialize()
+		{
+			Options = new List<string>();
+
+			KeyValueHeader = "/";
+			KeyValueSeparator = "=";
+		}
+
+		/// <summary>
+		/// オプションヘッダ。
+		/// </summary>
+		public string KeyValueHeader { get; set; }
+		/// <summary>
+		/// オプション分割文字。
+		/// </summary>
+		public string KeyValueSeparator { get; set; }
+
+		/// <summary>
+		/// 渡されたコマンドラインを統括。
+		/// </summary>
+		public List<string> Options { get; private set; }
+		/// <summary>
+		/// オプション数。
+		/// </summary>
+		public int Length { get { return Options.Count; } }
+
 		private KeyValuePair<string, string> SplitKeyValue(string pair)
 		{
 			var index = pair.IndexOf(KeyValueSeparator);
