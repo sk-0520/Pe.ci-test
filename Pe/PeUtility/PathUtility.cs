@@ -12,11 +12,10 @@ using System.IO;
 namespace PeUtility
 {
 	/// <summary>
-	/// Description of PathUtility.
+	/// パス関連共通処理。
 	/// </summary>
 	public static class PathUtility
 	{
-
 		static bool IsTargetExt(string path, Func<string, bool> dg)
 		{
 			var dotExt = Path.GetExtension(path);
@@ -28,7 +27,7 @@ namespace PeUtility
 		}
 		
 		/// <summary>
-		/// パスは実行形式として扱われるか
+		/// パスは実行形式として扱われるか。
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
@@ -37,6 +36,11 @@ namespace PeUtility
 			return IsTargetExt(path.ToLower(), s => s.IsIn("exe", "com", "bat"));
 		}
 		
+		/// <summary>
+		/// アイコンを保持するパスか。
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
 		public static bool HasIconPath(string path)
 		{
 			return IsTargetExt(path.ToLower(), s => s.IsIn("exe", "dll"));
