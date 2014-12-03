@@ -11,7 +11,7 @@ using System;
 namespace PeUtility
 {
 	/// <summary>
-	/// フルスクリーンイベント
+	/// フルスクリーンイベント。
 	/// </summary>
 	public class AppbarFullScreenEvent: EventArgs
 	{
@@ -25,6 +25,9 @@ namespace PeUtility
 	
 	public partial class AppbarForm
 	{
+		/// <summary>
+		/// フルスクリーンイベント。
+		/// </summary>
 		public event EventHandler<AppbarFullScreenEvent> AppbarFullScreen;
 		
 		protected void OnAppbarFullScreen(bool fullScreen)
@@ -36,7 +39,9 @@ namespace PeUtility
 			}
 		}
 		
-		
+		/// <summary>
+		/// 位置変更時に発生。
+		/// </summary>
 		public event EventHandler<EventArgs> AppbarPosChanged;
 		
 		protected virtual void OnAppbarPosChanged(EventArgs e)
@@ -49,8 +54,11 @@ namespace PeUtility
 			}
 		}
 		
-		
+		/// <summary>
+		/// ステータス変更。
+		/// </summary>
 		public event EventHandler<EventArgs> AppbarStateChange;
+
 		protected virtual void OnAppbarStateChange(EventArgs e)
 		{
 			if (AppbarStateChange != null) {

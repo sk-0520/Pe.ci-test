@@ -102,6 +102,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="PathUtilityTest.cs" />
     <Compile Include="SQLiteDBManagerTest.cs" />
     <Compile Include="TextUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
