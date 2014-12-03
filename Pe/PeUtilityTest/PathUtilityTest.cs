@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using PeUtility;
 
-namespace PeUtilityTest
+namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {
 	[TestFixture]
 	public class PathUtilityTest

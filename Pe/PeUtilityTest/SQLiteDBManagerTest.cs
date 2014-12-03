@@ -4,7 +4,7 @@ using System.Data.SQLite;
 using NUnit.Framework;
 using PeUtility;
 
-namespace PeUtilityTest
+namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {
 	[TestFixture]
 	public class SQLiteDBManagerTest
