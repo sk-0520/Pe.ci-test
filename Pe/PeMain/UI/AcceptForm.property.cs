@@ -7,9 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.PeMain.Data;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of AcceptForm_property.

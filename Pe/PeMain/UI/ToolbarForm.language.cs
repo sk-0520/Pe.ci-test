@@ -8,9 +8,9 @@
  */
 using System;
 using System.Diagnostics;
-using ContentTypeTextNet.Pe.Application.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of ToolbarForm_language.

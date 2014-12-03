@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Application.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class HomeForm
 	{

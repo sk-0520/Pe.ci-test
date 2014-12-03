@@ -14,14 +14,14 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Application.Data;
-using ContentTypeTextNet.Pe.Application.IF;
-using ContentTypeTextNet.Pe.Application.Logic;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// 標準で使用されるシステム環境にあってるっぽいスキン

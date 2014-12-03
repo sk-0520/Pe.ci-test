@@ -14,10 +14,10 @@ using System.IO.Compression;
 using System.Linq;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace ContentTypeTextNet.Pe.Application.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	public static class AppUtility
 	{
@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.Application.Logic
 		public static Image GetAppIcon(IconScale iconScale)
 		{
 			var iconSize = iconScale.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.Application.Properties.Images.App, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconSize)) {
 				return icon.ToBitmap();
 			}
 		}

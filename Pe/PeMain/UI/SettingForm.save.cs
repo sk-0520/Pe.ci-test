@@ -10,10 +10,10 @@ using System;
 using System.IO;
 using System.Linq;
 
-using ContentTypeTextNet.Pe.Application.Logic;
-using ContentTypeTextNet.Pe.Application.Logic.DB;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class SettingForm
 	{

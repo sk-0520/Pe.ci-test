@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>ContentTypeTextNet.Pe.Application</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.PeMain</RootNamespace>
     <AssemblyName>PeMain</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>

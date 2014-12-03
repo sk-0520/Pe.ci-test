@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.Application.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// ホットキー設定。

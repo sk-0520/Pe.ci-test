@@ -11,10 +11,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
-using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class App
 	{

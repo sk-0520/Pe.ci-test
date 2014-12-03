@@ -9,7 +9,7 @@
 using System;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace ContentTypeTextNet.Pe.Application.Data.DB
+namespace ContentTypeTextNet.Pe.PeMain.Data.DB
 {
 	public abstract class CommonDataEntity: Entity
 	{

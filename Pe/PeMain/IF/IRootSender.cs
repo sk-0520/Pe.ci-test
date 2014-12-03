@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.Application.IF
+namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	/// <summary>
 	/// 送信機。

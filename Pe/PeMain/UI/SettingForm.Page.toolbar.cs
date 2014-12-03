@@ -13,12 +13,12 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.Application.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class SettingForm
 	{
@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Bitmap>() {
-				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.Application.Properties.Images.NotImpl },
-				{ TREE_TYPE_GROUP, ContentTypeTextNet.Pe.Application.Properties.Images.Group },
+				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Images.NotImpl },
+				{ TREE_TYPE_GROUP, ContentTypeTextNet.Pe.PeMain.Properties.Images.Group },
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 			

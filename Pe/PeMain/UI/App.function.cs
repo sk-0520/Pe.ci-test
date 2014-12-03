@@ -18,14 +18,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using ContentTypeTextNet.Pe.Application.Data;
-using ContentTypeTextNet.Pe.Application.Logic;
-using ContentTypeTextNet.Pe.Application.Logic.DB;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_functions.
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			if(save) {
 				AppUtility.SaveSetting(this._commonData);
 			}
-			
+
 			Application.Exit();
 		}
 		

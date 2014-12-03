@@ -11,7 +11,7 @@ using System.Text;
 using Microsoft.Win32;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.Application.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// システムというかなんというか、ね。

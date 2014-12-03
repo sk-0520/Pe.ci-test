@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	public enum LauncherItemSelecterType
 	{

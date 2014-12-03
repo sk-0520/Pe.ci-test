@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 using ObjectDumper;
 
-namespace ContentTypeTextNet.Pe.Application.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// ログ種別。

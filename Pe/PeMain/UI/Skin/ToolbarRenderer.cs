@@ -10,11 +10,11 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ContentTypeTextNet.Pe.Application.Data;
-using ContentTypeTextNet.Pe.Application.IF;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// ISkinを元に描画する

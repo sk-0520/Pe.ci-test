@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class AboutForm
 	{
@@ -142,7 +142,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			// commandExecuteDir
 			// 
 			this.commandExecuteDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandExecuteDir.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Dir;
+			this.commandExecuteDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
 			this.commandExecuteDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandExecuteDir.Location = new System.Drawing.Point(523, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			// commandDataDir
 			// 
 			this.commandDataDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandDataDir.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Dir;
+			this.commandDataDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
 			this.commandDataDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandDataDir.Location = new System.Drawing.Point(523, 44);
 			this.commandDataDir.Name = "commandDataDir";
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			// commandBackupDir
 			// 
 			this.commandBackupDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandBackupDir.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Dir;
+			this.commandBackupDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
 			this.commandBackupDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandBackupDir.Location = new System.Drawing.Point(523, 76);
 			this.commandBackupDir.Name = "commandBackupDir";
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			// commandUpdate
 			// 
 			this.commandUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandUpdate.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Update;
+			this.commandUpdate.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Update;
 			this.commandUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandUpdate.Location = new System.Drawing.Point(523, 170);
 			this.commandUpdate.Name = "commandUpdate";
@@ -264,7 +264,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			// commandChangelog
 			// 
 			this.commandChangelog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandChangelog.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Changelog;
+			this.commandChangelog.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Changelog;
 			this.commandChangelog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandChangelog.Location = new System.Drawing.Point(523, 137);
 			this.commandChangelog.Name = "commandChangelog";

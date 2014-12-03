@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class ToolbarForm
 	{
@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.toolLauncher = new ContentTypeTextNet.Pe.Application.UI.ToolbarToolStrip();
+			this.toolLauncher = new ContentTypeTextNet.Pe.PeMain.UI.ToolbarToolStrip();
 			this.SuspendLayout();
 			// 
 			// toolLauncher
@@ -82,6 +82,6 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			this.ResumeLayout(false);
 
 		}
-		private ContentTypeTextNet.Pe.Application.UI.ToolbarToolStrip toolLauncher;
+		private ContentTypeTextNet.Pe.PeMain.UI.ToolbarToolStrip toolLauncher;
 	}
 }

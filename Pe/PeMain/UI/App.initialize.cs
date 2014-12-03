@@ -18,15 +18,15 @@ using System.Linq;
 using System.Windows.Forms;
 
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
-using ContentTypeTextNet.Pe.Application.Data;
-using ContentTypeTextNet.Pe.Application.Data.DB;
-using ContentTypeTextNet.Pe.Application.IF;
-using ContentTypeTextNet.Pe.Application.Logic;
-using ContentTypeTextNet.Pe.Application.Logic.DB;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.DB;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_initialize.
@@ -80,9 +80,9 @@ namespace ContentTypeTextNet.Pe.Application.UI
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
 		{
 			var map = new Dictionary<string, string>() {
-				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.Application.Properties.SQL.CreateNoteMasterTable },
-				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.Application.Properties.SQL.CreateNoteTransactionTable },
-				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.Application.Properties.SQL.CreateNoteStyleTransactionTable },
+				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteMasterTable },
+				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteTransactionTable },
+				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
 			};
 			var langMap = new Dictionary<string, string>() {
 				{ "TABLE-NAME", tableName },
@@ -152,7 +152,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成
 				using(var query = this._commonData.Database.CreateQuery()) {
-					query.ExecuteCommand(global::ContentTypeTextNet.Pe.Application.Properties.SQL.CreateVersionMasterTable);
+					query.ExecuteCommand(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateVersionMasterTable);
 				}
 			}
 			
@@ -255,7 +255,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// 親アイテム
 			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Toolbar;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Toolbar;
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				var screens = Screen.AllScreens.ToArray();
@@ -355,7 +355,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Note;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Note;
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -422,7 +422,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.WindowSave;
+			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.WindowSave;
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -430,7 +430,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.WindowLoad;
+			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.WindowLoad;
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
@@ -438,7 +438,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			parentItem.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.WindowList;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.WindowList;
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 				
@@ -528,7 +528,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Log;
+			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Log;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -536,12 +536,12 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.SystemEnvironment;
+			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.SystemEnvironment;
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Config;
+			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Config;
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 			
 			// 情報
@@ -565,12 +565,12 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Help;
+			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Help;
 			itemHelp.Click += (object sender, EventArgs e) => Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			
 			// 終了
 			itemExit.Name = menuNameExit;
-			itemExit.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Close;
+			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Close;
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 			
 			// メインメニュー

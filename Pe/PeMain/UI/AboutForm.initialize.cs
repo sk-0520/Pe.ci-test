@@ -15,7 +15,7 @@ using System.Xml.Linq;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace ContentTypeTextNet.Pe.Application.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class AboutForm
 	{
@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Application.UI
 			PointingUtility.AttachmentDefaultButton(this);
 			
 			var iconSize = IconScale.Big.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.Application.Properties.Images.App, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconSize)) {
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
