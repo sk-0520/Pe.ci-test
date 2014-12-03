@@ -72,10 +72,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PeUtility\CommandLine.cs">
+    <Compile Include="..\Utility\CommandLine.cs">
       <Link>CommandLine.cs</Link>
     </Compile>
-    <Compile Include="..\PeUtility\Functions.cs">
+    <Compile Include="..\Utility\Functions.cs">
       <Link>Functions.cs</Link>
     </Compile>
     <Compile Include="PeUpdater.cs" />
