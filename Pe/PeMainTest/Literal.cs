@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 
-namespace PeMainTest
+namespace ContentTypeTextNet.Pe.Test.ApplicationTest
 {
 	[TestFixture]
 	public class LiteralTest
