@@ -6,7 +6,7 @@
  */
 using System;
 using System.Windows.Forms;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace Hot_Key_Settings
 {

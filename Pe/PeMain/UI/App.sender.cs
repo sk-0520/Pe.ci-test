@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using PeMain.Data;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI
 {

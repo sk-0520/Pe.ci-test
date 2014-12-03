@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeSkin;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI
 {

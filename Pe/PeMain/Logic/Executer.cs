@@ -16,7 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.UI;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.Logic
 {

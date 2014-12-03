@@ -8,7 +8,7 @@
  */
 using System;
 using System.Diagnostics;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeUtility
 {

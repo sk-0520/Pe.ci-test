@@ -7,7 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 
-namespace PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
 {
 	using System;
 	using System.Runtime.InteropServices;

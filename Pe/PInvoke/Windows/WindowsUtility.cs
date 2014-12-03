@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Security;
 using System.Windows.Forms;
 
-namespace PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
 {
 	public static partial class NativeMethods { }
 	//internal static partial class NativeMethods { }

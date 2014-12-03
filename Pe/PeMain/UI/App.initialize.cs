@@ -17,7 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 using PeMain.Data;
 using PeMain.Data.DB;
 using PeMain.IF;

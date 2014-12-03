@@ -15,7 +15,7 @@ using PeMain.Data;
 using PeMain.IF;
 using PeSkin;
 using PeUtility;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI
 {

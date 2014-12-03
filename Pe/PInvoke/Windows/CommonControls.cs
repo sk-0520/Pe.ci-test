@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
 {
 	[Flags]
 	public enum ImageListDrawItemConstants : int

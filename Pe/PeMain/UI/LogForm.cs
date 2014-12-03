@@ -14,7 +14,7 @@ using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
 using PeMain.Logic;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI
 {

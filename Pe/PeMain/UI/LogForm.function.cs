@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 using ObjectDumper;
 using PeMain.Data;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI
 {

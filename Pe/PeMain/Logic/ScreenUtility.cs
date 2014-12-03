@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
-using PInvoke.Windows;
-using PInvoke.Windows.root.CIMV2;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows.root.CIMV2;
 
 namespace PeMain.Logic
 {

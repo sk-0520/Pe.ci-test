@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
 {
 	public enum ComResult : int
 	{

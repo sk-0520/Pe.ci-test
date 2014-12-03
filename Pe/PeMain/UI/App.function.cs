@@ -23,7 +23,7 @@ using PeMain.Logic;
 using PeMain.Logic.DB;
 using PeSkin;
 using PeUtility;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI
 {
