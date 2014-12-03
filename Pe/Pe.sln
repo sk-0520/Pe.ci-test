@@ -5,17 +5,17 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMain", "PeMain\PeMain.csproj", "{6877BDA1-FA71-4850-983C-F91DF0F9C6E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUtility", "PeUtility\PeUtility.csproj", "{863C2A90-A386-4F98-9D0B-EFB839168293}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "PeUtility\Utility.csproj", "{863C2A90-A386-4F98-9D0B-EFB839168293}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PInvoke", "PInvoke\PInvoke.csproj", "{2E80DF8C-5682-4B45-9172-846BAD85C305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUpdater", "PeUpdater\PeUpdater.csproj", "{2159F7AD-87AD-4CB8-8290-AFDE159C9891}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "PeUpdater\Updater.csproj", "{2159F7AD-87AD-4CB8-8290-AFDE159C9891}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Library\Package.csproj", "{E65232E9-77B5-41E3-A550-2001717AEEB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeSkin", "PeSkin\PeSkin.csproj", "{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skin", "PeSkin\Skin.csproj", "{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeUtilityTest", "PeUtilityTest\PeUtilityTest.csproj", "{C8E24195-1156-48D5-BE17-48D55DF30A98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityTest", "PeUtilityTest\UtilityTest.csproj", "{C8E24195-1156-48D5-BE17-48D55DF30A98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMainTest", "PeMainTest\PeMainTest.csproj", "{AC22B612-A2EA-4C52-A605-30CCB4D2CA84}"
 EndProject

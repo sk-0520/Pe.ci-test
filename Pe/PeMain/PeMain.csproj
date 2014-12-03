@@ -750,13 +750,13 @@
       <Project>{e65232e9-77b5-41e3-a550-2001717aeeb1}</Project>
       <Name>Package</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PeSkin\PeSkin.csproj">
+    <ProjectReference Include="..\PeSkin\Skin.csproj">
       <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
-      <Name>PeSkin</Name>
+      <Name>Skin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PeUtility\PeUtility.csproj">
+    <ProjectReference Include="..\PeUtility\Utility.csproj">
       <Project>{863C2A90-A386-4F98-9D0B-EFB839168293}</Project>
-      <Name>PeUtility</Name>
+      <Name>Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>

@@ -112,9 +112,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PeUtility\PeUtility.csproj">
+    <ProjectReference Include="..\PeUtility\Utility.csproj">
       <Project>{863c2a90-a386-4f98-9d0b-efb839168293}</Project>
-      <Name>PeUtility</Name>
+      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
