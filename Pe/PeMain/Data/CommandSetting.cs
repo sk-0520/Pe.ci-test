@@ -9,10 +9,10 @@
 using System;
 using System.Xml;
 using System.Xml.Serialization;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// コマンドランチャー設定

@@ -1,4 +1,4 @@
-﻿using PInvoke.Windows;
+﻿using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 /*
  * SharpDevelopによって生成
  * ユーザ: sk
@@ -7,7 +7,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class SettingForm
 	{
@@ -52,9 +52,9 @@ namespace PeMain.UI
 			this.selectUpdateCheckRC = new System.Windows.Forms.CheckBox();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
 			this.panelMainSystemEnv = new System.Windows.Forms.TableLayoutPanel();
-			this.inputSystemEnvExt = new PeMain.UI.PeHotkeyControl();
+			this.inputSystemEnvExt = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelSystemEnvExt = new System.Windows.Forms.Label();
-			this.inputSystemEnvHiddenFile = new PeMain.UI.PeHotkeyControl();
+			this.inputSystemEnvHiddenFile = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
 			this.selectLogFullDetail = new System.Windows.Forms.CheckBox();
@@ -66,7 +66,7 @@ namespace PeMain.UI
 			this.selectLogVisible = new System.Windows.Forms.CheckBox();
 			this.tabSetting_pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.selecterLauncher = new PeMain.UI.LauncherItemSelectControl();
+			this.selecterLauncher = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl();
 			this.tabLauncher = new System.Windows.Forms.TabControl();
 			this.tabLauncher_pageCommon = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -88,14 +88,14 @@ namespace PeMain.UI
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.commandLauncherIconPath = new System.Windows.Forms.Button();
 			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
-			this.inputLauncherIconPath = new PeMain.UI.IconTextBox();
+			this.inputLauncherIconPath = new ContentTypeTextNet.Pe.PeMain.UI.IconTextBox();
 			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
 			this.labelLauncherIconPath = new System.Windows.Forms.Label();
 			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
 			this.tabLauncher_pageEnv = new System.Windows.Forms.TabPage();
 			this.panelLauncherEnv = new System.Windows.Forms.TableLayoutPanel();
-			this.envLauncherRemove = new PeMain.UI.EnvRemoveControl();
-			this.envLauncherUpdate = new PeMain.UI.EnvUpdateControl();
+			this.envLauncherRemove = new ContentTypeTextNet.Pe.PeMain.UI.EnvRemoveControl();
+			this.envLauncherUpdate = new ContentTypeTextNet.Pe.PeMain.UI.EnvUpdateControl();
 			this.selectLauncherEnv = new System.Windows.Forms.CheckBox();
 			this.tabLauncher_pageOthers = new System.Windows.Forms.TabPage();
 			this.panelLauncherOthers = new System.Windows.Forms.TableLayoutPanel();
@@ -117,7 +117,7 @@ namespace PeMain.UI
 			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.labelToolbarFont = new System.Windows.Forms.Label();
-			this.commandToolbarFont = new PeMain.UI.FontSplitButton();
+			this.commandToolbarFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
 			this.labelToolbarIcon = new System.Windows.Forms.Label();
 			this.labelToolbarPosition = new System.Windows.Forms.Label();
@@ -136,32 +136,32 @@ namespace PeMain.UI
 			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
-			this.selecterToolbar = new PeMain.UI.LauncherItemSelectControl();
+			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl();
 			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
 			this.labelCommandHotkey = new System.Windows.Forms.Label();
-			this.inputCommandHotkey = new PeMain.UI.PeHotkeyControl();
+			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.labelCommandHideTime = new System.Windows.Forms.Label();
-			this.commandCommandFont = new PeMain.UI.FontSplitButton();
+			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.tabSetting_pageNote = new System.Windows.Forms.TabPage();
 			this.panelNote = new System.Windows.Forms.TableLayoutPanel();
 			this.panelNoteOthers = new System.Windows.Forms.TableLayoutPanel();
-			this.commandNoteCaptionFont = new PeMain.UI.FontSplitButton();
+			this.commandNoteCaptionFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.groupNoteKey = new System.Windows.Forms.GroupBox();
 			this.panelNoteKey = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelNoteCreate = new System.Windows.Forms.Label();
-			this.inputNoteCreate = new PeMain.UI.PeHotkeyControl();
+			this.inputNoteCreate = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelNoteHiddent = new System.Windows.Forms.Label();
-			this.inputNoteHidden = new PeMain.UI.PeHotkeyControl();
+			this.inputNoteHidden = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelNoteCompact = new System.Windows.Forms.Label();
-			this.inputNoteCompact = new PeMain.UI.PeHotkeyControl();
+			this.inputNoteCompact = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelNoteShowFront = new System.Windows.Forms.Label();
-			this.inputNoteShowFront = new PeMain.UI.PeHotkeyControl();
+			this.inputNoteShowFront = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
 			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -388,7 +388,7 @@ namespace PeMain.UI
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvExt.HotKeySetting = null;
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(156, 32);
-			this.inputSystemEnvExt.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputSystemEnvExt.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
 			this.inputSystemEnvExt.ReadOnly = true;
 			this.inputSystemEnvExt.Registered = false;
@@ -414,7 +414,7 @@ namespace PeMain.UI
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvHiddenFile.HotKeySetting = null;
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(156, 3);
-			this.inputSystemEnvHiddenFile.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputSystemEnvHiddenFile.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
 			this.inputSystemEnvHiddenFile.ReadOnly = true;
 			this.inputSystemEnvHiddenFile.Registered = false;
@@ -556,8 +556,8 @@ namespace PeMain.UI
 			// 
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterLauncher.Filtering = false;
-			this.selecterLauncher.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
-			this.selecterLauncher.IconScale = PeSkin.IconScale.Small;
+			this.selecterLauncher.FilterType = ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelecterType.Full;
+			this.selecterLauncher.IconScale = ContentTypeTextNet.Pe.Library.Skin.IconScale.Small;
 			this.selecterLauncher.ItemEdit = true;
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -565,8 +565,8 @@ namespace PeMain.UI
 			this.selecterLauncher.SelectedItem = null;
 			this.selecterLauncher.Size = new System.Drawing.Size(193, 275);
 			this.selecterLauncher.TabIndex = 0;
-			this.selecterLauncher.CreateItem += new System.EventHandler<PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
-			this.selecterLauncher.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
+			this.selecterLauncher.CreateItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
+			this.selecterLauncher.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
 			// tabLauncher
 			// 
@@ -704,7 +704,7 @@ namespace PeMain.UI
 			// 
 			// commandLauncherOptionDirPath
 			// 
-			this.commandLauncherOptionDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherOptionDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
 			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(489, 125);
 			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
 			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
@@ -724,7 +724,7 @@ namespace PeMain.UI
 			// 
 			// commandLauncherDirPath
 			// 
-			this.commandLauncherDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
 			this.commandLauncherDirPath.Location = new System.Drawing.Point(489, 94);
 			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
 			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
@@ -735,7 +735,7 @@ namespace PeMain.UI
 			// 
 			// commandLauncherFilePath
 			// 
-			this.commandLauncherFilePath.Image = global::PeMain.Properties.Images.File;
+			this.commandLauncherFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
 			this.commandLauncherFilePath.Location = new System.Drawing.Point(445, 94);
 			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
 			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
@@ -756,7 +756,7 @@ namespace PeMain.UI
 			// 
 			// commandLauncherOptionFilePath
 			// 
-			this.commandLauncherOptionFilePath.Image = global::PeMain.Properties.Images.File;
+			this.commandLauncherOptionFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
 			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(445, 125);
 			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
 			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
@@ -787,7 +787,7 @@ namespace PeMain.UI
 			// 
 			// commandLauncherWorkDirPath
 			// 
-			this.commandLauncherWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandLauncherWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
 			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(445, 156);
 			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
 			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
@@ -808,7 +808,7 @@ namespace PeMain.UI
 			// 
 			// commandLauncherIconPath
 			// 
-			this.commandLauncherIconPath.Image = global::PeMain.Properties.Images.File;
+			this.commandLauncherIconPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
 			this.commandLauncherIconPath.Location = new System.Drawing.Point(445, 187);
 			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
 			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
@@ -1339,7 +1339,7 @@ namespace PeMain.UI
 			// toolToolbarGroup_addGroup
 			// 
 			this.toolToolbarGroup_addGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addGroup.Image = global::PeMain.Properties.Images.Group;
+			this.toolToolbarGroup_addGroup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Group;
 			this.toolToolbarGroup_addGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_addGroup.Name = "toolToolbarGroup_addGroup";
 			this.toolToolbarGroup_addGroup.Size = new System.Drawing.Size(23, 22);
@@ -1349,7 +1349,7 @@ namespace PeMain.UI
 			// toolToolbarGroup_addItem
 			// 
 			this.toolToolbarGroup_addItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addItem.Image = global::PeMain.Properties.Images.AddItem;
+			this.toolToolbarGroup_addItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.AddItem;
 			this.toolToolbarGroup_addItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_addItem.Name = "toolToolbarGroup_addItem";
 			this.toolToolbarGroup_addItem.Size = new System.Drawing.Size(23, 22);
@@ -1364,7 +1364,7 @@ namespace PeMain.UI
 			// toolToolbarGroup_up
 			// 
 			this.toolToolbarGroup_up.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_up.Image = global::PeMain.Properties.Images.Up;
+			this.toolToolbarGroup_up.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Up;
 			this.toolToolbarGroup_up.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_up.Name = "toolToolbarGroup_up";
 			this.toolToolbarGroup_up.Size = new System.Drawing.Size(23, 22);
@@ -1374,7 +1374,7 @@ namespace PeMain.UI
 			// toolToolbarGroup_down
 			// 
 			this.toolToolbarGroup_down.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_down.Image = global::PeMain.Properties.Images.Down;
+			this.toolToolbarGroup_down.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Down;
 			this.toolToolbarGroup_down.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_down.Name = "toolToolbarGroup_down";
 			this.toolToolbarGroup_down.Size = new System.Drawing.Size(23, 22);
@@ -1389,7 +1389,7 @@ namespace PeMain.UI
 			// toolToolbarGroup_remove
 			// 
 			this.toolToolbarGroup_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_remove.Image = global::PeMain.Properties.Images.Remove;
+			this.toolToolbarGroup_remove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Remove;
 			this.toolToolbarGroup_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_remove.Name = "toolToolbarGroup_remove";
 			this.toolToolbarGroup_remove.Size = new System.Drawing.Size(23, 22);
@@ -1400,8 +1400,8 @@ namespace PeMain.UI
 			// 
 			this.selecterToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterToolbar.Filtering = false;
-			this.selecterToolbar.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
-			this.selecterToolbar.IconScale = PeSkin.IconScale.Small;
+			this.selecterToolbar.FilterType = ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelecterType.Full;
+			this.selecterToolbar.IconScale = ContentTypeTextNet.Pe.Library.Skin.IconScale.Small;
 			this.selecterToolbar.ItemEdit = false;
 			this.selecterToolbar.Location = new System.Drawing.Point(0, 0);
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1409,7 +1409,7 @@ namespace PeMain.UI
 			this.selecterToolbar.SelectedItem = null;
 			this.selecterToolbar.Size = new System.Drawing.Size(189, 283);
 			this.selecterToolbar.TabIndex = 0;
-			this.selecterToolbar.SelectChangedItem += new System.EventHandler<PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
+			this.selecterToolbar.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
 			// tabSetting_pageCommand
 			// 
@@ -1445,7 +1445,7 @@ namespace PeMain.UI
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputCommandHotkey.HotKeySetting = null;
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
-			this.inputCommandHotkey.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputCommandHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
 			this.inputCommandHotkey.ReadOnly = true;
 			this.inputCommandHotkey.Registered = false;
@@ -1622,7 +1622,7 @@ namespace PeMain.UI
 			this.inputNoteCreate.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteCreate.HotKeySetting = null;
 			this.inputNoteCreate.Location = new System.Drawing.Point(3, 18);
-			this.inputNoteCreate.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteCreate.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputNoteCreate.Name = "inputNoteCreate";
 			this.inputNoteCreate.ReadOnly = true;
 			this.inputNoteCreate.Registered = false;
@@ -1646,7 +1646,7 @@ namespace PeMain.UI
 			this.inputNoteHidden.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteHidden.HotKeySetting = null;
 			this.inputNoteHidden.Location = new System.Drawing.Point(3, 62);
-			this.inputNoteHidden.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteHidden.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputNoteHidden.Name = "inputNoteHidden";
 			this.inputNoteHidden.ReadOnly = true;
 			this.inputNoteHidden.Registered = false;
@@ -1670,7 +1670,7 @@ namespace PeMain.UI
 			this.inputNoteCompact.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteCompact.HotKeySetting = null;
 			this.inputNoteCompact.Location = new System.Drawing.Point(3, 106);
-			this.inputNoteCompact.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteCompact.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputNoteCompact.Name = "inputNoteCompact";
 			this.inputNoteCompact.ReadOnly = true;
 			this.inputNoteCompact.Registered = false;
@@ -1694,7 +1694,7 @@ namespace PeMain.UI
 			this.inputNoteShowFront.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteShowFront.HotKeySetting = null;
 			this.inputNoteShowFront.Location = new System.Drawing.Point(3, 150);
-			this.inputNoteShowFront.Modifiers = PInvoke.Windows.MOD.None;
+			this.inputNoteShowFront.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
 			this.inputNoteShowFront.Name = "inputNoteShowFront";
 			this.inputNoteShowFront.ReadOnly = true;
 			this.inputNoteShowFront.Registered = false;
@@ -1879,7 +1879,7 @@ namespace PeMain.UI
 			this.ClientSize = new System.Drawing.Size(761, 362);
 			this.Controls.Add(this.panelSetting);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.Icon = global::PeMain.Properties.Images.App;
+			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "SettingForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -1961,7 +1961,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel panelMainOthers;
 		private System.Windows.Forms.TableLayoutPanel panelMainSystemEnv;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherOthers;
-		private PeMain.UI.PeHotkeyControl inputNoteShowFront;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteShowFront;
 		private System.Windows.Forms.Label labelNoteShowFront;
 		private System.Windows.Forms.TableLayoutPanel panelNote;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherEnv;
@@ -1992,20 +1992,20 @@ namespace PeMain.UI
 		private System.Windows.Forms.GroupBox groupNoteItem;
 		private System.Windows.Forms.GroupBox groupNoteKey;
 		private System.Windows.Forms.Label labelNoteCaptionFont;
-		private PeMain.UI.FontSplitButton commandNoteCaptionFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton commandNoteCaptionFont;
 		private System.Windows.Forms.FlowLayoutPanel panelNoteKey;
 		private System.Windows.Forms.Label labelNoteCompact;
-		private PeMain.UI.PeHotkeyControl inputNoteCompact;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteCompact;
 		private System.Windows.Forms.Label labelNoteHiddent;
-		private PeMain.UI.PeHotkeyControl inputNoteHidden;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteHidden;
 		private System.Windows.Forms.Label labelNoteCreate;
-		private PeMain.UI.PeHotkeyControl inputNoteCreate;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteCreate;
 		private System.Windows.Forms.CheckBox selectLogTrigger_information;
 		private System.Windows.Forms.CheckBox selectLogTrigger_warning;
 		private System.Windows.Forms.CheckBox selectLogTrigger_error;
 		private System.Windows.Forms.GroupBox groupLogTrigger;
-		private PeMain.UI.EnvRemoveControl envLauncherRemove;
-		private PeMain.UI.EnvUpdateControl envLauncherUpdate;
+		private ContentTypeTextNet.Pe.PeMain.UI.EnvRemoveControl envLauncherRemove;
+		private ContentTypeTextNet.Pe.PeMain.UI.EnvUpdateControl envLauncherUpdate;
 		private System.Windows.Forms.CheckBox selectLauncherEnv;
 		private System.Windows.Forms.CheckBox selectLauncherAdmin;
 		private System.Windows.Forms.TabPage tabLauncher_pageOthers;
@@ -2013,8 +2013,8 @@ namespace PeMain.UI
 		private System.Windows.Forms.TabPage tabLauncher_pageCommon;
 		private System.Windows.Forms.TabControl tabLauncher;
 		private System.Windows.Forms.Label labelSystemEnvExt;
-		private PeMain.UI.PeHotkeyControl inputSystemEnvHiddenFile;
-		private PeMain.UI.PeHotkeyControl inputSystemEnvExt;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputSystemEnvHiddenFile;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputSystemEnvExt;
 		private System.Windows.Forms.Label labelSystemEnvHiddenFile;
 		private System.Windows.Forms.GroupBox groupMainSystemEnv;
 		private System.Windows.Forms.ComboBox selectToolbarItem;
@@ -2022,7 +2022,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.Label labelToolbarTextWidth;
 		private System.Windows.Forms.NumericUpDown inputToolbarTextWidth;
 		private System.Windows.Forms.Label labelCommandHotkey;
-		private PeMain.UI.PeHotkeyControl inputCommandHotkey;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;
 		private System.Windows.Forms.CheckBox selectLogVisible;
 		private System.Windows.Forms.GroupBox groupMainLog;
@@ -2058,7 +2058,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.TextBox inputLauncherCommand;
 		private System.Windows.Forms.TextBox inputLauncherName;
 		private System.Windows.Forms.TextBox inputLauncherWorkDirPath;
-		private PeMain.UI.IconTextBox inputLauncherIconPath;
+		private ContentTypeTextNet.Pe.PeMain.UI.IconTextBox inputLauncherIconPath;
 		private System.Windows.Forms.Label labelLauncherCommand;
 		private System.Windows.Forms.Label labelLauncherName;
 		private System.Windows.Forms.Label labelLauncherWorkDirPath;
@@ -2066,8 +2066,8 @@ namespace PeMain.UI
 		private System.Windows.Forms.RadioButton selectLauncherType_file;
 		private System.Windows.Forms.RadioButton selectLauncherType_uri;
 		private System.Windows.Forms.GroupBox groupLauncherType;
-		private PeMain.UI.LauncherItemSelectControl selecterToolbar;
-		private PeMain.UI.LauncherItemSelectControl selecterLauncher;
+		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl selecterToolbar;
+		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl selecterLauncher;
 		private System.Windows.Forms.TreeView treeToolbarItemGroup;
 		private System.Windows.Forms.ComboBox selectToolbarPosition;
 		private System.Windows.Forms.Label labelToolbarPosition;
@@ -2075,7 +2075,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.Label labelToolbarIcon;
 		private System.Windows.Forms.CheckBox selectToolbarVisible;
 		private System.Windows.Forms.Label labelToolbarFont;
-		private PeMain.UI.FontSplitButton commandToolbarFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton commandToolbarFont;
 		private System.Windows.Forms.CheckBox selectToolbarTopmost;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TabPage tabSetting_pageNote;
@@ -2084,7 +2084,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label labelCommandHideTime;
 		private System.Windows.Forms.CheckBox selectCommandTopmost;
-		private PeMain.UI.FontSplitButton commandCommandFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton commandCommandFont;
 		private System.Windows.Forms.Label labelCommandFont;
 		private System.Windows.Forms.ErrorProvider errorProvider;
 		private System.Windows.Forms.TabPage tabSetting_pageCommand;

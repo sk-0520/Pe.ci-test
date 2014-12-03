@@ -13,10 +13,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// ランチャー種別。
@@ -116,7 +116,7 @@ namespace PeMain.Data
 			var notfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::PeMain.Properties.Images.NotFound, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.NotFound, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
@@ -129,7 +129,7 @@ namespace PeMain.Data
 			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::PeMain.Properties.Images.URI, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.URI, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));

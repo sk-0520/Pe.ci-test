@@ -13,13 +13,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of ToolbarForm_functions.
@@ -712,7 +712,7 @@ namespace PeMain.UI
 		{
 			var iconSize = UseToolbarItem.IconScale.ToSize();
 			var toolItem = new ToolStripDropDownButton();
-			using(var icon = new Icon(global::PeMain.Properties.Images.ToolbarMain, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.ToolbarMain, iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));

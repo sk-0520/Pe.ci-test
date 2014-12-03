@@ -11,12 +11,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// ログ。
@@ -117,7 +117,7 @@ namespace PeMain.UI
 					//Debug.WriteLine(path);
 					try {
 						using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
-							stream.WriteLine(new PeMain.Logic.AppInformation().ToString());
+							stream.WriteLine(new ContentTypeTextNet.Pe.PeMain.Logic.AppInformation().ToString());
 							foreach(var logItem in this._logs) {
 								stream.WriteLine(logItem.ToString());
 							}

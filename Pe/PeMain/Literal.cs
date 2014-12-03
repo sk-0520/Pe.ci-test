@@ -14,9 +14,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain
+namespace ContentTypeTextNet.Pe.PeMain
 {
 	/// <summary>
 	/// 各種定数
@@ -30,7 +30,7 @@ namespace PeMain
 		#endif
 		
 		public const string programName = "Pe";
-		public const string updateProgramName = "PeUpdater.exe";
+		public const string updateProgramName = "Updater.exe";
 		#if DEBUG
 		public const string shortcutName = "Pe(DEBUG).lnk";
 		#else
@@ -180,6 +180,16 @@ namespace PeMain
 			get
 			{
 				return Path.Combine(ApplicationRootDirPath, "bin");
+			}
+		}
+		/// <summary>
+		/// sbin/
+		/// </summary>
+		public static string ApplicationSBinDirPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationRootDirPath, "sbin");
 			}
 		}
 		

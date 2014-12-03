@@ -14,12 +14,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.IF;
-using PeUtility;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// コモンダイアログ共通処理。

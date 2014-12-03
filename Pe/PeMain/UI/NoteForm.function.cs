@@ -13,13 +13,13 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
-using PeMain.Logic.DB;
-using PeSkin;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class NoteForm
 	{

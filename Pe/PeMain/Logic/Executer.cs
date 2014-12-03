@@ -14,11 +14,11 @@ using System.Linq;
 using System.Windows.Forms;
 
 using System.Windows.Forms.VisualStyles;
-using PeMain.Data;
-using PeMain.UI;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.UI;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// 実行処理共通化。

@@ -11,11 +11,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class StreamForm
 	{
@@ -37,7 +37,7 @@ namespace PeMain.UI
 				}
 			} catch(Exception ex) {
 				Debug.WriteLine(ex);
-				Icon = global::PeMain.Properties.Images.App;
+				Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App;
 			}
 		}
 

@@ -14,10 +14,10 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
-using PeMain.Data;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	public class UpdateInfo
 	{
@@ -53,7 +53,7 @@ namespace PeMain.Logic
 		
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.ApplicationBinDirPath, Literal.updateProgramName); }
+			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc, CommonData commonData)

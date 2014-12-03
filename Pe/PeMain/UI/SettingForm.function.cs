@@ -9,12 +9,12 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.Logic;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class SettingForm
 	{

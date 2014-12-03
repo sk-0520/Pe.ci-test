@@ -8,9 +8,9 @@
  */
 using System;
 using System.Windows.Forms;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of ExToolStrip.

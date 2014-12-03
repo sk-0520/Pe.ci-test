@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// システム環境に対する操作設定。

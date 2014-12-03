@@ -10,9 +10,9 @@ using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// ホットキー設定。

@@ -12,11 +12,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
-using PeUtility;
-using PeMain.Data;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// 設定。

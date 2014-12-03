@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class StreamForm
 	{

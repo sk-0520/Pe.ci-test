@@ -8,9 +8,9 @@
  */
 using System;
 using System.Xml.Serialization;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// なんかを保持するアイテムの基底。
