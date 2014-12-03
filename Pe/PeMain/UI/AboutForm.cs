@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void CommandExecuteDir_Click(object sender, EventArgs e)
 		{
-			OpenDirectory(Path.GetDirectoryName(Application.ExecutablePath));
+			OpenDirectory(Literal.ApplicationRootDirPath);
 		}
 		
 		void CommandDataDir_Click(object sender, EventArgs e)

@@ -169,7 +169,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get
 			{
-				return Path.GetDirectoryName(Application.ExecutablePath);
+				return Path.GetDirectoryName(Literal.ApplicationExecutablePath);
 			}
 		}
 		/// <summary>
