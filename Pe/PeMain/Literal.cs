@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#endif
 		
 		public const string programName = "Pe";
-		public const string updateProgramName = "PeUpdater.exe";
+		public const string updateProgramName = "Updater.exe";
 		#if DEBUG
 		public const string shortcutName = "Pe(DEBUG).lnk";
 		#else
@@ -180,6 +180,16 @@ namespace ContentTypeTextNet.Pe.PeMain
 			get
 			{
 				return Path.Combine(ApplicationRootDirPath, "bin");
+			}
+		}
+		/// <summary>
+		/// sbin/
+		/// </summary>
+		public static string ApplicationSBinDirPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationRootDirPath, "sbin");
 			}
 		}
 		
