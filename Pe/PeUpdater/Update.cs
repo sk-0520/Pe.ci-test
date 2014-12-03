@@ -17,7 +17,7 @@ using System.Threading;
 using System.Xml.Linq;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeUpdater
+namespace ContentTypeTextNet.Pe.Applications.Updater
 {
 	class Value<T>
 	{

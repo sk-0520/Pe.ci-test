@@ -9,7 +9,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace PeUpdater
+namespace ContentTypeTextNet.Pe.Applications.Updater
 {
 	public enum PeUpdaterCode
 	{

@@ -4,8 +4,8 @@
     <ProjectGuid>{2159F7AD-87AD-4CB8-8290-AFDE159C9891}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <OutputType>Exe</OutputType>
-    <RootNamespace>PeUpdater</RootNamespace>
-    <AssemblyName>PeUpdater</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Applications.Updater</RootNamespace>
+    <AssemblyName>Updater</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <TargetFrameworkProfile />
