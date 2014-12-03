@@ -27,8 +27,8 @@
 	-->
 	<log date="YYYY/MM/DD" version="0.34.1" type="rc">
 		<ul type="note">
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c" class="compatibility">#54に関連して各種パスに変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe が [Pe]/sbin/Updater/Updater.exe に変更されたためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
+			<li rev="">各種パス変更に伴い過去バージョンの不要ファイルを削除するには [Pe]/bat/clean.bat を実行してください</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="features">
@@ -44,7 +44,7 @@
 		</ul>
 		<ul type="developer">
 			<li rev="ff86166b83fe66b94389599100633dd1f0aa9647">#109: build.shの文字コード</li>
-			<li rev=""></li>
+			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c">#54: 名前空間と各名称がプログラム名(Pe)と直結してる</li>
 			<li rev=""></li>
 		</ul>
 	</log>
