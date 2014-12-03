@@ -13,10 +13,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of LauncherItemSelectControl_functions.

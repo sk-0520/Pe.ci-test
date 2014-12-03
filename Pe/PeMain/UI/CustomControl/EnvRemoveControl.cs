@@ -8,9 +8,9 @@
  */
 using System;
 using System.Windows.Forms;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.Application.IF;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	///環境変数削除用コントロール。

@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of ToolbarForm_initialize.

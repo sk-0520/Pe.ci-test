@@ -8,9 +8,9 @@
  */
 using System;
 using ContentTypeTextNet.Pe.Library.Utility;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.Application.IF;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// アイコン。

@@ -8,9 +8,9 @@
  */
 using System;
 using System.Collections.Generic;
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of AboutForm_property.

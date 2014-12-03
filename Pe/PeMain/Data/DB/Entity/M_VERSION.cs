@@ -8,7 +8,7 @@
  */
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data.DB
+namespace ContentTypeTextNet.Pe.Application.Data.DB
 {
 	[TargetName("M_VERSION")]
 	public class MVersionEntity: Entity

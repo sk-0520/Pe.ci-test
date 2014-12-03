@@ -7,7 +7,7 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 
-namespace PeMain.IF
+namespace ContentTypeTextNet.Pe.Application.IF
 {
 	public interface IItem { }
 	

@@ -1,9 +1,9 @@
-﻿namespace PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.Application.UI
 {
 	using System;
 	using System.Drawing;
 	using System.Windows.Forms;
-	using PeMain.Logic;
+	using ContentTypeTextNet.Pe.Application.Logic;
 
 	partial class HomeForm
 	{

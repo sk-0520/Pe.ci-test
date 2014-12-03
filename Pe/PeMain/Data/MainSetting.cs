@@ -14,7 +14,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// 実行情報。

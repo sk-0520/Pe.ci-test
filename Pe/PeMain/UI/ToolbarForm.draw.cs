@@ -10,9 +10,9 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of ToolbarForm_draw.

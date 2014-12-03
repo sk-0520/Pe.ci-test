@@ -8,10 +8,10 @@
  */
 using System;
 using System.IO;
-using PeMain.Data;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.IF;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.Application.Logic
 {
 	/// <summary>
 	/// Description of FileLogger.

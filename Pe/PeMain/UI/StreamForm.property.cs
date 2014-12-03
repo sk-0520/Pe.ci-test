@@ -8,9 +8,9 @@
  */
 using System;
 using System.Diagnostics;
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class StreamForm
 	{

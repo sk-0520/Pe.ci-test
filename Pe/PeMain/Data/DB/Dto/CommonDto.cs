@@ -8,7 +8,7 @@
  */
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data.DB
+namespace ContentTypeTextNet.Pe.Application.Data.DB
 {
 	public class CountDto: Dto
 	{

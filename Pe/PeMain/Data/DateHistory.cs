@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// 作成・更新日時保持。

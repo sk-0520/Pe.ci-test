@@ -9,11 +9,11 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of LogForm.
@@ -26,9 +26,9 @@ namespace PeMain.UI
 			this._imageLogType = new ImageList();
 			this._imageLogType.ColorDepth = ColorDepth.Depth32Bit;
 			this._imageLogType.ImageSize = IconScale.Small.ToSize();
-			this._imageLogType.Images.Add(LogType.Information.ToString(), global::PeMain.Properties.Images.Information);
-			this._imageLogType.Images.Add(LogType.Warning.ToString(), global::PeMain.Properties.Images.Warning);
-			this._imageLogType.Images.Add(LogType.Error.ToString(), global::PeMain.Properties.Images.Error);
+			this._imageLogType.Images.Add(LogType.Information.ToString(), global::ContentTypeTextNet.Pe.Application.Properties.Images.Information);
+			this._imageLogType.Images.Add(LogType.Warning.ToString(), global::ContentTypeTextNet.Pe.Application.Properties.Images.Warning);
+			this._imageLogType.Images.Add(LogType.Error.ToString(), global::ContentTypeTextNet.Pe.Application.Properties.Images.Error);
 			this.listLog.SmallImageList = this._imageLogType;
 			//this.listLog.LargeImageList = this._imageLogType;
 			

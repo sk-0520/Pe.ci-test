@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class SettingForm
 	{

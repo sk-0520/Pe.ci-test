@@ -11,11 +11,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-using PeMain.Data;
-using PeMain.Data.DB;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.Data.DB;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Logic.DB
+namespace ContentTypeTextNet.Pe.Application.Logic.DB
 {
 	/// <summary>
 	/// Description of Note.
@@ -34,7 +34,7 @@ namespace PeMain.Logic.DB
 		{
 			using(var query = this.db.CreateQuery()) {
 				//var dtoList = this.db.GetResultList<NoteItemDto>(global::PeMain.Properties.SQL.GetNoteItemList);
-				var dtoList = query.GetResultList<NoteItemDto>(global::PeMain.Properties.SQL.GetNoteItemList);
+				var dtoList = query.GetResultList<NoteItemDto>(global::ContentTypeTextNet.Pe.Application.Properties.SQL.GetNoteItemList);
 				if(enabledOnly) {
 					dtoList = dtoList.Where(dto => dto.CommonEnabled);
 				}
@@ -96,7 +96,7 @@ namespace PeMain.Logic.DB
 					idList.Add(item);
 				}
 				query.SetExpression("ID_LIST", string.Join(" or ", idList));
-				query.ExecuteCommand(global::PeMain.Properties.SQL.EnabledSwitch);
+				query.ExecuteCommand(global::ContentTypeTextNet.Pe.Application.Properties.SQL.EnabledSwitch);
 			}
 		}
 		

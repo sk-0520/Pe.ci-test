@@ -14,11 +14,11 @@ using System.Linq;
 using System.Windows.Forms;
 
 using ContentTypeTextNet.Pe.Library.Utility;
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.IF;
+using ContentTypeTextNet.Pe.Application.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// 情報。
@@ -126,7 +126,7 @@ namespace PeMain.UI
 		
 		void linkCopyLong_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Clipboard.SetText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, new PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
+			Clipboard.SetText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, new ContentTypeTextNet.Pe.Application.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine);
 		}
 	}
 }

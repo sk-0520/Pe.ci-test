@@ -12,7 +12,7 @@ using System.Linq;
 
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// フォント設定。

@@ -13,10 +13,10 @@ using System.Linq;
 using System.Windows.Forms;
 
 using ContentTypeTextNet.Pe.Library.Utility;
-using PeMain.Data;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// 設定。

@@ -12,7 +12,7 @@ using System.Drawing;
 
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// ログ内容種別。

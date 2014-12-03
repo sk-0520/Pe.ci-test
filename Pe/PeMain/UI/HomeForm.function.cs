@@ -1,4 +1,4 @@
-﻿namespace PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.Application.UI
 {
 	using System;
 	using System.Collections.Generic;
@@ -8,7 +8,7 @@
 	using System.Xml.Linq;
 
 	using ContentTypeTextNet.Pe.Library.Utility;
-	using PeMain.Data;
+	using ContentTypeTextNet.Pe.Application.Data;
 
 	partial class HomeForm
 	{

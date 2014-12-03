@@ -7,12 +7,12 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.IF;
+using ContentTypeTextNet.Pe.Application.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of ExHotkeyControl.

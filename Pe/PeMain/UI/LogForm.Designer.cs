@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class LogForm
 	{
@@ -49,7 +49,7 @@ namespace PeMain.UI
 			this.listStack_columnFunction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.listStack_columnLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.listStack_columnFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.toolLog = new PeMain.UI.ActiveToolStrip();
+			this.toolLog = new ContentTypeTextNet.Pe.Application.UI.ActiveToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
@@ -107,7 +107,7 @@ namespace PeMain.UI
 			// 
 			// statusLog_itemDetail
 			// 
-			this.statusLog_itemDetail.Image = global::PeMain.Properties.Images.NotImpl;
+			this.statusLog_itemDetail.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.NotImpl;
 			this.statusLog_itemDetail.Name = "statusLog_itemDetail";
 			this.statusLog_itemDetail.Size = new System.Drawing.Size(36, 18);
 			this.statusLog_itemDetail.Text = "☃";
@@ -233,7 +233,7 @@ namespace PeMain.UI
 			// 
 			// toolLog_save
 			// 
-			this.toolLog_save.Image = global::PeMain.Properties.Images.Save;
+			this.toolLog_save.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Save;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
 			this.toolLog_save.Size = new System.Drawing.Size(147, 22);
@@ -243,7 +243,7 @@ namespace PeMain.UI
 			// 
 			// toolLog_clear
 			// 
-			this.toolLog_clear.Image = global::PeMain.Properties.Images.Clear;
+			this.toolLog_clear.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Clear;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
 			this.toolLog_clear.Size = new System.Drawing.Size(148, 22);
@@ -304,7 +304,7 @@ namespace PeMain.UI
 		private System.Windows.Forms.SplitContainer panelMain;
 		private System.Windows.Forms.ToolStripButton toolLog_clear;
 		private System.Windows.Forms.ToolStripButton toolLog_save;
-		private PeMain.UI.ActiveToolStrip toolLog;
+		private ContentTypeTextNet.Pe.Application.UI.ActiveToolStrip toolLog;
 		private System.Windows.Forms.StatusStrip statusLog;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 	}

@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class StreamForm
 	{

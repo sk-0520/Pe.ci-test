@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PeMain
+namespace ContentTypeTextNet.Pe.Application
 {
 	public static class Startup
 	{
@@ -29,12 +29,12 @@ namespace PeMain
 			
 			var commandLine = new ContentTypeTextNet.Pe.Library.Utility.CommandLine(args);
 			Literal.Initialize(commandLine);
-			var fileLogger = new PeMain.Logic.FileLogger();
+			var fileLogger = new ContentTypeTextNet.Pe.Application.Logic.FileLogger();
 			if(commandLine.HasOption("log")) {
 				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.NowTimestampFileName) + ".log");
 				ContentTypeTextNet.Pe.Library.Utility.FileUtility.MakeFileParentDirectory(logPath);
-				fileLogger = new PeMain.Logic.FileLogger(logPath);
-				fileLogger.Puts(PeMain.Data.LogType.Information, "Information", new PeMain.Logic.AppInformation().ToString());
+				fileLogger = new ContentTypeTextNet.Pe.Application.Logic.FileLogger(logPath);
+				fileLogger.Puts(ContentTypeTextNet.Pe.Application.Data.LogType.Information, "Information", new ContentTypeTextNet.Pe.Application.Logic.AppInformation().ToString());
 			}
 			
 			bool isFirstInstance;
@@ -43,7 +43,7 @@ namespace PeMain
 			mutexName += "_debug";
 			//mutexName += new Random().Next().ToString();
 			#endif
-			fileLogger.Puts(PeMain.Data.LogType.Information, "mutex name", mutexName);
+			fileLogger.Puts(ContentTypeTextNet.Pe.Application.Data.LogType.Information, "mutex name", mutexName);
 			using(fileLogger) {
 				#if RELEASE
 				try {
@@ -72,9 +72,9 @@ namespace PeMain
 									Application.Run();
 								}
 							}
-							fileLogger.Puts(PeMain.Data.LogType.Information, "Close", Process.GetCurrentProcess());
+							fileLogger.Puts(ContentTypeTextNet.Pe.Application.Data.LogType.Information, "Close", Process.GetCurrentProcess());
 						} else {
-							fileLogger.Puts(PeMain.Data.LogType.Error, "duplicate boot", mutexName);
+							fileLogger.Puts(ContentTypeTextNet.Pe.Application.Data.LogType.Error, "duplicate boot", mutexName);
 						}
 					}
 				#if RELEASE

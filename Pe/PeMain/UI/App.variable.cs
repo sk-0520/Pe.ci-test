@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.UI;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.UI;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of Pe_variable.

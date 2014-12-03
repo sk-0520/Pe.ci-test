@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain
+namespace ContentTypeTextNet.Pe.Application
 {
 	/// <summary>
 	/// 各種定数

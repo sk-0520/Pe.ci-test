@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class EnvUpdateControl
 	{

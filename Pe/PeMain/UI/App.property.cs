@@ -1,4 +1,4 @@
-﻿namespace PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class App
 	{

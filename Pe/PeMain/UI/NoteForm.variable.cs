@@ -8,10 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class NoteForm
 	{

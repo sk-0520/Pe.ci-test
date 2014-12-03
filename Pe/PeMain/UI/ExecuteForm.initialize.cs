@@ -9,7 +9,7 @@
 using System;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class ExecuteForm
 	{

@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// ランチャアイテム起動時の環境変数設定。

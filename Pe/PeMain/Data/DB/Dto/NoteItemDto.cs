@@ -9,7 +9,7 @@
 using System.Drawing;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data.DB
+namespace ContentTypeTextNet.Pe.Application.Data.DB
 {
 	/// <summary>
 	/// Description of NoteItemDto.

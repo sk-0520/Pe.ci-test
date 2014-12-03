@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of AcceptForm_language.

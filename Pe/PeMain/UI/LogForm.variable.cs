@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of LogForm_variable.

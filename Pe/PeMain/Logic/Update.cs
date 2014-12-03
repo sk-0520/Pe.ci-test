@@ -14,10 +14,10 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.Application.Logic
 {
 	public class UpdateInfo
 	{

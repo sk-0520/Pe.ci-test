@@ -13,12 +13,12 @@ using System.Linq;
 using System.Timers;
 
 using Microsoft.Win32;
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.IF;
+using ContentTypeTextNet.Pe.Application.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of Pe.

@@ -9,7 +9,7 @@
 using System.Diagnostics;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.Application.Logic
 {
 	/// <summary>
 	/// Description of Information.

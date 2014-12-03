@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class UpdateForm
 	{
@@ -126,7 +126,7 @@ namespace PeMain.UI
 			this.ClientSize = new System.Drawing.Size(688, 361);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.Icon = global::PeMain.Properties.Images.App;
+			this.Icon = global::ContentTypeTextNet.Pe.Application.Properties.Images.App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MinimumSize = new System.Drawing.Size(540, 380);
 			this.Name = "UpdateForm";

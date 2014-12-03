@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class LauncherItemSelectControl
 	{
@@ -36,7 +36,7 @@ namespace PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.listLauncherItems = new PeMain.UI.LauncherItemListBox();
+			this.listLauncherItems = new ContentTypeTextNet.Pe.Application.UI.LauncherItemListBox();
 			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
 			this.toolLauncherItems_create = new System.Windows.Forms.ToolStripButton();
 			this.toolLauncherItems_remove = new System.Windows.Forms.ToolStripButton();
@@ -85,7 +85,7 @@ namespace PeMain.UI
 			// toolLauncherItems_create
 			// 
 			this.toolLauncherItems_create.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_create.Image = global::PeMain.Properties.Images.Add;
+			this.toolLauncherItems_create.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Add;
 			this.toolLauncherItems_create.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_create.Name = "toolLauncherItems_create";
 			this.toolLauncherItems_create.Size = new System.Drawing.Size(23, 20);
@@ -95,7 +95,7 @@ namespace PeMain.UI
 			// toolLauncherItems_remove
 			// 
 			this.toolLauncherItems_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_remove.Image = global::PeMain.Properties.Images.Remove;
+			this.toolLauncherItems_remove.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Remove;
 			this.toolLauncherItems_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_remove.Name = "toolLauncherItems_remove";
 			this.toolLauncherItems_remove.Size = new System.Drawing.Size(23, 20);
@@ -110,7 +110,7 @@ namespace PeMain.UI
 			// toolLauncherItems_filter
 			// 
 			this.toolLauncherItems_filter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolLauncherItems_filter.Image = global::PeMain.Properties.Images.Filter;
+			this.toolLauncherItems_filter.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Filter;
 			this.toolLauncherItems_filter.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_filter.Name = "toolLauncherItems_filter";
 			this.toolLauncherItems_filter.Size = new System.Drawing.Size(23, 20);
@@ -124,7 +124,7 @@ namespace PeMain.UI
 									this.toolLauncherItems_type_full,
 									this.toolLauncherItems_type_name,
 									this.toolLauncherItems_type_tag});
-			this.toolLauncherItems_type.Image = global::PeMain.Properties.Images.NotImpl;
+			this.toolLauncherItems_type.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.NotImpl;
 			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
 			this.toolLauncherItems_type.Size = new System.Drawing.Size(29, 20);
@@ -132,7 +132,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_full
 			// 
-			this.toolLauncherItems_type_full.Image = global::PeMain.Properties.Images.Find;
+			this.toolLauncherItems_type_full.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Find;
 			this.toolLauncherItems_type_full.Name = "toolLauncherItems_type_full";
 			this.toolLauncherItems_type_full.Size = new System.Drawing.Size(292, 22);
 			this.toolLauncherItems_type_full.Text = ":item-selecter/command/type-full";
@@ -140,7 +140,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_name
 			// 
-			this.toolLauncherItems_type_name.Image = global::PeMain.Properties.Images.Name;
+			this.toolLauncherItems_type_name.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Name;
 			this.toolLauncherItems_type_name.Name = "toolLauncherItems_type_name";
 			this.toolLauncherItems_type_name.Size = new System.Drawing.Size(292, 22);
 			this.toolLauncherItems_type_name.Text = ":item-selecter/command/type-name";
@@ -148,7 +148,7 @@ namespace PeMain.UI
 			// 
 			// toolLauncherItems_type_tag
 			// 
-			this.toolLauncherItems_type_tag.Image = global::PeMain.Properties.Images.Tag;
+			this.toolLauncherItems_type_tag.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Tag;
 			this.toolLauncherItems_type_tag.Name = "toolLauncherItems_type_tag";
 			this.toolLauncherItems_type_tag.Size = new System.Drawing.Size(292, 22);
 			this.toolLauncherItems_type_tag.Text = ":item-selecter/command/type-tag";
@@ -185,6 +185,6 @@ namespace PeMain.UI
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_remove;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_create;
 		private System.Windows.Forms.ToolStrip toolLauncherItems;
-		private PeMain.UI.LauncherItemListBox listLauncherItems;
+		private ContentTypeTextNet.Pe.Application.UI.LauncherItemListBox listLauncherItems;
 	}
 }

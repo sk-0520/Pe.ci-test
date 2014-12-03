@@ -12,11 +12,11 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.IF;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of LauncherItemSelectControl.

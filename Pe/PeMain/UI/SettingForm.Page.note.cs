@@ -9,7 +9,7 @@
 using System;
 using System.Linq;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// Description of SettingForm_Page_note.

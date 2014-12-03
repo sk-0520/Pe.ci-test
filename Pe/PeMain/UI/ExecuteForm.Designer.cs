@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class ExecuteForm
 	{
@@ -53,9 +53,9 @@ namespace PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectEnvironment = new System.Windows.Forms.CheckBox();
 			this.groupUpdate = new System.Windows.Forms.GroupBox();
-			this.envUpdate = new PeMain.UI.EnvUpdateControl();
+			this.envUpdate = new ContentTypeTextNet.Pe.Application.UI.EnvUpdateControl();
 			this.groupRemove = new System.Windows.Forms.GroupBox();
-			this.envRemove = new PeMain.UI.EnvRemoveControl();
+			this.envRemove = new ContentTypeTextNet.Pe.Application.UI.EnvRemoveControl();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.commandCancel = new System.Windows.Forms.Button();
@@ -204,7 +204,7 @@ namespace PeMain.UI
 			// 
 			// commandOption_file
 			// 
-			this.commandOption_file.Image = global::PeMain.Properties.Images.File;
+			this.commandOption_file.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.File;
 			this.commandOption_file.Location = new System.Drawing.Point(623, 32);
 			this.commandOption_file.Name = "commandOption_file";
 			this.commandOption_file.Size = new System.Drawing.Size(28, 25);
@@ -214,7 +214,7 @@ namespace PeMain.UI
 			// 
 			// commandWorkDirPath
 			// 
-			this.commandWorkDirPath.Image = global::PeMain.Properties.Images.Dir;
+			this.commandWorkDirPath.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Dir;
 			this.commandWorkDirPath.Location = new System.Drawing.Point(623, 63);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(28, 25);
@@ -225,7 +225,7 @@ namespace PeMain.UI
 			// commandOption_dir
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOption_dir.Image = global::PeMain.Properties.Images.Dir;
+			this.commandOption_dir.Image = global::ContentTypeTextNet.Pe.Application.Properties.Images.Dir;
 			this.commandOption_dir.Location = new System.Drawing.Point(741, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);
@@ -400,8 +400,8 @@ namespace PeMain.UI
 		}
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.CheckBox selectAdministrator;
-		private PeMain.UI.EnvRemoveControl envRemove;
-		private PeMain.UI.EnvUpdateControl envUpdate;
+		private ContentTypeTextNet.Pe.Application.UI.EnvRemoveControl envRemove;
+		private ContentTypeTextNet.Pe.Application.UI.EnvUpdateControl envUpdate;
 		private System.Windows.Forms.GroupBox groupRemove;
 		private System.Windows.Forms.GroupBox groupUpdate;
 		private System.Windows.Forms.CheckBox selectEnvironment;

@@ -13,12 +13,12 @@ using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.Application.Data;
+using ContentTypeTextNet.Pe.Application.IF;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows.root.CIMV2;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.Application.Logic
 {
 	/// <summary>
 	/// スクリーン共通処理。

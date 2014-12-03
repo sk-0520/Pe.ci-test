@@ -8,10 +8,10 @@
  */
 using System;
 using System.Windows.Forms;
-using PeMain.IF;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.IF;
+using ContentTypeTextNet.Pe.Application.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// 使用許諾。

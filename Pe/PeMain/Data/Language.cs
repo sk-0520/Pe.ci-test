@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// ワード。

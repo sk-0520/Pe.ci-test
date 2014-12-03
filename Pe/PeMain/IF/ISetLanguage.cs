@@ -6,9 +6,9 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-using PeMain.Data;
+using ContentTypeTextNet.Pe.Application.Data;
 
-namespace PeMain.IF
+namespace ContentTypeTextNet.Pe.Application.IF
 {
 	/// <summary>
 	/// 言語設定を外部から実施するためのインターフェイス。

@@ -9,7 +9,7 @@
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.Application.Data
 {
 	/// <summary>
 	/// デバイス情報変更。

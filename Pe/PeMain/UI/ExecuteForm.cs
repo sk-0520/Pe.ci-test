@@ -12,11 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using PeMain.IF;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.IF;
+using ContentTypeTextNet.Pe.Application.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	/// <summary>
 	/// 指定して実行。

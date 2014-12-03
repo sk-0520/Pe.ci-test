@@ -8,9 +8,9 @@
  */
 using System;
 using ContentTypeTextNet.Pe.Library.Utility;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.Application.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.Application.UI
 {
 	partial class UpdateForm
 	{
