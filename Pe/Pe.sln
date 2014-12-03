@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "PeUpdater\Update
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Library\Package.csproj", "{E65232E9-77B5-41E3-A550-2001717AEEB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skin", "PeSkin\Skin.csproj", "{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skin", "Skin\Skin.csproj", "{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityTest", "UtilityTest\UtilityTest.csproj", "{C8E24195-1156-48D5-BE17-48D55DF30A98}"
 EndProject

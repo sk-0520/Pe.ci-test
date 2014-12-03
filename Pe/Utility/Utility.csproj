@@ -171,7 +171,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PeSkin\Skin.csproj">
+    <ProjectReference Include="..\Skin\Skin.csproj">
       <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
       <Name>Skin</Name>
     </ProjectReference>
