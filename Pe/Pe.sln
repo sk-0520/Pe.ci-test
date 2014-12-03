@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PInvoke", "PInvoke\PInvoke.csproj", "{2E80DF8C-5682-4B45-9172-846BAD85C305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "PeUpdater\Updater.csproj", "{2159F7AD-87AD-4CB8-8290-AFDE159C9891}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{2159F7AD-87AD-4CB8-8290-AFDE159C9891}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "Library\Package.csproj", "{E65232E9-77B5-41E3-A550-2001717AEEB1}"
 EndProject
