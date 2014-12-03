@@ -746,7 +746,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\Package.csproj">
+    <ProjectReference Include="..\Package\Package.csproj">
       <Project>{e65232e9-77b5-41e3-a550-2001717aeeb1}</Project>
       <Name>Package</Name>
     </ProjectReference>
