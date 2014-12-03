@@ -14,7 +14,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain
 {

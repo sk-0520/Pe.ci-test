@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IWshRuntimeLibrary;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
     /// <summary>
     /// ショートカット。

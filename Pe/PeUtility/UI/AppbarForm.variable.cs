@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// Description of BaseToolbarForm_variable.

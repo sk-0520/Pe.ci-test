@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// 

@@ -15,7 +15,7 @@ using System.Linq;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
 using PeMain.Data;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.Logic
 {

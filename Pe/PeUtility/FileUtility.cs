@@ -12,7 +12,7 @@ using System.IO;
 
 using IWshRuntimeLibrary;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// ファイル関連の共通処理。

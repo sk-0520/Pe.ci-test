@@ -15,7 +15,7 @@ using System.Management;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// 各種情報を取得する。

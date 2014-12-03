@@ -10,7 +10,7 @@ using System;
 using System.Xml;
 using System.Xml.Serialization;
 using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.Data
 {

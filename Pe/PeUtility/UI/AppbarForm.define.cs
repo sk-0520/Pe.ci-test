@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// デスクトップへのドッキング位置。

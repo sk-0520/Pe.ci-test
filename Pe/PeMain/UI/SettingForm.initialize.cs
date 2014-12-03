@@ -15,7 +15,7 @@ using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;
 using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.UI
 {

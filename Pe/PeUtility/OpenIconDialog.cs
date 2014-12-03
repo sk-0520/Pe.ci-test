@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
     public class OpenIconDialog: CommonDialog
     {

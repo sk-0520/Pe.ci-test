@@ -12,7 +12,7 @@ using System.Data;
 using System.Data.Common;
 using System.Drawing;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	public class SQLiteDBManager: DBManager
 	{

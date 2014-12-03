@@ -17,7 +17,7 @@ using System.Windows.Forms;
 using PeSkin;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	public static class IconUtility
 	{

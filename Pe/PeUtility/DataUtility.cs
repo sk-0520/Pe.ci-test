@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	[Serializable]
 	public struct TPair<TFIRST, TSECOND>

@@ -14,7 +14,7 @@ using System.Windows.Forms.VisualStyles;
 using PeMain.Data;
 using PeMain.IF;
 using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI

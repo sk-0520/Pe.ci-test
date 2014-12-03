@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// パス関連共通処理。

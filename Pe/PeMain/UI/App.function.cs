@@ -22,7 +22,7 @@ using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;
 using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI

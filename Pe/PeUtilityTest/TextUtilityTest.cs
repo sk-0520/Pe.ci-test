@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {

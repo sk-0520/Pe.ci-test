@@ -12,7 +12,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	public static class Serializer
 	{

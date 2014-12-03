@@ -10,7 +10,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	public partial class AppbarForm
 	{

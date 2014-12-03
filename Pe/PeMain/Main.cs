@@ -27,12 +27,12 @@ namespace PeMain
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			
-			var commandLine = new PeUtility.CommandLine(args);
+			var commandLine = new ContentTypeTextNet.Pe.Library.Utility.CommandLine(args);
 			Literal.Initialize(commandLine);
 			var fileLogger = new PeMain.Logic.FileLogger();
 			if(commandLine.HasOption("log")) {
 				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.NowTimestampFileName) + ".log");
-				PeUtility.FileUtility.MakeFileParentDirectory(logPath);
+				ContentTypeTextNet.Pe.Library.Utility.FileUtility.MakeFileParentDirectory(logPath);
 				fileLogger = new PeMain.Logic.FileLogger(logPath);
 				fileLogger.Puts(PeMain.Data.LogType.Information, "Information", new PeMain.Logic.AppInformation().ToString());
 			}

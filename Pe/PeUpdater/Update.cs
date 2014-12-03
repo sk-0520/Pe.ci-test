@@ -15,7 +15,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Xml.Linq;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeUpdater
 {

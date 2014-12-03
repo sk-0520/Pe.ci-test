@@ -12,7 +12,7 @@ using System.IO;
 using System.Text;
 
 using PeMain.Logic;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.UI
 {

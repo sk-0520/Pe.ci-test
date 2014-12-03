@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using NUnit.Framework;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {

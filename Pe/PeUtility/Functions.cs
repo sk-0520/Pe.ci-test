@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// Description of Functions.

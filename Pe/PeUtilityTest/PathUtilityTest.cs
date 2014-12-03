@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {

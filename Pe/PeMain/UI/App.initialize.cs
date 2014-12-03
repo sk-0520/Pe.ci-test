@@ -23,7 +23,7 @@ using PeMain.Data.DB;
 using PeMain.IF;
 using PeMain.Logic;
 using PeMain.Logic.DB;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 using PeSkin;
 
 namespace PeMain.UI

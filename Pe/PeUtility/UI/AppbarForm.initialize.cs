@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace PeUtility
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// </summary>
