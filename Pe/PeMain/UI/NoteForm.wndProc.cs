@@ -11,7 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace PeMain.UI

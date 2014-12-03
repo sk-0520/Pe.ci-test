@@ -12,7 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using PeMain.Data;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.UI

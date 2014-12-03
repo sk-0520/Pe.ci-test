@@ -12,7 +12,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 
 namespace PeMain.Logic
 {

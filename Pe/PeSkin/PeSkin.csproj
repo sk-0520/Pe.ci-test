@@ -7,8 +7,8 @@
     <ProjectGuid>{5795CABD-7C4E-4CA7-962B-E80C9813EF1B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PeSkin</RootNamespace>
-    <AssemblyName>PeSkin</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.Skin</RootNamespace>
+    <AssemblyName>Skin</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

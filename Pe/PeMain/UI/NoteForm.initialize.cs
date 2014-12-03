@@ -12,7 +12,7 @@ using System.Linq;
 
 using PeMain.Data;
 using PeMain.Logic;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 
 namespace PeMain.UI
 {

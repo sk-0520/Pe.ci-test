@@ -21,7 +21,7 @@ using Microsoft.Win32;
 using PeMain.Data;
 using PeMain.Logic;
 using PeMain.Logic.DB;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 

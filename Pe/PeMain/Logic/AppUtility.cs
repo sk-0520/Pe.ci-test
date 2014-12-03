@@ -15,7 +15,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.Utility;
 using PeMain.Data;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 
 namespace PeMain.Logic
 {

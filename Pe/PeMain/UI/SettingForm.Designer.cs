@@ -557,7 +557,7 @@ namespace PeMain.UI
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterLauncher.Filtering = false;
 			this.selecterLauncher.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
-			this.selecterLauncher.IconScale = PeSkin.IconScale.Small;
+			this.selecterLauncher.IconScale = ContentTypeTextNet.Pe.Library.Skin.IconScale.Small;
 			this.selecterLauncher.ItemEdit = true;
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1401,7 +1401,7 @@ namespace PeMain.UI
 			this.selecterToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterToolbar.Filtering = false;
 			this.selecterToolbar.FilterType = PeMain.UI.LauncherItemSelecterType.Full;
-			this.selecterToolbar.IconScale = PeSkin.IconScale.Small;
+			this.selecterToolbar.IconScale = ContentTypeTextNet.Pe.Library.Skin.IconScale.Small;
 			this.selecterToolbar.ItemEdit = false;
 			this.selecterToolbar.Location = new System.Drawing.Point(0, 0);
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

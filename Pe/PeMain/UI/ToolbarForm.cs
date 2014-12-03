@@ -13,7 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.IF;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 

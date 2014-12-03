@@ -9,7 +9,7 @@
 using System;
 using PeMain.IF;
 using PeMain.Logic;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.Data

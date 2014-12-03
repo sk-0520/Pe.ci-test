@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using PeMain.Data;
 using PeMain.Logic;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.UI

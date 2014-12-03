@@ -24,7 +24,7 @@ using PeMain.IF;
 using PeMain.Logic;
 using PeMain.Logic.DB;
 using ContentTypeTextNet.Pe.Library.Utility;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 
 namespace PeMain.UI
 {

@@ -1,4 +1,4 @@
-﻿namespace PeSkin
+﻿namespace ContentTypeTextNet.Pe.Library.Skin
 {
 	public enum SkinButtonState
 	{

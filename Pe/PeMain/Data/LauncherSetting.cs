@@ -13,7 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace PeMain.Data
