@@ -376,40 +376,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 		
-		/*
-		void AttachmentWindowSubMenu(MenuItem parentMenu)
-		{
-			var menuList = new List<MenuItem>();
-			var itemToolbar = new MenuItem();
-			var itemNote = new MenuItem();
-			var itemLogger = new MenuItem();
-			
-			menuList.Add(itemToolbar);
-			menuList.Add(itemNote);
-			menuList.Add(itemLogger);
-			
-			itemToolbar.Name = menuNameWindowToolbar;
-			AttachmentToolbarSubMenu(itemToolbar);
-			
-			itemNote.Name = menuNameWindowNote;
-			AttachmentNoteSubMenu(itemNote);
-			
-			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Click += (object sender, EventArgs e) => {
-				this._logForm.Visible = !this._logForm.Visible;
-				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
-			};
-			
-			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
-			
-			// ログ
-			parentMenu.Popup += (object sender, EventArgs e) => {
-				itemLogger.Checked = this._logForm.Visible;
-			};
-		}
-		 */
-		
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
 		{
 			var menuList = new List<ToolStripItem>();
@@ -697,8 +663,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._windowTimer.Interval = this._commonData.MainSetting.WindowSaveTime.TotalMilliseconds;
 			this._windowTimer.Enabled = true;
 		}
-
 		
+		void InitializeListener(CommandLine commandLine, StartupLogger logger)
+		{
+			Debug.Assert(this._commonData != null);
+
+			this._listener = new Listener();
+			this._listener.Enabled = true;
+			this._listener.Keyboard.KeyPress += Keyboard_KeyPress;
+		}
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -728,6 +702,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeTimer(commandLine, logger);
 			
 			AttachmentSystemEvent();
+
+			InitializeListener(commandLine, logger);
 			
 			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);

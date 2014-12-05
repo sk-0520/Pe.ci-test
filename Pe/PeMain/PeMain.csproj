@@ -71,6 +71,9 @@
       <HintPath>..\packages\EntityFramework.6.1.2-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="MouseKeyboardActivityMonitor">
+      <HintPath>..\packages\MouseKeyboardActivityMonitor.4.0.5150.10665\lib\net20\MouseKeyboardActivityMonitor.dll</HintPath>
+    </Reference>
     <Reference Include="ObjectDumper">
       <HintPath>..\packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
     </Reference>
