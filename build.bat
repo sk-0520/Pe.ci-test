@@ -65,6 +65,9 @@ rmdir /S /Q "%OUTPUTx64%\x86"
 
 del "%OUTPUTx86%\System.Data.SQLite.xml"
 del "%OUTPUTx64%\System.Data.SQLite.xml"
+del "%OUTPUTx86%\MouseKeyboardActivityMonitor.xml"
+del "%OUTPUTx64%\MouseKeyboardActivityMonitor.xml"
+
 
 echo compression
 cscript "%ZIP%" "%OUTPUTx86%" "%OUTPUT%\Pe_%EXEVER%_x86.zip"
