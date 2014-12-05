@@ -679,10 +679,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		void HideAutoHiddenToolbar()
 		{
-			foreach(var toolbar in this._toolbarForms.Values.ToArray()) {
-				if(toolbar.AutoHide) {
-					toolbar.Hidden();
-				}
+			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.Visible && t.AutoHide).ToArray()) {
+				toolbar.Hidden();
 			}
 		}
 	}
