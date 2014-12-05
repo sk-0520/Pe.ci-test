@@ -46,6 +46,7 @@
 		<ul type="developer">
 			<li rev="ff86166b83fe66b94389599100633dd1f0aa9647">#109: build.shの文字コード</li>
 			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c">#54: 名前空間と各名称がプログラム名(Pe)と直結してる</li>
+			<li rev="33c9b96cd5465fb4ba9a656f09aa4ad5412a1110">#54によりアップデート後のアセンブリ解決のため PInvoke.dll から PlatformInvoke.dll に名称変更</li>
 			<li rev=""></li>
 		</ul>
 	</log>
