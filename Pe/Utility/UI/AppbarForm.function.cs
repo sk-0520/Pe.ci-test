@@ -227,6 +227,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 		
+		public void Hidden()
+		{
+			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			Debug.Assert(AutoHide);
+
+			ToHidden(true);
+		}
+
 		protected void ToHidden(bool force)
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
@@ -340,7 +348,6 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			
 			return result;
 		}
-			
 		
 		protected virtual void HiddenView(Rectangle area)
 		{
