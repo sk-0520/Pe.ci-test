@@ -9,12 +9,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WindowsAPI")]
+[assembly: AssemblyTitle("PlatformInvoke")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WindowsAPI")]
-[assembly: AssemblyCopyright("Copyright 2013")]
+[assembly: AssemblyProduct("PlatformInvoke")]
+[assembly: AssemblyCopyright("Copyright © 2014-<YEAR> sk <content-type-text.net>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

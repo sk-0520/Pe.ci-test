@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PeMain")]
-[assembly: AssemblyCopyright("sk")]
+[assembly: AssemblyCopyright("Copyright © 2014-<YEAR> sk <content-type-text.net>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
