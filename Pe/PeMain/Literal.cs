@@ -30,7 +30,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#endif
 		
 		public const string programName = "Pe";
-		public const string updateProgramName = "Updater.exe";
+		public const string updateProgramDir = "Updater";
+		public const string updateProgramName = updateProgramDir + ".exe";
 		#if DEBUG
 		public const string shortcutName = "Pe(DEBUG).lnk";
 		#else

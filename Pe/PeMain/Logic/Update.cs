@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramName); }
+			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramDir, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc, CommonData commonData)
