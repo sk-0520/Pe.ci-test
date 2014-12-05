@@ -17,6 +17,8 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -155,6 +157,35 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} finally {
 				if(timer.AutoReset) {
 					timer.Enabled = true;
+				}
+			}
+		}
+
+		void Keyboard_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			char esc = (char)27;
+
+			if(e.KeyChar == esc) {
+				var nowTime = DateTime.Now;
+				var prevToolbarHiddenTime = this._listener.PrevToolbarHiddenTime;
+				// ダブルクリック時間だけど分かりやすいのでよし
+				var time = NativeMethods.GetDoubleClickTime();
+				if(nowTime - prevToolbarHiddenTime <= TimeSpan.FromMilliseconds(time)) {
+					this._listener.Keyboard.Enabled = false;
+					try {
+						this._listener.PrevToolbarHiddenTime = nowTime;
+						//
+						foreach(var toolbar in this._toolbarForms.Values.ToArray()) {
+							if(toolbar.AutoHide) {
+								toolbar.Hidden();
+							}
+						}
+					} finally {
+						this._listener.PrevToolbarHiddenTime = DateTime.MinValue;
+						this._listener.Keyboard.Enabled = true;
+					}
+				} else {
+					this._listener.PrevToolbarHiddenTime = nowTime;
 				}
 			}
 		}
