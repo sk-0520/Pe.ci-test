@@ -673,6 +673,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			this._windowListItems.Add(windowListItem);
 		}
-		
+
+		/// <summary>
+		/// 自動的に隠すツールバーを強制的に隠す。
+		/// </summary>
+		void HideAutoHiddenToolbar()
+		{
+			foreach(var toolbar in this._toolbarForms.Values.ToArray()) {
+				if(toolbar.AutoHide) {
+					toolbar.Hidden();
+				}
+			}
+		}
 	}
 }

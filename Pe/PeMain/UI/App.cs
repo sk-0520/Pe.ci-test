@@ -173,12 +173,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					this._listener.Keyboard.Enabled = false;
 					try {
 						this._listener.PrevToolbarHiddenTime = nowTime;
-						//
-						foreach(var toolbar in this._toolbarForms.Values.ToArray()) {
-							if(toolbar.AutoHide) {
-								toolbar.Hidden();
-							}
-						}
+						HideAutoHiddenToolbar();
 					} finally {
 						this._listener.PrevToolbarHiddenTime = DateTime.MinValue;
 						this._listener.Keyboard.Enabled = true;
