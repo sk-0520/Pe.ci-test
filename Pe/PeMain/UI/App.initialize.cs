@@ -587,6 +587,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			foreach(ToolStripMenuItem toolItem in this._contextMenu.Items.Cast<ToolStripItem>().Where(t => t is ToolStripMenuItem)) {
 				ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
 			}
+			this._contextMenu.Opening += (object sender, CancelEventArgs e) => HideAutoHiddenToolbar();
 			this._notifyIcon.ContextMenuStrip = this._contextMenu;
 			
 		}
