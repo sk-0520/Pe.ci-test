@@ -284,7 +284,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 			}
 			
-			HiddenView(new Rectangle(pos, size));
+			HiddenView(!force, new Rectangle(pos, size));
 		}
 		
 		protected virtual void ToShow()
@@ -348,12 +348,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			
 			return result;
 		}
-		
-		protected virtual void HiddenView(Rectangle area)
+
+		protected virtual void HiddenView(bool animation, Rectangle area)
 		{
 			var prevVisible = Visible;
 			if(Visible) {
-				NativeMethods.AnimateWindow(Handle, (int)HiddenAnimateTime.TotalMilliseconds, ToAW(DesktopDockType, false));
+				if(animation) {
+					NativeMethods.AnimateWindow(Handle, (int)HiddenAnimateTime.TotalMilliseconds, ToAW(DesktopDockType, false));
+				}
 				Bounds = area;
 				Visible = prevVisible;
 			}
