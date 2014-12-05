@@ -1091,12 +1091,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplySettingTopmost();
 			UIUtility.ShowFront(this);
 		}
-		
-		protected override void HiddenView(Rectangle area)
+
+		protected override void HiddenView(bool animation, Rectangle area)
 		{
 			if(AutoHide) {
 				if(!this._menuOpening) {
-					base.HiddenView(area);
+					base.HiddenView(animation, area);
 					TopMost = true;
 					UIUtility.ShowFront(this);
 				} else {

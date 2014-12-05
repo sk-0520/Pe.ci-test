@@ -38,5 +38,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
 		
 		System.Timers.Timer _windowTimer;
+
+		Listener _listener;
 	}
 }
