@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// 	<description>アップデート成功後にキー待ちでも待たない。</description>
 	/// </item>
 	/// </list>
-	class PeUpdater
+	class Updater
 	{
 		public static void Main(string[] args)
 		{
@@ -68,7 +68,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			try {
 				var commandLine = new CommandLine(args);
 				if(commandLine.Length == 0) {
-					throw new PeUpdaterException(PeUpdaterCode.NotFoundArgument);
+					throw new UpdaterException(UpdaterCode.NotFoundArgument);
 				}
 				
 				update = new Update(commandLine);
@@ -83,9 +83,9 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				} else {
 					Console.WriteLine(">> NONE");
 				}
-			} catch(PeUpdaterException ex) {
+			} catch(UpdaterException ex) {
 				Console.WriteLine(">> ERROR");
-				Console.WriteLine(">> {0}", (int)ex.PeUpdaterCode);
+				Console.WriteLine(">> {0}", (int)ex.UpdaterCode);
 				Console.WriteLine(ex);
 			} catch(Exception ex) {
 				Console.WriteLine(">> ERROR");

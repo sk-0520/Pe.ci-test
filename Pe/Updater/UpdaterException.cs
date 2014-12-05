@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 
 namespace ContentTypeTextNet.Pe.Applications.Updater
 {
-	public enum PeUpdaterCode
+	public enum UpdaterCode
 	{
 		Unknown,
 		NotFoundArgument,
@@ -20,19 +20,19 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// Desctiption of PeUpdaterException.
 	/// </summary>
 	[Serializable]
-	public class PeUpdaterException : Exception, ISerializable
+	public class UpdaterException : Exception, ISerializable
 	{
-		public PeUpdaterException(): base(PeUpdaterCode.Unknown.ToString())
+		public UpdaterException(): base(UpdaterCode.Unknown.ToString())
 		{
-	 		PeUpdaterCode = PeUpdaterCode.Unknown;
+	 		UpdaterCode = UpdaterCode.Unknown;
 		}
 		
-		public PeUpdaterException(PeUpdaterCode pc): base(pc.ToString())
+		public UpdaterException(UpdaterCode pc): base(pc.ToString())
 		{
-	 		PeUpdaterCode = pc;
+	 		UpdaterCode = pc;
 		}
 	 	
-	 	public PeUpdaterCode PeUpdaterCode { get; private set; }
+	 	public UpdaterCode UpdaterCode { get; private set; }
 
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
