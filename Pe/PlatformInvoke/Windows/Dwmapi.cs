@@ -10,7 +10,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 {
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MARGINS

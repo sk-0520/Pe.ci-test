@@ -9,7 +9,7 @@
 using System;
 using System.Management;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows.root.CIMV2
+namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.root.CIMV2
 {
 	public interface IImportWMI
 	{

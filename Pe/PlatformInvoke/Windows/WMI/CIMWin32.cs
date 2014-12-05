@@ -10,7 +10,7 @@ using System;
 using System.Management;
 
 // TODO: リフレクション実装すべき
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows.root.CIMV2
+namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.root.CIMV2
 {
 	
 	public class CIM_UserDevice: IImportWMI

@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Utility
 {

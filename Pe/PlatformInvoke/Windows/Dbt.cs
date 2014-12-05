@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 {
 	public enum DBT
 	{

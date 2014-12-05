@@ -10,7 +10,7 @@ using System;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
