@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>ContentTypeTextNet.Pe.Library.PInvoke</RootNamespace>
-    <AssemblyName>PInvoke</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.PlatformInvoke</RootNamespace>
+    <AssemblyName>PlatformInvoke</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

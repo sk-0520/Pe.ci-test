@@ -1,4 +1,4 @@
-﻿using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+﻿using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 /*
  * SharpDevelopによって生成
  * ユーザ: sk
@@ -388,7 +388,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputSystemEnvExt.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvExt.HotKeySetting = null;
 			this.inputSystemEnvExt.Location = new System.Drawing.Point(156, 32);
-			this.inputSystemEnvExt.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputSystemEnvExt.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputSystemEnvExt.Name = "inputSystemEnvExt";
 			this.inputSystemEnvExt.ReadOnly = true;
 			this.inputSystemEnvExt.Registered = false;
@@ -414,7 +414,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputSystemEnvHiddenFile.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputSystemEnvHiddenFile.HotKeySetting = null;
 			this.inputSystemEnvHiddenFile.Location = new System.Drawing.Point(156, 3);
-			this.inputSystemEnvHiddenFile.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputSystemEnvHiddenFile.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputSystemEnvHiddenFile.Name = "inputSystemEnvHiddenFile";
 			this.inputSystemEnvHiddenFile.ReadOnly = true;
 			this.inputSystemEnvHiddenFile.Registered = false;
@@ -1445,7 +1445,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputCommandHotkey.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputCommandHotkey.HotKeySetting = null;
 			this.inputCommandHotkey.Location = new System.Drawing.Point(156, 105);
-			this.inputCommandHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputCommandHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputCommandHotkey.Name = "inputCommandHotkey";
 			this.inputCommandHotkey.ReadOnly = true;
 			this.inputCommandHotkey.Registered = false;
@@ -1622,7 +1622,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteCreate.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteCreate.HotKeySetting = null;
 			this.inputNoteCreate.Location = new System.Drawing.Point(3, 18);
-			this.inputNoteCreate.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputNoteCreate.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputNoteCreate.Name = "inputNoteCreate";
 			this.inputNoteCreate.ReadOnly = true;
 			this.inputNoteCreate.Registered = false;
@@ -1646,7 +1646,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteHidden.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteHidden.HotKeySetting = null;
 			this.inputNoteHidden.Location = new System.Drawing.Point(3, 62);
-			this.inputNoteHidden.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputNoteHidden.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputNoteHidden.Name = "inputNoteHidden";
 			this.inputNoteHidden.ReadOnly = true;
 			this.inputNoteHidden.Registered = false;
@@ -1670,7 +1670,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteCompact.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteCompact.HotKeySetting = null;
 			this.inputNoteCompact.Location = new System.Drawing.Point(3, 106);
-			this.inputNoteCompact.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputNoteCompact.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputNoteCompact.Name = "inputNoteCompact";
 			this.inputNoteCompact.ReadOnly = true;
 			this.inputNoteCompact.Registered = false;
@@ -1694,7 +1694,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteShowFront.Hotkey = System.Windows.Forms.Keys.None;
 			this.inputNoteShowFront.HotKeySetting = null;
 			this.inputNoteShowFront.Location = new System.Drawing.Point(3, 150);
-			this.inputNoteShowFront.Modifiers = ContentTypeTextNet.Pe.Library.PInvoke.Windows.MOD.None;
+			this.inputNoteShowFront.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
 			this.inputNoteShowFront.Name = "inputNoteShowFront";
 			this.inputNoteShowFront.ReadOnly = true;
 			this.inputNoteShowFront.Registered = false;

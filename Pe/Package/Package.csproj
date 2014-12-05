@@ -54,9 +54,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+    <ProjectReference Include="..\PlatformInvoke\PlatformInvoke.csproj">
       <Project>{2e80df8c-5682-4b45-9172-846bad85c305}</Project>
-      <Name>PInvoke</Name>
+      <Name>PlatformInvoke</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

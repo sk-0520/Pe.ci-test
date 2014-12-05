@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 {
 	/// <summary>
 	/// Description of MyClass.

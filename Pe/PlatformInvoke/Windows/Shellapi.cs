@@ -10,7 +10,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 {
 	public enum ABM: int
 	{

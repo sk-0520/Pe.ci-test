@@ -764,9 +764,9 @@
       <Name>Utility</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+    <ProjectReference Include="..\PlatformInvoke\PlatformInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>PInvoke</Name>
+      <Name>PlatformInvoke</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

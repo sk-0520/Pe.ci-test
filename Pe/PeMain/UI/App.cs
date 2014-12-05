@@ -18,7 +18,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {

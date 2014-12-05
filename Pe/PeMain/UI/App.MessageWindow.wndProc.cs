@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
