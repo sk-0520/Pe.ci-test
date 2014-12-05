@@ -163,14 +163,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void Keyboard_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			char esc = (char)27;
+			const char esc = (char)27;
 
 			if(e.KeyChar == esc) {
 				var nowTime = DateTime.Now;
-				var prevToolbarHiddenTime = this._listener.PrevToolbarHiddenTime;
 				// ダブルクリック時間だけど分かりやすいのでよし
 				var time = NativeMethods.GetDoubleClickTime();
-				if(nowTime - prevToolbarHiddenTime <= TimeSpan.FromMilliseconds(time)) {
+				if(nowTime - this._listener.PrevToolbarHiddenTime <= TimeSpan.FromMilliseconds(time)) {
 					this._listener.Keyboard.Enabled = false;
 					try {
 						this._listener.PrevToolbarHiddenTime = nowTime;
