@@ -25,24 +25,22 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.34.1" type="rc">
+	<log date="2014/12/06" version="0.35.0">
 		<ul type="note">
-			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c" class="compatibility">#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe が [Pe]/sbin/Updater/Updater.exe に変更されたためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
-			<li rev="">各種パス変更に伴い過去バージョンの不要ファイルを削除するには [Pe]/bat/clean.bat を実行してください</li>
-			<li rev=""></li>
+			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c" class="compatibility">#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe を [Pe]/sbin/Updater/Updater.exe に変更したためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
+			<li rev="">各種パス変更に伴い過去バージョンの不要ファイルが含まれます。削除するには [Pe]/bat/clean.bat を実行してください</li>
 		</ul>
 		<ul type="features">
 			<li rev="d85cf3d12e420d65babf6e64599eaab83b60ed48">#79: メニューからのツールバー位置を視覚化</li>
 			<li rev="7a6f206fef9bf358c01307d2069f3b82bd3523a6">#108: ツールバーをユーザー操作で強制的に隠す</li>
 			<li rev="2361a267964b772aa117c2c46745cd3c140746ea">#110: 言語ファイルのデフォルト</li>
-			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
 			<li rev="93ac22d2e9902221af0cdd36c61b576a5e5e9209">#56: マルチディスプレイ環境の切り替え, ディスプレイ位置変更時に一応追従</li>
 			<li rev="17785cfd712d9036a15b6a340c820e674f743b65">#106: #102対応のバッチファイル含み漏れ</li>
 			<li rev="bb3438add614a2876a141344a2e271b78cb7958f">#105: 設定→ツールバーの項目順</li>
 			<li rev="c138646841450de048868d33085f2864a79dee5f">#111: タスクトレイコンテキストメニューが自動的に隠すツールバーに連動して閉じる</li>
-			<li rev="">自動的に隠すツールバーが隠れたときに前回フォアグラウンドウィンドウをフォアグラウンドウィンドウに設定</li>
+			<li rev="c3ce164c8d39266aa1bb574741333f6252fe2d49">自動的に隠すツールバーが隠れたときに前回フォアグラウンドウィンドウをフォアグラウンドウィンドウに設定</li>
 		</ul>
 		<ul type="developer">
 			<li rev="ff86166b83fe66b94389599100633dd1f0aa9647">#109: build.shの文字コード</li>
