@@ -27,8 +27,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				case (int)WM.WM_SYSCOMMAND:
 					{
 						switch (m.WParam.ToInt32() & 0xfff0) {
-							case (int)SC.SC_MINIMIZE:
 							case (int)SC.SC_MAXIMIZE:
+								// #115
+								if(!NoteItem.Locked) {
+									ShowInputTitleArea(RECURSIVE);
+								}
+								return;
+							case (int)SC.SC_MINIMIZE:
 							case (int)SC.SC_RESTORE:
 								return;
 							default:
