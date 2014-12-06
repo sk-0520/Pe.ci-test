@@ -81,5 +81,51 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			public ToolStripItem Item { get; private set; }
 			public Color Color { get; private set; }
 		}
+
+		struct HitState
+		{
+			private const uint leftBit = 0x0001;
+			private const uint rightBit = 0x0002;
+			private const uint topBit = 0x0004;
+			private const uint bottomBit = 0x0008;
+
+			private uint _flag;
+
+			public bool HasTrue { get { return this._flag != 0; } }
+
+			private bool Get(uint bit)
+			{
+				return (this._flag & bit) == bit;
+			}
+			private void Set(uint bit, bool value)
+			{
+				if(value) {
+					this._flag |= bit;
+				} else {
+					this._flag &= ~(this._flag & bit);
+				}
+			}
+
+			public bool Left
+			{
+				get { return Get(leftBit); }
+				set { Set(leftBit, value); }
+			}
+			public bool Right
+			{
+				get { return Get(rightBit); }
+				set { Set(rightBit, value); }
+			}
+			public bool Top
+			{
+				get { return Get(topBit); }
+				set { Set(topBit, value); }
+			}
+			public bool Bottom
+			{
+				get { return Get(bottomBit); }
+				set { Set(bottomBit, value); }
+			}
+		}
 	}
 }
