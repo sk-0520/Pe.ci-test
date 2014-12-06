@@ -37,10 +37,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		
 		public static Image GetAppIcon(IconScale iconScale)
 		{
+			/*
 			var iconSize = iconScale.ToSize();
 			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconSize)) {
 				return icon.ToBitmap();
 			}
+			*/
+			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconScale);
 		}
 		
 		/// <summary>

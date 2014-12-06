@@ -132,6 +132,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return result;
 		}
+
+		public static Image ImageFromIcon(Icon icon, IconScale iconScale)
+		{
+			var iconSize = iconScale.ToSize();
+			using(var iconImage = new Icon(icon, iconSize)) {
+				return iconImage.ToBitmap();
+			}
+		}
 	}
 
 
