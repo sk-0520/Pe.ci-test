@@ -61,10 +61,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var langFileName = string.Format("{0}.xml", languageName);
 			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
 			
-			var p = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml");
-			
 			// TODO: 泥臭い
 			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
+				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
 				.Select(
 					f => new {
 						Language = Serializer.LoadFile<Language>(f, false),

@@ -56,6 +56,10 @@ namespace ContentTypeTextNet.Pe.PeMain
 		private const string _launcherItemsFileName = "launcher-items.xml";
 		private const string _dbFileName            = "db.sqlite3";
 		private const string _backupDirName         = "backup";
+		/// <summary>
+		/// デフォルトの言語名。
+		/// </summary>
+		public const string defaultLanguage = "default";
 		
 		#if DEBUG
 		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
