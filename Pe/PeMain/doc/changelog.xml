@@ -34,6 +34,7 @@
 		<ul type="features">
 			<li rev="d85cf3d12e420d65babf6e64599eaab83b60ed48">#79: メニューからのツールバー位置を視覚化</li>
 			<li rev="7a6f206fef9bf358c01307d2069f3b82bd3523a6">#108: ツールバーをユーザー操作で強制的に隠す</li>
+			<li rev="2361a267964b772aa117c2c46745cd3c140746ea">#110: 言語ファイルのデフォルト</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
