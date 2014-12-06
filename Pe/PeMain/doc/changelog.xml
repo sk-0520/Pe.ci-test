@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.35.1" type="rc">
+		<ul type="note">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="developer">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+	</log>
 	<log date="2014/12/06" version="0.35.0">
 		<ul type="note">
 			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c" class="compatibility">#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe を [Pe]/sbin/Updater/Updater.exe に変更したためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
