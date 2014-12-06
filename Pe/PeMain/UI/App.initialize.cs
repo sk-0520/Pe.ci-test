@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					logger.Puts(LogType.Warning, "not found language", languageFilePath);
 				}
 				// #110, デフォルトの言語ファイル名
-				langName = "default";
+				langName = Literal.defaultLanguage;
 				languageFilePath = getLangPath(langName);
 				this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, true);
 			}
