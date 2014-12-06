@@ -8,9 +8,9 @@
  */
 using System;
 using System.Windows.Forms;
-using PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class App
 	{

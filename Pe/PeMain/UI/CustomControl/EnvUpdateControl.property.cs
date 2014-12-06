@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class EnvUpdateControl
 	{

@@ -8,10 +8,10 @@
  */
 using System;
 using System.Windows.Forms;
-using PeMain.Data;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// 言語共通処理。

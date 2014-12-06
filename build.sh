@@ -8,14 +8,16 @@ if [ `git status -s | wc -l` -ne 0 ] ; then
     exit 1
 fi
 
-# ƒo[ƒWƒ‡ƒ“‘‚«Š·‚¦
+# ãƒãƒ¼ã‚¸ãƒ§ãƒ³æ›¸ãæ›ãˆ
 VERSION_REV=`git rev-parse HEAD`
 sed -E -i "s/^\[\s*assembly\s*:\s*\AssemblyInformationalVersion\s*\(\s*\"\s*(revision)\s*\"\s*\)\s*\]/[assembly: AssemblyInformationalVersion(\"$VERSION_REV\")]/" $VERSION_PATH
+# <YEAR>æ›¸ãæ›ãˆ
+find -name 'AssemblyInfo.cs' -print0 | xargs -0 sed -E -i "s/<YEAR>/`date +%Y`/"
 
-# ƒrƒ‹ƒh
+# ãƒ“ãƒ«ãƒ‰
 cmd.exe //c  build.bat
 
-# ƒo[ƒWƒ‡ƒ“–ß‚µ
+# ãƒãƒ¼ã‚¸ãƒ§ãƒ³æˆ»ã—
 git reset --hard
 
 echo "build success. please any key... "

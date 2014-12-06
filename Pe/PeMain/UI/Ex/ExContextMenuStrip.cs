@@ -8,9 +8,9 @@
  */
 using System;
 using System.Windows.Forms;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	public abstract class ExContextMenuStrip: ContextMenuStrip
 	{ }

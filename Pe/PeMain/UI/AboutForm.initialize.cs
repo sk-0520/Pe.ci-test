@@ -12,10 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class AboutForm
 	{
@@ -24,7 +24,7 @@ namespace PeMain.UI
 			PointingUtility.AttachmentDefaultButton(this);
 			
 			var iconSize = IconScale.Big.ToSize();
-			using(var icon = new Icon(global::PeMain.Properties.Images.App, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconSize)) {
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));

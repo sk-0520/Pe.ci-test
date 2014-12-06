@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class ExecuteForm
 	{

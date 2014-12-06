@@ -7,9 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System.Drawing;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data.DB
+namespace ContentTypeTextNet.Pe.PeMain.Data.DB
 {
 	/// <summary>
 	/// Description of NoteItemDto.

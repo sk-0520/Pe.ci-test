@@ -10,11 +10,11 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeSkin;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of NoteForm.

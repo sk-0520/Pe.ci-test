@@ -8,7 +8,7 @@
  */
 using System.Data.Common;
 
-namespace PeMain.Logic.DB
+namespace ContentTypeTextNet.Pe.PeMain.Logic.DB
 {
 	/// <summary>
 	/// Description of DBWrapper.

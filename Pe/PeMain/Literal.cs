@@ -14,9 +14,9 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain
+namespace ContentTypeTextNet.Pe.PeMain
 {
 	/// <summary>
 	/// 各種定数
@@ -30,7 +30,8 @@ namespace PeMain
 		#endif
 		
 		public const string programName = "Pe";
-		public const string updateProgramName = "PeUpdater.exe";
+		public const string updateProgramDir = "Updater";
+		public const string updateProgramName = updateProgramDir + ".exe";
 		#if DEBUG
 		public const string shortcutName = "Pe(DEBUG).lnk";
 		#else
@@ -55,6 +56,10 @@ namespace PeMain
 		private const string _launcherItemsFileName = "launcher-items.xml";
 		private const string _dbFileName            = "db.sqlite3";
 		private const string _backupDirName         = "backup";
+		/// <summary>
+		/// デフォルトの言語名。
+		/// </summary>
+		public const string defaultLanguage = "default";
 		
 		#if DEBUG
 		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
@@ -169,7 +174,7 @@ namespace PeMain
 		{
 			get
 			{
-				return Path.GetDirectoryName(Application.ExecutablePath);
+				return Path.GetDirectoryName(Literal.ApplicationExecutablePath);
 			}
 		}
 		/// <summary>
@@ -180,6 +185,16 @@ namespace PeMain
 			get
 			{
 				return Path.Combine(ApplicationRootDirPath, "bin");
+			}
+		}
+		/// <summary>
+		/// sbin/
+		/// </summary>
+		public static string ApplicationSBinDirPath
+		{
+			get
+			{
+				return Path.Combine(ApplicationRootDirPath, "sbin");
 			}
 		}
 		

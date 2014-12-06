@@ -35,7 +35,7 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 ## CI
 
-都合により赤かったりなかったり。
+都合により赤かったり404だったり。
 
  * **mater** [![Build status](https://ci.appveyor.com/api/projects/status/5pxaya16d6afx9df/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe/branch/master)
 

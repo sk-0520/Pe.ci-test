@@ -6,7 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class ToolbarForm
 	{
@@ -37,7 +37,7 @@ namespace PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.toolLauncher = new PeMain.UI.ToolbarToolStrip();
+			this.toolLauncher = new ContentTypeTextNet.Pe.PeMain.UI.ToolbarToolStrip();
 			this.SuspendLayout();
 			// 
 			// toolLauncher
@@ -71,7 +71,7 @@ namespace PeMain.UI
 			this.Name = "ToolbarForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/toolbar";
-			this.AppbarFullScreen += new System.EventHandler<PeUtility.AppbarFullScreenEvent>(this.ToolbarForm_AppbarFullScreen);
+			this.AppbarFullScreen += new System.EventHandler<ContentTypeTextNet.Pe.Library.Utility.AppbarFullScreenEvent>(this.ToolbarForm_AppbarFullScreen);
 			this.Activated += new System.EventHandler(this.ToolbarForm_Activated);
 			this.Deactivate += new System.EventHandler(this.ToolbarForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ToolbarFormFormClosing);
@@ -82,6 +82,6 @@ namespace PeMain.UI
 			this.ResumeLayout(false);
 
 		}
-		private PeMain.UI.ToolbarToolStrip toolLauncher;
+		private ContentTypeTextNet.Pe.PeMain.UI.ToolbarToolStrip toolLauncher;
 	}
 }

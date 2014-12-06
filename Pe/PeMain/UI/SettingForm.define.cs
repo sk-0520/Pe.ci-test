@@ -8,9 +8,9 @@
  */
 using System;
 using System.Drawing;
-using PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of SettingForm_define.

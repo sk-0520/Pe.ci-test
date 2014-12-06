@@ -8,10 +8,10 @@
  */
 using System;
 using System.Diagnostics;
-using PeMain.Data;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class SettingForm
 	{

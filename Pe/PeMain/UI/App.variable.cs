@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.UI;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.UI;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_variable.
@@ -38,5 +38,7 @@ namespace PeMain.UI
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
 		
 		System.Timers.Timer _windowTimer;
+
+		Listener _listener;
 	}
 }

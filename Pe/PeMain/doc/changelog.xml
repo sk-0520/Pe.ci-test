@@ -25,6 +25,33 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.34.1" type="rc">
+		<ul type="note">
+			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c" class="compatibility">#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe が [Pe]/sbin/Updater/Updater.exe に変更されたためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</li>
+			<li rev="">各種パス変更に伴い過去バージョンの不要ファイルを削除するには [Pe]/bat/clean.bat を実行してください</li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev="d85cf3d12e420d65babf6e64599eaab83b60ed48">#79: メニューからのツールバー位置を視覚化</li>
+			<li rev="7a6f206fef9bf358c01307d2069f3b82bd3523a6">#108: ツールバーをユーザー操作で強制的に隠す</li>
+			<li rev="2361a267964b772aa117c2c46745cd3c140746ea">#110: 言語ファイルのデフォルト</li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev="93ac22d2e9902221af0cdd36c61b576a5e5e9209">#56: マルチディスプレイ環境の切り替え, ディスプレイ位置変更時に一応追従</li>
+			<li rev="17785cfd712d9036a15b6a340c820e674f743b65">#106: #102対応のバッチファイル含み漏れ</li>
+			<li rev="bb3438add614a2876a141344a2e271b78cb7958f">#105: 設定→ツールバーの項目順</li>
+			<li rev="c138646841450de048868d33085f2864a79dee5f">#111: タスクトレイコンテキストメニューが自動的に隠すツールバーに連動して閉じる</li>
+			<li rev="">自動的に隠すツールバーが隠れたときに前回フォアグラウンドウィンドウをフォアグラウンドウィンドウに設定</li>
+		</ul>
+		<ul type="developer">
+			<li rev="ff86166b83fe66b94389599100633dd1f0aa9647">#109: build.shの文字コード</li>
+			<li rev="7e2cd76929891a874fb3494899d7b251d3de232c">#54: 名前空間と各名称がプログラム名(Pe)と直結してる</li>
+			<li rev="33c9b96cd5465fb4ba9a656f09aa4ad5412a1110">#54によりアップデート後のアセンブリ解決のため PInvoke.dll から PlatformInvoke.dll に名称変更</li>
+			<li rev="cac67b69ba9b8d082ec6cddfc43f9166400d1f35">各種アセンブリのAssemblyCopyrightを設定</li>
+			<li rev="">バージョン 0.33.0 での開発環境変更を追記</li>
+		</ul>
+	</log>
 	<log date="2014/11/30" version="0.34.0">
 		<ul type="note">
 			<li rev="">#26対応によりバージョン表記を a.b.c.d から a.b.c.d-xxxx... に変更しました。ユーザー操作に影響はありませんが報告用情報の内容が変更されます</li>
@@ -63,6 +90,7 @@
 			<li rev="288f2be6be13360028f79515eb571ed5e6e33b36">#69: ユニットテスト書こうぜ！</li>
 			<li rev="a70ce895c81d7261a93e3345ea0299a3121ce737">#89: ソース整理</li>
 			<li rev="ef51dcde150cff0a4c3e7b781c43f31312f999a9">#94: 変更履歴にコミットのリビジョンを含める</li>
+			<li rev="">開発環境を SharpDevelop 5.0 から Microsoft Visual Studio Community 2013 に変更</li>
 		</ul>
 	</log>
 	<log date="2014/11/19" version="0.32.0">

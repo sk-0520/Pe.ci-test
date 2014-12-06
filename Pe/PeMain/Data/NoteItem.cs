@@ -10,9 +10,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// ログ内容種別。

@@ -14,12 +14,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.IF;
-using PeUtility;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// コモンダイアログ共通処理。
@@ -369,6 +369,12 @@ namespace PeMain.Logic
 			toolItem.Opening += EventDropDownOpeningMenuInScreen;
 		}
 
+		/// <summary>
+		/// 安全にショートカットキーを設定する。
+		/// </summary>
+		/// <param name="toolItem"></param>
+		/// <param name="key"></param>
+		/// <param name="logger"></param>
 		public static void SetSafeShortcutKeys(ToolStripMenuItem toolItem, Keys key, ILogger logger) 
 		{
 			try {
@@ -380,6 +386,9 @@ namespace PeMain.Logic
 		
 	}
 	
+	/// <summary>
+	/// WebBrowser共通処理。
+	/// </summary>
 	public static class WebBrowserUtility
 	{
 		static void EventNewWindow(object sender, CancelEventArgs e)
@@ -389,7 +398,11 @@ namespace PeMain.Logic
 			e.Cancel = true;
 			Executer.RunCommand(link, null);
 		}
-		
+
+		/// <summary>
+		/// リンククリック時に外部ブラウザで開く。
+		/// </summary>
+		/// <param name="target"></param>
 		public static void AttachmentNewWindow(WebBrowser target)
 		{
 			target.NewWindow += EventNewWindow;

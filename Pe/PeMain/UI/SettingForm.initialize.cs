@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.Logic;
-using PeMain.Logic.DB;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of SettingForm_initialize.
@@ -61,10 +61,9 @@ namespace PeMain.UI
 			var langFileName = string.Format("{0}.xml", languageName);
 			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
 			
-			var p = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml");
-			
 			// TODO: 泥臭い
 			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
+				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
 				.Select(
 					f => new {
 						Language = Serializer.LoadFile<Language>(f, false),

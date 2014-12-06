@@ -1,8 +1,8 @@
-﻿namespace PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System;
 	using System.Collections.Generic;
-	using PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	partial class HomeForm
 	{

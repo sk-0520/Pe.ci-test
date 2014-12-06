@@ -7,10 +7,10 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System.Data.Common;
-using PeMain.Data.DB;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data.DB;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
@@ -24,7 +24,7 @@ namespace PeMain.Logic
 		{
 			using(var query = CreateQuery()) {
 				query.Parameter["table_name"] = tableName;
-				var count = query.GetResultSingle<CountDto>(global::PeMain.Properties.SQL.CheckTable);
+				var count = query.GetResultSingle<CountDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CheckTable);
 				return count.Has;
 			}
 		}
@@ -35,7 +35,7 @@ namespace PeMain.Logic
 				query.SetExpression("table_name", tableName);
 				query.SetExpression("id_column_name", idColumnName);
 
-				return query.GetResultSingle<SingleIdDto>(global::PeMain.Properties.SQL.GetId);
+				return query.GetResultSingle<SingleIdDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.GetId);
 			}
 		}
 		

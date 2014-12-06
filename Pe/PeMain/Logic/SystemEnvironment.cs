@@ -9,9 +9,9 @@
 using System;
 using System.Text;
 using Microsoft.Win32;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// システムというかなんというか、ね。

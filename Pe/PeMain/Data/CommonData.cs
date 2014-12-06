@@ -7,12 +7,12 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
-using PeMain.IF;
-using PeMain.Logic;
-using PeSkin;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// 持ち運び用共通データ。

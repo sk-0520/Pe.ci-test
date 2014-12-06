@@ -8,9 +8,9 @@
  */
 using System;
 using System.Diagnostics;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of LogForm_language.

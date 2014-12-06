@@ -7,9 +7,9 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System.Diagnostics;
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// Description of Information.

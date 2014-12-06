@@ -9,9 +9,9 @@
 using System;
 using System.Drawing;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	
 	/// <summary>

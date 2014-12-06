@@ -12,10 +12,10 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 
-using PeMain.Data;
-using PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class UpdateForm
 	{

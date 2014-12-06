@@ -6,9 +6,9 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data.DB
+namespace ContentTypeTextNet.Pe.PeMain.Data.DB
 {
 	[TargetName("T_NOTE")]
 	public class TNoteEntity: CommonDataEntity

@@ -13,11 +13,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Windows.Forms;
-using PeUtility;
-using PeMain.Data;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace PeMain.Logic
+namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	public static class AppUtility
 	{
@@ -37,10 +37,13 @@ namespace PeMain.Logic
 		
 		public static Image GetAppIcon(IconScale iconScale)
 		{
+			/*
 			var iconSize = iconScale.ToSize();
-			using(var icon = new Icon(global::PeMain.Properties.Images.App, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconSize)) {
 				return icon.ToBitmap();
 			}
+			*/
+			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconScale);
 		}
 		
 		/// <summary>

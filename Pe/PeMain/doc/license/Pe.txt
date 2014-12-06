@@ -1,2 +1,2 @@
-﻿PeMain, PeUpdater, PeUtility, PInvoke:
-license: GPLv3
+﻿Pe各種アセンブリは GPLv3 でライセンス。
+その他コンポーネントは各種元ライセンス。

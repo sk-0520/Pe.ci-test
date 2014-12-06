@@ -14,14 +14,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
-using PeSkin;
-using PeUtility;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// ノート。
@@ -308,7 +308,7 @@ namespace PeMain.UI
 			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
 			
 			// 状態チェック
-			var lockImage = NoteItem.Locked ? global::PeMain.Properties.Images.Lock : global::PeMain.Properties.Images.Unlock;
+			var lockImage = NoteItem.Locked ? global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Lock : global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Unlock;
 			this.contextMenu_itemLock.Image = lockImage;
 			this.contextMenu_itemLock.Checked = NoteItem.Locked;
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
@@ -353,7 +353,7 @@ namespace PeMain.UI
 					if (customMenuItem.Checked) {
 						customMenuItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
 					} else {
-						customMenuItem.Image = global::PeMain.Properties.Images.CustomColor;
+						customMenuItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.CustomColor;
 					}
 				}
 			};

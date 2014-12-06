@@ -13,12 +13,14 @@ using System.Linq;
 using System.Timers;
 
 using Microsoft.Win32;
-using PeMain.Data;
-using PeMain.IF;
-using PeMain.Logic;
-using PeUtility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Utility;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe.
@@ -120,6 +122,8 @@ namespace PeMain.UI
 			windowItemList.Name = this._commonData.Language["save-window/display"];
 			PushWindowListItem(windowItemList);
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
+			// #56
+			ResetToolbar();
 		}
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
@@ -153,6 +157,29 @@ namespace PeMain.UI
 			} finally {
 				if(timer.AutoReset) {
 					timer.Enabled = true;
+				}
+			}
+		}
+
+		void Keyboard_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			const char esc = (char)27;
+
+			if(e.KeyChar == esc) {
+				var nowTime = DateTime.Now;
+				// ダブルクリック時間だけど分かりやすいのでよし
+				var time = NativeMethods.GetDoubleClickTime();
+				if(nowTime - this._listener.PrevToolbarHiddenTime <= TimeSpan.FromMilliseconds(time)) {
+					this._listener.Keyboard.Enabled = false;
+					try {
+						this._listener.PrevToolbarHiddenTime = nowTime;
+						HideAutoHiddenToolbar();
+					} finally {
+						this._listener.PrevToolbarHiddenTime = DateTime.MinValue;
+						this._listener.Keyboard.Enabled = true;
+					}
+				} else {
+					this._listener.PrevToolbarHiddenTime = nowTime;
 				}
 			}
 		}

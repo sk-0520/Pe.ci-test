@@ -10,11 +10,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using PeMain.Data;
-using PeMain.Logic;
-using PeSkin;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class NoteForm
 	{

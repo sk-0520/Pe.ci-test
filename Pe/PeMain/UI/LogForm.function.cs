@@ -14,10 +14,10 @@ using System.Linq;
 using System.Windows.Forms;
 
 using ObjectDumper;
-using PeMain.Data;
-using PInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of LogForm_functions.
@@ -201,10 +201,10 @@ namespace PeMain.UI
 		void ChangeDetail(bool fullDetail)
 		{
 			if(fullDetail) {
-				statusLog_itemDetail.Image = PeMain.Properties.Images.SideExpand;
+				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Images.SideExpand;
 				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-full"];
 			} else {
-				statusLog_itemDetail.Image = PeMain.Properties.Images.SideContract;
+				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Images.SideContract;
 				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-split"];
 			}
 			

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PeMain</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.PeMain</RootNamespace>
     <AssemblyName>PeMain</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -32,7 +32,7 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
+    <OutputPath>$(SolutionDir)\..\output\$(Configuration)\$(Platform)</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
@@ -44,7 +44,7 @@
     <DefineConstants>DEBUG;TRACE;DISABLED_UPDATE_CHECK</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\output\$(Configuration)\$(Platform)</OutputPath>
+    <OutputPath>$(SolutionDir)\..\output\$(Configuration)\$(Platform)</OutputPath>
     <DebugSymbols>False</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
@@ -70,6 +70,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.2-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="MouseKeyboardActivityMonitor">
+      <HintPath>..\packages\MouseKeyboardActivityMonitor.4.0.5150.10665\lib\net20\MouseKeyboardActivityMonitor.dll</HintPath>
     </Reference>
     <Reference Include="ObjectDumper">
       <HintPath>..\packages\ObjectDumper.1.0.0.12\lib\net35-Client\ObjectDumper.dll</HintPath>
@@ -112,7 +115,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bat\accept.bat" />
+    <None Include="bat\accept.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
@@ -155,6 +160,7 @@
     <Compile Include="Properties\Images.Designer.cs">
       <DependentUpon>Images.resx</DependentUpon>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Data\CommandSetting.cs" />
     <Compile Include="Data\EnvironmentSetting.cs" />
@@ -743,21 +749,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj">
+    <ProjectReference Include="..\Package\Package.csproj">
       <Project>{e65232e9-77b5-41e3-a550-2001717aeeb1}</Project>
-      <Name>Library</Name>
+      <Name>Package</Name>
+      <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\PeSkin\PeSkin.csproj">
+    <ProjectReference Include="..\Skin\Skin.csproj">
       <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
-      <Name>PeSkin</Name>
+      <Name>Skin</Name>
+      <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\PeUtility\PeUtility.csproj">
+    <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{863C2A90-A386-4F98-9D0B-EFB839168293}</Project>
-      <Name>PeUtility</Name>
+      <Name>Utility</Name>
+      <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\PInvoke\PInvoke.csproj">
+    <ProjectReference Include="..\PlatformInvoke\PlatformInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
-      <Name>PInvoke</Name>
+      <Name>PlatformInvoke</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -768,6 +778,7 @@
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
+      <Private>False</Private>
     </COMReference>
   </ItemGroup>
   <ItemGroup>
@@ -796,8 +807,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy "$(OutDir)\etc\lang\ja-JP.xml" "$(OutDir)\etc\lang\default.xml"
+copy "$(OutDir)\etc\lang\ja-JP.accept.html" "$(OutDir)\etc\lang\default.accept.html"
+</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(LOCALAPPDATA)\Microsoft\MSBuild\SlowCheetah\v2.5.11\SlowCheetah.Transforms.targets</SlowCheetahTargets>

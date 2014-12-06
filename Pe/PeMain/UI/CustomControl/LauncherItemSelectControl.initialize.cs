@@ -8,10 +8,10 @@
  */
 using System;
 using System.Collections.Generic;
-using PeMain.Data;
-using PeSkin;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of LauncherItemSelectControl_initialize.

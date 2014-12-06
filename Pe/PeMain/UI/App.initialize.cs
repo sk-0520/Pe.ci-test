@@ -17,16 +17,16 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-using PInvoke.Windows;
-using PeMain.Data;
-using PeMain.Data.DB;
-using PeMain.IF;
-using PeMain.Logic;
-using PeMain.Logic.DB;
-using PeUtility;
-using PeSkin;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.DB;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Library.Skin;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of Pe_initialize.
@@ -35,22 +35,38 @@ namespace PeMain.UI
 	{
 		void InitializeLanguage(CommandLine commandLine, StartupLogger logger)
 		{
+			Func<string, string> getLangPath = delegate(string name) {
+				var fileName = string.Format("{0}.xml", name);
+				var filePath = Path.Combine(Literal.ApplicationLanguageDirPath, fileName);
+				if(logger != null) {
+					logger.Puts(LogType.Information, "load language", filePath);
+				}
+				return filePath;
+			};
 			// 言語
 			var langName = this._commonData.MainSetting.LanguageName;
 			if(string.IsNullOrEmpty(langName)) {
 				langName = CultureInfo.CurrentCulture.Name;
 			}
+			/*
 			var languageFileName = string.Format("{0}.xml", langName);
 			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, languageFileName);
 			if(logger != null) {
 				logger.Puts(LogType.Information, "load language", languageFilePath);
 			}
 			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
+			*/
+			var languageFilePath = getLangPath(langName);
+			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
+
 			if(this._commonData.Language == null) {
 				if(logger != null) {
 					logger.Puts(LogType.Warning, "not found language", languageFilePath);
 				}
-				this._commonData.Language = new Language();
+				// #110, デフォルトの言語ファイル名
+				langName = Literal.defaultLanguage;
+				languageFilePath = getLangPath(langName);
+				this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, true);
 			}
 			this._commonData.Language.BaseName = langName;
 		}
@@ -80,9 +96,9 @@ namespace PeMain.UI
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
 		{
 			var map = new Dictionary<string, string>() {
-				{ DataTables.masterTableNote,           global::PeMain.Properties.SQL.CreateNoteMasterTable },
-				{ DataTables.transactionTableNote,      global::PeMain.Properties.SQL.CreateNoteTransactionTable },
-				{ DataTables.transactionTableNoteStyle, global::PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
+				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteMasterTable },
+				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteTransactionTable },
+				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
 			};
 			var langMap = new Dictionary<string, string>() {
 				{ "TABLE-NAME", tableName },
@@ -152,7 +168,7 @@ namespace PeMain.UI
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成
 				using(var query = this._commonData.Database.CreateQuery()) {
-					query.ExecuteCommand(global::PeMain.Properties.SQL.CreateVersionMasterTable);
+					query.ExecuteCommand(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateVersionMasterTable);
 				}
 			}
 			
@@ -255,22 +271,54 @@ namespace PeMain.UI
 			
 			// 親アイテム
 			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = global::PeMain.Properties.Images.Toolbar;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Toolbar;
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
-				/*
-				var screens = Screen.AllScreens;
-				var area = new Rectangle(
-					screens.Min(s => s.Bounds.Left),
-					screens.Min(s => s.Bounds.Top),
-					screens.Max(s => s.Bounds.Right),
-					screens.Max(s => s.Bounds.Bottom)
-				);
+				var screens = Screen.AllScreens.ToArray();
+				var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
 				var iconSize = IconScale.Small.ToSize();
-				 */
-				foreach(var screen in Screen.AllScreens) {
+				var drawSize = (SizeF)iconSize;
+				var maxArea = new RectangleF() {
+					X = screens.Min(s => s.Bounds.Left),
+					Y = screens.Min(s => s.Bounds.Top)
+				};
+				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
+				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
+
+				var percentage = new SizeF(
+					drawSize.Width / maxArea.Width * 100.0f,
+					drawSize.Height / maxArea.Height * 100.0f
+				);
+
+				foreach(var screen in screens) {
 					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
 						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
+						// 各エリアの描画
+						var alpha = 80;
+						var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
+						using(var g = Graphics.FromImage(baseImage)) {
+							foreach(var inScreen in screens) {
+								var useScreen = inScreen == screen;
+								var backColor = useScreen ? SystemColors.ActiveCaption: Color.FromArgb(alpha, SystemColors.InactiveCaption);
+								var foreColor = useScreen ? SystemColors.ActiveCaptionText: Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+								using(var brush = new SolidBrush(backColor))
+								using(var pen = new Pen(foreColor)) {
+									var baseArea = inScreen.Bounds;
+									baseArea.Offset(basePos);
+
+									var drawArea = new RectangleF(
+										baseArea.X / 100.0f * percentage.Width + 1,
+										baseArea.Y / 100.0f * percentage.Height + 1,
+										baseArea.Width / 100.0f * percentage.Width - 1,
+										baseArea.Height / 100.0f * percentage.Height - 1
+									);
+									g.FillRectangle(brush, drawArea);
+									g.DrawRectangle(pen, drawArea.X - 1, drawArea.Y - 1, drawArea.Width, drawArea.Height);
+								}
+							}
+						}
+						menuItem.Image.ToDispose();
+						menuItem.Image = baseImage;
 						menuItem.Checked = this._toolbarForms[screen].Visible;
 					}
 				}
@@ -323,7 +371,7 @@ namespace PeMain.UI
 			
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = global::PeMain.Properties.Images.Note;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Note;
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -344,40 +392,6 @@ namespace PeMain.UI
 			};
 		}
 		
-		/*
-		void AttachmentWindowSubMenu(MenuItem parentMenu)
-		{
-			var menuList = new List<MenuItem>();
-			var itemToolbar = new MenuItem();
-			var itemNote = new MenuItem();
-			var itemLogger = new MenuItem();
-			
-			menuList.Add(itemToolbar);
-			menuList.Add(itemNote);
-			menuList.Add(itemLogger);
-			
-			itemToolbar.Name = menuNameWindowToolbar;
-			AttachmentToolbarSubMenu(itemToolbar);
-			
-			itemNote.Name = menuNameWindowNote;
-			AttachmentNoteSubMenu(itemNote);
-			
-			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Click += (object sender, EventArgs e) => {
-				this._logForm.Visible = !this._logForm.Visible;
-				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
-			};
-			
-			// サブメニュー設定
-			parentMenu.MenuItems.AddRange(menuList.ToArray());
-			
-			// ログ
-			parentMenu.Popup += (object sender, EventArgs e) => {
-				itemLogger.Checked = this._logForm.Visible;
-			};
-		}
-		 */
-		
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
 		{
 			var menuList = new List<ToolStripItem>();
@@ -390,7 +404,7 @@ namespace PeMain.UI
 			
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = global::PeMain.Properties.Images.WindowSave;
+			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.WindowSave;
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -398,7 +412,7 @@ namespace PeMain.UI
 			
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = global::PeMain.Properties.Images.WindowLoad;
+			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.WindowLoad;
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
@@ -406,7 +420,7 @@ namespace PeMain.UI
 			
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			parentItem.Image = global::PeMain.Properties.Images.WindowList;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.WindowList;
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 				
@@ -496,7 +510,7 @@ namespace PeMain.UI
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = global::PeMain.Properties.Images.Log;
+			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Log;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -504,12 +518,12 @@ namespace PeMain.UI
 			
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = global::PeMain.Properties.Images.SystemEnvironment;
+			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.SystemEnvironment;
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = global::PeMain.Properties.Images.Config;
+			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Config;
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 			
 			// 情報
@@ -533,12 +547,12 @@ namespace PeMain.UI
 			
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = global::PeMain.Properties.Images.Help;
+			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Help;
 			itemHelp.Click += (object sender, EventArgs e) => Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			
 			// 終了
 			itemExit.Name = menuNameExit;
-			itemExit.Image = global::PeMain.Properties.Images.Close;
+			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Close;
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 			
 			// メインメニュー
@@ -589,6 +603,7 @@ namespace PeMain.UI
 			foreach(ToolStripMenuItem toolItem in this._contextMenu.Items.Cast<ToolStripItem>().Where(t => t is ToolStripMenuItem)) {
 				ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
 			}
+			this._contextMenu.Opening += (object sender, CancelEventArgs e) => HideAutoHiddenToolbar();
 			this._notifyIcon.ContextMenuStrip = this._contextMenu;
 			
 		}
@@ -665,8 +680,16 @@ namespace PeMain.UI
 			this._windowTimer.Interval = this._commonData.MainSetting.WindowSaveTime.TotalMilliseconds;
 			this._windowTimer.Enabled = true;
 		}
-
 		
+		void InitializeListener(CommandLine commandLine, StartupLogger logger)
+		{
+			Debug.Assert(this._commonData != null);
+
+			this._listener = new Listener();
+			this._listener.Enabled = true;
+			this._listener.Keyboard.KeyPress += Keyboard_KeyPress;
+		}
+
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -696,6 +719,8 @@ namespace PeMain.UI
 			InitializeTimer(commandLine, logger);
 			
 			AttachmentSystemEvent();
+
+			InitializeListener(commandLine, logger);
 			
 			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);

@@ -12,9 +12,9 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-using PeUtility;
+using ContentTypeTextNet.Pe.Library.Utility;
 
-namespace PeMain.Data
+namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	/// <summary>
 	/// ワード。

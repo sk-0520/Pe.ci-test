@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	/// <summary>
 	/// Description of EnvUpdateControl.
