@@ -35,22 +35,38 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	{
 		void InitializeLanguage(CommandLine commandLine, StartupLogger logger)
 		{
+			Func<string, string> getLangPath = delegate(string name) {
+				var fileName = string.Format("{0}.xml", name);
+				var filePath = Path.Combine(Literal.ApplicationLanguageDirPath, fileName);
+				if(logger != null) {
+					logger.Puts(LogType.Information, "load language", filePath);
+				}
+				return filePath;
+			};
 			// 言語
 			var langName = this._commonData.MainSetting.LanguageName;
 			if(string.IsNullOrEmpty(langName)) {
 				langName = CultureInfo.CurrentCulture.Name;
 			}
+			/*
 			var languageFileName = string.Format("{0}.xml", langName);
 			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, languageFileName);
 			if(logger != null) {
 				logger.Puts(LogType.Information, "load language", languageFilePath);
 			}
 			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
+			*/
+			var languageFilePath = getLangPath(langName);
+			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
+
 			if(this._commonData.Language == null) {
 				if(logger != null) {
 					logger.Puts(LogType.Warning, "not found language", languageFilePath);
 				}
-				this._commonData.Language = new Language();
+				// #110, デフォルトの言語ファイル名
+				langName = "default";
+				languageFilePath = getLangPath(langName);
+				this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, true);
 			}
 			this._commonData.Language.BaseName = langName;
 		}
