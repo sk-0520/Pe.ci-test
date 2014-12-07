@@ -20,6 +20,8 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 		void ShowBalloon(ToolTipIcon icon, string title, string message);
 	
 		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
+
+		void AppendWindow(Form window);
 		
 		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
 		
