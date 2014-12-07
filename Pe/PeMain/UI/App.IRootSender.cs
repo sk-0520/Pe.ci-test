@@ -34,7 +34,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				toolbar.ReceiveChangedLauncherItems(toolbarItem, toolbarGroupItem);
 			}
 		}
-		
+
+		public void AppendWindow(Form window)
+		{
+			this._otherWindows.Add(window);
+			window.FormClosed += window_FormClosed;
+		}
+
 		public void ReceiveDeviceChanged(ChangeDevice changeDevice)
 		{
 			//this._commonData.Logger.Puts(LogType.Warning, "ReceiveDeviceChanged", changeDevice);

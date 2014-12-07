@@ -184,6 +184,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
+		void window_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			var window = (Form)sender;
+			Debug.WriteLine(window.Text);
+			this._otherWindows.Remove(window);
+			this._commonData.Logger.Puts(LogType.Information, sender.ToString(), e);
+			window.Dispose();
+		}
+		
+
 	}
 	
 }
