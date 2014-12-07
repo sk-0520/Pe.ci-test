@@ -34,6 +34,7 @@
 		<ul type="features">
 			<li rev="469eadb5d031563d83fac904cadeee2092fc5b51">#115: ノートのタイトル入力を直観的に</li>
 			<li rev="1cfae55dae07910d523ebb35510f325a0cc99ccd">#117: ツールバーのツールチップを消す</li>
+			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d">#114: ウィンドウを親依存でなく独立して保持する, #113も解決</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
