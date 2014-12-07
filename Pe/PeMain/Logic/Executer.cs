@@ -32,7 +32,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
 		/// <returns></returns>
-		private static Process RunFileItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		private static Process RunFileItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.File);
 			
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">ディレクトリアイテム</param>
 		/// <param name="commonData"></param>
 		/// <param name="parentForm"></param>
-		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
 			
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI);
 			
@@ -134,21 +134,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">ランチャーアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		public static void RunItem(LauncherItem launcherItem, CommonData commonData, Form parentForm)
+		public static void RunItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
 			
 			switch(launcherItem.LauncherType) {
 				case LauncherType.File:
-					RunFileItem(launcherItem, commonData, parentForm);
+					RunFileItem(launcherItem, commonData);
 					break;
 					
 				case LauncherType.Directory:
-					RunDirectoryItem(launcherItem, commonData, parentForm);
+					RunDirectoryItem(launcherItem, commonData);
 					break;
 					
 				case LauncherType.URI:
-					RunUriItem(launcherItem, commonData, parentForm);
+					RunUriItem(launcherItem, commonData);
 					break;
 					
 				default:

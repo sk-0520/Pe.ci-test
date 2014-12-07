@@ -857,7 +857,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
-				Executer.RunItem(launcherItem, CommonData, this);
+				Executer.RunItem(launcherItem, CommonData);
 				launcherItem.Increment(null, null);
 				return true;
 			} catch(Exception ex) {
