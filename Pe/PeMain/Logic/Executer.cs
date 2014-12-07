@@ -91,7 +91,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				streamForm = new StreamForm();
 				streamForm.SetParameter(process, launcherItem);
 				streamForm.SetCommonData(commonData);
-				streamForm.Show(parentForm);
+				streamForm.Show();
+				commonData.RootSender.AppendWindow(streamForm);
 				
 				process.BeginOutputReadLine();
 				process.BeginErrorReadLine();
