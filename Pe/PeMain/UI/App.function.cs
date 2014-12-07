@@ -174,6 +174,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		void ResetUI()
 		{
+			foreach(var window in this._otherWindows.ToArray()) {
+				this._otherWindows.Remove(window);
+				window.Dispose();
+			}
 			ResetToolbar();
 			ResetNote();
 		}
