@@ -869,17 +869,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void ExecuteExItem(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
-			using(var form = new ExecuteForm()) {
-				form.SetParameter(launcherItem, exOptions);
-				form.SetCommonData(CommonData);
-				form.TopMost = TopMost;
-				if(form.ShowDialog(this) == DialogResult.OK) {
+			var form = new ExecuteForm();
+			form.SetParameter(launcherItem, exOptions);
+			form.SetCommonData(CommonData);
+			//form.TopMost = TopMost;
+			CommonData.RootSender.AppendWindow(form);
+			form.Show();
+			form.FormClosed += (IRootSender, e) => {
+				if(form.DialogResult == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;
 					if(ExecuteItem(editedItem)) {
 						launcherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
 					}
 				}
-			}
+			};
 		}
 		
 		ToolStripItem GetOverButton(Point localPoint)

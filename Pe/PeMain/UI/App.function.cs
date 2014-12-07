@@ -64,9 +64,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			result.AddRange(this._toolbarForms.Values);
 			result.Add(this._logForm);
 			
+			/*
 			foreach(var f in this._toolbarForms.Values.Where(f => f.OwnedForms.Length > 0)) {
 				result.AddRange(f.OwnedForms);
 			}
+			*/
+			result.AddRange(this._otherWindows);
 			
 			result.AddRange(this._noteWindowList);
 
