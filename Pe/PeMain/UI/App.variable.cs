@@ -40,5 +40,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		System.Timers.Timer _windowTimer;
 
 		Listener _listener;
+
+		HashSet<Form> _otherWindows = new HashSet<Form>();
 	}
 }

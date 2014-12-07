@@ -36,8 +36,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 
 		public void AppendWindow(Form window)
-		{ }
-		
+		{
+			this._otherWindows.Add(window);
+			window.FormClosed += window_FormClosed;
+		}
+
 		public void ReceiveDeviceChanged(ChangeDevice changeDevice)
 		{
 			//this._commonData.Logger.Puts(LogType.Warning, "ReceiveDeviceChanged", changeDevice);
