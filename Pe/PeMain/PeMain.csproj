@@ -719,7 +719,7 @@
     <Compile Include="UI\App.MessageWindow.function.cs">
       <DependentUpon>App.MessageWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\App.sender.cs">
+    <Compile Include="UI\App.IRootSender.cs">
       <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
