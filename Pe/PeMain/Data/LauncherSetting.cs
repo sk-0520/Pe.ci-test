@@ -202,35 +202,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		public string Option { get; set; }
 		
-		#region アイコンデータ: 0.29.0未満対応
-		/// <summary>
-		/// 表示アイコンパス
-		/// </summary>
-		//[Obsolete("use property IconItem.Path")]
-		[XmlElement("IconPath", DataType = "string")]
-		public string IconPath {
-			get { return IconItem.Path; }
-			set {
-				if(string.IsNullOrWhiteSpace(IconItem.Path)) {
-					IconItem.Path = value;
-				}
-			}
-		}
-		/// <summary>
-		/// 表示アイコンインデックス
-		/// </summary>
-		//[Obsolete("use property IconItem.Index")]
-		[XmlElement("IconIndex", DataType = "int")]
-		public int IconIndex {
-			get { return IconItem.Index; }
-			set {
-				if(IconItem.Index == 0 && value != 0) {
-					IconItem.Index = value;
-				}
-			}
-		}
-		#endregion
-		
 		/// <summary>
 		/// 表示アイコンパス。
 		/// </summary>
