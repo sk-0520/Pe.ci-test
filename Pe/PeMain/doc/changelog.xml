@@ -27,7 +27,7 @@
 	-->
 	<log date="YYYY/MM/DD" version="0.35.1" type="rc">
 		<ul type="note">
-			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c">#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</li>
+			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility">#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
