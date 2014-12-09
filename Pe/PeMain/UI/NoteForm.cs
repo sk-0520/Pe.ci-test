@@ -369,10 +369,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
-			
-			// 拡張メニュー
-			var extension = AppUtility.IsExtension();
-			this.contextMenu_itemRemove.Visible = extension;
+
+			// #120
+			//// 拡張メニュー
+			//var extension = AppUtility.IsExtension();
+			//this.contextMenu_itemRemove.Visible = extension;
 		}
 		
 		[System.Security.Permissions.UIPermission(
