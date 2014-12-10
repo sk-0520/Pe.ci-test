@@ -85,7 +85,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		public void ChangeClipboard()
 		{
-			Debug.WriteLine(Clipboard.GetDataObject());
+			var data = Clipboard.GetDataObject();
+			Debug.WriteLine(string.Join(", ", data.GetFormats()));
 		}
 	}
 }

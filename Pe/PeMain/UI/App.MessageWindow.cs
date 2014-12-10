@@ -30,8 +30,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				InitializeComponent();
 				
 				this._parent = parent;
-
-				NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
 			}
 		}
 	}
