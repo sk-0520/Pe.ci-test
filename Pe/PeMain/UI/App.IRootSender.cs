@@ -80,5 +80,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				);
 			}
 		}
+
+		public bool EnabledClipboard { get; set; }
+
+		public void ChangeClipboard()
+		{
+			Debug.WriteLine(Clipboard.GetDataObject());
+		}
 	}
 }

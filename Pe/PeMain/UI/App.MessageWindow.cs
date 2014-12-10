@@ -8,6 +8,7 @@
  */
 using System;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
@@ -29,6 +30,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				InitializeComponent();
 				
 				this._parent = parent;
+
+				NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
 			}
 		}
 	}

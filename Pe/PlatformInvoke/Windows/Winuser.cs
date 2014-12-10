@@ -33,6 +33,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_CONTEXTMENU = 0x007b,
 		WM_DWMCOMPOSITIONCHANGED = 0x031e,
 		WM_DRAWCLIPBOARD = 0x0308,
+		WM_CHANGECBCHAIN = 0x030d,
 	}
 	
 	public enum WS_EX

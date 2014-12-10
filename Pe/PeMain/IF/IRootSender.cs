@@ -26,5 +26,8 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
 		
 		void ReceiveDeviceChanged(ChangeDevice changeDevice);
+
+		bool EnabledClipboard { get; set; }
+		void ChangeClipboard();
 	}
 }
