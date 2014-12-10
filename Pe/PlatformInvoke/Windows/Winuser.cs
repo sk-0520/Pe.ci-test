@@ -32,6 +32,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_SETCURSOR = 0x0020,
 		WM_CONTEXTMENU = 0x007b,
 		WM_DWMCOMPOSITIONCHANGED = 0x031e,
+		WM_DRAWCLIPBOARD = 0x0308,
 	}
 	
 	public enum WS_EX
@@ -1726,6 +1727,13 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool BringWindowToTop(IntPtr hWnd);
 
+		[DllImport("User32.dll", CharSet = CharSet.Auto)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 	}
 
 

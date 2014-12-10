@@ -119,6 +119,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Data\ChangeDevice.cs" />
+    <Compile Include="Data\ClipboardSetting.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
+    <Compile Include="Logic\ClipboardUtility.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\DB\DBWrapper.cs" />
     <Compile Include="Logic\DB\NoteDB.cs" />
