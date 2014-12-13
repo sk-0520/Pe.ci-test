@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// 認識可能とするクリップボード形式。
 	/// </summary>
 	[Flags]
-	enum ClipboardType
+	public enum ClipboardType
 	{
 		Text,
 		RichText,
