@@ -25,7 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.35.1" type="rc">
+	<log date="YYYY/MM/DD" version="0.35.7" type="rc">
 		<ul type="note">
 			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility">#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</li>
 			<li rev=""></li>
@@ -40,7 +40,7 @@
 		</ul>
 		<ul type="fixes">
 			<li rev="bbb2492c77690d64e1b7be07f38ee9ae4ad05213">#116: #106のバッチがBOM</li>
-			<li rev=""></li>
+			<li rev="31b395cf4005b2a317b9db0bacce8a7eddc21f65">#121: DwmGetColorizationColor() が大きめの値を返すと SetVisualStyle() で System.OverflowException</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
