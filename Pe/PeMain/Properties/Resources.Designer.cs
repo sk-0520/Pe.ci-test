@@ -101,23 +101,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   select
-        ///    count(*) NUM
-        ///from
-        ///    SQLITE_MASTER
-        ///where
-        ///    NAME = :table_name
-        ///    and
-        ///    TYPE = &apos;table&apos;
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CheckTable {
-            get {
-                return ResourceManager.GetString("CheckTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Clear {
@@ -208,74 +191,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   create table M_NOTE (
-        ///    NOTE_ID      integer  primary key,
-        ///    CMN_ENABLED  integer  not null,
-        ///    CMN_CREATE   text     not null,
-        ///    CMN_UPDATE   text     not null,
-        ///    NOTE_TITLE   text,
-        ///    NOTE_TYPE    integer  not null
-        ///)
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CreateNoteMasterTable {
-            get {
-                return ResourceManager.GetString("CreateNoteMasterTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   create table T_NOTE_STYLE (
-        ///    NOTE_ID         integer  primary key,
-        ///    CMN_CREATE      text     not null,
-        ///    CMN_UPDATE      text     not null,
-        ///    FONT_FAMILY     text     not null,
-        ///    FONT_SIZE       real     not null,
-        ///    FONT_ITALIC     integer  not null,
-        ///    FONT_BOLD       integer  not null,
-        ///    COLOR_FORE      text     not null,
-        ///    COLOR_BACK      text     not null,
-        ///    WINDOW_VISIBLED integer  not null,
-        ///    WINDOW_LOCKED   integer  not null,
-        ///    WINDOW_TOPMOST  integer  not null,
-        /// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CreateNoteStyleTransactionTable {
-            get {
-                return ResourceManager.GetString("CreateNoteStyleTransactionTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   create table T_NOTE (
-        ///    NOTE_ID      integer  primary key,
-        ///    CMN_CREATE   text     not null,
-        ///    CMN_UPDATE   text     not null,
-        ///    NOTE_BODY    text
-        ///)
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CreateNoteTransactionTable {
-            get {
-                return ResourceManager.GetString("CreateNoteTransactionTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   create table M_VERSION
-        ///(
-        ///    NAME     text primary key,
-        ///    VERSION  integer not null
-        ///)
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CreateVersionMasterTable {
-            get {
-                return ResourceManager.GetString("CreateVersionMasterTable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap CustomColor {
@@ -312,23 +227,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
             get {
                 object obj = ResourceManager.GetObject("Down", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   update
-        ///	M_NOTE
-        ///set
-        ///	CMN_ENABLED = :enabled,
-        ///	CMN_UPDATE  = :update
-        ///where
-        ///	({ID_LIST})
-        ///
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string EnabledSwitch {
-            get {
-                return ResourceManager.GetString("EnabledSwitch", resourceCulture);
             }
         }
         
@@ -409,56 +307,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
             get {
                 object obj = ResourceManager.GetObject("FontStyle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   select
-        ///    coalesce(max({id_column_name}), 0) MAX_ID,
-        ///    coalesce(min({id_column_name}), 0) MIN_ID
-        ///from
-        ///    {table_name}
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string GetId {
-            get {
-                return ResourceManager.GetString("GetId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   select
-        ///	CMN_ENABLED,
-        ///	NOTE_ID,
-        ///	NOTE_TITLE,
-        ///	NOTE_TYPE,
-        ///	NOTE_BODY,
-        ///	WINDOW_VISIBLED,
-        ///	WINDOW_LOCKED,
-        ///	WINDOW_TOPMOST,
-        ///	WINDOW_COMPACT,
-        ///	WINDOW_POS_X,
-        ///	WINDOW_POS_Y,
-        ///	WINDOW_SIZE_W,
-        ///	WINDOW_SIZE_H,
-        ///	FONT_FAMILY,
-        ///	FONT_SIZE,
-        ///	FONT_ITALIC,
-        ///	FONT_BOLD,
-        ///	COLOR_FORE,
-        ///	COLOR_BACK
-        ///from
-        ///	M_NOTE
-        ///	inner join T_NOTE using(NOTE_ID)
-        ///	inner join T_NOTE_STYLE using(NOTE_ID)
-        ///order by
-        ///	M_NOTE.CMN_CREATE
-        ///
-        /// に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string GetNoteItemList {
-            get {
-                return ResourceManager.GetString("GetNoteItemList", resourceCulture);
             }
         }
         
@@ -649,6 +497,158 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
             get {
                 object obj = ResourceManager.GetObject("SideExpand", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   select
+        ///    count(*) NUM
+        ///from
+        ///    SQLITE_MASTER
+        ///where
+        ///    NAME = :table_name
+        ///    and
+        ///    TYPE = &apos;table&apos;
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_CheckTable {
+            get {
+                return ResourceManager.GetString("SQL_CheckTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   create table M_NOTE (
+        ///    NOTE_ID      integer  primary key,
+        ///    CMN_ENABLED  integer  not null,
+        ///    CMN_CREATE   text     not null,
+        ///    CMN_UPDATE   text     not null,
+        ///    NOTE_TITLE   text,
+        ///    NOTE_TYPE    integer  not null
+        ///)
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_CreateNoteMasterTable {
+            get {
+                return ResourceManager.GetString("SQL_CreateNoteMasterTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   create table T_NOTE_STYLE (
+        ///    NOTE_ID         integer  primary key,
+        ///    CMN_CREATE      text     not null,
+        ///    CMN_UPDATE      text     not null,
+        ///    FONT_FAMILY     text     not null,
+        ///    FONT_SIZE       real     not null,
+        ///    FONT_ITALIC     integer  not null,
+        ///    FONT_BOLD       integer  not null,
+        ///    COLOR_FORE      text     not null,
+        ///    COLOR_BACK      text     not null,
+        ///    WINDOW_VISIBLED integer  not null,
+        ///    WINDOW_LOCKED   integer  not null,
+        ///    WINDOW_TOPMOST  integer  not null,
+        /// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_CreateNoteStyleTransactionTable {
+            get {
+                return ResourceManager.GetString("SQL_CreateNoteStyleTransactionTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   create table T_NOTE (
+        ///    NOTE_ID      integer  primary key,
+        ///    CMN_CREATE   text     not null,
+        ///    CMN_UPDATE   text     not null,
+        ///    NOTE_BODY    text
+        ///)
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_CreateNoteTransactionTable {
+            get {
+                return ResourceManager.GetString("SQL_CreateNoteTransactionTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   create table M_VERSION
+        ///(
+        ///    NAME     text primary key,
+        ///    VERSION  integer not null
+        ///)
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_CreateVersionMasterTable {
+            get {
+                return ResourceManager.GetString("SQL_CreateVersionMasterTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   update
+        ///	M_NOTE
+        ///set
+        ///	CMN_ENABLED = :enabled,
+        ///	CMN_UPDATE  = :update
+        ///where
+        ///	({ID_LIST})
+        ///
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_EnabledSwitch {
+            get {
+                return ResourceManager.GetString("SQL_EnabledSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   select
+        ///    coalesce(max({id_column_name}), 0) MAX_ID,
+        ///    coalesce(min({id_column_name}), 0) MIN_ID
+        ///from
+        ///    {table_name}
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_GetId {
+            get {
+                return ResourceManager.GetString("SQL_GetId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   select
+        ///	CMN_ENABLED,
+        ///	NOTE_ID,
+        ///	NOTE_TITLE,
+        ///	NOTE_TYPE,
+        ///	NOTE_BODY,
+        ///	WINDOW_VISIBLED,
+        ///	WINDOW_LOCKED,
+        ///	WINDOW_TOPMOST,
+        ///	WINDOW_COMPACT,
+        ///	WINDOW_POS_X,
+        ///	WINDOW_POS_Y,
+        ///	WINDOW_SIZE_W,
+        ///	WINDOW_SIZE_H,
+        ///	FONT_FAMILY,
+        ///	FONT_SIZE,
+        ///	FONT_ITALIC,
+        ///	FONT_BOLD,
+        ///	COLOR_FORE,
+        ///	COLOR_BACK
+        ///from
+        ///	M_NOTE
+        ///	inner join T_NOTE using(NOTE_ID)
+        ///	inner join T_NOTE_STYLE using(NOTE_ID)
+        ///order by
+        ///	M_NOTE.CMN_CREATE
+        ///
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SQL_GetNoteItemList {
+            get {
+                return ResourceManager.GetString("SQL_GetNoteItemList", resourceCulture);
             }
         }
         

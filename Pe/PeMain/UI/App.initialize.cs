@@ -96,9 +96,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
 		{
 			var map = new Dictionary<string, string>() {
-				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteMasterTable },
-				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteTransactionTable },
-				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateNoteStyleTransactionTable },
+				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteMasterTable },
+				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteTransactionTable },
+				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteStyleTransactionTable },
 			};
 			var langMap = new Dictionary<string, string>() {
 				{ "TABLE-NAME", tableName },
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(!enabledVersionTable) {
 				// バージョンテーブルが存在しなければ作成
 				using(var query = this._commonData.Database.CreateQuery()) {
-					query.ExecuteCommand(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CreateVersionMasterTable);
+					query.ExecuteCommand(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateVersionMasterTable);
 				}
 			}
 			

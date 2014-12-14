@@ -18,11 +18,11 @@
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap" mimetype="application/x-microsoft.net.object.binary.base64">
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
@@ -84,10 +84,10 @@
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
@@ -96,7 +96,7 @@
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
               <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
@@ -289,28 +289,28 @@
   <data name="URI" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\URI.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CheckTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_CheckTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CheckTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateNoteMasterTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_CreateNoteMasterTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CreateNoteMasterTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateNoteStyleTransactionTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_CreateNoteStyleTransactionTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CreateNoteStyleTransactionTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateNoteTransactionTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_CreateNoteTransactionTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CreateNoteTransactionTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="CreateVersionMasterTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_CreateVersionMasterTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CreateVersionMasterTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EnabledSwitch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_EnabledSwitch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\EnabledSwitch.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GetId" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_GetId" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\GetId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="GetNoteItemList" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="SQL_GetNoteItemList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\GetNoteItemList.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
