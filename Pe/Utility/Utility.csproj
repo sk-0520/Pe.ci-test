@@ -86,6 +86,7 @@
     <Compile Include="DialogFilter.cs" />
     <Compile Include="DialogUtility.cs" />
     <Compile Include="FileUtility.cs" />
+    <Compile Include="FixedSizedQueue.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="IconPath.cs" />
     <Compile Include="IconUtility.cs" />

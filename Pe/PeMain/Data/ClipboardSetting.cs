@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
@@ -39,7 +40,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	{
 		public ClipboardSetting()
 		{
-			Items = new Queue<ClipboardItem>(Literal.clipboardLimit);
+			Items = new ConcurrentFixedSizedQueue<ClipboardItem>(Literal.clipboardLimit);
 			EnabledApplicationCopy = false;
 		}
 
@@ -56,6 +57,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// クリップボードデータ
 		/// </summary>
 		[XmlIgnore]
-		public Queue<ClipboardItem> Items { get; set; }
+		public ConcurrentFixedSizedQueue<ClipboardItem> Items { get; set; }
 	}
 }
