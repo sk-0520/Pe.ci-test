@@ -808,175 +808,175 @@
     <None Include="Resources\SQL\CheckTable.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ClipboardText.png" />
+    <None Include="Resources\Image\ClipboardText.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ClipboardFile.png" />
+    <None Include="Resources\Image\ClipboardFile.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ClipboardImage.png" />
+    <None Include="Resources\Image\ClipboardImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ClipboardRichTextFormat.png" />
+    <None Include="Resources\Image\ClipboardRichTextFormat.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\WindowSave.png" />
+    <None Include="Resources\Image\WindowSave.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\WindowList.png" />
+    <None Include="Resources\Image\WindowList.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\WindowLoad.png" />
+    <None Include="Resources\Image\WindowLoad.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Up.png" />
+    <None Include="Resources\Image\Up.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Update.png" />
+    <None Include="Resources\Image\Update.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Warning.png" />
+    <None Include="Resources\Image\Warning.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Tag.png" />
+    <None Include="Resources\Image\Tag.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Toolbar.png" />
+    <None Include="Resources\Image\Toolbar.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Unlock.png" />
+    <None Include="Resources\Image\Unlock.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SideContract.png" />
+    <None Include="Resources\Image\SideContract.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SideExpand.png" />
+    <None Include="Resources\Image\SideExpand.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SystemEnvironment.png" />
+    <None Include="Resources\Image\SystemEnvironment.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Refresh.png" />
+    <None Include="Resources\Image\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Remove.png" />
+    <None Include="Resources\Image\Remove.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Save.png" />
+    <None Include="Resources\Image\Save.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\NotImpl.png" />
+    <None Include="Resources\Image\NotImpl.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OpenDir.png" />
+    <None Include="Resources\Image\OpenDir.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Pin.png" />
+    <None Include="Resources\Image\Pin.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Note.png" />
+    <None Include="Resources\Image\Note.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\NoteBody.png" />
+    <None Include="Resources\Image\NoteBody.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\NoteTitle.png" />
+    <None Include="Resources\Image\NoteTitle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Lock.png" />
+    <None Include="Resources\Image\Lock.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Log.png" />
+    <None Include="Resources\Image\Log.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Name.png" />
+    <None Include="Resources\Image\Name.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Help.png" />
+    <None Include="Resources\Image\Help.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Information.png" />
+    <None Include="Resources\Image\Information.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Kill.png" />
+    <None Include="Resources\Image\Kill.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Font.png" />
+    <None Include="Resources\Image\Font.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\FontStyle.png" />
+    <None Include="Resources\Image\FontStyle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Group.png" />
+    <None Include="Resources\Image\Group.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Find.png" />
+    <None Include="Resources\Image\Find.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Finder.png" />
+    <None Include="Resources\Image\Finder.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Flag.png" />
+    <None Include="Resources\Image\Flag.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Error.png" />
+    <None Include="Resources\Image\Error.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\File.png" />
+    <None Include="Resources\Image\File.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Filter.png" />
+    <None Include="Resources\Image\Filter.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Comment.png" />
+    <None Include="Resources\Image\Comment.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Config.png" />
+    <None Include="Resources\Image\Config.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\CustomColor.png" />
+    <None Include="Resources\Image\CustomColor.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Dir.png" />
+    <None Include="Resources\Image\Dir.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Disk.png" />
+    <None Include="Resources\Image\Disk.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Down.png" />
+    <None Include="Resources\Image\Down.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Clear.png" />
+    <None Include="Resources\Image\Clear.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Close.png" />
+    <None Include="Resources\Image\Close.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Add.png" />
+    <None Include="Resources\Image\Add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AddItem.png" />
+    <None Include="Resources\Image\AddItem.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Changelog.png" />
+    <None Include="Resources\Image\Changelog.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Windows.png" />
+    <None Include="Resources\Image\Windows.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ClipboardCopy.png" />
+    <None Include="Resources\Image\ClipboardCopy.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\App.ico" />
+    <None Include="Resources\Image\App.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\NotFound.ico" />
+    <None Include="Resources\Image\NotFound.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ToolbarMain.ico" />
+    <None Include="Resources\Image\ToolbarMain.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\URI.ico" />
+    <None Include="Resources\Image\URI.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
