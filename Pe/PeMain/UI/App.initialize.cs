@@ -275,7 +275,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// 親アイテム
 			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Toolbar;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar;
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				var screens = Screen.AllScreens.ToArray();
@@ -375,7 +375,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Note;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -408,7 +408,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.WindowSave;
+			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave;
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -416,7 +416,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.WindowLoad;
+			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad;
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
@@ -424,7 +424,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.WindowList;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList;
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 				
@@ -514,7 +514,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Log;
+			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log;
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -522,12 +522,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SystemEnvironment;
+			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment;
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Config;
+			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config;
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 			
 			// 情報
@@ -551,12 +551,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Help;
+			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help;
 			itemHelp.Click += (object sender, EventArgs e) => Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
 			
 			// 終了
 			itemExit.Name = menuNameExit;
-			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Close;
+			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close;
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 			
 			// メインメニュー

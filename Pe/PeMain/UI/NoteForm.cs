@@ -308,7 +308,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
 			
 			// 状態チェック
-			var lockImage = NoteItem.Locked ? global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Lock : global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Unlock;
+			var lockImage = NoteItem.Locked ? global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Lock : global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Unlock;
 			this.contextMenu_itemLock.Image = lockImage;
 			this.contextMenu_itemLock.Checked = NoteItem.Locked;
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
@@ -353,7 +353,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					if (customMenuItem.Checked) {
 						customMenuItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
 					} else {
-						customMenuItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.CustomColor;
+						customMenuItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_CustomColor;
 					}
 				}
 			};

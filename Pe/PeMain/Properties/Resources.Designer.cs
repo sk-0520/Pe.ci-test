@@ -61,26 +61,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Add {
-            get {
-                object obj = ResourceManager.GetObject("Add", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap AddItem {
-            get {
-                object obj = ResourceManager.GetObject("AddItem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Icon App {
@@ -93,9 +73,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Changelog {
+        internal static System.Drawing.Bitmap Image_Add {
             get {
-                object obj = ResourceManager.GetObject("Changelog", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +83,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Clear {
+        internal static System.Drawing.Bitmap Image_AddItem {
             get {
-                object obj = ResourceManager.GetObject("Clear", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_AddItem", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +93,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ClipboardCopy {
+        internal static System.Drawing.Bitmap Image_Changelog {
             get {
-                object obj = ResourceManager.GetObject("ClipboardCopy", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Changelog", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +103,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ClipboardFile {
+        internal static System.Drawing.Bitmap Image_Clear {
             get {
-                object obj = ResourceManager.GetObject("ClipboardFile", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Clear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +113,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ClipboardImage {
+        internal static System.Drawing.Bitmap Image_ClipboardCopy {
             get {
-                object obj = ResourceManager.GetObject("ClipboardImage", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_ClipboardCopy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +123,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ClipboardRichTextFormat {
+        internal static System.Drawing.Bitmap Image_ClipboardFile {
             get {
-                object obj = ResourceManager.GetObject("ClipboardRichTextFormat", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_ClipboardFile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +133,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap ClipboardText {
+        internal static System.Drawing.Bitmap Image_ClipboardImage {
             get {
-                object obj = ResourceManager.GetObject("ClipboardText", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_ClipboardImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +143,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Close {
+        internal static System.Drawing.Bitmap Image_ClipboardRichTextFormat {
             get {
-                object obj = ResourceManager.GetObject("Close", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_ClipboardRichTextFormat", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +153,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Comment {
+        internal static System.Drawing.Bitmap Image_ClipboardText {
             get {
-                object obj = ResourceManager.GetObject("Comment", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_ClipboardText", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +163,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Config {
+        internal static System.Drawing.Bitmap Image_Close {
             get {
-                object obj = ResourceManager.GetObject("Config", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +173,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap CustomColor {
+        internal static System.Drawing.Bitmap Image_Comment {
             get {
-                object obj = ResourceManager.GetObject("CustomColor", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Comment", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +183,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Dir {
+        internal static System.Drawing.Bitmap Image_Config {
             get {
-                object obj = ResourceManager.GetObject("Dir", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Config", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +193,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Disk {
+        internal static System.Drawing.Bitmap Image_CustomColor {
             get {
-                object obj = ResourceManager.GetObject("Disk", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_CustomColor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +203,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Down {
+        internal static System.Drawing.Bitmap Image_Dir {
             get {
-                object obj = ResourceManager.GetObject("Down", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Dir", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +213,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Error {
+        internal static System.Drawing.Bitmap Image_Disk {
             get {
-                object obj = ResourceManager.GetObject("Error", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Disk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +223,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap File {
+        internal static System.Drawing.Bitmap Image_Down {
             get {
-                object obj = ResourceManager.GetObject("File", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Down", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +233,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Filter {
+        internal static System.Drawing.Bitmap Image_Error {
             get {
-                object obj = ResourceManager.GetObject("Filter", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +243,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Find {
+        internal static System.Drawing.Bitmap Image_File {
             get {
-                object obj = ResourceManager.GetObject("Find", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_File", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +253,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Finder {
+        internal static System.Drawing.Bitmap Image_Filter {
             get {
-                object obj = ResourceManager.GetObject("Finder", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Filter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,9 +263,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Flag {
+        internal static System.Drawing.Bitmap Image_Find {
             get {
-                object obj = ResourceManager.GetObject("Flag", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Find", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +273,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Font {
+        internal static System.Drawing.Bitmap Image_Finder {
             get {
-                object obj = ResourceManager.GetObject("Font", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Finder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -303,9 +283,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap FontStyle {
+        internal static System.Drawing.Bitmap Image_Flag {
             get {
-                object obj = ResourceManager.GetObject("FontStyle", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Flag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,9 +293,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Group {
+        internal static System.Drawing.Bitmap Image_Font {
             get {
-                object obj = ResourceManager.GetObject("Group", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_Font", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,9 +303,289 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Help {
+        internal static System.Drawing.Bitmap Image_FontStyle {
             get {
-                object obj = ResourceManager.GetObject("Help", resourceCulture);
+                object obj = ResourceManager.GetObject("Image_FontStyle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Group {
+            get {
+                object obj = ResourceManager.GetObject("Image_Group", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Help {
+            get {
+                object obj = ResourceManager.GetObject("Image_Help", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Kill {
+            get {
+                object obj = ResourceManager.GetObject("Image_Kill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Lock {
+            get {
+                object obj = ResourceManager.GetObject("Image_Lock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Log {
+            get {
+                object obj = ResourceManager.GetObject("Image_Log", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Name {
+            get {
+                object obj = ResourceManager.GetObject("Image_Name", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Note {
+            get {
+                object obj = ResourceManager.GetObject("Image_Note", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_NoteBody {
+            get {
+                object obj = ResourceManager.GetObject("Image_NoteBody", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_NoteTitle {
+            get {
+                object obj = ResourceManager.GetObject("Image_NoteTitle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_NotImpl {
+            get {
+                object obj = ResourceManager.GetObject("Image_NotImpl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_OpenDir {
+            get {
+                object obj = ResourceManager.GetObject("Image_OpenDir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Pin {
+            get {
+                object obj = ResourceManager.GetObject("Image_Pin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Refresh {
+            get {
+                object obj = ResourceManager.GetObject("Image_Refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Remove {
+            get {
+                object obj = ResourceManager.GetObject("Image_Remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Save {
+            get {
+                object obj = ResourceManager.GetObject("Image_Save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_SideContract {
+            get {
+                object obj = ResourceManager.GetObject("Image_SideContract", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_SideExpand {
+            get {
+                object obj = ResourceManager.GetObject("Image_SideExpand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_SystemEnvironment {
+            get {
+                object obj = ResourceManager.GetObject("Image_SystemEnvironment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Tag {
+            get {
+                object obj = ResourceManager.GetObject("Image_Tag", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Toolbar {
+            get {
+                object obj = ResourceManager.GetObject("Image_Toolbar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Unlock {
+            get {
+                object obj = ResourceManager.GetObject("Image_Unlock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Up {
+            get {
+                object obj = ResourceManager.GetObject("Image_Up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Update {
+            get {
+                object obj = ResourceManager.GetObject("Image_Update", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Warning {
+            get {
+                object obj = ResourceManager.GetObject("Image_Warning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_WindowList {
+            get {
+                object obj = ResourceManager.GetObject("Image_WindowList", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_WindowLoad {
+            get {
+                object obj = ResourceManager.GetObject("Image_WindowLoad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Windows {
+            get {
+                object obj = ResourceManager.GetObject("Image_Windows", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_WindowSave {
+            get {
+                object obj = ResourceManager.GetObject("Image_WindowSave", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -341,162 +601,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Kill {
-            get {
-                object obj = ResourceManager.GetObject("Kill", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Lock {
-            get {
-                object obj = ResourceManager.GetObject("Lock", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Log {
-            get {
-                object obj = ResourceManager.GetObject("Log", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Name {
-            get {
-                object obj = ResourceManager.GetObject("Name", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Note {
-            get {
-                object obj = ResourceManager.GetObject("Note", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap NoteBody {
-            get {
-                object obj = ResourceManager.GetObject("NoteBody", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap NoteTitle {
-            get {
-                object obj = ResourceManager.GetObject("NoteTitle", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Icon NotFound {
             get {
                 object obj = ResourceManager.GetObject("NotFound", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap NotImpl {
-            get {
-                object obj = ResourceManager.GetObject("NotImpl", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap OpenDir {
-            get {
-                object obj = ResourceManager.GetObject("OpenDir", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Pin {
-            get {
-                object obj = ResourceManager.GetObject("Pin", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Refresh {
-            get {
-                object obj = ResourceManager.GetObject("Refresh", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Remove {
-            get {
-                object obj = ResourceManager.GetObject("Remove", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Save {
-            get {
-                object obj = ResourceManager.GetObject("Save", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap SideContract {
-            get {
-                object obj = ResourceManager.GetObject("SideContract", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap SideExpand {
-            get {
-                object obj = ResourceManager.GetObject("SideExpand", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -653,36 +763,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap SystemEnvironment {
-            get {
-                object obj = ResourceManager.GetObject("SystemEnvironment", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Tag {
-            get {
-                object obj = ResourceManager.GetObject("Tag", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Toolbar {
-            get {
-                object obj = ResourceManager.GetObject("Toolbar", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Icon ToolbarMain {
@@ -693,92 +773,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Unlock {
-            get {
-                object obj = ResourceManager.GetObject("Unlock", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Up {
-            get {
-                object obj = ResourceManager.GetObject("Up", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Update {
-            get {
-                object obj = ResourceManager.GetObject("Update", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Icon URI {
             get {
                 object obj = ResourceManager.GetObject("URI", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Warning {
-            get {
-                object obj = ResourceManager.GetObject("Warning", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap WindowList {
-            get {
-                object obj = ResourceManager.GetObject("WindowList", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap WindowLoad {
-            get {
-                object obj = ResourceManager.GetObject("WindowLoad", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Windows {
-            get {
-                object obj = ResourceManager.GetObject("Windows", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap WindowSave {
-            get {
-                object obj = ResourceManager.GetObject("WindowSave", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

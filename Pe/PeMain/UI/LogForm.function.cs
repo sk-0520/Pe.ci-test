@@ -201,10 +201,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ChangeDetail(bool fullDetail)
 		{
 			if(fullDetail) {
-				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.SideExpand;
+				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideExpand;
 				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-full"];
 			} else {
-				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.SideContract;
+				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideContract;
 				statusLog_itemDetail.Text  = CommonData.Language["log/label/detail-split"];
 			}
 			
