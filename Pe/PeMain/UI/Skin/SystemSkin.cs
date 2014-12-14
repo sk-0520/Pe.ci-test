@@ -69,15 +69,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			NativeMethods.DwmEnableBlurBehindWindow(target.Handle, ref blurHehind);
 			
 			// 設定色を取得
-				uint rawColor;
-				bool blend;
-				NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
-				//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
-				var a = (int)((rawColor & 0xff000000) >> 24);
-				var r = (int)((rawColor & 0x00ff0000) >> 16);
-				var g = (int)((rawColor & 0x0000ff00) >> 8);
-				var b = (int)((rawColor & 0x000000ff) >> 0);
-				VisualColor = Color.FromArgb(a, r, g, b);
+			uint rawColor;
+			bool blend;
+			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
+			//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
+			var a = (int)((rawColor & 0xff000000) >> 24);
+			var r = (int)((rawColor & 0x00ff0000) >> 16);
+			var g = (int)((rawColor & 0x0000ff00) >> 8);
+			var b = (int)((rawColor & 0x000000ff) >> 0);
+			VisualColor = Color.FromArgb(a, r, g, b);
 		}
 		
 		public override void Start(Form target)
