@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(e.CloseReason == CloseReason.UserClosing) {
 				e.Cancel = true;
 				Visible = false;
+				CommonData.MainSetting.Log.Visible = false;
 			}
 		}
 		

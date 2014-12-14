@@ -616,12 +616,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this._logForm = new LogForm(logger.FileLogger);
 			this._logForm.SetCommonData(this._commonData);
+			/*
 			this._logForm.Closing += (object sender, CancelEventArgs e) => {
 				this._commonData.MainSetting.Log.Visible = false;
 			};
+			*/
 			
 			this._commonData.Logger = this._logForm;
 		}
+
+		void InitializeClipboardWindow(CommandLine commandLine, StartupLogger logger)
+		{
+			this._clipboardForm = new ClipboardForm();
+			this._clipboardForm.SetCommonData(this._commonData);
+		}
+
 		
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{
