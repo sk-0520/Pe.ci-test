@@ -713,7 +713,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var iconSize = UseToolbarItem.IconScale.ToSize();
 			var toolItem = new ToolStripDropDownButton();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.ToolbarMain, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain, iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));

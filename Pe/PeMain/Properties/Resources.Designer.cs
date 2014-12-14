@@ -63,9 +63,39 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Icon App {
+        internal static System.Drawing.Icon Icon_App {
             get {
-                object obj = ResourceManager.GetObject("App", resourceCulture);
+                object obj = ResourceManager.GetObject("Icon_App", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_NotFound {
+            get {
+                object obj = ResourceManager.GetObject("Icon_NotFound", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_ToolbarMain {
+            get {
+                object obj = ResourceManager.GetObject("Icon_ToolbarMain", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_URI {
+            get {
+                object obj = ResourceManager.GetObject("Icon_URI", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -601,16 +631,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         }
         
         /// <summary>
-        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Icon NotFound {
-            get {
-                object obj = ResourceManager.GetObject("NotFound", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   select
         ///    count(*) NUM
         ///from
@@ -759,26 +779,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         internal static string SQL_GetNoteItemList {
             get {
                 return ResourceManager.GetString("SQL_GetNoteItemList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Icon ToolbarMain {
-            get {
-                object obj = ResourceManager.GetObject("ToolbarMain", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Icon URI {
-            get {
-                object obj = ResourceManager.GetObject("URI", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
             }
         }
     }

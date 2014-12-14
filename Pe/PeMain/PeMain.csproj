@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <SourceAnalysisOverrideSettingsFile>C:\Users\sk\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunCodeAnalysis>False</RunCodeAnalysis>
-    <ApplicationIcon>..\..\Resource\image\App.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -967,16 +967,16 @@
     <None Include="Resources\Image\ClipboardCopy.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image\App.ico" />
+    <None Include="Resources\Icon\App.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image\NotFound.ico" />
+    <None Include="Resources\Icon\NotFound.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image\ToolbarMain.ico" />
+    <None Include="Resources\Icon\ToolbarMain.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image\URI.ico" />
+    <None Include="Resources\Icon\URI.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

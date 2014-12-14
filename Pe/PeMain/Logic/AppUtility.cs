@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				return icon.ToBitmap();
 			}
 			*/
-			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App, iconScale);
+			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconScale);
 		}
 		
 		/// <summary>

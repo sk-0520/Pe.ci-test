@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			} catch(Exception ex) {
 				Debug.WriteLine(ex);
-				Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App;
+				Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
 			}
 		}
 
