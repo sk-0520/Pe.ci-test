@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			uint rawColor;
 			bool blend;
 			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
-			VisualColor = Color.FromArgb(Convert.ToInt32(rawColor));
+			VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
 		}
 		
 		public override void Start(Form target)

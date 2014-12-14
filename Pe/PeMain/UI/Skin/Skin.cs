@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		
 		protected bool EnabledAeroStyle { get; set; }
+		protected bool EnabledVisualStyle { get; set; }
 		
 		/// <summary>
 		/// http://msdn.microsoft.com/ja-jp/magazine/ee221436.aspx
