@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SQL {
+    internal class SQL {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ContentTypeTextNet.Pe.PeMain.Properties.SQL", typeof(SQL).Assembly);
@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///    TYPE = &apos;table&apos;
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CheckTable {
+        internal static string CheckTable {
             get {
                 return ResourceManager.GetString("CheckTable", resourceCulture);
             }
@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///)
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CreateNoteMasterTable {
+        internal static string CreateNoteMasterTable {
             get {
                 return ResourceManager.GetString("CreateNoteMasterTable", resourceCulture);
             }
@@ -110,7 +110,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///    WINDOW_TOPMOST  integer  not null,
         /// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CreateNoteStyleTransactionTable {
+        internal static string CreateNoteStyleTransactionTable {
             get {
                 return ResourceManager.GetString("CreateNoteStyleTransactionTable", resourceCulture);
             }
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///)
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CreateNoteTransactionTable {
+        internal static string CreateNoteTransactionTable {
             get {
                 return ResourceManager.GetString("CreateNoteTransactionTable", resourceCulture);
             }
@@ -139,7 +139,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///)
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CreateVersionMasterTable {
+        internal static string CreateVersionMasterTable {
             get {
                 return ResourceManager.GetString("CreateVersionMasterTable", resourceCulture);
             }
@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string EnabledSwitch {
+        internal static string EnabledSwitch {
             get {
                 return ResourceManager.GetString("EnabledSwitch", resourceCulture);
             }
@@ -170,7 +170,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///    {table_name}
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string GetId {
+        internal static string GetId {
             get {
                 return ResourceManager.GetString("GetId", resourceCulture);
             }
@@ -206,7 +206,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         ///
         /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string GetNoteItemList {
+        internal static string GetNoteItemList {
             get {
                 return ResourceManager.GetString("GetNoteItemList", resourceCulture);
             }

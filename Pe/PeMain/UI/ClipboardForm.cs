@@ -42,7 +42,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void ApplyLanguage()
 		{
-			throw new NotImplementedException();
 		}
 		
 		#endregion

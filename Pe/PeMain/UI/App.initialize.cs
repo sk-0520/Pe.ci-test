@@ -627,8 +627,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void InitializeClipboardWindow(CommandLine commandLine, StartupLogger logger)
 		{
-			this._clipboardForm = new ClipboardForm();
-			this._clipboardForm.SetCommonData(this._commonData);
+			this._clipboardWindow = new ClipboardForm();
+			this._clipboardWindow.SetCommonData(this._commonData);
+			this._clipboardWindow.Show();
 		}
 
 		
@@ -671,6 +672,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			InitializeSkin(commandLine, logger);
 			InitializeLogForm(commandLine, logger);
+			InitializeClipboardWindow(commandLine, logger);
 			InitializeMessage(commandLine, logger);
 			InitializeMain(commandLine, logger);
 			InitializeCommandForm(commandLine, logger);
