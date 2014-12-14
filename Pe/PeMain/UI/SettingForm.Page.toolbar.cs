@@ -27,8 +27,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Bitmap>() {
-				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Images.NotImpl },
-				{ TREE_TYPE_GROUP, ContentTypeTextNet.Pe.PeMain.Properties.Images.Group },
+				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Resources.NotImpl },
+				{ TREE_TYPE_GROUP, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Group },
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 			

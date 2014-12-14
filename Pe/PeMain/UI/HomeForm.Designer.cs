@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandLauncher
 			// 
 			this.commandLauncher.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.commandLauncher.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Finder;
+			this.commandLauncher.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Finder;
 			this.commandLauncher.Location = new System.Drawing.Point(20, 10);
 			this.commandLauncher.Margin = new System.Windows.Forms.Padding(4);
 			this.commandLauncher.Name = "commandLauncher";
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandNotify
 			// 
 			this.commandNotify.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.commandNotify.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Flag;
+			this.commandNotify.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Flag;
 			this.commandNotify.Location = new System.Drawing.Point(261, 10);
 			this.commandNotify.Margin = new System.Windows.Forms.Padding(4);
 			this.commandNotify.Name = "commandNotify";
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandStartup
 			// 
 			this.commandStartup.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.commandStartup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Windows;
+			this.commandStartup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Windows;
 			this.commandStartup.Location = new System.Drawing.Point(503, 10);
 			this.commandStartup.Margin = new System.Windows.Forms.Padding(4);
 			this.commandStartup.Name = "commandStartup";
@@ -185,7 +185,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Controls.Add(this.panelHome);
 			this.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App;
+			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App;
 			this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.Name = "HomeForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

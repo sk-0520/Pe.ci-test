@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var notfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.NotFound, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.NotFound, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.URI, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.URI, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
