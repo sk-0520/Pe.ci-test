@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		private void SetVisualStyle(Form target)
 		{
-			Debug.Assert(EnabledVisualStyle);
+			Debug.Assert(EnabledAeroStyle);
 
 			var blurHehind = new DWM_BLURBEHIND();
 			blurHehind.fEnable = true;
@@ -79,14 +79,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			base.Start(target);
 			//EnabledVisualStyle = false;
-			if(EnabledVisualStyle) {
+			if(EnabledAeroStyle) {
 				SetVisualStyle(target);
 			}
 		}
 		
 		public override void Close(Form target)
 		{
-			if(EnabledVisualStyle) {
+			if(EnabledAeroStyle) {
 				var margin = new MARGINS();
 				margin.leftWidth = 0;
 				margin.rightWidth = 0;
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var frame = SystemInformation.Border3DSize;
 			var edge = new Padding(frame.Width, frame.Height, frame.Width, frame.Height);
 			
-			if(EnabledVisualStyle) {
+			if(EnabledAeroStyle) {
 				switch(toolbarPosition) {
 					case ToolbarPosition.DesktopFloat:
 						edge.Top = edge.Bottom = 0;
@@ -134,7 +134,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		public override Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition)
 		{
-			if(EnabledVisualStyle) {
+			if(EnabledAeroStyle) {
 				var frame = SystemInformation.Border3DSize;
 				var border = new Padding(0);
 				switch(toolbarPosition) {
@@ -667,18 +667,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		//public override int PaddingWidth { get { return 0; } }
 		
 		#region IsDefaultDrawToolbar
-		public override bool IsDefaultDrawToolbarWindowBackground { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarWindowEdge { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarWindowCaption { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarBackground { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarBorder { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarArrow { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarButtonImage { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarButtonText { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarButtonBackground { get { return !EnabledVisualStyle; } }
-		public override bool IsDefaultDrawToolbarToolTipBackground { get { return !EnabledVisualStyle; } }
+		public override bool IsDefaultDrawToolbarWindowBackground { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarWindowEdge { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarWindowCaption { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarBackground { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarBorder { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarArrow { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarButtonImage { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarButtonText { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarDropDownButtonBackground { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarSplitButtonBackground { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarButtonBackground { get { return !EnabledAeroStyle; } }
+		public override bool IsDefaultDrawToolbarToolTipBackground { get { return !EnabledAeroStyle; } }
 		#endregion
 
 	}

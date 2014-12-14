@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			public Rectangle MenuArea { get; set; }
 		}
 		
-		protected bool EnabledVisualStyle { get; set; }
+		protected bool EnabledAeroStyle { get; set; }
 		
 		/// <summary>
 		/// http://msdn.microsoft.com/ja-jp/magazine/ee221436.aspx
@@ -123,7 +123,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return arrowArea ;
 		}
 		
-		protected static bool IsEnabledVisualStyle()
+		protected static bool IsEnabledAeroStyle()
 		{
 			bool isAero;
 			NativeMethods.DwmIsCompositionEnabled(out isAero);
@@ -132,7 +132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		public virtual void Start(Form target)
 		{
-			EnabledVisualStyle = IsEnabledVisualStyle();
+			EnabledAeroStyle = IsEnabledAeroStyle();
 		}
 		public abstract void Close(Form target);
 		
@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		public virtual void ApplyToolbarToolTipRegion(Form target)
 		{
-			if(EnabledVisualStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
+			if(EnabledAeroStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
 				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
 
 				using(Graphics g = Graphics.FromHwnd(IntPtr.Zero)) {
@@ -307,7 +307,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		public virtual void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea)
 		{
-			if(EnabledVisualStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
+			if(EnabledAeroStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
 				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
 				visualStyleRenderer.DrawBackground(g, drawArea);
 			}
