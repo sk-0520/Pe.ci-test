@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	public enum ClipboardType
 	{
 		Text,
-		RichText,
+		RichTextFormat,
 		Image,
 		File,
 	}

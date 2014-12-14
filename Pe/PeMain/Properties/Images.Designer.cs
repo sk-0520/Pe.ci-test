@@ -113,9 +113,49 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        public static System.Drawing.Bitmap ClipboardFile {
+            get {
+                object obj = ResourceManager.GetObject("ClipboardFile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        public static System.Drawing.Bitmap ClipboardImage {
+            get {
+                object obj = ResourceManager.GetObject("ClipboardImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        public static System.Drawing.Bitmap ClipboardRichTextFormat {
+            get {
+                object obj = ResourceManager.GetObject("ClipboardRichTextFormat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         public static System.Drawing.Bitmap ClipboardText {
             get {
                 object obj = ResourceManager.GetObject("ClipboardText", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        public static System.Drawing.Bitmap ClipboardText1 {
+            get {
+                object obj = ResourceManager.GetObject("ClipboardText1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
