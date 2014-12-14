@@ -113,6 +113,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        public static System.Drawing.Bitmap ClipboardCopy {
+            get {
+                object obj = ResourceManager.GetObject("ClipboardCopy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         public static System.Drawing.Bitmap ClipboardFile {
             get {
                 object obj = ResourceManager.GetObject("ClipboardFile", resourceCulture);
@@ -146,16 +156,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         public static System.Drawing.Bitmap ClipboardText {
             get {
                 object obj = ResourceManager.GetObject("ClipboardText", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        public static System.Drawing.Bitmap ClipboardText1 {
-            get {
-                object obj = ResourceManager.GetObject("ClipboardText1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

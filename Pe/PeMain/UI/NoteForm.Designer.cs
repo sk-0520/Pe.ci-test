@@ -145,7 +145,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemCopy
 			// 
-			this.contextMenu_itemCopy.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.ClipboardText;
+			this.contextMenu_itemCopy.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.ClipboardCopy;
 			this.contextMenu_itemCopy.Name = "contextMenu_itemCopy";
 			this.contextMenu_itemCopy.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemCopy.Text = ":note/menu/copy";
