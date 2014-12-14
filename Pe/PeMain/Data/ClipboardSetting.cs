@@ -40,12 +40,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ClipboardSetting()
 		{
 			Items = new Queue<ClipboardItem>(Literal.clipboardLimit);
+			EnabledApplicationCopy = false;
 		}
 
 		/// <summary>
 		/// 標準で使用するデータ形式。
 		/// </summary>
 		public ClipboardType DefaultClipboardType { get; set; }
+		/// <summary>
+		/// 本体でのコピー操作でもコピー検知に含めるか。
+		/// </summary>
+		public bool EnabledApplicationCopy { get; set; }
 
 		/// <summary>
 		/// クリップボードデータ
