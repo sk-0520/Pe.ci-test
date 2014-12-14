@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 		private const string _mainSettingFileName    = "mainsetting.xml";
 		private const string _launcherItemsFileName  = "launcher-items.xml";
-		private const string _clipboardItemsFileName = "clipboard-items.xml";
+		//private const string _clipboardItemsFileName = "clipboard-items.xml";
 		private const string _dbFileName             = "db.sqlite3";
 		private const string _backupDirName          = "backup";
 		/// <summary>
@@ -149,16 +149,17 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 		
-		#if DEBUG
+#if DEBUG
 		public const int backupCount = 3;
 		public const int logListLimit = 20;
-		#else
+		public const int clipboardLimit = 4;
+#else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
-		#endif
-
 		public const int clipboardLimit = 100;
-		
+#endif
+
+
 		/// <summary>
 		/// 実行パス
 		/// </summary>
@@ -291,10 +292,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 			get { return Path.Combine(UserSettingDirPath, _launcherItemsFileName); }
 		}
 
+		/*
 		public static string UserClipboardItemsPath
 		{
 			get { return Path.Combine(UserSettingDirPath, _clipboardItemsFileName); }
 		}
+		*/
 
 		public static string UserDBPath
 		{
