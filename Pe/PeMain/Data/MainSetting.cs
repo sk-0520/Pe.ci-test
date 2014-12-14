@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
+
+			Clipboard = new ClipboardSetting();
 			
 			WindowSaveTime = Literal.windowSaveTime.median;
 			WindowSaveCount = Literal.windowSaveCount.median;
@@ -128,6 +130,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				}
 			}
 		}
+
+		public ClipboardSetting Clipboard { get; set; }
 
 		protected override void Dispose(bool disposing)
 		{

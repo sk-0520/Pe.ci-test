@@ -143,6 +143,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				sortedSet.Add(item);
 			}
 			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
+			//// クリップボードデータ
+			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
+			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
 		}
 	}
 }

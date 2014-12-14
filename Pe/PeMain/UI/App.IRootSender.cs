@@ -87,6 +87,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var data = Clipboard.GetDataObject();
 			Debug.WriteLine(string.Join(", ", data.GetFormats()));
+			var clipboardItem = new ClipboardItem();
+			clipboardItem.Data = data;
+			this._commonData.MainSetting.Clipboard.Items.Enqueue(clipboardItem);
 		}
 	}
 }
