@@ -966,6 +966,18 @@
   <ItemGroup>
     <None Include="Resources\ClipboardCopy.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\App.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NotFound.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ToolbarMain.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\URI.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)\etc\lang\ja-JP.xml" "$(OutDir)\etc\lang\default.xml"
