@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize();
 		}
-		
+		//TODO: なんでこれ指定してんだろう
 		protected override CreateParams CreateParams
 		{
 			get

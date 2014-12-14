@@ -27,7 +27,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClipboardForm));
 			this.panelMain = new System.Windows.Forms.ToolStripContainer();
 			this.statusClipboard = new System.Windows.Forms.StatusStrip();
 			this.toolClipboard = new System.Windows.Forms.ToolStrip();
@@ -49,14 +48,14 @@
 			// panelMain.ContentPanel
 			// 
 			this.panelMain.ContentPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.panelMain.ContentPanel.Size = new System.Drawing.Size(310, 231);
+			this.panelMain.ContentPanel.Size = new System.Drawing.Size(401, 231);
 			this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelMain.LeftToolStripPanelVisible = false;
 			this.panelMain.Location = new System.Drawing.Point(0, 0);
 			this.panelMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.panelMain.Name = "panelMain";
 			this.panelMain.RightToolStripPanelVisible = false;
-			this.panelMain.Size = new System.Drawing.Size(310, 278);
+			this.panelMain.Size = new System.Drawing.Size(401, 278);
 			this.panelMain.TabIndex = 0;
 			this.panelMain.Text = "toolStripContainer1";
 			// 
@@ -69,7 +68,7 @@
 			this.statusClipboard.Dock = System.Windows.Forms.DockStyle.None;
 			this.statusClipboard.Location = new System.Drawing.Point(0, 0);
 			this.statusClipboard.Name = "statusClipboard";
-			this.statusClipboard.Size = new System.Drawing.Size(310, 22);
+			this.statusClipboard.Size = new System.Drawing.Size(401, 22);
 			this.statusClipboard.TabIndex = 0;
 			// 
 			// toolClipboard
@@ -79,36 +78,42 @@
 			this.toolClipboard.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolClipboard_itemSave,
             this.toolClipboard_itemClear});
-			this.toolClipboard.Location = new System.Drawing.Point(3, 0);
+			this.toolClipboard.Location = new System.Drawing.Point(0, 0);
 			this.toolClipboard.Name = "toolClipboard";
-			this.toolClipboard.Size = new System.Drawing.Size(282, 25);
+			this.toolClipboard.Size = new System.Drawing.Size(401, 25);
+			this.toolClipboard.Stretch = true;
 			this.toolClipboard.TabIndex = 0;
 			// 
 			// toolClipboard_itemSave
 			// 
-			this.toolClipboard_itemSave.Image = ((System.Drawing.Image)(resources.GetObject("toolClipboard_itemSave.Image")));
+			this.toolClipboard_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
 			this.toolClipboard_itemSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemSave.Name = "toolClipboard_itemSave";
-			this.toolClipboard_itemSave.Size = new System.Drawing.Size(124, 22);
-			this.toolClipboard_itemSave.Text = "toolStripButton1";
+			this.toolClipboard_itemSave.Size = new System.Drawing.Size(182, 22);
+			this.toolClipboard_itemSave.Text = ":clipboard/command/save";
 			// 
 			// toolClipboard_itemClear
 			// 
-			this.toolClipboard_itemClear.Image = ((System.Drawing.Image)(resources.GetObject("toolClipboard_itemClear.Image")));
+			this.toolClipboard_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear;
 			this.toolClipboard_itemClear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemClear.Name = "toolClipboard_itemClear";
-			this.toolClipboard_itemClear.Size = new System.Drawing.Size(124, 22);
-			this.toolClipboard_itemClear.Text = "toolStripButton1";
+			this.toolClipboard_itemClear.Size = new System.Drawing.Size(183, 22);
+			this.toolClipboard_itemClear.Text = ":clipboard/command/clear";
 			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(310, 278);
+			this.ClientSize = new System.Drawing.Size(401, 278);
 			this.Controls.Add(this.panelMain);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "ClipboardForm";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.Text = ":window/clipboard";
 			this.panelMain.BottomToolStripPanel.ResumeLayout(false);
 			this.panelMain.BottomToolStripPanel.PerformLayout();
