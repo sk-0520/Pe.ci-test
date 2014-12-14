@@ -126,7 +126,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ClientSize = new System.Drawing.Size(684, 362);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App;
+			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MinimumSize = new System.Drawing.Size(700, 400);
 			this.Name = "UpdateForm";
