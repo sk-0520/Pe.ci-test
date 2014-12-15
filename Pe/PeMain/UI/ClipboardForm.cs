@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -92,12 +93,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplySetting();
 		}
 
+		void ApplySettingUI()
+		{
+			this.listClipboard.DataSource = CommonData.MainSetting.Clipboard.Items;
+		}
+
+		/// <summary>
+		/// BUGS: Formsバインドで描画が変になる。
+		/// </summary>
 		void ApplySetting()
 		{
 			ApplyLanguage();
+			ApplySettingUI();
 
 			ChangeSelectType(this.toolClipboard_itemType_itemClipboard);
 		}
+
 
 		void ChangeSelectType(ToolStripItem item)
 		{

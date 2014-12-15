@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,22 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 本体でのコピー操作でもコピー検知に含めるか。
 		/// </summary>
 		public bool EnabledApplicationCopy { get; set; }
+		/// <summary>
+		/// 表示状態。
+		/// </summary>
+		public bool Visible { get; set; }
+		/// <summary>
+		/// サイズ。
+		/// </summary>
+		public Size Size { get; set; }
+		/// <summary>
+		/// 位置。
+		/// </summary>
+		public Point Location { get; set; }
+		/// <summary>
+		/// 最前面表示。
+		/// </summary>
+		public bool Topmost { get; set; }
 
 		/// <summary>
 		/// クリップボードデータ
