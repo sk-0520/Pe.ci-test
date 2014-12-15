@@ -47,6 +47,11 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewText = new System.Windows.Forms.TextBox();
+			this.viewRtf = new System.Windows.Forms.RichTextBox();
+			this.viewImage = new System.Windows.Forms.PictureBox();
+			this.viewFile = new System.Windows.Forms.ListView();
+			this.panelImage = new System.Windows.Forms.Panel();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -56,7 +61,13 @@
 			this.panelClipboard.Panel2.SuspendLayout();
 			this.panelClipboard.SuspendLayout();
 			this.tabPreview.SuspendLayout();
+			this.tabPreview_pageText.SuspendLayout();
+			this.tabPreview_pageRichTextFormat.SuspendLayout();
+			this.tabPreview_pageImage.SuspendLayout();
+			this.tabPreview_pageFile.SuspendLayout();
 			this.toolClipboard.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.viewImage)).BeginInit();
+			this.panelImage.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panelMain
@@ -138,6 +149,7 @@
 			// 
 			// tabPreview_pageText
 			// 
+			this.tabPreview_pageText.Controls.Add(this.viewText);
 			this.tabPreview_pageText.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageText.Name = "tabPreview_pageText";
 			this.tabPreview_pageText.Padding = new System.Windows.Forms.Padding(3);
@@ -148,30 +160,33 @@
 			// 
 			// tabPreview_pageRichTextFormat
 			// 
-			this.tabPreview_pageRichTextFormat.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageRichTextFormat.Controls.Add(this.viewRtf);
+			this.tabPreview_pageRichTextFormat.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageRichTextFormat.Name = "tabPreview_pageRichTextFormat";
 			this.tabPreview_pageRichTextFormat.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageRichTextFormat.Size = new System.Drawing.Size(371, 201);
+			this.tabPreview_pageRichTextFormat.Size = new System.Drawing.Size(371, 200);
 			this.tabPreview_pageRichTextFormat.TabIndex = 1;
 			this.tabPreview_pageRichTextFormat.Text = "#ClipboardType.Rtf";
 			this.tabPreview_pageRichTextFormat.UseVisualStyleBackColor = true;
 			// 
 			// tabPreview_pageImage
 			// 
-			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageImage.Controls.Add(this.panelImage);
+			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
 			this.tabPreview_pageImage.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 201);
+			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 200);
 			this.tabPreview_pageImage.TabIndex = 2;
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
 			// 
 			// tabPreview_pageFile
 			// 
-			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageFile.Controls.Add(this.viewFile);
+			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 201);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 200);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
@@ -260,6 +275,46 @@
 			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
 			this.toolClipboard_itemType_itemTemplate.Visible = false;
 			// 
+			// viewText
+			// 
+			this.viewText.Location = new System.Drawing.Point(31, 25);
+			this.viewText.Multiline = true;
+			this.viewText.Name = "viewText";
+			this.viewText.Size = new System.Drawing.Size(100, 19);
+			this.viewText.TabIndex = 0;
+			// 
+			// viewRtf
+			// 
+			this.viewRtf.Location = new System.Drawing.Point(88, 80);
+			this.viewRtf.Name = "viewRtf";
+			this.viewRtf.Size = new System.Drawing.Size(100, 96);
+			this.viewRtf.TabIndex = 0;
+			this.viewRtf.Text = "";
+			// 
+			// viewImage
+			// 
+			this.viewImage.Location = new System.Drawing.Point(29, 31);
+			this.viewImage.Name = "viewImage";
+			this.viewImage.Size = new System.Drawing.Size(100, 50);
+			this.viewImage.TabIndex = 0;
+			this.viewImage.TabStop = false;
+			// 
+			// viewFile
+			// 
+			this.viewFile.Location = new System.Drawing.Point(36, 38);
+			this.viewFile.Name = "viewFile";
+			this.viewFile.Size = new System.Drawing.Size(121, 97);
+			this.viewFile.TabIndex = 0;
+			this.viewFile.UseCompatibleStateImageBehavior = false;
+			// 
+			// panelImage
+			// 
+			this.panelImage.Controls.Add(this.viewImage);
+			this.panelImage.Location = new System.Drawing.Point(20, 52);
+			this.panelImage.Name = "panelImage";
+			this.panelImage.Size = new System.Drawing.Size(200, 100);
+			this.panelImage.TabIndex = 1;
+			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -288,8 +343,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.panelClipboard)).EndInit();
 			this.panelClipboard.ResumeLayout(false);
 			this.tabPreview.ResumeLayout(false);
+			this.tabPreview_pageText.ResumeLayout(false);
+			this.tabPreview_pageText.PerformLayout();
+			this.tabPreview_pageRichTextFormat.ResumeLayout(false);
+			this.tabPreview_pageImage.ResumeLayout(false);
+			this.tabPreview_pageFile.ResumeLayout(false);
 			this.toolClipboard.ResumeLayout(false);
 			this.toolClipboard.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.viewImage)).EndInit();
+			this.panelImage.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -315,5 +377,10 @@
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemTopmost;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ImageList imageTab;
+		private System.Windows.Forms.TextBox viewText;
+		private System.Windows.Forms.RichTextBox viewRtf;
+		private System.Windows.Forms.PictureBox viewImage;
+		private System.Windows.Forms.ListView viewFile;
+		private System.Windows.Forms.Panel panelImage;
 	}
 }
