@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -66,6 +67,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void ApplyLanguage()
 		{
+			UIUtility.SetDefaultText(this, CommonData.Language);
+
+			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemSave.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemClear.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemType_itemClipboard.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemType_itemTemplate.SetLanguage(CommonData.Language);
+
+			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
+			this.tabPreview_pageRichTextFormat.Text = ClipboardType.RichTextFormat.ToText(CommonData.Language);
+			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
+			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
 		}
 		
 		#endregion
@@ -82,9 +95,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ApplySetting()
 		{
 			ApplyLanguage();
+
+			ChangeSelectType(this.toolClipboard_itemType_itemClipboard);
 		}
 
+		void ChangeSelectType(ToolStripItem item)
+		{
+			this.toolClipboard_itemType.Text = item.Text;
+			this.toolClipboard_itemType.Image = item.Image;
+		}
 
 		#endregion
+
+		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
+		{
+			ChangeSelectType((ToolStripItem)sender);
+		}
 	}
 }
