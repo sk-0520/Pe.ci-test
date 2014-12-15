@@ -15,6 +15,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	public partial class ClipboardForm: Form, ISetCommonData
 	{
+		#region Define
+
+		const string imageText = "image_text";
+		const string imageRtf = "image_rtf";
+		const string imageImage = "image_image";
+		const string imageFile = "image_file";
+
+		#endregion
+
 		#region Variable
 		#endregion
 
@@ -32,9 +41,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion
 
 		#region Initialize
+		
+		void InitializeUI()
+		{
+			this.tabPreview_pageText.ImageKey = imageText;
+			this.tabPreview_pageRichTextFormat.ImageKey = imageRtf;
+			this.tabPreview_pageImage.ImageKey = imageImage;
+			this.tabPreview_pageFile.ImageKey = imageFile;
+		}
 
 		void Initialize()
-		{ }
+		{
+			this.imageTab.Images.Add(imageText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText);
+			this.imageTab.Images.Add(imageRtf, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat);
+			this.imageTab.Images.Add(imageImage, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage);
+			this.imageTab.Images.Add(imageFile, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile);
+
+			InitializeUI();
+		}
 
 		#endregion
 

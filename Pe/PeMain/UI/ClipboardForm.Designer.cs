@@ -27,6 +27,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.panelMain = new System.Windows.Forms.ToolStripContainer();
 			this.statusClipboard = new System.Windows.Forms.StatusStrip();
 			this.panelClipboard = new System.Windows.Forms.SplitContainer();
@@ -45,6 +46,7 @@
 			this.listClipboard = new System.Windows.Forms.ListBox();
 			this.toolClipboard_itemTopmost = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.imageTab = new System.Windows.Forms.ImageList(this.components);
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -116,6 +118,7 @@
 			this.tabPreview.Controls.Add(this.tabPreview_pageImage);
 			this.tabPreview.Controls.Add(this.tabPreview_pageFile);
 			this.tabPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabPreview.ImageList = this.imageTab;
 			this.tabPreview.Location = new System.Drawing.Point(0, 0);
 			this.tabPreview.Name = "tabPreview";
 			this.tabPreview.SelectedIndex = 0;
@@ -250,6 +253,12 @@
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
+			// imageTab
+			// 
+			this.imageTab.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+			this.imageTab.ImageSize = new System.Drawing.Size(16, 16);
+			this.imageTab.TransparentColor = System.Drawing.Color.Transparent;
+			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -303,5 +312,6 @@
 		private System.Windows.Forms.ListBox listClipboard;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemTopmost;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ImageList imageTab;
 	}
 }
