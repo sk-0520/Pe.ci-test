@@ -13,9 +13,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// <summary>
 	/// 認識可能とするクリップボード形式。
 	/// </summary>
-	[Flags]
 	public enum ClipboardType
 	{
+		None,
 		Text,
 		RichTextFormat,
 		Image,
@@ -27,6 +27,46 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// </summary>
 	public class ClipboardItem: Item
 	{
+		static readonly IDictionary<string, ClipboardType> _map = new Dictionary<string, ClipboardType>() {
+			{ "System.String,UnicodeText", ClipboardType.Text },
+			{ "Text", ClipboardType.Text },
+
+			{ "Rich Text Format", ClipboardType.RichTextFormat },
+
+			{ "System.Drawing.Bitmap", ClipboardType.Image },
+			{ "Bitmap", ClipboardType.Image },
+		};
+
+		public static ClipboardType ToType(string typeName)
+		{
+			ClipboardType type;
+			if(_map.TryGetValue(typeName, out type)) {
+				return type;
+			}
+
+			return ClipboardType.None;
+		}
+
+		public static IEnumerable<ClipboardType> ToEnabledType(IDataObject data)
+		{
+			var enabledType = false;
+			foreach(var typeName in data.GetFormats()) {
+				var type = ToType(typeName);
+				if(type != ClipboardType.None) {
+					enabledType = true;
+					yield return type;
+				}
+			}
+			if(!enabledType) {
+				yield return ClipboardType.None;
+			}
+		}
+
+		public static bool HasEnabledType(IDataObject data)
+		{
+			return ToEnabledType(data).Any(t => t != ClipboardType.None);
+		}
+
 		public ClipboardItem()
 		{
 			Timestamp = DateTime.Now;
@@ -38,6 +78,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public override string ToString()
 		{
 			return Timestamp.ToString();
+		}
+
+		private IEnumerable<ClipboardType> GetClipboardTypeList()
+		{
+			foreach(var typeName in Data.GetFormats()) {
+				yield return ToType(typeName);
+			}
 		}
 	}
 

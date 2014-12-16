@@ -86,9 +86,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		public void ChangeClipboard()
 		{
 			var data = Clipboard.GetDataObject();
-			var clipboardItem = new ClipboardItem();
-			clipboardItem.Data = data;
-			this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+			var enabledType = ClipboardItem.HasEnabledType(data);
+			Debug.WriteLine("{0}: {1}", enabledType, string.Join(",", data.GetFormats()));
+			if(enabledType) {
+				var clipboardItem = new ClipboardItem();
+				clipboardItem.Data = data;
+				this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+			}
 		}
 	}
 }

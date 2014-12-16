@@ -62,6 +62,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return viewText;
 		}
 
+		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem)
+		{
+			return clipboardItem.Timestamp.ToString();
+		}
+
 		
 	}
 }

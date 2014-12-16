@@ -168,7 +168,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 				e.DrawBackground();
 				using(var brush = new SolidBrush(e.ForeColor)) {
-					e.Graphics.DrawString(item.ToString(), CommonData.MainSetting.Clipboard.TextFont.Font, brush, e.Bounds.Location);
+					var displayText = LanguageUtility.ClipboardItemToDisplayText(CommonData.Language, item);
+					e.Graphics.DrawString(displayText, CommonData.MainSetting.Clipboard.TextFont.Font, brush, e.Bounds.Location);
 				}
 				e.DrawFocusRectangle();
 			}
