@@ -96,6 +96,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ApplySettingUI()
 		{
 			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
+
+			this.CommonData.MainSetting.Clipboard.Items.ListChanged += Items_ListChanged;
 		}
 
 		/// <summary>
@@ -107,6 +109,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplySettingUI();
 
 			ChangeSelectType(this.toolClipboard_itemType_itemClipboard);
+
+			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 		}
 
 
@@ -116,11 +120,45 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolClipboard_itemType.Image = item.Image;
 		}
 
+		void ChangeListItemNumber(int index, int count)
+		{
+			if(index == -1) {
+				this.statusClipboard_itemSelectedIndex.Text = "-";
+			} else {
+				this.statusClipboard_itemSelectedIndex.Text = (index + 1).ToString();
+			}
+
+			this.statusClipboard_itemCount.Text = count.ToString();
+		}
+
 		#endregion
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
 			ChangeSelectType((ToolStripItem)sender);
+		}
+
+		void Items_ListChanged(object sender, EventArgs e)
+		{
+			this.listClipboard.SuspendLayout();
+			var selectedIndex = this.listClipboard.SelectedIndex;
+			this.listClipboard.DataSource = null;
+			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
+			if(selectedIndex < this.listClipboard.Items.Count) {
+				this.listClipboard.SelectedIndex = selectedIndex;
+			}
+			//ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
+			this.listClipboard.ResumeLayout();
+		}
+
+		private void listClipboard_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			Debug.WriteLine(DateTime.Now.ToShortDateString() + e);
+		}
+
+		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 		}
 	}
 }

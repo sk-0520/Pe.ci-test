@@ -88,7 +88,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var data = Clipboard.GetDataObject();
 			var clipboardItem = new ClipboardItem();
 			clipboardItem.Data = data;
-			this._commonData.MainSetting.Clipboard.Items.Add(clipboardItem);
+			this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
 		}
 	}
 }

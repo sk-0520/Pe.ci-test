@@ -14,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	{
 		const int defaultLimit = 64;
 
+		public event EventHandler ListChanged;
+
 		public FixedSizedList()
 			: base()
 		{
@@ -40,6 +42,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 		public int LimitSize { get; set; }
 
+		protected void CallListChangedEvent()
+		{
+			if(ListChanged != null) {
+				ListChanged(this, new EventArgs());
+			}
+		}
+
 		public new void Add(T item)
 		{
 			if(Count >= LimitSize) {
@@ -47,6 +56,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			} 
 
 			base.Add(item);
+
+			CallListChangedEvent();
 		}
 
 		public new void AddRange(IEnumerable<T> collection)
@@ -59,6 +70,19 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				// TODO: ちょっと後回し
 				base.AddRange(collection);
 			}
+
+			CallListChangedEvent();
 		}
+
+		public new void Insert(int index, T item)
+		{
+			if(Count >= LimitSize) {
+				RemoveAt(Count - 1);
+			}
+			base.Insert(index, item);
+
+			CallListChangedEvent();
+		}
+
 	}
 }
