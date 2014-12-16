@@ -35,6 +35,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 			{ "System.Drawing.Bitmap", ClipboardType.Image },
 			{ "Bitmap", ClipboardType.Image },
+
+			//{ "Shell IDList Array", ClipboardType.File },
+			{ "FileDrop", ClipboardType.File },
+			{ "FileNameW", ClipboardType.File },
+			{ "FileName", ClipboardType.File },
 		};
 
 		public static ClipboardType ToType(string typeName)
