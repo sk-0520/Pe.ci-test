@@ -34,6 +34,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public DateTime Timestamp { get; set; }
 		public IDataObject Data { get; set; }
+
+		public override string ToString()
+		{
+			return Timestamp.ToString();
+		}
 	}
 
 	[Serializable]
@@ -41,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	{
 		public ClipboardSetting()
 		{
-			Items = new ConcurrentFixedSizedQueue<ClipboardItem>(Literal.clipboardLimit);
+			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit);
 			EnabledApplicationCopy = false;
 		}
 
@@ -74,6 +79,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// クリップボードデータ
 		/// </summary>
 		[XmlIgnore]
-		public ConcurrentFixedSizedQueue<ClipboardItem> Items { get; set; }
+		public FixedSizedList<ClipboardItem> Items { get; set; }
 	}
 }

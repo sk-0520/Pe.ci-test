@@ -95,7 +95,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void ApplySettingUI()
 		{
-			this.listClipboard.DataSource = CommonData.MainSetting.Clipboard.Items;
+			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
 		}
 
 		/// <summary>
