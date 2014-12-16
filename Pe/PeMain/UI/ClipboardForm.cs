@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
@@ -96,8 +97,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ApplySettingUI()
 		{
 			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
+			CommonData.MainSetting.Clipboard.Items.ListChanged += Items_ListChanged;
 
-			this.CommonData.MainSetting.Clipboard.Items.ListChanged += Items_ListChanged;
+			Visible = CommonData.MainSetting.Clipboard.Visible;
+			Location = CommonData.MainSetting.Clipboard.Location;
+			Size = CommonData.MainSetting.Clipboard.Size;
+
+			using(var g = CreateGraphics()) {
+				var fontHeight = (int)g.MeasureString("☃", this.CommonData.MainSetting.Clipboard.TextFont.Font).Height;
+				var buttonHeight = IconScale.Small.ToHeight();
+				this.listClipboard.ItemHeight = fontHeight + buttonHeight;
+			}
 		}
 
 		/// <summary>
@@ -144,8 +154,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var selectedIndex = this.listClipboard.SelectedIndex;
 			this.listClipboard.DataSource = null;
 			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
-			if(selectedIndex < this.listClipboard.Items.Count) {
-				this.listClipboard.SelectedIndex = selectedIndex;
+			if(selectedIndex + 1 < this.listClipboard.Items.Count) {
+				this.listClipboard.SelectedIndex = selectedIndex + 1;
 			}
 			//ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 			this.listClipboard.ResumeLayout();
@@ -153,12 +163,39 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_DrawItem(object sender, DrawItemEventArgs e)
 		{
-			Debug.WriteLine(DateTime.Now.ToShortDateString() + e);
+			if(e.Index != -1) {
+				var item = CommonData.MainSetting.Clipboard.Items[e.Index];
+
+				e.DrawBackground();
+				using(var brush = new SolidBrush(e.ForeColor)) {
+					e.Graphics.DrawString(item.ToString(), CommonData.MainSetting.Clipboard.TextFont.Font, brush, e.Bounds.Location);
+				}
+				e.DrawFocusRectangle();
+			}
 		}
 
 		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
+		}
+
+		private void ClipboardForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(e.CloseReason == CloseReason.UserClosing) {
+				e.Cancel = true;
+				Visible = false;
+				CommonData.MainSetting.Clipboard.Visible = false;
+			}
+		}
+
+		private void ClipboardForm_LocationChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Clipboard.Location = Location;
+		}
+
+		private void ClipboardForm_SizeChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Clipboard.Size = Size;
 		}
 	}
 }

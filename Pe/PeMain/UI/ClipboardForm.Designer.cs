@@ -132,13 +132,16 @@
 			// listClipboard
 			// 
 			this.listClipboard.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listClipboard.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.listClipboard.FormattingEnabled = true;
+			this.listClipboard.IntegralHeight = false;
 			this.listClipboard.ItemHeight = 15;
 			this.listClipboard.Location = new System.Drawing.Point(0, 0);
 			this.listClipboard.Name = "listClipboard";
 			this.listClipboard.ScrollAlwaysVisible = true;
 			this.listClipboard.Size = new System.Drawing.Size(225, 230);
 			this.listClipboard.TabIndex = 0;
+			this.listClipboard.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listClipboard_DrawItem);
 			this.listClipboard.SelectedIndexChanged += new System.EventHandler(this.listClipboard_SelectedIndexChanged);
 			// 
 			// tabPreview
@@ -358,6 +361,9 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/clipboard";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClipboardForm_FormClosing);
+			this.LocationChanged += new System.EventHandler(this.ClipboardForm_LocationChanged);
+			this.SizeChanged += new System.EventHandler(this.ClipboardForm_SizeChanged);
 			this.panelMain.BottomToolStripPanel.ResumeLayout(false);
 			this.panelMain.BottomToolStripPanel.PerformLayout();
 			this.panelMain.ContentPanel.ResumeLayout(false);

@@ -48,6 +48,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit);
 			EnabledApplicationCopy = false;
+			TextFont = new FontSetting(SystemFonts.DialogFont);
 		}
 
 		/// <summary>
@@ -74,7 +75,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 最前面表示。
 		/// </summary>
 		public bool Topmost { get; set; }
-
+		/// <summary>
+		/// テキストデータのフォント
+		/// </summary>
+		public FontSetting TextFont { get; set; }
 		/// <summary>
 		/// クリップボードデータ
 		/// </summary>
