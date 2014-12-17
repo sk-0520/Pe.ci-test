@@ -86,14 +86,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public DateTime Timestamp { get; set; }
 		public IDataObject Data { get; set; }
 
-		public IEnumerable<ClipboardType> GetClipboardTypeList()
+		protected IEnumerable<ClipboardType> GetClipboardTypeRawList()
 		{
 			return ToEnabledType(Data);
 		}
 
+		public IEnumerable<ClipboardType> GetClipboardTypeList()
+		{
+			return GetClipboardTypeRawList().Distinct();
+		}
+
 		public IEnumerable<ClipboradWeight> GetClipboardTypeWeight()
 		{
-			return GetClipboardTypeList()
+			return GetClipboardTypeRawList()
 				.GroupBy(t => t)
 				.Select(g => new ClipboradWeight () {
 					ClipboardType = g.Key,

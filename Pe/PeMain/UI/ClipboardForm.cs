@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
@@ -28,6 +29,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion
 
 		#region Variable
+
+		FlowLayoutPanel _panelClipboradItem = new FlowLayoutPanel();
+		Button _commandText = new Button();
+		Button _commandRtf = new Button();
+		Button _commandImage = new Button();
+		Button _commandFile = new Button();
+
 		#endregion
 
 		public ClipboardForm()
@@ -40,13 +48,47 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region Property
 
 		CommonData CommonData { get; set; }
+		int HoverItemIndex { get; set; }
+		int SelectedItemIndex { get; set; }
 
 		#endregion
 
 		#region Initialize
 		
+		void InitializeCommand()
+		{
+			var commandButtons = new[] {
+				this._commandText,
+				this._commandRtf,
+				this._commandImage,
+				this._commandFile,
+			};
+			this._commandText.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText;
+			this._commandRtf.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat;
+			this._commandImage.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage;
+			this._commandFile.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile;
+			var buttonSize = GetButtonSize();
+
+			foreach(var command in commandButtons) {
+				command.Size = buttonSize;
+				//command.FlatStyle = FlatStyle.Flat;
+				command.Margin = Padding.Empty;
+			}
+			this._panelClipboradItem.Padding = Padding.Empty;
+			this._panelClipboradItem.Margin = Padding.Empty;
+			this._panelClipboradItem.BackColor = Color.Transparent;
+			this._panelClipboradItem.BackColor = Color.FromArgb(25, Color.Black);
+			this._panelClipboradItem.Size = Size.Empty;
+			this._panelClipboradItem.AutoSize = true;
+			this._panelClipboradItem.Controls.AddRange(commandButtons);
+			this.listClipboard.Controls.Add(this._panelClipboradItem);
+			this._panelClipboradItem.Visible = false;
+		}
+
 		void InitializeUI()
 		{
+			InitializeCommand();
+
 			this.tabPreview_pageText.ImageKey = imageText;
 			this.tabPreview_pageRichTextFormat.ImageKey = imageRtf;
 			this.tabPreview_pageImage.ImageKey = imageImage;
@@ -87,6 +129,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region Function
 
+		Size GetButtonSize()
+		{
+			return new Size(
+				IconScale.Small.ToWidth() + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
+				IconScale.Small.ToHeight() + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
+			);
+		}
+		
 		public void SetCommonData(CommonData commonData)
 		{
 			CommonData = commonData;
@@ -103,10 +153,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
 			ChangeTopmost(CommonData.MainSetting.Clipboard.TopMost);
-
+			var buttonSize = GetButtonSize();
 			using(var g = CreateGraphics()) {
 				var fontHeight = (int)g.MeasureString("☃", this.CommonData.MainSetting.Clipboard.TextFont.Font).Height;
-				var buttonHeight = IconScale.Small.ToHeight();
+				var buttonHeight = buttonSize.Height;
 				this.listClipboard.ItemHeight = fontHeight + buttonHeight;
 			}
 		}
@@ -148,6 +198,33 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.statusClipboard_itemCount.Text = count.ToString();
 		}
 
+		void ChangeCommand(int index)
+		{
+			if(index != -1 && HoverItemIndex != index) {
+				var item = CommonData.MainSetting.Clipboard.Items[index];
+				var map = new Dictionary<ClipboardType, Control>() {
+					{ ClipboardType.Text, this._commandText },
+					{ ClipboardType.RichTextFormat, this._commandRtf },
+					{ ClipboardType.Image, this._commandImage },
+					{ ClipboardType.File, this._commandFile },
+				};
+				foreach(var control in map.Values.ToArray()) {
+					control.Enabled = false;
+				}
+				foreach(var type in item.GetClipboardTypeList()) {
+					map[type].Enabled = true;
+				}
+			}
+
+			HoverItemIndex = index;
+			this._panelClipboradItem.Visible = HoverItemIndex != -1;
+		}
+
+		void ChangeSelsectedItem(int index)
+		{
+			SelectedItemIndex = index;
+		}
+
 		#endregion
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
@@ -185,6 +262,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
+			ChangeSelsectedItem(this.listClipboard.SelectedIndex);
 		}
 
 		private void ClipboardForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -210,6 +288,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var check = !toolClipboard_itemTopmost.Checked;
 			ChangeTopmost(check);
+		}
+
+		private void listClipboard_MouseMove(object sender, MouseEventArgs e)
+		{
+			var index = this.listClipboard.IndexFromPoint(e.Location) - this.listClipboard.TopIndex;
+			var top = this.listClipboard.ItemHeight * (index + 1) - GetButtonSize().Height;
+			if(top != this._panelClipboradItem.Top) {
+				this._panelClipboradItem.Top = top;
+			}
+			ChangeCommand(index);
 		}
 	}
 }
