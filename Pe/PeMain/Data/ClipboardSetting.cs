@@ -80,11 +80,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public DateTime Timestamp { get; set; }
 		public IDataObject Data { get; set; }
 
-		public override string ToString()
-		{
-			return Timestamp.ToString();
-		}
-
 		private IEnumerable<ClipboardType> GetClipboardTypeList()
 		{
 			foreach(var typeName in Data.GetFormats()) {
@@ -126,7 +121,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// 最前面表示。
 		/// </summary>
-		public bool Topmost { get; set; }
+		public bool TopMost { get; set; }
 		/// <summary>
 		/// テキストデータのフォント
 		/// </summary>

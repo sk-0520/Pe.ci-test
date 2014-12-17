@@ -438,9 +438,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var itemHiddenFile = new ToolStripMenuItem();
 			var itemExtension = new ToolStripMenuItem();
 			var itemWindow = new ToolStripMenuItem();
+			var itemClipboard = new ToolStripMenuItem();
 			menuList.Add(itemHiddenFile);
 			menuList.Add(itemExtension);
 			menuList.Add(itemWindow);
+			menuList.Add(itemClipboard);
 			
 			// 隠しファイル
 			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
@@ -459,13 +461,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// ウィンドウ
 			itemWindow.Name = menuNameSystemEnvWindow;
 			AttachmentSystemEnvWindowSubMenu(itemWindow);
-			
+
+			// クリップボード
+			itemClipboard.Name = menuNameSystemEnvClipboard;
+			itemClipboard.Click += (object sender, EventArgs e) => {
+				this._commonData.MainSetting.Clipboard.Visible = !this._commonData.MainSetting.Clipboard.Visible;
+				this._clipboardWindow.Visible = this._commonData.MainSetting.Clipboard.Visible;
+			};
+
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 			
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
 				itemExtension.Checked = SystemEnvironment.IsExtensionShow();
+				itemClipboard.Checked = this._commonData.MainSetting.Clipboard.Visible;
 
 				//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();

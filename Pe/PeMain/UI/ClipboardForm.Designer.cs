@@ -274,6 +274,7 @@
 			this.toolClipboard_itemTopmost.Name = "toolClipboard_itemTopmost";
 			this.toolClipboard_itemTopmost.Size = new System.Drawing.Size(23, 22);
 			this.toolClipboard_itemTopmost.Text = ":clipboard/tips/topmost";
+			this.toolClipboard_itemTopmost.Click += new System.EventHandler(this.toolClipboard_itemTopmost_Click);
 			// 
 			// toolStripSeparator2
 			// 

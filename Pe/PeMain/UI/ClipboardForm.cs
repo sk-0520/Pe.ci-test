@@ -102,6 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Visible = CommonData.MainSetting.Clipboard.Visible;
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
+			ChangeTopmost(CommonData.MainSetting.Clipboard.TopMost);
 
 			using(var g = CreateGraphics()) {
 				var fontHeight = (int)g.MeasureString("☃", this.CommonData.MainSetting.Clipboard.TextFont.Font).Height;
@@ -123,6 +124,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 		}
 
+		void ChangeTopmost(bool topMost)
+		{
+			CommonData.MainSetting.Clipboard.TopMost = topMost;
+			this.toolClipboard_itemTopmost.Checked = topMost;
+			TopMost = topMost;
+		}
 
 		void ChangeSelectType(ToolStripItem item)
 		{
@@ -197,6 +204,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void ClipboardForm_SizeChanged(object sender, EventArgs e)
 		{
 			CommonData.MainSetting.Clipboard.Size = Size;
+		}
+
+		private void toolClipboard_itemTopmost_Click(object sender, EventArgs e)
+		{
+			var check = !toolClipboard_itemTopmost.Checked;
+			ChangeTopmost(check);
 		}
 	}
 }
