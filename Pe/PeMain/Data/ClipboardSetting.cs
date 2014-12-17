@@ -22,6 +22,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		File,
 	}
 
+	public class ClipboradWeight
+	{
+		public ClipboardType ClipboardType { get; set; }
+		public int Weight { get; set; }
+	}
+
 	/// <summary>
 	/// クリップボードのデータ。
 	/// </summary>
@@ -80,11 +86,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public DateTime Timestamp { get; set; }
 		public IDataObject Data { get; set; }
 
-		private IEnumerable<ClipboardType> GetClipboardTypeList()
+		public IEnumerable<ClipboardType> GetClipboardTypeList()
 		{
-			foreach(var typeName in Data.GetFormats()) {
-				yield return ToType(typeName);
-			}
+			return ToEnabledType(Data);
+		}
+
+		public IEnumerable<ClipboradWeight> GetClipboardTypeWeight()
+		{
+			return GetClipboardTypeList()
+				.GroupBy(t => t)
+				.Select(g => new ClipboradWeight () {
+					ClipboardType = g.Key,
+					Weight = g.Count()
+				})
+			;
 		}
 	}
 

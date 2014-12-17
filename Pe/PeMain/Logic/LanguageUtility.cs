@@ -7,9 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using ObjectDumper;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -64,7 +68,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
 		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem)
 		{
-			return clipboardItem.Timestamp.ToString();
+			var weight = clipboardItem.GetClipboardTypeWeight();
+			ClipboardType type;
+			if(weight.Any(w => w.ClipboardType == ClipboardType.RichTextFormat)) {
+				type = ClipboardType.RichTextFormat;
+			} else {
+				type = clipboardItem.GetClipboardTypeWeight().OrderByDescending(w => w.Weight).First().ClipboardType;
+			}
+			return type.ToString();
 		}
 
 		
