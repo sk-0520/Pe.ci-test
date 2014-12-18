@@ -295,7 +295,34 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
-		#endregion
+		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
+		{
+			var map = new Dictionary<ClipboardType, Action<ClipboardSetting>>() {
+				{ ClipboardType.Text, (setting) => {
+					ClipboardUtility.CopyText(clipboardItem.Text, setting);
+				} },
+				{ ClipboardType.Rtf, (setting) => {
+					ClipboardUtility.CopyRtf(clipboardItem.Rtf, setting);
+				} },
+				{ ClipboardType.Image, (setting) => {
+					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
+				} },
+				{ ClipboardType.File, (setting) => {
+					ClipboardUtility.CopyFile(clipboardItem.Files, setting);
+				} },
+			};
+			map[clipboardType](CommonData.MainSetting.Clipboard);
+		}
+
+		void CopySingleItem(int index)
+		{
+			Debug.Assert(index != -1);
+			
+			var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
+			CopyItem(clipboardItem, clipboardItem.GetSingleClipboardType());
+		}
+
+		#endregion ////////////////////////////////////////
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
@@ -397,21 +424,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				return;
 			}
 			var clipboardItem = CommonData.MainSetting.Clipboard.Items[HoverItemIndex];
-			var map = new Dictionary<object, Action<ClipboardSetting>>() {
-				{ this._commandText, (setting) => {
-					ClipboardUtility.CopyText(clipboardItem.Text, setting);
-				} },
-				{ this._commandRtf, (setting) => {
-					ClipboardUtility.CopyRtf(clipboardItem.Rtf, setting);
-				} },
-				{ this._commandImage, (setting) => {
-					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
-				} },
-				{ this._commandFile, (setting) => {
-					ClipboardUtility.CopyFile(clipboardItem.Files, setting);
-				} },
+			var map = new Dictionary<object, ClipboardType>() {
+				{ this._commandText, ClipboardType.Text },
+				{ this._commandRtf, ClipboardType.Rtf },
+				{ this._commandImage, ClipboardType.Image },
+				{ this._commandFile, ClipboardType.File },
 			};
-			map[sender](CommonData.MainSetting.Clipboard);
+			CopyItem(clipboardItem, map[sender]);
+		}
+
+		private void listClipboard_DoubleClick(object sender, EventArgs e)
+		{
+			var index = this.listClipboard.SelectedIndex;
+			if(index != -1) {
+				CopySingleItem(index);
+			}
 		}
 
 	}
