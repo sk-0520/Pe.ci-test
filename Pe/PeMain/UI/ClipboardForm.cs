@@ -73,6 +73,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				command.Size = buttonSize;
 				//command.FlatStyle = FlatStyle.Flat;
 				command.Margin = Padding.Empty;
+				command.Click += command_Click;
 			}
 			this._panelClipboradItem.Padding = Padding.Empty;
 			this._panelClipboradItem.Margin = Padding.Empty;
@@ -204,7 +205,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void ChangeCommand(int index)
 		{
-			if(index != -1 && HoverItemIndex != index) {
+			//if((index != -1 && HoverItemIndex != index) || (index != -1 && HoverItemIndex == -1)) {
+			if((index != -1 && HoverItemIndex != index)) {
 				var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 				var map = new Dictionary<ClipboardType, Control>() {
 					{ ClipboardType.Text, this._commandText },
@@ -388,5 +390,29 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			e.Cancel = true;
 		}
+
+		void command_Click(object sender, EventArgs e)
+		{
+			if(HoverItemIndex == -1) {
+				return;
+			}
+			var clipboardItem = CommonData.MainSetting.Clipboard.Items[HoverItemIndex];
+			var map = new Dictionary<object, Action<ClipboardSetting>>() {
+				{ this._commandText, (setting) => {
+					ClipboardUtility.CopyText(clipboardItem.Text, setting);
+				} },
+				{ this._commandRtf, (setting) => {
+					ClipboardUtility.CopyRtf(clipboardItem.Rtf, setting);
+				} },
+				{ this._commandImage, (setting) => {
+					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
+				} },
+				{ this._commandFile, (setting) => {
+					ClipboardUtility.CopyFile(clipboardItem.Files, setting);
+				} },
+			};
+			map[sender](CommonData.MainSetting.Clipboard);
+		}
+
 	}
 }

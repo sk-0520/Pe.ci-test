@@ -86,7 +86,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		public void ChangeClipboard()
 		{
 			var clipboardItem = new ClipboardItem();
-			if(clipboardItem.SetClipboardData()) {
+			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData()) {
 				this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
 			}
 		}

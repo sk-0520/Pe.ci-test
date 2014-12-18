@@ -168,5 +168,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public FixedSizedList<ClipboardItem> Items { get; set; }
+
+		[XmlIgnore]
+		public bool DisabledCopy { get; set; }
 	}
 }
