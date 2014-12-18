@@ -115,6 +115,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit);
 			EnabledApplicationCopy = false;
+			Size = new Size(
+				Screen.PrimaryScreen.Bounds.Width / 3,
+				Screen.PrimaryScreen.Bounds.Height / 3
+			);
+			var screenArea = Screen.PrimaryScreen.WorkingArea;
+			Location = new Point(screenArea.X, screenArea.Height - Size.Height);
 			TextFont = new FontSetting(SystemFonts.DialogFont);
 		}
 
