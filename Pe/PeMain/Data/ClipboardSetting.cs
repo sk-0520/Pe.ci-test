@@ -35,56 +35,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// </summary>
 	public class ClipboardItem: Item
 	{
-		/*
-		static readonly IDictionary<string, ClipboardType> _map = new Dictionary<string, ClipboardType>() {
-			{ "System.String,UnicodeText", ClipboardType.Text },
-			{ "Text", ClipboardType.Text },
-
-			{ "Rich Text Format", ClipboardType.RichTextFormat },
-
-			{ "System.Drawing.Bitmap", ClipboardType.Image },
-			{ "Bitmap", ClipboardType.Image },
-			{ "Format17", ClipboardType.Image },
-			{ "DeviceIndependentBitmap", ClipboardType.Image },
-			
-
-			//{ "Shell IDList Array", ClipboardType.File },
-			{ "FileDrop", ClipboardType.File },
-			{ "FileNameW", ClipboardType.File },
-			{ "FileName", ClipboardType.File },
-		};
-
-		protected static ClipboardType ToType(string typeName)
-		{
-			ClipboardType type;
-			if(_map.TryGetValue(typeName, out type)) {
-				return type;
-			}
-
-			return ClipboardType.None;
-		}
-
-		public static IEnumerable<ClipboardType> ToEnabledType(IDataObject data)
-		{
-			var enabledType = false;
-			foreach(var typeName in data.GetFormats()) {
-				var type = ToType(typeName);
-				if(type != ClipboardType.None) {
-					enabledType = true;
-					yield return type;
-				}
-			}
-			if(!enabledType) {
-				yield return ClipboardType.None;
-			}
-		}
-
-		public static bool HasEnabledType(IDataObject data)
-		{
-			return ToEnabledType(data).Any(t => t != ClipboardType.None);
-		}
-		*/
-
 		public ClipboardItem()
 		{
 			Timestamp = DateTime.Now;
@@ -109,7 +59,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			if(!isText && !isRtf && !isImage && !isFile) {
 				return false;
 			}
-			Debug.WriteLine("t = {0} r = {1} i = {2} f = {3}", isText, isRtf, isImage, isFile);
 
 			if(isText) {
 				Text = Clipboard.GetText(TextDataFormat.Text);
@@ -124,10 +73,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				ClipboardTypes |= ClipboardType.Image;
 			}
 			if(isFile) {
-				Files = Clipboard.GetFileDropList().Cast<string>();
-				ClipboardTypes |= ClipboardType.File;
+				var files = Clipboard.GetFileDropList().Cast<string>();
+				Files = files;
+				Text = string.Join(Environment.NewLine, files);
+				ClipboardTypes |=  ClipboardType.Text | ClipboardType.File;
 			}
-			Debug.WriteLine("ClipboardTypes = {0}", ClipboardTypes);
 
 			return true;
 		}
@@ -151,21 +101,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public ClipboardType GetSingleClipboardType()
 		{
-			Debug.WriteLine("> {0}", ClipboardTypes);
 			if((ClipboardTypes & ClipboardType.Rtf) == ClipboardType.Rtf) {
-				Debug.WriteLine(">> {0}", ClipboardTypes);
 				return ClipboardType.Rtf;
 			}
 			if((ClipboardTypes & ClipboardType.File) == ClipboardType.File) {
-				Debug.WriteLine(">> {0}", ClipboardTypes);
 				return ClipboardType.File;
 			}
 			if((ClipboardTypes & ClipboardType.Text) == ClipboardType.Text) {
-				Debug.WriteLine(">> {0}", ClipboardTypes);
 				return ClipboardType.Text;
 			}
 			if((ClipboardTypes & ClipboardType.Image) == ClipboardType.Image) {
-				Debug.WriteLine(">> {0}", ClipboardTypes);
 				return ClipboardType.Image;
 			}
 

@@ -118,9 +118,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemSave.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemClear.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemEmpty.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemType_itemClipboard.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.SetLanguage(CommonData.Language);
-
+			
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
@@ -151,16 +152,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
 			CommonData.MainSetting.Clipboard.Items.ListChanged += Items_ListChanged;
 
-			Visible = CommonData.MainSetting.Clipboard.Visible;
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
 			ChangeTopmost(CommonData.MainSetting.Clipboard.TopMost);
 			var buttonSize = GetButtonSize();
 			using(var g = CreateGraphics()) {
-				var fontHeight = (int)g.MeasureString("☃", this.CommonData.MainSetting.Clipboard.TextFont.Font).Height;
+				var fontHeight = (int)g.MeasureString("☃", Font).Height;
 				var buttonHeight = buttonSize.Height;
 				this.listClipboard.ItemHeight = fontHeight + buttonHeight;
 			}
+			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
+			Visible = CommonData.MainSetting.Clipboard.Visible;
 		}
 
 		/// <summary>
@@ -210,16 +212,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					{ ClipboardType.Image, this._commandImage },
 					{ ClipboardType.File, this._commandFile },
 				};
-				/*
-				foreach(var control in map.Values.ToArray()) {
-					control.Enabled = false;
-				}
-				foreach(var key in map.Keys) {
-
-					map[type].Enabled = true;
-				}
-				*/
-				Debug.WriteLine("-{0}-", clipboardItem.ClipboardTypes);
 				foreach(var pair in map.ToArray()) {
 					pair.Value.Enabled = (clipboardItem.ClipboardTypes.HasFlag(pair.Key));
 				}
@@ -257,16 +249,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 					case ClipboardType.Rtf:
 						{
+							this.viewRtf.Rtf = clipboardItem.Rtf;
 						}
 						break;
 
 					case ClipboardType.Image:
 						{
+							this.viewImage.Image = clipboardItem.Image;
 						}
 						break;
 
 					case ClipboardType.File:
 						{
+							// TODO
 						}
 						break;
 
@@ -304,7 +299,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				e.DrawBackground();
 				using(var brush = new SolidBrush(e.ForeColor)) {
 					var displayText = LanguageUtility.ClipboardItemToDisplayText(CommonData.Language, item);
-					e.Graphics.DrawString(displayText, CommonData.MainSetting.Clipboard.TextFont.Font, brush, e.Bounds.Location);
+					e.Graphics.DrawString(displayText, Font, brush, e.Bounds.Location);
 				}
 				e.DrawFocusRectangle();
 			}
