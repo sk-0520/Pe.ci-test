@@ -93,6 +93,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview_pageRichTextFormat.ImageKey = imageRtf;
 			this.tabPreview_pageImage.ImageKey = imageImage;
 			this.tabPreview_pageFile.ImageKey = imageFile;
+
+			ChangeSelsectedItem(-1);
 		}
 
 		void Initialize()
@@ -223,6 +225,49 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ChangeSelsectedItem(int index)
 		{
 			SelectedItemIndex = index;
+			this.tabPreview.Enabled = SelectedItemIndex != -1;
+
+			if(SelectedItemIndex == -1) {
+				return;
+			}
+
+			var map = new Dictionary<ClipboardType, TabPage>() {
+				{ ClipboardType.Text, this.tabPreview_pageText },
+				{ ClipboardType.RichTextFormat, this.tabPreview_pageRichTextFormat },
+				{ ClipboardType.Image, this.tabPreview_pageImage },
+				{ ClipboardType.File, this.tabPreview_pageFile },
+			};
+			var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
+			this.tabPreview.SelectedTab = map[clipboardItem.GetSingleClipboardType()];
+
+			foreach(var type in clipboardItem.GetClipboardTypeList()) {
+				switch(type) {
+					case ClipboardType.Text: 
+						{
+							var text = clipboardItem.Data.GetData(typeof(string));
+							this.viewText.Text = text as string;
+						}
+						break;
+
+					case ClipboardType.RichTextFormat:
+						{
+						}
+						break;
+
+					case ClipboardType.Image:
+						{
+						}
+						break;
+
+					case ClipboardType.File:
+						{
+						}
+						break;
+
+					default:
+						throw new NotImplementedException();
+				}
+			}
 		}
 
 		#endregion
@@ -298,6 +343,27 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				this._panelClipboradItem.Top = top;
 			}
 			ChangeCommand(index);
+		}
+
+		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
+		{
+			Debug.Assert(SelectedItemIndex != -1);
+
+			var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
+			var typeList = clipboardItem.GetClipboardTypeList();
+			var list = new[] {
+				new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
+				new { TabPage = this.tabPreview_pageRichTextFormat, ClipboardType = ClipboardType.RichTextFormat },
+				new { TabPage = this.tabPreview_pageImage, ClipboardType = ClipboardType.Image },
+				new { TabPage = this.tabPreview_pageFile, ClipboardType = ClipboardType.File },
+			};
+			foreach(var item in list) {
+				if(e.TabPage == item.TabPage && typeList.Any(t => t == item.ClipboardType)) {
+					return;
+				}
+			}
+
+			e.Cancel = true;
 		}
 	}
 }

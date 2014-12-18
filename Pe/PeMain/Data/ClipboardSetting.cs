@@ -41,6 +41,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 			{ "System.Drawing.Bitmap", ClipboardType.Image },
 			{ "Bitmap", ClipboardType.Image },
+			{ "Format17", ClipboardType.Image },
+			{ "DeviceIndependentBitmap", ClipboardType.Image },
+			
 
 			//{ "Shell IDList Array", ClipboardType.File },
 			{ "FileDrop", ClipboardType.File },
@@ -105,6 +108,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 					Weight = g.Count()
 				})
 			;
+		}
+
+		public ClipboardType GetSingleClipboardType()
+		{
+			var weight = GetClipboardTypeWeight();
+			ClipboardType type;
+			if(weight.Any(w => w.ClipboardType == ClipboardType.RichTextFormat)) {
+				// RTFがあればとりあえず強制
+				type = ClipboardType.RichTextFormat;
+			} else {
+				type = weight.OrderByDescending(w => w.Weight).First().ClipboardType;
+			}
+			return type;
 		}
 	}
 

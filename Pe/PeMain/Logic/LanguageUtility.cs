@@ -68,14 +68,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
 		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem)
 		{
-			var weight = clipboardItem.GetClipboardTypeWeight();
-			ClipboardType type;
-			if(weight.Any(w => w.ClipboardType == ClipboardType.RichTextFormat)) {
-				// RTFがあればとりあえず強制
-				type = ClipboardType.RichTextFormat;
-			} else {
-				type = clipboardItem.GetClipboardTypeWeight().OrderByDescending(w => w.Weight).First().ClipboardType;
-			}
+			ClipboardType type = clipboardItem.GetSingleClipboardType();
 			Debug.Assert(type != ClipboardType.None);
 
 			return type.ToString();

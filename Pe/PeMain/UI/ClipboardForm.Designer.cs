@@ -177,6 +177,7 @@
 			this.tabPreview.SelectedIndex = 0;
 			this.tabPreview.Size = new System.Drawing.Size(379, 230);
 			this.tabPreview.TabIndex = 0;
+			this.tabPreview.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabPreview_Selecting);
 			// 
 			// tabPreview_pageText
 			// 
