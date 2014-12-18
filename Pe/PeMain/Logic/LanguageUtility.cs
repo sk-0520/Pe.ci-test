@@ -7,9 +7,13 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using ObjectDumper;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -60,6 +64,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			}
 			
 			return viewText;
+		}
+
+		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem)
+		{
+			ClipboardType type = clipboardItem.GetSingleClipboardType();
+			Debug.Assert(type != ClipboardType.None);
+
+			return type.ToString();
 		}
 
 		

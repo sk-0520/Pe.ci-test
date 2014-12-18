@@ -25,6 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private AppContextMenuStrip _contextMenu;
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
+		private ClipboardForm _clipboardWindow;
 		
 		private List<NoteForm> _noteWindowList = new List<NoteForm>();
 		

@@ -704,7 +704,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherOptionDirPath
 			// 
-			this.commandLauncherOptionDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandLauncherOptionDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(489, 125);
 			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
 			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
@@ -724,7 +724,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherDirPath
 			// 
-			this.commandLauncherDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandLauncherDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandLauncherDirPath.Location = new System.Drawing.Point(489, 94);
 			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
 			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
@@ -735,7 +735,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherFilePath
 			// 
-			this.commandLauncherFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandLauncherFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandLauncherFilePath.Location = new System.Drawing.Point(445, 94);
 			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
 			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
@@ -756,7 +756,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherOptionFilePath
 			// 
-			this.commandLauncherOptionFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandLauncherOptionFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(445, 125);
 			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
 			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
@@ -787,7 +787,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherWorkDirPath
 			// 
-			this.commandLauncherWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandLauncherWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(445, 156);
 			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
 			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
@@ -808,7 +808,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherIconPath
 			// 
-			this.commandLauncherIconPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandLauncherIconPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandLauncherIconPath.Location = new System.Drawing.Point(445, 187);
 			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
 			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
@@ -1339,7 +1339,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_addGroup
 			// 
 			this.toolToolbarGroup_addGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addGroup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Group;
+			this.toolToolbarGroup_addGroup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group;
 			this.toolToolbarGroup_addGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_addGroup.Name = "toolToolbarGroup_addGroup";
 			this.toolToolbarGroup_addGroup.Size = new System.Drawing.Size(23, 22);
@@ -1349,7 +1349,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_addItem
 			// 
 			this.toolToolbarGroup_addItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.AddItem;
+			this.toolToolbarGroup_addItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_AddItem;
 			this.toolToolbarGroup_addItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_addItem.Name = "toolToolbarGroup_addItem";
 			this.toolToolbarGroup_addItem.Size = new System.Drawing.Size(23, 22);
@@ -1364,7 +1364,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_up
 			// 
 			this.toolToolbarGroup_up.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_up.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Up;
+			this.toolToolbarGroup_up.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Up;
 			this.toolToolbarGroup_up.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_up.Name = "toolToolbarGroup_up";
 			this.toolToolbarGroup_up.Size = new System.Drawing.Size(23, 22);
@@ -1374,7 +1374,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_down
 			// 
 			this.toolToolbarGroup_down.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_down.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Down;
+			this.toolToolbarGroup_down.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Down;
 			this.toolToolbarGroup_down.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_down.Name = "toolToolbarGroup_down";
 			this.toolToolbarGroup_down.Size = new System.Drawing.Size(23, 22);
@@ -1389,7 +1389,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_remove
 			// 
 			this.toolToolbarGroup_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_remove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Remove;
+			this.toolToolbarGroup_remove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove;
 			this.toolToolbarGroup_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_remove.Name = "toolToolbarGroup_remove";
 			this.toolToolbarGroup_remove.Size = new System.Drawing.Size(23, 22);
@@ -1879,7 +1879,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ClientSize = new System.Drawing.Size(761, 362);
 			this.Controls.Add(this.panelSetting);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App;
+			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "SettingForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

@@ -204,7 +204,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandOption_file
 			// 
-			this.commandOption_file.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandOption_file.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandOption_file.Location = new System.Drawing.Point(623, 32);
 			this.commandOption_file.Name = "commandOption_file";
 			this.commandOption_file.Size = new System.Drawing.Size(28, 25);
@@ -214,7 +214,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandWorkDirPath
 			// 
-			this.commandWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandWorkDirPath.Location = new System.Drawing.Point(623, 63);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(28, 25);
@@ -225,7 +225,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandOption_dir
 			// 
 			this.commandOption_dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOption_dir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandOption_dir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandOption_dir.Location = new System.Drawing.Point(747, 41);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(30, 25);

@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			using(var query = CreateQuery()) {
 				query.Parameter["table_name"] = tableName;
-				var count = query.GetResultSingle<CountDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.CheckTable);
+				var count = query.GetResultSingle<CountDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CheckTable);
 				return count.Has;
 			}
 		}
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				query.SetExpression("table_name", tableName);
 				query.SetExpression("id_column_name", idColumnName);
 
-				return query.GetResultSingle<SingleIdDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.GetId);
+				return query.GetResultSingle<SingleIdDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_GetId);
 			}
 		}
 		

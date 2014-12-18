@@ -9,7 +9,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
@@ -69,7 +69,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					Lang = "main/menu/system-env/show-extension",
 					Key  = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey
 				},
+				new {
+					Name = menuNameSystemEnvClipboard,
+					Lang = "main/menu/system-env/clipboard",
+					Key  = new HotKeySetting()
+				},
 			};
+
 			foreach(var keyItem in keyItems) {
 				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
 				menuItem.Text = this._commonData.Language[keyItem.Lang];

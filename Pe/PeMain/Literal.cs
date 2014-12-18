@@ -152,11 +152,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 #if DEBUG
 		public const int backupCount = 3;
 		public const int logListLimit = 20;
-		public const int clipboardLimit = 4;
+		public const int clipboardLimit = 40000;
 #else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
-		public const int clipboardLimit = 100;
+		public const int clipboardLimit = 1024;
 #endif
 
 

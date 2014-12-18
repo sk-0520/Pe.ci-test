@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
@@ -14,10 +17,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	[Flags]
 	public enum ClipboardType
 	{
-		Text,
-		RichText,
-		Image,
-		File,
+		None  = 0,
+		Text  = 0x01,
+		Rtf   = 0x02,
+		Image = 0x04,
+		File  = 0x08,
+	}
+
+	public class ClipboradWeight
+	{
+		public ClipboardType ClipboardType { get; set; }
+		public int Weight { get; set; }
 	}
 
 	/// <summary>
@@ -31,7 +41,82 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		}
 
 		public DateTime Timestamp { get; set; }
-		public IDataObject Data { get; set; }
+
+		public ClipboardType ClipboardTypes { get; set; }
+		public string Text { get; set; }
+		public string Rtf { get; set; }
+		public Image Image { get; set; }
+		public IEnumerable<string> Files { get; set; }
+
+		public bool SetClipboardData()
+		{
+			var isText = Clipboard.ContainsText(TextDataFormat.Text);
+			var isRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+			var isImage = Clipboard.ContainsImage();
+			var isFile = Clipboard.ContainsFileDropList();
+
+			ClipboardTypes = ClipboardType.None;
+			if(!isText && !isRtf && !isImage && !isFile) {
+				return false;
+			}
+
+			if(isText) {
+				Text = Clipboard.GetText(TextDataFormat.Text);
+				ClipboardTypes |= ClipboardType.Text;
+			}
+			if(isRtf) {
+				Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+				ClipboardTypes |= ClipboardType.Rtf;
+			}
+			if(isImage) {
+				Image = Clipboard.GetImage();
+				ClipboardTypes |= ClipboardType.Image;
+			}
+			if(isFile) {
+				var files = Clipboard.GetFileDropList().Cast<string>();
+				Files = files;
+				Text = string.Join(Environment.NewLine, files);
+				ClipboardTypes |=  ClipboardType.Text | ClipboardType.File;
+			}
+
+			return true;
+		}
+
+		public IEnumerable<ClipboardType> GetClipboardTypeList()
+		{
+			Debug.Assert(ClipboardTypes != ClipboardType.None);
+
+			var list = new[] {
+				ClipboardType.Text,
+				ClipboardType.Rtf,
+				ClipboardType.Image,
+				ClipboardType.File,
+			};
+			foreach(var type in list) {
+				if((ClipboardTypes & type) == type) {
+					yield return type;
+				}
+			}
+		}
+
+		public ClipboardType GetSingleClipboardType()
+		{
+			if((ClipboardTypes & ClipboardType.Rtf) == ClipboardType.Rtf) {
+				return ClipboardType.Rtf;
+			}
+			if((ClipboardTypes & ClipboardType.File) == ClipboardType.File) {
+				return ClipboardType.File;
+			}
+			if((ClipboardTypes & ClipboardType.Text) == ClipboardType.Text) {
+				return ClipboardType.Text;
+			}
+			if((ClipboardTypes & ClipboardType.Image) == ClipboardType.Image) {
+				return ClipboardType.Image;
+			}
+
+			Debug.Assert(false, ClipboardTypes.ToString());
+			throw new NotImplementedException();
+		}
 	}
 
 	[Serializable]
@@ -39,18 +124,52 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	{
 		public ClipboardSetting()
 		{
-			Items = new Queue<ClipboardItem>(Literal.clipboardLimit);
+			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit);
+			EnabledApplicationCopy = false;
+			Size = new Size(
+				Screen.PrimaryScreen.Bounds.Width / 3,
+				Screen.PrimaryScreen.Bounds.Height / 3
+			);
+			var screenArea = Screen.PrimaryScreen.WorkingArea;
+			Location = new Point(screenArea.X, screenArea.Height - Size.Height);
+			TextFont = new FontSetting(SystemFonts.DialogFont);
 		}
 
 		/// <summary>
 		/// 標準で使用するデータ形式。
 		/// </summary>
 		public ClipboardType DefaultClipboardType { get; set; }
-
+		/// <summary>
+		/// 本体でのコピー操作でもコピー検知に含めるか。
+		/// </summary>
+		public bool EnabledApplicationCopy { get; set; }
+		/// <summary>
+		/// 表示状態。
+		/// </summary>
+		public bool Visible { get; set; }
+		/// <summary>
+		/// サイズ。
+		/// </summary>
+		public Size Size { get; set; }
+		/// <summary>
+		/// 位置。
+		/// </summary>
+		public Point Location { get; set; }
+		/// <summary>
+		/// 最前面表示。
+		/// </summary>
+		public bool TopMost { get; set; }
+		/// <summary>
+		/// テキストデータのフォント
+		/// </summary>
+		public FontSetting TextFont { get; set; }
 		/// <summary>
 		/// クリップボードデータ
 		/// </summary>
 		[XmlIgnore]
-		public Queue<ClipboardItem> Items { get; set; }
+		public FixedSizedList<ClipboardItem> Items { get; set; }
+
+		[XmlIgnore]
+		public bool DisabledCopy { get; set; }
 	}
 }
