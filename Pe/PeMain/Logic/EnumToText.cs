@@ -147,7 +147,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			var key = "enum/clipboard-type/" + new Dictionary<ClipboardType, string>() {
 				{ ClipboardType.Text,           "text"},
-				{ ClipboardType.RichTextFormat, "rtf"},
+				{ ClipboardType.Rtf, "rtf"},
 				{ ClipboardType.Image,          "image"},
 				{ ClipboardType.File,           "file"},
 			}[value];

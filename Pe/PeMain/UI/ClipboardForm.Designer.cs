@@ -38,7 +38,7 @@
 			this.tabPreview = new System.Windows.Forms.TabControl();
 			this.tabPreview_pageText = new System.Windows.Forms.TabPage();
 			this.viewText = new System.Windows.Forms.TextBox();
-			this.tabPreview_pageRichTextFormat = new System.Windows.Forms.TabPage();
+			this.tabPreview_pageRtf = new System.Windows.Forms.TabPage();
 			this.viewRtf = new System.Windows.Forms.RichTextBox();
 			this.tabPreview_pageImage = new System.Windows.Forms.TabPage();
 			this.panelImage = new System.Windows.Forms.Panel();
@@ -66,7 +66,7 @@
 			this.panelClipboard.SuspendLayout();
 			this.tabPreview.SuspendLayout();
 			this.tabPreview_pageText.SuspendLayout();
-			this.tabPreview_pageRichTextFormat.SuspendLayout();
+			this.tabPreview_pageRtf.SuspendLayout();
 			this.tabPreview_pageImage.SuspendLayout();
 			this.panelImage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.viewImage)).BeginInit();
@@ -167,7 +167,7 @@
 			// 
 			this.tabPreview.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
 			this.tabPreview.Controls.Add(this.tabPreview_pageText);
-			this.tabPreview.Controls.Add(this.tabPreview_pageRichTextFormat);
+			this.tabPreview.Controls.Add(this.tabPreview_pageRtf);
 			this.tabPreview.Controls.Add(this.tabPreview_pageImage);
 			this.tabPreview.Controls.Add(this.tabPreview_pageFile);
 			this.tabPreview.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -198,16 +198,16 @@
 			this.viewText.Size = new System.Drawing.Size(140, 121);
 			this.viewText.TabIndex = 0;
 			// 
-			// tabPreview_pageRichTextFormat
+			// tabPreview_pageRtf
 			// 
-			this.tabPreview_pageRichTextFormat.Controls.Add(this.viewRtf);
-			this.tabPreview_pageRichTextFormat.Location = new System.Drawing.Point(4, 26);
-			this.tabPreview_pageRichTextFormat.Name = "tabPreview_pageRichTextFormat";
-			this.tabPreview_pageRichTextFormat.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageRichTextFormat.Size = new System.Drawing.Size(371, 200);
-			this.tabPreview_pageRichTextFormat.TabIndex = 1;
-			this.tabPreview_pageRichTextFormat.Text = "#ClipboardType.Rtf";
-			this.tabPreview_pageRichTextFormat.UseVisualStyleBackColor = true;
+			this.tabPreview_pageRtf.Controls.Add(this.viewRtf);
+			this.tabPreview_pageRtf.Location = new System.Drawing.Point(4, 27);
+			this.tabPreview_pageRtf.Name = "tabPreview_pageRtf";
+			this.tabPreview_pageRtf.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPreview_pageRtf.Size = new System.Drawing.Size(371, 199);
+			this.tabPreview_pageRtf.TabIndex = 1;
+			this.tabPreview_pageRtf.Text = "#ClipboardType.Rtf";
+			this.tabPreview_pageRtf.UseVisualStyleBackColor = true;
 			// 
 			// viewRtf
 			// 
@@ -220,10 +220,10 @@
 			// tabPreview_pageImage
 			// 
 			this.tabPreview_pageImage.Controls.Add(this.panelImage);
-			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
 			this.tabPreview_pageImage.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageImage.TabIndex = 2;
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
@@ -247,10 +247,10 @@
 			// tabPreview_pageFile
 			// 
 			this.tabPreview_pageFile.Controls.Add(this.viewFile);
-			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
@@ -383,7 +383,7 @@
 			this.tabPreview.ResumeLayout(false);
 			this.tabPreview_pageText.ResumeLayout(false);
 			this.tabPreview_pageText.PerformLayout();
-			this.tabPreview_pageRichTextFormat.ResumeLayout(false);
+			this.tabPreview_pageRtf.ResumeLayout(false);
 			this.tabPreview_pageImage.ResumeLayout(false);
 			this.panelImage.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.viewImage)).EndInit();
@@ -405,7 +405,7 @@
 		private System.Windows.Forms.SplitContainer panelClipboard;
 		private System.Windows.Forms.TabControl tabPreview;
 		private System.Windows.Forms.TabPage tabPreview_pageText;
-		private System.Windows.Forms.TabPage tabPreview_pageRichTextFormat;
+		private System.Windows.Forms.TabPage tabPreview_pageRtf;
 		private System.Windows.Forms.TabPage tabPreview_pageImage;
 		private System.Windows.Forms.TabPage tabPreview_pageFile;
 		private System.Windows.Forms.ToolStripDropDownButton toolClipboard_itemType;

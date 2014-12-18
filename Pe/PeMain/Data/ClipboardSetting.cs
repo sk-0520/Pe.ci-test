@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// <summary>
 	/// 認識可能とするクリップボード形式。
 	/// </summary>
+	[Flags]
 	public enum ClipboardType
 	{
-		None,
-		Text,
-		RichTextFormat,
-		Image,
-		File,
+		None  = 0,
+		Text  = 0x01,
+		Rtf   = 0x02,
+		Image = 0x04,
+		File  = 0x08,
 	}
 
 	public class ClipboradWeight
@@ -33,6 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// </summary>
 	public class ClipboardItem: Item
 	{
+		/*
 		static readonly IDictionary<string, ClipboardType> _map = new Dictionary<string, ClipboardType>() {
 			{ "System.String,UnicodeText", ClipboardType.Text },
 			{ "Text", ClipboardType.Text },
@@ -51,7 +54,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			{ "FileName", ClipboardType.File },
 		};
 
-		public static ClipboardType ToType(string typeName)
+		protected static ClipboardType ToType(string typeName)
 		{
 			ClipboardType type;
 			if(_map.TryGetValue(typeName, out type)) {
@@ -80,6 +83,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			return ToEnabledType(data).Any(t => t != ClipboardType.None);
 		}
+		*/
 
 		public ClipboardItem()
 		{
@@ -87,40 +91,86 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		}
 
 		public DateTime Timestamp { get; set; }
-		public IDataObject Data { get; set; }
 
-		protected IEnumerable<ClipboardType> GetClipboardTypeRawList()
+		public ClipboardType ClipboardTypes { get; set; }
+		public string Text { get; set; }
+		public string Rtf { get; set; }
+		public Image Image { get; set; }
+		public IEnumerable<string> Files { get; set; }
+
+		public bool SetClipboardData()
 		{
-			return ToEnabledType(Data);
+			var isText = Clipboard.ContainsText(TextDataFormat.Text);
+			var isRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+			var isImage = Clipboard.ContainsImage();
+			var isFile = Clipboard.ContainsFileDropList();
+
+			ClipboardTypes = ClipboardType.None;
+			if(!isText && !isRtf && !isImage && !isFile) {
+				return false;
+			}
+			Debug.WriteLine("t = {0} r = {1} i = {2} f = {3}", isText, isRtf, isImage, isFile);
+
+			if(isText) {
+				Text = Clipboard.GetText(TextDataFormat.Text);
+				ClipboardTypes |= ClipboardType.Text;
+			}
+			if(isRtf) {
+				Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+				ClipboardTypes |= ClipboardType.Rtf;
+			}
+			if(isImage) {
+				Image = Clipboard.GetImage();
+				ClipboardTypes |= ClipboardType.Image;
+			}
+			if(isFile) {
+				Files = Clipboard.GetFileDropList().Cast<string>();
+				ClipboardTypes |= ClipboardType.File;
+			}
+			Debug.WriteLine("ClipboardTypes = {0}", ClipboardTypes);
+
+			return true;
 		}
 
 		public IEnumerable<ClipboardType> GetClipboardTypeList()
 		{
-			return GetClipboardTypeRawList().Distinct();
-		}
+			Debug.Assert(ClipboardTypes != ClipboardType.None);
 
-		public IEnumerable<ClipboradWeight> GetClipboardTypeWeight()
-		{
-			return GetClipboardTypeRawList()
-				.GroupBy(t => t)
-				.Select(g => new ClipboradWeight () {
-					ClipboardType = g.Key,
-					Weight = g.Count()
-				})
-			;
+			var list = new[] {
+				ClipboardType.Text,
+				ClipboardType.Rtf,
+				ClipboardType.Image,
+				ClipboardType.File,
+			};
+			foreach(var type in list) {
+				if((ClipboardTypes & type) == type) {
+					yield return type;
+				}
+			}
 		}
 
 		public ClipboardType GetSingleClipboardType()
 		{
-			var weight = GetClipboardTypeWeight();
-			ClipboardType type;
-			if(weight.Any(w => w.ClipboardType == ClipboardType.RichTextFormat)) {
-				// RTFがあればとりあえず強制
-				type = ClipboardType.RichTextFormat;
-			} else {
-				type = weight.OrderByDescending(w => w.Weight).First().ClipboardType;
+			Debug.WriteLine("> {0}", ClipboardTypes);
+			if((ClipboardTypes & ClipboardType.Rtf) == ClipboardType.Rtf) {
+				Debug.WriteLine(">> {0}", ClipboardTypes);
+				return ClipboardType.Rtf;
 			}
-			return type;
+			if((ClipboardTypes & ClipboardType.File) == ClipboardType.File) {
+				Debug.WriteLine(">> {0}", ClipboardTypes);
+				return ClipboardType.File;
+			}
+			if((ClipboardTypes & ClipboardType.Text) == ClipboardType.Text) {
+				Debug.WriteLine(">> {0}", ClipboardTypes);
+				return ClipboardType.Text;
+			}
+			if((ClipboardTypes & ClipboardType.Image) == ClipboardType.Image) {
+				Debug.WriteLine(">> {0}", ClipboardTypes);
+				return ClipboardType.Image;
+			}
+
+			Debug.Assert(false, ClipboardTypes.ToString());
+			throw new NotImplementedException();
 		}
 	}
 

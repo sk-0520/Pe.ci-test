@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeCommand();
 
 			this.tabPreview_pageText.ImageKey = imageText;
-			this.tabPreview_pageRichTextFormat.ImageKey = imageRtf;
+			this.tabPreview_pageRtf.ImageKey = imageRtf;
 			this.tabPreview_pageImage.ImageKey = imageImage;
 			this.tabPreview_pageFile.ImageKey = imageFile;
 
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolClipboard_itemType_itemTemplate.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
-			this.tabPreview_pageRichTextFormat.Text = ClipboardType.RichTextFormat.ToText(CommonData.Language);
+			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
 		}
@@ -203,18 +203,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ChangeCommand(int index)
 		{
 			if(index != -1 && HoverItemIndex != index) {
-				var item = CommonData.MainSetting.Clipboard.Items[index];
+				var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 				var map = new Dictionary<ClipboardType, Control>() {
 					{ ClipboardType.Text, this._commandText },
-					{ ClipboardType.RichTextFormat, this._commandRtf },
+					{ ClipboardType.Rtf, this._commandRtf },
 					{ ClipboardType.Image, this._commandImage },
 					{ ClipboardType.File, this._commandFile },
 				};
+				/*
 				foreach(var control in map.Values.ToArray()) {
 					control.Enabled = false;
 				}
-				foreach(var type in item.GetClipboardTypeList()) {
+				foreach(var key in map.Keys) {
+
 					map[type].Enabled = true;
+				}
+				*/
+				Debug.WriteLine("-{0}-", clipboardItem.ClipboardTypes);
+				foreach(var pair in map.ToArray()) {
+					pair.Value.Enabled = (clipboardItem.ClipboardTypes.HasFlag(pair.Key));
 				}
 			}
 
@@ -233,7 +240,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			var map = new Dictionary<ClipboardType, TabPage>() {
 				{ ClipboardType.Text, this.tabPreview_pageText },
-				{ ClipboardType.RichTextFormat, this.tabPreview_pageRichTextFormat },
+				{ ClipboardType.Rtf, this.tabPreview_pageRtf },
 				{ ClipboardType.Image, this.tabPreview_pageImage },
 				{ ClipboardType.File, this.tabPreview_pageFile },
 			};
@@ -244,12 +251,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				switch(type) {
 					case ClipboardType.Text: 
 						{
-							var text = clipboardItem.Data.GetData(typeof(string));
-							this.viewText.Text = text as string;
+							this.viewText.Text = clipboardItem.Text;
 						}
 						break;
 
-					case ClipboardType.RichTextFormat:
+					case ClipboardType.Rtf:
 						{
 						}
 						break;
@@ -353,12 +359,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var typeList = clipboardItem.GetClipboardTypeList();
 			var list = new[] {
 				new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
-				new { TabPage = this.tabPreview_pageRichTextFormat, ClipboardType = ClipboardType.RichTextFormat },
+				new { TabPage = this.tabPreview_pageRtf, ClipboardType = ClipboardType.Rtf },
 				new { TabPage = this.tabPreview_pageImage, ClipboardType = ClipboardType.Image },
 				new { TabPage = this.tabPreview_pageFile, ClipboardType = ClipboardType.File },
 			};
 			foreach(var item in list) {
-				if(e.TabPage == item.TabPage && typeList.Any(t => t == item.ClipboardType)) {
+				if(e.TabPage == item.TabPage && typeList.Any(t => t.HasFlag(item.ClipboardType))) {
 					return;
 				}
 			}
