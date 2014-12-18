@@ -261,7 +261,29 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 					case ClipboardType.File:
 						{
-							// TODO
+							var imageList = new ImageList();
+							imageList.ColorDepth = ColorDepth.Depth32Bit;
+							imageList.ImageSize = IconScale.Small.ToSize();
+							var listItemList = new List<ListViewItem>(clipboardItem.Files.Count());
+							foreach(var path in clipboardItem.Files) {
+								var key = path.GetHashCode().ToString();
+
+								var icon = IconUtility.Load(path, IconScale.Small, 0);
+								imageList.Images.Add(key, icon);
+
+								var listItem = new ListViewItem();
+								listItem.Text = path;
+								listItem.ImageKey = key;
+
+								listItemList.Add(listItem);
+							}
+							this.viewFile.Items.Clear();
+							this.viewFile.SmallImageList.ToDispose();
+							this.viewFile.SmallImageList = null;
+							this.viewFile.SmallImageList = imageList;
+							this.viewFile.Items.AddRange(listItemList.ToArray());
+
+							this.viewFile.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 						}
 						break;
 

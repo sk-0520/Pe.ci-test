@@ -56,6 +56,7 @@
 			this.toolClipboard_itemClear = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolClipboard_itemEmpty = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelImage = new System.Windows.Forms.Panel();
+			this.columnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -248,21 +249,27 @@
 			// tabPreview_pageFile
 			// 
 			this.tabPreview_pageFile.Controls.Add(this.viewFile);
-			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
 			// 
 			// viewFile
 			// 
-			this.viewFile.Location = new System.Drawing.Point(36, 38);
+			this.viewFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnPath});
+			this.viewFile.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewFile.GridLines = true;
+			this.viewFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.viewFile.Location = new System.Drawing.Point(3, 3);
 			this.viewFile.Name = "viewFile";
-			this.viewFile.Size = new System.Drawing.Size(121, 97);
+			this.viewFile.Size = new System.Drawing.Size(365, 193);
 			this.viewFile.TabIndex = 0;
 			this.viewFile.UseCompatibleStateImageBehavior = false;
+			this.viewFile.View = System.Windows.Forms.View.Details;
 			// 
 			// imageTab
 			// 
@@ -367,6 +374,10 @@
 			this.panelImage.Size = new System.Drawing.Size(365, 193);
 			this.panelImage.TabIndex = 1;
 			// 
+			// columnPath
+			// 
+			this.columnPath.Text = ":clipboard/header/path";
+			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -444,5 +455,6 @@
 		private System.Windows.Forms.ToolStripSplitButton toolClipboard_itemClear;
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemEmpty;
 		private System.Windows.Forms.Panel panelImage;
+		private System.Windows.Forms.ColumnHeader columnPath;
 	}
 }
