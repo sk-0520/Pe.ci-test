@@ -84,5 +84,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			CallListChangedEvent();
 		}
 
+		public new void Clear()
+		{
+			var hasData = Count > 0;
+			if(hasData) {
+				base.Clear();
+				CallListChangedEvent();
+			}
+		}
+
 	}
 }

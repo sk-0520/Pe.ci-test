@@ -61,13 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void InitializeCommand()
 		{
-			var commandButtons = new[] {
-				this._commandText,
-				this._commandRtf,
-				this._commandHtml,
-				this._commandImage,
-				this._commandFile,
-			};
+			var commandButtons = GetButtonList().ToArray();
 			this._commandText.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText;
 			this._commandRtf.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat;
 			this._commandHtml.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml;
@@ -103,6 +97,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview_pageFile.ImageKey = imageFile;
 
 			ChangeSelsectedItem(-1);
+			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
 		}
 
 		void Initialize()
@@ -146,6 +141,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion
 
 		#region Function
+
+		/// <summary>
+		/// ボタン一覧
+		/// </summary>
+		/// <returns></returns>
+		IEnumerable<Button> GetButtonList()
+		{
+			return new[] {
+				this._commandText,
+				this._commandRtf,
+				this._commandHtml,
+				this._commandImage,
+				this._commandFile,
+			};
+		}
 
 		Size GetButtonSize()
 		{
@@ -244,6 +254,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview.Enabled = SelectedItemIndex != -1;
 
 			if(SelectedItemIndex == -1) {
+				this.toolClipboard_itemSave.Enabled = this.listClipboard.SelectedIndex != -1;
 				return;
 			}
 
@@ -254,8 +265,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				{ ClipboardType.Image, this.tabPreview_pageImage },
 				{ ClipboardType.File, this.tabPreview_pageFile },
 			};
+
+			this.tabPreview.SuspendLayout();
+			this.tabPreview.TabPages.Clear();
+
 			var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
-			this.tabPreview.SelectedTab = map[clipboardItem.GetSingleClipboardType()];
 
 			foreach(var type in clipboardItem.GetClipboardTypeList()) {
 				switch(type) {
@@ -354,7 +368,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					default:
 						throw new NotImplementedException();
 				}
+				this.tabPreview.TabPages.Add(map[type]);
 			}
+			this.tabPreview.SelectedTab = map[clipboardItem.GetSingleClipboardType()];
+			this.tabPreview.ResumeLayout();
 		}
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
@@ -399,11 +416,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.listClipboard.SuspendLayout();
 			var selectedIndex = this.listClipboard.SelectedIndex;
 			this.listClipboard.DataSource = null;
+			if(CommonData.MainSetting.Clipboard.Items.Count == 0) {
+				this.viewText.ResetText();
+				this.viewRtf.ResetText();
+				this.viewHtml.DocumentText = null;
+				this.viewImage.Image = null;
+				this.viewFile.Items.Clear();
+			}
 			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
 			if(selectedIndex + 1 < this.listClipboard.Items.Count) {
 				this.listClipboard.SelectedIndex = selectedIndex + 1;
 			}
-			//ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
+			this._panelClipboradItem.Visible = false;
+			this.toolClipboard_itemSave.Enabled = this.listClipboard.SelectedIndex != -1;
+
 			this.listClipboard.ResumeLayout();
 		}
 
@@ -511,6 +537,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
 		{
 			Clipboard.Clear();
+		}
+
+		private void toolClipboard_itemClear_ButtonClick(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Clipboard.Items.Clear();
 		}
 
 	}
