@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ClipboardSetting()
 		{
 			Visible = false;
-			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit);
+			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit.median);
 			EnabledApplicationCopy = false;
 			Size = new Size(
 				Screen.PrimaryScreen.Bounds.Width / 3,

@@ -96,6 +96,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 			TimeSpan.FromMilliseconds(250),
 			TimeSpan.FromSeconds(1)
 		);
+		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(4, 128, 1024);
 
 
 		#region NOTE
@@ -160,11 +161,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 #if DEBUG
 		public const int backupCount = 3;
 		public const int logListLimit = 20;
-		public const int clipboardLimit = 8;
 #else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
-		public const int clipboardLimit = 1024;
 #endif
 
 

@@ -31,7 +31,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string imageImage = "image_image";
 		const string imageFile = "image_file";
 
-		#endregion
+		#endregion ////////////////////////////////////////
 
 		#region Variable
 
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		Button _commandImage = new Button();
 		Button _commandFile = new Button();
 
-		#endregion
+		#endregion ////////////////////////////////////////
 
 		public ClipboardForm()
 		{
@@ -57,10 +57,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		int HoverItemIndex { get; set; }
 		int SelectedItemIndex { get; set; }
 
-		#endregion
+		#endregion ////////////////////////////////////////
 
 		#region Initialize
-		
+
 		void InitializeCommand()
 		{
 			var commandButtons = GetButtonList().ToArray();
@@ -114,7 +114,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeUI();
 		}
 
-		#endregion
+		#endregion ////////////////////////////////////////
 
 		#region Language
 
@@ -139,8 +139,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
 
 		}
-		
-		#endregion
+
+		#endregion ////////////////////////////////////////
 
 		#region Function
 
@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ChangeCommand(int index)
 		{
 			//if((index != -1 && HoverItemIndex != index) || (index != -1 && HoverItemIndex == -1)) {
-			if((index != -1 && HoverItemIndex != index)) {
+			if((index > -1 && HoverItemIndex != index)) {
 				var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 				var map = new Dictionary<ClipboardType, Control>() {
 					{ ClipboardType.Text, this._commandText },
@@ -476,6 +476,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var item = CommonData.MainSetting.Clipboard.Items[e.Index];
 
 				e.DrawBackground();
+
+				var map = new Dictionary<ClipboardType, string>() {
+					{ ClipboardType.Text, imageText},
+					{ ClipboardType.Rtf, imageRtf},
+					{ ClipboardType.Html, imageHtml},
+					{ ClipboardType.Image, imageImage},
+					{ ClipboardType.File, imageFile},
+				};
+				var image = this.imageTab.Images[map[item.GetSingleClipboardType()]];
+
+				var drawArea = new Rectangle(e.Bounds.X + this.listClipboard.Margin.Left, e.Bounds.Bottom - image.Height - +this.listClipboard.Margin.Bottom - 1, image.Width, image.Height);
+				
+				e.Graphics.DrawImage(image, drawArea);
+				
 				using(var sf = new StringFormat())
 				using(var brush = new SolidBrush(e.ForeColor)) {
 					sf.Alignment = StringAlignment.Near;
@@ -484,6 +498,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					sf.FormatFlags = StringFormatFlags.NoWrap;
 					e.Graphics.DrawString(item.Name, Font, brush, e.Bounds, sf);
 
+					sf.Alignment = StringAlignment.Far;
 					sf.LineAlignment = StringAlignment.Far;
 					e.Graphics.DrawString(item.Timestamp.ToString(), SystemFonts.SmallCaptionFont, brush, e.Bounds, sf);
 				}

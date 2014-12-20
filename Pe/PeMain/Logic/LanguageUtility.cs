@@ -68,6 +68,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return viewText;
 		}
 
+		static string ClipboardTypeToDisplayText(Language language, ClipboardType clipboardType)
+		{
+			return string.Format("<{0}>", clipboardType.ToText(language));
+		}
 		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem)
 		{
 			var type = clipboardItem.GetSingleClipboardType();
@@ -87,7 +91,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 						;
 
 						if(string.IsNullOrWhiteSpace(text)) {
-							result = type.ToText(language);
+							result = ClipboardTypeToDisplayText(language, type);
 						} else {
 							result = text;
 						}
@@ -106,7 +110,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 							;
 
 							if(string.IsNullOrWhiteSpace(text)) {
-								result = type.ToText(language);
+								result = ClipboardTypeToDisplayText(language, type);
 							} else {
 								result = text;
 							}
@@ -137,7 +141,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 						}
 
 						if(!converted || string.IsNullOrWhiteSpace(text)) {
-							result = type.ToText(language);
+							result = ClipboardTypeToDisplayText(language, type);
 						} else {
 							result = text;
 						}
@@ -147,7 +151,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				case ClipboardType.Image:
 					{
 						var map = new Dictionary<string,string>() {
-							{ AppLanguageName.imageType, type.ToText(language) },
+							{ AppLanguageName.imageType, ClipboardTypeToDisplayText(language, type) },
 							{ AppLanguageName.imageWidth, clipboardItem.Image.Width.ToString() },
 							{ AppLanguageName.imageHeight, clipboardItem.Image.Height.ToString() },
 						};
@@ -159,7 +163,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				case ClipboardType.File:
 					{
 						var map = new Dictionary<string, string>() {
-							{ AppLanguageName.fileType, type.ToText(language) },
+							{ AppLanguageName.fileType, ClipboardTypeToDisplayText(language, type) },
 							{ AppLanguageName.fileCount, clipboardItem.Files.Count().ToString() },
 						};
 
