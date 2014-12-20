@@ -28,8 +28,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				// The InitializeComponent() call is required for Windows Forms designer support.
 				//
 				InitializeComponent();
-				
+
 				this._parent = parent;
+				ClipboardRegisted = false;
 			}
 		}
 	}

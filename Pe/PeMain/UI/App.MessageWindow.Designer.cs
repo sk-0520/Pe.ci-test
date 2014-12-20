@@ -29,7 +29,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						components.Dispose();
 					}
 				}
-				NativeMethods.ChangeClipboardChain(Handle, NextWndHandle);
+				//NativeMethods.ChangeClipboardChain(Handle, NextWndHandle);
+				NativeMethods.RemoveClipboardFormatListener(Handle);
 				base.Dispose(disposing);
 			}
 			

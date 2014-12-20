@@ -34,6 +34,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_DWMCOMPOSITIONCHANGED = 0x031e,
 		WM_DRAWCLIPBOARD = 0x0308,
 		WM_CHANGECBCHAIN = 0x030d,
+		WM_CLIPBOARDUPDATE = 0x031d,
 	}
 	
 	public enum WS_EX
@@ -1740,6 +1741,11 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[return: MarshalAs(UnmanagedType.Bool)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool AddClipboardFormatListener(IntPtr hWnd);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
 	}
 
 

@@ -38,7 +38,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							CommonData.RootSender.ReceiveDeviceChanged(changeDevice);
 						}
 						break;
-
+						/*
 					case (int)WM.WM_CHANGECBCHAIN: 
 						{
 							if(m.WParam == NextWndHandle) {
@@ -48,7 +48,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							}
 						}
 						break;
-
+						
 					case (int)WM.WM_DRAWCLIPBOARD: 
 						{
 							//if(CommonData.RootSender.EnabledClipboard) {
@@ -59,7 +59,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							}
 						}
 						break;
-						
+						*/
+					case (int)WM.WM_CLIPBOARDUPDATE: 
+						{
+							CommonData.RootSender.ChangeClipboard();
+						}
+						break;
+
 					default:
 						break;
 				}

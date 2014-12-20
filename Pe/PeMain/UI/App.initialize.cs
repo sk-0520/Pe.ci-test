@@ -639,6 +639,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this._clipboardWindow = new ClipboardForm();
 			this._clipboardWindow.SetCommonData(this._commonData);
+			ChangeClipboard();
 		}
 
 		

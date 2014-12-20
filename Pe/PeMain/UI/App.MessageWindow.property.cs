@@ -21,7 +21,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			CommonData CommonData { get; set; }
 			public ILogger StartupLogger { get; set; }
-			IntPtr NextWndHandle { get; set; }
+			//IntPtr NextWndHandle { get; set; }
+			bool ClipboardRegisted { get; set; }
 		}
 	}
 }
