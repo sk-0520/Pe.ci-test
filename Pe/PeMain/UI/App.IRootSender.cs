@@ -90,7 +90,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 
 			var seq = NativeMethods.GetClipboardSequenceNumber();
-			Debug.WriteLine("{0} -> {1} - {2}", this._commonData.MainSetting.Clipboard.DisabledCopy, seq, _clipboardPrevSeq);
+			//Debug.WriteLine("{0} -> {1} - {2}", this._commonData.MainSetting.Clipboard.DisabledCopy, seq, _clipboardPrevSeq);
 			if(this._commonData.MainSetting.Clipboard.DisabledCopy || seq == this._clipboardPrevSeq) {
 				return;
 			}

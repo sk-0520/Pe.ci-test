@@ -17,6 +17,7 @@ using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.UI;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -78,8 +79,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			this._panelClipboradItem.Padding = Padding.Empty;
 			this._panelClipboradItem.Margin = Padding.Empty;
-			this._panelClipboradItem.BackColor = Color.Transparent;
-			this._panelClipboradItem.BackColor = Color.FromArgb(25, Color.Black);
+			//this._panelClipboradItem.BackColor = Color.Transparent;
+			//this._panelClipboradItem.BackColor = Color.FromArgb(50, Color.Black);
 			this._panelClipboradItem.Size = Size.Empty;
 			this._panelClipboradItem.AutoSize = true;
 			this._panelClipboradItem.Controls.AddRange(commandButtons);
@@ -130,7 +131,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			this.columnName.SetLanguage(CommonData.Language);
 			this.columnPath.SetLanguage(CommonData.Language);
-			//clipboard/header/name
 
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
@@ -466,7 +466,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			this._panelClipboradItem.Visible = false;
 			this.toolClipboard_itemSave.Enabled = this.listClipboard.SelectedIndex != -1;
-
+			ChangeCommand(-1);
 			this.listClipboard.ResumeLayout();
 		}
 
@@ -483,6 +483,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					sf.Trimming = StringTrimming.EllipsisCharacter;
 					sf.FormatFlags = StringFormatFlags.NoWrap;
 					e.Graphics.DrawString(item.Name, Font, brush, e.Bounds, sf);
+
+					sf.LineAlignment = StringAlignment.Far;
+					e.Graphics.DrawString(item.Timestamp.ToString(), SystemFonts.SmallCaptionFont, brush, e.Bounds, sf);
+				}
+				using(var pen = new Pen(Color.FromArgb(128, e.ForeColor))) {
+					var bottom = e.Bounds.Bottom - 1;
+					pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+					e.Graphics.DrawLine(pen, e.Bounds.X, bottom, e.Bounds.Right - 1, bottom);
 				}
 				e.DrawFocusRectangle();
 			}
@@ -530,7 +538,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void listClipboard_MouseMove(object sender, MouseEventArgs e)
 		{
 			var index = this.listClipboard.IndexFromPoint(e.Location) - this.listClipboard.TopIndex;
-			var top = this.listClipboard.ItemHeight * (index + 1) - GetButtonSize().Height;
+			var top = this.listClipboard.ItemHeight * (index + 1) - GetButtonSize().Height - 1;
 			if(top != this._panelClipboradItem.Top) {
 				this._panelClipboradItem.Top = top;
 			}

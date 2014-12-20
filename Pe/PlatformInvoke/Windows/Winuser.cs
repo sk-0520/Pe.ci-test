@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 	{
 		WS_EX_NOACTIVATE = 0x8000000,
 		WS_EX_TOOLWINDOW = 0x0000080,
+		WS_EX_TRANSPARENT = 0x00000020,
 	}
 	
 	public enum CS

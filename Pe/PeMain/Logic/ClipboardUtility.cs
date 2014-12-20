@@ -18,9 +18,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 	{
 		static void Copy(Action action, CommonData commonData)
 		{
-			var prevCopy = false;
+			//var prevCopy = false;
 			if(commonData != null) {
-				prevCopy = commonData.MainSetting.Clipboard.DisabledCopy;
+				//prevCopy = commonData.MainSetting.Clipboard.DisabledCopy;
 				commonData.MainSetting.Clipboard.DisabledCopy = !commonData.MainSetting.Clipboard.EnabledApplicationCopy;
 				//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 			}
@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			Task.Factory.StartNew(() => {
 				Thread.Sleep(Literal.clipboardSleepTime);
 				if(commonData != null) {
-					commonData.MainSetting.Clipboard.DisabledCopy = prevCopy;
+					commonData.MainSetting.Clipboard.DisabledCopy = !commonData.MainSetting.Clipboard.DisabledCopy;
 					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 				}
 			});
