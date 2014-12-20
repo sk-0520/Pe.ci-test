@@ -227,7 +227,7 @@
 			this.viewRtf.Location = new System.Drawing.Point(3, 3);
 			this.viewRtf.Name = "viewRtf";
 			this.viewRtf.ReadOnly = true;
-			this.viewRtf.Size = new System.Drawing.Size(365, 193);
+			this.viewRtf.Size = new System.Drawing.Size(365, 194);
 			this.viewRtf.TabIndex = 0;
 			this.viewRtf.Text = "";
 			this.viewRtf.WordWrap = false;
@@ -318,7 +318,7 @@
 			this.viewHtml.Location = new System.Drawing.Point(0, 0);
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
-			this.viewHtml.Size = new System.Drawing.Size(371, 199);
+			this.viewHtml.Size = new System.Drawing.Size(371, 200);
 			this.viewHtml.TabIndex = 0;
 			// 
 			// toolClipboard
@@ -360,6 +360,7 @@
 			this.toolClipboard_itemSave.Name = "toolClipboard_itemSave";
 			this.toolClipboard_itemSave.Size = new System.Drawing.Size(182, 22);
 			this.toolClipboard_itemSave.Text = ":clipboard/command/save";
+			this.toolClipboard_itemSave.Click += new System.EventHandler(this.toolClipboard_itemSave_Click);
 			// 
 			// toolClipboard_itemClear
 			// 
@@ -394,6 +395,7 @@
 			this.toolClipboard_itemType.Name = "toolClipboard_itemType";
 			this.toolClipboard_itemType.Size = new System.Drawing.Size(166, 22);
 			this.toolClipboard_itemType.Text = ":clipboard/select/type";
+			this.toolClipboard_itemType.Visible = false;
 			// 
 			// toolClipboard_itemType_itemClipboard
 			// 
@@ -408,7 +410,6 @@
 			this.toolClipboard_itemType_itemTemplate.Name = "toolClipboard_itemType_itemTemplate";
 			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(224, 22);
 			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
-			this.toolClipboard_itemType_itemTemplate.Visible = false;
 			// 
 			// ClipboardForm
 			// 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -404,6 +405,64 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			CopyItem(clipboardItem, clipboardItem.GetSingleClipboardType());
 		}
 
+		bool SaveItem(string path, ClipboardItem clipboardItem, ClipboardType type)
+		{
+			Debug.Assert(type != ClipboardType.File);
+
+			var map = new Dictionary<ClipboardType, Action>() {
+				{ ClipboardType.Text, () => File.WriteAllText(path, clipboardItem.Text) },
+				{ ClipboardType.Rtf, () => File.WriteAllText(path, clipboardItem.Rtf) },
+				{ ClipboardType.Html, () => File.WriteAllText(path, clipboardItem.Html) },
+				{ ClipboardType.Image, () => clipboardItem.Image.Save(path, ImageFormat.Png) },
+			};
+
+			try {
+				map[type]();
+				return true;
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Error, LanguageUtility.ClipboardItemToDisplayText(CommonData.Language, clipboardItem), ex);
+				return false;
+			}
+		}
+
+		void OpenSaveDialog(ClipboardItem clipboardItem)
+		{
+			var filter = new DialogFilter();
+			var map = new[] {
+				new { ClipboardType = ClipboardType.Text, Wildcard = new [] {"*.txt"} },
+				new { ClipboardType = ClipboardType.Rtf, Wildcard = new [] {"*.rtf"} },
+				new { ClipboardType = ClipboardType.Html, Wildcard = new [] {"*.html"} },
+				new { ClipboardType = ClipboardType.Image, Wildcard = new [] {"*.png"} },
+			}.Select(v => new {
+				ClipboardType = v.ClipboardType,
+				DisplayText = v.ClipboardType.ToText(CommonData.Language),
+				Wildcard = v.Wildcard,
+			}).ToDictionary(k => k.ClipboardType, v => new DialogFilterValueItem<ClipboardType>(v.ClipboardType, v.DisplayText, v.Wildcard));
+
+			var defType = clipboardItem.GetSingleClipboardType();
+			var defIndex = 0;
+			var tempIndex = 0;
+			foreach(var type in clipboardItem.GetClipboardTypeList().Where(t => t != ClipboardType.File)) {
+				filter.Items.Add(map[type]);
+				tempIndex += 1;
+				if(defType == type) {
+					defIndex = tempIndex;
+				}
+			}
+
+			using(var dialog = new SaveFileDialog()) {
+				filter.Attachment(dialog);
+				dialog.FileName = clipboardItem.Timestamp.ToString(Literal.timestampFileName);
+				dialog.FilterIndex = defIndex;
+				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+					var item = (DialogFilterValueItem<ClipboardType>)filter.Items[dialog.FilterIndex - 1];
+					var path = dialog.FileName;
+					var type = item.Value;
+					SaveItem(path, clipboardItem, type);
+				}
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
@@ -542,6 +601,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void toolClipboard_itemClear_ButtonClick(object sender, EventArgs e)
 		{
 			CommonData.MainSetting.Clipboard.Items.Clear();
+		}
+
+		private void toolClipboard_itemSave_Click(object sender, EventArgs e)
+		{
+			if(SelectedItemIndex != -1) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
+				OpenSaveDialog(clipboardItem);
+			}
+
 		}
 
 	}
