@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		Listener _listener;
 
+		DateTime _clipboardPrevTime = DateTime.MinValue;
+
 		HashSet<Form> _otherWindows = new HashSet<Form>();
 	}
 }

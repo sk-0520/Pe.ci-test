@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.PeMain.Logic;
+using System.Collections.Generic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -90,9 +91,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				return;
 			}
 
+			var nowTime = DateTime.Now;
+			if(nowTime - this._clipboardPrevTime <= Literal.clipboardWait.median) {
+				var map = new Dictionary<string,string>() {
+					{ AppLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
+				};
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
+				return;
+			}
+
 			var clipboardItem = new ClipboardItem();
 			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData()) {
-
+				this._clipboardPrevTime = nowTime;
 				var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem);
 				clipboardItem.Name = displayText;
 

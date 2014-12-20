@@ -471,8 +471,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var item = CommonData.MainSetting.Clipboard.Items[e.Index];
 
 				e.DrawBackground();
+				using(var sf = new StringFormat())
 				using(var brush = new SolidBrush(e.ForeColor)) {
-					e.Graphics.DrawString(item.Name, Font, brush, e.Bounds.Location);
+					sf.Alignment = StringAlignment.Near;
+					sf.LineAlignment = StringAlignment.Near;
+					sf.Trimming = StringTrimming.EllipsisCharacter;
+					sf.FormatFlags = StringFormatFlags.NoWrap;
+					e.Graphics.DrawString(item.Name, Font, brush, e.Bounds, sf);
 				}
 				e.DrawFocusRectangle();
 			}
@@ -480,8 +485,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
-			ChangeSelsectedItem(this.listClipboard.SelectedIndex);
+			if(this.listClipboard.SelectedIndex != SelectedItemIndex) {
+				ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
+				ChangeSelsectedItem(this.listClipboard.SelectedIndex);
+			}
 		}
 
 		private void ClipboardForm_FormClosing(object sender, FormClosingEventArgs e)

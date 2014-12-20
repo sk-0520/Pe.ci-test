@@ -171,7 +171,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 					throw new NotImplementedException();
 			}
 
-			return result;
+			return result.SplitLines().FirstOrDefault();
 		}
 
 		

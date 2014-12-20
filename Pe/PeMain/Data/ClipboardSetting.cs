@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Library.Utility;
 
@@ -49,6 +50,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public string Html { get; set; }
 		public Image Image { get; set; }
 		public IEnumerable<string> Files { get; set; }
+
 
 		public bool SetClipboardData()
 		{
@@ -191,5 +193,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public bool DisabledCopy { get; set; }
+		///// <summary>
+		///// 
+		///// </summary>
+		//[XmlIgnore]
+		//public TimeSpan WaitTime { get; set; }
+		//[XmlElement("WaitTime", DataType = "duration")]
+		//public string _WaitTime
+		//{
+		//	get { return XmlConvert.ToString(WaitTime); }
+		//	set
+		//	{
+		//		if(!string.IsNullOrWhiteSpace(value)) {
+		//			WaitTime = XmlConvert.ToTimeSpan(value);
+		//		}
+		//	}
+		//}
 	}
 }

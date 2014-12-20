@@ -89,7 +89,14 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
 		
 		public static readonly TripleRange<TimeSpan> commandHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(20));
-		
+
+		public static readonly TripleRange<TimeSpan> clipboardWait = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(50),
+			TimeSpan.FromMilliseconds(250),
+			TimeSpan.FromSeconds(1)
+		);
+
+
 		#region NOTE
 		
 		/// <summary>
@@ -477,6 +484,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string imageHeight = "HEIGHT";
 		public const string fileType = "TYPE";
 		public const string fileCount = "COUNT";
+
+		public const string clipboardPrevTime = "TIME";
 	}
 	
 	public static class DataTables

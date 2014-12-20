@@ -243,7 +243,9 @@
 		<Word Name="clipboard/header/path"     Text="パス" />
 		<Word Name="clipboard/html/error"      Text="HTML形式クリップボードの解析失敗" />
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] @[HEIGHT]" />
-		<Word Name="clipboard/title/file"     Text="@[TYPE]: @[COUNT]" />
+		<Word Name="clipboard/title/file"      Text="@[TYPE]: @[COUNT]" />
+		<Word Name="clipboard/wait/title"      Text="クリップボード待ち時間中のため無視" />
+		<Word Name="clipboard/wait/message"    Text="前回取得時間: @[TIME]" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャ" />
