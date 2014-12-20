@@ -51,9 +51,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 					case (int)WM.WM_DRAWCLIPBOARD: 
 						{
-							if(CommonData.RootSender.EnabledClipboard) {
-								CommonData.RootSender.ChangeClipboard();
-							}
+							//if(CommonData.RootSender.EnabledClipboard) {
+							CommonData.RootSender.ChangeClipboard();
+							//}
 							if(NextWndHandle != null) {
 								NativeMethods.SendMessage(NextWndHandle, (WM)m.Msg, m.WParam, m.LParam);
 							}

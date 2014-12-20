@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -24,6 +25,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		const string imageText = "image_text";
 		const string imageRtf = "image_rtf";
+		const string imageHtml = "image_html";
 		const string imageImage = "image_image";
 		const string imageFile = "image_file";
 
@@ -34,6 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		FlowLayoutPanel _panelClipboradItem = new FlowLayoutPanel();
 		Button _commandText = new Button();
 		Button _commandRtf = new Button();
+		Button _commandHtml = new Button();
 		Button _commandImage = new Button();
 		Button _commandFile = new Button();
 
@@ -61,11 +64,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var commandButtons = new[] {
 				this._commandText,
 				this._commandRtf,
+				this._commandHtml,
 				this._commandImage,
 				this._commandFile,
 			};
 			this._commandText.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText;
 			this._commandRtf.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat;
+			this._commandHtml.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml;
 			this._commandImage.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage;
 			this._commandFile.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile;
 			var buttonSize = GetButtonSize();
@@ -93,6 +98,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			this.tabPreview_pageText.ImageKey = imageText;
 			this.tabPreview_pageRtf.ImageKey = imageRtf;
+			this.tabPreview_pageHtml.ImageKey = imageHtml;
 			this.tabPreview_pageImage.ImageKey = imageImage;
 			this.tabPreview_pageFile.ImageKey = imageFile;
 
@@ -103,6 +109,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.imageTab.Images.Add(imageText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText);
 			this.imageTab.Images.Add(imageRtf, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat);
+			this.imageTab.Images.Add(imageHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml);
 			this.imageTab.Images.Add(imageImage, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage);
 			this.imageTab.Images.Add(imageFile, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile);
 
@@ -130,6 +137,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
+			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
 
@@ -217,6 +225,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var map = new Dictionary<ClipboardType, Control>() {
 					{ ClipboardType.Text, this._commandText },
 					{ ClipboardType.Rtf, this._commandRtf },
+					{ ClipboardType.Html, this._commandHtml },
 					{ ClipboardType.Image, this._commandImage },
 					{ ClipboardType.File, this._commandFile },
 				};
@@ -241,6 +250,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var map = new Dictionary<ClipboardType, TabPage>() {
 				{ ClipboardType.Text, this.tabPreview_pageText },
 				{ ClipboardType.Rtf, this.tabPreview_pageRtf },
+				{ ClipboardType.Html, this.tabPreview_pageHtml},
 				{ ClipboardType.Image, this.tabPreview_pageImage },
 				{ ClipboardType.File, this.tabPreview_pageFile },
 			};
@@ -258,6 +268,47 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					case ClipboardType.Rtf:
 						{
 							this.viewRtf.Rtf = clipboardItem.Rtf;
+						}
+						break;
+
+					case ClipboardType.Html:
+						{
+							Func<string, string, int> getIndex = (pattern, line) => {
+								var reg = new Regex(pattern, RegexOptions.IgnoreCase);
+								var match = reg.Match(line);
+								if(match.Success && match.Groups.Count == 2) {
+									var data = match.Groups[1].Value;
+									var result = -1;
+									if(int.TryParse(data, out result)) {
+										return result;
+									}
+								}
+
+								return -1;
+							};
+
+							var lines = clipboardItem.Html.SplitLines();
+							var head = -1;
+							var tail = -1;
+
+							foreach(var line in lines) {
+								if(head != -1 && tail != -1) {
+									break;
+								}
+								if(head == -1) {
+									head = getIndex("StartHTML:([0-9]+)", line);
+								}
+								if(tail == -1) {
+									tail = getIndex("EndHTML:([0-9]+)", line);
+								}
+							}
+							if(head != -1 && tail != -1) {
+								var html = new string(clipboardItem.Html.Take(tail).Skip(head).ToArray());
+								this.viewHtml.DocumentText = html;
+							} else {
+								var elements = string.Format("<p style='font-weight: bold; color: #f00; background: #fff'>{0}</p><hr />", CommonData.Language["clipboard/html/error"]);
+								this.viewHtml.DocumentText = elements + clipboardItem.Html;
+							}
 						}
 						break;
 
@@ -314,6 +365,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				} },
 				{ ClipboardType.Rtf, (setting) => {
 					ClipboardUtility.CopyRtf(clipboardItem.Rtf, setting);
+				} },
+				{ ClipboardType.Html, (setting) => {
+					ClipboardUtility.CopyHtml(clipboardItem.Html, setting);
 				} },
 				{ ClipboardType.Image, (setting) => {
 					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
@@ -417,6 +471,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var list = new[] {
 				new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
 				new { TabPage = this.tabPreview_pageRtf, ClipboardType = ClipboardType.Rtf },
+				new { TabPage = this.tabPreview_pageHtml, ClipboardType = ClipboardType.Html },
 				new { TabPage = this.tabPreview_pageImage, ClipboardType = ClipboardType.Image },
 				new { TabPage = this.tabPreview_pageFile, ClipboardType = ClipboardType.File },
 			};
@@ -438,6 +493,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var map = new Dictionary<object, ClipboardType>() {
 				{ this._commandText, ClipboardType.Text },
 				{ this._commandRtf, ClipboardType.Rtf },
+				{ this._commandHtml, ClipboardType.Html },
 				{ this._commandImage, ClipboardType.Image },
 				{ this._commandFile, ClipboardType.File },
 			};
@@ -450,6 +506,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(index != -1) {
 				CopySingleItem(index);
 			}
+		}
+
+		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
+		{
+			Clipboard.Clear();
 		}
 
 	}

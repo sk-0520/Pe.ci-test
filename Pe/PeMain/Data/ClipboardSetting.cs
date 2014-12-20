@@ -20,8 +20,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		None  = 0,
 		Text  = 0x01,
 		Rtf   = 0x02,
-		Image = 0x04,
-		File  = 0x08,
+		Html  = 0x04,
+		Image = 0x08,
+		File  = 0x10,
 	}
 
 	public class ClipboradWeight
@@ -45,6 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ClipboardType ClipboardTypes { get; set; }
 		public string Text { get; set; }
 		public string Rtf { get; set; }
+		public string Html { get; set; }
 		public Image Image { get; set; }
 		public IEnumerable<string> Files { get; set; }
 
@@ -52,11 +54,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			var isText = Clipboard.ContainsText(TextDataFormat.Text);
 			var isRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
+			var isHtml = Clipboard.ContainsText(TextDataFormat.Html);
 			var isImage = Clipboard.ContainsImage();
 			var isFile = Clipboard.ContainsFileDropList();
 
 			ClipboardTypes = ClipboardType.None;
-			if(!isText && !isRtf && !isImage && !isFile) {
+			if(!isText && !isRtf && !isHtml && !isImage && !isFile) {
 				return false;
 			}
 
@@ -67,6 +70,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			if(isRtf) {
 				Rtf = Clipboard.GetText(TextDataFormat.Rtf);
 				ClipboardTypes |= ClipboardType.Rtf;
+			}
+			if(isHtml) {
+				Html = Clipboard.GetText(TextDataFormat.Html);
+				ClipboardTypes |= ClipboardType.Html;
 			}
 			if(isImage) {
 				Image = Clipboard.GetImage();
@@ -89,6 +96,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var list = new[] {
 				ClipboardType.Text,
 				ClipboardType.Rtf,
+				ClipboardType.Html,
 				ClipboardType.Image,
 				ClipboardType.File,
 			};
@@ -101,6 +109,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public ClipboardType GetSingleClipboardType()
 		{
+			if((ClipboardTypes & ClipboardType.Html) == ClipboardType.Html) {
+				return ClipboardType.Html;
+			}
 			if((ClipboardTypes & ClipboardType.Rtf) == ClipboardType.Rtf) {
 				return ClipboardType.Rtf;
 			}
@@ -133,7 +144,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var screenArea = Screen.PrimaryScreen.WorkingArea;
 			Location = new Point(screenArea.X, screenArea.Height - Size.Height);
 			TextFont = new FontSetting(SystemFonts.DialogFont);
+
+			Enabled = true;
 		}
+
+		/// <summary>
+		/// クリップボードユーティリティを使用するか。
+		/// </summary>
+		public bool Enabled { get; set; }
 
 		/// <summary>
 		/// 標準で使用するデータ形式。
@@ -168,7 +186,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public FixedSizedList<ClipboardItem> Items { get; set; }
-
+		/// <summary>
+		/// コピーを検知を無視する
+		/// </summary>
 		[XmlIgnore]
 		public bool DisabledCopy { get; set; }
 	}

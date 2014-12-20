@@ -163,6 +163,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_ClipboardHtml {
+            get {
+                object obj = ResourceManager.GetObject("Image_ClipboardHtml", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_ClipboardImage {
             get {
                 object obj = ResourceManager.GetObject("Image_ClipboardImage", resourceCulture);

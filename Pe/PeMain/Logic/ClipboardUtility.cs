@@ -34,7 +34,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Rtf), clipboardSetting);
 		}
-
+		public static void CopyHtml(string rtf, ClipboardSetting clipboardSetting)
+		{
+			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Html), clipboardSetting);
+		}
 		public static void CopyImage(Image image, ClipboardSetting clipboardSetting)
 		{
 			Copy(() => Clipboard.SetImage(image), clipboardSetting);

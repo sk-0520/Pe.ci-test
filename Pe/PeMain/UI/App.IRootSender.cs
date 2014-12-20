@@ -81,10 +81,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
-		public bool EnabledClipboard { get; set; }
+		//public bool EnabledClipboard { get; set; }
 
 		public void ChangeClipboard()
 		{
+			if(!this._commonData.MainSetting.Clipboard.Enabled) {
+				return;
+			}
+
 			var clipboardItem = new ClipboardItem();
 			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData()) {
 				this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);

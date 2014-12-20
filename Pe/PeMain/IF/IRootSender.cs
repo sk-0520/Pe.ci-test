@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 		
 		void ReceiveDeviceChanged(ChangeDevice changeDevice);
 
-		bool EnabledClipboard { get; set; }
+		//bool EnabledClipboard { get; set; }
 		void ChangeClipboard();
 	}
 }

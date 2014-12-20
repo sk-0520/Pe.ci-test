@@ -745,7 +745,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			AttachmentSystemEvent();
 
 			InitializeListener(commandLine, logger);
-			this._commonData.RootSender.EnabledClipboard = true;
+			//this._commonData.RootSender.EnabledClipboard = true;
 
 			Debug.Assert(Initialized);
 			this._logForm.PutsList(logger.GetList(), false);

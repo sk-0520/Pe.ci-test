@@ -146,10 +146,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		public static string ToText(this ClipboardType value, Language language)
 		{
 			var key = "enum/clipboard-type/" + new Dictionary<ClipboardType, string>() {
-				{ ClipboardType.Text,           "text"},
-				{ ClipboardType.Rtf, "rtf"},
-				{ ClipboardType.Image,          "image"},
-				{ ClipboardType.File,           "file"},
+				{ ClipboardType.Text,  "text"},
+				{ ClipboardType.Rtf,   "rtf"},
+				{ ClipboardType.Html,  "html"},
+				{ ClipboardType.Image, "image"},
+				{ ClipboardType.File,  "file"},
 			}[value];
 
 			return language[key];

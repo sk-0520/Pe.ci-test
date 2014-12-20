@@ -241,6 +241,7 @@
 		<Word Name="clipboard/type/clipboard"  Text="クリップボード" />
 		<Word Name="clipboard/header/name"     Text="名前" />
 		<Word Name="clipboard/header/path"     Text="パス" />
+		<Word Name="clipboard/html/error"      Text="HTML形式クリップボードの解析失敗" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャ" />
@@ -417,6 +418,7 @@
 		<Word Name="enum/clipboard-type"        Text="クリップボードの種類" />
 		<Word Name="enum/clipboard-type/text"   Text="文字列" />
 		<Word Name="enum/clipboard-type/rtf"    Text="書式付文字列" />
+		<Word Name="enum/clipboard-type/html"   Text="HTML" />
 		<Word Name="enum/clipboard-type/image"  Text="画像" />
 		<Word Name="enum/clipboard-type/file"   Text="ファイル" />
 		
