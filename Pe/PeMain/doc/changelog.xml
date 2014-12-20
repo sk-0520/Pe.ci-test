@@ -35,7 +35,9 @@
 			<li rev="469eadb5d031563d83fac904cadeee2092fc5b51">#115: ノートのタイトル入力を直観的に</li>
 			<li rev="1cfae55dae07910d523ebb35510f325a0cc99ccd">#117: ツールバーのツールチップを消す</li>
 			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d">#114: ウィンドウを親依存でなく独立して保持する, #113も解決</li>
+			<li rev="">#113: 指定して実行ダイアログをモードレスにする</li>
 			<li rev="955cefea4f81c0c8127be3dde423ad900ba92e01">#120: ノートの削除を非拡張コンテキストメニューでも表示する</li>
+			<li rev="1bbe16ee46986aba7663e66e1e59ead95196081a">#119: クリップボード監視</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
