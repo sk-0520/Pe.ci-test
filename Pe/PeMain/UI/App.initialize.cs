@@ -464,6 +464,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// クリップボード
 			itemClipboard.Name = menuNameSystemEnvClipboard;
+			itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
 			itemClipboard.Click += (object sender, EventArgs e) => {
 				this._commonData.MainSetting.Clipboard.Visible = !this._commonData.MainSetting.Clipboard.Visible;
 				this._clipboardWindow.Visible = this._commonData.MainSetting.Clipboard.Visible;

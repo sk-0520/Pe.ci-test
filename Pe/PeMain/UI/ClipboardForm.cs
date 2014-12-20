@@ -584,25 +584,33 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void command_Click(object sender, EventArgs e)
 		{
-			if(HoverItemIndex == -1) {
+			if(HoverItemIndex > -1) {
 				return;
 			}
-			var clipboardItem = CommonData.MainSetting.Clipboard.Items[HoverItemIndex];
-			var map = new Dictionary<object, ClipboardType>() {
-				{ this._commandText, ClipboardType.Text },
-				{ this._commandRtf, ClipboardType.Rtf },
-				{ this._commandHtml, ClipboardType.Html },
-				{ this._commandImage, ClipboardType.Image },
-				{ this._commandFile, ClipboardType.File },
-			};
-			CopyItem(clipboardItem, map[sender]);
+			try {
+				var clipboardItem = CommonData.MainSetting.Clipboard.Items[HoverItemIndex];
+				var map = new Dictionary<object, ClipboardType>() {
+					{ this._commandText, ClipboardType.Text },
+					{ this._commandRtf, ClipboardType.Rtf },
+					{ this._commandHtml, ClipboardType.Html },
+					{ this._commandImage, ClipboardType.Image },
+					{ this._commandFile, ClipboardType.File },
+				};
+				CopyItem(clipboardItem, map[sender]);
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+			}
 		}
 
 		private void listClipboard_DoubleClick(object sender, EventArgs e)
 		{
 			var index = this.listClipboard.SelectedIndex;
 			if(index != -1) {
-				CopySingleItem(index);
+				try {
+					CopySingleItem(index);
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+				}
 			}
 		}
 

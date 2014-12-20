@@ -982,6 +982,9 @@
   <ItemGroup>
     <None Include="Resources\Image\ClipboardHtml.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Clipboard.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)\etc\lang\ja-JP.xml" "$(OutDir)\etc\lang\default.xml"

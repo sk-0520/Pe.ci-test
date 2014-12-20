@@ -26,12 +26,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		File  = 0x10,
 	}
 
-	public class ClipboradWeight
-	{
-		public ClipboardType ClipboardType { get; set; }
-		public int Weight { get; set; }
-	}
-
 	/// <summary>
 	/// クリップボードのデータ。
 	/// </summary>
@@ -111,20 +105,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public ClipboardType GetSingleClipboardType()
 		{
-			if((ClipboardTypes & ClipboardType.Html) == ClipboardType.Html) {
-				return ClipboardType.Html;
-			}
-			if((ClipboardTypes & ClipboardType.Rtf) == ClipboardType.Rtf) {
-				return ClipboardType.Rtf;
-			}
-			if((ClipboardTypes & ClipboardType.File) == ClipboardType.File) {
-				return ClipboardType.File;
-			}
-			if((ClipboardTypes & ClipboardType.Text) == ClipboardType.Text) {
-				return ClipboardType.Text;
-			}
-			if((ClipboardTypes & ClipboardType.Image) == ClipboardType.Image) {
-				return ClipboardType.Image;
+			var list = new[] {
+				ClipboardType.Html,
+				ClipboardType.Rtf,
+				ClipboardType.File,
+				ClipboardType.Text,
+				ClipboardType.Image,
+			};
+			foreach(var type in list) {
+				if((ClipboardTypes & type) == type) {
+					return type;
+				}
 			}
 
 			Debug.Assert(false, ClipboardTypes.ToString());
@@ -156,10 +147,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		public bool Enabled { get; set; }
 
-		/// <summary>
-		/// 標準で使用するデータ形式。
-		/// </summary>
-		public ClipboardType DefaultClipboardType { get; set; }
 		/// <summary>
 		/// 本体でのコピー操作でもコピー検知に含めるか。
 		/// </summary>

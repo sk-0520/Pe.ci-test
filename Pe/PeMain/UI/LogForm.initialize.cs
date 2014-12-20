@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._imageLogType = new ImageList();
 			this._imageLogType.ColorDepth = ColorDepth.Depth32Bit;
 			this._imageLogType.ImageSize = IconScale.Small.ToSize();
-			this._imageLogType.Images.Add(LogType.Information.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Information);
+			this._imageLogType.Images.Add(LogType.Information.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Information);
 			this._imageLogType.Images.Add(LogType.Warning.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Warning);
 			this._imageLogType.Images.Add(LogType.Error.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Error);
 			this.listLog.SmallImageList = this._imageLogType;

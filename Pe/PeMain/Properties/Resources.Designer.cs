@@ -143,6 +143,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_Clipboard {
+            get {
+                object obj = ResourceManager.GetObject("Image_Clipboard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_ClipboardCopy {
             get {
                 object obj = ResourceManager.GetObject("Image_ClipboardCopy", resourceCulture);
@@ -366,6 +376,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         internal static System.Drawing.Bitmap Image_Help {
             get {
                 object obj = ResourceManager.GetObject("Image_Help", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_Information {
+            get {
+                object obj = ResourceManager.GetObject("Image_Information", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -626,16 +646,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         internal static System.Drawing.Bitmap Image_WindowSave {
             get {
                 object obj = ResourceManager.GetObject("Image_WindowSave", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Information {
-            get {
-                object obj = ResourceManager.GetObject("Information", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
