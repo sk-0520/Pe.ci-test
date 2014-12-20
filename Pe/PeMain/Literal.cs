@@ -471,6 +471,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string versionNow    = "NOW";
 		public const string versionNext   = "NEXT";
 		public const string versionType   = "TYPE";
+
+		public const string imageType = "TYPE";
+		public const string imageWidth = "WIDTH";
+		public const string imageHeight = "HEIGHT";
+		public const string fileType = "TYPE";
+		public const string fileCount = "COUNT";
 	}
 	
 	public static class DataTables

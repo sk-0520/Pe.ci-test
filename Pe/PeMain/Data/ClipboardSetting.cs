@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// <summary>
 	/// クリップボードのデータ。
 	/// </summary>
-	public class ClipboardItem: Item
+	public class ClipboardItem: NameItem
 	{
 		public ClipboardItem()
 		{

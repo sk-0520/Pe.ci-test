@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -91,6 +92,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			var clipboardItem = new ClipboardItem();
 			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData()) {
+
+				var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem);
+				clipboardItem.Name = displayText;
+
 				this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
 			}
 		}

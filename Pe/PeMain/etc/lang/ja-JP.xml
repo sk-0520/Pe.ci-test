@@ -242,6 +242,8 @@
 		<Word Name="clipboard/header/name"     Text="名前" />
 		<Word Name="clipboard/header/path"     Text="パス" />
 		<Word Name="clipboard/html/error"      Text="HTML形式クリップボードの解析失敗" />
+		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] @[HEIGHT]" />
+		<Word Name="clipboard/title/file"     Text="@[TYPE]: @[COUNT]" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャ" />

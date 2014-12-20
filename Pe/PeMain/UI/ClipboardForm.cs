@@ -97,6 +97,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview_pageImage.ImageKey = imageImage;
 			this.tabPreview_pageFile.ImageKey = imageFile;
 
+			ChangeCommand(-1);
 			ChangeSelsectedItem(-1);
 			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
 		}
@@ -288,37 +289,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 					case ClipboardType.Html:
 						{
-							Func<string, string, int> getIndex = (pattern, line) => {
-								var reg = new Regex(pattern, RegexOptions.IgnoreCase);
-								var match = reg.Match(line);
-								if(match.Success && match.Groups.Count == 2) {
-									var data = match.Groups[1].Value;
-									var result = -1;
-									if(int.TryParse(data, out result)) {
-										return result;
-									}
-								}
-
-								return -1;
-							};
-
-							var lines = clipboardItem.Html.SplitLines();
-							var head = -1;
-							var tail = -1;
-
-							foreach(var line in lines) {
-								if(head != -1 && tail != -1) {
-									break;
-								}
-								if(head == -1) {
-									head = getIndex("StartHTML:([0-9]+)", line);
-								}
-								if(tail == -1) {
-									tail = getIndex("EndHTML:([0-9]+)", line);
-								}
-							}
-							if(head != -1 && tail != -1) {
-								var html = new string(clipboardItem.Html.Take(tail).Skip(head).ToArray());
+							string html;
+							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html);
+							if(result) {
 								this.viewHtml.DocumentText = html;
 							} else {
 								var elements = string.Format("<p style='font-weight: bold; color: #f00; background: #fff'>{0}</p><hr />", CommonData.Language["clipboard/html/error"]);
@@ -420,7 +393,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				map[type]();
 				return true;
 			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Error, LanguageUtility.ClipboardItemToDisplayText(CommonData.Language, clipboardItem), ex);
+				CommonData.Logger.Puts(LogType.Error, clipboardItem.Name, ex);
 				return false;
 			}
 		}
@@ -499,8 +472,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 				e.DrawBackground();
 				using(var brush = new SolidBrush(e.ForeColor)) {
-					var displayText = LanguageUtility.ClipboardItemToDisplayText(CommonData.Language, item);
-					e.Graphics.DrawString(displayText, Font, brush, e.Bounds.Location);
+					e.Graphics.DrawString(item.Name, Font, brush, e.Bounds.Location);
 				}
 				e.DrawFocusRectangle();
 			}
