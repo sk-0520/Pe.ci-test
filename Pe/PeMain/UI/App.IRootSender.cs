@@ -89,6 +89,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				return;
 			}
 
+			var seq = NativeMethods.GetClipboardSequenceNumber();
+			Debug.WriteLine("{0} -> {1} - {2}", this._commonData.MainSetting.Clipboard.DisabledCopy, seq, _clipboardPrevSeq);
+			if(this._commonData.MainSetting.Clipboard.DisabledCopy || seq == this._clipboardPrevSeq) {
+				return;
+			}
+			this._clipboardPrevSeq = seq;
+
 			var nowTime = DateTime.Now;
 			if(nowTime - this._clipboardPrevTime <= Literal.clipboardWait.median) {
 				var map = new Dictionary<string,string>() {

@@ -121,12 +121,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			list.Add("OS: " + System.Environment.OSVersion);
 			list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());
 
-			ClipboardUtility.CopyText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine, CommonData.MainSetting.Clipboard);
+			ClipboardUtility.CopyText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, list.Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine, CommonData);
 		}
 		
 		void linkCopyLong_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			ClipboardUtility.CopyText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, new ContentTypeTextNet.Pe.PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine, CommonData.MainSetting.Clipboard);
+			ClipboardUtility.CopyText(Environment.NewLine + Separator + Environment.NewLine + string.Join(Environment.NewLine, new ContentTypeTextNet.Pe.PeMain.Logic.AppInformation().ToString().SplitLines().Select(s => "    " + s)) + Environment.NewLine + Environment.NewLine, CommonData);
 		}
 	}
 }

@@ -350,7 +350,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
 		{
-			var map = new Dictionary<ClipboardType, Action<ClipboardSetting>>() {
+			var map = new Dictionary<ClipboardType, Action<CommonData>>() {
 				{ ClipboardType.Text, (setting) => {
 					ClipboardUtility.CopyText(clipboardItem.Text, setting);
 				} },
@@ -367,7 +367,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					ClipboardUtility.CopyFile(clipboardItem.Files, setting);
 				} },
 			};
-			map[clipboardType](CommonData.MainSetting.Clipboard);
+			map[clipboardType](CommonData);
 		}
 
 		void CopySingleItem(int index)
@@ -490,9 +490,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			//Debug.WriteLine(ActiveControl);
+			//var isActive = ActiveControl == this.listClipboard;
 			if(this.listClipboard.SelectedIndex != SelectedItemIndex) {
 				ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 				ChangeSelsectedItem(this.listClipboard.SelectedIndex);
+				
+					ActiveControl = this.listClipboard;
+				//	this.listClipboard.Select();
+				
 			}
 		}
 
