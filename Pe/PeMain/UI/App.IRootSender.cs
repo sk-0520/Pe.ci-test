@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._clipboardPrevSeq = seq;
 
 			var nowTime = DateTime.Now;
-			if(nowTime - this._clipboardPrevTime <= Literal.clipboardWait.median) {
+			if(nowTime - this._clipboardPrevTime <= Literal.clipboardWaitTime.median) {
 				var map = new Dictionary<string,string>() {
 					{ AppLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
 				};
