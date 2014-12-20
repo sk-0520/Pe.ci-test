@@ -239,6 +239,8 @@
 		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
 		<Word Name="clipboard/command/empty"   Text="クリップボードをクリア" />
 		<Word Name="clipboard/type/clipboard"  Text="クリップボード" />
+		<Word Name="clipboard/header/name"     Text="名前" />
+		<Word Name="clipboard/header/path"     Text="パス" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャ" />

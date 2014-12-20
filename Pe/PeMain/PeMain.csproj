@@ -706,6 +706,7 @@
     </None>
     <None Include="etc\lang\ja-JP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </None>
     <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
@@ -977,6 +978,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Icon\URI.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="etc\lang\ja-JP.Debug.xml">
+      <DependentUpon>ja-JP.xml</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="etc\lang\ja-JP.Release.xml">
+      <DependentUpon>ja-JP.xml</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

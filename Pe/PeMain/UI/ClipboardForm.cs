@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -122,11 +123,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolClipboard_itemEmpty.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemType_itemClipboard.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.SetLanguage(CommonData.Language);
-			
+
+			this.columnName.SetLanguage(CommonData.Language);
+			this.columnPath.SetLanguage(CommonData.Language);
+			//clipboard/header/name
+
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
+
 		}
 		
 		#endregion
@@ -267,21 +273,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							imageList.ColorDepth = ColorDepth.Depth32Bit;
 							imageList.ImageSize = IconScale.Small.ToSize();
 							var listItemList = new List<ListViewItem>(clipboardItem.Files.Count());
+							var showExtentions = SystemEnvironment.IsExtensionShow();
+							Func<string,string> getName;
+							if(showExtentions) getName = Path.GetFileName; else getName = Path.GetFileNameWithoutExtension;
 							foreach(var path in clipboardItem.Files) {
 								var key = path.GetHashCode().ToString();
+								var name = getName(path);
 
 								var icon = IconUtility.Load(path, IconScale.Small, 0);
 								imageList.Images.Add(key, icon);
 
 								var listItem = new ListViewItem();
-								listItem.Text = path;
+								listItem.Text = name;
 								listItem.ImageKey = key;
+
+								listItem.SubItems.Add(path);
 
 								listItemList.Add(listItem);
 							}
 							this.viewFile.Items.Clear();
 							this.viewFile.SmallImageList.ToDispose();
-							this.viewFile.SmallImageList = null;
 							this.viewFile.SmallImageList = imageList;
 							this.viewFile.Items.AddRange(listItemList.ToArray());
 
