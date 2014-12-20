@@ -119,6 +119,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void ApplyLanguage()
 		{
+			Text = ":window/clipboard";
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);

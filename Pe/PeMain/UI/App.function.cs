@@ -169,7 +169,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._noteWindowList.Clear();
 			InitializeNoteForm(null, null);
 		}
-		
+
+		void ResetClipboard()
+		{
+			this._clipboardWindow.SetCommonData(this._commonData);
+		}
+
 		/// <summary>
 		/// 表示コンポーネントをリセット。
 		/// </summary>
@@ -181,6 +186,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			ResetToolbar();
 			ResetNote();
+			ResetClipboard();
 		}
 		
 		/// <summary>
@@ -201,6 +207,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					 */
 					
 					var mainSetting = settingForm.MainSetting;
+					// 完全コピー
+					mainSetting.Clipboard = this._commonData.MainSetting.Clipboard;
+					Debug.WriteLine(mainSetting.Clipboard.Visible);
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveFiles();

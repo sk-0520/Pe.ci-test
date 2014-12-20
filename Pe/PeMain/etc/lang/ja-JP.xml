@@ -93,7 +93,7 @@
 		<Word Name="main/menu/system-env/window"            Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保存(&amp;S)" />
 		<Word Name="main/menu/system-env/window/load"       Text="保存しているウィンドウ状態を復帰(&amp;L)" />
-		<Word Name="main/menu/system-env/clipboard"         Text="clipboard(&amp;C)" />
+		<Word Name="main/menu/system-env/clipboard"         Text="クリップボード(&amp;C)" />
 		
 		<Word Name="main/event/screen/count-change"    Text="ディスプレイ数変更検知" />
 		<Word Name="main/event/power/resume"           Text="レジューム" />

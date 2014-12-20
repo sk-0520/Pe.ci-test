@@ -83,8 +83,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
-		//public bool EnabledClipboard { get; set; }
-
 		public void ChangeClipboard()
 		{
 			if(!this._commonData.MainSetting.Clipboard.Enabled) {
