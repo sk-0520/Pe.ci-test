@@ -38,6 +38,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				CommonData = commonData;
 				
 				ApplySetting();
+
+				//NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
+				if(ClipboardRegisted) {
+					NativeMethods.RemoveClipboardFormatListener(Handle);
+				}
+				ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
 			}
 			
 			void ApplyHotKey()

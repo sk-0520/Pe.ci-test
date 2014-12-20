@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize();
 		}
-		
+		//TODO: なんでこれ指定してんだろう
 		protected override CreateParams CreateParams
 		{
 			get
@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(e.CloseReason == CloseReason.UserClosing) {
 				e.Cancel = true;
 				Visible = false;
+				CommonData.MainSetting.Log.Visible = false;
 			}
 		}
 		

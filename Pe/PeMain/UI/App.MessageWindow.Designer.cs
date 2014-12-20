@@ -6,6 +6,7 @@
  * 
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class App
@@ -28,6 +29,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						components.Dispose();
 					}
 				}
+				//NativeMethods.ChangeClipboardChain(Handle, NextWndHandle);
+				NativeMethods.RemoveClipboardFormatListener(Handle);
 				base.Dispose(disposing);
 			}
 			

@@ -86,9 +86,12 @@
     <Compile Include="DialogFilter.cs" />
     <Compile Include="DialogUtility.cs" />
     <Compile Include="FileUtility.cs" />
+    <Compile Include="FixedSizedList.cs" />
+    <Compile Include="FixedSizedQueue.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="IconPath.cs" />
     <Compile Include="IconUtility.cs" />
+    <Compile Include="IF\ILimitSize.cs" />
     <Compile Include="InformationCollection.cs" />
     <Compile Include="InformationGroup.cs" />
     <Compile Include="OpenIconDialog.cs">

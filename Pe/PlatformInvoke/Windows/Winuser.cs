@@ -32,12 +32,16 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_SETCURSOR = 0x0020,
 		WM_CONTEXTMENU = 0x007b,
 		WM_DWMCOMPOSITIONCHANGED = 0x031e,
+		WM_DRAWCLIPBOARD = 0x0308,
+		WM_CHANGECBCHAIN = 0x030d,
+		WM_CLIPBOARDUPDATE = 0x031d,
 	}
 	
 	public enum WS_EX
 	{
 		WS_EX_NOACTIVATE = 0x8000000,
 		WS_EX_TOOLWINDOW = 0x0000080,
+		WS_EX_TRANSPARENT = 0x00000020,
 	}
 	
 	public enum CS
@@ -1726,6 +1730,27 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool BringWindowToTop(IntPtr hWnd);
 
+		[DllImport("User32.dll", CharSet = CharSet.Auto)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
+		
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern uint GetClipboardSequenceNumber();
+
+		[DllImport("user32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool AddClipboardFormatListener(IntPtr hWnd);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
 	}
 
 

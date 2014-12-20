@@ -52,10 +52,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 		private static string _settingRootDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 		private static string _logRootDirPath     = Path.Combine(UserSettingDirPath, "log");
 		
-		private const string _mainSettingFileName   = "mainsetting.xml";
-		private const string _launcherItemsFileName = "launcher-items.xml";
-		private const string _dbFileName            = "db.sqlite3";
-		private const string _backupDirName         = "backup";
+		private const string _mainSettingFileName    = "mainsetting.xml";
+		private const string _launcherItemsFileName  = "launcher-items.xml";
+		//private const string _clipboardItemsFileName = "clipboard-items.xml";
+		private const string _dbFileName             = "db.sqlite3";
+		private const string _backupDirName          = "backup";
 		/// <summary>
 		/// デフォルトの言語名。
 		/// </summary>
@@ -88,7 +89,16 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
 		
 		public static readonly TripleRange<TimeSpan> commandHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(20));
-		
+
+		public static readonly TimeSpan clipboardSleepTime = TimeSpan.FromMilliseconds(250);
+		public static readonly TripleRange<TimeSpan> clipboardWaitTime = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(50),
+			TimeSpan.FromMilliseconds(250),
+			TimeSpan.FromSeconds(1)
+		);
+		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(4, 128, 1024);
+
+
 		#region NOTE
 		
 		/// <summary>
@@ -148,14 +158,15 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
 		
-		#if DEBUG
+#if DEBUG
 		public const int backupCount = 3;
 		public const int logListLimit = 20;
-		#else
+#else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
-		#endif
-		
+#endif
+
+
 		/// <summary>
 		/// 実行パス
 		/// </summary>
@@ -287,7 +298,14 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get { return Path.Combine(UserSettingDirPath, _launcherItemsFileName); }
 		}
-		
+
+		/*
+		public static string UserClipboardItemsPath
+		{
+			get { return Path.Combine(UserSettingDirPath, _clipboardItemsFileName); }
+		}
+		*/
+
 		public static string UserDBPath
 		{
 			get { return Path.Combine(UserSettingDirPath, _dbFileName); }
@@ -460,6 +478,14 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string versionNow    = "NOW";
 		public const string versionNext   = "NEXT";
 		public const string versionType   = "TYPE";
+
+		public const string imageType = "TYPE";
+		public const string imageWidth = "WIDTH";
+		public const string imageHeight = "HEIGHT";
+		public const string fileType = "TYPE";
+		public const string fileCount = "COUNT";
+
+		public const string clipboardPrevTime = "TIME";
 	}
 	
 	public static class DataTables

@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <SourceAnalysisOverrideSettingsFile>C:\Users\sk\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunCodeAnalysis>False</RunCodeAnalysis>
-    <ApplicationIcon>..\..\Resource\image\App.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -119,6 +119,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Data\ChangeDevice.cs" />
+    <Compile Include="Data\ClipboardSetting.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
+    <Compile Include="Logic\ClipboardUtility.cs" />
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\DB\DBWrapper.cs" />
     <Compile Include="Logic\DB\NoteDB.cs" />
@@ -157,11 +159,6 @@
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Images.Designer.cs">
-      <DependentUpon>Images.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Data\CommandSetting.cs" />
     <Compile Include="Data\EnvironmentSetting.cs" />
     <Compile Include="Data\FontSetting.cs" />
@@ -172,10 +169,10 @@
     <Compile Include="Data\MainSetting.cs" />
     <Compile Include="Data\NoteSetting.cs" />
     <Compile Include="Data\ToolbarSetting.cs" />
-    <Compile Include="Properties\SQL.Designer.cs">
-      <DependentUpon>SQL.resx</DependentUpon>
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
@@ -224,6 +221,12 @@
     <Compile Include="UI\AcceptForm.property.cs">
       <DependentUpon>AcceptForm.cs</DependentUpon>
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ClipboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ClipboardForm.Designer.cs">
+      <DependentUpon>ClipboardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\CustomControl\EnvRemoveControl.cs">
       <SubType>UserControl</SubType>
@@ -615,19 +618,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Images.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Images.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\SQL.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AcceptForm.resx">
       <DependentUpon>AcceptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ClipboardForm.resx">
+      <DependentUpon>ClipboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
@@ -704,6 +706,7 @@
     </None>
     <None Include="etc\lang\ja-JP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </None>
     <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
@@ -804,6 +807,183 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SQL\CheckTable.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\ClipboardText.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\ClipboardFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\ClipboardImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\ClipboardRichTextFormat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\WindowSave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\WindowList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\WindowLoad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Update.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Tag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Toolbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Unlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\SideContract.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\SideExpand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\SystemEnvironment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\NotImpl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\OpenDir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Pin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Note.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\NoteBody.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\NoteTitle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Log.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Name.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Kill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Font.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\FontStyle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Finder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\File.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Comment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Config.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\CustomColor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Dir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\AddItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Changelog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Windows.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\ClipboardCopy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon\App.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon\NotFound.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon\ToolbarMain.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon\URI.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\ClipboardHtml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image\Clipboard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

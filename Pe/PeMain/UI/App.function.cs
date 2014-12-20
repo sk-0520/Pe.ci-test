@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var result = new List<Form>();
 			result.AddRange(this._toolbarForms.Values);
 			result.Add(this._logForm);
+			result.Add(this._clipboardWindow);
 			
 			/*
 			foreach(var f in this._toolbarForms.Values.Where(f => f.OwnedForms.Length > 0)) {
@@ -168,7 +169,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._noteWindowList.Clear();
 			InitializeNoteForm(null, null);
 		}
-		
+
+		void ResetClipboard()
+		{
+			this._clipboardWindow.ClearEvent();
+			this._clipboardWindow.ToDispose();
+			this._clipboardWindow = new ClipboardForm();
+			this._clipboardWindow.SetCommonData(this._commonData);
+		}
+
 		/// <summary>
 		/// 表示コンポーネントをリセット。
 		/// </summary>
@@ -180,6 +189,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			ResetToolbar();
 			ResetNote();
+			ResetClipboard();
 		}
 		
 		/// <summary>
@@ -200,6 +210,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					 */
 					
 					var mainSetting = settingForm.MainSetting;
+					// 完全コピー
+					mainSetting.Clipboard = this._commonData.MainSetting.Clipboard;
+					
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveFiles();

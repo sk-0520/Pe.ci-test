@@ -39,11 +39,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			/*
 			var iconSize = iconScale.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App, iconSize)) {
 				return icon.ToBitmap();
 			}
 			*/
-			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App, iconScale);
+			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconScale);
 		}
 		
 		/// <summary>
@@ -143,6 +143,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				sortedSet.Add(item);
 			}
 			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
+			//// クリップボードデータ
+			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
+			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
 		}
 	}
 }
