@@ -209,7 +209,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ContextMenu_itemCopy_Click(object sender, EventArgs e)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(NoteItem.Body));
-			Clipboard.SetText(NoteItem.Body);
+			ClipboardUtility.CopyText(NoteItem.Body, CommonData.MainSetting.Clipboard);
 		}
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)

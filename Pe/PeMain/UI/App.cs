@@ -112,7 +112,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			if(e.Mode == PowerModes.Resume) {
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
+#if !DISABLED_UPDATE_CHECK
 				CheckUpdateProcessAsync(false);
+#endif
 			}
 		}
 		

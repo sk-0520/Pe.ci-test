@@ -280,7 +280,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void CopyText(string text)
 		{
-			Clipboard.SetText(text);
+			ClipboardUtility.CopyText(text, CommonData.MainSetting.Clipboard);
 		}
 		
 		void OpenProperty(string path)

@@ -119,7 +119,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void ApplyLanguage()
 		{
-			Text = ":window/clipboard";
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
@@ -437,6 +436,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
+		public void ClearEvent()
+		{
+			CommonData.MainSetting.Clipboard.Items.ListChanged -= Items_ListChanged;
+		}
+
 		#endregion ////////////////////////////////////////
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
@@ -591,6 +595,5 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 
 		}
-
 	}
 }

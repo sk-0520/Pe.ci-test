@@ -172,6 +172,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void ResetClipboard()
 		{
+			this._clipboardWindow.ClearEvent();
+			this._clipboardWindow.ToDispose();
+			this._clipboardWindow = new ClipboardForm();
 			this._clipboardWindow.SetCommonData(this._commonData);
 		}
 
@@ -209,7 +212,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					var mainSetting = settingForm.MainSetting;
 					// 完全コピー
 					mainSetting.Clipboard = this._commonData.MainSetting.Clipboard;
-					Debug.WriteLine(mainSetting.Clipboard.Visible);
+					
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveFiles();

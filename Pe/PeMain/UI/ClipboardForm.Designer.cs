@@ -41,6 +41,7 @@
 			this.tabPreview_pageRtf = new System.Windows.Forms.TabPage();
 			this.viewRtf = new System.Windows.Forms.RichTextBox();
 			this.tabPreview_pageHtml = new System.Windows.Forms.TabPage();
+			this.viewHtml = new System.Windows.Forms.WebBrowser();
 			this.tabPreview_pageImage = new System.Windows.Forms.TabPage();
 			this.panelImage = new System.Windows.Forms.Panel();
 			this.viewImage = new System.Windows.Forms.PictureBox();
@@ -49,7 +50,6 @@
 			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageTab = new System.Windows.Forms.ImageList(this.components);
-			this.viewHtml = new System.Windows.Forms.WebBrowser();
 			this.toolClipboard = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
 			this.toolClipboard_itemTopmost = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -139,6 +139,7 @@
 			// panelClipboard
 			// 
 			this.panelClipboard.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelClipboard.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.panelClipboard.Location = new System.Drawing.Point(0, 0);
 			this.panelClipboard.Name = "panelClipboard";
 			// 
@@ -242,6 +243,15 @@
 			this.tabPreview_pageHtml.Text = "#ClipboardType.Html";
 			this.tabPreview_pageHtml.UseVisualStyleBackColor = true;
 			// 
+			// viewHtml
+			// 
+			this.viewHtml.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewHtml.Location = new System.Drawing.Point(0, 0);
+			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
+			this.viewHtml.Name = "viewHtml";
+			this.viewHtml.Size = new System.Drawing.Size(371, 200);
+			this.viewHtml.TabIndex = 0;
+			// 
 			// tabPreview_pageImage
 			// 
 			this.tabPreview_pageImage.Controls.Add(this.panelImage);
@@ -311,15 +321,6 @@
 			this.imageTab.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
 			this.imageTab.ImageSize = new System.Drawing.Size(16, 16);
 			this.imageTab.TransparentColor = System.Drawing.Color.Transparent;
-			// 
-			// viewHtml
-			// 
-			this.viewHtml.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.viewHtml.Location = new System.Drawing.Point(0, 0);
-			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
-			this.viewHtml.Name = "viewHtml";
-			this.viewHtml.Size = new System.Drawing.Size(371, 200);
-			this.viewHtml.TabIndex = 0;
 			// 
 			// toolClipboard
 			// 
