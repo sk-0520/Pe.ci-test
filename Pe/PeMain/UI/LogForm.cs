@@ -139,5 +139,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			ShowLast();
 		}
+
+		private void LogForm_SizeChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Log.Size = Size;
+		}
+
+		private void LogForm_LocationChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Log.Point = Location;
+		}
 	}
 }
