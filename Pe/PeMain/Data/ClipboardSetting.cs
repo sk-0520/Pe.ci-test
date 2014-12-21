@@ -129,7 +129,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ClipboardSetting()
 		{
 			Visible = false;
-			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit.median);
+			Limit = Literal.clipboardLimit.median;
+			//Items = new FixedSizedList<ClipboardItem>(Limit);
 			EnabledApplicationCopy = false;
 			Size = new Size(
 				Screen.PrimaryScreen.Bounds.Width / 3,
@@ -154,7 +155,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// クリップボード通知対象。
 		/// </summary>
 		public ClipboardType EnabledTypes { get; set; }
-
+		/// <summary>
+		/// サイズ。
+		/// </summary>
+		public int Limit { get; set; }
 		/// <summary>
 		/// 本体でのコピー操作でもコピー検知に含めるか。
 		/// </summary>
@@ -225,6 +229,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public override void CorrectionValue()
 		{
 			base.CorrectionValue();
+
+			Limit = Literal.clipboardLimit.ToRounding(Limit);
+			Items = new FixedSizedList<ClipboardItem>(Limit);
 
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);

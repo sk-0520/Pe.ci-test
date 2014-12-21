@@ -210,8 +210,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					 */
 					
 					var mainSetting = settingForm.MainSetting;
-					// 完全コピー
-					mainSetting.Clipboard = this._commonData.MainSetting.Clipboard;
+					// クリップボード
+					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
+					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
+					mainSetting.Clipboard.Items = this._commonData.MainSetting.Clipboard.Items;
+					mainSetting.Clipboard.Items.LimitSize = mainSetting.Clipboard.Limit;
 					
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;

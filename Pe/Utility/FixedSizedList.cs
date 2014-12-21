@@ -14,6 +14,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	{
 		const int defaultLimit = 64;
 
+		private int _limitSize;
+
 		public event EventHandler ListChanged;
 
 		public FixedSizedList()
@@ -40,7 +42,17 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			LimitSize = limitSize;
 		}
 
-		public int LimitSize { get; set; }
+		public int LimitSize 
+		{ 
+			get { return this._limitSize; } 
+			set
+			{
+				if(this._limitSize > value && Count > value) {
+					RemoveRange(value, Count - value);
+				}
+				this._limitSize = value;
+			}
+		}
 
 		protected void CallListChangedEvent()
 		{

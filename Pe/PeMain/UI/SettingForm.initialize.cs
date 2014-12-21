@@ -172,8 +172,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
-			this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
-			this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
+			//this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
+			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
+			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 			
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
