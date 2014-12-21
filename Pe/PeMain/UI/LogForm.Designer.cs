@@ -268,6 +268,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Text = ":window/log";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
 			this.Shown += new System.EventHandler(this.LogForm_Shown);
+			this.LocationChanged += new System.EventHandler(this.LogForm_LocationChanged);
+			this.SizeChanged += new System.EventHandler(this.LogForm_SizeChanged);
 			this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
