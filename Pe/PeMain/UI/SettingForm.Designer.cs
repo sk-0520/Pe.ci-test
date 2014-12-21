@@ -2008,7 +2008,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardLimit.Name = "inputClipboardLimit";
 			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardLimit.TabIndex = 4;
-			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelClipboardLimit
 			// 
@@ -2026,7 +2026,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
 			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardWaitTime.TabIndex = 5;
-			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// selectClipboardTopMost
 			// 
@@ -2066,7 +2066,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
 			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardSleepTime.TabIndex = 10;
-			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// commandCancel
 			// 

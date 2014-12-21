@@ -16,6 +16,7 @@ using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -72,7 +73,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			return string.Format("<{0}>", clipboardType.ToText(language));
 		}
-		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem)
+		public static string ClipboardItemToDisplayText(Language language, ClipboardItem clipboardItem, ILogger logger)
 		{
 			var type = clipboardItem.GetSingleClipboardType();
 			Debug.Assert(type != ClipboardType.None);
@@ -120,24 +121,38 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
 				case ClipboardType.Html:
 					{
+						var takeCount = 64;
 						var converted = false;
-						var text = string.Join("", clipboardItem.Html.SplitLines());
+						var lines = clipboardItem.Html.SplitLines().Take(takeCount);
+						var text = string.Join("", lines);
+						//var text = clipboardItem.Html.Replace('\r', ' ').Replace('\n', ' ');
+
+						var timeTitle = TimeSpan.FromMilliseconds(500);
+						var timeHeader = TimeSpan.FromMilliseconds(500);
 
 						// タイトル
-						var regTitle = new Regex("<title>(.+)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-						var matchTitle = regTitle.Match(text);
-						if(!converted && matchTitle.Success && matchTitle.Groups.Count > 1) {
-							text = matchTitle.Groups[1].Value.Trim();
-							converted = true;
+						try {
+							var regTitle = new Regex("<title>(.+)</title>", RegexOptions.IgnoreCase | RegexOptions.Multiline, timeTitle);
+							var matchTitle = regTitle.Match(text);
+							if(!converted && matchTitle.Success && matchTitle.Groups.Count > 1) {
+								text = matchTitle.Groups[1].Value.Trim();
+								converted = true;
+							}
+						} catch(RegexMatchTimeoutException ex) {
+							logger.Puts(LogType.Warning, "title:" + ex.Message, ex);
 						}
 
 						// h1
-						var regHeader = new Regex("<h1(?:.*)?>(.+)</h1>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-						var matchHeader = regHeader.Match(text);
-						if(!converted && matchHeader.Success && matchHeader.Groups.Count > 1) {
-							text = matchHeader.Groups[1].Value.Trim();
-							Debug.WriteLine(text);
-							converted = true;
+						try {
+							var regHeader = new Regex("<h1(?:.*)?>(.+)</h1>", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+							var matchHeader = regHeader.Match(text);
+							if(!converted && matchHeader.Success && matchHeader.Groups.Count > 1) {
+								text = matchHeader.Groups[1].Value.Trim();
+								Debug.WriteLine(text);
+								converted = true;
+							}
+						} catch(RegexMatchTimeoutException ex) {
+							logger.Puts(LogType.Warning, "header:" + ex.Message, ex);
 						}
 
 						if(!converted || string.IsNullOrWhiteSpace(text)) {

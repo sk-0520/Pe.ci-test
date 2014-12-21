@@ -18,12 +18,30 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	[Flags]
 	public enum ClipboardType
 	{
+		/// <summary>
+		/// 無効。
+		/// </summary>
 		None  = 0,
+		/// <summary>
+		/// プレーンテキスト。
+		/// </summary>
 		Text  = 0x01,
-		Rtf   = 0x02,
-		Html  = 0x04,
+		/// <summary>
+		/// RTF。
+		/// </summary>
+		Rtf = 0x02,
+		/// <summary>
+		/// HTML。
+		/// </summary>
+		Html = 0x04,
+		/// <summary>
+		/// 画像。
+		/// </summary>
 		Image = 0x08,
-		File  = 0x10,
+		/// <summary>
+		/// ファイル。
+		/// </summary>
+		File = 0x10,
 	}
 
 	/// <summary>

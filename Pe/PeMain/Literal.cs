@@ -100,7 +100,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 			TimeSpan.FromMilliseconds(250),
 			TimeSpan.FromSeconds(1)
 		);
-		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(4, 128, 1024);
+		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(8, 1024, 1024 * 5);
 
 
 		#region NOTE

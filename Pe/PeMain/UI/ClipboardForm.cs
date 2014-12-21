@@ -106,6 +106,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void Initialize()
 		{
 			SelectedItemIndex = -1;
+			HoverItemIndex = -1;
 
 			this.imageTab.Images.Add(imageText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText);
 			this.imageTab.Images.Add(imageRtf, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat);
