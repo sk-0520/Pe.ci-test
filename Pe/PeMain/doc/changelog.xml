@@ -43,6 +43,7 @@
 		<ul type="fixes">
 			<li rev="bbb2492c77690d64e1b7be07f38ee9ae4ad05213">#116: #106のバッチがBOM</li>
 			<li rev="31b395cf4005b2a317b9db0bacce8a7eddc21f65">#121: DwmGetColorizationColor() が大きめの値を返すと SetVisualStyle() で System.OverflowException</li>
+			<li rev="d7ecb37158ce17dd9829155708752bd28d99d4fc">#122: ログダイアログの表示位置とサイズが保存されてない</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
