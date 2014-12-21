@@ -25,13 +25,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 			}
 			action();
-			Task.Factory.StartNew(() => {
-				Thread.Sleep(commonData.MainSetting.Clipboard.SleepTime);
-				if(commonData != null) {
+			if(commonData != null) {
+				Task.Factory.StartNew(() => {
+					Thread.Sleep(commonData.MainSetting.Clipboard.SleepTime);
 					commonData.MainSetting.Clipboard.DisabledCopy = !commonData.MainSetting.Clipboard.DisabledCopy;
 					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
-				}
-			});
+				});
+			}
 		}
 
 		public static void CopyText(string text, CommonData commonData)

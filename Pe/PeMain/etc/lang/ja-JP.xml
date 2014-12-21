@@ -301,14 +301,14 @@
 		<Word Name="setting/column/note/font"      Text="${font}" />
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
-		<Word Name="setting/check/clipboard-enabled"      Text="" />
-		<Word Name="setting/check/clipboard-app-enabled"  Text="" />
-		<Word Name="setting/label/clipboard-limit"        Text="" />
-		<Word Name="setting/label/clipboard-wait"         Text="" />
-		<Word Name="setting/label/clipboard-sleep"        Text="" />
-		<Word Name="setting/check/clipboard-visible"      Text="" />
+		<Word Name="setting/check/clipboard-enabled"      Text="クリップボードの履歴を有効にする" />
+		<Word Name="setting/check/clipboard-app-enabled"  Text="@[APPLICATION]のコピー操作も履歴へ設定する" />
+		<Word Name="setting/label/clipboard-limit"        Text="保持する履歴数" />
+		<Word Name="setting/label/clipboard-wait"         Text="前回コピーからの待機時間(ミリ秒)" />
+		<Word Name="setting/label/clipboard-sleep"        Text="@[APPLICATION]操作猶予時間(ミリ秒)" />
+		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
-		<Word Name="setting/group/clipboard-type"         Text="" />
+		<Word Name="setting/group/clipboard-type"         Text="取り込む種類" />
 		
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
