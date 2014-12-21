@@ -25,31 +25,22 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.35.7" type="rc">
+	<log date="2014/12/21" version="0.36.0">
 		<ul type="note">
 			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility">#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</li>
-			<li rev=""></li>
-			<li rev=""></li>
 		</ul>
 		<ul type="features">
 			<li rev="469eadb5d031563d83fac904cadeee2092fc5b51">#115: ノートのタイトル入力を直観的に</li>
-			<li rev="1cfae55dae07910d523ebb35510f325a0cc99ccd">#117: ツールバーのツールチップを消す</li>
-			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d">#114: ウィンドウを親依存でなく独立して保持する, #113も解決</li>
-			<li rev="">#113: 指定して実行ダイアログをモードレスにする</li>
+			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d">#113: 指定して実行ダイアログをモードレスにする</li>
 			<li rev="955cefea4f81c0c8127be3dde423ad900ba92e01">#120: ノートの削除を非拡張コンテキストメニューでも表示する</li>
 			<li rev="1bbe16ee46986aba7663e66e1e59ead95196081a">#119: クリップボード監視</li>
-			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
 			<li rev="bbb2492c77690d64e1b7be07f38ee9ae4ad05213">#116: #106のバッチがBOM</li>
 			<li rev="31b395cf4005b2a317b9db0bacce8a7eddc21f65">#121: DwmGetColorizationColor() が大きめの値を返すと SetVisualStyle() で System.OverflowException</li>
 			<li rev="d7ecb37158ce17dd9829155708752bd28d99d4fc">#122: ログダイアログの表示位置とサイズが保存されてない</li>
-			<li rev=""></li>
-		</ul>
-		<ul type="developer">
-			<li rev=""></li>
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="1cfae55dae07910d523ebb35510f325a0cc99ccd">#117: ツールバーのツールチップを消す</li>
+			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d">#114: ウィンドウを親依存でなく独立して保持する, #113も解決</li>
 		</ul>
 	</log>
 	<log date="2014/12/06" version="0.35.0">
