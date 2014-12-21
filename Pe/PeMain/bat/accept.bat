@@ -1,6 +1,6 @@
-я╗┐cd /d %~dp0\..\
+cd /d %~dp0\..\
 
-rem ф╜┐чФиши▒шл╛хЖНшбичд║
+rem ОgЧpЛЦС°Н─Х\Ож
 
 PeMain.exe /accept=force
 

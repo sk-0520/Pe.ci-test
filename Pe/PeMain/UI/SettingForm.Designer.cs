@@ -112,8 +112,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
-			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
-			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
 			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.labelToolbarFont = new System.Windows.Forms.Label();
@@ -124,6 +122,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
 			this.labelToolbarGroup = new System.Windows.Forms.Label();
 			this.selectToolbarGroup = new System.Windows.Forms.ComboBox();
+			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
+			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -174,6 +174,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridNoteItems_columnFore = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.gridNoteItems_columnBack = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
+			this.panelClipboardMain = new System.Windows.Forms.TableLayoutPanel();
+			this.selectClipboardEnabled = new System.Windows.Forms.CheckBox();
+			this.groupClipboardType = new System.Windows.Forms.GroupBox();
+			this.panelClipboardType = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectClipboardType_text = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_rtf = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_html = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_image = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_file = new System.Windows.Forms.CheckBox();
+			this.selectClipboardAppEnabled = new System.Windows.Forms.CheckBox();
+			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
+			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
+			this.labelClipboardLimit = new System.Windows.Forms.Label();
+			this.inputClipboardWaitTime = new System.Windows.Forms.NumericUpDown();
+			this.selectClipboardTopMost = new System.Windows.Forms.CheckBox();
+			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
+			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
+			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -228,6 +247,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNoteKey.SuspendLayout();
 			this.groupNoteItem.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
+			this.tabSetting_pageClipboard.SuspendLayout();
+			this.panelClipboardMain.SuspendLayout();
+			this.groupClipboardType.SuspendLayout();
+			this.panelClipboardType.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -241,6 +267,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting.Controls.Add(this.tabSetting_pageCommand);
 			this.tabSetting.Controls.Add(this.tabSetting_pageNote);
 			this.tabSetting.Controls.Add(this.tabSetting_pageDisplay);
+			this.tabSetting.Controls.Add(this.tabSetting_pageClipboard);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabSetting.Location = new System.Drawing.Point(3, 4);
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -704,7 +731,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherOptionDirPath
 			// 
-			this.commandLauncherOptionDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandLauncherOptionDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(489, 125);
 			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
 			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
@@ -724,7 +751,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherDirPath
 			// 
-			this.commandLauncherDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandLauncherDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandLauncherDirPath.Location = new System.Drawing.Point(489, 94);
 			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
 			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
@@ -735,7 +762,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherFilePath
 			// 
-			this.commandLauncherFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandLauncherFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandLauncherFilePath.Location = new System.Drawing.Point(445, 94);
 			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
 			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
@@ -756,7 +783,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherOptionFilePath
 			// 
-			this.commandLauncherOptionFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandLauncherOptionFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(445, 125);
 			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
 			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
@@ -787,7 +814,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherWorkDirPath
 			// 
-			this.commandLauncherWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Dir;
+			this.commandLauncherWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
 			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(445, 156);
 			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
 			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
@@ -808,7 +835,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncherIconPath
 			// 
-			this.commandLauncherIconPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.File;
+			this.commandLauncherIconPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
 			this.commandLauncherIconPath.Location = new System.Drawing.Point(445, 187);
 			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
 			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
@@ -1105,7 +1132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(235, 235);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(235, 252);
 			this.tableLayoutPanel2.TabIndex = 0;
 			// 
 			// selectToolbarVisible
@@ -1131,30 +1158,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarTopmost.Text = ":common/label/topmost";
 			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
 			// 
-			// selectToolbarShowText
-			// 
-			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectToolbarShowText.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
-			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 150);
-			this.selectToolbarShowText.Name = "selectToolbarShowText";
-			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
-			this.selectToolbarShowText.TabIndex = 9;
-			this.selectToolbarShowText.Text = ":setting/check/show-text";
-			this.selectToolbarShowText.UseVisualStyleBackColor = true;
-			// 
-			// selectToolbarAutoHide
-			// 
-			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectToolbarAutoHide.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
-			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 175);
-			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
-			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
-			this.selectToolbarAutoHide.TabIndex = 10;
-			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
-			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
-			// 
 			// labelToolbarTextWidth
 			// 
 			this.labelToolbarTextWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -1171,6 +1174,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
 			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
 			this.inputToolbarTextWidth.TabIndex = 8;
+			this.inputToolbarTextWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelToolbarFont
 			// 
@@ -1252,6 +1256,30 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarGroup.Name = "selectToolbarGroup";
 			this.selectToolbarGroup.Size = new System.Drawing.Size(142, 23);
 			this.selectToolbarGroup.TabIndex = 0;
+			// 
+			// selectToolbarAutoHide
+			// 
+			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectToolbarAutoHide.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
+			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 175);
+			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
+			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
+			this.selectToolbarAutoHide.TabIndex = 10;
+			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
+			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
+			// 
+			// selectToolbarShowText
+			// 
+			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectToolbarShowText.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
+			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 150);
+			this.selectToolbarShowText.Name = "selectToolbarShowText";
+			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
+			this.selectToolbarShowText.TabIndex = 9;
+			this.selectToolbarShowText.Text = ":setting/check/show-text";
+			this.selectToolbarShowText.UseVisualStyleBackColor = true;
 			// 
 			// selectToolbarItem
 			// 
@@ -1339,7 +1367,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_addGroup
 			// 
 			this.toolToolbarGroup_addGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addGroup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Group;
+			this.toolToolbarGroup_addGroup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group;
 			this.toolToolbarGroup_addGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_addGroup.Name = "toolToolbarGroup_addGroup";
 			this.toolToolbarGroup_addGroup.Size = new System.Drawing.Size(23, 22);
@@ -1349,7 +1377,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_addItem
 			// 
 			this.toolToolbarGroup_addItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_addItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.AddItem;
+			this.toolToolbarGroup_addItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_AddItem;
 			this.toolToolbarGroup_addItem.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_addItem.Name = "toolToolbarGroup_addItem";
 			this.toolToolbarGroup_addItem.Size = new System.Drawing.Size(23, 22);
@@ -1364,7 +1392,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_up
 			// 
 			this.toolToolbarGroup_up.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_up.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Up;
+			this.toolToolbarGroup_up.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Up;
 			this.toolToolbarGroup_up.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_up.Name = "toolToolbarGroup_up";
 			this.toolToolbarGroup_up.Size = new System.Drawing.Size(23, 22);
@@ -1374,7 +1402,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_down
 			// 
 			this.toolToolbarGroup_down.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_down.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Down;
+			this.toolToolbarGroup_down.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Down;
 			this.toolToolbarGroup_down.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_down.Name = "toolToolbarGroup_down";
 			this.toolToolbarGroup_down.Size = new System.Drawing.Size(23, 22);
@@ -1389,7 +1417,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolToolbarGroup_remove
 			// 
 			this.toolToolbarGroup_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolToolbarGroup_remove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Remove;
+			this.toolToolbarGroup_remove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove;
 			this.toolToolbarGroup_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolToolbarGroup_remove.Name = "toolToolbarGroup_remove";
 			this.toolToolbarGroup_remove.Size = new System.Drawing.Size(23, 22);
@@ -1817,6 +1845,229 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageDisplay.Text = ":setting/page/display";
 			this.tabSetting_pageDisplay.UseVisualStyleBackColor = true;
 			// 
+			// tabSetting_pageClipboard
+			// 
+			this.tabSetting_pageClipboard.Controls.Add(this.panelClipboardMain);
+			this.tabSetting_pageClipboard.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageClipboard.Name = "tabSetting_pageClipboard";
+			this.tabSetting_pageClipboard.Padding = new System.Windows.Forms.Padding(3);
+			this.tabSetting_pageClipboard.Size = new System.Drawing.Size(747, 283);
+			this.tabSetting_pageClipboard.TabIndex = 7;
+			this.tabSetting_pageClipboard.Text = ":setting/page/clipboard";
+			this.tabSetting_pageClipboard.UseVisualStyleBackColor = true;
+			// 
+			// panelClipboardMain
+			// 
+			this.panelClipboardMain.ColumnCount = 3;
+			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelClipboardMain.Controls.Add(this.selectClipboardEnabled, 0, 0);
+			this.panelClipboardMain.Controls.Add(this.groupClipboardType, 2, 0);
+			this.panelClipboardMain.Controls.Add(this.selectClipboardAppEnabled, 0, 1);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardWaitTaime, 0, 3);
+			this.panelClipboardMain.Controls.Add(this.inputClipboardLimit, 1, 2);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardLimit, 0, 2);
+			this.panelClipboardMain.Controls.Add(this.inputClipboardWaitTime, 1, 3);
+			this.panelClipboardMain.Controls.Add(this.selectClipboardTopMost, 0, 6);
+			this.panelClipboardMain.Controls.Add(this.selectClipboardVisible, 0, 5);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardSleepTime, 0, 4);
+			this.panelClipboardMain.Controls.Add(this.inputClipboardSleepTime, 1, 4);
+			this.panelClipboardMain.Location = new System.Drawing.Point(6, 6);
+			this.panelClipboardMain.Name = "panelClipboardMain";
+			this.panelClipboardMain.RowCount = 8;
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.Size = new System.Drawing.Size(519, 222);
+			this.panelClipboardMain.TabIndex = 9;
+			// 
+			// selectClipboardEnabled
+			// 
+			this.selectClipboardEnabled.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardEnabled, 2);
+			this.selectClipboardEnabled.Location = new System.Drawing.Point(3, 3);
+			this.selectClipboardEnabled.Name = "selectClipboardEnabled";
+			this.selectClipboardEnabled.Size = new System.Drawing.Size(218, 19);
+			this.selectClipboardEnabled.TabIndex = 0;
+			this.selectClipboardEnabled.Text = ":setting/check/clipboard-enabled";
+			this.selectClipboardEnabled.UseVisualStyleBackColor = true;
+			// 
+			// groupClipboardType
+			// 
+			this.groupClipboardType.AutoSize = true;
+			this.groupClipboardType.Controls.Add(this.panelClipboardType);
+			this.groupClipboardType.Location = new System.Drawing.Point(319, 3);
+			this.groupClipboardType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
+			this.groupClipboardType.Name = "groupClipboardType";
+			this.panelClipboardMain.SetRowSpan(this.groupClipboardType, 6);
+			this.groupClipboardType.Size = new System.Drawing.Size(172, 147);
+			this.groupClipboardType.TabIndex = 8;
+			this.groupClipboardType.TabStop = false;
+			this.groupClipboardType.Text = ":setting/group/clipboard-type";
+			// 
+			// panelClipboardType
+			// 
+			this.panelClipboardType.AutoSize = true;
+			this.panelClipboardType.Controls.Add(this.selectClipboardType_text);
+			this.panelClipboardType.Controls.Add(this.selectClipboardType_rtf);
+			this.panelClipboardType.Controls.Add(this.selectClipboardType_html);
+			this.panelClipboardType.Controls.Add(this.selectClipboardType_image);
+			this.panelClipboardType.Controls.Add(this.selectClipboardType_file);
+			this.panelClipboardType.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelClipboardType.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.panelClipboardType.Location = new System.Drawing.Point(3, 19);
+			this.panelClipboardType.Name = "panelClipboardType";
+			this.panelClipboardType.Size = new System.Drawing.Size(166, 125);
+			this.panelClipboardType.TabIndex = 0;
+			// 
+			// selectClipboardType_text
+			// 
+			this.selectClipboardType_text.AutoSize = true;
+			this.selectClipboardType_text.Location = new System.Drawing.Point(3, 3);
+			this.selectClipboardType_text.Name = "selectClipboardType_text";
+			this.selectClipboardType_text.Size = new System.Drawing.Size(148, 19);
+			this.selectClipboardType_text.TabIndex = 0;
+			this.selectClipboardType_text.Text = "#ClipboardType.Text";
+			this.selectClipboardType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardType_text.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardType_rtf
+			// 
+			this.selectClipboardType_rtf.AutoSize = true;
+			this.selectClipboardType_rtf.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardType_rtf.Name = "selectClipboardType_rtf";
+			this.selectClipboardType_rtf.Size = new System.Drawing.Size(139, 19);
+			this.selectClipboardType_rtf.TabIndex = 0;
+			this.selectClipboardType_rtf.Text = "#ClipboardType.Rtf";
+			this.selectClipboardType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardType_rtf.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardType_html
+			// 
+			this.selectClipboardType_html.AutoSize = true;
+			this.selectClipboardType_html.Location = new System.Drawing.Point(3, 53);
+			this.selectClipboardType_html.Name = "selectClipboardType_html";
+			this.selectClipboardType_html.Size = new System.Drawing.Size(151, 19);
+			this.selectClipboardType_html.TabIndex = 0;
+			this.selectClipboardType_html.Text = "#ClipboardType.Html";
+			this.selectClipboardType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardType_html.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardType_image
+			// 
+			this.selectClipboardType_image.AutoSize = true;
+			this.selectClipboardType_image.Location = new System.Drawing.Point(3, 78);
+			this.selectClipboardType_image.Name = "selectClipboardType_image";
+			this.selectClipboardType_image.Size = new System.Drawing.Size(160, 19);
+			this.selectClipboardType_image.TabIndex = 0;
+			this.selectClipboardType_image.Text = "#ClipboardType.Image";
+			this.selectClipboardType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardType_image.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardType_file
+			// 
+			this.selectClipboardType_file.AutoSize = true;
+			this.selectClipboardType_file.Location = new System.Drawing.Point(3, 103);
+			this.selectClipboardType_file.Name = "selectClipboardType_file";
+			this.selectClipboardType_file.Size = new System.Drawing.Size(142, 19);
+			this.selectClipboardType_file.TabIndex = 0;
+			this.selectClipboardType_file.Text = "#ClipboardType.File";
+			this.selectClipboardType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardType_file.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardAppEnabled
+			// 
+			this.selectClipboardAppEnabled.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardAppEnabled, 2);
+			this.selectClipboardAppEnabled.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardAppEnabled.Name = "selectClipboardAppEnabled";
+			this.selectClipboardAppEnabled.Size = new System.Drawing.Size(244, 19);
+			this.selectClipboardAppEnabled.TabIndex = 1;
+			this.selectClipboardAppEnabled.Text = ":setting/check/clipboard-app-enabled";
+			this.selectClipboardAppEnabled.UseVisualStyleBackColor = true;
+			// 
+			// labelClipboardWaitTaime
+			// 
+			this.labelClipboardWaitTaime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardWaitTaime.AutoSize = true;
+			this.labelClipboardWaitTaime.Location = new System.Drawing.Point(3, 86);
+			this.labelClipboardWaitTaime.Name = "labelClipboardWaitTaime";
+			this.labelClipboardWaitTaime.Size = new System.Drawing.Size(173, 15);
+			this.labelClipboardWaitTaime.TabIndex = 7;
+			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
+			// 
+			// inputClipboardLimit
+			// 
+			this.inputClipboardLimit.Location = new System.Drawing.Point(187, 53);
+			this.inputClipboardLimit.Name = "inputClipboardLimit";
+			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardLimit.TabIndex = 4;
+			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// labelClipboardLimit
+			// 
+			this.labelClipboardLimit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardLimit.AutoSize = true;
+			this.labelClipboardLimit.Location = new System.Drawing.Point(3, 57);
+			this.labelClipboardLimit.Name = "labelClipboardLimit";
+			this.labelClipboardLimit.Size = new System.Drawing.Size(174, 15);
+			this.labelClipboardLimit.TabIndex = 6;
+			this.labelClipboardLimit.Text = ":setting/label/clipboard-limit";
+			// 
+			// inputClipboardWaitTime
+			// 
+			this.inputClipboardWaitTime.Location = new System.Drawing.Point(187, 82);
+			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
+			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardWaitTime.TabIndex = 5;
+			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// selectClipboardTopMost
+			// 
+			this.selectClipboardTopMost.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardTopMost, 2);
+			this.selectClipboardTopMost.Location = new System.Drawing.Point(3, 165);
+			this.selectClipboardTopMost.Name = "selectClipboardTopMost";
+			this.selectClipboardTopMost.Size = new System.Drawing.Size(222, 19);
+			this.selectClipboardTopMost.TabIndex = 3;
+			this.selectClipboardTopMost.Text = ":setting/check/clipboard-topmost";
+			this.selectClipboardTopMost.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardVisible
+			// 
+			this.selectClipboardVisible.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardVisible, 2);
+			this.selectClipboardVisible.Location = new System.Drawing.Point(3, 140);
+			this.selectClipboardVisible.Name = "selectClipboardVisible";
+			this.selectClipboardVisible.Size = new System.Drawing.Size(209, 19);
+			this.selectClipboardVisible.TabIndex = 2;
+			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
+			this.selectClipboardVisible.UseVisualStyleBackColor = true;
+			// 
+			// labelClipboardSleepTime
+			// 
+			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardSleepTime.AutoSize = true;
+			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 115);
+			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
+			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
+			this.labelClipboardSleepTime.TabIndex = 9;
+			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
+			// 
+			// inputClipboardSleepTime
+			// 
+			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 111);
+			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
+			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardSleepTime.TabIndex = 10;
+			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -1879,7 +2130,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ClientSize = new System.Drawing.Size(761, 362);
 			this.Controls.Add(this.panelSetting);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.App;
+			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Name = "SettingForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -1951,6 +2202,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNoteKey.PerformLayout();
 			this.groupNoteItem.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
+			this.tabSetting_pageClipboard.ResumeLayout(false);
+			this.panelClipboardMain.ResumeLayout(false);
+			this.panelClipboardMain.PerformLayout();
+			this.groupClipboardType.ResumeLayout(false);
+			this.groupClipboardType.PerformLayout();
+			this.panelClipboardType.ResumeLayout(false);
+			this.panelClipboardType.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
 			this.panelSetting.ResumeLayout(false);
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
@@ -2097,5 +2358,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabControl tabSetting;
 		private System.Windows.Forms.Label labelToolbarGroup;
 		private System.Windows.Forms.ComboBox selectToolbarGroup;
+		private System.Windows.Forms.TabPage tabSetting_pageClipboard;
+		private System.Windows.Forms.CheckBox selectClipboardEnabled;
+		private System.Windows.Forms.CheckBox selectClipboardType_file;
+		private System.Windows.Forms.CheckBox selectClipboardType_image;
+		private System.Windows.Forms.CheckBox selectClipboardType_html;
+		private System.Windows.Forms.CheckBox selectClipboardType_rtf;
+		private System.Windows.Forms.CheckBox selectClipboardType_text;
+		private System.Windows.Forms.CheckBox selectClipboardTopMost;
+		private System.Windows.Forms.CheckBox selectClipboardVisible;
+		private System.Windows.Forms.CheckBox selectClipboardAppEnabled;
+		private System.Windows.Forms.NumericUpDown inputClipboardWaitTime;
+		private System.Windows.Forms.NumericUpDown inputClipboardLimit;
+		private System.Windows.Forms.Label labelClipboardWaitTaime;
+		private System.Windows.Forms.Label labelClipboardLimit;
+		private System.Windows.Forms.GroupBox groupClipboardType;
+		private System.Windows.Forms.FlowLayoutPanel panelClipboardType;
+		private System.Windows.Forms.TableLayoutPanel panelClipboardMain;
+		private System.Windows.Forms.Label labelClipboardSleepTime;
+		private System.Windows.Forms.NumericUpDown inputClipboardSleepTime;
 	}
 }

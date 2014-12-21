@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var notfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.NotFound, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.URI, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_URI, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
@@ -201,35 +201,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 実行時に渡されるオプション。
 		/// </summary>
 		public string Option { get; set; }
-		
-		#region アイコンデータ: 0.29.0未満対応
-		/// <summary>
-		/// 表示アイコンパス
-		/// </summary>
-		//[Obsolete("use property IconItem.Path")]
-		[XmlElement("IconPath", DataType = "string")]
-		public string IconPath {
-			get { return IconItem.Path; }
-			set {
-				if(string.IsNullOrWhiteSpace(IconItem.Path)) {
-					IconItem.Path = value;
-				}
-			}
-		}
-		/// <summary>
-		/// 表示アイコンインデックス
-		/// </summary>
-		//[Obsolete("use property IconItem.Index")]
-		[XmlElement("IconIndex", DataType = "int")]
-		public int IconIndex {
-			get { return IconItem.Index; }
-			set {
-				if(IconItem.Index == 0 && value != 0) {
-					IconItem.Index = value;
-				}
-			}
-		}
-		#endregion
 		
 		/// <summary>
 		/// 表示アイコンパス。

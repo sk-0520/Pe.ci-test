@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
+
+			Clipboard = new ClipboardSetting();
 			
 			WindowSaveTime = Literal.windowSaveTime.median;
 			WindowSaveCount = Literal.windowSaveCount.median;
@@ -75,6 +77,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			WindowSaveTime = Literal.windowSaveTime.ToRounding(WindowSaveTime);
 			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
+
+			Launcher.CorrectionValue();
+			Log.CorrectionValue();
+			SystemEnv.CorrectionValue();
+			Command.CorrectionValue();
+			Toolbar.CorrectionValue();
+			Note.CorrectionValue();
+			Clipboard.CorrectionValue();
 		}
 		
 		public RunningInfo RunningInfo { get; set; }
@@ -128,6 +138,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				}
 			}
 		}
+
+		public ClipboardSetting Clipboard { get; set; }
 
 		protected override void Dispose(bool disposing)
 		{

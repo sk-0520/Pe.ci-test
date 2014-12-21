@@ -280,7 +280,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void CopyText(string text)
 		{
-			Clipboard.SetText(text);
+			ClipboardUtility.CopyText(text, CommonData);
 		}
 		
 		void OpenProperty(string path)
@@ -713,7 +713,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var iconSize = UseToolbarItem.IconScale.ToSize();
 			var toolItem = new ToolStripDropDownButton();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Images.ToolbarMain, iconSize)) {
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain, iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
@@ -857,7 +857,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
-				Executer.RunItem(launcherItem, CommonData, this);
+				Executer.RunItem(launcherItem, CommonData);
 				launcherItem.Increment(null, null);
 				return true;
 			} catch(Exception ex) {
@@ -869,17 +869,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void ExecuteExItem(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
-			using(var form = new ExecuteForm()) {
-				form.SetParameter(launcherItem, exOptions);
-				form.SetCommonData(CommonData);
-				form.TopMost = TopMost;
-				if(form.ShowDialog(this) == DialogResult.OK) {
+			var form = new ExecuteForm();
+			form.SetParameter(launcherItem, exOptions);
+			form.SetCommonData(CommonData);
+			//form.TopMost = TopMost;
+			CommonData.RootSender.AppendWindow(form);
+			form.Show();
+			form.FormClosed += (IRootSender, e) => {
+				if(form.DialogResult == DialogResult.OK) {
 					var editedItem = form.EditedLauncherItem;
 					if(ExecuteItem(editedItem)) {
 						launcherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
 					}
 				}
-			}
+			};
 		}
 		
 		ToolStripItem GetOverButton(Point localPoint)

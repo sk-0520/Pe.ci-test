@@ -59,6 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			SubmitInput();
 			DialogResult = DialogResult.OK;
+			Close();
 		}
 		
 		void TabExecute_pageBasic_DragEnter(object sender, DragEventArgs e)
@@ -105,6 +106,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 				}
 			}
+		}
+
+		private void commandCancel_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
 		}
 	}
 }

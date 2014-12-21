@@ -8,6 +8,7 @@
  */
 using System;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
@@ -27,8 +28,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				// The InitializeComponent() call is required for Windows Forms designer support.
 				//
 				InitializeComponent();
-				
+
 				this._parent = parent;
+				ClipboardRegisted = false;
 			}
 		}
 	}

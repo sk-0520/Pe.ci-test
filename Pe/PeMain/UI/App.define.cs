@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string menuNameSystemEnvWindowSave = "menu_systemenv_window_save";
 		const string menuNameSystemEnvWindowLoad = "menu_systemenv_window_load";
 		const string menuNameSystemEnvWindowSeparator = "menu_systemenv_window_separator";
+		const string menuNameSystemEnvClipboard = "menu_systemenv_clipboard";
 		
 
 		class StartupLogger: ILogger

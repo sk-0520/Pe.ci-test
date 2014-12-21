@@ -87,6 +87,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ExportNoteSetting(mainSetting.Note);
 			
 			// ディスプレイ
+
+			// クリップボード
+			ExportClipboardSetting(mainSetting.Clipboard);
 			
 			// プロパティ設定
 			MainSetting = mainSetting;

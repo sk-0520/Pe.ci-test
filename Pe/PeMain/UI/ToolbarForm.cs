@@ -45,6 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var toolItem = (ToolStripItem)sender;
 			var launcherItem = (LauncherItem)toolItem.Tag;
+			this._tipsLauncher.HideItem();
 			ExecuteItem(launcherItem);
 		}
 		

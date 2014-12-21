@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// statusLog_itemDetail
 			// 
-			this.statusLog_itemDetail.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.NotImpl;
+			this.statusLog_itemDetail.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
 			this.statusLog_itemDetail.Name = "statusLog_itemDetail";
 			this.statusLog_itemDetail.Size = new System.Drawing.Size(36, 18);
 			this.statusLog_itemDetail.Text = "☃";
@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// toolLog_save
 			// 
-			this.toolLog_save.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Save;
+			this.toolLog_save.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
 			this.toolLog_save.Size = new System.Drawing.Size(147, 22);
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// toolLog_clear
 			// 
-			this.toolLog_clear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Images.Clear;
+			this.toolLog_clear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
 			this.toolLog_clear.Size = new System.Drawing.Size(148, 22);
@@ -268,6 +268,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Text = ":window/log";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
 			this.Shown += new System.EventHandler(this.LogForm_Shown);
+			this.LocationChanged += new System.EventHandler(this.LogForm_LocationChanged);
+			this.SizeChanged += new System.EventHandler(this.LogForm_SizeChanged);
 			this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
 			this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
 			this.toolStripContainer1.ContentPanel.ResumeLayout(false);

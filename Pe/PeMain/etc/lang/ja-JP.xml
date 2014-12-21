@@ -65,15 +65,16 @@
 		<Word Name="common/dialog/d-d/shortcut/caption"  Text="ショートカット登録方法" />
 		<Word Name="common/dialog/d-d/shortcut/message"  Text="D&amp;Dされたパスはショートカットファイルです。&#x0d;&#x0a;&#x0d;&#x0a;ショートカット先を登録するには「${yes}」を、&#x0d;&#x0a;ショートカットファイルそのものを登録するには「${no}」を選択してください。" />
 
-		<Word Name="window/accept"   Text="@[APPLICATION] 使用許諾" />
-		<Word Name="window/home"     Text="@[APPLICATION] ホーム" />
-		<Word Name="window/update"   Text="アップデート" />
-		<Word Name="window/toolbar"  Text="@[APPLICATION]" />
-		<Word Name="window/log"      Text="${log}" />
-		<Word Name="window/about"    Text="@[APPLICATION] 情報" />
-		<Word Name="window/execute"  Text="@[ITEM]を指定して実行" />
-		<Word Name="window/stream"   Text="@[ITEM]の実行出力" />
-		<Word Name="window/setting"  Text="@[APPLICATION] 設定" />
+		<Word Name="window/accept"    Text="@[APPLICATION] 使用許諾" />
+		<Word Name="window/home"      Text="@[APPLICATION] ホーム" />
+		<Word Name="window/update"    Text="アップデート" />
+		<Word Name="window/toolbar"   Text="@[APPLICATION]" />
+		<Word Name="window/log"       Text="${log}" />
+		<Word Name="window/about"     Text="@[APPLICATION] 情報" />
+		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
+		<Word Name="window/stream"    Text="@[ITEM]の実行出力" />
+		<Word Name="window/clipboard" Text="クリップボード" />
+		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
@@ -92,6 +93,7 @@
 		<Word Name="main/menu/system-env/window"            Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保存(&amp;S)" />
 		<Word Name="main/menu/system-env/window/load"       Text="保存しているウィンドウ状態を復帰(&amp;L)" />
+		<Word Name="main/menu/system-env/clipboard"         Text="クリップボード(&amp;C)" />
 		
 		<Word Name="main/event/screen/count-change"    Text="ディスプレイ数変更検知" />
 		<Word Name="main/event/power/resume"           Text="レジューム" />
@@ -231,6 +233,20 @@
 		<Word Name="stream/command/topmost" Text="${topmost}" />
 		<Word Name="stream/tips/kill"       Text="プロセスを終了" />
 		<Word Name="stream/running-close"   Text="実行中プロセスを閉じることはできません" />
+
+		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
+		<Word Name="clipboard/command/save"    Text="選択中アイテムの保存" />
+		<Word Name="clipboard/command/remove"  Text="選択中アイテムの削除" />
+		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
+		<Word Name="clipboard/command/empty"   Text="クリップボードを空にする" />
+		<Word Name="clipboard/type/clipboard"  Text="クリップボード" />
+		<Word Name="clipboard/header/name"     Text="名前" />
+		<Word Name="clipboard/header/path"     Text="パス" />
+		<Word Name="clipboard/html/error"      Text="HTML形式クリップボードの解析失敗" />
+		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
+		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
+		<Word Name="clipboard/wait/title"      Text="クリップボード: 待ち時間中のため無視" />
+		<Word Name="clipboard/wait/message"    Text="前回取得時間: @[TIME]" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャ" />
@@ -240,7 +256,8 @@
 		<Word Name="setting/page/command"           Text="コマンド" />
 		<Word Name="setting/page/display"           Text="ディスプレイ" />
 		<Word Name="setting/page/note"              Text="${note}" />
-		<Word Name="setting/check/startup"        Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
+		<Word Name="setting/page/clipboard"         Text="クリップボード" />
+		<Word Name="setting/check/startup"         Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />
 		<Word Name="setting/check/update-check.RC" Text="${update-check.RC}" />
@@ -285,6 +302,14 @@
 		<Word Name="setting/column/note/font"      Text="${font}" />
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
+		<Word Name="setting/check/clipboard-enabled"      Text="クリップボードの履歴を有効にする" />
+		<Word Name="setting/check/clipboard-app-enabled"  Text="@[APPLICATION]のコピー操作も履歴へ設定する" />
+		<Word Name="setting/label/clipboard-limit"        Text="保持する履歴数" />
+		<Word Name="setting/label/clipboard-wait"         Text="前回コピーからの待機時間(ミリ秒)" />
+		<Word Name="setting/label/clipboard-sleep"        Text="@[APPLICATION]操作猶予時間(ミリ秒)" />
+		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
+		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
+		<Word Name="setting/group/clipboard-type"         Text="取り込む種類" />
 		
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
@@ -403,6 +428,13 @@
 		<Word Name="enum/about-component-type/Library"   Text="ライブラリ" />
 		<Word Name="enum/about-component-type/Image"     Text="画像" />
 		<Word Name="enum/about-component-type/Unknown"   Text="${unknown}" />
+		
+		<Word Name="enum/clipboard-type"        Text="クリップボードの種類" />
+		<Word Name="enum/clipboard-type/text"   Text="文字列" />
+		<Word Name="enum/clipboard-type/rtf"    Text="書式付文字列" />
+		<Word Name="enum/clipboard-type/html"   Text="HTML" />
+		<Word Name="enum/clipboard-type/image"  Text="画像" />
+		<Word Name="enum/clipboard-type/file"   Text="ファイル" />
 		
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />

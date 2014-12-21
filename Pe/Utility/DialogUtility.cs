@@ -37,7 +37,29 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			return string.Format("{0}|{1}", Display, string.Join(";", Wildcard));
 		}
+
 	}
 	
+	public class DialogFilterValueItem<T>: DialogFilterItem
+	{
+		public DialogFilterValueItem(T value)
+			: base()
+		{
+			Value = value;
+		}
+		public DialogFilterValueItem(T value, string display, params string[] wildcard)
+			: base(display, wildcard)
+		{
+			Value = value;
+		}
+		public DialogFilterValueItem(T value, string display, IEnumerable<string> wildcard)
+			: base(display, wildcard)
+		{
+			Value = value;
+		}
+
+
+		public T Value { get; set; }
+	}
 
 }

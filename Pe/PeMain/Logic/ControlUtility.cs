@@ -514,5 +514,32 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				primaryArea.Height / 2 - target.Height / 2
 			);
 		}
+
+	}
+
+	/// <summary>
+	/// 突貫工事。
+	/// </summary>
+	public static class UpDownUtility
+	{
+		public static void SetRange(this NumericUpDown target, int min, int max)
+		{
+			target.Minimum = min;
+			target.Maximum = max;
+		}
+		public static void SetRange(this NumericUpDown target, TripleRange<int> range)
+		{
+			SetRange(target, range.minimum, range.maximum);
+		}
+		public static void SetValue(this NumericUpDown target, TripleRange<int> range, int value)
+		{
+			SetRange(target, range);
+			target.Value = value;
+		}
+		public static void SetValue(this NumericUpDown target, TripleRange<TimeSpan> range, TimeSpan value)
+		{
+			SetRange(target, (int)range.minimum.TotalMilliseconds, (int)range.maximum.TotalMilliseconds);
+			target.Value = (int)value.TotalMilliseconds;
+		}
 	}
 }

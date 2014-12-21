@@ -63,10 +63,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var result = new List<Form>();
 			result.AddRange(this._toolbarForms.Values);
 			result.Add(this._logForm);
+			result.Add(this._clipboardWindow);
 			
+			/*
 			foreach(var f in this._toolbarForms.Values.Where(f => f.OwnedForms.Length > 0)) {
 				result.AddRange(f.OwnedForms);
 			}
+			*/
+			result.AddRange(this._otherWindows);
 			
 			result.AddRange(this._noteWindowList);
 
@@ -165,14 +169,27 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._noteWindowList.Clear();
 			InitializeNoteForm(null, null);
 		}
-		
+
+		void ResetClipboard()
+		{
+			this._clipboardWindow.ClearEvent();
+			this._clipboardWindow.ToDispose();
+			this._clipboardWindow = new ClipboardForm();
+			this._clipboardWindow.SetCommonData(this._commonData);
+		}
+
 		/// <summary>
 		/// 表示コンポーネントをリセット。
 		/// </summary>
 		void ResetUI()
 		{
+			foreach(var window in this._otherWindows.ToArray()) {
+				this._otherWindows.Remove(window);
+				window.Dispose();
+			}
 			ResetToolbar();
 			ResetNote();
+			ResetClipboard();
 		}
 		
 		/// <summary>
@@ -193,6 +210,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					 */
 					
 					var mainSetting = settingForm.MainSetting;
+					// ログ
+					mainSetting.Log.Point = this._commonData.MainSetting.Log.Point;
+					mainSetting.Log.Size = this._commonData.MainSetting.Log.Size;
+					// クリップボード
+					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
+					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
+					mainSetting.Clipboard.Items = this._commonData.MainSetting.Clipboard.Items;
+					mainSetting.Clipboard.Items.LimitSize = mainSetting.Clipboard.Limit;
+					
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					this._commonData.MainSetting = mainSetting;
 					settingForm.SaveFiles();

@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.DB
 		{
 			using(var query = this.db.CreateQuery()) {
 				//var dtoList = this.db.GetResultList<NoteItemDto>(global::PeMain.Properties.SQL.GetNoteItemList);
-				var dtoList = query.GetResultList<NoteItemDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.GetNoteItemList);
+				var dtoList = query.GetResultList<NoteItemDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_GetNoteItemList);
 				if(enabledOnly) {
 					dtoList = dtoList.Where(dto => dto.CommonEnabled);
 				}
@@ -96,7 +96,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic.DB
 					idList.Add(item);
 				}
 				query.SetExpression("ID_LIST", string.Join(" or ", idList));
-				query.ExecuteCommand(global::ContentTypeTextNet.Pe.PeMain.Properties.SQL.EnabledSwitch);
+				query.ExecuteCommand(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_EnabledSwitch);
 			}
 		}
 		

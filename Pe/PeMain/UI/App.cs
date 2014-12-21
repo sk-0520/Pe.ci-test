@@ -112,7 +112,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			if(e.Mode == PowerModes.Resume) {
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
+#if !DISABLED_UPDATE_CHECK
 				CheckUpdateProcessAsync(false);
+#endif
 			}
 		}
 		
@@ -183,6 +185,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			}
 		}
+
+		void window_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			var window = (Form)sender;
+			Debug.WriteLine(window.Text);
+			this._otherWindows.Remove(window);
+			this._commonData.Logger.Puts(LogType.Information, sender.ToString(), e);
+			window.Dispose();
+		}
+		
 
 	}
 	

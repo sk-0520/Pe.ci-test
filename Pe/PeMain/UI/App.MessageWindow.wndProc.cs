@@ -10,6 +10,7 @@ using System;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -37,7 +38,34 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							CommonData.RootSender.ReceiveDeviceChanged(changeDevice);
 						}
 						break;
+						/*
+					case (int)WM.WM_CHANGECBCHAIN: 
+						{
+							if(m.WParam == NextWndHandle) {
+								NextWndHandle = m.LParam;
+							} else if(NextWndHandle != null) {
+								NativeMethods.SendMessage(NextWndHandle, (WM)m.Msg, m.WParam, m.LParam);
+							}
+						}
+						break;
 						
+					case (int)WM.WM_DRAWCLIPBOARD: 
+						{
+							//if(CommonData.RootSender.EnabledClipboard) {
+							CommonData.RootSender.ChangeClipboard();
+							//}
+							if(NextWndHandle != null) {
+								NativeMethods.SendMessage(NextWndHandle, (WM)m.Msg, m.WParam, m.LParam);
+							}
+						}
+						break;
+						*/
+					case (int)WM.WM_CLIPBOARDUPDATE: 
+						{
+							CommonData.RootSender.ChangeClipboard();
+						}
+						break;
+
 					default:
 						break;
 				}

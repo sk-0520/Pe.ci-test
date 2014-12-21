@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize();
 		}
-		
+		//TODO: なんでこれ指定してんだろう
 		protected override CreateParams CreateParams
 		{
 			get
@@ -85,6 +85,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(e.CloseReason == CloseReason.UserClosing) {
 				e.Cancel = true;
 				Visible = false;
+				CommonData.MainSetting.Log.Visible = false;
 			}
 		}
 		
@@ -137,6 +138,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void LogForm_Shown(object sender, EventArgs e)
 		{
 			ShowLast();
+		}
+
+		private void LogForm_SizeChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Log.Size = Size;
+		}
+
+		private void LogForm_LocationChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Log.Point = Location;
 		}
 	}
 }
