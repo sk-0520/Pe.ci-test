@@ -48,10 +48,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region Initialize
 
 		void InitializeClipboard(ClipboardSetting setting)
-		{ }
+		{
+			this.selectClipboardAppEnabled.Checked = setting.EnabledApplicationCopy;
+		}
 		
 		#endregion ////////////////////////////////////////////////////
-
+		
 		
 		#region Export
 

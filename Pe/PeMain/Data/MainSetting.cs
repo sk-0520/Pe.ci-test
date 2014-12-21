@@ -77,6 +77,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			WindowSaveTime = Literal.windowSaveTime.ToRounding(WindowSaveTime);
 			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
+
+			Launcher.CorrectionValue();
+			Log.CorrectionValue();
+			SystemEnv.CorrectionValue();
+			Command.CorrectionValue();
+			Toolbar.CorrectionValue();
+			Note.CorrectionValue();
+			Clipboard.CorrectionValue();
 		}
 		
 		public RunningInfo RunningInfo { get; set; }

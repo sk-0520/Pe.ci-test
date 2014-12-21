@@ -141,13 +141,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 			Enabled = true;
 			EnabledTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
+
+			SleepTime = Literal.clipboardSleepTime.median;
+			WaitTime = Literal.clipboardWaitTime.median;
 		}
 
 		/// <summary>
 		/// クリップボードユーティリティを使用するか。
 		/// </summary>
 		public bool Enabled { get; set; }
-
+		/// <summary>
+		/// クリップボード通知対象。
+		/// </summary>
 		public ClipboardType EnabledTypes { get; set; }
 
 		/// <summary>
@@ -184,21 +189,45 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public bool DisabledCopy { get; set; }
-		///// <summary>
-		///// 
-		///// </summary>
-		//[XmlIgnore]
-		//public TimeSpan WaitTime { get; set; }
-		//[XmlElement("WaitTime", DataType = "duration")]
-		//public string _WaitTime
-		//{
-		//	get { return XmlConvert.ToString(WaitTime); }
-		//	set
-		//	{
-		//		if(!string.IsNullOrWhiteSpace(value)) {
-		//			WaitTime = XmlConvert.ToTimeSpan(value);
-		//		}
-		//	}
-		//}
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public TimeSpan WaitTime { get; set; }
+		[XmlElement("WaitTime", DataType = "duration")]
+		public string _WaitTime
+		{
+			get { return XmlConvert.ToString(WaitTime); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					WaitTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public TimeSpan SleepTime { get; set; }
+		[XmlElement("SleepTime", DataType = "duration")]
+		public string _SleepTime
+		{
+			get { return XmlConvert.ToString(SleepTime); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					SleepTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
+
+		public override void CorrectionValue()
+		{
+			base.CorrectionValue();
+
+			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
+			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
+		}
 	}
 }
