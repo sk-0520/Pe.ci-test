@@ -32,8 +32,41 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize(language, setting, db);
 		}
+
+		#region Function
+		#endregion ////////////////////////////////////////////////////
+
+
+		#region Language
+
+		void ApplyLanguageClipboard()
+		{ }
+
+		#endregion
+
+
+		#region Initialize
+
+		void InitializeClipboard(ClipboardSetting setting)
+		{ }
 		
+		#endregion ////////////////////////////////////////////////////
+
 		
+		#region Export
+
+		void ExportClipboardSetting(ClipboardSetting setting)
+		{ }
+
+		#endregion ////////////////////////////////////////////////////
+
+		
+		#region Page
+		#region Page/Clipboard
+		#endregion ////////////////////////////////////////////////////
+		#endregion ////////////////////////////////////////////////////
+
+
 		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
 		{
 			if(this._launcherSelectedItem != null) {

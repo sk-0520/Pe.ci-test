@@ -23,6 +23,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageCommand.SetLanguage(Language);
 			this.tabSetting_pageNote.SetLanguage(Language);
 			this.tabSetting_pageDisplay.SetLanguage(Language);
+			this.tabSetting_pageClipboard.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageLog()
@@ -174,6 +175,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageCommand();
 			ApplyLanguageNote();
 			ApplyLanguageDisplay();
+			ApplyLanguageClipboard();
 		}
 	}
 }

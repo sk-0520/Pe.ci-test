@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			}
 		}
-		
+
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			ApplyLanguage();
@@ -242,6 +242,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeToolbar(mainSetting.Toolbar);
 			InitializeCommand(mainSetting.Command);
 			InitializeNote(mainSetting.Note, db);
+			InitializeClipboard(mainSetting.Clipboard);
 
 			#if RELEASE
 			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };

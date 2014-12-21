@@ -112,8 +112,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
-			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
-			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
 			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.labelToolbarFont = new System.Windows.Forms.Label();
@@ -124,6 +122,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarPosition = new System.Windows.Forms.ComboBox();
 			this.labelToolbarGroup = new System.Windows.Forms.Label();
 			this.selectToolbarGroup = new System.Windows.Forms.ComboBox();
+			this.selectToolbarAutoHide = new System.Windows.Forms.CheckBox();
+			this.selectToolbarShowText = new System.Windows.Forms.CheckBox();
 			this.selectToolbarItem = new System.Windows.Forms.ComboBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -174,6 +174,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridNoteItems_columnFore = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.gridNoteItems_columnBack = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
+			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -241,6 +242,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting.Controls.Add(this.tabSetting_pageCommand);
 			this.tabSetting.Controls.Add(this.tabSetting_pageNote);
 			this.tabSetting.Controls.Add(this.tabSetting_pageDisplay);
+			this.tabSetting.Controls.Add(this.tabSetting_pageClipboard);
 			this.tabSetting.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabSetting.Location = new System.Drawing.Point(3, 4);
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1131,30 +1133,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarTopmost.Text = ":common/label/topmost";
 			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
 			// 
-			// selectToolbarShowText
-			// 
-			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectToolbarShowText.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
-			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 150);
-			this.selectToolbarShowText.Name = "selectToolbarShowText";
-			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
-			this.selectToolbarShowText.TabIndex = 9;
-			this.selectToolbarShowText.Text = ":setting/check/show-text";
-			this.selectToolbarShowText.UseVisualStyleBackColor = true;
-			// 
-			// selectToolbarAutoHide
-			// 
-			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectToolbarAutoHide.AutoSize = true;
-			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
-			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 175);
-			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
-			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
-			this.selectToolbarAutoHide.TabIndex = 10;
-			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
-			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
-			// 
 			// labelToolbarTextWidth
 			// 
 			this.labelToolbarTextWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -1252,6 +1230,30 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarGroup.Name = "selectToolbarGroup";
 			this.selectToolbarGroup.Size = new System.Drawing.Size(142, 23);
 			this.selectToolbarGroup.TabIndex = 0;
+			// 
+			// selectToolbarAutoHide
+			// 
+			this.selectToolbarAutoHide.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectToolbarAutoHide.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarAutoHide, 2);
+			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 175);
+			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
+			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
+			this.selectToolbarAutoHide.TabIndex = 10;
+			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
+			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
+			// 
+			// selectToolbarShowText
+			// 
+			this.selectToolbarShowText.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectToolbarShowText.AutoSize = true;
+			this.tableLayoutPanel2.SetColumnSpan(this.selectToolbarShowText, 2);
+			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 150);
+			this.selectToolbarShowText.Name = "selectToolbarShowText";
+			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
+			this.selectToolbarShowText.TabIndex = 9;
+			this.selectToolbarShowText.Text = ":setting/check/show-text";
+			this.selectToolbarShowText.UseVisualStyleBackColor = true;
 			// 
 			// selectToolbarItem
 			// 
@@ -1817,6 +1819,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageDisplay.Text = ":setting/page/display";
 			this.tabSetting_pageDisplay.UseVisualStyleBackColor = true;
 			// 
+			// tabSetting_pageClipboard
+			// 
+			this.tabSetting_pageClipboard.Location = new System.Drawing.Point(4, 24);
+			this.tabSetting_pageClipboard.Name = "tabSetting_pageClipboard";
+			this.tabSetting_pageClipboard.Padding = new System.Windows.Forms.Padding(3);
+			this.tabSetting_pageClipboard.Size = new System.Drawing.Size(747, 283);
+			this.tabSetting_pageClipboard.TabIndex = 7;
+			this.tabSetting_pageClipboard.Text = ":setting/page/clipboard";
+			this.tabSetting_pageClipboard.UseVisualStyleBackColor = true;
+			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -2097,5 +2109,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabControl tabSetting;
 		private System.Windows.Forms.Label labelToolbarGroup;
 		private System.Windows.Forms.ComboBox selectToolbarGroup;
+		private System.Windows.Forms.TabPage tabSetting_pageClipboard;
 	}
 }

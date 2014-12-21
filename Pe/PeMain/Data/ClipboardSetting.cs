@@ -140,12 +140,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			TextFont = new FontSetting(SystemFonts.DialogFont);
 
 			Enabled = true;
+			EnabledTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
 		}
 
 		/// <summary>
 		/// クリップボードユーティリティを使用するか。
 		/// </summary>
 		public bool Enabled { get; set; }
+
+		public ClipboardType EnabledTypes { get; set; }
 
 		/// <summary>
 		/// 本体でのコピー操作でもコピー検知に含めるか。
