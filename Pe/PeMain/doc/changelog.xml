@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.36.1" type="rc">
+		<ul type="note">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="developer">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+	</log>
 	<log date="2014/12/21" version="0.36.0">
 		<ul type="note">
 			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility">#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</li>
