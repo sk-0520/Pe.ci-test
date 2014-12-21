@@ -1174,6 +1174,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
 			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
 			this.inputToolbarTextWidth.TabIndex = 8;
+			this.inputToolbarTextWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelToolbarFont
 			// 
@@ -1933,6 +1934,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_text.Size = new System.Drawing.Size(148, 19);
 			this.selectClipboardType_text.TabIndex = 0;
 			this.selectClipboardType_text.Text = "#ClipboardType.Text";
+			this.selectClipboardType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardType_text.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardType_rtf
@@ -1943,6 +1945,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_rtf.Size = new System.Drawing.Size(139, 19);
 			this.selectClipboardType_rtf.TabIndex = 0;
 			this.selectClipboardType_rtf.Text = "#ClipboardType.Rtf";
+			this.selectClipboardType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardType_rtf.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardType_html
@@ -1953,6 +1956,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_html.Size = new System.Drawing.Size(151, 19);
 			this.selectClipboardType_html.TabIndex = 0;
 			this.selectClipboardType_html.Text = "#ClipboardType.Html";
+			this.selectClipboardType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardType_html.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardType_image
@@ -1963,6 +1967,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_image.Size = new System.Drawing.Size(160, 19);
 			this.selectClipboardType_image.TabIndex = 0;
 			this.selectClipboardType_image.Text = "#ClipboardType.Image";
+			this.selectClipboardType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardType_image.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardType_file
@@ -1973,6 +1978,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_file.Size = new System.Drawing.Size(142, 19);
 			this.selectClipboardType_file.TabIndex = 0;
 			this.selectClipboardType_file.Text = "#ClipboardType.File";
+			this.selectClipboardType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardType_file.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardAppEnabled
@@ -2002,6 +2008,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardLimit.Name = "inputClipboardLimit";
 			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardLimit.TabIndex = 4;
+			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// labelClipboardLimit
 			// 
@@ -2019,6 +2026,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
 			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardWaitTime.TabIndex = 5;
+			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// selectClipboardTopMost
 			// 
@@ -2058,6 +2066,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
 			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardSleepTime.TabIndex = 10;
+			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// commandCancel
 			// 

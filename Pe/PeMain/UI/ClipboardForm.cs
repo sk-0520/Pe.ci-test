@@ -105,6 +105,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void Initialize()
 		{
+			SelectedItemIndex = -1;
+
 			this.imageTab.Images.Add(imageText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText);
 			this.imageTab.Images.Add(imageRtf, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat);
 			this.imageTab.Images.Add(imageHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml);
@@ -518,7 +520,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Debug.WriteLine(this.listClipboard.SelectedIndex.ToString());
+			//Debug.WriteLine(this.listClipboard.SelectedIndex.ToString());
 			//Debug.WriteLine(ActiveControl);
 			//var isActive = ActiveControl == this.listClipboard;
 			var index = this.listClipboard.SelectedIndex;
@@ -526,10 +528,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				SelectedItemIndex = index;
 				ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 				ChangeSelsectedItem(this.listClipboard.SelectedIndex);
-				
+				if(Form.ActiveForm == this) {
 					ActiveControl = this.listClipboard;
+				}
 				//	this.listClipboard.Select();
-				
 			}
 		}
 
