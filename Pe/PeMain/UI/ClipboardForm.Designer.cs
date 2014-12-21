@@ -33,6 +33,9 @@
 			this.statusClipboard_itemSelectedIndex = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusClipboard_itemCount = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusClipboard_itemLimit = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.panelClipboard = new System.Windows.Forms.SplitContainer();
 			this.listClipboard = new System.Windows.Forms.ListBox();
 			this.tabPreview = new System.Windows.Forms.TabControl();
@@ -50,9 +53,6 @@
 			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageTab = new System.Windows.Forms.ImageList(this.components);
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.statusClipboard_itemLimit = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolClipboard = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
 			this.toolClipboard_itemTopmost = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -142,6 +142,24 @@
 			this.statusClipboard_itemCount.Name = "statusClipboard_itemCount";
 			this.statusClipboard_itemCount.Size = new System.Drawing.Size(20, 18);
 			this.statusClipboard_itemCount.Text = "☃";
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(13, 18);
+			this.toolStripStatusLabel1.Text = "(";
+			// 
+			// statusClipboard_itemLimit
+			// 
+			this.statusClipboard_itemLimit.Name = "statusClipboard_itemLimit";
+			this.statusClipboard_itemLimit.Size = new System.Drawing.Size(20, 18);
+			this.statusClipboard_itemLimit.Text = "☃";
+			// 
+			// toolStripStatusLabel4
+			// 
+			this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+			this.toolStripStatusLabel4.Size = new System.Drawing.Size(13, 18);
+			this.toolStripStatusLabel4.Text = ")";
 			// 
 			// panelClipboard
 			// 
@@ -238,7 +256,7 @@
 			this.viewRtf.Name = "viewRtf";
 			this.viewRtf.ReadOnly = true;
 			this.viewRtf.ShortcutsEnabled = false;
-			this.viewRtf.Size = new System.Drawing.Size(365, 194);
+			this.viewRtf.Size = new System.Drawing.Size(365, 193);
 			this.viewRtf.TabIndex = 0;
 			this.viewRtf.Text = "";
 			this.viewRtf.WordWrap = false;
@@ -255,11 +273,13 @@
 			// 
 			// viewHtml
 			// 
+			this.viewHtml.AllowWebBrowserDrop = false;
 			this.viewHtml.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewHtml.IsWebBrowserContextMenuEnabled = false;
 			this.viewHtml.Location = new System.Drawing.Point(0, 0);
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
-			this.viewHtml.Size = new System.Drawing.Size(371, 200);
+			this.viewHtml.Size = new System.Drawing.Size(371, 199);
 			this.viewHtml.TabIndex = 0;
 			// 
 			// tabPreview_pageImage
@@ -331,24 +351,6 @@
 			this.imageTab.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
 			this.imageTab.ImageSize = new System.Drawing.Size(16, 16);
 			this.imageTab.TransparentColor = System.Drawing.Color.Transparent;
-			// 
-			// toolStripStatusLabel1
-			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(13, 18);
-			this.toolStripStatusLabel1.Text = "(";
-			// 
-			// statusClipboard_itemLimit
-			// 
-			this.statusClipboard_itemLimit.Name = "statusClipboard_itemLimit";
-			this.statusClipboard_itemLimit.Size = new System.Drawing.Size(20, 18);
-			this.statusClipboard_itemLimit.Text = "☃";
-			// 
-			// toolStripStatusLabel4
-			// 
-			this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-			this.toolStripStatusLabel4.Size = new System.Drawing.Size(13, 18);
-			this.toolStripStatusLabel4.Text = ")";
 			// 
 			// toolClipboard
 			// 

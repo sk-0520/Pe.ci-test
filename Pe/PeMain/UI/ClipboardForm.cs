@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		CommonData CommonData { get; set; }
 		int HoverItemIndex { get; set; }
-		//int SelectedItemIndex { get; set; }
+		int SelectedItemIndex { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -518,16 +518,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			Debug.WriteLine(this.listClipboard.SelectedIndex.ToString());
 			//Debug.WriteLine(ActiveControl);
 			//var isActive = ActiveControl == this.listClipboard;
-			//if(this.listClipboard.SelectedIndex != SelectedItemIndex) {
+			var index = this.listClipboard.SelectedIndex;
+			if(index != SelectedItemIndex) {
+				SelectedItemIndex = index;
 				ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 				ChangeSelsectedItem(this.listClipboard.SelectedIndex);
 				
 					ActiveControl = this.listClipboard;
 				//	this.listClipboard.Select();
 				
-			//}
+			}
 		}
 
 		private void ClipboardForm_FormClosing(object sender, FormClosingEventArgs e)
