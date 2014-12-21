@@ -210,6 +210,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					 */
 					
 					var mainSetting = settingForm.MainSetting;
+					// ログ
+					mainSetting.Log.Point = this._commonData.MainSetting.Log.Point;
+					mainSetting.Log.Size = this._commonData.MainSetting.Log.Size;
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
