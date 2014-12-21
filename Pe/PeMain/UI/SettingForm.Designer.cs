@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.panelMainOthers = new System.Windows.Forms.FlowLayoutPanel();
@@ -185,19 +185,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_image = new System.Windows.Forms.CheckBox();
 			this.selectClipboardType_file = new System.Windows.Forms.CheckBox();
 			this.selectClipboardAppEnabled = new System.Windows.Forms.CheckBox();
-			this.selectClipboardTopMost = new System.Windows.Forms.CheckBox();
 			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
-			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
 			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
 			this.labelClipboardLimit = new System.Windows.Forms.Label();
 			this.inputClipboardWaitTime = new System.Windows.Forms.NumericUpDown();
+			this.selectClipboardTopMost = new System.Windows.Forms.CheckBox();
+			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
+			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
+			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
-			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.panelMainOthers.SuspendLayout();
@@ -253,10 +253,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardType.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -1774,8 +1774,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1805,9 +1805,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1908,7 +1908,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupClipboardType.Size = new System.Drawing.Size(172, 147);
 			this.groupClipboardType.TabIndex = 8;
 			this.groupClipboardType.TabStop = false;
-			this.groupClipboardType.Text = ":setting/group/type";
+			this.groupClipboardType.Text = ":setting/group/clipboard-type";
 			// 
 			// panelClipboardType
 			// 
@@ -1986,17 +1986,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardAppEnabled.Text = ":setting/check/clipboard-app-enabled";
 			this.selectClipboardAppEnabled.UseVisualStyleBackColor = true;
 			// 
-			// selectClipboardTopMost
-			// 
-			this.selectClipboardTopMost.AutoSize = true;
-			this.panelClipboardMain.SetColumnSpan(this.selectClipboardTopMost, 2);
-			this.selectClipboardTopMost.Location = new System.Drawing.Point(3, 165);
-			this.selectClipboardTopMost.Name = "selectClipboardTopMost";
-			this.selectClipboardTopMost.Size = new System.Drawing.Size(222, 19);
-			this.selectClipboardTopMost.TabIndex = 3;
-			this.selectClipboardTopMost.Text = ":setting/check/clipboard-topmost";
-			this.selectClipboardTopMost.UseVisualStyleBackColor = true;
-			// 
 			// labelClipboardWaitTaime
 			// 
 			this.labelClipboardWaitTaime.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -2006,17 +1995,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelClipboardWaitTaime.Size = new System.Drawing.Size(173, 15);
 			this.labelClipboardWaitTaime.TabIndex = 7;
 			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
-			// 
-			// selectClipboardVisible
-			// 
-			this.selectClipboardVisible.AutoSize = true;
-			this.panelClipboardMain.SetColumnSpan(this.selectClipboardVisible, 2);
-			this.selectClipboardVisible.Location = new System.Drawing.Point(3, 140);
-			this.selectClipboardVisible.Name = "selectClipboardVisible";
-			this.selectClipboardVisible.Size = new System.Drawing.Size(209, 19);
-			this.selectClipboardVisible.TabIndex = 2;
-			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
-			this.selectClipboardVisible.UseVisualStyleBackColor = true;
 			// 
 			// inputClipboardLimit
 			// 
@@ -2041,6 +2019,45 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
 			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardWaitTime.TabIndex = 5;
+			// 
+			// selectClipboardTopMost
+			// 
+			this.selectClipboardTopMost.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardTopMost, 2);
+			this.selectClipboardTopMost.Location = new System.Drawing.Point(3, 165);
+			this.selectClipboardTopMost.Name = "selectClipboardTopMost";
+			this.selectClipboardTopMost.Size = new System.Drawing.Size(222, 19);
+			this.selectClipboardTopMost.TabIndex = 3;
+			this.selectClipboardTopMost.Text = ":setting/check/clipboard-topmost";
+			this.selectClipboardTopMost.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardVisible
+			// 
+			this.selectClipboardVisible.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardVisible, 2);
+			this.selectClipboardVisible.Location = new System.Drawing.Point(3, 140);
+			this.selectClipboardVisible.Name = "selectClipboardVisible";
+			this.selectClipboardVisible.Size = new System.Drawing.Size(209, 19);
+			this.selectClipboardVisible.TabIndex = 2;
+			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
+			this.selectClipboardVisible.UseVisualStyleBackColor = true;
+			// 
+			// labelClipboardSleepTime
+			// 
+			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardSleepTime.AutoSize = true;
+			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 115);
+			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
+			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
+			this.labelClipboardSleepTime.TabIndex = 9;
+			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
+			// 
+			// inputClipboardSleepTime
+			// 
+			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 111);
+			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
+			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardSleepTime.TabIndex = 10;
 			// 
 			// commandCancel
 			// 
@@ -2094,23 +2111,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// labelClipboardSleepTime
-			// 
-			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardSleepTime.AutoSize = true;
-			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 115);
-			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
-			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
-			this.labelClipboardSleepTime.TabIndex = 9;
-			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
-			// 
-			// inputClipboardSleepTime
-			// 
-			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 111);
-			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
-			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardSleepTime.TabIndex = 10;
 			// 
 			// SettingForm
 			// 
@@ -2202,11 +2202,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardType.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
 			this.panelSetting.ResumeLayout(false);
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
 			this.ResumeLayout(false);
 
 		}

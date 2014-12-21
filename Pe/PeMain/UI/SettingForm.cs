@@ -40,7 +40,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region Language
 
 		void ApplyLanguageClipboard()
-		{ }
+		{
+			this.labelClipboardLimit.SetLanguage(Language);
+			this.labelClipboardWaitTaime.SetLanguage(Language);
+			this.labelClipboardSleepTime.SetLanguage(Language);
+			this.selectClipboardEnabled.SetLanguage(Language);
+			this.selectClipboardAppEnabled.SetLanguage(Language);
+			this.selectClipboardTopMost.SetLanguage(Language);
+			this.selectClipboardVisible.SetLanguage(Language);
+			this.groupClipboardType.SetLanguage(Language);
+			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
+			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
+			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
+			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
+			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+		}
 
 		#endregion
 

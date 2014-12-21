@@ -255,7 +255,8 @@
 		<Word Name="setting/page/command"           Text="コマンド" />
 		<Word Name="setting/page/display"           Text="ディスプレイ" />
 		<Word Name="setting/page/note"              Text="${note}" />
-		<Word Name="setting/check/startup"        Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
+		<Word Name="setting/page/clipboard"         Text="クリップボード" />
+		<Word Name="setting/check/startup"         Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />
 		<Word Name="setting/check/update-check.RC" Text="${update-check.RC}" />
@@ -300,6 +301,14 @@
 		<Word Name="setting/column/note/font"      Text="${font}" />
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
+		<Word Name="setting/check/clipboard-enabled"      Text="" />
+		<Word Name="setting/check/clipboard-app-enabled"  Text="" />
+		<Word Name="setting/label/clipboard-limit"        Text="" />
+		<Word Name="setting/label/clipboard-wait"         Text="" />
+		<Word Name="setting/label/clipboard-sleep"        Text="" />
+		<Word Name="setting/check/clipboard-visible"      Text="" />
+		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
+		<Word Name="setting/group/clipboard-type"         Text="" />
 		
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
