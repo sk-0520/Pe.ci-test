@@ -584,7 +584,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void command_Click(object sender, EventArgs e)
 		{
-			if(HoverItemIndex > -1) {
+			if(0 > HoverItemIndex) {
 				return;
 			}
 			try {

@@ -46,13 +46,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public IEnumerable<string> Files { get; set; }
 
 
-		public bool SetClipboardData()
+		public bool SetClipboardData(ClipboardType enabledTypes)
 		{
-			var isText = Clipboard.ContainsText(TextDataFormat.Text);
-			var isRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
-			var isHtml = Clipboard.ContainsText(TextDataFormat.Html);
-			var isImage = Clipboard.ContainsImage();
-			var isFile = Clipboard.ContainsFileDropList();
+			var isText = enabledTypes.HasFlag(ClipboardType.Text) && Clipboard.ContainsText(TextDataFormat.Text);
+			var isRtf = enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf);
+			var isHtml = enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html);
+			var isImage = enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage();
+			var isFile = enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList();
 
 			ClipboardTypes = ClipboardType.None;
 			if(!isText && !isRtf && !isHtml && !isImage && !isFile) {

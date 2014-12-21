@@ -106,7 +106,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 
 			var clipboardItem = new ClipboardItem();
-			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData()) {
+			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
 				this._clipboardPrevTime = nowTime;
 				var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem);
 				clipboardItem.Name = displayText;
