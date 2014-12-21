@@ -105,5 +105,11 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		public new void RemoveAt(int index)
+		{
+			base.RemoveAt(index);
+			CallListChangedEvent();
+		}
+
 	}
 }

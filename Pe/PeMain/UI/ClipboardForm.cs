@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		CommonData CommonData { get; set; }
 		int HoverItemIndex { get; set; }
-		int SelectedItemIndex { get; set; }
+		//int SelectedItemIndex { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -124,6 +124,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemSave.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemClear.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemEmpty.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemType_itemClipboard.SetLanguage(CommonData.Language);
@@ -227,6 +228,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 
 			this.statusClipboard_itemCount.Text = count.ToString();
+			this.statusClipboard_itemLimit.Text = CommonData.MainSetting.Clipboard.Limit.ToString();
 		}
 
 		void ChangeCommand(int index)
@@ -252,11 +254,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void ChangeSelsectedItem(int index)
 		{
-			SelectedItemIndex = index;
-			this.tabPreview.Enabled = SelectedItemIndex != -1;
+			//SelectedItemIndex = index;
+			this.tabPreview.Enabled = index != -1;
 
-			if(SelectedItemIndex == -1) {
-				this.toolClipboard_itemSave.Enabled = this.listClipboard.SelectedIndex != -1;
+			if(index == -1) {
 				return;
 			}
 
@@ -271,7 +272,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview.SuspendLayout();
 			this.tabPreview.TabPages.Clear();
 
-			var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
+			var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 
 			foreach(var type in clipboardItem.GetClipboardTypeList()) {
 				switch(type) {
@@ -451,6 +452,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void Items_ListChanged(object sender, EventArgs e)
 		{
 			this.listClipboard.SuspendLayout();
+			var isActive = Form.ActiveForm == this;
 			var selectedIndex = this.listClipboard.SelectedIndex;
 			this.listClipboard.DataSource = null;
 			if(CommonData.MainSetting.Clipboard.Items.Count == 0) {
@@ -461,11 +463,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				this.viewFile.Items.Clear();
 			}
 			this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.Items;
-			if(selectedIndex + 1 < this.listClipboard.Items.Count) {
-				this.listClipboard.SelectedIndex = selectedIndex + 1;
+			if(isActive) {
+				if(selectedIndex + 1 < this.listClipboard.Items.Count) {
+					this.listClipboard.SelectedIndex = selectedIndex + 1;
+				}
+			} else if(this.CommonData.MainSetting.Clipboard.Items.Any()) {
+				this.listClipboard.SelectedIndex = 0;
 			}
 			this._panelClipboradItem.Visible = false;
-			this.toolClipboard_itemSave.Enabled = this.listClipboard.SelectedIndex != -1;
 			ChangeCommand(-1);
 			this.listClipboard.ResumeLayout();
 		}
@@ -515,14 +520,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			//Debug.WriteLine(ActiveControl);
 			//var isActive = ActiveControl == this.listClipboard;
-			if(this.listClipboard.SelectedIndex != SelectedItemIndex) {
+			//if(this.listClipboard.SelectedIndex != SelectedItemIndex) {
 				ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 				ChangeSelsectedItem(this.listClipboard.SelectedIndex);
 				
 					ActiveControl = this.listClipboard;
 				//	this.listClipboard.Select();
 				
-			}
+			//}
 		}
 
 		private void ClipboardForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -562,9 +567,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
 		{
-			Debug.Assert(SelectedItemIndex != -1);
+			//Debug.Assert(SelectedItemIndex != -1);
+			var index = this.listClipboard.SelectedIndex;
+			Debug.Assert(index != -1);
 
-			var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
+			var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 			var typeList = clipboardItem.GetClipboardTypeList();
 			var list = new[] {
 				new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
@@ -614,23 +621,31 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
-		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
+		private void toolClipboard_itemSave_Click(object sender, EventArgs e)
 		{
-			Clipboard.Clear();
+			var index = this.listClipboard.SelectedIndex;
+			if(index != -1) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
+				OpenSaveDialog(clipboardItem);
+			}
 		}
 
 		private void toolClipboard_itemClear_ButtonClick(object sender, EventArgs e)
 		{
+			var index = this.listClipboard.SelectedIndex;
+			if(index != -1) {
+				CommonData.MainSetting.Clipboard.Items.RemoveAt(index);
+			}
+		}
+
+		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
+		{
 			CommonData.MainSetting.Clipboard.Items.Clear();
 		}
 
-		private void toolClipboard_itemSave_Click(object sender, EventArgs e)
+		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
 		{
-			if(SelectedItemIndex != -1) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.Items[SelectedItemIndex];
-				OpenSaveDialog(clipboardItem);
-			}
-
+			Clipboard.Clear();
 		}
 	}
 }

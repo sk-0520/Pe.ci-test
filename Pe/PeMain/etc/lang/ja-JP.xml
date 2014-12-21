@@ -236,6 +236,7 @@
 
 		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
 		<Word Name="clipboard/command/save"    Text="選択中アイテムの保存" />
+		<Word Name="clipboard/command/remove"  Text="選択中アイテムの削除" />
 		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
 		<Word Name="clipboard/command/empty"   Text="クリップボードを空にする" />
 		<Word Name="clipboard/type/clipboard"  Text="クリップボード" />
