@@ -32,8 +32,79 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize(language, setting, db);
 		}
+
+		#region Function
+		#endregion ////////////////////////////////////////////////////
+
+
+		#region Language
+
+		void ApplyLanguageClipboard()
+		{ }
+
+		#endregion
+
+
+		#region Initialize
+
+		void InitializeClipboard(ClipboardSetting setting)
+		{
+			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, setting.Limit);
+			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, setting.WaitTime);
+			this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
+
+			this.selectClipboardEnabled.Checked = setting.Enabled;
+			this.selectClipboardAppEnabled.Checked = setting.EnabledApplicationCopy;
+
+			this.selectClipboardVisible.Checked = setting.Visible;
+			this.selectClipboardTopMost.Checked = setting.TopMost;
+
+			this.selectClipboardType_text.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardType_rtf.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
+		}
+		
+		#endregion ////////////////////////////////////////////////////
 		
 		
+		#region Export
+
+		void ExportClipboardSetting(ClipboardSetting setting)
+		{
+			setting.Limit = (int)this.inputClipboardLimit.Value;
+			setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
+			setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
+
+			setting.Enabled = this.selectClipboardEnabled.Checked;
+			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
+			setting.Visible = this.selectClipboardVisible.Checked;
+			setting.TopMost = this.selectClipboardTopMost.Checked;
+
+			var map = new Dictionary<ClipboardType, bool>() {
+				{ ClipboardType.Text, this.selectClipboardType_text.Checked },
+				{ ClipboardType.Rtf,  this.selectClipboardType_rtf.Checked },
+				{ ClipboardType.Html, this.selectClipboardType_html.Checked },
+				{ ClipboardType.Image,this.selectClipboardType_image.Checked },
+				{ ClipboardType.File, this.selectClipboardType_file.Checked },
+			};
+			var clipboardType = ClipboardType.None;
+			foreach(var type in map.Where(p => p.Value).Select(p => p.Key)) {
+				clipboardType |= type;
+			}
+			setting.EnabledTypes = clipboardType;
+		}
+
+		#endregion ////////////////////////////////////////////////////
+
+		
+		#region Page
+		#region Page/Clipboard
+		#endregion ////////////////////////////////////////////////////
+		#endregion ////////////////////////////////////////////////////
+
+
 		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
 		{
 			if(this._launcherSelectedItem != null) {

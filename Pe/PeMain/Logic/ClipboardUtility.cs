@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			}
 			action();
 			Task.Factory.StartNew(() => {
-				Thread.Sleep(Literal.clipboardSleepTime);
+				Thread.Sleep(commonData.MainSetting.Clipboard.SleepTime);
 				if(commonData != null) {
 					commonData.MainSetting.Clipboard.DisabledCopy = !commonData.MainSetting.Clipboard.DisabledCopy;
 					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);

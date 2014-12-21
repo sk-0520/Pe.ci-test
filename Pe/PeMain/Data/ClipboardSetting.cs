@@ -46,13 +46,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public IEnumerable<string> Files { get; set; }
 
 
-		public bool SetClipboardData()
+		public bool SetClipboardData(ClipboardType enabledTypes)
 		{
-			var isText = Clipboard.ContainsText(TextDataFormat.Text);
-			var isRtf = Clipboard.ContainsText(TextDataFormat.Rtf);
-			var isHtml = Clipboard.ContainsText(TextDataFormat.Html);
-			var isImage = Clipboard.ContainsImage();
-			var isFile = Clipboard.ContainsFileDropList();
+			var isText = enabledTypes.HasFlag(ClipboardType.Text) && Clipboard.ContainsText(TextDataFormat.Text);
+			var isRtf = enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf);
+			var isHtml = enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html);
+			var isImage = enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage();
+			var isFile = enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList();
 
 			ClipboardTypes = ClipboardType.None;
 			if(!isText && !isRtf && !isHtml && !isImage && !isFile) {
@@ -129,7 +129,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ClipboardSetting()
 		{
 			Visible = false;
-			Items = new FixedSizedList<ClipboardItem>(Literal.clipboardLimit.median);
+			Limit = Literal.clipboardLimit.median;
+			//Items = new FixedSizedList<ClipboardItem>(Limit);
 			EnabledApplicationCopy = false;
 			Size = new Size(
 				Screen.PrimaryScreen.Bounds.Width / 3,
@@ -140,13 +141,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			TextFont = new FontSetting(SystemFonts.DialogFont);
 
 			Enabled = true;
+			EnabledTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
+
+			SleepTime = Literal.clipboardSleepTime.median;
+			WaitTime = Literal.clipboardWaitTime.median;
 		}
 
 		/// <summary>
 		/// クリップボードユーティリティを使用するか。
 		/// </summary>
 		public bool Enabled { get; set; }
-
+		/// <summary>
+		/// クリップボード通知対象。
+		/// </summary>
+		public ClipboardType EnabledTypes { get; set; }
+		/// <summary>
+		/// サイズ。
+		/// </summary>
+		public int Limit { get; set; }
 		/// <summary>
 		/// 本体でのコピー操作でもコピー検知に含めるか。
 		/// </summary>
@@ -181,21 +193,48 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlIgnore]
 		public bool DisabledCopy { get; set; }
-		///// <summary>
-		///// 
-		///// </summary>
-		//[XmlIgnore]
-		//public TimeSpan WaitTime { get; set; }
-		//[XmlElement("WaitTime", DataType = "duration")]
-		//public string _WaitTime
-		//{
-		//	get { return XmlConvert.ToString(WaitTime); }
-		//	set
-		//	{
-		//		if(!string.IsNullOrWhiteSpace(value)) {
-		//			WaitTime = XmlConvert.ToTimeSpan(value);
-		//		}
-		//	}
-		//}
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public TimeSpan WaitTime { get; set; }
+		[XmlElement("WaitTime", DataType = "duration")]
+		public string _WaitTime
+		{
+			get { return XmlConvert.ToString(WaitTime); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					WaitTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		[XmlIgnore]
+		public TimeSpan SleepTime { get; set; }
+		[XmlElement("SleepTime", DataType = "duration")]
+		public string _SleepTime
+		{
+			get { return XmlConvert.ToString(SleepTime); }
+			set
+			{
+				if(!string.IsNullOrWhiteSpace(value)) {
+					SleepTime = XmlConvert.ToTimeSpan(value);
+				}
+			}
+		}
+
+		public override void CorrectionValue()
+		{
+			base.CorrectionValue();
+
+			Limit = Literal.clipboardLimit.ToRounding(Limit);
+			Items = new FixedSizedList<ClipboardItem>(Limit);
+
+			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
+			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
+		}
 	}
 }

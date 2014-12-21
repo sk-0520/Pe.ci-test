@@ -172,8 +172,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
-			this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
-			this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
+			//this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
+			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
+			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 			
 			this.selecterToolbar.SetItems(this._launcherItems);
 			
@@ -232,7 +233,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			}
 		}
-		
+
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			ApplyLanguage();
@@ -242,6 +243,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeToolbar(mainSetting.Toolbar);
 			InitializeCommand(mainSetting.Command);
 			InitializeNote(mainSetting.Note, db);
+			InitializeClipboard(mainSetting.Clipboard);
 
 			#if RELEASE
 			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
