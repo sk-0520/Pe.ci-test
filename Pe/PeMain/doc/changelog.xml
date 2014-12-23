@@ -37,8 +37,8 @@
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li rev="7e3d641206d9d681a1d19f614799bbe8f3a50472">127: HTML形式クリップボードデータ保持</li>
-			<li rev=""></li>
+			<li rev="7e3d641206d9d681a1d19f614799bbe8f3a50472">#127: HTML形式クリップボードデータ保持</li>
+			<li rev="f1b45e68725c536ebcc9ac7b9c41982b244e7ef7">#126: クリップボード履歴の項目ボタンが不思議</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
