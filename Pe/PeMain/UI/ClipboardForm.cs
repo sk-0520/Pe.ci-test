@@ -383,7 +383,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
 				} },
 				{ ClipboardType.File, (setting) => {
-					ClipboardUtility.CopyFile(clipboardItem.Files, setting);
+					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), setting);
 				} },
 			};
 			map[clipboardType](CommonData);
