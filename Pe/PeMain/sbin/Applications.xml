@@ -2,9 +2,9 @@
 <Applications>
 	<Items>
 		<ApplicationItem Name="Updater">
-			<File Directory="Updater" Name="Updater.exe" />
+			<File Directory="Updater" Name="Updater.exe" Communication="Event" />
 			<Type>Console</Type>
-			<Stream>None</Stream>
+			<Stream>Custom</Stream>
 			<Parameters>
 				<Arg Name="checkonly" Type="Boolean" Necessary="true" />
 				<Arg Name="download" Type="Text" Necessary="false" />
@@ -12,6 +12,7 @@
 				<Arg Name="wait" Type="Text" Necessary="false" />
 				<Arg Name="no-wait-update" Type="Text" Necessary="false" />
 			</Parameters>
+			<Communication>Event</Communication>
 		</ApplicationItem>
 	</Items>
 </Applications>

@@ -44,6 +44,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 標準エラー。
 		/// </summary>
 		Error = 0x04,
+		/// <summary>
+		/// Peで完全処理(In, Out, Errorは無視される)。
+		/// </summary>
+		Custom = 0x08,
 	}
 
 	/// <summary>
@@ -97,6 +101,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlAttribute]
 		public string Directory { get; set; }
+		/// <summary>
+		/// 通信種別。
+		/// </summary>
+		[XmlAttribute]
+		ApplicationCommunication Communication { get; set; }
 	}
 
 	/// <summary>
