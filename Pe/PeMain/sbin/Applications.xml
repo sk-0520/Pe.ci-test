@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Applications>
+	<Items>
+		<ApplicationItem Name="Updater">
+			<File Directory="Updater" Name="Updater.exe" />
+		</ApplicationItem>
+	</Items>
+</Applications>

@@ -26,7 +26,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			
+			{
+				var s = Literal.ApplicationSBinAppPath;
+				var a = ContentTypeTextNet.Pe.Library.Utility.Serializer.LoadFile<ContentTypeTextNet.Pe.PeMain.Data.Applications>(s, true);
+				ContentTypeTextNet.Pe.Library.Utility.Serializer.SaveFile(a, @"Z:\a.xml");
+			}
 			var commandLine = new ContentTypeTextNet.Pe.Library.Utility.CommandLine(args);
 			Literal.Initialize(commandLine);
 			var fileLogger = new ContentTypeTextNet.Pe.PeMain.Logic.FileLogger();

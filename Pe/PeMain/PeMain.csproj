@@ -118,6 +118,7 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />
     <Compile Include="Data\CommonData.cs" />
@@ -710,6 +711,7 @@
     <None Include="etc\lang\ja-JP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
+      <SubType>Designer</SubType>
     </None>
     <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
@@ -752,7 +754,9 @@
     <None Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Package\Package.csproj">
@@ -987,6 +991,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image\Clipboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sbin\Applications.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
