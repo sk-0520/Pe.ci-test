@@ -364,6 +364,9 @@
     <Compile Include="UI\Ex\ExToolStripControlHost.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Ex\ExWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\HomeForm.cs">
       <SubType>Form</SubType>
     </Compile>

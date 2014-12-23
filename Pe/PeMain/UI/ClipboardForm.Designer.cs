@@ -44,7 +44,7 @@
 			this.tabPreview_pageRtf = new System.Windows.Forms.TabPage();
 			this.viewRtf = new System.Windows.Forms.RichTextBox();
 			this.tabPreview_pageHtml = new System.Windows.Forms.TabPage();
-			this.viewHtml = new System.Windows.Forms.WebBrowser();
+			this.viewHtml = new ContentTypeTextNet.Pe.PeMain.UI.ClipboardForm.ClipboardWebBrowser();
 			this.tabPreview_pageImage = new System.Windows.Forms.TabPage();
 			this.panelImage = new System.Windows.Forms.Panel();
 			this.viewImage = new System.Windows.Forms.PictureBox();
@@ -264,9 +264,9 @@
 			// tabPreview_pageHtml
 			// 
 			this.tabPreview_pageHtml.Controls.Add(this.viewHtml);
-			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageHtml.Name = "tabPreview_pageHtml";
-			this.tabPreview_pageHtml.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageHtml.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageHtml.TabIndex = 4;
 			this.tabPreview_pageHtml.Text = "#ClipboardType.Html";
 			this.tabPreview_pageHtml.UseVisualStyleBackColor = true;
@@ -279,8 +279,10 @@
 			this.viewHtml.Location = new System.Drawing.Point(0, 0);
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
-			this.viewHtml.Size = new System.Drawing.Size(371, 200);
+			this.viewHtml.ScriptErrorsSuppressed = true;
+			this.viewHtml.Size = new System.Drawing.Size(371, 199);
 			this.viewHtml.TabIndex = 0;
+			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
 			// tabPreview_pageImage
 			// 
@@ -533,7 +535,7 @@
 		private System.Windows.Forms.ColumnHeader columnName;
 		private System.Windows.Forms.ColumnHeader columnPath;
 		private System.Windows.Forms.TabPage tabPreview_pageHtml;
-		private System.Windows.Forms.WebBrowser viewHtml;
+		private ClipboardWebBrowser viewHtml;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.ToolStripStatusLabel statusClipboard_itemLimit;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
