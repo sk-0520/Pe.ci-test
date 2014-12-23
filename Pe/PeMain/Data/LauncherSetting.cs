@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// 見つからなかった時用アイコン。
 		/// </summary>
-		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap;
+		public static readonly Dictionary<IconScale, Icon> notfoundIconMap;
 		/*
 		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
 			{ IconScale.Small,  Icon.FromHandle(PeMain.Properties.Images.NotFound_016.GetHicon()) },
@@ -113,7 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
 			// NotFound 
-			var notfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			var tempNotfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
 				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound, iconSize);
@@ -121,9 +121,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
 				}
-				notfoundIconMap[iconScale] = icon;
+				tempNotfoundIconMap[iconScale] = icon;
 			}
-			_notfoundIconMap = notfoundIconMap;
+			notfoundIconMap = tempNotfoundIconMap;
 			
 			// URIアイコン構築
 			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
@@ -386,7 +386,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				if(LauncherType == LauncherType.URI) {
 					return _uriIconMap[iconScale];
 				} else {
-					return _notfoundIconMap[iconScale];
+					return notfoundIconMap[iconScale];
 				}
 			}
 		}
