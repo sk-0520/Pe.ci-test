@@ -332,7 +332,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 								var key = path.GetHashCode().ToString();
 								var name = getName(path);
 
-								var icon = IconUtility.Load(path, IconScale.Small, 0);
+								Icon icon;
+								if(FileUtility.Exists(path)) {
+									icon = IconUtility.Load(path, IconScale.Small, 0);
+								} else {
+									icon = LauncherItem.notfoundIconMap[IconScale.Small];
+								}
+								
 								imageList.Images.Add(key, icon);
 
 								var listItem = new ListViewItem();
