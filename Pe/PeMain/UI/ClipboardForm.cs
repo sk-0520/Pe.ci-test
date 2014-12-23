@@ -572,8 +572,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_MouseMove(object sender, MouseEventArgs e)
 		{
-			var index = this.listClipboard.IndexFromPoint(e.Location) - this.listClipboard.TopIndex;
-			var top = this.listClipboard.ItemHeight * (index + 1) - GetButtonSize().Height - 1;
+			var index = this.listClipboard.IndexFromPoint(e.Location);// -this.listClipboard.TopIndex;
+			var showIndex = index - this.listClipboard.TopIndex;
+			var top = this.listClipboard.ItemHeight * (showIndex + 1) - GetButtonSize().Height - 1;
+			
 			if(top != this._panelClipboradItem.Top) {
 				this._panelClipboradItem.Top = top;
 			}
