@@ -3,6 +3,15 @@
 	<Items>
 		<ApplicationItem Name="Updater">
 			<File Directory="Updater" Name="Updater.exe" />
+			<Type>Console</Type>
+			<Stream>None</Stream>
+			<Parameters>
+				<Arg Name="checkonly" Type="Boolean" Necessary="true" />
+				<Arg Name="download" Type="Text" Necessary="false" />
+				<Arg Name="expand" Type="Text" Necessary="false" />
+				<Arg Name="wait" Type="Text" Necessary="false" />
+				<Arg Name="no-wait-update" Type="Text" Necessary="false" />
+			</Parameters>
 		</ApplicationItem>
 	</Items>
 </Applications>
