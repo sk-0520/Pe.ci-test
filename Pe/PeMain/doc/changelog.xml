@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.36.1" type="rc">
+		<ul type="note">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev="9bc1cb51706097f0c4aeb7ad35468c91aadedb27">#128: クリップポ－ドの待機時間を延ばす</li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev="7e3d641206d9d681a1d19f614799bbe8f3a50472">#127: HTML形式クリップボードデータ保持</li>
+			<li rev="f1b45e68725c536ebcc9ac7b9c41982b244e7ef7">#126: クリップボード履歴の項目ボタンが不思議</li>
+			<li rev="14eb786e20344ae907656f79f177c3f409139730">#125: ファイルをクリップボードへ取り込んだ後ファイル削除→プレビュー表示で例外</li>
+			<li rev="">クリップボードアイテムがファイルの場合にファイルが存在しない場合はコピー対象としない</li>
+		</ul>
+		<ul type="developer">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+	</log>
 	<log date="2014/12/21" version="0.36.0">
 		<ul type="note">
 			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility">#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</li>

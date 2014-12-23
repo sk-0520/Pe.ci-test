@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.PeMain.UI;
+using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -30,6 +32,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string imageHtml = "image_html";
 		const string imageImage = "image_image";
 		const string imageFile = "image_file";
+
+		class ClipboardWebBrowser: ShowWebBrowser
+		{
+			public ClipboardWebBrowser()
+				: base()
+			{ }
+		}
 
 		#endregion ////////////////////////////////////////
 
@@ -323,7 +332,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 								var key = path.GetHashCode().ToString();
 								var name = getName(path);
 
-								var icon = IconUtility.Load(path, IconScale.Small, 0);
+								Icon icon;
+								if(FileUtility.Exists(path)) {
+									icon = IconUtility.Load(path, IconScale.Small, 0);
+								} else {
+									icon = LauncherItem.notfoundIconMap[IconScale.Small];
+								}
+								
 								imageList.Images.Add(key, icon);
 
 								var listItem = new ListViewItem();
@@ -368,7 +383,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
 				} },
 				{ ClipboardType.File, (setting) => {
-					ClipboardUtility.CopyFile(clipboardItem.Files, setting);
+					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), setting);
 				} },
 			};
 			map[clipboardType](CommonData);
@@ -563,8 +578,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void listClipboard_MouseMove(object sender, MouseEventArgs e)
 		{
-			var index = this.listClipboard.IndexFromPoint(e.Location) - this.listClipboard.TopIndex;
-			var top = this.listClipboard.ItemHeight * (index + 1) - GetButtonSize().Height - 1;
+			var index = this.listClipboard.IndexFromPoint(e.Location);// -this.listClipboard.TopIndex;
+			var showIndex = index - this.listClipboard.TopIndex;
+			var top = this.listClipboard.ItemHeight * (showIndex + 1) - GetButtonSize().Height - 1;
+			
 			if(top != this._panelClipboradItem.Top) {
 				this._panelClipboradItem.Top = top;
 			}
@@ -652,6 +669,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
 		{
 			Clipboard.Clear();
+		}
+
+		private void viewHtml_ShowMessage(object sender, ShowMessageEventArgs e)
+		{
+			e.Result = 0;
+			e.Handled = false;
 		}
 	}
 }
