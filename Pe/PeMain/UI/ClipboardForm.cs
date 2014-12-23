@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.PeMain.UI;
+using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -30,6 +32,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string imageHtml = "image_html";
 		const string imageImage = "image_image";
 		const string imageFile = "image_file";
+
+		class ClipboardWebBrowser: ShowWebBrowser
+		{
+			public ClipboardWebBrowser()
+				: base()
+			{ }
+		}
 
 		#endregion ////////////////////////////////////////
 
@@ -652,6 +661,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
 		{
 			Clipboard.Clear();
+		}
+
+		private void viewHtml_ShowMessage(object sender, ShowMessageEventArgs e)
+		{
+			e.Result = 0;
+			e.Handled = false;
 		}
 	}
 }
