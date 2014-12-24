@@ -16,6 +16,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	{
 		CommonData CommonData { get; set; }
 		Process Process { get; set;}
-		LauncherItem LauncherItem { get; set;}
+		public LauncherItem LauncherItem { get; private set; }
+		public bool ProcessRunning { get { return Process != null && !Process.HasExited; } }
 	}
 }

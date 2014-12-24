@@ -100,6 +100,7 @@
 		<Word Name="main/event/save-window/timer"      Text="ウィンドウ一覧取得" />
 		<Word Name="main/event/save-window/display"    Text="ディスプレイ設定変更によるウィンドウ一覧取得" />
 		<Word Name="main/event/save-window/skip"       Text="ウィンドウ一覧取得スキップ" />
+		<Word Name="main/event/reset/stream/skip"      Text="プロセス実行中のためUIリセットをスキップしました" />
 		
 		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
 		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />

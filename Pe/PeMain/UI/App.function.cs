@@ -184,6 +184,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ResetUI()
 		{
 			foreach(var window in this._otherWindows.ToArray()) {
+				var streamWindow = window as StreamForm;
+				if(streamWindow != null && streamWindow.ProcessRunning) {
+					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/reset/stream/skip"], streamWindow.LauncherItem);
+					continue;
+				}
 				this._otherWindows.Remove(window);
 				window.Dispose();
 			}
@@ -239,6 +244,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						InitializeToolbarForm(null, null);
 						 */
 						ResetUI();
+						foreach(var window in this._otherWindows.Where(w => w is StreamForm).Cast<StreamForm>().ToArray()) {
+							window.Visible = true;
+						}
 						
 						if(check) {
 							#if !DISABLED_UPDATE_CHECK
