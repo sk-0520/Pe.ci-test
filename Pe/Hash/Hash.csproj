@@ -84,6 +84,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="HashModel.cs" />
+    <Compile Include="HashSetting.cs" />
     <Compile Include="HashWindow.xaml.cs">
       <DependentUpon>HashWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
