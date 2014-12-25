@@ -32,10 +32,19 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		[TestCase("d", "50", "/a=1", "/b=2", "/c=3", "4", "d=5", "/d=50")]
 		[TestCase("a", "abc", "/a=abc")]
 		[TestCase("a", "abc", "/a=\"abc\"")]
+		[TestCase("a", "abc", "/a=abc", "/a=def")]
 		public void GetValue(string option, string value, params string[] args)
 		{
 			var cl = new CommandLine(args.ToArray());
 			Assert.IsTrue(cl.GetValue(option) == value);
+		}
+
+		[TestCase("a", "abc", 0, "/a=abc", "/a=def")]
+		[TestCase("a", "def", 1, "/a=abc", "/a=def")]
+		public void GetValues(string option, string value, int index, params string[] args)
+		{
+			var cl = new CommandLine(args.ToArray());
+			Assert.IsTrue(cl.GetValues(option).ElementAt(index) == value);
 		}
 	}
 }
