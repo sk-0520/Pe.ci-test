@@ -8,5 +8,11 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 {
 	public class HashModel
 	{
+		public HashModel()
+		{
+			HashSetting = new HashSetting();
+		}
+
+		public HashSetting HashSetting { get; set; }
 	}
 }

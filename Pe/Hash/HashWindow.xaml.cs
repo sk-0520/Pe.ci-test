@@ -18,11 +18,37 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 	/// <summary>
 	/// MainWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class MainWindow: Window
+	public partial class HashWindow: Window
 	{
-		public MainWindow()
+		public HashWindow()
 		{
 			InitializeComponent();
+
+			Initialize();
 		}
+
+		#region Property
+
+		HashModel Model { get; set; }
+
+		#endregion /////////////////////////////
+
+		#region Initialize
+
+		void InitializeAssembly()
+		{
+
+		}
+
+		void Initialize()
+		{
+			InitializeAssembly();
+
+			Model = new HashModel();
+
+			DataContext = Model;
+		}
+
+		#endregion //////////////////////////////////////
 	}
 }
