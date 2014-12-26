@@ -50,5 +50,10 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		}
 
 		#endregion //////////////////////////////////////
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }
