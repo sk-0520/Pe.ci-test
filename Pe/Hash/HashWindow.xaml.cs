@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
@@ -53,7 +54,8 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-
+			var dialog = new OpenFileDialog();
+			dialog.ShowDialog();
 		}
 	}
 }

@@ -85,5 +85,18 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
+		public string Compare
+		{
+			get { return this._model.Compare; }
+			set
+			{
+				if(this._model.Compare == value) {
+					return;
+				}
+
+				this._model.Compare = value;
+				OnPropertyChanged("Compare");
+			}
+		}
 	}
 }

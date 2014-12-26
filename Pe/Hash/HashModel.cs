@@ -27,5 +27,6 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		public string SHA1 { get; set; }
 		public string MD5 { get; set; }
 		public string CRC32 { get; set; }
+		public string Compare { get; set; }
 	}
 }
