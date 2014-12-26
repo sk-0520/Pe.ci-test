@@ -29,7 +29,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		#region Property
 
-		HashModel Model { get; set; }
+		HashViewModel ViewModel { get; set; }
 
 		#endregion /////////////////////////////
 
@@ -44,9 +44,9 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		{
 			InitializeAssembly();
 
-			Model = new HashModel();
+			ViewModel = new HashViewModel(new HashModel());
 
-			DataContext = Model;
+			DataContext = ViewModel;
 		}
 
 		#endregion //////////////////////////////////////
