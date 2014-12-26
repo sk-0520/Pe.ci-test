@@ -1,8 +1,12 @@
 ﻿<Window x:Class="ContentTypeTextNet.Pe.Applications.Hash.HashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:ContentTypeTextNet.Pe.Applications.Hash"
         Title="HashWindow" Width="450" Height="212" ResizeMode="NoResize">
 	<Grid>
+		<Grid.Resources>
+			<local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+		</Grid.Resources>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="93*"/>
 			<ColumnDefinition Width="299*"/>
@@ -20,9 +24,9 @@
 				</TransformGroup>
 			</Separator.RenderTransform>
 		</Separator>
-		<RadioButton Content="SHA1" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="73" IsChecked="True"/>
-		<RadioButton Content="MD5" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="73"/>
-		<RadioButton Content="CRC32" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="73"/>
+		<RadioButton HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="73" IsChecked="{Binding Path=HashType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:HashType.SHA1}}">SHA1</RadioButton>
+		<RadioButton HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="73" IsChecked="{Binding Path=HashType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:HashType.MD5}}">MD5</RadioButton>
+		<RadioButton HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="73"  IsChecked="{Binding Path=HashType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static local:HashType.CRC32}}">CRC32</RadioButton>
 		<TextBox Height="23" Margin="10,52,10,0" TextWrapping="Wrap" Text="{Binding Path=SHA1}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True"/>
 		<TextBox Height="23" Margin="10,80,10,0" TextWrapping="Wrap" Text="{Binding Path=MD5}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True"/>
 		<TextBox Height="23" Margin="10,108,10,0" TextWrapping="Wrap" Text="{Binding Path=CRC32}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True"/>

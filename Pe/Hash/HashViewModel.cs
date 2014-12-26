@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,13 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 				this._model.FilePath = value;
 				OnPropertyChanged("FilePath");
+
+				if(File.Exists(this._model.FilePath)) {
+					SHA1 = string.Empty;
+					MD5 = string.Empty;
+					CRC32 = string.Empty;
+					// 
+				}
 			}
 		}
 

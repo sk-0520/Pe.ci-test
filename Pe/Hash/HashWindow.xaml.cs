@@ -55,7 +55,10 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog();
-			dialog.ShowDialog();
+			if(dialog.ShowDialog() == true) {
+				var path = dialog.FileName;
+				ViewModel.FilePath = path;
+			}
 		}
 	}
 }
