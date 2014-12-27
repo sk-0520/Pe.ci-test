@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -118,11 +120,51 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		}
 
 		private HashModel _model;
+		private bool _forceExit;
 		private Brush _backgrond;
+		private EventWaitHandle _waitEvent;
 
 		public HashViewModel(HashModel model)
 		{
 			this._model = model;
+		}
+
+		public bool ForceExit 
+		{ 
+			get { return this._forceExit; }
+			set
+			{
+				if(this._forceExit != value) {
+					return;
+				}
+
+				this._forceExit = value;
+			}
+		}
+
+		public string EventName
+		{
+			get { return this._model.EventName; }
+			set
+			{
+				if(this._model.EventName == value) {
+					return;
+				}
+
+				this._model.EventName = value;
+				OnPropertyChanged("EventName");
+
+				if(!string.IsNullOrWhiteSpace(EventName)) {
+					// イベント取得
+					this._waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, this._model.EventName);
+					Task.Factory.StartNew(() => {
+						if(this._waitEvent.WaitOne(Timeout.Infinite, true)) {
+							ForceExit = true;
+							Debug.WriteLine("asdfghjkl.;");
+						}
+					});
+				}
+			}
 		}
 
 		public string FilePath

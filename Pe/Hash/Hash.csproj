@@ -75,6 +75,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Utility\CommandLine.cs">
+      <Link>CommandLine.cs</Link>
+    </Compile>
     <Compile Include="ViewModelBase.cs" />
     <Page Include="HashWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

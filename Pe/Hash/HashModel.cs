@@ -37,6 +37,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		public HashSetting HashSetting { get; set; }
 
+		public string EventName { get; set; }
 		public string FilePath { get; set; }
 		public HashType HashType { get; set; }
 		public string SHA1 { get; set; }

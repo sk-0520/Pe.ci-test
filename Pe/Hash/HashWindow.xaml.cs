@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
@@ -39,7 +43,31 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		void InitializeAssembly()
 		{
+			var assemblyList = new string[] { "PlatformInvoke", "Utility", };
+			var basePath = "Pe/bin/dir";
+			
+			var assembly = Assembly.GetExecutingAssembly();
+			
+			var dirPath = assembly.Location;
+			foreach(var n in Enumerable.Range(0, basePath.Split('/').Count())) {
+				dirPath = System.IO.Path.GetDirectoryName(dirPath);
+			}
+			var libDir = System.IO.Path.Combine(dirPath, "lib");
+			foreach(var assemblyName in assemblyList) {
+				var assemblyPath = System.IO.Path.Combine(libDir, assemblyName + ".dll");
+				var loadAssembly = Assembly.LoadFrom(assemblyPath);
+			}
+			assembly.GetReferencedAssemblies();
+		}
 
+		void InitializeCommandLine()
+		{
+			var commandLine = new CommandLine();
+
+			var eventNameArg = "event-name";
+			if(commandLine.HasValue(eventNameArg)) {
+				ViewModel.EventName = commandLine.GetValue(eventNameArg);
+			}
 		}
 
 		void Initialize()
@@ -47,6 +75,8 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			InitializeAssembly();
 
 			ViewModel = new HashViewModel(new HashModel());
+
+			InitializeCommandLine();
 
 			DataContext = ViewModel;
 		}
