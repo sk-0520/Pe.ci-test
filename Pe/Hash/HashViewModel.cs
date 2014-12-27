@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
@@ -117,6 +118,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		}
 
 		private HashModel _model;
+		private Brush _backgrond;
 
 		public HashViewModel(HashModel model)
 		{
@@ -131,6 +133,8 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				if(this._model.FilePath == value) {
 					return;
 				}
+
+				Computed = false;
 
 				this._model.FilePath = value;
 				OnPropertyChanged("FilePath");
@@ -153,9 +157,9 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 						pair.Value(b);
 					}
 
-					//var sha1 = new SHA1CryptoServiceProvider();
-					//sha1.ComputeHash();
+					Computed = true;
 				}
+				CheckHash();
 			}
 		}
 
@@ -170,6 +174,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 				this._model.HashType = value;
 				OnPropertyChanged("HashType");
+				CheckHash();
 			}
 		}
 
@@ -226,6 +231,42 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 				this._model.Compare = value;
 				OnPropertyChanged("Compare");
+				CheckHash();
+			}
+		}
+
+		public bool Computed { get; set; }
+
+		public Brush Backgrond
+		{
+			get { return this._backgrond; }
+			set
+			{
+				if(this._backgrond == value) {
+					return;
+				}
+
+				this._backgrond = value;
+				OnPropertyChanged("Backgrond");
+			}
+		}
+
+		void CheckHash()
+		{
+			if(Computed) {
+				var map = new Dictionary<HashType, string>() {
+						{ HashType.SHA1, SHA1 },
+						{ HashType.MD5, MD5 },
+						{ HashType.CRC32, CRC32 },
+					};
+				var equal = map[HashType] == Compare;
+				if(equal) {
+					Backgrond = Brushes.Lime;
+				} else {
+					Backgrond = Brushes.Red;
+				}
+			} else {
+				Backgrond = null;
 			}
 		}
 	}
