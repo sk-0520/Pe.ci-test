@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Applications>
 	<Items>
-		<ApplicationItem Name="Updater">
-			<File Directory="Updater" Name="Updater.exe" Communication="Event" />
+		<ApplicationItem Name="Hash">
+			<File Directory="Hash" Name="Hash.exe" Communication="Event" />
 			<Type>Console</Type>
 			<Stream>Custom</Stream>
 			<Parameters>

@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			{
-				var s = Literal.ApplicationSBinAppPath;
+				var s = Literal.ApplicationBinAppPath;
 				var a = ContentTypeTextNet.Pe.Library.Utility.Serializer.LoadFile<ContentTypeTextNet.Pe.PeMain.Data.Applications>(s, true);
 				a.Items[0].Type = Data.ApplicationType.Console;
 				ContentTypeTextNet.Pe.Library.Utility.Serializer.SaveFile(a, @"Z:\a.xml");

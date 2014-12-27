@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	public enum ApplicationCommunication
 	{
 		Event,
-		ServerClient,
+		ClientServer,
 	}
 
 	/// <summary>

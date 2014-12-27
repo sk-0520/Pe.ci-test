@@ -993,11 +993,12 @@
     <None Include="Resources\Image\Clipboard.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sbin\Applications.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="bin\Applications.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)\etc\lang\ja-JP.xml" "$(OutDir)\etc\lang\default.xml"
