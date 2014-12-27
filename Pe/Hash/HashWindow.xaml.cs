@@ -61,5 +61,13 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				ViewModel.FilePath = path;
 			}
 		}
+
+		private void Window_Drop(object sender, DragEventArgs e)
+		{
+			var files = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+			if(files != null && files.Length == 1) {
+				ViewModel.FilePath = files[0];
+			}
+		}
 	}
 }
