@@ -29,11 +29,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		private readonly Font _defaultFont;
 		
+		/// <summary>
+		/// 
+		/// </summary>
 		public FontSetting()
 		{
-			this._defaultFont = SystemFonts.MessageBoxFont;
+			this._defaultFont = (Font)SystemFonts.MessageBoxFont.Clone();
 		}
-		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="defaultFont">削除はFontSettingで処理する。</param>
 		public FontSetting(Font defaultFont)
 		{
 			this._defaultFont = defaultFont;
@@ -87,6 +93,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		protected override void Dispose(bool disposing)
 		{
+			this._defaultFont.ToDispose();
+
 			this._font.ToDispose();
 			this._font = null;
 
@@ -95,25 +103,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		
 		public virtual void Import(FontSetting fs)
 		{
-			Dispose();
+			this._font.ToDispose();
 			
 			Height = fs.Height;
 			Family = fs.Family;
 			Bold = fs.Bold;
 			Italic = fs.Italic;
-			
-			IsDisposed = false;
 		}
 		public virtual void Import(Font f)
 		{
-			Dispose();
+			this._font.ToDispose();
 			
 			Height = f.SizeInPoints;
 			Family = f.FontFamily.Name;
 			Bold = f.Bold;
 			Italic = f.Italic;
-			
-			IsDisposed = false;
 		}
 	}
 }
