@@ -320,26 +320,6 @@
     <Compile Include="UI\HomeForm.Designer.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\HomeForm.function.cs">
-      <DependentUpon>HomeForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\HomeForm.initialize.cs">
-      <DependentUpon>HomeForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\HomeForm.language.cs">
-      <DependentUpon>HomeForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\HomeForm.property.cs">
-      <DependentUpon>HomeForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\HomeForm.variable.cs">
-      <DependentUpon>HomeForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\LogForm.cs">
       <SubType>Form</SubType>
     </Compile>
