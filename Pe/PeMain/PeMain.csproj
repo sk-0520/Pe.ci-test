@@ -402,26 +402,6 @@
     <Compile Include="UI\StreamForm.Designer.cs">
       <DependentUpon>StreamForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\StreamForm.function.cs">
-      <DependentUpon>StreamForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\StreamForm.initialize.cs">
-      <DependentUpon>StreamForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\StreamForm.language.cs">
-      <DependentUpon>StreamForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\StreamForm.property.cs">
-      <DependentUpon>StreamForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\StreamForm.variable.cs">
-      <DependentUpon>StreamForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\ToolbarForm.cs">
       <SubType>Form</SubType>
     </Compile>
