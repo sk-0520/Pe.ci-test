@@ -20,6 +20,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.ComponentModel;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -28,6 +30,128 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public partial class NoteForm : Form, ISetCommonData
 	{
+		#region define
+		const int RECURSIVE = 2;
+		static readonly Size menuIconSize = IconScale.Small.ToSize();
+
+		private class NoteBindItem: INotifyPropertyChanged
+		{
+			public event PropertyChangedEventHandler PropertyChanged;
+
+			public NoteBindItem(NoteItem item)
+			{
+				NoteItem = item;
+			}
+
+			public NoteItem NoteItem { get; private set; }
+
+			public string Title
+			{
+				get
+				{
+					return NoteItem.Title;
+				}
+				set
+				{
+					NoteItem.Title = value;
+					NotifyPropertyChanged("Title");
+				}
+			}
+
+			public string Body
+			{
+				get
+				{
+					return NoteItem.Body;
+				}
+				set
+				{
+					NoteItem.Body = value;
+					NotifyPropertyChanged("Body");
+				}
+			}
+
+			protected void NotifyPropertyChanged(String s)
+			{
+				if(PropertyChanged != null) {
+					PropertyChanged(this, new PropertyChangedEventArgs(s));
+				}
+			}
+		}
+
+		class ColorMenuItem
+		{
+			public ColorMenuItem(ToolStripItem item, Color color)
+			{
+				Item = item;
+				Color = color;
+			}
+
+			public ToolStripItem Item { get; private set; }
+			public Color Color { get; private set; }
+		}
+
+		struct HitState
+		{
+			private const uint leftBit = 0x0001;
+			private const uint rightBit = 0x0002;
+			private const uint topBit = 0x0004;
+			private const uint bottomBit = 0x0008;
+
+			private uint _flag;
+
+			public bool HasTrue { get { return this._flag != 0; } }
+
+			private bool Get(uint bit)
+			{
+				return (this._flag & bit) == bit;
+			}
+			private void Set(uint bit, bool value)
+			{
+				if(value) {
+					this._flag |= bit;
+				} else {
+					this._flag &= ~(this._flag & bit);
+				}
+			}
+
+			public bool Left
+			{
+				get { return Get(leftBit); }
+				set { Set(leftBit, value); }
+			}
+			public bool Right
+			{
+				get { return Get(rightBit); }
+				set { Set(rightBit, value); }
+			}
+			public bool Top
+			{
+				get { return Get(topBit); }
+				set { Set(topBit, value); }
+			}
+			public bool Bottom
+			{
+				get { return Get(bottomBit); }
+				set { Set(bottomBit, value); }
+			}
+		}
+		#endregion ////////////////////////////////////
+
+		#region static
+		#endregion ////////////////////////////////////
+
+		#region variable
+		Dictionary<SkinNoteCommand, SkinButtonState> _commandStateMap;
+		NoteBindItem _bindItem;
+		bool _initialized = true;
+		bool _changed = false;
+		string _prevTitle;
+		string _prevBody;
+		//Color _prevForeColor;
+		//Color _prevBackColor;
+		#endregion ////////////////////////////////////
+
 		public NoteForm()
 		{
 			//
@@ -38,16 +162,68 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Initialize();
 		}
 
-		protected override CreateParams CreateParams {
-			get {
+		#region property
+		CommonData CommonData { get; set; }
+
+		/// <summary>
+		/// データそのものが削除された際に真。
+		/// </summary>
+		public bool Removed { get; private set; }
+
+		public NoteItem NoteItem
+		{
+			get
+			{
+				return this._bindItem.NoteItem;
+			}
+			set
+			{
+				this._bindItem = new NoteBindItem(value);
+			}
+		}
+		bool Changed
+		{
+			get
+			{
+				return this._changed;
+			}
+			set
+			{
+				if(this._initialized) {
+					this._changed = value;
+				}
+			}
+		}
+		#endregion ////////////////////////////////////
+
+		#region ISetCommonData
+		public void SetCommonData(CommonData commonData)
+		{
+			this._initialized = false;
+
+			CommonData = commonData;
+
+			ApplySetting();
+
+			this._changed = false;
+			this._initialized = true;
+		}
+		#endregion ////////////////////////////////////
+
+		#region override
+		protected override CreateParams CreateParams
+		{
+			get
+			{
 				CreateParams createParams = base.CreateParams;
 				createParams.ExStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
 				createParams.ClassStyle |= (int)CS.CS_DROPSHADOW;
 				return createParams;
 			}
 		}
-		
-		protected override bool ShowWithoutActivation {
+
+		protected override bool ShowWithoutActivation
+		{
 			get { return true; }
 		}
 
@@ -55,13 +231,724 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			//base.OnPaintBackground(pevent);
 		}
-		
+
 		protected override void OnResize(EventArgs e)
 		{
 			base.OnResize(e);
 			Invalidate();
 		}
+
+		protected override void WndProc(ref Message m)
+		{
+			switch(m.Msg) {
+				case (int)WM.WM_SYSCOMMAND: {
+						switch(m.WParam.ToInt32() & 0xfff0) {
+							case (int)SC.SC_MAXIMIZE:
+								// #115
+								if(!NoteItem.Locked) {
+									ShowInputTitleArea(RECURSIVE);
+								}
+								return;
+							case (int)SC.SC_MINIMIZE:
+							case (int)SC.SC_RESTORE:
+								return;
+							default:
+								break;
+						}
+						break;
+					}
+
+				case (int)WM.WM_NCPAINT: {
+						//if(CommonData != null && (!this.inputBody.Visible || !this.inputTitle.Visible)) {
+						if(CommonData != null) {
+							var hDC = NativeMethods.GetWindowDC(Handle);
+							try {
+								using(var g = Graphics.FromHdc(hDC)) {
+									DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
+								}
+							} finally {
+								NativeMethods.ReleaseDC(Handle, hDC);
+							}
+						}
+					}
+					break;
+
+				case (int)WM.WM_NCHITTEST: {
+						if(!NoteItem.Locked) {
+							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
+							var hitTest = HT.HTNOWHERE;
+
+							var edgePadding = CommonData.Skin.GetNoteWindowEdgePadding();
+
+							var noteArea = new Rectangle(Point.Empty, Size);
+							Rectangle area;
+							var pos = new HitState();
+							// 上
+							area = noteArea;
+							area.Height = edgePadding.Top;
+							pos.Top = area.Contains(point);
+							// 下
+							area = noteArea;
+							area.Y = noteArea.Height - edgePadding.Bottom;
+							area.Height = edgePadding.Bottom;
+							pos.Bottom = area.Contains(point);
+							// 左
+							area = noteArea;
+							area.Width = edgePadding.Left;
+							pos.Left = area.Contains(point);
+							// 右
+							area = noteArea;
+							area.X = noteArea.Width - edgePadding.Right;
+							area.Width = edgePadding.Right;
+							pos.Right = area.Contains(point);
+
+							if(pos.HasTrue && !NoteItem.Compact) {
+								if(pos.Left) {
+									if(pos.Top) {
+										hitTest = HT.HTTOPLEFT;
+									} else if(pos.Bottom) {
+										hitTest = HT.HTBOTTOMLEFT;
+									} else {
+										hitTest = HT.HTLEFT;
+									}
+								} else if(pos.Right) {
+									if(pos.Top) {
+										hitTest = HT.HTTOPRIGHT;
+									} else if(pos.Bottom) {
+										hitTest = HT.HTBOTTOMRIGHT;
+									} else {
+										hitTest = HT.HTRIGHT;
+									}
+								} else if(pos.Top) {
+									hitTest = HT.HTTOP;
+								} else if(pos.Bottom) {
+									hitTest = HT.HTBOTTOM;
+								}
+							} else {
+								var throwHittest = true;
+								DrawCommand(
+									point,
+									(isIn, nowState) => {
+										if(isIn) {
+											throwHittest = false;
+											if(nowState == SkinButtonState.Pressed) {
+												return SkinButtonState.Pressed;
+											} else {
+												return SkinButtonState.Selected;
+											}
+										} else {
+											return SkinButtonState.Normal;
+										}
+									},
+									null,
+									() => {
+										if(throwHittest) {
+											hitTest = HT.HTCAPTION;
+										}
+									},
+									true
+								);
+							}
+
+							if(hitTest != HT.HTNOWHERE) {
+								m.Result = (IntPtr)hitTest;
+								return;
+							}
+						}
+					}
+					break;
+
+				case (int)WM.WM_SETCURSOR: {
+						var hittest = WindowsUtility.HTFromLParam(m.LParam);
+						if(hittest == HT.HTCAPTION) {
+							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+							return;
+						} else {
+
+						}
+					}
+					break;
+
+				case (int)WM.WM_NCLBUTTONDOWN: {
+						if(!NoteItem.Locked) {
+							if(this.inputTitle.Visible) {
+								HiddenInputTitleArea();
+							}
+							if(this.inputBody.Visible) {
+								HiddenInputBodyArea();
+							}
+						}
+					}
+					break;
+
+				case (int)WM.WM_NCRBUTTONUP: {
+						if(!NoteItem.Locked) {
+							switch(m.WParam.ToInt32()) {
+								case (int)HT.HTCAPTION:
+									var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
+									ShowContextMenu(point);
+									break;
+								default:
+									break;
+							}
+						}
+					}
+					break;
+
+				default:
+					break;
+			}
+			base.WndProc(ref m);
+		}
+		#endregion ////////////////////////////////////
+
+		#region initialize
+		void InitializeUI()
+		{
+			/*
+			var colorControls = new [] {
+				new { Control = contextMenu_itemForeColor, Title = "note/style/color-fore", Default = Literal.noteFore },
+				new { Control = contextMenu_itemBackColor, Title = "note/style/color-back", Default = Literal.noteBack },
+			};
+			foreach(var control in colorControls) {
+				var isFore = control.Control == contextMenu_itemForeColor;
+				var colorList = new [] {
+					new ColorDisplayValue(isFore ? Literal.noteForeColorBlack:  Literal.noteBackColorBlack , control.Title, "note/style/color/black"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorWhite:  Literal.noteBackColorWhite , control.Title, "note/style/color/white"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorRed:    Literal.noteBackColorRed   , control.Title, "note/style/color/red"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorGreen:  Literal.noteBackColorGreen , control.Title, "note/style/color/green"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorBlue:   Literal.noteBackColorBlue  , control.Title, "note/style/color/blue"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorYellow: Literal.noteBackColorYellow, control.Title, "note/style/color/yellow"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorOrange: Literal.noteBackColorOrange, control.Title, "note/style/color/orange"),
+					new ColorDisplayValue(isFore ? Literal.noteForeColorPurple: Literal.noteBackColorPurple, control.Title, "note/style/color/purple"),
+					new ColorDisplayValue(Color.Transparent, control.Title, "note/style/color/custom"),
+				};
+				control.Control.ComboBox.BindingContext = BindingContext;
+				control.Control.Attachment(colorList, control.Default);
+			}
+			*/
+
+			var colorItems = new[] {
+				new { Menu = contextMenu_itemForeColor, Default = Literal.noteFore, IsFore = true, },
+				new { Menu = contextMenu_itemBackColor, Default = Literal.noteBack, IsFore = false, },
+			};
+
+			foreach(var colorItem in colorItems) {
+				var colors = colorItem.IsFore ? Literal.GetNoteForeColorList() : Literal.GetNoteBackColorList();
+				var pairs = GetColorMenuList(colorItem.Menu, colors);
+				foreach(var pair in pairs) {
+					pair.Item.Image = AppUtility.CreateNoteBoxImage(pair.Color, menuIconSize);
+				}
+			}
+
+			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
+		}
+
+		void Initialize()
+		{
+			this._commandStateMap = new Dictionary<SkinNoteCommand, SkinButtonState>() {
+				{ SkinNoteCommand.Close, SkinButtonState.Normal },
+				{ SkinNoteCommand.Compact, SkinButtonState.Normal },
+				{ SkinNoteCommand.Topmost, SkinButtonState.Normal },
+			};
+
+			InitializeUI();
+		}
+		#endregion ////////////////////////////////////
+
+		#region language
+		void ApplyLanguageMenuItems(ToolStripItemCollection itemCollection)
+		{
+			if(itemCollection == null || itemCollection.Count == 0) {
+				return;
+			}
+
+			foreach(ToolStripItem item in itemCollection) {
+				var menuItem = item as ToolStripMenuItem;
+				if(menuItem != null) {
+					ApplyLanguageMenuItems(menuItem.DropDownItems);
+				}
+				item.SetLanguage(CommonData.Language);
+			}
+		}
+
+		void ApplyLanguage()
+		{
+			ApplyLanguageMenuItems(this.contextMenu.Items);
+
+			/*
+			foreach(var combo in new [] { this.contextMenu_itemForeColor, this.contextMenu_itemBackColor } ) {
+				foreach(var item in (IEnumerable<ColorDisplayValue>)combo.ComboBox.DataSource) {
+					item.SetLanguage(CommonData.Language);
+				}
+			}
+			*/
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+		void ApplySetting()
+		{
+			/*
+			this.inputTitle.Text = NoteItem.Title;
+			this.inputBody.Text = NoteItem.Body;
+			 */
+			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+
+			Location = NoteItem.Location;
+			Size = NoteItem.Size;
+
+			TopMost = NoteItem.Topmost;
+
+			// 最小サイズ
+			var parentArea = CommonData.Skin.GetNoteCaptionArea(Size);
+			var edge = CommonData.Skin.GetNoteWindowEdgePadding();
+			var commandSize = CommonData.Skin.GetNoteCommandArea(parentArea, GetCommandList().First());
+			var minSize = new Size(edge.Horizontal + commandSize.Width, edge.Vertical + commandSize.Height);
+			MinimumSize = minSize;
+
+			//NoteItem.Style.ForeColor;
+			//			if(!this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Any(cd => cd.Value == NoteItem.Style.ForeColor)) {
+			//				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Single(cd => cd.Value == Color.Transparent).Value;
+			//			}
+			//NoteItem.Style.BackColor;
+
+			ApplyLanguage();
+		}
+
+		IEnumerable<SkinNoteCommand> GetCommandList()
+		{
+			return new[] {
+				SkinNoteCommand.Topmost,
+				SkinNoteCommand.Compact,
+				SkinNoteCommand.Close,
+			};
+		}
+
+		SkinNoteStatus GetNoteStatus()
+		{
+			var status = new SkinNoteStatus();
+
+			status.Compact = NoteItem.Compact;
+			status.Topmost = NoteItem.Topmost;
+			status.Locked = NoteItem.Locked;
+
+			return status;
+		}
+
+		public void ToClose(bool removeData)
+		{
+			ExecCommand(SkinNoteCommand.Close, removeData);
+		}
+
+		public void ToCompact()
+		{
+			ExecCommand(SkinNoteCommand.Compact, false);
+		}
+
+		public void ToTopmost()
+		{
+			ExecCommand(SkinNoteCommand.Topmost, false);
+		}
+
+		public void ToLock()
+		{
+			ExecCommand(SkinNoteCommand.Lock, false);
+		}
+
+		void ExecCommand(SkinNoteCommand noteCommand, bool removeData)
+		{
+			switch(noteCommand) {
+				case SkinNoteCommand.Topmost: {
+						NoteItem.Topmost = !NoteItem.Topmost;
+						TopMost = NoteItem.Topmost;
+						Changed = true;
+						Invalidate();
+					}
+					break;
+
+				case SkinNoteCommand.Compact: {
+						NoteItem.Compact = !NoteItem.Compact;
+						Changed = true;
+
+						ChangeCompact(NoteItem.Compact, NoteItem.Size);
+
+					}
+					break;
+
+				case SkinNoteCommand.Close: {
+						if(removeData) {
+							// TODO: 論理削除
+							Removed = true;
+							RemoveItem();
+						} else {
+							NoteItem.Visible = false;
+							Changed = true;
+							SaveItem();
+						}
+						Close();
+					}
+					break;
+
+				case SkinNoteCommand.Lock: {
+						HiddenInputTitleArea();
+						HiddenInputBodyArea();
+						NoteItem.Locked = !NoteItem.Locked;
+						Changed = true;
+						Refresh();
+					}
+					break;
+
+				default:
+					Debug.Assert(false, noteCommand.ToString());
+					break;
+			}
+		}
+
+		void ChangeCompact(bool compact, Size size)
+		{
+			if(compact) {
+				var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
+				var titleArea = GetTitleArea();
+				Size = new Size(titleArea.Width + edge.Horizontal, titleArea.Height + edge.Vertical);
+			} else {
+				Size = size;
+			}
+		}
+
+		Rectangle GetTitleArea()
+		{
+			return this.CommonData.Skin.GetNoteCaptionArea(Size);
+		}
+
+		Rectangle GetBodyArea()
+		{
+			return GetBodyArea(
+				this.CommonData.Skin.GetNoteWindowEdgePadding(),
+				this.CommonData.Skin.GetNoteCaptionArea(Size)
+			);
+		}
+		Rectangle GetBodyArea(Padding edge, Rectangle captionArea)
+		{
+			return new Rectangle(
+				new Point(edge.Left, captionArea.Bottom),
+				new Size(Size.Width - edge.Horizontal, Size.Height - (edge.Vertical + captionArea.Height))
+			);
+		}
+
+		void ResizeInputTitleArea()
+		{
+			var titleArea = GetTitleArea();
+			this.inputTitle.Location = titleArea.Location;
+			this.inputTitle.Size = titleArea.Size;
+		}
+
+		void ResizeInputBodyArea()
+		{
+			var bodyArea = GetBodyArea();
+			this.inputBody.Location = bodyArea.Location;
+			this.inputBody.Size = bodyArea.Size;
+		}
+
+		void ShowInputTitleArea(int recursive)
+		{
+			this._prevTitle = NoteItem.Title;
+			//this.inputTitle.Text = NoteItem.Title;
+			this.inputTitle.Font = CommonData.MainSetting.Note.CaptionFontSetting.Font;
+
+			if(!this.inputTitle.Visible) {
+				ResizeInputTitleArea();
+				this.inputTitle.Visible = true;
+				this.inputTitle.Focus();
+			}
+			if(!this.inputTitle.Visible && recursive > 0) {
+				ShowInputTitleArea(recursive - 1);
+			}
+		}
+
+		void ShowInputBodyArea(int recursive)
+		{
+			this._prevBody = NoteItem.Body;
+			//this.inputBody.Text = NoteItem.Body;
+			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
+
+			if(!this.inputBody.Visible) {
+				ResizeInputBodyArea();
+				this.inputBody.Visible = true;
+				this.inputBody.Focus();
+			}
+			if(!this.inputBody.Visible && recursive > 0) {
+				ShowInputBodyArea(recursive - 1);
+			}
+		}
+
+		void HiddenInputTitleArea()
+		{
+			if(!this.inputTitle.Visible) {
+				return;
+			}
+			/*
+			var value = this.inputTitle.Text.Trim();
+			if(value.Length == 0 && NoteItem.Body.Length > 0) {
+				value = TextUtility.SplitLines(NoteItem.Body).First().Trim();
+			}
+			var change = NoteItem.Title != value;
+			if(change) {
+				NoteItem.Title = value;
+				this._changed |= true;
+			}
+			 */
+			this._changed = true;
+			this.inputTitle.Visible = false;
+		}
+
+		void HiddenInputBodyArea()
+		{
+			if(!this.inputBody.Visible) {
+				return;
+			}
+			/*
+			var value = this.inputBody.Text.Trim();
+			var change = NoteItem.Body != value;
+			if(change) {
+				NoteItem.Body = value;
+				this._changed |= true;
+			}
+			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
+				NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
+			}
+			 */
+
+			this._changed = true;
+			this.inputBody.Visible = false;
+		}
+
+		void ShowContextMenu(Point point)
+		{
+			this.contextMenu.Show(this, point);
+		}
+
+		public void SaveItem()
+		{
+			if(this._changed) {
+				lock(CommonData.Database) {
+					var noteDB = new NoteDB(CommonData.Database);
+					using(var tran = noteDB.BeginTransaction()) {
+						try {
+							noteDB.Resist(new[] { NoteItem });
+							tran.Commit();
+						} catch(Exception ex) {
+							tran.Rollback();
+							CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+						}
+					}
+				}
+
+				this._changed = false;
+#if DEBUG
+				var map = new Dictionary<string, string>() {
+					{ AppLanguageName.noteTitle, NoteItem.Title },
+				};
+				CommonData.Logger.Puts(LogType.Information, CommonData.Language["note/save", map], NoteItem);
+#endif
+			}
+		}
+
+		void RemoveItem()
+		{
+			lock(CommonData.Database) {
+				var noteDB = new NoteDB(CommonData.Database);
+				using(var tran = noteDB.BeginTransaction()) {
+					try {
+						noteDB.ToDisabled(new[] { NoteItem });
+						tran.Commit();
+					} catch(Exception ex) {
+						tran.Rollback();
+						CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+					}
+				}
+			}
+		}
+
+		/*
+		Color GetSelectedColor(ToolStripComboBox control)
+		{
+			var index = control.ComboBox.SelectedIndex;
+			Debug.Assert(index >= 0, control.ComboBox.SelectedIndex.ToString());
+			var item = control.ComboBox.Items[index] as ColorDisplayValue;
+			return item.Value;
+		}
 		
+		bool IsCustomColor(Color color)
+		{
+			return color == Color.Transparent;
+		}
+		
+		Color SetAcceptColor(Color color, Color revertColor)
+		{
+			var resultColor = color;
+			var accept = false;
+			if(IsCustomColor(color)) {
+				using(var dialog = new ColorDialog()) {
+					if(dialog.ShowDialog() == DialogResult.OK) {
+						resultColor = dialog.Color;
+						accept = true;
+					} else {
+						resultColor = revertColor;
+					}
+				}
+			} else {
+				accept = true;
+			}
+			if(accept) {
+				Changed = true;
+			}
+			return resultColor;
+		}
+		 */
+
+		IList<ColorMenuItem> GetColorMenuList(ToolStripMenuItem parentItem, IList<Color> colorList)
+		{
+			return colorList
+				.Zip(
+					parentItem.DropDownItems
+					.Cast<ToolStripItem>()
+					.Where(i => i is ToolStripMenuItem)
+					.Take(colorList.Count),
+					(color, item) => new ColorMenuItem(item, color)
+				)
+				.ToList()
+				;
+		}
+
+		Color SelectedPlainColor(ToolStripItem selectItem, IList<ColorMenuItem> colorItemList)
+		{
+			return colorItemList.Single(c => c.Item == selectItem).Color;
+		}
+
+		Color SelectedCustomColor(Color nowColor)
+		{
+			var resultColor = nowColor;
+			using(var dialog = new ColorDialog()) {
+				dialog.CustomColors[0] = nowColor.ToArgb();
+				if(dialog.ShowDialog() == DialogResult.OK) {
+					resultColor = dialog.Color;
+				}
+			}
+
+			return resultColor;
+		}
+		#endregion ////////////////////////////////////
+
+		#region draw
+		void DrawEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
+		{
+			CommonData.Skin.DrawNoteWindowEdge(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor);
+		}
+		
+		void DrawCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
+		{
+			var buttonState = SkinButtonState.Normal;
+			
+			var title = NoteItem.Title;
+			#if DEBUG
+			title = string.Format("(DEBUG) {0}", title);
+			#endif
+			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, CommonData.MainSetting.Note.CaptionFontSetting.Font, title);
+			foreach(var command in GetCommandList()) {
+				var commandArea = CommonData.Skin.GetNoteCommandArea(drawArea, command);
+				CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, buttonState);
+			}
+		}
+
+		void DrawNoClient(Graphics g, Rectangle drawArea, bool active)
+		{
+			var noteStatus = GetNoteStatus();
+			//if(!CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
+				CommonData.Skin.DrawNoteWindowBackground(g, drawArea, active, noteStatus, NoteItem.Style.BackColor);
+			//}
+			
+			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
+			if(!captionArea.Size.IsEmpty) {
+				DrawCaption(g, captionArea, active, noteStatus);
+			}
+			var bodyArea = GetBodyArea();
+			DrawBody(g, bodyArea, active, noteStatus);
+			DrawEdge(g, drawArea, active, noteStatus);
+		}
+		
+		void DrawBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
+		{
+			if(!noteStatus.Compact) {
+				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, NoteItem.Style.FontSetting.Font, NoteItem.Body);
+			}
+		}
+		
+		void DrawFull(Graphics g, Rectangle drawArea, bool active)
+		{
+			DrawNoClient(g, drawArea, active);
+		}
+		void DrawFullActivaChanged(bool active)
+		{
+			using(var g = CreateGraphics()) {
+				using(var bmp = new Bitmap(Width, Height, g)) {
+					using(var memG = Graphics.FromImage(bmp)) {
+						var rect = new Rectangle(Point.Empty, Size);
+						DrawFull(memG, rect, active);
+						g.DrawImage(bmp, 0, 0);
+					}
+				}
+			}
+		}
+		
+		void DrawCommand(Point point, Func<bool, SkinButtonState, SkinButtonState> inFirstDg, Action<SkinNoteCommand> prevDrawDg, Action lastInDg, bool elseProcess)
+		{
+			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
+			if(!captionArea.Size.IsEmpty) {
+				var active = this == Form.ActiveForm;
+				var noteStatus = GetNoteStatus();
+				if(captionArea.Contains(point)) {
+					using(var g = CreateGraphics()) {
+						foreach(var command in GetCommandList()) {
+							var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, command);
+							var nowState = SkinButtonState.None;
+							var prevState = this._commandStateMap[command];
+							nowState = inFirstDg(commandArea.Contains(point), prevState);
+							
+							if(nowState != SkinButtonState.None) {
+								if(prevDrawDg != null) {
+									prevDrawDg(command);
+								}
+								if(nowState != prevState && this.Created) {
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
+									this._commandStateMap[command] = nowState;
+								}
+							}
+						}
+					}
+					if(lastInDg != null) {
+						lastInDg();
+					}
+				} else {
+					if(elseProcess) {
+						using(var g = CreateGraphics()) {
+							foreach(var pair in this._commandStateMap) {
+								if(pair.Value != SkinButtonState.Normal) {
+									var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, SkinButtonState.Normal);
+								}
+							}
+							foreach(var key in this._commandStateMap.Keys.ToArray()) {
+								this._commandStateMap[key] = SkinButtonState.Normal;
+							}
+						}
+					}
+				}
+			}
+		}
+		#endregion ////////////////////////////////////
+
 		void NoteForm_Paint(object sender, PaintEventArgs e)
 		{
 			using (var bmp = new Bitmap(Width, Height, e.Graphics)) {
