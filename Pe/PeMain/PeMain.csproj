@@ -207,38 +207,12 @@
     <Compile Include="UI\CustomControl\EnvUpdateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UI\CustomControl\LauncherItemSelectControl-Component.cs" />
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.define.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.event.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.functions.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.initialize.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.language.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.property.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\LauncherItemSelectControl.variable.cs">
-      <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>

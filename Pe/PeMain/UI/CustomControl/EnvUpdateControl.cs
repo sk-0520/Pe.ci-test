@@ -98,6 +98,30 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region function
+		public void SetItem(IDictionary<string, string> map)
+		{
+			this._event = false;
+			try {
+				var rowList = new List<DataGridViewRow>(map.Count);
+				foreach(var item in map) {
+					var row = new DataGridViewRow();
+					row.CreateCells(this.gridEnv);
+					row.Cells[this.gridEnv_columnKey.Index].Value = item.Key;
+					row.Cells[this.gridEnv_columnValue.Index].Value = item.Value;
+					
+					rowList.Add(row);
+				}
+				this.gridEnv.Rows.Clear();
+				this.gridEnv.Rows.AddRange(rowList.ToArray());
+			} finally {
+				this._event = true;
+			}
+		}
+		
+		public void Clear()
+		{
+			this.gridEnv.Rows.Clear();
+		}
 		#endregion ////////////////////////////////////
 
 		void GridEnv_CellValueChanged(object sender, DataGridViewCellEventArgs e)
