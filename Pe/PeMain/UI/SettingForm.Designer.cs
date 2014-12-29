@@ -74,7 +74,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectLauncherType_file = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_directory = new System.Windows.Forms.RadioButton();
-			this.selectLauncherType_uri = new System.Windows.Forms.RadioButton();
+			this.selectLauncherType_command = new System.Windows.Forms.RadioButton();
 			this.selectLauncherType_embedded = new System.Windows.Forms.RadioButton();
 			this.commandLauncherOptionDirPath = new System.Windows.Forms.Button();
 			this.inputLauncherOption = new System.Windows.Forms.TextBox();
@@ -673,7 +673,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_file);
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_directory);
-			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_uri);
+			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_command);
 			this.flowLayoutPanel3.Controls.Add(this.selectLauncherType_embedded);
 			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
@@ -705,17 +705,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLauncherType_directory.UseVisualStyleBackColor = true;
 			this.selectLauncherType_directory.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
-			// selectLauncherType_uri
+			// selectLauncherType_command
 			// 
-			this.selectLauncherType_uri.AutoSize = true;
-			this.selectLauncherType_uri.Location = new System.Drawing.Point(292, 3);
-			this.selectLauncherType_uri.Name = "selectLauncherType_uri";
-			this.selectLauncherType_uri.Size = new System.Drawing.Size(142, 19);
-			this.selectLauncherType_uri.TabIndex = 2;
-			this.selectLauncherType_uri.TabStop = true;
-			this.selectLauncherType_uri.Text = "#LauncherType.URI";
-			this.selectLauncherType_uri.UseVisualStyleBackColor = true;
-			this.selectLauncherType_uri.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
+			this.selectLauncherType_command.AutoSize = true;
+			this.selectLauncherType_command.Location = new System.Drawing.Point(292, 3);
+			this.selectLauncherType_command.Name = "selectLauncherType_command";
+			this.selectLauncherType_command.Size = new System.Drawing.Size(180, 19);
+			this.selectLauncherType_command.TabIndex = 2;
+			this.selectLauncherType_command.TabStop = true;
+			this.selectLauncherType_command.Text = "#LauncherType.Command";
+			this.selectLauncherType_command.UseVisualStyleBackColor = true;
+			this.selectLauncherType_command.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// selectLauncherType_embedded
 			// 
@@ -2325,7 +2325,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelLauncherWorkDirPath;
 		private System.Windows.Forms.Label labelLauncherIconPath;
 		private System.Windows.Forms.RadioButton selectLauncherType_file;
-		private System.Windows.Forms.RadioButton selectLauncherType_uri;
+		private System.Windows.Forms.RadioButton selectLauncherType_command;
 		private System.Windows.Forms.GroupBox groupLauncherType;
 		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl selecterToolbar;
 		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl selecterLauncher;

@@ -135,7 +135,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var tempCommandIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_URI, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
@@ -560,6 +560,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			LauncherHistory.DateHistory.Update = DateTime.UtcNow;
 			IncrementList(LauncherHistory.Options, option);
 			IncrementList(LauncherHistory.WorkDirs, workDirPath);
+		}
+
+		public override void CorrectionValue()
+		{
+			base.CorrectionValue();
+
+			if(LauncherType == Data.LauncherType.URI) {
+				LauncherType = Data.LauncherType.Command;
+			}
 		}
 	}
 	

@@ -73,6 +73,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Icon Icon_Command {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Command", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Icon Icon_NotFound {
             get {
                 object obj = ResourceManager.GetObject("Icon_NotFound", resourceCulture);
@@ -86,16 +96,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
         internal static System.Drawing.Icon Icon_ToolbarMain {
             get {
                 object obj = ResourceManager.GetObject("Icon_ToolbarMain", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Icon Icon_URI {
-            get {
-                object obj = ResourceManager.GetObject("Icon_URI", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
