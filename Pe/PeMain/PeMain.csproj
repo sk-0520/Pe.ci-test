@@ -156,6 +156,7 @@
     <Compile Include="Logic\DisplayValue.cs" />
     <Compile Include="Logic\AppDBManager.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
+    <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />
