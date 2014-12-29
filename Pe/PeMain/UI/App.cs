@@ -27,6 +27,35 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public sealed partial class App: IDisposable, IRootSender
 	{
+		#region Define
+
+		const string menuNameNote = "menu_note";
+		const string menuNameSystemEnv = "menu_systemenv";
+		const string menuNameSetting = "menu_setting";
+		const string menuNameAbout = "menu_about";
+		const string menuNameHelp = "menu_help";
+		const string menuNameExit = "menu_exit";
+
+		const string menuNameWindowToolbar = "menu_window_toolbar";
+		const string menuNameWindowNote = "menu_window_note";
+		const string menuNameWindowLogger = "menu_window_logger";
+
+		const string menuNameWindowNoteCreate = "menu_window_note_create";
+		const string menuNameWindowNoteHidden = "menu_window_note_hidden";
+		const string menuNameWindowNoteCompact = "menu_window_note_compact";
+		const string menuNameWindowNoteShowFront = "menu_window_note_show_front";
+		const string menuNameWindowNoteSeparator = "menu_window_note_separator";
+
+		const string menuNameSystemEnvHiddenFile = "menu_systemenv_hidden";
+		const string menuNameSystemEnvExtension = "menu_systemenv_ext";
+		const string menuNameSystemEnvWindow = "menu_systemenv_window";
+		const string menuNameSystemEnvWindowSave = "menu_systemenv_window_save";
+		const string menuNameSystemEnvWindowLoad = "menu_systemenv_window_load";
+		const string menuNameSystemEnvWindowSeparator = "menu_systemenv_window_separator";
+		const string menuNameSystemEnvClipboard = "menu_systemenv_clipboard";
+
+		#endregion //////////////////////////////////////////
+
 		public App(CommandLine commandLine, FileLogger fileLogger)
 		{
 			Initialized = true;

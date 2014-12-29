@@ -155,6 +155,7 @@
     <Compile Include="Logic\LanguageUtility.cs" />
     <Compile Include="Logic\DisplayValue.cs" />
     <Compile Include="Logic\AppDBManager.cs" />
+    <Compile Include="Logic\Listener.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
@@ -722,9 +723,6 @@
     <Compile Include="UI\LogForm.initialize.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\App.define.cs">
-      <DependentUpon>App.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\App.MessageWindow.function.cs">
       <DependentUpon>App.MessageWindow.cs</DependentUpon>
