@@ -414,22 +414,6 @@
     <Compile Include="UI\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\UpdateForm.function.cs">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\UpdateForm.language.cs">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\UpdateForm.initialize.cs">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\UpdateForm.property.cs">
-      <DependentUpon>UpdateForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
