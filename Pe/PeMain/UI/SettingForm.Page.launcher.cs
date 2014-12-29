@@ -28,7 +28,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var map = new Dictionary<RadioButton, LauncherType>() {
 				{ this.selectLauncherType_file, LauncherType.File },
 				{ this.selectLauncherType_directory, LauncherType.Directory },
-				{ this.selectLauncherType_uri, LauncherType.URI },
+				{ this.selectLauncherType_command, LauncherType.Command },
 				{ this.selectLauncherType_embedded, LauncherType.Embedded },
 			};
 			return map.Single(m => m.Key.Checked).Value;
@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.selectLauncherType_file.Checked = type == LauncherType.File;
 			this.selectLauncherType_directory.Checked  = type == LauncherType.Directory;
-			this.selectLauncherType_uri.Checked  = type == LauncherType.URI;
+			this.selectLauncherType_command.Checked = type == LauncherType.URI || type == LauncherType.Command;
 			this.selectLauncherType_embedded.Checked  = type == LauncherType.Embedded;
 			
 			LauncherApplyType(type);
@@ -210,8 +210,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						};
 					}
 					break;
-					
+
 				case LauncherType.URI:
+				case LauncherType.Command:
 					{
 						disabledControls = new Control[] {
 							this.commandLauncherFilePath,

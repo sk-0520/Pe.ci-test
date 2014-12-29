@@ -625,6 +625,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -984,7 +985,7 @@
     <None Include="Resources\Icon\ToolbarMain.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Icon\URI.ico" />
+    <None Include="Resources\Icon\Command.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image\ClipboardHtml.png" />

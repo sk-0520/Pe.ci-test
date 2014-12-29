@@ -357,6 +357,7 @@
 		<Word Name="enum/launcher-type/file"      Text="ファイル" />
 		<Word Name="enum/launcher-type/directory" Text="ディレクトリ" />
 		<Word Name="enum/launcher-type/uri"       Text="URI" />
+		<Word Name="enum/launcher-type/command"   Text="コマンド" />
 		<Word Name="enum/launcher-type/embedded"  Text="組み込み" />
 		
 		<Word Name="enum/icon-size"        Text="アイコンサイズ" />

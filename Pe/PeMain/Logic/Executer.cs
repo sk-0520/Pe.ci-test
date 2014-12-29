@@ -121,9 +121,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData)
+		private static void RunCommandItem(LauncherItem launcherItem, CommonData commonData)
 		{
-			Debug.Assert(launcherItem.LauncherType == LauncherType.URI);
+			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
 			
 			RunCommand(launcherItem.Command, commonData);
 		}
@@ -146,9 +146,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				case LauncherType.Directory:
 					RunDirectoryItem(launcherItem, commonData);
 					break;
-					
+
 				case LauncherType.URI:
-					RunUriItem(launcherItem, commonData);
+				case LauncherType.Command:
+					RunCommandItem(launcherItem, commonData);
 					break;
 					
 				default:
