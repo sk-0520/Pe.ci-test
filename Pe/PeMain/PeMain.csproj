@@ -207,26 +207,6 @@
     <Compile Include="UI\CustomControl\EnvUpdateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.functions.cs">
-      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.initialize.cs">
-      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.language.cs">
-      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.property.cs">
-      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.variable.cs">
-      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -487,10 +467,6 @@
     <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
-      <DependentUpon>EnvUpdateControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
     </Compile>
     <None Include="etc\lang\ja-JP.accept.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
