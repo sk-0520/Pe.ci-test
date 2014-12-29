@@ -335,32 +335,8 @@
     <Compile Include="UI\NoteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\NoteForm.define.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\NoteForm.Designer.cs">
       <DependentUpon>NoteForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\NoteForm.draw.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\NoteForm.initialize.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\NoteForm.language.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\NoteForm.property.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\NoteForm.variable.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\App.cs" />
     <Compile Include="UI\SettingForm.cs">
@@ -607,14 +583,6 @@
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\NoteForm.function.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\NoteForm.wndProc.cs">
-      <DependentUpon>NoteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
     </Compile>
     <None Include="etc\lang\ja-JP.accept.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
