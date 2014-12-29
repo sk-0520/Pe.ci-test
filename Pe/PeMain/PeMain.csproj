@@ -326,22 +326,6 @@
     <Compile Include="UI\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LogForm.function.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\LogForm.language.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\LogForm.property.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\LogForm.variable.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\MessageWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -618,10 +602,6 @@
     </None>
     <Compile Include="UI\SettingForm.function.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\LogForm.initialize.cs">
-      <DependentUpon>LogForm.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.event.cs">
