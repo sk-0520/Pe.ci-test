@@ -290,26 +290,6 @@
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\ExecuteForm.function.cs">
-      <DependentUpon>ExecuteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ExecuteForm.initialize.cs">
-      <DependentUpon>ExecuteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ExecuteForm.language.cs">
-      <DependentUpon>ExecuteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ExecuteForm.property.cs">
-      <DependentUpon>ExecuteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ExecuteForm.variable.cs">
-      <DependentUpon>ExecuteForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\Ex\ExContextMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>

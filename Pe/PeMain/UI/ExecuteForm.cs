@@ -15,6 +15,9 @@ using System.Windows.Forms;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.Library.Skin;
+using System.Diagnostics;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -23,6 +26,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public partial class ExecuteForm : Form, ISetCommonData
 	{
+		#region define
+		#endregion ////////////////////////////////////
+
+		#region variable
+		#endregion ////////////////////////////////////
+
 		public ExecuteForm()
 		{
 			//
@@ -32,7 +41,119 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize();
 		}
-		
+
+		#region property
+		CommonData CommonData { get; set; }
+		LauncherItem LauncherItem { get; set; }
+		IEnumerable<string> ExOptions { get; set; }
+
+		public LauncherItem EditedLauncherItem { get; private set; }
+		#endregion ////////////////////////////////////
+
+		#region ISetCommonData
+		public void SetCommonData(CommonData commonData)
+		{
+			CommonData = commonData;
+
+			ApplySetting();
+		}
+		#endregion ////////////////////////////////////
+
+		#region initialize
+		void Initialize()
+		{
+			PointingUtility.AttachmentDefaultButton(this);
+		}
+		#endregion ////////////////////////////////////
+
+		#region language
+		void ApplyLanguage()
+		{
+			Debug.Assert(CommonData != null);
+
+			var map = new Dictionary<string, string>() {
+				{ AppLanguageName.itemName, LauncherItem.Name },
+			};
+
+			UIUtility.SetDefaultText(this, CommonData.Language, map);
+
+			this.envUpdate.SetLanguage(CommonData.Language);
+			this.envRemove.SetLanguage(CommonData.Language);
+
+			/*
+			this.pageBasic.Text = CommonData.Language["execute/tab/basic"];
+			this.pageEnv.Text = CommonData.Language["common/tab/env"];
+			this.labelOption.Text = CommonData.Language["execute/label/option"];
+			this.labelWorkDirPath.Text = CommonData.Language["execute/label/work-dir"];
+			this.selectStdStream.Text  = CommonData.Language["execute/check/std-stream"];
+			this.selectEnvironment.Text  = CommonData.Language["execute/check/edit-env"];
+			this.groupUpdate.Text = CommonData.Language["common/label/edit"];
+			this.groupRemove.Text = CommonData.Language["common/label/remove"];
+			this.selectAdministrator.Text = CommonData.Language["common/check/admin"];
+			*/
+			this.tabExecute_pageBasic.SetLanguage(CommonData.Language);
+			this.tabExecute_pageEnv.SetLanguage(CommonData.Language);
+			this.labelOption.SetLanguage(CommonData.Language);
+			this.labelWorkDirPath.SetLanguage(CommonData.Language);
+			this.selectStdStream.SetLanguage(CommonData.Language);
+			this.selectEnvironment.SetLanguage(CommonData.Language);
+			this.groupUpdate.SetLanguage(CommonData.Language);
+			this.groupRemove.SetLanguage(CommonData.Language);
+			this.selectAdministrator.SetLanguage(CommonData.Language);
+
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+		public void SetParameter(LauncherItem launcherItem, IEnumerable<string> exOptions)
+		{
+			LauncherItem = launcherItem;
+			ExOptions = exOptions;
+		}
+
+		void ApplySetting()
+		{
+			Debug.Assert(LauncherItem != null);
+
+			ApplyLanguage();
+
+			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index);
+
+			this.viewCommand.Text = LauncherItem.Command;
+			this.inputOption.Items.AddRange(LauncherItem.LauncherHistory.Options.ToArray());
+			this.inputOption.Text = LauncherItem.Option;
+			this.inputWorkDirPath.Items.AddRange(LauncherItem.LauncherHistory.WorkDirs.ToArray());
+			this.inputWorkDirPath.Text = LauncherItem.WorkDirPath;
+			this.selectStdStream.Checked = LauncherItem.StdOutputWatch;
+			this.selectAdministrator.Checked = LauncherItem.Administrator;
+			this.selectEnvironment.Checked = !this.selectEnvironment.Checked;
+			this.selectEnvironment.Checked = LauncherItem.EnvironmentSetting.EditEnvironment;
+			this.envUpdate.SetItem(LauncherItem.EnvironmentSetting.Update.ToDictionary(pair => pair.First, pair => pair.Second));
+			this.envRemove.SetItem(LauncherItem.EnvironmentSetting.Remove);
+
+			if(ExOptions != null && ExOptions.Any()) {
+				var args = string.Join(" ", ExOptions.WhitespaceToQuotation());
+				this.inputOption.Text = args;
+			}
+		}
+
+		void SubmitInput()
+		{
+			var item = (LauncherItem)LauncherItem.Clone();
+			item.Option = this.inputOption.Text;
+			item.WorkDirPath = this.inputWorkDirPath.Text;
+			item.StdOutputWatch = this.selectStdStream.Checked;
+			item.Administrator = this.selectAdministrator.Checked;
+
+			item.EnvironmentSetting.EditEnvironment = this.selectEnvironment.Checked;
+			if(item.EnvironmentSetting.EditEnvironment) {
+				item.EnvironmentSetting.Update = this.envUpdate.Items.ToList();
+				item.EnvironmentSetting.Remove = this.envRemove.Items.ToList();
+			}
+			EditedLauncherItem = item;
+		}
+		#endregion ////////////////////////////////////
+
 		void CommandOption_file_Click(object sender, EventArgs e)
 		{
 			DialogUtility.OpenDialogFilePath(this.inputOption);
