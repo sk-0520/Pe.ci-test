@@ -189,6 +189,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			if(IconItem == null) {
 				IconItem = new IconItem();
 			}
+
+			if(LauncherType == Data.LauncherType.URI) {
+				LauncherType = Data.LauncherType.Command;
+			}
 		}
 		
 		/// <summary>
@@ -560,15 +564,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			LauncherHistory.DateHistory.Update = DateTime.UtcNow;
 			IncrementList(LauncherHistory.Options, option);
 			IncrementList(LauncherHistory.WorkDirs, workDirPath);
-		}
-
-		public override void CorrectionValue()
-		{
-			base.CorrectionValue();
-
-			if(LauncherType == Data.LauncherType.URI) {
-				LauncherType = Data.LauncherType.Command;
-			}
 		}
 	}
 	
