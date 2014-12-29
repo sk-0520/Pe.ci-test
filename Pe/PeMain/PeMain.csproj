@@ -405,40 +405,8 @@
     <Compile Include="UI\ToolbarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\ToolbarForm.define.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\ToolbarForm.Designer.cs">
       <DependentUpon>ToolbarForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.draw.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.function.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.initialize.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.language.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.property.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.variable.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\ToolbarForm.wndProc.cs">
-      <DependentUpon>ToolbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\UpdateForm.cs">
       <SubType>Form</SubType>
