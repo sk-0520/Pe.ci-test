@@ -57,6 +57,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		//private const string _clipboardItemsFileName = "clipboard-items.xml";
 		private const string _dbFileName             = "db.sqlite3";
 		private const string _backupDirName          = "backup";
+
+		private const string _applicationsFileName = "Applications.xml";
 		/// <summary>
 		/// デフォルトの言語名。
 		/// </summary>
@@ -202,6 +204,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 				return Path.Combine(ApplicationRootDirPath, "bin");
 			}
 		}
+
+		public static string ApplicationBinAppPath
+		{
+			get { return Path.Combine(ApplicationBinDirPath, _applicationsFileName); }
+		}
+
 		/// <summary>
 		/// sbin/
 		/// </summary>
@@ -211,6 +219,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 			{
 				return Path.Combine(ApplicationRootDirPath, "sbin");
 			}
+		}
+
+		public static string ApplicationSBinAppPath
+		{
+			get { return Path.Combine(ApplicationSBinDirPath, _applicationsFileName); }
 		}
 		
 		/// <summary>
