@@ -201,30 +201,6 @@
     <Compile Include="UI\CustomControl\EnvRemoveControl.Designer.cs">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.event.cs">
-      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.functions.cs">
-      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.initialize.cs">
-      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.language.cs">
-      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.property.cs">
-      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\CustomControl\EnvRemoveControl.variable.cs">
-      <DependentUpon>EnvRemoveControl.cs</DependentUpon>
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UI\CustomControl\EnvUpdateControl.Designer.cs">
       <DependentUpon>EnvUpdateControl.cs</DependentUpon>
     </Compile>
