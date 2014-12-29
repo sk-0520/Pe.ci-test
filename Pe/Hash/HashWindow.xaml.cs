@@ -26,6 +26,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 	/// </summary>
 	public partial class HashWindow: Window
 	{
+
 		public HashWindow()
 		{
 			InitializeComponent();
@@ -36,29 +37,11 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		#region Property
 
 		HashViewModel ViewModel { get; set; }
+		AssemblyLoader AssemblyLoader { get; set; }
 
 		#endregion /////////////////////////////
 
 		#region Initialize
-
-		void InitializeAssembly()
-		{
-			var assemblyList = new string[] { "PlatformInvoke", "Utility", };
-			var basePath = "Pe/bin/dir";
-			
-			var assembly = Assembly.GetExecutingAssembly();
-			
-			var dirPath = assembly.Location;
-			foreach(var n in Enumerable.Range(0, basePath.Split('/').Count())) {
-				dirPath = System.IO.Path.GetDirectoryName(dirPath);
-			}
-			var libDir = System.IO.Path.Combine(dirPath, "lib");
-			foreach(var assemblyName in assemblyList) {
-				var assemblyPath = System.IO.Path.Combine(libDir, assemblyName + ".dll");
-				var loadAssembly = Assembly.LoadFrom(assemblyPath);
-			}
-			assembly.GetReferencedAssemblies();
-		}
 
 		void InitializeCommandLine()
 		{
@@ -72,7 +55,8 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		void Initialize()
 		{
-			InitializeAssembly();
+			AssemblyLoader = new AssemblyLoader();
+			AssemblyLoader.AttachmentEvent();
 
 			ViewModel = new HashViewModel(new HashModel());
 

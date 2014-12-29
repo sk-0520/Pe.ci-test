@@ -135,8 +135,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				var pairs = Options.Where(s => s.StartsWith(keyOption));
 				return pairs.ElementAt(index).IndexOf(KeyValueSeparator) != -1;
 			}
-			
-			throw new ArgumentException(keyOption);
+
+			return false;
 		}
 		
 		private int CountKeyOption(string keyOption)

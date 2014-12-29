@@ -55,6 +55,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Hash.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -75,9 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="..\Utility\CommandLine.cs">
-      <Link>CommandLine.cs</Link>
+    <Compile Include="..\Common-Applications\AssemblyLoader.cs">
+      <Link>AssemblyLoader.cs</Link>
     </Compile>
+    <Compile Include="CRC32.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="HashWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +126,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlatformInvoke\PlatformInvoke.csproj">
+      <Project>{2e80df8c-5682-4b45-9172-846bad85c305}</Project>
+      <Name>PlatformInvoke</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{863c2a90-a386-4f98-9d0b-efb839168293}</Project>
+      <Name>Utility</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
