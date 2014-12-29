@@ -770,7 +770,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return toolItem;
 		}
 		
-		ToolStripButton CreateURIItemLauncherButton(LauncherItem item)
+		ToolStripButton CreateCommandItemLauncherButton(LauncherItem item)
 		{
 			var toolItem = new ToolStripButton();
 			
@@ -797,9 +797,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				case LauncherType.Directory:
 					toolItem = CreateDirectoryItemLauncherButton(item);
 					break;
-					
+
 				case LauncherType.URI:
-					toolItem = CreateURIItemLauncherButton(item);
+				case LauncherType.Command:
+					toolItem = CreateCommandItemLauncherButton(item);
 					break;
 					
 				default:

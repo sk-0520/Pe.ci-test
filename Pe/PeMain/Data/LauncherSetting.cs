@@ -34,8 +34,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		Directory,
 		/// <summary>
 		/// URI。
+		/// 
+		/// Commandへ置き換える。
 		/// </summary>
 		URI,
+		/// <summary>
+		/// コマンド。
+		/// </summary>
+		Command,
 		/// <summary>
 		/// 組み込み
 		/// </summary>
@@ -107,7 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
 		*/
-		private static readonly Dictionary<IconScale, Icon> _uriIconMap;
+		private static readonly Dictionary<IconScale, Icon> _commandIconMap;
 		
 		static LauncherItem()
 		{
@@ -126,7 +132,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			notfoundIconMap = tempNotfoundIconMap;
 			
 			// URIアイコン構築
-			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			var tempCommandIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
 				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_URI, iconSize);
@@ -134,9 +140,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
 				}
-				uriIconMap[iconScale] = icon;
+				tempCommandIconMap[iconScale] = icon;
 			}
-			_uriIconMap = uriIconMap;
+			_commandIconMap = tempCommandIconMap;
 		}
 
 		/// <summary>
@@ -383,8 +389,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			if(hasIcon) {
 				return this._iconMap[iconScale];
 			} else {
-				if(LauncherType == LauncherType.URI) {
-					return _uriIconMap[iconScale];
+				if(LauncherType == LauncherType.URI || LauncherType == LauncherType.Command) {
+					return _commandIconMap[iconScale];
 				} else {
 					return notfoundIconMap[iconScale];
 				}

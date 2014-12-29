@@ -27,6 +27,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				{ LauncherType.File,      "file"},
 				{ LauncherType.Directory, "directory"},
 				{ LauncherType.URI,       "uri"},
+				{ LauncherType.Command,   "command"},
 				{ LauncherType.Embedded,  "embedded"},
 			}[value];
 			
