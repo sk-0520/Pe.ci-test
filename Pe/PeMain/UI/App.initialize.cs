@@ -222,6 +222,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
 			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
 			this._commonData.MainSetting.Launcher.Items = Serializer.LoadFile<HashSet<LauncherItem>>(launcherItemsFilePath, true);
+			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
+				item.CorrectionValue();
+			}
 
 			//var clipboardItemsFilePath = Literal.UserClipboardItemsPath;
 			//logger.Puts(LogType.Information, "load clipboard-item", clipboardItemsFilePath);
