@@ -272,56 +272,8 @@
     <Compile Include="UI\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\SettingForm.define.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\SettingForm.export.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.initialize.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.language.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.Page.command.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.Page.launcher.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.Page.main.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.Page.note.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.Page.toolbar.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.property.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.save.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SettingForm.variable.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Skin\Skin.cs" />
     <Compile Include="UI\Skin\SystemSkin.cs" />
@@ -438,10 +390,6 @@
       <TransformOnBuild>true</TransformOnBuild>
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="UI\SettingForm.function.cs">
-      <DependentUpon>SettingForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <None Include="etc\lang\ja-JP.accept.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
