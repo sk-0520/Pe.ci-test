@@ -287,6 +287,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 
 			foreach(var type in clipboardItem.GetClipboardTypeList()) {
+				this.tabPreview.TabPages.Add(map[type]);
+
 				switch(type) {
 					case ClipboardType.Text: 
 						{
@@ -362,7 +364,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					default:
 						throw new NotImplementedException();
 				}
-				this.tabPreview.TabPages.Add(map[type]);
 			}
 			this.tabPreview.SelectedTab = map[clipboardItem.GetSingleClipboardType()];
 			this.tabPreview.ResumeLayout();
