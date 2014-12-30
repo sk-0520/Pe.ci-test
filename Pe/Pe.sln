@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{F9E31A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dust", "Dust", "{2957E6EA-7E84-43AF-9909-7B3E988E33A9}"
 	ProjectSection(SolutionItems) = preProject
-		region.txt = region.txt
+		Dust\region.txt = Dust\region.txt
 	EndProjectSection
 EndProject
 Global
