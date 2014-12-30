@@ -26,4 +26,10 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 		/// </summary>
 		string Name { get; set; }
 	}
+
+	public interface IRangeItem<T>: IItem
+	{
+		T Start { get; set; }
+		T End { get; set; }
+	}
 }
