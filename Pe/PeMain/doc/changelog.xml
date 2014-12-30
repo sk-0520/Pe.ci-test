@@ -37,8 +37,8 @@
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="29ff41ed68c8f966c784fec5d05b1fae50d38bba">#131: HTMLクリップボードの読み取り元が日本語を含む場合に範囲計算が狂う</li>
+			<li rev="c5b893be60bd911c67992af4037bd57d62bdec4c">#129: HTMLクリップボードデータをファイル保存時にクリップボードデータとして保存している</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
