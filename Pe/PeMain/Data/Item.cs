@@ -85,4 +85,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		[System.Xml.Serialization.XmlAttribute("Name")]
 		public string Name { get; set; }
 	}
+
+	public class RangeItem<T>: IRangeItem<T>
+	{
+		public T Start { get; set; }
+		public T End { get; set; }
+
+		public void SetRange(T value)
+		{
+			Start = value;
+			End = value;
+		}
+	}
 }

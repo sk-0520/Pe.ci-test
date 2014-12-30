@@ -302,10 +302,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 					case ClipboardType.Html:
 						{
-							string html;
-							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html);
+							ClipboardHtmlDataItem html;
+							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
+
 							if(result) {
-								this.viewHtml.DocumentText = html;
+								this.viewHtml.DocumentText = html.ToHtml();
 							} else {
 								var elements = string.Format("<p style='font-weight: bold; color: #f00; background: #fff'>{0}</p><hr />", CommonData.Language["clipboard/html/error"]);
 								this.viewHtml.DocumentText = elements + clipboardItem.Html;
