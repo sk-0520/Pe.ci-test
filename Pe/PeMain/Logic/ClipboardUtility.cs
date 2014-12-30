@@ -62,53 +62,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			Copy(() => Clipboard.SetFileDropList(sc), commonData);
 		}
 
-		public static bool TryConvertHtmlFromClipbordHtml(string clipboardHtml, out string convertResult)
-		{
-			Func<string, string, int> getIndex = (pattern, line) => {
-				var reg = new Regex(pattern, RegexOptions.IgnoreCase);
-				var match = reg.Match(line);
-				if(match.Success && match.Groups.Count == 2) {
-					var data = match.Groups[1].Value;
-					var result = -1;
-					if(int.TryParse(data, out result)) {
-						return result;
-					}
-				}
-
-				return -1;
-			};
-
-			var lines = clipboardHtml.SplitLines();
-			var head = -1;
-			var tail = -1;
-
-			foreach(var line in lines) {
-				if(head != -1 && tail != -1) {
-					break;
-				}
-				if(head == -1) {
-					head = getIndex("StartHTML:([0-9]+)", line);
-				}
-				if(tail == -1) {
-					tail = getIndex("EndHTML:([0-9]+)", line);
-				}
-			}
-			if(head != -1 && tail != -1) {
-				convertResult = new string(clipboardHtml.Take(tail).Skip(head).ToArray());
-				return true;
-			} else {
-				convertResult = string.Empty;
-				return false;
-			}
-		}
-
-		public static string ConvertHtmlFromClipbordHtml(string clipboardHtml)
-		{
-			string temp;
-			TryConvertHtmlFromClipbordHtml(clipboardHtml, out temp);
-			return temp;
-		}
-
 		static string ConvertStringFromRawHtml(RangeItem<int> range, byte[] data)
 		{
 			if(-1 < range.Start && -1 < range.End && range.Start <= range.End) {
@@ -160,5 +113,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return true;
 		}
 
+		public static ClipboardHtmlDataItem ConvertHtmlFromClipbordHtml(string clipboardHtml, ILogger logger)
+		{
+			ClipboardHtmlDataItem temp;
+			TryConvertHtmlFromClipbordHtml(clipboardHtml, out temp, logger);
+			return temp;
+		}
 	}
 }

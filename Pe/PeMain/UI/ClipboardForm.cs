@@ -405,7 +405,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var map = new Dictionary<ClipboardType, Action>() {
 				{ ClipboardType.Text, () => File.WriteAllText(path, clipboardItem.Text) },
 				{ ClipboardType.Rtf, () => File.WriteAllText(path, clipboardItem.Rtf) },
-				{ ClipboardType.Html, () => File.WriteAllText(path, clipboardItem.Html) },
+				{ ClipboardType.Html, () => File.WriteAllText(path, ClipboardUtility.ConvertHtmlFromClipbordHtml(clipboardItem.Html, CommonData.Logger).ToHtml()) },
 				{ ClipboardType.Image, () => clipboardItem.Image.Save(path, ImageFormat.Png) },
 			};
 
