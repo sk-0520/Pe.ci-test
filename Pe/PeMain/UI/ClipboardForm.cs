@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
 
 							if(result) {
-								this.viewHtml.DocumentText = html.HtmlText ?? html.FragmentText ?? html.SelectionText;
+								this.viewHtml.DocumentText = html.ToHtml();
 							} else {
 								var elements = string.Format("<p style='font-weight: bold; color: #f00; background: #fff'>{0}</p><hr />", CommonData.Language["clipboard/html/error"]);
 								this.viewHtml.DocumentText = elements + clipboardItem.Html;

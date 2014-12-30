@@ -29,5 +29,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public string HtmlText { get; set; }
 		public string FragmentText { get; set; }
 		public string SelectionText { get; set; }
+
+		public string ToHtml()
+		{
+			return HtmlText ?? FragmentText ?? SelectionText;
+		}
 	}
 }
