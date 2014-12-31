@@ -42,6 +42,7 @@
 			<li rev="3beedc59b897a80cbf5bcba4a66ffd592e349c6e">#132: RTFの書式が吹っ飛ぶ</li>
 			<li rev="5cf1a43a9d5b503ee2448997d59263a59d16f465">クリップボード履歴一覧からカーソルが外れた際にボタン一覧を非表示にする</li>
 			<li rev="645ee77f26749c255b64af6ddb62c9af6770d943">#133: PrintScreenでクリップボードに入んねー</li>
+			<li rev="ed6b3b7cb7cb6333071383ed6646e087a40971d7">クリップボード履歴一覧の描画がホイールスクロールで変になる</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
