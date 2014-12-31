@@ -64,6 +64,7 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolClipboard_itemEnabled = new System.Windows.Forms.ToolStripButton();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -360,6 +361,7 @@
 			this.toolClipboard.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolClipboard.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolClipboard.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolClipboard_itemEnabled,
             this.toolClipboard_itemTopmost,
             this.toolStripSeparator2,
             this.toolClipboard_itemSave,
@@ -455,6 +457,16 @@
 			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(224, 22);
 			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
 			// 
+			// toolClipboard_itemEnabled
+			// 
+			this.toolClipboard_itemEnabled.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			this.toolClipboard_itemEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolClipboard_itemEnabled.Name = "toolClipboard_itemEnabled";
+			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(23, 22);
+			this.toolClipboard_itemEnabled.Text = "toolStripButton1";
+			this.toolClipboard_itemEnabled.Click += new System.EventHandler(this.toolClipboard_itemEnabled_Click);
+			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -541,5 +553,6 @@
 		private System.Windows.Forms.ToolStripStatusLabel statusClipboard_itemLimit;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemClear;
+		private System.Windows.Forms.ToolStripButton toolClipboard_itemEnabled;
 	}
 }
