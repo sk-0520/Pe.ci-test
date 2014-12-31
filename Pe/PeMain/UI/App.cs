@@ -235,10 +235,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					var clipboardItem = new ClipboardItem();
 					if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
 						this._clipboardPrevTime = DateTime.Now;
-						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-						clipboardItem.Name = displayText;
-						
-						this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+						try {
+							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+							clipboardItem.Name = displayText;
+
+							this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+						} catch(Exception ex) {
+							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+						}
 					}
 				},
 				TaskScheduler.FromCurrentSynchronizationContext()
