@@ -33,7 +33,7 @@
 		</ul>
 		<ul type="features">
 			<li rev="556e62fe00d948335c82f2b548648af6b17515e6">#130: クリップボードリストダブルクリック時に保持データをすべてコピーする</li>
-			<li rev=""></li>
+			<li rev="777bd5716c9b9c1a1f522ffe25f11acbac542e37">クリップボード監視の切り替え機能を追加</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
