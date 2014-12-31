@@ -62,6 +62,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			Copy(() => Clipboard.SetFileDropList(sc), commonData);
 		}
 
+		public static void CopyDataObject(IDataObject data, CommonData commonData)
+		{
+			Copy(() => Clipboard.SetDataObject(data), commonData);
+		}
+
 		static string ConvertStringFromRawHtml(RangeItem<int> range, byte[] data)
 		{
 			if(-1 < range.Start && -1 < range.End && range.Start <= range.End) {

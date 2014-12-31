@@ -42,6 +42,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// ファイル。
 		/// </summary>
 		File = 0x10,
+		/// <summary>
+		/// 全部
+		/// </summary>
+		All = Text | Rtf | Html | Image | File
 	}
 
 	/// <summary>
