@@ -705,5 +705,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			e.Result = 0;
 			e.Handled = false;
 		}
+
+		private void listClipboard_MouseLeave(object sender, EventArgs e)
+		{
+			if(this._panelClipboradItem.Visible) {
+				var point = this.listClipboard.PointToClient(Cursor.Position);
+				this._panelClipboradItem.Visible = this.listClipboard.DisplayRectangle.Contains(point);
+			}
+		}
+
 	}
 }
