@@ -219,8 +219,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				return;
 			}
 			this._clipboardPrevSeq = seq;
-
-			if(DateTime.Now - this._clipboardPrevTime <= this._commonData.MainSetting.Clipboard.WaitTime) {
+			var now = DateTime.Now;
+			if(now - this._clipboardPrevTime <= this._commonData.MainSetting.Clipboard.WaitTime) {
 				var map = new Dictionary<string, string>() {
 					{ AppLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
 				};
@@ -229,12 +229,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			Task.Factory.StartNew(() => {
 				var time = Literal.clipboardThreadWaitTime.median;
+				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
 			}).ContinueWith(
 				t => {
 					var clipboardItem = new ClipboardItem();
 					if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
-						this._clipboardPrevTime = DateTime.Now;
+						//this._clipboardPrevTime = DateTime.Now;
 						try {
 							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 							clipboardItem.Name = displayText;
