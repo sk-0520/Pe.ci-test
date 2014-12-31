@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		Button _commandHtml = new Button();
 		Button _commandImage = new Button();
 		Button _commandFile = new Button();
+		Button _commandMulti = new Button();
 
 		#endregion ////////////////////////////////////////
 
@@ -78,6 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._commandHtml.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml;
 			this._commandImage.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage;
 			this._commandFile.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile;
+			this._commandMulti.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
 			var buttonSize = GetButtonSize();
 
 			foreach(var command in commandButtons) {
@@ -169,6 +172,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				this._commandHtml,
 				this._commandImage,
 				this._commandFile,
+				this._commandMulti,
 			};
 		}
 
@@ -254,6 +258,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					{ ClipboardType.Html, this._commandHtml },
 					{ ClipboardType.Image, this._commandImage },
 					{ ClipboardType.File, this._commandFile },
+					//{ ClipboardType.All, this._commandMulti},
 				};
 				foreach(var pair in map.ToArray()) {
 					pair.Value.Enabled = (clipboardItem.ClipboardTypes.HasFlag(pair.Key));
@@ -386,6 +391,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				} },
 				{ ClipboardType.File, (setting) => {
 					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), setting);
+				} },
+				{ ClipboardType.All, (setting) => {
+					var data = new DataObject();
+					var typeFuncs = new Dictionary<ClipboardType, Action>() {
+						{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
+						{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Rtf, TextDataFormat.Rtf) },
+						{ ClipboardType.Html, () => data.SetText(clipboardItem.Html, TextDataFormat.Html) },
+						{ ClipboardType.Image, () => data.SetImage(clipboardItem.Image) },
+						{ ClipboardType.File, () => {
+							var sc = new StringCollection();
+							sc.AddRange(clipboardItem.Files.ToArray());
+							data.SetFileDropList(sc); 
+						}},
+					};
+					foreach(var type in clipboardItem.GetClipboardTypeList()) {
+						typeFuncs[type]();
+					}
+					ClipboardUtility.CopyDataObject(data, setting);
 				} },
 			};
 			map[clipboardType](CommonData);
@@ -627,6 +650,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					{ this._commandHtml, ClipboardType.Html },
 					{ this._commandImage, ClipboardType.Image },
 					{ this._commandFile, ClipboardType.File },
+					{ this._commandMulti, ClipboardType.All },
 				};
 				CopyItem(clipboardItem, map[sender]);
 			} catch(Exception ex) {
@@ -639,7 +663,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var index = this.listClipboard.SelectedIndex;
 			if(index != -1) {
 				try {
-					CopySingleItem(index);
+					//CopySingleItem(index);
+					var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
+					CopyItem(clipboardItem, ClipboardType.All);
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 				}
