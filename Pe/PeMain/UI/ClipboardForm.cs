@@ -732,7 +732,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void listClipboard_MouseWheel(object sender, MouseEventArgs e)
 		{
+			var noDraw = new IntPtr(0);
+			var onDraw = new IntPtr(1);
+
+			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, noDraw, IntPtr.Zero);
+			
 			this.listClipboard.Invalidate();
+
+			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, onDraw, IntPtr.Zero);
+
 			this._panelClipboradItem.Refresh();
 		}
 	}
