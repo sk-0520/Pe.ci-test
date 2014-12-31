@@ -138,6 +138,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
+			this.toolClipboard_itemEnabled.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemSave.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);

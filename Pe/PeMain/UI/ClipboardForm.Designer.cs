@@ -54,6 +54,7 @@
 			this.columnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageTab = new System.Windows.Forms.ImageList(this.components);
 			this.toolClipboard = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
+			this.toolClipboard_itemEnabled = new System.Windows.Forms.ToolStripButton();
 			this.toolClipboard_itemTopmost = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolClipboard_itemSave = new System.Windows.Forms.ToolStripButton();
@@ -64,7 +65,6 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolClipboard_itemEnabled = new System.Windows.Forms.ToolStripButton();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -374,6 +374,16 @@
 			this.toolClipboard.Stretch = true;
 			this.toolClipboard.TabIndex = 0;
 			// 
+			// toolClipboard_itemEnabled
+			// 
+			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			this.toolClipboard_itemEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolClipboard_itemEnabled.Name = "toolClipboard_itemEnabled";
+			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(200, 22);
+			this.toolClipboard_itemEnabled.Text = ":clipboard/command/enabled";
+			this.toolClipboard_itemEnabled.ToolTipText = ":clipboard/tips/enabled";
+			this.toolClipboard_itemEnabled.Click += new System.EventHandler(this.toolClipboard_itemEnabled_Click);
+			// 
 			// toolClipboard_itemTopmost
 			// 
 			this.toolClipboard_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -456,16 +466,6 @@
 			this.toolClipboard_itemType_itemTemplate.Name = "toolClipboard_itemType_itemTemplate";
 			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(224, 22);
 			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
-			// 
-			// toolClipboard_itemEnabled
-			// 
-			this.toolClipboard_itemEnabled.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
-			this.toolClipboard_itemEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolClipboard_itemEnabled.Name = "toolClipboard_itemEnabled";
-			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(23, 22);
-			this.toolClipboard_itemEnabled.Text = "toolStripButton1";
-			this.toolClipboard_itemEnabled.Click += new System.EventHandler(this.toolClipboard_itemEnabled_Click);
 			// 
 			// ClipboardForm
 			// 
