@@ -41,7 +41,7 @@
 			<li rev="c5b893be60bd911c67992af4037bd57d62bdec4c">#129: HTMLクリップボードデータをファイル保存時にクリップボードデータとして保存している</li>
 			<li rev="3beedc59b897a80cbf5bcba4a66ffd592e349c6e">#132: RTFの書式が吹っ飛ぶ</li>
 			<li rev="5cf1a43a9d5b503ee2448997d59263a59d16f465">クリップボード履歴一覧からカーソルが外れた際にボタン一覧を非表示にする</li>
-			<li rev=""></li>
+			<li rev="645ee77f26749c255b64af6ddb62c9af6770d943">#133: PrintScreenでクリップボードに入んねー</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
