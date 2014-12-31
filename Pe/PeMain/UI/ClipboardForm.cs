@@ -138,6 +138,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
+			this.toolClipboard_itemEnabled.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemSave.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);
@@ -199,6 +200,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
+			ChangeEnabled(CommonData.MainSetting.Clipboard.Enabled);
 			ChangeTopmost(CommonData.MainSetting.Clipboard.TopMost);
 			var buttonSize = GetButtonSize();
 			using(var g = CreateGraphics()) {
@@ -228,6 +230,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			CommonData.MainSetting.Clipboard.TopMost = topMost;
 			this.toolClipboard_itemTopmost.Checked = topMost;
 			TopMost = topMost;
+		}
+
+		void ChangeEnabled(bool enabled)
+		{
+			CommonData.MainSetting.Clipboard.Enabled = enabled;
+			this.toolClipboard_itemEnabled.Checked = enabled;
 		}
 
 		void ChangeSelectType(ToolStripItem item)
@@ -712,6 +720,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var point = this.listClipboard.PointToClient(Cursor.Position);
 				this._panelClipboradItem.Visible = this.listClipboard.DisplayRectangle.Contains(point);
 			}
+		}
+
+		private void toolClipboard_itemEnabled_Click(object sender, EventArgs e)
+		{
+			var check = !toolClipboard_itemEnabled.Checked;
+			ChangeEnabled(check);
 		}
 
 	}
