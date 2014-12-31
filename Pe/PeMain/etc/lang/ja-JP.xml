@@ -102,7 +102,7 @@
 		<Word Name="main/event/save-window/skip"       Text="ウィンドウ一覧取得スキップ" />
 		<Word Name="main/event/reset/stream/skip"      Text="プロセス実行中のためUIリセットをスキップしました" />
 		
-		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
+		<Word Name="hotkey/unregist/fail"            Text="${hotkey}${unregist} ${failure}" />
 		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />
 		<Word Name="hotkey/unregist/hidden-file"     Text="${hotkey}${unregist}: ${hidden-file}" />
 		<Word Name="hotkey/unregist/extension"       Text="${hotkey}${unregist}: ${extension}" />
