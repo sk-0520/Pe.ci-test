@@ -89,6 +89,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				command.Margin = Padding.Empty;
 				command.Click += command_Click;
 			}
+			this._commandMulti.Margin = new Padding(0, 0, 1, 0);
 			this._panelClipboradItem.Padding = Padding.Empty;
 			this._panelClipboradItem.Margin = Padding.Empty;
 			//this._panelClipboradItem.BackColor = Color.Transparent;
@@ -167,12 +168,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		IEnumerable<Button> GetButtonList()
 		{
 			return new[] {
+				this._commandMulti,
 				this._commandText,
 				this._commandRtf,
 				this._commandHtml,
 				this._commandImage,
 				this._commandFile,
-				this._commandMulti,
 			};
 		}
 
