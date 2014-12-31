@@ -114,6 +114,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ChangeCommand(-1);
 			ChangeSelsectedItem(-1);
 			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
+
+			listClipboard.MouseWheel += listClipboard_MouseWheel;
 		}
 
 		void Initialize()
@@ -728,5 +730,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ChangeEnabled(check);
 		}
 
+		void listClipboard_MouseWheel(object sender, MouseEventArgs e)
+		{
+			this.listClipboard.Invalidate();
+			this._panelClipboradItem.Refresh();
+		}
 	}
 }

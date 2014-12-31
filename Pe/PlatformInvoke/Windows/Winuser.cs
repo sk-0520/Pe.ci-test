@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_DRAWCLIPBOARD = 0x0308,
 		WM_CHANGECBCHAIN = 0x030d,
 		WM_CLIPBOARDUPDATE = 0x031d,
+		WM_VSCROLL = 0x0115,
 	}
 	
 	public enum WS_EX
@@ -59,6 +60,25 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		SC_MINIMIZE = 0xf020,
 		SC_MAXIMIZE = 0xf030,
 		SC_RESTORE = 0xf120,
+	}
+
+	public enum SB
+	{
+		SB_LINEUP = 0,
+		SB_LINELEFT = 0,
+		SB_LINEDOWN = 1,
+		SB_LINERIGHT = 1,
+		SB_PAGEUP = 2,
+		SB_PAGELEFT = 2,
+		SB_PAGEDOWN = 3,
+		SB_PAGERIGHT = 3,
+		SB_THUMBPOSITION = 4,
+		SB_THUMBTRACK = 5,
+		SB_TOP = 6,
+		SB_LEFT = 6,
+		SB_BOTTOM = 7,
+		SB_RIGHT = 7,
+		SB_ENDSCROLL = 8
 	}
 	
 	public enum MA: int
