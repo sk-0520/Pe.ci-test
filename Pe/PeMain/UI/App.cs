@@ -220,23 +220,29 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			this._clipboardPrevSeq = seq;
 
-			var nowTime = DateTime.Now;
-			if(nowTime - this._clipboardPrevTime <= this._commonData.MainSetting.Clipboard.WaitTime) {
+			if(DateTime.Now - this._clipboardPrevTime <= this._commonData.MainSetting.Clipboard.WaitTime) {
 				var map = new Dictionary<string, string>() {
 					{ AppLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
 				};
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
 				return;
 			}
-
-			var clipboardItem = new ClipboardItem();
-			if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
-				this._clipboardPrevTime = nowTime;
-				var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-				clipboardItem.Name = displayText;
-
-				this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
-			}
+			Task.Factory.StartNew(() => {
+				var time = Literal.clipboardThreadWaitTime.median;
+				Thread.Sleep(time);
+			}).ContinueWith(
+				t => {
+					var clipboardItem = new ClipboardItem();
+					if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
+						this._clipboardPrevTime = DateTime.Now;
+						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+						clipboardItem.Name = displayText;
+						
+						this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+					}
+				},
+				TaskScheduler.FromCurrentSynchronizationContext()
+			);
 		}
 
 		#endregion //////////////////////////////////////////
