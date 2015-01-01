@@ -455,13 +455,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 	}
 	
-	public static class AppEnv
-	{
-		public static string AppFilePath { get { return "PE_APP_EXE"; } }
-		public static string AppDirPath { get { return "PE_APP_DIR"; } }
-		public static string AppUserDir { get { return "PE_USER_DIR"; } }
-	}
-	
 	public enum HotKeyId: ushort
 	{
 		ShowCommand = 0x0001,

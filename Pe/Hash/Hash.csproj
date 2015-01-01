@@ -86,6 +86,9 @@
     <Compile Include="..\Common-Applications\AssemblyLoader.cs">
       <Link>AssemblyLoader.cs</Link>
     </Compile>
+    <Compile Include="..\Common-Applications\EnvironmentVariable.cs">
+      <Link>EnvironmentVariable.cs</Link>
+    </Compile>
     <Compile Include="CRC32.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="HashWindow.xaml">
