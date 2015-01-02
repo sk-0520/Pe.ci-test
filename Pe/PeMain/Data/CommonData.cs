@@ -45,9 +45,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 入れるべきじゃない気がする。
 		/// </summary>
 		public AppDBManager Database { get; set; }
+
+		public ApplicationExecuter ApplicationExecuter { get; set; }
 		
 		public void Dispose()
 		{
+			ApplicationExecuter.ToDispose();
 			Database.ToDispose();
 		}
 	}
