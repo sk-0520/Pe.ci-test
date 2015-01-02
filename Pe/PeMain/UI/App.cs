@@ -95,6 +95,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		uint _clipboardPrevSeq = 0;
 
 		HashSet<Form> _otherWindows = new HashSet<Form>();
+
+		ApplicationExecuter _appExecuter;
 	
 		#endregion //////////////////////////////////////////
 
@@ -407,6 +409,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeNote(CommandLine commandLine, ILogger logger)
 		{ }
 
+		void InitializeApplicationExecuter(CommandLine commandLine, ILogger logger)
+		{
+			this._appExecuter = new ApplicationExecuter(Literal.ApplicationBinAppPath);
+		}
 		/// <summary>
 		/// Peを使用使用するかユーザーに問い合わせる。
 		/// </summary>
@@ -464,6 +470,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
+
+			InitializeApplicationExecuter(commandLine, logger);
 
 			return existsSettingFilePath;
 		}

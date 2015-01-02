@@ -11,12 +11,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Xml.XPath;
 
 using System.Windows.Forms.VisualStyles;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.UI;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.Threading;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -223,5 +227,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 
+	public class ApplicationExecuter
+	{
+		public ApplicationExecuter(string settingPath)
+		{
+			Events = new Dictionary<string, AutoResetEvent>();
+
+			ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(settingPath, false);
+		}
+
+		ApplicationSetting ApplicationSetting { get; set; }
+
+		Dictionary<string, AutoResetEvent> Events { get; set; }
+
+		public IEnumerable<string> Names
+		{
+			get
+			{
+				return ApplicationSetting.Items.Select(i => i.Name);
+			}
+		}
+	}
 
 }

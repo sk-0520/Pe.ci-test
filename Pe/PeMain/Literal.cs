@@ -58,7 +58,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		private const string _dbFileName             = "db.sqlite3";
 		private const string _backupDirName          = "backup";
 
-		private const string _applicationsFileName = "Applications.xml";
+		private const string _applicationsFileName = "ApplicationSetting.xml";
 		/// <summary>
 		/// デフォルトの言語名。
 		/// </summary>

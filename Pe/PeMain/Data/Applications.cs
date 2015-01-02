@@ -161,9 +161,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	}
 
 	[Serializable]
-	public class Applications
+	public class ApplicationSetting
 	{
-		public Applications()
+		public ApplicationSetting()
 		{
 			Items = new List<ApplicationItem>();
 		}
