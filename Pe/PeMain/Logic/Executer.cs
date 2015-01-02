@@ -21,6 +21,7 @@ using ContentTypeTextNet.Pe.PeMain.UI;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using System.Threading;
 using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Applications;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -266,11 +267,38 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return result;
 		}
 
-		public void Executer(ApplicationExecuteItem item)
+		IDictionary<string, string> CreateExecuterEV(ApplicationExecuteItem item)
+		{
+			//	public const string communicationEventName = "PE_C_EVENT";
+			//	public const string communicationServerName = "PE_C_SEVER";
+			return new Dictionary<string, string>() {
+				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
+				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
+				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
+				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
+				// ----------------------
+				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, item.Name) },
+				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, item.Name) },
+				// ----------------------
+				{ EVLiteral.communicationEventName, string.Format("e-{0}", item.Name) },
+				{ EVLiteral.communicationServerName, string.Format("s-{0}", item.Name) },
+			};
+		}
+
+		public void Executer(ApplicationExecuteItem item, CommonData commonData)
 		{
 			if(Items.Any(i => i == item || i.Name == item.Name)) {
 				throw new ArgumentException(item.Name);
 			}
+
+			var launcherItem = new LauncherItem();
+			launcherItem.Name = item.Name;
+			launcherItem.Command = Path.Combine(
+				Literal.ApplicationBinDirPath,
+				item.ApplicationItem.File.Directory,
+				item.ApplicationItem.File.Name
+			);
+			launcherItem.EnvironmentSetting.EditEnvironment = true;
 		}
 	}
 

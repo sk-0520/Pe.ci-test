@@ -5,9 +5,7 @@
 			<File Directory="Hash" Name="Hash.exe" Communication="Event" />
 			<Type>Window</Type>
 			<Stream>None</Stream>
-			<Parameters>
-				<Arg Name="event-name" Type="Text" Necessary="true" />
-			</Parameters>
+			<Parameters />
 			<Communication>Event</Communication>
 		</ApplicationItem>
 	</Items>

@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		private const string _backupDirName          = "backup";
 
 		private const string _applicationsFileName = "ApplicationSetting.xml";
+		private const string _applicationsLogDirectoryName = "Applications";
+
 		/// <summary>
 		/// デフォルトの言語名。
 		/// </summary>
@@ -215,6 +217,16 @@ namespace ContentTypeTextNet.Pe.PeMain
 			get { return Path.Combine(ApplicationBinDirPath, _applicationsFileName); }
 		}
 
+		public static string ApplicationSettingBaseDirectoryPath
+		{
+			get { return Path.Combine(UserSettingDirPath, _applicationsLogDirectoryName); }
+		}
+
+		public static string ApplicationLogBaseDirectoryPath
+		{
+			get { return Path.Combine(LogFileDirPath, _applicationsLogDirectoryName); }
+		}
+
 		/// <summary>
 		/// sbin/
 		/// </summary>
@@ -230,7 +242,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get { return Path.Combine(ApplicationSBinDirPath, _applicationsFileName); }
 		}
-		
+
 		/// <summary>
 		/// etc/
 		/// </summary>

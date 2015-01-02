@@ -13,7 +13,6 @@ namespace ContentTypeTextNet.Pe.Applications
 		public const string systemSettingDirectoryPath = "PE_SYS_SETTING_DIR";
 		public const string systemLogDirectoryPath = "PE_SYS_LOG_DIR";
 
-		public const string applicationSettingBaseDirectoryPath = "PE_APP_SETTING_BASE_DIR";
 		public const string applicationSettingDirectoryPath = "PE_APP_SETTING_DIR";
 		public const string applicationLogDirectoryPath = "PE_APP_LOG_DIR";
 
@@ -31,7 +30,6 @@ namespace ContentTypeTextNet.Pe.Applications
 				systemSettingDirectoryPath,
 				systemLogDirectoryPath,
 				// --------------------------------------
-				applicationSettingBaseDirectoryPath,
 				applicationSettingDirectoryPath,
 				applicationLogDirectoryPath,
 				// --------------------------------------
