@@ -112,12 +112,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">ディレクトリアイテム</param>
 		/// <param name="commonData"></param>
 		/// <param name="parentForm"></param>
-		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData)
+		private static Process RunDirectoryItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
 			
 			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-			OpenDirectory(expandPath, commonData, null);
+			return OpenDirectory(expandPath, commonData, null);
 		}
 		
 		/// <summary>
@@ -126,11 +126,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static void RunCommandItem(LauncherItem launcherItem, CommonData commonData)
+		private static Process RunCommandItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
 			
-			RunCommand(launcherItem.Command, commonData);
+			return RunCommand(launcherItem.Command, commonData);
 		}
 		
 		/// <summary>
@@ -139,23 +139,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">ランチャーアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		public static void RunItem(LauncherItem launcherItem, CommonData commonData)
+		public static Process RunItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
 			
 			switch(launcherItem.LauncherType) {
 				case LauncherType.File:
-					RunFileItem(launcherItem, commonData);
-					break;
+					return RunFileItem(launcherItem, commonData);
 					
 				case LauncherType.Directory:
-					RunDirectoryItem(launcherItem, commonData);
-					break;
+					return RunDirectoryItem(launcherItem, commonData);
 
 				case LauncherType.URI:
 				case LauncherType.Command:
-					RunCommandItem(launcherItem, commonData);
-					break;
+					return RunCommandItem(launcherItem, commonData);
 					
 				default:
 					throw new NotImplementedException();
@@ -192,9 +189,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="expandPath">展開済みディレクトリパス</param>
 		/// <param name="commonData"></param>
 		/// <param name="openItem"></param>
-		public static void OpenDirectory(string expandPath, CommonData commonData, LauncherItem openItem)
+		public static Process OpenDirectory(string expandPath, CommonData commonData, LauncherItem openItem)
 		{
-			Process.Start(expandPath);
+			return Process.Start(expandPath);
 		}
 
 		/// <summary>
@@ -297,6 +294,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
 			var launcherItem = new LauncherItem();
 			launcherItem.Name = item.Name;
+			launcherItem.LauncherType = LauncherType.File;
 			launcherItem.WorkDirPath = Path.Combine(
 				Literal.ApplicationBinDirPath,
 				item.ApplicationItem.File.Directory
@@ -306,10 +304,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				item.ApplicationItem.File.Name
 			);
 			launcherItem.EnvironmentSetting.EditEnvironment = true;
-			foreach(var pair in CreateExecuterEV(item.ApplicationItem)) {
+			var ev = CreateExecuterEV(item.ApplicationItem);
+			foreach(var pair in ev) {
 				var pairItem = TPair<string, string>.Create(pair.Key, pair.Value);
 				launcherItem.EnvironmentSetting.Update.Add(pairItem);
 			}
+			launcherItem.Administrator = item.ApplicationItem.Administrator;
+
+			switch(item.ApplicationItem.Communication) {
+				case ApplicationCommunication.Event:
+					{
+						var name = ev[EVLiteral.communicationEventName];
+						item.Event = new EventWaitHandle(false, EventResetMode.AutoReset, name);
+					}
+					break;
+				case ApplicationCommunication.ClientServer:
+				default:
+					throw new NotImplementedException();
+			}
+
+			var process = ContentTypeTextNet.Pe.PeMain.Logic.Executer.RunItem(launcherItem, commonData);
+
 		}
 	}
 

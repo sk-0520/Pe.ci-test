@@ -161,6 +161,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 通信方法。
 		/// </summary>
 		public ApplicationCommunication Communication { get; set; }
+		/// <summary>
+		/// 管理者権限で実行。
+		/// </summary>
+		public bool Administrator { get; set; }
 	}
 
 	[Serializable]
@@ -183,7 +187,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public ApplicationItem ApplicationItem { get; private set; }
 		public Process Process { get; set; }
-		public AutoResetEvent Event { get; set; }
+		public EventWaitHandle Event { get; set; }
 
 		#region INameItem
 
