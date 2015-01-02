@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
@@ -169,5 +172,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		}
 
 		public List<ApplicationItem> Items { get; set; }
+	}
+
+	public class ApplicationExecuteItem: INameItem
+	{
+		public ApplicationExecuteItem(ApplicationItem item)
+		{
+			ApplicationItem = item;
+		}
+
+		public ApplicationItem ApplicationItem { get; private set; }
+		public Process Process { get; set; }
+		public AutoResetEvent Event { get; set; }
+
+		#region INameItem
+
+		public string Name
+		{
+			get { return ApplicationItem.Name;  }
+			set { throw new NotImplementedException(); }
+		}
+
+		#endregion
 	}
 }

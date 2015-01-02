@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationSetting>
+	<Items>
+		<ApplicationItem Name="Hash">
+			<File Directory="Hash" Name="Hash.exe" Communication="Event" />
+			<Type>Window</Type>
+			<Stream>None</Stream>
+			<Parameters>
+				<Arg Name="event-name" Type="Text" Necessary="true" />
+			</Parameters>
+			<Communication>Event</Communication>
+		</ApplicationItem>
+	</Items>
+</ApplicationSetting>

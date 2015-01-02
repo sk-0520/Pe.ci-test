@@ -17,6 +17,8 @@ namespace ContentTypeTextNet.Pe.Applications
 		public const string applicationSettingDirectoryPath = "PE_APP_SETTING_DIR";
 		public const string applicationLogDirectoryPath = "PE_APP_LOG_DIR";
 
+		public const string communicationEventName = "PE_C_EVENT";
+		public const string communicationServerName = "PE_C_SEVER";
 		/// <summary>
 		/// 環境変数名一覧。
 		/// </summary>
@@ -32,6 +34,9 @@ namespace ContentTypeTextNet.Pe.Applications
 				applicationSettingBaseDirectoryPath,
 				applicationSettingDirectoryPath,
 				applicationLogDirectoryPath,
+				// --------------------------------------
+				communicationEventName,
+				communicationServerName,
 			};
 		}
 	}

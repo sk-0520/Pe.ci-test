@@ -227,24 +227,49 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 
-	public class ApplicationExecuter
+	public class ApplicationExecuter: IDisposable
 	{
 		public ApplicationExecuter(string settingPath)
 		{
-			Events = new Dictionary<string, AutoResetEvent>();
-
 			ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(settingPath, false);
+			Items = new List<ApplicationExecuteItem>();
 		}
 
 		ApplicationSetting ApplicationSetting { get; set; }
 
-		Dictionary<string, AutoResetEvent> Events { get; set; }
+		List<ApplicationExecuteItem> Items { get; set; }
 
 		public IEnumerable<string> Names
 		{
 			get
 			{
 				return ApplicationSetting.Items.Select(i => i.Name);
+			}
+		}
+
+		#region IDisposable
+
+		protected virtual void Dispose(bool disposing)
+		{ }
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion
+
+		public ApplicationExecuteItem CreateExecuteItem(string name)
+		{
+			var item = ApplicationSetting.Items.Single(s => s.Name == name);
+			var result = new ApplicationExecuteItem(item);
+			return result;
+		}
+
+		public void Executer(ApplicationExecuteItem item)
+		{
+			if(Items.Any(i => i == item || i.Name == item.Name)) {
+				throw new ArgumentException(item.Name);
 			}
 		}
 	}
