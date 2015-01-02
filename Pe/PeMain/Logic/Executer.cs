@@ -267,11 +267,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return result;
 		}
 
-		IDictionary<string, string> CreateExecuterEV(ApplicationExecuteItem item)
+		IDictionary<string, string> CreateExecuterEV(ApplicationItem item)
 		{
-			//	public const string communicationEventName = "PE_C_EVENT";
-			//	public const string communicationServerName = "PE_C_SEVER";
-			return new Dictionary<string, string>() {
+			var result = new Dictionary<string, string>() {
 				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
 				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
 				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
@@ -280,9 +278,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, item.Name) },
 				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, item.Name) },
 				// ----------------------
-				{ EVLiteral.communicationEventName, string.Format("e-{0}", item.Name) },
-				{ EVLiteral.communicationServerName, string.Format("s-{0}", item.Name) },
 			};
+
+			var communication = new Dictionary<ApplicationCommunication, TPair<string, string>>() {
+				{ ApplicationCommunication.Event, TPair<string,string>.Create(EVLiteral.communicationEventName, string.Format("e-{0}", item.Name)) },
+				{ ApplicationCommunication.ClientServer, TPair<string,string>.Create(EVLiteral.communicationServerName, string.Format("s-{0}", item.Name)) },
+			}[item.Communication];
+			result[communication.First] = communication.Second;
+
+			return result;
 		}
 
 		public void Executer(ApplicationExecuteItem item, CommonData commonData)
@@ -293,12 +297,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 
 			var launcherItem = new LauncherItem();
 			launcherItem.Name = item.Name;
-			launcherItem.Command = Path.Combine(
+			launcherItem.WorkDirPath = Path.Combine(
 				Literal.ApplicationBinDirPath,
-				item.ApplicationItem.File.Directory,
+				item.ApplicationItem.File.Directory
+			);
+			launcherItem.Command = Path.Combine(
+				launcherItem.WorkDirPath,
 				item.ApplicationItem.File.Name
 			);
 			launcherItem.EnvironmentSetting.EditEnvironment = true;
+			foreach(var pair in CreateExecuterEV(item.ApplicationItem)) {
+				var pairItem = TPair<string, string>.Create(pair.Key, pair.Value);
+				launcherItem.EnvironmentSetting.Update.Add(pairItem);
+			}
 		}
 	}
 
