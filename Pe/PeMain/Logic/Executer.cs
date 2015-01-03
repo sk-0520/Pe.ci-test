@@ -134,6 +134,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 		
 		/// <summary>
+		/// 組み込みアイテムの実行。
+		/// </summary>
+		/// <param name="launcherItem"></param>
+		/// <param name="commonData"></param>
+		/// <returns></returns>
+		private static Process RunEmbeddedItem(LauncherItem launcherItem, CommonData commonData)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
 		/// ランチャーアイテム実行。
 		/// </summary>
 		/// <param name="launcherItem">ランチャーアイテム</param>
@@ -153,6 +164,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				case LauncherType.URI:
 				case LauncherType.Command:
 					return RunCommandItem(launcherItem, commonData);
+
+				case LauncherType.Embedded:
+					return RunEmbeddedItem(launcherItem, commonData);
 					
 				default:
 					throw new NotImplementedException();
@@ -225,11 +239,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 
+	/*
 	public class ApplicationExecuter: IDisposable
 	{
 		public ApplicationExecuter(string settingPath)
 		{
-			ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(settingPath, false);
+			ApplicationSetting = ;
 			Items = new List<ApplicationExecuteItem>();
 		}
 
@@ -352,5 +367,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 
 	}
+	 * */
 
 }

@@ -409,8 +409,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void InitializeApplicationExecuter(CommandLine commandLine, ILogger logger)
 		{
-			var applicationExecuter = new ApplicationExecuter(Literal.ApplicationBinAppPath);
-			this._commonData.ApplicationExecuter = applicationExecuter;
+			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
 		}
 		/// <summary>
 		/// Peを使用使用するかユーザーに問い合わせる。
@@ -1785,6 +1784,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
 #if DEBUG
+			/*
 			var name = "Hash";
 			if(this._commonData.ApplicationExecuter.IsExecutingItem(name)) {
 				this._commonData.ApplicationExecuter.Kill(name);
@@ -1792,6 +1792,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var item = this._commonData.ApplicationExecuter.CreateExecuteItem("Hash");
 				this._commonData.ApplicationExecuter.Executer(item, this._commonData);
 			}
+			*/
 #else
 			if(!this._pause) {
 				ShowHomeDialog();

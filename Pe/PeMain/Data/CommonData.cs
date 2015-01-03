@@ -46,11 +46,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		public AppDBManager Database { get; set; }
 
-		public ApplicationExecuter ApplicationExecuter { get; set; }
+		public ApplicationSetting ApplicationSetting { get; set; }
 		
 		public void Dispose()
 		{
-			ApplicationExecuter.ToDispose();
+			ApplicationSetting.ToDispose();
 			Database.ToDispose();
 		}
 	}

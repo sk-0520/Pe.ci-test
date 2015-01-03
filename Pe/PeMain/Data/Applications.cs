@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using ContentTypeTextNet.Pe.Applications;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
@@ -167,17 +170,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public bool Administrator { get; set; }
 	}
 
-	[Serializable]
-	public class ApplicationSetting
-	{
-		public ApplicationSetting()
-		{
-			Items = new List<ApplicationItem>();
-		}
-
-		public List<ApplicationItem> Items { get; set; }
-	}
-
 	public class ApplicationExecuteItem: INameItem
 	{
 		public ApplicationExecuteItem(ApplicationItem item)
@@ -199,4 +191,60 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		#endregion
 	}
+
+	[Serializable]
+	public class ApplicationSetting: IDisposable
+	{
+		public ApplicationSetting()
+		{
+			Items = new List<ApplicationItem>();
+			ExecutingItems = new List<ApplicationExecuteItem>();
+		}
+
+		public List<ApplicationItem> Items { get; set; }
+
+		[XmlIgnore]
+		public List<ApplicationExecuteItem> ExecutingItems { get; set; }
+
+		#region IDisposable
+		
+		protected virtual void Dispose(bool disposing)
+		{ }
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion
+
+		public bool IsExecutingItem(string name)
+		{
+			return ExecutingItems.Any(i => i.Name == name);
+		}
+
+		public IDictionary<string, string> CreateExecuterEV(ApplicationItem item)
+		{
+			var result = new Dictionary<string, string>() {
+				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
+				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
+				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
+				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
+				// ----------------------
+				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, item.Name) },
+				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, item.Name) },
+				// ----------------------
+			};
+
+			var communication = new Dictionary<ApplicationCommunication, TPair<string, string>>() {
+				{ ApplicationCommunication.Event, TPair<string,string>.Create(EVLiteral.communicationEventName, string.Format("e-{0}", item.Name)) },
+				{ ApplicationCommunication.ClientServer, TPair<string,string>.Create(EVLiteral.communicationServerName, string.Format("s-{0}", item.Name)) },
+			}[item.Communication];
+			result[communication.First] = communication.Second;
+
+			return result;
+		}
+
+	}
+
 }
