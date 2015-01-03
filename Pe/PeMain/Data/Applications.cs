@@ -168,6 +168,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 管理者権限で実行。
 		/// </summary>
 		public bool Administrator { get; set; }
+
+		public string DirectoryPath
+		{
+			get
+			{
+				return Path.Combine(Literal.ApplicationBinDirPath, File.Directory);
+			}
+		}
+		public string FilePath
+		{
+			get
+			{
+				return Path.Combine(DirectoryPath, File.Name);
+			}
+		}
 	}
 
 	public class ApplicationExecuteItem: INameItem
@@ -245,6 +260,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			return result;
 		}
 
+		public ApplicationItem GetApplicationItem(LauncherItem item)
+		{
+			Debug.Assert(item.LauncherType == LauncherType.Embedded);
+			return Items.Single(i => i.Name == item.Command);
+		}
 	}
 
 }

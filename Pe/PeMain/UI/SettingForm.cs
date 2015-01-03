@@ -117,19 +117,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		Dictionary<string, FontSetting> _toolbarFont = new Dictionary<string, FontSetting>();
 		*/
 		ToolbarItem _toolbarSelectedToolbarItem = null;
+
+		ApplicationSetting _applicationSetting;
 		#endregion ////////////////////////////////////
 
 		#region event
 		#endregion ////////////////////////////////////
 
-		public SettingForm(Language language, MainSetting setting, AppDBManager db)
+		public SettingForm(Language language, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
-			Initialize(language, setting, db);
+
+			Initialize(language, setting, db, applicationSetting);
 		}
 
 		#region property
@@ -238,7 +240,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			foreach(var item in launcherSetting.Items) {
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
-			this.selecterLauncher.SetItems(this._launcherItems);
+			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -300,7 +302,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 
-			this.selecterToolbar.SetItems(this._launcherItems);
+			this.selecterToolbar.SetItems(this._launcherItems, this._applicationSetting);
 
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
@@ -397,11 +399,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 
-		void Initialize(Language language, MainSetting mainSetting, AppDBManager db)
+		void Initialize(Language language, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 
 			Language = language;
+			this._applicationSetting = applicationSetting;
 
 			InitializeUI(mainSetting, db);
 		}
@@ -1150,7 +1153,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region page/toolbar
 		void ToolbarSelectingPage()
 		{
-			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
+			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Bitmap>() {
 				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
@@ -1158,7 +1161,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
-			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index) }).Where(item => item.Icon != null);
+			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, this._applicationSetting) }).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
 			}

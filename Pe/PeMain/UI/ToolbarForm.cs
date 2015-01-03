@@ -232,7 +232,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var launcherItem = toolStripItem.Tag as LauncherItem;
 
 				if(launcherItem != null) {
-					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index).ToBitmap();
+					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting).ToBitmap();
 					this._title = launcherItem.Name;
 					this._message = launcherItem.Note;
 				} else {
@@ -1268,16 +1268,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			return toolItem;
 		}
-		
+
 		ToolStripButton CreateCommandItemLauncherButton(LauncherItem item)
 		{
 			var toolItem = new ToolStripButton();
-			
+
 			toolItem.Click += LauncherTypeFile_ButtonClick;
-			
+
 			return toolItem;
 		}
-			
+
+		ToolStripButton CreateEmbeddedItemLauncherButton(LauncherItem item)
+		{
+			var toolItem = new ToolStripButton();
+
+			toolItem.Click += LauncherTypeFile_ButtonClick;
+
+			return toolItem;
+		}
+
 		/// <summary>
 		/// ランチャーアイテムボタンの生成。
 		/// </summary>
@@ -1301,7 +1310,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				case LauncherType.Command:
 					toolItem = CreateCommandItemLauncherButton(item);
 					break;
-					
+
+				case LauncherType.Embedded:
+					toolItem = CreateEmbeddedItemLauncherButton(item);
+					break;
+
 				default:
 					throw new NotImplementedException(item.LauncherType.ToString());
 			}
@@ -1311,7 +1324,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}
