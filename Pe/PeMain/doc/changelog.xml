@@ -27,13 +27,14 @@
 	-->
 	<log date="YYYY/MM/DD" version="0.37.1" type="rc">
 		<ul type="note">
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibility">#41: アイテムの種類, 種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404">組み込みアイテムを追加しましたが#118対応でのIF試験的意味合いが強いため該当プログラムの機能は弱いです</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="features">
 			<li rev="556e62fe00d948335c82f2b548648af6b17515e6">#130: クリップボードリストダブルクリック時に保持データをすべてコピーする</li>
 			<li rev="777bd5716c9b9c1a1f522ffe25f11acbac542e37">クリップボード監視の切り替え機能を追加</li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404">#41: アイテムの種類, 組み込みアイテムの追加</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
@@ -47,7 +48,7 @@
 		</ul>
 		<ul type="developer">
 			<li rev="2f513e7e823cd0d1399306dff08045bb357ca43d">#124: GUIコンポーネントのソースをまとめる</li>
-			<li rev=""></li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404">#118: 自前プログラム呼び出し方法</li>
 			<li rev=""></li>
 		</ul>
 	</log>
