@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using NUnit.Framework;
 using ContentTypeTextNet.Pe.Library.Utility;
@@ -25,5 +26,20 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		{
 			Assert.IsTrue(TextUtility.RegexPatternToWildcard(s) == result);
 		}
+
+		[TestCase(false, "a")]
+		[TestCase(false, "ab")]
+		[TestCase(true, "a b")]
+		[TestCase(true, " a")]
+		[TestCase(true, "a ")]
+		[TestCase(true, " a ")]
+		[TestCase(false, "あ")]
+		[TestCase(false, "☃")]
+		public void WhitespaceToQuotation(bool hasQ, string s)
+		{
+			var q = TextUtility.WhitespaceToQuotation(s);
+			Assert.IsTrue((q.First() == '"' && q.Last() == '"') == hasQ);
+		}
+
 	}
 }

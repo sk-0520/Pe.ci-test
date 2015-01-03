@@ -161,8 +161,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			var args = new List<string>();
 			foreach(var param in applicationItem.Parameters) {
 				var value = UIUtility.GetLanguage(param.Value, commonData.Language);
-				var s = string.Format("/{0}=\"{1}\"", param.Name, value);
-				args.Add(s);
+				string arg;
+				// type
+				arg = string.Format("/{0}={1}", param.Name, TextUtility.WhitespaceToQuotation(value));
+				args.Add(arg);
 			}
 			executeItem.Option = string.Join(" ", args);
 
