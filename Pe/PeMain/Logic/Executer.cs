@@ -141,9 +141,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <returns></returns>
 		private static Process RunEmbeddedItem(LauncherItem launcherItem, CommonData commonData)
 		{
+			Debug.Assert(launcherItem.LauncherType == LauncherType.Embedded);
+
 			var applicationItem = commonData.ApplicationSetting.GetApplicationItem(launcherItem);
 			if(commonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem || i.Name == applicationItem.Name)) {
-				throw new WarningException(launcherItem.Name);
+				throw new WarningException(launcherItem.Name + " - " + launcherItem.Command);
 			}
 
 			var executeItem = new LauncherItem();
