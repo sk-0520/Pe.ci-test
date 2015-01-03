@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Applications
 		{
 			foreach(var name in EVLiteral.GetEVNames()) {
 				var value = Environment.GetEnvironmentVariable(name);
-				Add(name, name);
+				Add(name, value);
 			}
 		}
 	}

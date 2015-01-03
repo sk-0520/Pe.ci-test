@@ -245,6 +245,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			}
 		}
 
+		public IEnumerable<string> ExecutingNames
+		{
+			get
+			{
+				return Items.Select(i => i.Name);
+			}
+		}
+
 		#region IDisposable
 
 		protected virtual void Dispose(bool disposing)
@@ -256,6 +264,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 
 		#endregion
+
+		public bool IsExecutingItem(string name)
+		{
+			return Items.Any(i => i.Name == name);
+		}
+
+		public void Kill(string name)
+		{
+			var item = Items.Single(s => s.Name == name);
+			item.Event.Set();
+		}
 
 		public ApplicationExecuteItem CreateExecuteItem(string name)
 		{
@@ -323,9 +342,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 					throw new NotImplementedException();
 			}
 
-			var process = ContentTypeTextNet.Pe.PeMain.Logic.Executer.RunItem(launcherItem, commonData);
+			Items.Add(item);
+			item.Process = ContentTypeTextNet.Pe.PeMain.Logic.Executer.RunItem(launcherItem, commonData);
+			item.Process.EnableRaisingEvents = true;
+			item.Process.Exited += (object sender, EventArgs e) => {
+				Items.Remove(item);
+			};
 
 		}
+
 	}
 
 }

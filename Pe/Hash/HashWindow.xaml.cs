@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		HashViewModel ViewModel { get; set; }
 		AssemblyLoader AssemblyLoader { get; set; }
+		EventWaitHandle Event { get; set; }
 
 		#endregion /////////////////////////////
 
@@ -46,13 +47,25 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		void InitializeCommandLine()
 		{
 			var commandLine = new CommandLine();
-
-			var eventNameArg = "event-name";
-			if(commandLine.HasValue(eventNameArg)) {
-				ViewModel.EventName = commandLine.GetValue(eventNameArg);
+		}
+		void InitializeEvent()
+		{
+			var ev = new EVDictionary();
+			var eventName = ev[EVLiteral.communicationEventName];
+			if(!string.IsNullOrWhiteSpace(eventName)) {
+				EventWaitHandle eventHandle;
+				if(EventWaitHandle.TryOpenExisting(eventName, out eventHandle)) {
+					Event = eventHandle;
+					Task.Factory.StartNew(() =>{
+						return Event.WaitOne(Timeout.InfiniteTimeSpan);
+					}).ContinueWith(t => {
+						if(t.Result) {
+							Application.Current.Shutdown();
+						}
+					}, TaskScheduler.FromCurrentSynchronizationContext());
+				}
 			}
 		}
-
 		void Initialize()
 		{
 			AssemblyLoader = new AssemblyLoader();
@@ -61,6 +74,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			ViewModel = new HashViewModel(new HashModel());
 
 			InitializeCommandLine();
+			InitializeEvent();
 
 			DataContext = ViewModel;
 		}

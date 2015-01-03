@@ -1784,21 +1784,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
-			/*
-			var update = new Update(@"Z:temp", false);
-			var info = update.Check();
-			if(info.IsUpdate) {
-				var s = string.Format("{0} {1}", info.Version, info.IsRcVersion ? "RC": "RELEASE");
-				if(MessageBox.Show(s, "UPDATE", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes) {
-					update.Execute();
-				}
+#if DEBUG
+			var name = "Hash";
+			if(this._commonData.ApplicationExecuter.IsExecutingItem(name)) {
+				this._commonData.ApplicationExecuter.Kill(name);
+			} else {
+				var item = this._commonData.ApplicationExecuter.CreateExecuteItem("Hash");
+				this._commonData.ApplicationExecuter.Executer(item, this._commonData);
 			}
-			 */
-			//MessageBox.Show("PON!");
+#else
 			if(!this._pause) {
 				ShowHomeDialog();
 			}
-			//ResetUI();
+#endif
 		}
 		
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
