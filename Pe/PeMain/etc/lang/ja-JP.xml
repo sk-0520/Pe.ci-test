@@ -361,7 +361,7 @@
 		<Word Name="enum/launcher-type"           Text="アイテムの種類" />
 		<Word Name="enum/launcher-type/file"      Text="ファイル" />
 		<Word Name="enum/launcher-type/directory" Text="ディレクトリ" />
-		<Word Name="enum/launcher-type/uri"       Text="URI" />
+		<Word Name="enum/launcher-type/uri"       Text="URI(廃止: コマンドを使用してください)" />
 		<Word Name="enum/launcher-type/command"   Text="コマンド" />
 		<Word Name="enum/launcher-type/embedded"  Text="組み込み" />
 		
@@ -463,11 +463,12 @@
 		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 		<Word Name="log/output/error"   Text="ログ出力異常" />
 
-		<Word Name="applications/hash/title"    Text="HASH" />
-		<Word Name="applications/hash/comment"  Text="HASH!" />
+		<Word Name="applications/hash/title"    Text="ハッシュチェック" />
+		<Word Name="applications/hash/comment"  Text="指定ファイルからハッシュ値を取得します。" />
 	
 		<!-- デフォルトランチャーグループ -->
 		<Word Name="default/group/main"      Text="メイングループ" />
+		<Word Name="default/group/embedded"  Text="組み込みアプリケーション" />
 		<Word Name="default/group/programs"  Text="プログラム" />
 		<!-- デフォルトランチャータグ -->
 		<Word Name="default/tag/web-browser" Text="ブラウザ" />
