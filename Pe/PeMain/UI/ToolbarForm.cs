@@ -52,6 +52,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string menuNamePath_copyWorkDir = "copy_work_dir";
 		const string menuNamePath_property = "property";
 
+		const string menuNameApplicationExecute = "execute";
+		const string menuNameApplicationClose = "close";
+		const string menuNameApplicationHelp = "help";
+
 		enum DropType
 		{
 			None,
@@ -1041,7 +1045,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			};
 		}
-		
+
+
 		string MakeGroupItemName(string groupName)
 		{
 			return menuNameMainGroupItem + groupName;
@@ -1184,6 +1189,58 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 
+		void AttachmentEmbeddedLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
+		{
+			var itemList = new List<ToolStripItem>();
+
+			var execItem = new ToolStripMenuItem();
+			var closeItem = new ToolStripMenuItem();
+			var helpItem = new ToolStripMenuItem();
+			itemList.Add(execItem);
+			itemList.Add(closeItem);
+			itemList.Add(new ToolStripSeparator());
+			itemList.Add(helpItem);
+
+			// 起動
+			execItem.Name = menuNameApplicationExecute;
+			execItem.Text = CommonData.Language["toolbar/menu/application/execute"];
+			execItem.Click += (object sender, EventArgs e) => {
+				ExecuteItem(launcherItem);
+			};
+			// 終了
+			closeItem.Name = menuNameApplicationClose;
+			closeItem.Text = CommonData.Language["toolbar/menu/application/close"];
+			closeItem.Click += (object sender, EventArgs e) => {
+				try {
+					CommonData.ApplicationSetting.KillApplicationItem(launcherItem);
+				} catch(Exception ex) {
+					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
+					CommonData.Logger.Puts(LogType.Warning, message, ex);
+				}
+			};
+			// ヘルプ
+			helpItem.Name = menuNameApplicationHelp;
+			helpItem.Text = CommonData.Language["toolbar/menu/application/help"];
+			helpItem.Click += (object sender, EventArgs e) => {
+				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+				try {
+					Executer.RunCommand(applicationItem.HelpPath, CommonData);
+				} catch(Exception ex) {
+					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, applicationItem.HelpPath);
+				}
+			};
+
+			parentItem.DropDownItems.AddRange(itemList.ToArray());
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
+				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+				var isRunning = CommonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem);
+				execItem.Enabled = !isRunning;
+				closeItem.Enabled = isRunning;
+				helpItem.Enabled = !string.IsNullOrWhiteSpace(applicationItem.File.Help);
+			};
+		}
+
 		static void SetButtonLayout(ToolStripItem toolItem, ISkin skin, IconScale iconSize, bool showText, int textWidth)
 		{
 			var toolSplit = toolItem as ToolStripSplitButton;
@@ -1283,11 +1340,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return toolItem;
 		}
 
-		ToolStripButton CreateEmbeddedItemLauncherButton(LauncherItem item)
+		ToolStripSplitButton CreateEmbeddedItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripButton();
+			var toolItem = new ToolStripSplitButton();
+			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 
-			toolItem.Click += LauncherTypeFile_ButtonClick;
+			AttachmentEmbeddedLauncherMenu(toolItem, item);
 
 			return toolItem;
 		}

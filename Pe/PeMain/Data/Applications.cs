@@ -189,6 +189,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				return Path.Combine(DirectoryPath, File.Name);
 			}
 		}
+		public string HelpPath
+		{
+			get
+			{
+				return Path.Combine(DirectoryPath, File.Help);
+			}
+		}
 		public string SettingDirectoryPath
 		{
 			get
