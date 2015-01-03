@@ -728,6 +728,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLauncherType_embedded.TabStop = true;
 			this.selectLauncherType_embedded.Text = "#LauncherType.Embedded";
 			this.selectLauncherType_embedded.UseVisualStyleBackColor = true;
+			this.selectLauncherType_embedded.CheckedChanged += new System.EventHandler(this.SelectLauncherType_file_CheckedChanged);
 			// 
 			// commandLauncherOptionDirPath
 			// 
