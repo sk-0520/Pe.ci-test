@@ -95,23 +95,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	[Serializable]
 	public class ApplicationFile: NameItem
 	{
-		#region Define
-
-		public const string CommunicationEvent = "ev";
-		public const string CommunicationServerClient = "sc";
-
-		#endregion ////////////////////////
-
 		/// <summary>
 		/// ディレクトリ名
 		/// </summary>
 		[XmlAttribute]
 		public string Directory { get; set; }
 		/// <summary>
-		/// 通信種別。
+		/// ヘルプ。
 		/// </summary>
 		[XmlAttribute]
-		ApplicationCommunication Communication { get; set; }
+		public string Help { get; set; }
+		/// <summary>
+		/// ヘルプ。
+		/// </summary>
+		[XmlAttribute]
+		public bool Setting { get; set; }
+		/// <summary>
+		/// ヘルプ。
+		/// </summary>
+		[XmlAttribute]
+		public bool Log { get; set; }
 	}
 
 	/// <summary>
@@ -183,6 +186,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				return Path.Combine(DirectoryPath, File.Name);
 			}
 		}
+		public string SettingDirectoryPath
+		{
+			get
+			{
+				return Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, File.Directory);
+			}
+		}
+		public string LogDirectoryPath
+		{
+			get
+			{
+				return Path.Combine(Literal.ApplicationLogBaseDirectoryPath, File.Directory);
+			}
+		}
+
 
 		public IDictionary<string, string> CreateExecuterEV()
 		{
@@ -191,11 +209,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
 				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
 				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
-				// ----------------------
-				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, Name) },
-				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, Name) },
-				// ----------------------
 			};
+
+			if(File.Setting) {
+				result[EVLiteral.applicationSettingDirectoryPath] = SettingDirectoryPath;
+			}
+			if(File.Log) {
+				result[EVLiteral.applicationLogDirectoryPath] = LogDirectoryPath;
+			}
 
 			var communication = new Dictionary<ApplicationCommunication, TPair<string, string>>() {
 				{ ApplicationCommunication.Event, TPair<string,string>.Create(EVLiteral.communicationEventName, string.Format("e-{0}", Name)) },
@@ -248,9 +269,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		#region IDisposable
 		
 		protected virtual void Dispose(bool disposing)
-		{
-			KillAllApplication();
-		}
+		{ }
 
 		public void Dispose()
 		{

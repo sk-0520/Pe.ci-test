@@ -2,7 +2,7 @@
 <ApplicationSetting>
 	<Items>
 		<ApplicationItem Name="Hash">
-			<File Directory="Hash" Name="Hash.exe" />
+			<File Directory="Hash" Name="Hash.exe" Help="readme.txt" Setting="false" Log="false" />
 			<Type>Window</Type>
 			<Stream>None</Stream>
 			<Communication>Event</Communication>
