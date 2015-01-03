@@ -70,17 +70,19 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			return src.ReplaceRange(head, tail, s => map.ContainsKey(s) ? map[s]: head + s + tail);
 		}
-		
+
+		public static string WhitespaceToQuotation(this string s)
+		{
+			if(s.Any(c => char.IsWhiteSpace(c))) {
+				return "\"" + s + "\"";
+			}
+
+			return s;
+		}
 		public static IEnumerable<string> WhitespaceToQuotation(this IEnumerable<string> seq)
 		{
 			foreach(var s in seq) {
-				string element = null;
-				if(s.Any(c => char.IsWhiteSpace(c))) {
-					element = "\"" + s + "\"";
-				} else {
-					element = s;
-				}
-				yield return element;
+				yield return WhitespaceToQuotation(s);
 			}
 		}
 		

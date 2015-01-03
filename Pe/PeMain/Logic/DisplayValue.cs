@@ -155,8 +155,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			}
 		}
 	}
-	
-		
+
+	public class ApplicationDisplayValue: UseLanguageDisplayValue<ApplicationItem>
+	{
+		public ApplicationDisplayValue(ApplicationItem value) : base(value) { }
+		public override string Display
+		{
+			get
+			{
+				return LanguageUtility.ApplicationItemToTitle(Language, Value);
+			}
+		}
+	}
+
 	/// <summary>
 	/// ランチャ種別のUI用ラッパ。
 	/// </summary>
@@ -191,6 +202,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			}
 		}
 	}
+
 	
 	
 

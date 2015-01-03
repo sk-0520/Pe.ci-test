@@ -34,8 +34,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		Directory,
 		/// <summary>
 		/// URI。
+		/// 
+		/// Commandへ置き換える。
 		/// </summary>
 		URI,
+		/// <summary>
+		/// コマンド。
+		/// </summary>
+		Command,
 		/// <summary>
 		/// 組み込み
 		/// </summary>
@@ -107,7 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
 		};
 		*/
-		private static readonly Dictionary<IconScale, Icon> _uriIconMap;
+		private static readonly Dictionary<IconScale, Icon> _commandIconMap;
 		
 		static LauncherItem()
 		{
@@ -126,17 +132,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			notfoundIconMap = tempNotfoundIconMap;
 			
 			// URIアイコン構築
-			var uriIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
+			var tempCommandIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_URI, iconSize);
+				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command, iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
 				}
-				uriIconMap[iconScale] = icon;
+				tempCommandIconMap[iconScale] = icon;
 			}
-			_uriIconMap = uriIconMap;
+			_commandIconMap = tempCommandIconMap;
 		}
 
 		/// <summary>
@@ -182,6 +188,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			
 			if(IconItem == null) {
 				IconItem = new IconItem();
+			}
+
+			if(LauncherType == Data.LauncherType.URI) {
+				LauncherType = Data.LauncherType.Command;
 			}
 		}
 		
@@ -351,24 +361,32 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <param name = "iconScale">アイコンサイズ</param>
 		/// <param name="iconIndex">アイコンインデックス</param>
 		/// <returns>アイコン</returns>
-		public Icon GetIcon(IconScale iconScale, int iconIndex)
+		public Icon GetIcon(IconScale iconScale, int iconIndex, ApplicationSetting applicationSetting)
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconScale);
 			if(!hasIcon) {
 				string useIconPath = null;
-				if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
-					var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
-					//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
-					hasIcon = FileUtility.Exists(expandIconPath);
-					useIconPath = expandIconPath;
-				}
-				if(!hasIcon) {
-					if(new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
-						if(!string.IsNullOrWhiteSpace(Command)) {
-							var expandPath = Environment.ExpandEnvironmentVariables(Command);
-							//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
-							hasIcon = FileUtility.Exists(expandPath);
-							useIconPath = expandPath;
+
+				if(LauncherType == Data.LauncherType.Embedded) {
+					Debug.Assert(applicationSetting != null);
+					var applicationItem = applicationSetting.GetApplicationItem(this);
+					useIconPath = applicationItem.FilePath;
+					hasIcon = true;
+				} else {
+					if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
+						var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
+						//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+						hasIcon = FileUtility.Exists(expandIconPath);
+						useIconPath = expandIconPath;
+					}
+					if(!hasIcon) {
+						if(new[] { LauncherType.File, LauncherType.Directory }.Any(lt => lt == LauncherType)) {
+							if(!string.IsNullOrWhiteSpace(Command)) {
+								var expandPath = Environment.ExpandEnvironmentVariables(Command);
+								//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
+								hasIcon = FileUtility.Exists(expandPath);
+								useIconPath = expandPath;
+							}
 						}
 					}
 				}
@@ -383,12 +401,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			if(hasIcon) {
 				return this._iconMap[iconScale];
 			} else {
-				if(LauncherType == LauncherType.URI) {
-					return _uriIconMap[iconScale];
+				if(LauncherType == LauncherType.URI || LauncherType == LauncherType.Command) {
+					return _commandIconMap[iconScale];
 				} else {
 					return notfoundIconMap[iconScale];
 				}
 			}
+		}
+
+		public Icon GetEmbeddedIcon(IconScale iconScale, ApplicationItem applicationItem)
+		{
+			var icon = IconUtility.Load(applicationItem.FilePath, iconScale, 0);
+			return icon;
 		}
 		
 		public void ClearIcon()

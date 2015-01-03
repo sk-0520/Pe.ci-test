@@ -449,6 +449,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				cancelButton.Text = language["common/command/cancel"];
 			}
 		}
+		/// <summary>
+		/// NOTE: 絶対的に場所が違う。
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="language"></param>
+		/// <param name="map"></param>
+		/// <returns></returns>
+		public static string GetLanguage(string target, Language language, IDictionary<string, string> map = null)
+		{
+			return GetWord(language, target, map);
+		}
 		
 		public static void SetLanguage(this Control target, Language language, IDictionary<string, string> map = null)
 		{

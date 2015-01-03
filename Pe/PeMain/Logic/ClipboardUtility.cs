@@ -12,6 +12,9 @@ using ContentTypeTextNet.Pe.Library.Utility;
 using System.Diagnostics;
 using System.Threading;
 
+using ObjectDumper;
+using ContentTypeTextNet.Pe.PeMain.IF;
+
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	public class ClipboardUtility
@@ -43,9 +46,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Rtf), commonData);
 		}
-		public static void CopyHtml(string rtf, CommonData commonData)
+		public static void CopyHtml(string html, CommonData commonData)
 		{
-			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Html), commonData);
+			Copy(() => Clipboard.SetText(html, TextDataFormat.Html), commonData);
 		}
 		public static void CopyImage(Image image, CommonData commonData)
 		{
@@ -59,52 +62,67 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			Copy(() => Clipboard.SetFileDropList(sc), commonData);
 		}
 
-		public static bool TryConvertHtmlFromClipbordHtml(string clipboardHtml, out string convertResult)
+		public static void CopyDataObject(IDataObject data, CommonData commonData)
 		{
-			Func<string, string, int> getIndex = (pattern, line) => {
-				var reg = new Regex(pattern, RegexOptions.IgnoreCase);
-				var match = reg.Match(line);
-				if(match.Success && match.Groups.Count == 2) {
-					var data = match.Groups[1].Value;
-					var result = -1;
-					if(int.TryParse(data, out result)) {
-						return result;
-					}
-				}
-
-				return -1;
-			};
-
-			var lines = clipboardHtml.SplitLines();
-			var head = -1;
-			var tail = -1;
-
-			foreach(var line in lines) {
-				if(head != -1 && tail != -1) {
-					break;
-				}
-				if(head == -1) {
-					head = getIndex("StartHTML:([0-9]+)", line);
-				}
-				if(tail == -1) {
-					tail = getIndex("EndHTML:([0-9]+)", line);
-				}
-			}
-			if(head != -1 && tail != -1) {
-				convertResult = new string(clipboardHtml.Take(tail).Skip(head).ToArray());
-				return true;
-			} else {
-				convertResult = string.Empty;
-				return false;
-			}
+			Copy(() => Clipboard.SetDataObject(data), commonData);
 		}
 
-		public static string ConvertHtmlFromClipbordHtml(string clipboardHtml)
+		static string ConvertStringFromRawHtml(RangeItem<int> range, byte[] data)
 		{
-			string temp;
-			TryConvertHtmlFromClipbordHtml(clipboardHtml, out temp);
+			if(-1 < range.Start && -1 < range.End && range.Start <= range.End) {
+				var raw = data.Skip(range.Start).Take(range.End - range.Start);
+				return Encoding.UTF8.GetString(raw.ToArray());
+			}
+
+			return null;
+		}
+
+		public static bool TryConvertHtmlFromClipbordHtml(string clipboardHtml, out ClipboardHtmlDataItem convertResult, ILogger logger)
+		{
+			var result = new ClipboardHtmlDataItem();
+
+			//Version:0.9
+			//StartHTML:00000213
+			//EndHTML:00001173
+			//StartFragment:00000247
+			//EndFragment:00001137
+			//SourceURL:file:///C:/Users/sk/Documents/Programming/SharpDevelop%20Project/Pe/Pe/PeMain/etc/lang/ja-JP.accept.html
+
+			var map = new Dictionary<string, Action<string>>() {
+				{ "version", s => result.Version = decimal.Parse(s) },
+				{ "starthtml", s => result.Html.Start = int.Parse(s) },
+				{ "endhtml", s => result.Html.End = int.Parse(s) },
+				{ "startfragment", s => result.Fragment.Start = int.Parse(s) },
+				{ "endfragment", s => result.Fragment.End = int.Parse(s) },
+				{ "sourceurl", s => result.SourceURL = new Uri(s) },
+			};
+			var reg = new Regex(@"^\s*(?<KEY>Version|StartHTML|EndHTML|StartFragment|EndFragment|SourceURL)\s*:\s*(?<VALUE>.+?)\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+			for(var match = reg.Match(clipboardHtml); match.Success; match = match.NextMatch()) {
+				var key = match.Groups["KEY"].Value.ToLower();
+				var value = match.Groups["VALUE"].Value;
+				try {
+					map[key](value);
+				} catch(Exception ex) {
+					logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+			}
+			//
+			//clipboardHtml.
+			var rawHtml = Encoding.UTF8.GetBytes(clipboardHtml);
+			result.HtmlText = ConvertStringFromRawHtml(result.Html, rawHtml); ;
+			result.FragmentText = ConvertStringFromRawHtml(result.Fragment, rawHtml);
+			result.SelectionText = ConvertStringFromRawHtml(result.Selection, rawHtml);
+			
+			convertResult = result;
+
+			return true;
+		}
+
+		public static ClipboardHtmlDataItem ConvertHtmlFromClipbordHtml(string clipboardHtml, ILogger logger)
+		{
+			ClipboardHtmlDataItem temp;
+			TryConvertHtmlFromClipbordHtml(clipboardHtml, out temp, logger);
 			return temp;
 		}
-
 	}
 }

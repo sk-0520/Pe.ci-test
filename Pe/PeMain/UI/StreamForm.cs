@@ -7,11 +7,17 @@
  * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
  */
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -20,6 +26,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public partial class StreamForm : Form, ISetCommonData
 	{
+		#region define
+		#endregion ////////////////////////////////////
+
+		#region static
+		#endregion ////////////////////////////////////
+
+		#region variable
+		//StreamWriter _inputStream;
+		#endregion ////////////////////////////////////
+
 		public StreamForm()
 		{
 			//
@@ -29,7 +45,172 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize();
 		}
-		
+
+
+		#region property
+		CommonData CommonData { get; set; }
+		Process Process { get; set; }
+		public LauncherItem LauncherItem { get; private set; }
+		public bool ProcessRunning { get { return Process != null && !Process.HasExited; } }
+		#endregion ////////////////////////////////////
+
+		#region ISetCommonData
+		public void SetCommonData(CommonData commonData)
+		{
+			CommonData = commonData;
+
+			ApplySetting();
+		}
+
+		#endregion ////////////////////////////////////
+
+		#region override
+		#endregion ////////////////////////////////////
+
+		#region initialize
+		void Initialize()
+		{
+			// これきかねーなぁ。。。
+			TopMost = false;
+		}
+		#endregion ////////////////////////////////////
+
+		#region language
+		void ApplyLanguage()
+		{
+			Debug.Assert(CommonData != null);
+			Debug.Assert(CommonData.Language != null);
+
+			var map = new Dictionary<string, string>() {
+				{ AppLanguageName.itemName, LauncherItem.Name },
+			};
+
+			UIUtility.SetDefaultText(this, CommonData.Language, map);
+
+			this.tabStream_pageStream.SetLanguage(CommonData.Language);
+			this.tabStream_pageProcess.SetLanguage(CommonData.Language);
+			this.tabStream_pageProperty.SetLanguage(CommonData.Language);
+
+			this.toolStream_itemSave.SetLanguage(CommonData.Language);
+			this.toolStream_itemClear.SetLanguage(CommonData.Language);
+			this.toolStream_itemRefresh.SetLanguage(CommonData.Language);
+			this.toolStream_itemTopmost.SetLanguage(CommonData.Language);
+			this.toolStream_itemKill.SetLanguage(CommonData.Language);
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+		public void SetParameter(Process process, LauncherItem launcherItem)
+		{
+			Process = process;
+			LauncherItem = launcherItem;
+
+			Process.EnableRaisingEvents = true;
+			Process.Exited += new EventHandler(Process_Exited);
+
+			// アイコン設定、アイテムに設定されているアイコンとは別に実行プロセスのアイコンを指定する
+			try {
+				var iconPath = Environment.ExpandEnvironmentVariables(LauncherItem.Command);
+				if(PathUtility.HasIconPath(iconPath)) {
+					Icon = IconUtility.Load(iconPath, IconScale.Normal, 0);
+				} else {
+					Icon = new Icon(iconPath);
+				}
+			} catch(Exception ex) {
+				Debug.WriteLine(ex);
+				Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
+			}
+		}
+
+		void ApplySetting()
+		{
+			Debug.Assert(Process != null);
+
+			ApplyLanguage();
+
+			this.propertyProcess.SelectedObject = Process;
+			this.propertyProperty.SelectedObject = Process.StartInfo;
+
+			Process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
+			Process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
+
+			//this._inputStream = Process.StandardInput;
+
+			this.inputOutput.Font = CommonData.MainSetting.Launcher.StreamFontSetting.Font;
+		}
+
+		void OutputStreamReceived(string line, bool stdOutput)
+		{
+			/* //#20 retry
+			if(IsDisposed) {
+				// #20
+				return;
+			}
+			 */
+
+			this.inputOutput.BeginInvoke(
+				(MethodInvoker)delegate() {
+				this.inputOutput.Text += line + Environment.NewLine;
+				this.inputOutput.SelectionStart = this.inputOutput.TextLength;
+				this.inputOutput.ScrollToCaret();
+			}
+			);
+		}
+
+		void RefreshProperty()
+		{
+			// #21
+			Process.Refresh();
+		}
+
+		void ExitedProcess()
+		{
+			/* //#20 retry
+			if(IsDisposed) {
+				// #20
+				return;
+			}
+			 */
+
+			this.toolStream_itemKill.Enabled = false;
+			this.toolStream_itemClear.Enabled = false;
+			this.toolStream_itemRefresh.Enabled = false;
+			this.inputOutput.ReadOnly = true;
+			RefreshProperty();
+
+			Text += String.Format(": {0}", Process.ExitCode);
+		}
+
+		void KillProcess()
+		{
+			try {
+				if(Process.HasExited) {
+					return;
+				}
+				Process.Kill();
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+			}
+		}
+
+		/// <summary>
+		/// #22
+		/// </summary>
+		/// <param name="path"></param>
+		void SaveStream(string path)
+		{
+			using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
+				stream.Write(this.inputOutput.Text);
+			}
+		}
+
+		void SwitchTopmost()
+		{
+			this.toolStream_itemTopmost.Checked = !this.toolStream_itemTopmost.Checked;
+			TopMost = this.toolStream_itemTopmost.Checked;
+		}
+		#endregion ////////////////////////////////////
+
 		void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
 		{
 			OutputStreamReceived(e.Data, true);

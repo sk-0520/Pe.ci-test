@@ -13,6 +13,16 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	[Serializable]
 	public struct TPair<TFIRST, TSECOND>
 	{
+		public static TPair<TFIRST, TSECOND> Create(TFIRST first, TSECOND second)
+		{
+			var pair = new TPair<TFIRST, TSECOND>();
+
+			pair.First = first;
+			pair.Second = second;
+
+			return pair;
+		}
+
 		public TFIRST First { get; set; }
 		public TSECOND Second { get; set; }
 	}

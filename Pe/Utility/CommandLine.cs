@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ContentTypeTextNet.Pe.Library.Utility
@@ -63,16 +64,31 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		/// </summary>
 		public int Length { get { return Options.Count; } }
 
+		/// <summary>
+		/// キー KeyValueSeparator 値を分割。
+		/// </summary>
+		/// <param name="pair"></param>
+		/// <returns></returns>
 		private KeyValuePair<string, string> SplitKeyValue(string pair)
 		{
 			var index = pair.IndexOf(KeyValueSeparator);
 			if(index != -1) {
-				return new KeyValuePair<string,string>(string.Concat(pair.Take(index)), string.Concat(pair.Skip(index + KeyValueHeader.Length)));
+				var key = string.Concat(pair.Take(index));
+				var value = string.Concat(pair.Skip(index + KeyValueHeader.Length));
+				if(value.Length > "\"\"".Length && value.First() == '"' && value.Last() == '"') {
+					value = value.Substring(1, value.Length - 1 - 1);
+				}
+				return new KeyValuePair<string,string>(key, value);
 			}
 			
 			throw new ArgumentException(string.Format("pair = {0}, header = {1}", pair, KeyValueHeader));
 		}
 		
+		/// <summary>
+		/// KeyValueHeader + option 検索。
+		/// </summary>
+		/// <param name="keyOption"></param>
+		/// <returns></returns>
 		private IEnumerable<string> Find(string keyOption)
 		{
 			return Options
@@ -111,7 +127,16 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			var keyOption = GetKeyOption(option);
 			return HasKeyOption(keyOption);
 		}
-		
+
+		/// <summary>
+		/// 値を持つ KeyValueHeader + option が存在するかを確認。
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
+		public bool HasValue(string option)
+		{
+			return HasValue(option, 0);
+		}
 		public bool HasValue(string option, int index = 0)
 		{
 			var keyOption = GetKeyOption(option);
@@ -119,8 +144,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				var pairs = Options.Where(s => s.StartsWith(keyOption));
 				return pairs.ElementAt(index).IndexOf(KeyValueSeparator) != -1;
 			}
-			
-			throw new ArgumentException(keyOption);
+
+			return false;
 		}
 		
 		private int CountKeyOption(string keyOption)
@@ -134,16 +159,21 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return CountKeyOption(keyOption);
 		}
 		
-		public string GetValue(string option)
+		public IEnumerable<string> GetValues(string option)
 		{
 			var keyOption = GetKeyOption(option);
-			if(HasKeyOption(keyOption)) {
-				return KeyToValue(keyOption, 0);
-			}
+			var optionCount = CountKeyOption(keyOption);
 			
-			throw new ArgumentException(option);
+			foreach(var i in Enumerable.Range(0, optionCount)) {
+				yield return KeyToValue(keyOption, i);
+			}
 		}
-		
+
+		public string GetValue(string option)
+		{
+			return GetValues(option).First();
+		}
+
 		
 	}
 }

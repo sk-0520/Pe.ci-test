@@ -11,12 +11,17 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Xml.XPath;
 
 using System.Windows.Forms.VisualStyles;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.UI;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.Threading;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Applications;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -107,12 +112,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">ディレクトリアイテム</param>
 		/// <param name="commonData"></param>
 		/// <param name="parentForm"></param>
-		private static void RunDirectoryItem(LauncherItem launcherItem, CommonData commonData)
+		private static Process RunDirectoryItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.Directory);
 			
 			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-			OpenDirectory(expandPath, commonData, null);
+			return OpenDirectory(expandPath, commonData, null);
 		}
 		
 		/// <summary>
@@ -121,35 +126,98 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="launcherItem">URIアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		private static void RunUriItem(LauncherItem launcherItem, CommonData commonData)
+		private static Process RunCommandItem(LauncherItem launcherItem, CommonData commonData)
 		{
-			Debug.Assert(launcherItem.LauncherType == LauncherType.URI);
+			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
 			
-			RunCommand(launcherItem.Command, commonData);
+			return RunCommand(launcherItem.Command, commonData);
 		}
 		
+		/// <summary>
+		/// 組み込みアイテムの実行。
+		/// </summary>
+		/// <param name="launcherItem"></param>
+		/// <param name="commonData"></param>
+		/// <returns></returns>
+		private static Process RunEmbeddedItem(LauncherItem launcherItem, CommonData commonData)
+		{
+			Debug.Assert(launcherItem.LauncherType == LauncherType.Embedded);
+
+			var applicationItem = commonData.ApplicationSetting.GetApplicationItem(launcherItem);
+			if(commonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem || i.Name == applicationItem.Name)) {
+				throw new WarningException(launcherItem.Name + " - " + launcherItem.Command);
+			}
+
+			var executeItem = new LauncherItem();
+			executeItem.Name = applicationItem.Name;
+			executeItem.LauncherType = LauncherType.File;
+			executeItem.WorkDirPath = applicationItem.DirectoryPath;
+			executeItem.Command = applicationItem.FilePath;
+			executeItem.EnvironmentSetting.EditEnvironment = true;
+			var ev = applicationItem.CreateExecuterEV();
+			foreach(var pair in ev) {
+				var pairItem = TPair<string, string>.Create(pair.Key, pair.Value);
+				executeItem.EnvironmentSetting.Update.Add(pairItem);
+			}
+			executeItem.Administrator = applicationItem.Administrator;
+			var args = new List<string>();
+			foreach(var param in applicationItem.Parameters) {
+				var value = UIUtility.GetLanguage(param.Value, commonData.Language);
+				string arg;
+				// type
+				arg = string.Format("/{0}={1}", param.Name, TextUtility.WhitespaceToQuotation(value));
+				args.Add(arg);
+			}
+			executeItem.Option = string.Join(" ", args);
+
+			var applicationExecuteItem = new ApplicationExecuteItem(applicationItem);
+
+			switch(applicationItem.Communication) {
+				case ApplicationCommunication.Event:
+					{
+						var name = ev[EVLiteral.communicationEventName];
+						applicationExecuteItem.Event = new EventWaitHandle(false, EventResetMode.AutoReset, name);
+					}
+					break;
+				case ApplicationCommunication.ClientServer:
+				default:
+					throw new NotImplementedException();
+			}
+
+			commonData.ApplicationSetting.ExecutingItems.Add(applicationExecuteItem);
+			var process = RunFileItem(executeItem, commonData);
+			applicationExecuteItem.Process = process;
+			applicationExecuteItem.Process.EnableRaisingEvents = true;
+			applicationExecuteItem.Process.Exited += (object sender, EventArgs e) => {
+				commonData.ApplicationSetting.ExecutingItems.Remove(applicationExecuteItem);
+			};
+
+			return process;
+		}
+
 		/// <summary>
 		/// ランチャーアイテム実行。
 		/// </summary>
 		/// <param name="launcherItem">ランチャーアイテム</param>
 		/// <param name="commonData">共通データ</param>
 		/// <param name="parentForm">親ウィンドウ</param>
-		public static void RunItem(LauncherItem launcherItem, CommonData commonData)
+		public static Process RunItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			commonData.Logger.Puts(LogType.Information, commonData.Language["log/exec/run-item"], launcherItem);
 			
 			switch(launcherItem.LauncherType) {
 				case LauncherType.File:
-					RunFileItem(launcherItem, commonData);
-					break;
+					return RunFileItem(launcherItem, commonData);
 					
 				case LauncherType.Directory:
-					RunDirectoryItem(launcherItem, commonData);
-					break;
-					
+					return RunDirectoryItem(launcherItem, commonData);
+
 				case LauncherType.URI:
-					RunUriItem(launcherItem, commonData);
-					break;
+				case LauncherType.Command:
+					return RunCommandItem(launcherItem, commonData);
+
+				case LauncherType.Embedded:
+					return RunEmbeddedItem(launcherItem, commonData);
 					
 				default:
 					throw new NotImplementedException();
@@ -186,9 +254,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="expandPath">展開済みディレクトリパス</param>
 		/// <param name="commonData"></param>
 		/// <param name="openItem"></param>
-		public static void OpenDirectory(string expandPath, CommonData commonData, LauncherItem openItem)
+		public static Process OpenDirectory(string expandPath, CommonData commonData, LauncherItem openItem)
 		{
-			Process.Start(expandPath);
+			return Process.Start(expandPath);
 		}
 
 		/// <summary>
@@ -221,6 +289,4 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			RunDLL("shell32.dll,Options_RunDLL 5", commonData);
 		}
 	}
-
-
 }

@@ -25,6 +25,29 @@
 		</ul>
 	</log>
 	-->
+	<log date="2015/01/03" version="0.38.0">
+		<ul type="note">
+			<li rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibility">#41: アイテムの種類, 種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404">組み込みアイテムを追加しましたが#118対応でのIF試験的意味合いが強いため該当プログラムの機能は弱いです</li>
+		</ul>
+		<ul type="features">
+			<li rev="556e62fe00d948335c82f2b548648af6b17515e6">#130: クリップボード履歴ダブルクリック時に保持データをすべてコピーする</li>
+			<li rev="777bd5716c9b9c1a1f522ffe25f11acbac542e37">クリップボード監視の切り替え機能を追加</li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404">#41: アイテムの種類, 組み込みアイテムの追加</li>
+		</ul>
+		<ul type="fixes">
+			<li rev="29ff41ed68c8f966c784fec5d05b1fae50d38bba">#131: HTMLクリップボードの読み取り元が日本語を含む場合に範囲計算が狂う</li>
+			<li rev="c5b893be60bd911c67992af4037bd57d62bdec4c">#129: HTMLクリップボードデータをファイル保存時にクリップボードデータとして保存している</li>
+			<li rev="3beedc59b897a80cbf5bcba4a66ffd592e349c6e">#132: RTFの書式が吹っ飛ぶ</li>
+			<li rev="5cf1a43a9d5b503ee2448997d59263a59d16f465">クリップボード履歴一覧からカーソルが外れた際にボタン一覧を非表示にする</li>
+			<li rev="645ee77f26749c255b64af6ddb62c9af6770d943">#133: PrintScreenでクリップボードに入んねー</li>
+			<li rev="ed6b3b7cb7cb6333071383ed6646e087a40971d7">クリップボード履歴一覧の描画がホイールスクロールで変になる</li>
+		</ul>
+		<ul type="developer">
+			<li rev="2f513e7e823cd0d1399306dff08045bb357ca43d">#124: GUIコンポーネントのソースをまとめる</li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404">#118: 自前プログラム呼び出し方法</li>
+		</ul>
+	</log>
 	<log date="2014/12/23" version="0.37.0">
 		<ul type="note">
 			<li rev="">0.36.0でクリップボード処理がバグりまくっていたので修正しました</li>

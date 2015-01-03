@@ -100,8 +100,9 @@
 		<Word Name="main/event/save-window/timer"      Text="ウィンドウ一覧取得" />
 		<Word Name="main/event/save-window/display"    Text="ディスプレイ設定変更によるウィンドウ一覧取得" />
 		<Word Name="main/event/save-window/skip"       Text="ウィンドウ一覧取得スキップ" />
+		<Word Name="main/event/reset/stream/skip"      Text="プロセス実行中のためUIリセットをスキップしました" />
 		
-		<Word Name="hotkey/unregist/fail"            Text="{hotkey}${unregist} ${failure}" />
+		<Word Name="hotkey/unregist/fail"            Text="${hotkey}${unregist} ${failure}" />
 		<Word Name="hotkey/unregist/command"         Text="${hotkey}${unregist}: コマンド" />
 		<Word Name="hotkey/unregist/hidden-file"     Text="${hotkey}${unregist}: ${hidden-file}" />
 		<Word Name="hotkey/unregist/extension"       Text="${hotkey}${unregist}: ${extension}" />
@@ -183,10 +184,13 @@
 		<Word Name="toolbar/menu/file/path/property"        Text="プロパティ(&amp;P)" />
 		<Word Name="toolbar/menu/file/ls/not-child-files"   Text="下位ファイルなし" />
 		<Word Name="toolbar/menu/file/ls/open"              Text="ここを開く" />
+		<Word Name="toolbar/menu/application/execute"     Text="実行(&amp;S)" />
+		<Word Name="toolbar/menu/application/close"       Text="終了(&amp;X)" />
+		<Word Name="toolbar/menu/application/help"        Text="ヘルプ(&amp;H)" />
 		<Word Name="toolbar/dialog/d-d/directory/caption"  Text="ディレクトリ登録方法" />
 		<Word Name="toolbar/dialog/d-d/directory/message"  Text="D&amp;Dされたパスをディレクトリアイテム(フォルダ)として登録します。&#x0d;&#x0a;&#x0d;&#x0a;ディレクトリ内容を一覧表示するには「${yes}」を、&#x0d;&#x0a;ディレクトリそのものを開く場合は「${no}」を選択してください。&#x0d;&#x0a;これは設定ダイアログで再度変更できます。" />
 		<Word Name="toolbar/loging/unfile"  Text="非ファイル形式のパス選択: ランチャー種別URIの使用を推奨します" />
-		
+
 		<Word Name="execute/page/basic"         Text="基本指定" />
 		<Word Name="execute/label/option"      Text="${option}" />
 		<Word Name="execute/label/work-dir"    Text="${work-dir}" />
@@ -235,6 +239,8 @@
 		<Word Name="stream/running-close"   Text="実行中プロセスを閉じることはできません" />
 
 		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
+		<Word Name="clipboard/command/enabled" Text="有効" />
+		<Word Name="clipboard/tips/enabled"    Text="クリップボード履歴の取り込みを有効にする" />
 		<Word Name="clipboard/command/save"    Text="選択中アイテムの保存" />
 		<Word Name="clipboard/command/remove"  Text="選択中アイテムの削除" />
 		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
@@ -355,7 +361,8 @@
 		<Word Name="enum/launcher-type"           Text="アイテムの種類" />
 		<Word Name="enum/launcher-type/file"      Text="ファイル" />
 		<Word Name="enum/launcher-type/directory" Text="ディレクトリ" />
-		<Word Name="enum/launcher-type/uri"       Text="URI" />
+		<Word Name="enum/launcher-type/uri"       Text="URI(廃止: コマンドを使用してください)" />
+		<Word Name="enum/launcher-type/command"   Text="コマンド" />
 		<Word Name="enum/launcher-type/embedded"  Text="組み込み" />
 		
 		<Word Name="enum/icon-size"        Text="アイコンサイズ" />
@@ -455,9 +462,13 @@
 		
 		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 		<Word Name="log/output/error"   Text="ログ出力異常" />
+
+		<Word Name="applications/hash/title"    Text="ハッシュチェック" />
+		<Word Name="applications/hash/comment"  Text="指定ファイルからハッシュ値を取得します。" />
 	
 		<!-- デフォルトランチャーグループ -->
 		<Word Name="default/group/main"      Text="メイングループ" />
+		<Word Name="default/group/embedded"  Text="組み込みアプリケーション" />
 		<Word Name="default/group/programs"  Text="プログラム" />
 		<!-- デフォルトランチャータグ -->
 		<Word Name="default/tag/web-browser" Text="ブラウザ" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -50,6 +51,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		Button _commandHtml = new Button();
 		Button _commandImage = new Button();
 		Button _commandFile = new Button();
+		Button _commandMulti = new Button();
 
 		#endregion ////////////////////////////////////////
 
@@ -78,6 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._commandHtml.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml;
 			this._commandImage.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage;
 			this._commandFile.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile;
+			this._commandMulti.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
 			var buttonSize = GetButtonSize();
 
 			foreach(var command in commandButtons) {
@@ -86,6 +89,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				command.Margin = Padding.Empty;
 				command.Click += command_Click;
 			}
+			this._commandMulti.Margin = new Padding(0, 0, NativeMethods.GetSystemMetrics(SM.SM_CXEDGE), 0);
 			this._panelClipboradItem.Padding = Padding.Empty;
 			this._panelClipboradItem.Margin = Padding.Empty;
 			//this._panelClipboradItem.BackColor = Color.Transparent;
@@ -110,6 +114,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ChangeCommand(-1);
 			ChangeSelsectedItem(-1);
 			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
+
+			listClipboard.MouseWheel += listClipboard_MouseWheel;
 		}
 
 		void Initialize()
@@ -134,6 +140,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
+			this.toolClipboard_itemEnabled.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemTopmost.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemSave.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);
@@ -164,6 +171,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		IEnumerable<Button> GetButtonList()
 		{
 			return new[] {
+				this._commandMulti,
 				this._commandText,
 				this._commandRtf,
 				this._commandHtml,
@@ -194,6 +202,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
+			ChangeEnabled(CommonData.MainSetting.Clipboard.Enabled);
 			ChangeTopmost(CommonData.MainSetting.Clipboard.TopMost);
 			var buttonSize = GetButtonSize();
 			using(var g = CreateGraphics()) {
@@ -225,6 +234,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			TopMost = topMost;
 		}
 
+		void ChangeEnabled(bool enabled)
+		{
+			CommonData.MainSetting.Clipboard.Enabled = enabled;
+			this.toolClipboard_itemEnabled.Checked = enabled;
+		}
+
 		void ChangeSelectType(ToolStripItem item)
 		{
 			this.toolClipboard_itemType.Text = item.Text;
@@ -254,6 +269,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					{ ClipboardType.Html, this._commandHtml },
 					{ ClipboardType.Image, this._commandImage },
 					{ ClipboardType.File, this._commandFile },
+					//{ ClipboardType.All, this._commandMulti},
 				};
 				foreach(var pair in map.ToArray()) {
 					pair.Value.Enabled = (clipboardItem.ClipboardTypes.HasFlag(pair.Key));
@@ -287,6 +303,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 
 			foreach(var type in clipboardItem.GetClipboardTypeList()) {
+				this.tabPreview.TabPages.Add(map[type]);
+
 				switch(type) {
 					case ClipboardType.Text: 
 						{
@@ -302,10 +320,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 					case ClipboardType.Html:
 						{
-							string html;
-							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html);
+							ClipboardHtmlDataItem html;
+							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
+
 							if(result) {
-								this.viewHtml.DocumentText = html;
+								this.viewHtml.DocumentText = html.ToHtml();
 							} else {
 								var elements = string.Format("<p style='font-weight: bold; color: #f00; background: #fff'>{0}</p><hr />", CommonData.Language["clipboard/html/error"]);
 								this.viewHtml.DocumentText = elements + clipboardItem.Html;
@@ -361,7 +380,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					default:
 						throw new NotImplementedException();
 				}
-				this.tabPreview.TabPages.Add(map[type]);
 			}
 			this.tabPreview.SelectedTab = map[clipboardItem.GetSingleClipboardType()];
 			this.tabPreview.ResumeLayout();
@@ -385,6 +403,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				{ ClipboardType.File, (setting) => {
 					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), setting);
 				} },
+				{ ClipboardType.All, (setting) => {
+					var data = new DataObject();
+					var typeFuncs = new Dictionary<ClipboardType, Action>() {
+						{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
+						{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Rtf, TextDataFormat.Rtf) },
+						{ ClipboardType.Html, () => data.SetText(clipboardItem.Html, TextDataFormat.Html) },
+						{ ClipboardType.Image, () => data.SetImage(clipboardItem.Image) },
+						{ ClipboardType.File, () => {
+							var sc = new StringCollection();
+							sc.AddRange(clipboardItem.Files.ToArray());
+							data.SetFileDropList(sc); 
+						}},
+					};
+					foreach(var type in clipboardItem.GetClipboardTypeList()) {
+						typeFuncs[type]();
+					}
+					ClipboardUtility.CopyDataObject(data, setting);
+				} },
 			};
 			map[clipboardType](CommonData);
 		}
@@ -404,7 +440,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var map = new Dictionary<ClipboardType, Action>() {
 				{ ClipboardType.Text, () => File.WriteAllText(path, clipboardItem.Text) },
 				{ ClipboardType.Rtf, () => File.WriteAllText(path, clipboardItem.Rtf) },
-				{ ClipboardType.Html, () => File.WriteAllText(path, clipboardItem.Html) },
+				{ ClipboardType.Html, () => File.WriteAllText(path, ClipboardUtility.ConvertHtmlFromClipbordHtml(clipboardItem.Html, CommonData.Logger).ToHtml()) },
 				{ ClipboardType.Image, () => clipboardItem.Image.Save(path, ImageFormat.Png) },
 			};
 
@@ -625,6 +661,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					{ this._commandHtml, ClipboardType.Html },
 					{ this._commandImage, ClipboardType.Image },
 					{ this._commandFile, ClipboardType.File },
+					{ this._commandMulti, ClipboardType.All },
 				};
 				CopyItem(clipboardItem, map[sender]);
 			} catch(Exception ex) {
@@ -637,7 +674,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var index = this.listClipboard.SelectedIndex;
 			if(index != -1) {
 				try {
-					CopySingleItem(index);
+					//CopySingleItem(index);
+					var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
+					CopyItem(clipboardItem, ClipboardType.All);
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 				}
@@ -675,6 +714,34 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			e.Result = 0;
 			e.Handled = false;
+		}
+
+		private void listClipboard_MouseLeave(object sender, EventArgs e)
+		{
+			if(this._panelClipboradItem.Visible) {
+				var point = this.listClipboard.PointToClient(Cursor.Position);
+				this._panelClipboradItem.Visible = this.listClipboard.DisplayRectangle.Contains(point);
+			}
+		}
+
+		private void toolClipboard_itemEnabled_Click(object sender, EventArgs e)
+		{
+			var check = !toolClipboard_itemEnabled.Checked;
+			ChangeEnabled(check);
+		}
+
+		void listClipboard_MouseWheel(object sender, MouseEventArgs e)
+		{
+			var noDraw = new IntPtr(0);
+			var onDraw = new IntPtr(1);
+
+			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, noDraw, IntPtr.Zero);
+			
+			this.listClipboard.Invalidate();
+
+			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, onDraw, IntPtr.Zero);
+
+			this._panelClipboradItem.Refresh();
 		}
 	}
 }

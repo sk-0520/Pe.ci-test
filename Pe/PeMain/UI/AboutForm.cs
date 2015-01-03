@@ -9,10 +9,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
+using System.Xml.Linq;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
@@ -25,6 +27,27 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public partial class AboutForm : Form, ISetCommonData
 	{
+		#region define
+		class ComponentInfo
+		{
+			public ComponentInfo(XElement x)
+			{
+				Name = x.Attribute("name").Value;
+				Type = x.Attribute("type").Value;
+				URI = x.Attribute("uri").Value;
+				License = x.Attribute("license").Value;
+			}
+
+			public string Name { get; private set; }
+			public string Type { get; private set; }
+			public string URI { get; private set; }
+			public string License { get; private set; }
+		}
+		#endregion ////////////////////////////////////
+
+		#region variable
+		#endregion ////////////////////////////////////
+
 		public AboutForm()
 		{
 			//
@@ -34,7 +57,107 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			Initialize();
 		}
-		
+
+		#region property
+		CommonData CommonData { get; set; }
+		public bool CheckUpdate { get; private set; }
+
+		List<ComponentInfo> ComponentInfoList { get; set; }
+
+		string Separator { get { return "____________"; } }
+		#endregion ////////////////////////////////////
+
+		#region ISetCommonData
+
+		public void SetCommonData(CommonData commonData)
+		{
+			CommonData = commonData;
+
+			ApplySetting();
+		}
+
+		#endregion ////////////////////////////////////
+
+		#region initialize
+		void Initialize()
+		{
+			PointingUtility.AttachmentDefaultButton(this);
+
+			var iconSize = IconScale.Big.ToSize();
+			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconSize)) {
+				var image = new Bitmap(iconSize.Width, iconSize.Height);
+				using(var g = Graphics.FromImage(image)) {
+					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
+				}
+				this.imageIcon.Image = image;
+			}
+
+			this.labelAppName.Text = Literal.programName;
+			this.labelAppVersion.Text = Literal.ApplicationVersion;
+			this.labelConfiguration.Text = string.Format(
+				"{0}: {1}bit",
+#if DEBUG
+				"DEBUG",
+#else
+				"RELEASE",
+#endif
+ Environment.Is64BitProcess ? "64" : "32"
+			);
+
+			this.linkAbout.Text = Literal.AboutWebURL;
+			this.linkMail.Text = "mailto:" + Literal.AboutMailAddress;
+			this.linkDevelopment.Text = Literal.AboutDevelopmentURL;
+			this.linkDiscussion.Text = Literal.DiscussionURL;
+
+			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));
+			ComponentInfoList = xml
+				.Elements()
+				.Select(e => new ComponentInfo(e))
+				.ToList()
+			;
+			this.gridComponents_columnName.DataPropertyName = "Name";
+			this.gridComponents_columnType.DataPropertyName = "Type";
+			this.gridComponents_columnLicense.DataPropertyName = "License";
+			this.gridComponents.AutoGenerateColumns = false;
+			this.gridComponents.DataSource = new BindingSource(ComponentInfoList, string.Empty);
+		}
+		#endregion ////////////////////////////////////
+
+		#region language
+		void ApplyLanguage()
+		{
+			UIUtility.SetDefaultText(this, CommonData.Language);
+
+			this.commandExecuteDir.SetLanguage(CommonData.Language);
+			this.commandDataDir.SetLanguage(CommonData.Language);
+			this.commandBackupDir.SetLanguage(CommonData.Language);
+			this.commandChangelog.SetLanguage(CommonData.Language);
+			this.commandUpdate.SetLanguage(CommonData.Language);
+
+			this.labelUserenv.SetLanguage(CommonData.Language);
+			this.linkCopyShort.SetLanguage(CommonData.Language);
+			this.linkCopyLong.SetLanguage(CommonData.Language);
+
+			this.gridComponents_columnName.SetLanguage(CommonData.Language);
+			this.gridComponents_columnType.SetLanguage(CommonData.Language);
+			this.gridComponents_columnLicense.SetLanguage(CommonData.Language);
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+
+		void ApplySetting()
+		{
+			ApplyLanguage();
+		}
+
+		void OpenDirectory(string path)
+		{
+			Executer.OpenDirectory(path, CommonData, null);
+		}
+
+		#endregion ////////////////////////////////////
+
 		void CommandOk_Click(object sender, EventArgs e)
 		{
 			DialogResult = DialogResult.OK;

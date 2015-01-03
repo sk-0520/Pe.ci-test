@@ -193,6 +193,34 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return result.SplitLines().FirstOrDefault();
 		}
 
-		
+		enum ApplicationItemText
+		{
+			Title,
+			Comment,
+		}
+		static string GetApplicationItemText(ApplicationItem item, ApplicationItemText type)
+		{
+			string typeKey;
+			switch(type) {
+				case ApplicationItemText.Title:
+					typeKey = "title";
+					break;
+				case ApplicationItemText.Comment:
+					typeKey = "comment";
+					break;
+				default:
+					throw new NotImplementedException();
+			}
+
+			return string.Format("applications/{0}/{1}", item.LanguageKey, typeKey);
+		}
+		public static string ApplicationItemToTitle(Language language, ApplicationItem item)
+		{
+			return language[GetApplicationItemText(item, ApplicationItemText.Title)];
+		}
+		public static string ApplicationItemToComment(Language language, ApplicationItem item)
+		{
+			return language[GetApplicationItemText(item, ApplicationItemText.Comment)];
+		}
 	}
 }

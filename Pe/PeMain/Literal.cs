@@ -57,6 +57,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 		//private const string _clipboardItemsFileName = "clipboard-items.xml";
 		private const string _dbFileName             = "db.sqlite3";
 		private const string _backupDirName          = "backup";
+
+		private const string _applicationsFileName = "ApplicationSetting.xml";
+		private const string _applicationsSettingBaseDirectoryName = "Applications";
+		private const string _applicationsLogBaseDirectoryName = "Applications";
+
 		/// <summary>
 		/// デフォルトの言語名。
 		/// </summary>
@@ -98,6 +103,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public static readonly TripleRange<TimeSpan> clipboardWaitTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(50),
 			TimeSpan.FromMilliseconds(500),
+			TimeSpan.FromSeconds(1)
+		);
+		public static readonly TripleRange<TimeSpan> clipboardThreadWaitTime = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(50),
+			TimeSpan.FromMilliseconds(200),
 			TimeSpan.FromSeconds(1)
 		);
 		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(8, 1024, 1024 * 5);
@@ -202,6 +212,22 @@ namespace ContentTypeTextNet.Pe.PeMain
 				return Path.Combine(ApplicationRootDirPath, "bin");
 			}
 		}
+
+		public static string ApplicationBinAppPath
+		{
+			get { return Path.Combine(ApplicationBinDirPath, _applicationsFileName); }
+		}
+
+		public static string ApplicationSettingBaseDirectoryPath
+		{
+			get { return Path.Combine(UserSettingDirPath, _applicationsSettingBaseDirectoryName); }
+		}
+
+		public static string ApplicationLogBaseDirectoryPath
+		{
+			get { return Path.Combine(LogFileDirPath, _applicationsLogBaseDirectoryName); }
+		}
+
 		/// <summary>
 		/// sbin/
 		/// </summary>
@@ -212,7 +238,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 				return Path.Combine(ApplicationRootDirPath, "sbin");
 			}
 		}
-		
+
+		public static string ApplicationSBinAppPath
+		{
+			get { return Path.Combine(ApplicationSBinDirPath, _applicationsFileName); }
+		}
+
 		/// <summary>
 		/// etc/
 		/// </summary>
@@ -435,13 +466,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 			
 			return replacedText;
 		}
-	}
-	
-	public static class AppEnv
-	{
-		public static string AppFilePath { get { return "PE_APP_EXE"; } }
-		public static string AppDirPath { get { return "PE_APP_DIR"; } }
-		public static string AppUserDir { get { return "PE_USER_DIR"; } }
 	}
 	
 	public enum HotKeyId: ushort
