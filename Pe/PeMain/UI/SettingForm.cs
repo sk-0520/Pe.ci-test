@@ -1109,6 +1109,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							this.selectLauncherEnv,
 							this.envLauncherUpdate,
 							this.envLauncherRemove,
+							this.inputLauncherNote,
 						};
 					}
 					break;

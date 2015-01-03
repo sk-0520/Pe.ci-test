@@ -163,8 +163,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			get
 			{
-				var key = string.Format("applications/{0}", Value.LanguageKey);
-				return Language[key];
+				return LanguageUtility.ApplicationItemToTitle(Language, Value);
 			}
 		}
 	}

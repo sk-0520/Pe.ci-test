@@ -234,7 +234,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				if(launcherItem != null) {
 					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting).ToBitmap();
 					this._title = launcherItem.Name;
-					this._message = launcherItem.Note;
+					if(launcherItem.LauncherType == LauncherType.Embedded) {
+						var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+						this._message = LanguageUtility.ApplicationItemToComment(CommonData.Language, applicationItem);
+					} else {
+						this._message = launcherItem.Note;
+					}
 				} else {
 					this._imageIcon = AppUtility.GetAppIcon(IconScale.Normal);
 					this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
