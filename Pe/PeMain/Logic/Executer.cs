@@ -141,7 +141,46 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <returns></returns>
 		private static Process RunEmbeddedItem(LauncherItem launcherItem, CommonData commonData)
 		{
-			throw new NotImplementedException();
+			var applicationItem = commonData.ApplicationSetting.GetApplicationItem(launcherItem);
+			if(commonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem || i.Name == applicationItem.Name)) {
+				throw new WarningException(launcherItem.Name);
+			}
+
+			var executeItem = new LauncherItem();
+			executeItem.Name = applicationItem.Name;
+			executeItem.LauncherType = LauncherType.File;
+			executeItem.WorkDirPath = applicationItem.DirectoryPath;
+			executeItem.Command = applicationItem.FilePath;
+			executeItem.EnvironmentSetting.EditEnvironment = true;
+			var ev = applicationItem.CreateExecuterEV();
+			foreach(var pair in ev) {
+				var pairItem = TPair<string, string>.Create(pair.Key, pair.Value);
+				executeItem.EnvironmentSetting.Update.Add(pairItem);
+			}
+			executeItem.Administrator = applicationItem.Administrator;
+
+			var applicationExecuteItem = new ApplicationExecuteItem(applicationItem);
+
+			switch(applicationItem.Communication) {
+				case ApplicationCommunication.Event: {
+						var name = ev[EVLiteral.communicationEventName];
+						applicationExecuteItem.Event = new EventWaitHandle(false, EventResetMode.AutoReset, name);
+					}
+					break;
+				case ApplicationCommunication.ClientServer:
+				default:
+					throw new NotImplementedException();
+			}
+
+			commonData.ApplicationSetting.ExecutingItems.Add(applicationExecuteItem);
+			var process = RunFileItem(executeItem, commonData);
+			applicationExecuteItem.Process = process;
+			applicationExecuteItem.Process.EnableRaisingEvents = true;
+			applicationExecuteItem.Process.Exited += (object sender, EventArgs e) => {
+				commonData.ApplicationSetting.ExecutingItems.Remove(applicationExecuteItem);
+			};
+
+			return process;
 		}
 
 		/// <summary>
@@ -238,135 +277,4 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			RunDLL("shell32.dll,Options_RunDLL 5", commonData);
 		}
 	}
-
-	/*
-	public class ApplicationExecuter: IDisposable
-	{
-		public ApplicationExecuter(string settingPath)
-		{
-			ApplicationSetting = ;
-			Items = new List<ApplicationExecuteItem>();
-		}
-
-		ApplicationSetting ApplicationSetting { get; set; }
-
-		List<ApplicationExecuteItem> Items { get; set; }
-
-		public IEnumerable<string> Names
-		{
-			get
-			{
-				return ApplicationSetting.Items.Select(i => i.Name);
-			}
-		}
-
-		public IEnumerable<string> ExecutingNames
-		{
-			get
-			{
-				return Items.Select(i => i.Name);
-			}
-		}
-
-		#region IDisposable
-
-		protected virtual void Dispose(bool disposing)
-		{ }
-
-		public void Dispose()
-		{
-			Dispose(true);
-		}
-
-		#endregion
-
-		public bool IsExecutingItem(string name)
-		{
-			return Items.Any(i => i.Name == name);
-		}
-
-		public void Kill(string name)
-		{
-			var item = Items.Single(s => s.Name == name);
-			item.Event.Set();
-		}
-
-		public ApplicationExecuteItem CreateExecuteItem(string name)
-		{
-			var item = ApplicationSetting.Items.Single(s => s.Name == name);
-			var result = new ApplicationExecuteItem(item);
-			return result;
-		}
-
-		IDictionary<string, string> CreateExecuterEV(ApplicationItem item)
-		{
-			var result = new Dictionary<string, string>() {
-				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
-				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
-				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
-				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
-				// ----------------------
-				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, item.Name) },
-				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, item.Name) },
-				// ----------------------
-			};
-
-			var communication = new Dictionary<ApplicationCommunication, TPair<string, string>>() {
-				{ ApplicationCommunication.Event, TPair<string,string>.Create(EVLiteral.communicationEventName, string.Format("e-{0}", item.Name)) },
-				{ ApplicationCommunication.ClientServer, TPair<string,string>.Create(EVLiteral.communicationServerName, string.Format("s-{0}", item.Name)) },
-			}[item.Communication];
-			result[communication.First] = communication.Second;
-
-			return result;
-		}
-
-		public void Executer(ApplicationExecuteItem item, CommonData commonData)
-		{
-			if(Items.Any(i => i == item || i.Name == item.Name)) {
-				throw new ArgumentException(item.Name);
-			}
-
-			var launcherItem = new LauncherItem();
-			launcherItem.Name = item.Name;
-			launcherItem.LauncherType = LauncherType.File;
-			launcherItem.WorkDirPath = Path.Combine(
-				Literal.ApplicationBinDirPath,
-				item.ApplicationItem.File.Directory
-			);
-			launcherItem.Command = Path.Combine(
-				launcherItem.WorkDirPath,
-				item.ApplicationItem.File.Name
-			);
-			launcherItem.EnvironmentSetting.EditEnvironment = true;
-			var ev = CreateExecuterEV(item.ApplicationItem);
-			foreach(var pair in ev) {
-				var pairItem = TPair<string, string>.Create(pair.Key, pair.Value);
-				launcherItem.EnvironmentSetting.Update.Add(pairItem);
-			}
-			launcherItem.Administrator = item.ApplicationItem.Administrator;
-
-			switch(item.ApplicationItem.Communication) {
-				case ApplicationCommunication.Event:
-					{
-						var name = ev[EVLiteral.communicationEventName];
-						item.Event = new EventWaitHandle(false, EventResetMode.AutoReset, name);
-					}
-					break;
-				case ApplicationCommunication.ClientServer:
-				default:
-					throw new NotImplementedException();
-			}
-
-			Items.Add(item);
-			item.Process = ContentTypeTextNet.Pe.PeMain.Logic.Executer.RunItem(launcherItem, commonData);
-			item.Process.EnableRaisingEvents = true;
-			item.Process.Exited += (object sender, EventArgs e) => {
-				Items.Remove(item);
-			};
-
-		}
-
-	}
-	 * */
-
 }

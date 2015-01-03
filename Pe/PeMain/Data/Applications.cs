@@ -183,6 +183,30 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				return Path.Combine(DirectoryPath, File.Name);
 			}
 		}
+
+		public IDictionary<string, string> CreateExecuterEV()
+		{
+			var result = new Dictionary<string, string>() {
+				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
+				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
+				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
+				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
+				// ----------------------
+				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, Name) },
+				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, Name) },
+				// ----------------------
+			};
+
+			var communication = new Dictionary<ApplicationCommunication, TPair<string, string>>() {
+				{ ApplicationCommunication.Event, TPair<string,string>.Create(EVLiteral.communicationEventName, string.Format("e-{0}", Name)) },
+				{ ApplicationCommunication.ClientServer, TPair<string,string>.Create(EVLiteral.communicationServerName, string.Format("s-{0}", Name)) },
+			}[Communication];
+			result[communication.First] = communication.Second;
+
+			return result;
+		}
+
+
 	}
 
 	public class ApplicationExecuteItem: INameItem
@@ -224,7 +248,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		#region IDisposable
 		
 		protected virtual void Dispose(bool disposing)
-		{ }
+		{
+			KillAllApplication();
+		}
 
 		public void Dispose()
 		{
@@ -238,32 +264,41 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			return ExecutingItems.Any(i => i.Name == name);
 		}
 
-		public IDictionary<string, string> CreateExecuterEV(ApplicationItem item)
-		{
-			var result = new Dictionary<string, string>() {
-				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
-				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
-				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
-				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
-				// ----------------------
-				{ EVLiteral.applicationSettingDirectoryPath, Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, item.Name) },
-				{ EVLiteral.applicationLogDirectoryPath, Path.Combine(Literal.ApplicationLogBaseDirectoryPath, item.Name) },
-				// ----------------------
-			};
-
-			var communication = new Dictionary<ApplicationCommunication, TPair<string, string>>() {
-				{ ApplicationCommunication.Event, TPair<string,string>.Create(EVLiteral.communicationEventName, string.Format("e-{0}", item.Name)) },
-				{ ApplicationCommunication.ClientServer, TPair<string,string>.Create(EVLiteral.communicationServerName, string.Format("s-{0}", item.Name)) },
-			}[item.Communication];
-			result[communication.First] = communication.Second;
-
-			return result;
-		}
-
 		public ApplicationItem GetApplicationItem(LauncherItem item)
 		{
 			Debug.Assert(item.LauncherType == LauncherType.Embedded);
 			return Items.Single(i => i.Name == item.Command);
+		}
+
+
+
+		public void KillApplicationItem(ApplicationExecuteItem applicationExecuteItem)
+		{
+			switch(applicationExecuteItem.ApplicationItem.Communication) {
+				case ApplicationCommunication.Event:
+					applicationExecuteItem.Event.Set();
+					break;
+
+				case ApplicationCommunication.ClientServer:
+				default:
+					throw new NotImplementedException();
+			}
+		}
+		public void KillApplicationItem(string name)
+		{
+			var applicationExecuteItem = ExecutingItems.Single(i => i.Name == name);
+			KillApplicationItem(applicationExecuteItem);
+		}
+		public void KillApplicationItem(LauncherItem item)
+		{
+			Debug.Assert(item.LauncherType == LauncherType.Embedded);
+			KillApplicationItem(item.Command);
+		}
+		public void KillAllApplication()
+		{
+			foreach(var item in ExecutingItems.ToArray()) {
+				KillApplicationItem(item);
+			}
 		}
 	}
 
