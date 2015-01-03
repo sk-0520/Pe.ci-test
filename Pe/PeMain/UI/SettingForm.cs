@@ -117,19 +117,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		Dictionary<string, FontSetting> _toolbarFont = new Dictionary<string, FontSetting>();
 		*/
 		ToolbarItem _toolbarSelectedToolbarItem = null;
+
+		ApplicationSetting _applicationSetting;
 		#endregion ////////////////////////////////////
 
 		#region event
 		#endregion ////////////////////////////////////
 
-		public SettingForm(Language language, MainSetting setting, AppDBManager db)
+		public SettingForm(Language language, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
-			Initialize(language, setting, db);
+
+			Initialize(language, setting, db, applicationSetting);
 		}
 
 		#region property
@@ -238,7 +240,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			foreach(var item in launcherSetting.Items) {
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
-			this.selecterLauncher.SetItems(this._launcherItems);
+			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -300,7 +302,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 
-			this.selecterToolbar.SetItems(this._launcherItems);
+			this.selecterToolbar.SetItems(this._launcherItems, this._applicationSetting);
 
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
@@ -397,11 +399,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 
-		void Initialize(Language language, MainSetting mainSetting, AppDBManager db)
+		void Initialize(Language language, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 
 			Language = language;
+			this._applicationSetting = applicationSetting;
 
 			InitializeUI(mainSetting, db);
 		}
@@ -925,7 +928,30 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			LauncherSetSelectedType(item.LauncherType);
 			this.inputLauncherName.Text = item.Name;
-			this.inputLauncherCommand.Text = item.Command;
+
+			this.inputLauncherCommand.DataSource = null;
+			if(item.LauncherType == LauncherType.Embedded) {
+				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
+				var displayValueList = _applicationSetting.Items
+					.OrderBy(i => i.Name)
+					.Select(i => new ApplicationDisplayValue(i))
+					.ToArray()
+				;
+				foreach(var dv in displayValueList) {
+					dv.SetLanguage(Language);
+				}
+				var applicationItem = this._applicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
+				if(applicationItem != null){
+					this.inputLauncherCommand.Attachment(displayValueList, applicationItem);
+				} else {
+					this.inputLauncherCommand.Attachment(displayValueList);
+				} 
+				//this.inputLauncherCommand.Text = item.Command;
+			} else {
+				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDown;
+				this.inputLauncherCommand.Text = item.Command;
+			}
+
 			this.inputLauncherOption.Text = item.Option;
 			this.inputLauncherWorkDirPath.Text = item.WorkDirPath;
 			/*
@@ -964,7 +990,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var oldIcon = new IconItem(item.IconItem.Path, item.IconItem.Index);
 			item.LauncherType = LauncherGetSelectedType();
 			item.Name = this.inputLauncherName.Text.Trim();
-			item.Command = this.inputLauncherCommand.Text.Trim();
+			if(item.LauncherType == LauncherType.Embedded) {
+				var applicationItem = this.inputLauncherCommand.SelectedValue as ApplicationItem;
+				item.Command = applicationItem.Name;
+			} else {
+				item.Command = this.inputLauncherCommand.Text.Trim();
+			}
 			item.Option = this.inputLauncherOption.Text.Trim();
 			item.WorkDirPath = this.inputLauncherWorkDirPath.Text.Trim();
 			/*
@@ -1062,8 +1093,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 					break;
 					
-				case LauncherType.Embedded:
-					Debug.Assert(false, type.ToString());
+				case LauncherType.Embedded: 
+					{
+						disabledControls = new Control[] {
+							this.commandLauncherFilePath,
+							this.commandLauncherDirPath,
+							this.commandLauncherOptionFilePath,
+							this.commandLauncherOptionDirPath,
+							this.commandLauncherWorkDirPath,
+							this.inputLauncherOption,
+							this.inputLauncherWorkDirPath,
+							this.inputLauncherIconPath,
+							this.selectLauncherStdStream,
+							this.selectLauncherAdmin,
+							this.selectLauncherEnv,
+							this.envLauncherUpdate,
+							this.envLauncherRemove,
+							this.inputLauncherNote,
+						};
+					}
 					break;
 			}
 			
@@ -1150,7 +1198,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region page/toolbar
 		void ToolbarSelectingPage()
 		{
-			this.selecterToolbar.SetItems(this.selecterLauncher.Items);
+			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Bitmap>() {
 				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
@@ -1158,7 +1206,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
-			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index) }).Where(item => item.Icon != null);
+			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, this._applicationSetting) }).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
 			}

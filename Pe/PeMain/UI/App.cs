@@ -407,6 +407,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeNote(CommandLine commandLine, ILogger logger)
 		{ }
 
+		void InitializeApplicationExecuter(CommandLine commandLine, ILogger logger)
+		{
+			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
+		}
 		/// <summary>
 		/// Peを使用使用するかユーザーに問い合わせる。
 		/// </summary>
@@ -464,6 +468,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
+
+			InitializeApplicationExecuter(commandLine, logger);
 
 			return existsSettingFilePath;
 		}
@@ -1180,6 +1186,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <param name="save"></param>
 		public void CloseApplication(bool save)
 		{
+			this._commonData.ApplicationSetting.KillAllApplication();
+
 			if(save) {
 				AppUtility.SaveSetting(this._commonData);
 			}
@@ -1257,7 +1265,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <returns></returns>
 		Func<bool> OpenSettingDialog()
 		{
-			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database)) {
+			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
 					foreach(var note in this._noteWindowList) {
@@ -1777,21 +1785,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		private void IconDoubleClick(object sender, EventArgs e)
 		{
+#if DEBUG
 			/*
-			var update = new Update(@"Z:temp", false);
-			var info = update.Check();
-			if(info.IsUpdate) {
-				var s = string.Format("{0} {1}", info.Version, info.IsRcVersion ? "RC": "RELEASE");
-				if(MessageBox.Show(s, "UPDATE", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes) {
-					update.Execute();
-				}
+			var name = "Hash";
+			if(this._commonData.ApplicationExecuter.IsExecutingItem(name)) {
+				this._commonData.ApplicationExecuter.Kill(name);
+			} else {
+				var item = this._commonData.ApplicationExecuter.CreateExecuteItem("Hash");
+				this._commonData.ApplicationExecuter.Executer(item, this._commonData);
 			}
-			 */
-			//MessageBox.Show("PON!");
+			*/
+#else
 			if(!this._pause) {
 				ShowHomeDialog();
 			}
-			//ResetUI();
+#endif
 		}
 		
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)

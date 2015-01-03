@@ -52,6 +52,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string menuNamePath_copyWorkDir = "copy_work_dir";
 		const string menuNamePath_property = "property";
 
+		const string menuNameApplicationExecute = "execute";
+		const string menuNameApplicationClose = "close";
+		const string menuNameApplicationHelp = "help";
+
 		enum DropType
 		{
 			None,
@@ -232,9 +236,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var launcherItem = toolStripItem.Tag as LauncherItem;
 
 				if(launcherItem != null) {
-					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index).ToBitmap();
+					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting).ToBitmap();
 					this._title = launcherItem.Name;
-					this._message = launcherItem.Note;
+					if(launcherItem.LauncherType == LauncherType.Embedded) {
+						var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+						this._message = LanguageUtility.ApplicationItemToComment(CommonData.Language, applicationItem);
+					} else {
+						this._message = launcherItem.Note;
+					}
 				} else {
 					this._imageIcon = AppUtility.GetAppIcon(IconScale.Normal);
 					this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
@@ -1036,7 +1045,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			};
 		}
-		
+
+
 		string MakeGroupItemName(string groupName)
 		{
 			return menuNameMainGroupItem + groupName;
@@ -1179,6 +1189,58 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 
+		void AttachmentEmbeddedLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
+		{
+			var itemList = new List<ToolStripItem>();
+
+			var execItem = new ToolStripMenuItem();
+			var closeItem = new ToolStripMenuItem();
+			var helpItem = new ToolStripMenuItem();
+			itemList.Add(execItem);
+			itemList.Add(closeItem);
+			itemList.Add(new ToolStripSeparator());
+			itemList.Add(helpItem);
+
+			// 起動
+			execItem.Name = menuNameApplicationExecute;
+			execItem.Text = CommonData.Language["toolbar/menu/application/execute"];
+			execItem.Click += (object sender, EventArgs e) => {
+				ExecuteItem(launcherItem);
+			};
+			// 終了
+			closeItem.Name = menuNameApplicationClose;
+			closeItem.Text = CommonData.Language["toolbar/menu/application/close"];
+			closeItem.Click += (object sender, EventArgs e) => {
+				try {
+					CommonData.ApplicationSetting.KillApplicationItem(launcherItem);
+				} catch(Exception ex) {
+					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
+					CommonData.Logger.Puts(LogType.Warning, message, ex);
+				}
+			};
+			// ヘルプ
+			helpItem.Name = menuNameApplicationHelp;
+			helpItem.Text = CommonData.Language["toolbar/menu/application/help"];
+			helpItem.Click += (object sender, EventArgs e) => {
+				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+				try {
+					Executer.RunCommand(applicationItem.HelpPath, CommonData);
+				} catch(Exception ex) {
+					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, applicationItem.HelpPath);
+				}
+			};
+
+			parentItem.DropDownItems.AddRange(itemList.ToArray());
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
+				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+				var isRunning = CommonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem);
+				execItem.Enabled = !isRunning;
+				closeItem.Enabled = isRunning;
+				helpItem.Enabled = !string.IsNullOrWhiteSpace(applicationItem.File.Help);
+			};
+		}
+
 		static void SetButtonLayout(ToolStripItem toolItem, ISkin skin, IconScale iconSize, bool showText, int textWidth)
 		{
 			var toolSplit = toolItem as ToolStripSplitButton;
@@ -1268,16 +1330,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			return toolItem;
 		}
-		
+
 		ToolStripButton CreateCommandItemLauncherButton(LauncherItem item)
 		{
 			var toolItem = new ToolStripButton();
-			
+
 			toolItem.Click += LauncherTypeFile_ButtonClick;
-			
+
 			return toolItem;
 		}
-			
+
+		ToolStripSplitButton CreateEmbeddedItemLauncherButton(LauncherItem item)
+		{
+			var toolItem = new ToolStripSplitButton();
+			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
+
+			AttachmentEmbeddedLauncherMenu(toolItem, item);
+
+			return toolItem;
+		}
+
 		/// <summary>
 		/// ランチャーアイテムボタンの生成。
 		/// </summary>
@@ -1301,7 +1373,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				case LauncherType.Command:
 					toolItem = CreateCommandItemLauncherButton(item);
 					break;
-					
+
+				case LauncherType.Embedded:
+					toolItem = CreateEmbeddedItemLauncherButton(item);
+					break;
+
 				default:
 					throw new NotImplementedException(item.LauncherType.ToString());
 			}
@@ -1311,7 +1387,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index);
+			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}

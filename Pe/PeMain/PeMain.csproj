@@ -117,6 +117,9 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="..\Common-Applications\EnvironmentVariable.cs">
+      <Link>IF\EnvironmentVariable.cs</Link>
+    </Compile>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
@@ -641,8 +644,11 @@
     <None Include="Resources\Image\Clipboard.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Applications.xml">
+    <Content Include="bin\ApplicationSetting.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="doc\license\Applications\Hash.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

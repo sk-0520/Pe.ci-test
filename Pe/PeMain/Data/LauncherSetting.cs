@@ -361,24 +361,32 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <param name = "iconScale">アイコンサイズ</param>
 		/// <param name="iconIndex">アイコンインデックス</param>
 		/// <returns>アイコン</returns>
-		public Icon GetIcon(IconScale iconScale, int iconIndex)
+		public Icon GetIcon(IconScale iconScale, int iconIndex, ApplicationSetting applicationSetting)
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconScale);
 			if(!hasIcon) {
 				string useIconPath = null;
-				if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
-					var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
-					//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
-					hasIcon = FileUtility.Exists(expandIconPath);
-					useIconPath = expandIconPath;
-				}
-				if(!hasIcon) {
-					if(new [] { LauncherType.File, LauncherType.Directory}.Any(lt => lt == LauncherType)) {
-						if(!string.IsNullOrWhiteSpace(Command)) {
-							var expandPath = Environment.ExpandEnvironmentVariables(Command);
-							//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
-							hasIcon = FileUtility.Exists(expandPath);
-							useIconPath = expandPath;
+
+				if(LauncherType == Data.LauncherType.Embedded) {
+					Debug.Assert(applicationSetting != null);
+					var applicationItem = applicationSetting.GetApplicationItem(this);
+					useIconPath = applicationItem.FilePath;
+					hasIcon = true;
+				} else {
+					if(!string.IsNullOrWhiteSpace(IconItem.Path)) {
+						var expandIconPath = Environment.ExpandEnvironmentVariables(IconItem.Path);
+						//hasIcon = File.Exists(expandIconPath) || Directory.Exists(expandIconPath);
+						hasIcon = FileUtility.Exists(expandIconPath);
+						useIconPath = expandIconPath;
+					}
+					if(!hasIcon) {
+						if(new[] { LauncherType.File, LauncherType.Directory }.Any(lt => lt == LauncherType)) {
+							if(!string.IsNullOrWhiteSpace(Command)) {
+								var expandPath = Environment.ExpandEnvironmentVariables(Command);
+								//hasIcon = File.Exists(expandPath) || Directory.Exists(expandPath);
+								hasIcon = FileUtility.Exists(expandPath);
+								useIconPath = expandPath;
+							}
 						}
 					}
 				}
@@ -399,6 +407,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 					return notfoundIconMap[iconScale];
 				}
 			}
+		}
+
+		public Icon GetEmbeddedIcon(IconScale iconScale, ApplicationItem applicationItem)
+		{
+			var icon = IconUtility.Load(applicationItem.FilePath, iconScale, 0);
+			return icon;
 		}
 		
 		public void ClearIcon()

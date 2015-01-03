@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			ApplyLanguage();
 
-			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index);
+			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index, CommonData.ApplicationSetting);
 
 			this.viewCommand.Text = LauncherItem.Command;
 			this.inputOption.Items.AddRange(LauncherItem.LauncherHistory.Options.ToArray());
