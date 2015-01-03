@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.38.2" type="rc">
+		<ul type="note">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="developer">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+	</log>
 	<log date="2015/01/03" version="0.38.1">
 		<ul type="note">
 			<li rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibility">#41: アイテムの種類, 種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</li>
