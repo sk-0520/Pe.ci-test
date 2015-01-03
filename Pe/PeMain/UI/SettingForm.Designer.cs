@@ -91,7 +91,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherIconPath = new ContentTypeTextNet.Pe.PeMain.UI.IconTextBox();
 			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
 			this.labelLauncherIconPath = new System.Windows.Forms.Label();
-			this.inputLauncherCommand = new System.Windows.Forms.TextBox();
+			this.inputLauncherCommand = new System.Windows.Forms.ComboBox();
 			this.tabLauncher_pageEnv = new System.Windows.Forms.TabPage();
 			this.panelLauncherEnv = new System.Windows.Forms.TableLayoutPanel();
 			this.envLauncherRemove = new ContentTypeTextNet.Pe.PeMain.UI.EnvRemoveControl();
@@ -581,6 +581,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// selecterLauncher
 			// 
+			this.selecterLauncher.ApplicationSetting = null;
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterLauncher.Filtering = false;
 			this.selecterLauncher.FilterType = ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelecterType.Full;
@@ -720,7 +721,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// selectLauncherType_embedded
 			// 
 			this.selectLauncherType_embedded.AutoSize = true;
-			this.selectLauncherType_embedded.Enabled = false;
 			this.selectLauncherType_embedded.Location = new System.Drawing.Point(3, 28);
 			this.selectLauncherType_embedded.Name = "selectLauncherType_embedded";
 			this.selectLauncherType_embedded.Size = new System.Drawing.Size(181, 19);
@@ -1426,6 +1426,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// selecterToolbar
 			// 
+			this.selecterToolbar.ApplicationSetting = null;
 			this.selecterToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterToolbar.Filtering = false;
 			this.selecterToolbar.FilterType = ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelecterType.Full;
@@ -2316,7 +2317,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Button commandLauncherFilePath;
 		private System.Windows.Forms.Button commandLauncherWorkDirPath;
 		private System.Windows.Forms.Button commandLauncherIconPath;
-		private System.Windows.Forms.TextBox inputLauncherCommand;
+		private System.Windows.Forms.ComboBox inputLauncherCommand;
 		private System.Windows.Forms.TextBox inputLauncherName;
 		private System.Windows.Forms.TextBox inputLauncherWorkDirPath;
 		private ContentTypeTextNet.Pe.PeMain.UI.IconTextBox inputLauncherIconPath;
