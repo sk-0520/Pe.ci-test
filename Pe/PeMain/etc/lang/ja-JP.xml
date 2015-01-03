@@ -459,6 +459,8 @@
 		
 		<Word Name="log/exec/run-item"  Text="アイテム実行" />
 		<Word Name="log/output/error"   Text="ログ出力異常" />
+
+		<Word Name="applications/hash"   Text="HASH" />
 	
 		<!-- デフォルトランチャーグループ -->
 		<Word Name="default/group/main"      Text="メイングループ" />

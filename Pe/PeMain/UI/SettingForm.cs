@@ -928,7 +928,30 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			LauncherSetSelectedType(item.LauncherType);
 			this.inputLauncherName.Text = item.Name;
-			this.inputLauncherCommand.Text = item.Command;
+
+			this.inputLauncherCommand.DataSource = null;
+			if(item.LauncherType == LauncherType.Embedded) {
+				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
+				var displayValueList = _applicationSetting.Items
+					.OrderBy(i => i.Name)
+					.Select(i => new ApplicationDisplayValue(i))
+					.ToArray()
+				;
+				foreach(var dv in displayValueList) {
+					dv.SetLanguage(Language);
+				}
+				var applicationItem = this._applicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
+				if(applicationItem != null){
+					this.inputLauncherCommand.Attachment(displayValueList, applicationItem);
+				} else {
+					this.inputLauncherCommand.Attachment(displayValueList);
+				} 
+				//this.inputLauncherCommand.Text = item.Command;
+			} else {
+				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDown;
+				this.inputLauncherCommand.Text = item.Command;
+			}
+
 			this.inputLauncherOption.Text = item.Option;
 			this.inputLauncherWorkDirPath.Text = item.WorkDirPath;
 			/*
@@ -967,7 +990,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var oldIcon = new IconItem(item.IconItem.Path, item.IconItem.Index);
 			item.LauncherType = LauncherGetSelectedType();
 			item.Name = this.inputLauncherName.Text.Trim();
-			item.Command = this.inputLauncherCommand.Text.Trim();
+			if(item.LauncherType == LauncherType.Embedded) {
+				var applicationItem = this.inputLauncherCommand.SelectedValue as ApplicationItem;
+				item.Command = applicationItem.Name;
+			} else {
+				item.Command = this.inputLauncherCommand.Text.Trim();
+			}
 			item.Option = this.inputLauncherOption.Text.Trim();
 			item.WorkDirPath = this.inputLauncherWorkDirPath.Text.Trim();
 			/*
@@ -1065,8 +1093,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 					break;
 					
-				case LauncherType.Embedded:
-					Debug.Assert(false, type.ToString());
+				case LauncherType.Embedded: 
+					{
+						disabledControls = new Control[] {
+							this.commandLauncherFilePath,
+							this.commandLauncherDirPath,
+							this.commandLauncherOptionFilePath,
+							this.commandLauncherOptionDirPath,
+							this.commandLauncherWorkDirPath,
+							this.inputLauncherOption,
+							this.inputLauncherWorkDirPath,
+							this.inputLauncherIconPath,
+							this.selectLauncherStdStream,
+							this.selectLauncherAdmin,
+							this.selectLauncherEnv,
+							this.envLauncherUpdate,
+							this.envLauncherRemove,
+						};
+					}
 					break;
 			}
 			

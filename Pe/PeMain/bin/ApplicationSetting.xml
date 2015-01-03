@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ApplicationSetting>
 	<Items>
-		<ApplicationItem Name="Hash">
+		<ApplicationItem Name="Hash" LanguageKey="hash">
 			<File Directory="Hash" Name="Hash.exe" Help="readme.txt" Setting="false" Log="false" />
 			<Type>Window</Type>
 			<Stream>None</Stream>

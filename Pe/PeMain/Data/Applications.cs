@@ -146,6 +146,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Parameters = new List<ApplicationParameter>();
 		}
 
+		[XmlAttribute]
+		public string LanguageKey { get; set; }
+
 		/// <summary>
 		/// ファイル設定。
 		/// </summary>
@@ -288,8 +291,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Debug.Assert(item.LauncherType == LauncherType.Embedded);
 			return Items.Single(i => i.Name == item.Command);
 		}
-
-
 
 		public void KillApplicationItem(ApplicationExecuteItem applicationExecuteItem)
 		{
