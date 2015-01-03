@@ -64,7 +64,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// 名前のみ。
 		/// </summary>
-		NameOnly,
+		KeyOnly,
 		/// <summary>
 		/// 真偽値。
 		/// </summary>
@@ -133,6 +133,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		[XmlAttribute]
 		public bool Necessary { get; set; }
+
+		[XmlAttribute]
+		public string Value { get; set; }
 	}
 
 	/// <summary>

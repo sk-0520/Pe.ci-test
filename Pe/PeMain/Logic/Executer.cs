@@ -158,11 +158,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				executeItem.EnvironmentSetting.Update.Add(pairItem);
 			}
 			executeItem.Administrator = applicationItem.Administrator;
+			var args = new List<string>();
+			foreach(var param in applicationItem.Parameters) {
+				var value = UIUtility.GetLanguage(param.Value, commonData.Language);
+				var s = string.Format("/{0}=\"{1}\"", param.Name, value);
+				args.Add(s);
+			}
+			executeItem.Option = string.Join(" ", args);
 
 			var applicationExecuteItem = new ApplicationExecuteItem(applicationItem);
 
 			switch(applicationItem.Communication) {
-				case ApplicationCommunication.Event: {
+				case ApplicationCommunication.Event:
+					{
 						var name = ev[EVLiteral.communicationEventName];
 						applicationExecuteItem.Event = new EventWaitHandle(false, EventResetMode.AutoReset, name);
 					}

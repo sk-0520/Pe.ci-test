@@ -6,7 +6,9 @@
 			<Type>Window</Type>
 			<Stream>None</Stream>
 			<Communication>Event</Communication>
-			<Parameters />
+			<Parameters>
+				<Arg Name="title" Type="Text" Necessary="false" Value=":applications/hash/title" />
+			</Parameters>
 			<Administrator>false</Administrator>
 		</ApplicationItem>
 	</Items>

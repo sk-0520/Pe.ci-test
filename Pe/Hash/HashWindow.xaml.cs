@@ -47,6 +47,12 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		void InitializeCommandLine()
 		{
 			var commandLine = new CommandLine();
+
+			var keyTitle = "title";
+			if(commandLine.HasValue(keyTitle)) {
+				var valTitle = commandLine.GetValue(keyTitle);
+				Title = valTitle;
+			}
 		}
 		void InitializeEvent()
 		{

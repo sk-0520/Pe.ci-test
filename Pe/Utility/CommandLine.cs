@@ -127,7 +127,16 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			var keyOption = GetKeyOption(option);
 			return HasKeyOption(keyOption);
 		}
-		
+
+		/// <summary>
+		/// 値を持つ KeyValueHeader + option が存在するかを確認。
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
+		public bool HasValue(string option)
+		{
+			return HasValue(option, 0);
+		}
 		public bool HasValue(string option, int index = 0)
 		{
 			var keyOption = GetKeyOption(option);
