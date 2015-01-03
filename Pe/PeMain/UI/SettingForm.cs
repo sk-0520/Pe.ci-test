@@ -13,6 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
@@ -992,7 +993,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			item.Name = this.inputLauncherName.Text.Trim();
 			if(item.LauncherType == LauncherType.Embedded) {
 				var applicationItem = this.inputLauncherCommand.SelectedValue as ApplicationItem;
-				item.Command = applicationItem.Name;
+				if(applicationItem != null) {
+					item.Command = applicationItem.Name;
+				} else {
+					item.Command = this._applicationSetting.Items.Single().Name;
+				}
 			} else {
 				item.Command = this.inputLauncherCommand.Text.Trim();
 			}
@@ -1114,9 +1119,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 					break;
 			}
-			
-			SuspendLayout();
-			
+
 			foreach(var control in enabledControls) {
 				control.Enabled = true;
 			}
@@ -1125,8 +1128,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					control.Enabled = false;
 				}
 			}
-			
-			ResumeLayout(false);
 		}
 		
 		bool LauncherItemValid()
@@ -1191,6 +1192,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			if(this._launcherSelectedItem != null) {
 				LauncherInputValueToItem(this._launcherSelectedItem);
+
+				this.inputLauncherCommand.DataSource = null;
+
 				this.selecterLauncher.Refresh();
 			}
 		}
@@ -1559,6 +1563,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			if(this._launcherItemEvent) {
 				LauncherInputChange();
+				LauncherSelectItem(this._launcherSelectedItem);
 			}
 
 			/*
