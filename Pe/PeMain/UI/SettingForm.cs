@@ -111,6 +111,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		ToolbarItem _toolbarSelectedToolbarItem = null;
 
 		ApplicationSetting _applicationSetting;
+
+		string[] _commandList;
 		#endregion ////////////////////////////////////
 
 		#region event
@@ -391,12 +393,46 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 
+		void InitializeCommand()
+		{
+			//_commandList
+			var osDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+			var systemDirPath = Environment.SystemDirectory;
+
+			var pathDirList = Environment.GetEnvironmentVariable("PATH")
+				.Split(';')
+				.Select(s => Environment.ExpandEnvironmentVariables(s))
+				.Where(s => s != osDirPath || s != systemDirPath)
+				.Distinct()
+				.ToArray()
+			;
+			var dirList = new List<string>(new[] { osDirPath, systemDirPath });
+			dirList.AddRange(pathDirList);
+
+			var tempList = dirList
+				.Where(Directory.Exists)
+				.Select(s => Directory.EnumerateFiles(s, "*.exe").Select(Path.GetFileNameWithoutExtension))
+			;
+			var commandList = new List<string>();
+			foreach(var list in tempList) {
+				commandList.AddRange(list);
+			}
+
+			this._commandList = commandList
+				.OrderBy(s => s)
+				.Distinct()
+				.ToArray()
+			;
+		}
+
 		void Initialize(Language language, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 
 			Language = language;
 			this._applicationSetting = applicationSetting;
+
+			InitializeCommand();
 
 			InitializeUI(mainSetting, db);
 		}
@@ -921,7 +957,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			LauncherSetSelectedType(item.LauncherType);
 			this.inputLauncherName.Text = item.Name;
 
-			this.inputLauncherCommand.DataSource = null;
+			//this.inputLauncherCommand.DataSource = null;
 			if(item.LauncherType == LauncherType.Embedded) {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
 				var displayValueList = _applicationSetting.Items
@@ -941,6 +977,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				//this.inputLauncherCommand.Text = item.Command;
 			} else {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDown;
+				if(item.LauncherType == LauncherType.Command) {
+					/*
+					var commandList = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Text_CommandList
+						.SplitLines()
+						.Select(s => s.Trim())
+						.Where(s => !string.IsNullOrWhiteSpace(s))
+						.OrderBy(s => s)
+						.ToArray()
+					;
+					this.inputLauncherCommand.DataSource = commandList;
+					*/
+					this.inputLauncherCommand.Items.AddRange(this._commandList);
+				} else {
+					this.inputLauncherCommand.Items.Clear();
+				}
+
 				this.inputLauncherCommand.Text = item.Command;
 			}
 
