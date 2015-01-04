@@ -27,12 +27,12 @@
 	-->
 	<log date="YYYY/MM/DD" version="0.38.2" type="rc">
 		<ul type="note">
-			<li rev=""></li>
+			<li rev="">本バージョンからアップデートチェックに使用するアドレスが変更となります。アドレスについての詳細はオンラインヘルプを参照してください</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
 		<ul type="features">
-			<li rev=""></li>
+			<li rev="7e5149cbb741c03214f9b5d1a95fd240921c0ba4">#104: アップデート定義ファイルをリポジトリから外す</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
