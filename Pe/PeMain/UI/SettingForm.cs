@@ -921,7 +921,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			LauncherSetSelectedType(item.LauncherType);
 			this.inputLauncherName.Text = item.Name;
 
-			this.inputLauncherCommand.DataSource = null;
+			//this.inputLauncherCommand.DataSource = null;
 			if(item.LauncherType == LauncherType.Embedded) {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
 				var displayValueList = _applicationSetting.Items
