@@ -801,5 +801,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties {
                 return ResourceManager.GetString("SQL_GetNoteItemList", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Text_CommandList {
+            get {
+                return ResourceManager.GetString("Text_CommandList", resourceCulture);
+            }
+        }
     }
 }
