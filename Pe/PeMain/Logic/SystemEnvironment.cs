@@ -1,15 +1,7 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/02/05
- * 時刻: 22:59
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Text;
-using Microsoft.Win32;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {

@@ -107,36 +107,10 @@
     <Compile Include="UI\AppbarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\AppbarForm.define.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\AppbarForm.Designer.cs">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AppbarForm.event.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AppbarForm.function.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AppbarForm.initialize.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AppbarForm.property.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AppbarForm.variable.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\AppbarForm.wndProc.cs">
-      <DependentUpon>AppbarForm.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="UI\AppbarFormUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\AppbarForm.resx">

@@ -1,35 +1,26 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/15
- * 時刻: 17:22
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Timers;
-
-using Microsoft.Win32;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.Library.Utility;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Text;
-using ContentTypeTextNet.Pe.Library.Skin;
 using System.ComponentModel;
 using System.Data.SQLite;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using System.Diagnostics;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Timers;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Data.DB;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {

@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/10/13
- * 時刻: 11:33
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-
+﻿
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	public interface IItem { }

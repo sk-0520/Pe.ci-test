@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
@@ -19,7 +13,6 @@ using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.UI;
 using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI

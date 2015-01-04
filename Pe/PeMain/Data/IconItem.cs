@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/11/03
- * 時刻: 20:45
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
