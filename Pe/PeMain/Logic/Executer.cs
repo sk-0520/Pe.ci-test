@@ -129,8 +129,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		private static Process RunCommandItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
-			
-			return RunCommand(launcherItem.Command, commonData);
+
+			return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
 		}
 		
 		/// <summary>
@@ -223,18 +223,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 					throw new NotImplementedException();
 			}
 		}
-		
+
+		public static Process RunCommand(string expandPath, CommonData commonData)
+		{
+			return RunCommand(expandPath, null, commonData);
+		}
+
 		/// <summary>
 		/// コマンド文字列の実行。
 		/// </summary>
 		/// <param name="expandPath">環境変数展開済みコマンド文字列。</param>
 		/// <param name="commonData"></param>
 		/// <returns></returns>
-		public static Process RunCommand(string expandPath, CommonData commonData)
+		public static Process RunCommand(string expandPath, string arguments, CommonData commonData)
 		{
 			string exCommand = expandPath;
-			
-			return Process.Start(exCommand);
+
+			if(string.IsNullOrWhiteSpace(arguments)) {
+				return Process.Start(exCommand);
+			} else {
+				return Process.Start(exCommand, arguments);
+			}
 		}
 		
 		/// <summary>
