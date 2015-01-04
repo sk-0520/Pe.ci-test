@@ -1087,7 +1087,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							this.commandLauncherOptionFilePath,
 							this.commandLauncherOptionDirPath,
 							this.commandLauncherWorkDirPath,
-							this.inputLauncherOption,
+							//this.inputLauncherOption,
 							this.inputLauncherWorkDirPath,
 							this.selectLauncherStdStream,
 							this.selectLauncherAdmin,
