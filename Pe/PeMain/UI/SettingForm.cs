@@ -942,6 +942,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDown;
 				if(item.LauncherType == LauncherType.Command) {
+					/*
 					var commandList = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Text_CommandList
 						.SplitLines()
 						.Select(s => s.Trim())
@@ -950,6 +951,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						.ToArray()
 					;
 					this.inputLauncherCommand.DataSource = commandList;
+					*/
 				}
 
 				this.inputLauncherCommand.Text = item.Command;
