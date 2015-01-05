@@ -2,7 +2,7 @@
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
-	public abstract class ViewModelBase: INotifyPropertyChanged
+	public abstract class BaseViewModel: INotifyPropertyChanged
 	{
 		#region INotifyPropertyChanged
 

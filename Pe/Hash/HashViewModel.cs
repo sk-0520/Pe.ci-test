@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
-	public class HashViewModel: ViewModelBase
+	public class HashViewModel: BaseViewModel
 	{
 		static string ToHashString(byte[] binary)
 		{
