@@ -118,9 +118,6 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="..\Common-Applications\EnvironmentVariable.cs">
-      <Link>IF\EnvironmentVariable.cs</Link>
-    </Compile>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
@@ -181,6 +178,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="sbin\Updater\script.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
