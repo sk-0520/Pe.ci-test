@@ -35,7 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{F9E31A
 	ProjectSection(SolutionItems) = preProject
 		Common-Applications\AssemblyLoader.cs = Common-Applications\AssemblyLoader.cs
 		Common-Applications\BaseViewModel.cs = Common-Applications\BaseViewModel.cs
-		Common-Applications\EnvironmentVariable.cs = Common-Applications\EnvironmentVariable.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dust", "Dust", "{2957E6EA-7E84-43AF-9909-7B3E988E33A9}"

@@ -93,9 +93,6 @@
     <Compile Include="..\Common-Applications\BaseViewModel.cs">
       <Link>BaseViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\Common-Applications\EnvironmentVariable.cs">
-      <Link>EnvironmentVariable.cs</Link>
-    </Compile>
     <Compile Include="CRC32.cs" />
     <Page Include="HashWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

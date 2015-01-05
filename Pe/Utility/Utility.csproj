@@ -85,6 +85,7 @@
     <Compile Include="DBManager.cs" />
     <Compile Include="DialogFilter.cs" />
     <Compile Include="DialogUtility.cs" />
+    <Compile Include="EnvironmentVariable.cs" />
     <Compile Include="FileUtility.cs" />
     <Compile Include="FixedSizedList.cs" />
     <Compile Include="FixedSizedQueue.cs" />
