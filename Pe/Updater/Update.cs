@@ -2,6 +2,8 @@
 #define NOT_EXPAND
 
 using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -11,6 +13,7 @@ using System.Reflection;
 using System.Threading;
 using System.Xml.Linq;
 using ContentTypeTextNet.Pe.Library.Utility;
+using Microsoft.CSharp;
 
 namespace ContentTypeTextNet.Pe.Applications.Updater
 {
@@ -28,7 +31,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// </summary>
 	public class Update
 	{
-		const string scriptFileName = "script.cs";
+		const string scriptFileName = "UpdaterScript.cs";
 
 		private CommandLine _commandLine;
 		
@@ -235,10 +238,12 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			// 自身の名前を切り替え
 			var myPath = Assembly.GetEntryAssembly().Location;
 			var myDir = Path.GetDirectoryName(myPath);
+#if !NOT_EXPAND
 			var renamePath = Path.ChangeExtension(myPath, "update-old");
 			if(File.Exists(renamePath)) {
 				File.Delete(renamePath);
 			}
+#endif
 			try {
 #if !NOT_EXPAND
 				Console.WriteLine("Rename -> {0} => {1}", myPath, renamePath);
@@ -257,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				}
 #endif
 				// スクリプト実行
-				ExecuteScript(Path.Combine(myDir, scriptFileName));
+				ExecuteScript(Path.Combine(myDir, scriptFileName), this._expandDir.Data);
 
 				if(isRestart) {
 					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);
@@ -267,20 +272,33 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 					WaitSkip = true;
 				}
 			} catch(Exception) {
+#if !NOT_EXPAND
 				File.Move(renamePath, myPath);
+#endif
 				throw;
 			}
 		}
 
-		void ExecuteScript(string path)
+		void ExecuteScript(string scriptFilePath, string baseDirectoryPath)
 		{
-			if(!File.Exists(path)) {
+			if(!File.Exists(scriptFilePath)) {
 				Console.WriteLine("not found script file");
 				return;
 			}
 
-			ChangeTempColor(string.Format("Execute Script: {0}", path), ConsoleColor.Black, ConsoleColor.Cyan);
+			ChangeTempColor(string.Format("Execute Script: {0}", scriptFilePath), ConsoleColor.Black, ConsoleColor.Cyan);
 
+			using(var compiler= new CSharpCodeProvider(new Dictionary<string, string>() { 
+				{"CompilerVersion", "v4.0" } 
+			})) {
+				var parameters = new CompilerParameters();
+				parameters.GenerateExecutable = false;
+				parameters.GenerateInMemory = true;
+
+				var cr = compiler.CompileAssemblyFromFile(parameters, scriptFilePath);
+				var us = cr.CompiledAssembly.CreateInstance("UpdaterScript");
+				us.GetType().GetMethod("Main").Invoke(us, new object [] { new string[] { scriptFilePath, baseDirectoryPath }});
+			}
 		}
 	}
 }
