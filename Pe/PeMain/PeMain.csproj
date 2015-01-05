@@ -178,9 +178,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Content Include="sbin\Updater\UpdaterScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

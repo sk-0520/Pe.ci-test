@@ -262,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				}
 #endif
 				// スクリプト実行
-				ExecuteScript(Path.Combine(myDir, scriptFileName), this._expandDir.Data);
+				ExecuteScript(Path.Combine(myDir, scriptFileName), this._expandDir.Data, this._platform.Data);
 
 				if(isRestart) {
 					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);
@@ -279,14 +279,14 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			}
 		}
 
-		void ExecuteScript(string scriptFilePath, string baseDirectoryPath)
+		void ExecuteScript(string scriptFilePath, string baseDirectoryPath, string platform)
 		{
 			if(!File.Exists(scriptFilePath)) {
 				Console.WriteLine("not found script file");
 				return;
 			}
 
-			ChangeTempColor(string.Format("Execute Script: {0}", scriptFilePath), ConsoleColor.Black, ConsoleColor.Cyan);
+			ChangeTempColor(string.Format("Execute Script: {0}", scriptFilePath), ConsoleColor.Cyan, ConsoleColor.Black);
 
 			using(var compiler= new CSharpCodeProvider(new Dictionary<string, string>() { 
 				{"CompilerVersion", "v4.0" } 
@@ -294,10 +294,34 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				var parameters = new CompilerParameters();
 				parameters.GenerateExecutable = false;
 				parameters.GenerateInMemory = true;
+				parameters.IncludeDebugInformation = true;
+				parameters.TreatWarningsAsErrors = true;
+				parameters.WarningLevel = 4;
 
 				var cr = compiler.CompileAssemblyFromFile(parameters, scriptFilePath);
+				var indent = "    ";
+#if DEBUG
+				if(cr.Output.Count > 0) {
+					ChangeTempColor("Output:", ConsoleColor.DarkGreen, ConsoleColor.Black);
+					foreach(var output in cr.Output) {
+						ChangeTempColor(indent + output.ToString(), ConsoleColor.DarkGreen, ConsoleColor.Black);
+					}
+				}
+#endif
+				if(cr.Errors.Count > 0) {
+					ChangeTempColor("Error:", ConsoleColor.DarkRed, ConsoleColor.Black);
+					foreach(var error in cr.Errors) {
+						ChangeTempColor(indent + error.ToString(), ConsoleColor.DarkRed, ConsoleColor.Black);
+					}
+					throw new UpdaterException(UpdaterCode.ScriptCompile);
+				}
+
 				var us = cr.CompiledAssembly.CreateInstance("UpdaterScript");
-				us.GetType().GetMethod("Main").Invoke(us, new object [] { new string[] { scriptFilePath, baseDirectoryPath }});
+				us.GetType().GetMethod("Main").Invoke(us, new object [] { new [] { 
+					scriptFilePath,
+					baseDirectoryPath,
+					platform
+				}});
 			}
 		}
 	}
