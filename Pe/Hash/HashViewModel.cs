@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
-	public class HashViewModel: BaseViewModel
+	public class HashViewModel: AbstractViewModel
 	{
 		static string ToHashString(byte[] binary)
 		{
@@ -54,7 +54,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.EventName = value;
-				OnPropertyChanged("EventName");
+				OnPropertyChanged();
 
 				if(!string.IsNullOrWhiteSpace(EventName)) {
 					// イベント取得
@@ -62,7 +62,6 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 					Task.Factory.StartNew(() => {
 						if(this._waitEvent.WaitOne(Timeout.Infinite, true)) {
 							ForceExit = true;
-							Debug.WriteLine("asdfghjkl.;");
 						}
 					});
 				}
@@ -81,7 +80,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				Computed = false;
 
 				this._model.FilePath = value;
-				OnPropertyChanged("FilePath");
+				OnPropertyChanged();
 
 				if(File.Exists(this._model.FilePath)) {
 					SHA1 = string.Empty;
@@ -117,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.HashType = value;
-				OnPropertyChanged("HashType");
+				OnPropertyChanged();
 				CheckHash();
 			}
 		}
@@ -132,7 +131,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.SHA1 = value;
-				OnPropertyChanged("SHA1");
+				OnPropertyChanged();
 			}
 		}
 
@@ -146,7 +145,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.MD5 = value;
-				OnPropertyChanged("MD5");
+				OnPropertyChanged();
 			}
 		}
 
@@ -160,7 +159,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.CRC32 = value;
-				OnPropertyChanged("CRC32");
+				OnPropertyChanged();
 			}
 		}
 
@@ -174,7 +173,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.Compare = value;
-				OnPropertyChanged("Compare");
+				OnPropertyChanged();
 				CheckHash();
 			}
 		}
@@ -191,7 +190,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._backgrond = value;
-				OnPropertyChanged("Backgrond");
+				OnPropertyChanged();
 			}
 		}
 

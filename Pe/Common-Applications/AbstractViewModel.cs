@@ -3,7 +3,7 @@
 	using System.ComponentModel;
 	using System.Runtime.CompilerServices;
 
-	public abstract class BaseViewModel: INotifyPropertyChanged
+	public abstract class AbstractViewModel: INotifyPropertyChanged
 	{
 		#region INotifyPropertyChanged
 		/// <summary>
