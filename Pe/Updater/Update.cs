@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define NOT_DOWNLOAD
+#define NOT_EXPAND
+
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -25,6 +28,8 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// </summary>
 	public class Update
 	{
+		const string scriptFileName = "script.cs";
+
 		private CommandLine _commandLine;
 		
 		Value<int> _pid = new Value<int>();
@@ -58,9 +63,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			
 			Set("pid", this._pid);
 			Set("version", this._version, (value, s) => {
-			    	var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
-			    	value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
-			    });
+				//var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
+				//value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
+				value.Data = Functions.ConvertVersionTuple(s);
+			});
 			Set("uri", this._uri);
 			Set("download", this._downloadDir);
 			Set("expand", this._expandDir);
@@ -70,6 +76,17 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			Set("wait", this._wait);
 			Set("no-wait-update", this._noWaitUpdate);
 			Set("event", this._eventName);
+		}
+
+		void OutputErrorMessage(string s)
+		{
+			ChangeTempColor(s, ConsoleColor.Black, ConsoleColor.Red);
+		}
+
+		void OutputErrorMessage(Exception ex)
+		{
+			ChangeTempColor(ex.Message, ConsoleColor.Black, ConsoleColor.Red);
+			ChangeTempColor(ex.StackTrace, ConsoleColor.Black, ConsoleColor.DarkRed);
 		}
 		
 		void Set<T>(string key, Value<T> value)
@@ -82,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						value.HasValue = true;
 					}
 				} catch(Exception ex) {
-					Console.WriteLine(ex);
+					OutputErrorMessage(ex);
 				}
 			}
 		}
@@ -97,7 +114,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						value.HasValue = true;
 					}
 				} catch(Exception ex) {
-					Console.WriteLine(ex);
+					OutputErrorMessage(ex);
 				}
 			}
 		}
@@ -196,6 +213,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			}
 
 			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
+#if !NOT_DOWNLOAD
 			using(var web = new WebClient()) {
 				Console.WriteLine("Download = {0} -> {1}", DownloadFileUrl, downloadPath);
 				var downloadSw = new Stopwatch();
@@ -204,7 +222,8 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				downloadSw.Stop();
 				Console.WriteLine("Download -> Size: {0} byte, Time = {1}", (new FileInfo(downloadPath)).Length, downloadSw.Elapsed);
 			}
-			
+#endif
+
 			if(process != null) {
 				isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
 				if(isRestart && !process.HasExited) {
@@ -215,11 +234,13 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			
 			// 自身の名前を切り替え
 			var myPath = Assembly.GetEntryAssembly().Location;
+			var myDir = Path.GetDirectoryName(myPath);
 			var renamePath = Path.ChangeExtension(myPath, "update-old");
 			if(File.Exists(renamePath)) {
 				File.Delete(renamePath);
 			}
 			try {
+#if !NOT_EXPAND
 				Console.WriteLine("Rename -> {0} => {1}", myPath, renamePath);
 				File.Move(myPath, renamePath);
 				// 置き換え開始
@@ -234,6 +255,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						entry.ExtractToFile(expandPath, true);
 					}
 				}
+#endif
+				// スクリプト実行
+				ExecuteScript(Path.Combine(myDir, scriptFileName));
+
 				if(isRestart) {
 					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);
 					Process.Start(restartExe, restartArg);
@@ -245,6 +270,17 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				File.Move(renamePath, myPath);
 				throw;
 			}
+		}
+
+		void ExecuteScript(string path)
+		{
+			if(!File.Exists(path)) {
+				Console.WriteLine("not found script file");
+				return;
+			}
+
+			ChangeTempColor(string.Format("Execute Script: {0}", path), ConsoleColor.Black, ConsoleColor.Cyan);
+
 		}
 	}
 }
