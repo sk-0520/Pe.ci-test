@@ -1,13 +1,61 @@
-﻿using System;
-using System.IO;
+﻿/*-*/using System;
+/*-*/using System.IO;
+/*-*/using System.Data;
+/*-*/using System.Linq;
 
 public class UpdaterScript
 {
+	void ChangeTemporaryColor(string s, ConsoleColor fore, ConsoleColor back)
+	{
+		var tempFore = Console.ForegroundColor;
+		var tempBack = Console.BackgroundColor;
+
+		Console.ForegroundColor = fore;
+		Console.BackgroundColor = back;
+		Console.WriteLine(s);
+
+		Console.ForegroundColor = tempFore;
+		Console.BackgroundColor = tempBack;
+	}
+
 	void RemoveFiles(string baseDirectoryPath, string platform)
 	{
-		var targets = new[] {
-			""
+		var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\": @"x86\";
+		var targets = new [] {
+			@"PeUpdater.exe",
+			@"PeUpdater.exe.config",
+			@"PeUpdater.update-old",
+			@"Interop.IWshRuntimeLibrary.dll",
+			@"Library.dll",
+			@"PInvoke.dll",
+			@"PeSkin.dll",
+			@"PeUtility.dll",
+			@"PeUtility.dll.config",
+			@"bin\PeUpdater.update-old",
+			@"bin\PeUpdater.exe",
+			@"doc\changelog.xsl",
+			notPlatformDir,
 		};
+		var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
+		foreach(var targetPath in tagetPathList) {
+			var found = false;
+			var isDir = targetPath.Last() == Path.DirectorySeparatorChar;
+			var fileOrDir = isDir ? 'D' : 'F';
+			try {
+				if(isDir) {
+					if(Directory.Exists(targetPath)) {
+						found = true;
+						Directory.Delete(targetPath, true);
+					}
+				} else if(File.Exists(targetPath)) {
+					found = true;
+					File.Delete(targetPath);
+				}
+				Console.WriteLine("DEL:{0}: {1}, FOUND = {2}", fileOrDir, targetPath, found);
+			} catch(Exception ex) {
+				Console.WriteLine("ERR:{0}: {1}, {2}", fileOrDir, targetPath, ex);
+			}
+		}
 	}
 
 	public void Main(string[] args)
@@ -32,12 +80,10 @@ public class UpdaterScript
 			RemoveFiles(baseDirectoryPath, platform);
 
 		} catch(Exception ex) {
-			Console.ForegroundColor = ConsoleColor.Magenta;
-			Console.WriteLine("<<UpdaterScript: ERROR>>");
+			ChangeTemporaryColor("<<UpdaterScript: ERROR>>", ConsoleColor.Magenta, prevBack);
 			Console.WriteLine(ex);
 		}
 
-		Console.ForegroundColor = ConsoleColor.Cyan;
 		Console.WriteLine("<<UpdaterScript: END>>");
 		Console.ForegroundColor = prevFore;
 		Console.BackgroundColor = prevBack;
