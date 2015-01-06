@@ -51,11 +51,6 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// 	<term>no-wait-update</term>
 	/// 	<description>アップデート成功後にキー待ちでも待たない。</description>
 	/// </item>
-	/// <item>
-	/// 	<term>script</term>
-	/// 	<description>アップデート実行時に処理を行うスクリプト名。</description>
-	/// </item>
-	/// </list>
 	class Updater
 	{
 		public static void Main(string[] args)
