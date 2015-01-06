@@ -13,6 +13,7 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		[TestCase("a", "a", "b")]
 		[TestCase("a(2)", "a", "a")]
 		[TestCase("A", "A", "A(2)")]
+		[TestCase("a(3)", "a", "a(5)", "a(2)", "a(4)", "a")]
 		public void ToUniqueDefault(string result, string src, params string[] list)
 		{
 			Assert.IsTrue(TextUtility.ToUniqueDefault(src, list) == result);
