@@ -7,6 +7,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	{
 		Unknown,
 		NotFoundArgument,
+		ScriptCompile,
 	}
 	/// <summary>
 	/// Desctiption of PeUpdaterException.

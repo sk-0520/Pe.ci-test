@@ -118,9 +118,6 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="..\Common-Applications\EnvironmentVariable.cs">
-      <Link>IF\EnvironmentVariable.cs</Link>
-    </Compile>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
