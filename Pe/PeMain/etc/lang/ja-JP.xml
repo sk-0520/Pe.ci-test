@@ -156,7 +156,7 @@
 		<Word Name="home/launcher/dialog/found/caption"    Text="登録処理が完了しました。" />
 		<Word Name="home/launcher/dialog/found/message"    Text="登録処理が完了しました。" />
 		<Word Name="home/command/launcher"  Text="ランチャーアイテム自動登録" />
-		<Word Name="home/label/launcher"    Text="使用環境から自動的にランチャーアイテムを構築します&#x0d;&#x0a;※実装中機能になります。" />
+		<Word Name="home/label/launcher"    Text="使用環境から自動的にランチャーアイテムを構築します。&#x0d;&#x0a;※実装中機能になります。" />
 		<Word Name="home/command/notify"  Text="${tasktray}設定" />
 		<Word Name="home/label/notify"    Text="${tasktray}の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
 		<Word Name="home/command/startup" Text="スタートアップ登録" />
