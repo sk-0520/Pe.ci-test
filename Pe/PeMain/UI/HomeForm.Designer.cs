@@ -53,7 +53,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.commandClose.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.commandClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.commandClose.Location = new System.Drawing.Point(602, 308);
+			this.commandClose.Location = new System.Drawing.Point(602, 334);
 			this.commandClose.Margin = new System.Windows.Forms.Padding(4);
 			this.commandClose.Name = "commandClose";
 			this.commandClose.Size = new System.Drawing.Size(127, 39);
@@ -76,11 +76,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelHome.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelHome.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
 			this.panelHome.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-			this.panelHome.Size = new System.Drawing.Size(733, 351);
+			this.panelHome.Size = new System.Drawing.Size(733, 377);
 			this.panelHome.TabIndex = 2;
 			// 
 			// panelCommand
 			// 
+			this.panelCommand.AutoSize = true;
 			this.panelCommand.ColumnCount = 3;
 			this.panelCommand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
 			this.panelCommand.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
@@ -98,7 +99,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelCommand.RowCount = 2;
 			this.panelCommand.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 220F));
 			this.panelCommand.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelCommand.Size = new System.Drawing.Size(725, 296);
+			this.panelCommand.Size = new System.Drawing.Size(725, 322);
 			this.panelCommand.TabIndex = 1;
 			// 
 			// commandLauncher
@@ -145,34 +146,34 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// labelLauncher
 			// 
-			this.labelLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labelLauncher.AutoSize = true;
 			this.labelLauncher.Location = new System.Drawing.Point(4, 220);
 			this.labelLauncher.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelLauncher.Name = "labelLauncher";
 			this.labelLauncher.Padding = new System.Windows.Forms.Padding(6, 7, 6, 7);
-			this.labelLauncher.Size = new System.Drawing.Size(233, 76);
+			this.labelLauncher.Size = new System.Drawing.Size(182, 33);
 			this.labelLauncher.TabIndex = 1;
 			this.labelLauncher.Text = ":home/label/launcher";
 			// 
 			// labelNotify
 			// 
-			this.labelNotify.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labelNotify.AutoSize = true;
 			this.labelNotify.Location = new System.Drawing.Point(245, 220);
 			this.labelNotify.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelNotify.Name = "labelNotify";
 			this.labelNotify.Padding = new System.Windows.Forms.Padding(6, 7, 6, 7);
-			this.labelNotify.Size = new System.Drawing.Size(233, 76);
+			this.labelNotify.Size = new System.Drawing.Size(160, 33);
 			this.labelNotify.TabIndex = 1;
 			this.labelNotify.Text = ":home/label/notify";
 			// 
 			// labelStartup
 			// 
-			this.labelStartup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labelStartup.AutoSize = true;
 			this.labelStartup.Location = new System.Drawing.Point(486, 220);
 			this.labelStartup.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelStartup.Name = "labelStartup";
 			this.labelStartup.Padding = new System.Windows.Forms.Padding(6, 7, 6, 7);
-			this.labelStartup.Size = new System.Drawing.Size(235, 76);
+			this.labelStartup.Size = new System.Drawing.Size(171, 33);
 			this.labelStartup.TabIndex = 1;
 			this.labelStartup.Text = ":home/label/startup";
 			// 
@@ -180,7 +181,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(733, 351);
+			this.AutoSize = true;
+			this.ClientSize = new System.Drawing.Size(733, 377);
 			this.ControlBox = false;
 			this.Controls.Add(this.panelHome);
 			this.Font = new System.Drawing.Font("Meiryo UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -192,7 +194,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Text = ":window/home";
 			this.Shown += new System.EventHandler(this.HomeForm_Shown);
 			this.panelHome.ResumeLayout(false);
+			this.panelHome.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
+			this.panelCommand.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
