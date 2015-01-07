@@ -170,31 +170,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
 				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
 				//bool isTimeout = false;
-				Task.Factory.StartNew(
-					() => {
-						const int waitMax = Literal.waitCountForGetScreenCount;
-						int waitCount = 0;
+				Task.Factory.StartNew(() => {
+					const int waitMax = Literal.waitCountForGetScreenCount;
+					int waitCount = 0;
 
-						var managedScreenCount = Screen.AllScreens.Count();
-						while(rawScreenCount != managedScreenCount) {
-							//Debug.WriteLine("waitCount" + waitCount);
-							if(waitMax < ++waitCount) {
-								// タイムアウト
-								//isTimeout = true;
-								break;
-							}
-							Thread.Sleep(Literal.screenCountWaitTime);
-							managedScreenCount = Screen.AllScreens.Count();
+					var managedScreenCount = Screen.AllScreens.Count();
+					while(rawScreenCount != managedScreenCount) {
+						//Debug.WriteLine("waitCount" + waitCount);
+						if(waitMax < ++waitCount) {
+							// タイムアウト
+							//isTimeout = true;
+							break;
 						}
+						Thread.Sleep(Literal.screenCountWaitTime);
+						managedScreenCount = Screen.AllScreens.Count();
 					}
-				).ContinueWith(
-					t => {
-						if(changedScreenCount) {
-							ChangedScreenCount();
-						}
-					},
-					TaskScheduler.FromCurrentSynchronizationContext()
-				);
+				}).ContinueWith(t => {
+					if(changedScreenCount) {
+						ChangedScreenCount();
+					}
+				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 		}
 
@@ -222,23 +217,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var time = Literal.clipboardThreadWaitTime.median;
 				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
-			}).ContinueWith(
-				t => {
-					var clipboardItem = new ClipboardItem();
-					if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
-						//this._clipboardPrevTime = DateTime.Now;
-						try {
-							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-							clipboardItem.Name = displayText;
+			}).ContinueWith(t => {
+				var clipboardItem = new ClipboardItem();
+				if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
+					//this._clipboardPrevTime = DateTime.Now;
+					try {
+						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+						clipboardItem.Name = displayText;
 
-							this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
-						} catch(Exception ex) {
-							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-						}
+						this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+					} catch(Exception ex) {
+						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
-				},
-				TaskScheduler.FromCurrentSynchronizationContext()
-			);
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		#endregion //////////////////////////////////////////
@@ -765,21 +757,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 情報
 			itemAbout.Name = menuNameAbout;
 			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
-			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(
-				() => {
-					var checkUpdate = false;
-					using(var dialog = new AboutForm()) {
-						dialog.SetCommonData(this._commonData);
-						dialog.ShowDialog();
-						checkUpdate = dialog.CheckUpdate;
-					}
-					if(checkUpdate) {
-						CheckUpdateProcessWait(true);
-					}
-
-					return null;
+			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
+				var checkUpdate = false;
+				using(var dialog = new AboutForm()) {
+					dialog.SetCommonData(this._commonData);
+					dialog.ShowDialog();
+					checkUpdate = dialog.CheckUpdate;
 				}
-			);
+				if(checkUpdate) {
+					CheckUpdateProcessWait(true);
+				}
+
+				return null;
+			});
 
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
@@ -1489,19 +1479,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void CheckUpdateProcessAsync(bool force)
 		{
-			Task.Factory.StartNew(
-				() => {
-					if(!force) {
-						Thread.Sleep(Literal.updateWaitTime);
-					}
-					return CheckUpdate(force);
+			Task.Factory.StartNew(() => {
+				if(!force) {
+					Thread.Sleep(Literal.updateWaitTime);
 				}
-			).ContinueWith(
-				t => {
-					CheckedUpdate(force, t.Result);
-				},
-				TaskScheduler.FromCurrentSynchronizationContext()
-			);
+				return CheckUpdate(force);
+			}).ContinueWith(t => {
+				CheckedUpdate(force, t.Result);
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		void CheckUpdateProcessWait(bool force)
@@ -1516,30 +1501,28 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <param name="updateData"></param>
 		void ShowUpdateDialog(UpdateData updateData)
 		{
-			PauseOthers(
-				() => {
-					try {
-						using(var dialog = new UpdateForm()) {
-							dialog.UpdateData = updateData;
-							dialog.SetCommonData(this._commonData);
-							if(dialog.ShowDialog() == DialogResult.OK) {
-								// 現在設定を保持する
-								AppUtility.SaveSetting(this._commonData);
-								if(updateData.Execute()) {
-									return () => {
-										CloseApplication(false);
-										return false;
-									};
-								}
+			PauseOthers(() => {
+				try {
+					using(var dialog = new UpdateForm()) {
+						dialog.UpdateData = updateData;
+						dialog.SetCommonData(this._commonData);
+						if(dialog.ShowDialog() == DialogResult.OK) {
+							// 現在設定を保持する
+							AppUtility.SaveSetting(this._commonData);
+							if(updateData.Execute()) {
+								return () => {
+									CloseApplication(false);
+									return false;
+								};
 							}
 						}
-					} catch(Exception ex) {
-						// #96
-						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
-					return null;
+				} catch(Exception ex) {
+					// #96
+					this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 				}
-			);
+				return null;
+			});
 		}
 
 		void ResetLauncherFileList()
@@ -1561,27 +1544,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		public void ShowHomeDialog()
 		{
-			PauseOthers(
-				() => {
-					using(var dialog = new HomeForm()) {
-						dialog.SetCommonData(this._commonData);
-						dialog.ShowDialog();
-						if(dialog.ItemFound) {
-							return () => {
-								// ログがあれば構築
-								if(dialog.LogList.Count != 0) {
-									this._logForm.PutsList(dialog.LogList, true);
-								}
-								// 初期化
-								ResetUI();
-								return true;
-							};
-						} else {
-							return null;
-						}
+			PauseOthers(() => {
+				using(var dialog = new HomeForm()) {
+					dialog.SetCommonData(this._commonData);
+					dialog.ShowDialog();
+					if(dialog.ItemFound) {
+						return () => {
+							// ログがあれば構築
+							if(dialog.LogList.Count != 0) {
+								this._logForm.PutsList(dialog.LogList, true);
+							}
+							// 初期化
+							ResetUI();
+							return true;
+						};
+					} else {
+						return null;
 					}
 				}
-			);
+			});
 		}
 
 		void OpeningNoteMenu()

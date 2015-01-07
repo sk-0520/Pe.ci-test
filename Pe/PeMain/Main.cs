@@ -50,16 +50,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 									app.CloseApplication(false);
 								} else {
 									if(!app.ExistsSettingFilePath) {
-										Task.Factory.StartNew(
-											() => {
-												Thread.Sleep(Literal.startHomeDialogWaitTime);
-											}
-										).ContinueWith(
-											t => {
-												app.ShowHomeDialog();
-											},
-											TaskScheduler.FromCurrentSynchronizationContext()
-										);
+										Task.Factory.StartNew(() => {
+											Thread.Sleep(Literal.startHomeDialogWaitTime);
+										}).ContinueWith(t => {
+											app.ShowHomeDialog();
+										}, TaskScheduler.FromCurrentSynchronizationContext());
 									}
 									Application.Run();
 								}
