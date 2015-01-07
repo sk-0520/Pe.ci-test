@@ -37,7 +37,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region variable
-		List<LogItem> _logs = new List<LogItem>();
+		//List<LogItem> _logs = new List<LogItem>();
+		FixedSizedList<LogItem> _logs = new FixedSizedList<LogItem>(Literal.logListLimit);
 		ImageList _imageLogType = null;
 		FileLogger _fileLogger = null;
 		bool _refresh = false;
@@ -77,9 +78,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			var logItem = new LogItem(logType, title, detail, frame);
 			this._fileLogger.WiteItem(logItem);
+			/*
 			if(this._logs.Count >= Literal.logListLimit) {
 				this._logs.RemoveAt(0);
 			}
+			*/
 			this._logs.Add(logItem);
 			var isCreated = Created;
 

@@ -166,7 +166,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 #if DEBUG
 		public const int backupCount = 3;
-		public const int logListLimit = 20;
+		public const int logListLimit = 5;
 #else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
