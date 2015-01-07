@@ -65,7 +65,7 @@ public class UpdaterScript
 		Console.ForegroundColor = ConsoleColor.Cyan;
 		Console.BackgroundColor = ConsoleColor.Black;
 
-		Console.WriteLine("<<UpdaterScript: START>>");
+		Console.WriteLine("<UpdaterScript: START>");
 		try {
 			if(args.Length != 3) {
 				throw new ArgumentException();
@@ -80,11 +80,11 @@ public class UpdaterScript
 			RemoveFiles(baseDirectoryPath, platform);
 
 		} catch(Exception ex) {
-			ChangeTemporaryColor("<<UpdaterScript: ERROR>>", ConsoleColor.Magenta, prevBack);
+			ChangeTemporaryColor("<UpdaterScript: ERROR>", ConsoleColor.Magenta, prevBack);
 			Console.WriteLine(ex);
 		}
 
-		Console.WriteLine("<<UpdaterScript: END>>");
+		Console.WriteLine("<UpdaterScript: END>");
 		Console.ForegroundColor = prevFore;
 		Console.BackgroundColor = prevBack;
 	}
