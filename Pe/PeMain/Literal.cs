@@ -481,6 +481,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string year04      = "Y:04";
 		public const string month       = "M";
 		public const string month02     = "M:02";
+		public const string monthShortName = "M:S";
+		public const string monthLongName  = "M:L";
 		public const string day         = "D";
 		public const string day02       = "D:02";
 		public const string hour        = "h";

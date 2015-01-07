@@ -111,6 +111,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				{ AppLanguageName.year04,       nowDateTime.Year.ToString("D4") },
 				{ AppLanguageName.month,        nowDateTime.Month.ToString() },
 				{ AppLanguageName.month02,      nowDateTime.Month.ToString("D2") },
+				{ AppLanguageName.monthShortName, nowDateTime.ToString("MMM") },
+				{ AppLanguageName.monthLongName,  nowDateTime.ToString("MMMM") },
 				{ AppLanguageName.day,          nowDateTime.Day.ToString() },
 				{ AppLanguageName.day02,        nowDateTime.Day.ToString("D2") },
 				{ AppLanguageName.hour,         nowDateTime.Hour.ToString() },
