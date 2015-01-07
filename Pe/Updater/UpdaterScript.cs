@@ -2,7 +2,7 @@
 /*-*/using System.IO;
 /*-*/using System.Data;
 /*-*/using System.Linq;
-
+/*
 public class UpdaterScript
 {
 	void ChangeTemporaryColor(string s, ConsoleColor fore, ConsoleColor back)
@@ -89,3 +89,4 @@ public class UpdaterScript
 		Console.BackgroundColor = prevBack;
 	}
 }
+*/
