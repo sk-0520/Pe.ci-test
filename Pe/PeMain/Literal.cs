@@ -469,6 +469,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		HiddenNote,
 		CompactNote,
 		ShowFrontNote,
+		SwitchClipboardShow,
 	}
 	
 	public static class AppLanguageName

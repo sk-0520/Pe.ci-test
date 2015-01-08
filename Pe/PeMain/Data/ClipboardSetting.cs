@@ -165,6 +165,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 			SleepTime = Literal.clipboardSleepTime.median;
 			WaitTime = Literal.clipboardWaitTime.median;
+
+			ToggleHotKeySetting = new HotKeySetting();
 		}
 
 		/// <summary>
@@ -256,5 +258,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
 		}
+
+		HotKeySetting ToggleHotKeySetting { get; set; }
 	}
 }
