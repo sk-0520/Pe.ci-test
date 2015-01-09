@@ -289,7 +289,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}
 
-
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
 			//this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
@@ -440,22 +439,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguageClipboard()
-		{
-			this.labelClipboardLimit.SetLanguage(Language);
-			this.labelClipboardWaitTaime.SetLanguage(Language);
-			this.labelClipboardSleepTime.SetLanguage(Language);
-			this.selectClipboardEnabled.SetLanguage(Language);
-			this.selectClipboardAppEnabled.SetLanguage(Language);
-			this.selectClipboardTopMost.SetLanguage(Language);
-			this.selectClipboardVisible.SetLanguage(Language);
-			this.groupClipboardType.SetLanguage(Language);
-			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
-			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
-			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
-			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
-			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
-		}
+
 		void ApplyLanguageTab()
 		{
 			this.tabSetting_pageMain.SetLanguage(Language);
@@ -602,7 +586,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			
 		}
-		
+
+		void ApplyLanguageClipboard()
+		{
+			this.inputClipboardHotkey.SetLanguage(Language);
+
+			this.labelClipboardLimit.SetLanguage(Language);
+			this.labelClipboardWaitTaime.SetLanguage(Language);
+			this.labelClipboardSleepTime.SetLanguage(Language);
+			this.selectClipboardEnabled.SetLanguage(Language);
+			this.selectClipboardAppEnabled.SetLanguage(Language);
+			this.selectClipboardTopMost.SetLanguage(Language);
+			this.selectClipboardVisible.SetLanguage(Language);
+			this.groupClipboardType.SetLanguage(Language);
+			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
+			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
+			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
+			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
+			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+		}
+
 		void ApplyLanguage()
 		{
 			Debug.Assert(Language != null);
@@ -824,6 +827,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 		}
+
+
 		void ExportClipboardSetting(ClipboardSetting setting)
 		{
 			setting.Limit = (int)this.inputClipboardLimit.Value;
@@ -847,6 +852,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				clipboardType |= type;
 			}
 			setting.EnabledTypes = clipboardType;
+
+			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
 		}
 		#endregion ////////////////////////////////////
 

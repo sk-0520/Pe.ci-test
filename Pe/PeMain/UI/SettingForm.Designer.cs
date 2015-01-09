@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.labelClipboardHotkey = new System.Windows.Forms.Label();
-			this.inputClipboardHotkey = new Hot_Key_Settings.HotKeyControl();
+			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.panelMainOthers.SuspendLayout();
@@ -2408,6 +2408,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelClipboardSleepTime;
 		private System.Windows.Forms.NumericUpDown inputClipboardSleepTime;
 		private System.Windows.Forms.Label labelClipboardHotkey;
-		private Hot_Key_Settings.HotKeyControl inputClipboardHotkey;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputClipboardHotkey;
 	}
 }
