@@ -119,6 +119,7 @@
 		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ${note}${hidden}" />
 		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ${note}最小化" />
 		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ${note}${show-front}" />
+		<Word Name="hotkey/regist/clipboard"       Text="${hotkey}${regist}: ホットキー${show-front}" />
 
 		<Word Name="balloon/hidden-file/title" Text="${hidden-file}" />
 		<Word Name="balloon/hidden-file/show"  Text="${hidden-file}を${show}" />

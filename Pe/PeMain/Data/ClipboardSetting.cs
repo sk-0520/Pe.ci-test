@@ -259,6 +259,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
 		}
 
-		HotKeySetting ToggleHotKeySetting { get; set; }
+		public HotKeySetting ToggleHotKeySetting { get; set; }
 	}
 }
