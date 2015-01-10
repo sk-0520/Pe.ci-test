@@ -388,7 +388,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			var webBrowser = (WebBrowser)sender;
 			var link = webBrowser.StatusText;
 			e.Cancel = true;
-			Executer.RunCommand(link, null);
+			Executor.RunCommand(link, null);
 		}
 
 		/// <summary>

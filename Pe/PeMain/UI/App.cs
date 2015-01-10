@@ -774,7 +774,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
 			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help;
-			itemHelp.Click += (object sender, EventArgs e) => Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
+			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
 			// 終了
 			itemExit.Name = menuNameExit;

@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void OpenDirectory(string path)
 		{
-			Executer.OpenDirectory(path, CommonData, null);
+			Executor.OpenDirectory(path, CommonData, null);
 		}
 
 		#endregion ////////////////////////////////////
@@ -164,7 +164,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			
 			try {
-				Executer.RunCommand(link, CommonData);
+				Executor.RunCommand(link, CommonData);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, link, ex);
 			}
@@ -199,7 +199,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void CommandChangelog_Click(object sender, EventArgs e)
 		{
 			var path = Path.Combine(Literal.ApplicationDocumentDirPath, "changelog.xml");
-			Executer.OpenFile(path, CommonData);
+			Executor.OpenFile(path, CommonData);
 		}
 		
 		void GridComponents_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
@@ -211,7 +211,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					if(0 <= rowIndex && rowIndex < ComponentInfoList.Count) {
 						var componentInfo = ComponentInfoList[rowIndex];
 						var link = componentInfo.URI;
-						Executer.RunCommand(link, CommonData);
+						Executor.RunCommand(link, CommonData);
 						cell.LinkVisited = true;
 					}
 				}

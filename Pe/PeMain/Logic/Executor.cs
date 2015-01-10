@@ -15,7 +15,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 	/// <summary>
 	/// 実行処理共通化。
 	/// </summary>
-	public static class Executer
+	public static class Executor
 	{
 		/// <summary>
 		/// ファイルアイテムの実行。
@@ -177,6 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			applicationExecuteItem.Process.EnableRaisingEvents = true;
 			applicationExecuteItem.Process.Exited += (object sender, EventArgs e) => {
 				commonData.ApplicationSetting.ExecutingItems.Remove(applicationExecuteItem);
+				applicationExecuteItem.ToDispose();
 			};
 
 			return process;
@@ -266,7 +267,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 
-	public static class SystemExecuter
+	public static class SystemExecutor
 	{
 		public static Process RunDLL(string command, CommonData commonData)
 		{

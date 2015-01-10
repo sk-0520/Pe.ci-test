@@ -246,7 +246,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void CommandNotify_Click(object sender, EventArgs e)
 		{
-			SystemExecuter.OpenNotificationAreaHistory(CommonData);
+			SystemExecutor.OpenNotificationAreaHistory(CommonData);
 		}
 		
 		void CommandStartup_Click(object sender, EventArgs e)
