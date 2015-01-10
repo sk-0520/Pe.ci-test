@@ -92,6 +92,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				OnPropertyChanged();
 
 				if(File.Exists(this._model.FilePath)) {
+
 					SHA1 = string.Empty;
 					MD5 = string.Empty;
 					CRC32 = string.Empty;
@@ -120,28 +121,30 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 					int binaryLength = binary.Length;
 
 					hashList.AsParallel().ForAll(hashItem => {
+						//foreach(var hashItem in hashList) {
 						//var b = hash.ComputeHash(binary);
 						decimal doneSize = 0;
 						int percent = 0;
-
-						for(int offset = 0; offset < binaryLength; offset += blockSize) {
-							if(offset + blockSize < binaryLength) {
-								hashItem.Hash.TransformBlock(binary, offset, blockSize, null, 0);
-								doneSize = offset + blockSize;
-							} else {
-								hashItem.Hash.TransformFinalBlock(binary, offset, binaryLength - offset);
-								doneSize = binaryLength;
+						Task.Factory.StartNew(() => {
+							for(int offset = 0; offset < binaryLength; offset += blockSize) {
+								if(offset + blockSize < binaryLength) {
+									hashItem.Hash.TransformBlock(binary, offset, blockSize, null, 0);
+									doneSize = offset + blockSize;
+								} else {
+									hashItem.Hash.TransformFinalBlock(binary, offset, binaryLength - offset);
+									doneSize = binaryLength;
+								}
+								if(percent != doneSize * 100 / binaryLength) {
+									percent = (int)(doneSize * 100 / binaryLength);
+									hashItem.Percent(percent);
+									//Debug.WriteLine("{0}, {1}", DateTime.Now.ToLongTimeString(), percent);
+								}
 							}
-							if(percent != doneSize * 100 / binaryLength) {
-								percent = (int)(doneSize * 100 / binaryLength);
-								hashItem.Percent(percent);
-							}
-						}
-
-						var text = ToHashString(hashItem.Hash.Hash);
-						hashItem.Result(text);
+							var text = ToHashString(hashItem.Hash.Hash);
+							hashItem.Result(text);
+						});
 					});
-
+					//}
 					Computed = true;
 				}
 				CheckHash();
