@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -69,6 +70,13 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
+		class SetHashProgress
+		{
+			public HashAlgorithm Hash { get; set; }
+			public Action<decimal> Percent { get; set; }
+			public Action<string> Result { get; set; }
+		}
+
 		public string FilePath
 		{
 			get { return this._model.FilePath; }
@@ -88,41 +96,51 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 					MD5 = string.Empty;
 					CRC32 = string.Empty;
 
-					var map = new Dictionary<HashAlgorithm, Action<byte[]>>() {
-						{ new SHA1CryptoServiceProvider(), b => SHA1 = ToHashString(b) },
-						{ new MD5CryptoServiceProvider(), b => MD5 = ToHashString(b) },
-						{ new CRC32(), b => CRC32 = ToHashString(b) },
+					var hashList = new[] {
+						new SetHashProgress() {
+							Hash = new SHA1CryptoServiceProvider(),
+							Percent = p => PercentSHA1 = p,
+							Result = r => SHA1 = r,
+						},
+						new SetHashProgress() {
+							Hash = new MD5CryptoServiceProvider(),
+							Percent = p => PercentMD5 = p,
+							Result = r => MD5 = r,
+						},
+						new SetHashProgress() {
+							Hash = new CRC32(),
+							Percent = p => PercentCRC32 = p,
+							Result = r => CRC32 = r,
+						},
 					};
 
 					var binary = FileUtility.ToBinary(this._model.FilePath);
 
-					int blockSize = 1024 * 4;
+					int blockSize = 1024 * 1;
 					int binaryLength = binary.Length;
 
-					foreach(var pair in map) {
-						var hash = pair.Key;
+					hashList.AsParallel().ForAll(hashItem => {
 						//var b = hash.ComputeHash(binary);
 						decimal doneSize = 0;
 						int percent = 0;
 
 						for(int offset = 0; offset < binaryLength; offset += blockSize) {
 							if(offset + blockSize < binaryLength) {
-								hash.TransformBlock(
-								  binary, offset, blockSize, null, 0);
+								hashItem.Hash.TransformBlock(binary, offset, blockSize, null, 0);
 								doneSize = offset + blockSize;
 							} else {
-								hash.TransformFinalBlock(
-								  binary, offset, binaryLength - offset);
+								hashItem.Hash.TransformFinalBlock(binary, offset, binaryLength - offset);
 								doneSize = binaryLength;
 							}
 							if(percent != doneSize * 100 / binaryLength) {
 								percent = (int)(doneSize * 100 / binaryLength);
-								Debug.WriteLine(percent);
+								hashItem.Percent(percent);
 							}
 						}
 
-						pair.Value(hash.Hash);
-					}
+						var text = ToHashString(hashItem.Hash.Hash);
+						hashItem.Result(text);
+					});
 
 					Computed = true;
 				}
