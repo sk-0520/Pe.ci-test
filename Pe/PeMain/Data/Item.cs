@@ -20,7 +20,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// <summary>
 	/// 解放が必要なアイテムの基底。
 	/// </summary>
-	public abstract class DisposableItem: ICorrectionItem
+	public abstract class DisposableItem: ICorrectionItem, IDisposable
 	{
 		protected DisposableItem()
 		{

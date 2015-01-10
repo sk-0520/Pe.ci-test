@@ -177,6 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			applicationExecuteItem.Process.EnableRaisingEvents = true;
 			applicationExecuteItem.Process.Exited += (object sender, EventArgs e) => {
 				commonData.ApplicationSetting.ExecutingItems.Remove(applicationExecuteItem);
+				applicationExecuteItem.ToDispose();
 			};
 
 			return process;
