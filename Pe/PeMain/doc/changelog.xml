@@ -38,6 +38,7 @@
 			<li rev="e234d1c035cc4e9a421397e78c26f53b689eb44a">#134: アップデート実行時にスクリプト実行</li>
 			<li rev="62ba9830a6afdd7986bd6ffa5cf530721fb7d340">#139: クリップボードウィンドウのホットキー</li>
 			<li rev="452b69ff948c0a46297cc80a1e1d765fccd6137c">#140: 組み込みアイテムの一覧</li>
+			<li rev="db83e73bc16fd58a54137b0e9db8b3ebb3b563e5">#142: Hash機能強化</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
