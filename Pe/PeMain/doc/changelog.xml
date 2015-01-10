@@ -27,14 +27,14 @@
 	-->
 	<log date="YYYY/MM/DD" version="0.38.2" type="rc">
 		<ul type="note">
-			<li rev="">本バージョンからアップデートチェックに使用するアドレスが変更となります。アドレスについての詳細はオンラインヘルプを参照してください</li>
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="">本バージョンからアップデートチェックに使用するアドレスが変更となります</li>
+			<li rev="">XML -&gt; http://content-type-text.net/document/software/pe-update/update.xml</li>
+			<li rev="">詳細はオンラインヘルプを参照してください</li>
 		</ul>
 		<ul type="features">
 			<li rev="7e5149cbb741c03214f9b5d1a95fd240921c0ba4">#104: アップデート定義ファイルをリポジトリから外す</li>
 			<li rev="9e6e24366567961f56a3e4de03ade9acfae8ee5c">#135: コマンド(URI)アイテムに対する引数</li>
-			<li rev="782040d7832c3bf0f3faf40d0c14dd0300e73e41">コマンドアイテム設定時にプルダウンに環境変数PATHの実行ファイルをリストアップする</li>
+			<li rev="782040d7832c3bf0f3faf40d0c14dd0300e73e41">コマンドアイテム設定時、プルダウンに環境変数PATHの実行ファイルをリストアップする</li>
 			<li rev="e234d1c035cc4e9a421397e78c26f53b689eb44a">#134: アップデート実行時にスクリプト実行</li>
 			<li rev="62ba9830a6afdd7986bd6ffa5cf530721fb7d340">#139: クリップボードウィンドウのホットキー</li>
 			<li rev="452b69ff948c0a46297cc80a1e1d765fccd6137c">#140: 組み込みアイテムの一覧</li>
