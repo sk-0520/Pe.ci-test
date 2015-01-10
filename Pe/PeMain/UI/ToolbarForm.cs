@@ -772,7 +772,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
-				Executer.OpenDirectory(expandPath, CommonData, null);
+				Executor.OpenDirectory(expandPath, CommonData, null);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
@@ -786,7 +786,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void OpenProperty(string path)
 		{
 			var expandPath = Environment.ExpandEnvironmentVariables(path);
-			Executer.OpenProperty(expandPath, Handle);
+			Executor.OpenProperty(expandPath, Handle);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
@@ -880,9 +880,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
 					if(File.Exists(path)) {
-						Executer.OpenFile(path, CommonData);
+						Executor.OpenFile(path, CommonData);
 					} else {
-						Executer.OpenDirectory(path, CommonData, null);
+						Executor.OpenDirectory(path, CommonData, null);
 					}
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
@@ -1216,7 +1216,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			helpItem.Click += (object sender, EventArgs e) => {
 				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
 				try {
-					Executer.RunCommand(applicationItem.HelpPath, CommonData);
+					Executor.RunCommand(applicationItem.HelpPath, CommonData);
 				} catch(Exception ex) {
 					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, applicationItem.HelpPath);
@@ -1425,7 +1425,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
-				Executer.RunItem(launcherItem, CommonData);
+				Executor.RunItem(launcherItem, CommonData);
 				launcherItem.Increment(null, null);
 				return true;
 			} catch(Exception ex) {

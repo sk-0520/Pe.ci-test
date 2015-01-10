@@ -150,7 +150,7 @@
     <Compile Include="Logic\DB\NoteDB.cs" />
     <Compile Include="Logic\DrawUtility.cs" />
     <Compile Include="Logic\EnumToText.cs" />
-    <Compile Include="Logic\Executer.cs" />
+    <Compile Include="Logic\Executor.cs" />
     <Compile Include="Logic\FileLogger.cs" />
     <Compile Include="Logic\AppInformation.cs" />
     <Compile Include="Logic\LanguageUtility.cs" />
