@@ -83,6 +83,7 @@
 		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
+		<Word Name="main/menu/applications"                 Text="組み込みアイテム(&amp;E)" />
 		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />

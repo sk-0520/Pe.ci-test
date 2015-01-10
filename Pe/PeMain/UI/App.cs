@@ -41,6 +41,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string menuNameWindowToolbar = "menu_window_toolbar";
 		const string menuNameWindowNote = "menu_window_note";
 		const string menuNameWindowLogger = "menu_window_logger";
+		const string menuNameApplications = "menu_applications";
 
 		const string menuNameWindowNoteCreate = "menu_window_note_create";
 		const string menuNameWindowNoteHidden = "menu_window_note_hidden";
@@ -609,6 +610,49 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 
+		void AttachmentApplicationsSubMenu(ToolStripMenuItem parentItem)
+		{
+			var menuList = new List<ToolStripItem>();
+			foreach(var applicationItem in this._commonData.ApplicationSetting.Items) {
+				var launcherItem = new LauncherItem();
+				launcherItem.Name = applicationItem.Name;
+				launcherItem.Command = applicationItem.Name;
+				launcherItem.LauncherType = LauncherType.Embedded;
+
+				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
+
+				var menuItem = new ToolStripMenuItem();
+
+				menuItem.Tag = applicationItem;
+				menuItem.Image = IconUtility.ImageFromIcon(icon, IconScale.Small);
+
+				menuItem.Click += (object sender, EventArgs e) => {
+					if(this._commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
+						this._commonData.ApplicationSetting.KillApplicationItem(launcherItem);
+					} else {
+						Executor.RunItem(launcherItem, this._commonData);
+					}
+				};
+
+				menuList.Add(menuItem);
+			}
+
+			parentItem.DropDownItems.AddRange(menuList.ToArray());
+
+			parentItem.Name = menuNameApplications;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
+
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
+				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+				foreach(var menuItem in menuItems.Where(m => m is ToolStripMenuItem).Cast<ToolStripMenuItem>()) {
+					var applicationItem = menuItem.Tag as ApplicationItem;
+					if(applicationItem != null) {
+						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
+					}
+				}
+			};
+		}
+
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
 		{
 			var menuList = new List<ToolStripItem>();
@@ -709,6 +753,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//var itemWindow = new MenuItem();
 			var itemToolbar = new ToolStripMenuItem();
 			var itemNote = new ToolStripMenuItem();
+			var itemApplications = new ToolStripMenuItem();
 			var itemLogger = new ToolStripMenuItem();
 			var itemSystemEnv = new ToolStripMenuItem();
 			var itemSetting = new ToolStripMenuItem();
@@ -720,6 +765,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemToolbar);
 			menuList.Add(itemNote);
+			menuList.Add(itemApplications);
 			menuList.Add(itemLogger);
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemSystemEnv);
@@ -736,6 +782,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			AttachmentNoteSubMenu(itemNote);
 
+			AttachmentApplicationsSubMenu(itemApplications);
+			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log;
@@ -1045,12 +1093,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageSystemEnvWindowMenu(itemWindow);
 		}
 
+		void ApplyLanguageApplicationsMenu(ToolStripDropDownItem parentItem)
+		{
+			var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+			foreach(var menuItem in menuItems) {
+				var applicationItem = menuItem.Tag as ApplicationItem;
+				if(applicationItem != null) {
+					menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
+				}
+			}
+		}
+
 		void ApplyLanguageMainMenu()
 		{
 			var rootMenu = this._contextMenu.Items;
 
 			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
 			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			rootMenu[menuNameApplications].Text = this._commonData.Language["main/menu/applications"];
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];
 
@@ -1059,6 +1119,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			var systemEnvMenu = (ToolStripDropDownItem)rootMenu[menuNameSystemEnv];
 			ApplyLanguageSystemEnvMenu(systemEnvMenu);
+
+			var applicationsMenu = (ToolStripDropDownItem)rootMenu[menuNameApplications];
+			ApplyLanguageApplicationsMenu(applicationsMenu);
 
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
