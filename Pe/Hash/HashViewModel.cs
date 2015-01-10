@@ -285,7 +285,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 
 		void CheckHash()
 		{
-			if(Computed) {
+			if(Computed && !string.IsNullOrWhiteSpace(Compare)) {
 				var map = new Dictionary<HashType, string>() {
 						{ HashType.SHA1, SHA1 },
 						{ HashType.MD5, MD5 },

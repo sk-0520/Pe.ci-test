@@ -12,7 +12,7 @@
 			<ColumnDefinition Width="299*"/>
 		</Grid.ColumnDefinitions>
 		<Button Content="File" Margin="10,10,10,0" VerticalAlignment="Top" Click="Button_Click" />
-		<TextBox Height="23" Margin="10,11,10,0" TextWrapping="Wrap" Text="{Binding FilePath}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True"/>
+		<TextBox Height="23" Margin="10,11,10,0" TextWrapping="Wrap" Text="{Binding FilePath}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True" />
 		<Separator Height="5" Margin="0,41,0
 				   ,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.289" Grid.ColumnSpan="2">
 			<Separator.RenderTransform>
