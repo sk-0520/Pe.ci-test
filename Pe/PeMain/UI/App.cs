@@ -76,7 +76,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 		
 		private WindowListItem _tempWindowListItem;
-		List<WindowListItem> _windowListItems = new List<WindowListItem>();
+		FixedSizedList<WindowListItem> _windowListItems; //= new List<WindowListItem>();
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
 		
 		System.Timers.Timer _windowTimer;
@@ -323,7 +323,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
-
+		void InitializeWindowList(CommandLine commandLine, StartupLogger logger)
+		{
+			this._windowListItems = new FixedSizedList<WindowListItem>(this._commonData.MainSetting.WindowSaveCount);
+		}
 		/// <summary>
 		/// NOTE: 将来的な予約
 		/// </summary>
@@ -948,6 +951,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeCommandForm(commandLine, logger);
 			InitializeToolbarForm(commandLine, logger);
 			InitializeNoteForm(commandLine, logger);
+			InitializeWindowList(commandLine, logger);
 
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui/end"], string.Empty);
 		}
@@ -1812,9 +1816,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		public void PushWindowListItem(WindowListItem windowListItem)
 		{
+			/*
 			if(this._commonData.MainSetting.WindowSaveCount <= this._windowListItems.Count) {
 				this._windowListItems.RemoveRange(0, this._windowListItems.Count - this._commonData.MainSetting.WindowSaveCount + 1);
 			}
+			*/
 			this._windowListItems.Add(windowListItem);
 		}
 
