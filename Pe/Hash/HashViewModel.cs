@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
@@ -93,11 +94,34 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 						{ new CRC32(), b => CRC32 = ToHashString(b) },
 					};
 
-					var binary = File.ReadAllBytes(this._model.FilePath);
+					var binary = FileUtility.ToBinary(this._model.FilePath);
+
+					int blockSize = 1024 * 4;
+					int binaryLength = binary.Length;
+
 					foreach(var pair in map) {
 						var hash = pair.Key;
-						var b = hash.ComputeHash(binary);
-						pair.Value(b);
+						//var b = hash.ComputeHash(binary);
+						decimal doneSize = 0;
+						int percent = 0;
+
+						for(int offset = 0; offset < binaryLength; offset += blockSize) {
+							if(offset + blockSize < binaryLength) {
+								hash.TransformBlock(
+								  binary, offset, blockSize, null, 0);
+								doneSize = offset + blockSize;
+							} else {
+								hash.TransformFinalBlock(
+								  binary, offset, binaryLength - offset);
+								doneSize = binaryLength;
+							}
+							if(percent != doneSize * 100 / binaryLength) {
+								percent = (int)(doneSize * 100 / binaryLength);
+								Debug.WriteLine(percent);
+							}
+						}
+
+						pair.Value(hash.Hash);
 					}
 
 					Computed = true;
@@ -163,7 +187,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
-		public int PercentSHA1
+		public decimal PercentSHA1
 		{
 			get { return this._model.PercentSHA1; }
 			set
@@ -177,7 +201,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
-		public int PercentMD5
+		public decimal PercentMD5
 		{
 			get { return this._model.PercentMD5; }
 			set
@@ -191,7 +215,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
-		public int PercentCRC32
+		public decimal PercentCRC32
 		{
 			get { return this._model.PercentCRC32; }
 			set
