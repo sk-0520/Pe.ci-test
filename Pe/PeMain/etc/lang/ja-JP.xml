@@ -317,7 +317,8 @@
 		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
 		<Word Name="setting/group/clipboard-type"         Text="取り込む種類" />
-		
+		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
+
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
 		<Word Name="about/command/backup"    Text="バックアップ" />

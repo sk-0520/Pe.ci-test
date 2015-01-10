@@ -370,6 +370,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
 			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
 			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
+
+			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
 		}
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
@@ -594,6 +596,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);
 			this.labelClipboardSleepTime.SetLanguage(Language);
+			this.labelClipboardHotkey.SetLanguage(Language);
 			this.selectClipboardEnabled.SetLanguage(Language);
 			this.selectClipboardAppEnabled.SetLanguage(Language);
 			this.selectClipboardTopMost.SetLanguage(Language);
