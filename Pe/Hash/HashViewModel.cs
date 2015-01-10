@@ -140,6 +140,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 									//Debug.WriteLine("{0}, {1}", DateTime.Now.ToLongTimeString(), percent);
 								}
 							}
+							hashItem.Percent(100);
 							var text = ToHashString(hashItem.Hash.Hash);
 							hashItem.Result(text);
 						});

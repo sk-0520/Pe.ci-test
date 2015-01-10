@@ -31,8 +31,8 @@
 		<TextBox Height="23" Margin="10,88,10,0" TextWrapping="Wrap" Text="{Binding Path=MD5}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True"/>
 		<TextBox Height="23" Margin="10,125,10,0" TextWrapping="Wrap" Text="{Binding Path=CRC32}" VerticalAlignment="Top" Grid.Column="1" IsReadOnly="True"/>
 		<TextBox Height="23" Margin="10,0,10,10" TextWrapping="Wrap" Text="{Binding Path=Compare, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Grid.Column="1" Background="{Binding Path=Backgrond}" />
-		<ProgressBar Height="9" Margin="10,74,10,0" VerticalAlignment="Top" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Path=PercentSHA1}"/>
-		<ProgressBar Height="9" Margin="10,111,10,0" VerticalAlignment="Top" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Path=PercentMD5}"/>
-		<ProgressBar Height="9" Margin="10,148,10,0" VerticalAlignment="Top" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Path=PercentCRC32}"/>
+		<ProgressBar Height="9" Margin="10,74,10,0" VerticalAlignment="Top" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Path=PercentSHA1}" x:Name="progressSHA1"/>
+		<ProgressBar Height="9" Margin="10,111,10,0" VerticalAlignment="Top" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Path=PercentMD5}" x:Name="progressMD5"/>
+		<ProgressBar Height="9" Margin="10,148,10,0" VerticalAlignment="Top" Grid.Column="1" Minimum="0" Maximum="100" Value="{Binding Path=PercentCRC32}" x:Name="progressCRC32"/>
 	</Grid>
 </Window>
