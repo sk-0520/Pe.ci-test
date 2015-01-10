@@ -41,7 +41,7 @@
 		</ul>
 		<ul type="fixes">
 			<li rev="7bd3b5202a7b842b0bcd357f345bd679454fa15a">#141: ホームダイアログの文言</li>
-			<li rev=""></li>
+			<li rev="27f1b25c3efba2b667c8a82a5b6abab2fc6bc740">#138: 組み込みアイテムの起動後後処理</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
