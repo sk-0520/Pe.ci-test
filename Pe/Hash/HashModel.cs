@@ -37,6 +37,10 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		public string SHA1 { get; set; }
 		public string MD5 { get; set; }
 		public string CRC32 { get; set; }
+		public int PercentSHA1 { get; set; }
+		public int PercentMD5 { get; set; }
+		public int PercentCRC32 { get; set; }
+
 		public string Compare { get; set; }
 	}
 }

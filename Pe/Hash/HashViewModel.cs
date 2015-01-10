@@ -163,6 +163,49 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
+		public int PercentSHA1
+		{
+			get { return this._model.PercentSHA1; }
+			set
+			{
+				if(this._model.PercentSHA1 == value) {
+					return;
+				}
+
+				this._model.PercentSHA1 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentMD5
+		{
+			get { return this._model.PercentMD5; }
+			set
+			{
+				if(this._model.PercentMD5 == value) {
+					return;
+				}
+
+				this._model.PercentMD5 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int PercentCRC32
+		{
+			get { return this._model.PercentCRC32; }
+			set
+			{
+				if(this._model.PercentCRC32 == value) {
+					return;
+				}
+
+				this._model.PercentCRC32 = value;
+				OnPropertyChanged();
+			}
+		}
+
+
 		public string Compare
 		{
 			get { return this._model.Compare; }
