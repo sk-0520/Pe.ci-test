@@ -642,6 +642,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			parentItem.Name = menuNameApplications;
 			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
 
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
+				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+				foreach(var menuItem in menuItems.Where(m => m is ToolStripMenuItem).Cast<ToolStripMenuItem>()) {
+					var applicationItem = menuItem.Tag as ApplicationItem;
+					if(applicationItem != null) {
+						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
+					}
+				}
+			};
 		}
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
