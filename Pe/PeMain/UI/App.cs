@@ -613,16 +613,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void AttachmentApplicationsSubMenu(ToolStripMenuItem parentItem)
 		{
 			var menuList = new List<ToolStripItem>();
-			foreach(var item in this._commonData.ApplicationSetting.Items) {
+			foreach(var applicationItem in this._commonData.ApplicationSetting.Items) {
 				var launcherItem = new LauncherItem();
-				launcherItem.Command = item.Name;
+				launcherItem.Command = applicationItem.Name;
 				launcherItem.LauncherType = LauncherType.Embedded;
 
 				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
 
 				var menuItem = new ToolStripMenuItem();
 
-				menuItem.Tag = item;
+				menuItem.Tag = applicationItem;
 				menuItem.Image = IconUtility.ImageFromIcon(icon, IconScale.Small);
 
 				menuList.Add(menuItem);
@@ -633,6 +633,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			parentItem.Name = menuNameApplications;
 			//parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
 
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
+				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+				foreach(var menuItem in menuItems) {
+					var applicationItem = menuItem.Tag as ApplicationItem;
+					if(applicationItem != null) {
+						menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
+					}
+				}
+			};
 		}
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
