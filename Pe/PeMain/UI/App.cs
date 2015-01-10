@@ -633,15 +633,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			parentItem.Name = menuNameApplications;
 			//parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
 
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
-				foreach(var menuItem in menuItems) {
-					var applicationItem = menuItem.Tag as ApplicationItem;
-					if(applicationItem != null) {
-						menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
-					}
-				}
-			};
 		}
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
@@ -1084,12 +1075,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageSystemEnvWindowMenu(itemWindow);
 		}
 
+		void ApplyLanguageApplicationsMenu(ToolStripDropDownItem parentItem)
+		{
+			var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+			foreach(var menuItem in menuItems) {
+				var applicationItem = menuItem.Tag as ApplicationItem;
+				if(applicationItem != null) {
+					menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
+				}
+			}
+		}
+
 		void ApplyLanguageMainMenu()
 		{
 			var rootMenu = this._contextMenu.Items;
 
 			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
 			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			rootMenu[menuNameApplications].Text = this._commonData.Language["main/menu/applications"];
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];
 
@@ -1098,6 +1101,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			var systemEnvMenu = (ToolStripDropDownItem)rootMenu[menuNameSystemEnv];
 			ApplyLanguageSystemEnvMenu(systemEnvMenu);
+
+			var applicationsMenu = (ToolStripDropDownItem)rootMenu[menuNameApplications];
+			ApplyLanguageApplicationsMenu(applicationsMenu);
 
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
