@@ -121,7 +121,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			this.commandExecuteDir.SetLanguage(CommonData.Language);
 			this.commandDataDir.SetLanguage(CommonData.Language);
-			this.commandBackupDir.SetLanguage(CommonData.Language);
 			this.commandChangelog.SetLanguage(CommonData.Language);
 			this.commandUpdate.SetLanguage(CommonData.Language);
 
@@ -178,11 +177,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void CommandDataDir_Click(object sender, EventArgs e)
 		{
 			OpenDirectory(Literal.UserSettingDirPath);
-		}
-		
-		void CommandBackupDir_Click(object sender, EventArgs e)
-		{
-			OpenDirectory(Literal.UserBackupDirPath);
 		}
 		
 		void CommandUpdate_Click(object sender, EventArgs e)
