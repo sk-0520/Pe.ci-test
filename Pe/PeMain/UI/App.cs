@@ -615,6 +615,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var menuList = new List<ToolStripItem>();
 			foreach(var applicationItem in this._commonData.ApplicationSetting.Items) {
 				var launcherItem = new LauncherItem();
+				launcherItem.Name = applicationItem.Name;
 				launcherItem.Command = applicationItem.Name;
 				launcherItem.LauncherType = LauncherType.Embedded;
 
@@ -625,13 +626,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				menuItem.Tag = applicationItem;
 				menuItem.Image = IconUtility.ImageFromIcon(icon, IconScale.Small);
 
+				menuItem.Click += (object sender, EventArgs e) => {
+					if(this._commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
+						this._commonData.ApplicationSetting.KillApplicationItem(launcherItem);
+					} else {
+						Executor.RunItem(launcherItem, this._commonData);
+					}
+				};
+
 				menuList.Add(menuItem);
 			}
 
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 
 			parentItem.Name = menuNameApplications;
-			//parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
 
 		}
 
