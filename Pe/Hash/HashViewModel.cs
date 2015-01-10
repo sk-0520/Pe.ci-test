@@ -287,11 +287,11 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		{
 			if(Computed && !string.IsNullOrWhiteSpace(Compare)) {
 				var map = new Dictionary<HashType, string>() {
-						{ HashType.SHA1, SHA1 },
-						{ HashType.MD5, MD5 },
-						{ HashType.CRC32, CRC32 },
-					};
-				var equal = map[HashType] == Compare;
+					{ HashType.SHA1, SHA1 },
+					{ HashType.MD5, MD5 },
+					{ HashType.CRC32, CRC32 },
+				};
+				var equal = string.Compare(map[HashType], Compare.Trim(), true) == 0;
 				if(equal) {
 					Backgrond = Brushes.Lime;
 				} else {
