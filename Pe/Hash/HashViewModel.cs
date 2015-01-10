@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 			}
 		}
 
-		class SetHashProgress
+		class HashProgress
 		{
 			public HashAlgorithm Hash { get; set; }
 			public Action<decimal> Percent { get; set; }
@@ -98,17 +98,17 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 					CRC32 = string.Empty;
 
 					var hashList = new[] {
-						new SetHashProgress() {
+						new HashProgress() {
 							Hash = new SHA1CryptoServiceProvider(),
 							Percent = p => PercentSHA1 = p,
 							Result = r => SHA1 = r,
 						},
-						new SetHashProgress() {
+						new HashProgress() {
 							Hash = new MD5CryptoServiceProvider(),
 							Percent = p => PercentMD5 = p,
 							Result = r => MD5 = r,
 						},
-						new SetHashProgress() {
+						new HashProgress() {
 							Hash = new CRC32(),
 							Percent = p => PercentCRC32 = p,
 							Result = r => CRC32 = r,
