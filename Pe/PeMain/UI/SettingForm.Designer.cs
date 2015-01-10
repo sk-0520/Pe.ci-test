@@ -193,6 +193,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
 			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
 			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
+			this.labelClipboardHotkey = new System.Windows.Forms.Label();
+			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -1875,9 +1877,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.Controls.Add(this.selectClipboardVisible, 0, 5);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardSleepTime, 0, 4);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardSleepTime, 1, 4);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardHotkey, 0, 7);
+			this.panelClipboardMain.Controls.Add(this.inputClipboardHotkey, 1, 7);
 			this.panelClipboardMain.Location = new System.Drawing.Point(6, 6);
 			this.panelClipboardMain.Name = "panelClipboardMain";
-			this.panelClipboardMain.RowCount = 8;
+			this.panelClipboardMain.RowCount = 9;
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1886,6 +1890,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.panelClipboardMain.Size = new System.Drawing.Size(519, 222);
 			this.panelClipboardMain.TabIndex = 9;
 			// 
@@ -1904,7 +1909,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupClipboardType.AutoSize = true;
 			this.groupClipboardType.Controls.Add(this.panelClipboardType);
-			this.groupClipboardType.Location = new System.Drawing.Point(319, 3);
+			this.groupClipboardType.Location = new System.Drawing.Point(377, 3);
 			this.groupClipboardType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
 			this.groupClipboardType.Name = "groupClipboardType";
 			this.panelClipboardMain.SetRowSpan(this.groupClipboardType, 6);
@@ -2006,7 +2011,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardLimit
 			// 
-			this.inputClipboardLimit.Location = new System.Drawing.Point(187, 53);
+			this.inputClipboardLimit.Location = new System.Drawing.Point(197, 53);
 			this.inputClipboardLimit.Name = "inputClipboardLimit";
 			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardLimit.TabIndex = 4;
@@ -2024,7 +2029,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardWaitTime
 			// 
-			this.inputClipboardWaitTime.Location = new System.Drawing.Point(187, 82);
+			this.inputClipboardWaitTime.Location = new System.Drawing.Point(197, 82);
 			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
 			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardWaitTime.TabIndex = 5;
@@ -2064,11 +2069,37 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardSleepTime
 			// 
-			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 111);
+			this.inputClipboardSleepTime.Location = new System.Drawing.Point(197, 111);
 			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
 			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardSleepTime.TabIndex = 10;
 			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// labelClipboardHotkey
+			// 
+			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardHotkey.AutoSize = true;
+			this.labelClipboardHotkey.Location = new System.Drawing.Point(3, 194);
+			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
+			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
+			this.labelClipboardHotkey.TabIndex = 11;
+			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
+			// 
+			// inputClipboardHotkey
+			// 
+			this.inputClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
+			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputClipboardHotkey.HotKeySetting = null;
+			this.inputClipboardHotkey.Location = new System.Drawing.Point(197, 190);
+			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
+			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
+			this.inputClipboardHotkey.ReadOnly = true;
+			this.inputClipboardHotkey.Registered = false;
+			this.inputClipboardHotkey.Size = new System.Drawing.Size(168, 23);
+			this.inputClipboardHotkey.TabIndex = 12;
+			this.inputClipboardHotkey.Text = "None";
 			// 
 			// commandCancel
 			// 
@@ -2379,5 +2410,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TableLayoutPanel panelClipboardMain;
 		private System.Windows.Forms.Label labelClipboardSleepTime;
 		private System.Windows.Forms.NumericUpDown inputClipboardSleepTime;
+		private System.Windows.Forms.Label labelClipboardHotkey;
+		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputClipboardHotkey;
 	}
 }

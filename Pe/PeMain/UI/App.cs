@@ -679,8 +679,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			itemClipboard.Name = menuNameSystemEnvClipboard;
 			itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
 			itemClipboard.Click += (object sender, EventArgs e) => {
-				this._commonData.MainSetting.Clipboard.Visible = !this._commonData.MainSetting.Clipboard.Visible;
-				this._clipboardWindow.Visible = this._commonData.MainSetting.Clipboard.Visible;
+				SwitchShowClipboard();
 			};
 
 			// サブメニュー設定
@@ -695,6 +694,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
 				ToolStripUtility.SetSafeShortcutKeys(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey(), this._commonData.Logger);
 				ToolStripUtility.SetSafeShortcutKeys(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeys(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting.GetShorcutKey(), this._commonData.Logger);
 			};
 
 		}
@@ -1368,17 +1368,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/create"]);
 					CreateNote(Point.Empty);
 					break;
+
 				case HotKeyId.HiddenNote:
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/hidden"]);
 					HiddenNote();
 					break;
+
 				case HotKeyId.CompactNote:
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/compact"]);
 					CompactNote();
 					break;
+
 				case HotKeyId.ShowFrontNote:
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/show-front"]);
 					ShowFrontNote();
+					break;
+
+				case HotKeyId.SwitchClipboardShow:
+					SwitchShowClipboard();
 					break;
 
 				default:
@@ -1447,6 +1454,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			foreach(var note in list) {
 				UIUtility.ShowFront(note);
 			}
+		}
+
+		void SwitchShowClipboard()
+		{
+			this._commonData.MainSetting.Clipboard.Visible = !this._commonData.MainSetting.Clipboard.Visible;
+			this._clipboardWindow.Visible = this._commonData.MainSetting.Clipboard.Visible;
 		}
 
 		UpdateData CheckUpdate(bool force)

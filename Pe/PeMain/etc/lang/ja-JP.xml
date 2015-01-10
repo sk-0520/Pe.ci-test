@@ -119,6 +119,7 @@
 		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ${note}${hidden}" />
 		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ${note}最小化" />
 		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ${note}${show-front}" />
+		<Word Name="hotkey/regist/clipboard"       Text="${hotkey}${regist}: ホットキー${show-front}" />
 
 		<Word Name="balloon/hidden-file/title" Text="${hidden-file}" />
 		<Word Name="balloon/hidden-file/show"  Text="${hidden-file}を${show}" />
@@ -316,7 +317,8 @@
 		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
 		<Word Name="setting/group/clipboard-type"         Text="取り込む種類" />
-		
+		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
+
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
 		<Word Name="about/command/backup"    Text="バックアップ" />
