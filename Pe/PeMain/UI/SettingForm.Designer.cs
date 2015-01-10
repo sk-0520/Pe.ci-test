@@ -193,13 +193,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
 			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
 			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
+			this.labelClipboardHotkey = new System.Windows.Forms.Label();
+			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.labelClipboardHotkey = new System.Windows.Forms.Label();
-			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.panelMainOthers.SuspendLayout();
@@ -1909,7 +1909,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupClipboardType.AutoSize = true;
 			this.groupClipboardType.Controls.Add(this.panelClipboardType);
-			this.groupClipboardType.Location = new System.Drawing.Point(329, 3);
+			this.groupClipboardType.Location = new System.Drawing.Point(377, 3);
 			this.groupClipboardType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
 			this.groupClipboardType.Name = "groupClipboardType";
 			this.panelClipboardMain.SetRowSpan(this.groupClipboardType, 6);
@@ -2075,6 +2075,32 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardSleepTime.TabIndex = 10;
 			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
+			// labelClipboardHotkey
+			// 
+			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardHotkey.AutoSize = true;
+			this.labelClipboardHotkey.Location = new System.Drawing.Point(3, 194);
+			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
+			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
+			this.labelClipboardHotkey.TabIndex = 11;
+			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
+			// 
+			// inputClipboardHotkey
+			// 
+			this.inputClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
+			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputClipboardHotkey.HotKeySetting = null;
+			this.inputClipboardHotkey.Location = new System.Drawing.Point(197, 190);
+			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
+			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
+			this.inputClipboardHotkey.ReadOnly = true;
+			this.inputClipboardHotkey.Registered = false;
+			this.inputClipboardHotkey.Size = new System.Drawing.Size(168, 23);
+			this.inputClipboardHotkey.TabIndex = 12;
+			this.inputClipboardHotkey.Text = "None";
+			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -2127,29 +2153,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// labelClipboardHotkey
-			// 
-			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardHotkey.AutoSize = true;
-			this.labelClipboardHotkey.Location = new System.Drawing.Point(3, 194);
-			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
-			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
-			this.labelClipboardHotkey.TabIndex = 11;
-			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
-			// 
-			// inputClipboardHotkey
-			// 
-			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
-			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.inputClipboardHotkey.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputClipboardHotkey.Location = new System.Drawing.Point(197, 190);
-			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
-			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
-			this.inputClipboardHotkey.ReadOnly = true;
-			this.inputClipboardHotkey.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardHotkey.TabIndex = 12;
 			// 
 			// SettingForm
 			// 
