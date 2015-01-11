@@ -1,5 +1,5 @@
-﻿#define NO_DOWNLOAD
-#define NO_EXPAND
+﻿//#define NO_DOWNLOAD
+//#define NO_EXPAND
 
 using System;
 using System.CodeDom.Compiler;
