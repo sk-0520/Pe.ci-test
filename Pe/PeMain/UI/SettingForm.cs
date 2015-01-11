@@ -402,24 +402,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			var pathDirList = Environment.GetEnvironmentVariable("PATH")
 				.Split(';')
-				.Select(s => Environment.ExpandEnvironmentVariables(s))
-				.Where(s => s != osDirPath || s != systemDirPath)
+				.Select(Environment.ExpandEnvironmentVariables)
+				.Where(s => string.Compare(s, osDirPath, true) == 0 || string.Compare(s, systemDirPath, true) == 0)
 				.Distinct()
-				.ToArray()
 			;
+
 			var dirList = new List<string>(new[] { osDirPath, systemDirPath });
 			dirList.AddRange(pathDirList);
 
-			var tempList = dirList
+			this._commandList = dirList
 				.Where(Directory.Exists)
-				.Select(s => Directory.EnumerateFiles(s, "*.exe").Select(Path.GetFileNameWithoutExtension))
-			;
-			var commandList = new List<string>();
-			foreach(var list in tempList) {
-				commandList.AddRange(list);
-			}
-
-			this._commandList = commandList
+				.Select(s => Directory.EnumerateFiles(s, "*.exe"))
+				.SelectMany(list => list)
+				.Select(Path.GetFileNameWithoutExtension)
 				.OrderBy(s => s)
 				.Distinct()
 				.ToArray()
@@ -967,7 +962,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			LauncherSetSelectedType(item.LauncherType);
 			this.inputLauncherName.Text = item.Name;
 
-			//this.inputLauncherCommand.DataSource = null;
+			this.inputLauncherCommand.DataSource = null;
 			if(item.LauncherType == LauncherType.Embedded) {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
 				var displayValueList = _applicationSetting.Items
