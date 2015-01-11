@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.39.1" type="rc">
+		<ul type="note">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="developer">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+	</log>
 	<log date="2015/01/11" version="0.39.0">
 		<ul type="note">
 			<li rev="">本バージョンからアップデートチェックに使用するアドレスが変更となります</li>
