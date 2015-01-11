@@ -1,15 +1,17 @@
-﻿//#define NO_DOWNLOAD
-//#define NO_EXPAND
+﻿#define NO_DOWNLOAD
+#define NO_EXPAND
 
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
@@ -280,6 +282,15 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			}
 		}
 
+		void AppendAssembly(CompilerParameters parameters, string dllName)
+		{
+			if(!parameters.ReferencedAssemblies.Contains(dllName)) {
+				parameters.ReferencedAssemblies.Add(dllName);
+			} else {
+				Console.WriteLine("Overlap: {0}", dllName);
+			}
+		}
+
 		void ExecuteScript(string scriptFilePath, string baseDirectoryPath, string platform)
 		{
 			if(!File.Exists(scriptFilePath)) {
@@ -292,6 +303,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			using(var compiler= new CSharpCodeProvider(new Dictionary<string, string>() { 
 				{"CompilerVersion", "v4.0" } 
 			})) {
+				//var scriptText = File.ReadAllText(scriptFilePath, Encoding.UTF8);
 				var scriptText = File.ReadAllText(scriptFilePath);
 
 				var parameters = new CompilerParameters();
@@ -304,17 +316,26 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 
 				// 最低限のアセンブリは読み込ませる
 				var asmList = new[] { "System.dll", "System.Core.dll", "System.Data.dll" };
-				parameters.ReferencedAssemblies.AddRange(asmList);
+				foreach(var dllName in asmList) {
+					AppendAssembly(parameters, dllName);
+				}
+
+				// //+DLL:*.dll読み込み
+				var regTargetDll = new Regex(@"^//\+DLL\s*:\s*(?<DLL>.*\.dll)", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+				foreach(Match match in regTargetDll.Matches(scriptText)) {
+					var dllName = match.Groups["DLL"].Value;
+					AppendAssembly(parameters, dllName);
+				}
 
 				// /*-*/using xxx は読み込み無視
-				var reg = new Regex(@"[^(/*-*/)]\s*using\s+(?<NAME>.+)\s*;", RegexOptions.Multiline);
-				foreach(Match match in reg.Matches(scriptText)) {
+				var regUsingDll = new Regex(@"[^(/*-*/)]\s*using\s+(?<NAME>.+)\s*;", RegexOptions.Multiline);
+				foreach(Match match in regUsingDll.Matches(scriptText)) {
 					var name = match.Groups["NAME"].Value;
 					if(name.Any(c => c == '=')) {
 						name = name.Split('=').Last().Trim();
 					}
 					var dllName = name + ".dll";
-					parameters.ReferencedAssemblies.Add(dllName);
+					AppendAssembly(parameters, dllName);
 				}
 				foreach(var asm in parameters.ReferencedAssemblies) {
 					Console.WriteLine("Assembly = {0}", asm);
