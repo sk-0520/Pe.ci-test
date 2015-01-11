@@ -772,7 +772,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-				Executor.OpenDirectoryWithFileSelect(expandPath, Path.GetFileName(expandPath), CommonData, null);
+				Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
@@ -825,7 +825,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(Path.GetDirectoryName(launcherItem.WorkDirPath));
+			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];

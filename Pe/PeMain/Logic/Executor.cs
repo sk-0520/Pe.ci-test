@@ -256,8 +256,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return Process.Start(expandPath);
 		}
 
-		public static Process OpenDirectoryWithFileSelect(string expandPath, string fileName, CommonData commonData, LauncherItem openItem)
+		public static Process OpenDirectoryWithFileSelect(string expandPath, CommonData commonData, LauncherItem openItem)
 		{
+			if(FileUtility.Exists(expandPath)) {
+				var processName = "explorer.exe";
+				var argument = string.Format("/select, {0}", expandPath);
+				return Process.Start(processName, argument);
+			} else {
+				var dirPath = Path.GetDirectoryName(expandPath);
+				return OpenDirectory(dirPath, commonData, openItem);
+			}
 		}
 
 		/// <summary>
