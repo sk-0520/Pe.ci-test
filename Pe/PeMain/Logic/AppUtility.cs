@@ -67,17 +67,39 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			return CreateBoxColorImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
 		}
+
+		public static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirPath)
+		{
+			var entryPath = path.Substring(baseDirPath.Length);
+			while(entryPath.First() == Path.DirectorySeparatorChar) {
+				entryPath = entryPath.Substring(1);
+			}
+
+			var entry = archive.CreateEntry(entryPath);
+
+			using(var entryStream = new BinaryWriter(entry.Open())) {
+				var buffer = FileUtility.ToBinary(path);
+				entryStream.Write(buffer);
+			}
+
+			return entry;
+		}
 		
 		public static void BackupSetting(CommonData commonData, IEnumerable<string> targetFiles, string saveDirPath, int count)
 		{
-			var enabledFiles = targetFiles.Where(File.Exists);
+			var enabledFiles = targetFiles.Where(FileUtility.Exists);
 			if (!enabledFiles.Any()) {
 				return;
 			}
 			
 			// バックアップ世代交代
 			if(Directory.Exists(saveDirPath)) {
-				foreach(var path in Directory.GetFileSystemEntries(saveDirPath).OrderByDescending(s => Path.GetFileName(s)).Skip(count - 1)) {
+				var archiveList = Directory.GetFileSystemEntries(saveDirPath, "*.zip")
+					.Where(File.Exists)
+					.OrderByDescending(s => Path.GetFileName(s))
+					.Skip(count - 1)
+				;
+				foreach(var path in archiveList) {
 					try {
 						File.Delete(path);
 					} catch(Exception ex) {
@@ -92,21 +114,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			
 			// zip
 			using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
+				var basePath = Literal.UserSettingDirPath;
 				foreach(var filePath in enabledFiles) {
-					var entry = zip.CreateEntry(Path.GetFileName(filePath));
-					using(var entryStream = new BinaryWriter(entry.Open())) {
-						var buffer = FileUtility.ToBinary(filePath);
-						//var buffer = File.ReadAllBytes(filePath);
-						/*
-						using(var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
-							var buffer = new byte[Literal.fileTempBufferLength];
-							int readLength;
-							while((readLength = fileStream.Read(buffer, 0, buffer.Length)) > 0) {
-								entryStream.Write(buffer, 0, readLength);
-							}
+					if(File.Exists(filePath)) {
+						WriteArchive(zip, filePath, basePath);
+					} else if(Directory.Exists(filePath)) {
+						var list = Directory.EnumerateFiles(filePath, "*", SearchOption.AllDirectories);
+						foreach(var f in list) {
+							WriteArchive(zip, f, basePath);
 						}
-						 */
-						entryStream.Write(buffer);
 					}
 				}
 			}
@@ -123,6 +139,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				Literal.UserMainSettingPath,
 				Literal.UserLauncherItemsPath,
 				Literal.UserDBPath,
+				Literal.ApplicationSettingBaseDirectoryPath,
 			};
 			BackupSetting(commonData, backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
 			
