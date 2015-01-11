@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Applications;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -243,7 +240,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 	}
 
-	public class ApplicationExecuteItem: INameItem
+	public class ApplicationExecuteItem: DisposableNameItem
 	{
 		public ApplicationExecuteItem(ApplicationItem item)
 		{
@@ -256,17 +253,40 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		#region INameItem
 
-		public string Name
+		public new string Name
 		{
 			get { return ApplicationItem.Name;  }
-			set { throw new NotImplementedException(); }
+			//set { throw new NotImplementedException(); }
+		}
+
+		#endregion
+
+		#region IDisposable
+
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+
+			switch(ApplicationItem.Communication) {
+				case ApplicationCommunication.Event:
+					Event.ToDispose();
+					break;
+
+				case ApplicationCommunication.ClientServer:
+				default:
+					throw new NotImplementedException();
+			}
+
+			if(Process.HasExited) {
+				Process.ToDispose();
+			}
 		}
 
 		#endregion
 	}
 
 	[Serializable]
-	public class ApplicationSetting: IDisposable
+	public class ApplicationSetting: DisposableItem
 	{
 		public ApplicationSetting()
 		{
@@ -281,12 +301,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		#region IDisposable
 		
-		protected virtual void Dispose(bool disposing)
-		{ }
-
-		public void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			Dispose(true);
+			base.Dispose(disposing);
 		}
 
 		#endregion

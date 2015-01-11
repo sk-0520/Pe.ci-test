@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/08/08
- * 時刻: 21:12
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System.Data.Common;
+﻿using System.Data.Common;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic.DB
 {

@@ -1,21 +1,11 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/09/28
- * 時刻: 13:51
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
-using Microsoft.Win32.SafeHandles;
-using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {

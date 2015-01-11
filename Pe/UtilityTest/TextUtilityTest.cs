@@ -9,11 +9,12 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 	[TestFixture]
 	public class TextUtilityTest
 	{
-		[TestCase("a", "a", new[] { "" })]
-		[TestCase("a", "a", new[] { "b" })]
-		[TestCase("a(2)", "a", new[] { "a" })]
-		[TestCase("A", "A", new[] { "A(2)" })]
-		public void ToUniqueDefault(string result, string src, IEnumerable<string> list)
+		[TestCase("a", "a", "")]
+		[TestCase("a", "a", "b")]
+		[TestCase("a(2)", "a", "a")]
+		[TestCase("A", "A", "A(2)")]
+		[TestCase("a(3)", "a", "a(5)", "a(2)", "a(4)", "a")]
+		public void ToUniqueDefault(string result, string src, params string[] list)
 		{
 			Assert.IsTrue(TextUtility.ToUniqueDefault(src, list) == result);
 		}

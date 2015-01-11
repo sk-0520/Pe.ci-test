@@ -57,9 +57,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.listLauncherItems.FormattingEnabled = true;
 			this.listLauncherItems.IntegralHeight = false;
 			this.listLauncherItems.ItemHeight = 12;
-			this.listLauncherItems.Location = new System.Drawing.Point(0, 44);
+			this.listLauncherItems.Location = new System.Drawing.Point(0, 25);
 			this.listLauncherItems.Name = "listLauncherItems";
-			this.listLauncherItems.Size = new System.Drawing.Size(147, 106);
+			this.listLauncherItems.Size = new System.Drawing.Size(147, 125);
 			this.listLauncherItems.TabIndex = 4;
 			this.listLauncherItems.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListLauncherItems_DrawItem);
 			this.listLauncherItems.SelectedIndexChanged += new System.EventHandler(this.ListLauncherItemsSelectedIndexChanged);
@@ -68,16 +68,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.toolLauncherItems.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolLauncherItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLauncherItems_create,
-									this.toolLauncherItems_remove,
-									this.toolLauncherItems_editSeparator,
-									this.toolLauncherItems_filter,
-									this.toolLauncherItems_type,
-									this.toolLauncherItems_input});
+            this.toolLauncherItems_create,
+            this.toolLauncherItems_remove,
+            this.toolLauncherItems_editSeparator,
+            this.toolLauncherItems_filter,
+            this.toolLauncherItems_type,
+            this.toolLauncherItems_input});
 			this.toolLauncherItems.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.toolLauncherItems.Location = new System.Drawing.Point(0, 0);
 			this.toolLauncherItems.Name = "toolLauncherItems";
-			this.toolLauncherItems.Size = new System.Drawing.Size(147, 44);
+			this.toolLauncherItems.Size = new System.Drawing.Size(147, 25);
 			this.toolLauncherItems.Stretch = true;
 			this.toolLauncherItems.TabIndex = 3;
 			this.toolLauncherItems.Text = "toolStrip1";
@@ -121,9 +121,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.toolLauncherItems_type.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolLauncherItems_type.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolLauncherItems_type_full,
-									this.toolLauncherItems_type_name,
-									this.toolLauncherItems_type_tag});
+            this.toolLauncherItems_type_full,
+            this.toolLauncherItems_type_name,
+            this.toolLauncherItems_type_tag});
 			this.toolLauncherItems_type.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
 			this.toolLauncherItems_type.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLauncherItems_type.Name = "toolLauncherItems_type";
@@ -166,6 +166,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.listLauncherItems);
 			this.Controls.Add(this.toolLauncherItems);
+			this.DoubleBuffered = true;
 			this.Name = "LauncherItemSelectControl";
 			this.Size = new System.Drawing.Size(147, 150);
 			this.Load += new System.EventHandler(this.LauncherItemSelectControlLoad);
@@ -174,6 +175,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolLauncherItems.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.ToolStripTextBox toolLauncherItems_input;
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_tag;

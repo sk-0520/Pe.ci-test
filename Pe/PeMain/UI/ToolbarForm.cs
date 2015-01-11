@@ -1,26 +1,18 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/23
- * 時刻: 13:15
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using System.Collections.Generic;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Drawing.Drawing2D;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -775,12 +767,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			SetToolButtons(UseToolbarItem.IconScale, toolButtonList);
 		}
-		
+
+		void OpenDir(LauncherItem launcherItem)
+		{
+			try {
+				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+				Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+			}
+		}
+
 		void OpenDir(string path)
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
-				Executer.OpenDirectory(expandPath, CommonData, null);
+				Executor.OpenDirectory(expandPath, CommonData, null);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
@@ -794,7 +796,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void OpenProperty(string path)
 		{
 			var expandPath = Environment.ExpandEnvironmentVariables(path);
-			Executer.OpenProperty(expandPath, Handle);
+			Executor.OpenProperty(expandPath, Handle);
 		}
 		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
@@ -819,11 +821,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(Path.GetDirectoryName(launcherItem.Command));
+			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(Path.GetDirectoryName(launcherItem.WorkDirPath));
+			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
@@ -888,9 +890,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			menuItem.Click += (object sender, EventArgs e) => {
 				try {
 					if(File.Exists(path)) {
-						Executer.OpenFile(path, CommonData);
+						Executor.OpenFile(path, CommonData);
 					} else {
-						Executer.OpenDirectory(path, CommonData, null);
+						Executor.OpenDirectory(path, CommonData, null);
 					}
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
@@ -1224,7 +1226,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			helpItem.Click += (object sender, EventArgs e) => {
 				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
 				try {
-					Executer.RunCommand(applicationItem.HelpPath, CommonData);
+					Executor.RunCommand(applicationItem.HelpPath, CommonData);
 				} catch(Exception ex) {
 					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
 					CommonData.Logger.Puts(LogType.Warning, ex.Message, applicationItem.HelpPath);
@@ -1433,7 +1435,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
 			try {
-				Executer.RunItem(launcherItem, CommonData);
+				Executor.RunItem(launcherItem, CommonData);
 				launcherItem.Increment(null, null);
 				return true;
 			} catch(Exception ex) {

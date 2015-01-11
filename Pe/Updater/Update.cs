@@ -1,21 +1,22 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/09/25
- * 時刻: 23:25
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
+﻿//#define NO_DOWNLOAD
+//#define NO_EXPAND
+
 using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Linq;
 using ContentTypeTextNet.Pe.Library.Utility;
+using Microsoft.CSharp;
 
 namespace ContentTypeTextNet.Pe.Applications.Updater
 {
@@ -33,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// </summary>
 	public class Update
 	{
+		const string scriptFileName = "UpdaterScript.cs";
+
 		private CommandLine _commandLine;
 		
 		Value<int> _pid = new Value<int>();
@@ -66,9 +69,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			
 			Set("pid", this._pid);
 			Set("version", this._version, (value, s) => {
-			    	var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
-			    	value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
-			    });
+				//var v = s.Split('.').Select(n => ushort.Parse(n)).ToArray();
+				//value.Data = new Tuple<ushort, ushort, ushort>(v[0], v[1], v[2]);
+				value.Data = Functions.ConvertVersionTuple(s);
+			});
 			Set("uri", this._uri);
 			Set("download", this._downloadDir);
 			Set("expand", this._expandDir);
@@ -78,6 +82,17 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			Set("wait", this._wait);
 			Set("no-wait-update", this._noWaitUpdate);
 			Set("event", this._eventName);
+		}
+
+		void OutputErrorMessage(string s)
+		{
+			ChangeTemporaryColor(s, ConsoleColor.Black, ConsoleColor.Red);
+		}
+
+		void OutputErrorMessage(Exception ex)
+		{
+			ChangeTemporaryColor(ex.Message, ConsoleColor.Black, ConsoleColor.Red);
+			ChangeTemporaryColor(ex.StackTrace, ConsoleColor.Black, ConsoleColor.DarkRed);
 		}
 		
 		void Set<T>(string key, Value<T> value)
@@ -90,7 +105,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						value.HasValue = true;
 					}
 				} catch(Exception ex) {
-					Console.WriteLine(ex);
+					OutputErrorMessage(ex);
 				}
 			}
 		}
@@ -105,7 +120,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						value.HasValue = true;
 					}
 				} catch(Exception ex) {
-					Console.WriteLine(ex);
+					OutputErrorMessage(ex);
 				}
 			}
 		}
@@ -152,7 +167,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			}
 		}
 
-		void ChangeTempColor(string s, ConsoleColor fore, ConsoleColor back)
+		void ChangeTemporaryColor(string s, ConsoleColor fore, ConsoleColor back)
 		{
 			var tempFore = Console.ForegroundColor;
 			var tempBack = Console.BackgroundColor;
@@ -170,9 +185,9 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			EventWaitHandle eventHandle = null;
 			if(this._eventName.HasValue) {
 				eventHandle = EventWaitHandle.OpenExisting(this._eventName.Data);
-				ChangeTempColor(string.Format("PID = {0}, Event = {1}, kill wait...", this._pid.Data, this._eventName.Data), ConsoleColor.Black, ConsoleColor.Green);
+				ChangeTemporaryColor(string.Format("PID = {0}, Event = {1}, kill wait...", this._pid.Data, this._eventName.Data), ConsoleColor.Black, ConsoleColor.Green);
 			} else {
-				ChangeTempColor(string.Format("PID = {0}, kill wait...", this._pid.Data), ConsoleColor.Black, ConsoleColor.Yellow);
+				ChangeTemporaryColor(string.Format("PID = {0}, kill wait...", this._pid.Data), ConsoleColor.Black, ConsoleColor.Yellow);
 			}
 			if(eventHandle != null) {
 				Console.WriteLine("event set");
@@ -204,6 +219,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			}
 
 			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
+#if !NO_DOWNLOAD
 			using(var web = new WebClient()) {
 				Console.WriteLine("Download = {0} -> {1}", DownloadFileUrl, downloadPath);
 				var downloadSw = new Stopwatch();
@@ -212,7 +228,8 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				downloadSw.Stop();
 				Console.WriteLine("Download -> Size: {0} byte, Time = {1}", (new FileInfo(downloadPath)).Length, downloadSw.Elapsed);
 			}
-			
+#endif
+
 			if(process != null) {
 				isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
 				if(isRestart && !process.HasExited) {
@@ -223,11 +240,15 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			
 			// 自身の名前を切り替え
 			var myPath = Assembly.GetEntryAssembly().Location;
+			var myDir = Path.GetDirectoryName(myPath);
+#if !NO_EXPAND
 			var renamePath = Path.ChangeExtension(myPath, "update-old");
 			if(File.Exists(renamePath)) {
 				File.Delete(renamePath);
 			}
+#endif
 			try {
+#if !NO_EXPAND
 				Console.WriteLine("Rename -> {0} => {1}", myPath, renamePath);
 				File.Move(myPath, renamePath);
 				// 置き換え開始
@@ -242,6 +263,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						entry.ExtractToFile(expandPath, true);
 					}
 				}
+#endif
+				// スクリプト実行
+				ExecuteScript(Path.Combine(myDir, scriptFileName), this._expandDir.Data, this._platform.Data);
+
 				if(isRestart) {
 					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);
 					Process.Start(restartExe, restartArg);
@@ -250,8 +275,99 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 					WaitSkip = true;
 				}
 			} catch(Exception) {
+#if !NO_EXPAND
 				File.Move(renamePath, myPath);
+#endif
 				throw;
+			}
+		}
+
+		void AppendAssembly(CompilerParameters parameters, string dllName)
+		{
+			if(!parameters.ReferencedAssemblies.Contains(dllName)) {
+				parameters.ReferencedAssemblies.Add(dllName);
+			} else {
+				Console.WriteLine("Overlap: {0}", dllName);
+			}
+		}
+
+		void ExecuteScript(string scriptFilePath, string baseDirectoryPath, string platform)
+		{
+			if(!File.Exists(scriptFilePath)) {
+				Console.WriteLine("not found script file");
+				return;
+			}
+
+			ChangeTemporaryColor(string.Format("Execute Script: {0}", scriptFilePath), ConsoleColor.Cyan, ConsoleColor.Black);
+
+			using(var compiler= new CSharpCodeProvider(new Dictionary<string, string>() { 
+				{"CompilerVersion", "v4.0" } 
+			})) {
+				//var scriptText = File.ReadAllText(scriptFilePath, Encoding.UTF8);
+				var scriptText = File.ReadAllText(scriptFilePath);
+
+				var parameters = new CompilerParameters();
+				parameters.GenerateExecutable = false;
+				parameters.GenerateInMemory = true;
+				parameters.IncludeDebugInformation = true;
+				parameters.TreatWarningsAsErrors = true;
+				parameters.WarningLevel = 4;
+				parameters.CompilerOptions = string.Format("/platform:{0}", platform);
+
+				// 最低限のアセンブリは読み込ませる
+				var asmList = new[] { "System.dll", "System.Core.dll", "System.Data.dll" };
+				foreach(var dllName in asmList) {
+					AppendAssembly(parameters, dllName);
+				}
+
+				// //+DLL:*.dll読み込み
+				var regTargetDll = new Regex(@"^//\+DLL\s*:\s*(?<DLL>.*\.dll)", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+				foreach(Match match in regTargetDll.Matches(scriptText)) {
+					var dllName = match.Groups["DLL"].Value;
+					AppendAssembly(parameters, dllName);
+				}
+
+				// /*-*/using xxx は読み込み無視
+				var regUsingDll = new Regex(@"[^(/*-*/)]\s*using\s+(?<NAME>.+)\s*;", RegexOptions.Multiline);
+				foreach(Match match in regUsingDll.Matches(scriptText)) {
+					var name = match.Groups["NAME"].Value;
+					if(name.Any(c => c == '=')) {
+						name = name.Split('=').Last().Trim();
+					}
+					var dllName = name + ".dll";
+					AppendAssembly(parameters, dllName);
+				}
+				foreach(var asm in parameters.ReferencedAssemblies) {
+					Console.WriteLine("Assembly = {0}", asm);
+				}
+
+				var cr = compiler.CompileAssemblyFromSource(parameters, scriptText);
+
+				var indent = "    ";
+#if DEBUG
+				if(cr.Output.Count > 0) {
+					ChangeTemporaryColor("Output:", ConsoleColor.DarkGreen, ConsoleColor.Black);
+					foreach(var output in cr.Output) {
+						ChangeTemporaryColor(indent + output.ToString(), ConsoleColor.DarkGreen, ConsoleColor.Black);
+					}
+				}
+#endif
+				if(cr.Errors.Count > 0) {
+					ChangeTemporaryColor("Error:", ConsoleColor.DarkRed, ConsoleColor.Black);
+					foreach(var error in cr.Errors) {
+						ChangeTemporaryColor(indent + error.ToString(), ConsoleColor.DarkRed, ConsoleColor.Black);
+					}
+					throw new UpdaterException(UpdaterCode.ScriptCompile);
+				}
+
+				var assembly = cr.CompiledAssembly;
+
+				var us = assembly.CreateInstance("UpdaterScript");
+				us.GetType().GetMethod("Main").Invoke(us, new object [] { new [] { 
+					scriptFilePath,
+					baseDirectoryPath,
+					platform
+				}});
 			}
 		}
 	}

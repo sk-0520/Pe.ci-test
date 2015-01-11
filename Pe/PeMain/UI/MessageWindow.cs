@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.PeMain.Data;
@@ -141,6 +134,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					new { Id = HotKeyId.HiddenNote,    HotKey = CommonData.MainSetting.Note.HiddenHotKey,              UnRegistMessageName = "hotkey/unregist/hidden-note",     RegistMessageName = "hotkey/regist/hidden-note" },
 					new { Id = HotKeyId.CompactNote,   HotKey = CommonData.MainSetting.Note.CompactHotKey,             UnRegistMessageName = "hotkey/unregist/compact-note",    RegistMessageName = "hotkey/regist/compact-note" },
 					new { Id = HotKeyId.ShowFrontNote, HotKey = CommonData.MainSetting.Note.ShowFrontHotKey,           UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/show-front-note" },
+					new { Id = HotKeyId.SwitchClipboardShow, HotKey = CommonData.MainSetting.Clipboard.ToggleHotKeySetting, UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/clipborad" },
 				};
 			// 登録解除
 			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.IsRegistered)) {

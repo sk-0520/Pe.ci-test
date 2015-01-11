@@ -1,14 +1,5 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/09/07
- * 時刻: 17:52
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -130,7 +121,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			this.commandExecuteDir.SetLanguage(CommonData.Language);
 			this.commandDataDir.SetLanguage(CommonData.Language);
-			this.commandBackupDir.SetLanguage(CommonData.Language);
 			this.commandChangelog.SetLanguage(CommonData.Language);
 			this.commandUpdate.SetLanguage(CommonData.Language);
 
@@ -153,7 +143,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void OpenDirectory(string path)
 		{
-			Executer.OpenDirectory(path, CommonData, null);
+			Executor.OpenDirectory(path, CommonData, null);
 		}
 
 		#endregion ////////////////////////////////////
@@ -173,7 +163,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			
 			try {
-				Executer.RunCommand(link, CommonData);
+				Executor.RunCommand(link, CommonData);
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, link, ex);
 			}
@@ -187,11 +177,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void CommandDataDir_Click(object sender, EventArgs e)
 		{
 			OpenDirectory(Literal.UserSettingDirPath);
-		}
-		
-		void CommandBackupDir_Click(object sender, EventArgs e)
-		{
-			OpenDirectory(Literal.UserBackupDirPath);
 		}
 		
 		void CommandUpdate_Click(object sender, EventArgs e)
@@ -208,7 +193,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void CommandChangelog_Click(object sender, EventArgs e)
 		{
 			var path = Path.Combine(Literal.ApplicationDocumentDirPath, "changelog.xml");
-			Executer.OpenFile(path, CommonData);
+			Executor.OpenFile(path, CommonData);
 		}
 		
 		void GridComponents_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
@@ -220,7 +205,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					if(0 <= rowIndex && rowIndex < ComponentInfoList.Count) {
 						var componentInfo = ComponentInfoList[rowIndex];
 						var link = componentInfo.URI;
-						Executer.RunCommand(link, CommonData);
+						Executor.RunCommand(link, CommonData);
 						cell.LinkVisited = true;
 					}
 				}

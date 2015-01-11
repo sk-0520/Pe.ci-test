@@ -25,6 +25,30 @@
 		</ul>
 	</log>
 	-->
+	<log date="2015/01/11" version="0.39.0">
+		<ul type="note">
+			<li rev="">本バージョンからアップデートチェックに使用するアドレスが変更となります</li>
+			<li rev="">XML -&gt; http://content-type-text.net/document/software/pe-update/update.xml</li>
+			<li rev="">詳細はオンラインヘルプを参照してください</li>
+		</ul>
+		<ul type="features">
+			<li rev="7e5149cbb741c03214f9b5d1a95fd240921c0ba4">#104: アップデート定義ファイルをリポジトリから外す</li>
+			<li rev="9e6e24366567961f56a3e4de03ade9acfae8ee5c">#135: コマンド(URI)アイテムに対する引数</li>
+			<li rev="782040d7832c3bf0f3faf40d0c14dd0300e73e41">コマンドアイテム設定時、プルダウンに環境変数PATHの実行ファイルをリストアップする</li>
+			<li rev="e234d1c035cc4e9a421397e78c26f53b689eb44a">#134: アップデート実行時にスクリプト実行</li>
+			<li rev="62ba9830a6afdd7986bd6ffa5cf530721fb7d340">#139: クリップボードウィンドウのホットキー</li>
+			<li rev="452b69ff948c0a46297cc80a1e1d765fccd6137c">#140: 組み込みアイテムの一覧</li>
+			<li rev="db83e73bc16fd58a54137b0e9db8b3ebb3b563e5">#142: Hash機能強化</li>
+			<li rev="5fe681ad3f86409322635b13fcfd0d0e91f353f6">ファイルアイテムの親フォルダを開く際にファイルを選択した状態でエクスプローラを開く</li>
+		</ul>
+		<ul type="fixes">
+			<li rev="7bd3b5202a7b842b0bcd357f345bd679454fa15a">#141: ホームダイアログの文言</li>
+			<li rev="27f1b25c3efba2b667c8a82a5b6abab2fc6bc740">#138: 組み込みアイテムの起動後後処理</li>
+			<li rev="e89286a60a585d79d907a054114066d91b636d1d">情報ダイアログのバックアップボタン削除</li>
+			<li rev="5fe681ad3f86409322635b13fcfd0d0e91f353f6">ファイルアイテムの作業フォルダに環境変数を含んでいる場合に、展開前パスがディレクトリパスとでない場合に正常にフォルダを開けない不具合の修正</li>
+			<li rev="13e7be2ba5ce325c942992d3f26d9cbbc1cd72b2">バックアップファイル世代対象を*.zipに限定し、バックアップ対象をディレクトリまで広げる</li>
+		</ul>
+	</log>
 	<log date="2015/01/03" version="0.38.1">
 		<ul type="note">
 			<li rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibility">#41: アイテムの種類, 種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</li>

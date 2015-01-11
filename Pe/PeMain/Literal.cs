@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/15
- * 時刻: 17:06
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -174,7 +166,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 #if DEBUG
 		public const int backupCount = 3;
-		public const int logListLimit = 20;
+		public const int logListLimit = 5;
 #else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
@@ -477,6 +469,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		HiddenNote,
 		CompactNote,
 		ShowFrontNote,
+		SwitchClipboardShow,
 	}
 	
 	public static class AppLanguageName
@@ -489,6 +482,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string year04      = "Y:04";
 		public const string month       = "M";
 		public const string month02     = "M:02";
+		public const string monthShortName = "M:S";
+		public const string monthLongName  = "M:L";
 		public const string day         = "D";
 		public const string day02       = "D:02";
 		public const string hour        = "h";

@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
 {
-	public class HashViewModel: ViewModelBase
+	public class HashViewModel: AbstractViewModel
 	{
 		static string ToHashString(byte[] binary)
 		{
@@ -55,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.EventName = value;
-				OnPropertyChanged("EventName");
+				OnPropertyChanged();
 
 				if(!string.IsNullOrWhiteSpace(EventName)) {
 					// イベント取得
@@ -63,11 +64,17 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 					Task.Factory.StartNew(() => {
 						if(this._waitEvent.WaitOne(Timeout.Infinite, true)) {
 							ForceExit = true;
-							Debug.WriteLine("asdfghjkl.;");
 						}
 					});
 				}
 			}
+		}
+
+		class HashProgress
+		{
+			public HashAlgorithm Hash { get; set; }
+			public Action<decimal> Percent { get; set; }
+			public Action<string> Result { get; set; }
 		}
 
 		public string FilePath
@@ -82,26 +89,63 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				Computed = false;
 
 				this._model.FilePath = value;
-				OnPropertyChanged("FilePath");
+				OnPropertyChanged();
 
 				if(File.Exists(this._model.FilePath)) {
+
 					SHA1 = string.Empty;
 					MD5 = string.Empty;
 					CRC32 = string.Empty;
 
-					var map = new Dictionary<HashAlgorithm, Action<byte[]>>() {
-						{ new SHA1CryptoServiceProvider(), b => SHA1 = ToHashString(b) },
-						{ new MD5CryptoServiceProvider(), b => MD5 = ToHashString(b) },
-						{ new CRC32(), b => CRC32 = ToHashString(b) },
+					var hashList = new[] {
+						new HashProgress() {
+							Hash = new SHA1CryptoServiceProvider(),
+							Percent = p => PercentSHA1 = p,
+							Result = r => SHA1 = r,
+						},
+						new HashProgress() {
+							Hash = new MD5CryptoServiceProvider(),
+							Percent = p => PercentMD5 = p,
+							Result = r => MD5 = r,
+						},
+						new HashProgress() {
+							Hash = new CRC32(),
+							Percent = p => PercentCRC32 = p,
+							Result = r => CRC32 = r,
+						},
 					};
 
-					var binary = File.ReadAllBytes(this._model.FilePath);
-					foreach(var pair in map) {
-						var hash = pair.Key;
-						var b = hash.ComputeHash(binary);
-						pair.Value(b);
-					}
+					var binary = FileUtility.ToBinary(this._model.FilePath);
 
+					int blockSize = 1024 * 1;
+					int binaryLength = binary.Length;
+
+					hashList.AsParallel().ForAll(hashItem => {
+						//foreach(var hashItem in hashList) {
+						//var b = hash.ComputeHash(binary);
+						decimal doneSize = 0;
+						int percent = 0;
+						Task.Factory.StartNew(() => {
+							for(int offset = 0; offset < binaryLength; offset += blockSize) {
+								if(offset + blockSize < binaryLength) {
+									hashItem.Hash.TransformBlock(binary, offset, blockSize, null, 0);
+									doneSize = offset + blockSize;
+								} else {
+									hashItem.Hash.TransformFinalBlock(binary, offset, binaryLength - offset);
+									doneSize = binaryLength;
+								}
+								if(percent != doneSize * 100 / binaryLength) {
+									percent = (int)(doneSize * 100 / binaryLength);
+									hashItem.Percent(percent);
+									//Debug.WriteLine("{0}, {1}", DateTime.Now.ToLongTimeString(), percent);
+								}
+							}
+							hashItem.Percent(100);
+							var text = ToHashString(hashItem.Hash.Hash);
+							hashItem.Result(text);
+						});
+					});
+					//}
 					Computed = true;
 				}
 				CheckHash();
@@ -118,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.HashType = value;
-				OnPropertyChanged("HashType");
+				OnPropertyChanged();
 				CheckHash();
 			}
 		}
@@ -133,7 +177,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.SHA1 = value;
-				OnPropertyChanged("SHA1");
+				OnPropertyChanged();
 			}
 		}
 
@@ -147,7 +191,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.MD5 = value;
-				OnPropertyChanged("MD5");
+				OnPropertyChanged();
 			}
 		}
 
@@ -161,9 +205,52 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.CRC32 = value;
-				OnPropertyChanged("CRC32");
+				OnPropertyChanged();
 			}
 		}
+
+		public decimal PercentSHA1
+		{
+			get { return this._model.PercentSHA1; }
+			set
+			{
+				if(this._model.PercentSHA1 == value) {
+					return;
+				}
+
+				this._model.PercentSHA1 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public decimal PercentMD5
+		{
+			get { return this._model.PercentMD5; }
+			set
+			{
+				if(this._model.PercentMD5 == value) {
+					return;
+				}
+
+				this._model.PercentMD5 = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public decimal PercentCRC32
+		{
+			get { return this._model.PercentCRC32; }
+			set
+			{
+				if(this._model.PercentCRC32 == value) {
+					return;
+				}
+
+				this._model.PercentCRC32 = value;
+				OnPropertyChanged();
+			}
+		}
+
 
 		public string Compare
 		{
@@ -175,7 +262,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._model.Compare = value;
-				OnPropertyChanged("Compare");
+				OnPropertyChanged();
 				CheckHash();
 			}
 		}
@@ -192,19 +279,19 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				}
 
 				this._backgrond = value;
-				OnPropertyChanged("Backgrond");
+				OnPropertyChanged();
 			}
 		}
 
 		void CheckHash()
 		{
-			if(Computed) {
+			if(Computed && !string.IsNullOrWhiteSpace(Compare)) {
 				var map = new Dictionary<HashType, string>() {
-						{ HashType.SHA1, SHA1 },
-						{ HashType.MD5, MD5 },
-						{ HashType.CRC32, CRC32 },
-					};
-				var equal = map[HashType] == Compare;
+					{ HashType.SHA1, SHA1 },
+					{ HashType.MD5, MD5 },
+					{ HashType.CRC32, CRC32 },
+				};
+				var equal = string.Compare(map[HashType], Compare.Trim(), true) == 0;
 				if(equal) {
 					Backgrond = Brushes.Lime;
 				} else {

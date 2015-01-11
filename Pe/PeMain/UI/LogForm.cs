@@ -1,25 +1,16 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 01/10/2014
- * 時刻: 23:49
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
-
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using System.Collections.Generic;
 using ObjectDumper;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -46,7 +37,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region variable
-		List<LogItem> _logs = new List<LogItem>();
+		//List<LogItem> _logs = new List<LogItem>();
+		FixedSizedList<LogItem> _logs = new FixedSizedList<LogItem>(Literal.logListLimit);
 		ImageList _imageLogType = null;
 		FileLogger _fileLogger = null;
 		bool _refresh = false;
@@ -86,9 +78,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			var logItem = new LogItem(logType, title, detail, frame);
 			this._fileLogger.WiteItem(logItem);
+			/*
 			if(this._logs.Count >= Literal.logListLimit) {
 				this._logs.RemoveAt(0);
 			}
+			*/
 			this._logs.Add(logItem);
 			var isCreated = Created;
 

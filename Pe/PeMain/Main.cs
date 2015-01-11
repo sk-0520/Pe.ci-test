@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/10/30
- * 時刻: 23:30
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -58,16 +50,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 									app.CloseApplication(false);
 								} else {
 									if(!app.ExistsSettingFilePath) {
-										Task.Factory.StartNew(
-											() => {
-												Thread.Sleep(Literal.startHomeDialogWaitTime);
-											}
-										).ContinueWith(
-											t => {
-												app.ShowHomeDialog();
-											},
-											TaskScheduler.FromCurrentSynchronizationContext()
-										);
+										Task.Factory.StartNew(() => {
+											Thread.Sleep(Literal.startHomeDialogWaitTime);
+										}).ContinueWith(t => {
+											app.ShowHomeDialog();
+										}, TaskScheduler.FromCurrentSynchronizationContext());
 									}
 									Application.Run();
 								}

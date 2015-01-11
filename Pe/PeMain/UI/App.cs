@@ -1,35 +1,26 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/15
- * 時刻: 17:22
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Timers;
-
-using Microsoft.Win32;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.Library.Utility;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Text;
-using ContentTypeTextNet.Pe.Library.Skin;
 using System.ComponentModel;
 using System.Data.SQLite;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using System.Diagnostics;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Timers;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Data.DB;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+using Microsoft.Win32;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -50,6 +41,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		const string menuNameWindowToolbar = "menu_window_toolbar";
 		const string menuNameWindowNote = "menu_window_note";
 		const string menuNameWindowLogger = "menu_window_logger";
+		const string menuNameApplications = "menu_applications";
 
 		const string menuNameWindowNoteCreate = "menu_window_note_create";
 		const string menuNameWindowNoteHidden = "menu_window_note_hidden";
@@ -84,7 +76,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private Dictionary<Screen, ToolbarForm> _toolbarForms = new Dictionary<Screen, ToolbarForm>();
 		
 		private WindowListItem _tempWindowListItem;
-		List<WindowListItem> _windowListItems = new List<WindowListItem>();
+		FixedSizedList<WindowListItem> _windowListItems; //= new List<WindowListItem>();
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
 		
 		System.Timers.Timer _windowTimer;
@@ -179,31 +171,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
 				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
 				//bool isTimeout = false;
-				Task.Factory.StartNew(
-					() => {
-						const int waitMax = Literal.waitCountForGetScreenCount;
-						int waitCount = 0;
+				Task.Factory.StartNew(() => {
+					const int waitMax = Literal.waitCountForGetScreenCount;
+					int waitCount = 0;
 
-						var managedScreenCount = Screen.AllScreens.Count();
-						while(rawScreenCount != managedScreenCount) {
-							//Debug.WriteLine("waitCount" + waitCount);
-							if(waitMax < ++waitCount) {
-								// タイムアウト
-								//isTimeout = true;
-								break;
-							}
-							Thread.Sleep(Literal.screenCountWaitTime);
-							managedScreenCount = Screen.AllScreens.Count();
+					var managedScreenCount = Screen.AllScreens.Count();
+					while(rawScreenCount != managedScreenCount) {
+						//Debug.WriteLine("waitCount" + waitCount);
+						if(waitMax < ++waitCount) {
+							// タイムアウト
+							//isTimeout = true;
+							break;
 						}
+						Thread.Sleep(Literal.screenCountWaitTime);
+						managedScreenCount = Screen.AllScreens.Count();
 					}
-				).ContinueWith(
-					t => {
-						if(changedScreenCount) {
-							ChangedScreenCount();
-						}
-					},
-					TaskScheduler.FromCurrentSynchronizationContext()
-				);
+				}).ContinueWith(t => {
+					if(changedScreenCount) {
+						ChangedScreenCount();
+					}
+				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 		}
 
@@ -231,23 +218,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				var time = Literal.clipboardThreadWaitTime.median;
 				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
-			}).ContinueWith(
-				t => {
-					var clipboardItem = new ClipboardItem();
-					if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
-						//this._clipboardPrevTime = DateTime.Now;
-						try {
-							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-							clipboardItem.Name = displayText;
+			}).ContinueWith(t => {
+				var clipboardItem = new ClipboardItem();
+				if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
+					//this._clipboardPrevTime = DateTime.Now;
+					try {
+						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+						clipboardItem.Name = displayText;
 
-							this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
-						} catch(Exception ex) {
-							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-						}
+						this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+					} catch(Exception ex) {
+						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
-				},
-				TaskScheduler.FromCurrentSynchronizationContext()
-			);
+				}
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		#endregion //////////////////////////////////////////
@@ -339,7 +323,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
-
+		void InitializeWindowList(CommandLine commandLine, StartupLogger logger)
+		{
+			this._windowListItems = new FixedSizedList<WindowListItem>(this._commonData.MainSetting.WindowSaveCount);
+		}
 		/// <summary>
 		/// NOTE: 将来的な予約
 		/// </summary>
@@ -626,6 +613,49 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 
+		void AttachmentApplicationsSubMenu(ToolStripMenuItem parentItem)
+		{
+			var menuList = new List<ToolStripItem>();
+			foreach(var applicationItem in this._commonData.ApplicationSetting.Items) {
+				var launcherItem = new LauncherItem();
+				launcherItem.Name = applicationItem.Name;
+				launcherItem.Command = applicationItem.Name;
+				launcherItem.LauncherType = LauncherType.Embedded;
+
+				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
+
+				var menuItem = new ToolStripMenuItem();
+
+				menuItem.Tag = applicationItem;
+				menuItem.Image = IconUtility.ImageFromIcon(icon, IconScale.Small);
+
+				menuItem.Click += (object sender, EventArgs e) => {
+					if(this._commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
+						this._commonData.ApplicationSetting.KillApplicationItem(launcherItem);
+					} else {
+						Executor.RunItem(launcherItem, this._commonData);
+					}
+				};
+
+				menuList.Add(menuItem);
+			}
+
+			parentItem.DropDownItems.AddRange(menuList.ToArray());
+
+			parentItem.Name = menuNameApplications;
+			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
+
+			parentItem.DropDownOpening += (object sender, EventArgs e) => {
+				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+				foreach(var menuItem in menuItems.Where(m => m is ToolStripMenuItem).Cast<ToolStripMenuItem>()) {
+					var applicationItem = menuItem.Tag as ApplicationItem;
+					if(applicationItem != null) {
+						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
+					}
+				}
+			};
+		}
+
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
 		{
 			var menuList = new List<ToolStripItem>();
@@ -696,8 +726,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			itemClipboard.Name = menuNameSystemEnvClipboard;
 			itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
 			itemClipboard.Click += (object sender, EventArgs e) => {
-				this._commonData.MainSetting.Clipboard.Visible = !this._commonData.MainSetting.Clipboard.Visible;
-				this._clipboardWindow.Visible = this._commonData.MainSetting.Clipboard.Visible;
+				SwitchShowClipboard();
 			};
 
 			// サブメニュー設定
@@ -712,6 +741,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
 				ToolStripUtility.SetSafeShortcutKeys(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey(), this._commonData.Logger);
 				ToolStripUtility.SetSafeShortcutKeys(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeys(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting.GetShorcutKey(), this._commonData.Logger);
 			};
 
 		}
@@ -726,6 +756,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//var itemWindow = new MenuItem();
 			var itemToolbar = new ToolStripMenuItem();
 			var itemNote = new ToolStripMenuItem();
+			var itemApplications = new ToolStripMenuItem();
 			var itemLogger = new ToolStripMenuItem();
 			var itemSystemEnv = new ToolStripMenuItem();
 			var itemSetting = new ToolStripMenuItem();
@@ -737,6 +768,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemToolbar);
 			menuList.Add(itemNote);
+			menuList.Add(itemApplications);
 			menuList.Add(itemLogger);
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemSystemEnv);
@@ -753,6 +785,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			AttachmentNoteSubMenu(itemNote);
 
+			AttachmentApplicationsSubMenu(itemApplications);
+			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
 			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log;
@@ -774,26 +808,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 情報
 			itemAbout.Name = menuNameAbout;
 			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
-			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(
-				() => {
-					var checkUpdate = false;
-					using(var dialog = new AboutForm()) {
-						dialog.SetCommonData(this._commonData);
-						dialog.ShowDialog();
-						checkUpdate = dialog.CheckUpdate;
-					}
-					if(checkUpdate) {
-						CheckUpdateProcessWait(true);
-					}
-
-					return null;
+			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
+				var checkUpdate = false;
+				using(var dialog = new AboutForm()) {
+					dialog.SetCommonData(this._commonData);
+					dialog.ShowDialog();
+					checkUpdate = dialog.CheckUpdate;
 				}
-			);
+				if(checkUpdate) {
+					CheckUpdateProcessWait(true);
+				}
+
+				return null;
+			});
 
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
 			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help;
-			itemHelp.Click += (object sender, EventArgs e) => Executer.RunCommand(Literal.HelpDocumentURI, this._commonData);
+			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
 			// 終了
 			itemExit.Name = menuNameExit;
@@ -919,6 +951,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeCommandForm(commandLine, logger);
 			InitializeToolbarForm(commandLine, logger);
 			InitializeNoteForm(commandLine, logger);
+			InitializeWindowList(commandLine, logger);
 
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/ui/end"], string.Empty);
 		}
@@ -1064,12 +1097,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageSystemEnvWindowMenu(itemWindow);
 		}
 
+		void ApplyLanguageApplicationsMenu(ToolStripDropDownItem parentItem)
+		{
+			var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+			foreach(var menuItem in menuItems) {
+				var applicationItem = menuItem.Tag as ApplicationItem;
+				if(applicationItem != null) {
+					menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
+				}
+			}
+		}
+
 		void ApplyLanguageMainMenu()
 		{
 			var rootMenu = this._contextMenu.Items;
 
 			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
 			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			rootMenu[menuNameApplications].Text = this._commonData.Language["main/menu/applications"];
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];
 
@@ -1078,6 +1123,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			var systemEnvMenu = (ToolStripDropDownItem)rootMenu[menuNameSystemEnv];
 			ApplyLanguageSystemEnvMenu(systemEnvMenu);
+
+			var applicationsMenu = (ToolStripDropDownItem)rootMenu[menuNameApplications];
+			ApplyLanguageApplicationsMenu(applicationsMenu);
 
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
@@ -1387,17 +1435,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/create"]);
 					CreateNote(Point.Empty);
 					break;
+
 				case HotKeyId.HiddenNote:
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/hidden"]);
 					HiddenNote();
 					break;
+
 				case HotKeyId.CompactNote:
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/compact"]);
 					CompactNote();
 					break;
+
 				case HotKeyId.ShowFrontNote:
 					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/show-front"]);
 					ShowFrontNote();
+					break;
+
+				case HotKeyId.SwitchClipboardShow:
+					SwitchShowClipboard();
 					break;
 
 				default:
@@ -1468,6 +1523,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
+		void SwitchShowClipboard()
+		{
+			this._commonData.MainSetting.Clipboard.Visible = !this._commonData.MainSetting.Clipboard.Visible;
+			this._clipboardWindow.Visible = this._commonData.MainSetting.Clipboard.Visible;
+		}
+
 		UpdateData CheckUpdate(bool force)
 		{
 			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC, this._commonData);
@@ -1498,19 +1559,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void CheckUpdateProcessAsync(bool force)
 		{
-			Task.Factory.StartNew(
-				() => {
-					if(!force) {
-						Thread.Sleep(Literal.updateWaitTime);
-					}
-					return CheckUpdate(force);
+			Task.Factory.StartNew(() => {
+				if(!force) {
+					Thread.Sleep(Literal.updateWaitTime);
 				}
-			).ContinueWith(
-				t => {
-					CheckedUpdate(force, t.Result);
-				},
-				TaskScheduler.FromCurrentSynchronizationContext()
-			);
+				return CheckUpdate(force);
+			}).ContinueWith(t => {
+				CheckedUpdate(force, t.Result);
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
 		void CheckUpdateProcessWait(bool force)
@@ -1525,30 +1581,28 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <param name="updateData"></param>
 		void ShowUpdateDialog(UpdateData updateData)
 		{
-			PauseOthers(
-				() => {
-					try {
-						using(var dialog = new UpdateForm()) {
-							dialog.UpdateData = updateData;
-							dialog.SetCommonData(this._commonData);
-							if(dialog.ShowDialog() == DialogResult.OK) {
-								// 現在設定を保持する
-								AppUtility.SaveSetting(this._commonData);
-								if(updateData.Execute()) {
-									return () => {
-										CloseApplication(false);
-										return false;
-									};
-								}
+			PauseOthers(() => {
+				try {
+					using(var dialog = new UpdateForm()) {
+						dialog.UpdateData = updateData;
+						dialog.SetCommonData(this._commonData);
+						if(dialog.ShowDialog() == DialogResult.OK) {
+							// 現在設定を保持する
+							AppUtility.SaveSetting(this._commonData);
+							if(updateData.Execute()) {
+								return () => {
+									CloseApplication(false);
+									return false;
+								};
 							}
 						}
-					} catch(Exception ex) {
-						// #96
-						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
-					return null;
+				} catch(Exception ex) {
+					// #96
+					this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 				}
-			);
+				return null;
+			});
 		}
 
 		void ResetLauncherFileList()
@@ -1570,27 +1624,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		public void ShowHomeDialog()
 		{
-			PauseOthers(
-				() => {
-					using(var dialog = new HomeForm()) {
-						dialog.SetCommonData(this._commonData);
-						dialog.ShowDialog();
-						if(dialog.ItemFound) {
-							return () => {
-								// ログがあれば構築
-								if(dialog.LogList.Count != 0) {
-									this._logForm.PutsList(dialog.LogList, true);
-								}
-								// 初期化
-								ResetUI();
-								return true;
-							};
-						} else {
-							return null;
-						}
+			PauseOthers(() => {
+				using(var dialog = new HomeForm()) {
+					dialog.SetCommonData(this._commonData);
+					dialog.ShowDialog();
+					if(dialog.ItemFound) {
+						return () => {
+							// ログがあれば構築
+							if(dialog.LogList.Count != 0) {
+								this._logForm.PutsList(dialog.LogList, true);
+							}
+							// 初期化
+							ResetUI();
+							return true;
+						};
+					} else {
+						return null;
 					}
 				}
-			);
+			});
 		}
 
 		void OpeningNoteMenu()
@@ -1764,9 +1816,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		public void PushWindowListItem(WindowListItem windowListItem)
 		{
+			/*
 			if(this._commonData.MainSetting.WindowSaveCount <= this._windowListItems.Count) {
 				this._windowListItems.RemoveRange(0, this._windowListItems.Count - this._commonData.MainSetting.WindowSaveCount + 1);
 			}
+			*/
 			this._windowListItems.Add(windowListItem);
 		}
 

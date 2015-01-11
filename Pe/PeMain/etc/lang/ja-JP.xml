@@ -83,6 +83,7 @@
 		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
+		<Word Name="main/menu/applications"                 Text="組み込みアイテム(&amp;E)" />
 		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />
@@ -119,6 +120,7 @@
 		<Word Name="hotkey/regist/hidden-note"     Text="${hotkey}${regist}: ${note}${hidden}" />
 		<Word Name="hotkey/regist/compact-note"    Text="${hotkey}${regist}: ${note}最小化" />
 		<Word Name="hotkey/regist/show-front-note" Text="${hotkey}${regist}: ${note}${show-front}" />
+		<Word Name="hotkey/regist/clipboard"       Text="${hotkey}${regist}: ホットキー${show-front}" />
 
 		<Word Name="balloon/hidden-file/title" Text="${hidden-file}" />
 		<Word Name="balloon/hidden-file/show"  Text="${hidden-file}を${show}" />
@@ -156,7 +158,7 @@
 		<Word Name="home/launcher/dialog/found/caption"    Text="登録処理が完了しました。" />
 		<Word Name="home/launcher/dialog/found/message"    Text="登録処理が完了しました。" />
 		<Word Name="home/command/launcher"  Text="ランチャーアイテム自動登録" />
-		<Word Name="home/label/launcher"    Text="使用環境から自動的にランチャーアイテムを構築します&#x0d;&#x0a;※実装中機能になります。" />
+		<Word Name="home/label/launcher"    Text="使用環境から自動的にランチャーアイテムを構築します。&#x0d;&#x0a;※実装中機能になります。" />
 		<Word Name="home/command/notify"  Text="${tasktray}設定" />
 		<Word Name="home/label/notify"    Text="${tasktray}の@[APPLICATION]アイコンを常に表示することにより操作しやすくなります。" />
 		<Word Name="home/command/startup" Text="スタートアップ登録" />
@@ -316,7 +318,8 @@
 		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
 		<Word Name="setting/group/clipboard-type"         Text="取り込む種類" />
-		
+		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
+
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
 		<Word Name="about/command/backup"    Text="バックアップ" />

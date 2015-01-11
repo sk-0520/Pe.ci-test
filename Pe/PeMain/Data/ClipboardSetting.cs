@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -167,6 +165,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 			SleepTime = Literal.clipboardSleepTime.median;
 			WaitTime = Literal.clipboardWaitTime.median;
+
+			ToggleHotKeySetting = new HotKeySetting();
 		}
 
 		/// <summary>
@@ -258,5 +258,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
 		}
+
+		public HotKeySetting ToggleHotKeySetting { get; set; }
 	}
 }

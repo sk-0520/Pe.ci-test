@@ -1,34 +1,21 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2014/02/05
- * 時刻: 21:38
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Xml.XPath;
-
-using System.Windows.Forms.VisualStyles;
+using System.Threading;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.UI;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using System.Threading;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.Applications;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	/// <summary>
 	/// 実行処理共通化。
 	/// </summary>
-	public static class Executer
+	public static class Executor
 	{
 		/// <summary>
 		/// ファイルアイテムの実行。
@@ -129,8 +116,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		private static Process RunCommandItem(LauncherItem launcherItem, CommonData commonData)
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
-			
-			return RunCommand(launcherItem.Command, commonData);
+
+			return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
 		}
 		
 		/// <summary>
@@ -190,6 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			applicationExecuteItem.Process.EnableRaisingEvents = true;
 			applicationExecuteItem.Process.Exited += (object sender, EventArgs e) => {
 				commonData.ApplicationSetting.ExecutingItems.Remove(applicationExecuteItem);
+				applicationExecuteItem.ToDispose();
 			};
 
 			return process;
@@ -223,18 +211,27 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 					throw new NotImplementedException();
 			}
 		}
-		
+
+		public static Process RunCommand(string expandPath, CommonData commonData)
+		{
+			return RunCommand(expandPath, null, commonData);
+		}
+
 		/// <summary>
 		/// コマンド文字列の実行。
 		/// </summary>
 		/// <param name="expandPath">環境変数展開済みコマンド文字列。</param>
 		/// <param name="commonData"></param>
 		/// <returns></returns>
-		public static Process RunCommand(string expandPath, CommonData commonData)
+		public static Process RunCommand(string expandPath, string arguments, CommonData commonData)
 		{
 			string exCommand = expandPath;
-			
-			return Process.Start(exCommand);
+
+			if(string.IsNullOrWhiteSpace(arguments)) {
+				return Process.Start(exCommand);
+			} else {
+				return Process.Start(exCommand, arguments);
+			}
 		}
 		
 		/// <summary>
@@ -259,6 +256,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return Process.Start(expandPath);
 		}
 
+		public static Process OpenDirectoryWithFileSelect(string expandPath, CommonData commonData, LauncherItem openItem)
+		{
+			if(FileUtility.Exists(expandPath)) {
+				var processName = "explorer.exe";
+				var argument = string.Format("/select, {0}", expandPath);
+				return Process.Start(processName, argument);
+			} else {
+				var dirPath = Path.GetDirectoryName(expandPath);
+				return OpenDirectory(dirPath, commonData, openItem);
+			}
+		}
+
 		/// <summary>
 		/// プロパティを表示。
 		/// </summary>
@@ -270,7 +279,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 
-	public static class SystemExecuter
+	public static class SystemExecutor
 	{
 		public static Process RunDLL(string command, CommonData commonData)
 		{

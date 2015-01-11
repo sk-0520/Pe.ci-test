@@ -118,9 +118,6 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="..\Common-Applications\EnvironmentVariable.cs">
-      <Link>IF\EnvironmentVariable.cs</Link>
-    </Compile>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
@@ -153,7 +150,7 @@
     <Compile Include="Logic\DB\NoteDB.cs" />
     <Compile Include="Logic\DrawUtility.cs" />
     <Compile Include="Logic\EnumToText.cs" />
-    <Compile Include="Logic\Executer.cs" />
+    <Compile Include="Logic\Executor.cs" />
     <Compile Include="Logic\FileLogger.cs" />
     <Compile Include="Logic\AppInformation.cs" />
     <Compile Include="Logic\LanguageUtility.cs" />
@@ -360,13 +357,6 @@
       <DependentUpon>app.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="app.Release.config">
-      <DependentUpon>app.config</DependentUpon>
-      <IsTransformFile>True</IsTransformFile>
-    </None>
-    <None Include="bat\clean.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="bat\log.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -655,6 +645,7 @@
     <Content Include="doc\license\Applications\Hash.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Image\Applications.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

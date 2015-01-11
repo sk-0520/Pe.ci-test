@@ -1,19 +1,10 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/15
- * 時刻: 21:39
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
@@ -120,6 +111,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		ToolbarItem _toolbarSelectedToolbarItem = null;
 
 		ApplicationSetting _applicationSetting;
+
+		string[] _commandList;
 		#endregion ////////////////////////////////////
 
 		#region event
@@ -296,7 +289,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}
 
-
 		void InitializeToolbar(ToolbarSetting toolbarSetting)
 		{
 			//this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
@@ -378,6 +370,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
 			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
 			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
+
+			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
 		}
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
@@ -400,6 +394,33 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 
+		void InitializeCommand()
+		{
+			//_commandList
+			var osDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+			var systemDirPath = Environment.SystemDirectory;
+
+			var pathDirList = Environment.GetEnvironmentVariable("PATH")
+				.Split(';')
+				.Select(Environment.ExpandEnvironmentVariables)
+				.Where(s => string.Compare(s, osDirPath, true) == 0 || string.Compare(s, systemDirPath, true) == 0)
+				.Distinct()
+			;
+
+			var dirList = new List<string>(new[] { osDirPath, systemDirPath });
+			dirList.AddRange(pathDirList);
+
+			this._commandList = dirList
+				.Where(Directory.Exists)
+				.Select(s => Directory.EnumerateFiles(s, "*.exe"))
+				.SelectMany(list => list)
+				.Select(Path.GetFileNameWithoutExtension)
+				.OrderBy(s => s)
+				.Distinct()
+				.ToArray()
+			;
+		}
+
 		void Initialize(Language language, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
@@ -407,28 +428,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Language = language;
 			this._applicationSetting = applicationSetting;
 
+			InitializeCommand();
+
 			InitializeUI(mainSetting, db);
 		}
 
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguageClipboard()
-		{
-			this.labelClipboardLimit.SetLanguage(Language);
-			this.labelClipboardWaitTaime.SetLanguage(Language);
-			this.labelClipboardSleepTime.SetLanguage(Language);
-			this.selectClipboardEnabled.SetLanguage(Language);
-			this.selectClipboardAppEnabled.SetLanguage(Language);
-			this.selectClipboardTopMost.SetLanguage(Language);
-			this.selectClipboardVisible.SetLanguage(Language);
-			this.groupClipboardType.SetLanguage(Language);
-			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
-			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
-			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
-			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
-			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
-		}
+
 		void ApplyLanguageTab()
 		{
 			this.tabSetting_pageMain.SetLanguage(Language);
@@ -575,7 +583,27 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			
 		}
-		
+
+		void ApplyLanguageClipboard()
+		{
+			this.inputClipboardHotkey.SetLanguage(Language);
+
+			this.labelClipboardLimit.SetLanguage(Language);
+			this.labelClipboardWaitTaime.SetLanguage(Language);
+			this.labelClipboardSleepTime.SetLanguage(Language);
+			this.labelClipboardHotkey.SetLanguage(Language);
+			this.selectClipboardEnabled.SetLanguage(Language);
+			this.selectClipboardAppEnabled.SetLanguage(Language);
+			this.selectClipboardTopMost.SetLanguage(Language);
+			this.selectClipboardVisible.SetLanguage(Language);
+			this.groupClipboardType.SetLanguage(Language);
+			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
+			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
+			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
+			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
+			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+		}
+
 		void ApplyLanguage()
 		{
 			Debug.Assert(Language != null);
@@ -797,6 +825,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 		}
+
+
 		void ExportClipboardSetting(ClipboardSetting setting)
 		{
 			setting.Limit = (int)this.inputClipboardLimit.Value;
@@ -820,6 +850,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				clipboardType |= type;
 			}
 			setting.EnabledTypes = clipboardType;
+
+			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
 		}
 		#endregion ////////////////////////////////////
 
@@ -950,6 +982,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				//this.inputLauncherCommand.Text = item.Command;
 			} else {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDown;
+				if(item.LauncherType == LauncherType.Command) {
+					/*
+					var commandList = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Text_CommandList
+						.SplitLines()
+						.Select(s => s.Trim())
+						.Where(s => !string.IsNullOrWhiteSpace(s))
+						.OrderBy(s => s)
+						.ToArray()
+					;
+					this.inputLauncherCommand.DataSource = commandList;
+					*/
+					this.inputLauncherCommand.Items.AddRange(this._commandList);
+				} else {
+					this.inputLauncherCommand.Items.Clear();
+				}
+
 				this.inputLauncherCommand.Text = item.Command;
 			}
 
@@ -1087,7 +1135,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 							this.commandLauncherOptionFilePath,
 							this.commandLauncherOptionDirPath,
 							this.commandLauncherWorkDirPath,
-							this.inputLauncherOption,
+							//this.inputLauncherOption,
 							this.inputLauncherWorkDirPath,
 							this.selectLauncherStdStream,
 							this.selectLauncherAdmin,

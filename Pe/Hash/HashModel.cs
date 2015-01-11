@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 
 namespace ContentTypeTextNet.Pe.Applications.Hash
@@ -43,6 +37,10 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 		public string SHA1 { get; set; }
 		public string MD5 { get; set; }
 		public string CRC32 { get; set; }
+		public decimal PercentSHA1 { get; set; }
+		public decimal PercentMD5 { get; set; }
+		public decimal PercentCRC32 { get; set; }
+
 		public string Compare { get; set; }
 	}
 }

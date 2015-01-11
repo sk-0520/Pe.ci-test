@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ContentTypeTextNet.Pe.Applications
+namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// 環境変数名。
@@ -24,7 +27,7 @@ namespace ContentTypeTextNet.Pe.Applications
 		/// <returns></returns>
 		public static IEnumerable<string> GetEVNames()
 		{
-			return new [] {
+			return new[] {
 				systemExecuteFilePath,
 				systemDirectoryPath,
 				systemSettingDirectoryPath,

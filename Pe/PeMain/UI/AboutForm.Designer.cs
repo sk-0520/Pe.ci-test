@@ -45,7 +45,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkDevelopment = new System.Windows.Forms.LinkLabel();
 			this.commandExecuteDir = new System.Windows.Forms.Button();
 			this.commandDataDir = new System.Windows.Forms.Button();
-			this.commandBackupDir = new System.Windows.Forms.Button();
 			this.labelConfiguration = new System.Windows.Forms.Label();
 			this.linkMail = new System.Windows.Forms.LinkLabel();
 			this.commandUpdate = new System.Windows.Forms.Button();
@@ -166,20 +165,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandDataDir.UseVisualStyleBackColor = true;
 			this.commandDataDir.Click += new System.EventHandler(this.CommandDataDir_Click);
-			// 
-			// commandBackupDir
-			// 
-			this.commandBackupDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandBackupDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
-			this.commandBackupDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandBackupDir.Location = new System.Drawing.Point(523, 76);
-			this.commandBackupDir.Name = "commandBackupDir";
-			this.commandBackupDir.Size = new System.Drawing.Size(101, 27);
-			this.commandBackupDir.TabIndex = 4;
-			this.commandBackupDir.Text = ":about/command/backup";
-			this.commandBackupDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.commandBackupDir.UseVisualStyleBackColor = true;
-			this.commandBackupDir.Click += new System.EventHandler(this.CommandBackupDir_Click);
 			// 
 			// labelConfiguration
 			// 
@@ -376,7 +361,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Controls.Add(this.commandChangelog);
 			this.Controls.Add(this.gridComponents);
 			this.Controls.Add(this.commandUpdate);
-			this.Controls.Add(this.commandBackupDir);
 			this.Controls.Add(this.commandDataDir);
 			this.Controls.Add(this.commandExecuteDir);
 			this.Controls.Add(this.commandOk);
@@ -409,7 +393,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Button commandUpdate;
 		private System.Windows.Forms.LinkLabel linkMail;
 		private System.Windows.Forms.Label labelConfiguration;
-		private System.Windows.Forms.Button commandBackupDir;
 		private System.Windows.Forms.Button commandDataDir;
 		private System.Windows.Forms.Button commandExecuteDir;
 		private System.Windows.Forms.LinkLabel linkDevelopment;
