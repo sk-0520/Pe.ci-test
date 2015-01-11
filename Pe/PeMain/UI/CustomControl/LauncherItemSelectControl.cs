@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
+﻿
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Drawing.Text;
+	using System.Linq;
+	using System.Text.RegularExpressions;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// Description of LauncherItemSelectControl.
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private bool _itemEdit;
 		private LauncherItemSelecterType _filterType;
 		private List<LauncherItem> _items;
-		private List<LauncherItem> _viewItems;
+		private IEnumerable<LauncherItem> _viewItems;
 		private bool _filtering;
 		#endregion ////////////////////////////////////
 
@@ -96,13 +96,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		public IList<LauncherItem> Items { get { return this._items; } }
 		
-		public IEnumerable<LauncherItem> ViewItems
-		{
-			get
-			{
-				return this._viewItems;
-			}
-		}
+		public IEnumerable<LauncherItem> ViewItems { get { return this._viewItems; } }
 		
 		public bool Filtering
 		{
@@ -292,8 +286,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.listLauncherItems.Items.Add(item);
 			this.listLauncherItems.SelectedItem = item;
 		}
-		
-		List<LauncherItem> ApplyFilter()
+
+		IEnumerable<LauncherItem> ApplyFilter()
 		{
 			var srcPattern = this.toolLauncherItems_input.Text;
 			var wldPattern = TextUtility.RegexPatternToWildcard(srcPattern);
@@ -311,8 +305,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(type == LauncherItemSelecterType.Full || type == LauncherItemSelecterType.Tag) {
 				list.AddRange(tagSeq);
 			}
-			
-			return list.Distinct().ToList();
+
+			return list.Distinct();
 		}
 		#endregion ////////////////////////////////////
 
