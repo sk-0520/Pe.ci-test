@@ -767,7 +767,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			SetToolButtons(UseToolbarItem.IconScale, toolButtonList);
 		}
-		
+
+		void OpenDir(LauncherItem launcherItem)
+		{
+			try {
+				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+				Executor.OpenDirectoryWithFileSelect(expandPath, Path.GetFileName(expandPath), CommonData, null);
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+			}
+		}
+
 		void OpenDir(string path)
 		{
 			try {
@@ -811,7 +821,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(Path.GetDirectoryName(launcherItem.Command));
+			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];

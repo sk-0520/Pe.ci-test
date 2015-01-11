@@ -256,6 +256,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return Process.Start(expandPath);
 		}
 
+		public static Process OpenDirectoryWithFileSelect(string expandPath, string fileName, CommonData commonData, LauncherItem openItem)
+		{
+		}
+
 		/// <summary>
 		/// プロパティを表示。
 		/// </summary>
