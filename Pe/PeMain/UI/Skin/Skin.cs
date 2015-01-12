@@ -104,6 +104,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		static IReadOnlyDictionary<SkinIcon, Icon> _skinIconMap = new Dictionary<SkinIcon, Icon>() {
 			{ SkinIcon.App, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
+			{ SkinIcon.Tasktray, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
 			{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command },
 			{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound },
 			{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain },

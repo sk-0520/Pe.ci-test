@@ -27,7 +27,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			shortcut.Save();
 		}
 		
-		public static Image GetAppIcon(IconScale iconScale)
+		public static Image GetAppIcon(ISkin skin, IconScale iconScale)
 		{
 			/*
 			var iconSize = iconScale.ToSize();

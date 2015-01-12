@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 	public enum SkinIcon
 	{
 		App,
+		Tasktray,
 		Command,
 		NotFound,
 		ToolbarMain,

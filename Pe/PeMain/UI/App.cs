@@ -807,7 +807,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 情報
 			itemAbout.Name = menuNameAbout;
-			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
+			itemAbout.Image = AppUtility.GetAppIcon(this._commonData.Skin, IconScale.Small);
 			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
@@ -863,15 +863,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var iconRect = new Rectangle(Point.Empty, iconSize);
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
-					using(var icon = AppUtility.GetAppIcon(IconScale.Small)) {
+					using(var icon = AppUtility.GetAppIcon(this._commonData.Skin, IconScale.Small)) {
 						g.DrawImage(icon, iconRect);
 					}
 #if DEBUG
-					/*
-					using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
-						g.FillRectangle(b, iconRect);
-					}
-					 */
 					DrawUtility.MarkingDebug(g, iconRect);
 #endif
 				}
