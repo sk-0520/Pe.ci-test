@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using System.Windows.Forms.VisualStyles;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -16,6 +18,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public abstract class Skin: ISkin
 	{
+		#region Skin
+
 		protected class ToolbarButtonData
 		{
 			public ToolbarButtonData()
@@ -37,7 +41,78 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			public Rectangle ButtonArea { get; set; }
 			public Rectangle MenuArea { get; set; }
 		}
-		
+
+		#region Resource
+
+		static IReadOnlyDictionary<SkinImage, Image> _skinImageMap = new Dictionary<SkinImage, Image>() {
+			{ SkinImage.Add, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Add },
+			{ SkinImage.AddItem, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_AddItem },
+			{ SkinImage.Applications, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications },
+			{ SkinImage.Changelog, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Changelog },
+			{ SkinImage.Clear, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear },
+			{ SkinImage.Clipboard, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard },
+			{ SkinImage.ClipboardCopy, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy },
+			{ SkinImage.ClipboardFile, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile },
+			{ SkinImage.ClipboardHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml },
+			{ SkinImage.ClipboardImage, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage },
+			{ SkinImage.ClipboardRichTextFormat, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat },
+			{ SkinImage.ClipboardText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText },
+			{ SkinImage.Close, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close },
+			{ SkinImage.Comment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Comment },
+			{ SkinImage.Config, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config },
+			{ SkinImage.CustomColor, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_CustomColor },
+			{ SkinImage.Dir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir },
+			{ SkinImage.Disk, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Disk },
+			{ SkinImage.Down, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Down },
+			{ SkinImage.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Error },
+			{ SkinImage.File, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File },
+			{ SkinImage.Filter, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Filter },
+			{ SkinImage.Find, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Find },
+			{ SkinImage.Finder, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Finder },
+			{ SkinImage.Flag, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Flag },
+			{ SkinImage.Font, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Font },
+			{ SkinImage.FontStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_FontStyle },
+			{ SkinImage.Group, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group },
+			{ SkinImage.Help, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help },
+			{ SkinImage.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Information },
+			{ SkinImage.Kill, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Kill },
+			{ SkinImage.Lock, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Lock },
+			{ SkinImage.Log, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log },
+			{ SkinImage.Name, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Name },
+			{ SkinImage.Note, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note },
+			{ SkinImage.NoteBody, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteBody },
+			{ SkinImage.NoteTitle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle },
+			{ SkinImage.NotImpl, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
+			{ SkinImage.OpenDir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_OpenDir },
+			{ SkinImage.Pin, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin },
+			{ SkinImage.Refresh, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Refresh },
+			{ SkinImage.Remove, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove },
+			{ SkinImage.Save, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save },
+			{ SkinImage.SideContract, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideContract },
+			{ SkinImage.SideExpand, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideExpand },
+			{ SkinImage.SystemEnvironment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment },
+			{ SkinImage.Tag, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Tag },
+			{ SkinImage.Toolbar, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar },
+			{ SkinImage.Unlock, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Unlock },
+			{ SkinImage.Up, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Up },
+			{ SkinImage.Update, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Update },
+			{ SkinImage.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Warning },
+			{ SkinImage.WindowList, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList },
+			{ SkinImage.WindowLoad, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad },
+			{ SkinImage.Windows, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Windows },
+			{ SkinImage.WindowSave, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave },
+		};
+
+		static IReadOnlyDictionary<SkinIcon, Icon> _skinIconMap = new Dictionary<SkinIcon, Icon>() {
+			{ SkinIcon.App, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
+			{ SkinIcon.Tasktray, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
+			{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command },
+			{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound },
+			{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain },
+		};
+
+		#endregion
+
 		protected bool EnabledAeroStyle { get; set; }
 		//protected bool EnabledVisualStyle { get; set; }
 		
@@ -121,6 +196,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return isAero;
 		}
 		
+		#endregion
+
 		public virtual void Start(Form target)
 		{
 			EnabledAeroStyle = IsEnabledAeroStyle();
@@ -132,8 +209,57 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Close(target);
 			Start(target);
 		}
+
+		#region Resource
 		
-#region Layout Toolbar
+		public Image GetImage(SkinImage skinImage)
+		{
+			Image result;
+			if(_skinImageMap.TryGetValue(skinImage, out result)) {
+				return result;
+			} else {
+				//return global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
+				return null;
+			}
+		}
+		
+		public Icon GetIcon(SkinIcon skinIcon)
+		{
+			Icon result;
+			if(_skinIconMap.TryGetValue(skinIcon, out result)) {
+				return result;
+			} else {
+				return null;
+			}
+		}
+
+		#endregion ///////////////////////////////////
+
+		#region CreateColorBox
+		public Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
+		{
+			var image = new Bitmap(size.Width, size.Height);
+
+			using(var g = Graphics.FromImage(image)) {
+				using(var brush = new SolidBrush(backColor)) {
+					using(var pen = new Pen(borderColor)) {
+						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
+						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
+					}
+				}
+			}
+
+			return image;
+		}
+
+		public Image CreateNoteBoxImage(Color color, Size size)
+		{
+			return CreateColorBoxImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
+		}
+
+		#endregion ///////////////////////////////////
+
+		#region Layout Toolbar
 
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);

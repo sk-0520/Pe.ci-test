@@ -27,15 +27,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			shortcut.Save();
 		}
 		
-		public static Image GetAppIcon(IconScale iconScale)
+		public static Image GetAppIcon(ISkin skin, IconScale iconScale)
 		{
-			/*
-			var iconSize = iconScale.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App, iconSize)) {
-				return icon.ToBitmap();
-			}
-			*/
-			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconScale);
+			return IconUtility.ImageFromIcon(skin.GetIcon(SkinIcon.App), iconScale);
 		}
 		
 		/// <summary>
@@ -47,27 +41,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return Control.ModifierKeys == Keys.Shift;
 		}
 		
-		public static Image CreateBoxColorImage(Color borderColor, Color backColor, Size size)
-		{
-			var image = new Bitmap(size.Width, size.Height);
-			
-			using(var g = Graphics.FromImage(image)) {
-				using(var brush = new SolidBrush(backColor)) {
-					using(var pen = new Pen(borderColor)) {
-						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
-						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
-					}
-				}
-			}
-			
-			return image;
-		}
-		
-		public static Image CreateNoteBoxImage(Color color, Size size)
-		{
-			return CreateBoxColorImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
-		}
-
 		public static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirPath)
 		{
 			var entryPath = path.Substring(baseDirPath.Length);

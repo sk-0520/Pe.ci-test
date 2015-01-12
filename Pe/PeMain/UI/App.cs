@@ -394,7 +394,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeNote(CommandLine commandLine, ILogger logger)
 		{ }
 
-		void InitializeApplicationExecuter(CommandLine commandLine, ILogger logger)
+		void InitializeApplicationExecutor(CommandLine commandLine, ILogger logger)
 		{
 			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
 		}
@@ -456,7 +456,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
 
-			InitializeApplicationExecuter(commandLine, logger);
+			InitializeApplicationExecutor(commandLine, logger);
 
 			return existsSettingFilePath;
 		}
@@ -492,7 +492,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				var screens = Screen.AllScreens.ToArray();
@@ -592,7 +592,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Note);
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -643,7 +643,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 
 			parentItem.Name = menuNameApplications;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
@@ -668,7 +668,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave;
+			itemSave.Image = this._commonData.Skin.GetImage(SkinImage.WindowSave);
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -676,7 +676,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad;
+			itemLoad.Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad);
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
@@ -684,7 +684,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.WindowList);
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 
@@ -724,7 +724,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// クリップボード
 			itemClipboard.Name = menuNameSystemEnvClipboard;
-			itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			itemClipboard.Image = this._commonData.Skin.GetImage(SkinImage.Clipboard);
+			
 			itemClipboard.Click += (object sender, EventArgs e) => {
 				SwitchShowClipboard();
 			};
@@ -789,7 +790,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log;
+			itemLogger.Image = this._commonData.Skin.GetImage(SkinImage.Log);
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -797,17 +798,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment;
+			itemSystemEnv.Image = this._commonData.Skin.GetImage(SkinImage.SystemEnvironment);
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config;
+			itemSetting.Image = this._commonData.Skin.GetImage(SkinImage.Config);
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 
 			// 情報
 			itemAbout.Name = menuNameAbout;
-			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
+			itemAbout.Image = AppUtility.GetAppIcon(this._commonData.Skin, IconScale.Small);
 			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
@@ -824,12 +825,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help;
+			itemHelp.Image = this._commonData.Skin.GetImage(SkinImage.Help);
 			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
 			// 終了
 			itemExit.Name = menuNameExit;
-			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close;
+			itemExit.Image = this._commonData.Skin.GetImage(SkinImage.Close);
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 
 			// メインメニュー
@@ -843,6 +844,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
 		{
 			this._commonData.Skin = new SystemSkin();
+
+			LauncherItem.SetSkin(this._commonData.Skin);
 		}
 
 		/// <summary>
@@ -859,19 +862,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 
+			// タスクトレイアイコン構築
 			var iconSize = IconScale.Small.ToSize();
 			var iconRect = new Rectangle(Point.Empty, iconSize);
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
-					using(var icon = AppUtility.GetAppIcon(IconScale.Small)) {
-						g.DrawImage(icon, iconRect);
-					}
+					g.DrawImage(IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.Tasktray), IconScale.Small), iconRect);
 #if DEBUG
-					/*
-					using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
-						g.FillRectangle(b, iconRect);
-					}
-					 */
 					DrawUtility.MarkingDebug(g, iconRect);
 #endif
 				}
@@ -904,7 +901,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._clipboardWindow.SetCommonData(this._commonData);
 			ChangeClipboard();
 		}
-
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{
@@ -1313,7 +1309,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <returns></returns>
 		Func<bool> OpenSettingDialog()
 		{
-			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
+			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.Skin, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
 					foreach(var note in this._noteWindowList) {
@@ -1675,9 +1671,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				menuItem.Text = noteItem.Title;
 				if(noteItem.Compact) {
 					menuItem.ImageScaling = ToolStripItemImageScaling.None;
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
 				} else {
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
 				}
 				menuItem.Checked = noteItem.Visible;
 				menuItem.Click += (object sender, EventArgs e) => {

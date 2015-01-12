@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ObjectDumper;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ObjectDumper;
+
 	/// <summary>
 	/// ログ。
 	/// </summary>
@@ -115,11 +115,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// イメージリストをリソースから構築
 			this._imageLogType = new ImageList();
 			this._imageLogType.ColorDepth = ColorDepth.Depth32Bit;
-			this._imageLogType.ImageSize = IconScale.Small.ToSize();
-			this._imageLogType.Images.Add(LogType.Information.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Information);
-			this._imageLogType.Images.Add(LogType.Warning.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Warning);
-			this._imageLogType.Images.Add(LogType.Error.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Error);
-			this.listLog.SmallImageList = this._imageLogType;
 			//this.listLog.LargeImageList = this._imageLogType;
 
 		}
@@ -160,6 +155,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.listStack_columnFile.Text = CommonData.Language["log/header/method"];
 			this.listStack_columnLine.Text = CommonData.Language["log/header/file"];
 			this.listStack_columnFunction.Text = CommonData.Language["log/header/title"];
+		}
+		#endregion ////////////////////////////////////
+
+		#region skin
+		void ApplySkin()
+		{
+			this.toolLog_save.Image = CommonData.Skin.GetImage(SkinImage.Save);
+			this.toolLog_clear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
+
+			this._imageLogType.Images.Clear();
+			this._imageLogType.ImageSize = IconScale.Small.ToSize();
+			this._imageLogType.Images.Add(LogType.Information.ToString(), CommonData.Skin.GetImage(SkinImage.Information));
+			this._imageLogType.Images.Add(LogType.Warning.ToString(), CommonData.Skin.GetImage(SkinImage.Warning));
+			this._imageLogType.Images.Add(LogType.Error.ToString(), CommonData.Skin.GetImage(SkinImage.Error));
+			this.listLog.SmallImageList = this._imageLogType;
 		}
 		#endregion ////////////////////////////////////
 
@@ -210,6 +220,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Debug.Assert(CommonData.MainSetting != null);
 
 			ApplyLanguage();
+			ApplySkin();
 			ApplyUI();
 		}
 
@@ -312,10 +323,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ChangeDetail(bool fullDetail)
 		{
 			if(fullDetail) {
-				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideExpand;
+				statusLog_itemDetail.Image = CommonData.Skin.GetImage(SkinImage.SideExpand);
 				statusLog_itemDetail.Text = CommonData.Language["log/label/detail-full"];
 			} else {
-				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideContract;
+				statusLog_itemDetail.Image = CommonData.Skin.GetImage(SkinImage.SideContract);
 				statusLog_itemDetail.Text = CommonData.Language["log/label/detail-split"];
 			}
 

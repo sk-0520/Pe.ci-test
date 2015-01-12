@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
@@ -21,6 +22,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region variable
 		Language _language;
+		ISkin _skin;
 		bool _event = false;
 		#endregion ////////////////////////////////////
 
@@ -71,6 +73,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region ISetSkin
+
+		public void SetSkin(ISkin skin)
+		{
+			ApplySkin(skin);
+			this._skin = skin;
+		}
+
+		#endregion ////////////////////////////////////
+
 		#region override
 		#endregion ////////////////////////////////////
 
@@ -86,6 +98,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.gridEnv_columnKey.SetLanguage(language);
 			this.gridEnv_columnValue.SetLanguage(language);
+		}
+		#endregion ////////////////////////////////////
+
+		#region skin
+		void ApplySkin(ISkin skin)
+		{
 		}
 		#endregion ////////////////////////////////////
 

@@ -95,6 +95,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region skin
+		void ApplySkin()
+		{
+			this.envUpdate.SetSkin(CommonData.Skin);
+			this.envRemove.SetSkin(CommonData.Skin);
+
+			this.commandOption_file.Image = CommonData.Skin.GetImage(SkinImage.File);
+			this.commandOption_dir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandWorkDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+		}
+		#endregion ////////////////////////////////////
+
 		#region function
 		public void SetParameter(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
@@ -107,6 +119,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Debug.Assert(LauncherItem != null);
 
 			ApplyLanguage();
+			ApplySkin();
 
 			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index, CommonData.ApplicationSetting);
 
