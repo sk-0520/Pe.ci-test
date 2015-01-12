@@ -631,6 +631,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterLauncher.SetSkin(Skin);
 			this.envLauncherUpdate.SetSkin(Skin);
 			this.envLauncherRemove.SetSkin(Skin);
+
+			toolToolbarGroup_addGroup.Image = Skin.GetImage(SkinImage.Group);
+			toolToolbarGroup_addItem.Image = Skin.GetImage(SkinImage.AddItem);
+			toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
+			toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
+			toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
 		}
 
 		void ApplySkinToolbar()
@@ -1277,9 +1283,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
-			var treeImage = new Dictionary<int, Bitmap>() {
-				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
-				{ TREE_TYPE_GROUP, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group },
+			var treeImage = new Dictionary<int, Image>() {
+				{ TREE_TYPE_NONE, Skin.GetImage(SkinImage.NotImpl) },
+				{ TREE_TYPE_GROUP, Skin.GetImage(SkinImage.Group) },
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
