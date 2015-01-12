@@ -492,7 +492,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				var screens = Screen.AllScreens.ToArray();
@@ -592,7 +592,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Note);
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -803,7 +803,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config;
+			itemSetting.Image = this._commonData.Skin.GetImage(SkinImage.Config);
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 
 			// 情報
