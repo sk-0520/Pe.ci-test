@@ -100,6 +100,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.envUpdate.SetSkin(CommonData.Skin);
 			this.envRemove.SetSkin(CommonData.Skin);
+
+			this.commandOption_file.Image = CommonData.Skin.GetImage(SkinImage.File);
+			this.commandOption_dir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandWorkDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
 		}
 		#endregion ////////////////////////////////////
 

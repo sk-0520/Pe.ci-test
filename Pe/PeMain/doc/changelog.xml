@@ -32,12 +32,12 @@
 			<li rev=""></li>
 		</ul>
 		<ul type="features">
-			<li rev=""></li>
+			<li rev="">指定して実行ダイアログをタスクバーに表示する</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li rev=""></li>
+			<li rev="">指定して実行ダイアログのオプションでディレクトリ選択ボタンがはるか彼方に消えていたのを修正</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
