@@ -29,13 +29,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		
 		public static Image GetAppIcon(ISkin skin, IconScale iconScale)
 		{
-			/*
-			var iconSize = iconScale.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App, iconSize)) {
-				return icon.ToBitmap();
-			}
-			*/
-			//return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconScale);
 			return IconUtility.ImageFromIcon(skin.GetIcon(SkinIcon.App), iconScale);
 		}
 		

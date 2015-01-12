@@ -96,8 +96,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// 見つからなかった時用アイコン。
 		/// </summary>
-		public static Dictionary<IconScale, Icon> notfoundIconMap;
-		public static Dictionary<IconScale, Icon> commandIconMap;
+		public static IReadOnlyDictionary<IconScale, Icon> notfoundIconMap;
+		public static IReadOnlyDictionary<IconScale, Icon> commandIconMap;
 		
 		public static void SetSkin(ISkin skin)
 		{
