@@ -74,15 +74,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			PointingUtility.AttachmentDefaultButton(this);
 
-			var iconSize = IconScale.Big.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconSize)) {
-				var image = new Bitmap(iconSize.Width, iconSize.Height);
-				using(var g = Graphics.FromImage(image)) {
-					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
-				}
-				this.imageIcon.Image = image;
-			}
-
 			this.labelAppName.Text = Literal.programName;
 			this.labelAppVersion.Text = Literal.ApplicationVersion;
 			this.labelConfiguration.Text = string.Format(
@@ -134,11 +125,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region skin
+		void ApplySkin()
+		{
+			this.imageIcon.Image = AppUtility.GetAppIcon(CommonData.Skin, IconScale.Big);
+
+			this.commandExecuteDir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandDataDir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+
+			this.commandChangelog.Image = CommonData.Skin.GetImage(SkinImage.Changelog);
+			this.commandUpdate.Image = CommonData.Skin.GetImage(SkinImage.Update);
+		}
+		#endregion ////////////////////////////////////
+
 		#region function
 
 		void ApplySetting()
 		{
 			ApplyLanguage();
+			ApplySkin();
 		}
 
 		void OpenDirectory(string path)
