@@ -49,6 +49,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		OpenDir,
 		Pin,
 		Refresh,
+		Reset,
 		Remove,
 		Save,
 		SideContract,

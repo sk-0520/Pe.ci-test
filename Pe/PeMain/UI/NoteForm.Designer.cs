@@ -107,26 +107,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// contextMenu
 			// 
 			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.contextMenu_itemTitle,
-									this.contextMenu_itemBody,
-									this.toolStripSeparator1,
-									this.contextMenu_itemCopy,
-									this.toolStripMenuItem3,
-									this.contextMenu_font,
-									this.contextMenu_itemForeColor,
-									this.contextMenu_itemBackColor,
-									this.toolStripSeparator2,
-									this.contextMenu_itemLock,
-									this.contextMenu_itemCompact,
-									this.contextMenu_itemTopmost,
-									this.toolStripSeparator3,
-									this.contextMenu_itemHidden,
-									this.contextMenu_itemRemove,
-									this.toolStripSeparator4,
-									this.contextMenu_itemExport,
-									this.contextMenu_itemImport});
+            this.contextMenu_itemTitle,
+            this.contextMenu_itemBody,
+            this.toolStripSeparator1,
+            this.contextMenu_itemCopy,
+            this.toolStripMenuItem3,
+            this.contextMenu_font,
+            this.contextMenu_itemForeColor,
+            this.contextMenu_itemBackColor,
+            this.toolStripSeparator2,
+            this.contextMenu_itemLock,
+            this.contextMenu_itemCompact,
+            this.contextMenu_itemTopmost,
+            this.toolStripSeparator3,
+            this.contextMenu_itemHidden,
+            this.contextMenu_itemRemove,
+            this.toolStripSeparator4,
+            this.contextMenu_itemExport,
+            this.contextMenu_itemImport});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(213, 342);
+			this.contextMenu.Size = new System.Drawing.Size(213, 320);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			// 
@@ -159,8 +159,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// contextMenu_font
 			// 
 			this.contextMenu_font.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.contextMenu_font_change,
-									this.contextMenu_font_reset});
+            this.contextMenu_font_change,
+            this.contextMenu_font_reset});
 			this.contextMenu_font.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Font;
 			this.contextMenu_font.Name = "contextMenu_font";
 			this.contextMenu_font.Size = new System.Drawing.Size(212, 22);
@@ -184,16 +184,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// contextMenu_itemForeColor
 			// 
 			this.contextMenu_itemForeColor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.contextMenu_itemForeColor_itemBlack,
-									this.contextMenu_itemForeColor_itemWhite,
-									this.contextMenu_itemForeColor_itemRed,
-									this.contextMenu_itemForeColor_itemGreen,
-									this.contextMenu_itemForeColor_itemBlue,
-									this.contextMenu_itemForeColor_itemYellow,
-									this.contextMenu_itemForeColor_itemOrange,
-									this.contextMenu_itemForeColor_itemPurple,
-									this.toolStripSeparator5,
-									this.contextMenu_itemForeColor_itemCustom});
+            this.contextMenu_itemForeColor_itemBlack,
+            this.contextMenu_itemForeColor_itemWhite,
+            this.contextMenu_itemForeColor_itemRed,
+            this.contextMenu_itemForeColor_itemGreen,
+            this.contextMenu_itemForeColor_itemBlue,
+            this.contextMenu_itemForeColor_itemYellow,
+            this.contextMenu_itemForeColor_itemOrange,
+            this.contextMenu_itemForeColor_itemPurple,
+            this.toolStripSeparator5,
+            this.contextMenu_itemForeColor_itemCustom});
 			this.contextMenu_itemForeColor.Name = "contextMenu_itemForeColor";
 			this.contextMenu_itemForeColor.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemForeColor.Text = ":note/menu/color-fore";
@@ -269,16 +269,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// contextMenu_itemBackColor
 			// 
 			this.contextMenu_itemBackColor.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.contextMenu_itemBackColor_itemBlack,
-									this.contextMenu_itemBackColor_itemWhite,
-									this.contextMenu_itemBackColor_itemRed,
-									this.contextMenu_itemBackColor_itemGreen,
-									this.contextMenu_itemBackColor_itemBlue,
-									this.contextMenu_itemBackColor_itemYellow,
-									this.contextMenu_itemBackColor_itemOrange,
-									this.contextMenu_itemBackColor_itemPurple,
-									this.toolStripSeparator6,
-									this.contextMenu_itemBackColor_itemCustom});
+            this.contextMenu_itemBackColor_itemBlack,
+            this.contextMenu_itemBackColor_itemWhite,
+            this.contextMenu_itemBackColor_itemRed,
+            this.contextMenu_itemBackColor_itemGreen,
+            this.contextMenu_itemBackColor_itemBlue,
+            this.contextMenu_itemBackColor_itemYellow,
+            this.contextMenu_itemBackColor_itemOrange,
+            this.contextMenu_itemBackColor_itemPurple,
+            this.toolStripSeparator6,
+            this.contextMenu_itemBackColor_itemCustom});
 			this.contextMenu_itemBackColor.Name = "contextMenu_itemBackColor";
 			this.contextMenu_itemBackColor.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemBackColor.Text = ":note/menu/color-back";
@@ -406,7 +406,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemExport
 			// 
-			this.contextMenu_itemExport.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Disk;
+			this.contextMenu_itemExport.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
 			this.contextMenu_itemExport.Name = "contextMenu_itemExport";
 			this.contextMenu_itemExport.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemExport.Text = ":note/menu/export";
@@ -465,6 +465,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemRemove;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemCustom;

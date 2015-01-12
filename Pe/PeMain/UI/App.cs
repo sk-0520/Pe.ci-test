@@ -1671,9 +1671,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				menuItem.Text = noteItem.Title;
 				if(noteItem.Compact) {
 					menuItem.ImageScaling = ToolStripItemImageScaling.None;
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
 				} else {
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
 				}
 				menuItem.Checked = noteItem.Visible;
 				menuItem.Click += (object sender, EventArgs e) => {

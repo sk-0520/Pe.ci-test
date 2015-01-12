@@ -7,6 +7,7 @@ using System.Windows.Forms.VisualStyles;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -213,17 +214,52 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		public Image GetImage(SkinImage skinImage)
 		{
-			return _skinImageMap[skinImage];
+			Image result;
+			if(_skinImageMap.TryGetValue(skinImage, out result)) {
+				return result;
+			} else {
+				//return global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
+				return null;
+			}
 		}
 		
 		public Icon GetIcon(SkinIcon skinIcon)
 		{
-			return _skinIconMap[skinIcon];
+			Icon result;
+			if(_skinIconMap.TryGetValue(skinIcon, out result)) {
+				return result;
+			} else {
+				return null;
+			}
 		}
 
-		#endregion
+		#endregion ///////////////////////////////////
 
-#region Layout Toolbar
+		#region CreateColorBox
+		public Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
+		{
+			var image = new Bitmap(size.Width, size.Height);
+
+			using(var g = Graphics.FromImage(image)) {
+				using(var brush = new SolidBrush(backColor)) {
+					using(var pen = new Pen(borderColor)) {
+						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
+						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
+					}
+				}
+			}
+
+			return image;
+		}
+
+		public Image CreateNoteBoxImage(Color color, Size size)
+		{
+			return CreateColorBoxImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
+		}
+
+		#endregion ///////////////////////////////////
+
+		#region Layout Toolbar
 
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
