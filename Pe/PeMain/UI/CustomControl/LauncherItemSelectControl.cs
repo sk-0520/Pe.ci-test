@@ -1,5 +1,4 @@
-﻿
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System;
 	using System.Collections.Generic;
@@ -27,6 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region variable
 		private Language _language;
+		ISkin _skin;
 		private bool _itemEdit;
 		private LauncherItemSelecterType _filterType;
 		private List<LauncherItem> _items;
@@ -134,6 +134,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region ISetSkin
+
+		public void SetSkin(ISkin skin)
+		{
+			ApplySkin(skin);
+			this._skin = skin;
+		}
+
+		#endregion ////////////////////////////////////
+
 		#region override
 		#endregion ////////////////////////////////////
 
@@ -171,6 +181,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolLauncherItems_type_tag.SetLanguage(language);
 
 			ToolLauncherItems_type_Click(this.toolLauncherItems_type_full, null);
+		}
+		#endregion ////////////////////////////////////
+
+		#region skin
+		void ApplySkin(ISkin skin)
+		{
 		}
 		#endregion ////////////////////////////////////
 

@@ -1313,7 +1313,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <returns></returns>
 		Func<bool> OpenSettingDialog()
 		{
-			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
+			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.Skin, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
 					foreach(var note in this._noteWindowList) {

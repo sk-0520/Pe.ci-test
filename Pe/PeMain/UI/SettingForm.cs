@@ -118,14 +118,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region event
 		#endregion ////////////////////////////////////
 
-		public SettingForm(Language language, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
+		public SettingForm(Language language, ISkin skin, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 
-			Initialize(language, setting, db, applicationSetting);
+			Initialize(language, skin, setting, db, applicationSetting);
 		}
 
 		#region property
@@ -133,6 +133,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// 使用言語データ
 		/// </summary>
 		public Language Language { get; private set; }
+		public ISkin Skin { get; private set; }
 
 		public MainSetting MainSetting { get; private set; }
 		#endregion ////////////////////////////////////
@@ -377,6 +378,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			ApplyLanguage();
+			ApplySkin();
 
 			InitializeMainSetting(mainSetting);
 			InitializeLauncher(mainSetting.Launcher);
@@ -421,11 +423,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			;
 		}
 
-		void Initialize(Language language, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
+		void Initialize(Language language, ISkin skin, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 
 			Language = language;
+			Skin = skin;
 			this._applicationSetting = applicationSetting;
 
 			InitializeCommand();
@@ -619,6 +622,28 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageDisplay();
 			ApplyLanguageClipboard();
 		}
+		#endregion ////////////////////////////////////
+
+		#region skin
+
+		void ApplySkinLauncher()
+		{
+			this.selecterLauncher.SetSkin(Skin);
+			this.envLauncherUpdate.SetSkin(Skin);
+			this.envLauncherRemove.SetSkin(Skin);
+		}
+
+		void ApplySkinToolbar()
+		{
+			this.selecterToolbar.SetSkin(Skin);
+		}
+
+		void ApplySkin()
+		{
+			ApplySkinLauncher();
+			ApplySkinToolbar();
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region function
@@ -1405,7 +1430,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region page/clipboard
 		#endregion ////////////////////////////////////
 		#endregion ////////////////////////////////////
-
 
 		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
 		{
