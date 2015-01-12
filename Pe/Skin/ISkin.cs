@@ -12,6 +12,9 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		void Refresh(Form target);
 		void Close(Form target);
 
+		Image GetImage(SkinImage skinImage);
+		Icon GetIcon(SkinIcon skinIcon);
+
 		Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
