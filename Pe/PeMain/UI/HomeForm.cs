@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
@@ -87,10 +88,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region skin
+		void ApplySkin()
+		{
+			this.commandLauncher.Image = CommonData.Skin.GetImage(SkinImage.Finder);
+			this.commandNotify.Image = CommonData.Skin.GetImage(SkinImage.Flag);
+			this.commandStartup.Image = CommonData.Skin.GetImage(SkinImage.Windows);
+		}
+		#endregion ////////////////////////////////////
+
 		#region function
 		void ApplySetting()
 		{
 			ApplyLanguage();
+			ApplySkin();
 		}
 
 		IEnumerable<string> SplitLauncherItemText(string text)
