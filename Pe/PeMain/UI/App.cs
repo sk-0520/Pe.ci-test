@@ -394,7 +394,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeNote(CommandLine commandLine, ILogger logger)
 		{ }
 
-		void InitializeApplicationExecuter(CommandLine commandLine, ILogger logger)
+		void InitializeApplicationExecutor(CommandLine commandLine, ILogger logger)
 		{
 			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
 		}
@@ -456,7 +456,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
 
-			InitializeApplicationExecuter(commandLine, logger);
+			InitializeApplicationExecutor(commandLine, logger);
 
 			return existsSettingFilePath;
 		}
