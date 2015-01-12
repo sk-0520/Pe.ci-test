@@ -158,7 +158,7 @@
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardFile), Control = this._commandFile, Name = imageFile },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy), Control = this._commandMulti, Name = string.Empty },
 			};
-
+			this.imageTab.Images.Clear();
 			foreach(var skinItem in skinItems) {
 				skinItem.Control.Image = skinItem.Image;
 				if(!string.IsNullOrEmpty(skinItem.Name)) {
