@@ -643,7 +643,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 
 			parentItem.Name = menuNameApplications;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
@@ -668,7 +668,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave;
+			itemSave.Image = this._commonData.Skin.GetImage(SkinImage.WindowSave);
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -676,7 +676,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad;
+			itemLoad.Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad);
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
@@ -684,7 +684,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.WindowList);
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 
@@ -724,7 +724,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// クリップボード
 			itemClipboard.Name = menuNameSystemEnvClipboard;
-			itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			itemClipboard.Image = this._commonData.Skin.GetImage(SkinImage.Clipboard);
+			
 			itemClipboard.Click += (object sender, EventArgs e) => {
 				SwitchShowClipboard();
 			};
@@ -789,7 +790,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log;
+			itemLogger.Image = this._commonData.Skin.GetImage(SkinImage.Log);
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -797,7 +798,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment;
+			itemSystemEnv.Image = this._commonData.Skin.GetImage(SkinImage.SystemEnvironment);
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
@@ -824,12 +825,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help;
+			itemHelp.Image = this._commonData.Skin.GetImage(SkinImage.Help);
 			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
 			// 終了
 			itemExit.Name = menuNameExit;
-			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close;
+			itemExit.Image = this._commonData.Skin.GetImage(SkinImage.Close);
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 
 			// メインメニュー
@@ -900,7 +901,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._clipboardWindow.SetCommonData(this._commonData);
 			ChangeClipboard();
 		}
-
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{

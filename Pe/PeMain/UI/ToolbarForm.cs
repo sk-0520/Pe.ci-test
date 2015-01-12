@@ -1276,16 +1276,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var iconSize = UseToolbarItem.IconScale.ToSize();
 			var toolItem = new ToolStripDropDownButton();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain, iconSize)) {
+			using(var icon = new Icon(CommonData.Skin.GetIcon(SkinIcon.ToolbarMain), iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#if DEBUG
-					/*
-					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
-						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
-					}
-					 */
 					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#endif
 				}
