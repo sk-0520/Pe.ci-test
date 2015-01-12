@@ -859,13 +859,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 
+			// タスクトレイアイコン構築
 			var iconSize = IconScale.Small.ToSize();
 			var iconRect = new Rectangle(Point.Empty, iconSize);
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
-					using(var icon = AppUtility.GetAppIcon(this._commonData.Skin, IconScale.Small)) {
-						g.DrawImage(icon, iconRect);
-					}
+					g.DrawImage(IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.Tasktray), IconScale.Small), iconRect);
 #if DEBUG
 					DrawUtility.MarkingDebug(g, iconRect);
 #endif
