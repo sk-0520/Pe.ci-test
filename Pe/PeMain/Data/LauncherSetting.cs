@@ -96,25 +96,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// 見つからなかった時用アイコン。
 		/// </summary>
-		public static readonly Dictionary<IconScale, Icon> notfoundIconMap;
-		/*
-		private static readonly Dictionary<IconScale, Icon> _notfoundIconMap = new Dictionary<IconScale, Icon>() {
-			{ IconScale.Small,  Icon.FromHandle(PeMain.Properties.Images.NotFound_016.GetHicon()) },
-			{ IconScale.Normal, Icon.FromHandle(PeMain.Properties.Images.NotFound_032.GetHicon()) },
-			{ IconScale.Big,    Icon.FromHandle(PeMain.Properties.Images.NotFound_048.GetHicon()) },
-			{ IconScale.Large,  Icon.FromHandle(PeMain.Properties.Images.NotFound_256.GetHicon()) },
-		};
-		*/
-		private static readonly Dictionary<IconScale, Icon> _commandIconMap;
+		public static Dictionary<IconScale, Icon> notfoundIconMap;
+		public static Dictionary<IconScale, Icon> commandIconMap;
 		
-		static LauncherItem()
+		public static void SetSkin(ISkin skin)
 		{
 			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
 			// NotFound 
 			var tempNotfoundIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound, iconSize);
+				var icon = new Icon(skin.GetIcon(SkinIcon.NotFound), iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
@@ -127,14 +119,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var tempCommandIconMap = new Dictionary<IconScale, Icon>(iconScaleList.Length);
 			foreach(var iconScale in iconScaleList) {
 				var iconSize = iconScale.ToSize();
-				var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command, iconSize);
+				var icon = new Icon(skin.GetIcon(SkinIcon.Command), iconSize);
 				var image = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(image)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, iconSize));
 				}
 				tempCommandIconMap[iconScale] = icon;
 			}
-			_commandIconMap = tempCommandIconMap;
+			commandIconMap = tempCommandIconMap;
 		}
 
 		/// <summary>
@@ -394,7 +386,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				return this._iconMap[iconScale];
 			} else {
 				if(LauncherType == LauncherType.URI || LauncherType == LauncherType.Command) {
-					return _commandIconMap[iconScale];
+					return commandIconMap[iconScale];
 				} else {
 					return notfoundIconMap[iconScale];
 				}

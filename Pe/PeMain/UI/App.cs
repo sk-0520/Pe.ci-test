@@ -843,6 +843,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
 		{
 			this._commonData.Skin = new SystemSkin();
+
+			LauncherItem.SetSkin(this._commonData.Skin);
 		}
 
 		/// <summary>
