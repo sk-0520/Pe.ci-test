@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.UI.Ex;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.Specialized;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Drawing.Imaging;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.UI;
+
 	public partial class ClipboardForm: Form, ISetCommonData
 	{
 		#region Define
@@ -68,12 +68,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeCommand()
 		{
 			var commandButtons = GetButtonList().ToArray();
-			this._commandText.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText;
-			this._commandRtf.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat;
-			this._commandHtml.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml;
-			this._commandImage.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage;
-			this._commandFile.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile;
-			this._commandMulti.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
 			var buttonSize = GetButtonSize();
 
 			foreach(var command in commandButtons) {
@@ -116,12 +110,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			SelectedItemIndex = -1;
 			HoverItemIndex = -1;
 
-			this.imageTab.Images.Add(imageText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText);
-			this.imageTab.Images.Add(imageRtf, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat);
-			this.imageTab.Images.Add(imageHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml);
-			this.imageTab.Images.Add(imageImage, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage);
-			this.imageTab.Images.Add(imageFile, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile);
-
 			InitializeUI();
 		}
 
@@ -150,9 +138,34 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
-
 		}
 
+		#endregion ////////////////////////////////////////
+
+		#region skin
+		private void ApplySkin()
+		{
+			this.toolClipboard_itemEnabled.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
+			this.toolClipboard_itemTopmost.Image = CommonData.Skin.GetImage(SkinImage.Pin);
+			this.toolClipboard_itemSave.Image = CommonData.Skin.GetImage(SkinImage.Save);
+			this.toolClipboard_itemRemove.Image = CommonData.Skin.GetImage(SkinImage.Remove);
+
+			var skinItems = new[] {
+				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardText), Control = this._commandText, Name = imageText },
+				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardRichTextFormat), Control = this._commandRtf, Name = imageRtf },
+				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardHtml), Control = this._commandHtml, Name = imageHtml },
+				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardImage), Control = this._commandImage, Name = imageImage },
+				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardFile), Control = this._commandFile, Name = imageFile },
+				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy), Control = this._commandMulti, Name = string.Empty },
+			};
+
+			foreach(var skinItem in skinItems) {
+				skinItem.Control.Image = skinItem.Image;
+				if(!string.IsNullOrEmpty(skinItem.Name)) {
+					this.imageTab.Images.Add(skinItem.Name, skinItem.Image);
+				}
+			}
+		}
 		#endregion ////////////////////////////////////////
 
 		#region Function
@@ -213,6 +226,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ApplySetting()
 		{
 			ApplyLanguage();
+			ApplySkin();
 			ApplySettingUI();
 
 			ChangeSelectType(this.toolClipboard_itemType_itemClipboard);
