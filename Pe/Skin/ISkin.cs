@@ -22,6 +22,9 @@
 		#endregion
 
 		#region Setting About
+
+		ISkinAbout GetAbout();
+
 		#endregion
 
 		#region Style

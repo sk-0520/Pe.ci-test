@@ -39,6 +39,8 @@
     <Compile Include="IconScale.cs" />
     <Compile Include="ISkin.cs" />
     <Compile Include="Skin.cs" />
+    <Compile Include="ISkinAbout.cs" />
+    <Compile Include="SkinAbout.cs" />
     <Compile Include="SkinNoteCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkinButtonState.cs" />

@@ -25,6 +25,20 @@
 
 		#endregion
 
+		#region Setting About
+
+		public override ISkinAbout GetAbout()
+		{
+			return new SkinAbout(
+				"DotSkin",
+				"sk",
+				new Uri("http://content-type-text.net"),
+				false
+			);
+		}
+
+		#endregion
+
 		#region Style
 
 		public override void AttachmentStyle(Form target)

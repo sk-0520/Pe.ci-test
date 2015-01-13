@@ -135,6 +135,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#endregion
 
+		#region Setting About
+
+		public override ISkinAbout GetAbout()
+		{
+			return new SkinAbout(
+				"SystemSkin",
+				"sk",
+				new Uri(Literal.AboutWebURL),
+				false
+			);
+		}
+
+		#endregion
+
 		private void SetVisualStyle(Form target)
 		{
 			Debug.Assert(EnabledAeroStyle);

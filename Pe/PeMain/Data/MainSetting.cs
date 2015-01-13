@@ -132,6 +132,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public ClipboardSetting Clipboard { get; set; }
 
+		/// <summary>
+		/// 使用するスキン名。
+		/// </summary>
+		public string Skin { get; set; }
+
 		protected override void Dispose(bool disposing)
 		{
 			Command.ToDispose();

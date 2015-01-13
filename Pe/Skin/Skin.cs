@@ -31,7 +31,6 @@
 		public Rectangle MenuArea { get; set; }
 	}
 
-
 	/// <summary>
 	/// ISkinの多分共通だろうって部分の抽象版
 	/// </summary>
@@ -132,6 +131,12 @@
 
 		public abstract void Load();
 		public abstract void Initialize();
+
+		#endregion
+
+		#region Setting About
+
+		public abstract ISkinAbout GetAbout();
 
 		#endregion
 
