@@ -8,6 +8,8 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 	/// </summary>
 	public interface ISkin
 	{
+		#region Initialize
+
 		/// <summary>
 		/// 必要最低限の準備を行う。
 		/// </summary>
@@ -16,6 +18,13 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		/// スキンとして処理可能な状態まで初期化する。
 		/// </summary>
 		void Initialize();
+
+		#endregion
+
+		#region Setting About
+		#endregion
+
+		#region Style
 
 		/// <summary>
 		/// 指定フォームにスタイルを適用する。
@@ -33,11 +42,23 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		/// <param name="target"></param>
 		void DetachmentStyle(Form target);
 
+		#endregion
+
+		#region Resource
+
 		Image GetImage(SkinImage skinImage);
 		Icon GetIcon(SkinIcon skinIcon);
 
+		#endregion
+
+		#region Create
+
 		Image CreateColorBoxImage(Color borderColor, Color backColor, Size size);
 		Image CreateNoteBoxImage(Color color, Size size);
+
+		#endregion
+
+		#region Layout Toolbar
 
 		Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
@@ -46,9 +67,17 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
 		void ApplyToolbarToolTipRegion(Form target);
 
+		#endregion
+
+		#region Layout Note
+
 		Padding GetNoteWindowEdgePadding();
 		Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
 		Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, SkinNoteCommand noteCommand);
+
+		#endregion
+
+		#region Draw Toolbar
 
 		void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
 		void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
@@ -63,11 +92,19 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		void DrawToolbarButtonBackground(ToolStripItemRenderEventArgs e, ToolStripButton item, bool active, Rectangle itemArea);
 		void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea);
 
+		#endregion
+
+		#region Draw Note
+
 		void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
 		void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption);
 		void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, SkinNoteCommand noteCommand, SkinButtonState buttonState);
 		void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
+
+		#endregion
+
+		#region Property
 
 		int MenuWidth { get; }
 		int PaddingWidth { get; }
@@ -84,5 +121,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		bool IsDefaultDrawToolbarSplitButtonBackground { get; }
 		bool IsDefaultDrawToolbarButtonBackground { get; }
 		bool IsDefaultDrawToolbarToolTipBackground { get; }
+
+		#endregion
 	}
 }

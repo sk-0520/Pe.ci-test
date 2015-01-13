@@ -37,12 +37,11 @@
 	/// </summary>
 	public abstract class Skin: ISkin
 	{
+		#region Static
+
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll")]
 		static extern int DwmIsCompositionEnabled(out bool enabled);
-
-		protected bool EnabledAeroStyle { get; set; }
-		//protected bool EnabledVisualStyle { get; set; }
 
 		/// <summary>
 		/// http://msdn.microsoft.com/ja-jp/magazine/ee221436.aspx
@@ -124,8 +123,19 @@
 			return isAero;
 		}
 
+		#endregion
+
+		protected bool EnabledAeroStyle { get; set; }
+		//protected bool EnabledVisualStyle { get; set; }
+
+		#region Initialize
+
 		public abstract void Load();
 		public abstract void Initialize();
+
+		#endregion
+
+		#region Style
 
 		public virtual void AttachmentStyle(Form target)
 		{
@@ -139,11 +149,17 @@
 			AttachmentStyle(target);
 		}
 
+		#endregion
+
+		#region Resource
+
 		public abstract Image GetImage(SkinImage skinImage);
 		public abstract Icon GetIcon(SkinIcon skinIcon);
 
+		#endregion
 
-		#region CreateColorBox
+		#region Create
+
 		public virtual Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
 		{
 			var image = new Bitmap(size.Width, size.Height);
@@ -206,16 +222,16 @@
 		
 #endregion
 		
-#region Layout Note
+		#region Layout Note
 
 		public abstract Padding GetNoteWindowEdgePadding();
 		public abstract Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
 		public abstract Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, SkinNoteCommand noteCommand);
-
 		
-#endregion
+		#endregion
 
-#region Draw Toolbar
+		#region Draw Toolbar
+
 		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
@@ -334,9 +350,10 @@
 				visualStyleRenderer.DrawBackground(g, drawArea);
 			}
 		}
-#endregion
+
+		#endregion
 			
-#region Draw Note
+		#region Draw Note
 
 		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
@@ -344,8 +361,9 @@
 		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, SkinNoteCommand noteCommand, SkinButtonState buttonState);
 		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
+		#endregion
 
-#endregion
+		#region Property
 
 		public virtual int MenuWidth { get { throw new NotImplementedException(); } }
 		public virtual int PaddingWidth { get { throw new NotImplementedException(); } }
@@ -362,7 +380,9 @@
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarToolTipBackground { get{ return true; } }
-		
+
+		#endregion
+
 		protected virtual void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{
 			throw new NotImplementedException();
