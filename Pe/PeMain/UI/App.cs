@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SQLite;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Data.DB;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
-using Microsoft.Win32;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Data.SQLite;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Globalization;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System.Timers;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using Microsoft.Win32;
+
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
@@ -844,6 +844,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
 		{
 			this._commonData.Skin = new SystemSkin();
+
+			this._commonData.Skin.Load();
+			this._commonData.Skin.Initialize();
 
 			LauncherItem.SetSkin(this._commonData.Skin);
 		}

@@ -8,8 +8,29 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 	/// </summary>
 	public interface ISkin
 	{
+		/// <summary>
+		/// 必要最低限の準備を行う。
+		/// </summary>
+		void Load();
+		/// <summary>
+		/// スキンとして処理可能な状態まで初期化する。
+		/// </summary>
+		void Initialize();
+
+		/// <summary>
+		/// 指定フォームにスタイルを適用する。
+		/// </summary>
+		/// <param name="target"></param>
 		void AttachmentStyle(Form target);
+		/// <summary>
+		/// 指定フォームのスタイルを再生委呈する
+		/// </summary>
+		/// <param name="target"></param>
 		void RefreshStyle(Form target);
+		/// <summary>
+		/// 指定フォームのスタイル適用を取り消す。
+		/// </summary>
+		/// <param name="target"></param>
 		void DetachmentStyle(Form target);
 
 		Image GetImage(SkinImage skinImage);

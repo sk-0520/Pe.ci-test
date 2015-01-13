@@ -122,6 +122,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return isAero;
 		}
 
+		public virtual void Load() { throw new NotImplementedException(); }
+		public virtual void Initialize() { throw new NotImplementedException(); }
+
 		public virtual void AttachmentStyle(Form target)
 		{
 			EnabledAeroStyle = IsEnabledAeroStyle();
