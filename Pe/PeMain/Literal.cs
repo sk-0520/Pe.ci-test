@@ -54,6 +54,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		private const string _applicationsSettingBaseDirectoryName = "Applications";
 		private const string _applicationsLogBaseDirectoryName = "Applications";
 
+		private const string _libDirName = "lib";
+		private const string _skinDirName = "lib";
+
 		/// <summary>
 		/// デフォルトの言語名。
 		/// </summary>
@@ -166,7 +169,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 #if DEBUG
 		public const int backupCount = 3;
-		public const int logListLimit = 5;
+		public const int logListLimit = 50;
 #else
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
@@ -237,6 +240,19 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 
 		/// <summary>
+		/// lib/
+		/// </summary>
+		public static string ApplicationLibraryDirectoryPath
+		{
+			get { return Path.Combine(ApplicationRootDirPath, "lib"); }
+		}
+
+		public static string ApplicationSkinDirectoryPath
+		{
+			get { return ApplicationLibraryDirectoryPath; }
+		}
+
+		/// <summary>
 		/// etc/
 		/// </summary>
 		public static string ApplicationEtcDirPath
@@ -269,7 +285,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 		
 		/// <summary>
-		/// デフォルトのの
+		/// デフォルトランチャーアイテムパス。
 		/// </summary>
 		public static string ApplicationDefaultLauncherItemPath
 		{

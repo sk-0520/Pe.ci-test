@@ -14,11 +14,18 @@
 		/// 必要最低限の準備を行う。
 		/// </summary>
 		void Load();
+		void Unload();
 		/// <summary>
 		/// スキンとして処理可能な状態まで初期化する。
+		/// 
+		/// Load後に呼び出される。
 		/// </summary>
 		void Initialize();
-
+		/// <summary>
+		/// スキンを初期状態に戻す。
+		/// 
+		/// インスタンスとして有効であっても再使用には Load → Initialize が必要。
+		/// </summary>
 		#endregion
 
 		#region Setting About

@@ -23,6 +23,10 @@
 		{
 		}
 
+		public override void Unload()
+		{
+		}
+
 		#endregion
 
 		#region Setting About
@@ -55,12 +59,12 @@
 
 		public override Image GetImage(SkinImage skinImage)
 		{
-			return null;
+			return new Bitmap(16, 16);
 		}
 
 		public override Icon GetIcon(SkinIcon skinIcon)
 		{
-			return null;
+			return Icon.FromHandle( new Bitmap(16,16).GetHicon());
 		}
 
 		#endregion ///////////////////////////////////
@@ -296,5 +300,11 @@
 
 		#endregion
 
+		#region Property
+
+		public override int MenuWidth { get { return 2 * 4; } }
+		public override int PaddingWidth { get { return 4; } }
+
+		#endregion
 	}
 }

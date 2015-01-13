@@ -9,6 +9,7 @@
 	using System.Globalization;
 	using System.IO;
 	using System.Linq;
+	using System.Reflection;
 	using System.Text;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -87,6 +88,8 @@
 		uint _clipboardPrevSeq = 0;
 
 		HashSet<Form> _otherWindows = new HashSet<Form>();
+
+		HashSet<ISkin> _skins = new HashSet<ISkin>();
 	
 		#endregion //////////////////////////////////////////
 
@@ -848,9 +851,22 @@
 
 		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
 		{
-			this._commonData.Skin = new SystemSkin();
+			ResetSkin(logger);
 
-			this._commonData.Skin.Load();
+			var skinName = this._commonData.MainSetting.Skin;
+			var isDefault = string.IsNullOrWhiteSpace(skinName);
+			if(!isDefault) {
+				var hasSkin = this._skins.Any(s => s.GetAbout().Name == skinName);
+				isDefault = !hasSkin;
+			}
+			if(isDefault) {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				skinName = defSkin.GetAbout().Name;
+			}
+			var skin = this._skins.Single(s => s.GetAbout().Name == skinName);
+
+			this._commonData.Skin = skin;
 			this._commonData.Skin.Initialize();
 
 			LauncherItem.SetSkin(this._commonData.Skin);
@@ -1245,6 +1261,16 @@
 			}
 
 			Application.Exit();
+		}
+
+		void ResetSkin(ILogger logger)
+		{
+			foreach(var skin in this._skins) {
+				skin.Unload();
+			}
+
+			this._skins = AppUtility.GetSkins(logger);
+
 		}
 
 		/// <summary>

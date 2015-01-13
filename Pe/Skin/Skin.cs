@@ -131,6 +131,7 @@
 
 		public abstract void Load();
 		public abstract void Initialize();
+		public abstract void Unload();
 
 		#endregion
 
@@ -370,8 +371,8 @@
 
 		#region Property
 
-		public virtual int MenuWidth { get { throw new NotImplementedException(); } }
-		public virtual int PaddingWidth { get { throw new NotImplementedException(); } }
+		public abstract int MenuWidth { get; }
+		public abstract int PaddingWidth { get; }
 
 		public virtual bool IsDefaultDrawToolbarWindowBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarWindowEdge { get { return true; } }

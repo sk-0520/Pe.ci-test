@@ -63,6 +63,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region Initialize
 
 		public override void Load() { }
+		
 		public override void Initialize()
 		{
 			this._skinImageMap = new Dictionary<SkinImage, Image>() {
@@ -131,6 +132,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain },
 			};
+		}
+		
+		public override void Unload() {
+			this._skinImageMap = null;
+			this._skinIconMap = null;
 		}
 
 		#endregion
