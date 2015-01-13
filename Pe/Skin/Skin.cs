@@ -124,6 +124,7 @@
 
 		#endregion
 
+		protected ISkinAbout _about;
 		protected bool EnabledAeroStyle { get; set; }
 		//protected bool EnabledVisualStyle { get; set; }
 
@@ -137,7 +138,7 @@
 
 		#region Setting About
 
-		public abstract ISkinAbout GetAbout();
+		public ISkinAbout About { get { return this._about; } }
 
 		#endregion
 

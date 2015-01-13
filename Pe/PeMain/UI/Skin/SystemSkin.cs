@@ -62,7 +62,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region Initialize
 
-		public override void Load() { }
+		public override void Load() {
+			this._about = new SkinAbout(
+				"SystemSkin",
+				"sk",
+				new Uri(Literal.AboutWebURL),
+				false
+			);
+		}
 		
 		public override void Initialize()
 		{
@@ -143,15 +150,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region Setting About
 
-		public override ISkinAbout GetAbout()
-		{
-			return new SkinAbout(
-				"SystemSkin",
-				"sk",
-				new Uri(Literal.AboutWebURL),
-				false
-			);
-		}
+
 
 		#endregion
 

@@ -30,7 +30,7 @@
 
 		#region Setting About
 
-		ISkinAbout GetAbout();
+		ISkinAbout About { get; }
 
 		#endregion
 

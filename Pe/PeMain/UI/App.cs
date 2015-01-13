@@ -856,15 +856,15 @@
 			var skinName = this._commonData.MainSetting.Skin;
 			var isDefault = string.IsNullOrWhiteSpace(skinName);
 			if(!isDefault) {
-				var hasSkin = this._skins.Any(s => s.GetAbout().Name == skinName);
+				var hasSkin = this._skins.Any(s => s.About.Name == skinName);
 				isDefault = !hasSkin;
 			}
 			if(isDefault) {
 				var defSkin = new SystemSkin();
 				defSkin.Load();
-				skinName = defSkin.GetAbout().Name;
+				skinName = defSkin.About.Name;
 			}
-			var skin = this._skins.Single(s => s.GetAbout().Name == skinName);
+			var skin = this._skins.Single(s => s.About.Name == skinName);
 
 			this._commonData.Skin = skin;
 			this._commonData.Skin.Initialize();

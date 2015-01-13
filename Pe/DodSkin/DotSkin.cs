@@ -17,6 +17,12 @@
 
 		public override void Load() 
 		{
+			this._about = new SkinAbout(
+				"DotSkin",
+				"sk",
+				new Uri("http://content-type-text.net"),
+				false
+			);
 		}
 
 		public override void Initialize()
@@ -31,15 +37,7 @@
 
 		#region Setting About
 
-		public override ISkinAbout GetAbout()
-		{
-			return new SkinAbout(
-				"DotSkin",
-				"sk",
-				new Uri("http://content-type-text.net"),
-				false
-			);
-		}
+
 
 		#endregion
 

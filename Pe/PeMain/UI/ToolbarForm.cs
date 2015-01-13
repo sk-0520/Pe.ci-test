@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				if(CommonData != null && CommonData.Skin != null) {
 					if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
 						base.OnPaintBackground(e);
-						e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+						//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
 					} else {
 						CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
 					}
