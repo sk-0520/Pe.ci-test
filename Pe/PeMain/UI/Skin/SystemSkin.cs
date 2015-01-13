@@ -70,16 +70,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			VisualColor = Color.FromArgb(a, r, g, b);
 		}
 		
-		public override void Start(Form target)
+		public override void AttachmentStyle(Form target)
 		{
-			base.Start(target);
+			base.AttachmentStyle(target);
 			//EnabledVisualStyle = false;
 			if(EnabledAeroStyle) {
 				SetVisualStyle(target);
 			}
 		}
 		
-		public override void Close(Form target)
+		public override void DetachmentStyle(Form target)
 		{
 			if(EnabledAeroStyle) {
 				var margin = new MARGINS();

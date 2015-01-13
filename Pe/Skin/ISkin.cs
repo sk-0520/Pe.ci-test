@@ -8,9 +8,9 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 	/// </summary>
 	public interface ISkin
 	{
-		void Start(Form target);
-		void Refresh(Form target);
-		void Close(Form target);
+		void AttachmentStyle(Form target);
+		void RefreshStyle(Form target);
+		void DetachmentStyle(Form target);
 
 		Image GetImage(SkinImage skinImage);
 		Icon GetIcon(SkinIcon skinIcon);

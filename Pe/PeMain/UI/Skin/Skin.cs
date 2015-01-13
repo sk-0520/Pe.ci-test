@@ -198,16 +198,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		#endregion
 
-		public virtual void Start(Form target)
+		public virtual void AttachmentStyle(Form target)
 		{
 			EnabledAeroStyle = IsEnabledAeroStyle();
 		}
-		public abstract void Close(Form target);
+		public abstract void DetachmentStyle(Form target);
 		
-		public void Refresh(Form target)
+		public void RefreshStyle(Form target)
 		{
-			Close(target);
-			Start(target);
+			DetachmentStyle(target);
+			AttachmentStyle(target);
 		}
 
 		#region Resource

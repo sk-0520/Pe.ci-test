@@ -495,7 +495,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						break;
 
 					case (int)WM.WM_DWMCOMPOSITIONCHANGED: {
-							CommonData.Skin.Refresh(this);
+							CommonData.Skin.RefreshStyle(this);
 						}
 						break;
 				}
@@ -551,7 +551,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			this.toolLauncher.Renderer = renderer;
 			
-			CommonData.Skin.Start(this);
+			CommonData.Skin.AttachmentStyle(this);
 		}
 		
 		void ApplySettingPosition()
