@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-//using ContentTypeTextNet.Pe.PeMain.Data;
-//using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Drawing.Text;
+	using System.Runtime.InteropServices;
+	using System.Windows.Forms;
+	using System.Windows.Forms.VisualStyles;
+	using ContentTypeTextNet.Pe.Library.Skin;
+
 	public class ToolbarButtonData
 	{
 		public ToolbarButtonData()
@@ -39,6 +37,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public abstract class Skin: ISkin
 	{
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("dwmapi.dll")]
+		static extern int DwmIsCompositionEnabled(out bool enabled);
+
 		protected bool EnabledAeroStyle { get; set; }
 		//protected bool EnabledVisualStyle { get; set; }
 
@@ -118,7 +120,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		protected static bool IsEnabledAeroStyle()
 		{
 			bool isAero;
-			NativeMethods.DwmIsCompositionEnabled(out isAero);
+			DwmIsCompositionEnabled(out isAero);
 			return isAero;
 		}
 
