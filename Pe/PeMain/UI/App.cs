@@ -812,7 +812,8 @@
 
 			// 情報
 			itemAbout.Name = menuNameAbout;
-			itemAbout.Image = AppUtility.GetAppIcon(this._commonData.Skin, IconScale.Small);
+
+			itemAbout.Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small);
 			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {

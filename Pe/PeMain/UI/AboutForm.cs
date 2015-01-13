@@ -74,6 +74,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			PointingUtility.AttachmentDefaultButton(this);
 
+			this.imageIcon.Image = IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, IconScale.Big);
+
 			this.labelAppName.Text = Literal.programName;
 			this.labelAppVersion.Text = Literal.ApplicationVersion;
 			this.labelConfiguration.Text = string.Format(
@@ -128,8 +130,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region skin
 		void ApplySkin()
 		{
-			this.imageIcon.Image = AppUtility.GetAppIcon(CommonData.Skin, IconScale.Big);
-
 			this.commandExecuteDir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
 			this.commandDataDir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
 

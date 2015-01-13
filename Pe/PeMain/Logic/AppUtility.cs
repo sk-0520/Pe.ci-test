@@ -27,11 +27,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			shortcut.Save();
 		}
 		
-		public static Image GetAppIcon(ISkin skin, IconScale iconScale)
-		{
-			return IconUtility.ImageFromIcon(skin.GetIcon(SkinIcon.App), iconScale);
-		}
-		
 		/// <summary>
 		/// 拡張状態か。
 		/// </summary>
