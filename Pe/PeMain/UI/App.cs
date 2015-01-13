@@ -623,7 +623,11 @@
 				launcherItem.LauncherType = LauncherType.Embedded;
 
 				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
-
+#if DEBUG
+				if(icon == null) {
+					throw new NullReferenceException("rebuild solution!");
+				}
+#endif
 				var menuItem = new ToolStripMenuItem();
 
 				menuItem.Tag = applicationItem;

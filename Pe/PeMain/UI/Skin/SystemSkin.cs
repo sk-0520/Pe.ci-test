@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -194,6 +195,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else {
 				return null;
 			}
+		}
+
+		#endregion ///////////////////////////////////
+
+		#region CreateColorBox
+
+		public override Image CreateNoteBoxImage(Color color, Size size)
+		{
+			return CreateColorBoxImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
 		}
 
 		#endregion ///////////////////////////////////

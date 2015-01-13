@@ -7,7 +7,7 @@ using System.Windows.Forms.VisualStyles;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
 //using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Logic;
+//using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
@@ -122,8 +122,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return isAero;
 		}
 
-		public virtual void Load() { throw new NotImplementedException(); }
-		public virtual void Initialize() { throw new NotImplementedException(); }
+		public abstract void Load();
+		public abstract void Initialize();
 
 		public virtual void AttachmentStyle(Form target)
 		{
@@ -137,12 +137,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			AttachmentStyle(target);
 		}
 
-		public virtual Image GetImage(SkinImage skinImage) { throw new NotImplementedException(); }
-		public virtual Icon GetIcon(SkinIcon skinIcon) { throw new NotImplementedException(); }
+		public abstract Image GetImage(SkinImage skinImage);
+		public abstract Icon GetIcon(SkinIcon skinIcon);
 
 
 		#region CreateColorBox
-		public Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
+		public virtual Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
 		{
 			var image = new Bitmap(size.Width, size.Height);
 
@@ -158,10 +158,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return image;
 		}
 
-		public Image CreateNoteBoxImage(Color color, Size size)
-		{
-			return CreateColorBoxImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
-		}
+		public abstract Image CreateNoteBoxImage(Color color, Size size);
 
 		#endregion ///////////////////////////////////
 
