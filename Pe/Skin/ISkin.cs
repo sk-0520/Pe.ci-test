@@ -1,8 +1,8 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-
-namespace ContentTypeTextNet.Pe.Library.Skin
+﻿namespace ContentTypeTextNet.Pe.Library.Skin
 {
+	using System.Drawing;
+	using System.Windows.Forms;
+
 	/// <summary>
 	///スキン
 	/// </summary>

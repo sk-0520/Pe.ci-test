@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.Library.Skin
 {
 	using System;
 	using System.Collections.Generic;

@@ -60,6 +60,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		Color VisualColor { get; set;}
 
+		#region Initialize
+
 		public override void Load() { }
 		public override void Initialize()
 		{
@@ -131,6 +133,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 
+		#endregion
+
 		private void SetVisualStyle(Form target)
 		{
 			Debug.Assert(EnabledAeroStyle);
@@ -152,7 +156,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var b = (int)((rawColor & 0x000000ff) >> 0);
 			VisualColor = Color.FromArgb(a, r, g, b);
 		}
-		
+
+		#region Style
+
 		public override void AttachmentStyle(Form target)
 		{
 			base.AttachmentStyle(target);
@@ -173,6 +179,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				NativeMethods.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
 			}
 		}
+
+		#endregion
 
 		#region Resource
 
