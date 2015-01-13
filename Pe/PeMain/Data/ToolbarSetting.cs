@@ -8,12 +8,10 @@ using ContentTypeTextNet.Pe.Library.Utility;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-
-	
 	/// <summary>
 	/// 
 	/// </summary>
-	public static class ToolbarPositionUtility
+	public static class ToolbarPositionConverter
 	{
 		public static ToolbarPosition ToToolbarPosition(DesktopDockType value)
 		{
@@ -33,21 +31,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				{ToolbarPosition.DesktopBottom, DesktopDockType.Bottom },
 			}[value];
 		}
-		public static bool IsDockingMode(ToolbarPosition value)
-		{
-			return value.IsIn(ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopRight, ToolbarPosition.DesktopBottom);
-		}
-		public static bool IsHorizonMode(ToolbarPosition pos)
-		{
-			return pos.IsIn(
-				ToolbarPosition.DesktopFloat,
-				ToolbarPosition.DesktopTop,
-				ToolbarPosition.DesktopBottom,
-				ToolbarPosition.WindowTop,
-				ToolbarPosition.WindowBottom
-			);
-		}
-		
 	}
 	
 	/// <summary>

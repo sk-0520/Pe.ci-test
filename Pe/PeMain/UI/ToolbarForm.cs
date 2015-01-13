@@ -575,7 +575,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 					
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
-						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
+						DesktopDockType = ToolbarPositionConverter.ToDockType(UseToolbarItem.ToolbarPosition);
 						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
 						} else {

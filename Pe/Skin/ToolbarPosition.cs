@@ -1,6 +1,7 @@
-﻿
-namespace ContentTypeTextNet.Pe.Library.Skin
+﻿namespace ContentTypeTextNet.Pe.Library.Skin
 {
+	using System.Linq;
+
 	/// <summary>
 	/// ツールバーの位置。
 	/// </summary>
@@ -42,5 +43,32 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		/// アクティブウィンドウ 下側
 		/// </summary>
 		WindowBottom,
+	}
+
+	public static class ToolbarPositionUtility
+	{
+		public static bool IsDockingMode(ToolbarPosition value)
+		{
+			var targetList = new[] { 
+				ToolbarPosition.DesktopLeft,
+				ToolbarPosition.DesktopTop,
+				ToolbarPosition.DesktopRight,
+				ToolbarPosition.DesktopBottom
+			};
+
+			return targetList.Any(tp => tp == value);
+		}
+		public static bool IsHorizonMode(ToolbarPosition pos)
+		{
+			var targetList = new [] {
+				ToolbarPosition.DesktopFloat,
+				ToolbarPosition.DesktopTop,
+				ToolbarPosition.DesktopBottom,
+				ToolbarPosition.WindowTop,
+				ToolbarPosition.WindowBottom
+			};
+
+			return targetList.Any(tp => tp == pos);
+		}
 	}
 }

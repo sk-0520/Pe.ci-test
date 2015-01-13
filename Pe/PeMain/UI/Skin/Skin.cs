@@ -6,11 +6,32 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.PeMain.Data;
+//using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	public class ToolbarButtonData
+	{
+		public ToolbarButtonData()
+		{
+			Active = false;
+			HasArrow = false;
+			HasMenuSplit = false;
+			ButtonState = SkinButtonState.None;
+			MenuState = SkinButtonState.None;
+		}
+
+		public Graphics Graphics { get; set; }
+		public bool Active { get; set; }
+		public bool HasArrow { get; set; }
+		public ArrowDirection ArrowDirection { get; set; }
+		public bool HasMenuSplit { get; set; }
+		public SkinButtonState ButtonState { get; set; }
+		public SkinButtonState MenuState { get; set; }
+		public Rectangle ButtonArea { get; set; }
+		public Rectangle MenuArea { get; set; }
+	}
 
 
 	/// <summary>
@@ -18,104 +39,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public abstract class Skin: ISkin
 	{
-		#region Skin
-
-		protected class ToolbarButtonData
-		{
-			public ToolbarButtonData()
-			{
-				Active = false;
-				HasArrow = false;
-				HasMenuSplit = false;
-				ButtonState = SkinButtonState.None;
-				MenuState = SkinButtonState.None;
-			}
-			
-			public Graphics Graphics { get; set; }
-			public bool Active { get; set; }
-			public bool HasArrow { get; set; }
-			public ArrowDirection ArrowDirection { get; set; }
-			public bool HasMenuSplit { get; set; }
-			public SkinButtonState ButtonState { get; set; }
-			public SkinButtonState MenuState { get; set; }
-			public Rectangle ButtonArea { get; set; }
-			public Rectangle MenuArea { get; set; }
-		}
-
-		#region Resource
-
-		static IReadOnlyDictionary<SkinImage, Image> _skinImageMap = new Dictionary<SkinImage, Image>() {
-			{ SkinImage.Add, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Add },
-			{ SkinImage.AddItem, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_AddItem },
-			{ SkinImage.Applications, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications },
-			{ SkinImage.Changelog, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Changelog },
-			{ SkinImage.Clear, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear },
-			{ SkinImage.Clipboard, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard },
-			{ SkinImage.ClipboardCopy, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy },
-			{ SkinImage.ClipboardFile, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile },
-			{ SkinImage.ClipboardHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml },
-			{ SkinImage.ClipboardImage, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage },
-			{ SkinImage.ClipboardRichTextFormat, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat },
-			{ SkinImage.ClipboardText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText },
-			{ SkinImage.Close, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close },
-			{ SkinImage.Comment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Comment },
-			{ SkinImage.Config, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config },
-			{ SkinImage.CustomColor, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_CustomColor },
-			{ SkinImage.Dir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir },
-			{ SkinImage.Disk, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Disk },
-			{ SkinImage.Down, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Down },
-			{ SkinImage.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Error },
-			{ SkinImage.File, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File },
-			{ SkinImage.Filter, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Filter },
-			{ SkinImage.Find, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Find },
-			{ SkinImage.Finder, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Finder },
-			{ SkinImage.Flag, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Flag },
-			{ SkinImage.Font, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Font },
-			{ SkinImage.FontStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_FontStyle },
-			{ SkinImage.Group, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group },
-			{ SkinImage.Help, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help },
-			{ SkinImage.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Information },
-			{ SkinImage.Kill, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Kill },
-			{ SkinImage.Lock, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Lock },
-			{ SkinImage.Log, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log },
-			{ SkinImage.Name, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Name },
-			{ SkinImage.Note, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note },
-			{ SkinImage.NoteBody, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteBody },
-			{ SkinImage.NoteTitle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle },
-			{ SkinImage.NotImpl, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
-			{ SkinImage.OpenDir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_OpenDir },
-			{ SkinImage.Pin, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin },
-			{ SkinImage.Refresh, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Refresh },
-			{ SkinImage.Remove, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove },
-			{ SkinImage.Save, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save },
-			{ SkinImage.SideContract, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideContract },
-			{ SkinImage.SideExpand, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideExpand },
-			{ SkinImage.SystemEnvironment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment },
-			{ SkinImage.Tag, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Tag },
-			{ SkinImage.Toolbar, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar },
-			{ SkinImage.Unlock, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Unlock },
-			{ SkinImage.Up, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Up },
-			{ SkinImage.Update, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Update },
-			{ SkinImage.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Warning },
-			{ SkinImage.WindowList, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList },
-			{ SkinImage.WindowLoad, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad },
-			{ SkinImage.Windows, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Windows },
-			{ SkinImage.WindowSave, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave },
-		};
-
-		static IReadOnlyDictionary<SkinIcon, Icon> _skinIconMap = new Dictionary<SkinIcon, Icon>() {
-			{ SkinIcon.App, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
-			{ SkinIcon.Tasktray, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
-			{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command },
-			{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound },
-			{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain },
-		};
-
-		#endregion
-
 		protected bool EnabledAeroStyle { get; set; }
 		//protected bool EnabledVisualStyle { get; set; }
-		
+
 		/// <summary>
 		/// http://msdn.microsoft.com/ja-jp/magazine/ee221436.aspx
 		/// </summary>
@@ -124,7 +50,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		protected static StringFormat ToStringFormat(TextFormatFlags flags)
 		{
 			var format = new StringFormat();
-			
+
 			// 縦方向
 			if((flags & TextFormatFlags.Left) == TextFormatFlags.Left) {
 				format.Alignment = StringAlignment.Near;
@@ -133,7 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else if((flags & TextFormatFlags.Right) == TextFormatFlags.Right) {
 				format.Alignment = StringAlignment.Far;
 			}
-			
+
 			// 縦方向
 			if((flags & TextFormatFlags.Top) == TextFormatFlags.Top) {
 				format.LineAlignment = StringAlignment.Near;
@@ -142,7 +68,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else if((flags & TextFormatFlags.Bottom) == TextFormatFlags.Bottom) {
 				format.LineAlignment = StringAlignment.Far;
 			}
-			
+
 			// 省略符号
 			if((flags & TextFormatFlags.EndEllipsis) == TextFormatFlags.EndEllipsis) {
 				format.Trimming = StringTrimming.EllipsisCharacter;
@@ -151,29 +77,29 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else if((flags & TextFormatFlags.PathEllipsis) == TextFormatFlags.PathEllipsis) {
 				format.Trimming = StringTrimming.EllipsisPath;
 			}
-			
+
 			// ホットキープレフィックス
 			if((flags & TextFormatFlags.NoPrefix) == TextFormatFlags.NoPrefix) {
 				format.HotkeyPrefix = HotkeyPrefix.None;
 			} else if((flags & TextFormatFlags.HidePrefix) == TextFormatFlags.HidePrefix) {
 				format.HotkeyPrefix = HotkeyPrefix.Hide;
 			}
-			
+
 			// テキストの埋め込み
 			if((flags & TextFormatFlags.NoPadding) == TextFormatFlags.NoPadding) {
 				format.FormatFlags |= StringFormatFlags.FitBlackBox;
 			}
-			
+
 			// テキストの折り返し
 			if((flags & TextFormatFlags.SingleLine) == TextFormatFlags.SingleLine) {
 				format.FormatFlags |= StringFormatFlags.NoWrap;
 			} else if((flags & (TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl)) == (TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl)) {
 				format.FormatFlags |= StringFormatFlags.LineLimit;
 			}
-			
+
 			return format;
 		}
-		
+
 		/// <summary>
 		/// TODO: システムからの領域無視
 		/// </summary>
@@ -185,18 +111,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var itemArea = new Rectangle(System.Drawing.Point.Empty, item.Size);
 			var arrawSize = new System.Drawing.Size(menuWidth, itemArea.Height);
 			var arrowArea = new Rectangle(new System.Drawing.Point(itemArea.Width - arrawSize.Width, itemArea.Height - arrawSize.Height), arrawSize);
-			
-			return arrowArea ;
+
+			return arrowArea;
 		}
-		
+
 		protected static bool IsEnabledAeroStyle()
 		{
 			bool isAero;
 			NativeMethods.DwmIsCompositionEnabled(out isAero);
 			return isAero;
 		}
-		
-		#endregion
 
 		public virtual void AttachmentStyle(Form target)
 		{
@@ -210,30 +134,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			AttachmentStyle(target);
 		}
 
-		#region Resource
-		
-		public Image GetImage(SkinImage skinImage)
-		{
-			Image result;
-			if(_skinImageMap.TryGetValue(skinImage, out result)) {
-				return result;
-			} else {
-				//return global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
-				return null;
-			}
-		}
-		
-		public Icon GetIcon(SkinIcon skinIcon)
-		{
-			Icon result;
-			if(_skinIconMap.TryGetValue(skinIcon, out result)) {
-				return result;
-			} else {
-				return null;
-			}
-		}
+		public virtual Image GetImage(SkinImage skinImage) { throw new NotImplementedException(); }
+		public virtual Icon GetIcon(SkinIcon skinIcon) { throw new NotImplementedException(); }
 
-		#endregion ///////////////////////////////////
 
 		#region CreateColorBox
 		public Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
