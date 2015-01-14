@@ -1197,7 +1197,7 @@
 					if (customMenuItem.Checked) {
 						customMenuItem.Image = CommonData.Skin.CreateNoteBoxImage(nowColor, menuIconSize);
 					} else {
-						customMenuItem.Image = CommonData.Skin.GetImage(SkinImage.CustomColor);
+						customMenuItem.Image = (Image)CommonData.Skin.GetImage(SkinImage.CustomColor).Clone();
 					}
 				}
 			};
