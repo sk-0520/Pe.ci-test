@@ -1,0 +1,19 @@
+version: '{build}'
+configuration: Release
+platform:
+- x86
+- x64
+before_build:
+- nuget restore Pe\Pe.sln
+build:
+  project: Pe\Pe.sln
+  verbosity: normal
+after_build:
+- build.sh
+test:
+  assemblies: '**\*Test.dll'
+artifacts:
+- path: output
+  name: OUTPUT
+on_success:
+- build.sh ci
