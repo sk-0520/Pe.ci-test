@@ -24,6 +24,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		Comment,
 		Config,
 		CustomColor,
+		Debug,
 		Dir,
 		Disk,
 		Down,

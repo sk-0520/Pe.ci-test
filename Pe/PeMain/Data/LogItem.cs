@@ -26,6 +26,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 異常。
 		/// </summary>
 		Error = 0x04,
+		/// <summary>
+		/// デバッグ。
+		/// </summary>
+		Debug
 	}
 	
 	/// <summary>
@@ -48,7 +52,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public LogItem(LogType logType, string title, object detail, int frame = 1)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(title));
-			Debug.Assert(detail != null);
+			//Debug.Assert(detail != null);
 			Debug.Assert(frame >= 1);
 			
 			LogType = logType;
@@ -66,13 +70,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		
 		public override string ToString()
 		{
+			string detailText = "<NULL>";
+			if(Detail is Exception || Detail is string) {
+				detailText = Detail.ToString();
+			} else if(Detail != null) {
+				Detail.DumpToString(Title);
+			}
+
 			return string.Format(
 				"=====================================" + Environment.NewLine +
 				"{0} {1}" + Environment.NewLine +
 				"{2}" +
 				"{3}" + Environment.NewLine,
 				DateTime, Title,
-				(Detail is Exception || Detail is string) ? Detail: Detail.DumpToString(Title),
+				detailText,
 				StackTrace
 			);
 		}

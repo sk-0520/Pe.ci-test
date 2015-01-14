@@ -29,6 +29,7 @@
 				case LogType.Information: return 0;
 				case LogType.Warning: return 1;
 				case LogType.Error: return 2;
+				case LogType.Debug: return 3;
 				default:
 					Debug.Assert(false, logType.ToString());
 					return -1;
@@ -70,8 +71,13 @@
 		#endregion ////////////////////////////////////
 
 		#region ILogger
+
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
+			if(CommonData.MainSetting.Log.Debugging && logType == LogType.Debug) {
+				return;
+			}
+
 			if(InvokeRequired) {
 				BeginInvoke((MethodInvoker)delegate() { Puts(logType, title, detail, frame); });
 				return;
@@ -94,6 +100,12 @@
 
 			ShowLast();
 		}
+
+		public void PutsDebug(string title, object detail, int frame = 3)
+		{
+			Puts(LogType.Debug, title, detail, frame);
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -169,18 +181,25 @@
 			this._imageLogType.Images.Add(LogType.Information.ToString(), CommonData.Skin.GetImage(SkinImage.Information));
 			this._imageLogType.Images.Add(LogType.Warning.ToString(), CommonData.Skin.GetImage(SkinImage.Warning));
 			this._imageLogType.Images.Add(LogType.Error.ToString(), CommonData.Skin.GetImage(SkinImage.Error));
+			this._imageLogType.Images.Add(LogType.Debug.ToString(), CommonData.Skin.GetImage(SkinImage.Debug));
 			this.listLog.SmallImageList = this._imageLogType;
 		}
 		#endregion ////////////////////////////////////
 
 		#region function
-		public void PutsList(IEnumerable<LogItem> logs, bool show)
+
+		public void PutsList(IEnumerable<LogItem> log, bool show)
 		{
-			if(logs.Count() >= Literal.logListLimit) {
-				logs = logs.Skip(logs.Count() - Literal.logListLimit);
+			var putLogs = log;
+			if(!CommonData.MainSetting.Log.Debugging) {
+				putLogs = log.Where(l => l.LogType != LogType.Debug);
+			}
+
+			if(putLogs.Count() >= Literal.logListLimit) {
+				putLogs = putLogs.Skip(putLogs.Count() - Literal.logListLimit);
 			}
 			this._refresh = true;
-			this._logs.AddRange(logs);
+			this._logs.AddRange(putLogs);
 
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);

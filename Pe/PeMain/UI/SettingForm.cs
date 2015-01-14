@@ -150,6 +150,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogVisible.Checked = logSetting.Visible;
 			this.selectLogAddShow.Checked = logSetting.AddShow;
 			this.selectLogFullDetail.Checked = logSetting.FullDetail;
+			this.selectLogDebugging.Checked = logSetting.Debugging;
 
 			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
 			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
@@ -475,6 +476,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogVisible.SetLanguage(Language);
 			this.selectLogAddShow.SetLanguage(Language);
 			this.selectLogFullDetail.SetLanguage(Language);
+			this.selectLogDebugging.SetLanguage(Language);
 			this.selectLogTrigger_information.Text = LogType.Information.ToText(Language);
 			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(Language);
 			this.selectLogTrigger_error.Text = LogType.Error.ToText(Language);
@@ -793,6 +795,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			logSetting.Visible = this.selectLogVisible.Checked;
 			logSetting.AddShow = this.selectLogAddShow.Checked;
 			logSetting.FullDetail = this.selectLogFullDetail.Checked;
+			logSetting.Debugging = this.selectLogDebugging.Checked;
 
 			var trigger = new Dictionary<CheckBox, LogType>() {
 				{ this.selectLogTrigger_information, LogType.Information },

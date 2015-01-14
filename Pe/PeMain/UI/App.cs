@@ -98,7 +98,8 @@
 			Initialized = true;
 			
 			var logger = new StartupLogger(fileLogger);
-
+			logger.PutsDebug("DebugLogging", "Startup: force logging");
+			
 			ExistsSettingFilePath = Initialize(commandLine, logger);
 			
 			#if !DISABLED_UPDATE_CHECK
@@ -1033,8 +1034,8 @@
 			//this._commonData.RootSender.EnabledClipboard = true;
 
 			Debug.Assert(Initialized);
-			this._logForm.PutsList(logger.GetList(), false);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
+			this._logForm.PutsList(logger.GetList(), false);
 
 			return existsSettingFilePath;
 		}

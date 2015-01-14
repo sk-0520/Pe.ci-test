@@ -90,6 +90,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				{ SkinImage.Comment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Comment },
 				{ SkinImage.Config, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config },
 				{ SkinImage.CustomColor, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_CustomColor },
+				{ SkinImage.Debug, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Debug },
 				{ SkinImage.Dir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir },
 				{ SkinImage.Disk, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Disk },
 				{ SkinImage.Down, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Down },
