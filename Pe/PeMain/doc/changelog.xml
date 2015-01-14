@@ -34,18 +34,18 @@
 		<ul type="features">
 			<li rev="">指定して実行ダイアログをタスクバーに表示する</li>
 			<li rev="029c51b7fb9514b2d8594ca3a40a750f57eee0b1">#143: 各種イメージリソースをISkinで管理する</li>
-			<li rev="19bd29aefc541502c5f8d3756b70dfd4a0bf368e">スキン切り替え, 実装のみで切り替えモジュールは含めてない</li>
+			<li rev="19bd29aefc541502c5f8d3756b70dfd4a0bf368e">#44: スキン切り替え, 実装のみで切り替えモジュールは含めてない</li>
 			<li rev=""></li>
 			
 		</ul>
 		<ul type="fixes">
 			<li rev="">指定して実行ダイアログのオプションでディレクトリ選択ボタンがはるか彼方に消えていたのを修正</li>
-			<li rev="">ツールバーのツールチップが非Aero環境でわけ分からん描画になっていた不具合の修正</li>
+			<li rev="987a88a61201f9a6865c5a8378a6e8b41447b81a">ツールバーのツールチップが非Aero環境でわけ分からん描画になっていた不具合の修正</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
-			<li rev=""></li>
+			<li rev="36c19df96db15c6b1c082cd4270dd40cf8b5ae93">#147: NuGetパッケージをまとめる</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
