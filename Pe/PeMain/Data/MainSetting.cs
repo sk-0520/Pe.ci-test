@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Note = new NoteSetting();
 
 			Clipboard = new ClipboardSetting();
+
+			Skin = new SkinSetting();
 			
 			WindowSaveTime = Literal.windowSaveTime.median;
 			WindowSaveCount = Literal.windowSaveCount.median;
@@ -133,9 +135,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ClipboardSetting Clipboard { get; set; }
 
 		/// <summary>
-		/// 使用するスキン名。
+		/// 使用するスキン。
 		/// </summary>
-		public string Skin { get; set; }
+		public SkinSetting Skin { get; set; }
 
 		protected override void Dispose(bool disposing)
 		{

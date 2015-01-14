@@ -200,6 +200,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.groupMainSkin = new System.Windows.Forms.GroupBox();
+			this.selectSkinName = new System.Windows.Forms.ComboBox();
+			this.commandSkinAbout = new System.Windows.Forms.Button();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.panelMainOthers.SuspendLayout();
@@ -259,6 +263,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			this.groupMainSkin.SuspendLayout();
+			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -275,12 +281,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(755, 311);
+			this.tabSetting.Size = new System.Drawing.Size(755, 328);
 			this.tabSetting.TabIndex = 0;
 			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
 			// tabSetting_pageMain
 			// 
+			this.tabSetting_pageMain.Controls.Add(this.groupMainSkin);
 			this.tabSetting_pageMain.Controls.Add(this.panelMainOthers);
 			this.tabSetting_pageMain.Controls.Add(this.groupUpdateCheck);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainSystemEnv);
@@ -289,7 +296,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting_pageMain.Name = "tabSetting_pageMain";
 			this.tabSetting_pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tabSetting_pageMain.Size = new System.Drawing.Size(747, 283);
+			this.tabSetting_pageMain.Size = new System.Drawing.Size(747, 300);
 			this.tabSetting_pageMain.TabIndex = 0;
 			this.tabSetting_pageMain.Text = ":setting/page/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
@@ -340,9 +347,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupUpdateCheck.AutoSize = true;
 			this.groupUpdateCheck.Controls.Add(this.panelUpdate);
-			this.groupUpdateCheck.Location = new System.Drawing.Point(221, 160);
+			this.groupUpdateCheck.Location = new System.Drawing.Point(221, 191);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
-			this.groupUpdateCheck.Size = new System.Drawing.Size(291, 81);
+			this.groupUpdateCheck.Size = new System.Drawing.Size(288, 81);
 			this.groupUpdateCheck.TabIndex = 3;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
@@ -356,7 +363,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelUpdate.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelUpdate.Location = new System.Drawing.Point(3, 19);
 			this.panelUpdate.Name = "panelUpdate";
-			this.panelUpdate.Size = new System.Drawing.Size(285, 59);
+			this.panelUpdate.Size = new System.Drawing.Size(282, 59);
 			this.panelUpdate.TabIndex = 4;
 			// 
 			// selectUpdateCheck
@@ -383,7 +390,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupMainSystemEnv.AutoSize = true;
 			this.groupMainSystemEnv.Controls.Add(this.panelMainSystemEnv);
-			this.groupMainSystemEnv.Location = new System.Drawing.Point(221, 42);
+			this.groupMainSystemEnv.Location = new System.Drawing.Point(221, 99);
 			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
 			this.groupMainSystemEnv.Size = new System.Drawing.Size(288, 89);
 			this.groupMainSystemEnv.TabIndex = 2;
@@ -2136,7 +2143,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelSetting.Size = new System.Drawing.Size(761, 362);
+			this.panelSetting.Size = new System.Drawing.Size(761, 379);
 			this.panelSetting.TabIndex = 2;
 			// 
 			// panelCommand
@@ -2145,7 +2152,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelCommand.Controls.Add(this.commandSubmit);
 			this.panelCommand.Controls.Add(this.commandCancel);
 			this.panelCommand.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panelCommand.Location = new System.Drawing.Point(572, 322);
+			this.panelCommand.Location = new System.Drawing.Point(572, 339);
 			this.panelCommand.Name = "panelCommand";
 			this.panelCommand.Size = new System.Drawing.Size(186, 37);
 			this.panelCommand.TabIndex = 3;
@@ -2154,13 +2161,52 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// groupMainSkin
+			// 
+			this.groupMainSkin.AutoSize = true;
+			this.groupMainSkin.Controls.Add(this.flowLayoutPanel1);
+			this.groupMainSkin.Location = new System.Drawing.Point(221, 42);
+			this.groupMainSkin.Name = "groupMainSkin";
+			this.groupMainSkin.Size = new System.Drawing.Size(288, 51);
+			this.groupMainSkin.TabIndex = 4;
+			this.groupMainSkin.TabStop = false;
+			this.groupMainSkin.Text = ":setting/group/skin";
+			// 
+			// selectSkinName
+			// 
+			this.selectSkinName.FormattingEnabled = true;
+			this.selectSkinName.Location = new System.Drawing.Point(3, 3);
+			this.selectSkinName.Name = "selectSkinName";
+			this.selectSkinName.Size = new System.Drawing.Size(176, 23);
+			this.selectSkinName.TabIndex = 0;
+			// 
+			// commandSkinAbout
+			// 
+			this.commandSkinAbout.Location = new System.Drawing.Point(185, 3);
+			this.commandSkinAbout.Name = "commandSkinAbout";
+			this.commandSkinAbout.Size = new System.Drawing.Size(84, 23);
+			this.commandSkinAbout.TabIndex = 5;
+			this.commandSkinAbout.Text = ":setting/command/skin";
+			this.commandSkinAbout.UseVisualStyleBackColor = true;
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.AutoSize = true;
+			this.flowLayoutPanel1.Controls.Add(this.selectSkinName);
+			this.flowLayoutPanel1.Controls.Add(this.commandSkinAbout);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 19);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(282, 29);
+			this.flowLayoutPanel1.TabIndex = 0;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(761, 362);
+			this.ClientSize = new System.Drawing.Size(761, 379);
 			this.Controls.Add(this.panelSetting);
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
@@ -2249,6 +2295,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.groupMainSkin.ResumeLayout(false);
+			this.groupMainSkin.PerformLayout();
+			this.flowLayoutPanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -2412,5 +2461,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.NumericUpDown inputClipboardSleepTime;
 		private System.Windows.Forms.Label labelClipboardHotkey;
 		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputClipboardHotkey;
+		private System.Windows.Forms.GroupBox groupMainSkin;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+		private System.Windows.Forms.ComboBox selectSkinName;
+		private System.Windows.Forms.Button commandSkinAbout;
 	}
 }

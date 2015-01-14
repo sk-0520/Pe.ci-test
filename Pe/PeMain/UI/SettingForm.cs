@@ -177,6 +177,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
 		}
 
+		void InitializeSkin(SkinSetting setting)
+		{
+			//Skin
+		}
+
 		void InitializeLanguage(string languageName, Language language)
 		{
 			var langFileName = string.Format("{0}.xml", languageName);
@@ -227,6 +232,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeSystemEnv(mainSetting.SystemEnv);
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
+			InitializeSkin(mainSetting.Skin);
 		}
 
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -469,7 +475,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelSystemEnvExt.SetLanguage(Language);
 			this.labelSystemEnvHiddenFile.SetLanguage(Language);
 		}
-		
+
+		void ApplyLanguageSkin()
+		{
+			this.groupMainSkin.SetLanguage(Language);
+			this.commandSkinAbout.SetLanguage(Language);
+		}
+
 		void ApplyLanguageRunningInfo()
 		{
 			this.groupUpdateCheck.SetLanguage(Language);
@@ -761,6 +773,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				setting.Items.Add(item);
 			}
 		}
+
 		void ExportLogSetting(LogSetting logSetting)
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
@@ -887,6 +900,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region save
+
 		void SaveFileMainStartup()
 		{
 			var linkPath = Literal.StartupShortcutPath;

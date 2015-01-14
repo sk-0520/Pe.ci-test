@@ -135,6 +135,7 @@
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
+    <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Data\WindowItem.cs" />
     <Compile Include="IF\IItem.cs" />

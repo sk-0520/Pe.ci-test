@@ -853,7 +853,7 @@
 		{
 			ResetSkin(logger);
 
-			var skinName = this._commonData.MainSetting.Skin;
+			var skinName = this._commonData.MainSetting.Skin.Name;
 			var isDefault = string.IsNullOrWhiteSpace(skinName);
 			if(!isDefault) {
 				var hasSkin = this._skins.Any(s => s.About.Name == skinName);
