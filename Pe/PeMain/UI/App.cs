@@ -1100,7 +1100,7 @@
 				new {
 					Name = menuNameSystemEnvClipboard,
 					Lang = "main/menu/system-env/clipboard",
-					Key  = new HotKeySetting()
+					Key  = this._commonData.MainSetting.Clipboard.ToggleHotKeySetting
 				},
 			};
 
