@@ -608,10 +608,10 @@
 				//itemNoteHidden.ShortcutKeys = this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey();
 				//itemNoteCompact.ShortcutKeys = this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey();
 				//itemNoteShowFront.ShortcutKeys = this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
 
 				OpeningNoteMenu();
 			};
@@ -748,9 +748,9 @@
 
 				//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeys(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
 			};
 
 		}
@@ -1050,31 +1050,31 @@
 				new {
 					Name = menuNameWindowNoteCreate,
 					Lang = "main/menu/window/note/create",
-					Key  = this._commonData.MainSetting.Note.CreateHotKey
+					//Key  = this._commonData.MainSetting.Note.CreateHotKey
 				},
 				new {
 					Name = menuNameWindowNoteHidden,
 					Lang = "main/menu/window/note/hidden",
-					Key  = this._commonData.MainSetting.Note.HiddenHotKey
+					//Key  = this._commonData.MainSetting.Note.HiddenHotKey
 				},
 				new {
 					Name = menuNameWindowNoteCompact,
 					Lang = "main/menu/window/note/compact",
-					Key  = this._commonData.MainSetting.Note.CompactHotKey
+					//Key  = this._commonData.MainSetting.Note.CompactHotKey
 				},
 				new {
 					Name = menuNameWindowNoteShowFront,
 					Lang = "main/menu/window/note/show-front",
-					Key  = this._commonData.MainSetting.Note.ShowFrontHotKey
+					//Key  = this._commonData.MainSetting.Note.ShowFrontHotKey
 				},
 			};
 
 			foreach(var keyItem in keyItems) {
 				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
 				menuItem.Text = this._commonData.Language[keyItem.Lang];
-				if(keyItem.Key.Enabled) {
-					menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
-				}
+				//if(keyItem.Key.Enabled) {
+				//	menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
+				//}
 			}
 		}
 
@@ -1090,26 +1090,26 @@
 				new {
 					Name = menuNameSystemEnvHiddenFile,
 					Lang = "main/menu/system-env/show-hiddne-file",
-					Key  = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey
+					//Key  = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey
 				},
 				new {
 					Name = menuNameSystemEnvExtension,
 					Lang = "main/menu/system-env/show-extension",
-					Key  = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey
+					//Key  = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey
 				},
 				new {
 					Name = menuNameSystemEnvClipboard,
 					Lang = "main/menu/system-env/clipboard",
-					Key  = this._commonData.MainSetting.Clipboard.ToggleHotKeySetting
+					//Key  = this._commonData.MainSetting.Clipboard.ToggleHotKeySetting
 				},
 			};
 
 			foreach(var keyItem in keyItems) {
 				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
 				menuItem.Text = this._commonData.Language[keyItem.Lang];
-				if(keyItem.Key.Enabled) {
-					menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
-				}
+				//if(keyItem.Key.Enabled) {
+				//	menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
+				//}
 			}
 
 			// ウィンドウ
