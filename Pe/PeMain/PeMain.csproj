@@ -135,6 +135,7 @@
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
+    <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Data\WindowItem.cs" />
     <Compile Include="IF\IItem.cs" />
@@ -155,9 +156,10 @@
     <Compile Include="Logic\FileLogger.cs" />
     <Compile Include="Logic\AppInformation.cs" />
     <Compile Include="Logic\LanguageUtility.cs" />
-    <Compile Include="Logic\DisplayValue.cs" />
+    <Compile Include="Data\DisplayValue.cs" />
     <Compile Include="Logic\AppDBManager.cs" />
     <Compile Include="Logic\Listener.cs" />
+    <Compile Include="Logic\NullLogger.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
@@ -277,7 +279,6 @@
     <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Skin\Skin.cs" />
     <Compile Include="UI\Skin\SystemSkin.cs" />
     <Compile Include="UI\Skin\ToolbarRenderer.cs" />
     <Compile Include="UI\StreamForm.cs">

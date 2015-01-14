@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// UIに対して項目と名称を設定する。
 	/// </summary>
@@ -108,7 +108,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 	
-	
 	public class ToolbarPositionDisplayValue: UseLanguageDisplayValue<ToolbarPosition>
 	{
 		public ToolbarPositionDisplayValue(ToolbarPosition value): base(value) { }
@@ -195,7 +194,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		}
 	}
 
-	
+	public class SkinDisplayValue: DisplayValue<ISkin>
+	{
+		public SkinDisplayValue(ISkin value) : base(value) { }
+
+		public override string Display
+		{
+			get { return Value.About.Name; }
+		}
+
+	}
 	
 
 }

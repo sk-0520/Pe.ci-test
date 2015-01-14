@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				if(CommonData != null && CommonData.Skin != null) {
 					if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
 						base.OnPaintBackground(e);
-						e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+						//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
 					} else {
 						CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
 					}
@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						this._message = launcherItem.Note;
 					}
 				} else {
-					this._imageIcon = AppUtility.GetAppIcon(CommonData.Skin, IconScale.Normal);
+					this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
 					this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
 					this._message = string.Empty;
 				}
@@ -495,7 +495,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						break;
 
 					case (int)WM.WM_DWMCOMPOSITIONCHANGED: {
-							CommonData.Skin.Refresh(this);
+							CommonData.Skin.RefreshStyle(this);
 						}
 						break;
 				}
@@ -551,7 +551,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			this.toolLauncher.Renderer = renderer;
 			
-			CommonData.Skin.Start(this);
+			CommonData.Skin.AttachmentStyle(this);
 		}
 		
 		void ApplySettingPosition()
@@ -575,7 +575,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 					
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
-						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
+						DesktopDockType = ToolbarPositionConverter.ToDockType(UseToolbarItem.ToolbarPosition);
 						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
 						} else {

@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SQLite;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Data.DB;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
-using Microsoft.Win32;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Data.SQLite;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Globalization;
+	using System.IO;
+	using System.Linq;
+	using System.Reflection;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System.Timers;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using Microsoft.Win32;
+
 	/// <summary>
 	/// Description of Pe.
 	/// </summary>
@@ -87,6 +88,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		uint _clipboardPrevSeq = 0;
 
 		HashSet<Form> _otherWindows = new HashSet<Form>();
+
+		HashSet<ISkin> _skins = new HashSet<ISkin>();
 	
 		#endregion //////////////////////////////////////////
 
@@ -623,7 +626,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				launcherItem.LauncherType = LauncherType.Embedded;
 
 				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
-
+#if DEBUG
+				if(icon == null) {
+					throw new NullReferenceException("rebuild solution!");
+				}
+#endif
 				var menuItem = new ToolStripMenuItem();
 
 				menuItem.Tag = applicationItem;
@@ -808,7 +815,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 情報
 			itemAbout.Name = menuNameAbout;
-			itemAbout.Image = AppUtility.GetAppIcon(this._commonData.Skin, IconScale.Small);
+
+			itemAbout.Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small);
 			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
@@ -841,9 +849,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._contextMenu.Items.AddRange(menuList.ToArray());
 		}
 
-		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
+		void InitializeSkin(CommandLine commandLine, ILogger logger)
 		{
-			this._commonData.Skin = new SystemSkin();
+			ResetSkin(logger);
+
+			var skinName = this._commonData.MainSetting.Skin.Name;
+			var isDefault = string.IsNullOrWhiteSpace(skinName);
+			if(!isDefault) {
+				var hasSkin = this._skins.Any(s => s.About.Name == skinName);
+				isDefault = !hasSkin;
+			}
+			if(isDefault) {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				skinName = defSkin.About.Name;
+			}
+			var skin = this._skins.Single(s => s.About.Name == skinName);
+
+			this._commonData.Skin = skin;
+			this._commonData.Skin.Initialize();
 
 			LauncherItem.SetSkin(this._commonData.Skin);
 		}
@@ -1239,6 +1263,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Application.Exit();
 		}
 
+		void ResetSkin(ILogger logger)
+		{
+			foreach(var skin in this._skins) {
+				skin.Unload();
+			}
+
+			this._skins = AppUtility.GetSkins(logger);
+
+		}
+
+		void ResetMain()
+		{
+			this._contextMenu.ToDispose();
+			this._notifyIcon.ToDispose();
+
+			InitializeMain(null, null);
+		}
+
 		/// <summary>
 		/// ツール―バー状態のリセット。
 		/// </summary>
@@ -1298,6 +1340,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				this._otherWindows.Remove(window);
 				window.Dispose();
 			}
+
+			ResetMain();
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
@@ -1336,20 +1380,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					settingForm.SaveDB(this._commonData.Database);
 					AppUtility.SaveSetting(this._commonData);
 					InitializeLanguage(null, null);
-					ApplyLanguage();
+					InitializeSkin(null, this._commonData.Logger);
 
 					return () => {
 						this._logForm.SetCommonData(this._commonData);
 						this._messageWindow.SetCommonData(this._commonData);
-						/*
-						foreach(var toolbar in this._toolbarForms.Values) {
-							//toolbar.SetCommonData(this._commonData);
-							toolbar.Dispose();
-						}
-						this._toolbarForms.Clear();
-						InitializeToolbarForm(null, null);
-						 */
+
 						ResetUI();
+						ApplyLanguage();
+
 						foreach(var window in this._otherWindows.Where(w => w is StreamForm).Cast<StreamForm>().ToArray()) {
 							window.Visible = true;
 						}

@@ -177,6 +177,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
 		}
 
+		void InitializeSkin(SkinSetting setting)
+		{
+			var skins = AppUtility.GetSkins(new NullLogger());
+
+			var skinDisplayValues = skins.Select(s => new SkinDisplayValue(s));
+			var selectSkin = skinDisplayValues.SingleOrDefault(s => s.Value.About.Name == setting.Name);
+			if(selectSkin != null) {
+				this.selectSkinName.Attachment(skinDisplayValues, selectSkin.Value);
+			} else {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				var skin = skinDisplayValues.Single(s => s.Value.About.Name == defSkin.About.Name);
+				this.selectSkinName.Attachment(skinDisplayValues, skin.Value);
+				defSkin.Unload();
+			}
+			
+		}
+
 		void InitializeLanguage(string languageName, Language language)
 		{
 			var langFileName = string.Format("{0}.xml", languageName);
@@ -227,6 +245,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeSystemEnv(mainSetting.SystemEnv);
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
+			InitializeSkin(mainSetting.Skin);
 		}
 
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -469,7 +488,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelSystemEnvExt.SetLanguage(Language);
 			this.labelSystemEnvHiddenFile.SetLanguage(Language);
 		}
-		
+
+		void ApplyLanguageSkin()
+		{
+			this.groupMainSkin.SetLanguage(Language);
+			this.commandSkinAbout.SetLanguage(Language);
+		}
+
 		void ApplyLanguageRunningInfo()
 		{
 			this.groupUpdateCheck.SetLanguage(Language);
@@ -487,6 +512,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
 			ApplyLanguageRunningInfo();
+			ApplyLanguageSkin();
 		}
 		
 		void ApplyLanguageLauncher()
@@ -761,6 +787,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				setting.Items.Add(item);
 			}
 		}
+
 		void ExportLogSetting(LogSetting logSetting)
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
@@ -810,6 +837,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
+		void ExportSkinSetting(SkinSetting setting)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			setting.Name = skin.About.Name;
+		}
+
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
@@ -817,6 +850,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ExportRunningInfoSetting(mainSetting.RunningInfo);
 
 			ExportLanguageSetting(mainSetting);
+			ExportSkinSetting(mainSetting.Skin);
 		}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
@@ -887,6 +921,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region save
+
 		void SaveFileMainStartup()
 		{
 			var linkPath = Literal.StartupShortcutPath;
@@ -1795,6 +1830,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var nowIndex = this.selectToolbarGroup.SelectedIndex;
 			this.selectToolbarGroup.Attachment(groupList);
 			this.selectToolbarGroup.SelectedIndex = nowIndex;
+		}
+
+		private void selectSkinName_SelectedValueChanged(object sender, EventArgs e)
+		{
+			var skin = this.selectSkinName.SelectedValue as ISkin;
+			if(skin != null) {
+				this.commandSkinAbout.Enabled = skin.About.Setting;
+			}
+		}
+
+		private void commandSkinAbout_Click(object sender, EventArgs e)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			var about = skin.About;
+			MessageBox.Show(about.Name);
 		}
 	}
 }
