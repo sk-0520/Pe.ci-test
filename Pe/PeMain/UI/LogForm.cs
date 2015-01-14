@@ -70,6 +70,7 @@
 		#endregion ////////////////////////////////////
 
 		#region ILogger
+
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
 			if(InvokeRequired) {
@@ -94,6 +95,12 @@
 
 			ShowLast();
 		}
+
+		public void PutsDebug(string title, object detail, int frame = 3)
+		{
+			Puts(LogType.Debug, title, detail, frame);
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -174,13 +181,16 @@
 		#endregion ////////////////////////////////////
 
 		#region function
-		public void PutsList(IEnumerable<LogItem> logs, bool show)
+
+		public void PutsList(IEnumerable<LogItem> log, bool show)
 		{
-			if(logs.Count() >= Literal.logListLimit) {
-				logs = logs.Skip(logs.Count() - Literal.logListLimit);
+			var putLogs = log;
+
+			if(putLogs.Count() >= Literal.logListLimit) {
+				putLogs = putLogs.Skip(putLogs.Count() - Literal.logListLimit);
 			}
 			this._refresh = true;
-			this._logs.AddRange(logs);
+			this._logs.AddRange(putLogs);
 
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
