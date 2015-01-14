@@ -60,6 +60,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				}
 			}
 		}
+
+		public static void SetFontSetting(this FontDialog dialog, FontSetting fontSetting)
+		{
+			if(!fontSetting.IsDefault) {
+				dialog.Font = fontSetting.Font;
+			} else {
+				dialog.Font = fontSetting.DefaultFont;
+			}
+		}
 	}
 	
 	/// <summary>

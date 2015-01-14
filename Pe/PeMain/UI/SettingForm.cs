@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+
 	/// <summary>
 	/// 設定。
 	/// </summary>
@@ -623,6 +623,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardHotkey.SetLanguage(Language);
 
 			this.commandClipboardTextFont.SetLanguage(Language);
+			this.labelClipboardFont.SetLanguage(Language);
 
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);
@@ -1735,18 +1736,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
 				// フォント変更
 				// TODO: ダイアログ表示を一元化する必要あり
+				// ↑
+				// 2015/01/15: なんのこっちゃ……
 				using(var dialog = new FontDialog()) {
 					var row = this._noteItemList[e.RowIndex];
 					var fontSetting = row.Font;
-					if(fontSetting.IsDefault) {
-						dialog.Font = fontSetting.Font;
-					}
+					dialog.SetFontSetting(fontSetting);
 					
 					if(dialog.ShowDialog() == DialogResult.OK) {
-						var result = new FontSetting();
-						var font = dialog.Font;
-						fontSetting.Family = font.FontFamily.Name;
-						fontSetting.Height = font.Size;
+						fontSetting.Import(dialog.Font);
 					}
 				}
 			} else if(e.ColumnIndex == this.gridNoteItems_columnFore.Index || e.ColumnIndex == this.gridNoteItems_columnBack.Index) {
