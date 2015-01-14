@@ -20,6 +20,8 @@ cmd.exe //c  build.bat
 # バージョン戻し
 git reset --hard
 
+echo $@
+echo $1
 if [ "$1" != "ci" ] ; then
     echo "build success. please any key..."
     read
