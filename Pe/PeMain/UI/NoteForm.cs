@@ -1111,9 +1111,7 @@
 		void ContextMenu_font_change_Click(object sender, EventArgs e)
 		{
 			using(var dialog = new FontDialog()) {
-				if(!NoteItem.Style.FontSetting.IsDefault) {
-					dialog.Font = NoteItem.Style.FontSetting.Font;
-				}
+				dialog.SetFontSetting(NoteItem.Style.FontSetting);
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					NoteItem.Style.FontSetting.Import(dialog.Font);
