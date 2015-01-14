@@ -204,6 +204,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.selectLogDebugging = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupMainSkin.SuspendLayout();
@@ -513,13 +514,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// groupMainLog
 			// 
 			this.groupMainLog.AutoSize = true;
+			this.groupMainLog.Controls.Add(this.selectLogDebugging);
 			this.groupMainLog.Controls.Add(this.selectLogFullDetail);
 			this.groupMainLog.Controls.Add(this.selectLogAddShow);
 			this.groupMainLog.Controls.Add(this.groupLogTrigger);
 			this.groupMainLog.Controls.Add(this.selectLogVisible);
 			this.groupMainLog.Location = new System.Drawing.Point(15, 42);
 			this.groupMainLog.Name = "groupMainLog";
-			this.groupMainLog.Size = new System.Drawing.Size(200, 199);
+			this.groupMainLog.Size = new System.Drawing.Size(200, 227);
 			this.groupMainLog.TabIndex = 1;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
@@ -2203,6 +2205,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// selectLogDebugging
+			// 
+			this.selectLogDebugging.AutoSize = true;
+			this.selectLogDebugging.Location = new System.Drawing.Point(16, 183);
+			this.selectLogDebugging.Name = "selectLogDebugging";
+			this.selectLogDebugging.Size = new System.Drawing.Size(175, 19);
+			this.selectLogDebugging.TabIndex = 4;
+			this.selectLogDebugging.Text = ":setting/check/debugging";
+			this.selectLogDebugging.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -2468,5 +2480,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.ComboBox selectSkinName;
 		private System.Windows.Forms.Button commandSkinAbout;
+		private System.Windows.Forms.CheckBox selectLogDebugging;
 	}
 }
