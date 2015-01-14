@@ -99,6 +99,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		/// <param name="value"></param>
 		/// <param name="datas"></param>
 		/// <returns></returns>
+		//[Obsolete]
 		public static bool IsIn<T>(this T value, params T[] datas)
 			where T : IComparable
 		{

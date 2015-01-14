@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// 設定統括
 	/// </summary>
 	[Serializable]
-	public class MainSetting: DisposableItem, IDisposable
+	public class MainSetting: DisposableItem
 	{
 		public MainSetting()
 		{
@@ -59,6 +59,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Note = new NoteSetting();
 
 			Clipboard = new ClipboardSetting();
+
+			Skin = new SkinSetting();
 			
 			WindowSaveTime = Literal.windowSaveTime.median;
 			WindowSaveCount = Literal.windowSaveCount.median;
@@ -132,11 +134,21 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		public ClipboardSetting Clipboard { get; set; }
 
+		/// <summary>
+		/// 使用するスキン。
+		/// </summary>
+		public SkinSetting Skin { get; set; }
+
+		#region DisposableItem
+
 		protected override void Dispose(bool disposing)
 		{
 			Command.ToDispose();
+			Clipboard.ToDispose();
 
 			base.Dispose(disposing);
 		}
+
+		#endregion
 	}
 }

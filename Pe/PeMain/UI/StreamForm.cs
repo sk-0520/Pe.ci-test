@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 標準出力取得。
 	/// </summary>
@@ -90,6 +90,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region skin
+		void ApplySkin()
+		{
+			toolStream_itemTopmost.Image = CommonData.Skin.GetImage(SkinImage.Pin);
+			toolStream_itemSave.Image = CommonData.Skin.GetImage(SkinImage.Save);
+			toolStream_itemClear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
+			toolStream_itemRefresh.Image = CommonData.Skin.GetImage(SkinImage.Refresh);
+			toolStream_itemKill.Image = CommonData.Skin.GetImage(SkinImage.Kill);
+		}
+		#endregion ////////////////////////////////////
+
 		#region function
 		public void SetParameter(Process process, LauncherItem launcherItem)
 		{
@@ -118,6 +129,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Debug.Assert(Process != null);
 
 			ApplyLanguage();
+			ApplySkin();
 
 			this.propertyProcess.SelectedObject = Process;
 			this.propertyProperty.SelectedObject = Process.StartInfo;

@@ -322,4 +322,7 @@
   <data name="Image_Applications" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Image\Applications.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Image_Debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Image\Debug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

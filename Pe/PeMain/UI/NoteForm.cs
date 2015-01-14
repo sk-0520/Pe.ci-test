@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+
 	/// <summary>
 	/// ノート。
 	/// </summary>
@@ -420,19 +420,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			*/
 
-			var colorItems = new[] {
-				new { Menu = contextMenu_itemForeColor, Default = Literal.noteFore, IsFore = true, },
-				new { Menu = contextMenu_itemBackColor, Default = Literal.noteBack, IsFore = false, },
-			};
-
-			foreach(var colorItem in colorItems) {
-				var colors = colorItem.IsFore ? Literal.GetNoteForeColorList() : Literal.GetNoteBackColorList();
-				var pairs = GetColorMenuList(colorItem.Menu, colors);
-				foreach(var pair in pairs) {
-					pair.Item.Image = AppUtility.CreateNoteBoxImage(pair.Color, menuIconSize);
-				}
-			}
-
 			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
 		}
 
@@ -478,6 +465,37 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region skin
+		void ApplySkin()
+		{
+			this.contextMenu_itemTitle.Image = CommonData.Skin.GetImage(SkinImage.NoteTitle);
+			this.contextMenu_itemBody.Image = CommonData.Skin.GetImage(SkinImage.NoteBody);
+			this.contextMenu_itemCopy.Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy);
+			this.contextMenu_font.Image = CommonData.Skin.GetImage(SkinImage.Font);
+			this.contextMenu_font_change.Image = CommonData.Skin.GetImage(SkinImage.FontStyle);
+			this.contextMenu_font_reset.Image = CommonData.Skin.GetImage(SkinImage.Reset);
+			this.contextMenu_itemLock.Image = CommonData.Skin.GetImage(SkinImage.Lock);
+			this.contextMenu_itemTopmost.Image = CommonData.Skin.GetImage(SkinImage.Pin);
+			this.contextMenu_itemHidden.Image = CommonData.Skin.GetImage(SkinImage.Close);
+			this.contextMenu_itemRemove.Image = CommonData.Skin.GetImage(SkinImage.Remove);
+			this.contextMenu_itemExport.Image = CommonData.Skin.GetImage(SkinImage.Save);
+			this.contextMenu_itemImport.Image = CommonData.Skin.GetImage(SkinImage.OpenDir);
+
+			var colorItems = new[] {
+				new { Menu = contextMenu_itemForeColor, Default = Literal.noteFore, IsFore = true, },
+				new { Menu = contextMenu_itemBackColor, Default = Literal.noteBack, IsFore = false, },
+			};
+
+			foreach(var colorItem in colorItems) {
+				var colors = colorItem.IsFore ? Literal.GetNoteForeColorList() : Literal.GetNoteBackColorList();
+				var pairs = GetColorMenuList(colorItem.Menu, colors);
+				foreach(var pair in pairs) {
+					pair.Item.Image = CommonData.Skin.CreateNoteBoxImage(pair.Color, menuIconSize);
+				}
+			}
+		}
+		#endregion ////////////////////////////////////
+
 		#region function
 		void ApplySetting()
 		{
@@ -506,6 +524,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//			}
 			//NoteItem.Style.BackColor;
 
+			ApplySkin();
 			ApplyLanguage();
 		}
 
@@ -971,7 +990,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			SaveItem();
 		}
 		
-		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
 		{
 			HiddenInputTitleArea();
@@ -1077,7 +1095,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			ShowInputBodyArea(RECURSIVE);
 		}
-
 		
 		void NoteForm_Load(object sender, EventArgs e)
 		{
@@ -1093,12 +1110,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)
 		{
-			using (var dialog = new FontDialog()) {
-				if (NoteItem.Style.FontSetting.IsDefault) {
-					dialog.Font = NoteItem.Style.FontSetting.Font;
-				}
+			using(var dialog = new FontDialog()) {
+				dialog.SetFontSetting(NoteItem.Style.FontSetting);
 				
-				if (dialog.ShowDialog() == DialogResult.OK) {
+				if(dialog.ShowDialog() == DialogResult.OK) {
 					NoteItem.Style.FontSetting.Import(dialog.Font);
 				}
 			}
@@ -1113,36 +1128,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 			Refresh();
 		}
-		/*
-		void ContextMenu_fore_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if(contextMenu.Created) {
-				var color = GetSelectedColor(this.contextMenu_itemForeColor);
-				var result = SetAcceptColor(color, this._prevForeColor);
-				if(result != this._prevForeColor) {
-					NoteItem.Style.ForeColor = result;
-					Refresh();
-				} else {
-					contextMenu.Close();
-				}
-			}
-		}
-		
-		void ContextMenu_back_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if(contextMenu.Created) {
-				var color = GetSelectedColor(this.contextMenu_itemBackColor);
-				var result = SetAcceptColor(color, this._prevBackColor);
-				if(result != this._prevBackColor) {
-					NoteItem.Style.BackColor = result;
-					Refresh();
-				} else {
-					contextMenu.Close();
-				}
-				Refresh();
-			}
-		}
-		 */
 		
 		void ContextMenu_Closed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
@@ -1171,13 +1156,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ToLock();
 		}
 		
-		/*
-		void ContextMenu_itemRemove_Click(object sender, EventArgs e)
-		{
-			ToClose(true);
-		}
-		 */
-		
 		void ContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			// 本文入力
@@ -1187,7 +1165,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemCopy.Enabled = !string.IsNullOrEmpty(NoteItem.Body);
 			
 			// 状態チェック
-			var lockImage = NoteItem.Locked ? global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Lock : global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Unlock;
+			var lockImage = NoteItem.Locked 
+				? CommonData.Skin.GetImage(SkinImage.Lock)
+				: CommonData.Skin.GetImage(SkinImage.Unlock)
+			;
 			this.contextMenu_itemLock.Image = lockImage;
 			this.contextMenu_itemLock.Checked = NoteItem.Locked;
 			this.contextMenu_itemCompact.Checked = NoteItem.Compact;
@@ -1197,27 +1178,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_font_change.Text = LanguageUtility.FontSettingToDisplayText(CommonData.Language, NoteItem.Style.FontSetting);
 			
 			// 色
-			/*
-			this._prevForeColor = ((ColorDisplayValue)this.contextMenu_itemForeColor.ComboBox.SelectedItem).Value;
-			this._prevBackColor = ((ColorDisplayValue)this.contextMenu_itemBackColor.ComboBox.SelectedItem).Value;
-			var foreColor = this.contextMenu_itemForeColor.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.ForeColor);
-			if(foreColor != null) {
-				this.contextMenu_itemForeColor.SelectedItem = foreColor;
-			} else {
-				this.contextMenu_itemForeColor.SelectedItem = this.contextMenu_itemForeColor.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
-			}
-			var backColor = this.contextMenu_itemBackColor.ComboBox.Items.Cast<ColorDisplayValue>().SingleOrDefault(cd => cd.Value == NoteItem.Style.BackColor);
-			if(backColor != null) {
-				this.contextMenu_itemBackColor.SelectedItem = backColor;
-			} else {
-				this.contextMenu_itemBackColor.SelectedItem = this.contextMenu_itemBackColor.Items.Cast<ColorDisplayValue>().Single(cd => IsCustomColor(cd.Value));
-			}
-			 */
 			Action<ToolStripItem, IList<ColorMenuItem>, ToolStripItem, Color> checkColor = (parentItem, colorItemList, customItem, nowColor) => {
 				var plainColor = false;
 				
 				parentItem.Image.ToDispose();
-				parentItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
+				parentItem.Image = CommonData.Skin.CreateNoteBoxImage(nowColor, menuIconSize);
 				
 				foreach (var colorItem in colorItemList) {
 					var menuItem = colorItem.Item as ToolStripMenuItem;
@@ -1230,9 +1195,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					customMenuItem.Checked = !plainColor;
 					customMenuItem.Image.ToDispose();
 					if (customMenuItem.Checked) {
-						customMenuItem.Image = AppUtility.CreateNoteBoxImage(nowColor, menuIconSize);
+						customMenuItem.Image = CommonData.Skin.CreateNoteBoxImage(nowColor, menuIconSize);
 					} else {
-						customMenuItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_CustomColor;
+						customMenuItem.Image = CommonData.Skin.GetImage(SkinImage.CustomColor);
 					}
 				}
 			};
@@ -1244,7 +1209,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 最小化状態
 			this.contextMenu_itemCompact.ImageScaling = ToolStripItemImageScaling.None;
 			this.contextMenu_itemCompact.Image.ToDispose();
-			this.contextMenu_itemCompact.Image = AppUtility.CreateNoteBoxImage(NoteItem.Style.BackColor, new Size(menuIconSize.Width, menuIconSize.Height / 2));
+			this.contextMenu_itemCompact.Image = CommonData.Skin.CreateNoteBoxImage(NoteItem.Style.BackColor, new Size(menuIconSize.Width, menuIconSize.Height / 2));
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;

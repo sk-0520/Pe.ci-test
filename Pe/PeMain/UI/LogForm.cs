@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ObjectDumper;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ObjectDumper;
+
 	/// <summary>
 	/// ログ。
 	/// </summary>
@@ -29,6 +29,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				case LogType.Information: return 0;
 				case LogType.Warning: return 1;
 				case LogType.Error: return 2;
+				case LogType.Debug: return 3;
 				default:
 					Debug.Assert(false, logType.ToString());
 					return -1;
@@ -70,8 +71,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region ILogger
+
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
+			if(CommonData.MainSetting.Log.Debugging && logType == LogType.Debug) {
+				return;
+			}
+
 			if(InvokeRequired) {
 				BeginInvoke((MethodInvoker)delegate() { Puts(logType, title, detail, frame); });
 				return;
@@ -94,6 +100,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			ShowLast();
 		}
+
+		public void PutsDebug(string title, object detail, int frame = 3)
+		{
+			Puts(LogType.Debug, title, detail, frame);
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -115,11 +127,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// イメージリストをリソースから構築
 			this._imageLogType = new ImageList();
 			this._imageLogType.ColorDepth = ColorDepth.Depth32Bit;
-			this._imageLogType.ImageSize = IconScale.Small.ToSize();
-			this._imageLogType.Images.Add(LogType.Information.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Information);
-			this._imageLogType.Images.Add(LogType.Warning.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Warning);
-			this._imageLogType.Images.Add(LogType.Error.ToString(), global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Error);
-			this.listLog.SmallImageList = this._imageLogType;
 			//this.listLog.LargeImageList = this._imageLogType;
 
 		}
@@ -163,14 +170,36 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
-		#region function
-		public void PutsList(IEnumerable<LogItem> logs, bool show)
+		#region skin
+		void ApplySkin()
 		{
-			if(logs.Count() >= Literal.logListLimit) {
-				logs = logs.Skip(logs.Count() - Literal.logListLimit);
+			this.toolLog_save.Image = CommonData.Skin.GetImage(SkinImage.Save);
+			this.toolLog_clear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
+
+			this._imageLogType.Images.Clear();
+			this._imageLogType.ImageSize = IconScale.Small.ToSize();
+			this._imageLogType.Images.Add(LogType.Information.ToString(), CommonData.Skin.GetImage(SkinImage.Information));
+			this._imageLogType.Images.Add(LogType.Warning.ToString(), CommonData.Skin.GetImage(SkinImage.Warning));
+			this._imageLogType.Images.Add(LogType.Error.ToString(), CommonData.Skin.GetImage(SkinImage.Error));
+			this._imageLogType.Images.Add(LogType.Debug.ToString(), CommonData.Skin.GetImage(SkinImage.Debug));
+			this.listLog.SmallImageList = this._imageLogType;
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+
+		public void PutsList(IEnumerable<LogItem> log, bool show)
+		{
+			var putLogs = log;
+			if(!CommonData.MainSetting.Log.Debugging) {
+				putLogs = log.Where(l => l.LogType != LogType.Debug);
+			}
+
+			if(putLogs.Count() >= Literal.logListLimit) {
+				putLogs = putLogs.Skip(putLogs.Count() - Literal.logListLimit);
 			}
 			this._refresh = true;
-			this._logs.AddRange(logs);
+			this._logs.AddRange(putLogs);
 
 			this.listLog.VirtualListSize = this._logs.Count;
 			this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -210,6 +239,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Debug.Assert(CommonData.MainSetting != null);
 
 			ApplyLanguage();
+			ApplySkin();
 			ApplyUI();
 		}
 
@@ -312,10 +342,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ChangeDetail(bool fullDetail)
 		{
 			if(fullDetail) {
-				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideExpand;
+				statusLog_itemDetail.Image = CommonData.Skin.GetImage(SkinImage.SideExpand);
 				statusLog_itemDetail.Text = CommonData.Language["log/label/detail-full"];
 			} else {
-				statusLog_itemDetail.Image = ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideContract;
+				statusLog_itemDetail.Image = CommonData.Skin.GetImage(SkinImage.SideContract);
 				statusLog_itemDetail.Text = CommonData.Language["log/label/detail-split"];
 			}
 

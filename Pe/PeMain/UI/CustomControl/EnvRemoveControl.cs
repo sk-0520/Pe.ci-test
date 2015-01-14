@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -10,7 +11,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// <summary>
 	///環境変数削除用コントロール。
 	/// </summary>
-	public partial class EnvRemoveControl : UserControl, ISetLanguage
+	public partial class EnvRemoveControl: UserControl, ISetLanguage, ISetSkin
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -20,6 +21,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region variable
 		Language _language;
+		ISkin _skin;
 		bool _event = false;
 		#endregion ////////////////////////////////////
 
@@ -58,6 +60,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
+		#region ISetSkin
+
+		public void SetSkin(ISkin skin)
+		{
+			ApplySkin(skin);
+			this._skin = skin;
+		}
+
+		#endregion ////////////////////////////////////
+
 		#region override
 		#endregion ////////////////////////////////////
 
@@ -72,6 +84,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ApplyLanguage(Language language)
 		{
 
+		}
+		#endregion ////////////////////////////////////
+
+		#region skin
+		void ApplySkin(ISkin skin)
+		{
 		}
 		#endregion ////////////////////////////////////
 

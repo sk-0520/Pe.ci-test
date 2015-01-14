@@ -177,7 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				if(CommonData != null && CommonData.Skin != null) {
 					if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
 						base.OnPaintBackground(e);
-						e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+						//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
 					} else {
 						CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
 					}
@@ -237,7 +237,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						this._message = launcherItem.Note;
 					}
 				} else {
-					this._imageIcon = AppUtility.GetAppIcon(IconScale.Normal);
+					this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
 					this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
 					this._message = string.Empty;
 				}
@@ -370,6 +370,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region override
+
+		protected override void OnPaintBackground(PaintEventArgs e)
+		{
+			//pevent.Graphics.Clear()
+			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
+				base.OnPaintBackground(e);
+			} else {
+				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
+			}
+		}
+
 		protected override void ToShow()
 		{
 			base.ToShow();
@@ -495,7 +506,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						break;
 
 					case (int)WM.WM_DWMCOMPOSITIONCHANGED: {
-							CommonData.Skin.Refresh(this);
+							CommonData.Skin.RefreshStyle(this);
 						}
 						break;
 				}
@@ -551,7 +562,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			this.toolLauncher.Renderer = renderer;
 			
-			CommonData.Skin.Start(this);
+			CommonData.Skin.AttachmentStyle(this);
 		}
 		
 		void ApplySettingPosition()
@@ -575,7 +586,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					}
 					
 					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
-						DesktopDockType = ToolbarPositionUtility.ToDockType(UseToolbarItem.ToolbarPosition);
+						DesktopDockType = ToolbarPositionConverter.ToDockType(UseToolbarItem.ToolbarPosition);
 						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
 							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
 						} else {
@@ -617,6 +628,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				UseToolbarItem = toolbarItem;
 			}
 		}
+
 		void ApplySettingFont()
 		{
 			Debug.Assert(CommonData != null);
@@ -677,16 +689,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
 			HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
-		}
-		
-		protected override void OnPaintBackground(PaintEventArgs e)
-		{
-			//pevent.Graphics.Clear()
-			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
-				base.OnPaintBackground(e);
-			} else {
-				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
-			}
 		}
 		
 		/// <summary>
@@ -1048,7 +1050,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			};
 		}
 
-
 		string MakeGroupItemName(string groupName)
 		{
 			return menuNameMainGroupItem + groupName;
@@ -1276,16 +1277,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			var iconSize = UseToolbarItem.IconScale.ToSize();
 			var toolItem = new ToolStripDropDownButton();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain, iconSize)) {
+			using(var icon = new Icon(CommonData.Skin.GetIcon(SkinIcon.ToolbarMain), iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#if DEBUG
-					/*
-					using(var b = new SolidBrush(Color.FromArgb(64, Color.Red))) {
-						g.FillRectangle(b, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
-					}
-					 */
 					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
 					#endif
 				}
@@ -1612,7 +1608,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// 例外として自身の次アイテムに挿入する場合は位置が変わらないためその次に挿入する。
 		/// </summary>
 		/// <param name="dropData"></param>
-		void ChnageDropDataLauncherItemPosition(DropData dropData)
+		void ChangeDropDataLauncherItemPosition(DropData dropData)
 		{
 			Debug.Assert(dropData.DropType == DropType.Button);
 			//Debug.WriteLine("{0} * {1}", dropData.SrcToolStripItem, dropData.ToolStripItem);
@@ -1800,7 +1796,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				ExecuteDropData(dropData);
 			} else {
 				Debug.Assert(dropData.DropType == DropType.Button);
-				ChnageDropDataLauncherItemPosition(dropData);
+				ChangeDropDataLauncherItemPosition(dropData);
 				this._dragStartItem = null;
 			}
 		}
@@ -1933,6 +1929,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(Control.ModifierKeys == Keys.Alt) {
 				this._dragStartItem = (ToolStripItem)sender;
 				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
+			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
+				// #148
+				var toolItem = (ToolStripItem)sender;
+				var launcherItem = toolItem.Tag as LauncherItem;
+				if(launcherItem == null) {
+					return;
+				}
+				var menuTypes = new [] {
+					LauncherType.File,
+					LauncherType.Directory,
+					LauncherType.Embedded
+				};
+				if(menuTypes.Any(l => l == launcherItem.LauncherType)) {
+					var menuItem = (ToolStripDropDownItem)toolItem;
+					menuItem.ShowDropDown();
+				}
 			}
 		}
 

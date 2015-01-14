@@ -20,6 +20,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Point = new Point(screenSize.Width - Size.Width, screenSize.Height - Size.Height);
 			AddShow = true;
 			AddShowTrigger = LogType.Warning | LogType.Error;
+
+			Debugging = false;
 		}
 		
 		/// <summary>
@@ -42,6 +44,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// ログダイアログを表示する際にどの種別で表示するか。
 		/// </summary>
 		public LogType AddShowTrigger { get; set; }
+
+		/// <summary>
+		/// デバッグ用出力を行うか。
+		/// </summary>
+		public bool Debugging { get; set; }
 		
 		/// <summary>
 		/// 詳細部を全面表示。

@@ -4,10 +4,13 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.UI;
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -27,17 +30,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			shortcut.Save();
 		}
 		
-		public static Image GetAppIcon(IconScale iconScale)
-		{
-			/*
-			var iconSize = iconScale.ToSize();
-			using(var icon = new Icon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.App, iconSize)) {
-				return icon.ToBitmap();
-			}
-			*/
-			return IconUtility.ImageFromIcon(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App, iconScale);
-		}
-		
 		/// <summary>
 		/// 拡張状態か。
 		/// </summary>
@@ -47,27 +39,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			return Control.ModifierKeys == Keys.Shift;
 		}
 		
-		public static Image CreateBoxColorImage(Color borderColor, Color backColor, Size size)
-		{
-			var image = new Bitmap(size.Width, size.Height);
-			
-			using(var g = Graphics.FromImage(image)) {
-				using(var brush = new SolidBrush(backColor)) {
-					using(var pen = new Pen(borderColor)) {
-						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
-						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
-					}
-				}
-			}
-			
-			return image;
-		}
-		
-		public static Image CreateNoteBoxImage(Color color, Size size)
-		{
-			return CreateBoxColorImage(Color.FromArgb(160, DrawUtility.CalcAutoColor(color)), color, size);
-		}
-
 		public static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirPath)
 		{
 			var entryPath = path.Substring(baseDirPath.Length);
@@ -155,6 +126,54 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			//// クリップボードデータ
 			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
 			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
+		}
+
+		/// <summary>
+		/// スキンを取得。
+		/// 
+		/// 取得したスキンはISkin.Loadまで処理する。
+		/// </summary>
+		/// <param name="logger"></param>
+		/// <returns></returns>
+		public static HashSet<ISkin> GetSkins(ILogger logger)
+		{
+			var result = new HashSet<ISkin>() {
+				new SystemSkin(),
+			};
+
+			var skinDllList = Directory.EnumerateFiles(Literal.ApplicationSkinDirectoryPath, "?*Skin.dll", SearchOption.TopDirectoryOnly);
+			foreach(var skinDll in skinDllList) {
+				var assembly = Assembly.LoadFrom(skinDll);
+				foreach(var type in assembly.GetTypes()) {
+					if(!type.IsClass || type.IsAbstract || type.IsNotPublic || !type.IsVisible) {
+						continue;
+					}
+					if(type.GetInterface("ContentTypeTextNet.Pe.Library.Skin.ISkin") != null) {
+						var ctor = type.GetConstructor(Type.EmptyTypes);
+						if(ctor == null) {
+							logger.Puts(LogType.Error, "default constructor: " + skinDll, type);
+							continue;
+						}
+						var instance = ctor.Invoke(new object[] { });
+						if(instance == null) {
+							logger.Puts(LogType.Error, "create instance: " + skinDll, ctor);
+							continue;
+						}
+						try {
+							var skin = (ISkin)instance;
+							result.Add(skin);
+						} catch(Exception ex) {
+							logger.Puts(LogType.Error, ex.Message + ": " + skinDll, ex);
+						}
+					}
+				}
+			}
+
+			foreach(var skin in result) {
+				skin.Load();
+			}
+
+			return result;
 		}
 	}
 }

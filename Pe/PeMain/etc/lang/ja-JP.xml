@@ -276,6 +276,7 @@
 		<Word Name="setting/group/system-env"      Text="システム環境" />
 		<Word Name="setting/check/add-show"        Text="追加されるたびに表示する" />
 		<Word Name="setting/check/full-detail"     Text="詳細部分を最大化表示する" />
+		<Word Name="setting/check/debugging"       Text="デバッグログも${log}ウィンドウに出力" />
 		<Word Name="setting/group/item-type"       Text="アイテムの種類" />
 		<Word Name="setting/label/item-name"       Text="アイテム名" />
 		<Word Name="setting/label/command"         Text="コマンド" />
@@ -319,6 +320,8 @@
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
 		<Word Name="setting/group/clipboard-type"         Text="取り込む種類" />
 		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
+		<Word Name="setting/group/skin"       Text="スキン" />
+		<Word Name="setting/command/skin"     Text="設定" />
 
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />

@@ -1,31 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SQLite;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Data.DB;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
-using Microsoft.Win32;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Data.SQLite;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Globalization;
+	using System.IO;
+	using System.Linq;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System.Timers;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using Microsoft.Win32;
+
 	/// <summary>
-	/// Description of Pe.
+	/// プログラム本体。
 	/// </summary>
 	public sealed class App: IDisposable, IRootSender
 	{
@@ -87,6 +87,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		uint _clipboardPrevSeq = 0;
 
 		HashSet<Form> _otherWindows = new HashSet<Form>();
+
+		HashSet<ISkin> _skins = new HashSet<ISkin>();
 	
 		#endregion //////////////////////////////////////////
 
@@ -95,7 +97,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Initialized = true;
 			
 			var logger = new StartupLogger(fileLogger);
-
+			logger.PutsDebug("DebugLogging", "Startup: force logging");
+			
 			ExistsSettingFilePath = Initialize(commandLine, logger);
 			
 			#if !DISABLED_UPDATE_CHECK
@@ -394,7 +397,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void InitializeNote(CommandLine commandLine, ILogger logger)
 		{ }
 
-		void InitializeApplicationExecuter(CommandLine commandLine, ILogger logger)
+		void InitializeApplicationExecutor(CommandLine commandLine, ILogger logger)
 		{
 			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
 		}
@@ -456,7 +459,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
 
-			InitializeApplicationExecuter(commandLine, logger);
+			InitializeApplicationExecutor(commandLine, logger);
 
 			return existsSettingFilePath;
 		}
@@ -492,7 +495,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				var screens = Screen.AllScreens.ToArray();
@@ -592,7 +595,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Note);
 			// 表示
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var hasNote = this._noteWindowList.Count > 0;
@@ -604,10 +607,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				//itemNoteHidden.ShortcutKeys = this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey();
 				//itemNoteCompact.ShortcutKeys = this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey();
 				//itemNoteShowFront.ShortcutKeys = this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
 
 				OpeningNoteMenu();
 			};
@@ -623,7 +626,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				launcherItem.LauncherType = LauncherType.Embedded;
 
 				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
-
+#if DEBUG
+				if(icon == null) {
+					throw new NullReferenceException("rebuild solution!");
+				}
+#endif
 				var menuItem = new ToolStripMenuItem();
 
 				menuItem.Tag = applicationItem;
@@ -643,7 +650,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 
 			parentItem.Name = menuNameApplications;
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
@@ -668,7 +675,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 保存
 			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave;
+			itemSave.Image = this._commonData.Skin.GetImage(SkinImage.WindowSave);
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
@@ -676,7 +683,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// 読込
 			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad;
+			itemLoad.Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad);
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
@@ -684,7 +691,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			parentItem.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList;
+			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.WindowList);
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
 
@@ -724,7 +731,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// クリップボード
 			itemClipboard.Name = menuNameSystemEnvClipboard;
-			itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			itemClipboard.Image = this._commonData.Skin.GetImage(SkinImage.Clipboard);
+			
 			itemClipboard.Click += (object sender, EventArgs e) => {
 				SwitchShowClipboard();
 			};
@@ -739,9 +747,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 				//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeys(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey(), this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeys(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting.GetShorcutKey(), this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
 			};
 
 		}
@@ -789,7 +797,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			// ログ
 			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log;
+			itemLogger.Image = this._commonData.Skin.GetImage(SkinImage.Log);
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
@@ -797,17 +805,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// システム環境
 			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment;
+			itemSystemEnv.Image = this._commonData.Skin.GetImage(SkinImage.SystemEnvironment);
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
 			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config;
+			itemSetting.Image = this._commonData.Skin.GetImage(SkinImage.Config);
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 
 			// 情報
 			itemAbout.Name = menuNameAbout;
-			itemAbout.Image = AppUtility.GetAppIcon(IconScale.Small);
+
+			itemAbout.Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small);
 			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
@@ -824,12 +833,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 			// ヘルプ
 			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help;
+			itemHelp.Image = this._commonData.Skin.GetImage(SkinImage.Help);
 			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
 			// 終了
 			itemExit.Name = menuNameExit;
-			itemExit.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close;
+			itemExit.Image = this._commonData.Skin.GetImage(SkinImage.Close);
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 
 			// メインメニュー
@@ -840,9 +849,27 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._contextMenu.Items.AddRange(menuList.ToArray());
 		}
 
-		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
+		void InitializeSkin(CommandLine commandLine, ILogger logger)
 		{
-			this._commonData.Skin = new SystemSkin();
+			ResetSkin(logger);
+
+			var skinName = this._commonData.MainSetting.Skin.Name;
+			var isDefault = string.IsNullOrWhiteSpace(skinName);
+			if(!isDefault) {
+				var hasSkin = this._skins.Any(s => s.About.Name == skinName);
+				isDefault = !hasSkin;
+			}
+			if(isDefault) {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				skinName = defSkin.About.Name;
+			}
+			var skin = this._skins.Single(s => s.About.Name == skinName);
+
+			this._commonData.Skin = skin;
+			this._commonData.Skin.Initialize();
+
+			LauncherItem.SetSkin(this._commonData.Skin);
 		}
 
 		/// <summary>
@@ -859,19 +886,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
 
+			// タスクトレイアイコン構築
 			var iconSize = IconScale.Small.ToSize();
 			var iconRect = new Rectangle(Point.Empty, iconSize);
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
-					using(var icon = AppUtility.GetAppIcon(IconScale.Small)) {
-						g.DrawImage(icon, iconRect);
-					}
+					g.DrawImage(IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.Tasktray), IconScale.Small), iconRect);
 #if DEBUG
-					/*
-					using(var b = new SolidBrush(Color.FromArgb(128, Color.Red))) {
-						g.FillRectangle(b, iconRect);
-					}
-					 */
 					DrawUtility.MarkingDebug(g, iconRect);
 #endif
 				}
@@ -904,7 +925,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this._clipboardWindow.SetCommonData(this._commonData);
 			ChangeClipboard();
 		}
-
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{
@@ -1013,8 +1033,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			//this._commonData.RootSender.EnabledClipboard = true;
 
 			Debug.Assert(Initialized);
-			this._logForm.PutsList(logger.GetList(), false);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
+			this._logForm.PutsList(logger.GetList(), false);
 
 			return existsSettingFilePath;
 		}
@@ -1029,31 +1049,31 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				new {
 					Name = menuNameWindowNoteCreate,
 					Lang = "main/menu/window/note/create",
-					Key  = this._commonData.MainSetting.Note.CreateHotKey
+					//Key  = this._commonData.MainSetting.Note.CreateHotKey
 				},
 				new {
 					Name = menuNameWindowNoteHidden,
 					Lang = "main/menu/window/note/hidden",
-					Key  = this._commonData.MainSetting.Note.HiddenHotKey
+					//Key  = this._commonData.MainSetting.Note.HiddenHotKey
 				},
 				new {
 					Name = menuNameWindowNoteCompact,
 					Lang = "main/menu/window/note/compact",
-					Key  = this._commonData.MainSetting.Note.CompactHotKey
+					//Key  = this._commonData.MainSetting.Note.CompactHotKey
 				},
 				new {
 					Name = menuNameWindowNoteShowFront,
 					Lang = "main/menu/window/note/show-front",
-					Key  = this._commonData.MainSetting.Note.ShowFrontHotKey
+					//Key  = this._commonData.MainSetting.Note.ShowFrontHotKey
 				},
 			};
 
 			foreach(var keyItem in keyItems) {
 				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
 				menuItem.Text = this._commonData.Language[keyItem.Lang];
-				if(keyItem.Key.Enabled) {
-					menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
-				}
+				//if(keyItem.Key.Enabled) {
+				//	menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
+				//}
 			}
 		}
 
@@ -1069,26 +1089,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				new {
 					Name = menuNameSystemEnvHiddenFile,
 					Lang = "main/menu/system-env/show-hiddne-file",
-					Key  = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey
+					//Key  = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey
 				},
 				new {
 					Name = menuNameSystemEnvExtension,
 					Lang = "main/menu/system-env/show-extension",
-					Key  = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey
+					//Key  = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey
 				},
 				new {
 					Name = menuNameSystemEnvClipboard,
 					Lang = "main/menu/system-env/clipboard",
-					Key  = new HotKeySetting()
+					//Key  = this._commonData.MainSetting.Clipboard.ToggleHotKeySetting
 				},
 			};
 
 			foreach(var keyItem in keyItems) {
 				var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[keyItem.Name];
 				menuItem.Text = this._commonData.Language[keyItem.Lang];
-				if(keyItem.Key.Enabled) {
-					menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
-				}
+				//if(keyItem.Key.Enabled) {
+				//	menuItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(this._commonData.Language, keyItem.Key);
+				//}
 			}
 
 			// ウィンドウ
@@ -1243,6 +1263,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Application.Exit();
 		}
 
+		void ResetSkin(ILogger logger)
+		{
+			foreach(var skin in this._skins) {
+				skin.Unload();
+			}
+
+			this._skins = AppUtility.GetSkins(logger);
+
+		}
+
+		void ResetMain()
+		{
+			this._contextMenu.ToDispose();
+			this._notifyIcon.ToDispose();
+
+			InitializeMain(null, null);
+		}
+
 		/// <summary>
 		/// ツール―バー状態のリセット。
 		/// </summary>
@@ -1302,6 +1340,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				this._otherWindows.Remove(window);
 				window.Dispose();
 			}
+
+			ResetMain();
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
@@ -1313,7 +1353,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// <returns></returns>
 		Func<bool> OpenSettingDialog()
 		{
-			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
+			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.Skin, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
 					foreach(var note in this._noteWindowList) {
@@ -1335,25 +1375,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					mainSetting.Clipboard.Items.LimitSize = mainSetting.Clipboard.Limit;
 
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
+					var oldSetting = this._commonData.MainSetting;
 					this._commonData.MainSetting = mainSetting;
+					oldSetting.ToDispose();
 					settingForm.SaveFiles();
 					settingForm.SaveDB(this._commonData.Database);
 					AppUtility.SaveSetting(this._commonData);
 					InitializeLanguage(null, null);
-					ApplyLanguage();
+					InitializeSkin(null, this._commonData.Logger);
 
 					return () => {
 						this._logForm.SetCommonData(this._commonData);
 						this._messageWindow.SetCommonData(this._commonData);
-						/*
-						foreach(var toolbar in this._toolbarForms.Values) {
-							//toolbar.SetCommonData(this._commonData);
-							toolbar.Dispose();
-						}
-						this._toolbarForms.Clear();
-						InitializeToolbarForm(null, null);
-						 */
+
 						ResetUI();
+						ApplyLanguage();
+
 						foreach(var window in this._otherWindows.Where(w => w is StreamForm).Cast<StreamForm>().ToArray()) {
 							window.Visible = true;
 						}
@@ -1675,9 +1712,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				menuItem.Text = noteItem.Title;
 				if(noteItem.Compact) {
 					menuItem.ImageScaling = ToolStripItemImageScaling.None;
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
 				} else {
-					menuItem.Image = AppUtility.CreateBoxColorImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
 				}
 				menuItem.Checked = noteItem.Visible;
 				menuItem.Click += (object sender, EventArgs e) => {

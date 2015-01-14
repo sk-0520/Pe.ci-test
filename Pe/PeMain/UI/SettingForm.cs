@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.DB;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+
 	/// <summary>
 	/// 設定。
 	/// </summary>
@@ -118,14 +118,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region event
 		#endregion ////////////////////////////////////
 
-		public SettingForm(Language language, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
+		public SettingForm(Language language, ISkin skin, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 
-			Initialize(language, setting, db, applicationSetting);
+			Initialize(language, skin, setting, db, applicationSetting);
 		}
 
 		#region property
@@ -133,6 +133,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// 使用言語データ
 		/// </summary>
 		public Language Language { get; private set; }
+		public ISkin Skin { get; private set; }
 
 		public MainSetting MainSetting { get; private set; }
 		#endregion ////////////////////////////////////
@@ -149,6 +150,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogVisible.Checked = logSetting.Visible;
 			this.selectLogAddShow.Checked = logSetting.AddShow;
 			this.selectLogFullDetail.Checked = logSetting.FullDetail;
+			this.selectLogDebugging.Checked = logSetting.Debugging;
 
 			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
 			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
@@ -174,6 +176,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.selectUpdateCheck.Checked = setting.CheckUpdate;
 			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
+		}
+
+		void InitializeSkin(SkinSetting setting)
+		{
+			var skins = AppUtility.GetSkins(new NullLogger());
+
+			var skinDisplayValues = skins.Select(s => new SkinDisplayValue(s));
+			var selectSkin = skinDisplayValues.SingleOrDefault(s => s.Value.About.Name == setting.Name);
+			if(selectSkin != null) {
+				this.selectSkinName.Attachment(skinDisplayValues, selectSkin.Value);
+			} else {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				var skin = skinDisplayValues.Single(s => s.Value.About.Name == defSkin.About.Name);
+				this.selectSkinName.Attachment(skinDisplayValues, skin.Value);
+				defSkin.Unload();
+			}
+			
 		}
 
 		void InitializeLanguage(string languageName, Language language)
@@ -226,6 +246,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeSystemEnv(mainSetting.SystemEnv);
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
+			InitializeSkin(mainSetting.Skin);
 		}
 
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -372,11 +393,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
 
 			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
+
+			this.commandClipboardTextFont.FontSetting.Import(setting.TextFont);
+			this.commandClipboardTextFont.RefreshView();
 		}
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			ApplyLanguage();
+			ApplySkin();
 
 			InitializeMainSetting(mainSetting);
 			InitializeLauncher(mainSetting.Launcher);
@@ -421,11 +446,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			;
 		}
 
-		void Initialize(Language language, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
+		void Initialize(Language language, ISkin skin, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 
 			Language = language;
+			Skin = skin;
 			this._applicationSetting = applicationSetting;
 
 			InitializeCommand();
@@ -453,6 +479,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogVisible.SetLanguage(Language);
 			this.selectLogAddShow.SetLanguage(Language);
 			this.selectLogFullDetail.SetLanguage(Language);
+			this.selectLogDebugging.SetLanguage(Language);
 			this.selectLogTrigger_information.Text = LogType.Information.ToText(Language);
 			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(Language);
 			this.selectLogTrigger_error.Text = LogType.Error.ToText(Language);
@@ -466,7 +493,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelSystemEnvExt.SetLanguage(Language);
 			this.labelSystemEnvHiddenFile.SetLanguage(Language);
 		}
-		
+
+		void ApplyLanguageSkin()
+		{
+			this.groupMainSkin.SetLanguage(Language);
+			this.commandSkinAbout.SetLanguage(Language);
+		}
+
 		void ApplyLanguageRunningInfo()
 		{
 			this.groupUpdateCheck.SetLanguage(Language);
@@ -484,6 +517,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
 			ApplyLanguageRunningInfo();
+			ApplyLanguageSkin();
 		}
 		
 		void ApplyLanguageLauncher()
@@ -588,6 +622,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.inputClipboardHotkey.SetLanguage(Language);
 
+			this.commandClipboardTextFont.SetLanguage(Language);
+			this.labelClipboardFont.SetLanguage(Language);
+
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);
 			this.labelClipboardSleepTime.SetLanguage(Language);
@@ -619,6 +656,34 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageDisplay();
 			ApplyLanguageClipboard();
 		}
+		#endregion ////////////////////////////////////
+
+		#region skin
+
+		void ApplySkinLauncher()
+		{
+			this.selecterLauncher.SetSkin(Skin);
+			this.envLauncherUpdate.SetSkin(Skin);
+			this.envLauncherRemove.SetSkin(Skin);
+
+			toolToolbarGroup_addGroup.Image = Skin.GetImage(SkinImage.Group);
+			toolToolbarGroup_addItem.Image = Skin.GetImage(SkinImage.AddItem);
+			toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
+			toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
+			toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
+		}
+
+		void ApplySkinToolbar()
+		{
+			this.selecterToolbar.SetSkin(Skin);
+		}
+
+		void ApplySkin()
+		{
+			ApplySkinLauncher();
+			ApplySkinToolbar();
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region function
@@ -730,11 +795,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				setting.Items.Add(item);
 			}
 		}
+
 		void ExportLogSetting(LogSetting logSetting)
 		{
 			logSetting.Visible = this.selectLogVisible.Checked;
 			logSetting.AddShow = this.selectLogAddShow.Checked;
 			logSetting.FullDetail = this.selectLogFullDetail.Checked;
+			logSetting.Debugging = this.selectLogDebugging.Checked;
 
 			var trigger = new Dictionary<CheckBox, LogType>() {
 				{ this.selectLogTrigger_information, LogType.Information },
@@ -779,6 +846,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
+		void ExportSkinSetting(SkinSetting setting)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			setting.Name = skin.About.Name;
+		}
+
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
@@ -786,6 +859,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ExportRunningInfoSetting(mainSetting.RunningInfo);
 
 			ExportLanguageSetting(mainSetting);
+			ExportSkinSetting(mainSetting.Skin);
 		}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
@@ -852,10 +926,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			setting.EnabledTypes = clipboardType;
 
 			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
+
+			// フォント
+			setting.TextFont = this.commandClipboardTextFont.FontSetting;
 		}
 		#endregion ////////////////////////////////////
 
 		#region save
+
 		void SaveFileMainStartup()
 		{
 			var linkPath = Literal.StartupShortcutPath;
@@ -1252,9 +1330,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
-			var treeImage = new Dictionary<int, Bitmap>() {
-				{ TREE_TYPE_NONE, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
-				{ TREE_TYPE_GROUP, ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group },
+			var treeImage = new Dictionary<int, Image>() {
+				{ TREE_TYPE_NONE, Skin.GetImage(SkinImage.NotImpl) },
+				{ TREE_TYPE_GROUP, Skin.GetImage(SkinImage.Group) },
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
@@ -1405,7 +1483,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region page/clipboard
 		#endregion ////////////////////////////////////
 		#endregion ////////////////////////////////////
-
 
 		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
 		{
@@ -1659,18 +1736,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
 				// フォント変更
 				// TODO: ダイアログ表示を一元化する必要あり
+				// ↑
+				// 2015/01/15: なんのこっちゃ……
 				using(var dialog = new FontDialog()) {
 					var row = this._noteItemList[e.RowIndex];
 					var fontSetting = row.Font;
-					if(fontSetting.IsDefault) {
-						dialog.Font = fontSetting.Font;
-					}
+					dialog.SetFontSetting(fontSetting);
 					
 					if(dialog.ShowDialog() == DialogResult.OK) {
-						var result = new FontSetting();
-						var font = dialog.Font;
-						fontSetting.Family = font.FontFamily.Name;
-						fontSetting.Height = font.Size;
+						fontSetting.Import(dialog.Font);
 					}
 				}
 			} else if(e.ColumnIndex == this.gridNoteItems_columnFore.Index || e.ColumnIndex == this.gridNoteItems_columnBack.Index) {
@@ -1765,6 +1839,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var nowIndex = this.selectToolbarGroup.SelectedIndex;
 			this.selectToolbarGroup.Attachment(groupList);
 			this.selectToolbarGroup.SelectedIndex = nowIndex;
+		}
+
+		private void selectSkinName_SelectedValueChanged(object sender, EventArgs e)
+		{
+			var skin = this.selectSkinName.SelectedValue as ISkin;
+			if(skin != null) {
+				this.commandSkinAbout.Enabled = skin.About.Setting;
+			}
+		}
+
+		private void commandSkinAbout_Click(object sender, EventArgs e)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			var about = skin.About;
+			MessageBox.Show(about.Name);
 		}
 	}
 }

@@ -33,13 +33,22 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		{
 			Dispose(true);
 		}
-		
+
+		#region ILogger
+
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
 			var logItem = new LogItem(logType, title, detail, frame);
 			WiteItem(logItem);
 		}
-		
+
+		public void PutsDebug(string title, object detail, int frame = 3)
+		{
+			Puts(LogType.Debug, title, detail, frame);
+		}
+
+		#endregion
+
 		public void WiteItem(LogItem logItem)
 		{
 			if(this._stream != null) {

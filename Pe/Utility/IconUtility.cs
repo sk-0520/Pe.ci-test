@@ -9,21 +9,6 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	public static class IconUtility
 	{
-		public static int ToHeight(this IconScale iconScale)
-		{
-			return (int)iconScale;
-		}
-		public static int ToWidth(this IconScale iconScale)
-		{
-			return (int)iconScale;
-		}
-		public static Size ToSize(this IconScale iconScale)
-		{
-			var w = iconScale.ToWidth();
-			var h = iconScale.ToHeight();
-			return new Size(w, h);
-		}
-
 		/// <summary>
 		/// 16px, 32pxアイコン取得
 		/// </summary>

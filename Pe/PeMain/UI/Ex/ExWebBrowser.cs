@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
+namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	public abstract class ExWebBrowser: WebBrowser
 	{

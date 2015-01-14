@@ -60,6 +60,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 				}
 			}
 		}
+
+		public static void SetFontSetting(this FontDialog dialog, FontSetting fontSetting)
+		{
+			if(!fontSetting.IsDefault) {
+				dialog.Font = fontSetting.Font;
+			} else {
+				dialog.Font = fontSetting.DefaultFont;
+			}
+		}
 	}
 	
 	/// <summary>
@@ -367,12 +376,20 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		/// <param name="toolItem"></param>
 		/// <param name="key"></param>
 		/// <param name="logger"></param>
-		public static void SetSafeShortcutKeys(ToolStripMenuItem toolItem, Keys key, ILogger logger) 
+		static void SetSafeShortcutKeys(ToolStripMenuItem toolItem, Keys key, ILogger logger) 
 		{
 			try {
 				toolItem.ShortcutKeys = key;
 			} catch(InvalidEnumArgumentException ex) {
 				logger.Puts(LogType.Warning, key.ToString(), ex);
+			}
+		}
+
+		public static void SetSafeShortcutKeysAndDisplayKey(ToolStripMenuItem toolItem, HotKeySetting hotkeySetting, Language language, ILogger logger)
+		{
+			SetSafeShortcutKeys(toolItem, hotkeySetting.GetShorcutKey(), logger);
+			if(hotkeySetting.Enabled) {
+				toolItem.ShortcutKeyDisplayString = LanguageUtility.HotkeySettingToDisplayText(language, hotkeySetting);
 			}
 		}
 		

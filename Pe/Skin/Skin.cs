@@ -1,46 +1,47 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.PeMain.Data;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.Library.Skin
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Drawing.Text;
+	using System.Runtime.InteropServices;
+	using System.Windows.Forms;
+	using System.Windows.Forms.VisualStyles;
+	using ContentTypeTextNet.Pe.Library.Skin;
 
+	public class ToolbarButtonData
+	{
+		public ToolbarButtonData()
+		{
+			Active = false;
+			HasArrow = false;
+			HasMenuSplit = false;
+			ButtonState = SkinButtonState.None;
+			MenuState = SkinButtonState.None;
+		}
+
+		public Graphics Graphics { get; set; }
+		public bool Active { get; set; }
+		public bool HasArrow { get; set; }
+		public ArrowDirection ArrowDirection { get; set; }
+		public bool HasMenuSplit { get; set; }
+		public SkinButtonState ButtonState { get; set; }
+		public SkinButtonState MenuState { get; set; }
+		public Rectangle ButtonArea { get; set; }
+		public Rectangle MenuArea { get; set; }
+	}
 
 	/// <summary>
 	/// ISkinの多分共通だろうって部分の抽象版
 	/// </summary>
 	public abstract class Skin: ISkin
 	{
-		protected class ToolbarButtonData
-		{
-			public ToolbarButtonData()
-			{
-				Active = false;
-				HasArrow = false;
-				HasMenuSplit = false;
-				ButtonState = SkinButtonState.None;
-				MenuState = SkinButtonState.None;
-			}
-			
-			public Graphics Graphics { get; set; }
-			public bool Active { get; set; }
-			public bool HasArrow { get; set; }
-			public ArrowDirection ArrowDirection { get; set; }
-			public bool HasMenuSplit { get; set; }
-			public SkinButtonState ButtonState { get; set; }
-			public SkinButtonState MenuState { get; set; }
-			public Rectangle ButtonArea { get; set; }
-			public Rectangle MenuArea { get; set; }
-		}
-		
-		protected bool EnabledAeroStyle { get; set; }
-		//protected bool EnabledVisualStyle { get; set; }
-		
+		#region Static
+
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("dwmapi.dll")]
+		static extern int DwmIsCompositionEnabled(out bool enabled);
+
 		/// <summary>
 		/// http://msdn.microsoft.com/ja-jp/magazine/ee221436.aspx
 		/// </summary>
@@ -49,7 +50,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		protected static StringFormat ToStringFormat(TextFormatFlags flags)
 		{
 			var format = new StringFormat();
-			
+
 			// 縦方向
 			if((flags & TextFormatFlags.Left) == TextFormatFlags.Left) {
 				format.Alignment = StringAlignment.Near;
@@ -58,7 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else if((flags & TextFormatFlags.Right) == TextFormatFlags.Right) {
 				format.Alignment = StringAlignment.Far;
 			}
-			
+
 			// 縦方向
 			if((flags & TextFormatFlags.Top) == TextFormatFlags.Top) {
 				format.LineAlignment = StringAlignment.Near;
@@ -67,7 +68,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else if((flags & TextFormatFlags.Bottom) == TextFormatFlags.Bottom) {
 				format.LineAlignment = StringAlignment.Far;
 			}
-			
+
 			// 省略符号
 			if((flags & TextFormatFlags.EndEllipsis) == TextFormatFlags.EndEllipsis) {
 				format.Trimming = StringTrimming.EllipsisCharacter;
@@ -76,29 +77,29 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			} else if((flags & TextFormatFlags.PathEllipsis) == TextFormatFlags.PathEllipsis) {
 				format.Trimming = StringTrimming.EllipsisPath;
 			}
-			
+
 			// ホットキープレフィックス
 			if((flags & TextFormatFlags.NoPrefix) == TextFormatFlags.NoPrefix) {
 				format.HotkeyPrefix = HotkeyPrefix.None;
 			} else if((flags & TextFormatFlags.HidePrefix) == TextFormatFlags.HidePrefix) {
 				format.HotkeyPrefix = HotkeyPrefix.Hide;
 			}
-			
+
 			// テキストの埋め込み
 			if((flags & TextFormatFlags.NoPadding) == TextFormatFlags.NoPadding) {
 				format.FormatFlags |= StringFormatFlags.FitBlackBox;
 			}
-			
+
 			// テキストの折り返し
 			if((flags & TextFormatFlags.SingleLine) == TextFormatFlags.SingleLine) {
 				format.FormatFlags |= StringFormatFlags.NoWrap;
 			} else if((flags & (TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl)) == (TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl)) {
 				format.FormatFlags |= StringFormatFlags.LineLimit;
 			}
-			
+
 			return format;
 		}
-		
+
 		/// <summary>
 		/// TODO: システムからの領域無視
 		/// </summary>
@@ -110,30 +111,83 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			var itemArea = new Rectangle(System.Drawing.Point.Empty, item.Size);
 			var arrawSize = new System.Drawing.Size(menuWidth, itemArea.Height);
 			var arrowArea = new Rectangle(new System.Drawing.Point(itemArea.Width - arrawSize.Width, itemArea.Height - arrawSize.Height), arrawSize);
-			
-			return arrowArea ;
+
+			return arrowArea;
 		}
-		
+
 		protected static bool IsEnabledAeroStyle()
 		{
 			bool isAero;
-			NativeMethods.DwmIsCompositionEnabled(out isAero);
+			DwmIsCompositionEnabled(out isAero);
 			return isAero;
 		}
-		
-		public virtual void Start(Form target)
+
+		#endregion
+
+		protected ISkinAbout _about;
+		protected bool EnabledAeroStyle { get; set; }
+		//protected bool EnabledVisualStyle { get; set; }
+
+		#region Initialize
+
+		public abstract void Load();
+		public abstract void Initialize();
+		public abstract void Unload();
+
+		#endregion
+
+		#region Setting About
+
+		public ISkinAbout About { get { return this._about; } }
+
+		#endregion
+
+		#region Style
+
+		public virtual void AttachmentStyle(Form target)
 		{
 			EnabledAeroStyle = IsEnabledAeroStyle();
 		}
-		public abstract void Close(Form target);
+		public abstract void DetachmentStyle(Form target);
 		
-		public void Refresh(Form target)
+		public void RefreshStyle(Form target)
 		{
-			Close(target);
-			Start(target);
+			DetachmentStyle(target);
+			AttachmentStyle(target);
 		}
-		
-#region Layout Toolbar
+
+		#endregion
+
+		#region Resource
+
+		public abstract Image GetImage(SkinImage skinImage);
+		public abstract Icon GetIcon(SkinIcon skinIcon);
+
+		#endregion
+
+		#region Create
+
+		public virtual Image CreateColorBoxImage(Color borderColor, Color backColor, Size size)
+		{
+			var image = new Bitmap(size.Width, size.Height);
+
+			using(var g = Graphics.FromImage(image)) {
+				using(var brush = new SolidBrush(backColor)) {
+					using(var pen = new Pen(borderColor)) {
+						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
+						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
+					}
+				}
+			}
+
+			return image;
+		}
+
+		public abstract Image CreateNoteBoxImage(Color color, Size size);
+
+		#endregion ///////////////////////////////////
+
+		#region Layout Toolbar
 
 		public abstract Padding GetToolbarWindowEdgePadding(ToolbarPosition toolbarPosition);
 		public abstract Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
@@ -175,16 +229,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 #endregion
 		
-#region Layout Note
+		#region Layout Note
 
 		public abstract Padding GetNoteWindowEdgePadding();
 		public abstract Rectangle GetNoteCaptionArea(System.Drawing.Size parentSize);
 		public abstract Rectangle GetNoteCommandArea(System.Drawing.Rectangle parentArea, SkinNoteCommand noteCommand);
-
 		
-#endregion
+		#endregion
 
-#region Draw Toolbar
+		#region Draw Toolbar
+
 		public abstract void DrawToolbarWindowBackground(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarWindowEdge(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition);
@@ -303,9 +357,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				visualStyleRenderer.DrawBackground(g, drawArea);
 			}
 		}
-#endregion
+
+		#endregion
 			
-#region Draw Note
+		#region Draw Note
 
 		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
 		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
@@ -313,11 +368,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, SkinNoteCommand noteCommand, SkinButtonState buttonState);
 		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
 
+		#endregion
 
-#endregion
+		#region Property
 
-		public virtual int MenuWidth { get { throw new NotImplementedException(); } }
-		public virtual int PaddingWidth { get { throw new NotImplementedException(); } }
+		public abstract int MenuWidth { get; }
+		public abstract int PaddingWidth { get; }
 
 		public virtual bool IsDefaultDrawToolbarWindowBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarWindowEdge { get { return true; } }
@@ -331,7 +387,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		public virtual bool IsDefaultDrawToolbarSplitButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarButtonBackground { get { return true; } }
 		public virtual bool IsDefaultDrawToolbarToolTipBackground { get{ return true; } }
-		
+
+		#endregion
+
 		protected virtual void DrawToolbarArrowImage(ToolbarButtonData toolbarButtonData)
 		{
 			throw new NotImplementedException();

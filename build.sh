@@ -20,6 +20,10 @@ cmd.exe //c  build.bat
 # バージョン戻し
 git reset --hard
 
-echo "build success. please any key... "
-read
+if [ -z "${CI+x}" ] ; then
+    echo "build success. please any key..."
+    read
+else
+    echo "build success. CI mode."
+fi
 
