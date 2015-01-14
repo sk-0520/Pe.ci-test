@@ -10,7 +10,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// フォント設定。
 	/// </summary>
 	[Serializable]
-	public class FontSetting: DisposableItem, IDisposable
+	public class FontSetting: DisposableItem
 	{
 		/// <summary>
 		/// 保持用フォント。
@@ -83,20 +83,29 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			get { return string.IsNullOrWhiteSpace(this.Family); }
 		}
 
+		#region DisposableItem
+
 		protected override void Dispose(bool disposing)
 		{
 			this._defaultFont.ToDispose();
 
-			this._font.ToDispose();
-			this._font = null;
+			ClearFont();
 
 			base.Dispose(disposing);
 		}
-		
-		public virtual void Import(FontSetting fs)
+
+		#endregion
+
+		protected void ClearFont()
 		{
 			this._font.ToDispose();
-			
+			this._font = null;
+		}
+
+		public virtual void Import(FontSetting fs)
+		{
+			ClearFont();
+
 			Height = fs.Height;
 			Family = fs.Family;
 			Bold = fs.Bold;
@@ -104,7 +113,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		}
 		public virtual void Import(Font f)
 		{
-			this._font.ToDispose();
+			ClearFont();
 			
 			Height = f.SizeInPoints;
 			Family = f.FontFamily.Name;

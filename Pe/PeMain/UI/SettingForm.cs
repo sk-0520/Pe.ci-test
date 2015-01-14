@@ -623,6 +623,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardHotkey.SetLanguage(Language);
 
 			this.commandClipboardTextFont.SetLanguage(Language);
+			this.labelClipboardFont.SetLanguage(Language);
 
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);

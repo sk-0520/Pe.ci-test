@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSkin = new System.Windows.Forms.GroupBox();
@@ -200,13 +200,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
 			this.labelClipboardHotkey = new System.Windows.Forms.Label();
 			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.labelClipboardFont = new System.Windows.Forms.Label();
+			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.label1 = new System.Windows.Forms.Label();
-			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupMainSkin.SuspendLayout();
@@ -1842,8 +1842,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1873,9 +1873,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -1942,7 +1942,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.Controls.Add(this.inputClipboardSleepTime, 1, 4);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardHotkey, 0, 7);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardHotkey, 1, 7);
-			this.panelClipboardMain.Controls.Add(this.label1, 0, 8);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardFont, 0, 8);
 			this.panelClipboardMain.Controls.Add(this.commandClipboardTextFont, 1, 8);
 			this.panelClipboardMain.Location = new System.Drawing.Point(6, 6);
 			this.panelClipboardMain.Name = "panelClipboardMain";
@@ -2167,6 +2167,27 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardHotkey.TabIndex = 12;
 			this.inputClipboardHotkey.Text = "None";
 			// 
+			// labelClipboardFont
+			// 
+			this.labelClipboardFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardFont.AutoSize = true;
+			this.labelClipboardFont.Location = new System.Drawing.Point(3, 224);
+			this.labelClipboardFont.Name = "labelClipboardFont";
+			this.labelClipboardFont.Size = new System.Drawing.Size(125, 15);
+			this.labelClipboardFont.TabIndex = 13;
+			this.labelClipboardFont.Text = ":common/label/font";
+			// 
+			// commandClipboardTextFont
+			// 
+			this.commandClipboardTextFont.AutoSize = true;
+			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 219);
+			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
+			this.commandClipboardTextFont.Size = new System.Drawing.Size(168, 25);
+			this.commandClipboardTextFont.TabIndex = 14;
+			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
+			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
+			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -2219,27 +2240,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 224);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(188, 15);
-			this.label1.TabIndex = 13;
-			this.label1.Text = ":setting/label/clipboard-hotkey";
-			// 
-			// commandClipboardTextFont
-			// 
-			this.commandClipboardTextFont.AutoSize = true;
-			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 219);
-			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
-			this.commandClipboardTextFont.Size = new System.Drawing.Size(168, 25);
-			this.commandClipboardTextFont.TabIndex = 14;
-			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
-			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -2507,7 +2507,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ComboBox selectSkinName;
 		private System.Windows.Forms.Button commandSkinAbout;
 		private System.Windows.Forms.CheckBox selectLogDebugging;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label labelClipboardFont;
 		private FontSplitButton commandClipboardTextFont;
 	}
 }

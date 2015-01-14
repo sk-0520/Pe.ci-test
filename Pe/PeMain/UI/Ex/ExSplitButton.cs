@@ -1,17 +1,22 @@
-﻿using System;
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
+{
+using System;
+using System.Drawing;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic;
 
-namespace ContentTypeTextNet.Pe.PeMain.UI
-{
 	/// <summary>
-	/// Description of ExSplitButton.
+	/// 拡張スプリットボタン基底クラス。
 	/// </summary>
 	public abstract class ExSplitButton: wyDay.Controls.SplitButton
 	{ }
 	
+	/// <summary>
+	/// フォント選択用コントロール。
+	/// </summary>
 	public class FontSplitButton: ExSplitButton, ISetLanguage
 	{
 		const string nameMenuReset = "reset";
@@ -45,15 +50,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void FontSplitButton_Click(object sender, EventArgs e)
 		{
 			using(var dialog = new FontDialog()) {
-				if(FontSetting.IsDefault) {
+				if(!FontSetting.IsDefault) {
 					dialog.Font = FontSetting.Font;
+				} else {
+					dialog.Font = SystemFonts.DefaultFont;
 				}
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
-					var result = new FontSetting();
 					var font = dialog.Font;
-					FontSetting.Family = font.FontFamily.Name;
-					FontSetting.Height = font.Size;
+					FontSetting.Import(font);
 
 					RefreshView();
 				}
