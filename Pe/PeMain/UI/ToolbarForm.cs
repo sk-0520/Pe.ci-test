@@ -370,6 +370,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region override
+
+		protected override void OnPaintBackground(PaintEventArgs e)
+		{
+			//pevent.Graphics.Clear()
+			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
+				base.OnPaintBackground(e);
+			} else {
+				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
+			}
+		}
+
 		protected override void ToShow()
 		{
 			base.ToShow();
@@ -617,6 +628,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				UseToolbarItem = toolbarItem;
 			}
 		}
+
 		void ApplySettingFont()
 		{
 			Debug.Assert(CommonData != null);
@@ -677,16 +689,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			
 			HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
 			HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
-		}
-		
-		protected override void OnPaintBackground(PaintEventArgs e)
-		{
-			//pevent.Graphics.Clear()
-			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
-				base.OnPaintBackground(e);
-			} else {
-				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
-			}
 		}
 		
 		/// <summary>
@@ -1047,7 +1049,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				}
 			};
 		}
-
 
 		string MakeGroupItemName(string groupName)
 		{
@@ -1607,7 +1608,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// 例外として自身の次アイテムに挿入する場合は位置が変わらないためその次に挿入する。
 		/// </summary>
 		/// <param name="dropData"></param>
-		void ChnageDropDataLauncherItemPosition(DropData dropData)
+		void ChangeDropDataLauncherItemPosition(DropData dropData)
 		{
 			Debug.Assert(dropData.DropType == DropType.Button);
 			//Debug.WriteLine("{0} * {1}", dropData.SrcToolStripItem, dropData.ToolStripItem);
@@ -1795,7 +1796,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				ExecuteDropData(dropData);
 			} else {
 				Debug.Assert(dropData.DropType == DropType.Button);
-				ChnageDropDataLauncherItemPosition(dropData);
+				ChangeDropDataLauncherItemPosition(dropData);
 				this._dragStartItem = null;
 			}
 		}
@@ -1928,6 +1929,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(Control.ModifierKeys == Keys.Alt) {
 				this._dragStartItem = (ToolStripItem)sender;
 				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
+			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
+				// #148
+				var toolItem = (ToolStripItem)sender;
+				var launcherItem = toolItem.Tag as LauncherItem;
+				if(launcherItem == null) {
+					return;
+				}
+				var menuTypes = new [] {
+					LauncherType.File,
+					LauncherType.Directory,
+					LauncherType.Embedded
+				};
+				if(menuTypes.Any(l => l == launcherItem.LauncherType)) {
+					var menuItem = (ToolStripDropDownItem)toolItem;
+					menuItem.ShowDropDown();
+				}
 			}
 		}
 
