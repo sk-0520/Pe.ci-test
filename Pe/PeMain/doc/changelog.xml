@@ -50,7 +50,7 @@
 		</ul>
 		<ul type="developer">
 			<li rev="36c19df96db15c6b1c082cd4270dd40cf8b5ae93">#147: NuGetパッケージをまとめる</li>
-			<li rev=""></li>
+			<li rev="113d6f59d0b1a1cd4d5b100043b4c4b389c9e0d7">準備だけして使いもしていなかったマウスフックを無効にした</li>
 			<li rev=""></li>
 		</ul>
 	</log>
