@@ -60,13 +60,18 @@ echo. End With >> "%ZIP%"
 for /F "usebackq" %%s in (`cscript "%GV%" "%PEPATH%"`) do set EXEVER=%%s
 
 echo remove
+echo remove SQLite.Interop.dll
 rmdir /S /Q "%OUTPUTx86%\x64"
+rmdir /S /Q "%OUTPUTx86%\x86"
+rmdir /S /Q "%OUTPUTx64%\x64"
 rmdir /S /Q "%OUTPUTx64%\x86"
-
-del "%OUTPUTx86%\System.Data.SQLite.xml"
-del "%OUTPUTx64%\System.Data.SQLite.xml"
-del "%OUTPUTx86%\MouseKeyboardActivityMonitor.xml"
-del "%OUTPUTx64%\MouseKeyboardActivityMonitor.xml"
+rmdir /S /Q "%OUTPUTx86%\lib\x64"
+rmdir /S /Q "%OUTPUTx64%\lib\x86"
+echo remove XML
+del "%OUTPUTx86%\lib\System.Data.SQLite.xml"
+del "%OUTPUTx64%\lib\System.Data.SQLite.xml"
+del "%OUTPUTx86%\lib\MouseKeyboardActivityMonitor.xml"
+del "%OUTPUTx64%\lib\MouseKeyboardActivityMonitor.xml"
 
 
 echo compression
