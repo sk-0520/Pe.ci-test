@@ -1929,6 +1929,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			if(Control.ModifierKeys == Keys.Alt) {
 				this._dragStartItem = (ToolStripItem)sender;
 				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
+			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
+				// #148
+				var toolItem = (ToolStripItem)sender;
+				var launcherItem = toolItem.Tag as LauncherItem;
+				if(launcherItem == null) {
+					return;
+				}
+				var menuTypes = new [] {
+					LauncherType.File,
+					LauncherType.Directory,
+					LauncherType.Embedded
+				};
+				if(menuTypes.Any(l => l == launcherItem.LauncherType)) {
+					var menuItem = (ToolStripDropDownItem)toolItem;
+					menuItem.ShowDropDown();
+				}
 			}
 		}
 
