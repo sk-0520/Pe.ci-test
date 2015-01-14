@@ -512,6 +512,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
 			ApplyLanguageRunningInfo();
+			ApplyLanguageSkin();
 		}
 		
 		void ApplyLanguageLauncher()
