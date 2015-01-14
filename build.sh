@@ -21,7 +21,9 @@ cmd.exe //c  build.bat
 git reset --hard
 
 if [ "$1" != "ci" ] ; then
-    echo "build success. please any key... "
+    echo "build success. please any key..."
     read
+else
+    echo "build success. CI mode."
 fi
 
