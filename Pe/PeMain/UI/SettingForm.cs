@@ -836,6 +836,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			}
 		}
 
+		void ExportSkinSetting(SkinSetting setting)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			setting.Name = skin.About.Name;
+		}
+
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
@@ -843,6 +849,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ExportRunningInfoSetting(mainSetting.RunningInfo);
 
 			ExportLanguageSetting(mainSetting);
+			ExportSkinSetting(mainSetting.Skin);
 		}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
