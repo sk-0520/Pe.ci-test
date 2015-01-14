@@ -9,7 +9,6 @@
 	using System.Globalization;
 	using System.IO;
 	using System.Linq;
-	using System.Reflection;
 	using System.Text;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -26,7 +25,7 @@
 	using Microsoft.Win32;
 
 	/// <summary>
-	/// Description of Pe.
+	/// プログラム本体。
 	/// </summary>
 	public sealed class App: IDisposable, IRootSender
 	{
