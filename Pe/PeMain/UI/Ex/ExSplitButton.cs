@@ -50,16 +50,10 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 		void FontSplitButton_Click(object sender, EventArgs e)
 		{
 			using(var dialog = new FontDialog()) {
-				if(!FontSetting.IsDefault) {
-					dialog.Font = FontSetting.Font;
-				} else {
-					dialog.Font = SystemFonts.DefaultFont;
-				}
+				dialog.SetFontSetting(FontSetting);
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
-					var font = dialog.Font;
-					FontSetting.Import(font);
-
+					FontSetting.Import(dialog.Font);
 					RefreshView();
 				}
 			}

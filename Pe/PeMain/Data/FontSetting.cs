@@ -1,11 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Drawing;
+	using System.Linq;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.Utility;
+
 	/// <summary>
 	/// フォント設定。
 	/// </summary>
@@ -19,14 +19,15 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// デフォルト値としてのフォント。
 		/// </summary>
-		private readonly Font _defaultFont;
+		[XmlIgnore]
+		public Font DefaultFont { get; private set; }
 		
 		/// <summary>
 		/// 
 		/// </summary>
 		public FontSetting()
 		{
-			this._defaultFont = (Font)SystemFonts.MessageBoxFont.Clone();
+			this.DefaultFont = (Font)SystemFonts.MessageBoxFont.Clone();
 		}
 		/// <summary>
 		/// 
@@ -34,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <param name="defaultFont">削除はFontSettingで処理する。</param>
 		public FontSetting(Font defaultFont)
 		{
-			this._defaultFont = defaultFont;
+			this.DefaultFont = defaultFont;
 		}
 		
 		/// <summary>
@@ -64,11 +65,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 						family = FontFamily.Families.SingleOrDefault(f => f.Name == Family);
 					}
 					if(family == null) {
-						family = this._defaultFont.FontFamily;
+						family = this.DefaultFont.FontFamily;
 					}
 					var size = Height;
 					if(float.IsNaN(size) || size == 0.0) {
-						size = this._defaultFont.SizeInPoints;
+						size = this.DefaultFont.SizeInPoints;
 					}
 					
 					this._font = new Font(family, size);
@@ -87,7 +88,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 		protected override void Dispose(bool disposing)
 		{
-			this._defaultFont.ToDispose();
+			this.DefaultFont.ToDispose();
 
 			ClearFont();
 
