@@ -849,7 +849,7 @@
 			this._contextMenu.Items.AddRange(menuList.ToArray());
 		}
 
-		void InitializeSkin(CommandLine commandLine, StartupLogger logger)
+		void InitializeSkin(CommandLine commandLine, ILogger logger)
 		{
 			ResetSkin(logger);
 
@@ -1273,6 +1273,14 @@
 
 		}
 
+		void ResetMain()
+		{
+			this._contextMenu.ToDispose();
+			this._notifyIcon.ToDispose();
+
+			InitializeMain(null, null);
+		}
+
 		/// <summary>
 		/// ツール―バー状態のリセット。
 		/// </summary>
@@ -1332,6 +1340,8 @@
 				this._otherWindows.Remove(window);
 				window.Dispose();
 			}
+
+			ResetMain();
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
@@ -1370,20 +1380,15 @@
 					settingForm.SaveDB(this._commonData.Database);
 					AppUtility.SaveSetting(this._commonData);
 					InitializeLanguage(null, null);
-					ApplyLanguage();
+					InitializeSkin(null, this._commonData.Logger);
 
 					return () => {
 						this._logForm.SetCommonData(this._commonData);
 						this._messageWindow.SetCommonData(this._commonData);
-						/*
-						foreach(var toolbar in this._toolbarForms.Values) {
-							//toolbar.SetCommonData(this._commonData);
-							toolbar.Dispose();
-						}
-						this._toolbarForms.Clear();
-						InitializeToolbarForm(null, null);
-						 */
+
 						ResetUI();
+						ApplyLanguage();
+
 						foreach(var window in this._otherWindows.Where(w => w is StreamForm).Cast<StreamForm>().ToArray()) {
 							window.Visible = true;
 						}
