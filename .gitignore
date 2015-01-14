@@ -5,6 +5,7 @@ $*
 obj/
 bin/
 /output/
+/changelog/
 *.Settings
 /Pe/packages/
 *.cd
