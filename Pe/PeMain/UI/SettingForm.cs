@@ -393,6 +393,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
 
 			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
+
+			this.commandClipboardTextFont.FontSetting.Import(setting.TextFont);
+			this.commandClipboardTextFont.RefreshView();
 		}
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
@@ -618,6 +621,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		void ApplyLanguageClipboard()
 		{
 			this.inputClipboardHotkey.SetLanguage(Language);
+
+			this.commandClipboardTextFont.SetLanguage(Language);
 
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);
@@ -920,6 +925,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			setting.EnabledTypes = clipboardType;
 
 			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
+
+			// フォント
+			setting.TextFont = this.commandClipboardTextFont.FontSetting;
 		}
 		#endregion ////////////////////////////////////
 

@@ -1376,7 +1376,9 @@
 					mainSetting.Clipboard.Items.LimitSize = mainSetting.Clipboard.Limit;
 
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
+					var oldSetting = this._commonData.MainSetting;
 					this._commonData.MainSetting = mainSetting;
+					oldSetting.ToDispose();
 					settingForm.SaveFiles();
 					settingForm.SaveDB(this._commonData.Database);
 					AppUtility.SaveSetting(this._commonData);

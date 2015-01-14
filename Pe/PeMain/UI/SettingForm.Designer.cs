@@ -61,6 +61,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputSystemEnvHiddenFile = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
 			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
+			this.selectLogDebugging = new System.Windows.Forms.CheckBox();
 			this.selectLogFullDetail = new System.Windows.Forms.CheckBox();
 			this.selectLogAddShow = new System.Windows.Forms.CheckBox();
 			this.groupLogTrigger = new System.Windows.Forms.GroupBox();
@@ -204,7 +205,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.selectLogDebugging = new System.Windows.Forms.CheckBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupMainSkin.SuspendLayout();
@@ -525,6 +527,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupMainLog.TabIndex = 1;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
+			// 
+			// selectLogDebugging
+			// 
+			this.selectLogDebugging.AutoSize = true;
+			this.selectLogDebugging.Location = new System.Drawing.Point(16, 183);
+			this.selectLogDebugging.Name = "selectLogDebugging";
+			this.selectLogDebugging.Size = new System.Drawing.Size(175, 19);
+			this.selectLogDebugging.TabIndex = 4;
+			this.selectLogDebugging.Text = ":setting/check/debugging";
+			this.selectLogDebugging.UseVisualStyleBackColor = true;
 			// 
 			// selectLogFullDetail
 			// 
@@ -1930,9 +1942,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.Controls.Add(this.inputClipboardSleepTime, 1, 4);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardHotkey, 0, 7);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardHotkey, 1, 7);
+			this.panelClipboardMain.Controls.Add(this.label1, 0, 8);
+			this.panelClipboardMain.Controls.Add(this.commandClipboardTextFont, 1, 8);
 			this.panelClipboardMain.Location = new System.Drawing.Point(6, 6);
 			this.panelClipboardMain.Name = "panelClipboardMain";
-			this.panelClipboardMain.RowCount = 9;
+			this.panelClipboardMain.RowCount = 10;
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1942,7 +1957,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelClipboardMain.Size = new System.Drawing.Size(519, 222);
+			this.panelClipboardMain.Size = new System.Drawing.Size(519, 269);
 			this.panelClipboardMain.TabIndex = 9;
 			// 
 			// selectClipboardEnabled
@@ -2205,15 +2220,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// selectLogDebugging
+			// label1
 			// 
-			this.selectLogDebugging.AutoSize = true;
-			this.selectLogDebugging.Location = new System.Drawing.Point(16, 183);
-			this.selectLogDebugging.Name = "selectLogDebugging";
-			this.selectLogDebugging.Size = new System.Drawing.Size(175, 19);
-			this.selectLogDebugging.TabIndex = 4;
-			this.selectLogDebugging.Text = ":setting/check/debugging";
-			this.selectLogDebugging.UseVisualStyleBackColor = true;
+			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(3, 224);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(188, 15);
+			this.label1.TabIndex = 13;
+			this.label1.Text = ":setting/label/clipboard-hotkey";
+			// 
+			// commandClipboardTextFont
+			// 
+			this.commandClipboardTextFont.AutoSize = true;
+			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 219);
+			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
+			this.commandClipboardTextFont.Size = new System.Drawing.Size(168, 25);
+			this.commandClipboardTextFont.TabIndex = 14;
+			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
+			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -2481,5 +2507,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ComboBox selectSkinName;
 		private System.Windows.Forms.Button commandSkinAbout;
 		private System.Windows.Forms.CheckBox selectLogDebugging;
+		private System.Windows.Forms.Label label1;
+		private FontSplitButton commandClipboardTextFont;
 	}
 }
