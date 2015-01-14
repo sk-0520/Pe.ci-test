@@ -108,7 +108,6 @@
 		}
 	}
 	
-	
 	public class ToolbarPositionDisplayValue: UseLanguageDisplayValue<ToolbarPosition>
 	{
 		public ToolbarPositionDisplayValue(ToolbarPosition value): base(value) { }
@@ -195,7 +194,16 @@
 		}
 	}
 
-	
+	public class SkinDisplayValue: DisplayValue<ISkin>
+	{
+		public SkinDisplayValue(ISkin value) : base(value) { }
+
+		public override string Display
+		{
+			get { return Value.About.Name; }
+		}
+
+	}
 	
 
 }

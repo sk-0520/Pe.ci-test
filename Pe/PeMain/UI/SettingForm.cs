@@ -179,7 +179,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		void InitializeSkin(SkinSetting setting)
 		{
-			//Skin
+			var skins = AppUtility.GetSkins(new NullLogger());
+
+			var skinDisplayValues = skins.Select(s => new SkinDisplayValue(s));
+			var selectSkin = skinDisplayValues.SingleOrDefault(s => s.Value.About.Name == setting.Name);
+			if(selectSkin != null) {
+				this.selectSkinName.Attachment(skinDisplayValues, selectSkin.Value);
+			} else {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				var skin = skinDisplayValues.Single(s => s.Value.About.Name == defSkin.About.Name);
+				this.selectSkinName.Attachment(skinDisplayValues, skin.Value);
+				defSkin.Unload();
+			}
+			
 		}
 
 		void InitializeLanguage(string languageName, Language language)
