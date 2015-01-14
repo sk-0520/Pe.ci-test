@@ -25,7 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.40.1" type="rc">
+	<log date="YYYY/MM/DD" version="0.40.2" type="rc">
 		<ul type="note">
 			<li rev=""></li>
 			<li rev=""></li>
@@ -47,7 +47,7 @@
 			<li rev=""></li>
 		</ul>
 	</log>
-	<log date="2015/01/15" version="0.40.0">
+	<log date="2015/01/15" version="0.40.1">
 		<ul type="features">
 			<li rev="">指定して実行ダイアログをタスクバーに表示する</li>
 			<li rev="029c51b7fb9514b2d8594ca3a40a750f57eee0b1">#143: 各種イメージリソースをISkinで管理する</li>
