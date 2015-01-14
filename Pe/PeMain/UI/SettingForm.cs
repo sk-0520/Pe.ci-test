@@ -1823,5 +1823,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarGroup.Attachment(groupList);
 			this.selectToolbarGroup.SelectedIndex = nowIndex;
 		}
+
+		private void selectSkinName_SelectedValueChanged(object sender, EventArgs e)
+		{
+			var skin = this.selectSkinName.SelectedValue as ISkin;
+			if(skin != null) {
+				this.commandSkinAbout.Enabled = skin.About.Setting;
+			}
+		}
+
+		private void commandSkinAbout_Click(object sender, EventArgs e)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			var about = skin.About;
+			MessageBox.Show(about.Name);
+		}
 	}
 }

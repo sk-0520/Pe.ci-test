@@ -331,6 +331,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectSkinName.Name = "selectSkinName";
 			this.selectSkinName.Size = new System.Drawing.Size(176, 23);
 			this.selectSkinName.TabIndex = 0;
+			this.selectSkinName.SelectedValueChanged += new System.EventHandler(this.selectSkinName_SelectedValueChanged);
 			// 
 			// commandSkinAbout
 			// 
@@ -340,6 +341,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandSkinAbout.TabIndex = 5;
 			this.commandSkinAbout.Text = ":setting/command/skin";
 			this.commandSkinAbout.UseVisualStyleBackColor = true;
+			this.commandSkinAbout.Click += new System.EventHandler(this.commandSkinAbout_Click);
 			// 
 			// panelMainOthers
 			// 
