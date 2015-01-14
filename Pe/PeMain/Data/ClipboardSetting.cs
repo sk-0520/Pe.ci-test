@@ -144,7 +144,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	}
 
 	[Serializable]
-	public class ClipboardSetting: Item
+	public class ClipboardSetting: DisposableItem
 	{
 		public ClipboardSetting()
 		{
@@ -260,5 +260,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		}
 
 		public HotKeySetting ToggleHotKeySetting { get; set; }
+
+		#region DisposableItem
+
+		protected override void Dispose(bool disposing)
+		{
+			TextFont.ToDispose();
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
 	}
 }

@@ -45,7 +45,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// 設定統括
 	/// </summary>
 	[Serializable]
-	public class MainSetting: DisposableItem, IDisposable
+	public class MainSetting: DisposableItem
 	{
 		public MainSetting()
 		{
@@ -139,11 +139,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// </summary>
 		public SkinSetting Skin { get; set; }
 
+		#region DisposableItem
+
 		protected override void Dispose(bool disposing)
 		{
 			Command.ToDispose();
+			Clipboard.ToDispose();
 
 			base.Dispose(disposing);
 		}
+
+		#endregion
 	}
 }
