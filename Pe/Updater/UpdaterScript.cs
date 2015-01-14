@@ -39,8 +39,8 @@ public class UpdaterScript
 			@"MouseKeyboardActivityMonitor.dll",
 			@"ObjectDumper.dll",
 			@"System.Data.SQLite.dll",
-			platformDir,
-			notPlatformDir,
+			@"x86\",
+			@"x64\",
 		};
 		var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
 		foreach(var targetPath in tagetPathList) {
