@@ -4,7 +4,6 @@
 /*-*/using System.Data;
 /*-*/using System.Linq;
 
-/*
 public class UpdaterScript
 {
 	void ChangeTemporaryColor(string s, ConsoleColor fore, ConsoleColor back)
@@ -22,6 +21,7 @@ public class UpdaterScript
 
 	void RemoveFiles(string baseDirectoryPath, string platform)
 	{
+		var platformDir = platform + @"\";
 		var notPlatformDir = string.Compare(platform, "x86", true) == 0 ? @"x64\": @"x86\";
 		var targets = new [] {
 			@"PeUpdater.exe",
@@ -36,6 +36,10 @@ public class UpdaterScript
 			@"bin\PeUpdater.update-old",
 			@"bin\PeUpdater.exe",
 			@"doc\changelog.xsl",
+			@"MouseKeyboardActivityMonitor.dll",
+			@"ObjectDumper.dll",
+			@"System.Data.SQLite.dll",
+			platformDir,
 			notPlatformDir,
 		};
 		var tagetPathList = targets.Select(s => Path.Combine(baseDirectoryPath, s));
@@ -91,4 +95,3 @@ public class UpdaterScript
 		Console.BackgroundColor = prevBack;
 	}
 }
-*/
