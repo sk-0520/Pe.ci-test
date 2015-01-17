@@ -59,6 +59,7 @@
 			InvalidateEx();
 		}
 
+
 		#endregion //////////////////////////////////////
 
 		protected void InvalidateEx()
@@ -78,5 +79,25 @@
 			ScrollBars = RichTextBoxScrollBars.None;
 		}
 
+		#region override
+
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			base.OnKeyDown(e);
+
+			if(e.Control && e.KeyCode == Keys.V || e.Shift && e.KeyCode == Keys.I) {
+				if(ReadOnly) {
+					e.Handled = true;
+					return;
+				}
+
+				if(Clipboard.ContainsText(TextDataFormat.Text) || Clipboard.ContainsText(TextDataFormat.UnicodeText)) {
+					SelectedText = Clipboard.GetText(TextDataFormat.UnicodeText);
+				}
+				e.Handled = true;
+			}
+		}
+
+		#endregion
 	}
 }

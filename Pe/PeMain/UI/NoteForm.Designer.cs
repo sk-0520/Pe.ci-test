@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox();
-			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBody = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +86,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// inputBody
 			// 
 			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.inputBody.ContextMenuStrip = this.contextMenu;
 			this.inputBody.Location = new System.Drawing.Point(40, 56);
 			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
 			this.inputBody.Name = "inputBody";
@@ -94,14 +95,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputBody.TabIndex = 0;
 			this.inputBody.TabStop = false;
 			this.inputBody.Text = "";
-			// 
-			// contextMenu_itemTitle
-			// 
-			this.contextMenu_itemTitle.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle;
-			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
-			this.contextMenu_itemTitle.Size = new System.Drawing.Size(212, 22);
-			this.contextMenu_itemTitle.Text = ":note/menu/title";
-			this.contextMenu_itemTitle.Click += new System.EventHandler(this.ContextMenu_title_Click);
 			// 
 			// contextMenu
 			// 
@@ -125,10 +118,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
             this.contextMenu_itemExport,
             this.contextMenu_itemImport});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(213, 342);
+			this.contextMenu.Size = new System.Drawing.Size(213, 320);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			this.contextMenu.Opened += new System.EventHandler(this.contextMenu_Opened);
+			// 
+			// contextMenu_itemTitle
+			// 
+			this.contextMenu_itemTitle.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle;
+			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
+			this.contextMenu_itemTitle.Size = new System.Drawing.Size(212, 22);
+			this.contextMenu_itemTitle.Text = ":note/menu/title";
+			this.contextMenu_itemTitle.Click += new System.EventHandler(this.ContextMenu_title_Click);
 			// 
 			// contextMenu_itemBody
 			// 

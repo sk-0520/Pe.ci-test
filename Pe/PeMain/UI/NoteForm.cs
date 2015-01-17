@@ -585,7 +585,7 @@
 			ApplySkin();
 			ApplyLanguage();
 
-			inputBody.ContextMenuStrip = this.contextMenu;
+			this.inputBody.ReadOnly = NoteItem.Locked;
 
 			this.inputBody.Focus();
 		}
@@ -1216,6 +1216,7 @@
 				NoteItem.Style.FontSetting.Dispose();
 				NoteItem.Style.FontSetting = new FontSetting();
 			}
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1380,5 +1381,7 @@
 			this.inputBody.ReadOnly = false;
 			this.inputBody.Focus();
 		}
+
+
 	}
 }
