@@ -94,8 +94,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputBody.TabIndex = 0;
 			this.inputBody.TabStop = false;
 			this.inputBody.Text = "";
-			this.inputBody.DoubleClick += new System.EventHandler(this.inputBody_DoubleClick);
-			this.inputBody.Leave += new System.EventHandler(this.Input_Leave);
 			// 
 			// contextMenu_itemTitle
 			// 
@@ -127,7 +125,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
             this.contextMenu_itemExport,
             this.contextMenu_itemImport});
 			this.contextMenu.Name = "contextMenuStrip1";
-			this.contextMenu.Size = new System.Drawing.Size(213, 320);
+			this.contextMenu.Size = new System.Drawing.Size(213, 342);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
 			this.contextMenu.Opened += new System.EventHandler(this.contextMenu_Opened);
@@ -138,7 +136,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemBody.Name = "contextMenu_itemBody";
 			this.contextMenu_itemBody.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemBody.Text = ":note/menu/body";
-			this.contextMenu_itemBody.Click += new System.EventHandler(this.ContextMenu_body_Click);
+			this.contextMenu_itemBody.Click += new System.EventHandler(this.contextMenu_itemBody_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -459,7 +457,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);
 			this.Load += new System.EventHandler(this.NoteForm_Load);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteForm_Paint);
-			this.DoubleClick += new System.EventHandler(this.NoteForm_DoubleClick);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseDown);
 			this.MouseLeave += new System.EventHandler(this.NoteForm_MouseLeave);
 			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseUp);

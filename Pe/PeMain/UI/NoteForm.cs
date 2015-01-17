@@ -139,7 +139,7 @@
 		bool _initialized = true;
 		bool _changed = false;
 		string _prevTitle;
-		string _prevBody;
+		//string _prevBody;
 		//Color _prevForeColor;
 		//Color _prevBackColor;
 		#endregion ////////////////////////////////////
@@ -393,6 +393,7 @@
 				default:
 					break;
 			}
+
 			base.WndProc(ref m);
 		}
 
@@ -423,7 +424,7 @@
 			if(this.inputBody.Focused) {
 				var key = keyData & Keys.KeyCode;
 				if(key == Keys.Escape) {
-					_bindItem.Body = this._prevBody;
+					//_bindItem.Body = this._prevBody;
 					//HiddenInputBodyArea();
 					return true;
 				}
@@ -633,7 +634,6 @@
 						Changed = true;
 
 						ChangeCompact(NoteItem.Compact, NoteItem.Size);
-
 					}
 					break;
 
@@ -655,8 +655,10 @@
 						HiddenInputTitleArea();
 						//HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
+						this.inputBody.ReadOnly = NoteItem.Locked;
+
 						Changed = true;
-						Invalidate();
+						Refresh();
 					}
 					break;
 
@@ -727,29 +729,29 @@
 			}
 		}
 
-		void ShowInputBodyArea(int recursive)
-		{
-			this._prevBody = NoteItem.Body;
-			/*
-			//this.inputBody.Text = NoteItem.Body;
-			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
+		//void ShowInputBodyArea(int recursive)
+		//{
+		//	this._prevBody = NoteItem.Body;
+		//	/*
+		//	//this.inputBody.Text = NoteItem.Body;
+		//	this.inputBody.Font = NoteItem.Style.FontSetting.Font;
 
-			if(!this.inputBody.Visible) {
-				ResizeInputBodyArea();
-				this.inputBody.Visible = true;
-				this.inputBody.Focus();
-			}
-			if(!this.inputBody.Visible && recursive > 0) {
-				ShowInputBodyArea(recursive - 1);
-			}
-			*/
-			if(inputBody.ReadOnly) {
-				inputBody.ContextMenuStrip = null;
-				inputBody.ReadOnly = false;
-				inputBody.Cursor = Cursors.IBeam;
-			}
-			inputBody.Focus();
-		}
+		//	if(!this.inputBody.Visible) {
+		//		ResizeInputBodyArea();
+		//		this.inputBody.Visible = true;
+		//		this.inputBody.Focus();
+		//	}
+		//	if(!this.inputBody.Visible && recursive > 0) {
+		//		ShowInputBodyArea(recursive - 1);
+		//	}
+		//	*/
+		//	if(inputBody.ReadOnly) {
+		//		inputBody.ContextMenuStrip = null;
+		//		inputBody.ReadOnly = false;
+		//		inputBody.Cursor = Cursors.IBeam;
+		//	}
+		//	inputBody.Focus();
+		//}
 
 		void HiddenInputTitleArea()
 		{
@@ -1054,9 +1056,10 @@
 			}
 			
 			DrawFullActivaChanged(false);
-			
+
 			SaveItem();
 
+			this.inputBody.ReadOnly = NoteItem.Locked;
 			Refresh();
 		}
 		
@@ -1121,13 +1124,15 @@
 			);
 		}
 		
+		/*
 		void NoteForm_DoubleClick(object sender, EventArgs e)
 		{
 			if (!NoteItem.Locked) {
 				ShowInputBodyArea(RECURSIVE);
 			}
 		}
-		
+		*/
+
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
 			if (!this._initialized && NoteItem.Compact) {
@@ -1161,11 +1166,13 @@
 			ShowInputTitleArea(RECURSIVE);
 		}
 		
+		/*
 		void ContextMenu_body_Click(object sender, EventArgs e)
 		{
 			ShowInputBodyArea(RECURSIVE);
 		}
-		
+		*/
+
 		void NoteForm_Load(object sender, EventArgs e)
 		{
 			// 生成前の高さがWindowsにより補正されるためここでリサイズ
@@ -1342,16 +1349,24 @@
 			ExecCommand(SkinNoteCommand.Close, true);
 		}
 
+		/*
 		private void inputBody_DoubleClick(object sender, EventArgs e)
 		{
 			if(!NoteItem.Locked) {
 				ShowInputBodyArea(RECURSIVE);
 			}
 		}
-
+		*/
+		
 		private void contextMenu_Opened(object sender, EventArgs e)
 		{
 			Refresh();
+		}
+
+		private void contextMenu_itemBody_Click(object sender, EventArgs e)
+		{
+			this.inputBody.ReadOnly = false;
+			this.inputBody.Focus();
 		}
 	}
 }
