@@ -37,9 +37,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.inputBody = new System.Windows.Forms.TextBox();
-			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
+			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBody = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenu_itemCopy = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,23 +86,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// inputBody
 			// 
 			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.inputBody.ContextMenuStrip = this.contextMenu;
 			this.inputBody.Location = new System.Drawing.Point(40, 56);
 			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
-			this.inputBody.Multiline = true;
 			this.inputBody.Name = "inputBody";
+			this.inputBody.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
 			this.inputBody.Size = new System.Drawing.Size(187, 120);
 			this.inputBody.TabIndex = 0;
 			this.inputBody.TabStop = false;
-			this.inputBody.Visible = false;
-			this.inputBody.Leave += new System.EventHandler(this.Input_Leave);
-			// 
-			// contextMenu_itemTitle
-			// 
-			this.contextMenu_itemTitle.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle;
-			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
-			this.contextMenu_itemTitle.Size = new System.Drawing.Size(212, 22);
-			this.contextMenu_itemTitle.Text = ":note/menu/title";
-			this.contextMenu_itemTitle.Click += new System.EventHandler(this.ContextMenu_title_Click);
+			this.inputBody.Text = "";
 			// 
 			// contextMenu
 			// 
@@ -129,6 +121,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu.Size = new System.Drawing.Size(213, 320);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
+			this.contextMenu.Opened += new System.EventHandler(this.contextMenu_Opened);
+			// 
+			// contextMenu_itemTitle
+			// 
+			this.contextMenu_itemTitle.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle;
+			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
+			this.contextMenu_itemTitle.Size = new System.Drawing.Size(212, 22);
+			this.contextMenu_itemTitle.Text = ":note/menu/title";
+			this.contextMenu_itemTitle.Click += new System.EventHandler(this.ContextMenu_title_Click);
 			// 
 			// contextMenu_itemBody
 			// 
@@ -136,7 +137,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemBody.Name = "contextMenu_itemBody";
 			this.contextMenu_itemBody.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemBody.Text = ":note/menu/body";
-			this.contextMenu_itemBody.Click += new System.EventHandler(this.ContextMenu_body_Click);
+			this.contextMenu_itemBody.Click += new System.EventHandler(this.contextMenu_itemBody_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -441,6 +442,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ControlBox = false;
 			this.Controls.Add(this.inputTitle);
 			this.Controls.Add(this.inputBody);
+			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -456,7 +458,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Deactivate += new System.EventHandler(this.NoteForm_Deactivate);
 			this.Load += new System.EventHandler(this.NoteForm_Load);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteForm_Paint);
-			this.DoubleClick += new System.EventHandler(this.NoteForm_DoubleClick);
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseDown);
 			this.MouseLeave += new System.EventHandler(this.NoteForm_MouseLeave);
 			this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteForm_MouseUp);
@@ -509,6 +510,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBody;
 		private System.Windows.Forms.ContextMenuStrip contextMenu;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTitle;
-		private System.Windows.Forms.TextBox inputBody;
+		private ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox inputBody;
 	}
 }

@@ -777,7 +777,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			*/
 		}
 		
-		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body)
+		public override void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor)
 		{
 			var edge = GetNoteWindowEdgePadding();
 			var backArea = new Rectangle(
@@ -791,6 +791,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				g.FillRectangle(brush, backArea);
 			}
 			
+			/*
 			using(var sf = new StringFormat()) {
 				using(var brush = new SolidBrush(foreColor)) {
 					sf.Alignment = StringAlignment.Near;
@@ -798,6 +799,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					g.DrawString(body, font, brush, drawArea, sf);
 				}
 			}
+			*/
 		}
 
 		#endregion
