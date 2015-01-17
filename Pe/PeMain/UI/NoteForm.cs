@@ -523,7 +523,7 @@
 			//				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Single(cd => cd.Value == Color.Transparent).Value;
 			//			}
 			//NoteItem.Style.BackColor;
-			SetBodyFont();
+			ApplyBodyStyle();
 			ApplySkin();
 			ApplyLanguage();
 		}
@@ -575,7 +575,7 @@
 						NoteItem.Topmost = !NoteItem.Topmost;
 						TopMost = NoteItem.Topmost;
 						Changed = true;
-						Invalidate();
+						Refresh();
 					}
 					break;
 
@@ -607,7 +607,7 @@
 						HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
 						Changed = true;
-						Refresh();
+						Invalidate();
 					}
 					break;
 
@@ -855,9 +855,10 @@
 			return resultColor;
 		}
 
-		void SetBodyFont()
+		void ApplyBodyStyle()
 		{
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
+			this.inputBody.ForeColor = NoteItem.Style.ForeColor;
 		}
 
 		#endregion ////////////////////////////////////
@@ -1127,7 +1128,7 @@
 					NoteItem.Style.FontSetting.Import(dialog.Font);
 				}
 			}
-			SetBodyFont();
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1291,6 +1292,7 @@
 		{
 			var colorItemList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
 			NoteItem.Style.ForeColor = SelectedPlainColor((ToolStripItem)sender, colorItemList);
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1304,6 +1306,7 @@
 		void ContextMenu_itemForeColor_itemCustom_Click(object sender, EventArgs e)
 		{
 			NoteItem.Style.ForeColor = SelectedCustomColor(NoteItem.Style.ForeColor);
+			ApplyBodyStyle();
 			Refresh();
 		}
 		

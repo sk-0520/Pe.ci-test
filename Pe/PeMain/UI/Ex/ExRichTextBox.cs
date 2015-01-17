@@ -47,6 +47,18 @@
 			InvalidateEx();
 		}
 
+		protected override void OnParentChanged(System.EventArgs e)
+		{
+			base.OnParentChanged(e);
+			InvalidateEx();
+		}
+
+		protected override void OnResize(System.EventArgs e)
+		{
+			base.OnResize(e);
+			InvalidateEx();
+		}
+
 		#endregion //////////////////////////////////////
 
 		protected void InvalidateEx()
