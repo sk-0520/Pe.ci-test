@@ -233,7 +233,8 @@
 		protected override void WndProc(ref Message m)
 		{
 			switch(m.Msg) {
-				case (int)WM.WM_SYSCOMMAND: {
+				case (int)WM.WM_SYSCOMMAND: 
+					{
 						switch(m.WParam.ToInt32() & 0xfff0) {
 							case (int)SC.SC_MAXIMIZE:
 								// #115
@@ -250,7 +251,8 @@
 						break;
 					}
 
-				case (int)WM.WM_NCPAINT: {
+				case (int)WM.WM_NCPAINT:
+					{
 						//if(CommonData != null && (!this.inputBody.Visible || !this.inputTitle.Visible)) {
 						if(CommonData != null) {
 							var hDC = NativeMethods.GetWindowDC(Handle);
@@ -266,7 +268,8 @@
 					}
 					break;
 
-				case (int)WM.WM_NCHITTEST: {
+				case (int)WM.WM_NCHITTEST:
+					{
 						if(!NoteItem.Locked) {
 							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
 							var hitTest = HT.HTNOWHERE;
@@ -351,7 +354,8 @@
 					}
 					break;
 
-				case (int)WM.WM_SETCURSOR: {
+				case (int)WM.WM_SETCURSOR:
+					{
 						var hittest = WindowsUtility.HTFromLParam(m.LParam);
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
@@ -362,7 +366,8 @@
 					}
 					break;
 
-				case (int)WM.WM_NCLBUTTONDOWN: {
+				case (int)WM.WM_NCLBUTTONDOWN:
+					{
 						if(!NoteItem.Locked) {
 							if(this.inputTitle.Visible) {
 								HiddenInputTitleArea();
@@ -377,7 +382,8 @@
 					}
 					break;
 
-				case (int)WM.WM_NCRBUTTONUP: {
+				case (int)WM.WM_NCRBUTTONUP:
+					{
 						if(!NoteItem.Locked) {
 							switch(m.WParam.ToInt32()) {
 								case (int)HT.HTCAPTION:
@@ -419,13 +425,15 @@
 			if(this.inputTitle.Focused) {
 				var key = keyData & Keys.KeyCode;
 				switch(key) {
-					case Keys.Enter: {
+					case Keys.Enter: 
+						{
 							HiddenInputTitleArea();
 							return true;
 						}
 
-					case Keys.Escape: {
-							_bindItem.Title = this._prevTitle;
+					case Keys.Escape: 
+						{
+							this._bindItem.Title = this._prevTitle;
 							HiddenInputTitleArea();
 							return true;
 						}
@@ -635,7 +643,8 @@
 		void ExecCommand(SkinNoteCommand noteCommand, bool removeData)
 		{
 			switch(noteCommand) {
-				case SkinNoteCommand.Topmost: {
+				case SkinNoteCommand.Topmost:
+					{
 						NoteItem.Topmost = !NoteItem.Topmost;
 						TopMost = NoteItem.Topmost;
 						Changed = true;
@@ -643,7 +652,8 @@
 					}
 					break;
 
-				case SkinNoteCommand.Compact: {
+				case SkinNoteCommand.Compact:
+					{
 						NoteItem.Compact = !NoteItem.Compact;
 						Changed = true;
 
@@ -651,7 +661,8 @@
 					}
 					break;
 
-				case SkinNoteCommand.Close: {
+				case SkinNoteCommand.Close:
+					{
 						if(removeData) {
 							// TODO: 論理削除
 							Removed = true;
@@ -665,7 +676,8 @@
 					}
 					break;
 
-				case SkinNoteCommand.Lock: {
+				case SkinNoteCommand.Lock:
+					{
 						HiddenInputTitleArea();
 						//HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
