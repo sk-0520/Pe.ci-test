@@ -366,10 +366,13 @@
 							if(this.inputTitle.Visible) {
 								HiddenInputTitleArea();
 							}
+							/*
 							if(this.inputBody.Visible) {
 								HiddenInputBodyArea();
 							}
+							 * */
 						}
+						this.inputBody.Focus();
 					}
 					break;
 
@@ -392,6 +395,43 @@
 			}
 			base.WndProc(ref m);
 		}
+
+		[System.Security.Permissions.UIPermission(
+			System.Security.Permissions.SecurityAction.Demand,
+			Window = System.Security.Permissions.UIPermissionWindow.AllWindows
+		)]
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			if(this.inputTitle.Focused) {
+				var key = keyData & Keys.KeyCode;
+				switch(key) {
+					case Keys.Enter: {
+							HiddenInputTitleArea();
+							return true;
+						}
+
+					case Keys.Escape: {
+							_bindItem.Title = this._prevTitle;
+							HiddenInputTitleArea();
+							return true;
+						}
+
+					default:
+						break;
+				}
+			}
+			if(this.inputBody.Focused) {
+				var key = keyData & Keys.KeyCode;
+				if(key == Keys.Escape) {
+					_bindItem.Body = this._prevBody;
+					//HiddenInputBodyArea();
+					return true;
+				}
+			}
+
+			return base.ProcessDialogKey(keyData);
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region initialize
@@ -504,7 +544,12 @@
 			this.inputBody.Text = NoteItem.Body;
 			 */
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+			//this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+
+			var bindBody = new Binding("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+			bindBody.ControlUpdateMode = ControlUpdateMode.Never;
+			this.inputBody.DataBindings.Add(bindBody);
+			this.inputBody.Text = this._bindItem.Body;
 
 			Location = NoteItem.Location;
 			Size = NoteItem.Size;
@@ -526,6 +571,10 @@
 			ApplyBodyStyle();
 			ApplySkin();
 			ApplyLanguage();
+
+			inputBody.ContextMenuStrip = this.contextMenu;
+
+			this.inputBody.Focus();
 		}
 
 		IEnumerable<SkinNoteCommand> GetCommandList()
@@ -604,7 +653,7 @@
 
 				case SkinNoteCommand.Lock: {
 						HiddenInputTitleArea();
-						HiddenInputBodyArea();
+						//HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
 						Changed = true;
 						Invalidate();
@@ -694,6 +743,12 @@
 				ShowInputBodyArea(recursive - 1);
 			}
 			*/
+			if(inputBody.ReadOnly) {
+				inputBody.ContextMenuStrip = null;
+				inputBody.ReadOnly = false;
+				inputBody.Cursor = Cursors.IBeam;
+			}
+			inputBody.Focus();
 		}
 
 		void HiddenInputTitleArea()
@@ -716,28 +771,31 @@
 			this.inputTitle.Visible = false;
 		}
 
-		void HiddenInputBodyArea()
-		{
-			//inputBody.InvalidateEx();
+		//void HiddenInputBodyArea()
+		//{
+		//	//inputBody.InvalidateEx();
+		//	inputBody.ContextMenuStrip = this.contextMenu;
+		//	inputBody.ReadOnly = true;
+		//	inputBody.Cursor = Cursors.Default;
 
-			if(!this.inputBody.Visible) {
-				return;
-			}
-			/*
-			var value = this.inputBody.Text.Trim();
-			var change = NoteItem.Body != value;
-			if(change) {
-				NoteItem.Body = value;
-				this._changed |= true;
-			}
-			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
-				NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
-			}
-			 */
+		//	if(!this.inputBody.Visible) {
+		//		return;
+		//	}
+		//	/*
+		//	var value = this.inputBody.Text.Trim();
+		//	var change = NoteItem.Body != value;
+		//	if(change) {
+		//		NoteItem.Body = value;
+		//		this._changed |= true;
+		//	}
+		//	if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
+		//		NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
+		//	}
+		//	 */
 
-			this._changed = true;
-			//this.inputBody.Visible = false;
-		}
+		//	this._changed = true;
+		//	//this.inputBody.Visible = false;
+		//}
 
 		void ShowContextMenu(Point point)
 		{
@@ -992,13 +1050,14 @@
 		{
 			if (this._initialized) {
 				HiddenInputTitleArea();
-				HiddenInputBodyArea();
+				//HiddenInputBodyArea();
 			}
-			
 			
 			DrawFullActivaChanged(false);
 			
 			SaveItem();
+
+			Refresh();
 		}
 		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
@@ -1046,7 +1105,7 @@
 						var isRemove = AppUtility.IsExtension();
 						if (isRemove) {
 							var map = new Dictionary<string, string>() {
-								{ "NOTE", NoteItem.Title },
+								{ AppLanguageName.noteTitle, NoteItem.Title },
 							};
 							var result = MessageBox.Show(CommonData.Language["note/dialog/message", map], CommonData.Language["note/dialog/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 							if (result == DialogResult.Cancel) {
@@ -1094,7 +1153,7 @@
 		void Input_Leave(object sender, EventArgs e)
 		{
 			HiddenInputTitleArea();
-			HiddenInputBodyArea();
+			//HiddenInputBodyArea();
 		}
 		
 		void ContextMenu_title_Click(object sender, EventArgs e)
@@ -1232,44 +1291,6 @@
 			//this.contextMenu_itemRemove.Visible = extension;
 		}
 		
-		[System.Security.Permissions.UIPermission(
-			System.Security.Permissions.SecurityAction.Demand,
-			Window = System.Security.Permissions.UIPermissionWindow.AllWindows
-		)]
-		protected override bool ProcessDialogKey(Keys keyData)
-		{
-			if (this.inputTitle.Focused) {
-				var key = keyData & Keys.KeyCode;
-				switch (key) {
-					case Keys.Enter:
-						{
-							HiddenInputTitleArea();
-							return true;
-						}
-						
-					case Keys.Escape:
-						{
-							_bindItem.Title = this._prevTitle;
-							HiddenInputTitleArea();
-							return true;
-						}
-						
-					default:
-						break;
-				}
-			}
-			if (this.inputBody.Focused) {
-				var key = keyData & Keys.KeyCode;
-				if (key == Keys.Escape) {
-					_bindItem.Body = this._prevBody;
-					HiddenInputBodyArea();
-					return true;
-				}
-			}
-			
-			return base.ProcessDialogKey(keyData);
-		}
-		
 		void NoteForm_MouseLeave(object sender, EventArgs e)
 		{
 			Refresh();
@@ -1319,6 +1340,18 @@
 		void ContextMenu_itemRemove_Click(object sender, EventArgs e)
 		{
 			ExecCommand(SkinNoteCommand.Close, true);
+		}
+
+		private void inputBody_DoubleClick(object sender, EventArgs e)
+		{
+			if(!NoteItem.Locked) {
+				ShowInputBodyArea(RECURSIVE);
+			}
+		}
+
+		private void contextMenu_Opened(object sender, EventArgs e)
+		{
+			Refresh();
 		}
 	}
 }

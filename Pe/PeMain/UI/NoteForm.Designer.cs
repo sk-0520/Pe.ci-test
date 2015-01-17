@@ -89,10 +89,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputBody.Location = new System.Drawing.Point(40, 56);
 			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
 			this.inputBody.Name = "inputBody";
+			this.inputBody.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
 			this.inputBody.Size = new System.Drawing.Size(187, 120);
 			this.inputBody.TabIndex = 0;
 			this.inputBody.TabStop = false;
 			this.inputBody.Text = "";
+			this.inputBody.DoubleClick += new System.EventHandler(this.inputBody_DoubleClick);
 			this.inputBody.Leave += new System.EventHandler(this.Input_Leave);
 			// 
 			// contextMenu_itemTitle
@@ -128,6 +130,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu.Size = new System.Drawing.Size(213, 320);
 			this.contextMenu.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.ContextMenu_Closed);
 			this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
+			this.contextMenu.Opened += new System.EventHandler(this.contextMenu_Opened);
 			// 
 			// contextMenu_itemBody
 			// 
@@ -440,6 +443,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ControlBox = false;
 			this.Controls.Add(this.inputTitle);
 			this.Controls.Add(this.inputBody);
+			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Meiryo UI", 9F);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
