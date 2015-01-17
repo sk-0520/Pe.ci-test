@@ -34,6 +34,7 @@ public class UpdaterScript
 			@"PeUtility.dll.config",
 			@"bin\PeUpdater.update-old",
 			@"bin\PeUpdater.exe",
+			@"bin\PeUpdater.exe.config",
 			@"doc\changelog.xsl",
 			@"MouseKeyboardActivityMonitor.dll",
 			@"ObjectDumper.dll",
