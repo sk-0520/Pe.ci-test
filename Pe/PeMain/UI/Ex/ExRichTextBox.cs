@@ -96,7 +96,7 @@
 		{
 			base.OnKeyDown(e);
 
-			if(e.Control && e.KeyCode == Keys.V || e.Shift && e.KeyCode == Keys.I) {
+			if(e.Control && e.KeyCode == Keys.V || e.Shift && e.KeyCode == Keys.Insert) {
 				if(ReadOnly) {
 					e.Handled = true;
 					return;

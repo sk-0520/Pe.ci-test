@@ -586,7 +586,7 @@
 			ApplySkin();
 			ApplyLanguage();
 
-			this.inputBody.ReadOnly = NoteItem.Locked;
+			ChangeLock(NoteItem.Locked);
 
 			this.inputBody.Focus();
 		}
@@ -668,7 +668,7 @@
 						HiddenInputTitleArea();
 						//HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
-						this.inputBody.ReadOnly = NoteItem.Locked;
+						ChangeLock(NoteItem.Locked);
 
 						Changed = true;
 						Refresh();
@@ -683,12 +683,24 @@
 
 		void ChangeCompact(bool compact, Size size)
 		{
+			this.inputBody.Visible = !compact;
+
 			if(compact) {
 				var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
 				var titleArea = GetTitleArea();
 				Size = new Size(titleArea.Width + edge.Horizontal, titleArea.Height + edge.Vertical);
 			} else {
 				Size = size;
+			}
+		}
+
+		void ChangeLock(bool isLock)
+		{
+			this.inputBody.ReadOnly = isLock;
+			if(isLock) {
+				this.inputBody.Cursor = Cursors.Default;
+			} else {
+				this.inputBody.Cursor = Cursors.IBeam;
 			}
 		}
 
@@ -1072,7 +1084,7 @@
 
 			SaveItem();
 
-			this.inputBody.ReadOnly = NoteItem.Locked;
+			ChangeLock(NoteItem.Locked);
 			Refresh();
 		}
 		
@@ -1316,6 +1328,9 @@
 			//// 拡張メニュー
 			//var extension = AppUtility.IsExtension();
 			//this.contextMenu_itemRemove.Visible = extension;
+
+			HiddenInputTitleArea();
+			ChangeLock(NoteItem.Locked);
 		}
 		
 		void NoteForm_MouseLeave(object sender, EventArgs e)
@@ -1385,7 +1400,7 @@
 
 		private void contextMenu_itemBody_Click(object sender, EventArgs e)
 		{
-			this.inputBody.ReadOnly = false;
+			ChangeLock(false);
 			this.inputBody.Focus();
 		}
 
