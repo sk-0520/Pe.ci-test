@@ -557,6 +557,7 @@
 			this.inputBody.Text = NoteItem.Body;
 			 */
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.Never);
 			//this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			var bindBody = new Binding("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -1194,7 +1195,13 @@
 		void ContextMenu_itemCopy_Click(object sender, EventArgs e)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(NoteItem.Body));
-			ClipboardUtility.CopyText(NoteItem.Body, CommonData);
+			string copyText;
+			if(this.inputBody.SelectionLength > 0) {
+				copyText = this.inputBody.SelectedText;
+			} else {
+				copyText = NoteItem.Body;
+			}
+			ClipboardUtility.CopyText(copyText, CommonData);
 		}
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)
