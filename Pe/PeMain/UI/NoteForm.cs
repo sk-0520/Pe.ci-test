@@ -892,7 +892,7 @@
 		void DrawBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
 			if(!noteStatus.Compact) {
-				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, NoteItem.Style.FontSetting.Font, NoteItem.Body);
+				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor);
 			}
 		}
 		
