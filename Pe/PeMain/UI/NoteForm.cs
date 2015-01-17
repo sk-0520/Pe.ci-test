@@ -523,7 +523,7 @@
 			//				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Single(cd => cd.Value == Color.Transparent).Value;
 			//			}
 			//NoteItem.Style.BackColor;
-
+			SetBodyFont();
 			ApplySkin();
 			ApplyLanguage();
 		}
@@ -681,6 +681,7 @@
 		void ShowInputBodyArea(int recursive)
 		{
 			this._prevBody = NoteItem.Body;
+			/*
 			//this.inputBody.Text = NoteItem.Body;
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
 
@@ -692,6 +693,7 @@
 			if(!this.inputBody.Visible && recursive > 0) {
 				ShowInputBodyArea(recursive - 1);
 			}
+			*/
 		}
 
 		void HiddenInputTitleArea()
@@ -716,6 +718,8 @@
 
 		void HiddenInputBodyArea()
 		{
+			//inputBody.InvalidateEx();
+
 			if(!this.inputBody.Visible) {
 				return;
 			}
@@ -732,7 +736,7 @@
 			 */
 
 			this._changed = true;
-			this.inputBody.Visible = false;
+			//this.inputBody.Visible = false;
 		}
 
 		void ShowContextMenu(Point point)
@@ -850,6 +854,12 @@
 
 			return resultColor;
 		}
+
+		void SetBodyFont()
+		{
+			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region draw
@@ -1117,6 +1127,7 @@
 					NoteItem.Style.FontSetting.Import(dialog.Font);
 				}
 			}
+			SetBodyFont();
 			Refresh();
 		}
 		

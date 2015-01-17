@@ -88,12 +88,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.inputBody.Location = new System.Drawing.Point(40, 56);
 			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
-			this.inputBody.Multiline = true;
 			this.inputBody.Name = "inputBody";
 			this.inputBody.Size = new System.Drawing.Size(187, 120);
 			this.inputBody.TabIndex = 0;
 			this.inputBody.TabStop = false;
-			this.inputBody.Visible = false;
+			this.inputBody.Text = "";
 			this.inputBody.Leave += new System.EventHandler(this.Input_Leave);
 			// 
 			// contextMenu_itemTitle
