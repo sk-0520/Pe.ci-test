@@ -34,6 +34,8 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_EXITSIZEMOVE = 0x0232,
 		WM_MOUSEWHEEL = 0x020a,
 		WM_MOUSEHWHEEL = 0x020e,
+		WM_NOTIFY = 0x004e,
+		WM_ERASEBKGND = 0x0014,
 	}
 	
 	public enum WS_EX

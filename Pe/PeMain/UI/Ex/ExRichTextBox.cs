@@ -32,6 +32,16 @@
 			}
 		}
 
+		/*
+		protected override void WndProc(ref Message m)
+		{
+			if(m.Msg == (int)WM.WM_ERASEBKGND) {
+				InvalidateEx();
+			}
+			base.WndProc(ref m);
+		}
+		*/
+
 		protected override void OnPaintBackground(PaintEventArgs pevent)
 		{
 			//do not allow the background to be painted 
@@ -60,7 +70,6 @@
 			base.OnResize(e);
 			InvalidateEx();
 		}
-
 
 		#endregion //////////////////////////////////////
 

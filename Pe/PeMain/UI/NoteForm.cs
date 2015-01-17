@@ -261,6 +261,7 @@
 							} finally {
 								NativeMethods.ReleaseDC(Handle, hDC);
 							}
+							Refresh();
 						}
 					}
 					break;
