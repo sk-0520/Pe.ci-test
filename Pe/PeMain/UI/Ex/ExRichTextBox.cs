@@ -1,5 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Diagnostics;
 	using System.Drawing;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -77,9 +79,18 @@
 		public NoteTextBox(): base()
 		{
 			ScrollBars = RichTextBoxScrollBars.None;
+			LanguageOption = RichTextBoxLanguageOptions.UIFonts;
 		}
 
 		#region override
+
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			base.OnMouseWheel(e);
+
+			var dir = e.Delta > 0 ? SB.SB_LINEUP : SB.SB_LINEDOWN;
+			NativeMethods.SendMessage(Handle, WM.WM_VSCROLL, new IntPtr((int)dir), IntPtr.Zero);
+		}
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
