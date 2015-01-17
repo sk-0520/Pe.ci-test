@@ -114,6 +114,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// ノートサイズ
 		/// </summary>
 		public static readonly Size noteSize = new Size(200, 200);
+		public const double noteMoveSizeOpacity = 0.6;
+		public const double noteNormalOpacity = 1.0;
 		
 		public static readonly Color noteForeColorWhite = Color.FromArgb(255, 255, 255);
 		public static readonly Color noteForeColorBlack = Color.FromArgb(0, 0, 0);

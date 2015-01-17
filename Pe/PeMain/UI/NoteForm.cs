@@ -390,6 +390,18 @@
 					}
 					break;
 
+				case (int)WM.WM_ENTERSIZEMOVE:
+					{
+						Opacity = Literal.noteMoveSizeOpacity;
+					}
+					break;
+
+				case (int)WM.WM_EXITSIZEMOVE:
+					{
+						Opacity = Literal.noteNormalOpacity;
+					}
+					break;
+
 				default:
 					break;
 			}

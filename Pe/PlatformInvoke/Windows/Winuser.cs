@@ -29,6 +29,8 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_CLIPBOARDUPDATE = 0x031d,
 		WM_VSCROLL = 0x0115,
 		WM_SETREDRAW = 0x000b,
+		WM_ENTERSIZEMOVE = 0x0231,
+		WM_EXITSIZEMOVE = 0x0232,
 	}
 	
 	public enum WS_EX
