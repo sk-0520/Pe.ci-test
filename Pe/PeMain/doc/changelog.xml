@@ -38,7 +38,8 @@
 		</ul>
 		<ul type="fixes">
 			<li rev="f4e785b8e4dacf26bca7fc54f8e020e3853fadb4">#55: ノートの改行表示</li>
-			<li rev=""></li>
+			<li rev="4d8241d562904003be368d54d57fb2fe12aa2b0b">#155: デバッグログの条件式/li>
+				<li rev=""></li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
