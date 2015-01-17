@@ -74,7 +74,7 @@
 
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
-			if(CommonData.MainSetting.Log.Debugging && logType == LogType.Debug) {
+			if(!CommonData.MainSetting.Log.Debugging && logType == LogType.Debug) {
 				return;
 			}
 
