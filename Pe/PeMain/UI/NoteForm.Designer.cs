@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.inputBody = new System.Windows.Forms.TextBox();
+			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox();
 			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.contextMenu_itemBody = new System.Windows.Forms.ToolStripMenuItem();
@@ -509,6 +509,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBody;
 		private System.Windows.Forms.ContextMenuStrip contextMenu;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTitle;
-		private System.Windows.Forms.TextBox inputBody;
+		private ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox inputBody;
 	}
 }

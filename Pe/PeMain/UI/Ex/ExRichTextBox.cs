@@ -3,7 +3,7 @@
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
-	public class ExRichTextBox: RichTextBox
+	public abstract class ExRichTextBox: RichTextBox
 	{ }
 
 	public class TransparentRichTextBox: ExRichTextBox
@@ -23,5 +23,12 @@
 		}
 
 		#endregion //////////////////////////////////////
+	}
+
+	public class NoteTextBox: TransparentRichTextBox
+	{
+		public NoteTextBox(): base()
+		{
+		}
 	}
 }
