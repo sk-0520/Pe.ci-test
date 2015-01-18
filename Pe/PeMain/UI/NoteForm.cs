@@ -770,8 +770,7 @@
 			return colorList
 				.Zip(
 					parentItem.DropDownItems
-					.Cast<ToolStripItem>()
-					.Where(i => i is ToolStripMenuItem)
+					.OfType<ToolStripMenuItem>()
 					.Take(colorList.Count),
 					(color, item) => new ColorMenuItem(item, color)
 				)

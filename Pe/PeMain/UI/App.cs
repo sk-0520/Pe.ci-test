@@ -654,8 +654,8 @@
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
-				foreach(var menuItem in menuItems.Where(m => m is ToolStripMenuItem).Cast<ToolStripMenuItem>()) {
+				var menuItems = parentItem.DropDownItems.OfType<ToolStripMenuItem>();
+				foreach(var menuItem in menuItems) {
 					var applicationItem = menuItem.Tag as ApplicationItem;
 					if(applicationItem != null) {
 						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
@@ -899,7 +899,7 @@
 				}
 				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			}
-			foreach(ToolStripMenuItem toolItem in this._contextMenu.Items.Cast<ToolStripItem>().Where(t => t is ToolStripMenuItem)) {
+			foreach(var toolItem in this._contextMenu.Items.OfType<ToolStripMenuItem>()) {
 				ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
 			}
 			this._contextMenu.Opening += (object sender, CancelEventArgs e) => HideAutoHiddenToolbar();
@@ -1392,7 +1392,7 @@
 						ResetUI();
 						ApplyLanguage();
 
-						foreach(var window in this._otherWindows.Where(w => w is StreamForm).Cast<StreamForm>().ToArray()) {
+						foreach(var window in this._otherWindows.OfType<StreamForm>().ToArray()) {
 							window.Visible = true;
 						}
 
