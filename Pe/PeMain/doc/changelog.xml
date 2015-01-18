@@ -34,6 +34,7 @@
 		<ul type="features">
 			<li rev="c523a87135a248d192384cfa5ab4bda299e86169">ノートのサイズ・位置変更中は透明にする</li>
 			<li rev="9bf0cd67718bec973bb1411ba3ad6845782d7a68">#150: システムスキンをきちんと環境に合わせる, まぁアイコンだけ</li>
+			<li rev="6694402d6870d38bbf6ee9465e0da97462836311">#153: ノート編集時の初期状態</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
