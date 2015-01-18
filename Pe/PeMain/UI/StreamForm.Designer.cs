@@ -36,7 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.toolStream = new System.Windows.Forms.ToolStrip();
+			this.toolStream = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
 			this.toolStream_itemTopmost = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStream_itemSave = new System.Windows.Forms.ToolStripButton();
@@ -249,6 +249,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabPage tabStream_pageStream;
 		private System.Windows.Forms.TabControl tabStream;
 		private System.Windows.Forms.ToolStripButton toolStream_itemSave;
-		private System.Windows.Forms.ToolStrip toolStream;
+		private ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip toolStream;
 	}
 }
