@@ -184,10 +184,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\SystemSkin7Resource.Designer.cs">
+    <Compile Include="Properties\SystemSkin\SystemSkin7Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SystemSkin7Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\SystemSkin\SystemSkin8Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SystemSkin8Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
@@ -317,9 +322,13 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\SystemSkin7Resource.resx">
+    <EmbeddedResource Include="Properties\SystemSkin\SystemSkin7Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SystemSkin7Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\SystemSkin\SystemSkin8Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SystemSkin8Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -662,6 +671,67 @@
     <Content Include="doc\license\Applications\Hash.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\SystemSkin\8\Image\Applications.png" />
+    <None Include="Resources\SystemSkin\8\Image\AddItem.png" />
+    <None Include="Resources\SystemSkin\8\Image\Add.png" />
+    <None Include="Resources\SystemSkin\8\Image\WindowSave.png" />
+    <None Include="Resources\SystemSkin\8\Image\Windows.png" />
+    <None Include="Resources\SystemSkin\8\Image\WindowLoad.png" />
+    <None Include="Resources\SystemSkin\8\Image\WindowList.png" />
+    <None Include="Resources\SystemSkin\8\Image\Warning.png" />
+    <None Include="Resources\SystemSkin\8\Image\Update.png" />
+    <None Include="Resources\SystemSkin\8\Image\Up.png" />
+    <None Include="Resources\SystemSkin\8\Image\Unlock.png" />
+    <None Include="Resources\SystemSkin\8\Image\Toolbar.png" />
+    <None Include="Resources\SystemSkin\8\Image\Tag.png" />
+    <None Include="Resources\SystemSkin\8\Image\SystemEnvironment.png" />
+    <None Include="Resources\SystemSkin\8\Image\SideExpand.png" />
+    <None Include="Resources\SystemSkin\8\Image\SideContract.png" />
+    <None Include="Resources\SystemSkin\8\Image\Save.png" />
+    <None Include="Resources\SystemSkin\8\Image\Remove.png" />
+    <None Include="Resources\SystemSkin\8\Image\Refresh.png" />
+    <None Include="Resources\SystemSkin\8\Image\Pin.png" />
+    <None Include="Resources\SystemSkin\8\Image\OpenDir.png" />
+    <None Include="Resources\SystemSkin\8\Image\NotImpl.png" />
+    <None Include="Resources\SystemSkin\8\Image\NoteTitle.png" />
+    <None Include="Resources\SystemSkin\8\Image\NoteBody.png" />
+    <None Include="Resources\SystemSkin\8\Image\Note.png" />
+    <None Include="Resources\SystemSkin\8\Image\Name.png" />
+    <None Include="Resources\SystemSkin\8\Image\Log.png" />
+    <None Include="Resources\SystemSkin\8\Image\Lock.png" />
+    <None Include="Resources\SystemSkin\8\Image\Kill.png" />
+    <None Include="Resources\SystemSkin\8\Image\Information.png" />
+    <None Include="Resources\SystemSkin\8\Image\Help.png" />
+    <None Include="Resources\SystemSkin\8\Image\Group.png" />
+    <None Include="Resources\SystemSkin\8\Image\FontStyle.png" />
+    <None Include="Resources\SystemSkin\8\Image\Font.png" />
+    <None Include="Resources\SystemSkin\8\Image\Flag.png" />
+    <None Include="Resources\SystemSkin\8\Image\Finder.png" />
+    <None Include="Resources\SystemSkin\8\Image\Find.png" />
+    <None Include="Resources\SystemSkin\8\Image\Filter.png" />
+    <None Include="Resources\SystemSkin\8\Image\File.png" />
+    <None Include="Resources\SystemSkin\8\Image\Error.png" />
+    <None Include="Resources\SystemSkin\8\Image\Down.png" />
+    <None Include="Resources\SystemSkin\8\Image\Disk.png" />
+    <None Include="Resources\SystemSkin\8\Image\Dir.png" />
+    <None Include="Resources\SystemSkin\8\Image\Debug.png" />
+    <None Include="Resources\SystemSkin\8\Image\CustomColor.png" />
+    <None Include="Resources\SystemSkin\8\Image\Config.png" />
+    <None Include="Resources\SystemSkin\8\Image\Comment.png" />
+    <None Include="Resources\SystemSkin\8\Image\Close.png" />
+    <None Include="Resources\SystemSkin\8\Image\ClipboardText.png" />
+    <None Include="Resources\SystemSkin\8\Image\ClipboardRichTextFormat.png" />
+    <None Include="Resources\SystemSkin\8\Image\ClipboardImage.png" />
+    <None Include="Resources\SystemSkin\8\Image\ClipboardHtml.png" />
+    <None Include="Resources\SystemSkin\8\Image\ClipboardFile.png" />
+    <None Include="Resources\SystemSkin\8\Image\ClipboardCopy.png" />
+    <None Include="Resources\SystemSkin\8\Image\Clipboard.png" />
+    <None Include="Resources\SystemSkin\8\Image\Clear.png" />
+    <None Include="Resources\SystemSkin\8\Image\Changelog.png" />
+    <None Include="Resources\SystemSkin\8\Icon\ToolbarMain.ico" />
+    <None Include="Resources\SystemSkin\8\Icon\NotFound.ico" />
+    <None Include="Resources\SystemSkin\8\Icon\Command.ico" />
+    <None Include="Resources\SystemSkin\8\Icon\App.ico" />
     <None Include="Resources\SystemSkin\7\Image\Clear.png" />
     <None Include="Resources\SystemSkin\7\Image\Changelog.png" />
     <None Include="Resources\SystemSkin\7\Image\Applications.png" />
