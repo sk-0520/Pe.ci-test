@@ -60,10 +60,8 @@
 
 		#region initialize
 		void Initialize()
-		{
-			// これきかねーなぁ。。。
-			TopMost = false;
-		}
+		{ }
+
 		#endregion ////////////////////////////////////
 
 		#region language
