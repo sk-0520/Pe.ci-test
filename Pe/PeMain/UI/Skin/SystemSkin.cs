@@ -189,7 +189,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		OSVersion GetOSVersion()
 		{
-			return OSVersion.Windows7;
+			//return OSVersion.Windows7;
+			return OSVersion.Windows8;
 		}
 
 		private void SetVisualStyle(Form target)
