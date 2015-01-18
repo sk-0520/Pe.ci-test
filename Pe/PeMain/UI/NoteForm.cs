@@ -700,6 +700,7 @@
 			if(!this.inputTitle.Visible) {
 				ResizeInputTitleArea();
 				this.inputTitle.Visible = true;
+				this.inputTitle.SelectAll();
 				this.inputTitle.Focus();
 			}
 			if(!this.inputTitle.Visible && recursive > 0) {
