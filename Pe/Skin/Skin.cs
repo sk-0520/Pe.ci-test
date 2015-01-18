@@ -203,7 +203,7 @@
 						var fillArea = new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2));
 						g.FillRectangle(brush, fillArea);
 						if(SkinTarget == Library.Skin.SkinTarget.Windows7) {
-							using(var gradation = new LinearGradientBrush(fillArea, Color.FromArgb(128, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
+							using(var gradation = new LinearGradientBrush(fillArea, Color.FromArgb(92, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
 								g.FillRectangle(gradation, fillArea);
 							}
 						}
