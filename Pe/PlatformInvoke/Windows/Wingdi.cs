@@ -90,22 +90,43 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		public int dsOffset;
 	}
 
-	        [StructLayout(LayoutKind.Sequential)]
-        public struct BLENDFUNCTION
-        {
-				public AC BlendOp;
-            public byte BlendFlags;
-            public byte SourceConstantAlpha;
-			public AC AlphaFormat;
+	[StructLayout(LayoutKind.Sequential)]
+	public struct BLENDFUNCTION
+	{
+		public AC BlendOp;
+		public byte BlendFlags;
+		public byte SourceConstantAlpha;
+		public AC AlphaFormat;
 
-            public BLENDFUNCTION(AC op, byte flags, byte alpha, AC format)
-            {
-                BlendOp = op;
-                BlendFlags = flags;
-                SourceConstantAlpha = alpha;
-                AlphaFormat = format;
-            }
-        }
+		public BLENDFUNCTION(AC op, byte flags, byte alpha, AC format)
+		{
+			BlendOp = op;
+			BlendFlags = flags;
+			SourceConstantAlpha = alpha;
+			AlphaFormat = format;
+		}
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct ICONDIR
+	{
+		public ushort idReserved;
+		public ushort idType;
+		public ushort idCount;
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	public struct ICONDIRENTRY
+	{
+		public byte bWidth;
+		public byte bHeight;
+		public byte bColorCount;
+		public byte bReserved;
+		public ushort wPlanes;
+		public ushort wBitCount;
+		public uint dwBytesInRes;
+		public uint dwImageOffset;
+	}
 
 	partial class NativeMethods
 	{
