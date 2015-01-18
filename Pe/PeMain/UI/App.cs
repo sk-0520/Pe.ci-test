@@ -532,10 +532,10 @@
 									baseArea.Offset(basePos);
 
 									var drawArea = new RectangleF(
-										baseArea.X / 100.0f * percentage.Width + 1,
-										baseArea.Y / 100.0f * percentage.Height + 1,
-										baseArea.Width / 100.0f * percentage.Width - 1,
-										baseArea.Height / 100.0f * percentage.Height - 1
+										baseArea.X / 100.0f * percentage.Width + 0,
+										baseArea.Y / 100.0f * percentage.Height + 0,
+										baseArea.Width / 100.0f * percentage.Width - 0,
+										baseArea.Height / 100.0f * percentage.Height - 0
 									);
 									/*
 									g.FillRectangle(brush, drawArea);

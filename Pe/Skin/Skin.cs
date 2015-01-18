@@ -131,8 +131,14 @@
 
 		protected static SkinTarget GetSkinTarget()
 		{
+			var version = Environment.OSVersion;
+			if(version.Version.Major >= 6 && version.Version.Minor > 1) {
+				return SkinTarget.Windows8;
+			} else {
+				return SkinTarget.Windows7;
+			}
 			//return SkinTarget.Windows7;
-			return SkinTarget.Windows8;
+			//return SkinTarget.Windows8;
 		}
 
 		#endregion
