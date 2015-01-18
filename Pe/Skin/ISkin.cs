@@ -14,6 +14,9 @@
 		/// 必要最低限の準備を行う。
 		/// </summary>
 		void Load();
+		/// <summary>
+		/// 
+		/// </summary>
 		void Unload();
 		/// <summary>
 		/// スキンとして処理可能な状態まで初期化する。

@@ -26,7 +26,7 @@
 		const int RECURSIVE = 2;
 		static readonly Size menuIconSize = IconScale.Small.ToSize();
 
-		private class NoteBindItem: INotifyPropertyChanged
+		class NoteBindItem: INotifyPropertyChanged
 		{
 			public event PropertyChangedEventHandler PropertyChanged;
 
@@ -139,9 +139,6 @@
 		bool _initialized = true;
 		bool _changed = false;
 		string _prevTitle;
-		//string _prevBody;
-		//Color _prevForeColor;
-		//Color _prevBackColor;
 		#endregion ////////////////////////////////////
 
 		public NoteForm()
@@ -253,7 +250,6 @@
 
 				case (int)WM.WM_NCPAINT:
 					{
-						//if(CommonData != null && (!this.inputBody.Visible || !this.inputTitle.Visible)) {
 						if(CommonData != null) {
 							var hDC = NativeMethods.GetWindowDC(Handle);
 							try {
@@ -360,8 +356,6 @@
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 							return;
-						} else {
-
 						}
 					}
 					break;
@@ -372,11 +366,6 @@
 							if(this.inputTitle.Visible) {
 								HiddenInputTitleArea();
 							}
-							/*
-							if(this.inputBody.Visible) {
-								HiddenInputBodyArea();
-							}
-							 * */
 						}
 						this.inputBody.Focus();
 					}
@@ -442,14 +431,6 @@
 						break;
 				}
 			}
-			if(this.inputBody.Focused) {
-				var key = keyData & Keys.KeyCode;
-				if(key == Keys.Escape) {
-					//_bindItem.Body = this._prevBody;
-					//HiddenInputBodyArea();
-					return true;
-				}
-			}
 
 			return base.ProcessDialogKey(keyData);
 		}
@@ -459,29 +440,6 @@
 		#region initialize
 		void InitializeUI()
 		{
-			/*
-			var colorControls = new [] {
-				new { Control = contextMenu_itemForeColor, Title = "note/style/color-fore", Default = Literal.noteFore },
-				new { Control = contextMenu_itemBackColor, Title = "note/style/color-back", Default = Literal.noteBack },
-			};
-			foreach(var control in colorControls) {
-				var isFore = control.Control == contextMenu_itemForeColor;
-				var colorList = new [] {
-					new ColorDisplayValue(isFore ? Literal.noteForeColorBlack:  Literal.noteBackColorBlack , control.Title, "note/style/color/black"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorWhite:  Literal.noteBackColorWhite , control.Title, "note/style/color/white"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorRed:    Literal.noteBackColorRed   , control.Title, "note/style/color/red"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorGreen:  Literal.noteBackColorGreen , control.Title, "note/style/color/green"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorBlue:   Literal.noteBackColorBlue  , control.Title, "note/style/color/blue"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorYellow: Literal.noteBackColorYellow, control.Title, "note/style/color/yellow"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorOrange: Literal.noteBackColorOrange, control.Title, "note/style/color/orange"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorPurple: Literal.noteBackColorPurple, control.Title, "note/style/color/purple"),
-					new ColorDisplayValue(Color.Transparent, control.Title, "note/style/color/custom"),
-				};
-				control.Control.ComboBox.BindingContext = BindingContext;
-				control.Control.Attachment(colorList, control.Default);
-			}
-			*/
-
 			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
 		}
 
@@ -516,14 +474,6 @@
 		void ApplyLanguage()
 		{
 			ApplyLanguageMenuItems(this.contextMenu.Items);
-
-			/*
-			foreach(var combo in new [] { this.contextMenu_itemForeColor, this.contextMenu_itemBackColor } ) {
-				foreach(var item in (IEnumerable<ColorDisplayValue>)combo.ComboBox.DataSource) {
-					item.SetLanguage(CommonData.Language);
-				}
-			}
-			*/
 		}
 		#endregion ////////////////////////////////////
 
@@ -561,13 +511,8 @@
 		#region function
 		void ApplySetting()
 		{
-			/*
-			this.inputTitle.Text = NoteItem.Title;
-			this.inputBody.Text = NoteItem.Body;
-			 */
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
 			this.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.Never);
-			//this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			var bindBody = new Binding("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
 			bindBody.ControlUpdateMode = ControlUpdateMode.Never;
@@ -586,11 +531,6 @@
 			var minSize = new Size(edge.Horizontal + commandSize.Width, edge.Vertical + commandSize.Height);
 			MinimumSize = minSize;
 
-			//NoteItem.Style.ForeColor;
-			//			if(!this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Any(cd => cd.Value == NoteItem.Style.ForeColor)) {
-			//				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Single(cd => cd.Value == Color.Transparent).Value;
-			//			}
-			//NoteItem.Style.BackColor;
 			ApplyBodyStyle();
 			ApplySkin();
 			ApplyLanguage();
@@ -767,75 +707,15 @@
 			}
 		}
 
-		//void ShowInputBodyArea(int recursive)
-		//{
-		//	this._prevBody = NoteItem.Body;
-		//	/*
-		//	//this.inputBody.Text = NoteItem.Body;
-		//	this.inputBody.Font = NoteItem.Style.FontSetting.Font;
-
-		//	if(!this.inputBody.Visible) {
-		//		ResizeInputBodyArea();
-		//		this.inputBody.Visible = true;
-		//		this.inputBody.Focus();
-		//	}
-		//	if(!this.inputBody.Visible && recursive > 0) {
-		//		ShowInputBodyArea(recursive - 1);
-		//	}
-		//	*/
-		//	if(inputBody.ReadOnly) {
-		//		inputBody.ContextMenuStrip = null;
-		//		inputBody.ReadOnly = false;
-		//		inputBody.Cursor = Cursors.IBeam;
-		//	}
-		//	inputBody.Focus();
-		//}
-
 		void HiddenInputTitleArea()
 		{
 			if(!this.inputTitle.Visible) {
 				return;
 			}
-			/*
-			var value = this.inputTitle.Text.Trim();
-			if(value.Length == 0 && NoteItem.Body.Length > 0) {
-				value = TextUtility.SplitLines(NoteItem.Body).First().Trim();
-			}
-			var change = NoteItem.Title != value;
-			if(change) {
-				NoteItem.Title = value;
-				this._changed |= true;
-			}
-			 */
+
 			this._changed = true;
 			this.inputTitle.Visible = false;
 		}
-
-		//void HiddenInputBodyArea()
-		//{
-		//	//inputBody.InvalidateEx();
-		//	inputBody.ContextMenuStrip = this.contextMenu;
-		//	inputBody.ReadOnly = true;
-		//	inputBody.Cursor = Cursors.Default;
-
-		//	if(!this.inputBody.Visible) {
-		//		return;
-		//	}
-		//	/*
-		//	var value = this.inputBody.Text.Trim();
-		//	var change = NoteItem.Body != value;
-		//	if(change) {
-		//		NoteItem.Body = value;
-		//		this._changed |= true;
-		//	}
-		//	if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
-		//		NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
-		//	}
-		//	 */
-
-		//	this._changed = true;
-		//	//this.inputBody.Visible = false;
-		//}
 
 		void ShowContextMenu(Point point)
 		{
@@ -883,43 +763,6 @@
 				}
 			}
 		}
-
-		/*
-		Color GetSelectedColor(ToolStripComboBox control)
-		{
-			var index = control.ComboBox.SelectedIndex;
-			Debug.Assert(index >= 0, control.ComboBox.SelectedIndex.ToString());
-			var item = control.ComboBox.Items[index] as ColorDisplayValue;
-			return item.Value;
-		}
-		
-		bool IsCustomColor(Color color)
-		{
-			return color == Color.Transparent;
-		}
-		
-		Color SetAcceptColor(Color color, Color revertColor)
-		{
-			var resultColor = color;
-			var accept = false;
-			if(IsCustomColor(color)) {
-				using(var dialog = new ColorDialog()) {
-					if(dialog.ShowDialog() == DialogResult.OK) {
-						resultColor = dialog.Color;
-						accept = true;
-					} else {
-						resultColor = revertColor;
-					}
-				}
-			} else {
-				accept = true;
-			}
-			if(accept) {
-				Changed = true;
-			}
-			return resultColor;
-		}
-		 */
 
 		IList<ColorMenuItem> GetColorMenuList(ToolStripMenuItem parentItem, IList<Color> colorList)
 		{
@@ -1090,7 +933,6 @@
 		{
 			if (this._initialized) {
 				HiddenInputTitleArea();
-				//HiddenInputBodyArea();
 			}
 			
 			DrawFullActivaChanged(false);
@@ -1161,20 +1003,10 @@
 				true
 			);
 		}
-		
-		/*
-		void NoteForm_DoubleClick(object sender, EventArgs e)
-		{
-			if (!NoteItem.Locked) {
-				ShowInputBodyArea(RECURSIVE);
-			}
-		}
-		*/
 
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
 			if (!this._initialized && NoteItem.Compact) {
-				//ChangeCompact(true, Size.Empty);
 				Height = 20;
 			} else {
 				ResizeInputTitleArea();
@@ -1196,20 +1028,12 @@
 		void Input_Leave(object sender, EventArgs e)
 		{
 			HiddenInputTitleArea();
-			//HiddenInputBodyArea();
 		}
 		
 		void ContextMenu_title_Click(object sender, EventArgs e)
 		{
 			ShowInputTitleArea(RECURSIVE);
 		}
-		
-		/*
-		void ContextMenu_body_Click(object sender, EventArgs e)
-		{
-			ShowInputBodyArea(RECURSIVE);
-		}
-		*/
 
 		void NoteForm_Load(object sender, EventArgs e)
 		{
@@ -1396,15 +1220,6 @@
 		{
 			ExecCommand(SkinNoteCommand.Close, true);
 		}
-
-		/*
-		private void inputBody_DoubleClick(object sender, EventArgs e)
-		{
-			if(!NoteItem.Locked) {
-				ShowInputBodyArea(RECURSIVE);
-			}
-		}
-		*/
 		
 		private void contextMenu_Opened(object sender, EventArgs e)
 		{
