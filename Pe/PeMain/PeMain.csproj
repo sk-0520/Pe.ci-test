@@ -396,6 +396,7 @@
     <None Include="doc\license\SplitButton.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="doc\license\Visual Studio 2013 Image Library EULA.docx" />
     <None Include="doc\readme-ja.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
