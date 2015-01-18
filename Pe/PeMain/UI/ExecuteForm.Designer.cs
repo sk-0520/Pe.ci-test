@@ -381,7 +381,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ExecuteForm";
-			this.ShowInTaskbar = false;
+			this.ShowInTaskbar = true;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/execute";
 			this.tabExecute.ResumeLayout(false);
