@@ -526,8 +526,8 @@
 								var useScreen = inScreen == screen;
 								var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
 								var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
-								using(var brush = new SolidBrush(backColor))
-								using(var pen = new Pen(foreColor)) {
+								//using(var brush = new SolidBrush(backColor))
+								//using(var pen = new Pen(foreColor)) {
 									var baseArea = inScreen.Bounds;
 									baseArea.Offset(basePos);
 
@@ -537,11 +537,15 @@
 										baseArea.Width / 100.0f * percentage.Width - 1,
 										baseArea.Height / 100.0f * percentage.Height - 1
 									);
+									/*
 									g.FillRectangle(brush, drawArea);
 									g.DrawRectangle(pen, drawArea.X - 1, drawArea.Y - 1, drawArea.Width, drawArea.Height);
-								}
+									*/
+									using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize()))
+										g.DrawImage(img, drawArea.Location);
+									}
+								//}
 							}
-						}
 						menuItem.Image.ToDispose();
 						menuItem.Image = baseImage;
 						menuItem.Checked = this._toolbarForms[screen].Visible;

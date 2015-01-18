@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Drawing.Text;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Drawing.Drawing2D;
+	using System.Drawing.Imaging;
+	using System.Drawing.Text;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 標準で使用されるシステム環境にあってるっぽいスキン
 	/// </summary>
@@ -21,11 +21,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	{
 		#region define
 
-		enum OSVersion
-		{
-			Windows7,
-			Windows8,
-		}
 
 		#endregion ///////////////////////////
 
@@ -181,17 +176,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#region property
 		
 		Color VisualColor { get; set; }
-		OSVersion Version { get; set; }
 
 		#endregion ///////////////////////////
 
 		#region function
-
-		OSVersion GetOSVersion()
-		{
-			//return OSVersion.Windows7;
-			return OSVersion.Windows8;
-		}
 
 		private void SetVisualStyle(Form target)
 		{
@@ -258,14 +246,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		public override void Initialize()
 		{
-			var version = GetOSVersion();
-
-			var resFunc = new Dictionary<OSVersion, Action>() {
-				{ OSVersion.Windows7, SetWindow7 },
-				{ OSVersion.Windows8, SetWindow8 },
+			var resFunc = new Dictionary<SkinTarget, Action>() {
+				{ SkinTarget.Windows7, SetWindow7 },
+				{ SkinTarget.Windows8, SetWindow8 },
 			};
 
-			resFunc[version]();
+			resFunc[SkinTarget]();
 		}
 		
 		public override void Unload() {
