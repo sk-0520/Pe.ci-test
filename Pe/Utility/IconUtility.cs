@@ -11,6 +11,58 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	public static class IconUtility
 	{
 		/// <summary>
+		/// http://svn.nate.deepcreek.org.au/svn/KeyboardRedirector/trunk/IconExtractor/IconExtractor.cs
+		/// </summary>
+		/// <param name="hBitmap"></param>
+		/// <returns></returns>
+		static Bitmap BitmapFromhBitmap(IntPtr hBitmap)
+		{
+			var plainBitmap = Image.FromHbitmap(hBitmap);
+			var bmData = new BitmapData[2];
+			var bounds = new Rectangle(0, 0, plainBitmap.Width, plainBitmap.Height);
+			bmData[0] = plainBitmap.LockBits(bounds, ImageLockMode.ReadOnly, plainBitmap.PixelFormat);
+
+			var transparentBitmap = new Bitmap(bmData[0].Width, bmData[0].Height, bmData[0].Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, bmData[0].Scan0);
+			bmData[1] = transparentBitmap.LockBits(bounds, System.Drawing.Imaging.ImageLockMode.WriteOnly, transparentBitmap.PixelFormat);
+			try {
+				Marshal.StructureToPtr(bmData[0].Scan0, bmData[1].Scan0, true);
+			} finally {
+				transparentBitmap.UnlockBits(bmData[1]);
+				plainBitmap.UnlockBits(bmData[0]);
+			}
+			var isPlain = true;
+			for(int y = 0; y < transparentBitmap.Height; y++) {
+				for(int x = 0; x < transparentBitmap.Width; x++) {
+					if((x > 0) && (y > 0)) {
+						byte alpha = transparentBitmap.GetPixel(x, y).A;
+						if(alpha > 0) {
+							isPlain = false;
+							break;
+						}
+					}
+				}
+			}
+
+			if(!isPlain) {
+				return transparentBitmap;
+			}
+
+			return plainBitmap;
+		}
+
+		public static Bitmap GetThumbnailImage(string iconPath, IconScale iconScale)
+		{
+			var hBitmap = IntPtr.Zero;
+			IShellItem iShellItem = null;
+			NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
+			var size = iconScale.ToSize();
+			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
+			((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
+
+			return BitmapFromhBitmap(hBitmap);
+		}
+
+		/// <summary>
 		/// 16px, 32pxアイコン取得
 		/// </summary>
 		/// <param name="iconPath"></param>
@@ -50,13 +102,18 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				if(fileInfoResult != IntPtr.Zero) {
 					result = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
 					NativeMethods.DestroyIcon(fileInfo.hIcon);
+				} else {
+					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
+						result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+					}
 				}
 			}
+
 			return result;
 		}
 
 		// BUGS: いろいろ調べてるけどインデックス指定がわけわかめ
-		unsafe static Icon LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+		static Icon LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
 		{
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 
@@ -75,62 +132,17 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			if(getImageListResult == ComResult.S_OK) {
 				var hIcon = IntPtr.Zero;
+
 				if(hasIcon) {
 					int n = 0;
 					imageList.GetImageCount(ref n);
-					Debug.WriteLine("{0}, {1}, {2}, {3}", iconPath, n, fileInfo.iIcon, hasIcon);
+					Debug.WriteLine("!{0}, {1}, {2}, {3}", iconPath, n, fileInfo.iIcon, hasIcon);
 					//fileInfo.iIcon = iconIndex;
 					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 				}
+
 				if(hIcon == IntPtr.Zero) {
-
-					//var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
-					var hBitmap = IntPtr.Zero;
-					IShellItem iShellItem = null;
-					NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
-					var size = iconScale.ToSize();
-					((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), 0x0, out hBitmap);
-
-					var dibsection = new DIBSECTION();
-					NativeMethods.GetObject((IntPtr)hBitmap, Marshal.SizeOf(dibsection), ref dibsection);
-					int width = dibsection.dsBm.bmWidth;
-					int height = dibsection.dsBm.bmHeight;
-					Debug.WriteLine("{0}, {1}, {2}, {3}", iconPath, dibsection.dsBm.bmHeight, dibsection.dsBmih.biHeight, hasIcon);
-					using(var bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb)) {
-
-						for(int x = 0; x < dibsection.dsBmih.biWidth; x++) {
-							for(int y = 0; y < dibsection.dsBmih.biHeight; y++) {
-								int i = y * dibsection.dsBmih.biWidth + x;
-								IntPtr ptr = dibsection.dsBm.bmBits + (i * Marshal.SizeOf(typeof(RGBQUAD)));
-								var rgbquad = (RGBQUAD)Marshal.PtrToStructure(ptr, typeof(RGBQUAD));
-
-								if(rgbquad.rgbReserved != 0)
-									bitmap.SetPixel(x, y, Color.FromArgb(rgbquad.rgbReserved, rgbquad.rgbRed, rgbquad.rgbGreen, rgbquad.rgbBlue));
-							}
-						}
-						/*
-						{
-							// create the destination Bitmap object
-							Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-
-							// get the HDCs and select the HBITMAP
-							Graphics graphics = Graphics.FromImage(bmp);
-
-							IntPtr hdcDest = graphics.GetHdc();
-							IntPtr hdcSrc = NativeMethods.CreateCompatibleDC(hdcDest);
-							IntPtr hobjOriginal = NativeMethods.SelectObject(hdcSrc, (IntPtr)hBitmap);
-
-							// render the bmp using AlphaBlend
-							BLENDFUNCTION blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 0xFF, AC.AC_SRC_ALPHA);
-							NativeMethods.AlphaBlend(hdcDest, 0, 0, width, height, hdcSrc, 0, 0, width, height, blendfunction);
-
-							// clean up
-							NativeMethods.SelectObject(hdcSrc, hobjOriginal);
-							NativeMethods.DeleteDC(hdcSrc);
-							graphics.ReleaseHdc(hdcDest);
-							graphics.Dispose();
-						}
-						*/
+					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
 						hIcon = bitmap.GetHicon();
 					}
 				}
@@ -161,6 +173,43 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return result;
 		}
+
+		//private static System.Drawing.Bitmap GetBitmapFromHbitmap(IntPtr hbitmap)
+		//{
+		//	Bitmap bm1 = Image.FromHbitmap(hbitmap);
+
+		//	var bmData = new System.Drawing.Imaging.BitmapData[2];
+		//	var bounds = new System.Drawing.Rectangle(0, 0, bm1.Width, bm1.Height);
+		//	bmData[0] = bm1.LockBits(bounds, ImageLockMode.ReadOnly, bm1.PixelFormat);
+
+		//	var bm2 = new Bitmap(bmData[0].Width, bmData[0].Height, bmData[0].Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, bmData[0].Scan0);
+		//	bmData[1] = bm2.LockBits(bounds, System.Drawing.Imaging.ImageLockMode.WriteOnly, bm2.PixelFormat);
+
+		//	Debug.WriteLine("{0}, {1}", bm1.Size, bm2.Size);
+
+		//	Marshal.StructureToPtr(bmData[0].Scan0, bmData[1].Scan0, true);
+		//	bm2.UnlockBits(bmData[1]);
+		//	bm1.UnlockBits(bmData[0]);
+
+		//	bool transparent = true;
+		//	for(int y = 0; y < bm2.Height; y++) {
+		//		for(int x = 0; x < bm2.Width; x++) {
+		//			if((x > 0) && (y > 0)) {
+		//				byte alpha = bm2.GetPixel(x, y).A;
+		//				if(alpha > 0) {
+		//					transparent = false;
+		//					break;
+		//				}
+		//			}
+		//		}
+		//	}
+
+		//	if(transparent == false) {
+		//		return bm2;
+		//	}
+
+		//	return bm1;
+		//}
 
 		public static Image ImageFromIcon(Icon icon, IconScale iconScale)
 		{
