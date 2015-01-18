@@ -12,7 +12,13 @@
 
 	public enum SkinTarget
 	{
+		/// <summary>
+		/// 7以下
+		/// </summary>
 		Windows7,
+		/// <summary>
+		/// 8以上
+		/// </summary>
 		Windows8,
 	}
 

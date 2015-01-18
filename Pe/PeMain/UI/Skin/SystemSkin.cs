@@ -221,12 +221,10 @@
 
 		void TuneRect(ref Rectangle r)
 		{
-			if (r.Width % 2 == 1)
-			{
+			if(r.Width % 2 == 1) {
 				r.Width += 1;
 			}
-			if (r.Height % 2 == 1)
-			{
+			if(r.Height % 2 == 1) {
 				r.Height += 1;
 			}
 		}
@@ -300,7 +298,6 @@
 			if(_skinImageMap.TryGetValue(skinImage, out result)) {
 				return result;
 			} else {
-				//return global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl;
 				return null;
 			}
 		}
