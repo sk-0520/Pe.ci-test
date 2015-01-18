@@ -65,8 +65,9 @@
 
 		protected void InvalidateEx()
 		{
-			if(Parent == null)
+			if(Parent == null) {
 				return;
+			}
 
 			var rc = new Rectangle(this.Location, this.Size);
 			Parent.Invalidate(rc, true);

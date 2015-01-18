@@ -190,6 +190,7 @@
 			this.toolLauncherItems_create.Image = skin.GetImage(SkinImage.Add);
 			this.toolLauncherItems_remove.Image = skin.GetImage(SkinImage.Remove);
 			this.toolLauncherItems_filter.Image = skin.GetImage(SkinImage.Filter);
+			this.toolLauncherItems_type.Image = skin.GetImage(SkinImage.Find);
 			this.toolLauncherItems_type_full.Image = skin.GetImage(SkinImage.Find);
 			this.toolLauncherItems_type_tag.Image = skin.GetImage(SkinImage.Tag);
 			this.toolLauncherItems_type_name.Image = skin.GetImage(SkinImage.Name);
