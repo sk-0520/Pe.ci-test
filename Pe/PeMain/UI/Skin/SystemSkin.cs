@@ -19,16 +19,200 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 	/// </summary>
 	public class SystemSkin: Skin
 	{
-		#region Skin
+		#region define
+
+		enum OSVersion
+		{
+			Windows7,
+			Windows8,
+		}
+
+		#endregion ///////////////////////////
 
 		#region Resource
 
-		IReadOnlyDictionary<SkinImage, Image> _skinImageMap;
-		IReadOnlyDictionary<SkinIcon, Icon> _skinIconMap;
+		IDictionary<SkinImage, Image> _skinImageMap;
+		IDictionary<SkinIcon, Icon> _skinIconMap;
+
+		void SetWindow7()
+		{
+			this._skinImageMap = new Dictionary<SkinImage, Image>() {
+				{ SkinImage.Add, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Add },
+				{ SkinImage.AddItem, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_AddItem },
+				{ SkinImage.Applications, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Applications },
+				{ SkinImage.Changelog, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Changelog },
+				{ SkinImage.Clear, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Clear },
+				{ SkinImage.Clipboard, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Clipboard },
+				{ SkinImage.ClipboardCopy, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ClipboardCopy },
+				{ SkinImage.ClipboardFile, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ClipboardFile },
+				{ SkinImage.ClipboardHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ClipboardHtml },
+				{ SkinImage.ClipboardImage, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ClipboardImage },
+				{ SkinImage.ClipboardRichTextFormat, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ClipboardRichTextFormat },
+				{ SkinImage.ClipboardText, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ClipboardText },
+				{ SkinImage.Close, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Close },
+				{ SkinImage.Comment, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Comment },
+				{ SkinImage.Config, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Config },
+				{ SkinImage.CustomColor, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_CustomColor },
+				{ SkinImage.Debug, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Debug },
+				{ SkinImage.Dir, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Dir },
+				{ SkinImage.Disk, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Disk },
+				{ SkinImage.Down, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Down },
+				{ SkinImage.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Error },
+				{ SkinImage.File, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_File },
+				{ SkinImage.Filter, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Filter },
+				{ SkinImage.Find, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Find },
+				{ SkinImage.Finder, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Finder },
+				{ SkinImage.Flag, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Flag },
+				{ SkinImage.Font, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Font },
+				{ SkinImage.FontStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_FontStyle },
+				{ SkinImage.Group, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Group },
+				{ SkinImage.Help, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Help },
+				{ SkinImage.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Information },
+				{ SkinImage.Kill, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Kill },
+				{ SkinImage.Lock, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Lock },
+				{ SkinImage.Log, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Log },
+				{ SkinImage.Name, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Name },
+				{ SkinImage.Note, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Note },
+				{ SkinImage.NoteBody, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_NoteBody },
+				{ SkinImage.NoteTitle, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_NoteTitle },
+				{ SkinImage.NotImpl, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_NotImpl },
+				{ SkinImage.OpenDir, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_OpenDir },
+				{ SkinImage.Pin, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Pin },
+				{ SkinImage.Refresh, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Refresh },
+				{ SkinImage.Remove, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Remove },
+				{ SkinImage.Save, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Save },
+				{ SkinImage.SideContract, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_SideContract },
+				{ SkinImage.SideExpand, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_SideExpand },
+				{ SkinImage.SystemEnvironment, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_SystemEnvironment },
+				{ SkinImage.Tag, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Tag },
+				{ SkinImage.Toolbar, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Toolbar },
+				{ SkinImage.Unlock, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Unlock },
+				{ SkinImage.Up, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Up },
+				{ SkinImage.Update, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Update },
+				{ SkinImage.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Warning },
+				{ SkinImage.WindowList, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_WindowList },
+				{ SkinImage.WindowLoad, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_WindowLoad },
+				{ SkinImage.Windows, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Windows },
+				{ SkinImage.WindowSave, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_WindowSave },
+			};
+
+			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {
+				{ SkinIcon.App, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_App },
+				{ SkinIcon.Tasktray, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_App },
+				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Command },
+				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_NotFound },
+				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_ToolbarMain },
+			};
+		}
+
+		void SetWindow8()
+		{
+			this._skinImageMap = new Dictionary<SkinImage, Image>() {
+				{ SkinImage.Add, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Add },
+				{ SkinImage.AddItem, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_AddItem },
+				{ SkinImage.Applications, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Applications },
+				{ SkinImage.Changelog, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Changelog },
+				{ SkinImage.Clear, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Clear },
+				{ SkinImage.Clipboard, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Clipboard },
+				{ SkinImage.ClipboardCopy, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_ClipboardCopy },
+				{ SkinImage.ClipboardFile, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_ClipboardFile },
+				{ SkinImage.ClipboardHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_ClipboardHtml },
+				{ SkinImage.ClipboardImage, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_ClipboardImage },
+				{ SkinImage.ClipboardRichTextFormat, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_ClipboardRichTextFormat },
+				{ SkinImage.ClipboardText, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_ClipboardText },
+				{ SkinImage.Close, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Close },
+				{ SkinImage.Comment, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Comment },
+				{ SkinImage.Config, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Config },
+				{ SkinImage.CustomColor, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_CustomColor },
+				{ SkinImage.Debug, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Debug },
+				{ SkinImage.Dir, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Dir },
+				{ SkinImage.Disk, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Disk },
+				{ SkinImage.Down, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Down },
+				{ SkinImage.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Error },
+				{ SkinImage.File, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_File },
+				{ SkinImage.Filter, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Filter },
+				{ SkinImage.Find, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Find },
+				{ SkinImage.Finder, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Finder },
+				{ SkinImage.Flag, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Flag },
+				{ SkinImage.Font, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Font },
+				{ SkinImage.FontStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_FontStyle },
+				{ SkinImage.Group, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Group },
+				{ SkinImage.Help, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Help },
+				{ SkinImage.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Information },
+				{ SkinImage.Kill, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Kill },
+				{ SkinImage.Lock, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Lock },
+				{ SkinImage.Log, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Log },
+				{ SkinImage.Name, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Name },
+				{ SkinImage.Note, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Note },
+				{ SkinImage.NoteBody, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_NoteBody },
+				{ SkinImage.NoteTitle, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_NoteTitle },
+				{ SkinImage.NotImpl, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_NotImpl },
+				{ SkinImage.OpenDir, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_OpenDir },
+				{ SkinImage.Pin, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Pin },
+				{ SkinImage.Refresh, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Refresh },
+				{ SkinImage.Remove, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Remove },
+				{ SkinImage.Save, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Save },
+				{ SkinImage.SideContract, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_SideContract },
+				{ SkinImage.SideExpand, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_SideExpand },
+				{ SkinImage.SystemEnvironment, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_SystemEnvironment },
+				{ SkinImage.Tag, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Tag },
+				{ SkinImage.Toolbar, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Toolbar },
+				{ SkinImage.Unlock, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Unlock },
+				{ SkinImage.Up, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Up },
+				{ SkinImage.Update, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Update },
+				{ SkinImage.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Warning },
+				{ SkinImage.WindowList, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_WindowList },
+				{ SkinImage.WindowLoad, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_WindowLoad },
+				{ SkinImage.Windows, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_Windows },
+				{ SkinImage.WindowSave, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Image_WindowSave },
+			};
+
+			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {
+				{ SkinIcon.App, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_App },
+				{ SkinIcon.Tasktray, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_App },
+				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Command },
+				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_NotFound },
+				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_ToolbarMain },
+			};
+		}
 
 		#endregion
 
-		#endregion
+		#region property
+		
+		Color VisualColor { get; set; }
+		OSVersion Version { get; set; }
+
+		#endregion ///////////////////////////
+
+		#region function
+
+		OSVersion GetOSVersion()
+		{
+			return OSVersion.Windows7;
+		}
+
+		private void SetVisualStyle(Form target)
+		{
+			Debug.Assert(EnabledAeroStyle);
+
+			var blurHehind = new DWM_BLURBEHIND();
+			blurHehind.fEnable = true;
+			blurHehind.hRgnBlur = IntPtr.Zero;
+			blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
+			NativeMethods.DwmEnableBlurBehindWindow(target.Handle, ref blurHehind);
+
+			// 設定色を取得
+			uint rawColor;
+			bool blend;
+			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
+			//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
+			var a = (int)((rawColor & 0xff000000) >> 24);
+			var r = (int)((rawColor & 0x00ff0000) >> 16);
+			var g = (int)((rawColor & 0x0000ff00) >> 8);
+			var b = (int)((rawColor & 0x000000ff) >> 0);
+			VisualColor = Color.FromArgb(a, r, g, b);
+		}
 
 		private static Point GetPressOffset(ToolStripItem toolItem)
 		{
@@ -45,7 +229,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			return Point.Empty;
 			 */
 		}
-		
+
 		void TuneRect(ref Rectangle r)
 		{
 			if (r.Width % 2 == 1)
@@ -57,8 +241,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				r.Height += 1;
 			}
 		}
-		
-		Color VisualColor { get; set;}
+
+		#endregion ///////////////////////////
 
 		#region Initialize
 
@@ -73,73 +257,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		public override void Initialize()
 		{
-			this._skinImageMap = new Dictionary<SkinImage, Image>() {
-				{ SkinImage.Add, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Add },
-				{ SkinImage.AddItem, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_AddItem },
-				{ SkinImage.Applications, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Applications },
-				{ SkinImage.Changelog, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Changelog },
-				{ SkinImage.Clear, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear },
-				{ SkinImage.Clipboard, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard },
-				{ SkinImage.ClipboardCopy, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy },
-				{ SkinImage.ClipboardFile, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardFile },
-				{ SkinImage.ClipboardHtml, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardHtml },
-				{ SkinImage.ClipboardImage, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardImage },
-				{ SkinImage.ClipboardRichTextFormat, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardRichTextFormat },
-				{ SkinImage.ClipboardText, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardText },
-				{ SkinImage.Close, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close },
-				{ SkinImage.Comment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Comment },
-				{ SkinImage.Config, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Config },
-				{ SkinImage.CustomColor, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_CustomColor },
-				{ SkinImage.Debug, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Debug },
-				{ SkinImage.Dir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir },
-				{ SkinImage.Disk, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Disk },
-				{ SkinImage.Down, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Down },
-				{ SkinImage.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Error },
-				{ SkinImage.File, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File },
-				{ SkinImage.Filter, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Filter },
-				{ SkinImage.Find, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Find },
-				{ SkinImage.Finder, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Finder },
-				{ SkinImage.Flag, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Flag },
-				{ SkinImage.Font, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Font },
-				{ SkinImage.FontStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_FontStyle },
-				{ SkinImage.Group, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Group },
-				{ SkinImage.Help, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Help },
-				{ SkinImage.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Information },
-				{ SkinImage.Kill, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Kill },
-				{ SkinImage.Lock, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Lock },
-				{ SkinImage.Log, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Log },
-				{ SkinImage.Name, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Name },
-				{ SkinImage.Note, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Note },
-				{ SkinImage.NoteBody, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteBody },
-				{ SkinImage.NoteTitle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle },
-				{ SkinImage.NotImpl, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NotImpl },
-				{ SkinImage.OpenDir, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_OpenDir },
-				{ SkinImage.Pin, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin },
-				{ SkinImage.Refresh, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Refresh },
-				{ SkinImage.Remove, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove },
-				{ SkinImage.Save, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save },
-				{ SkinImage.SideContract, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideContract },
-				{ SkinImage.SideExpand, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SideExpand },
-				{ SkinImage.SystemEnvironment, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_SystemEnvironment },
-				{ SkinImage.Tag, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Tag },
-				{ SkinImage.Toolbar, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Toolbar },
-				{ SkinImage.Unlock, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Unlock },
-				{ SkinImage.Up, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Up },
-				{ SkinImage.Update, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Update },
-				{ SkinImage.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Warning },
-				{ SkinImage.WindowList, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowList },
-				{ SkinImage.WindowLoad, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowLoad },
-				{ SkinImage.Windows, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Windows },
-				{ SkinImage.WindowSave, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_WindowSave },
+			var version = GetOSVersion();
+
+			var resFunc = new Dictionary<OSVersion, Action>() {
+				{ OSVersion.Windows7, SetWindow7 },
+				{ OSVersion.Windows8, SetWindow8 },
 			};
 
-			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {
-				{ SkinIcon.App, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
-				{ SkinIcon.Tasktray, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App },
-				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_Command },
-				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_NotFound },
-				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_ToolbarMain },
-			};
+			resFunc[version]();
 		}
 		
 		public override void Unload() {
@@ -154,28 +279,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 
 		#endregion
-
-		private void SetVisualStyle(Form target)
-		{
-			Debug.Assert(EnabledAeroStyle);
-
-			var blurHehind = new DWM_BLURBEHIND();
-			blurHehind.fEnable = true;
-			blurHehind.hRgnBlur = IntPtr.Zero;
-			blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
-			NativeMethods.DwmEnableBlurBehindWindow(target.Handle, ref blurHehind);
-			
-			// 設定色を取得
-			uint rawColor;
-			bool blend;
-			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
-			//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
-			var a = (int)((rawColor & 0xff000000) >> 24);
-			var r = (int)((rawColor & 0x00ff0000) >> 16);
-			var g = (int)((rawColor & 0x0000ff00) >> 8);
-			var b = (int)((rawColor & 0x000000ff) >> 0);
-			VisualColor = Color.FromArgb(a, r, g, b);
-		}
 
 		#region Style
 

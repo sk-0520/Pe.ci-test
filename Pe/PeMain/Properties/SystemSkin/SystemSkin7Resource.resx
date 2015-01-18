@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Image_7_Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Image_Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\Add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Image_7_AddItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Image_AddItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\AddItem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Image_7_Applications" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Image_Applications" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\Applications.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Image_Changelog" type="System.Resources.ResXFileRef, System.Windows.Forms">
