@@ -1346,6 +1346,8 @@
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
+
+			ApplyLanguage();
 		}
 
 		/// <summary>
@@ -1390,7 +1392,6 @@
 						this._messageWindow.SetCommonData(this._commonData);
 
 						ResetUI();
-						ApplyLanguage();
 
 						foreach(var window in this._otherWindows.OfType<StreamForm>().ToArray()) {
 							window.Visible = true;
