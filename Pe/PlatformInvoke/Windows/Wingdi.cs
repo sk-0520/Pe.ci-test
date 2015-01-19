@@ -107,6 +107,20 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		}
 	}
 
+
+	[StructLayout(LayoutKind.Sequential, Pack = 2)]
+	public struct GRPICONDIRENTRY
+	{
+		public byte bWidth;
+		public byte bHeight;
+		public byte bColorCount;
+		public byte bReserved;
+		public ushort wPlanes;
+		public ushort wBitCount;
+		public uint dwBytesInRes;
+		public ushort nID;
+	}
+
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ICONDIR
 	{
@@ -127,6 +141,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		public uint dwBytesInRes;
 		public uint dwImageOffset;
 	}
+
 
 	partial class NativeMethods
 	{

@@ -97,7 +97,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return resBinary;
 		}
 
-		static IList<byte[]> LoadIconResource(string resourcePath, IconScale iconScale)
+		unsafe static IList<byte[]> LoadIconResource(string resourcePath, IconScale iconScale)
 		{
 			var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
 			var binaryList = new List<byte[]>();
@@ -106,17 +106,21 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				if(binaryGroupIconData != null) {
 					// GRPICONDIR.idCount
 					const int sizeofGRPICONDIR_idCount = 4;
-					const int sizeofICONDIRENTRY_nID = 2;
+					const int offsetGRPICONDIRENTRY_nID = 12;
+					const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
 					var sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
 					var sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
+					var sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 
 					var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
+					Debug.WriteLine("iconCount = {0}", iconCount);
 					var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 					foreach(var i in Enumerable.Range(0, iconCount)) {
 						// GRPICONDIRENTRY.dwBytesInRes
 						var length = BitConverter.ToInt32(
 							binaryGroupIconData,
-							sizeofICONDIR + (sizeofICONDIRENTRY - sizeofICONDIRENTRY_nID) * i + 8
+							//sizeofICONDIR + (sizeofICONDIRENTRY - sizeofICONDIRENTRY_nID) * i + 8
+							sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes
 						);
 						Debug.WriteLine("[{0}] = {1} byte", i, length);
 						totalSize += length;
@@ -129,14 +133,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 						var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 						foreach(var i in Enumerable.Range(0, iconCount)) {
 							// First 12bytes are identical.
-							stream.Write(binaryGroupIconData, sizeofICONDIR + 14 * i, 12);
+							stream.Write(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i, offsetGRPICONDIRENTRY_nID);
 							// Write offset instead of ID.
 							stream.Write(picOffset); 
 							stream.Seek(picOffset, SeekOrigin.Begin);
 
 							// GRPICONDIRENTRY.nID
-							ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + 14 * i + 12);
-							var pic = GetResourceBinaryData(hModule, (IntPtr)id, ResType.ICON);
+							ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
+							var pic = GetResourceBinaryData(hModule, new IntPtr(id), ResType.ICON);
 							stream.Write(pic, 0, pic.Length);
 							picOffset += pic.Length;
 						}
@@ -218,10 +222,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 
+			var useIconIndex = Math.Abs(iconIndex);
+
 			Icon result = null;
 			var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
 			var fileInfo = new SHFILEINFO() {
-				iIcon = iconIndex,
+				iIcon = useIconIndex,
 			};
 
 			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;//| SHGFI.SHGFI_USEFILEATTRIBUTES;
@@ -242,18 +248,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 
 					var list = LoadIconResource(iconPath, iconScale);
-					if(list.Any()) {
-						for(var i = 0; i < list.Count; i++) {
-							var name = Path.GetFileName(iconPath);
-							var path = string.Format(@"Z:\data\{0}-{1}.ico", name, i);
-							if(!File.Exists(path))
-							using (var ms = new MemoryStream(list[i])) {
-								using(var icon = new Icon(ms)) {
-									using(var sv = new FileStream(path, FileMode.CreateNew)) {
-										icon.Save(sv);
-									}
-								}
-							}
+					if(list.Any() && useIconIndex < list.Count) {
+						using(var ms = new MemoryStream(list[useIconIndex])) {
+							var icon = new Icon(ms);
+
 						}
 					}
 				}
