@@ -100,7 +100,7 @@
 			logger.PutsDebug("DebugLogging", "Startup: force logging");
 			
 			ExistsSettingFilePath = Initialize(commandLine, logger);
-			this._commonData.Logger.PutsDebug("ExistsSettingFilePath", ExistsSettingFilePath);
+			logger.PutsDebug("ExistsSettingFilePath", ExistsSettingFilePath);
 
 			#if !DISABLED_UPDATE_CHECK
 			CheckUpdateProcessAsync(false);

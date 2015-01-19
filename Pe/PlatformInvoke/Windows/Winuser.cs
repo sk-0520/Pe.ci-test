@@ -36,6 +36,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_MOUSEHWHEEL = 0x020e,
 		WM_NOTIFY = 0x004e,
 		WM_ERASEBKGND = 0x0014,
+		WM_CLOSE = 0x0010
 	}
 	
 	public enum WS_EX
