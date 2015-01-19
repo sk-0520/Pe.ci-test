@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Drawing.Imaging;
+	using System.IO;
+	using System.Linq;
+	using System.Runtime.InteropServices;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+
+	/// <summary>
+	/// アイコン取得共通処理。
+	/// </summary>
 	public static class IconUtility
 	{
 		const int sizeofGRPICONDIR_idCount = 4;
@@ -29,6 +32,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		}
 
 		/// <summary>
+		/// GBITAMPからBitmap作成。
+		/// 
 		/// http://svn.nate.deepcreek.org.au/svn/KeyboardRedirector/trunk/IconExtractor/IconExtractor.cs
 		/// </summary>
 		/// <param name="hBitmap"></param>
@@ -68,6 +73,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return plainBitmap;
 		}
 
+		/// <summary>
+		/// ファイルのサムネイルを取得。
+		/// </summary>
+		/// <param name="iconPath"></param>
+		/// <param name="iconScale"></param>
+		/// <returns></returns>
 		public static Bitmap GetThumbnailImage(string iconPath, IconScale iconScale)
 		{
 			var hBitmap = IntPtr.Zero;
@@ -275,10 +286,6 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 						}
 					} catch(Exception ex) {
 						Debug.WriteLine(ex);
-						int n = 0;
-						imageList.GetImageCount(ref n);
-						//fileInfo.iIcon = iconIndex;
-						var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 					}
 				}
 
@@ -286,6 +293,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
 						hIcon = bitmap.GetHicon();
 					}
+				}
+
+				if(hIcon == IntPtr.Zero) {
+					int n = 0;
+					imageList.GetImageCount(ref n);
+					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 				}
 
 				using(var icon = Icon.FromHandle(hIcon)) {
