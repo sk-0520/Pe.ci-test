@@ -189,6 +189,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		static Icon LoadNormalIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
 		{
 			Debug.Assert(iconScale.IsIn(IconScale.Small, IconScale.Normal), iconScale.ToString());
+			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
 			Icon result = null;
 			// 16, 32 px
@@ -247,13 +248,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		static Icon LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
 		{
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
-
-			var useIconIndex = Math.Abs(iconIndex);
+			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
 			Icon result = null;
 			var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
 			var fileInfo = new SHFILEINFO() {
-				iIcon = useIconIndex,
+				iIcon = iconIndex,
 			};
 
 			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
@@ -268,8 +268,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				if(hasIcon) {
 					try {
 						var iconList = LoadIconResource(iconPath, iconScale);
-						if(useIconIndex < iconList.Count) {
-							using(var ms = new MemoryStream(iconList[useIconIndex])) {
+						if(iconIndex < iconList.Count) {
+							using(var ms = new MemoryStream(iconList[iconIndex])) {
 								hIcon = new Icon(ms, iconScale.ToSize()).Handle;
 							}
 						}
@@ -305,12 +305,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			// 実行形式
 			var hasIcon = PathUtility.HasIconPath(iconPath);
+			var useIconIndex = Math.Abs(iconIndex);
 
 			Icon result = null;
 			if(iconScale == IconScale.Small || iconScale == IconScale.Normal) {
-				result = LoadNormalIcon(iconPath, iconScale, iconIndex, hasIcon);
+				result = LoadNormalIcon(iconPath, iconScale, useIconIndex, hasIcon);
 			} else {
-				result = LoadLargeIcon(iconPath, iconScale, iconIndex, hasIcon);
+				result = LoadLargeIcon(iconPath, iconScale, useIconIndex, hasIcon);
 			}
 
 			return result;
