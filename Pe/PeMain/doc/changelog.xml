@@ -28,15 +28,12 @@
 	<log date="YYYY/MM/DD" version="0.40.2" type="rc">
 		<ul type="note">
 			<li rev="">#55対応によりノートの本文入力方法が若干変更されました</li>
-			<li rev=""></li>
-			<li rev=""></li>
 		</ul>
 		<ul type="features">
 			<li rev="c523a87135a248d192384cfa5ab4bda299e86169">ノートのサイズ・位置変更中は透明にする</li>
 			<li rev="9bf0cd67718bec973bb1411ba3ad6845782d7a68">#150: システムスキンをきちんと環境に合わせる, まぁアイコンだけ</li>
 			<li rev="6694402d6870d38bbf6ee9465e0da97462836311">#153: ノート編集時の初期状態</li>
 			<li rev="799106280493668be468ae6120c171d85e9e2221">32px以上のアイコンの場合に通常ファイルアイコンにサムネイルを使用</li>
-			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
 			<li rev="f4e785b8e4dacf26bca7fc54f8e020e3853fadb4">#55: ノートの改行表示</li>
@@ -46,11 +43,7 @@
 			<li rev="799106280493668be468ae6120c171d85e9e2221">#2: アイコン取得</li>
 			<li rev="47c521ea8aae5df4313f0fccc98b3ae82d05240c">ホームダイアログで処理後に言語情報が吹っ飛ぶのを修正(多分開発ブランチでしか起こらないけど混入コミット探すのしんどい)</li>
 			<li rev="ea64a3a87d8fda05b0f0ed580e58ad9ae4b0c8f9">#157: 各ウィンドウ表示時に前面へ移動させる</li>
-		</ul>
-		<ul type="developer">
-			<li rev=""></li>
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="e031432aaf5a4947e0f12c65c367780e58805655">アップデート処理で bin\PeUpdater.exe.config の削除処理が抜けていた</li>
 		</ul>
 	</log>
 	<log date="2015/01/15" version="0.40.1">
