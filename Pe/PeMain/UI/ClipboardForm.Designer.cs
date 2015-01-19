@@ -275,7 +275,6 @@
 			// 
 			// viewHtml
 			// 
-			this.viewHtml.AllowWebBrowserDrop = false;
 			this.viewHtml.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.viewHtml.IsWebBrowserContextMenuEnabled = false;
 			this.viewHtml.Location = new System.Drawing.Point(0, 0);

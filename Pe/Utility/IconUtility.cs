@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -13,6 +14,20 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	public static class IconUtility
 	{
+		const int sizeofGRPICONDIR_idCount = 4;
+		const int offsetGRPICONDIRENTRY_nID = 12;
+		const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
+		static readonly int sizeofICONDIR;
+		static readonly int sizeofICONDIRENTRY;
+		static readonly int sizeofGRPICONDIRENTRY;
+
+		static IconUtility()
+		{
+			sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
+			sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
+			sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
+		}
+
 		/// <summary>
 		/// http://svn.nate.deepcreek.org.au/svn/KeyboardRedirector/trunk/IconExtractor/IconExtractor.cs
 		/// </summary>
@@ -65,6 +80,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return BitmapFromhBitmap(hBitmap);
 		}
 
+		/// <summary>
+		/// http://hp.vector.co.jp/authors/VA016117/rsrc2icon.html
+		/// </summary>
+		/// <param name="hModule"></param>
+		/// <param name="name"></param>
+		/// <param name="resType"></param>
+		/// <returns></returns>
 		static byte[] GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
 		{
 			var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
@@ -96,7 +118,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return resBinary;
 		}
-
+		
+		/// <summary>
+		/// https://github.com/TsudaKageyu/IconExtractor
+		/// </summary>
+		/// <param name="resourcePath"></param>
+		/// <param name="iconScale"></param>
+		/// <returns></returns>
 		unsafe static IList<byte[]> LoadIconResource(string resourcePath, IconScale iconScale)
 		{
 			var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
@@ -104,41 +132,32 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			EnumResNameProc proc = (hMod, type, name, lp) => {
 				var binaryGroupIconData = GetResourceBinaryData(hMod, name, ResType.GROUP_ICON);
 				if(binaryGroupIconData != null) {
-					// GRPICONDIR.idCount
-					const int sizeofGRPICONDIR_idCount = 4;
-					const int offsetGRPICONDIRENTRY_nID = 12;
-					const int offsetGRPICONDIRENTRY_dwBytesInRes = 8;
-					var sizeofICONDIR = Marshal.SizeOf<ICONDIR>();
-					var sizeofICONDIRENTRY = Marshal.SizeOf<ICONDIRENTRY>();
-					var sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
-
 					var iconCount = BitConverter.ToUInt16(binaryGroupIconData, sizeofGRPICONDIR_idCount);
-					Debug.WriteLine("iconCount = {0}", iconCount);
+					//Debug.WriteLine("iconCount = {0}", iconCount);
+
 					var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 					foreach(var i in Enumerable.Range(0, iconCount)) {
-						// GRPICONDIRENTRY.dwBytesInRes
 						var length = BitConverter.ToInt32(
 							binaryGroupIconData,
-							//sizeofICONDIR + (sizeofICONDIRENTRY - sizeofICONDIRENTRY_nID) * i + 8
 							sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes
 						);
-						Debug.WriteLine("[{0}] = {1} byte", i, length);
+						//Debug.WriteLine("[{0}] = {1} byte", i, length);
 						totalSize += length;
 					}
-					Debug.WriteLine("totalSize = {0}", totalSize);
+					//Debug.WriteLine("totalSize = {0}", totalSize);
+
 					using(var stream = new BinaryWriter(new MemoryStream(totalSize))) {
-						// Copy GRPICONDIR to ICONDIR.
 						stream.Write(binaryGroupIconData, 0, sizeofICONDIR);
 
 						var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 						foreach(var i in Enumerable.Range(0, iconCount)) {
-							// First 12bytes are identical.
+							stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
+
 							stream.Write(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i, offsetGRPICONDIRENTRY_nID);
-							// Write offset instead of ID.
 							stream.Write(picOffset); 
+
 							stream.Seek(picOffset, SeekOrigin.Begin);
 
-							// GRPICONDIRENTRY.nID
 							ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
 							var pic = GetResourceBinaryData(hModule, new IntPtr(id), ResType.ICON);
 							stream.Write(pic, 0, pic.Length);
@@ -160,7 +179,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 
 		/// <summary>
-		/// 16px, 32pxアイコン取得
+		/// 16px, 32pxアイコン取得。
 		/// </summary>
 		/// <param name="iconPath"></param>
 		/// <param name="iconScale"></param>
@@ -217,7 +236,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return result;
 		}
 
-		// BUGS: いろいろ調べてるけどインデックス指定がわけわかめ
+		/// <summary>
+		/// 48px以上のアイコン取得。
+		/// </summary>
+		/// <param name="iconPath"></param>
+		/// <param name="iconScale"></param>
+		/// <param name="iconIndex"></param>
+		/// <param name="hasIcon"></param>
+		/// <returns></returns>
 		static Icon LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
 		{
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
@@ -230,8 +256,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				iIcon = useIconIndex,
 			};
 
-			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;//| SHGFI.SHGFI_USEFILEATTRIBUTES;
-			//var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
+			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
 			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 
 			IImageList imageList = null;
@@ -241,18 +266,19 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				var hIcon = IntPtr.Zero;
 
 				if(hasIcon) {
-					int n = 0;
-					imageList.GetImageCount(ref n);
-					Debug.WriteLine("!{0}, {1}, {2}, {3}", iconPath, n, fileInfo.iIcon, hasIcon);
-					//fileInfo.iIcon = iconIndex;
-					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
-
-					var list = LoadIconResource(iconPath, iconScale);
-					if(list.Any() && useIconIndex < list.Count) {
-						using(var ms = new MemoryStream(list[useIconIndex])) {
-							var icon = new Icon(ms);
-
+					try {
+						var iconList = LoadIconResource(iconPath, iconScale);
+						if(useIconIndex < iconList.Count) {
+							using(var ms = new MemoryStream(iconList[useIconIndex])) {
+								hIcon = new Icon(ms, iconScale.ToSize()).Handle;
+							}
 						}
+					} catch(Exception ex) {
+						Debug.WriteLine(ex);
+						int n = 0;
+						imageList.GetImageCount(ref n);
+						//fileInfo.iIcon = iconIndex;
+						var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 					}
 				}
 
@@ -262,9 +288,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					}
 				}
 
-				using(var icon = System.Drawing.Icon.FromHandle(hIcon)) {
+				using(var icon = Icon.FromHandle(hIcon)) {
 					result = (Icon)icon.Clone();
 				}
+
 				NativeMethods.DestroyIcon(hIcon);
 				NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 			}
