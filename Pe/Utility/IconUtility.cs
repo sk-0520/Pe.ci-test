@@ -136,7 +136,7 @@
 		/// <param name="resourcePath"></param>
 		/// <param name="iconScale"></param>
 		/// <returns></returns>
-		unsafe static IList<byte[]> LoadIconResource(string resourcePath, IconScale iconScale)
+		static IList<byte[]> LoadIconResource(string resourcePath, IconScale iconScale)
 		{
 			var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
 			var binaryList = new List<byte[]>();
