@@ -1255,7 +1255,9 @@
 		/// <param name="save"></param>
 		public void CloseApplication(bool save)
 		{
-			this._commonData.ApplicationSetting.KillAllApplication();
+			if(this._commonData.ApplicationSetting != null) {
+				this._commonData.ApplicationSetting.KillAllApplication();
+			}
 
 			if(save) {
 				AppUtility.SaveSetting(this._commonData);

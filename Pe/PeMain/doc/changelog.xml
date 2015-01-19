@@ -25,9 +25,9 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.40.2" type="rc">
+	<log date="2015/01/19" version="0.41.0">
 		<ul type="note">
-			<li rev="">#55対応によりノートの本文入力方法が若干変更されました</li>
+			<li rev="">#55対応によりノートの本文入力方法が変わりました。Windowsの付箋に近くなった感じです</li>
 		</ul>
 		<ul type="features">
 			<li rev="c523a87135a248d192384cfa5ab4bda299e86169">ノートのサイズ・位置変更中は透明にする</li>
