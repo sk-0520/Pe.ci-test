@@ -1186,7 +1186,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				autoHideItem.Enabled = IsDocking;
 				
 				// グループ
-				foreach(var groupItem in parentItem.DropDownItems.Cast<ToolStripItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal)).Cast<ToolStripMenuItem>()) {
+				foreach(var groupItem in parentItem.DropDownItems.OfType<ToolStripMenuItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal))) {
 					groupItem.Checked = groupItem.Tag == SelectedGroupItem;
 				}
 			};

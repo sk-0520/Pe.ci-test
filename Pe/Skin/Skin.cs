@@ -3,11 +3,24 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Drawing;
+	using System.Drawing.Drawing2D;
 	using System.Drawing.Text;
 	using System.Runtime.InteropServices;
 	using System.Windows.Forms;
 	using System.Windows.Forms.VisualStyles;
 	using ContentTypeTextNet.Pe.Library.Skin;
+
+	public enum SkinTarget
+	{
+		/// <summary>
+		/// 7以下
+		/// </summary>
+		Windows7,
+		/// <summary>
+		/// 8以上
+		/// </summary>
+		Windows8,
+	}
 
 	public class ToolbarButtonData
 	{
@@ -122,11 +135,30 @@
 			return isAero;
 		}
 
+		protected static SkinTarget GetSkinTarget()
+		{
+			var version = Environment.OSVersion;
+			if(version.Version.Major >= 6 && version.Version.Minor > 1) {
+				return SkinTarget.Windows8;
+			} else {
+				return SkinTarget.Windows7;
+			}
+			//return SkinTarget.Windows7;
+			//return SkinTarget.Windows8;
+		}
+
 		#endregion
 
 		protected ISkinAbout _about;
 		protected bool EnabledAeroStyle { get; set; }
 		//protected bool EnabledVisualStyle { get; set; }
+
+		protected SkinTarget SkinTarget { get; set; }
+
+		public Skin()
+		{
+			SkinTarget = GetSkinTarget();
+		}
 
 		#region Initialize
 
@@ -172,9 +204,15 @@
 			var image = new Bitmap(size.Width, size.Height);
 
 			using(var g = Graphics.FromImage(image)) {
-				using(var brush = new SolidBrush(backColor)) {
-					using(var pen = new Pen(borderColor)) {
-						g.FillRectangle(brush, new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2)));
+				using(var pen = new Pen(borderColor)) {
+					using(var brush = new SolidBrush(backColor)) {
+						var fillArea = new Rectangle(new Point(1, 1), new Size(size.Width - 2, size.Height - 2));
+						g.FillRectangle(brush, fillArea);
+						if(SkinTarget == Library.Skin.SkinTarget.Windows7) {
+							using(var gradation = new LinearGradientBrush(fillArea, Color.FromArgb(92, Color.White), Color.Transparent, LinearGradientMode.Vertical)) {
+								g.FillRectangle(gradation, fillArea);
+							}
+						}
 						g.DrawRectangle(pen, new Rectangle(Point.Empty, new Size(size.Width - 1, size.Height - 1)));
 					}
 				}
@@ -366,7 +404,7 @@
 		public abstract void DrawNoteWindowEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
 		public abstract void DrawNoteCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string caption);
 		public abstract void DrawNoteCommand(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, SkinNoteCommand noteCommand, SkinButtonState buttonState);
-		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor, Font font, string body);
+		public abstract void DrawNoteBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color foreColor, Color backColor);
 
 		#endregion
 

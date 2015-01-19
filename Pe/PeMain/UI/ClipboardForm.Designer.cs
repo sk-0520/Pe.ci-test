@@ -275,7 +275,6 @@
 			// 
 			// viewHtml
 			// 
-			this.viewHtml.AllowWebBrowserDrop = false;
 			this.viewHtml.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.viewHtml.IsWebBrowserContextMenuEnabled = false;
 			this.viewHtml.Location = new System.Drawing.Point(0, 0);
@@ -486,6 +485,7 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClipboardForm_FormClosing);
 			this.LocationChanged += new System.EventHandler(this.ClipboardForm_LocationChanged);
 			this.SizeChanged += new System.EventHandler(this.ClipboardForm_SizeChanged);
+			this.VisibleChanged += new System.EventHandler(this.ClipboardForm_VisibleChanged);
 			this.panelMain.BottomToolStripPanel.ResumeLayout(false);
 			this.panelMain.BottomToolStripPanel.PerformLayout();
 			this.panelMain.ContentPanel.ResumeLayout(false);

@@ -72,7 +72,7 @@
 		<Word Name="window/log"       Text="${log}" />
 		<Word Name="window/about"     Text="@[APPLICATION] 情報" />
 		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
-		<Word Name="window/stream"    Text="@[ITEM]の実行出力" />
+		<Word Name="window/stream"    Text="@[ITEM]の標準入出力" />
 		<Word Name="window/clipboard" Text="クリップボード" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
 		

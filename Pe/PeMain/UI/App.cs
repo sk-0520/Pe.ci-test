@@ -100,7 +100,8 @@
 			logger.PutsDebug("DebugLogging", "Startup: force logging");
 			
 			ExistsSettingFilePath = Initialize(commandLine, logger);
-			
+			logger.PutsDebug("ExistsSettingFilePath", ExistsSettingFilePath);
+
 			#if !DISABLED_UPDATE_CHECK
 			CheckUpdateProcessAsync(false);
 			#endif
@@ -525,19 +526,19 @@
 								var useScreen = inScreen == screen;
 								var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
 								var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
-								using(var brush = new SolidBrush(backColor))
-								using(var pen = new Pen(foreColor)) {
-									var baseArea = inScreen.Bounds;
-									baseArea.Offset(basePos);
 
-									var drawArea = new RectangleF(
-										baseArea.X / 100.0f * percentage.Width + 1,
-										baseArea.Y / 100.0f * percentage.Height + 1,
-										baseArea.Width / 100.0f * percentage.Width - 1,
-										baseArea.Height / 100.0f * percentage.Height - 1
-									);
-									g.FillRectangle(brush, drawArea);
-									g.DrawRectangle(pen, drawArea.X - 1, drawArea.Y - 1, drawArea.Width, drawArea.Height);
+								var baseArea = inScreen.Bounds;
+								baseArea.Offset(basePos);
+
+								var drawArea = new RectangleF(
+									baseArea.X / 100.0f * percentage.Width,
+									baseArea.Y / 100.0f * percentage.Height,
+									baseArea.Width / 100.0f * percentage.Width,
+									baseArea.Height / 100.0f * percentage.Height
+								);
+
+								using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
+									g.DrawImage(img, drawArea.Location);
 								}
 							}
 						}
@@ -653,8 +654,8 @@
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
-				foreach(var menuItem in menuItems.Where(m => m is ToolStripMenuItem).Cast<ToolStripMenuItem>()) {
+				var menuItems = parentItem.DropDownItems.OfType<ToolStripMenuItem>();
+				foreach(var menuItem in menuItems) {
 					var applicationItem = menuItem.Tag as ApplicationItem;
 					if(applicationItem != null) {
 						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
@@ -898,7 +899,7 @@
 				}
 				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			}
-			foreach(ToolStripMenuItem toolItem in this._contextMenu.Items.Cast<ToolStripItem>().Where(t => t is ToolStripMenuItem)) {
+			foreach(var toolItem in this._contextMenu.Items.OfType<ToolStripMenuItem>()) {
 				ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
 			}
 			this._contextMenu.Opening += (object sender, CancelEventArgs e) => HideAutoHiddenToolbar();
@@ -1254,7 +1255,9 @@
 		/// <param name="save"></param>
 		public void CloseApplication(bool save)
 		{
-			this._commonData.ApplicationSetting.KillAllApplication();
+			if(this._commonData.ApplicationSetting != null) {
+				this._commonData.ApplicationSetting.KillAllApplication();
+			}
 
 			if(save) {
 				AppUtility.SaveSetting(this._commonData);
@@ -1345,6 +1348,8 @@
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
+
+			ApplyLanguage();
 		}
 
 		/// <summary>
@@ -1389,9 +1394,8 @@
 						this._messageWindow.SetCommonData(this._commonData);
 
 						ResetUI();
-						ApplyLanguage();
 
-						foreach(var window in this._otherWindows.Where(w => w is StreamForm).Cast<StreamForm>().ToArray()) {
+						foreach(var window in this._otherWindows.OfType<StreamForm>().ToArray()) {
 							window.Visible = true;
 						}
 

@@ -30,7 +30,7 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>$(SolutionDir)\..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
@@ -40,7 +40,7 @@
     <StartAction>Project</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>$(SolutionDir)\..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
     <DebugSymbols>False</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
@@ -69,6 +69,7 @@
     <Compile Include="Windows\Dbt.cs" />
     <Compile Include="Windows\Mshtmhst.cs" />
     <Compile Include="Windows\Shlwapi.cs" />
+    <Compile Include="Windows\Shobjidl.cs" />
     <Compile Include="Windows\WMI\CIMWin32.cs" />
     <Compile Include="Windows\Commctrl.cs" />
     <Compile Include="Windows\CommonControls.cs" />

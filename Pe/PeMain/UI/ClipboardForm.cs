@@ -149,6 +149,8 @@
 			this.toolClipboard_itemTopmost.Image = CommonData.Skin.GetImage(SkinImage.Pin);
 			this.toolClipboard_itemSave.Image = CommonData.Skin.GetImage(SkinImage.Save);
 			this.toolClipboard_itemRemove.Image = CommonData.Skin.GetImage(SkinImage.Remove);
+			this.toolClipboard_itemClear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
+			this.toolClipboard_itemEmpty.Image = CommonData.Skin.GetImage(SkinImage.Refresh);
 
 			var skinItems = new[] {
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardText), Control = this._commandText, Name = imageText },
@@ -749,6 +751,13 @@
 			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, onDraw, IntPtr.Zero);
 
 			this._panelClipboradItem.Refresh();
+		}
+
+		private void ClipboardForm_VisibleChanged(object sender, EventArgs e)
+		{
+			if(Visible) {
+				UIUtility.ShowFrontActive(this);
+			}
 		}
 	}
 }

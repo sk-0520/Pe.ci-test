@@ -280,15 +280,6 @@
   <data name="Icon_App" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\App.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Icon_NotFound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\NotFound.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_ToolbarMain" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\ToolbarMain.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Command" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\Command.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SQL_CheckTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQL\CheckTable.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

@@ -26,7 +26,7 @@
 		const int RECURSIVE = 2;
 		static readonly Size menuIconSize = IconScale.Small.ToSize();
 
-		private class NoteBindItem: INotifyPropertyChanged
+		class NoteBindItem: INotifyPropertyChanged
 		{
 			public event PropertyChangedEventHandler PropertyChanged;
 
@@ -139,9 +139,6 @@
 		bool _initialized = true;
 		bool _changed = false;
 		string _prevTitle;
-		string _prevBody;
-		//Color _prevForeColor;
-		//Color _prevBackColor;
 		#endregion ////////////////////////////////////
 
 		public NoteForm()
@@ -233,7 +230,8 @@
 		protected override void WndProc(ref Message m)
 		{
 			switch(m.Msg) {
-				case (int)WM.WM_SYSCOMMAND: {
+				case (int)WM.WM_SYSCOMMAND: 
+					{
 						switch(m.WParam.ToInt32() & 0xfff0) {
 							case (int)SC.SC_MAXIMIZE:
 								// #115
@@ -250,8 +248,8 @@
 						break;
 					}
 
-				case (int)WM.WM_NCPAINT: {
-						//if(CommonData != null && (!this.inputBody.Visible || !this.inputTitle.Visible)) {
+				case (int)WM.WM_NCPAINT:
+					{
 						if(CommonData != null) {
 							var hDC = NativeMethods.GetWindowDC(Handle);
 							try {
@@ -261,11 +259,13 @@
 							} finally {
 								NativeMethods.ReleaseDC(Handle, hDC);
 							}
+							Refresh();
 						}
 					}
 					break;
 
-				case (int)WM.WM_NCHITTEST: {
+				case (int)WM.WM_NCHITTEST:
+					{
 						if(!NoteItem.Locked) {
 							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
 							var hitTest = HT.HTNOWHERE;
@@ -350,30 +350,29 @@
 					}
 					break;
 
-				case (int)WM.WM_SETCURSOR: {
+				case (int)WM.WM_SETCURSOR:
+					{
 						var hittest = WindowsUtility.HTFromLParam(m.LParam);
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 							return;
-						} else {
-
 						}
 					}
 					break;
 
-				case (int)WM.WM_NCLBUTTONDOWN: {
+				case (int)WM.WM_NCLBUTTONDOWN:
+					{
 						if(!NoteItem.Locked) {
 							if(this.inputTitle.Visible) {
 								HiddenInputTitleArea();
 							}
-							if(this.inputBody.Visible) {
-								HiddenInputBodyArea();
-							}
 						}
+						this.inputBody.Focus();
 					}
 					break;
 
-				case (int)WM.WM_NCRBUTTONUP: {
+				case (int)WM.WM_NCRBUTTONUP:
+					{
 						if(!NoteItem.Locked) {
 							switch(m.WParam.ToInt32()) {
 								case (int)HT.HTCAPTION:
@@ -387,39 +386,60 @@
 					}
 					break;
 
+				case (int)WM.WM_ENTERSIZEMOVE:
+					{
+						Opacity = Literal.noteMoveSizeOpacity;
+					}
+					break;
+
+				case (int)WM.WM_EXITSIZEMOVE:
+					{
+						Opacity = Literal.noteNormalOpacity;
+					}
+					break;
+
 				default:
 					break;
 			}
+
 			base.WndProc(ref m);
 		}
+
+		[System.Security.Permissions.UIPermission(
+			System.Security.Permissions.SecurityAction.Demand,
+			Window = System.Security.Permissions.UIPermissionWindow.AllWindows
+		)]
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			if(this.inputTitle.Focused) {
+				var key = keyData & Keys.KeyCode;
+				switch(key) {
+					case Keys.Enter: 
+						{
+							HiddenInputTitleArea();
+							return true;
+						}
+
+					case Keys.Escape: 
+						{
+							this._bindItem.Title = this._prevTitle;
+							HiddenInputTitleArea();
+							return true;
+						}
+
+					default:
+						break;
+				}
+			}
+
+			return base.ProcessDialogKey(keyData);
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region initialize
 		void InitializeUI()
 		{
-			/*
-			var colorControls = new [] {
-				new { Control = contextMenu_itemForeColor, Title = "note/style/color-fore", Default = Literal.noteFore },
-				new { Control = contextMenu_itemBackColor, Title = "note/style/color-back", Default = Literal.noteBack },
-			};
-			foreach(var control in colorControls) {
-				var isFore = control.Control == contextMenu_itemForeColor;
-				var colorList = new [] {
-					new ColorDisplayValue(isFore ? Literal.noteForeColorBlack:  Literal.noteBackColorBlack , control.Title, "note/style/color/black"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorWhite:  Literal.noteBackColorWhite , control.Title, "note/style/color/white"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorRed:    Literal.noteBackColorRed   , control.Title, "note/style/color/red"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorGreen:  Literal.noteBackColorGreen , control.Title, "note/style/color/green"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorBlue:   Literal.noteBackColorBlue  , control.Title, "note/style/color/blue"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorYellow: Literal.noteBackColorYellow, control.Title, "note/style/color/yellow"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorOrange: Literal.noteBackColorOrange, control.Title, "note/style/color/orange"),
-					new ColorDisplayValue(isFore ? Literal.noteForeColorPurple: Literal.noteBackColorPurple, control.Title, "note/style/color/purple"),
-					new ColorDisplayValue(Color.Transparent, control.Title, "note/style/color/custom"),
-				};
-				control.Control.ComboBox.BindingContext = BindingContext;
-				control.Control.Attachment(colorList, control.Default);
-			}
-			*/
-
 			ToolStripUtility.AttachmentOpeningMenuInScreen(this);
 		}
 
@@ -454,14 +474,6 @@
 		void ApplyLanguage()
 		{
 			ApplyLanguageMenuItems(this.contextMenu.Items);
-
-			/*
-			foreach(var combo in new [] { this.contextMenu_itemForeColor, this.contextMenu_itemBackColor } ) {
-				foreach(var item in (IEnumerable<ColorDisplayValue>)combo.ComboBox.DataSource) {
-					item.SetLanguage(CommonData.Language);
-				}
-			}
-			*/
 		}
 		#endregion ////////////////////////////////////
 
@@ -499,12 +511,13 @@
 		#region function
 		void ApplySetting()
 		{
-			/*
-			this.inputTitle.Text = NoteItem.Title;
-			this.inputBody.Text = NoteItem.Body;
-			 */
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.inputBody.DataBindings.Add("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.Never);
+
+			var bindBody = new Binding("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
+			bindBody.ControlUpdateMode = ControlUpdateMode.Never;
+			this.inputBody.DataBindings.Add(bindBody);
+			this.inputBody.Text = this._bindItem.Body;
 
 			Location = NoteItem.Location;
 			Size = NoteItem.Size;
@@ -518,14 +531,13 @@
 			var minSize = new Size(edge.Horizontal + commandSize.Width, edge.Vertical + commandSize.Height);
 			MinimumSize = minSize;
 
-			//NoteItem.Style.ForeColor;
-			//			if(!this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Any(cd => cd.Value == NoteItem.Style.ForeColor)) {
-			//				this.contextMenu_fore.SelectedItem = this.contextMenu_fore.ComboBox.Items.Cast<ColorDisplayValue>().Single(cd => cd.Value == Color.Transparent).Value;
-			//			}
-			//NoteItem.Style.BackColor;
-
+			ApplyBodyStyle();
 			ApplySkin();
 			ApplyLanguage();
+
+			ChangeLock(NoteItem.Locked);
+
+			this.inputBody.Focus();
 		}
 
 		IEnumerable<SkinNoteCommand> GetCommandList()
@@ -571,24 +583,26 @@
 		void ExecCommand(SkinNoteCommand noteCommand, bool removeData)
 		{
 			switch(noteCommand) {
-				case SkinNoteCommand.Topmost: {
+				case SkinNoteCommand.Topmost:
+					{
 						NoteItem.Topmost = !NoteItem.Topmost;
 						TopMost = NoteItem.Topmost;
 						Changed = true;
-						Invalidate();
+						Refresh();
 					}
 					break;
 
-				case SkinNoteCommand.Compact: {
+				case SkinNoteCommand.Compact:
+					{
 						NoteItem.Compact = !NoteItem.Compact;
 						Changed = true;
 
 						ChangeCompact(NoteItem.Compact, NoteItem.Size);
-
 					}
 					break;
 
-				case SkinNoteCommand.Close: {
+				case SkinNoteCommand.Close:
+					{
 						if(removeData) {
 							// TODO: 論理削除
 							Removed = true;
@@ -602,10 +616,13 @@
 					}
 					break;
 
-				case SkinNoteCommand.Lock: {
+				case SkinNoteCommand.Lock:
+					{
 						HiddenInputTitleArea();
-						HiddenInputBodyArea();
+						//HiddenInputBodyArea();
 						NoteItem.Locked = !NoteItem.Locked;
+						ChangeLock(NoteItem.Locked);
+
 						Changed = true;
 						Refresh();
 					}
@@ -619,12 +636,24 @@
 
 		void ChangeCompact(bool compact, Size size)
 		{
+			this.inputBody.Visible = !compact;
+
 			if(compact) {
 				var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
 				var titleArea = GetTitleArea();
 				Size = new Size(titleArea.Width + edge.Horizontal, titleArea.Height + edge.Vertical);
 			} else {
 				Size = size;
+			}
+		}
+
+		void ChangeLock(bool isLock)
+		{
+			this.inputBody.ReadOnly = isLock;
+			if(isLock) {
+				this.inputBody.Cursor = Cursors.Default;
+			} else {
+				this.inputBody.Cursor = Cursors.IBeam;
 			}
 		}
 
@@ -671,26 +700,11 @@
 			if(!this.inputTitle.Visible) {
 				ResizeInputTitleArea();
 				this.inputTitle.Visible = true;
+				this.inputTitle.SelectAll();
 				this.inputTitle.Focus();
 			}
 			if(!this.inputTitle.Visible && recursive > 0) {
 				ShowInputTitleArea(recursive - 1);
-			}
-		}
-
-		void ShowInputBodyArea(int recursive)
-		{
-			this._prevBody = NoteItem.Body;
-			//this.inputBody.Text = NoteItem.Body;
-			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
-
-			if(!this.inputBody.Visible) {
-				ResizeInputBodyArea();
-				this.inputBody.Visible = true;
-				this.inputBody.Focus();
-			}
-			if(!this.inputBody.Visible && recursive > 0) {
-				ShowInputBodyArea(recursive - 1);
 			}
 		}
 
@@ -699,40 +713,9 @@
 			if(!this.inputTitle.Visible) {
 				return;
 			}
-			/*
-			var value = this.inputTitle.Text.Trim();
-			if(value.Length == 0 && NoteItem.Body.Length > 0) {
-				value = TextUtility.SplitLines(NoteItem.Body).First().Trim();
-			}
-			var change = NoteItem.Title != value;
-			if(change) {
-				NoteItem.Title = value;
-				this._changed |= true;
-			}
-			 */
+
 			this._changed = true;
 			this.inputTitle.Visible = false;
-		}
-
-		void HiddenInputBodyArea()
-		{
-			if(!this.inputBody.Visible) {
-				return;
-			}
-			/*
-			var value = this.inputBody.Text.Trim();
-			var change = NoteItem.Body != value;
-			if(change) {
-				NoteItem.Body = value;
-				this._changed |= true;
-			}
-			if(value.Length > 0 && NoteItem.Title.Trim().Length == 0) {
-				NoteItem.Title = TextUtility.SplitLines(value).First().Trim();
-			}
-			 */
-
-			this._changed = true;
-			this.inputBody.Visible = false;
 		}
 
 		void ShowContextMenu(Point point)
@@ -782,50 +765,12 @@
 			}
 		}
 
-		/*
-		Color GetSelectedColor(ToolStripComboBox control)
-		{
-			var index = control.ComboBox.SelectedIndex;
-			Debug.Assert(index >= 0, control.ComboBox.SelectedIndex.ToString());
-			var item = control.ComboBox.Items[index] as ColorDisplayValue;
-			return item.Value;
-		}
-		
-		bool IsCustomColor(Color color)
-		{
-			return color == Color.Transparent;
-		}
-		
-		Color SetAcceptColor(Color color, Color revertColor)
-		{
-			var resultColor = color;
-			var accept = false;
-			if(IsCustomColor(color)) {
-				using(var dialog = new ColorDialog()) {
-					if(dialog.ShowDialog() == DialogResult.OK) {
-						resultColor = dialog.Color;
-						accept = true;
-					} else {
-						resultColor = revertColor;
-					}
-				}
-			} else {
-				accept = true;
-			}
-			if(accept) {
-				Changed = true;
-			}
-			return resultColor;
-		}
-		 */
-
 		IList<ColorMenuItem> GetColorMenuList(ToolStripMenuItem parentItem, IList<Color> colorList)
 		{
 			return colorList
 				.Zip(
 					parentItem.DropDownItems
-					.Cast<ToolStripItem>()
-					.Where(i => i is ToolStripMenuItem)
+					.OfType<ToolStripMenuItem>()
 					.Take(colorList.Count),
 					(color, item) => new ColorMenuItem(item, color)
 				)
@@ -850,6 +795,13 @@
 
 			return resultColor;
 		}
+
+		void ApplyBodyStyle()
+		{
+			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
+			this.inputBody.ForeColor = NoteItem.Style.ForeColor;
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region draw
@@ -892,7 +844,7 @@
 		void DrawBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
 			if(!noteStatus.Compact) {
-				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, NoteItem.Style.FontSetting.Font, NoteItem.Body);
+				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor);
 			}
 		}
 		
@@ -981,13 +933,14 @@
 		{
 			if (this._initialized) {
 				HiddenInputTitleArea();
-				HiddenInputBodyArea();
 			}
 			
-			
 			DrawFullActivaChanged(false);
-			
+
 			SaveItem();
+
+			ChangeLock(NoteItem.Locked);
+			Refresh();
 		}
 		
 		void NoteForm_MouseDown(object sender, MouseEventArgs e)
@@ -1035,7 +988,7 @@
 						var isRemove = AppUtility.IsExtension();
 						if (isRemove) {
 							var map = new Dictionary<string, string>() {
-								{ "NOTE", NoteItem.Title },
+								{ AppLanguageName.noteTitle, NoteItem.Title },
 							};
 							var result = MessageBox.Show(CommonData.Language["note/dialog/message", map], CommonData.Language["note/dialog/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 							if (result == DialogResult.Cancel) {
@@ -1050,18 +1003,10 @@
 				true
 			);
 		}
-		
-		void NoteForm_DoubleClick(object sender, EventArgs e)
-		{
-			if (!NoteItem.Locked) {
-				ShowInputBodyArea(RECURSIVE);
-			}
-		}
-		
+
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
 			if (!this._initialized && NoteItem.Compact) {
-				//ChangeCompact(true, Size.Empty);
 				Height = 20;
 			} else {
 				ResizeInputTitleArea();
@@ -1083,19 +1028,13 @@
 		void Input_Leave(object sender, EventArgs e)
 		{
 			HiddenInputTitleArea();
-			HiddenInputBodyArea();
 		}
 		
 		void ContextMenu_title_Click(object sender, EventArgs e)
 		{
 			ShowInputTitleArea(RECURSIVE);
 		}
-		
-		void ContextMenu_body_Click(object sender, EventArgs e)
-		{
-			ShowInputBodyArea(RECURSIVE);
-		}
-		
+
 		void NoteForm_Load(object sender, EventArgs e)
 		{
 			// 生成前の高さがWindowsにより補正されるためここでリサイズ
@@ -1105,7 +1044,13 @@
 		void ContextMenu_itemCopy_Click(object sender, EventArgs e)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(NoteItem.Body));
-			ClipboardUtility.CopyText(NoteItem.Body, CommonData);
+			string copyText;
+			if(this.inputBody.SelectionLength > 0) {
+				copyText = this.inputBody.SelectedText;
+			} else {
+				copyText = NoteItem.Body;
+			}
+			ClipboardUtility.CopyText(copyText, CommonData);
 		}
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)
@@ -1117,6 +1062,7 @@
 					NoteItem.Style.FontSetting.Import(dialog.Font);
 				}
 			}
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1126,6 +1072,7 @@
 				NoteItem.Style.FontSetting.Dispose();
 				NoteItem.Style.FontSetting = new FontSetting();
 			}
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1218,44 +1165,9 @@
 			//// 拡張メニュー
 			//var extension = AppUtility.IsExtension();
 			//this.contextMenu_itemRemove.Visible = extension;
-		}
-		
-		[System.Security.Permissions.UIPermission(
-			System.Security.Permissions.SecurityAction.Demand,
-			Window = System.Security.Permissions.UIPermissionWindow.AllWindows
-		)]
-		protected override bool ProcessDialogKey(Keys keyData)
-		{
-			if (this.inputTitle.Focused) {
-				var key = keyData & Keys.KeyCode;
-				switch (key) {
-					case Keys.Enter:
-						{
-							HiddenInputTitleArea();
-							return true;
-						}
-						
-					case Keys.Escape:
-						{
-							_bindItem.Title = this._prevTitle;
-							HiddenInputTitleArea();
-							return true;
-						}
-						
-					default:
-						break;
-				}
-			}
-			if (this.inputBody.Focused) {
-				var key = keyData & Keys.KeyCode;
-				if (key == Keys.Escape) {
-					_bindItem.Body = this._prevBody;
-					HiddenInputBodyArea();
-					return true;
-				}
-			}
-			
-			return base.ProcessDialogKey(keyData);
+
+			HiddenInputTitleArea();
+			ChangeLock(NoteItem.Locked);
 		}
 		
 		void NoteForm_MouseLeave(object sender, EventArgs e)
@@ -1280,6 +1192,7 @@
 		{
 			var colorItemList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
 			NoteItem.Style.ForeColor = SelectedPlainColor((ToolStripItem)sender, colorItemList);
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1293,6 +1206,7 @@
 		void ContextMenu_itemForeColor_itemCustom_Click(object sender, EventArgs e)
 		{
 			NoteItem.Style.ForeColor = SelectedCustomColor(NoteItem.Style.ForeColor);
+			ApplyBodyStyle();
 			Refresh();
 		}
 		
@@ -1306,5 +1220,18 @@
 		{
 			ExecCommand(SkinNoteCommand.Close, true);
 		}
+		
+		private void contextMenu_Opened(object sender, EventArgs e)
+		{
+			Refresh();
+		}
+
+		private void contextMenu_itemBody_Click(object sender, EventArgs e)
+		{
+			ChangeLock(false);
+			this.inputBody.Focus();
+		}
+
+
 	}
 }

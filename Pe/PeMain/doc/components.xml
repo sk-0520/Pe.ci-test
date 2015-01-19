@@ -5,9 +5,12 @@
 	<component name="Hotkey Control" uri="http://tech.reboot.pro/showthread.php?tid=2582" type="Library" license="unknown" />
 	<component name="SplitButton" uri="http://wyday.com/splitbutton/" type="Library" license="BSD License" />
 	<component name="MouseKeyboardActivityMonitor" uri="http://globalmousekeyhook.codeplex.com/" type="Library" license="New BSD License" />
+	<component name="IconExtractor" uri="https://github.com/TsudaKageyu/IconExtractor" type="Library" license="BSD License" />
 	<component name="LED Icon Set" uri="http://http://led24.de/" type="Image" license="CC BY-SA 3.0" />
 	<component name="iconeden" uri="http://www.iconeden.com/" type="Image" license="Free for commercial use" />
 	<component name="ionicons" uri="http://ionicons.com/" type="Image" license="MIT License" />
 	<component name="sa-ki (Alexandre Moore) on deviantART" uri="http://sa-ki.deviantart.com/" type="Image" license="unknown" />
 	<component name="Lynx Black" uri="https://www.iconfinder.com/iconsets/lynx" type="Image" license="GPL" />
+	<component name="OmmoZoubayr" uri="http://www.ommozoubayr.esy.es/" type="Image" license="GPL" />
+	<component name="MICROSOFT VISUAL STUDIO 2013 IMAGE LIBRARY" uri="http://msdn.microsoft.com/ja-jp/library/ms246582.aspx" type="Image" license="Visual Studio 2013 Image Library EULA" />
 </components>
