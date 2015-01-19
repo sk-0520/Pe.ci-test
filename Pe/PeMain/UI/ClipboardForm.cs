@@ -752,5 +752,12 @@
 
 			this._panelClipboradItem.Refresh();
 		}
+
+		private void ClipboardForm_VisibleChanged(object sender, EventArgs e)
+		{
+			if(Visible) {
+				UIUtility.ShowFrontActive(this);
+			}
+		}
 	}
 }
