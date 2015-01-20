@@ -44,7 +44,7 @@
 		
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramDir, Literal.updateProgramName); }
+			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramDirectoryName, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc, CommonData commonData)
@@ -140,7 +140,7 @@
 			var lines = new List<string>();
 			var map = new Dictionary<string,string>() {
 				{ "download",       this._downloadPath },
-				{ "expand",         Literal.ApplicationRootDirPath },
+				{ "expand",         Literal.ApplicationRootDirectoryPath },
 				{ "wait",           "true" },
 				{ "no-wait-update", "true" },
 				{ "event",           eventName },

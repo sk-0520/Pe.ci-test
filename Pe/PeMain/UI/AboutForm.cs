@@ -177,12 +177,12 @@
 		
 		void CommandExecuteDir_Click(object sender, EventArgs e)
 		{
-			OpenDirectory(Literal.ApplicationRootDirPath);
+			OpenDirectory(Literal.ApplicationRootDirectoryPath);
 		}
 		
 		void CommandDataDir_Click(object sender, EventArgs e)
 		{
-			OpenDirectory(Literal.UserSettingDirPath);
+			OpenDirectory(Literal.UserSettingDirectoryPath);
 		}
 		
 		void CommandUpdate_Click(object sender, EventArgs e)

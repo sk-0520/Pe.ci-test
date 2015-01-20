@@ -27,7 +27,7 @@
 			shortcut.TargetPath = Literal.ApplicationExecutablePath;
 			shortcut.IconPath = Literal.ApplicationExecutablePath;
 			shortcut.IconIndex = 0;
-			shortcut.WorkingDirectory = Literal.ApplicationRootDirPath;
+			shortcut.WorkingDirectory = Literal.ApplicationRootDirectoryPath;
 			shortcut.Save();
 		}
 		
@@ -86,7 +86,7 @@
 			
 			// zip
 			using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
-				var basePath = Literal.UserSettingDirPath;
+				var basePath = Literal.UserSettingDirectoryPath;
 				foreach(var filePath in enabledFiles) {
 					if(File.Exists(filePath)) {
 						WriteArchive(zip, filePath, basePath);
@@ -113,7 +113,7 @@
 				Literal.UserDBPath,
 				Literal.ApplicationSettingBaseDirectoryPath,
 			};
-			BackupSetting(commonData, backupFiles, Literal.UserBackupDirPath, Literal.backupCount);
+			BackupSetting(commonData, backupFiles, Literal.UserBackupDirectoryPath, Literal.backupCount);
 			
 			// 保存開始
 			// メインデータ

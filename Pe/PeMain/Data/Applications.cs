@@ -154,7 +154,7 @@
 		{
 			get
 			{
-				return Path.Combine(Literal.ApplicationBinDirPath, File.Directory);
+				return Path.Combine(Literal.ApplicationBinDirectoryPath, File.Directory);
 			}
 		}
 		/// <summary>
@@ -209,8 +209,8 @@
 		{
 			var result = new Dictionary<string, string>() {
 				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
-				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
-				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
+				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirectoryPath },
+				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirectoryPath },
 				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
 			};
 
