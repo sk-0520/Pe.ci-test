@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.PeMain.Data;
-
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	/// <summary>
 	/// 列挙体メンバ名を言語に合わせて文字列化する。
 	/// </summary>

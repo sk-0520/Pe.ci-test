@@ -6,6 +6,7 @@
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>

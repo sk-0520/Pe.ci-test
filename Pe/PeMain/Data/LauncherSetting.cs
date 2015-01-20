@@ -1,45 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-	/// <summary>
-	/// ランチャー種別。
-	/// </summary>
-	public enum LauncherType
-	{
-		None,
-		/// <summary>
-		/// 何かのファイル。
-		/// </summary>
-		File,
-		/// <summary>
-		/// ディレクトリ。
-		/// </summary>
-		Directory,
-		/// <summary>
-		/// URI。
-		/// 
-		/// Commandへ置き換える。
-		/// </summary>
-		URI,
-		/// <summary>
-		/// コマンド。
-		/// </summary>
-		Command,
-		/// <summary>
-		/// 組み込み
-		/// </summary>
-		Embedded
-	}
-	
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	/// <summary>
 	/// 実行履歴
 	/// </summary>
@@ -174,8 +145,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				IconItem = new IconItem();
 			}
 
-			if(LauncherType == Data.LauncherType.URI) {
-				LauncherType = Data.LauncherType.Command;
+			if(LauncherType == LauncherType.URI) {
+				LauncherType = LauncherType.Command;
 			}
 		}
 		
@@ -351,7 +322,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			if(!hasIcon) {
 				string useIconPath = null;
 
-				if(LauncherType == Data.LauncherType.Embedded) {
+				if(LauncherType == LauncherType.Embedded) {
 					Debug.Assert(applicationSetting != null);
 					var applicationItem = applicationSetting.GetApplicationItem(this);
 					useIconPath = applicationItem.FilePath;

@@ -148,7 +148,9 @@
     <Compile Include="IF\ISetCommonData.cs" />
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISetSkin.cs" />
+    <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
+    <Compile Include="Kind\Launcher.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ClipboardUtility.cs" />
