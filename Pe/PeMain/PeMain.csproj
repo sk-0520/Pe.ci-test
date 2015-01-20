@@ -155,6 +155,7 @@
     <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Kind\Launcher.cs" />
     <Compile Include="Kind\Log.cs" />
+    <Compile Include="Kind\Note.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ClipboardUtility.cs" />

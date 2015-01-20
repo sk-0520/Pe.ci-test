@@ -1,24 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-	/// <summary>
-	/// ログ内容種別。
-	/// 
-	/// NOTE: べつにこれといって
-	/// </summary>
-	public enum NoteType
-	{
-		Text,
-		Rtf,
-	}
-	
+	using System;
+	using System.Diagnostics;
+	using System.Drawing;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
-	
 	/// <summary>
 	/// NoteTypeに対してなんかする用ユーティリティだが現状死んでますしおすし。
 	/// </summary>
