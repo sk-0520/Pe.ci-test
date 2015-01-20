@@ -11,16 +11,22 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 	public interface IRootSender
 	{
 		void ShowBalloon(ToolTipIcon icon, string title, string message);
-	
-		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
 
 		void AppendWindow(Form window);
-		
-		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
-		
-		void ReceiveDeviceChanged(ChangeDevice changeDevice);
 
-		//bool EnabledClipboard { get; set; }
+		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
+
 		void ChangeClipboard();
+
+		/// <summary>
+		/// ホットキー。
+		/// </summary>
+		/// <param name="hotKeyId"></param>
+		/// <param name="mod"></param>
+		/// <param name="key"></param>
+		void SendHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
+		
+		void SendDeviceChanged(ChangeDevice changeDevice);
+
 	}
 }

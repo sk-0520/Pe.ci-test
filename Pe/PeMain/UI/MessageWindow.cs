@@ -59,13 +59,13 @@
 						var id = (HotKeyId)m.WParam;
 						var mod = (MOD)unchecked((short)(long)m.LParam);
 						var key = (Keys)unchecked((ushort)((long)m.LParam >> 16));
-						CommonData.RootSender.ReceiveHotKey(id, mod, key);
+						CommonData.RootSender.SendHotKey(id, mod, key);
 					}
 					break;
 
 				case (int)WM.WM_DEVICECHANGE: {
 						var changeDevice = new ChangeDevice(m);
-						CommonData.RootSender.ReceiveDeviceChanged(changeDevice);
+						CommonData.RootSender.SendDeviceChanged(changeDevice);
 					}
 					break;
 				/*
