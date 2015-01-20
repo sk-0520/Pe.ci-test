@@ -144,6 +144,9 @@
     <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\ToolbarGroup.cs" />
+    <Compile Include="Data\ToolbarGroupItem.cs" />
+    <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
