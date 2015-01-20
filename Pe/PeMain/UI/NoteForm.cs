@@ -355,10 +355,12 @@
 						var hittest = WindowsUtility.HTFromLParam(m.LParam);
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+							m.Result = new IntPtr(1);
 							return;
 						} else if(NoteItem.Locked) {
-							NativeMethods.SetCursor(Cursors.Default.Handle);
-							m.Result = new IntPtr(1); //Signify that we dealt with the message. We should be returning "true", but I can't figure out how to do that.
+							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
+							m.Result = new IntPtr(1);
+							return;
 						}
 					}
 					break;
