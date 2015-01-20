@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Xml;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Collections.Generic;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+
 	/// <summary>
 	/// 
 	/// </summary>
