@@ -156,6 +156,7 @@
     <Compile Include="IF\ISetSkin.cs" />
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
+    <Compile Include="Kind\HotKeyId.cs" />
     <Compile Include="Kind\Launcher.cs" />
     <Compile Include="Kind\Log.cs" />
     <Compile Include="Kind\Note.cs" />

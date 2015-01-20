@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Kind;
 
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
