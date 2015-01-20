@@ -26,7 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.NowTimestampFileName) + ".log");
 				ContentTypeTextNet.Pe.Library.Utility.FileUtility.MakeFileParentDirectory(logPath);
 				fileLogger = new ContentTypeTextNet.Pe.PeMain.Logic.FileLogger(logPath);
-				fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Data.LogType.Information, "Information", new ContentTypeTextNet.Pe.PeMain.Logic.AppInformation().ToString());
+				fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Information, "Information", new ContentTypeTextNet.Pe.PeMain.Logic.AppInformation().ToString());
 			}
 			
 			bool isFirstInstance;
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 			mutexName += "_debug";
 			//mutexName += new Random().Next().ToString();
 			#endif
-			fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Data.LogType.Information, "mutex name", mutexName);
+			fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Information, "mutex name", mutexName);
 			using(fileLogger) {
 				#if RELEASE
 				try {
@@ -59,9 +59,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 									Application.Run();
 								}
 							}
-							fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Data.LogType.Information, "Close", Process.GetCurrentProcess());
+							fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Information, "Close", Process.GetCurrentProcess());
 						} else {
-							fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Data.LogType.Error, "duplicate boot", mutexName);
+							fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Error, "duplicate boot", mutexName);
 						}
 					}
 				#if RELEASE

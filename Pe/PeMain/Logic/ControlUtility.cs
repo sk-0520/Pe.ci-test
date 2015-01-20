@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	/// <summary>
 	/// コモンダイアログ共通処理。
 	/// </summary>

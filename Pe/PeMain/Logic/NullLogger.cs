@@ -3,6 +3,7 @@
 	using System.Diagnostics;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	/// <summary>
 	/// 無効なログにあれやこれや。

@@ -141,6 +141,7 @@
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
+    <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Data\WindowItem.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Kind\Launcher.cs" />
+    <Compile Include="Kind\Log.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ClipboardUtility.cs" />

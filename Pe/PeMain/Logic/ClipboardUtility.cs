@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.Specialized;
+	using System.Drawing;
+	using System.Linq;
+	using System.Text;
+	using System.Text.RegularExpressions;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	public class ClipboardUtility
 	{
 		static void Copy(Action action, CommonData commonData)
