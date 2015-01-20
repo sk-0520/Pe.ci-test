@@ -1,12 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace ContentTypeTextNet.Pe.PeMain
+﻿namespace ContentTypeTextNet.Pe.PeMain
 {
+	using System;
+	using System.Windows.Forms;
+
 	public static class Startup
 	{
 		/// <summary>
@@ -19,58 +15,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			var commandLine = new ContentTypeTextNet.Pe.Library.Utility.CommandLine(args);
-			Literal.Initialize(commandLine);
-			var fileLogger = new ContentTypeTextNet.Pe.PeMain.Logic.FileLogger();
-			if(commandLine.HasOption("log")) {
-				var logPath = Path.Combine(Literal.LogFileDirPath, DateTime.Now.ToString(Literal.NowTimestampFileName) + ".log");
-				ContentTypeTextNet.Pe.Library.Utility.FileUtility.MakeFileParentDirectory(logPath);
-				fileLogger = new ContentTypeTextNet.Pe.PeMain.Logic.FileLogger(logPath);
-				fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Information, "Information", new ContentTypeTextNet.Pe.PeMain.Logic.AppInformation().ToString());
-			}
-			
-			bool isFirstInstance;
-			var mutexName = Literal.programName;
-			#if DEBUG
-			mutexName += "_debug";
-			//mutexName += new Random().Next().ToString();
-			#endif
-			fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Information, "mutex name", mutexName);
-			using(fileLogger) {
-				#if RELEASE
-				try {
-				#endif
-					using (var mtx = new Mutex(true, mutexName, out isFirstInstance)) {
-						if (isFirstInstance) {
-							using(var app = new UI.App(commandLine, fileLogger)) {
-								#if DEBUG
-								app.DebugProcess();
-								#endif
-								if(!app.Initialized) {
-									app.CloseApplication(false);
-								} else {
-									if(!app.ExistsSettingFilePath) {
-										Task.Factory.StartNew(() => {
-											Thread.Sleep(Literal.startHomeDialogWaitTime);
-										}).ContinueWith(t => {
-											app.ShowHomeDialog();
-										}, TaskScheduler.FromCurrentSynchronizationContext());
-									}
-									Application.Run();
-								}
-							}
-							fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Information, "Close", Process.GetCurrentProcess());
-						} else {
-							fileLogger.Puts(ContentTypeTextNet.Pe.PeMain.Kind.LogType.Error, "duplicate boot", mutexName);
-						}
-					}
-				#if RELEASE
-				} catch(Exception ex) {
-					fileLogger.Puts(PeMain.Data.LogType.Error, ex.Message, ex);
-					throw;
-				}
-				#endif
-			}
+			ContentTypeTextNet.Pe.PeMain.Logic.ApplicationRoot.Execute(args);
 		}
 	}
 }
