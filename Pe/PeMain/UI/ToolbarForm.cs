@@ -1599,7 +1599,7 @@
 				SelectedGroup(SelectedGroupItem);
 				
 				// 他のツールバーにアイテム変更を教える
-				CommonData.RootSender.ChangeLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
+				CommonData.RootSender.ChangedLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
 			}
 		}
 		

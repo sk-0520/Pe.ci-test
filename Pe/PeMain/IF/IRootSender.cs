@@ -14,9 +14,9 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 
 		void AppendWindow(Form window);
 
-		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
+		void ChangedLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
 
-		void ChangeClipboard();
+		void ChangedClipboard();
 
 		/// <summary>
 		/// ホットキー。

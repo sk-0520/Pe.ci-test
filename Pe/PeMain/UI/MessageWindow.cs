@@ -91,7 +91,7 @@
 				break;
 				*/
 				case (int)WM.WM_CLIPBOARDUPDATE: {
-						CommonData.RootSender.ChangeClipboard();
+						CommonData.RootSender.ChangedClipboard();
 					}
 					break;
 

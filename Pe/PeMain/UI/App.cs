@@ -157,14 +157,14 @@
 			window.FormClosed += window_FormClosed;
 		}
 
-		public void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
+		public void ChangedLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
 		{
 			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.UseToolbarItem != toolbarItem)) {
 				toolbar.ReceiveChangedLauncherItems(toolbarItem, toolbarGroupItem);
 			}
 		}
 
-		public void ChangeClipboard()
+		public void ChangedClipboard()
 		{
 			if(!this._commonData.MainSetting.Clipboard.Enabled) {
 				return;
@@ -982,7 +982,7 @@
 		{
 			this._clipboardWindow = new ClipboardForm();
 			this._clipboardWindow.SetCommonData(this._commonData);
-			ChangeClipboard();
+			ChangedClipboard();
 		}
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
