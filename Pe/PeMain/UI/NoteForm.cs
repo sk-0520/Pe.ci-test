@@ -355,6 +355,11 @@
 						var hittest = WindowsUtility.HTFromLParam(m.LParam);
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+							m.Result = new IntPtr(1);
+							return;
+						} else if(NoteItem.Locked) {
+							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
+							m.Result = new IntPtr(1);
 							return;
 						}
 					}
@@ -1231,6 +1236,7 @@
 			ChangeLock(false);
 			this.inputBody.Focus();
 		}
+
 
 
 	}
