@@ -356,6 +356,9 @@
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
 							return;
+						} else if(NoteItem.Locked) {
+							NativeMethods.SetCursor(Cursors.Default.Handle);
+							m.Result = new IntPtr(1); //Signify that we dealt with the message. We should be returning "true", but I can't figure out how to do that.
 						}
 					}
 					break;
@@ -1231,6 +1234,7 @@
 			ChangeLock(false);
 			this.inputBody.Focus();
 		}
+
 
 
 	}
