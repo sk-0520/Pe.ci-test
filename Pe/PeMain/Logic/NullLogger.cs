@@ -8,7 +8,7 @@
 	/// <summary>
 	/// 無効なログにあれやこれや。
 	/// </summary>
-	public class NullLogger: ILogger
+	public sealed class NullLogger: ILogger
 	{
 		public void Puts(LogType logType, string title, object detail, int frame = 2)
 		{
