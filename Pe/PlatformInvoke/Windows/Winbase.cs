@@ -58,9 +58,6 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		public static extern IntPtr FindResource(IntPtr hModule, string lpName, string lpType);
 		[DllImport("kernel32.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-		public static extern IntPtr FindResource(IntPtr hModule, int lpID, string lpType);
-		[DllImport("kernel32.dll")]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr FindResource(IntPtr hModule, IntPtr lpID, IntPtr lpType);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
