@@ -136,6 +136,7 @@
     <Compile Include="Data\DB\Entity\T_NOTE_STYLE.cs" />
     <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\IconItem.cs" />
+    <Compile Include="Data\LauncherHistory.cs" />
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
