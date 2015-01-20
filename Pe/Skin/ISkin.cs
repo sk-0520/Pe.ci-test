@@ -43,17 +43,17 @@
 		/// 指定フォームにスタイルを適用する。
 		/// </summary>
 		/// <param name="target"></param>
-		void AttachmentStyle(Form target);
+		void AttachmentStyle(Form target, SkinWindow skinWindow);
 		/// <summary>
 		/// 指定フォームのスタイルを再生委呈する
 		/// </summary>
 		/// <param name="target"></param>
-		void RefreshStyle(Form target);
+		void RefreshStyle(Form target, SkinWindow skinWindow);
 		/// <summary>
 		/// 指定フォームのスタイル適用を取り消す。
 		/// </summary>
 		/// <param name="target"></param>
-		void DetachmentStyle(Form target);
+		void DetachmentStyle(Form target, SkinWindow skinWindow);
 
 		#endregion
 

@@ -267,24 +267,29 @@
 
 		#region Style
 
-		public override void AttachmentStyle(Form target)
+		public override void AttachmentStyle(Form target, SkinWindow skinWindow)
 		{
-			base.AttachmentStyle(target);
-			//EnabledVisualStyle = false;
-			if(EnabledAeroStyle) {
-				SetVisualStyle(target);
+			if(skinWindow == SkinWindow.Toolbar) {
+				base.AttachmentStyle(target, skinWindow);
+
+				//EnabledVisualStyle = false;
+				if(EnabledAeroStyle) {
+					SetVisualStyle(target);
+				}
 			}
 		}
-		
-		public override void DetachmentStyle(Form target)
+
+		public override void DetachmentStyle(Form target, SkinWindow skinWindow)
 		{
-			if(EnabledAeroStyle) {
-				var margin = new MARGINS();
-				margin.leftWidth = 0;
-				margin.rightWidth = 0;
-				margin.topHeight = 0;
-				margin.bottomHeight = 0;
-				NativeMethods.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
+			if(skinWindow == SkinWindow.Toolbar) {
+				if(EnabledAeroStyle) {
+					var margin = new MARGINS();
+					margin.leftWidth = 0;
+					margin.rightWidth = 0;
+					margin.topHeight = 0;
+					margin.bottomHeight = 0;
+					NativeMethods.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
+				}
 			}
 		}
 

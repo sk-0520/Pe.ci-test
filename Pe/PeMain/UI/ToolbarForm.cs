@@ -410,7 +410,8 @@
 		{
 			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				switch(m.Msg) {
-					case (int)WM.WM_SYSCOMMAND: {
+					case (int)WM.WM_SYSCOMMAND:
+						{
 							switch(m.WParam.ToInt32() & 0xfff0) {
 								case (int)SC.SC_MINIMIZE:
 								case (int)SC.SC_MAXIMIZE:
@@ -422,7 +423,8 @@
 						}
 						break;
 
-					case (int)WM.WM_NCPAINT: {
+					case (int)WM.WM_NCPAINT:
+						{
 							if(CommonData != null) {
 								var hDC = NativeMethods.GetWindowDC(Handle);
 								try {
@@ -436,8 +438,8 @@
 						}
 						break;
 
-					case (int)WM.WM_NCHITTEST: {
-
+					case (int)WM.WM_NCHITTEST:
+						{
 							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
 							var padding = Padding;
 
@@ -461,7 +463,8 @@
 						}
 						break;
 
-					case (int)WM.WM_SETCURSOR: {
+					case (int)WM.WM_SETCURSOR:
+						{
 							if(!this._menuOpening) {
 								var hittest = WindowsUtility.HTFromLParam(m.LParam);
 								if(hittest == HT.HTCAPTION) {
@@ -482,7 +485,8 @@
 					break;
 					 */
 
-					case (int)WM.WM_MOVING: {
+					case (int)WM.WM_MOVING:
+						{
 							var rect = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
 							var workingArea = DockScreen.WorkingArea;
 
@@ -506,8 +510,9 @@
 						}
 						break;
 
-					case (int)WM.WM_DWMCOMPOSITIONCHANGED: {
-							CommonData.Skin.RefreshStyle(this);
+					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+						{
+							CommonData.Skin.RefreshStyle(this, SkinWindow.Toolbar);
 						}
 						break;
 				}
@@ -562,8 +567,8 @@
 			renderer.ToolbarItem = UseToolbarItem;
 			
 			this.toolLauncher.Renderer = renderer;
-			
-			CommonData.Skin.AttachmentStyle(this);
+
+			CommonData.Skin.AttachmentStyle(this, SkinWindow.Toolbar);
 		}
 		
 		void ApplySettingPosition()

@@ -404,6 +404,12 @@
 					}
 					break;
 
+				case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+					{
+						CommonData.Skin.RefreshStyle(this, SkinWindow.Note);
+					}
+					break;
+
 				default:
 					break;
 			}
@@ -486,6 +492,8 @@
 		#region skin
 		void ApplySkin()
 		{
+			CommonData.Skin.AttachmentStyle(this, SkinWindow.Note);
+
 			this.contextMenu_itemTitle.Image = CommonData.Skin.GetImage(SkinImage.NoteTitle);
 			this.contextMenu_itemBody.Image = CommonData.Skin.GetImage(SkinImage.NoteBody);
 			this.contextMenu_itemCopy.Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy);
@@ -538,8 +546,8 @@
 			MinimumSize = minSize;
 
 			ApplyBodyStyle();
-			ApplySkin();
 			ApplyLanguage();
+			ApplySkin();
 
 			ChangeLock(NoteItem.Locked);
 
