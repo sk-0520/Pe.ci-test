@@ -123,6 +123,7 @@
     </None>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
+    <Compile Include="Data\ClipboardHtmlDataItem.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />
     <Compile Include="Data\CommonData.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="IF\ISetCommonData.cs" />
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISetSkin.cs" />
+    <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ClipboardUtility.cs" />
