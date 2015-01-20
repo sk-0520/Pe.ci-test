@@ -123,6 +123,7 @@
     </None>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
+    <Compile Include="Data\ClipboardHtmlDataItem.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />
     <Compile Include="Data\CommonData.cs" />
@@ -135,11 +136,17 @@
     <Compile Include="Data\DB\Entity\T_NOTE_STYLE.cs" />
     <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\IconItem.cs" />
+    <Compile Include="Data\LauncherHistory.cs" />
+    <Compile Include="Data\LauncherItem.cs" />
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
+    <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\ToolbarGroup.cs" />
+    <Compile Include="Data\ToolbarGroupItem.cs" />
+    <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
@@ -147,6 +154,11 @@
     <Compile Include="IF\ISetCommonData.cs" />
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISetSkin.cs" />
+    <Compile Include="Kind\Applications.cs" />
+    <Compile Include="Kind\Clipboard.cs" />
+    <Compile Include="Kind\Launcher.cs" />
+    <Compile Include="Kind\Log.cs" />
+    <Compile Include="Kind\Note.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\ClipboardUtility.cs" />

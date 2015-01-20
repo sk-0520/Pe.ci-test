@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.PeMain.Kind;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {

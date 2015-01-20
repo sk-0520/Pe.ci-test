@@ -1,37 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using ObjectDumper;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-	/// <summary>
-	/// ログ種別。
-	/// </summary>
-	[Flags]
-	public enum LogType
-	{
-		/// <summary>
-		/// 使用しない。
-		/// </summary>
-		None = 0x00,
-		/// <summary>
-		/// 情報。
-		/// </summary>
-		Information = 0x01,
-		/// <summary>
-		/// 警告。
-		/// </summary>
-		Warning = 0x02,
-		/// <summary>
-		/// 異常。
-		/// </summary>
-		Error = 0x04,
-		/// <summary>
-		/// デバッグ。
-		/// </summary>
-		Debug
-	}
-	
+	using System;
+	using System.Diagnostics;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ObjectDumper;
+
 	/// <summary>
 	/// ログ出力時の必要データ。
 	/// </summary>
@@ -87,6 +60,5 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				StackTrace
 			);
 		}
-
 	}
 }
