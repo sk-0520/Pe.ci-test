@@ -6,7 +6,7 @@ set BUILD=Build
 set OUTPUT=output\Release
 set OUTPUTx86=%OUTPUT%\x86
 set OUTPUTx64=%OUTPUT%\x64
-set PEPATH=%OUTPUTx86%\PeMain.exe
+set VER_TARGET=%OUTPUTx86%\PeMain.exe
 set ZIP=%BUILD%\zip.vbs
 set GV=%BUILD%\get-ver.vbs
 
@@ -26,7 +26,7 @@ echo build x86
 echo build x64
 "%MB%" Pe\Pe.sln /p:Configuration=Release;Platform=x64 /t:Rebuild /m
 
-for /F "usebackq" %%s in (`cscript "%GV%" "%PEPATH%"`) do set EXEVER=%%s
+for /F "usebackq" %%s in (`cscript "%GV%" "%VER_TARGET%"`) do set EXEVER=%%s
 
 echo remove
 echo remove SQLite.Interop.dll
