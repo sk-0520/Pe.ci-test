@@ -42,6 +42,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
+			this.groupLauncherStream = new System.Windows.Forms.GroupBox();
+			this.commandLauncherStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.groupMainSkin = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectSkinName = new System.Windows.Forms.ComboBox();
@@ -207,10 +209,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.groupStream = new System.Windows.Forms.GroupBox();
-			this.commandStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
+			this.groupLauncherStream.SuspendLayout();
 			this.groupMainSkin.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.panelMainOthers.SuspendLayout();
@@ -270,7 +271,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			this.groupStream.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -293,7 +293,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// tabSetting_pageMain
 			// 
-			this.tabSetting_pageMain.Controls.Add(this.groupStream);
+			this.tabSetting_pageMain.Controls.Add(this.groupLauncherStream);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainSkin);
 			this.tabSetting_pageMain.Controls.Add(this.panelMainOthers);
 			this.tabSetting_pageMain.Controls.Add(this.groupUpdateCheck);
@@ -307,6 +307,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageMain.TabIndex = 0;
 			this.tabSetting_pageMain.Text = ":setting/page/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
+			// 
+			// groupLauncherStream
+			// 
+			this.groupLauncherStream.Controls.Add(this.commandLauncherStreamFont);
+			this.groupLauncherStream.Location = new System.Drawing.Point(224, 194);
+			this.groupLauncherStream.Name = "groupLauncherStream";
+			this.groupLauncherStream.Size = new System.Drawing.Size(288, 75);
+			this.groupLauncherStream.TabIndex = 5;
+			this.groupLauncherStream.TabStop = false;
+			this.groupLauncherStream.Text = ":setting/group/stream";
+			// 
+			// commandLauncherStreamFont
+			// 
+			this.commandLauncherStreamFont.AutoSize = true;
+			this.commandLauncherStreamFont.Location = new System.Drawing.Point(9, 22);
+			this.commandLauncherStreamFont.Name = "commandLauncherStreamFont";
+			this.commandLauncherStreamFont.Size = new System.Drawing.Size(141, 25);
+			this.commandLauncherStreamFont.TabIndex = 0;
+			this.commandLauncherStreamFont.Text = "{FAMILY} {PT} ...";
+			this.commandLauncherStreamFont.UseVisualStyleBackColor = true;
 			// 
 			// groupMainSkin
 			// 
@@ -2245,26 +2265,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// groupStream
-			// 
-			this.groupStream.Controls.Add(this.commandStreamFont);
-			this.groupStream.Location = new System.Drawing.Point(224, 194);
-			this.groupStream.Name = "groupStream";
-			this.groupStream.Size = new System.Drawing.Size(288, 75);
-			this.groupStream.TabIndex = 5;
-			this.groupStream.TabStop = false;
-			this.groupStream.Text = ":setting/group/stream";
-			// 
-			// commandStreamFont
-			// 
-			this.commandStreamFont.AutoSize = true;
-			this.commandStreamFont.Location = new System.Drawing.Point(9, 22);
-			this.commandStreamFont.Name = "commandStreamFont";
-			this.commandStreamFont.Size = new System.Drawing.Size(141, 25);
-			this.commandStreamFont.TabIndex = 0;
-			this.commandStreamFont.Text = "{FAMILY} {PT} ...";
-			this.commandStreamFont.UseVisualStyleBackColor = true;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -2282,6 +2282,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting.ResumeLayout(false);
 			this.tabSetting_pageMain.ResumeLayout(false);
 			this.tabSetting_pageMain.PerformLayout();
+			this.groupLauncherStream.ResumeLayout(false);
+			this.groupLauncherStream.PerformLayout();
 			this.groupMainSkin.ResumeLayout(false);
 			this.groupMainSkin.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
@@ -2363,8 +2365,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.groupStream.ResumeLayout(false);
-			this.groupStream.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -2535,7 +2535,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectLogDebugging;
 		private System.Windows.Forms.Label labelClipboardFont;
 		private FontSplitButton commandClipboardTextFont;
-		private System.Windows.Forms.GroupBox groupStream;
-		private FontSplitButton commandStreamFont;
+		private System.Windows.Forms.GroupBox groupLauncherStream;
+		private FontSplitButton commandLauncherStreamFont;
 	}
 }

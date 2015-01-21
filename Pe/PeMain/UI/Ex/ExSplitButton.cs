@@ -32,6 +32,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 		
 		void Initialize()
 		{
+			Text = "{FAMILY} {PT} ...";
+
 			var menu = new ContextMenuStrip();
 			var itemReset = new ToolStripMenuItem();
 			itemReset.Name = nameMenuReset;
