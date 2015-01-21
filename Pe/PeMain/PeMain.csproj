@@ -676,9 +676,7 @@
     <None Include="Resources\Image\Clipboard.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\ApplicationSetting.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="bin\ApplicationSetting.md" />
     <Content Include="bin\ApplicationSetting.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

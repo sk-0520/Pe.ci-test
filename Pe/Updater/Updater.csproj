@@ -93,9 +93,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
