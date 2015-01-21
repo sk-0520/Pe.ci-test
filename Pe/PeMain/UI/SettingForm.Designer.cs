@@ -38,8 +38,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupMainSkin = new System.Windows.Forms.GroupBox();
@@ -207,6 +207,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.groupStream = new System.Windows.Forms.GroupBox();
+			this.commandStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupMainSkin.SuspendLayout();
@@ -268,6 +270,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			this.groupStream.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -290,6 +293,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// tabSetting_pageMain
 			// 
+			this.tabSetting_pageMain.Controls.Add(this.groupStream);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainSkin);
 			this.tabSetting_pageMain.Controls.Add(this.panelMainOthers);
 			this.tabSetting_pageMain.Controls.Add(this.groupUpdateCheck);
@@ -308,7 +312,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupMainSkin.AutoSize = true;
 			this.groupMainSkin.Controls.Add(this.flowLayoutPanel1);
-			this.groupMainSkin.Location = new System.Drawing.Point(221, 42);
+			this.groupMainSkin.Location = new System.Drawing.Point(224, 42);
 			this.groupMainSkin.Name = "groupMainSkin";
 			this.groupMainSkin.Size = new System.Drawing.Size(288, 51);
 			this.groupMainSkin.TabIndex = 4;
@@ -392,9 +396,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupUpdateCheck.AutoSize = true;
 			this.groupUpdateCheck.Controls.Add(this.panelUpdate);
-			this.groupUpdateCheck.Location = new System.Drawing.Point(221, 191);
+			this.groupUpdateCheck.Location = new System.Drawing.Point(518, 42);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
-			this.groupUpdateCheck.Size = new System.Drawing.Size(288, 81);
+			this.groupUpdateCheck.Size = new System.Drawing.Size(226, 81);
 			this.groupUpdateCheck.TabIndex = 3;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
@@ -408,7 +412,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelUpdate.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelUpdate.Location = new System.Drawing.Point(3, 19);
 			this.panelUpdate.Name = "panelUpdate";
-			this.panelUpdate.Size = new System.Drawing.Size(282, 59);
+			this.panelUpdate.Size = new System.Drawing.Size(220, 59);
 			this.panelUpdate.TabIndex = 4;
 			// 
 			// selectUpdateCheck
@@ -435,7 +439,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupMainSystemEnv.AutoSize = true;
 			this.groupMainSystemEnv.Controls.Add(this.panelMainSystemEnv);
-			this.groupMainSystemEnv.Location = new System.Drawing.Point(221, 99);
+			this.groupMainSystemEnv.Location = new System.Drawing.Point(224, 99);
 			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
 			this.groupMainSystemEnv.Size = new System.Drawing.Size(288, 89);
 			this.groupMainSystemEnv.TabIndex = 2;
@@ -1842,8 +1846,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1873,9 +1877,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -2241,6 +2245,26 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// groupStream
+			// 
+			this.groupStream.Controls.Add(this.commandStreamFont);
+			this.groupStream.Location = new System.Drawing.Point(224, 194);
+			this.groupStream.Name = "groupStream";
+			this.groupStream.Size = new System.Drawing.Size(288, 75);
+			this.groupStream.TabIndex = 5;
+			this.groupStream.TabStop = false;
+			this.groupStream.Text = ":setting/group/stream";
+			// 
+			// commandStreamFont
+			// 
+			this.commandStreamFont.AutoSize = true;
+			this.commandStreamFont.Location = new System.Drawing.Point(9, 22);
+			this.commandStreamFont.Name = "commandStreamFont";
+			this.commandStreamFont.Size = new System.Drawing.Size(141, 25);
+			this.commandStreamFont.TabIndex = 0;
+			this.commandStreamFont.Text = "{FAMILY} {PT} ...";
+			this.commandStreamFont.UseVisualStyleBackColor = true;
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -2339,6 +2363,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.groupStream.ResumeLayout(false);
+			this.groupStream.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -2509,5 +2535,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectLogDebugging;
 		private System.Windows.Forms.Label labelClipboardFont;
 		private FontSplitButton commandClipboardTextFont;
+		private System.Windows.Forms.GroupBox groupStream;
+		private FontSplitButton commandStreamFont;
 	}
 }
