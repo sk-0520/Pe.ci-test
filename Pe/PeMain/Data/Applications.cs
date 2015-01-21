@@ -176,7 +176,10 @@
 		{
 			get
 			{
-				//TODO: ファイル限定
+				if(File.Help.StartsWith("http://", StringComparison.OrdinalIgnoreCase)) {
+					return File.Help;
+				}
+
 				return Path.Combine(DirectoryPath, File.Help);
 			}
 		}

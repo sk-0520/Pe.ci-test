@@ -2,7 +2,7 @@
 <ApplicationSetting>
 	<Items>
 		<ApplicationItem Name="Hash" LanguageKey="hash">
-			<File Directory="Hash" Name="Hash.exe" Help="readme.txt" Setting="false" Log="false" />
+			<File Directory="Hash" Name="Hash.exe" Help="https://bitbucket.org/sk_0520/pe/src/HEAD/Pe/Hash/readme.md" Setting="false" Log="false" />
 			<Type>Window</Type>
 			<Stream>None</Stream>
 			<Communication>Event</Communication>
