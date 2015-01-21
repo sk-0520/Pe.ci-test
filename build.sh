@@ -15,7 +15,9 @@ sed -E -i "s/^\[\s*assembly\s*:\s*\AssemblyInformationalVersion\s*\(\s*\"\s*(rev
 find -name 'AssemblyInfo.cs' -print0 | xargs -0 sed -E -i "s/<YEAR>/`date +%Y`/"
 
 # ビルド
-cmd.exe //c  build.bat
+pushd Build
+    cmd.exe //c build.bat
+popd
 
 # バージョン戻し
 git reset --hard
