@@ -63,7 +63,7 @@
 			if(Directory.Exists(baseFile)) {
 				var archiveList = Directory.GetFileSystemEntries(baseFile, targetWildcardName)
 					.Where(File.Exists)
-					.OrderByDescending(s => Path.GetFileName(s))
+					.OrderByDescending(Path.GetFileName)
 					.Skip(count - 1)
 				;
 				foreach(var path in archiveList) {
