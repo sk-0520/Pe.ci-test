@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
+﻿namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 {
+	using System;
+
 	partial class NativeMethods
 	{
 		public static Guid IID_IImageList = new Guid("{46EB5926-582E-4017-9FDF-E8998DAA0950}");
