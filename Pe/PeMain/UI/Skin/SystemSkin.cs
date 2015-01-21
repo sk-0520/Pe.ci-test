@@ -357,8 +357,7 @@
 						break;
 						
 					default:
-						Debug.Assert(false, toolbarPosition.ToString());
-						break;
+						throw new NotImplementedException();
 				}
 			}
 			return edge;
@@ -386,8 +385,7 @@
 						break;
 						
 					default:
-						Debug.Assert(false, toolbarPosition.ToString());
-						break;
+						throw new NotImplementedException();
 				}
 				
 				return border;
@@ -474,8 +472,7 @@
 					case SkinNoteCommand.Topmost: pos = 2; break;
 					case SkinNoteCommand.Compact: pos = 3; break;
 				default:
-					Debug.Assert(false);
-					break;
+					throw new NotImplementedException();
 			}
 			var size = new Size(parentArea.Height, parentArea.Height);
 			return new Rectangle(
@@ -542,9 +539,7 @@
 							break;
 							
 						default:
-							startPoint = endPoint = Point.Empty;
-							Debug.Assert(false, toolbarPosition.ToString());
-							break;
+							throw new NotImplementedException();
 					}
 					using(var pen = new Pen(Color.FromArgb(180, Color.White))) {
 						pen.Width = lineWidth;
@@ -709,8 +704,7 @@
 						case SkinButtonState.Selected:
 							case SkinButtonState.Pressed:  alpha = 210; break;
 						default:
-							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
-							break;
+							throw new NotImplementedException();
 					}
 					
 					RectangleF fillArea = drawArea;

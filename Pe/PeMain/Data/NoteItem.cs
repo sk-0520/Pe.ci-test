@@ -17,8 +17,7 @@
 				case NoteType.Text: return 0;
 				case NoteType.Rtf:  return 1;
 				default:
-					Debug.Assert(false, type.ToString());
-					return -1;
+					throw new NotImplementedException();
 			}
 		}
 		public static NoteType ToNoteType(long value)
@@ -27,8 +26,7 @@
 				case 0: return NoteType.Text;
 				case 1: return NoteType.Rtf;
 				default:
-					Debug.Assert(false, value.ToString());
-					return NoteType.Text;
+					throw new NotImplementedException();
 			}
 		}
 	}
