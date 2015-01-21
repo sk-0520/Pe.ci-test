@@ -149,6 +149,8 @@
 			if(!Directory.Exists(this._downloadPath)) {
 				Directory.CreateDirectory(this._downloadPath);
 			}
+			// #158
+			AppUtility.RotateFile(this._downloadPath, "*.zip", Literal.updateArchiveCount, this._commonData.Logger);
 
 			//var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
 			var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);

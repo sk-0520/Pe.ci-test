@@ -176,6 +176,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
 #endif
+		public const int updateArchiveCount = 15;
 
 
 		/// <summary>
