@@ -2,6 +2,7 @@ cd /d %~dp0\..\
 echo off
 
 set BUILD=Build
+set ERROR=%BUILD%\error
 
 set OUTPUT=output\Release
 set OUTPUTx86=%OUTPUT%\x86
@@ -11,6 +12,8 @@ set ZIP=%BUILD%\zip.vbs
 set GV=%BUILD%\get-ver.vbs
 
 set DOTNETVER=v4.0.30319
+
+del /Q %ERROR%
 
 rmdir /S /Q "%OUTPUTx86%"
 rmdir /S /Q "%OUTPUTx64%"
@@ -23,8 +26,14 @@ if "%PROCESSOR_ARCHITECTURE%" NEQ "x86" (
 
 echo build x86
 "%MB%" Pe\Pe.sln /p:Configuration=Release;Platform=x86 /t:Rebuild /m
+set ERROR_X86=%ERRORLEVEL%
+
 echo build x64
 "%MB%" Pe\Pe.sln /p:Configuration=Release;Platform=x64 /t:Rebuild /m
+set ERROR_X64=%ERRORLEVEL%
+
+if not %ERROR_X86% == 0 echo "build error x86: %ERROR_X86%" >> "%ERROR%"
+if not %ERROR_X64% == 0 echo "build error x64: %ERROR_X64%" >> "%ERROR%"
 
 for /F "usebackq" %%s in (`cscript "%GV%" "%VER_TARGET%"`) do set EXEVER=%%s
 

@@ -22,10 +22,19 @@ popd
 # バージョン戻し
 git reset --hard
 
-if [ -z "${CI+x}" ] ; then
-    echo "build success. please any key..."
-    read
+if [ -f Build/error ] ; then
+    if [ -z "${CI+x}" ] ; then
+        echo "build failed. please any key..."
+        read
+    else
+        echo "build failed. CI mode."
+    fi
 else
-    echo "build success. CI mode."
+    if [ -z "${CI+x}" ] ; then
+        echo "build success. please any key..."
+        read
+    else
+        echo "build success. CI mode."
+    fi
 fi
 
