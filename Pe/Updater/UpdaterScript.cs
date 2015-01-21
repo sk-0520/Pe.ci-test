@@ -35,7 +35,7 @@ public class UpdaterScript
 			@"bin\PeUpdater.update-old",
 			@"bin\PeUpdater.exe",
 			@"bin\PeUpdater.exe.config",
-			@"bin\readme.txt",
+			@"bin\ApplicationSetting.txt",
 			@"bin\Hash\readme.txt",
 			@"sbin\Updater\readme.txt",
 			@"doc\changelog.xsl",
