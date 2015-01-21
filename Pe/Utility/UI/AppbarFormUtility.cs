@@ -53,8 +53,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				case DesktopDockType.Bottom: return ABE.ABE_BOTTOM;
 				case DesktopDockType.Right: return ABE.ABE_RIGHT;
 				default:
-					Debug.Assert(false, type.ToString());
-					return ABE.ABE_LEFT; // dummy
+					throw new NotImplementedException();
 			}
 		}
 
@@ -71,8 +70,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				case ABE.ABE_RIGHT: return DesktopDockType.Right;
 				case ABE.ABE_BOTTOM: return DesktopDockType.Bottom;
 				default:
-					Debug.Assert(false, abe.ToString());
-					return DesktopDockType.None; // dummy
+					throw new NotImplementedException();
 			}
 		}
 	}

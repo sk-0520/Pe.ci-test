@@ -344,8 +344,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 					
 				default:
-					Debug.Assert(false, appBar.uEdge.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 		}
 		
@@ -519,8 +518,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 					
 				default:
-					Debug.Assert(false, DesktopDockType.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 			
 			HiddenView(!force, new Rectangle(pos, size));
@@ -565,8 +563,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 					
 				default:
-					Debug.Assert(false, DesktopDockType.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 			
 			Bounds = new Rectangle(pos, size);

@@ -297,7 +297,6 @@
 						break;
 
 					default:
-						Debug.Assert(false, toolbarItem.ToolbarPosition.ToString());
 						throw new NotImplementedException();
 				}
 
@@ -1861,8 +1860,7 @@
 						break;
 						
 					default:
-						Debug.Assert(false, UseToolbarItem.ToolbarPosition.ToString());
-						break;
+						throw new NotImplementedException();
 				}
 			}
 		}

@@ -643,8 +643,7 @@
 					break;
 
 				default:
-					Debug.Assert(false, noteCommand.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 		}
 

@@ -32,8 +32,7 @@
 				case LogType.Error: return 2;
 				case LogType.Debug: return 3;
 				default:
-					Debug.Assert(false, logType.ToString());
-					return -1;
+					throw new NotImplementedException();
 			}
 		}
 		#endregion ////////////////////////////////////
