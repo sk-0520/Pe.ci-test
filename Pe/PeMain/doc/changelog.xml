@@ -38,7 +38,7 @@
 		</ul>
 		<ul type="fixes">
 			<li rev="bbb2f76b4ae4a92931906718cbde3b8acf2b31a1">#161: 固定したノートでマウスカーソルが点滅する, 詳細はIssuesを参照のこと</li>
-			<li rev=""></li>
+			<li rev="853a055234c33476e8fd61d6db517c88c43695f6">#163: クリップボードのUnicodeな文字列</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
