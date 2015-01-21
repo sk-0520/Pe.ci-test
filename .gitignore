@@ -1,11 +1,10 @@
 @*
-#*
 ~*
 $*
 obj/
 bin/
 /output/
-/changelog/
+/Changelog/
 *.Settings
 /Pe/packages/
 *.cd
