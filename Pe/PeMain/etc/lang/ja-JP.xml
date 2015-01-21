@@ -322,6 +322,7 @@
 		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
 		<Word Name="setting/group/skin"       Text="スキン" />
 		<Word Name="setting/command/skin"     Text="設定" />
+		<Word Name="setting/group/stream"     Text="標準入出力" />
 
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
