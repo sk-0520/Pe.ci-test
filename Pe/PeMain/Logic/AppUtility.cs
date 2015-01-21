@@ -56,8 +56,27 @@
 
 			return entry;
 		}
-		
-		public static void BackupSetting(CommonData commonData, IEnumerable<string> targetFiles, string saveDirPath, int count)
+
+		public static void RotateFile(string baseFile, string targetWildcardName, int count, ILogger logger)
+		{
+			// バックアップ世代交代
+			if(Directory.Exists(baseFile)) {
+				var archiveList = Directory.GetFileSystemEntries(baseFile, targetWildcardName)
+					.Where(File.Exists)
+					.OrderByDescending(Path.GetFileName)
+					.Skip(count - 1)
+				;
+				foreach(var path in archiveList) {
+					try {
+						File.Delete(path);
+					} catch(Exception ex) {
+						logger.Puts(LogType.Error, ex.Message, ex);
+					}
+				}
+			}
+		}
+
+		public static void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int count, ILogger logger)
 		{
 			var enabledFiles = targetFiles.Where(FileUtility.Exists);
 			if (!enabledFiles.Any()) {
@@ -65,20 +84,7 @@
 			}
 			
 			// バックアップ世代交代
-			if(Directory.Exists(saveDirPath)) {
-				var archiveList = Directory.GetFileSystemEntries(saveDirPath, "*.zip")
-					.Where(File.Exists)
-					.OrderByDescending(s => Path.GetFileName(s))
-					.Skip(count - 1)
-				;
-				foreach(var path in archiveList) {
-					try {
-						File.Delete(path);
-					} catch(Exception ex) {
-						commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-					}
-				}
-			}
+			RotateFile(saveDirPath, "*.zip", count, logger);
 			
 			var fileName = Literal.NowTimestampFileName + ".zip";
 			var saveFilePath = Path.Combine(saveDirPath, fileName);
@@ -98,7 +104,6 @@
 					}
 				}
 			}
-
 		}
 
 		/// <summary>
@@ -113,7 +118,7 @@
 				Literal.UserDBPath,
 				Literal.ApplicationSettingBaseDirectoryPath,
 			};
-			BackupSetting(commonData, backupFiles, Literal.UserBackupDirectoryPath, Literal.backupCount);
+			BackupSetting(backupFiles, Literal.UserBackupDirectoryPath, Literal.backupCount, commonData.Logger);
 			
 			// 保存開始
 			// メインデータ
