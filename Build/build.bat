@@ -2,7 +2,7 @@ cd /d %~dp0\..\
 echo off
 
 set BUILD=Build
-set ERROR=%BUILD%\error
+set ERROR=%BUILD%\@error
 
 set OUTPUT=output\Release
 set OUTPUTx86=%OUTPUT%\x86

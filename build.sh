@@ -22,7 +22,7 @@ popd
 # バージョン戻し
 git reset --hard
 
-if [ -f Build/error ] ; then
+if [ -f Build/@error ] ; then
     if [ -z "${CI+x}" ] ; then
         echo "build failed. please any key..."
         read
