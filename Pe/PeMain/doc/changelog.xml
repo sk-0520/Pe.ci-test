@@ -41,6 +41,7 @@
 			<li rev="853a055234c33476e8fd61d6db517c88c43695f6">#163: クリップボードのUnicodeな文字列</li>
 			<li rev="1544ed313cd5a936dc3af284bfb38c86c0c8a3ed">Hashのヘルプファイルをリポジトリ参照へ変更</li>
 			<li rev="ad40f830b93720415224e8c874bbceeb46f9bbd0">一部文言の修正</li>
+			<li rev="8967a05e4fc44ada7ba393d4e2e7b923ac693117">#68: UNICODEを含むショートカットファイルの読み込みに失敗</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
