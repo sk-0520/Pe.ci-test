@@ -1302,8 +1302,9 @@
 				switch(result) {
 					case DialogResult.Yes:
 						try {
-							var sf = new ShortcutFile(filePath, false);
-							path = sf.TargetPath;
+							using(var sf = new ShortcutFile(filePath)) {
+								path = sf.TargetPath;
+							}
 						} catch(ArgumentException ex) {
 							Debug.WriteLine(ex);
 						}

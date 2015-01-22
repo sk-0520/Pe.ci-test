@@ -11,8 +11,18 @@
 
 	internal static class ApplicationRoot
 	{
+#if DEBUG
+		static void DebugRootProcess()
+		{
+		}
+#endif
+
 		internal static void Execute(string[] args)
 		{
+#if DEBUG
+			DebugRootProcess();
+#endif
+
 			var commandLine = new CommandLine(args);
 			Literal.Initialize(commandLine);
 			var fileLogger = new ContentTypeTextNet.Pe.PeMain.Logic.FileLogger();

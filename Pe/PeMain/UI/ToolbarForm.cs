@@ -1553,10 +1553,11 @@
 					switch(result) {
 						case DialogResult.Yes:
 							try {
-								var sf = new ShortcutFile(path, false);
-								var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
-								checkDirectory = Directory.Exists(expandPath);
-								path = sf.TargetPath;
+								using(var sf = new ShortcutFile(path)) {
+									var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
+									checkDirectory = Directory.Exists(expandPath);
+									path = sf.TargetPath;
+								}
 							} catch(ArgumentException ex) {
 								CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 							}
