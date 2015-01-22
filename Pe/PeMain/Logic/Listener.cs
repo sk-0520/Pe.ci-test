@@ -30,7 +30,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			get
 			{
 #if USE_MOUSE_HOOK
+#	if BUILD
+#		error Deinfed BUILD!
+#	else
 				return Mouse.Enabled | Keyboard.Enabled;
+#	endif
 #else
 				return Keyboard.Enabled;
 #endif
