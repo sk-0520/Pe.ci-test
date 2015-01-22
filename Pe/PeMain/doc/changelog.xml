@@ -25,7 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.42.0" type="rc">
+	<log date="2015/01/22" version="0.42.0">
 		<ul type="features">
 			<li rev="7a38fc15197655ea9a941744f4c0e24860ff5d28">#167: 標準入出力ダイアログのフォントを設定項目に表示する</li>
 			<li rev="0387abfea5c3af98acba2948271b523240a377c5">#158: 肥大化するarchiveディレクトリ</li>
