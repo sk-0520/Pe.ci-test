@@ -11,8 +11,21 @@
 
 	internal static class ApplicationRoot
 	{
+#if DEBUG
+		static void DebugProcess()
+		{
+			var sf = new ShortcutFile2();
+			sf.Load(@"Z:\☃.lnk");
+			throw new Exception("ばいばい");
+		}
+#endif
+
 		internal static void Execute(string[] args)
 		{
+#if DEBUG
+			DebugProcess();
+#endif
+
 			var commandLine = new CommandLine(args);
 			Literal.Initialize(commandLine);
 			var fileLogger = new ContentTypeTextNet.Pe.PeMain.Logic.FileLogger();

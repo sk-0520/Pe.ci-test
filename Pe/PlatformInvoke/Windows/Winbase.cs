@@ -51,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 	/// http://www.pinvoke.net/default.aspx/Structures/WIN32_FIND_DATA.html
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-	struct WIN32_FIND_DATA
+	public struct WIN32_FIND_DATA
 	{
 		public uint dwFileAttributes;
 		public System.Runtime.InteropServices.ComTypes.FILETIME ftCreationTime;

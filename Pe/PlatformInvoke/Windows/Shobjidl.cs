@@ -36,7 +36,7 @@
 	/// http://pinvoke.net/default.aspx/Enums/SLGP_FLAGS.html
 	/// </summary>
 	[Flags()]
-	enum SLGP_FLAGS
+	public enum SLGP_FLAGS
 	{
 		/// <summary>Retrieves the standard short (8.3 format) file name</summary>
 		SLGP_SHORTPATH = 0x1,
@@ -52,7 +52,7 @@
 	/// http://www.pinvoke.net/default.aspx/Enums/SLR_FLAGS.html
 	/// </summary>
 	[Flags()]
-	enum SLR_FLAGS
+	public enum SLR_FLAGS
 	{
 		/// <summary>
 		/// Do not display a dialog box if the link cannot be resolved. When SLR_NO_UI is set,
@@ -123,7 +123,7 @@
 	/// http://www.pinvoke.net/default.aspx/Interfaces/IShellLinkW.html
 	/// </summary>
 	[ComImport(), InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214F9-0000-0000-C000-000000000046")]
-	interface IShellLink
+	public interface IShellLink
 	{
 		/// <summary>Retrieves the path and file name of a Shell link object</summary>
 		void GetPath([Out(), MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out WIN32_FIND_DATA pfd, SLGP_FLAGS fFlags);
