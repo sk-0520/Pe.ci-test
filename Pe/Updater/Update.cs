@@ -228,6 +228,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				downloadSw.Stop();
 				Console.WriteLine("Download -> Size: {0} byte, Time = {1}", (new FileInfo(downloadPath)).Length, downloadSw.Elapsed);
 			}
+#else
+#	if BUILD
+#		error Deinfed BUILD!
+#	endif
 #endif
 
 			if(process != null) {
@@ -246,6 +250,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			if(File.Exists(renamePath)) {
 				File.Delete(renamePath);
 			}
+#else
+#	if BUILD
+#		error Deinfed BUILD!
+#	endif
 #endif
 			try {
 #if !NO_EXPAND
@@ -263,6 +271,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 						entry.ExtractToFile(expandPath, true);
 					}
 				}
+#else
+#	if BUILD
+#		error Deinfed BUILD!
+#	endif
 #endif
 				// スクリプト実行
 				ExecuteScript(Path.Combine(myDir, scriptFileName), this._expandDir.Data, this._platform.Data);
@@ -277,6 +289,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			} catch(Exception) {
 #if !NO_EXPAND
 				File.Move(renamePath, myPath);
+#else
+#	if BUILD
+#		error Deinfed BUILD!
+#	endif
 #endif
 				throw;
 			}
