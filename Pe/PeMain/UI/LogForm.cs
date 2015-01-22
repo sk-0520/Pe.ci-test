@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ObjectDumper;
 
@@ -31,8 +32,7 @@
 				case LogType.Error: return 2;
 				case LogType.Debug: return 3;
 				default:
-					Debug.Assert(false, logType.ToString());
-					return -1;
+					throw new NotImplementedException();
 			}
 		}
 		#endregion ////////////////////////////////////

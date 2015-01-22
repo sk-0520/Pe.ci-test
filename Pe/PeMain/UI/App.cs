@@ -20,6 +20,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.DB;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 	using Microsoft.Win32;
@@ -150,55 +151,20 @@
 			this._notifyIcon.ShowBalloonTip(0, title, message, icon);
 		}
 
-		public void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
-		{
-			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.UseToolbarItem != toolbarItem)) {
-				toolbar.ReceiveChangedLauncherItems(toolbarItem, toolbarGroupItem);
-			}
-		}
-
 		public void AppendWindow(Form window)
 		{
 			this._otherWindows.Add(window);
 			window.FormClosed += window_FormClosed;
 		}
 
-		public void ReceiveDeviceChanged(ChangeDevice changeDevice)
+		public void ChangedLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
 		{
-			//this._commonData.Logger.Puts(LogType.Warning, "ReceiveDeviceChanged", changeDevice);
-			// デバイス状態が変更されたか
-			if(changeDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !this._pause) {
-				// デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
-				// 現在生成されているツールバーの数が前回ディスプレイ数となる
-
-				// 変更通知から現在数をAPIでまともに取得する
-				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
-				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
-				//bool isTimeout = false;
-				Task.Factory.StartNew(() => {
-					const int waitMax = Literal.waitCountForGetScreenCount;
-					int waitCount = 0;
-
-					var managedScreenCount = Screen.AllScreens.Count();
-					while(rawScreenCount != managedScreenCount) {
-						//Debug.WriteLine("waitCount" + waitCount);
-						if(waitMax < ++waitCount) {
-							// タイムアウト
-							//isTimeout = true;
-							break;
-						}
-						Thread.Sleep(Literal.screenCountWaitTime);
-						managedScreenCount = Screen.AllScreens.Count();
-					}
-				}).ContinueWith(t => {
-					if(changedScreenCount) {
-						ChangedScreenCount();
-					}
-				}, TaskScheduler.FromCurrentSynchronizationContext());
+			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.UseToolbarItem != toolbarItem)) {
+				toolbar.ReceiveChangedLauncherItems(toolbarItem, toolbarGroupItem);
 			}
 		}
 
-		public void ChangeClipboard()
+		public void ChangedClipboard()
 		{
 			if(!this._commonData.MainSetting.Clipboard.Enabled) {
 				return;
@@ -238,6 +204,98 @@
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 
+		public void SendHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
+		{
+			ReceiveHotKey(hotKeyId, mod, key);
+		}
+
+		public void SendDeviceChanged(ChangeDevice changeDevice)
+		{
+			ReceiveDeviceChanged(changeDevice);
+		}
+
+		#region IRootSender-Receive
+
+		public void ReceiveDeviceChanged(ChangeDevice changeDevice)
+		{
+			//this._commonData.Logger.Puts(LogType.Warning, "ReceiveDeviceChanged", changeDevice);
+			// デバイス状態が変更されたか
+			if(changeDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !this._pause) {
+				// デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
+				// 現在生成されているツールバーの数が前回ディスプレイ数となる
+
+				// 変更通知から現在数をAPIでまともに取得する
+				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
+				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
+				//bool isTimeout = false;
+				Task.Factory.StartNew(() => {
+					const int waitMax = Literal.waitCountForGetScreenCount;
+					int waitCount = 0;
+
+					var managedScreenCount = Screen.AllScreens.Count();
+					while(rawScreenCount != managedScreenCount) {
+						//Debug.WriteLine("waitCount" + waitCount);
+						if(waitMax < ++waitCount) {
+							// タイムアウト
+							//isTimeout = true;
+							break;
+						}
+						Thread.Sleep(Literal.screenCountWaitTime);
+						managedScreenCount = Screen.AllScreens.Count();
+					}
+				}).ContinueWith(t => {
+					if(changedScreenCount) {
+						ChangedScreenCount();
+					}
+				}, TaskScheduler.FromCurrentSynchronizationContext());
+			}
+		}
+
+		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
+		{
+			if(this._pause) {
+				return;
+			}
+
+			switch(hotKeyId) {
+				case HotKeyId.HiddenFile:
+					ChangeShowSystemEnvironment(SystemEnvironment.IsHiddenFileShow, SystemEnvironment.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
+					break;
+
+				case HotKeyId.Extension:
+					ChangeShowSystemEnvironment(SystemEnvironment.IsExtensionShow, SystemEnvironment.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
+					break;
+
+				case HotKeyId.CreateNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/create"]);
+					CreateNote(Point.Empty);
+					break;
+
+				case HotKeyId.HiddenNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/hidden"]);
+					HiddenNote();
+					break;
+
+				case HotKeyId.CompactNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/compact"]);
+					CompactNote();
+					break;
+
+				case HotKeyId.ShowFrontNote:
+					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/show-front"]);
+					ShowFrontNote();
+					break;
+
+				case HotKeyId.SwitchClipboardShow:
+					SwitchShowClipboard();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		#endregion ------------------------------------------
 		#endregion //////////////////////////////////////////
 
 		#region initilize
@@ -924,7 +982,7 @@
 		{
 			this._clipboardWindow = new ClipboardForm();
 			this._clipboardWindow.SetCommonData(this._commonData);
-			ChangeClipboard();
+			ChangedClipboard();
 		}
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
@@ -1449,56 +1507,6 @@
 			}
 
 			ShowBalloon(icon, title, message);
-		}
-
-		/// <summary>
-		/// ホットキー受信。
-		/// </summary>
-		/// <param name="hotKeyId"></param>
-		/// <param name="mod"></param>
-		/// <param name="key"></param>
-		public void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
-		{
-			if(this._pause) {
-				return;
-			}
-
-			switch(hotKeyId) {
-				case HotKeyId.HiddenFile:
-					ChangeShowSystemEnvironment(SystemEnvironment.IsHiddenFileShow, SystemEnvironment.SetHiddenFileShow, "balloon/hidden-file/title", "balloon/hidden-file/show", "balloon/hidden-file/hide", "balloon/hidden-file/error");
-					break;
-
-				case HotKeyId.Extension:
-					ChangeShowSystemEnvironment(SystemEnvironment.IsExtensionShow, SystemEnvironment.SetExtensionShow, "balloon/extension/title", "balloon/extension/show", "balloon/extension/hide", "balloon/extension/error");
-					break;
-
-				case HotKeyId.CreateNote:
-					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/create"]);
-					CreateNote(Point.Empty);
-					break;
-
-				case HotKeyId.HiddenNote:
-					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/hidden"]);
-					HiddenNote();
-					break;
-
-				case HotKeyId.CompactNote:
-					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/compact"]);
-					CompactNote();
-					break;
-
-				case HotKeyId.ShowFrontNote:
-					ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/note/title"], this._commonData.Language["balloon/note/show-front"]);
-					ShowFrontNote();
-					break;
-
-				case HotKeyId.SwitchClipboardShow:
-					SwitchShowClipboard();
-					break;
-
-				default:
-					break;
-			}
 		}
 
 		NoteForm CreateNote(Point point)

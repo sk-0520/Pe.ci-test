@@ -37,7 +37,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBody = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,21 +79,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemExport = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemImport = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputTitle = new System.Windows.Forms.TextBox();
+			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// inputBody
-			// 
-			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.inputBody.ContextMenuStrip = this.contextMenu;
-			this.inputBody.Location = new System.Drawing.Point(40, 56);
-			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
-			this.inputBody.Name = "inputBody";
-			this.inputBody.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-			this.inputBody.Size = new System.Drawing.Size(187, 120);
-			this.inputBody.TabIndex = 0;
-			this.inputBody.TabStop = false;
-			this.inputBody.Text = "";
 			// 
 			// contextMenu
 			// 
@@ -432,6 +419,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputTitle.TabStop = false;
 			this.inputTitle.Visible = false;
 			this.inputTitle.Leave += new System.EventHandler(this.Input_Leave);
+			// 
+			// inputBody
+			// 
+			this.inputBody.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.inputBody.ContextMenuStrip = this.contextMenu;
+			this.inputBody.Location = new System.Drawing.Point(40, 56);
+			this.inputBody.Margin = new System.Windows.Forms.Padding(0);
+			this.inputBody.Name = "inputBody";
+			this.inputBody.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+			this.inputBody.Size = new System.Drawing.Size(187, 120);
+			this.inputBody.TabIndex = 0;
+			this.inputBody.TabStop = false;
+			this.inputBody.Text = "";
 			// 
 			// NoteForm
 			// 

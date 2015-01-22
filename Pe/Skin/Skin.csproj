@@ -47,6 +47,7 @@
     <Compile Include="SkinNoteStatus.cs" />
     <Compile Include="SkinResource.cs" />
     <Compile Include="SkinToolbarButtonLayout.cs" />
+    <Compile Include="SkinWindow.cs" />
     <Compile Include="ToolbarPosition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

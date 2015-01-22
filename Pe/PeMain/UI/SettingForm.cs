@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 
@@ -256,6 +257,9 @@
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
 			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
+
+			this.commandLauncherStreamFont.FontSetting.Import(launcherSetting.StreamFontSetting);
+			this.commandLauncherStreamFont.RefreshView();
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -549,6 +553,9 @@
 			
 			this.selectLauncherStdStream.SetLanguage(Language);
 			this.selectLauncherAdmin.SetLanguage(Language);
+
+			this.groupLauncherStream.SetLanguage(Language);
+			this.commandLauncherStreamFont.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageToolbar()
@@ -794,6 +801,8 @@
 			foreach(var item in this.selecterLauncher.Items) {
 				setting.Items.Add(item);
 			}
+
+			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
 		}
 
 		void ExportLogSetting(LogSetting logSetting)
@@ -1293,8 +1302,9 @@
 				switch(result) {
 					case DialogResult.Yes:
 						try {
-							var sf = new ShortcutFile(filePath, false);
-							path = sf.TargetPath;
+							using(var sf = new ShortcutFile(filePath)) {
+								path = sf.TargetPath;
+							}
 						} catch(ArgumentException ex) {
 							Debug.WriteLine(ex);
 						}

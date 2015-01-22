@@ -1,24 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-	/// <summary>
-	/// ログ内容種別。
-	/// 
-	/// NOTE: べつにこれといって
-	/// </summary>
-	public enum NoteType
-	{
-		Text,
-		Rtf,
-	}
-	
+	using System;
+	using System.Diagnostics;
+	using System.Drawing;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
-	
 	/// <summary>
 	/// NoteTypeに対してなんかする用ユーティリティだが現状死んでますしおすし。
 	/// </summary>
@@ -30,8 +17,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				case NoteType.Text: return 0;
 				case NoteType.Rtf:  return 1;
 				default:
-					Debug.Assert(false, type.ToString());
-					return -1;
+					throw new NotImplementedException();
 			}
 		}
 		public static NoteType ToNoteType(long value)
@@ -40,8 +26,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				case 0: return NoteType.Text;
 				case 1: return NoteType.Rtf;
 				default:
-					Debug.Assert(false, value.ToString());
-					return NoteType.Text;
+					throw new NotImplementedException();
 			}
 		}
 	}

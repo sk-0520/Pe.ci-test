@@ -25,6 +25,26 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.42.0" type="rc">
+		<ul type="features">
+			<li rev="7a38fc15197655ea9a941744f4c0e24860ff5d28">#167: 標準入出力ダイアログのフォントを設定項目に表示する</li>
+			<li rev="0387abfea5c3af98acba2948271b523240a377c5">#158: 肥大化するarchiveディレクトリ</li>
+			<li rev="3092a80fd5f4f217d8b1133d444375607192b4b3">#170: accept.batを同期実行させない</li>
+		</ul>
+		<ul type="fixes">
+			<li rev="bbb2f76b4ae4a92931906718cbde3b8acf2b31a1">#161: 固定したノートでマウスカーソルが点滅する, 詳細はIssuesを参照のこと</li>
+			<li rev="853a055234c33476e8fd61d6db517c88c43695f6">#163: クリップボードのUnicodeな文字列</li>
+			<li rev="1544ed313cd5a936dc3af284bfb38c86c0c8a3ed">Hashのヘルプファイルをリポジトリ参照へ変更</li>
+			<li rev="ad40f830b93720415224e8c874bbceeb46f9bbd0">一部文言の修正</li>
+			<li rev="8967a05e4fc44ada7ba393d4e2e7b923ac693117">#68: UNICODEを含むショートカットファイルの読み込みに失敗</li>
+		</ul>
+		<ul type="developer">
+			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#160: リリースビルドバッチ整理</li>
+			<li rev="e3ec638ee1ca1f8aec93f5aa1eb2878106873185">#164: switchのDebug.Assert</li>
+			<li rev="34960ebefb5d0820a2d2f7f023bc5f0858773240">#166: readme.txtをMarkdownにする</li>
+			<li rev="11f6e6e7e3e9f55ec8f7c7729038bfee64490163">#160: リリースビルド時に変なdefineがある場合にエラーとする</li>
+		</ul>
+	</log>
 	<log date="2015/01/20" version="0.41.0">
 		<ul type="note">
 			<li rev="">#55対応によりノートの本文入力方法が変わりました。Windowsの付箋に近くなった感じです</li>

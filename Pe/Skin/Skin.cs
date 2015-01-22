@@ -176,16 +176,16 @@
 
 		#region Style
 
-		public virtual void AttachmentStyle(Form target)
+		public virtual void AttachmentStyle(Form target, SkinWindow skinWindow)
 		{
 			EnabledAeroStyle = IsEnabledAeroStyle();
 		}
-		public abstract void DetachmentStyle(Form target);
-		
-		public void RefreshStyle(Form target)
+		public abstract void DetachmentStyle(Form target, SkinWindow skinWindow);
+
+		public void RefreshStyle(Form target, SkinWindow skinWindow)
 		{
-			DetachmentStyle(target);
-			AttachmentStyle(target);
+			DetachmentStyle(target, skinWindow);
+			AttachmentStyle(target, skinWindow);
 		}
 
 		#endregion

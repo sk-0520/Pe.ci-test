@@ -22,8 +22,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		#endif
 		
 		public const string programName = "Pe";
-		public const string updateProgramDir = "Updater";
-		public const string updateProgramName = updateProgramDir + ".exe";
+		public const string updateProgramDirectoryName = "Updater";
+		public const string updateProgramName = updateProgramDirectoryName + ".exe";
 		#if DEBUG
 		public const string shortcutName = "Pe(DEBUG).lnk";
 		#else
@@ -39,23 +39,23 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// <summary>
 		/// このプログラムが使用するディレクトリ名
 		/// </summary>
-		private const string _dirRootName = programName;
-		
-		private static string _settingRootDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		private static string _logRootDirPath     = Path.Combine(UserSettingDirPath, "log");
+		private const string _rootDirectoryName = programName;
+
+		private static string _settingRootDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		private static string _logRootDirPath     = Path.Combine(UserSettingDirectoryPath, "log");
 		
 		private const string _mainSettingFileName    = "mainsetting.xml";
 		private const string _launcherItemsFileName  = "launcher-items.xml";
 		//private const string _clipboardItemsFileName = "clipboard-items.xml";
 		private const string _dbFileName             = "db.sqlite3";
-		private const string _backupDirName          = "backup";
+		private const string _backupDirectoryName          = "backup";
 
 		private const string _applicationsFileName = "ApplicationSetting.xml";
 		private const string _applicationsSettingBaseDirectoryName = "Applications";
 		private const string _applicationsLogBaseDirectoryName = "Applications";
 
-		private const string _libDirName = "lib";
-		private const string _skinDirName = "lib";
+		private const string _libDirectoryName = "lib";
+		private const string _skinDirectoryName = "lib";
 
 		/// <summary>
 		/// デフォルトの言語名。
@@ -176,6 +176,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const int backupCount = 20;
 		public const int logListLimit = 1000;
 #endif
+		public const int updateArchiveCount = 15;
 
 
 		/// <summary>
@@ -192,7 +193,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// <summary>
 		/// 起動ディレクトリ
 		/// </summary>
-		public static string ApplicationRootDirPath
+		public static string ApplicationRootDirectoryPath
 		{
 			get
 			{
@@ -202,22 +203,22 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// <summary>
 		/// bin/
 		/// </summary>
-		public static string ApplicationBinDirPath
+		public static string ApplicationBinDirectoryPath
 		{
 			get
 			{
-				return Path.Combine(ApplicationRootDirPath, "bin");
+				return Path.Combine(ApplicationRootDirectoryPath, "bin");
 			}
 		}
 
 		public static string ApplicationBinAppPath
 		{
-			get { return Path.Combine(ApplicationBinDirPath, _applicationsFileName); }
+			get { return Path.Combine(ApplicationBinDirectoryPath, _applicationsFileName); }
 		}
 
 		public static string ApplicationSettingBaseDirectoryPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _applicationsSettingBaseDirectoryName); }
+			get { return Path.Combine(UserSettingDirectoryPath, _applicationsSettingBaseDirectoryName); }
 		}
 
 		public static string ApplicationLogBaseDirectoryPath
@@ -232,7 +233,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get
 			{
-				return Path.Combine(ApplicationRootDirPath, "sbin");
+				return Path.Combine(ApplicationRootDirectoryPath, "sbin");
 			}
 		}
 
@@ -246,7 +247,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// </summary>
 		public static string ApplicationLibraryDirectoryPath
 		{
-			get { return Path.Combine(ApplicationRootDirPath, "lib"); }
+			get { return Path.Combine(ApplicationRootDirectoryPath, "lib"); }
 		}
 
 		public static string ApplicationSkinDirectoryPath
@@ -261,7 +262,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get
 			{
-				return Path.Combine(ApplicationRootDirPath, "etc");
+				return Path.Combine(ApplicationRootDirectoryPath, "etc");
 			}
 		}
 		
@@ -316,17 +317,17 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get
 			{
-				return Path.Combine(ApplicationRootDirPath, "doc");
+				return Path.Combine(ApplicationRootDirectoryPath, "doc");
 			}
 		}
 		/// <summary>
 		/// ユーザー設定ルートディレクトリ
 		/// </summary>
-		public static string UserSettingDirPath
+		public static string UserSettingDirectoryPath
 		{
 			get
 			{
-				var path = Path.Combine(_settingRootDirPath, _dirRootName);
+				var path = Path.Combine(_settingRootDirectoryPath, _rootDirectoryName);
 				
 				return path;
 			}
@@ -336,12 +337,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// </summary>
 		public static string UserMainSettingPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _mainSettingFileName); }
+			get { return Path.Combine(UserSettingDirectoryPath, _mainSettingFileName); }
 		}
 		
 		public static string UserLauncherItemsPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _launcherItemsFileName); }
+			get { return Path.Combine(UserSettingDirectoryPath, _launcherItemsFileName); }
 		}
 
 		/*
@@ -353,12 +354,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		public static string UserDBPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _dbFileName); }
+			get { return Path.Combine(UserSettingDirectoryPath, _dbFileName); }
 		}
-		
-		public static string UserBackupDirPath
+
+		public static string UserBackupDirectoryPath
 		{
-			get { return Path.Combine(UserSettingDirPath, _backupDirName);}
+			get { return Path.Combine(UserSettingDirectoryPath, _backupDirectoryName); }
 		}
 		
 		public static string NowTimestampFileName
@@ -368,7 +369,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		
 		public static string UserDownloadDirPath
 		{
-			get { return Path.Combine(UserSettingDirPath, "archive");}
+			get { return Path.Combine(UserSettingDirectoryPath, "archive");}
 		}
 		
 		/// <summary>
@@ -445,7 +446,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 			#endif
 			
 			if(commandLine.HasOption("setting-root")) {
-				_settingRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
+				_settingRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
 			}
 			
 			if(commandLine.HasOption("log")) {
@@ -476,18 +477,6 @@ namespace ContentTypeTextNet.Pe.PeMain
 			
 			return replacedText;
 		}
-	}
-	
-	public enum HotKeyId: ushort
-	{
-		ShowCommand = 0x0001,
-		HiddenFile,
-		Extension,
-		CreateNote,
-		HiddenNote,
-		CompactNote,
-		ShowFrontNote,
-		SwitchClipboardShow,
 	}
 	
 	public static class AppLanguageName

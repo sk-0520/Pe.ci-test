@@ -45,6 +45,29 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		MANIFEST = 24
 	}
 
+	/// <summary>
+	/// The CharSet must match the CharSet of the corresponding PInvoke signature
+	/// 
+	/// http://www.pinvoke.net/default.aspx/Structures/WIN32_FIND_DATA.html
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+	public struct WIN32_FIND_DATA
+	{
+		public uint dwFileAttributes;
+		public System.Runtime.InteropServices.ComTypes.FILETIME ftCreationTime;
+		public System.Runtime.InteropServices.ComTypes.FILETIME ftLastAccessTime;
+		public System.Runtime.InteropServices.ComTypes.FILETIME ftLastWriteTime;
+		public uint nFileSizeHigh;
+		public uint nFileSizeLow;
+		public uint dwReserved0;
+		public uint dwReserved1;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+		public string cFileName;
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
+		public string cAlternateFileName;
+	}
+
+
 	public delegate bool EnumResNameProc(IntPtr hModule, IntPtr type, IntPtr name, IntPtr lp);
 
 	partial class NativeMethods
@@ -56,9 +79,6 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[DllImport("kernel32.dll", SetLastError = true)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr FindResource(IntPtr hModule, string lpName, string lpType);
-		[DllImport("kernel32.dll")]
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-		public static extern IntPtr FindResource(IntPtr hModule, int lpID, string lpType);
 		[DllImport("kernel32.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr FindResource(IntPtr hModule, IntPtr lpID, IntPtr lpType);

@@ -1,139 +1,180 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using IWshRuntimeLibrary;
+using System.Runtime.InteropServices;
+using System.Text;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
 	/// ショートカット。
 	/// </summary>
-	public class ShortcutFile
+	public class ShortcutFile: IDisposable
 	{
-		IWshShortcut _shortcut;
-
-		public ShortcutFile(string path, bool isCreste)
+		private static StringBuilder CreateStringBuffer()
 		{
-			IsCreate = isCreste;
-			if(IsCreate) {
-				var wshShell = CreateShell();
-				this._shortcut = (IWshShortcut)wshShell.CreateShortcut(path);
-			} else {
-				Load(path);
-			}
+			return CreateStringBuffer((int)MAX.MAX_PATH);
+		}
+		private static StringBuilder CreateStringBuffer(int max)
+		{
+			return new StringBuilder(max, max);
+		}
+		private static IShellLink CreateShellLink()
+		{
+			return (IShellLink)new ShellLinkObject();
+		}
+		protected IShellLink _shellLink;
+
+		public ShortcutFile()
+		{
+			this._shellLink = CreateShellLink();
 		}
 
-		public bool IsCreate { get; private set; }
-
-		public string FullName
+		public ShortcutFile(string path)
 		{
-			get { return this._shortcut.FullName; }
+			Load(path);
+		}
+
+		private IPersistFile PersistFile {
+			get
+			{
+				var result = this._shellLink as IPersistFile;
+				if (result == null) {
+					throw new COMException("cannot create IPersistFile");
+				}
+
+				return result;
+			}
 		}
 
 		public string TargetPath
 		{
 			get
 			{
-				var path = this._shortcut.TargetPath;
-				var expandPath = Environment.ExpandEnvironmentVariables(path);
-				if(FileUtility.Exists(expandPath)) {
-					return expandPath;
-				}
-				var dirPath = Path.GetDirectoryName(expandPath);
-				var x86pfPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-				var x64pfPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-				var x86Index = dirPath.IndexOf(x86pfPath);
-				var x64Index = dirPath.IndexOf(x64pfPath);
+				var resultBuffer = CreateStringBuffer();
+				var findData = new WIN32_FIND_DATA();
 
-				if(x86Index == 0) {
-					// x86指定の場合にx64を考慮(なんかへんだこれ)
-					var relationPath = dirPath.Substring(x86pfPath.Length);
-					var x64TargetPath = Path.Combine(x64pfPath, relationPath);
-					if(FileUtility.Exists(x64TargetPath)) {
-						return x64TargetPath;
-					}
-				}
+				this._shellLink.GetPath(resultBuffer, resultBuffer.MaxCapacity, out findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
-				return path;
+				return resultBuffer.ToString();
 			}
-			set { this._shortcut.TargetPath = value; }
+			set
+			{
+				this._shellLink.SetPath(value);
+			}
 		}
-
 
 		public string Arguments
 		{
-			get { return this._shortcut.Arguments; }
-			set { this._shortcut.Arguments = value; }
+			get
+			{
+				var max = 1024;
+				var resultBuffer = CreateStringBuffer(max);
+
+				this._shellLink.GetArguments(resultBuffer, resultBuffer.Capacity);
+
+				return resultBuffer.ToString();
+			}
+			set
+			{
+				this._shellLink.SetArguments(value);
+			}
 		}
 
 		public string Description
 		{
-			get { return this._shortcut.Description; }
-			set { this._shortcut.Description = value; }
-		}
+			get
+			{
+				var max = 1024 * 5;
+				var resultBuffer = CreateStringBuffer(max);
 
-		public string Hotkey
-		{
-			get { return this._shortcut.Hotkey; }
-			set { this._shortcut.Hotkey = value; }
-		}
+				this._shellLink.GetDescription(resultBuffer, resultBuffer.Capacity);
 
-		public string IconLocation
-		{
-			get { return this._shortcut.Hotkey; }
-			set { this._shortcut.Hotkey = value; }
-		}
-
-		public string RelativePath
-		{
-			set { this._shortcut.RelativePath = value; }
-		}
-
-		public int WindowStyle
-		{
-			get { return this._shortcut.WindowStyle; }
-			set { this._shortcut.WindowStyle = value; }
+				return resultBuffer.ToString();
+			}
+			set
+			{
+				this._shellLink.SetDescription(value);
+			}
 		}
 
 		public string WorkingDirectory
 		{
-			get { return this._shortcut.WorkingDirectory; }
-			set { this._shortcut.WorkingDirectory = value; }
-		}
+			get
+			{
+				var resultBuffer = CreateStringBuffer();
 
-		public string IconPath { get; set; }
-		public int IconIndex { get; set; }
+				this._shellLink.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
 
-		protected IWshRuntimeLibrary.WshShell CreateShell()
-		{
-			if(Environment.Is64BitOperatingSystem && Environment.Is64BitProcess) {
-				return new IWshRuntimeLibrary.WshShell();
-			} else {
-				return new IWshRuntimeLibrary.WshShellClass();
+				return resultBuffer.ToString();
+			}
+			set
+			{
+				this._shellLink.SetWorkingDirectory(value);
 			}
 		}
+
+		public SW ShowCommand
+		{
+			get
+			{
+				int rawShowCommand;
+
+				this._shellLink.GetShowCmd(out rawShowCommand);
+
+				return (SW)rawShowCommand;
+			}
+			set
+			{
+				this._shellLink.SetShowCmd((int)value);
+			}
+		}
+
+		public IconPath GetIcon()
+		{
+			var resultBuffer = CreateStringBuffer();
+			int iconIndex;
+
+			this._shellLink.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
+
+			return new IconPath(resultBuffer.ToString(), iconIndex);
+		}
+
+		public void SetIcon(IconPath iconPath)
+		{
+			this._shellLink.SetIconLocation(iconPath.Path, iconPath.Index);
+		}
+
+		#region IDisposable
+
+		protected void Dispose(bool disposing)
+		{
+			Marshal.ReleaseComObject(this._shellLink);
+			this._shellLink = null;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion /////////////////////////////////
 
 		public void Load(string path)
 		{
-			var wshShell = CreateShell();
-			this._shortcut = (IWshShortcut)wshShell.CreateShortcut(path);
-
-			var iconPath = this._shortcut.IconLocation;
-			var index = iconPath.LastIndexOf(',');
-			if(index == -1) {
-				IconPath = iconPath;
-				IconIndex = 0;
-			} else {
-				IconPath = iconPath.Substring(0, index);
-				IconIndex = int.Parse(iconPath.Substring(index + 1));
+			if(this._shellLink != null) {
+				Dispose(true);
 			}
+
+			this._shellLink = CreateShellLink();
+			PersistFile.Load(path, 0);
 		}
 
-		public void Save()
+		public void Save(string path)
 		{
-			Debug.Assert(IsCreate);
-			this._shortcut.IconLocation = string.Format("{0},{1}", IconPath, IconIndex);
-			this._shortcut.Save();
+			PersistFile.Save(path, true);
 		}
 	}
+
 }

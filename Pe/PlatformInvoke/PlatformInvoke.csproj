@@ -67,7 +67,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\Dbt.cs" />
+    <Compile Include="Windows\IID.cs" />
     <Compile Include="Windows\Mshtmhst.cs" />
+    <Compile Include="Windows\ObjIdl.cs" />
+    <Compile Include="Windows\Shldisp.cs" />
     <Compile Include="Windows\Shlwapi.cs" />
     <Compile Include="Windows\Shobjidl.cs" />
     <Compile Include="Windows\WMI\CIMWin32.cs" />

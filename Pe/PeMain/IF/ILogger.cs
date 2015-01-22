@@ -1,7 +1,8 @@
-﻿using ContentTypeTextNet.Pe.PeMain.Data;
-
-namespace ContentTypeTextNet.Pe.PeMain.IF
+﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	/// <summary>
 	/// ログ取インターフェイス。
 	/// </summary>

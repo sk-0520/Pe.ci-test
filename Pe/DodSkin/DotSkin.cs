@@ -43,11 +43,12 @@
 
 		#region Style
 
-		public override void AttachmentStyle(Form target)
+		public override void AttachmentStyle(Form target, SkinWindow skinWindow)
 		{
+			base.AttachmentStyle(target, skinWindow);
 		}
 
-		public override void DetachmentStyle(Form target)
+		public override void DetachmentStyle(Form target, SkinWindow skinWindow)
 		{
 		}
 

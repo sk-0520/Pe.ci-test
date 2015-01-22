@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Threading;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	public class UpdateInfo
 	{
 		IEnumerable<string> _log;
@@ -43,7 +44,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 		
 		public static string UpdaterExe
 		{
-			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramDir, Literal.updateProgramName); }
+			get { return Path.Combine(Literal.ApplicationSBinDirPath, Literal.updateProgramDirectoryName, Literal.updateProgramName); }
 		}
 		
 		public UpdateData(string downloadPath, bool donwloadRc, CommonData commonData)
@@ -139,7 +140,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			var lines = new List<string>();
 			var map = new Dictionary<string,string>() {
 				{ "download",       this._downloadPath },
-				{ "expand",         Literal.ApplicationRootDirPath },
+				{ "expand",         Literal.ApplicationRootDirectoryPath },
 				{ "wait",           "true" },
 				{ "no-wait-update", "true" },
 				{ "event",           eventName },
@@ -148,6 +149,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			if(!Directory.Exists(this._downloadPath)) {
 				Directory.CreateDirectory(this._downloadPath);
 			}
+			// #158
+			AppUtility.RotateFile(this._downloadPath, "*.zip", Literal.updateArchiveCount, this._commonData.Logger);
 
 			//var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
 			var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);

@@ -267,24 +267,29 @@
 
 		#region Style
 
-		public override void AttachmentStyle(Form target)
+		public override void AttachmentStyle(Form target, SkinWindow skinWindow)
 		{
-			base.AttachmentStyle(target);
-			//EnabledVisualStyle = false;
-			if(EnabledAeroStyle) {
-				SetVisualStyle(target);
+			if(skinWindow == SkinWindow.Toolbar) {
+				base.AttachmentStyle(target, skinWindow);
+
+				//EnabledVisualStyle = false;
+				if(EnabledAeroStyle) {
+					SetVisualStyle(target);
+				}
 			}
 		}
-		
-		public override void DetachmentStyle(Form target)
+
+		public override void DetachmentStyle(Form target, SkinWindow skinWindow)
 		{
-			if(EnabledAeroStyle) {
-				var margin = new MARGINS();
-				margin.leftWidth = 0;
-				margin.rightWidth = 0;
-				margin.topHeight = 0;
-				margin.bottomHeight = 0;
-				NativeMethods.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
+			if(skinWindow == SkinWindow.Toolbar) {
+				if(EnabledAeroStyle) {
+					var margin = new MARGINS();
+					margin.leftWidth = 0;
+					margin.rightWidth = 0;
+					margin.topHeight = 0;
+					margin.bottomHeight = 0;
+					NativeMethods.DwmExtendFrameIntoClientArea(target.Handle, ref margin);
+				}
 			}
 		}
 
@@ -352,8 +357,7 @@
 						break;
 						
 					default:
-						Debug.Assert(false, toolbarPosition.ToString());
-						break;
+						throw new NotImplementedException();
 				}
 			}
 			return edge;
@@ -381,8 +385,7 @@
 						break;
 						
 					default:
-						Debug.Assert(false, toolbarPosition.ToString());
-						break;
+						throw new NotImplementedException();
 				}
 				
 				return border;
@@ -469,8 +472,7 @@
 					case SkinNoteCommand.Topmost: pos = 2; break;
 					case SkinNoteCommand.Compact: pos = 3; break;
 				default:
-					Debug.Assert(false);
-					break;
+					throw new NotImplementedException();
 			}
 			var size = new Size(parentArea.Height, parentArea.Height);
 			return new Rectangle(
@@ -537,9 +539,7 @@
 							break;
 							
 						default:
-							startPoint = endPoint = Point.Empty;
-							Debug.Assert(false, toolbarPosition.ToString());
-							break;
+							throw new NotImplementedException();
 					}
 					using(var pen = new Pen(Color.FromArgb(180, Color.White))) {
 						pen.Width = lineWidth;
@@ -704,8 +704,7 @@
 						case SkinButtonState.Selected:
 							case SkinButtonState.Pressed:  alpha = 210; break;
 						default:
-							Debug.Assert(false, toolbarButtonData.ButtonState.ToString());
-							break;
+							throw new NotImplementedException();
 					}
 					
 					RectangleF fillArea = drawArea;

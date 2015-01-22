@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Kind;
 
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
@@ -10,16 +11,22 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 	public interface IRootSender
 	{
 		void ShowBalloon(ToolTipIcon icon, string title, string message);
-	
-		void ChangeLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
 
 		void AppendWindow(Form window);
-		
-		void ReceiveHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
-		
-		void ReceiveDeviceChanged(ChangeDevice changeDevice);
 
-		//bool EnabledClipboard { get; set; }
-		void ChangeClipboard();
+		void ChangedLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem);
+
+		void ChangedClipboard();
+
+		/// <summary>
+		/// ホットキー。
+		/// </summary>
+		/// <param name="hotKeyId"></param>
+		/// <param name="mod"></param>
+		/// <param name="key"></param>
+		void SendHotKey(HotKeyId hotKeyId, MOD mod, Keys key);
+		
+		void SendDeviceChanged(ChangeDevice changeDevice);
+
 	}
 }

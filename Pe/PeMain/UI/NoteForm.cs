@@ -14,6 +14,7 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 
@@ -355,6 +356,11 @@
 						var hittest = WindowsUtility.HTFromLParam(m.LParam);
 						if(hittest == HT.HTCAPTION) {
 							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+							m.Result = new IntPtr(1);
+							return;
+						} else if(NoteItem.Locked) {
+							NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
+							m.Result = new IntPtr(1);
 							return;
 						}
 					}
@@ -395,6 +401,12 @@
 				case (int)WM.WM_EXITSIZEMOVE:
 					{
 						Opacity = Literal.noteNormalOpacity;
+					}
+					break;
+
+				case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+					{
+						CommonData.Skin.RefreshStyle(this, SkinWindow.Note);
 					}
 					break;
 
@@ -480,6 +492,8 @@
 		#region skin
 		void ApplySkin()
 		{
+			CommonData.Skin.AttachmentStyle(this, SkinWindow.Note);
+
 			this.contextMenu_itemTitle.Image = CommonData.Skin.GetImage(SkinImage.NoteTitle);
 			this.contextMenu_itemBody.Image = CommonData.Skin.GetImage(SkinImage.NoteBody);
 			this.contextMenu_itemCopy.Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy);
@@ -532,8 +546,8 @@
 			MinimumSize = minSize;
 
 			ApplyBodyStyle();
-			ApplySkin();
 			ApplyLanguage();
+			ApplySkin();
 
 			ChangeLock(NoteItem.Locked);
 
@@ -629,8 +643,7 @@
 					break;
 
 				default:
-					Debug.Assert(false, noteCommand.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 		}
 
@@ -1231,6 +1244,7 @@
 			ChangeLock(false);
 			this.inputBody.Focus();
 		}
+
 
 
 	}

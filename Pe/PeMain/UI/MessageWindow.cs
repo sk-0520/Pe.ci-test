@@ -1,12 +1,13 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	public partial class MessageWindow: Form, ISetCommonData
 	{
 		#region property
@@ -58,13 +59,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						var id = (HotKeyId)m.WParam;
 						var mod = (MOD)unchecked((short)(long)m.LParam);
 						var key = (Keys)unchecked((ushort)((long)m.LParam >> 16));
-						CommonData.RootSender.ReceiveHotKey(id, mod, key);
+						CommonData.RootSender.SendHotKey(id, mod, key);
 					}
 					break;
 
 				case (int)WM.WM_DEVICECHANGE: {
 						var changeDevice = new ChangeDevice(m);
-						CommonData.RootSender.ReceiveDeviceChanged(changeDevice);
+						CommonData.RootSender.SendDeviceChanged(changeDevice);
 					}
 					break;
 				/*
@@ -90,7 +91,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				break;
 				*/
 				case (int)WM.WM_CLIPBOARDUPDATE: {
-						CommonData.RootSender.ChangeClipboard();
+						CommonData.RootSender.ChangedClipboard();
 					}
 					break;
 

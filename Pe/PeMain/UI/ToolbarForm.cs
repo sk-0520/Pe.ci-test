@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Drawing.Drawing2D;
+	using System.IO;
+	using System.Linq;
+	using System.Runtime.InteropServices;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// ツールバー。
 	/// </summary>
@@ -296,7 +297,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						break;
 
 					default:
-						Debug.Assert(false, toolbarItem.ToolbarPosition.ToString());
 						throw new NotImplementedException();
 				}
 
@@ -409,7 +409,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				switch(m.Msg) {
-					case (int)WM.WM_SYSCOMMAND: {
+					case (int)WM.WM_SYSCOMMAND:
+						{
 							switch(m.WParam.ToInt32() & 0xfff0) {
 								case (int)SC.SC_MINIMIZE:
 								case (int)SC.SC_MAXIMIZE:
@@ -421,7 +422,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						}
 						break;
 
-					case (int)WM.WM_NCPAINT: {
+					case (int)WM.WM_NCPAINT:
+						{
 							if(CommonData != null) {
 								var hDC = NativeMethods.GetWindowDC(Handle);
 								try {
@@ -435,8 +437,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						}
 						break;
 
-					case (int)WM.WM_NCHITTEST: {
-
+					case (int)WM.WM_NCHITTEST:
+						{
 							var point = PointToClient(WindowsUtility.ScreenPointFromLParam(m.LParam));
 							var padding = Padding;
 
@@ -460,7 +462,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						}
 						break;
 
-					case (int)WM.WM_SETCURSOR: {
+					case (int)WM.WM_SETCURSOR:
+						{
 							if(!this._menuOpening) {
 								var hittest = WindowsUtility.HTFromLParam(m.LParam);
 								if(hittest == HT.HTCAPTION) {
@@ -481,7 +484,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					break;
 					 */
 
-					case (int)WM.WM_MOVING: {
+					case (int)WM.WM_MOVING:
+						{
 							var rect = (RECT)Marshal.PtrToStructure(m.LParam, typeof(RECT));
 							var workingArea = DockScreen.WorkingArea;
 
@@ -505,8 +509,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						}
 						break;
 
-					case (int)WM.WM_DWMCOMPOSITIONCHANGED: {
-							CommonData.Skin.RefreshStyle(this);
+					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+						{
+							CommonData.Skin.RefreshStyle(this, SkinWindow.Toolbar);
 						}
 						break;
 				}
@@ -561,8 +566,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			renderer.ToolbarItem = UseToolbarItem;
 			
 			this.toolLauncher.Renderer = renderer;
-			
-			CommonData.Skin.AttachmentStyle(this);
+
+			CommonData.Skin.AttachmentStyle(this, SkinWindow.Toolbar);
 		}
 		
 		void ApplySettingPosition()
@@ -1548,10 +1553,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 					switch(result) {
 						case DialogResult.Yes:
 							try {
-								var sf = new ShortcutFile(path, false);
-								var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
-								checkDirectory = Directory.Exists(expandPath);
-								path = sf.TargetPath;
+								using(var sf = new ShortcutFile(path)) {
+									var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
+									checkDirectory = Directory.Exists(expandPath);
+									path = sf.TargetPath;
+								}
 							} catch(ArgumentException ex) {
 								CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 							}
@@ -1598,7 +1604,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				SelectedGroup(SelectedGroupItem);
 				
 				// 他のツールバーにアイテム変更を教える
-				CommonData.RootSender.ChangeLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
+				CommonData.RootSender.ChangedLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
 			}
 		}
 		
@@ -1855,8 +1861,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 						break;
 						
 					default:
-						Debug.Assert(false, UseToolbarItem.ToolbarPosition.ToString());
-						break;
+						throw new NotImplementedException();
 				}
 			}
 		}

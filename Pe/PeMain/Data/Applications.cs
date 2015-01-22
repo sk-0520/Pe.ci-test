@@ -1,57 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.IF;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
-	/// <summary>
-	/// プログラムの種類。
-	/// </summary>
-	public enum ApplicationType
-	{
-		/// <summary>
-		/// コンソール。
-		/// </summary>
-		Console,
-		/// <summary>
-		/// GUI。
-		/// </summary>
-		Window,
-	}
-
-	/// <summary>
-	/// 標準入出力に関するフラグ。
-	/// </summary>
-	[Flags]
-	public enum ApplicationStream
-	{
-		/// <summary>
-		/// なし
-		/// </summary>
-		None  = 0x00,
-		/// <summary>
-		/// 標準入力。
-		/// </summary>
-		In    = 0x01,
-		/// <summary>
-		/// 標準出力。
-		/// </summary>
-		Out   = 0x02,
-		/// <summary>
-		/// 標準エラー。
-		/// </summary>
-		Error = 0x04,
-		/// <summary>
-		/// Peで完全処理(In, Out, Errorは無視される)。
-		/// </summary>
-		Custom = 0x08,
-	}
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Threading;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	/// <summary>
 	/// パラメータの種類。
@@ -80,9 +38,18 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		//Hex,
 	}
 
+	/// <summary>
+	/// アプリケーションの通信方法。
+	/// </summary>
 	public enum ApplicationCommunication
 	{
+		/// <summary>
+		/// イベントによる終了通知。
+		/// </summary>
 		Event,
+		/// <summary>
+		/// C/Sにてデータの相互通信。
+		/// </summary>
 		ClientServer,
 	}
 
@@ -93,7 +60,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	public class ApplicationFile: NameItem
 	{
 		/// <summary>
-		/// ディレクトリ名
+		/// ディレクトリ名。
 		/// </summary>
 		[XmlAttribute]
 		public string Directory { get; set; }
@@ -103,12 +70,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		[XmlAttribute]
 		public string Help { get; set; }
 		/// <summary>
-		/// ヘルプ。
+		/// 設定を行うか。
 		/// </summary>
 		[XmlAttribute]
 		public bool Setting { get; set; }
 		/// <summary>
-		/// ヘルプ。
+		/// ログ出力を行うか。
 		/// </summary>
 		[XmlAttribute]
 		public bool Log { get; set; }
@@ -131,6 +98,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		[XmlAttribute]
 		public bool Necessary { get; set; }
 
+		/// <summary>
+		/// 値。
+		/// </summary>
 		[XmlAttribute]
 		public string Value { get; set; }
 	}
@@ -146,6 +116,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Parameters = new List<ApplicationParameter>();
 		}
 
+		/// <summary>
+		/// アプリケーションの共通IFとしての言語キー。
+		/// </summary>
 		[XmlAttribute]
 		public string LanguageKey { get; set; }
 
@@ -174,14 +147,19 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 管理者権限で実行。
 		/// </summary>
 		public bool Administrator { get; set; }
-
+		/// <summary>
+		/// ディレクトリパス。
+		/// </summary>
 		public string DirectoryPath
 		{
 			get
 			{
-				return Path.Combine(Literal.ApplicationBinDirPath, File.Directory);
+				return Path.Combine(Literal.ApplicationBinDirectoryPath, File.Directory);
 			}
 		}
+		/// <summary>
+		/// アプリケーション自体のパス。
+		/// </summary>
 		public string FilePath
 		{
 			get
@@ -189,13 +167,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				return Path.Combine(DirectoryPath, File.Name);
 			}
 		}
+		/// <summary>
+		/// ヘルプのパス。
+		/// 
+		/// ファイル・URIを問わない。
+		/// </summary>
 		public string HelpPath
 		{
 			get
 			{
+				// TODO: だるい。とりあえず二択で。
+				if(File.Help.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || File.Help.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) {
+					return File.Help;
+				}
+
 				return Path.Combine(DirectoryPath, File.Help);
 			}
 		}
+		/// <summary>
+		/// 設定ファイルを配置するディレクトリパス。
+		/// </summary>
 		public string SettingDirectoryPath
 		{
 			get
@@ -203,6 +194,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				return Path.Combine(Literal.ApplicationSettingBaseDirectoryPath, File.Directory);
 			}
 		}
+		/// <summary>
+		/// ログファイルを配置するディレクトリパス。
+		/// </summary>
 		public string LogDirectoryPath
 		{
 			get
@@ -211,13 +205,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			}
 		}
 
-
+		/// <summary>
+		/// アプリケーションに対してPeから渡される環境変数のデータを作成する。
+		/// </summary>
+		/// <returns></returns>
 		public IDictionary<string, string> CreateExecuterEV()
 		{
 			var result = new Dictionary<string, string>() {
 				{ EVLiteral.systemExecuteFilePath, Literal.ApplicationExecutablePath },
-				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirPath },
-				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirPath },
+				{ EVLiteral.systemDirectoryPath, Literal.ApplicationRootDirectoryPath },
+				{ EVLiteral.systemSettingDirectoryPath, Literal.UserSettingDirectoryPath },
 				{ EVLiteral.systemLogDirectoryPath, Literal.LogFileDirPath },
 			};
 
@@ -236,10 +233,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 			return result;
 		}
-
-
 	}
 
+	/// <summary>
+	/// 実行アプリケーションのデータ。
+	/// </summary>
 	public class ApplicationExecuteItem: DisposableNameItem
 	{
 		public ApplicationExecuteItem(ApplicationItem item)
@@ -247,12 +245,24 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			ApplicationItem = item;
 		}
 
+		/// <summary>
+		/// 実行中アプリケーション。
+		/// </summary>
 		public ApplicationItem ApplicationItem { get; private set; }
+		/// <summary>
+		/// 実行中プロセス。
+		/// </summary>
 		public Process Process { get; set; }
+		/// <summary>
+		/// 通信用イベント。
+		/// </summary>
 		public EventWaitHandle Event { get; set; }
 
 		#region INameItem
 
+		/// <summary>
+		/// 実行中アプリケーション名。
+		/// </summary>
 		public new string Name
 		{
 			get { return ApplicationItem.Name;  }
@@ -285,6 +295,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		#endregion
 	}
 
+	/// <summary>
+	/// アプリケーション設定。
+	/// </summary>
 	[Serializable]
 	public class ApplicationSetting: DisposableItem
 	{

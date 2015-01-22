@@ -156,7 +156,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		protected override void OnResizeEnd(EventArgs e)
 		{
 			if(IsDocking) {
-				// AppBar のサイズを更新します。
+				// AppBar のサイズを更新。
 				switch (DesktopDockType) {
 					case DesktopDockType.Left:
 					case DesktopDockType.Right:
@@ -166,6 +166,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					case DesktopDockType.Bottom:
 						BarSize = new Size(BarSize.Width, Height);
 						break;
+					default:
+						throw new NotImplementedException();
 				}
 				Docking(DesktopDockType);
 			}
@@ -230,6 +232,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 							// タスクバーの [常に手前に表示] または [自動的に隠す] が変化したとき
 							// 特に何もする必要なし
 							OnAppbarStateChange(EventArgs.Empty);
+							break;
+
+						default:
 							break;
 					}
 				}
@@ -344,8 +349,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 					
 				default:
-					Debug.Assert(false, appBar.uEdge.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 		}
 		
@@ -519,8 +523,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 					
 				default:
-					Debug.Assert(false, DesktopDockType.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 			
 			HiddenView(!force, new Rectangle(pos, size));
@@ -565,8 +568,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 					break;
 					
 				default:
-					Debug.Assert(false, DesktopDockType.ToString());
-					break;
+					throw new NotImplementedException();
 			}
 			
 			Bounds = new Rectangle(pos, size);

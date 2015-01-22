@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using System.Xml.Linq;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 情報。
 	/// </summary>
@@ -176,12 +177,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		
 		void CommandExecuteDir_Click(object sender, EventArgs e)
 		{
-			OpenDirectory(Literal.ApplicationRootDirPath);
+			OpenDirectory(Literal.ApplicationRootDirectoryPath);
 		}
 		
 		void CommandDataDir_Click(object sender, EventArgs e)
 		{
-			OpenDirectory(Literal.UserSettingDirPath);
+			OpenDirectory(Literal.UserSettingDirectoryPath);
 		}
 		
 		void CommandUpdate_Click(object sender, EventArgs e)
