@@ -387,7 +387,7 @@
 				switch(dotExt.ToLower()) {
 					case ".lnk": {
 							if(!useShortcut) {
-								using(var shortcut = new ShortcutFile2(expandPath)) {
+								using(var shortcut = new ShortcutFile(expandPath)) {
 									item.Command = shortcut.TargetPath;
 									item.Option = shortcut.Arguments;
 									item.WorkDirPath = shortcut.WorkingDirectory;

@@ -1553,7 +1553,7 @@
 					switch(result) {
 						case DialogResult.Yes:
 							try {
-								using(var sf = new ShortcutFile2(path)) {
+								using(var sf = new ShortcutFile(path)) {
 									var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
 									checkDirectory = Directory.Exists(expandPath);
 									path = sf.TargetPath;

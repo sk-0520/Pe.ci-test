@@ -1302,7 +1302,7 @@
 				switch(result) {
 					case DialogResult.Yes:
 						try {
-							using(var sf = new ShortcutFile2(filePath)) {
+							using(var sf = new ShortcutFile(filePath)) {
 								path = sf.TargetPath;
 							}
 						} catch(ArgumentException ex) {
