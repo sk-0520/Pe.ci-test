@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="YYYY/MM/DD" version="0.42.1" type="rc">
+		<ul type="note">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="features">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="fixes">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+		<ul type="developer">
+			<li rev=""></li>
+			<li rev=""></li>
+			<li rev=""></li>
+		</ul>
+	</log>
 	<log date="2015/01/22" version="0.42.0">
 		<ul type="features">
 			<li rev="7a38fc15197655ea9a941744f4c0e24860ff5d28">#167: 標準入出力ダイアログのフォントを設定項目に表示する</li>
