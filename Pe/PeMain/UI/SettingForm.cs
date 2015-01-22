@@ -414,7 +414,7 @@
 			InitializeNote(mainSetting.Note, db);
 			InitializeClipboard(mainSetting.Clipboard);
 
-#if RELEASE
+#if !DEBUG
 			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
 			foreach(var page in debugPage) {
 				this.tabSetting.TabPages.Remove(page);

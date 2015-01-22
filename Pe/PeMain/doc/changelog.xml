@@ -25,7 +25,7 @@
 		</ul>
 	</log>
 	-->
-	<log date="2015/01/22" version="0.42.0">
+	<log date="2015/01/22" version="0.42.1">
 		<ul type="features">
 			<li rev="7a38fc15197655ea9a941744f4c0e24860ff5d28">#167: 標準入出力ダイアログのフォントを設定項目に表示する</li>
 			<li rev="0387abfea5c3af98acba2948271b523240a377c5">#158: 肥大化するarchiveディレクトリ</li>
@@ -37,6 +37,7 @@
 			<li rev="1544ed313cd5a936dc3af284bfb38c86c0c8a3ed">Hashのヘルプファイルをリポジトリ参照へ変更</li>
 			<li rev="ad40f830b93720415224e8c874bbceeb46f9bbd0">一部文言の修正</li>
 			<li rev="8967a05e4fc44ada7ba393d4e2e7b923ac693117">#68: UNICODEを含むショートカットファイルの読み込みに失敗</li>
+			<li rev="">0.42.0のビルド変更により設定項目にデバッグ用UIが表示されていた</li>
 		</ul>
 		<ul type="developer">
 			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#160: リリースビルドバッチ整理</li>
