@@ -48,6 +48,7 @@
 			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#160: リリースビルドバッチ整理</li>
 			<li rev="e3ec638ee1ca1f8aec93f5aa1eb2878106873185">#164: switchのDebug.Assert</li>
 			<li rev="34960ebefb5d0820a2d2f7f023bc5f0858773240">#166: readme.txtをMarkdownにする</li>
+			<li rev="11f6e6e7e3e9f55ec8f7c7729038bfee64490163">#160: リリースビルド時に変なdefineがある場合にエラーとする</li>
 			<li rev=""></li>
 		</ul>
 	</log>
