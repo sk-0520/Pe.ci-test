@@ -150,8 +150,21 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			return new StringBuilder(max, max);
 		}
+		private static IShellLink CreateShellLink()
+		{
+			return (IShellLink)new ShellLinkObject();
+		}
+		protected IShellLink _shellLink;
 
-		IShellLink _shellLink;
+		public ShortcutFile2()
+		{
+			this._shellLink = CreateShellLink();
+		}
+
+		public ShortcutFile2(string path)
+		{
+			Load(path);
+		}
 
 		private IPersistFile PersistFile {
 			get
@@ -280,9 +293,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 		public void Load(string path)
 		{
-			this._shellLink = (IShellLink)new ShellLinkObject();
+			if(this._shellLink != null) {
+				Dispose(true);
+			}
+
+			this._shellLink = CreateShellLink();
 			PersistFile.Load(path, 0);
-			Debug.WriteLine(TargetPath);
 		}
 
 		public void Save(string path)
