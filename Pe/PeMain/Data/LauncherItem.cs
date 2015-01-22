@@ -387,17 +387,6 @@
 				switch(dotExt.ToLower()) {
 					case ".lnk": {
 							if(!useShortcut) {
-								//var shortcut = new ShortcutFile(expandPath, false);
-								//item.Command = shortcut.TargetPath;
-								//item.Option = shortcut.Arguments;
-								//item.WorkDirPath = shortcut.WorkingDirectory;
-								///*
-								//item.IconPath = shortcut.IconPath;
-								//item.IconIndex = shortcut.IconIndex;
-								// */
-								//item.IconItem.Path = shortcut.IconPath;
-								//item.IconItem.Index = shortcut.IconIndex;
-								//item.Note = shortcut.Description;
 								using(var shortcut = new ShortcutFile2(expandPath)) {
 									item.Command = shortcut.TargetPath;
 									item.Option = shortcut.Arguments;
