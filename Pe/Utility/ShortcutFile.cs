@@ -140,7 +140,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		}
 	}
 
-	public class ShortcutFile2
+	public class ShortcutFile2: IDisposable
 	{
 		private static StringBuilder CreateStringBuffer()
 		{
@@ -262,6 +262,21 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			this._shellLink.SetIconLocation(iconPath.Path, iconPath.Index);
 		}
+
+		#region IDisposable
+
+		protected void Dispose(bool disposing)
+		{
+			Marshal.ReleaseComObject(this._shellLink);
+			this._shellLink = null;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion /////////////////////////////////
 
 		public void Load(string path)
 		{
