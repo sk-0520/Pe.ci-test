@@ -176,7 +176,8 @@
 		{
 			get
 			{
-				if(File.Help.StartsWith("http://", StringComparison.OrdinalIgnoreCase)) {
+				// TODO: だるい。とりあえず二択で。
+				if(File.Help.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || File.Help.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) {
 					return File.Help;
 				}
 
