@@ -12,18 +12,15 @@
 	internal static class ApplicationRoot
 	{
 #if DEBUG
-		static void DebugProcess()
+		static void DebugRootProcess()
 		{
-			var sf = new ShortcutFile2();
-			sf.Load(@"Z:\☃.lnk");
-			throw new Exception("ばいばい");
 		}
 #endif
 
 		internal static void Execute(string[] args)
 		{
 #if DEBUG
-			DebugProcess();
+			DebugRootProcess();
 #endif
 
 			var commandLine = new CommandLine(args);

@@ -18,7 +18,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		
 		public IconItem(string path, int index): base(path, index)
 		{ }
-		
+
+		public IconItem(IconPath iconPath): base(iconPath.Path, iconPath.Index)
+		{ }
+
 		#region ICloneable implementation
 		public object Clone()
 		{

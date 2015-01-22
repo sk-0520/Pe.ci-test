@@ -23,12 +23,19 @@
 		/// <param name="savePath"></param>
 		public static void MakeAppShortcut(string savePath)
 		{
+			/*
 			var shortcut = new ShortcutFile(savePath, true);
 			shortcut.TargetPath = Literal.ApplicationExecutablePath;
 			shortcut.IconPath = Literal.ApplicationExecutablePath;
 			shortcut.IconIndex = 0;
 			shortcut.WorkingDirectory = Literal.ApplicationRootDirectoryPath;
 			shortcut.Save();
+			*/
+			var shortcut = new ShortcutFile2();
+			shortcut.TargetPath = Literal.ApplicationExecutablePath;
+			shortcut.WorkingDirectory = Literal.ApplicationRootDirectoryPath;
+			shortcut.SetIcon(new IconPath(Literal.ApplicationExecutablePath, 0));
+			shortcut.Save(savePath);
 		}
 		
 		/// <summary>

@@ -11,6 +11,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	/// <summary>
 	/// ショートカット。
 	/// </summary>
+	[Obsolete]
 	public class ShortcutFile
 	{
 		IWshShortcut _shortcut;
@@ -140,6 +141,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		}
 	}
 
+	/// <summary>
+	/// ショートカット。
+	/// </summary>
 	public class ShortcutFile2: IDisposable
 	{
 		private static StringBuilder CreateStringBuffer()
