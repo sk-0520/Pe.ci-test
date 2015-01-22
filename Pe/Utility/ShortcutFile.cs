@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using IWshRuntimeLibrary;
 
 namespace ContentTypeTextNet.Pe.Library.Utility
 {

@@ -38,6 +38,7 @@ public class UpdaterScript
 			@"bin\ApplicationSetting.txt",
 			@"bin\Hash\readme.txt",
 			@"sbin\Updater\readme.txt",
+			@"lib\Interop.IWshRuntimeLibrary.dll",
 			@"doc\changelog.xsl",
 			@"MouseKeyboardActivityMonitor.dll",
 			@"ObjectDumper.dll",
