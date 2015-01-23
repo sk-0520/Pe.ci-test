@@ -103,8 +103,11 @@
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);
 		void DrawToolbarButtonBackground(ToolStripItemRenderEventArgs e, ToolStripButton item, bool active, Rectangle itemArea);
-		void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea);
 
+		#endregion
+
+		#region Draw Tooltip
+		void DrawToolTipBackground(Graphics g, Rectangle drawArea);
 		#endregion
 
 		#region Draw Note

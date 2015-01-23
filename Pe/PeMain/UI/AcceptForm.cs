@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System.Text;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 使用許諾。
 	/// </summary>
-	partial class AcceptForm : Form, ISetCommonData
+	partial class AcceptForm : CommonForm
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -36,17 +35,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 		#region property
 
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 		#endregion ////////////////////////////////////
 
 		#region initialize
@@ -57,8 +56,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
+			base.ApplyLanguage();
+
 			UIUtility.SetDefaultText(this, CommonData.Language);
 #if RELEASE
 			this.AcceptButton = null;
@@ -82,10 +83,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		#endregion ////////////////////////////////////
 
-		#region function
-		void ApplySetting()
+		#region skin
+		protected override void ApplySkin()
 		{
-			ApplyLanguage();
+			// この時点でスキンは未設定
+			//base.ApplySkin();
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+		protected override void ApplySetting()
+		{
+			base.ApplySetting();
 
 			this.selectUpdateCheck.Checked = CommonData.MainSetting.RunningInfo.CheckUpdate;
 			this.selectUpdateCheckRC.Checked = CommonData.MainSetting.RunningInfo.CheckUpdateRC;
