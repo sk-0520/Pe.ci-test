@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System;
 using System.Collections.Generic;
@@ -18,17 +18,25 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 	/// </summary>
 	public class CommonForm: ExForm, ISetCommonData
 	{
+		/// <summary>
+		/// 共通データ。
+		/// </summary>
 		protected CommonData CommonData { get; set; }
-		protected bool CommonDataSetting { get; set; }
+		/// <summary>
+		/// 初期化済みであるか。
+		/// 
+		/// ここで言う初期化は SetCommonData を実施済みであるかという意味。
+		/// </summary>
+		protected bool Initialized { get; set; }
 
 		public void SetCommonData(CommonData commonData)
 		{
-			CommonDataSetting = true;
+			Initialized = false;
 
 			CommonData = commonData;
 			ApplySetting();
 
-			CommonDataSetting = false;
+			Initialized = true;
 		}
 
 		protected virtual void ApplySetting()
