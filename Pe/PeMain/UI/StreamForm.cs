@@ -16,7 +16,7 @@
 	/// <summary>
 	/// 標準出力取得。
 	/// </summary>
-	public partial class StreamForm : Form, ISetCommonData
+	public partial class StreamForm : CommonForm
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -40,19 +40,19 @@
 
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		Process Process { get; set; }
 		public LauncherItem LauncherItem { get; private set; }
 		public bool ProcessRunning { get { return Process != null && !Process.HasExited; } }
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 
 		#endregion ////////////////////////////////////
 
@@ -66,10 +66,9 @@
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
-			Debug.Assert(CommonData != null);
-			Debug.Assert(CommonData.Language != null);
+			base.ApplyLanguage();
 
 			var map = new Dictionary<string, string>() {
 				{ AppLanguageName.itemName, LauncherItem.Name },
@@ -90,8 +89,10 @@
 		#endregion ////////////////////////////////////
 
 		#region skin
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			toolStream_itemTopmost.Image = CommonData.Skin.GetImage(SkinImage.Pin);
 			toolStream_itemSave.Image = CommonData.Skin.GetImage(SkinImage.Save);
 			toolStream_itemClear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
@@ -123,12 +124,9 @@
 			}
 		}
 
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			Debug.Assert(Process != null);
-
-			ApplyLanguage();
-			ApplySkin();
+			base.ApplySetting();
 
 			this.propertyProcess.SelectedObject = Process;
 			this.propertyProperty.SelectedObject = Process.StartInfo;
