@@ -251,6 +251,9 @@
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Ex\ExForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\Ex\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
