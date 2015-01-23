@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System.Diagnostics;
 	using ContentTypeTextNet.Pe.Library.Utility;
