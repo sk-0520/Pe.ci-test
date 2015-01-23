@@ -1562,6 +1562,7 @@
 		
 		void ToolbarFormShown(object sender, EventArgs e)
 		{
+			// この子のおかげでちかちかする。でも実装してるからなんか理由あのかもしれんけど調べる気にもならん。
 			ApplySettingPosition();
 		}
 		

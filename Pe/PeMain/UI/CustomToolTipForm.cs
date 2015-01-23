@@ -114,7 +114,7 @@
 					base.OnPaintBackground(e);
 					//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
 				} else {
-					CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
+					CommonData.Skin.DrawToolTipBackground(e.Graphics, e.ClipRectangle);
 				}
 			} else {
 				base.OnPaintBackground(e);

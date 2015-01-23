@@ -387,8 +387,11 @@
 			}
 			DrawToolbarButton(toolbarButtonData);
 		}
+		#endregion
 
-		public virtual void DrawToolbarToolTipBackground(Graphics g, Rectangle drawArea)
+		#region Draw Tooltip
+		
+		public virtual void DrawToolTipBackground(Graphics g, Rectangle drawArea)
 		{
 			if(EnabledAeroStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.ToolTip.Standard.Normal)) {
 				var visualStyleRenderer = new VisualStyleRenderer(VisualStyleElement.ToolTip.Standard.Normal);
@@ -397,7 +400,7 @@
 		}
 
 		#endregion
-			
+
 		#region Draw Note
 
 		public abstract void DrawNoteWindowBackground(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus, Color backColor);
