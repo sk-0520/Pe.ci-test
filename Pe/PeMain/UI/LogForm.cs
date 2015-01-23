@@ -18,7 +18,7 @@
 	/// <summary>
 	/// ログ。
 	/// </summary>
-	public partial class LogForm : Form, ILogger, ISetCommonData
+	public partial class LogForm : CommonForm, ILogger
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -58,16 +58,16 @@
 		}
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 		#endregion ////////////////////////////////////
 
 		#region ILogger
@@ -133,24 +133,10 @@
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
-			Debug.Assert(CommonData != null);
+			base.ApplyLanguage();
 
-			//Text = CommonData.Language["window/log"];
-			/*
-			this.toolLog_save.Text = CommonData.Language["log/command/save"];
-			this.toolLog_save.ToolTipText = CommonData.Language["log/tips/save"];
-			this.toolLog_clear.Text = CommonData.Language["log/command/clear"];
-			this.toolLog_clear.ToolTipText = CommonData.Language["log/tips/save"];
-			
-			this.listLog_columnTimestamp.Text = CommonData.Language["log/header/timestamp"];
-			this.listLog_columnTitle.Text = CommonData.Language["log/header/title"];
-			this.listStack_columnFile.Text = CommonData.Language["log/header/file"];
-			this.listStack_columnLine.Text = CommonData.Language["log/header/line"];
-			this.listStack_columnFunction.Text = CommonData.Language["log/header/method"];
-			*/
-			//UIUtility.SetDefaultText(this, CommonData.Language);
 			Text = CommonData.Language["window/log"];
 #if DEBUG
 			Text = "(DEBUG) " + Text;
@@ -171,8 +157,10 @@
 		#endregion ////////////////////////////////////
 
 		#region skin
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			this.toolLog_save.Image = CommonData.Skin.GetImage(SkinImage.Save);
 			this.toolLog_clear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
 
@@ -234,12 +222,10 @@
 			ChangeDetail(CommonData.MainSetting.Log.FullDetail);
 		}
 
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			Debug.Assert(CommonData.MainSetting != null);
+			base.ApplySetting();
 
-			ApplyLanguage();
-			ApplySkin();
 			ApplyUI();
 		}
 

@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.IO;
+	using System.Net;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// アップデートチェック。
 	/// 
 	/// 実行は PeUpdater にお任せ。
 	/// </summary>
-	public partial class UpdateForm : Form, ISetCommonData
+	public partial class UpdateForm : CommonForm
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -42,20 +42,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		public UpdateData UpdateData { get; set; }
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplyLanguage();
-			ApplySetting();
+		//	ApplyLanguage();
+		//	ApplySetting();
 
-			ApplyUpdate();
-		}
+		//	ApplyUpdate();
+		//}
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -70,8 +70,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
+			base.ApplyLanguage();
+
 			UIUtility.SetDefaultText(this, CommonData.Language);
 			this.AcceptButton = null;
 
@@ -89,13 +91,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region function
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
+			base.ApplySetting();
+
 			if(UpdateData.Info.IsRcVersion) {
 				this.labelVersion.BorderStyle = BorderStyle.FixedSingle;
 				this.labelVersion.ForeColor = Color.Red;
 				this.labelVersion.BackColor = Color.Black;
 			}
+
+			ApplyUpdate();
 		}
 		
 		void ApplyUpdate()

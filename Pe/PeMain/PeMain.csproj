@@ -144,6 +144,7 @@
     <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\ToolbarDropData.cs" />
     <Compile Include="Data\ToolbarGroup.cs" />
     <Compile Include="Data\ToolbarGroupItem.cs" />
     <Compile Include="Data\ToolbarItem.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Kind\Launcher.cs" />
     <Compile Include="Kind\Log.cs" />
     <Compile Include="Kind\Note.cs" />
+    <Compile Include="Kind\Toolbar.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ApplicationRoot.cs" />
     <Compile Include="Logic\AppUtility.cs" />
@@ -245,11 +247,20 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomToolTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Ex\ExAppbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExRichTextBox.cs">
       <SubType>Component</SubType>

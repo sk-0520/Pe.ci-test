@@ -21,7 +21,7 @@
 	/// <summary>
 	/// ノート。
 	/// </summary>
-	public partial class NoteForm : Form, ISetCommonData
+	public partial class NoteForm: CommonForm
 	{
 		#region define
 		const int RECURSIVE = 2;
@@ -137,7 +137,7 @@
 		#region variable
 		Dictionary<SkinNoteCommand, SkinButtonState> _commandStateMap;
 		NoteBindItem _bindItem;
-		bool _initialized = true;
+		//bool Initialized = true;
 		bool _changed = false;
 		string _prevTitle;
 		#endregion ////////////////////////////////////
@@ -153,7 +153,7 @@
 		}
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 
 		/// <summary>
 		/// データそのものが削除された際に真。
@@ -179,7 +179,7 @@
 			}
 			set
 			{
-				if(this._initialized) {
+				if(this.Initialized) {
 					this._changed = value;
 				}
 			}
@@ -187,17 +187,17 @@
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			this._initialized = false;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	this.Initialized = false;
 
-			CommonData = commonData;
+		//	CommonData = commonData;
 
-			ApplySetting();
+		//	ApplySetting();
 
-			this._changed = false;
-			this._initialized = true;
-		}
+		//	this._changed = false;
+		//	this.Initialized = true;
+		//}
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -483,15 +483,19 @@
 			}
 		}
 
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
+			base.ApplyLanguage();
+
 			ApplyLanguageMenuItems(this.contextMenu.Items);
 		}
 		#endregion ////////////////////////////////////
 
 		#region skin
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			CommonData.Skin.AttachmentStyle(this, SkinWindow.Note);
 
 			this.contextMenu_itemTitle.Image = CommonData.Skin.GetImage(SkinImage.NoteTitle);
@@ -523,8 +527,10 @@
 		#endregion ////////////////////////////////////
 
 		#region function
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
+			base.ApplySetting();
+
 			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
 			this.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.Never);
 
@@ -546,12 +552,14 @@
 			MinimumSize = minSize;
 
 			ApplyBodyStyle();
-			ApplyLanguage();
-			ApplySkin();
+			//ApplyLanguage();
+			//ApplySkin();
 
 			ChangeLock(NoteItem.Locked);
 
 			this.inputBody.Focus();
+
+			this._changed = false;
 		}
 
 		IEnumerable<SkinNoteCommand> GetCommandList()
@@ -944,7 +952,7 @@
 		
 		void NoteForm_Deactivate(object sender, EventArgs e)
 		{
-			if (this._initialized) {
+			if (this.Initialized) {
 				HiddenInputTitleArea();
 			}
 			
@@ -1019,7 +1027,7 @@
 
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
-			if (!this._initialized && NoteItem.Compact) {
+			if (!this.Initialized && NoteItem.Compact) {
 				Height = 20;
 			} else {
 				ResizeInputTitleArea();
