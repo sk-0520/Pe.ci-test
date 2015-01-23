@@ -17,7 +17,7 @@
 	/// <summary>
 	/// 情報。
 	/// </summary>
-	public partial class AboutForm : Form, ISetCommonData
+	public partial class AboutForm : CommonForm
 	{
 		#region define
 		class ComponentInfo
@@ -51,7 +51,7 @@
 		}
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		public bool CheckUpdate { get; private set; }
 
 		List<ComponentInfo> ComponentInfoList { get; set; }
@@ -61,12 +61,12 @@
 
 		#region ISetCommonData
 
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 
 		#endregion ////////////////////////////////////
 
@@ -109,8 +109,10 @@
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
+			base.ApplyLanguage();
+
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
 			this.commandExecuteDir.SetLanguage(CommonData.Language);
@@ -129,8 +131,10 @@
 		#endregion ////////////////////////////////////
 
 		#region skin
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			this.commandExecuteDir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
 			this.commandDataDir.Image = CommonData.Skin.GetImage(SkinImage.Dir);
 
@@ -141,10 +145,9 @@
 
 		#region function
 
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			ApplyLanguage();
-			ApplySkin();
+			base.ApplySetting();
 		}
 
 		void OpenDirectory(string path)
