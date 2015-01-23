@@ -1,14 +1,9 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
-	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Diagnostics;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public abstract class ExForm: Form
 	{ }
