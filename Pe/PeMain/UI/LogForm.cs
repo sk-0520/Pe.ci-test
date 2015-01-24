@@ -101,9 +101,9 @@
 			ShowLast();
 		}
 
-		public void PutsDebug(string title, object detail, int frame = 3)
+		public void PutsDebug(string title, Func<object> detail, int frame = 3)
 		{
-			Puts(LogType.Debug, title, detail, frame);
+			Puts(LogType.Debug, title, detail(), frame);
 		}
 
 		#endregion ////////////////////////////////////

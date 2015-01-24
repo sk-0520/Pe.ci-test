@@ -149,10 +149,11 @@
     <Compile Include="Data\ToolbarGroupItem.cs" />
     <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
+    <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IRootSender.cs" />
-    <Compile Include="IF\ISetCommonData.cs" />
+    <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISetSkin.cs" />
     <Compile Include="Kind\Applications.cs" />
@@ -285,6 +286,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExToolStripControlHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStripItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExWebBrowser.cs">

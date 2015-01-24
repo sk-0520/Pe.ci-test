@@ -107,6 +107,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 		);
 		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(8, 1024, 1024 * 5);
 
+		/// <summary>
+		/// 隠しファイルを表示する際に使用する透明度。
+		/// </summary>
+		public const float hiddenFileOpacity = 0.6f;
+
 
 		#region NOTE
 		
