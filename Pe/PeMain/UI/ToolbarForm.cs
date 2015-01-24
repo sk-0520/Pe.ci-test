@@ -31,6 +31,7 @@
 		const string menuNameMainPosDesktopRight = "desktop_right";
 		const string menuNameMainTopmost = "topmost";
 		const string menuNameMainAutoHide = "autohide";
+		const string menuNameMainHidden = "hidden";
 		const string menuNameMainGroupSeparator = "group_sep";
 		const string menuNameMainGroupItem = "group_item_";
 
@@ -806,75 +807,71 @@
 		/// <param name="parentItem"></param>
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
 		{
-			var itemList = new List<ToolStripItem>();
-			
-			var posFloatItem = new ToolStripMenuItem();
-			var posTopItem = new ToolStripMenuItem();
-			var posBottomItem = new ToolStripMenuItem();
-			var posLeftItem = new ToolStripMenuItem();
-			var posRightItem = new ToolStripMenuItem();
-			var topmostItem = new ToolStripMenuItem();
-			var autoHideItem = new ToolStripMenuItem();
-			var hiddenItem = new ToolStripMenuItem();
-			var groupSeparator = new ToolStripSeparator();
-			itemList.Add(posFloatItem);
-			itemList.Add(posTopItem);
-			itemList.Add(posBottomItem);
-			itemList.Add(posLeftItem);
-			itemList.Add(posRightItem);
-			itemList.Add(new ToolStripSeparator());
-			itemList.Add(topmostItem);
-			itemList.Add(autoHideItem);
-			itemList.Add(new ToolStripSeparator());
-			itemList.Add(hiddenItem);
-			
 			// フロート
-			posFloatItem.Name = menuNameMainPosDesktopFloat;
-			posFloatItem.Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language);
+			var posFloatItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopFloat,
+				Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language),
+			};
 			posFloatItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：上
-			posTopItem.Name = menuNameMainPosDesktopTop;
-			posTopItem.Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language);
+			var posTopItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopTop,
+				Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language),
+			};
 			posTopItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：下
-			posBottomItem.Name = menuNameMainPosDesktopBottom;
-			posBottomItem.Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language);
+			var posBottomItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopBottom,
+				Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language),
+			};
 			posBottomItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：左
-			posLeftItem.Name = menuNameMainPosDesktopLeft;
-			posLeftItem.Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language);
+			var posLeftItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopLeft,
+				Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language),
+			};
 			posLeftItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：右
-			posRightItem.Name = menuNameMainPosDesktopRight;
-			posRightItem.Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language);
+			var posRightItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopRight,
+				Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language),
+			};
 			posRightItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
 				ApplySettingPosition();
 			};
-			
+
 			// 最前面表示
-			topmostItem.Name = menuNameMainTopmost;
-			topmostItem.Text = CommonData.Language["common/menu/topmost"];
+			var topmostItem = new ToolStripMenuItem() {
+				Name = menuNameMainTopmost,
+				Text = CommonData.Language["common/menu/topmost"],
+			};
 			topmostItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.Topmost = !topmostItem.Checked;
 				ApplySettingTopmost();
 			};
-			
+
 			// 自動的に隠す
-			autoHideItem.Name = menuNameMainAutoHide;
-			autoHideItem.Text = CommonData.Language["toolbar/menu/main/auto-hide"];
+			var autoHideItem = new ToolStripMenuItem() {
+				Name = menuNameMainAutoHide,
+				Text = CommonData.Language["toolbar/menu/main/auto-hide"],
+			};
 			autoHideItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
@@ -884,16 +881,36 @@
 					UsingToolbarItem.AutoHide = false;
 				}
 			};
-			hiddenItem.Text = CommonData.Language["toolbar/menu/main/hidden"];
+
+			// 非表示
+			var hiddenItem = new ToolStripMenuItem() {
+				Name = menuNameMainHidden,
+				Text = CommonData.Language["toolbar/menu/main/hidden"],
+			};
 			hiddenItem.Click += (object sender, EventArgs e) => {
 				UsingToolbarItem.Visible = false;
 				ApplySettingVisible();
 			};
-			
+
 			// グループ関連メニュー
-			var itemGroupSeparator = new ToolStripSeparator();
-			groupSeparator.Name = menuNameMainGroupSeparator;
-			itemList.Add(itemGroupSeparator);
+			var itemGroupSeparator = new ToolStripSeparator() {
+				Name = menuNameMainGroupSeparator,
+			};
+
+			var menuList = new List<ToolStripItem>() {
+				posFloatItem,
+				posTopItem,
+				posBottomItem,
+				posLeftItem,
+				posRightItem,
+				new ToolStripSeparator(),
+				topmostItem,
+				autoHideItem,
+				new ToolStripSeparator(),
+				hiddenItem,
+				itemGroupSeparator,
+			};
+
 			foreach(var group in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
 				var itemGroup = new ToolStripMenuItem();
 				itemGroup.Text = group.Name;
@@ -901,11 +918,11 @@
 				itemGroup.Tag = group;
 				itemGroup.CheckState = CheckState.Indeterminate;
 				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
-				itemList.Add(itemGroup);
+				menuList.Add(itemGroup);
 			}
 			
 			// メニュー設定
-			var items = itemList.ToArray();
+			var items = menuList.ToArray();
 			// #3
 			foreach(var item in items) {
 				item.ImageScaling = ToolStripItemImageScaling.None;
@@ -943,25 +960,20 @@
 
 		void AttachmentEmbeddedLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
 		{
-			var itemList = new List<ToolStripItem>();
-
-			var execItem = new ToolStripMenuItem();
-			var closeItem = new ToolStripMenuItem();
-			var helpItem = new ToolStripMenuItem();
-			itemList.Add(execItem);
-			itemList.Add(closeItem);
-			itemList.Add(new ToolStripSeparator());
-			itemList.Add(helpItem);
-
 			// 起動
-			execItem.Name = menuNameApplicationExecute;
-			execItem.Text = CommonData.Language["toolbar/menu/application/execute"];
+			var execItem = new ToolStripMenuItem() {
+				Name = menuNameApplicationExecute,
+				Text = CommonData.Language["toolbar/menu/application/execute"],
+			};
 			execItem.Click += (object sender, EventArgs e) => {
 				ExecuteItem(launcherItem);
 			};
+
 			// 終了
-			closeItem.Name = menuNameApplicationClose;
-			closeItem.Text = CommonData.Language["toolbar/menu/application/close"];
+			var closeItem = new ToolStripMenuItem() {
+				Name = menuNameApplicationClose,
+				Text = CommonData.Language["toolbar/menu/application/close"],
+			};
 			closeItem.Click += (object sender, EventArgs e) => {
 				try {
 					CommonData.ApplicationSetting.KillApplicationItem(launcherItem);
@@ -970,9 +982,12 @@
 					CommonData.Logger.Puts(LogType.Warning, message, ex);
 				}
 			};
+
 			// ヘルプ
-			helpItem.Name = menuNameApplicationHelp;
-			helpItem.Text = CommonData.Language["toolbar/menu/application/help"];
+			var helpItem = new ToolStripMenuItem() {
+				Name = menuNameApplicationHelp,
+				Text = CommonData.Language["toolbar/menu/application/help"],
+			};
 			helpItem.Click += (object sender, EventArgs e) => {
 				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
 				try {
@@ -983,7 +998,14 @@
 				}
 			};
 
-			parentItem.DropDownItems.AddRange(itemList.ToArray());
+			var menuList = new ToolStripItem[] {
+				execItem,
+				closeItem,
+				new ToolStripSeparator(),
+				helpItem,
+			};
+
+			parentItem.DropDownItems.AddRange(menuList);
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
 				var isRunning = CommonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem);
