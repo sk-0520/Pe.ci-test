@@ -590,32 +590,32 @@
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
 			//openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
-			openParentDirItem.Click += LauncherItemMenu_OpenParentDirectory;
+			openParentDirItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
 			//openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
-			openWorkDirItem.Click += LauncherItemMenu_OpenWorkDirectory;
+			openWorkDirItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
 			//copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
-			copyCommandItem.Click += LauncherItemMenu_CopyCommand;
+			copyCommandItem.Click += FileLauncherItemPathMenu_CopyCommand;
 			// 親ディレクトリをコピー
 			copyParentDirItem.Name = menuNamePath_copyParentDir;
 			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
 			//copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
-			copyParentDirItem.Click += LauncherItemMenu_CopyParentDirectory;
+			copyParentDirItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
 			// 作業ディレクトリをコピー
 			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
 			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
 			//copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
-			copyWorkDirItem.Click += LauncherItemMenu_CopyWorkDirectory;
+			copyWorkDirItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
 			//propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
-			propertyItem.Click += LauncherItemMenu_OpenProperty;
+			propertyItem.Click += FileLauncherItemPathMenu_OpenProperty;
 			
 			// メニュー構築
 			parentItem.DropDownItems.AddRange(itemList.ToArray());
@@ -634,7 +634,7 @@
 			//	openWorkDirItem.Enabled = workDirEnabled;
 			//	copyWorkDirItem.Enabled = workDirEnabled;
 			//};
-			parentItem.DropDownOpening += LauncherItemMenu_DropDownOpening;
+			parentItem.DropDownOpening += FileLauncherItemPathMenu_DropDownOpening;
 		}
 		
 		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showHiddenFile, bool showExtension)
@@ -1698,43 +1698,43 @@
 
 		#region File Launcher Menu
 
-		void LauncherItemMenu_OpenParentDirectory(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_OpenParentDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			OpenParentDirectory(menuItem.LauncherItem);
 		}
 
-		void LauncherItemMenu_OpenWorkDirectory(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_OpenWorkDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			OpenDir(menuItem.LauncherItem.WorkDirPath);
 		}
 
-		void LauncherItemMenu_CopyCommand(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_CopyCommand(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			CopyText(menuItem.LauncherItem.Command);
 		}
 
-		void LauncherItemMenu_CopyParentDirectory(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_CopyParentDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			CopyText(Path.GetDirectoryName(menuItem.LauncherItem.Command));
 		}
 
-		void LauncherItemMenu_CopyWorkDirectory(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_CopyWorkDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			CopyText(menuItem.LauncherItem.WorkDirPath);
 		}
 
-		void LauncherItemMenu_OpenProperty(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_OpenProperty(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			OpenProperty(menuItem.LauncherItem.Command);
 		}
 
-		void LauncherItemMenu_DropDownOpening(object sender, EventArgs e)
+		void FileLauncherItemPathMenu_DropDownOpening(object sender, EventArgs e)
 		{
 			var parentItem = (LauncherToolStripMenuItem)sender;
 			var launcherItem = parentItem.LauncherItem;
@@ -1760,6 +1760,8 @@
 			openWorkDirItem.Enabled = workDirEnabled;
 			copyWorkDirItem.Enabled = workDirEnabled;
 		}
+
+		//void LauncherItemMenu_
 
 		#endregion
 
