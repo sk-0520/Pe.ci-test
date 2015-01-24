@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.UI;
 
 	/// <summary>
 	/// スクリーン共通処理。
@@ -25,6 +26,8 @@
 		
 		private static IEnumerable<Win32_DesktopMonitor> GetScreens(string deviceName, ILogger logger)
 		{
+			Debug.Assert(logger != null);
+
 			string query = "SELECT * FROM Win32_DesktopMonitor";
 			if(!string.IsNullOrWhiteSpace(deviceName)) {
 				//var id = new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
@@ -37,11 +40,7 @@
 					try {
 						item.Import(mng);
 					} catch(Exception ex) {
-						if(logger != null) {
-							logger.Puts(LogType.Warning, ex.Message, ex);
-						} else {
-							Debug.WriteLine(ex);
-						}
+						logger.Puts(LogType.Warning, ex.Message, ex);
 						continue;
 					}
 					
@@ -58,6 +57,7 @@
 		/// <returns></returns>
 		public static string GetScreenName(Screen screen, ILogger logger)
 		{
+			Debug.Assert(logger != null);
 			/*
 			var id = new string(screen.DeviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
 			var query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
@@ -103,14 +103,19 @@
 		/// <returns></returns>
 		public static string GetScreenName(Screen screen)
 		{
-			return GetScreenName(screen, null);
+			return GetScreenName(screen, new NullLogger());
 		}
 		
 		public static string GetScreenName(string screenDeviceName, ILogger logger)
 		{
+			var usingLogger = logger;
+			if(logger == null) {
+				usingLogger = new NullLogger();
+			}
+
 			var screen = Screen.AllScreens.SingleOrDefault(s => s.DeviceName == screenDeviceName);
 			if(screen != null) {
-				return GetScreenName(screen, logger);
+				return GetScreenName(screen, usingLogger);
 			}
 			return screenDeviceName;
 		}

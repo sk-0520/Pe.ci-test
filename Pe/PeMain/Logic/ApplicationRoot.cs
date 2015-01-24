@@ -47,9 +47,6 @@
 				using(var mtx = new Mutex(true, mutexName, out isFirstInstance)) {
 					if(isFirstInstance) {
 						using(var app = new UI.App(commandLine, fileLogger)) {
-#if DEBUG
-							app.DebugProcess();
-#endif
 							if(!app.Initialized) {
 								app.CloseApplication(false);
 							} else {

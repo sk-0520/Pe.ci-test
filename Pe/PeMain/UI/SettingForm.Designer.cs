@@ -209,6 +209,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.commandToolbarScreens = new System.Windows.Forms.Button();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupLauncherStream.SuspendLayout();
@@ -1172,6 +1173,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// groupToolbar
 			// 
+			this.groupToolbar.Controls.Add(this.commandToolbarScreens);
 			this.groupToolbar.Controls.Add(this.panel1);
 			this.groupToolbar.Controls.Add(this.selectToolbarItem);
 			this.groupToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2265,6 +2267,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// commandToolbarScreens
+			// 
+			this.commandToolbarScreens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandToolbarScreens.Location = new System.Drawing.Point(193, 0);
+			this.commandToolbarScreens.Name = "commandToolbarScreens";
+			this.commandToolbarScreens.Size = new System.Drawing.Size(71, 23);
+			this.commandToolbarScreens.TabIndex = 22;
+			this.commandToolbarScreens.Text = ":setting/command/screens";
+			this.commandToolbarScreens.UseVisualStyleBackColor = true;
+			this.commandToolbarScreens.Click += new System.EventHandler(this.commandToolbarScreens_Click);
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -2537,5 +2551,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private FontSplitButton commandClipboardTextFont;
 		private System.Windows.Forms.GroupBox groupLauncherStream;
 		private FontSplitButton commandLauncherStreamFont;
+		private System.Windows.Forms.Button commandToolbarScreens;
 	}
 }

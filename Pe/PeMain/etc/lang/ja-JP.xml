@@ -74,6 +74,7 @@
 		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
 		<Word Name="window/stream"    Text="@[ITEM]の標準入出力" />
 		<Word Name="window/clipboard" Text="クリップボード" />
+		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
@@ -323,6 +324,11 @@
 		<Word Name="setting/group/skin"       Text="スキン" />
 		<Word Name="setting/command/skin"     Text="設定" />
 		<Word Name="setting/group/stream"     Text="標準入出力" />
+		<Word Name="setting/command/screens"  Text="識別" />
+
+		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
+		<Word Name="screen/primary/false"  Text="" />
+		<Word Name="screen/close"          Text="マウスクリックかキー入力で識別画面を閉じてください" />
 
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
