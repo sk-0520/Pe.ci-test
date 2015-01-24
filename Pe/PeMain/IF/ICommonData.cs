@@ -9,4 +9,9 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 	{
 		void SetCommonData(CommonData commonData);
 	}
+
+	public interface ICommonData
+	{
+		CommonData CommonData { get; }
+	}
 }

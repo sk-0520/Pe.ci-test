@@ -756,8 +756,12 @@
 		{
 			var menuList = new List<ToolStripItem>();
 			
-			var executeItem = new ToolStripMenuItem();
-			var executeExItem = new ToolStripMenuItem();
+			var executeItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var executeExItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
 			var pathItem = new LauncherToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
@@ -771,11 +775,13 @@
 			// 通常実行
 			executeItem.Name = menuNameExecute;
 			executeItem.Text = CommonData.Language["toolbar/menu/file/execute"];
-			executeItem.Click += (object sender, EventArgs e) => ExecuteItem(launcherItem);
+			//executeItem.Click += (object sender, EventArgs e) => ExecuteItem(launcherItem);
+			executeItem.Click += FileLauncherItemMenu_Execute;
 			// 指定実行
 			executeExItem.Name = menuNameExecuteEx;
 			executeExItem.Text = CommonData.Language["toolbar/menu/file/execute-ex"];
-			executeExItem.Click += (object sender, EventArgs e) => ExecuteExItem(launcherItem, null);
+			//executeExItem.Click += (object sender, EventArgs e) => ExecuteExItem(launcherItem, null);
+			executeExItem.Click += FileLauncherItemMenu_ExecuteEx;
 			// パス関係
 			pathItem.Name = menuNamePath;
 			pathItem.Text = CommonData.Language["toolbar/menu/file/path"];
@@ -806,37 +812,37 @@
 			var menuItems = menuList.ToArray();
 			ToolStripUtility.AttachmentOpeningMenuInScreen(menuItems);
 			parentItem.DropDownItems.AddRange(menuItems);
-			
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				if(launcherItem.IsExists) {
-					executeItem.Enabled = true;
-					//executeExItem.Enabled = launcherItem.IsExecteFile;
-				} else {
-					executeItem.Enabled = false;
-					//executeExItem.Enabled = false;
-				}
-				try {
-					var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-					var expandParentPath = Path.GetDirectoryName(expandPath);
-					fileItem.Enabled = Directory.Exists(expandParentPath);
-				} catch(ArgumentException ex) {
-					// #41の影響により#77考慮不要
-					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
-					pathItem.Enabled = false;
-					fileItem.Enabled = false;
-					executeItem.Enabled = true;
-				}
-				try {
-					if(!fileItem.HasDropDownItems) {
-						var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
-						var showExtension = SystemEnvironment.IsExtensionShow();
-						var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
-						AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
-					}
-				} catch(Exception ex) {
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-				}
-			};
+			//parentItem.DropDownOpening += (object sender, EventArgs e) => {
+			//	if(launcherItem.IsExists) {
+			//		executeItem.Enabled = true;
+			//		//executeExItem.Enabled = launcherItem.IsExecteFile;
+			//	} else {
+			//		executeItem.Enabled = false;
+			//		//executeExItem.Enabled = false;
+			//	}
+			//	try {
+			//		var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+			//		var expandParentPath = Path.GetDirectoryName(expandPath);
+			//		fileItem.Enabled = Directory.Exists(expandParentPath);
+			//	} catch(ArgumentException ex) {
+			//		// #41の影響により#77考慮不要
+			//		CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
+			//		pathItem.Enabled = false;
+			//		fileItem.Enabled = false;
+			//		executeItem.Enabled = true;
+			//	}
+			//	try {
+			//		if(!fileItem.HasDropDownItems) {
+			//			var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+			//			var showExtension = SystemEnvironment.IsExtensionShow();
+			//			var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+			//			AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
+			//		}
+			//	} catch(Exception ex) {
+			//		CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+			//	}
+			//};
+			parentItem.DropDownOpening += FileLauncherItemMenu_DropDownOpening;
 		}
 
 		string MakeGroupItemName(string groupName)
@@ -1089,7 +1095,9 @@
 		/// <returns></returns>
 		ToolStripSplitButton CreateFileItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripSplitButton();
+			var toolItem = new LauncherToolStripSplitButton(CommonData) {
+				LauncherItem = item,
+			};
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 			
 			AttachmentFileLauncherMenu(toolItem, item);
@@ -1736,15 +1744,15 @@
 
 		void FileLauncherItemPathMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			var parentItem = (LauncherToolStripMenuItem)sender;
-			var launcherItem = parentItem.LauncherItem;
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			var launcherItem = menuItem.LauncherItem;
 
-			var openParentDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_openParentDir];
-			var openWorkDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_openWorkDir];
-			var copyCommandItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_copyCommand];
-			var copyParentDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_copyParentDir];
-			var copyWorkDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_copyWorkDir];
-			var propertyItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_property];
+			var openParentDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_openParentDir];
+			var openWorkDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_openWorkDir];
+			var copyCommandItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_copyCommand];
+			var copyParentDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_copyParentDir];
+			var copyWorkDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_copyWorkDir];
+			var propertyItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_property];
 
 			// コマンド有無
 			var commandEnabled = launcherItem.IsExists;
@@ -1761,7 +1769,57 @@
 			copyWorkDirItem.Enabled = workDirEnabled;
 		}
 
-		//void LauncherItemMenu_
+		void FileLauncherItemMenu_Execute(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			ExecuteItem(menuItem.LauncherItem);
+		}
+
+		void FileLauncherItemMenu_ExecuteEx(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			ExecuteExItem(menuItem.LauncherItem, null);
+		}
+
+		void FileLauncherItemMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripSplitButton)sender;
+			var launcherItem = menuItem.LauncherItem;
+
+			var executeItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameExecute];
+			var executeExItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameExecuteEx];
+			var pathItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNamePath];
+			var fileItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameFiles];
+
+			if(launcherItem.IsExists) {
+					executeItem.Enabled = true;
+					//executeExItem.Enabled = launcherItem.IsExecteFile;
+				} else {
+					executeItem.Enabled = false;
+					//executeExItem.Enabled = false;
+				}
+				try {
+					var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+					var expandParentPath = Path.GetDirectoryName(expandPath);
+					fileItem.Enabled = Directory.Exists(expandParentPath);
+				} catch(ArgumentException ex) {
+					// #41の影響により#77考慮不要
+					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
+					pathItem.Enabled = false;
+					fileItem.Enabled = false;
+					executeItem.Enabled = true;
+				}
+				try {
+					if(!fileItem.HasDropDownItems) {
+						var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+						var showExtension = SystemEnvironment.IsExtensionShow();
+						var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+						AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
+					}
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+		}
 
 		#endregion
 
