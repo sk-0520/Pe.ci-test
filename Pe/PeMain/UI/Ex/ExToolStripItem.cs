@@ -6,8 +6,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+
+	#region abstract
 
 	public abstract class ExToolStripItem: ToolStripItem
 	{ }
@@ -17,6 +20,10 @@
 
 	public abstract class ExToolStripSplitButton: ToolStripSplitButton
 	{ }
+
+	#endregion
+
+	#region ExToolStripMenuItem
 
 	public abstract class CommonDataToolStripMenuItem: ExToolStripMenuItem, ICommonData
 	{
@@ -47,6 +54,9 @@
 		public LauncherItem LauncherItem { get; set; }
 	}
 
+	#endregion
+
+	#region ExToolStripSplitButton
 
 	public abstract class CommonDataToolStripSplitButton: ExToolStripSplitButton, ICommonData
 	{
@@ -67,5 +77,7 @@
 
 		public LauncherItem LauncherItem { get; set; }
 	}
+
+	#endregion
 
 }

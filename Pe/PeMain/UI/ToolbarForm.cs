@@ -535,7 +535,7 @@
 			}
 		}
 
-		void OpenDir(string path)
+		void OpenDirectory(string path)
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
@@ -763,8 +763,8 @@
 			// 指定実行
 			var executeExItem = new LauncherToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
-			Name = menuNameExecuteEx,
-			Text = CommonData.Language["toolbar/menu/file/execute-ex"],
+				Name = menuNameExecuteEx,
+				Text = CommonData.Language["toolbar/menu/file/execute-ex"],
 			};
 			executeExItem.Click += FileLauncherItemMenu_ExecuteEx;
 
@@ -1690,7 +1690,7 @@
 		void FileLauncherItemPathMenu_OpenWorkDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
-			OpenDir(menuItem.LauncherItem.WorkDirPath);
+			OpenDirectory(menuItem.LauncherItem.WorkDirPath);
 		}
 
 		void FileLauncherItemPathMenu_CopyCommand(object sender, EventArgs e)
