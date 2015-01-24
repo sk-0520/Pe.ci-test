@@ -74,6 +74,8 @@
 
 		void ChangeScreen(Screen screen)
 		{
+			var rect = screen.Bounds;
+			SetBounds(rect.X, rect.Y, rect.Width, rect.Height);
 		}
 
 		#endregion ////////////////////////////////////

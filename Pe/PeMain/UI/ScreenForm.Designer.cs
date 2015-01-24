@@ -27,7 +27,23 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.SuspendLayout();
+			// 
+			// ScreenForm
+			// 
+			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.ControlBox = false;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
+			this.Name = "ScreenForm";
+			this.Opacity = 0.9D;
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+			this.TopMost = true;
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion
