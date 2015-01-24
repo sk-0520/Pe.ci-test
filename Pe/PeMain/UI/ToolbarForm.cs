@@ -523,7 +523,7 @@
 			SetToolButtons(UseToolbarItem.IconScale, toolButtonList);
 		}
 
-		void OpenDir(LauncherItem launcherItem)
+		void OpenParentDirectory(LauncherItem launcherItem)
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
@@ -557,13 +557,15 @@
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
 		{
 			var itemList = new List<ToolStripItem>();
-			
-			var openParentDirItem = new ToolStripMenuItem();
-			var openWorkDirItem = new ToolStripMenuItem();
-			var copyCommandItem = new ToolStripMenuItem();
-			var copyParentDirItem = new ToolStripMenuItem();
-			var copyWorkDirItem = new ToolStripMenuItem();
-			var propertyItem = new ToolStripMenuItem();
+
+			var openParentDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var openWorkDirItem = new LauncherToolStripMenuItem(CommonData);
+			var copyCommandItem = new LauncherToolStripMenuItem(CommonData);
+			var copyParentDirItem = new LauncherToolStripMenuItem(CommonData);
+			var copyWorkDirItem = new LauncherToolStripMenuItem(CommonData);
+			var propertyItem = new LauncherToolStripMenuItem(CommonData);
 			itemList.Add(openParentDirItem);
 			itemList.Add(openWorkDirItem);
 			itemList.Add(new ToolStripSeparator());
@@ -576,7 +578,8 @@
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
+			//openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
+			openParentDirItem.Click += LauncherItemMenu_Open;
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
@@ -619,7 +622,9 @@
 		
 		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showHiddenFile, bool showExtension)
 		{
-			var menuItem = new FileToolStripMenuItem(commonData, path);
+			var menuItem = new FileToolStripMenuItem(commonData){
+				Path = path,
+			};
 
 			if(!isDir && !showExtension) {
 				menuItem.Text = Path.GetFileNameWithoutExtension(path);
@@ -647,7 +652,9 @@
 		/// <param name="dirPath">基ディレクトリパス</param>
 		void AttachmentDirectoryOpen(ToolStripDropDownItem parentItem, string dirPath)
 		{
-			var openItem = new FileToolStripMenuItem(CommonData, dirPath);
+			var openItem = new FileToolStripMenuItem(CommonData) {
+				Path = dirPath,
+			};
 			var sepItem = new ToolStripSeparator();
 
 			var menuList = new ToolStripItem[] {
@@ -1670,6 +1677,12 @@
 			}
 		}
 
+		void LauncherItemMenu_Open(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			OpenParentDirectory(menuItem.LauncherItem);
+		}
+
 		void FileListMenu_DropDownOpening(object sender, EventArgs e)
 		{
 			var toolItem = sender as ToolStripDropDownItem;
@@ -1698,7 +1711,7 @@
 				CommonData.Logger.PutsDebug(fileMenuItem.Text, () => fileMenuItem.DropDownItems.Count);
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
-				AttachmentFileList(fileMenuItem, false, Environment.ExpandEnvironmentVariables(fileMenuItem.FilePath), showHiddenFile, showExtension);
+				AttachmentFileList(fileMenuItem, false, Environment.ExpandEnvironmentVariables(fileMenuItem.Path), showHiddenFile, showExtension);
 			} else {
 				// 起こりえないけど改修実装なんで入れとく
 				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => toolItem.DumpToString(toolItem.Text));
@@ -1710,7 +1723,7 @@
 			var fileMenuItem = sender as FileToolStripMenuItem;
 			if(fileMenuItem != null) {
 				try {
-					var path = fileMenuItem.FilePath;
+					var path = fileMenuItem.Path;
 					if(File.Exists(path)) {
 						Executor.OpenFile(path, CommonData);
 					} else {

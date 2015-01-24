@@ -14,16 +14,32 @@
 	public abstract class ExToolStripMenuItem: ToolStripMenuItem
 	{ }
 
-	public class FileToolStripMenuItem: ExToolStripMenuItem
+	public abstract class CommonDataToolStripMenuItem: ExToolStripMenuItem
 	{
-		public FileToolStripMenuItem(CommonData commonData, string filePath)
+		public CommonDataToolStripMenuItem(CommonData commonData)
 			: base()
 		{
 			CommonData = commonData;
-			FilePath = filePath;
 		}
 
 		public CommonData CommonData { get; private set; }
-		public string FilePath { get; private set; }
+	}
+
+	public class FileToolStripMenuItem: CommonDataToolStripMenuItem
+	{
+		public FileToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public string Path { get; set; }
+	}
+
+	public class LauncherToolStripMenuItem: CommonDataToolStripMenuItem
+	{
+		public LauncherToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public LauncherItem LauncherItem { get; set; }
 	}
 }
