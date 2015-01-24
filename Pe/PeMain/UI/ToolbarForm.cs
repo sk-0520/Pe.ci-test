@@ -561,11 +561,22 @@
 			var openParentDirItem = new LauncherToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var openWorkDirItem = new LauncherToolStripMenuItem(CommonData);
-			var copyCommandItem = new LauncherToolStripMenuItem(CommonData);
-			var copyParentDirItem = new LauncherToolStripMenuItem(CommonData);
-			var copyWorkDirItem = new LauncherToolStripMenuItem(CommonData);
-			var propertyItem = new LauncherToolStripMenuItem(CommonData);
+			var openWorkDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var copyCommandItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var copyParentDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var copyWorkDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var propertyItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+
 			itemList.Add(openParentDirItem);
 			itemList.Add(openWorkDirItem);
 			itemList.Add(new ToolStripSeparator());
@@ -579,45 +590,51 @@
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
 			//openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
-			openParentDirItem.Click += LauncherItemMenu_Open;
+			openParentDirItem.Click += LauncherItemMenu_OpenParentDirectory;
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
+			//openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
+			openWorkDirItem.Click += LauncherItemMenu_OpenWorkDirectory;
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
-			copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
+			//copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
+			copyCommandItem.Click += LauncherItemMenu_CopyCommand;
 			// 親ディレクトリをコピー
 			copyParentDirItem.Name = menuNamePath_copyParentDir;
 			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
-			copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
+			//copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
+			copyParentDirItem.Click += LauncherItemMenu_CopyParentDirectory;
 			// 作業ディレクトリをコピー
 			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
 			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
-			copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
+			//copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
+			copyWorkDirItem.Click += LauncherItemMenu_CopyWorkDirectory;
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
-			propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
+			//propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
+			propertyItem.Click += LauncherItemMenu_OpenProperty;
 			
 			// メニュー構築
 			parentItem.DropDownItems.AddRange(itemList.ToArray());
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				// コマンド有無
-				var commandEnabled = launcherItem.IsExists;
-				copyCommandItem.Enabled = commandEnabled;
-				propertyItem.Enabled = commandEnabled;
-				// 親ディレクトリ有無
-				var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
-				var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
-				openParentDirItem.Enabled = parentDirEnabled;
-				copyParentDirItem.Enabled = parentDirEnabled;
-				// 作業ディレクトリ有無
-				var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
-				openWorkDirItem.Enabled = workDirEnabled;
-				copyWorkDirItem.Enabled = workDirEnabled;
-			};
+			//parentItem.DropDownOpening += (object sender, EventArgs e) => {
+			//	// コマンド有無
+			//	var commandEnabled = launcherItem.IsExists;
+			//	copyCommandItem.Enabled = commandEnabled;
+			//	propertyItem.Enabled = commandEnabled;
+			//	// 親ディレクトリ有無
+			//	var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+			//	var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
+			//	openParentDirItem.Enabled = parentDirEnabled;
+			//	copyParentDirItem.Enabled = parentDirEnabled;
+			//	// 作業ディレクトリ有無
+			//	var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
+			//	openWorkDirItem.Enabled = workDirEnabled;
+			//	copyWorkDirItem.Enabled = workDirEnabled;
+			//};
+			parentItem.DropDownOpening += LauncherItemMenu_DropDownOpening;
 		}
 		
 		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showHiddenFile, bool showExtension)
@@ -741,7 +758,9 @@
 			
 			var executeItem = new ToolStripMenuItem();
 			var executeExItem = new ToolStripMenuItem();
-			var pathItem = new ToolStripMenuItem();
+			var pathItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
 			var fileItem = new ToolStripMenuItem();
 			menuList.Add(executeItem);
 			menuList.Add(executeExItem);
@@ -1677,10 +1696,67 @@
 			}
 		}
 
-		void LauncherItemMenu_Open(object sender, EventArgs e)
+		void LauncherItemMenu_OpenParentDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
 			OpenParentDirectory(menuItem.LauncherItem);
+		}
+
+		void LauncherItemMenu_OpenWorkDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			OpenDir(menuItem.LauncherItem.WorkDirPath);
+		}
+
+		void LauncherItemMenu_CopyCommand(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			CopyText(menuItem.LauncherItem.Command);
+		}
+
+		void LauncherItemMenu_CopyParentDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			CopyText(Path.GetDirectoryName(menuItem.LauncherItem.Command));
+		}
+
+		void LauncherItemMenu_CopyWorkDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			CopyText(menuItem.LauncherItem.WorkDirPath);
+		}
+
+		void LauncherItemMenu_OpenProperty(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			OpenProperty(menuItem.LauncherItem.Command);
+		}
+
+		void LauncherItemMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			var parentItem = (LauncherToolStripMenuItem)sender;
+			var launcherItem = parentItem.LauncherItem;
+
+			var openParentDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_openParentDir];
+			var openWorkDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_openWorkDir];
+			var copyCommandItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_copyCommand];
+			var copyParentDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_copyParentDir];
+			var copyWorkDirItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_copyWorkDir];
+			var propertyItem = (ToolStripItem)parentItem.DropDownItems[menuNamePath_property];
+
+			// コマンド有無
+			var commandEnabled = launcherItem.IsExists;
+			copyCommandItem.Enabled = commandEnabled;
+			propertyItem.Enabled = commandEnabled;
+			// 親ディレクトリ有無
+			var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+			var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
+			openParentDirItem.Enabled = parentDirEnabled;
+			copyParentDirItem.Enabled = parentDirEnabled;
+			// 作業ディレクトリ有無
+			var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
+			openWorkDirItem.Enabled = workDirEnabled;
+			copyWorkDirItem.Enabled = workDirEnabled;
 		}
 
 		void FileListMenu_DropDownOpening(object sender, EventArgs e)
