@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.UI;
 
 	/// <summary>
 	/// スクリーン共通処理。
@@ -118,6 +119,20 @@
 		public static Screen GetCurrentCursor()
 		{
 			return Screen.FromPoint(Cursor.Position);
+		}
+
+		public static void ShowScreenWindow(CommonData commonData)
+		{
+			var pairs = Screen.AllScreens.Select(s => new { Screen = s, Window = new ScreenForm()}).ToList();
+			foreach(var pair in pairs) {
+				pair.Window.SetCommonData(commonData);
+				pair.Window.Screen = pair.Screen;
+				
+			}
+
+			foreach(var window in pairs.Select(p => p.Window)) {
+				window.Show();
+			}
 		}
 	}
 }

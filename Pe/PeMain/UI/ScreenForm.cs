@@ -35,7 +35,7 @@
 
 		#region property
 
-		Screen Screen 
+		public Screen Screen 
 		{
 			get { return this._screen; }
 			set 
