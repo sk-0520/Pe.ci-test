@@ -516,6 +516,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string fileCount = "COUNT";
 
 		public const string clipboardPrevTime = "TIME";
+		public const string screen = "SCREEN";
 	}
 	
 	public static class DataTables

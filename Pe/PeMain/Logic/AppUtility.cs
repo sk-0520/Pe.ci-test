@@ -181,19 +181,5 @@
 
 			return result;
 		}
-
-		public static void ShowScreenWindow(CommonData commonData)
-		{
-			var pairs = Screen.AllScreens.Select(s => new { Screen = s, Window = new ScreenForm() }).ToList();
-			foreach(var pair in pairs) {
-				pair.Window.SetCommonData(commonData);
-				pair.Window.Screen = pair.Screen;
-			}
-
-			foreach(var window in pairs.Select(p => p.Window)) {
-				window.Show();
-			}
-		}
-
 	}
 }

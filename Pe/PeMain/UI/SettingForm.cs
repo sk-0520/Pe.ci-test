@@ -562,7 +562,8 @@
 		{
 			this.selecterToolbar.SetLanguage(Language);
 			this.commandToolbarFont.SetLanguage(Language);
-			
+			this.commandToolbarScreens.SetLanguage(Language);
+
 			this.selectToolbarTopmost.SetLanguage(Language);
 			this.selectToolbarVisible.SetLanguage(Language);
 			this.selectToolbarAutoHide.SetLanguage(Language);
@@ -780,6 +781,35 @@
 			return appLinkPath;
 		}
 		*/
+
+
+		void CloseScreenWindow(object sender, EventArgs e)
+		{
+			var windows = this.OwnedForms;
+			foreach(var w in windows) {
+				Debug.WriteLine(w.Text);
+			}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="commonData"></param>
+		public void ShowScreenWindow()
+		{
+			var pairs = Screen.AllScreens.Select(s => new { Screen = s, Window = new ScreenForm() }).ToList();
+			foreach(var pair in pairs) {
+				//pair.Window.SetCommonData(CommonData);
+				pair.Window.SetLanguage(Language);
+				pair.Window.SetSkin(Skin);
+				pair.Window.Screen = pair.Screen;
+				pair.Window.Click += CloseScreenWindow;
+			}
+
+			foreach(var window in pairs.Select(p => p.Window)) {
+				window.Show(this);
+			}
+		}
+
 		#endregion ////////////////////////////////////
 
 		#region export
@@ -1864,6 +1894,11 @@
 			var skin = (ISkin)this.selectSkinName.SelectedValue;
 			var about = skin.About;
 			MessageBox.Show(about.Name);
+		}
+
+		private void commandToolbarScreens_Click(object sender, EventArgs e)
+		{
+			ShowScreenWindow();
 		}
 	}
 }

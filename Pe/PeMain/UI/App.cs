@@ -1240,7 +1240,6 @@
 #if DEBUG
 		public void DebugProcess()
 		{
-			AppUtility.ShowScreenWindow(this._commonData);
 		}
 #endif
 		void AttachmentSystemEvent()
@@ -1898,7 +1897,6 @@
 				toolbar.Hidden();
 			}
 		}
-
 
 		#endregion //////////////////////////////////////////
 

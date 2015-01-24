@@ -7,9 +7,12 @@
 	using System.Drawing;
 	using System.Text;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
-	public partial class ScreenForm: ContentTypeTextNet.Pe.PeMain.UI.CommonForm
+	public partial class ScreenForm: Form, ISetLanguage, ISetSkin
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -35,19 +38,19 @@
 
 		#region property
 
+		Language Language { get; set; }
+		ISkin Skin { get; set; }
+
 		public Screen Screen 
 		{
 			get { return this._screen; }
 			set 
 			{
-				ChangeScreen(value);
 				this._screen = value;
+				ChangedScreen(value);
 			}
 		}
 
-		#endregion ////////////////////////////////////
-
-		#region ISetCommonData
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -65,17 +68,27 @@
 
 		#region function
 
-		protected override void ApplyLanguage()
+		public void SetLanguage(Language language)
 		{
-			base.ApplyLanguage();
-
-			UIUtility.SetDefaultText(this, CommonData.Language);
+			Language = language;
 		}
 
-		void ChangeScreen(Screen screen)
+		public void SetSkin(ISkin skin)
+		{
+			Skin = skin;
+		}
+
+		void ChangedScreen(Screen screen)
 		{
 			var rect = screen.Bounds;
 			SetBounds(rect.X, rect.Y, rect.Width, rect.Height);
+
+			var map = new Dictionary<string, string>();
+			if(Screen != null) {
+				map[AppLanguageName.screen] = ScreenUtility.GetScreenName(Screen, new NullLogger());
+			}
+
+			UIUtility.SetDefaultText(this, Language, map.Count > 0 ? map : null);
 		}
 
 		#endregion ////////////////////////////////////
