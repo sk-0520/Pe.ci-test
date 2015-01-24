@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Drawing.Imaging;
+	using System.Linq;
+
 	/// <summary>
 	/// 描画等々の共通処理。
 	/// </summary>

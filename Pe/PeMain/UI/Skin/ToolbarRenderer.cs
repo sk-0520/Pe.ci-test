@@ -1,10 +1,10 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.PeMain.Data;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System.Drawing;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+
 	/// <summary>
 	/// ISkinを元に描画する
 	/// </summary>

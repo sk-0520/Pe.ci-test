@@ -1,9 +1,9 @@
-﻿using System.Data.Common;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data.DB;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System.Data.Common;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data.DB;
+
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
 	/// </summary>

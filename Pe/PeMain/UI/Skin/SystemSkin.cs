@@ -1,20 +1,17 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Logic;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Drawing.Drawing2D;
+	using System.Drawing.Imaging;
+	using System.Runtime.InteropServices;
+	using System.Windows.Forms;
+	using System.Windows.Forms.VisualStyles;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// 標準で使用されるシステム環境にあってるっぽいスキン

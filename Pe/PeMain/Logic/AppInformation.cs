@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System.Diagnostics;
+	using ContentTypeTextNet.Pe.Library.Utility;
+
 	/// <summary>
 	/// Description of Information.
 	/// </summary>
