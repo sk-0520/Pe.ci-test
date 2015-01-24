@@ -1,18 +1,20 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Drawing;
-	using System.Drawing.Drawing2D;
-	using System.Drawing.Imaging;
-	using System.Drawing.Text;
-	using System.Windows.Forms;
-	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-	using ContentTypeTextNet.Pe.Library.Skin;
-	using ContentTypeTextNet.Pe.Library.Utility;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Logic;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Drawing.Text;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// 標準で使用されるシステム環境にあってるっぽいスキン
@@ -21,6 +23,7 @@
 	{
 		#region define
 
+		const int glowSize = 4;
 
 		#endregion ///////////////////////////
 
@@ -551,7 +554,6 @@
 				g.SmoothingMode = prevSmoothingMode;
 			}
 		}
-
 		
 		public override void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
@@ -581,7 +583,6 @@
 			}
 		}
 		
-		
 		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition)
 		{
 			e.Graphics.Clear(VisualColor);
@@ -591,7 +592,6 @@
 		{
 		}
 		
-		
 		public override void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, IconScale iconScale)
 		{
 			var offset = GetPressOffset(e.Item);
@@ -600,53 +600,73 @@
 			var iconSize = iconScale.ToSize();
 			e.Graphics.DrawImage(e.Image, PaddingWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
 		}
-		
+
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth)
 		{
 			var offset = GetPressOffset(e.Item);
-			
-			using(var textBrush = new SolidBrush(Color.FromArgb(255, Color.White))) {
-				using(var shadowBrush = new SolidBrush(Color.FromArgb(200, Color.Gray))) {
-					using(var format = ToStringFormat(e.TextFormat)) {
-						format.LineAlignment = StringAlignment.Center;
-						format.Trimming = StringTrimming.EllipsisCharacter;
-						//format.FormatFlags = StringFormatFlags.;
-						var buttonLayout = GetToolbarButtonLayout(iconScale, showText, textWidth);
-						var iconSize = iconScale.ToSize();
-						var textArea = new Rectangle(
-							PaddingWidth + buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
-							buttonLayout.Padding.Top + offset.Y,
-							buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth - PaddingWidth,
-							buttonLayout.Size.Height - buttonLayout.Padding.Vertical
-						);
-						var prevTextRenderingHint = e.Graphics.TextRenderingHint;
-						try {
-							// HACK: なんとかならんのかコレ
-							var textOffsetColors = new [] {
-								new {X = +1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = -1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = -1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = -1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								//new {X = +0, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = +0, TextBrush = textBrush,   Hint = TextRenderingHint.ClearTypeGridFit }, // 
-							};
-							foreach(var offsetColor in textOffsetColors) {
-								var tempArea = textArea;
-								tempArea.X += offsetColor.X;
-								tempArea.Y += offsetColor.Y;
-								
-								e.Graphics.TextRenderingHint = offsetColor.Hint;
-								e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, tempArea, format);
-							}
-						} finally {
-							e.Graphics.TextRenderingHint = prevTextRenderingHint;
-						}
+			var buttonLayout = GetToolbarButtonLayout(iconScale, showText, textWidth);
+			var iconSize = iconScale.ToSize();
+			var textArea = new Rectangle(
+				PaddingWidth + buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
+				buttonLayout.Padding.Top + offset.Y,
+				buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth - PaddingWidth,
+				buttonLayout.Size.Height - buttonLayout.Padding.Vertical
+			);
+
+			var drawArea = new RECT() {
+				Left = 0,
+				Top = 0,
+				Width = textArea.Width,
+				Height = textArea.Height,
+			};
+			if(EnabledAeroStyle && VisualStyleRenderer.IsElementDefined(VisualStyleElement.Window.Caption.Active)) {
+				var bitmapInfo = new BITMAPINFO();
+
+				bitmapInfo.bmiHeader.biSize = Marshal.SizeOf(bitmapInfo.bmiHeader);
+				bitmapInfo.bmiHeader.biSize = Marshal.SizeOf(bitmapInfo.bmiHeader);
+				bitmapInfo.bmiHeader.biWidth = textArea.Width;
+				bitmapInfo.bmiHeader.biHeight = -textArea.Height;
+				bitmapInfo.bmiHeader.biPlanes = 1;
+				bitmapInfo.bmiHeader.biBitCount = 32;
+
+				var hDC = e.Graphics.GetHdc();
+				var hFont = e.TextFont.ToHfont();
+				var hMemDC = NativeMethods.CreateCompatibleDC(hDC);
+				var tempPtr = IntPtr.Zero;
+				var hBitmap = NativeMethods.CreateDIBSection(hDC, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0);
+				try {
+					var hOldBitmap = NativeMethods.SelectObject(hMemDC, hBitmap);
+					var hOldFont = NativeMethods.SelectObject(hMemDC, hFont);
+					try {
+						var ddtOpts = new DTTOPTS() {
+							dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
+							dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor,
+							crText = new COLORREF(e.TextColor),
+							iGlowSize = glowSize,
+						};
+
+						var renderer = new VisualStyleRenderer(VisualStyleElement.Window.Caption.Active);
+						var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
+
+						NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
+						//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
+						var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
+						NativeMethods.AlphaBlend(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, textArea.Width, textArea.Height, blendfunction);
+					} finally {
+						NativeMethods.SelectObject(hMemDC, hOldFont);
+						NativeMethods.SelectObject(hMemDC, hOldBitmap);
 					}
+				} finally {
+					NativeMethods.DeleteObject(hBitmap);
+					NativeMethods.DeleteObject(hFont);
+					NativeMethods.DeleteDC(hMemDC);
+
+					e.Graphics.ReleaseHdc(hDC);
+				}
+			} else {
+				using(var sf = ToStringFormat(e.TextFormat))
+				using(var brush = new SolidBrush(e.TextColor)) {
+					e.Graphics.DrawString(e.Text, e.TextFont, brush, textArea, sf);
 				}
 			}
 		}
