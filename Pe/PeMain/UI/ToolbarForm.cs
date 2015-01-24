@@ -751,44 +751,47 @@
 
 		void AttachmentFileLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			
+			// 通常実行
 			var executeItem = new LauncherToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
+				Name = menuNameExecute,
+				Text = CommonData.Language["toolbar/menu/file/execute"],
 			};
+			executeItem.Click += FileLauncherItemMenu_Execute;
+
+			// 指定実行
 			var executeExItem = new LauncherToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
+			Name = menuNameExecuteEx,
+			Text = CommonData.Language["toolbar/menu/file/execute-ex"],
 			};
+			executeExItem.Click += FileLauncherItemMenu_ExecuteEx;
+
+			// パス関係
 			var pathItem = new LauncherToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
+				Name = menuNamePath,
+				Text = CommonData.Language["toolbar/menu/file/path"],
 			};
-			var fileItem = new ToolStripMenuItem();
-			menuList.Add(executeItem);
-			menuList.Add(executeExItem);
-			menuList.Add(new ToolStripSeparator());
-			menuList.Add(pathItem);
-			menuList.Add(fileItem);
-			
-			// 通常実行
-			executeItem.Name = menuNameExecute;
-			executeItem.Text = CommonData.Language["toolbar/menu/file/execute"];
-			executeItem.Click += FileLauncherItemMenu_Execute;
-			// 指定実行
-			executeExItem.Name = menuNameExecuteEx;
-			executeExItem.Text = CommonData.Language["toolbar/menu/file/execute-ex"];
-			executeExItem.Click += FileLauncherItemMenu_ExecuteEx;
-			// パス関係
-			pathItem.Name = menuNamePath;
-			pathItem.Text = CommonData.Language["toolbar/menu/file/path"];
 			AttachmentFileLauncherPathSubMenu(pathItem, launcherItem);
+
 			// ファイル一覧
-			fileItem.Name = menuNameFiles;
-			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
+			var fileItem = new ToolStripMenuItem() {
+				Name = menuNameFiles,
+				Text = CommonData.Language["toolbar/menu/file/ls"],
+			};
+
+			var menuList = new ToolStripItem[] {
+				executeItem,
+				executeExItem,
+				new ToolStripSeparator(),
+				pathItem,
+				fileItem,
+			};
 			
 			// メニュー設定
-			var menuItems = menuList.ToArray();
-			ToolStripUtility.AttachmentOpeningMenuInScreen(menuItems);
-			parentItem.DropDownItems.AddRange(menuItems);
+			ToolStripUtility.AttachmentOpeningMenuInScreen(menuList);
+			parentItem.DropDownItems.AddRange(menuList);
 			parentItem.DropDownOpening += FileLauncherItemMenu_DropDownOpening;
 		}
 
