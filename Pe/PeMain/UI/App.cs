@@ -163,7 +163,7 @@
 
 		public void ChangedLauncherGroupItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
 		{
-			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.UseToolbarItem != toolbarItem)) {
+			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.UsingToolbarItem != toolbarItem)) {
 				toolbar.ReceiveChangedLauncherItems(toolbarItem, toolbarGroupItem);
 			}
 		}
@@ -547,7 +547,7 @@
 					toolbar.Visible = !toolbar.Visible;
 					toolbar.UseToolbarItem.Visible = toolbar.Visible;
 					 */
-					toolbar.UseToolbarItem.Visible = !toolbar.Visible;
+					toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
 					toolbar.ApplySettingVisible();
 				};
 				menuList.Add(menuItem);
