@@ -58,6 +58,10 @@
 		const string menuNameSystemEnvWindowSeparator = "menu_systemenv_window_separator";
 		const string menuNameSystemEnvClipboard = "menu_systemenv_clipboard";
 
+#if DEBUG
+		const string menuNameDebug = "menu_debug";
+#endif
+
 		#endregion //////////////////////////////////////////
 
 		#region Variable
@@ -842,6 +846,10 @@
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemAbout);
 			menuList.Add(itemHelp);
+#if DEBUG
+			var itemDebug = new ToolStripMenuItem();
+			menuList.Add(itemDebug);
+#endif
 			menuList.Add(new ToolStripSeparator());
 			menuList.Add(itemExit);
 
@@ -900,6 +908,12 @@
 			itemExit.Image = this._commonData.Skin.GetImage(SkinImage.Close);
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 
+#if DEBUG
+			itemDebug.Name = menuNameDebug;
+			itemDebug.Image = this._commonData.Skin.GetImage(SkinImage.Debug);
+			itemDebug.Text = "!DEBUG!";
+			itemDebug.Click += (o, e) => DebugProcess();
+#endif
 			// メインメニュー
 			this._contextMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
@@ -1223,10 +1237,10 @@
 
 		#region function
 
-		[Conditional("DEBUG")]
+#if DEBUG
 		public void DebugProcess()
 		{ }
-
+#endif
 		void AttachmentSystemEvent()
 		{
 			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
