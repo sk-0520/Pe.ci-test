@@ -873,6 +873,7 @@
 			//	LoadFileList(fileItem, Path.GetDirectoryName(expandPath), showHiddenFile, showExtension);
 			//};
 			//ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
+			/*
 			try {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
@@ -881,6 +882,7 @@
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 			}
+			 * */
 			
 			// メニュー設定
 			var menuItems = menuList.ToArray();
@@ -905,6 +907,16 @@
 					pathItem.Enabled = false;
 					fileItem.Enabled = false;
 					executeItem.Enabled = true;
+				}
+				try {
+					if(!fileItem.HasDropDownItems) {
+						var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+						var showExtension = SystemEnvironment.IsExtensionShow();
+						var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+						AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
+					}
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
 				}
 			};
 		}
