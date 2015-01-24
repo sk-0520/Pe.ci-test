@@ -1815,8 +1815,15 @@
 			}
 
 			// 下位ファイル群が生成済みであればサヨナラ
-			var separatorItem = toolItem.DropDownItems[menuNameFiles_sep];
-			if(toolItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem).Skip(1).Any()) {
+			var skip = false;
+			if(toolItem.DropDownItems.ContainsKey(menuNameFiles_sep)) {
+				var separatorItem = toolItem.DropDownItems[menuNameFiles_sep];
+				skip = toolItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem).Skip(1).Any();
+			} else {
+				skip = toolItem.DropDownItems.Count > 0;
+			}
+
+			if(skip) {
 				CommonData.Logger.PutsDebug("opening", "skip");
 				return;
 			}
