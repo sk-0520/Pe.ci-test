@@ -145,5 +145,42 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 			this.cx = cx;
 			this.cy = cy;
 		}
-	} 
+	}
+
+	// Alternate
+	[StructLayout(LayoutKind.Explicit, Size = 4)]
+	public struct COLORREF
+	{
+		[FieldOffset(0)]
+		public byte R;
+		[FieldOffset(1)]
+		public byte G;
+		[FieldOffset(2)]
+		public byte B;
+
+		[FieldOffset(0)]
+		public uint ColorDWORD;
+
+		public COLORREF(System.Drawing.Color color)
+		{
+			R = color.R;
+			G = color.G;
+			B = color.B;
+
+			ColorDWORD = (uint)R + (((uint)G) << 8) + (((uint)B) << 16);
+		}
+
+		public System.Drawing.Color GetColor()
+		{
+			// return System.Drawing.Color.FromArgb((int)(0x000000FFU & ColorDWORD),
+			// (int)(0x0000FF00U & ColorDWORD) >> 8, (int)(0x00FF0000U & ColorDWORD) >> 16);
+			return System.Drawing.Color.FromArgb((int)ColorDWORD);
+		}
+
+		public void SetColor(System.Drawing.Color color)
+		{
+			ColorDWORD = (uint)color.R + (((uint)color.G) << 8) + (((uint)color.B) << 16);
+		}
+	}
+
 }

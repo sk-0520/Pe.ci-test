@@ -551,7 +551,6 @@
 				g.SmoothingMode = prevSmoothingMode;
 			}
 		}
-
 		
 		public override void DrawToolbarWindowCaption(Graphics g, Rectangle drawArea, bool active, ToolbarPosition toolbarPosition)
 		{
@@ -581,7 +580,6 @@
 			}
 		}
 		
-		
 		public override void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition)
 		{
 			e.Graphics.Clear(VisualColor);
@@ -590,7 +588,6 @@
 		public override void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition)
 		{
 		}
-		
 		
 		public override void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, IconScale iconScale)
 		{
