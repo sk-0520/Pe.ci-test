@@ -789,6 +789,13 @@
 				w.Dispose();
 			}
 		}
+
+		void KeyUpScreen(object sender, KeyEventArgs e)
+		{
+			// イベント強制
+			CloseScreenWindow(sender, e);
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -802,10 +809,15 @@
 				pair.Window.SetSkin(Skin);
 				pair.Window.Screen = pair.Screen;
 				pair.Window.Click += CloseScreenWindow;
+				// KeyDownでESCだと勢い余って設定画面が閉じるのであげたときのみ取得する
+				pair.Window.KeyUp += KeyUpScreen;
 			}
 
 			foreach(var window in pairs.Select(p => p.Window)) {
 				window.Show(this);
+			}
+			foreach(var window in pairs.Select(p => p.Window)) {
+				window.Refresh();
 			}
 		}
 

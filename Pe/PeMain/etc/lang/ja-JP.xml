@@ -328,6 +328,7 @@
 
 		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
 		<Word Name="screen/primary/false"  Text="" />
+		<Word Name="screen/close"          Text="マウスクリックかキー入力で識別画面を閉じてください" />
 
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />

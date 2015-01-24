@@ -19,6 +19,8 @@
 
 		struct ScreenInfo
 		{
+			public static string CloseMessage { get; set; }
+
 			public string ScreenName { get; set; }
 			public string DeviceName { get; set; }
 			public string Info { get; set; }
@@ -32,6 +34,8 @@
 						string.Empty,
 						DeviceName,
 						Info,
+						string.Empty,
+						CloseMessage,
 					}
 				);
 			}
@@ -120,6 +124,7 @@
 		public void SetLanguage(Language language)
 		{
 			Language = language;
+			ScreenInfo.CloseMessage = Language["screen/close"];
 		}
 
 		public void SetSkin(ISkin skin)
