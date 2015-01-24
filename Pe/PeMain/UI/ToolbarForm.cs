@@ -804,6 +804,8 @@
 
 				if(pathItemList.Length > 0) {
 					foreach(var pathItem in pathItemList) {
+						Debug.WriteLine(pathItem.Path);
+
 						var isAppend = true;
 						if(!showHiddenFile && (File.GetAttributes(pathItem.Path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
 							isAppend = false;
@@ -864,13 +866,21 @@
 			// ファイル一覧
 			fileItem.Name = menuNameFiles;
 			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
-			fileItem.DropDownOpening += (object sender, EventArgs e) => {
+			//fileItem.DropDownOpening += (object sender, EventArgs e) => {
+			//	var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+			//	var showExtension = SystemEnvironment.IsExtensionShow();
+			//	var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+			//	LoadFileList(fileItem, Path.GetDirectoryName(expandPath), showHiddenFile, showExtension);
+			//};
+			//ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
+			try {
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
-				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-				LoadFileList(fileItem, Path.GetDirectoryName(expandPath), showHiddenFile, showExtension);
-			};
-			ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
+				var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+				AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+			}
 			
 			// メニュー設定
 			var menuItems = menuList.ToArray();
