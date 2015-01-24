@@ -22,6 +22,7 @@
 	{
 		#region define
 
+		const int glowSize = 4;
 
 		#endregion ///////////////////////////
 
@@ -598,137 +599,69 @@
 			var iconSize = iconScale.ToSize();
 			e.Graphics.DrawImage(e.Image, PaddingWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
 		}
-		
+
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth)
 		{
 			var offset = GetPressOffset(e.Item);
 
-			using(var textBrush = new SolidBrush(Color.FromArgb(255, Color.White))) {
-				using(var shadowBrush = new SolidBrush(Color.FromArgb(200, Color.Black))) {
-					using(var format = ToStringFormat(e.TextFormat)) {
-						format.LineAlignment = StringAlignment.Center;
-						format.Trimming = StringTrimming.EllipsisCharacter;
-						//format.FormatFlags = StringFormatFlags.;
-						var buttonLayout = GetToolbarButtonLayout(iconScale, showText, textWidth);
-						var iconSize = iconScale.ToSize();
-						var textArea = new Rectangle(
-							PaddingWidth + buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
-							buttonLayout.Padding.Top + offset.Y,
-							buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth - PaddingWidth,
-							buttonLayout.Size.Height - buttonLayout.Padding.Vertical
-						);
-						//var prevTextRenderingHint = e.Graphics.TextRenderingHint;
-						//var prevSmoothingMode = e.Graphics.SmoothingMode;
-						try {
-							/*
-							// HACK: なんとかならんのかコレ
-							var textOffsetColors = new [] {
-								new {X = +1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = -1, Y = -1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = -1, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = -1, Y = +1, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								//new {X = +0, Y = +0, TextBrush = shadowBrush, Hint = TextRenderingHint.AntiAlias }, // 
-								new {X = +0, Y = +0, TextBrush = textBrush,   Hint = TextRenderingHint.ClearTypeGridFit }, // 
-							};
-							foreach(var offsetColor in textOffsetColors) {
-								var tempArea = textArea;
-								tempArea.X += offsetColor.X;
-								tempArea.Y += offsetColor.Y;
-								
-								e.Graphics.TextRenderingHint = offsetColor.Hint;
-								e.Graphics.DrawString(e.Text, e.TextFont, offsetColor.TextBrush, tempArea, format);
-							}
-							*/
-							/*
-							e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-							e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
-							using(var shadowPath = new GraphicsPath()) {
-								var shadowOffsetList = new[] {
-									new {X = +1, Y = -1, },
-									new {X = +0, Y = -1, },
-									new {X = -1, Y = -1, },
-									new {X = +1, Y = +0, },
-									new {X = +0, Y = +0, },
-									new {X = -1, Y = +0, },
-									new {X = +1, Y = +1, },
-									new {X = +0, Y = +1, },
-									new {X = -1, Y = +1, },
-								};
-								foreach(var shadowOffset in shadowOffsetList) {
-									var tempArea = textArea;
-									tempArea.X += shadowOffset.X;
-									tempArea.Y += shadowOffset.Y;
-									shadowPath.AddString(e.Text, e.TextFont.FontFamily, 0, e.TextFont.SizeInPoints, textArea, format);
-								}
-								//e.Graphics.FillPath(shadowBrush, shadowPath);
+			var buttonLayout = GetToolbarButtonLayout(iconScale, showText, textWidth);
+			var iconSize = iconScale.ToSize();
+			var textArea = new Rectangle(
+				PaddingWidth + buttonLayout.Padding.Vertical + iconSize.Width + offset.X,
+				buttonLayout.Padding.Top + offset.Y,
+				buttonLayout.Size.Width - iconSize.Width - buttonLayout.Padding.Right - buttonLayout.Padding.Horizontal - buttonLayout.MenuWidth - PaddingWidth,
+				buttonLayout.Size.Height - buttonLayout.Padding.Vertical
+			);
 
-								using(var fontPath = new GraphicsPath()) {
-									fontPath.AddString(e.Text, e.TextFont.FontFamily, 0, e.TextFont.Size, textArea, format);
-									//e.Graphics.FillPath(textBrush, fontPath);
-								}
-							}
-							*/
-							var hDC = e.Graphics.GetHdc();
-							var hFont = e.TextFont.ToHfont();
-							var hMemDC = NativeMethods.CreateCompatibleDC(hDC);
-							var drawArea = new RECT() {
-								Left = 0,
-								Top = 0,
-								Width = textArea.Width,
-								Height = textArea.Height,
-							};
-							var bitmapInfo = new BITMAPINFO();
+			var drawArea = new RECT() {
+				Left = 0,
+				Top = 0,
+				Width = textArea.Width,
+				Height = textArea.Height,
+			};
+			var bitmapInfo = new BITMAPINFO();
 
-							bitmapInfo.bmiHeader.biSize = Marshal.SizeOf(bitmapInfo.bmiHeader);
-							bitmapInfo.bmiHeader.biWidth = textArea.Width;
-							bitmapInfo.bmiHeader.biHeight = -textArea.Height;
-							bitmapInfo.bmiHeader.biPlanes = 1;
-							bitmapInfo.bmiHeader.biBitCount = 32;
+			bitmapInfo.bmiHeader.biSize = Marshal.SizeOf(bitmapInfo.bmiHeader);
+			bitmapInfo.bmiHeader.biSize = Marshal.SizeOf(bitmapInfo.bmiHeader);
+			bitmapInfo.bmiHeader.biWidth = textArea.Width;
+			bitmapInfo.bmiHeader.biHeight = -textArea.Height;
+			bitmapInfo.bmiHeader.biPlanes = 1;
+			bitmapInfo.bmiHeader.biBitCount = 32;
 
-							var tempPtr = IntPtr.Zero;
-							var dibSection = NativeMethods.CreateDIBSection(hDC, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0);
+			var hDC = e.Graphics.GetHdc();
+			var hFont = e.TextFont.ToHfont();
+			var hMemDC = NativeMethods.CreateCompatibleDC(hDC);
+			var tempPtr = IntPtr.Zero;
+			var hBitmap = NativeMethods.CreateDIBSection(hDC, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0);
+			try {
+				var hOldBitmap = NativeMethods.SelectObject(hMemDC, hBitmap);
+				var hOldFont = NativeMethods.SelectObject(hMemDC, hFont);
+				try {
+					var ddtOpts = new DTTOPTS() {
+						dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
+						dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor,
+						crText = new COLORREF(e.TextColor),
+						iGlowSize = glowSize,
+					};
 
-							var oldBitmap = NativeMethods.SelectObject(hMemDC, dibSection);
-							var oldFont = NativeMethods.SelectObject(hMemDC, hFont);
+					var renderer = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active);
+					var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
 
-							var ddtOpts = new DTTOPTS();
-							ddtOpts.dwSize = (uint)Marshal.SizeOf<DTTOPTS>();
-							ddtOpts.dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor | DTT.ApplyOverlay;
-							ddtOpts.dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor;
-							ddtOpts.crText = new COLORREF(e.TextColor);
-							ddtOpts.fApplyOverlay = true;
-							ddtOpts.iGlowSize = 3;
-
-							var renderer = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active);
-
-							var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
-							NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
-							//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
-							var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
-							NativeMethods.AlphaBlend(hDC, textArea.Left, textArea.Top - 2, textArea.Width, textArea.Height, hMemDC, 0, 0, textArea.Width, textArea.Height, blendfunction);
-
-							NativeMethods.SelectObject(hMemDC, hFont);
-							NativeMethods.SelectObject(hMemDC, oldBitmap);
-
-							NativeMethods.DeleteDC(hMemDC);
-							NativeMethods.DeleteObject(hFont);
-							NativeMethods.DeleteObject(dibSection);
-
-							e.Graphics.ReleaseHdc(hDC);
-
-							
-						} finally {
-							//e.Graphics.TextRenderingHint = prevTextRenderingHint;
-							//e.Graphics.SmoothingMode = prevSmoothingMode;
-						}
-					}
+					NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
+					//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
+					var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
+					NativeMethods.AlphaBlend(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, textArea.Width, textArea.Height, blendfunction);
+				} finally {
+					NativeMethods.SelectObject(hMemDC, hOldFont);
+					NativeMethods.SelectObject(hMemDC, hOldBitmap);
 				}
+			} finally {
+				NativeMethods.DeleteObject(hBitmap);
+				NativeMethods.DeleteObject(hFont);
+				NativeMethods.DeleteDC(hMemDC);
+
+				e.Graphics.ReleaseHdc(hDC);
 			}
 		}
 
