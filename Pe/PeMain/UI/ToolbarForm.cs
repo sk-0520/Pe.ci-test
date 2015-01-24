@@ -548,12 +548,6 @@
 			ClipboardUtility.CopyText(text, CommonData);
 		}
 		
-		void OpenProperty(string path)
-		{
-			var expandPath = Environment.ExpandEnvironmentVariables(path);
-			Executor.OpenProperty(expandPath, Handle);
-		}
-		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
 		{
 			var itemList = new List<ToolStripItem>();
@@ -1692,7 +1686,9 @@
 		void FileLauncherItemPathMenu_OpenProperty(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
-			OpenProperty(menuItem.LauncherItem.Command);
+			var expandPath = Environment.ExpandEnvironmentVariables(menuItem.LauncherItem.Command);
+
+			Executor.OpenProperty(expandPath, Handle);
 		}
 
 		void FileLauncherItemPathMenu_DropDownOpening(object sender, EventArgs e)
