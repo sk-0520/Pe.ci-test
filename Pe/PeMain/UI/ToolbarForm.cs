@@ -392,6 +392,7 @@
 				this.toolLauncher.Font = UsingToolbarItem.FontSetting.Font;
 			}
 		}
+
 		public void ApplySettingVisible()
 		{
 			var floatSize = UsingToolbarItem.FloatSize;
@@ -663,24 +664,26 @@
 		/// <param name="dirPath">基ディレクトリパス</param>
 		void AttachmentDirectoryOpen(ToolStripDropDownItem parentItem, string dirPath)
 		{
+			// ここを開く
 			var openItem = new FileToolStripMenuItem(CommonData) {
+				Name = menuNameFiles_open,
+				Text = CommonData.Language["toolbar/menu/file/ls/open"],
 				Path = dirPath,
 			};
-			var sepItem = new ToolStripSeparator();
+			openItem.Click += FileListMenu_Click;
+
+			// 罫線
+			var sepItem = new ToolStripSeparator() {
+				Name = menuNameFiles_sep,
+			};
 
 			var menuList = new ToolStripItem[] {
 				openItem,
 				sepItem,
 			};
 
-			// ここを開く
-			openItem.Name = menuNameFiles_open;
-			openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
-			openItem.Click += FileListMenu_Click;
-			// 罫線
-			sepItem.Name = menuNameFiles_sep;
-
 			parentItem.DropDownItems.AddRange(menuList);
+
 			parentItem.DropDownOpening += FileListMenu_DropDownOpening;
 		}
 
