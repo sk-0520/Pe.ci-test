@@ -326,6 +326,9 @@
 		<Word Name="setting/group/stream"     Text="標準入出力" />
 		<Word Name="setting/command/screens"  Text="識別" />
 
+		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
+		<Word Name="screen/primary/false"  Text="" />
+
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
 		<Word Name="about/command/backup"    Text="バックアップ" />

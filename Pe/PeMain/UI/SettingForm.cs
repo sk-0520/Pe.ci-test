@@ -785,9 +785,8 @@
 
 		void CloseScreenWindow(object sender, EventArgs e)
 		{
-			var windows = this.OwnedForms;
-			foreach(var w in windows) {
-				Debug.WriteLine(w.Text);
+			foreach(var w in OwnedForms.OfType<ScreenForm>().ToArray()) {
+				w.Dispose();
 			}
 		}
 		/// <summary>
