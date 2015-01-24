@@ -1239,7 +1239,9 @@
 
 #if DEBUG
 		public void DebugProcess()
-		{ }
+		{
+			ScreenUtility.ShowScreenWindow(this._commonData);
+		}
 #endif
 		void AttachmentSystemEvent()
 		{
