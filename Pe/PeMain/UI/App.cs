@@ -102,10 +102,10 @@
 			Initialized = true;
 			
 			var logger = new StartupLogger(fileLogger);
-			logger.PutsDebug("DebugLogging", "Startup: force logging");
+			logger.PutsDebug("DebugLogging", () => "Startup: force logging");
 			
 			ExistsSettingFilePath = Initialize(commandLine, logger);
-			logger.PutsDebug("ExistsSettingFilePath", ExistsSettingFilePath);
+			logger.PutsDebug("ExistsSettingFilePath", () => ExistsSettingFilePath);
 
 			#if !DISABLED_UPDATE_CHECK
 			CheckUpdateProcessAsync(false);

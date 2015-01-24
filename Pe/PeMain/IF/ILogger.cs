@@ -1,5 +1,6 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
+	using System;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
@@ -25,6 +26,6 @@
 		/// <param name="title"></param>
 		/// <param name="detail"></param>
 		/// <param name="frame"></param>
-		void PutsDebug(string title, object detail, int frame = 3);
+		void PutsDebug(string title, Func<object> detail, int frame = 3);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System;
 	using System.Collections.Generic;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -26,9 +27,9 @@
 			this._logList.Add(logItem);
 		}
 
-		public void PutsDebug(string title, object detail, int frame = 3)
+		public void PutsDebug(string title, Func<object> detail, int frame = 3)
 		{
-			Puts(LogType.Debug, title, detail, frame);
+			Puts(LogType.Debug, title, detail(), frame);
 		}
 
 		#endregion

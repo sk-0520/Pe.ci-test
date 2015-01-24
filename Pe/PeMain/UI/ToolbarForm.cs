@@ -617,46 +617,6 @@
 			};
 		}
 		
-		ToolStripMenuItem GetFileListItem(string path, bool isDir, bool showHiddenFile, bool showExtension)
-		{
-			var menuItem = new ToolStripMenuItem();
-			if(!isDir && !showExtension) {
-				menuItem.Text = Path.GetFileNameWithoutExtension(path);
-			} else {
-				menuItem.Text = Path.GetFileName(path);
-			}
-			using(var icon = IconUtility.Load(path, UseToolbarItem.IconScale, 0)) {
-				//using(var icon = IconUtility.Load(path, IconScale.Small, 0)) {
-				menuItem.Image = icon.ToBitmap();
-				menuItem.ImageScaling = ToolStripItemImageScaling.None;
-			}
-			
-			// アクセス権から使用可・不可
-			//if(isDir) {
-			//	var access = Directory.GetAccessControl(path);
-			//} else {
-			//	var access = File.GetAccessControl(path);
-			//}
-			
-			if(isDir) {
-				menuItem.DropDownOpening += (object sender, EventArgs e) => LoadFileList(menuItem, path, showHiddenFile, showExtension);
-			}
-			
-			menuItem.Click += (object sender, EventArgs e) => {
-				try {
-					if(File.Exists(path)) {
-						Executor.OpenFile(path, CommonData);
-					} else {
-						Executor.OpenDirectory(path, CommonData, null);
-					}
-				} catch(Exception ex) {
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-				}
-			};
-			
-			return menuItem;
-		}
-
 		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showHiddenFile, bool showExtension)
 		{
 			var menuItem = new FileToolStripMenuItem(commonData, path);
@@ -680,88 +640,11 @@
 			return menuItem;
 		}
 
-		bool LoadFileList(ToolStripDropDownItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
-		{
-			if(parentItem.HasDropDownItems) {
-				return false;
-			}
-			
-			if(!Directory.Exists(parentDirPath)) {
-				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-dir"], parentDirPath);;
-				return false;
-			}
-
-			IList<ToolStripItem> menuList;
-			
-			try {
-				var dirList = Directory.GetDirectories(parentDirPath);
-				var fileList = Directory.GetFiles(parentDirPath);
-				var pathItemList = new [] {
-					new { PathList = dirList,  IsDirectory = true, },
-					new { PathList = fileList, IsDirectory = false, },
-				};
-				menuList = new List<ToolStripItem>(dirList.Length + fileList.Length);
-				if(dirList.Length + fileList.Length > 0) {
-					/*
-					foreach(var path in dirList) {
-						var use = true;
-						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
-							use = false;
-						}
-						if(use) {
-							var menuItem = GetFileListItem(path, true, showHiddenFile, showExtension);
-							menuList.Add(menuItem);
-						}
-					}
-					foreach(var path in fileList) {
-						var use = true;
-						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
-							use = false;
-						}
-						if(use) {
-							var menuItem = GetFileListItem(path, false, showHiddenFile, showExtension);
-							menuList.Add(menuItem);
-						}
-					}
-					 */
-					foreach(var pathItem in pathItemList) {
-						foreach(var path in pathItem.PathList) {
-							var use = true;
-							if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
-								use = false;
-							}
-							if(use) {
-								var menuItem = GetFileListItem(path, pathItem.IsDirectory, showHiddenFile, showExtension);
-								menuList.Add(menuItem);
-							}
-						}
-					}
-					
-				} else {
-					var menuItem = new ToolStripMenuItem();
-					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
-					menuItem.Image = SystemIcons.Information.ToBitmap();
-					menuItem.Enabled = false;
-					
-					menuList.Add(menuItem);
-				}
-				
-			} catch(UnauthorizedAccessException ex) {
-				var menuItem = new ToolStripMenuItem();
-				menuItem.Text = ex.Message;
-				menuItem.Image = SystemIcons.Warning.ToBitmap();
-				menuItem.Enabled = false;
-				menuList = new [] { menuItem };
-			}
-			
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			
-			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
-			parentItem.ShowDropDown();
-			return true;
-		}
-
-
+		/// <summary>
+		/// ファイル一覧メニューにディレクトリを開く共通項目の設定
+		/// </summary>
+		/// <param name="parentItem">項目を設定する親メニューアイテム</param>
+		/// <param name="dirPath">基ディレクトリパス</param>
 		void AttachmentDirectoryOpen(ToolStripDropDownItem parentItem, string dirPath)
 		{
 			var openItem = new FileToolStripMenuItem(CommonData, dirPath);
@@ -782,6 +665,16 @@
 			parentItem.DropDownItems.AddRange(menuList);
 			parentItem.DropDownOpening += FileListMenu_DropDownOpening;
 		}
+
+		/// <summary>
+		/// ファイル一覧メニューに指定ディレクトリ以下のファイル・ディレクトリ一覧を設定する
+		/// </summary>
+		/// <param name="parentItem">項目を設定する親メニューアイテム</param>
+		/// <param name="appendOpen">ディレクトリを開く共通メニューを追加するか</param>
+		/// <param name="dirPath">基ディレクトリパス</param>
+		/// <param name="showHiddenFile">隠しファイルを表示するか</param>
+		/// <param name="showExtension">拡張子を表示するか</param>
+		/// <returns></returns>
 		bool AttachmentFileList(ToolStripDropDownItem parentItem, bool appendOpen, string dirPath, bool showHiddenFile, bool showExtension)
 		{
 			if(!Directory.Exists(dirPath)) {
@@ -804,8 +697,6 @@
 
 				if(pathItemList.Length > 0) {
 					foreach(var pathItem in pathItemList) {
-						Debug.WriteLine(pathItem.Path);
-
 						var isAppend = true;
 						if(!showHiddenFile && (File.GetAttributes(pathItem.Path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
 							isAppend = false;
@@ -833,6 +724,7 @@
 
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
+
 			return true;
 		}
 
@@ -1185,25 +1077,6 @@
 			var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 			var showExtension = SystemEnvironment.IsExtensionShow();
 			AttachmentFileList(toolItem, true, Environment.ExpandEnvironmentVariables(item.Command), showHiddenFile, showExtension);
-
-			//toolItem.DropDownOpening += (object sender, EventArgs e) => {
-			//	var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
-			//	var showExtension = SystemEnvironment.IsExtensionShow();
-			//	var expandPath = Environment.ExpandEnvironmentVariables(item.Command);
-
-			//	openItem.Image = toolItem.Image;
-
-			//	if(LoadFileList(toolItem, expandPath, showHiddenFile, showExtension)) {
-			//		/*
-			//		var openItem = new ToolStripMenuItem();
-			//		openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
-			//		openItem.Image = toolItem.Image;
-			//		openItem.Click += (object child_sender, EventArgs child_e) => ExecuteItem(item);
-			//		toolItem.DropDownItems.Insert(0, openItem);
-			//		toolItem.DropDownItems.Insert(1, new ToolStripSeparator());
-			//		 * */
-			//	}
-			//};
 
 			return toolItem;
 		}
@@ -1750,20 +1623,7 @@
 		void ToolItem_MouseHover(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
-			/*
-			var cursorPoint = Cursor.Position;
-			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
-			var point = this.PointToClient(cursorPoint);
-			Debug.WriteLine(toolItem.ToolTipText);
-			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
-			 */
-			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
-			//this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
-			//this.tipsLauncher.RemoveAll();
-			//this.tipsLauncher.SetToolTip(this, "#");
-			//if(toolItem.OwnerItem == this.toolLauncher)
-			//if(toolItem.OwnerItem == null)
-			//var menuItem = toolItem as ToolStripDropDownItem;
+
 			if(this._menuOpening) {
 				// メニュー表示中はなんもしない
 				return;
@@ -1774,25 +1634,7 @@
 		void toolItem_MouseLeave(object sender, EventArgs e)
 		{
 			this._tipsLauncher.HideItem();
-			//this.tipsLauncher.RemoveAll();
 		}
-		
-
-		/*
-		void ToolLauncher_MouseHover(object sender, EventArgs e)
-		{
-			var cursorPoint = Cursor.Position;
-			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
-			var point = this.PointToClient(cursorPoint);
-			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().FirstOrDefault(i => i.Bounds.Contains(point));
-			if(toolItem != null) {
-				//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
-				Debug.WriteLine("ToolLauncher_MouseHover");
-			} else {
-				this.tipsLauncher.RemoveAll();
-			}
-		}
-		 * */
 		
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
 		{
@@ -1846,20 +1688,20 @@
 			}
 
 			if(skip) {
-				CommonData.Logger.PutsDebug("opening", "skip");
+				CommonData.Logger.PutsDebug("opening: skip", () => string.Join(Environment.NewLine, toolItem.DropDownItems.Cast<ToolStripItem>().Select(t => t.Text)));
 				return;
 			}
 
 			// 下位ファイル群生成
 			var fileMenuItem = toolItem as FileToolStripMenuItem;
 			if(fileMenuItem != null) {
-				CommonData.Logger.PutsDebug(fileMenuItem.Text, fileMenuItem.DropDownItems.Count);
+				CommonData.Logger.PutsDebug(fileMenuItem.Text, () => fileMenuItem.DropDownItems.Count);
 				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 				var showExtension = SystemEnvironment.IsExtensionShow();
 				AttachmentFileList(fileMenuItem, false, Environment.ExpandEnvironmentVariables(fileMenuItem.FilePath), showHiddenFile, showExtension);
 			} else {
 				// 起こりえないけど改修実装なんで入れとく
-				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", toolItem.DumpToString(toolItem.Text));
+				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => toolItem.DumpToString(toolItem.Text));
 			}
 		}
 
@@ -1879,7 +1721,7 @@
 				}
 			} else {
 				// 起こりえないけど改修実装なんで入れとく
-				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", sender.DumpToString(sender.GetType().ToString()));
+				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => sender.DumpToString(sender.GetType().ToString()));
 			}
 		}
 
