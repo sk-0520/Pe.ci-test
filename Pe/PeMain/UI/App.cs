@@ -291,7 +291,16 @@
 					break;
 
 				case HotKeyId.SwitchClipboardShow:
-					SwitchShowClipboard();
+					{
+						var langKey = this._commonData.MainSetting.Clipboard.Visible
+							? "show"
+							: "hidden"
+						;
+						var titleKey = "balloon/clipboard/title-" + key;
+						var messageKey ="balloon/clipboard/message-" + key;
+						ShowBalloon(ToolTipIcon.Info, this._commonData.Language[titleKey], this._commonData.Language[messageKey]);
+						SwitchShowClipboard();
+					}
 					break;
 
 				default:
