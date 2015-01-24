@@ -25,14 +25,14 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.42.1" type="rc">
+	<log date="YYYY/MM/DD" version="0.42.2" type="rc">
 		<ul type="note">
 			<li rev=""></li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
 		<ul type="features">
-			<li rev="">#175: 設定画面のディスプレイ識別を視覚的に行う</li>
+			<li rev="c65b4ed19b2eacc8b93ae130ce779ad363b6d54d">#175: 設定画面のディスプレイ識別を視覚的に行う</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>
@@ -43,11 +43,11 @@
 		</ul>
 		<ul type="developer">
 			<li rev="76d69b05c5208a53b2bf180ad166a0b8cf855f24">各種UIの共通処理をまとめる</li>
-			<li rev=""></li>
+			<li rev="">0.42.1の更新履歴で「リリースビルドバッチ整理」が#160になっていたのを#165に修正</li>
 			<li rev=""></li>
 		</ul>
 	</log>
-	<log date="2015/01/22" version="0.42.0">
+	<log date="2015/01/22" version="0.42.1">
 		<ul type="features">
 			<li rev="7a38fc15197655ea9a941744f4c0e24860ff5d28">#167: 標準入出力ダイアログのフォントを設定項目に表示する</li>
 			<li rev="0387abfea5c3af98acba2948271b523240a377c5">#158: 肥大化するarchiveディレクトリ</li>
@@ -62,7 +62,7 @@
 			<li rev="">0.42.0のビルド変更により設定項目にデバッグ用UIが表示されていた</li>
 		</ul>
 		<ul type="developer">
-			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#160: リリースビルドバッチ整理</li>
+			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#165: リリースビルドバッチ整理</li>
 			<li rev="e3ec638ee1ca1f8aec93f5aa1eb2878106873185">#164: switchのDebug.Assert</li>
 			<li rev="34960ebefb5d0820a2d2f7f023bc5f0858773240">#166: readme.txtをMarkdownにする</li>
 			<li rev="11f6e6e7e3e9f55ec8f7c7729038bfee64490163">#160: リリースビルド時に変なdefineがある場合にエラーとする</li>
