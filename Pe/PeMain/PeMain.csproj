@@ -314,6 +314,12 @@
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\App.cs" />
+    <Compile Include="UI\ScreenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScreenForm.Designer.cs">
+      <DependentUpon>ScreenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
