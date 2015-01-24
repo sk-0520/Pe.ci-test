@@ -33,11 +33,11 @@
 		</ul>
 		<ul type="features">
 			<li rev="c65b4ed19b2eacc8b93ae130ce779ad363b6d54d">#175: 設定画面のディスプレイ識別を視覚的に行う</li>
-			<li rev=""></li>
+			<li rev="">ファイルメニューを表示する際にシステムが隠しファイルを表示する設定であれば該当ファイルを半透明で表示する</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
-			<li rev=""></li>
+			<li rev="">#174: ファイルメニューが表示されない</li>
 			<li rev=""></li>
 			<li rev=""></li>
 		</ul>

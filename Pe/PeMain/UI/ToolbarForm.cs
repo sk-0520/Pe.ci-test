@@ -633,7 +633,7 @@
 			parentItem.DropDownOpening += FileLauncherItemPathMenu_DropDownOpening;
 		}
 		
-		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showHiddenFile, bool showExtension)
+		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showExtension, bool isHiddenFile)
 		{
 			var menuItem = new FileToolStripMenuItem(commonData){
 				Path = path,
@@ -645,7 +645,13 @@
 				menuItem.Text = Path.GetFileName(path);
 			}
 			using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-				menuItem.Image = icon.ToBitmap();
+				Image image = icon.ToBitmap();
+				if(isHiddenFile) {
+					var hiddenFileImage = DrawUtility.SetImageOpacity(image, Literal.hiddenFileOpacity);
+					image.ToDispose();
+					image = hiddenFileImage;
+				}
+				menuItem.Image = image;
 				menuItem.ImageScaling = ToolStripItemImageScaling.None;
 			}
 
@@ -720,11 +726,12 @@
 				if(pathItemList.Length > 0) {
 					foreach(var pathItem in pathItemList) {
 						var isAppend = true;
-						if(!showHiddenFile && (File.GetAttributes(pathItem.Path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
+						var isHiddenFile = File.GetAttributes(pathItem.Path).HasFlag(FileAttributes.Hidden);
+						if(!showHiddenFile && isHiddenFile) {
 							isAppend = false;
 						}
 						if(isAppend) {
-							var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showHiddenFile, showExtension);
+							var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, isHiddenFile);
 							menuList.Add(menuItem);
 						}
 					}
