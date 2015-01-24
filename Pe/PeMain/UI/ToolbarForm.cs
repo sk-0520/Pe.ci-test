@@ -1696,6 +1696,8 @@
 			}
 		}
 
+		#region File Launcher Menu
+
 		void LauncherItemMenu_OpenParentDirectory(object sender, EventArgs e)
 		{
 			var menuItem = (LauncherToolStripMenuItem)sender;
@@ -1759,6 +1761,10 @@
 			copyWorkDirItem.Enabled = workDirEnabled;
 		}
 
+		#endregion
+
+		#region File List Menu
+
 		void FileListMenu_DropDownOpening(object sender, EventArgs e)
 		{
 			var toolItem = sender as ToolStripDropDownItem;
@@ -1814,6 +1820,6 @@
 			}
 		}
 
-
+		#endregion
 	}
 }
