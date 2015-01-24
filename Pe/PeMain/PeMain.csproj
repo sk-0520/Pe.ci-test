@@ -287,6 +287,9 @@
     <Compile Include="UI\Ex\ExToolStripControlHost.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Ex\ExToolStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Ex\ExWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
