@@ -9,6 +9,8 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using Microsoft.Win32.SafeHandles;
+	using ObjectDumper;
 
 	public class UpdateInfo
 	{
@@ -133,6 +135,10 @@
 			return Info = info;
 		}
 		
+		/// <summary>
+		/// 更新処理実行。
+		/// </summary>
+		/// <returns></returns>
 		public bool Execute()
 		{
 			var eventName = "pe-event";
@@ -158,16 +164,36 @@
 			var process = CreateProcess(map);
 			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
 
-			process.Start();
-			//pipe.WaitForConnection();
-			if(waitEvent.WaitOne(TimeSpan.FromMinutes(3))) {
-				// 終了
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exit"], process.StartInfo.Arguments);
+			var result = false;
 
-				return true;
+			process.Start();
+			var processEvent =  new EventWaitHandle(false, EventResetMode.AutoReset) {
+				SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
+			};
+			var handles = new [] { waitEvent, processEvent };
+			var waitResult = WaitHandle.WaitAny(handles, TimeSpan.FromMinutes(3));
+			this._commonData.Logger.PutsDebug("WaitHandle.WaitAny", () => waitResult);
+			if(0 <= waitResult && waitResult < handles.Length) {
+				if(handles[waitResult] == waitEvent) {
+					// イベントが立てられたので終了
+					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exit"], process.StartInfo.Arguments);
+					result = true;
+				} else if(handles[waitResult] == processEvent) {
+					// Updaterがイベント立てる前に死んだ
+					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/error-process"], process.ExitCode);
+				}
+			} else {
+				// タイムアウト
+				if(!process.HasExited) {
+					// まだ生きてるなら強制的に殺す
+					process.Kill();
+				}
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/error-timeout"], process.ExitCode);
 			}
 
-			return false;
+			return result;
 		}
+
+
 	}
 }
