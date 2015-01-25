@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.IO;
+
 	/// <summary>
 	/// パス関連共通処理。
 	/// </summary>
@@ -11,7 +11,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		static bool IsTargetExt(string path, Func<string, bool> dg)
 		{
 			var dotExt = Path.GetExtension(path);
-			if(dotExt.Length > ".x".Length) {
+			if(dotExt.Length >= ".x".Length) {
 				var ext = dotExt.Substring(1).ToLower();
 				return dg(ext);
 			}
