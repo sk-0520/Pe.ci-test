@@ -663,6 +663,9 @@
 				var edge = this.CommonData.Skin.GetNoteWindowEdgePadding();
 				var titleArea = GetTitleArea();
 				Size = new Size(titleArea.Width + edge.Horizontal, titleArea.Height + edge.Vertical);
+				if(this.inputBody.Focused) {
+					ActiveControl = null;
+				}
 			} else {
 				Size = size;
 			}
