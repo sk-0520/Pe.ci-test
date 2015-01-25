@@ -25,18 +25,16 @@
 		</ul>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.42.2" type="rc">
+	<log date="2015/01/25" version="0.43.0">
 		<ul type="note">
-			<li rev=""></li>
-			<li rev=""></li>
-			<li rev=""></li>
+			<li rev="">ファイル・ディレクトリアイテムのファイルメニューからディレクトリを開くには下位メニューから「ここを開く」を選択してください</li>
+			<li rev="">ファイルアイテムのファイルメニュー第一階層目はパスメニューから代用できるため「ここを開く」はありません</li>
 		</ul>
 		<ul type="features">
 			<li rev="c65b4ed19b2eacc8b93ae130ce779ad363b6d54d">#175: 設定画面のディスプレイ識別を視覚的に行う</li>
 			<li rev="97ea508e7ab1e34ec988da8b53ff73fe49338d5a">ファイルメニューを表示する際にシステムが隠しファイルを表示する設定であれば該当ファイルを半透明で表示する</li>
 			<li rev="2c9de6cfd57c2a85ff2535dcd539de1c6cd36890">SystemSkin: ツールバー文字列描画にシステムのタイトルバー描画処理を使用する</li>
 			<li rev="c63c8d0188451395a33d3ca3278b0efb8d5f061e">#173: クリップボードウィンドウ表示切り替え時にバルーンを表示する</li>
-			<li rev=""></li>
 		</ul>
 		<ul type="fixes">
 			<li rev="2d432b805313cf5cd6938404c54e387cc4a7c59e">#174: ファイルメニューが表示されない</li>
@@ -47,7 +45,6 @@
 		<ul type="developer">
 			<li rev="76d69b05c5208a53b2bf180ad166a0b8cf855f24">各種UIの共通処理をまとめる</li>
 			<li rev="">0.42.1の更新履歴で「リリースビルドバッチ整理」が#160になっていたのを#165に修正</li>
-			<li rev=""></li>
 		</ul>
 	</log>
 	<log date="2015/01/22" version="0.42.1">
