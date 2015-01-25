@@ -43,6 +43,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			FalseExpression = null;
 		}
 		
+		/// <summary>
+		/// 条件を真とし、真の文字列コマンドを設定する。
+		/// </summary>
+		/// <param name="trueCommand"></param>
 		public CommandExpression(string trueCommand): this()
 		{
 			Condition = true;
@@ -213,8 +217,17 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	public abstract class Dto: DbData
 	{ }
 
+	/// <summary>
+	/// DBクエリ。
+	/// </summary>
 	public class DbQuery: IDisposable
 	{
+		/// <summary>
+		/// 生成。
+		/// 
+		/// 基本的にDBManagerから作成するのでユーザーコードでは使用しない。
+		/// </summary>
+		/// <param name="dbManager"></param>
 		public DbQuery(DBManager dbManager)
 		{
 			DBManager = dbManager;
@@ -225,12 +238,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			ConditionPattern = @"\{(\w+)\}";
 		}
+
 		/// <summary>
 		/// 生成元。
 		/// </summary>
 		public DBManager DBManager { get; private set; }
 		/// <summary>
-		/// 
+		/// コマンド。
 		/// </summary>
 		protected DbCommand DbCommand { get; set; }
 
@@ -255,33 +269,72 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			set { CompiledPattern = new Regex(value, RegexOptions.Singleline | RegexOptions.Compiled); }
 		}
 
+		/// <summary>
+		/// 条件式が存在するか。
+		/// </summary>
+		/// <param name="name">条件式名。</param>
+		/// <returns></returns>
 		public bool HasExpression(string name)
 		{
 			return Expression.ContainsKey(name);
 		}
 
+		/// <summary>
+		/// 条件式取得。
+		/// </summary>
+		/// <param name="exprName">条件式名。</param>
+		/// <returns></returns>
 		public CommandExpression GetExpression(string exprName)
 		{
 			return Expression[exprName];
 		}
 
+		/// <summary>
+		/// 条件式の設定。
+		/// </summary>
+		/// <param name="exprName"></param>
+		/// <param name="expr"></param>
+		/// <returns></returns>
 		public CommandExpression SetExpression(string exprName, CommandExpression expr)
 		{
 			return Expression[exprName] = expr;
 		}
 
+		/// <summary>
+		/// コマンド条件式を真で設定。
+		/// </summary>
+		/// <param name="exprName"></param>
+		/// <param name="trueCommand"></param>
+		/// <returns></returns>
 		public CommandExpression SetExpression(string exprName, string trueCommand)
 		{
 			var expr = new CommandExpression(trueCommand);
 			return SetExpression(exprName, expr);
 		}
 
+		/// <summary>
+		/// 条件式を設定。
+		/// 
+		/// 偽の場合は空白となる。
+		/// </summary>
+		/// <param name="exprName"></param>
+		/// <param name="condition"></param>
+		/// <param name="trueCommand"></param>
+		/// <returns></returns>
 		public CommandExpression SetExpression(string exprName, bool condition, string trueCommand)
 		{
 			var expr = new CommandExpression(condition, trueCommand);
 			return SetExpression(exprName, expr);
 		}
 
+		/// <summary>
+		/// 条件式を設定。
+		/// </summary>
+		/// <param name="exprName"></param>
+		/// <param name="condition"></param>
+		/// <param name="trueCommand"></param>
+		/// <param name="falseCommand"></param>
+		/// <returns></returns>
 		public CommandExpression SetExpression(string exprName, bool condition, string trueCommand, string falseCommand)
 		{
 			var expr = new CommandExpression(condition, trueCommand, falseCommand);
@@ -307,6 +360,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 			return param;
 		}
+
 		/// <summary>
 		/// 現在設定されているパラメータの配列を作成
 		/// </summary>
@@ -322,6 +376,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return list.ToArray();
 		}
+
 		/// <summary>
 		/// 現在設定されているパラメータをコマンドに設定。
 		/// </summary>
@@ -340,6 +395,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return false;
 		}
+
 		/// <summary>
 		/// 条件式をパターンから置き換え。
 		/// </summary>
@@ -369,6 +425,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			SetParameter(DbCommand);
 			return func(DbCommand);
 		}
+
 		/// <summary>
 		/// 現在の指定値からコマンド実行。
 		/// </summary>
@@ -442,6 +499,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			return GetDtoListImpl<T>(code).Single();
 		}
+
 		/// <summary>
 		/// 指定値からコマンドを実行
 		/// </summary>
@@ -502,6 +560,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return code;
 		}
+
 		/// <summary>
 		/// エンティティ更新用コードの生成。
 		/// </summary>
@@ -567,6 +626,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				ExecuteCommand(code);
 			}
 		}
+
 		/// <summary>
 		/// Entityの挿入。
 		/// </summary>
@@ -576,6 +636,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			ExecuteEntityCommand(entityList, CreateInsertCommandCode);
 		}
+
 		/// <summary>
 		/// Entityの更新。
 		/// </summary>
@@ -585,6 +646,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			ExecuteEntityCommand(entityList, CreateUpdateCommandCode);
 		}
+
 		/// <summary>
 		/// Entityの削除。
 		/// </summary>
@@ -609,6 +671,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 			return GetDtoListImpl<T>(code).SingleOrDefault();
 		}
+
 		/// <summary>
 		/// 指定エンティティから主キー(将来的には非重複キー)のみのデータを持つエンティティを作成。
 		/// </summary>
@@ -626,6 +689,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return keyEntity;
 		}
 
+		#region IDisposable
+
 		protected virtual void Dispose(bool disposing)
 		{
 			DbCommand.Dispose();
@@ -635,6 +700,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			Dispose(true);
 		}
+
+		#endregion
 	}
 
 	/// <summary>
@@ -662,10 +729,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				Connection.Open();
 			}
 		}
+
 		/// <summary>
 		/// DB接続。
 		/// </summary>
 		public DbConnection Connection { get; private set; }
+
 		/// <summary>
 		/// トランザクションの開始
 		/// </summary>
@@ -775,12 +844,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			#endif
 		}
 
+#region IDisposable
 
 		protected virtual void Dispose(bool disposing)
 		{
 			Connection.Dispose();
 		}
-
 
 		/// <summary>
 		/// とじるん。
@@ -789,7 +858,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			Dispose(true);
 		}
-		
-		
+
+#endregion
 	}
 }
