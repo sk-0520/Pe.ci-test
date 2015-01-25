@@ -40,7 +40,7 @@
 		</ul>
 		<ul type="fixes">
 			<li rev="2d432b805313cf5cd6938404c54e387cc4a7c59e">#174: ファイルメニューが表示されない</li>
-			<li rev=""></li>
+			<li rev="">#176: ノートの文字列がURLの場合にオートリンクされる</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
