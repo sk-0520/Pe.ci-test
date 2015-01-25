@@ -9,10 +9,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		/// <summary>
 		/// アイコンのファイルパスを作成。
 		/// </summary>
-		public IconPath()
-		{
-			Path = string.Empty;
-		}
+		public IconPath(): this(string.Empty, 0)
+		{ }
 
 		/// <summary>
 		/// アイコンのファイルパスを作成。
