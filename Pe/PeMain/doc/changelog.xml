@@ -41,6 +41,7 @@
 		<ul type="fixes">
 			<li rev="2d432b805313cf5cd6938404c54e387cc4a7c59e">#174: ファイルメニューが表示されない</li>
 			<li rev="f35f8146e262a58783de927b801ca58e1d3aed79">#176: ノートの文字列がURLの場合にオートリンクされる</li>
+			<li rev="">#162: 自動アップデート失敗時にPeが復帰しない</li>
 			<li rev=""></li>
 		</ul>
 		<ul type="developer">
