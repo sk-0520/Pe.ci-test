@@ -9,7 +9,7 @@
 	/// <summary>
 	/// 描画等々の共通処理。
 	/// </summary>
-	public class DrawUtility
+	public static class DrawUtility
 	{
 		/// <summary>
 		/// デバッグ時にデバッグ用と分かるように印付け。

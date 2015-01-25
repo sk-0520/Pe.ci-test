@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	/// <summary>
+	/// ファイルダイアログのフィルタ。
+	/// </summary>
 	public class DialogFilter
 	{
 		public DialogFilter()
@@ -12,11 +15,6 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		}
 
 		public List<DialogFilterItem> Items { get; private set; }
-
-		public void Attachment(FileDialog dialog)
-		{
-			dialog.Filter = ToString();
-		}
 
 		public override string ToString()
 		{

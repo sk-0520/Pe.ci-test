@@ -84,7 +84,7 @@
     <Compile Include="DataUtility.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="DialogFilter.cs" />
-    <Compile Include="DialogUtility.cs" />
+    <Compile Include="DialogFilterUtility.cs" />
     <Compile Include="DrawUtility.cs" />
     <Compile Include="EnvironmentVariable.cs" />
     <Compile Include="FileUtility.cs" />
