@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System.Collections.Generic;
+
 	public class DialogFilterItem
 	{
 		public DialogFilterItem()
