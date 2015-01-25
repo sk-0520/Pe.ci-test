@@ -16,21 +16,31 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			return CreateStringBuffer((int)MAX.MAX_PATH);
 		}
+
 		private static StringBuilder CreateStringBuffer(int max)
 		{
 			return new StringBuilder(max, max);
 		}
+	
 		private static IShellLink CreateShellLink()
 		{
 			return (IShellLink)new ShellLinkObject();
 		}
+
 		protected IShellLink _shellLink;
 
+		/// <summary>
+		/// ショートカットを作成するためにオブジェクト生成。
+		/// </summary>
 		public ShortcutFile()
 		{
 			this._shellLink = CreateShellLink();
 		}
 
+		/// <summary>
+		/// ショートカットを読み込むためにオブジェクト生成。
+		/// </summary>
+		/// <param name="path">読み込むショートカットファイルパス。</param>
 		public ShortcutFile(string path)
 		{
 			Load(path);
@@ -48,6 +58,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// ショートカット先パス。
+		/// </summary>
 		public string TargetPath
 		{
 			get
@@ -65,6 +78,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// 引数。
+		/// </summary>
 		public string Arguments
 		{
 			get
@@ -82,6 +98,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// コメント。
+		/// </summary>
 		public string Description
 		{
 			get
@@ -99,6 +118,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// 作業ディレクトリ。
+		/// </summary>
 		public string WorkingDirectory
 		{
 			get
@@ -115,6 +137,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// 表示方法。
+		/// </summary>
 		public SW ShowCommand
 		{
 			get
@@ -131,6 +156,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// アイコン取得。
+		/// </summary>
+		/// <returns></returns>
 		public IconPath GetIcon()
 		{
 			var resultBuffer = CreateStringBuffer();
@@ -141,6 +170,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return new IconPath(resultBuffer.ToString(), iconIndex);
 		}
 
+		/// <summary>
+		/// アイコン設定。
+		/// </summary>
+		/// <param name="iconPath"></param>
 		public void SetIcon(IconPath iconPath)
 		{
 			this._shellLink.SetIconLocation(iconPath.Path, iconPath.Index);
@@ -161,6 +194,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 		#endregion /////////////////////////////////
 
+		/// <summary>
+		/// ショートカット読み込み。
+		/// 
+		/// public だが Save との IF を合わせるためだけであり基本的には外から使用しない。
+		/// 使っても問題ないけど。
+		/// </summary>
+		/// <param name="path">読み込むショートカットパス。</param>
 		public void Load(string path)
 		{
 			if(this._shellLink != null) {
@@ -171,6 +211,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			PersistFile.Load(path, 0);
 		}
 
+		/// <summary>
+		/// ショートカットを保存。
+		/// </summary>
+		/// <param name="path">保存先ショートカットパス。</param>
 		public void Save(string path)
 		{
 			PersistFile.Save(path, true);
