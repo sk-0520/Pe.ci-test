@@ -1,16 +1,19 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Drawing;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+
 	/// <summary>
-	/// Description of PointingUtility.
+	/// カーソルに関する共通処理。
 	/// </summary>
 	public static class PointingUtility
 	{
+		/// <summary>
+		/// 指定コントロールの上にカーソルを移動させる。
+		/// </summary>
+		/// <param name="target"></param>
 		public static void Over(Control target)
 		{
 			//Debug.WriteLine(((Form)sender).PointToScreen(((Button)((Form)sender).AcceptButton).Location));
@@ -28,7 +31,11 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			var funcReturn = NativeMethods.SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref result, SPIF.None);
 			return funcReturn && result != 0;
 		}
-		
+
+		/// <summary>
+		/// システムが自動移動設定になっていれば指定コントロールの上にカーソルを移動させる。
+		/// </summary>
+		/// <param name="target"></param>
 		public static void OverAuto(Control target)
 		{
 			if(IsAutoMove()) {
@@ -36,6 +43,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 		
+		/// <summary>
+		/// 指定ウィンドウの各情報からカーソルを自動設定。
+		/// </summary>
+		/// <param name="form"></param>
 		public static void OverForm(Form form)
 		{
 			var accept = form.AcceptButton as Control;
@@ -54,6 +65,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			OverForm((Form)sender);
 		}
 		
+		/// <summary>
+		/// OverFormを表示時に実行するイベント設定。
+		/// </summary>
+		/// <param name="form"></param>
 		public static void AttachmentDefaultButton(Form form)
 		{
 			form.Shown += EventDefaultButton;

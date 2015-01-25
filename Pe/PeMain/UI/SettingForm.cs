@@ -1186,7 +1186,7 @@
 			item.IconItem.Path = this.inputLauncherIconPath.Text.Trim();
 			item.IconItem.Index = this.inputLauncherIconPath.IconIndex;
 			
-			item.Tag = this.inputLauncherTag.Text.Split(',').Map(s => s.Trim()).ToList();
+			item.Tag = this.inputLauncherTag.Text.Split(',').Select(s => s.Trim()).ToList();
 			item.Note = this.inputLauncherNote.Text.Trim();
 			item.StdOutputWatch = this.selectLauncherStdStream.Checked;
 			item.Administrator = this.selectLauncherAdmin.Checked;

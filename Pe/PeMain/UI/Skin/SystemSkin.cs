@@ -11,6 +11,7 @@
 	using System.Windows.Forms.VisualStyles;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>

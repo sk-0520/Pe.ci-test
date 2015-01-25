@@ -2,6 +2,13 @@
 
 namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	/// <summary>
+	/// ペア。
+	/// 
+	/// 捨てたい……。
+	/// </summary>
+	/// <typeparam name="TFIRST"></typeparam>
+	/// <typeparam name="TSECOND"></typeparam>
 	[Serializable]
 	public struct TPair<TFIRST, TSECOND>
 	{

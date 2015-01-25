@@ -493,7 +493,7 @@
 			}
 
 			using(var dialog = new SaveFileDialog()) {
-				filter.Attachment(dialog);
+				dialog.Attachment(filter);
 				dialog.FileName = clipboardItem.Timestamp.ToString(Literal.timestampFileName);
 				dialog.FilterIndex = defIndex;
 				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {

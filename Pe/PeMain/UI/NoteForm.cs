@@ -1201,8 +1201,8 @@
 			using (var dialog = new SaveFileDialog()) {
 				var filter = new DialogFilter();
 				filter.Items.Add(new DialogFilterItem("*.txt", "*.txt"));
-				filter.Attachment(dialog);
-				if (dialog.ShowDialog() == DialogResult.OK) {
+				dialog.Attachment(filter);
+				if(dialog.ShowDialog() == DialogResult.OK) {
 					var path = dialog.FileName;
 					File.WriteAllText(path, NoteItem.Body, Encoding.UTF8);
 				}

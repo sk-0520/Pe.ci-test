@@ -144,12 +144,22 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return Options.Count(s => s.StartsWith(keyOption));
 		}
 		
+		/// <summary>
+		/// オプション数取得。
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
 		public int CountOption(string option)
 		{
 			var keyOption = GetKeyOption(option);
 			return CountKeyOption(keyOption);
 		}
 		
+		/// <summary>
+		/// 値を列挙。
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
 		public IEnumerable<string> GetValues(string option)
 		{
 			var keyOption = GetKeyOption(option);
@@ -160,6 +170,11 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 
+		/// <summary>
+		/// 値を取得。
+		/// </summary>
+		/// <param name="option"></param>
+		/// <returns></returns>
 		public string GetValue(string option)
 		{
 			return GetValues(option).First();

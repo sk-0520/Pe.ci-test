@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Management;
-using System.Text;
-using System.Windows.Forms;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Management;
+	using System.Text;
+	using System.Windows.Forms;
+
 	/// <summary>
 	/// 各種情報を取得する。
 	/// </summary>

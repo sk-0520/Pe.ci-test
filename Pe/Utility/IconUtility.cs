@@ -177,7 +177,6 @@
 
 						binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
 					}
-
 				}
 
 				return true;
