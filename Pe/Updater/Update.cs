@@ -1,25 +1,25 @@
 ﻿//#define NO_DOWNLOAD
 //#define NO_EXPAND
 
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Xml.Linq;
-using ContentTypeTextNet.Pe.Library.Utility;
-using Microsoft.CSharp;
-
 namespace ContentTypeTextNet.Pe.Applications.Updater
 {
+	using System;
+	using System.CodeDom.Compiler;
+	using System.Collections.Generic;
+	using System.Collections.Specialized;
+	using System.Diagnostics;
+	using System.IO;
+	using System.IO.Compression;
+	using System.Linq;
+	using System.Net;
+	using System.Reflection;
+	using System.Text;
+	using System.Text.RegularExpressions;
+	using System.Threading;
+	using System.Xml.Linq;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using Microsoft.CSharp;
+
 	class Value<T>
 	{
 		public bool HasValue { get; set; }
@@ -205,19 +205,6 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			var restartExe = string.Empty;
 			var restartArg = string.Empty;
 			
-			Process process = null;
-			var processSw = new Stopwatch();
-			if(this._pid.HasValue) {
-				process = Process.GetProcessById(this._pid.Data);
-				restartExe = "\"" + process.MainModule.FileName + "\"";
-				restartArg = process.StartInfo.Arguments;
-				process.Exited += (object sender, EventArgs e) => {
-					processSw.Stop();
-				};
-				processSw.Start();
-				KillProcess(process);
-			}
-
 			var downloadPath = Path.Combine(this._downloadDir.Data, DownloadFileUrl.Split('/').Last());
 #if !NO_DOWNLOAD
 			using(var web = new WebClient()) {
@@ -233,6 +220,18 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 #		error Deinfed BUILD!
 #	endif
 #endif
+			Process process = null;
+			var processSw = new Stopwatch();
+			if(this._pid.HasValue) {
+				process = Process.GetProcessById(this._pid.Data);
+				restartExe = "\"" + process.MainModule.FileName + "\"";
+				restartArg = process.StartInfo.Arguments;
+				process.Exited += (object sender, EventArgs e) => {
+					processSw.Stop();
+				};
+				processSw.Start();
+				KillProcess(process);
+			}
 
 			if(process != null) {
 				isRestart = process.WaitForExit((int)(TimeSpan.FromMinutes(1).TotalMilliseconds));
