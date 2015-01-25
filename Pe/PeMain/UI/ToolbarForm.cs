@@ -647,7 +647,7 @@
 			using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
 				Image image = icon.ToBitmap();
 				if(isHiddenFile) {
-					var hiddenFileImage = DrawUtility.SetImageOpacity(image, Literal.hiddenFileOpacity);
+					var hiddenFileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
 					image.ToDispose();
 					image = hiddenFileImage;
 				}

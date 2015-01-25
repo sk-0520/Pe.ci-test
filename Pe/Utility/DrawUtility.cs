@@ -120,7 +120,7 @@
 		/// <param name="srcImage"></param>
 		/// <param name="opacity"></param>
 		/// <returns></returns>
-		public static Image SetImageOpacity(Image image, float opacity)
+		public static Image Opacity(Image image, float opacity)
 		{
 			//create a Bitmap the size of the image provided  
 			Bitmap bmp = new Bitmap(image.Width, image.Height);
@@ -143,6 +143,7 @@
 				//now draw the image  
 				gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
 			}
+
 			return bmp;
 		}
 	}
