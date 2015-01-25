@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+
 	/// <summary>
 	/// 環境変数名。
 	/// </summary>
@@ -21,6 +18,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 
 		public const string communicationEventName = "PE_C_EVENT";
 		public const string communicationServerName = "PE_C_SEVER";
+
 		/// <summary>
 		/// 環境変数名一覧。
 		/// </summary>
