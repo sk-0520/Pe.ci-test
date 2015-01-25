@@ -17,7 +17,7 @@
 	/// <summary>
 	/// Description of HomeForm.
 	/// </summary>
-	public partial class HomeForm : Form, ISetCommonData
+	public partial class HomeForm: CommonForm
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -39,19 +39,19 @@
 		}
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 
 		public bool ItemFound { get; private set; }
 		public IReadOnlyList<LogItem> LogList { get { return this._logList; } }
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 		#endregion ////////////////////////////////////
 
 		#region initialize
@@ -67,8 +67,10 @@
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
+			base.ApplyLanguage();
+
 			UIUtility.SetDefaultText(this, CommonData.Language);
 			AcceptButton = this.commandClose;
 			CancelButton = this.commandClose;
@@ -90,8 +92,10 @@
 		#endregion ////////////////////////////////////
 
 		#region skin
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			this.commandLauncher.Image = CommonData.Skin.GetImage(SkinImage.Finder);
 			this.commandNotify.Image = CommonData.Skin.GetImage(SkinImage.Flag);
 			this.commandStartup.Image = CommonData.Skin.GetImage(SkinImage.Windows);
@@ -99,10 +103,9 @@
 		#endregion ////////////////////////////////////
 
 		#region function
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			ApplyLanguage();
-			ApplySkin();
+			base.ApplySetting();
 		}
 
 		IEnumerable<string> SplitLauncherItemText(string text)

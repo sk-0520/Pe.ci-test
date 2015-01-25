@@ -18,7 +18,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.UI;
 
-	public partial class ClipboardForm: Form, ISetCommonData
+	public partial class ClipboardForm: CommonForm
 	{
 		#region Define
 
@@ -58,7 +58,7 @@
 
 		#region Property
 
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		int HoverItemIndex { get; set; }
 		int SelectedItemIndex { get; set; }
 
@@ -118,8 +118,10 @@
 
 		#region Language
 
-		private void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
+			base.ApplyLanguage();
+
 			UIUtility.SetDefaultText(this, CommonData.Language);
 
 			this.toolClipboard_itemEnabled.SetLanguage(CommonData.Language);
@@ -144,8 +146,10 @@
 		#endregion ////////////////////////////////////////
 
 		#region skin
-		private void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			this.toolClipboard_itemEnabled.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
 			this.toolClipboard_itemTopmost.Image = CommonData.Skin.GetImage(SkinImage.Pin);
 			this.toolClipboard_itemSave.Image = CommonData.Skin.GetImage(SkinImage.Save);
@@ -197,12 +201,12 @@
 			);
 		}
 		
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 
 		void ApplySettingUI()
 		{
@@ -226,10 +230,10 @@
 		/// <summary>
 		/// BUGS: Formsバインドで描画が変になる。
 		/// </summary>
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			ApplyLanguage();
-			ApplySkin();
+			base.ApplySetting();
+
 			ApplySettingUI();
 
 			ChangeSelectType(this.toolClipboard_itemType_itemClipboard);
@@ -489,7 +493,7 @@
 			}
 
 			using(var dialog = new SaveFileDialog()) {
-				filter.Attachment(dialog);
+				dialog.Attachment(filter);
 				dialog.FileName = clipboardItem.Timestamp.ToString(Literal.timestampFileName);
 				dialog.FilterIndex = defIndex;
 				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {

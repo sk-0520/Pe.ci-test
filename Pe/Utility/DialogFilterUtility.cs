@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System.Collections.Generic;
+	using System.Windows.Forms;
+
+	/// <summary>
+	/// DialogFilter内部で使用するデータ。
+	/// </summary>
 	public class DialogFilterItem
 	{
 		public DialogFilterItem()
 		{
 			Wildcard = new List<string>();
 		}
-		
+
 		public DialogFilterItem(string display, params string[] wildcard)
 		{
 			Display = display;
@@ -19,16 +23,16 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			Display = display;
 			Wildcard = new List<string>(wildcard);
 		}
+
 		public string Display { get; set; }
 		public List<string> Wildcard { get; set; }
-		
+
 		public override string ToString()
 		{
 			return string.Format("{0}|{1}", Display, string.Join(";", Wildcard));
 		}
-
 	}
-	
+
 	public class DialogFilterValueItem<T>: DialogFilterItem
 	{
 		public DialogFilterValueItem(T value)
@@ -51,4 +55,12 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		public T Value { get; set; }
 	}
 
+	public static class DialogFilterUtility
+	{
+		public static void Attachment(this FileDialog dialog, DialogFilter filter)
+		{
+			dialog.Filter = filter.ToString();
+		}
+
+	}
 }

@@ -16,7 +16,9 @@
 	{
 		public TransparentRichTextBox()
 			: base()
-		{ }
+		{
+			DetectUrls = false;
+		}
 
 		#region override
 

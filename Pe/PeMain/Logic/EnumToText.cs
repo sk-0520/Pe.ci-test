@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-namespace ContentTypeTextNet.Pe.PeMain.Logic
+﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System.Collections.Generic;
+	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.PeMain.Data;

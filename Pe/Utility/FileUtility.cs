@@ -1,8 +1,7 @@
-﻿using System.IO;
-
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System.IO;
+
 	/// <summary>
 	/// ファイル関連の共通処理。
 	/// </summary>

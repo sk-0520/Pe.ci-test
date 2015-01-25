@@ -16,11 +16,12 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ObjectDumper;
 
 	/// <summary>
 	/// ツールバー。
 	/// </summary>
-	public partial class ToolbarForm : AppbarForm, ISetCommonData
+	public partial class ToolbarForm: CommonAppbarForm
 	{
 		#region define
 		const string menuNameMainPosDesktopFloat = "desktop_float";
@@ -30,6 +31,7 @@
 		const string menuNameMainPosDesktopRight = "desktop_right";
 		const string menuNameMainTopmost = "topmost";
 		const string menuNameMainAutoHide = "autohide";
+		const string menuNameMainHidden = "hidden";
 		const string menuNameMainGroupSeparator = "group_sep";
 		const string menuNameMainGroupItem = "group_item_";
 
@@ -45,264 +47,12 @@
 		const string menuNamePath_copyWorkDir = "copy_work_dir";
 		const string menuNamePath_property = "property";
 
+		const string menuNameFiles_open = "ls_dir_open";
+		const string menuNameFiles_sep = "ls_dir_sep";
+
 		const string menuNameApplicationExecute = "execute";
 		const string menuNameApplicationClose = "close";
 		const string menuNameApplicationHelp = "help";
-
-		enum DropType
-		{
-			None,
-			Files,
-			Button
-		}
-
-		struct DropData
-		{
-			public DropType DropType { get; set; }
-			public ToolStripItem ToolStripItem { get; set; }
-			public LauncherItem LauncherItem { get; set; }
-			public IEnumerable<string> Files { get; set; }
-			public ToolStripItem SrcToolStripItem { get; set; }
-		}
-
-		/// <summary>
-		/// TODO: スキンと内部描画が入り混じっている。描画処理は整理出来たら全部スキンに回す。
-		/// </summary>
-		public partial class CustomToolTipForm: Form, ISetCommonData
-		{
-			CommonData CommonData { get; set; }
-
-			FontSetting TitleFontSetting { get; set; }
-			FontSetting MessageFontSetting { get; set; }
-			IconScale IconScale { get; set; }
-			Size TipPadding { get; set; }
-
-			string _title, _message;
-			Image _imageIcon;
-
-			float _titleHeight;
-
-			//enum FadeState
-			//{
-			//	None,
-			//	In,
-			//	Out,
-			//}
-			//FadeState _fadeState;
-
-			public CustomToolTipForm()
-			{
-				//Opacity = 0;
-				Visible = false;
-				FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				ShowInTaskbar = false;
-				TopMost = true;
-				Padding = new Padding(3);
-
-				BackColor = SystemColors.Info;
-				ForeColor = SystemColors.InfoText;
-
-				//this._fadeState = FadeState.None;
-
-				TipPadding = new Size(4, 4);
-				TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
-				MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
-				IconScale = IconScale.Normal;
-			}
-
-			protected override void Dispose(bool disposing)
-			{
-				_imageIcon.ToDispose();
-
-				base.Dispose(disposing);
-			}
-
-			protected override bool ShowWithoutActivation { get { return true; } }
-
-			protected override CreateParams CreateParams
-			{
-				get
-				{
-					var result = base.CreateParams;
-
-					result.ExStyle |= (int)(WS_EX.WS_EX_NOACTIVATE | WS_EX.WS_EX_TOOLWINDOW);
-					result.ClassStyle |= (int)CS.CS_DROPSHADOW;
-
-					return result;
-				}
-			}
-
-			void ApplyLanguage()
-			{ }
-
-			void ApplySetting()
-			{
-				ApplyLanguage();
-			}
-
-			public void SetCommonData(CommonData commonData)
-			{
-				CommonData = commonData;
-
-				ApplySetting();
-			}
-
-			bool HasMessage()
-			{
-				return !string.IsNullOrWhiteSpace(this._message);
-			}
-
-			StringFormat CreateTitleFormat()
-			{
-				var sf = new StringFormat();
-
-				sf.Alignment = StringAlignment.Near;
-				sf.LineAlignment = StringAlignment.Center;
-				sf.Trimming = StringTrimming.EllipsisCharacter;
-
-				return sf;
-			}
-			StringFormat CreateMessageFormat()
-			{
-				var sf = new StringFormat();
-
-				sf.Alignment = StringAlignment.Near;
-				sf.LineAlignment = StringAlignment.Near;
-				sf.Trimming = StringTrimming.EllipsisCharacter;
-
-				return sf;
-			}
-
-			protected override void OnPaintBackground(PaintEventArgs e)
-			{
-				if(CommonData != null && CommonData.Skin != null) {
-					if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
-						base.OnPaintBackground(e);
-						//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
-					} else {
-						CommonData.Skin.DrawToolbarToolTipBackground(e.Graphics, e.ClipRectangle);
-					}
-				} else {
-					base.OnPaintBackground(e);
-				}
-			}
-
-			protected override void OnPaint(PaintEventArgs e)
-			{
-				var iconTop = this._titleHeight / 2 - IconScale.ToHeight() / 2;
-				e.Graphics.DrawImage(this._imageIcon, new Point(Padding.Left, Padding.Top + (int)iconTop));
-				var iconWidth = Padding.Left + IconScale.ToWidth() + Padding.Left;
-				var titleArea = new Rectangle(iconWidth, Padding.Top, Width - iconWidth, (int)this._titleHeight);
-				var messageArea = new Rectangle(Padding.Left, titleArea.Bottom, Width - Padding.Horizontal, Height - titleArea.Height - Padding.Vertical);
-				using(var sf = CreateTitleFormat())
-				using(var brush = new SolidBrush(Color.Black)) {
-					e.Graphics.DrawString(this._title, TitleFontSetting.Font, brush, titleArea, sf);
-				}
-				if(HasMessage()) {
-					using(var sf = CreateTitleFormat())
-					using(var brush = new SolidBrush(Color.Black)) {
-						e.Graphics.DrawString(this._message, MessageFontSetting.Font, brush, messageArea, sf);
-					}
-				}
-			}
-
-			void ToShow()
-			{
-				WindowsUtility.ShowNoActive(this);
-			}
-
-			void ToHide()
-			{
-				Visible = false;
-			}
-
-			public void HideItem()
-			{
-				ToHide();
-			}
-
-			public void ShowItem(Screen screen, ToolStripItem toolStripItem, ToolbarGroupItem groupItem, ToolbarItem toolbarItem)
-			{
-				Debug.Assert(toolStripItem != null);
-				Debug.Assert(CommonData != null);
-
-				var launcherItem = toolStripItem.Tag as LauncherItem;
-
-				if(launcherItem != null) {
-					this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting).ToBitmap();
-					this._title = launcherItem.Name;
-					if(launcherItem.LauncherType == LauncherType.Embedded) {
-						var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
-						this._message = LanguageUtility.ApplicationItemToComment(CommonData.Language, applicationItem);
-					} else {
-						this._message = launcherItem.Note;
-					}
-				} else {
-					this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
-					this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
-					this._message = string.Empty;
-				}
-
-				// 描画サイズ生成
-				using(var g = CreateGraphics())
-				using(var titleFormat = CreateTitleFormat())
-				using(var messageFormat = CreateTitleFormat()) {
-					var maxShowSize = new Size(screen.WorkingArea.Size.Width / 2, screen.WorkingArea.Size.Height / 2);
-					var titleSize = g.MeasureString(this._title, TitleFontSetting.Font, maxShowSize, titleFormat);
-					var messageSize = HasMessage() ? g.MeasureString(this._message, MessageFontSetting.Font, maxShowSize, messageFormat) : SizeF.Empty;
-
-					this._titleHeight = Math.Max((float)IconScale.ToHeight(), titleSize.Height) + (float)(HasMessage() ? Padding.Top : 0);
-
-					Size = new Size(
-						(int)(Math.Max(titleSize.Width, messageSize.Width) + IconScale.Normal.ToWidth() + Padding.Left) + Padding.Horizontal,
-						(int)(Math.Max(IconScale.ToHeight(), titleSize.Height) + messageSize.Height) + Padding.Vertical
-					);
-				}
-
-				CommonData.Skin.ApplyToolbarToolTipRegion(this);
-
-				// 表示位置設定
-				var itemArea = toolStripItem.Bounds;
-				if(toolStripItem.OwnerItem != null) {
-					var ownerItemLocation = toolStripItem.OwnerItem.Bounds.Location;
-					itemArea.Offset(ownerItemLocation);
-				}
-				var screenPoint = toolStripItem.Owner.PointToScreen(itemArea.Location);
-				switch(toolbarItem.ToolbarPosition) {
-					case ToolbarPosition.DesktopFloat:
-					case ToolbarPosition.DesktopTop:
-						// 下に表示
-						Location = new Point(screenPoint.X, screenPoint.Y + itemArea.Height + TipPadding.Height);
-						if(toolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-							if(Location.Y + Size.Height > screen.WorkingArea.Height) {
-								goto LABEL_TOP;
-							}
-						}
-						break;
-
-					case ToolbarPosition.DesktopBottom:
-					LABEL_TOP:
-						// 上に表示
-						Location = new Point(screenPoint.X, screenPoint.Y - Height - TipPadding.Height);
-						break;
-
-					case ToolbarPosition.DesktopLeft:
-						// 右に表示
-						Location = new Point(screenPoint.X + itemArea.Width + TipPadding.Width, screenPoint.Y);
-						break;
-
-					case ToolbarPosition.DesktopRight:
-						// 左に表示
-						Location = new Point(screenPoint.X - Width - TipPadding.Width, screenPoint.Y);
-						break;
-
-					default:
-						throw new NotImplementedException();
-				}
-
-				ToShow();
-			}
-		}
 
 		#endregion ////////////////////////////////////
 
@@ -311,7 +61,6 @@
 
 		#region variable
 		ContextMenu _menuGroup = null;
-		bool _isRunning = false;
 		bool _menuOpening = false;
 
 		ToolStripItem _dragStartItem;
@@ -329,10 +78,10 @@
 		}
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 
 		ToolbarGroupItem SelectedGroupItem { get; set; }
-		public ToolbarItem UseToolbarItem { get; private set; }
+		public ToolbarItem UsingToolbarItem { get; private set; }
 
 		override public DesktopDockType DesktopDockType
 		{
@@ -340,9 +89,9 @@
 			set
 			{
 				if(CommonData != null) {
-					var pos = UseToolbarItem.ToolbarPosition;
+					var pos = UsingToolbarItem.ToolbarPosition;
 
-					Padding = CommonData.Skin.GetToolbarTotalPadding(UseToolbarItem.ToolbarPosition, Size);
+					Padding = CommonData.Skin.GetToolbarTotalPadding(UsingToolbarItem.ToolbarPosition, Size);
 					if(this.toolLauncher != null) {
 						if(ToolbarPositionUtility.IsHorizonMode(pos)) {
 							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
@@ -357,16 +106,16 @@
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
-			this._isRunning = false;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
+		//	this.Initialized = false;
 
-			this._tipsLauncher.SetCommonData(CommonData);
-			ApplySetting();
+		//	this._tipsLauncher.SetCommonData(CommonData);
+		//	ApplySetting();
 
-			this._isRunning = true;
-		}
+		//	this.Initialized = true;
+		//}
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -377,7 +126,7 @@
 			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
 				base.OnPaintBackground(e);
 			} else {
-				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UseToolbarItem.ToolbarPosition);
+				CommonData.Skin.DrawToolbarWindowBackground(e.Graphics, e.ClipRectangle, this == Form.ActiveForm, UsingToolbarItem.ToolbarPosition);
 			}
 		}
 
@@ -407,7 +156,7 @@
 
 		protected override void WndProc(ref Message m)
 		{
-			if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+			if(UsingToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				switch(m.Msg) {
 					case (int)WM.WM_SYSCOMMAND:
 						{
@@ -443,7 +192,7 @@
 							var padding = Padding;
 
 							var hitTest = HT.HTNOWHERE;
-							var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, Size);
+							var captionArea = CommonData.Skin.GetToolbarCaptionArea(UsingToolbarItem.ToolbarPosition, Size);
 							if(captionArea.Contains(point)) {
 								hitTest = HT.HTCAPTION;
 							} else {
@@ -544,10 +293,9 @@
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
-			Debug.Assert(CommonData != null);
-			Debug.Assert(CommonData.Language != null);
+			base.ApplyLanguage();
 
 			UIUtility.SetDefaultText(this, CommonData.Language);
 		}
@@ -556,14 +304,16 @@
 		#region function
 		void ApplySettingTopmost()
 		{
-			TopMost = UseToolbarItem.Topmost;
+			TopMost = UsingToolbarItem.Topmost;
 		}
 		
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			var renderer = new ToolbarRenderer();
 			renderer.Skin = CommonData.Skin;
-			renderer.ToolbarItem = UseToolbarItem;
+			renderer.ToolbarItem = UsingToolbarItem;
 			
 			this.toolLauncher.Renderer = renderer;
 
@@ -578,7 +328,7 @@
 				HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
 			}
 			//*/
-			if(UseToolbarItem.Visible) {
+			if(UsingToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;
 				
@@ -586,21 +336,21 @@
 				try {
 					ItemSizeToFormSize();
 					
-					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
-						AutoHide = UseToolbarItem.AutoHide;
+					if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {
+						AutoHide = UsingToolbarItem.AutoHide;
 					}
 					
-					if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
-						DesktopDockType = ToolbarPositionConverter.ToDockType(UseToolbarItem.ToolbarPosition);
-						if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
+					if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {
+						DesktopDockType = ToolbarPositionConverter.ToDockType(UsingToolbarItem.ToolbarPosition);
+						if(ToolbarPositionUtility.IsHorizonMode(UsingToolbarItem.ToolbarPosition)) {
 							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
 						} else {
 							this.toolLauncher.LayoutStyle = ToolStripLayoutStyle.VerticalStackWithOverflow;
 						}
 					} else {
 						DesktopDockType = DesktopDockType.None;
-						if(UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-							Location = UseToolbarItem.FloatLocation;
+						if(UsingToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+							Location = UsingToolbarItem.FloatLocation;
 						}
 					}
 					//DrawFullActivaChanged(this == Form.ActiveForm);
@@ -617,20 +367,20 @@
 			Debug.Assert(CommonData.Skin != null);
 			Debug.Assert(DockScreen != null);
 			
-			UseToolbarItem = null;
+			UsingToolbarItem = null;
 			foreach(var item in CommonData.MainSetting.Toolbar.Items) {
 				if(item.IsNameEqual(DockScreen.DeviceName)) {
-					UseToolbarItem = item;
+					UsingToolbarItem = item;
 					break;
 				}
 			}
-			if(UseToolbarItem == null) {
+			if(UsingToolbarItem == null) {
 				// 新規
 				var toolbarItem = new ToolbarItem();
 				toolbarItem.Name = DockScreen.DeviceName;
 				CommonData.MainSetting.Toolbar.Items.Add(toolbarItem);
 				toolbarItem.FloatLocation = DockScreen.WorkingArea.Location;
-				UseToolbarItem = toolbarItem;
+				UsingToolbarItem = toolbarItem;
 			}
 		}
 
@@ -639,30 +389,30 @@
 			Debug.Assert(CommonData != null);
 			Debug.Assert(CommonData.MainSetting != null);
 			
-			if(UseToolbarItem.FontSetting != null && !UseToolbarItem.FontSetting.IsDefault) {
-				this.toolLauncher.Font = UseToolbarItem.FontSetting.Font;
+			if(UsingToolbarItem.FontSetting != null && !UsingToolbarItem.FontSetting.IsDefault) {
+				this.toolLauncher.Font = UsingToolbarItem.FontSetting.Font;
 			}
 		}
+
 		public void ApplySettingVisible()
 		{
-			var floatSize = UseToolbarItem.FloatSize;
-			if(!Visible && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+			var floatSize = UsingToolbarItem.FloatSize;
+			if(!Visible && UsingToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 				Size = floatSize;
 			}
-			Visible = UseToolbarItem.Visible;
+			Visible = UsingToolbarItem.Visible;
 		}
 		
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			Debug.Assert(CommonData != null);
-			Debug.Assert(CommonData.MainSetting != null);
-			
-			ApplyLanguage();
 			ApplyScreen();
 			ApplySettingFont();
-			ApplySkin();
-			
-			Font = UseToolbarItem.FontSetting.Font;
+
+			base.ApplySetting();
+
+			this._tipsLauncher.SetCommonData(CommonData);
+
+			Font = UsingToolbarItem.FontSetting.Font;
 			if(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
 				// グループが存在しなければグループを作っておく
 				var toolbarGroupItem = new ToolbarGroupItem();
@@ -683,7 +433,7 @@
 				this._menuGroup.MenuItems.Add(menuItem);
 			}
 			var firstGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First();
-			var initGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => ToolbarItem.CheckNameEqual(g.Name, UseToolbarItem.DefaultGroup));
+			var initGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => ToolbarItem.CheckNameEqual(g.Name, UsingToolbarItem.DefaultGroup));
 			
 			SelectedGroup(initGroup ?? firstGroup);
 			
@@ -692,8 +442,8 @@
 			ApplySettingVisible();
 			ApplySettingTopmost();
 			
-			HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
-			HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
+			HiddenAnimateTime = UsingToolbarItem.HiddenAnimateTime;
+			HiddenWaitTime = UsingToolbarItem.HiddenWaitTime;
 		}
 		
 		/// <summary>
@@ -701,12 +451,12 @@
 		/// </summary>
 		void ItemSizeToFormSize()
 		{
-			var floatSize = UseToolbarItem.FloatSize;
-			Padding = CommonData.Skin.GetToolbarTotalPadding(UseToolbarItem.ToolbarPosition, Size);
+			var floatSize = UsingToolbarItem.FloatSize;
+			Padding = CommonData.Skin.GetToolbarTotalPadding(UsingToolbarItem.ToolbarPosition, Size);
 			
-			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
-			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UseToolbarItem.ToolbarPosition);
-			var borderPadding = CommonData.Skin.GetToolbarBorderPadding(UseToolbarItem.ToolbarPosition);
+			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
+			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UsingToolbarItem.ToolbarPosition);
+			var borderPadding = CommonData.Skin.GetToolbarBorderPadding(UsingToolbarItem.ToolbarPosition);
 			this.toolLauncher.Padding = borderPadding;
 			var minSize = new Size(edgeSize.Horizontal + buttonLayout.Size.Width, edgeSize.Vertical + buttonLayout.Size.Height);
 			minSize.Width += this.toolLauncher.Margin.Horizontal + borderPadding.Horizontal;
@@ -715,11 +465,11 @@
 			
 			//Size = new Size(minSize.Width, minSize.Height);
 			
-			if(ToolbarPositionUtility.IsDockingMode(UseToolbarItem.ToolbarPosition)) {
+			if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {
 				BarSize = new Size(minSize.Width, minSize.Height);
 				MinimumSize = Size.Empty;
 			} else {
-				if(ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition)) {
+				if(ToolbarPositionUtility.IsHorizonMode(UsingToolbarItem.ToolbarPosition)) {
 					Size = new Size(floatSize.Width, minSize.Height);
 				} else {
 					Size = new Size(minSize.Width, floatSize.Height);
@@ -772,10 +522,10 @@
 					toolButtonList.Add(itemButton);
 				}
 			}
-			SetToolButtons(UseToolbarItem.IconScale, toolButtonList);
+			SetToolButtons(UsingToolbarItem.IconScale, toolButtonList);
 		}
 
-		void OpenDir(LauncherItem launcherItem)
+		void OpenParentDirectory(LauncherItem launcherItem)
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
@@ -785,7 +535,7 @@
 			}
 		}
 
-		void OpenDir(string path)
+		void OpenDirectory(string path)
 		{
 			try {
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
@@ -800,22 +550,29 @@
 			ClipboardUtility.CopyText(text, CommonData);
 		}
 		
-		void OpenProperty(string path)
-		{
-			var expandPath = Environment.ExpandEnvironmentVariables(path);
-			Executor.OpenProperty(expandPath, Handle);
-		}
-		
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)
 		{
 			var itemList = new List<ToolStripItem>();
-			
-			var openParentDirItem = new ToolStripMenuItem();
-			var openWorkDirItem = new ToolStripMenuItem();
-			var copyCommandItem = new ToolStripMenuItem();
-			var copyParentDirItem = new ToolStripMenuItem();
-			var copyWorkDirItem = new ToolStripMenuItem();
-			var propertyItem = new ToolStripMenuItem();
+
+			var openParentDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var openWorkDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var copyCommandItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var copyParentDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var copyWorkDirItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+			var propertyItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+			};
+
 			itemList.Add(openParentDirItem);
 			itemList.Add(openWorkDirItem);
 			itemList.Add(new ToolStripSeparator());
@@ -828,231 +585,222 @@
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
+			//openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
+			openParentDirItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
+			//openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
+			openWorkDirItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
-			copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
+			//copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
+			copyCommandItem.Click += FileLauncherItemPathMenu_CopyCommand;
 			// 親ディレクトリをコピー
 			copyParentDirItem.Name = menuNamePath_copyParentDir;
 			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
-			copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
+			//copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
+			copyParentDirItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
 			// 作業ディレクトリをコピー
 			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
 			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
-			copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
+			//copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
+			copyWorkDirItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
-			propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
+			//propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
+			propertyItem.Click += FileLauncherItemPathMenu_OpenProperty;
 			
 			// メニュー構築
 			parentItem.DropDownItems.AddRange(itemList.ToArray());
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				// コマンド有無
-				var commandEnabled = launcherItem.IsExists;
-				copyCommandItem.Enabled = commandEnabled;
-				propertyItem.Enabled = commandEnabled;
-				// 親ディレクトリ有無
-				var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
-				var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
-				openParentDirItem.Enabled = parentDirEnabled;
-				copyParentDirItem.Enabled = parentDirEnabled;
-				// 作業ディレクトリ有無
-				var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
-				openWorkDirItem.Enabled = workDirEnabled;
-				copyWorkDirItem.Enabled = workDirEnabled;
-			};
+			//parentItem.DropDownOpening += (object sender, EventArgs e) => {
+			//	// コマンド有無
+			//	var commandEnabled = launcherItem.IsExists;
+			//	copyCommandItem.Enabled = commandEnabled;
+			//	propertyItem.Enabled = commandEnabled;
+			//	// 親ディレクトリ有無
+			//	var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+			//	var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
+			//	openParentDirItem.Enabled = parentDirEnabled;
+			//	copyParentDirItem.Enabled = parentDirEnabled;
+			//	// 作業ディレクトリ有無
+			//	var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
+			//	openWorkDirItem.Enabled = workDirEnabled;
+			//	copyWorkDirItem.Enabled = workDirEnabled;
+			//};
+			parentItem.DropDownOpening += FileLauncherItemPathMenu_DropDownOpening;
 		}
 		
-		ToolStripMenuItem GetFileListItem(string path, bool isDir, bool showHiddenFile, bool showExtension)
+		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showExtension, bool isHiddenFile)
 		{
-			var menuItem = new ToolStripMenuItem();
+			var menuItem = new FileToolStripMenuItem(commonData){
+				Path = path,
+			};
+
 			if(!isDir && !showExtension) {
 				menuItem.Text = Path.GetFileNameWithoutExtension(path);
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
-			using(var icon = IconUtility.Load(path, UseToolbarItem.IconScale, 0)) {
-				//using(var icon = IconUtility.Load(path, IconScale.Small, 0)) {
-				menuItem.Image = icon.ToBitmap();
+			using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+				Image image = icon.ToBitmap();
+				if(isHiddenFile) {
+					var hiddenFileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+					image.ToDispose();
+					image = hiddenFileImage;
+				}
+				menuItem.Image = image;
 				menuItem.ImageScaling = ToolStripItemImageScaling.None;
 			}
-			
-			// アクセス権から使用可・不可
-			//if(isDir) {
-			//	var access = Directory.GetAccessControl(path);
-			//} else {
-			//	var access = File.GetAccessControl(path);
-			//}
-			
+
 			if(isDir) {
-				menuItem.DropDownOpening += (object sender, EventArgs e) => LoadFileList(menuItem, path, showHiddenFile, showExtension);
-			}
-			
-			menuItem.Click += (object sender, EventArgs e) => {
-				try {
-					if(File.Exists(path)) {
-						Executor.OpenFile(path, CommonData);
-					} else {
-						Executor.OpenDirectory(path, CommonData, null);
-					}
-				} catch(Exception ex) {
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-				}
-			};
-			
-			return menuItem;
-		}
-		
-		bool LoadFileList(ToolStripDropDownItem parentItem, string parentDirPath, bool showHiddenFile, bool showExtension)
-		{
-			if(parentItem.HasDropDownItems) {
-				return false;
-			}
-			
-			if(!Directory.Exists(parentDirPath)) {
-				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-dir"], parentDirPath);;
-				return false;
+				AttachmentDirectoryOpen(menuItem, path);
+			} else {
+				menuItem.Click += FileListMenu_Click;
 			}
 
-			IList<ToolStripItem> menuList;
-			
+			return menuItem;
+		}
+
+		/// <summary>
+		/// ファイル一覧メニューにディレクトリを開く共通項目の設定
+		/// </summary>
+		/// <param name="parentItem">項目を設定する親メニューアイテム</param>
+		/// <param name="dirPath">基ディレクトリパス</param>
+		void AttachmentDirectoryOpen(ToolStripDropDownItem parentItem, string dirPath)
+		{
+			// ここを開く
+			var openItem = new FileToolStripMenuItem(CommonData) {
+				Name = menuNameFiles_open,
+				Text = CommonData.Language["toolbar/menu/file/ls/open"],
+				Path = dirPath,
+			};
+			openItem.Click += FileListMenu_Click;
+
+			// 罫線
+			var sepItem = new ToolStripSeparator() {
+				Name = menuNameFiles_sep,
+			};
+
+			var menuList = new ToolStripItem[] {
+				openItem,
+				sepItem,
+			};
+
+			parentItem.DropDownItems.AddRange(menuList);
+
+			parentItem.DropDownOpening += FileListMenu_DropDownOpening;
+		}
+
+		/// <summary>
+		/// ファイル一覧メニューに指定ディレクトリ以下のファイル・ディレクトリ一覧を設定する
+		/// </summary>
+		/// <param name="parentItem">項目を設定する親メニューアイテム</param>
+		/// <param name="appendOpen">ディレクトリを開く共通メニューを追加するか</param>
+		/// <param name="dirPath">基ディレクトリパス</param>
+		/// <param name="showHiddenFile">隠しファイルを表示するか</param>
+		/// <param name="showExtension">拡張子を表示するか</param>
+		/// <returns></returns>
+		bool AttachmentFileList(ToolStripDropDownItem parentItem, bool appendOpen, string dirPath, bool showHiddenFile, bool showExtension)
+		{
+			if(!Directory.Exists(dirPath)) {
+				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-dir"], dirPath);;
+				return false;
+			}
+			if(appendOpen) {
+				AttachmentDirectoryOpen(parentItem, dirPath);
+			}
+
+			var menuList = new List<ToolStripItem>();
 			try {
-				var dirList = Directory.GetDirectories(parentDirPath);
-				var fileList = Directory.GetFiles(parentDirPath);
-				var pathItemList = new [] {
-					new { PathList = dirList,  IsDirectory = true, },
-					new { PathList = fileList, IsDirectory = false, },
-				};
-				menuList = new List<ToolStripItem>(dirList.Length + fileList.Length);
-				if(dirList.Length + fileList.Length > 0) {
-					/*
-					foreach(var path in dirList) {
-						var use = true;
-						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
-							use = false;
-						}
-						if(use) {
-							var menuItem = GetFileListItem(path, true, showHiddenFile, showExtension);
-							menuList.Add(menuItem);
-						}
-					}
-					foreach(var path in fileList) {
-						var use = true;
-						if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
-							use = false;
-						}
-						if(use) {
-							var menuItem = GetFileListItem(path, false, showHiddenFile, showExtension);
-							menuList.Add(menuItem);
-						}
-					}
-					 */
+				// ディレクトリ以下のファイルを列挙
+				var pathItemList = new[] {
+					Directory.GetDirectories(dirPath).Select(f => new { Path = f, IsDirectory = true }),
+					Directory.GetFiles(dirPath).Select(f => new { Path = f, IsDirectory = false }),
+				}.SelectMany(a => a).ToArray();
+
+				menuList.Capacity = pathItemList.Length;
+
+				if(pathItemList.Length > 0) {
 					foreach(var pathItem in pathItemList) {
-						foreach(var path in pathItem.PathList) {
-							var use = true;
-							if(!showHiddenFile && (File.GetAttributes(path) & FileAttributes.Hidden) == FileAttributes.Hidden) {
-								use = false;
-							}
-							if(use) {
-								var menuItem = GetFileListItem(path, pathItem.IsDirectory, showHiddenFile, showExtension);
-								menuList.Add(menuItem);
-							}
+						var isAppend = true;
+						var isHiddenFile = File.GetAttributes(pathItem.Path).HasFlag(FileAttributes.Hidden);
+						if(!showHiddenFile && isHiddenFile) {
+							isAppend = false;
+						}
+						if(isAppend) {
+							var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, isHiddenFile);
+							menuList.Add(menuItem);
 						}
 					}
-					
 				} else {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
 					menuItem.Image = SystemIcons.Information.ToBitmap();
 					menuItem.Enabled = false;
-					
+
 					menuList.Add(menuItem);
 				}
-				
 			} catch(UnauthorizedAccessException ex) {
 				var menuItem = new ToolStripMenuItem();
 				menuItem.Text = ex.Message;
 				menuItem.Image = SystemIcons.Warning.ToBitmap();
 				menuItem.Enabled = false;
-				menuList = new [] { menuItem };
+				menuList.Add(menuItem);
 			}
-			
+
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			
 			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
-			parentItem.ShowDropDown();
+
 			return true;
 		}
-		
+
 		void AttachmentFileLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			
-			var executeItem = new ToolStripMenuItem();
-			var executeExItem = new ToolStripMenuItem();
-			var pathItem = new ToolStripMenuItem();
-			var fileItem = new ToolStripMenuItem();
-			menuList.Add(executeItem);
-			menuList.Add(executeExItem);
-			menuList.Add(new ToolStripSeparator());
-			menuList.Add(pathItem);
-			menuList.Add(fileItem);
-			
 			// 通常実行
-			executeItem.Name = menuNameExecute;
-			executeItem.Text = CommonData.Language["toolbar/menu/file/execute"];
-			executeItem.Click += (object sender, EventArgs e) => ExecuteItem(launcherItem);
-			// 指定実行
-			executeExItem.Name = menuNameExecuteEx;
-			executeExItem.Text = CommonData.Language["toolbar/menu/file/execute-ex"];
-			executeExItem.Click += (object sender, EventArgs e) => ExecuteExItem(launcherItem, null);
-			// パス関係
-			pathItem.Name = menuNamePath;
-			pathItem.Text = CommonData.Language["toolbar/menu/file/path"];
-			AttachmentFileLauncherPathSubMenu(pathItem, launcherItem);
-			//pathItem.DropDownItems.AddRange(CreateFileLauncherMenuPathItems(launcherItem));
-			// ファイル一覧
-			fileItem.Name = menuNameFiles;
-			fileItem.Text = CommonData.Language["toolbar/menu/file/ls"];
-			fileItem.DropDownOpening += (object sender, EventArgs e) => {
-				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
-				var showExtension = SystemEnvironment.IsExtensionShow();
-				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-				LoadFileList(fileItem, Path.GetDirectoryName(expandPath), showHiddenFile, showExtension);
+			var executeItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+				Name = menuNameExecute,
+				Text = CommonData.Language["toolbar/menu/file/execute"],
 			};
-			ToolStripUtility.AttachmentOpeningMenuInScreen(fileItem);
+			executeItem.Click += FileLauncherItemMenu_Execute;
+
+			// 指定実行
+			var executeExItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+				Name = menuNameExecuteEx,
+				Text = CommonData.Language["toolbar/menu/file/execute-ex"],
+			};
+			executeExItem.Click += FileLauncherItemMenu_ExecuteEx;
+
+			// パス関係
+			var pathItem = new LauncherToolStripMenuItem(CommonData) {
+				LauncherItem = launcherItem,
+				Name = menuNamePath,
+				Text = CommonData.Language["toolbar/menu/file/path"],
+			};
+			AttachmentFileLauncherPathSubMenu(pathItem, launcherItem);
+
+			// ファイル一覧
+			var fileItem = new ToolStripMenuItem() {
+				Name = menuNameFiles,
+				Text = CommonData.Language["toolbar/menu/file/ls"],
+			};
+
+			var menuList = new ToolStripItem[] {
+				executeItem,
+				executeExItem,
+				new ToolStripSeparator(),
+				pathItem,
+				fileItem,
+			};
 			
 			// メニュー設定
-			var menuItems = menuList.ToArray();
-			ToolStripUtility.AttachmentOpeningMenuInScreen(menuItems);
-			parentItem.DropDownItems.AddRange(menuItems);
-			
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				if(launcherItem.IsExists) {
-					executeItem.Enabled = true;
-					//executeExItem.Enabled = launcherItem.IsExecteFile;
-				} else {
-					executeItem.Enabled = false;
-					//executeExItem.Enabled = false;
-				}
-				try {
-					var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-					var expandParentPath = Path.GetDirectoryName(expandPath);
-					fileItem.Enabled = Directory.Exists(expandParentPath);
-				} catch(ArgumentException ex) {
-					// #41の影響により#77考慮不要
-					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
-					pathItem.Enabled = false;
-					fileItem.Enabled = false;
-					executeItem.Enabled = true;
-				}
-			};
+			ToolStripUtility.AttachmentOpeningMenuInScreen(menuList);
+			parentItem.DropDownItems.AddRange(menuList);
+			parentItem.DropDownOpening += FileLauncherItemMenu_DropDownOpening;
 		}
 
 		string MakeGroupItemName(string groupName)
@@ -1060,96 +808,116 @@
 			return menuNameMainGroupItem + groupName;
 		}
 		
+		/// <summary>
+		/// TODO: += 
+		/// </summary>
+		/// <param name="parentItem"></param>
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
 		{
-			var itemList = new List<ToolStripItem>();
-			
-			var posFloatItem = new ToolStripMenuItem();
-			var posTopItem = new ToolStripMenuItem();
-			var posBottomItem = new ToolStripMenuItem();
-			var posLeftItem = new ToolStripMenuItem();
-			var posRightItem = new ToolStripMenuItem();
-			var topmostItem = new ToolStripMenuItem();
-			var autoHideItem = new ToolStripMenuItem();
-			var hiddenItem = new ToolStripMenuItem();
-			var groupSeparator = new ToolStripSeparator();
-			itemList.Add(posFloatItem);
-			itemList.Add(posTopItem);
-			itemList.Add(posBottomItem);
-			itemList.Add(posLeftItem);
-			itemList.Add(posRightItem);
-			itemList.Add(new ToolStripSeparator());
-			itemList.Add(topmostItem);
-			itemList.Add(autoHideItem);
-			itemList.Add(new ToolStripSeparator());
-			itemList.Add(hiddenItem);
-			
 			// フロート
-			posFloatItem.Name = menuNameMainPosDesktopFloat;
-			posFloatItem.Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language);
+			var posFloatItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopFloat,
+				Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language),
+			};
 			posFloatItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
+				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：上
-			posTopItem.Name = menuNameMainPosDesktopTop;
-			posTopItem.Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language);
+			var posTopItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopTop,
+				Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language),
+			};
 			posTopItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
+				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：下
-			posBottomItem.Name = menuNameMainPosDesktopBottom;
-			posBottomItem.Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language);
+			var posBottomItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopBottom,
+				Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language),
+			};
 			posBottomItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
+				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：左
-			posLeftItem.Name = menuNameMainPosDesktopLeft;
-			posLeftItem.Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language);
+			var posLeftItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopLeft,
+				Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language),
+			};
 			posLeftItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
+				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
 				ApplySettingPosition();
 			};
+
 			// デスクトップ：右
-			posRightItem.Name = menuNameMainPosDesktopRight;
-			posRightItem.Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language);
+			var posRightItem = new ToolStripMenuItem() {
+				Name = menuNameMainPosDesktopRight,
+				Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language),
+			};
 			posRightItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
+				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
 				ApplySettingPosition();
 			};
-			
+
 			// 最前面表示
-			topmostItem.Name = menuNameMainTopmost;
-			topmostItem.Text = CommonData.Language["common/menu/topmost"];
+			var topmostItem = new ToolStripMenuItem() {
+				Name = menuNameMainTopmost,
+				Text = CommonData.Language["common/menu/topmost"],
+			};
 			topmostItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.Topmost = !topmostItem.Checked;
+				UsingToolbarItem.Topmost = !topmostItem.Checked;
 				ApplySettingTopmost();
 			};
-			
+
 			// 自動的に隠す
-			autoHideItem.Name = menuNameMainAutoHide;
-			autoHideItem.Text = CommonData.Language["toolbar/menu/main/auto-hide"];
+			var autoHideItem = new ToolStripMenuItem() {
+				Name = menuNameMainAutoHide,
+				Text = CommonData.Language["toolbar/menu/main/auto-hide"],
+			};
 			autoHideItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.AutoHide = !autoHideItem.Checked;
+				UsingToolbarItem.AutoHide = !autoHideItem.Checked;
 				ApplySettingPosition();
 				if(DesktopDockType != DesktopDockType.None) {
-					UseToolbarItem.AutoHide = AutoHide;
+					UsingToolbarItem.AutoHide = AutoHide;
 				} else {
-					UseToolbarItem.AutoHide = false;
+					UsingToolbarItem.AutoHide = false;
 				}
 			};
-			hiddenItem.Text = CommonData.Language["toolbar/menu/main/hidden"];
+
+			// 非表示
+			var hiddenItem = new ToolStripMenuItem() {
+				Name = menuNameMainHidden,
+				Text = CommonData.Language["toolbar/menu/main/hidden"],
+			};
 			hiddenItem.Click += (object sender, EventArgs e) => {
-				UseToolbarItem.Visible = false;
+				UsingToolbarItem.Visible = false;
 				ApplySettingVisible();
 			};
-			
+
 			// グループ関連メニュー
-			var itemGroupSeparator = new ToolStripSeparator();
-			groupSeparator.Name = menuNameMainGroupSeparator;
-			itemList.Add(itemGroupSeparator);
+			var itemGroupSeparator = new ToolStripSeparator() {
+				Name = menuNameMainGroupSeparator,
+			};
+
+			var menuList = new List<ToolStripItem>() {
+				posFloatItem,
+				posTopItem,
+				posBottomItem,
+				posLeftItem,
+				posRightItem,
+				new ToolStripSeparator(),
+				topmostItem,
+				autoHideItem,
+				new ToolStripSeparator(),
+				hiddenItem,
+				itemGroupSeparator,
+			};
+
 			foreach(var group in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
 				var itemGroup = new ToolStripMenuItem();
 				itemGroup.Text = group.Name;
@@ -1157,11 +925,11 @@
 				itemGroup.Tag = group;
 				itemGroup.CheckState = CheckState.Indeterminate;
 				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
-				itemList.Add(itemGroup);
+				menuList.Add(itemGroup);
 			}
 			
 			// メニュー設定
-			var items = itemList.ToArray();
+			var items = menuList.ToArray();
 			// #3
 			foreach(var item in items) {
 				item.ImageScaling = ToolStripItemImageScaling.None;
@@ -1180,11 +948,11 @@
 				foreach(var pair in windowPosNameKey) {
 					pair.Key.CheckState = CheckState.Indeterminate;
 					
-					pair.Key.Checked = UseToolbarItem.ToolbarPosition == pair.Value;
+					pair.Key.Checked = UsingToolbarItem.ToolbarPosition == pair.Value;
 				}
 				
 				// 最前面表示
-				topmostItem.Checked = UseToolbarItem.Topmost;
+				topmostItem.Checked = UsingToolbarItem.Topmost;
 				
 				// 自動的に隠す
 				autoHideItem.Checked = AutoHide;
@@ -1199,25 +967,20 @@
 
 		void AttachmentEmbeddedLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
 		{
-			var itemList = new List<ToolStripItem>();
-
-			var execItem = new ToolStripMenuItem();
-			var closeItem = new ToolStripMenuItem();
-			var helpItem = new ToolStripMenuItem();
-			itemList.Add(execItem);
-			itemList.Add(closeItem);
-			itemList.Add(new ToolStripSeparator());
-			itemList.Add(helpItem);
-
 			// 起動
-			execItem.Name = menuNameApplicationExecute;
-			execItem.Text = CommonData.Language["toolbar/menu/application/execute"];
+			var execItem = new ToolStripMenuItem() {
+				Name = menuNameApplicationExecute,
+				Text = CommonData.Language["toolbar/menu/application/execute"],
+			};
 			execItem.Click += (object sender, EventArgs e) => {
 				ExecuteItem(launcherItem);
 			};
+
 			// 終了
-			closeItem.Name = menuNameApplicationClose;
-			closeItem.Text = CommonData.Language["toolbar/menu/application/close"];
+			var closeItem = new ToolStripMenuItem() {
+				Name = menuNameApplicationClose,
+				Text = CommonData.Language["toolbar/menu/application/close"],
+			};
 			closeItem.Click += (object sender, EventArgs e) => {
 				try {
 					CommonData.ApplicationSetting.KillApplicationItem(launcherItem);
@@ -1226,9 +989,12 @@
 					CommonData.Logger.Puts(LogType.Warning, message, ex);
 				}
 			};
+
 			// ヘルプ
-			helpItem.Name = menuNameApplicationHelp;
-			helpItem.Text = CommonData.Language["toolbar/menu/application/help"];
+			var helpItem = new ToolStripMenuItem() {
+				Name = menuNameApplicationHelp,
+				Text = CommonData.Language["toolbar/menu/application/help"],
+			};
 			helpItem.Click += (object sender, EventArgs e) => {
 				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
 				try {
@@ -1239,7 +1005,14 @@
 				}
 			};
 
-			parentItem.DropDownItems.AddRange(itemList.ToArray());
+			var menuList = new ToolStripItem[] {
+				execItem,
+				closeItem,
+				new ToolStripSeparator(),
+				helpItem,
+			};
+
+			parentItem.DropDownItems.AddRange(menuList);
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
 				var isRunning = CommonData.ApplicationSetting.ExecutingItems.Any(i => i.ApplicationItem == applicationItem);
@@ -1273,21 +1046,20 @@
 			}
 		}
 		
-		
 		/// <summary>
 		/// メインボタン生成。
 		/// </summary>
 		/// <returns></returns>
 		ToolStripDropDownButton CreateMainLauncherButton()
 		{
-			var iconSize = UseToolbarItem.IconScale.ToSize();
+			var iconSize = UsingToolbarItem.IconScale.ToSize();
 			var toolItem = new ToolStripDropDownButton();
 			using(var icon = new Icon(CommonData.Skin.GetIcon(SkinIcon.ToolbarMain), iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
-					g.DrawIcon(icon, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+					g.DrawIcon(icon, new Rectangle(Point.Empty, UsingToolbarItem.IconScale.ToSize()));
 					#if DEBUG
-					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UseToolbarItem.IconScale.ToSize()));
+					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UsingToolbarItem.IconScale.ToSize()));
 					#endif
 				}
 				toolItem.Image = img;
@@ -1305,7 +1077,9 @@
 		/// <returns></returns>
 		ToolStripSplitButton CreateFileItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripSplitButton();
+			var toolItem = new LauncherToolStripSplitButton(CommonData) {
+				LauncherItem = item,
+			};
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 			
 			AttachmentFileLauncherMenu(toolItem, item);
@@ -1316,20 +1090,9 @@
 		ToolStripDropDownButton CreateDirectoryItemLauncherButton(LauncherItem item)
 		{
 			var toolItem = new ToolStripDropDownButton();
-			
-			toolItem.DropDownOpening += (object sender, EventArgs e) => {
-				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
-				var showExtension = SystemEnvironment.IsExtensionShow();
-				var expandPath = Environment.ExpandEnvironmentVariables(item.Command);
-				if(LoadFileList(toolItem, expandPath, showHiddenFile, showExtension)) {
-					var openItem = new ToolStripMenuItem();
-					openItem.Text = CommonData.Language["toolbar/menu/file/ls/open"];
-					openItem.Image = toolItem.Image;
-					openItem.Click += (object child_sender, EventArgs child_e) => ExecuteItem(item);
-					toolItem.DropDownItems.Insert(0, openItem);
-					toolItem.DropDownItems.Insert(1, new ToolStripSeparator());
-				}
-			};
+			var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+			var showExtension = SystemEnvironment.IsExtensionShow();
+			AttachmentFileList(toolItem, true, Environment.ExpandEnvironmentVariables(item.Command), showHiddenFile, showExtension);
 
 			return toolItem;
 		}
@@ -1390,7 +1153,7 @@
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UseToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting);
+			var icon = item.GetIcon(UsingToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}
@@ -1418,7 +1181,7 @@
 				toolItem = CreateItemLauncherButton(item);
 			}
 			
-			SetButtonLayout(toolItem, CommonData.Skin, UseToolbarItem.IconScale, UseToolbarItem.ShowText, UseToolbarItem.TextWidth);
+			SetButtonLayout(toolItem, CommonData.Skin, UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
 			toolItem.Visible = true;
 
 			toolItem.MouseHover += ToolItem_MouseHover;
@@ -1604,7 +1367,7 @@
 				SelectedGroup(SelectedGroupItem);
 				
 				// 他のツールバーにアイテム変更を教える
-				CommonData.RootSender.ChangedLauncherGroupItems(UseToolbarItem, SelectedGroupItem);
+				CommonData.RootSender.ChangedLauncherGroupItems(UsingToolbarItem, SelectedGroupItem);
 			}
 		}
 		
@@ -1631,7 +1394,7 @@
 					Debug.Assert(dropData.SrcToolStripItem != null);
 					
 					// 次の項目か
-					var arrow = ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition) ? ArrowDirection.Right: ArrowDirection.Down;
+					var arrow = ToolbarPositionUtility.IsHorizonMode(UsingToolbarItem.ToolbarPosition) ? ArrowDirection.Right: ArrowDirection.Down;
 					var nextItem = this.toolLauncher.GetNextItem(dropData.SrcToolStripItem, arrow);
 					var isNext = nextItem == dropData.ToolStripItem;
 					var itemList = this.toolLauncher.Items.Cast<ToolStripItem>().ToList();
@@ -1665,7 +1428,7 @@
 		public void ReceiveChangedLauncherItems(ToolbarItem toolbarItem, ToolbarGroupItem toolbarGroupItem)
 		{
 			// 他のツールバーから通知を受け取った場合に反映処理を行う
-			Debug.Assert(toolbarItem != UseToolbarItem);
+			Debug.Assert(toolbarItem != UsingToolbarItem);
 			SelectedGroup(SelectedGroupItem);
 		}
 		
@@ -1676,7 +1439,7 @@
 		void DrawEdge(Graphics g, Rectangle drawArea, bool active)
 		{
 			if(CommonData.Skin.IsDefaultDrawToolbarWindowEdge) {
-				var edgePadding = CommonData.Skin.GetToolbarWindowEdgePadding(UseToolbarItem.ToolbarPosition);
+				var edgePadding = CommonData.Skin.GetToolbarWindowEdgePadding(UsingToolbarItem.ToolbarPosition);
 				
 				// 境界線
 				var light = active ? SystemBrushes.ControlLight: SystemBrushes.ControlLightLight;
@@ -1691,7 +1454,7 @@
 				// 上
 				g.FillRectangle(dark, 0, 0, drawArea.Width, edgePadding.Top);
 			} else {
-				CommonData.Skin.DrawToolbarWindowEdge(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+				CommonData.Skin.DrawToolbarWindowEdge(g, drawArea, active, UsingToolbarItem.ToolbarPosition);
 			}
 		}
 		
@@ -1707,22 +1470,22 @@
 					headColor = SystemColors.GradientInactiveCaption;
 					tailColor = SystemColors.InactiveCaption;
 				}
-				var mode = ToolbarPositionUtility.IsHorizonMode(UseToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
+				var mode = ToolbarPositionUtility.IsHorizonMode(UsingToolbarItem.ToolbarPosition) ? LinearGradientMode.Vertical: LinearGradientMode.Horizontal;
 				using(var brush = new LinearGradientBrush(drawArea, headColor, tailColor, mode)) {
 					g.FillRectangle(brush, drawArea);
 				}
 			} else {
-				CommonData.Skin.DrawToolbarWindowCaption(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+				CommonData.Skin.DrawToolbarWindowCaption(g, drawArea, active, UsingToolbarItem.ToolbarPosition);
 			}
 		}
 		
 		void DrawNoClient(Graphics g, Rectangle drawArea, bool active)
 		{
 			if(!CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
-				CommonData.Skin.DrawToolbarWindowBackground(g, drawArea, active, UseToolbarItem.ToolbarPosition);
+				CommonData.Skin.DrawToolbarWindowBackground(g, drawArea, active, UsingToolbarItem.ToolbarPosition);
 			}
 			
-			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UseToolbarItem.ToolbarPosition, ClientSize);
+			var captionArea = CommonData.Skin.GetToolbarCaptionArea(UsingToolbarItem.ToolbarPosition, ClientSize);
 			if(!captionArea.Size.IsEmpty) {
 				DrawCaption(g, captionArea, active);
 			}
@@ -1774,14 +1537,14 @@
 		
 		void ToolbarForm_SizeChanged(object sender, EventArgs e)
 		{
-			if(this._isRunning && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-				UseToolbarItem.FloatSize = Size;
+			if(this.Initialized && UsingToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+				UsingToolbarItem.FloatSize = Size;
 			}
 		}
 		void ToolbarForm_LocationChanged(object sender, EventArgs e)
 		{
-			if(this._isRunning && UseToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
-				UseToolbarItem.FloatLocation = Location;
+			if(this.Initialized && UsingToolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
+				UsingToolbarItem.FloatLocation = Location;
 			}
 		}
 		
@@ -1818,6 +1581,7 @@
 		
 		void ToolbarFormShown(object sender, EventArgs e)
 		{
+			// この子のおかげでちかちかする。でも実装してるからなんか理由あのかもしれんけど調べる気にもならん。
 			ApplySettingPosition();
 		}
 		
@@ -1839,7 +1603,7 @@
 			this._tipsLauncher.Hide();
 			var toolItem = sender as ToolStripDropDownItem;
 			if(toolItem != null) {
-				switch(UseToolbarItem.ToolbarPosition) {
+				switch(UsingToolbarItem.ToolbarPosition) {
 					case ToolbarPosition.DesktopFloat:
 						toolItem.DropDownDirection = ToolStripDropDownDirection.Default;
 						break;
@@ -1875,49 +1639,18 @@
 		void ToolItem_MouseHover(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
-			/*
-			var cursorPoint = Cursor.Position;
-			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
-			var point = this.PointToClient(cursorPoint);
-			Debug.WriteLine(toolItem.ToolTipText);
-			this.tipsLauncher.Show(toolItem.ToolTipText, this, point);
-			 */
-			//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
-			//this.tipsLauncher.Show(toolItem.Text, this, Point.Empty);
-			//this.tipsLauncher.RemoveAll();
-			//this.tipsLauncher.SetToolTip(this, "#");
-			//if(toolItem.OwnerItem == this.toolLauncher)
-			//if(toolItem.OwnerItem == null)
-			//var menuItem = toolItem as ToolStripDropDownItem;
+
 			if(this._menuOpening) {
 				// メニュー表示中はなんもしない
 				return;
 			}
-			this._tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UseToolbarItem);
+			this._tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UsingToolbarItem);
 		}
 
 		void toolItem_MouseLeave(object sender, EventArgs e)
 		{
 			this._tipsLauncher.HideItem();
-			//this.tipsLauncher.RemoveAll();
 		}
-		
-
-		/*
-		void ToolLauncher_MouseHover(object sender, EventArgs e)
-		{
-			var cursorPoint = Cursor.Position;
-			cursorPoint.Offset(SystemInformation.SmallIconSize.Width, SystemInformation.SmallIconSize.Height);
-			var point = this.PointToClient(cursorPoint);
-			var toolItem = this.toolLauncher.Items.Cast<ToolStripItem>().FirstOrDefault(i => i.Bounds.Contains(point));
-			if(toolItem != null) {
-				//this.tipsLauncher.SetToolTip(this.toolLauncher, toolItem.ToolTipText);
-				Debug.WriteLine("ToolLauncher_MouseHover");
-			} else {
-				this.tipsLauncher.RemoveAll();
-			}
-		}
-		 * */
 		
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
 		{
@@ -1953,5 +1686,184 @@
 			}
 		}
 
+		#region File Launcher Menu
+
+		void FileLauncherItemPathMenu_OpenParentDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			OpenParentDirectory(menuItem.LauncherItem);
+		}
+
+		void FileLauncherItemPathMenu_OpenWorkDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			OpenDirectory(menuItem.LauncherItem.WorkDirPath);
+		}
+
+		void FileLauncherItemPathMenu_CopyCommand(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			CopyText(menuItem.LauncherItem.Command);
+		}
+
+		void FileLauncherItemPathMenu_CopyParentDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			CopyText(Path.GetDirectoryName(menuItem.LauncherItem.Command));
+		}
+
+		void FileLauncherItemPathMenu_CopyWorkDirectory(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			CopyText(menuItem.LauncherItem.WorkDirPath);
+		}
+
+		void FileLauncherItemPathMenu_OpenProperty(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			var expandPath = Environment.ExpandEnvironmentVariables(menuItem.LauncherItem.Command);
+
+			Executor.OpenProperty(expandPath, Handle);
+		}
+
+		void FileLauncherItemPathMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			var launcherItem = menuItem.LauncherItem;
+
+			var openParentDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_openParentDir];
+			var openWorkDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_openWorkDir];
+			var copyCommandItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_copyCommand];
+			var copyParentDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_copyParentDir];
+			var copyWorkDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_copyWorkDir];
+			var propertyItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_property];
+
+			// コマンド有無
+			var commandEnabled = launcherItem.IsExists;
+			copyCommandItem.Enabled = commandEnabled;
+			propertyItem.Enabled = commandEnabled;
+			// 親ディレクトリ有無
+			var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+			var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
+			openParentDirItem.Enabled = parentDirEnabled;
+			copyParentDirItem.Enabled = parentDirEnabled;
+			// 作業ディレクトリ有無
+			var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
+			openWorkDirItem.Enabled = workDirEnabled;
+			copyWorkDirItem.Enabled = workDirEnabled;
+		}
+
+		void FileLauncherItemMenu_Execute(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			ExecuteItem(menuItem.LauncherItem);
+		}
+
+		void FileLauncherItemMenu_ExecuteEx(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			ExecuteExItem(menuItem.LauncherItem, null);
+		}
+
+		void FileLauncherItemMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripSplitButton)sender;
+			var launcherItem = menuItem.LauncherItem;
+
+			var executeItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameExecute];
+			var executeExItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameExecuteEx];
+			var pathItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNamePath];
+			var fileItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameFiles];
+
+			if(launcherItem.IsExists) {
+					executeItem.Enabled = true;
+					//executeExItem.Enabled = launcherItem.IsExecteFile;
+				} else {
+					executeItem.Enabled = false;
+					//executeExItem.Enabled = false;
+				}
+				try {
+					var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+					var expandParentPath = Path.GetDirectoryName(expandPath);
+					fileItem.Enabled = Directory.Exists(expandParentPath);
+				} catch(ArgumentException ex) {
+					// #41の影響により#77考慮不要
+					CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
+					pathItem.Enabled = false;
+					fileItem.Enabled = false;
+					executeItem.Enabled = true;
+				}
+				try {
+					if(!fileItem.HasDropDownItems) {
+						var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+						var showExtension = SystemEnvironment.IsExtensionShow();
+						var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+						AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
+					}
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+		}
+
+		#endregion
+
+		#region File List Menu
+
+		void FileListMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			var toolItem = sender as ToolStripDropDownItem;
+			var openItem = toolItem.DropDownItems[menuNameFiles_open];
+			if(openItem.Image == null) {
+				toolItem.DropDownItems[menuNameFiles_open].Image = toolItem.Image;
+			}
+
+			// 下位ファイル群が生成済みであればサヨナラ
+			var skip = false;
+			if(toolItem.DropDownItems.ContainsKey(menuNameFiles_sep)) {
+				var separatorItem = toolItem.DropDownItems[menuNameFiles_sep];
+				skip = toolItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem).Skip(1).Any();
+			} else {
+				skip = toolItem.DropDownItems.Count > 0;
+			}
+
+			if(skip) {
+				CommonData.Logger.PutsDebug("opening: skip", () => string.Join(Environment.NewLine, toolItem.DropDownItems.Cast<ToolStripItem>().Select(t => t.Text)));
+				return;
+			}
+
+			// 下位ファイル群生成
+			var fileMenuItem = toolItem as FileToolStripMenuItem;
+			if(fileMenuItem != null) {
+				CommonData.Logger.PutsDebug(fileMenuItem.Text, () => fileMenuItem.DropDownItems.Count);
+				var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+				var showExtension = SystemEnvironment.IsExtensionShow();
+				AttachmentFileList(fileMenuItem, false, Environment.ExpandEnvironmentVariables(fileMenuItem.Path), showHiddenFile, showExtension);
+			} else {
+				// 起こりえないけど改修実装なんで入れとく
+				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => toolItem.DumpToString(toolItem.Text));
+			}
+		}
+
+		void FileListMenu_Click(object sender, EventArgs e)
+		{
+			var fileMenuItem = sender as FileToolStripMenuItem;
+			if(fileMenuItem != null) {
+				try {
+					var path = fileMenuItem.Path;
+					if(File.Exists(path)) {
+						Executor.OpenFile(path, CommonData);
+					} else {
+						Executor.OpenDirectory(path, CommonData, null);
+					}
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+			} else {
+				// 起こりえないけど改修実装なんで入れとく
+				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => sender.DumpToString(sender.GetType().ToString()));
+			}
+		}
+
+		#endregion
 	}
 }

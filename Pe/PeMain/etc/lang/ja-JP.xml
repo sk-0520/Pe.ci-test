@@ -43,6 +43,7 @@
 		<Word Name="env"               Text="環境変数" />
 		<Word Name="copy"              Text="コピー" />
 		<Word Name="create"            Text="作成" />
+		<Word Name="clipboard"         Text="クリップボード" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -73,7 +74,8 @@
 		<Word Name="window/about"     Text="@[APPLICATION] 情報" />
 		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
 		<Word Name="window/stream"    Text="@[ITEM]の標準入出力" />
-		<Word Name="window/clipboard" Text="クリップボード" />
+		<Word Name="window/clipboard" Text="${clipboard}" />
+		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
@@ -94,7 +96,7 @@
 		<Word Name="main/menu/system-env/window"            Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保存(&amp;S)" />
 		<Word Name="main/menu/system-env/window/load"       Text="保存しているウィンドウ状態を復帰(&amp;L)" />
-		<Word Name="main/menu/system-env/clipboard"         Text="クリップボード(&amp;C)" />
+		<Word Name="main/menu/system-env/clipboard"         Text="${clipboard}(&amp;C)" />
 		
 		<Word Name="main/event/screen/count-change"    Text="ディスプレイ数変更検知" />
 		<Word Name="main/event/power/resume"           Text="レジューム" />
@@ -135,8 +137,11 @@
 		<Word Name="balloon/note/hidden"       Text="編集可能${note}の非表示" />
 		<Word Name="balloon/note/compact"      Text="編集可能${note}の最小化" />
 		<Word Name="balloon/note/show-front"   Text="表示中${note}の${show-front}" />
+		<Word Name="balloon/clipboard/title"     Text="${clipboard}ウィンドウ" />
+		<Word Name="balloon/clipboard/message-show"   Text="${clipboard}を${show}" />
+		<Word Name="balloon/clipboard/message-hidden" Text="${clipboard}を${hidden}" />
 		
-		
+
 		<Word Name="log/command/save"     Text="ログ保存" />
 		<Word Name="log/tips/save"        Text="現在のログをファイルに保存" />
 		<Word Name="log/command/clear"    Text="ログクリア" />
@@ -242,18 +247,18 @@
 
 		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
 		<Word Name="clipboard/command/enabled" Text="有効" />
-		<Word Name="clipboard/tips/enabled"    Text="クリップボード履歴の取り込みを有効にする" />
+		<Word Name="clipboard/tips/enabled"    Text="${clipboard}履歴の取り込みを有効にする" />
 		<Word Name="clipboard/command/save"    Text="選択中アイテムの保存" />
 		<Word Name="clipboard/command/remove"  Text="選択中アイテムの削除" />
 		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
-		<Word Name="clipboard/command/empty"   Text="クリップボードを空にする" />
-		<Word Name="clipboard/type/clipboard"  Text="クリップボード" />
+		<Word Name="clipboard/command/empty"   Text="${clipboard}を空にする" />
+		<Word Name="clipboard/type/clipboard"  Text="${clipboard}" />
 		<Word Name="clipboard/header/name"     Text="名前" />
 		<Word Name="clipboard/header/path"     Text="パス" />
-		<Word Name="clipboard/html/error"      Text="HTML形式クリップボードの解析失敗" />
+		<Word Name="clipboard/html/error"      Text="HTML形式${clipboard}の解析失敗" />
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
 		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
-		<Word Name="clipboard/wait/title"      Text="クリップボード: 待ち時間中のため無視" />
+		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
 		<Word Name="clipboard/wait/message"    Text="前回取得時間: @[TIME]" />
 		
 		<Word Name="setting/page/main"              Text="本体" />
@@ -264,7 +269,7 @@
 		<Word Name="setting/page/command"           Text="コマンド" />
 		<Word Name="setting/page/display"           Text="ディスプレイ" />
 		<Word Name="setting/page/note"              Text="${note}" />
-		<Word Name="setting/page/clipboard"         Text="クリップボード" />
+		<Word Name="setting/page/clipboard"         Text="${clipboard}" />
 		<Word Name="setting/check/startup"         Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />
@@ -311,7 +316,7 @@
 		<Word Name="setting/column/note/font"      Text="${font}" />
 		<Word Name="setting/column/note/fore"      Text="前景色" />
 		<Word Name="setting/column/note/back"      Text="背景色" />
-		<Word Name="setting/check/clipboard-enabled"      Text="クリップボードの履歴を有効にする" />
+		<Word Name="setting/check/clipboard-enabled"      Text="${clipboard}の履歴を有効にする" />
 		<Word Name="setting/check/clipboard-app-enabled"  Text="@[APPLICATION]のコピー操作も履歴へ設定する" />
 		<Word Name="setting/label/clipboard-limit"        Text="保持する履歴数" />
 		<Word Name="setting/label/clipboard-wait"         Text="前回コピーからの待機時間(ミリ秒)" />
@@ -323,13 +328,18 @@
 		<Word Name="setting/group/skin"       Text="スキン" />
 		<Word Name="setting/command/skin"     Text="設定" />
 		<Word Name="setting/group/stream"     Text="標準入出力" />
+		<Word Name="setting/command/screens"  Text="識別" />
+
+		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
+		<Word Name="screen/primary/false"  Text="" />
+		<Word Name="screen/close"          Text="マウスクリックかキー入力で識別画面を閉じてください" />
 
 		<Word Name="about/command/execute"   Text="@[APPLICATION]" />
 		<Word Name="about/command/data"      Text="データ" />
 		<Word Name="about/command/backup"    Text="バックアップ" />
 		<Word Name="about/command/update"    Text="アップデート" />
 		<Word Name="about/command/changelog" Text="更新履歴" />
-		<Word Name="about/label/user-env"    Text="報告用情報をクリップボードへコピーする:" />
+		<Word Name="about/label/user-env"    Text="報告用情報を${clipboard}へ${copy}する:" />
 		<Word Name="about/link/short-env"    Text="短い情報" />
 		<Word Name="about/long/long-env"     Text="長い情報" />
 		<Word Name="about/column/name"       Text="コンポーネント" />
@@ -443,7 +453,7 @@
 		<Word Name="enum/about-component-type/Image"     Text="画像" />
 		<Word Name="enum/about-component-type/Unknown"   Text="${unknown}" />
 		
-		<Word Name="enum/clipboard-type"        Text="クリップボードの種類" />
+		<Word Name="enum/clipboard-type"        Text="${clipboard}の種類" />
 		<Word Name="enum/clipboard-type/text"   Text="文字列" />
 		<Word Name="enum/clipboard-type/rtf"    Text="書式付文字列" />
 		<Word Name="enum/clipboard-type/html"   Text="HTML" />
@@ -461,6 +471,8 @@
 		<Word Name="log/update/exec"       Text="アップデート処理開始" />
 		<Word Name="log/update/exit"       Text="アップデートのため終了" />
 		<Word Name="log/update/error"      Text="アップデートチェック失敗" />
+		<Word Name="log/update/error-timeout"  Text="アップデート処理タイムアウト" />
+		<Word Name="log/update/error-process"  Text="アップデートプロセス異常終了" />
 		<Word Name="log/update/check-stop" Text="アップデートチェック中止" />
 		<Word Name="log/update/newest"     Text="最新版です" />
 	

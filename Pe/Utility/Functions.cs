@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Diagnostics;
+	using System.Linq;
+
 	/// <summary>
-	/// Description of Functions.
+	/// 共通処理。
 	/// </summary>
 	public static class Functions
 	{
@@ -108,19 +108,6 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 			return datas.Any(data => value.CompareTo(data) == 0);
 		}
-
-		/// <summary>
-		/// 集合の処理。
-		/// </summary>
-		/// <param name="seq"></param>
-		/// <param name="pred"></param>
-		/// <returns>処理したデータ</returns>
-		public static IEnumerable<R> Map<T, R>(this IEnumerable<T> seq, Func<T, R> pred)
-		{
-			foreach(var element in seq) {
-				yield return pred(element);
-			}
-		}
 		
 		/// <summary>
 		/// スライス。
@@ -177,6 +164,10 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return na - nb;
 		}
 		
+		/// <summary>
+		/// IDisposableオブジェクトをnullでもDisposeしてみる。
+		/// </summary>
+		/// <param name="target"></param>
 		public static void ToDispose(this IDisposable target)
 		{
 			if(target != null) {

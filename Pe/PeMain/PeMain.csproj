@@ -144,14 +144,16 @@
     <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\ToolbarDropData.cs" />
     <Compile Include="Data\ToolbarGroup.cs" />
     <Compile Include="Data\ToolbarGroupItem.cs" />
     <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
+    <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IRootSender.cs" />
-    <Compile Include="IF\ISetCommonData.cs" />
+    <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ISetLanguage.cs" />
     <Compile Include="IF\ISetSkin.cs" />
     <Compile Include="Kind\Applications.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Kind\Launcher.cs" />
     <Compile Include="Kind\Log.cs" />
     <Compile Include="Kind\Note.cs" />
+    <Compile Include="Kind\Toolbar.cs" />
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\ApplicationRoot.cs" />
     <Compile Include="Logic\AppUtility.cs" />
@@ -167,7 +170,6 @@
     <Compile Include="Logic\ControlUtility.cs" />
     <Compile Include="Logic\DB\DBWrapper.cs" />
     <Compile Include="Logic\DB\NoteDB.cs" />
-    <Compile Include="Logic\DrawUtility.cs" />
     <Compile Include="Logic\EnumToText.cs" />
     <Compile Include="Logic\Executor.cs" />
     <Compile Include="Logic\FileLogger.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="Logic\AppDBManager.cs" />
     <Compile Include="Logic\Listener.cs" />
     <Compile Include="Logic\NullLogger.cs" />
+    <Compile Include="Logic\ScreenForms.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
@@ -245,11 +248,20 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\CustomToolTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\ExecuteForm.Designer.cs">
       <DependentUpon>ExecuteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Ex\ExAppbarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExRichTextBox.cs">
       <SubType>Component</SubType>
@@ -273,6 +285,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExToolStripControlHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExToolStripItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExWebBrowser.cs">
@@ -303,6 +318,12 @@
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\App.cs" />
+    <Compile Include="UI\ScreenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ScreenForm.Designer.cs">
+      <DependentUpon>ScreenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -373,6 +394,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\NoteForm.resx">
       <DependentUpon>NoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ScreenForm.resx">
+      <DependentUpon>ScreenForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>

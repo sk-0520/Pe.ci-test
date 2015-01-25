@@ -25,6 +25,28 @@
 		</ul>
 	</log>
 	-->
+	<log date="2015/01/25" version="0.43.0">
+		<ul type="note">
+			<li rev="">ファイル・ディレクトリアイテムのファイルメニューからディレクトリを開くには下位メニューから「ここを開く」を選択してください</li>
+			<li rev="">ファイルアイテムのファイルメニュー第一階層目はパスメニューから代用できるため「ここを開く」はありません</li>
+		</ul>
+		<ul type="features">
+			<li rev="c65b4ed19b2eacc8b93ae130ce779ad363b6d54d">#175: 設定画面のディスプレイ識別を視覚的に行う</li>
+			<li rev="97ea508e7ab1e34ec988da8b53ff73fe49338d5a">ファイルメニューを表示する際にシステムが隠しファイルを表示する設定であれば該当ファイルを半透明で表示する</li>
+			<li rev="2c9de6cfd57c2a85ff2535dcd539de1c6cd36890">SystemSkin: ツールバー文字列描画にシステムのタイトルバー描画処理を使用する</li>
+			<li rev="c63c8d0188451395a33d3ca3278b0efb8d5f061e">#173: クリップボードウィンドウ表示切り替え時にバルーンを表示する</li>
+		</ul>
+		<ul type="fixes">
+			<li rev="2d432b805313cf5cd6938404c54e387cc4a7c59e">#174: ファイルメニューが表示されない</li>
+			<li rev="f35f8146e262a58783de927b801ca58e1d3aed79">#176: ノートの文字列がURLの場合にオートリンクされる</li>
+			<li rev="8f1e77dac716127e4362f8ff2464411f0e1943ce">#162: 自動アップデート失敗時にPeが復帰しない</li>
+			<li rev="fa03d1e087b4b2b8a04f7b645f1a80e6958830ff">#177: ノートを本文入力状態で最小化しても本文入力が可能</li>
+		</ul>
+		<ul type="developer">
+			<li rev="76d69b05c5208a53b2bf180ad166a0b8cf855f24">各種UIの共通処理をまとめる</li>
+			<li rev="">0.42.1の更新履歴で「リリースビルドバッチ整理」が#160になっていたのを#165に修正</li>
+		</ul>
+	</log>
 	<log date="2015/01/22" version="0.42.1">
 		<ul type="features">
 			<li rev="7a38fc15197655ea9a941744f4c0e24860ff5d28">#167: 標準入出力ダイアログのフォントを設定項目に表示する</li>
@@ -40,7 +62,7 @@
 			<li rev="">0.42.0のビルド変更により設定項目にデバッグ用UIが表示されていた</li>
 		</ul>
 		<ul type="developer">
-			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#160: リリースビルドバッチ整理</li>
+			<li rev="bbf8b9f7ef559eebd0236fcd4261fd1dd9a0c1d5">#165: リリースビルドバッチ整理</li>
 			<li rev="e3ec638ee1ca1f8aec93f5aa1eb2878106873185">#164: switchのDebug.Assert</li>
 			<li rev="34960ebefb5d0820a2d2f7f023bc5f0858773240">#166: readme.txtをMarkdownにする</li>
 			<li rev="11f6e6e7e3e9f55ec8f7c7729038bfee64490163">#160: リリースビルド時に変なdefineがある場合にエラーとする</li>

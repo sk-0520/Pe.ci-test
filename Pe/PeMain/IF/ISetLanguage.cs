@@ -7,6 +7,10 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 	/// </summary>
 	public interface ISetLanguage
 	{
+		/// <summary>
+		/// Languageの受信。
+		/// </summary>
+		/// <param name="language"></param>
 		void SetLanguage(Language language);
 	}
 }

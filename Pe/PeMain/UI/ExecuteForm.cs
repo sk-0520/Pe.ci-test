@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Skin;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Linq;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 指定して実行。
 	/// </summary>
-	public partial class ExecuteForm : Form, ISetCommonData
+	public partial class ExecuteForm : CommonForm
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -34,7 +34,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 
 		#region property
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		LauncherItem LauncherItem { get; set; }
 		IEnumerable<string> ExOptions { get; set; }
 
@@ -42,12 +42,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
-		}
+		//	ApplySetting();
+		//}
 		#endregion ////////////////////////////////////
 
 		#region initialize
@@ -58,9 +58,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region language
-		void ApplyLanguage()
+		protected override void ApplyLanguage()
 		{
-			Debug.Assert(CommonData != null);
+			base.ApplyLanguage();
 
 			var map = new Dictionary<string, string>() {
 				{ AppLanguageName.itemName, LauncherItem.Name },
@@ -96,8 +96,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		#endregion ////////////////////////////////////
 
 		#region skin
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
+			base.ApplySkin();
+
 			this.envUpdate.SetSkin(CommonData.Skin);
 			this.envRemove.SetSkin(CommonData.Skin);
 
@@ -114,12 +116,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			ExOptions = exOptions;
 		}
 
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			Debug.Assert(LauncherItem != null);
-
-			ApplyLanguage();
-			ApplySkin();
+			base.ApplySetting();
 
 			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index, CommonData.ApplicationSetting);
 
