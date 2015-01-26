@@ -88,7 +88,7 @@
 			<li rev="3092a80fd5f4f217d8b1133d444375607192b4b3"><message>#170: accept.batを同期実行させない</message></li>
 		</ul>
 		<ul type="fixes">
-			<li rev="bbb2f76b4ae4a92931906718cbde3b8acf2b31a1"><message>#161: 固定したノートでマウスカーソルが点滅する, 詳細はIssuesを参照のこと</message></li>
+			<li rev="bbb2f76b4ae4a92931906718cbde3b8acf2b31a1"><message>#161: 固定したノートでマウスカーソルが点滅する</message><note><li>詳細はIssuesを参照のこと</li></note></li>
 			<li rev="853a055234c33476e8fd61d6db517c88c43695f6"><message>#163: クリップボードのUnicodeな文字列</message></li>
 			<li rev="1544ed313cd5a936dc3af284bfb38c86c0c8a3ed"><message>Hashのヘルプファイルをリポジトリ参照へ変更</message></li>
 			<li rev="ad40f830b93720415224e8c874bbceeb46f9bbd0"><message>一部文言の修正</message></li>
@@ -108,7 +108,7 @@
 		</ul>
 		<ul type="features">
 			<li rev="c523a87135a248d192384cfa5ab4bda299e86169"><message>ノートのサイズ・位置変更中は透明にする</message></li>
-			<li rev="9bf0cd67718bec973bb1411ba3ad6845782d7a68"><message>#150: システムスキンをきちんと環境に合わせる, まぁアイコンだけ</message></li>
+			<li rev="9bf0cd67718bec973bb1411ba3ad6845782d7a68"><message>#150: システムスキンをきちんと環境に合わせる<note><li>まぁアイコンだけ</li></note></message></li>
 			<li rev="6694402d6870d38bbf6ee9465e0da97462836311"><message>#153: ノート編集時の初期状態</message></li>
 			<li rev="799106280493668be468ae6120c171d85e9e2221"><message>32px以上のアイコンの場合に通常ファイルアイコンにサムネイルを使用</message></li>
 		</ul>
@@ -127,7 +127,7 @@
 		<ul type="features">
 			<li rev=""><message>指定して実行ダイアログをタスクバーに表示する</message></li>
 			<li rev="029c51b7fb9514b2d8594ca3a40a750f57eee0b1"><message>#143: 各種イメージリソースをISkinで管理する</message></li>
-			<li rev="19bd29aefc541502c5f8d3756b70dfd4a0bf368e"><message>#44: スキン切り替え, 実装のみで切り替えモジュールは含めてない</message></li>
+			<li rev="19bd29aefc541502c5f8d3756b70dfd4a0bf368e"><message>#44: スキン切り替え</message><note><li>実装のみで切り替えモジュールは含めてない</li></note></li>
 			<li rev="dbedd8185a43d391e7ae241269563341887269dd"><message>#148: ランチャーボタンのメニュー表示方法追加</message></li>
 			<li rev="3fa85c221ea546fab3a01e95d218362c96f13465"><message>#145: ログにデバッグ出力</message></li>
 		</ul>
@@ -169,13 +169,13 @@
 	</log>
 	<log date="2015/01/03" version="0.38.1">
 		<ul type="note">
-			<li rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibility"><message>#41: アイテムの種類, 種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</message></li>
+			<li rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibility"><message>#41: アイテムの種類</message><note><li>種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</li></note></li>
 			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404"><message>組み込みアイテムを追加しましたが#118対応でのIF試験的意味合いが強いため該当プログラムの機能は弱いです</message></li>
 		</ul>
 		<ul type="features">
 			<li rev="556e62fe00d948335c82f2b548648af6b17515e6"><message>#130: クリップボード履歴ダブルクリック時に保持データをすべてコピーする</message></li>
 			<li rev="777bd5716c9b9c1a1f522ffe25f11acbac542e37"><message>クリップボード監視の切り替え機能を追加</message></li>
-			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404"><message>#41: アイテムの種類, 組み込みアイテムの追加</message></li>
+			<li rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404"><message>#41: アイテムの種類</message><note><li>組み込みアイテムの追加</li></note></li>
 		</ul>
 		<ul type="fixes">
 			<li><message>0.38.0で何をどう頑張っても落ちる不具合の修正。緊急のため0.38.0と0.38.1は統合</message></li>
@@ -207,7 +207,7 @@
 	</log>
 	<log date="2014/12/21" version="0.36.0">
 		<ul type="note">
-			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility"><message>#65: 下位互換@IconItem, Pe 0.29.0 からの下位互換をサポートしなくなりました</message></li>
+			<li rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibility"><message>#65: 下位互換@IconItem</message><note><li>Pe 0.29.0 からの下位互換をサポートしなくなりました</li></note></li>
 		</ul>
 		<ul type="features">
 			<li rev="469eadb5d031563d83fac904cadeee2092fc5b51"><message>#115: ノートのタイトル入力を直観的に</message></li>
@@ -220,7 +220,7 @@
 			<li rev="31b395cf4005b2a317b9db0bacce8a7eddc21f65"><message>#121: DwmGetColorizationColor() が大きめの値を返すと SetVisualStyle() で System.OverflowException</message></li>
 			<li rev="d7ecb37158ce17dd9829155708752bd28d99d4fc"><message>#122: ログダイアログの表示位置とサイズが保存されてない</message></li>
 			<li rev="1cfae55dae07910d523ebb35510f325a0cc99ccd"><message>#117: ツールバーのツールチップを消す</message></li>
-			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d"><message>#114: ウィンドウを親依存でなく独立して保持する, #113も解決</message></li>
+			<li rev="97945be931fb097ecdc831580cbbff57fd389a4d"><message>#114: ウィンドウを親依存でなく独立して保持する</message><note><li>#113も解決</li></note></li>
 		</ul>
 	</log>
 	<log date="2014/12/06" version="0.35.0">
@@ -234,7 +234,7 @@
 			<li rev="2361a267964b772aa117c2c46745cd3c140746ea"><message>#110: 言語ファイルのデフォルト</message></li>
 		</ul>
 		<ul type="fixes">
-			<li rev="93ac22d2e9902221af0cdd36c61b576a5e5e9209"><message>#56: マルチディスプレイ環境の切り替え, ディスプレイ位置変更時に一応追従</message></li>
+			<li rev="93ac22d2e9902221af0cdd36c61b576a5e5e9209"><message>#56: マルチディスプレイ環境の切り替え</message><note><li>ディスプレイ位置変更時に一応追従</li></note></li>
 			<li rev="17785cfd712d9036a15b6a340c820e674f743b65"><message>#106: #102対応のバッチファイル含み漏れ</message></li>
 			<li rev="bb3438add614a2876a141344a2e271b78cb7958f"><message>#105: 設定→ツールバーの項目順</message></li>
 			<li rev="c138646841450de048868d33085f2864a79dee5f"><message>#111: タスクトレイコンテキストメニューが自動的に隠すツールバーに連動して閉じる</message></li>
@@ -277,7 +277,7 @@
 			<li rev="65c905ae5b74109082263b1972aead5d7a6cda30"><message>#92: 環境変数で指定したファイル アイテムのプロパティが表示されない</message></li>
 			<li rev="2d6a501969e86fb4776b31777b61731cf725b713"><message>#93: ファイルアイテムが環境変数を含む場合にファイルメニューが非活性</message></li>
 			<li rev=""><message>#92, #93に関連して環境変数を含む親ディレクトリ、作業ディレクトリのパスコピー・表示の不具合修正</message></li>
-			<li rev="20f4d6b558d59e70b8aa8f635364d8b5fa003406"><message>#91: ツールチップがメニューを覆う, #78を含む</message></li>
+			<li rev="20f4d6b558d59e70b8aa8f635364d8b5fa003406"><message>#91: ツールチップがメニューを覆う</message><note><li>#78を含む</li></note></li>
 			<li rev="5f532dd9c09c3d01d0af55c81712e1e2ce029371"><message>#62: メニューに表示するホットキーが頭おかしい</message></li>
 			<li rev="888da4e58a8ad763ba8fd73a642e812b0fb31c41"><message>#95: よろしくないホットキーのメニューショットカット割り当てで例外</message></li>
 			<li rev="9cc9b57861d742d72e77ee8a8989d386732578f4"><message>#96: 認証が必要なネットワークでの更新履歴取得失敗</message></li>
@@ -295,12 +295,12 @@
 			<li><message>#74: ランチャーアイテムをツールバー上で移動させる</message></li>
 			<li><message>#84: ツールバーメインボタンでグループ切り替え</message></li>
 			<li><message>#85: ショートカットファイルの登録処理</message></li>
-			<li><message>#41: アイテムの種類, URI追加</message></li>
+			<li><message>#41: アイテムの種類</message><note><li>URI追加</li></note></li>
 			<li><message>#86: 使用者の環境情報を定型として出力</message></li>
 		</ul>
 		<ul type="fixes">
 			<li><message>#80: toolbar/main/tips の ${version-release}</message></li>
-			<li><message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, #41により対応不要</message></li>
+			<li><message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception</message><note><li>#41により対応不要</li></note></li>
 			<li><message>#83: バッチ ファイルにパラメタが渡らない</message></li>
 			<li><message>ツールバーのボタンサイズに左側余白を若干追加しました</message></li>
 		</ul>
@@ -323,12 +323,12 @@
 			<li><message>設定ダイアログのランチャーアイコン設定処理のインデックス関連を改善</message></li>
 			<li><message>#73の影響によりグループ名の重複時に連番を自動採番するように変更</message></li>
 			<li><message>#73の影響によりグループ名編集時に trim</message></li>
-			<li><message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception, 暫定対応により例外握り潰し</message></li>
+			<li><message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception</message><note><li>暫定対応により例外握り潰し</li></note></li>
 		</ul>
 	</log>
 	<log date="2014/11/09" version="0.30.0">
 		<ul type="features">
-			<li><message>#67: ランチャアイテムの自動登録, 基盤処理実装、細かい修正や default-launcher.xml の定義が必要</message></li>
+			<li><message>#67: ランチャアイテムの自動登録</message><note><li>基盤処理実装、細かい修正や default-launcher.xml の定義が必要</li></note></li>
 			<li><message>設定ダイアログで新規グループ作成時の初期グループ名に連番を設定する</message></li>
 		</ul>
 		<ul type="fixes">
@@ -337,12 +337,12 @@
 			<li><message>マルチディスプレイ環境でホームダイアログが非プライマリディスプレイに表示されることがあったためプライマリディスプレイに固定表示するように変更</message></li>
 		</ul>
 		<ul type="developer">
-			<li><message>すっかり忘れていた Hotkey Control, SplitButton をコンポーネント情報に追加と名前空間整理</message></li>
+			<li><message>すっかり忘れていた Hotkey Control</message><note><li>SplitButton をコンポーネント情報に追加と名前空間整理</li></note></li>
 		</ul>
 	</log>
 	<log date="2014/11/05" version="0.29.0">
 		<ul type="note">
-			<li class="compatibility"><message>将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath, IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</message></li>
+			<li class="compatibility"><message>将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath</message><note><li>IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</li></note></li>
 		</ul>
 		<ul type="features">
 			<li><message>アップデート処理前に設定データを保存</message></li>
@@ -414,7 +414,7 @@
 		<ul type="features">
 			<li><message>ノートの有無によってタスクトレイPeコンテキストメニュー内容の有効・無効切り替え</message></li>
 			<li><message>ツールバーのグリップ部、ノートのキャプションにカーソルを持って行ったときに移動を示すカーソルに変更</message></li>
-			<li><message>ノートのコンテキストメニューにアイコンべたべたはっつけてみた, 最小化のアイコンは未定</message></li>
+			<li><message>ノートのコンテキストメニューにアイコンべたべたはっつけてみた</message><note><li>最小化のアイコンは未定</li></note></li>
 		</ul>
 		<ul type="fixes">
 			<li><message>前面表示処理が死んでた</message></li>
@@ -431,15 +431,15 @@
 		</ul>
 		<ul type="fixes">
 			<li><message>ノートの前面表示が常時最前面表示となっていた</message></li>
-			<li><message>#38: 多言語によるUIの自動調整, 設定/本体 気が付けば終わってた</message></li>
+			<li><message>#38: 多言語によるUIの自動調整</message><note><li>設定/本体 気が付けば終わってた</li></note></li>
 			<li><message>使用許諾ダイアログ、ホームダイアログ、アップデートダイアログの前面移動を実装</message></li>
 			<li><message>初回起動時のホームダイアログがウィンドウプロシージャを経由していない不具合を力技修正()</message></li>
-			<li><message>#20: 準出力取得時に取得ウィンドウを閉じると例外, 閉じないようにした</message></li>
+			<li><message>#20: 準出力取得時に取得ウィンドウを閉じると例外</message><note><li>閉じないようにした</li></note></li>
 			<li><message>標準出力ダイアログのタブに当たる言語設定が古かった</message></li>
 			<li><message>標準出力ダイアログをツールダイアログから通常ウィンドウへ変更</message></li>
 		</ul>
 		<ul type="developer">
-			<li><message>#53: デフォルト引数なくしたい, ﾋｬｯﾎｰｲ!!</message></li>
+			<li><message>#53: デフォルト引数なくしたい</message><note><li>ﾋｬｯﾎｰｲ!!</li></note></li>
 		</ul>
 	</log>
 	<log date="2014/10/18" version="0.23.0">
@@ -455,7 +455,7 @@
 			<li><message>#6: 言語設定</message></li>
 			<li><message>ノートを一括で前面表示する機能追加</message></li>
 			<li><message>ホットキー操作で行われる処理内容をバルーン表示する</message></li>
-			<li><message>#56: マルチディスプレイ環境の切り替え, 位置は知らんけどディスプレイ数を検知するよう修正</message></li>
+			<li><message>#56: マルチディスプレイ環境の切り替え</message><note><li>位置は知らんけどディスプレイ数を検知するよう修正</li></note></li>
 			<li><message>#51: タスクトレイダブルクリック機能実装</message></li>
 			<li><message>初回起動時(使用許諾ダイアログとは別ロジック)にホームダイアログを表示</message></li>
 		</ul>
@@ -498,7 +498,7 @@
 		</ul>
 		<ul type="fixes">
 			<li><message>アップデート確認ダイアログに最新バージョンが表示されない不具合</message></li>
-			<li><message>#41: アイテムの種類, ファイルとディレクトリで分岐させる。その他は未実装</message></li>
+			<li><message>#41: アイテムの種類</message><note><li>ファイルとディレクトリで分岐させる。その他は未実装</li></note></li>
 			<li><message>ファイルランチャーメニューのファイルで列挙されたディレクトリを選択した際にディレクトリが存在しなければ例外</message></li>
 		</ul>
 		<ul type="developer">
@@ -537,8 +537,8 @@
 		</ul>
 		<ul type="fixes">
 			<li><message>ツールバーでコンテキストが表示できないの修正</message></li>
-			<li><message>#34: 付箋フォームのコンテキストメニューがマルチディスプレイで（ｒｙ, 再修正</message></li>
-			<li><message>#35: 付箋の再描画, 再修正</message></li>
+			<li><message>#34: 付箋フォームのコンテキストメニューがマルチディスプレイで（ｒｙ</message><note><li>再修正</li></note></li>
+			<li><message>#35: 付箋の再描画</message><note><li>再修正</li></note></li>
 		</ul>
 		<ul type="developer">
 			<li><message>PeUpdater大幅改修</message></li>
@@ -642,7 +642,7 @@
 		<ul type="fixes">
 			<li><message>doc/change.log の出力設定を PreserveNewest に設定</message></li>
 			<li><message>タスクトレイメニューからノート作成でスクリーン中央に表示する</message></li>
-			<li><message>#38: 多言語によるUIの自動調整, 設定/本体は機能確定まで未定</message></li>
+			<li><message>#38: 多言語によるUIの自動調整</message><note><li>設定/本体は機能確定まで未定</li></note></li>
 			<li><message>プログラムのアイコンとタスクトレイアイコンを統合</message></li>
 			<li><message>#40: ノート最小化時における本文編集</message></li>
 			<li><message>ツールバーメインアイコンの修正</message></li>
