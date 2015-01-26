@@ -154,8 +154,8 @@
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IRootSender.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\ISetLanguage.cs" />
-    <Compile Include="IF\ISetSkin.cs" />
+    <Compile Include="IF\ILanguage.cs" />
+    <Compile Include="IF\IISkin.cs" />
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Kind\HotKeyId.cs" />
