@@ -56,25 +56,37 @@
 		</dd>
 	</xsl:template>
 	
-	<xsl:template match="log/ul/li">
+	<xsl:template match="log/ul/li/message">
 		<xsl:choose>
-			<xsl:when test="@class != ''">
-				<li class="{@class}">
+			<xsl:when test="../@class != ''">
+				<li class="{../@class}">
 					<xsl:value-of select="." />。
-					<xsl:if test="@rev != ''">
-						<a class="rev"><xsl:value-of select="@rev" /></a>
+					<xsl:if test="../@rev != ''">
+						<a class="rev"><xsl:value-of select="../@rev" /></a>
 					</xsl:if>
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
 				<li>
 					<xsl:value-of select="." />。
-					<xsl:if test="@rev != ''">
-						<a class="rev"><xsl:value-of select="@rev" /></a>
+					<xsl:if test="../@rev != ''">
+						<a class="rev"><xsl:value-of select="../@rev" /></a>
 					</xsl:if>
 				</li>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template match="log/ul/li/note">
+		<ul class="note">
+			<xsl:apply-templates />
+		</ul>
+	</xsl:template>
+	
+	<xsl:template match="log/ul/li/note/li">
+		<li>
+			<xsl:value-of select="." />
+		</li>
 	</xsl:template>
 	
 </xsl:transform>
