@@ -3,7 +3,7 @@
 <changelog>
 	<!--
 	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
-		<group type="note">
+		<group type="note"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
@@ -23,7 +23,7 @@
 				</comments>
 			</note>
 		</group>
-		<group type="features">
+		<group type="features"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
@@ -43,7 +43,7 @@
 				</comments>
 			</note>
 		</group>
-		<group type="fixes">
+		<group type="fixes"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
@@ -63,7 +63,7 @@
 				</comments>
 			</note>
 		</group>
-		<group type="developer">
+		<group type="developer"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
@@ -85,10 +85,10 @@
 		</group>
 	</log>
 	</log>
-	-->
+	@-->
 	<log date="YYYY/MM/DD" version="0.43.1" type="rc">
-		<group type="note">
-			<note rev="">
+		<group type="note"><sep dummy="=================================" />
+			<note rev="0489176fc54f793dbdac09effb524d09d7dfb6f7">
 				<message>#172: changelog.xmlの補足事項</message>
 				<comments>
 					<comment>構成自体をざっくり修正</comment>
@@ -107,7 +107,7 @@
 				</comments>
 			</note>
 		</group>
-		<group type="features">
+		<group type="features"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
@@ -127,7 +127,7 @@
 				</comments>
 			</note>
 		</group>
-		<group type="fixes">
+		<group type="fixes"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
@@ -147,7 +147,7 @@
 				</comments>
 			</note>
 		</group>
-		<group type="developer">
+		<group type="developer"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
 				<comments>
