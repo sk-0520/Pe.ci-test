@@ -88,10 +88,10 @@
 	@-->
 	<log date="YYYY/MM/DD" version="0.43.1" type="rc">
 		<group type="note"><sep dummy="=================================" />
-			<note rev="0489176fc54f793dbdac09effb524d09d7dfb6f7">
-				<message>#172: changelog.xmlの補足事項</message>
+			<note rev="">
+				<message></message>
 				<comments>
-					<comment>構成自体をざっくり修正</comment>
+					<comment></comment>
 				</comments>
 			</note>
 			<note rev="">
@@ -129,7 +129,7 @@
 		</group>
 		<group type="fixes"><sep dummy="=================================" />
 			<note rev="">
-				<message></message>
+				<message>#180: メニューの罫線クリックでメニューが閉じる</message>
 				<comments>
 					<comment></comment>
 				</comments>
@@ -148,10 +148,10 @@
 			</note>
 		</group>
 		<group type="developer"><sep dummy="=================================" />
-			<note rev="">
-				<message></message>
+			<note rev="0489176fc54f793dbdac09effb524d09d7dfb6f7">
+				<message>#172: changelog.xmlの補足事項</message>
 				<comments>
-					<comment></comment>
+					<comment>構成自体をざっくり修正</comment>
 				</comments>
 			</note>
 			<note rev="">

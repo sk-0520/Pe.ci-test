@@ -28,6 +28,9 @@
 
 	#region ExDisableCloseToolStripSeparator
 
+	/// <summary>
+	/// クリックしても閉じないセパレータ。
+	/// </summary>
 	public class DisableCloseToolStripSeparator: ExToolStripSeparator
 	{
 		public DisableCloseToolStripSeparator()
@@ -41,6 +44,10 @@
 
 	#region ExToolStripMenuItem
 
+	/// <summary>
+	/// 共通データを保持するすぷちっとメニューアイテム。
+	/// </summary>
+	/// <param name="commonData"></param>
 	public abstract class CommonDataToolStripMenuItem: ExToolStripMenuItem, ICommonData
 	{
 		public CommonDataToolStripMenuItem(CommonData commonData)
@@ -52,6 +59,9 @@
 		public CommonData CommonData { get; private set; }
 	}
 
+	/// <summary>
+	/// ファイルパスを保持するメニューアイテム。
+	/// </summary>
 	public class FileToolStripMenuItem: CommonDataToolStripMenuItem
 	{
 		public FileToolStripMenuItem(CommonData commonData)
@@ -61,6 +71,9 @@
 		public string Path { get; set; }
 	}
 
+	/// <summary>
+	/// ランチャーアイテムを保持するメニューアイテム。
+	/// </summary>
 	public class LauncherToolStripMenuItem: CommonDataToolStripMenuItem, ILauncherItem
 	{
 		public LauncherToolStripMenuItem(CommonData commonData)
@@ -76,6 +89,10 @@
 
 	public abstract class CommonDataToolStripSplitButton: ExToolStripSplitButton, ICommonData
 	{
+		/// <summary>
+		/// 共通データを保持するすぷちっとボタンアイテム。
+		/// </summary>
+		/// <param name="commonData"></param>
 		public CommonDataToolStripSplitButton(CommonData commonData)
 			: base()
 		{
@@ -85,6 +102,9 @@
 		public CommonData CommonData { get; private set; }
 	}
 
+	/// <summary>
+	/// ランチャーアイテムを保持するスプリットボタンアイテム。
+	/// </summary>
 	public class LauncherToolStripSplitButton: CommonDataToolStripSplitButton, ILauncherItem
 	{
 		public LauncherToolStripSplitButton(CommonData commonData)
