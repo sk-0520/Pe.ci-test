@@ -1736,7 +1736,7 @@
 			var noteSmallSize = new Size(noteImageSize.Width, noteImageSize.Height / 2);
 			foreach(var noteItem in noteItems) {
 				if(isStart) {
-					var itemSeparator = new ToolStripSeparator();
+					var itemSeparator = new DisableCloseToolStripSeparator();
 					itemSeparator.Name = menuNameWindowNoteSeparator;
 					itemNoteMenuList.Add(itemSeparator);
 					isStart = false;

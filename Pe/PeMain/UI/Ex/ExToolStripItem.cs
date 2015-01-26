@@ -12,6 +12,9 @@
 
 	#region abstract
 
+	public abstract class ExToolStripSeparator: ToolStripSeparator
+	{ }
+
 	public abstract class ExToolStripItem: ToolStripItem
 	{ }
 
@@ -20,6 +23,19 @@
 
 	public abstract class ExToolStripSplitButton: ToolStripSplitButton
 	{ }
+
+	#endregion
+
+	#region ExToolStripSeparator
+
+	public class DisableCloseToolStripSeparator: ExToolStripSeparator
+	{
+		public DisableCloseToolStripSeparator()
+		{
+			// http://blogs.wankuma.com/youryella/archive/2007/08/19/91000.aspx
+			Enabled = false;
+		}
+	}
 
 	#endregion
 
