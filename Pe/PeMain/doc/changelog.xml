@@ -128,7 +128,7 @@
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="=================================" />
-			<note rev="">
+			<note rev="447134f2e1da7933d3e286474705acfabaab012c">
 				<message>#180: メニューの罫線クリックでメニューが閉じる</message>
 				<comments>
 					<comment></comment>
