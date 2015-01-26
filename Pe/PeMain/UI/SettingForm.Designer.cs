@@ -138,10 +138,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup = new System.Windows.Forms.ToolStrip();
 			this.toolToolbarGroup_addGroup = new System.Windows.Forms.ToolStripButton();
 			this.toolToolbarGroup_addItem = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
 			this.toolToolbarGroup_up = new System.Windows.Forms.ToolStripButton();
 			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl();
 			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
@@ -1444,10 +1444,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolToolbarGroup_addGroup,
             this.toolToolbarGroup_addItem,
-            this.toolStripSeparator1,
+            this.DisableCloseToolStripSeparator1,
             this.toolToolbarGroup_up,
             this.toolToolbarGroup_down,
-            this.toolStripSeparator2,
+            this.DisableCloseToolStripSeparator2,
             this.toolToolbarGroup_remove});
 			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
@@ -1476,10 +1476,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup_addItem.ToolTipText = ":setting/tips/add-item";
 			this.toolToolbarGroup_addItem.Click += new System.EventHandler(this.ToolToolbarGroup_addItem_Click);
 			// 
-			// toolStripSeparator1
+			// DisableCloseToolStripSeparator1
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			this.DisableCloseToolStripSeparator1.Name = "DisableCloseToolStripSeparator1";
+			this.DisableCloseToolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolToolbarGroup_up
 			// 
@@ -1501,10 +1501,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup_down.ToolTipText = ":setting/tips/down-item";
 			this.toolToolbarGroup_down.Click += new System.EventHandler(this.ToolToolbarGroup_down_Click);
 			// 
-			// toolStripSeparator2
+			// DisableCloseToolStripSeparator2
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			this.DisableCloseToolStripSeparator2.Name = "DisableCloseToolStripSeparator2";
+			this.DisableCloseToolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolToolbarGroup_remove
 			// 
@@ -2455,10 +2455,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectLauncherStdStream;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_remove;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_down;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_up;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_addItem;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_addGroup;
 		private System.Windows.Forms.ToolStrip toolToolbarGroup;

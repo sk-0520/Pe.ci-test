@@ -26,7 +26,7 @@
 
 	#endregion
 
-	#region ExToolStripSeparator
+	#region ExDisableCloseToolStripSeparator
 
 	public class DisableCloseToolStripSeparator: ExToolStripSeparator
 	{

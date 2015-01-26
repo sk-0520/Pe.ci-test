@@ -38,10 +38,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.toolStream = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
 			this.toolStream_itemTopmost = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
 			this.toolStream_itemSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_itemClear = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
 			this.toolStream_itemRefresh = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_itemKill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
@@ -63,10 +63,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStream.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStream.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.toolStream_itemTopmost,
-									this.toolStripSeparator2,
+									this.DisableCloseToolStripSeparator2,
 									this.toolStream_itemSave,
 									this.toolStream_itemClear,
-									this.toolStripSeparator1,
+									this.DisableCloseToolStripSeparator1,
 									this.toolStream_itemRefresh,
 									this.toolStream_itemKill});
 			this.toolStream.Location = new System.Drawing.Point(0, 0);
@@ -85,10 +85,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStream_itemTopmost.Text = ":stream/command/topmost";
 			this.toolStream_itemTopmost.Click += new System.EventHandler(this.ToolStream_itemTopmost_Click);
 			// 
-			// toolStripSeparator2
+			// DisableCloseToolStripSeparator2
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			this.DisableCloseToolStripSeparator2.Name = "DisableCloseToolStripSeparator2";
+			this.DisableCloseToolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStream_itemSave
 			// 
@@ -112,10 +112,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStream_itemClear.ToolTipText = ":stream/tips/clear";
 			this.toolStream_itemClear.Click += new System.EventHandler(this.ToolStream_clear_Click);
 			// 
-			// toolStripSeparator1
+			// DisableCloseToolStripSeparator1
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			this.DisableCloseToolStripSeparator1.Name = "DisableCloseToolStripSeparator1";
+			this.DisableCloseToolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStream_itemRefresh
 			// 
@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton toolStream_itemTopmost;
 		private System.Windows.Forms.ToolStripButton toolStream_itemKill;
 		private System.Windows.Forms.ToolStripButton toolStream_itemRefresh;
@@ -244,7 +244,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.PropertyGrid propertyProcess;
 		private System.Windows.Forms.TextBox inputOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_itemClear;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.TabPage tabStream_pageProcess;
 		private System.Windows.Forms.TabPage tabStream_pageStream;
 		private System.Windows.Forms.TabControl tabStream;

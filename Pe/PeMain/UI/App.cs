@@ -629,7 +629,7 @@
 			menuList.Add(itemNoteCreate);
 			menuList.Add(itemNoteHidden);
 			menuList.Add(itemNoteCompact);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemNoteShowFront);
 
 			// ノート作成
@@ -738,7 +738,7 @@
 			var menuList = new List<ToolStripItem>();
 			var itemSave = new ToolStripMenuItem();
 			var itemLoad = new ToolStripMenuItem();
-			//var itemSeparator = new ToolStripSeparator();
+			//var itemSeparator = new DisableCloseToolStripSeparator();
 			menuList.Add(itemSave);
 			menuList.Add(itemLoad);
 			//menuList.Add(itemSeparator);
@@ -843,21 +843,21 @@
 			var itemExit = new ToolStripMenuItem();
 
 			menuList.Add(itemSetting);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemToolbar);
 			menuList.Add(itemNote);
 			menuList.Add(itemApplications);
 			menuList.Add(itemLogger);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemSystemEnv);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemAbout);
 			menuList.Add(itemHelp);
 #if DEBUG
 			var itemDebug = new ToolStripMenuItem();
 			menuList.Add(itemDebug);
 #endif
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemExit);
 
 			// ウィンドウ
@@ -1868,7 +1868,7 @@
 			var isStart = true;
 			foreach(var windowListItem in this._windowListItems) {
 				if(isStart) {
-					var itemSeparator = new ToolStripSeparator();
+					var itemSeparator = new DisableCloseToolStripSeparator();
 					itemSeparator.Name = menuNameSystemEnvWindowSeparator;
 					itemWindowMenuList.Add(itemSeparator);
 					isStart = false;
