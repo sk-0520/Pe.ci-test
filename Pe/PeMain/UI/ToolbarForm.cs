@@ -575,11 +575,11 @@
 
 			itemList.Add(openParentDirItem);
 			itemList.Add(openWorkDirItem);
-			itemList.Add(new ToolStripSeparator());
+			itemList.Add(new DisableCloseToolStripSeparator());
 			itemList.Add(copyCommandItem);
 			itemList.Add(copyParentDirItem);
 			itemList.Add(copyWorkDirItem);
-			itemList.Add(new ToolStripSeparator());
+			itemList.Add(new DisableCloseToolStripSeparator());
 			itemList.Add(propertyItem);
 			
 			// 親ディレクトリを開く
@@ -680,7 +680,7 @@
 			openItem.Click += FileListMenu_Click;
 
 			// 罫線
-			var sepItem = new ToolStripSeparator() {
+			var sepItem = new DisableCloseToolStripSeparator() {
 				Name = menuNameFiles_sep,
 			};
 
@@ -792,7 +792,7 @@
 			var menuList = new ToolStripItem[] {
 				executeItem,
 				executeExItem,
-				new ToolStripSeparator(),
+				new DisableCloseToolStripSeparator(),
 				pathItem,
 				fileItem,
 			};
@@ -900,7 +900,7 @@
 			};
 
 			// グループ関連メニュー
-			var itemGroupSeparator = new ToolStripSeparator() {
+			var itemGroupSeparator = new DisableCloseToolStripSeparator() {
 				Name = menuNameMainGroupSeparator,
 			};
 
@@ -910,10 +910,10 @@
 				posBottomItem,
 				posLeftItem,
 				posRightItem,
-				new ToolStripSeparator(),
+				new DisableCloseToolStripSeparator(),
 				topmostItem,
 				autoHideItem,
-				new ToolStripSeparator(),
+				new DisableCloseToolStripSeparator(),
 				hiddenItem,
 				itemGroupSeparator,
 			};
@@ -1008,7 +1008,7 @@
 			var menuList = new ToolStripItem[] {
 				execItem,
 				closeItem,
-				new ToolStripSeparator(),
+				new DisableCloseToolStripSeparator(),
 				helpItem,
 			};
 
