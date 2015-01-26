@@ -8,7 +8,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
-	public partial class MessageWindow: Form, ISetCommonData
+	public partial class MessageWindow: CommonForm
 	{
 		#region property
 
@@ -26,24 +26,24 @@
 
 		#region ISetCommonData
 
-		public void SetCommonData(CommonData commonData)
-		{
-			CommonData = commonData;
+		//public void SetCommonData(CommonData commonData)
+		//{
+		//	CommonData = commonData;
 
-			ApplySetting();
+		//	ApplySetting();
 
-			//NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
-			if(ClipboardRegisted) {
-				NativeMethods.RemoveClipboardFormatListener(Handle);
-			}
-			ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
-		}
+		//	//NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
+		//	if(ClipboardRegisted) {
+		//		NativeMethods.RemoveClipboardFormatListener(Handle);
+		//	}
+		//	ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
+		//}
 
 		#endregion
 
 		#region property
 
-		CommonData CommonData { get; set; }
+		//CommonData CommonData { get; set; }
 		public ILogger StartupLogger { get; set; }
 		//IntPtr NextWndHandle { get; set; }
 		bool ClipboardRegisted { get; set; }
@@ -106,10 +106,12 @@
 
 		#region language
 
+		/*
 		void ApplyLanguage()
 		{
 			// 無意味
 		}
+		*/
 
 		#endregion
 
@@ -172,14 +174,19 @@
 			}
 		}
 
-		void ApplySetting()
+		protected override void ApplySetting()
 		{
-			Debug.Assert(CommonData != null);
-
-			ApplyLanguage();
+			base.ApplySetting();
 
 			ApplyHotKey();
+
+			//NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
+			if(ClipboardRegisted) {
+				NativeMethods.RemoveClipboardFormatListener(Handle);
+			}
+			ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
 		}
+
 		#endregion /////////////////////////////////
 	}
 }
