@@ -77,13 +77,13 @@
 		</xsl:choose>
 	</xsl:template>
 	
-	<xsl:template match="log/ul/li/note">
+	<xsl:template match="log/ul/li/comments">
 		<ul class="note">
 			<xsl:apply-templates />
 		</ul>
 	</xsl:template>
 	
-	<xsl:template match="log/ul/li/note/li">
+	<xsl:template match="log/ul/li/comments/comment">
 		<li>
 			<xsl:value-of select="." />
 		</li>
