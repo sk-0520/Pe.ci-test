@@ -8,8 +8,6 @@
 					<comment></comment>
 				</comments>
 			</note>
-	-->
-	<!--
 	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
 		<group type="note"><sep dummy="=================================" />
 			<note rev="">
@@ -55,7 +53,7 @@
 				<message></message>
 			</note>
 	</log>
-	@-->
+	-->
 	<log date="YYYY/MM/DD" version="0.43.1" type="rc">
 		<group type="note"><sep dummy="=================================" />
 			<note rev="">
@@ -95,7 +93,9 @@
 					<comment>構成自体をざっくり修正</comment>
 				</comments>
 			</note>
-			<note rev="f403270f80000b5675dfad32222199b1d34104c2"><message>IF適応の漏れを修正</message><comments></note>
+			<note rev="f403270f80000b5675dfad32222199b1d34104c2">
+				<message>IF適応の漏れを修正</message>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
