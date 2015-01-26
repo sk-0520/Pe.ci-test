@@ -4,59 +4,168 @@
 	<!--
 	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
 		<group type="note">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 		<group type="features">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 		<group type="fixes">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 		<group type="developer">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
+	</log>
 	</log>
 	-->
 	<log date="YYYY/MM/DD" version="0.43.1" type="rc">
 		<group type="note">
-			<note rev="asdfghjkl;">
-				<message>changelog.xmlの補足事項</message>
+			<note rev="">
+				<message>#172: changelog.xmlの補足事項</message>
 				<comments>
-					<comment>asd1</comment>
-					<comment>asd2</comment>
+					<comment>構成自体をざっくり修正</comment>
 				</comments>
 			</note>
-			<note rev="asdfghjkl;" class="compatibinotety">
-				<message>changelog.xmlの補足事項</message>
+			<note rev="">
+				<message></message>
 				<comments>
-					<comment>asd1</comment>
-					<comment>asd2</comment>
+					<comment></comment>
 				</comments>
 			</note>
-			<note rev=""><message>asdasd</message></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 		<group type="features">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 		<group type="fixes">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 		<group type="developer">
-			<note rev=""></note>
-			<note rev=""></note>
-			<note rev=""></note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
 		</group>
 	</log>
 	<log date="2015/01/25" version="0.43.0">

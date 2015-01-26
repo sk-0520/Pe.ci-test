@@ -85,7 +85,7 @@
 	
 	<xsl:template match="log/group/note/comments/comment">
 		<li>
-			<xsl:value-of select="." />
+			<xsl:value-of select="." />。
 		</li>
 	</xsl:template>
 	
