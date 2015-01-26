@@ -88,3 +88,9 @@ p.uri
 {
 	color: #f00;
 }
+
+*.changelog *.comment
+{
+	font-size: 90%;
+}
+
