@@ -2,149 +2,90 @@
 <?xml-stylesheet type="text/xsl" href="../etc/style/changelog.xsl"?>
 <changelog>
 	<!--
+			<note rev="">
+				<message></message>
+				<comments>
+					<comment></comment>
+				</comments>
+			</note>
+	-->
+	<!--
 	<log date="YYYY/MM/DD" version="0.xx.1" type="rc">
 		<group type="note"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 		<group type="features"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 		<group type="developer"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
-		</group>
-	</log>
 	</log>
 	@-->
 	<log date="YYYY/MM/DD" version="0.43.1" type="rc">
 		<group type="note"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 		<group type="features"><sep dummy="=================================" />
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="=================================" />
-			<note rev="447134f2e1da7933d3e286474705acfabaab012c">
-				<message>#180: メニューの罫線クリックでメニューが閉じる</message>
-				<comments>
-					<comment></comment>
-				</comments>
+			<note rev="447134f2e1da7933d3e286474705acfabaab012c"><message>#180: メニューの罫線クリックでメニューが閉じる</message></note>
+			<note rev="">
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 		<group type="developer"><sep dummy="=================================" />
@@ -154,17 +95,9 @@
 					<comment>構成自体をざっくり修正</comment>
 				</comments>
 			</note>
+			<note rev="f403270f80000b5675dfad32222199b1d34104c2"><message>IF適応の漏れを修正</message><comments></note>
 			<note rev="">
 				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-				<comments>
-					<comment></comment>
-				</comments>
 			</note>
 		</group>
 	</log>
