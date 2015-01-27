@@ -642,15 +642,7 @@
 			parentItem.Name = menuNameApplications;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var menuItems = parentItem.DropDownItems.OfType<ToolStripMenuItem>();
-				foreach(var menuItem in menuItems) {
-					var applicationItem = menuItem.Tag as ApplicationItem;
-					if(applicationItem != null) {
-						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
-					}
-				}
-			};
+			parentItem.DropDownOpening += ApplicationsMenu_Opening;
 		}
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
@@ -2074,6 +2066,19 @@
 				Executor.RunItem(launcherItem, commonData);
 			}
 		}
+
+		void ApplicationsMenu_Opening(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+			var appMenuItems = menuItem.DropDownItems.OfType<ToolStripMenuItem>();
+			foreach(var appMenuItem in appMenuItems) {
+				var applicationItem = appMenuItem.Tag as ApplicationItem;
+				if(applicationItem != null) {
+					appMenuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
+				}
+			}
+		}
+
 	}
 }
 
