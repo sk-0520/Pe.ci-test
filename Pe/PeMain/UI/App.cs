@@ -83,7 +83,7 @@
 		private WindowListItem _tempWindowListItem;
 		FixedSizedList<WindowListItem> _windowListItems; //= new List<WindowListItem>();
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
-		
+
 		System.Timers.Timer _windowTimer;
 
 		Listener _listener;
@@ -107,9 +107,7 @@
 			ExistsSettingFilePath = Initialize(commandLine, logger);
 			logger.PutsDebug("ExistsSettingFilePath", () => ExistsSettingFilePath);
 
-			#if !DISABLED_UPDATE_CHECK
-			CheckUpdateProcessAsync(false);
-			#endif
+			CheckUpdateProcessAsync();
 		}
 
 		#region property
@@ -1068,6 +1066,15 @@
 			this._windowTimer.Enabled = false;
 			this._windowTimer.Interval = this._commonData.MainSetting.WindowSaveTime.TotalMilliseconds;
 			this._windowTimer.Enabled = true;
+
+			//// アップデート
+			//if(this._updateTimer == null) {
+			//	this._updateTimer = new System.Timers.Timer();
+			//	this._updateTimer.Elapsed += Timer_Elapsed;
+			//}
+			//this._updateTimer.Enabled = false;
+			//this._updateTimer.Interval = Literal.updateCheckTime.TotalMilliseconds;
+			//this._updateTimer.Enabled = true;
 		}
 
 		void InitializeListener(CommandLine commandLine, StartupLogger logger)
@@ -1256,7 +1263,6 @@
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
-
 		}
 		void DetachmentSystemEvent()
 		{
@@ -1480,9 +1486,7 @@
 						}
 
 						if(check) {
-#if !DISABLED_UPDATE_CHECK
-							CheckUpdateProcessAsync(false);
-#endif
+							CheckUpdateProcessAsync();
 						}
 
 						return true;
@@ -1603,13 +1607,19 @@
 		UpdateData CheckUpdate(bool force)
 		{
 			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC, this._commonData);
+			this._commonData.Logger.PutsDebug("update: parameter", () => string.Format("force = {0}, setting = {1}", force, this._commonData.MainSetting.RunningInfo.CheckUpdate));
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				var updateInfo = updateData.Check();
 			}
 			return updateData;
 		}
 
-		void CheckedUpdate(bool force, UpdateData updateData)
+		/// <summary>
+		/// アップデートを実行するか確認する。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
+		/// <param name="updateData">アップデート情報。</param>
+		void ConfirmUpdate(bool force, UpdateData updateData)
 		{
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				if(updateData != null && updateData.Info != null) {
@@ -1628,22 +1638,32 @@
 			}
 		}
 
-		void CheckUpdateProcessAsync(bool force)
+		/// <summary>
+		/// アップデートチェックを非同期で行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		void CheckUpdateProcessAsync()
 		{
+#if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
-				if(!force) {
-					Thread.Sleep(Literal.updateWaitTime);
-				}
-				return CheckUpdate(force);
+				this._commonData.Logger.PutsDebug("update: check", () => "wait");
+				Thread.Sleep(Literal.updateWaitTime);
+				return CheckUpdate(false);
 			}).ContinueWith(t => {
-				CheckedUpdate(force, t.Result);
+				ConfirmUpdate(false, t.Result);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
+#else
+			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
+#endif
 		}
 
+		/// <summary>
+		/// アップデートチェックを同期的に行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
 		void CheckUpdateProcessWait(bool force)
 		{
 			var updateData = CheckUpdate(force);
-			CheckedUpdate(force, updateData);
+			ConfirmUpdate(force, updateData);
 		}
 
 		/// <summary>
@@ -1714,6 +1734,7 @@
 					}
 				}
 			});
+			CheckUpdateProcessAsync();
 		}
 
 		void OpeningNoteMenu()
@@ -1917,8 +1938,9 @@
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
 		{
 			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
-			if(e.Reason == SessionSwitchReason.ConsoleConnect) {
+			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
 				ResetUI();
+				CheckUpdateProcessAsync();
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
 				AppUtility.SaveSetting(this._commonData);
 			}
@@ -1942,9 +1964,7 @@
 		{
 			if(e.Mode == PowerModes.Resume) {
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
-#if !DISABLED_UPDATE_CHECK
-				CheckUpdateProcessAsync(false);
-#endif
+				CheckUpdateProcessAsync();
 			}
 		}
 		
@@ -2024,9 +2044,6 @@
 			this._commonData.Logger.Puts(LogType.Information, sender.ToString(), e);
 			window.Dispose();
 		}
-		
-
 	}
-	
 }
 
