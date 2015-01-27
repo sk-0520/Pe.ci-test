@@ -107,9 +107,7 @@
 			ExistsSettingFilePath = Initialize(commandLine, logger);
 			logger.PutsDebug("ExistsSettingFilePath", () => ExistsSettingFilePath);
 
-			#if !DISABLED_UPDATE_CHECK
 			CheckUpdateProcessAsync(false);
-			#endif
 		}
 
 		#region property
@@ -1480,9 +1478,7 @@
 						}
 
 						if(check) {
-#if !DISABLED_UPDATE_CHECK
 							CheckUpdateProcessAsync(false);
-#endif
 						}
 
 						return true;
@@ -1630,6 +1626,7 @@
 
 		void CheckUpdateProcessAsync(bool force)
 		{
+#if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
 				if(!force) {
 					Thread.Sleep(Literal.updateWaitTime);
@@ -1638,6 +1635,7 @@
 			}).ContinueWith(t => {
 				CheckedUpdate(force, t.Result);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
+#endif
 		}
 
 		void CheckUpdateProcessWait(bool force)
@@ -1942,9 +1940,7 @@
 		{
 			if(e.Mode == PowerModes.Resume) {
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
-#if !DISABLED_UPDATE_CHECK
 				CheckUpdateProcessAsync(false);
-#endif
 			}
 		}
 		
