@@ -1254,7 +1254,6 @@
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
-
 		}
 		void DetachmentSystemEvent()
 		{
@@ -1931,6 +1930,7 @@
 			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
 			if(e.Reason == SessionSwitchReason.ConsoleConnect) {
 				ResetUI();
+				CheckUpdateProcessAsync();
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
 				AppUtility.SaveSetting(this._commonData);
 			}
