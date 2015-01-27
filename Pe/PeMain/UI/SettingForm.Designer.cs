@@ -73,7 +73,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogVisible = new System.Windows.Forms.CheckBox();
 			this.tabSetting_pageLauncher = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.selecterLauncher = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl();
+			this.selecterLauncher = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl();
 			this.tabLauncher = new System.Windows.Forms.TabControl();
 			this.tabLauncher_pageCommon = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -143,7 +143,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
 			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
-			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl();
+			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl();
 			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
 			this.labelCommandHotkey = new System.Windows.Forms.Label();
 			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
@@ -674,7 +674,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterLauncher.ApplicationSetting = null;
 			this.selecterLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterLauncher.Filtering = false;
-			this.selecterLauncher.FilterType = ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelecterType.Full;
+			this.selecterLauncher.FilterType = ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelecterType.Full;
 			this.selecterLauncher.IconScale = ContentTypeTextNet.Pe.Library.Skin.IconScale.Small;
 			this.selecterLauncher.ItemEdit = true;
 			this.selecterLauncher.Location = new System.Drawing.Point(0, 0);
@@ -683,8 +683,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterLauncher.SelectedItem = null;
 			this.selecterLauncher.Size = new System.Drawing.Size(193, 292);
 			this.selecterLauncher.TabIndex = 0;
-			this.selecterLauncher.CreateItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
-			this.selecterLauncher.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
+			this.selecterLauncher.CreateItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
+			this.selecterLauncher.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
 			// tabLauncher
 			// 
@@ -1521,7 +1521,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterToolbar.ApplicationSetting = null;
 			this.selecterToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selecterToolbar.Filtering = false;
-			this.selecterToolbar.FilterType = ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelecterType.Full;
+			this.selecterToolbar.FilterType = ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelecterType.Full;
 			this.selecterToolbar.IconScale = ContentTypeTextNet.Pe.Library.Skin.IconScale.Small;
 			this.selecterToolbar.ItemEdit = false;
 			this.selecterToolbar.Location = new System.Drawing.Point(0, 0);
@@ -1530,7 +1530,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterToolbar.SelectedItem = null;
 			this.selecterToolbar.Size = new System.Drawing.Size(189, 300);
 			this.selecterToolbar.TabIndex = 0;
-			this.selecterToolbar.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
+			this.selecterToolbar.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			// 
 			// tabSetting_pageCommand
 			// 
@@ -2490,8 +2490,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.RadioButton selectLauncherType_file;
 		private System.Windows.Forms.RadioButton selectLauncherType_command;
 		private System.Windows.Forms.GroupBox groupLauncherType;
-		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl selecterToolbar;
-		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemSelectControl selecterLauncher;
+		private ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl selecterToolbar;
+		private ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl selecterLauncher;
 		private System.Windows.Forms.TreeView treeToolbarItemGroup;
 		private System.Windows.Forms.ComboBox selectToolbarPosition;
 		private System.Windows.Forms.Label labelToolbarPosition;
