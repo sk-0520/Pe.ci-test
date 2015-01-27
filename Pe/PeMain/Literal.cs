@@ -62,11 +62,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// </summary>
 		public const string defaultLanguage = "default";
 		
-		#if DEBUG
+#if DEBUG
 		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(1);
-		#else
+#else
 		public static readonly TimeSpan updateWaitTime = TimeSpan.FromSeconds(30);
-		#endif
+#endif
+
 		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
 		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(3, 10, 20);

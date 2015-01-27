@@ -83,7 +83,7 @@
 		private WindowListItem _tempWindowListItem;
 		FixedSizedList<WindowListItem> _windowListItems; //= new List<WindowListItem>();
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
-		
+
 		System.Timers.Timer _windowTimer;
 
 		Listener _listener;
@@ -1066,6 +1066,15 @@
 			this._windowTimer.Enabled = false;
 			this._windowTimer.Interval = this._commonData.MainSetting.WindowSaveTime.TotalMilliseconds;
 			this._windowTimer.Enabled = true;
+
+			//// アップデート
+			//if(this._updateTimer == null) {
+			//	this._updateTimer = new System.Timers.Timer();
+			//	this._updateTimer.Elapsed += Timer_Elapsed;
+			//}
+			//this._updateTimer.Enabled = false;
+			//this._updateTimer.Interval = Literal.updateCheckTime.TotalMilliseconds;
+			//this._updateTimer.Enabled = true;
 		}
 
 		void InitializeListener(CommandLine commandLine, StartupLogger logger)
@@ -1640,7 +1649,7 @@
 				Thread.Sleep(Literal.updateWaitTime);
 				return CheckUpdate(false);
 			}).ContinueWith(t => {
-				CheckedUpdate(false, t.Result);
+				ConfirmUpdate(false, t.Result);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 #else
 			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
@@ -1725,6 +1734,7 @@
 					}
 				}
 			});
+			CheckUpdateProcessAsync();
 		}
 
 		void OpeningNoteMenu()
@@ -2034,9 +2044,6 @@
 			this._commonData.Logger.Puts(LogType.Information, sender.ToString(), e);
 			window.Dispose();
 		}
-		
-
 	}
-	
 }
 
