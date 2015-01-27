@@ -51,6 +51,8 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 		Value<bool> _wait = new Value<bool>();
 		Value<bool> _noWaitUpdate = new Value<bool>();
 		Value<string> _eventName = new Value<string>();
+		Value<string> _scriptPath = new Value<string>();
+		
 		
 		public bool CheckOnly { get { return this._checkOnly.Data; } }
 		public bool Wait { get { return this._wait.Data; } }
@@ -82,6 +84,7 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 			Set("wait", this._wait);
 			Set("no-wait-update", this._noWaitUpdate);
 			Set("event", this._eventName);
+			Set("script", this._scriptPath);
 		}
 
 		void OutputErrorMessage(string s)
@@ -276,7 +279,16 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 #	endif
 #endif
 				// スクリプト実行
-				ExecuteScript(Path.Combine(myDir, scriptFileName), this._expandDir.Data, this._platform.Data);
+				var scriptPath = string.Empty;
+				if(this._scriptPath.HasValue && File.Exists(this._scriptPath.Data)) {
+					Console.WriteLine("script: arg value");
+					scriptPath = this._scriptPath.Data;
+				}
+				if(string.IsNullOrEmpty(scriptPath)) {
+					Console.WriteLine("script: define value");
+					scriptPath = Path.Combine(myDir, scriptFileName);
+				}
+				ExecuteScript(scriptPath, this._expandDir.Data, this._platform.Data);
 
 				if(isRestart) {
 					Console.WriteLine("Exe -> {0}, Arg -> {1}", restartExe, restartArg);

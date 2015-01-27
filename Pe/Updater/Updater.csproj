@@ -75,6 +75,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\PeMain\etc\script\Updater\UpdaterScript.cs">
+      <Link>UpdaterScript.cs</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="..\Utility\CommandLine.cs">
       <Link>CommandLine.cs</Link>
     </Compile>
