@@ -149,6 +149,9 @@
     <Compile Include="Data\ToolbarGroupItem.cs" />
     <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
+    <Content Include="etc\script\Updater\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />

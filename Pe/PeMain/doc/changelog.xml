@@ -82,7 +82,10 @@
 				<message>#180: メニューの罫線クリックでメニューが閉じる</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#144: UpdateScriptをPe/etc/scriptに移動する</message>
+				<comments>
+					<comment>スクリプト自体は移動したが下位互換等のため/sbin/Updater, /etc/script/Updater を同時配布して整合性を保つ</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
