@@ -570,59 +570,46 @@
 			};
 			itemNoteCreate.Click += itemNoteCreate_Click;
 
-			var itemNoteHidden = new ToolStripMenuItem();
-			var itemNoteCompact = new ToolStripMenuItem();
-			var itemNoteShowFront = new ToolStripMenuItem();
-
-			var menuList = new List<ToolStripItem>();
-			menuList.Add(itemNoteCreate);
-			menuList.Add(itemNoteHidden);
-			menuList.Add(itemNoteCompact);
-			menuList.Add(new DisableCloseToolStripSeparator());
-			menuList.Add(itemNoteShowFront);
-
-
 			// ノート非表示
-			itemNoteHidden.Name = menuNameWindowNoteHidden;
+			var itemNoteHidden = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteHidden,
+			};
 			itemNoteHidden.Click += (object sender, EventArgs e) => {
 				HiddenNote();
 			};
+
 			// ノート最小化
-			itemNoteCompact.Name = menuNameWindowNoteCompact;
+			var itemNoteCompact = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteCompact,
+			};
 			itemNoteCompact.Click += (object sender, EventArgs e) => {
 				CompactNote();
 			};
 
-			// ノートを前面へ
-			itemNoteShowFront.Name = menuNameWindowNoteShowFront;
+			// 前面へ
+			var itemNoteShowFront = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteShowFront,
+			};
 			itemNoteShowFront.Click += (object sender, EventArgs e) => {
 				ShowFrontNote();
 			};
 
+			var menuList = new ToolStripItem[] {
+				itemNoteCreate,
+				itemNoteHidden,
+				itemNoteCompact,
+				new DisableCloseToolStripSeparator(),
+				itemNoteShowFront,
+			};
+
 			// サブメニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownItems.AddRange(menuList);
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Note);
 			// 表示
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var hasNote = this._noteWindowList.Count > 0;
-				itemNoteHidden.Enabled = hasNote;
-				itemNoteCompact.Enabled = hasNote;
-				itemNoteShowFront.Enabled = hasNote;
-
-				//itemNoteCreate.ShortcutKeys = this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey();
-				//itemNoteHidden.ShortcutKeys = this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey();
-				//itemNoteCompact.ShortcutKeys = this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey();
-				//itemNoteShowFront.ShortcutKeys = this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
-
-				OpeningNoteMenu();
-			};
+			parentItem.DropDownOpening += NoteMenu_Opening;
 		}
 
 		void AttachmentApplicationsSubMenu(ToolStripMenuItem parentItem)
@@ -2057,6 +2044,28 @@
 				area.Top + area.Height / 2 - Literal.noteSize.Width / 2
 			);
 			CreateNote(point);
+		}
+
+		void NoteMenu_Opening(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+
+			var itemNoteCreate = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteCreate];
+			var itemNoteHidden = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteHidden];
+			var itemNoteCompact = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteCompact];
+			var itemNoteShowFront = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteShowFront];
+
+			var hasNote = this._noteWindowList.Count > 0;
+			itemNoteHidden.Enabled = hasNote;
+			itemNoteCompact.Enabled = hasNote;
+			itemNoteShowFront.Enabled = hasNote;
+
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
+
+			OpeningNoteMenu();
 		}
 	}
 }
