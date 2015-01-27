@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
 	using System;
 	using System.Collections.Generic;
@@ -9,6 +9,7 @@
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	#region abstract
 
@@ -45,7 +46,7 @@
 	#region ExToolStripMenuItem
 
 	/// <summary>
-	/// 共通データを保持するすぷちっとメニューアイテム。
+	/// 共通データを保持するメニューアイテム。
 	/// </summary>
 	/// <param name="commonData"></param>
 	public abstract class CommonDataToolStripMenuItem: ExToolStripMenuItem, ICommonData
@@ -69,6 +70,28 @@
 		{ }
 
 		public string Path { get; set; }
+	}
+
+	/// <summary>
+	/// スクリーン情報を保持するメニューアイテム。
+	/// </summary>
+	public class ScreenToolStripMenuItem: CommonDataToolStripMenuItem, IScreen
+	{
+		protected Screen _screen;
+
+		public ScreenToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public Screen Screen
+		{
+			get { return this._screen; }
+			set
+			{
+				this._screen = value;
+				Text = ScreenUtility.GetScreenName(Screen);
+			}
+		}
 	}
 
 	/// <summary>

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
-	/// <summary>
-	/// Description of ExToolStrip.
-	/// </summary>
+	using System;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+
 	public abstract class ExToolStrip: ToolStrip
 	{ }
 
+	/// <summary>
+	/// アクティブ・非アクティブで挙動の変わらないToolStrip。
+	/// </summary>
 	public class ActiveToolStrip: ExToolStrip
 	{
 		/// <summary>

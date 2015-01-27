@@ -36,12 +36,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.toolStream = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
+			this.toolStream = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip();
 			this.toolStream_itemTopmost = new System.Windows.Forms.ToolStripButton();
-			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolStream_itemSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_itemClear = new System.Windows.Forms.ToolStripButton();
-			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolStream_itemRefresh = new System.Windows.Forms.ToolStripButton();
 			this.toolStream_itemKill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
@@ -235,7 +235,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton toolStream_itemTopmost;
 		private System.Windows.Forms.ToolStripButton toolStream_itemKill;
 		private System.Windows.Forms.ToolStripButton toolStream_itemRefresh;
@@ -244,11 +244,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.PropertyGrid propertyProcess;
 		private System.Windows.Forms.TextBox inputOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_itemClear;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.TabPage tabStream_pageProcess;
 		private System.Windows.Forms.TabPage tabStream_pageStream;
 		private System.Windows.Forms.TabControl tabStream;
 		private System.Windows.Forms.ToolStripButton toolStream_itemSave;
-		private ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip toolStream;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip toolStream;
 	}
 }

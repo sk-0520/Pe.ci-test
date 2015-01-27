@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
+	using System.Windows.Forms;
+
 	/// <summary>
 	/// Description of ExListBox.
 	/// </summary>

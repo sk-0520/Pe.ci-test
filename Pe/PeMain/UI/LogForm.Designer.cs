@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.listStack_columnFunction = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.listStack_columnLine = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.listStack_columnFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.toolLog = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
+			this.toolLog = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip();
 			this.toolLog_save = new System.Windows.Forms.ToolStripButton();
 			this.toolLog_clear = new System.Windows.Forms.ToolStripButton();
 			this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
@@ -306,7 +306,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.SplitContainer panelMain;
 		private System.Windows.Forms.ToolStripButton toolLog_clear;
 		private System.Windows.Forms.ToolStripButton toolLog_save;
-		private ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip toolLog;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip toolLog;
 		private System.Windows.Forms.StatusStrip statusLog;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 	}
