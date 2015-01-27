@@ -1928,7 +1928,7 @@
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
 		{
 			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
-			if(e.Reason == SessionSwitchReason.ConsoleConnect) {
+			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
 				ResetUI();
 				CheckUpdateProcessAsync();
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
