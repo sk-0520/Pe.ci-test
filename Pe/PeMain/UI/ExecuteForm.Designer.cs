@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.envUpdate = new ContentTypeTextNet.Pe.PeMain.UI.EnvUpdateControl();
-			this.envRemove = new ContentTypeTextNet.Pe.PeMain.UI.EnvRemoveControl();
+			this.envRemove = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvRemoveControl();
 			this.tabExecute.SuspendLayout();
 			this.tabExecute_pageBasic.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -403,7 +403,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.CheckBox selectAdministrator;
-		private ContentTypeTextNet.Pe.PeMain.UI.EnvRemoveControl envRemove;
+		private ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvRemoveControl envRemove;
 		private ContentTypeTextNet.Pe.PeMain.UI.EnvUpdateControl envUpdate;
 		private System.Windows.Forms.GroupBox groupRemove;
 		private System.Windows.Forms.GroupBox groupUpdate;
