@@ -1599,6 +1599,7 @@
 		UpdateData CheckUpdate(bool force)
 		{
 			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC, this._commonData);
+			this._commonData.Logger.PutsDebug("update: parameter", () => string.Format("force = {0}, setting = {1}", force, this._commonData.MainSetting.RunningInfo.CheckUpdate));
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				var updateInfo = updateData.Check();
 			}
@@ -1636,11 +1637,14 @@
 		{
 #if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
+				this._commonData.Logger.PutsDebug("update: check", () => "wait");
 				Thread.Sleep(Literal.updateWaitTime);
 				return CheckUpdate(false);
 			}).ContinueWith(t => {
 				CheckedUpdate(false, t.Result);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
+#else
+			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
 #endif
 		}
 
