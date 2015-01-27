@@ -564,28 +564,24 @@
 
 		void AttachmentNoteSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemNoteCreate = new ToolStripMenuItem();
+			// ノート作成
+			var itemNoteCreate = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteCreate,
+			};
+			itemNoteCreate.Click += itemNoteCreate_Click;
+
 			var itemNoteHidden = new ToolStripMenuItem();
 			var itemNoteCompact = new ToolStripMenuItem();
 			var itemNoteShowFront = new ToolStripMenuItem();
+
+			var menuList = new List<ToolStripItem>();
 			menuList.Add(itemNoteCreate);
 			menuList.Add(itemNoteHidden);
 			menuList.Add(itemNoteCompact);
 			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemNoteShowFront);
 
-			// ノート作成
-			itemNoteCreate.Name = menuNameWindowNoteCreate;
-			itemNoteCreate.Click += (object sender, EventArgs e) => {
-				var screen = ScreenUtility.GetCurrentCursor();
-				var area = screen.Bounds;
-				var point = new Point(
-					area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
-					area.Top + area.Height / 2 - Literal.noteSize.Width / 2
-				);
-				CreateNote(point);
-			};
+
 			// ノート非表示
 			itemNoteHidden.Name = menuNameWindowNoteHidden;
 			itemNoteHidden.Click += (object sender, EventArgs e) => {
@@ -2050,6 +2046,17 @@
 					screenMenuItem.Checked = this._toolbarForms[screen].Visible;
 				}
 			}
+		}
+
+		void itemNoteCreate_Click(object sender, EventArgs e)
+		{
+			var screen = ScreenUtility.GetCurrentCursor();
+			var area = screen.Bounds;
+			var point = new Point(
+				area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
+				area.Top + area.Height / 2 - Literal.noteSize.Width / 2
+			);
+			CreateNote(point);
 		}
 	}
 }
