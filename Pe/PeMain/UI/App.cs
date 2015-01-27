@@ -543,18 +543,11 @@
 		{
 			var menuList = new List<ToolStripMenuItem>();
 			foreach(var screen in Screen.AllScreens) {
-				var menuItem = new ToolStripMenuItem();
-				menuItem.Name = screen.DeviceName;
-				menuItem.Text = ScreenUtility.GetScreenName(screen);
-				menuItem.Click += (object sender, EventArgs e) => {
-					var toolbar = this._toolbarForms[screen];
-					/*
-					toolbar.Visible = !toolbar.Visible;
-					toolbar.UseToolbarItem.Visible = toolbar.Visible;
-					 */
-					toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
-					toolbar.ApplySettingVisible();
+				var menuItem = new ScreenToolStripMenuItem(this._commonData) {
+					Name = screen.DeviceName,
+					Screen = screen,
 				};
+				menuItem.Click += screenToolMenuItem_Click;
 				menuList.Add(menuItem);
 			}
 
@@ -2043,6 +2036,15 @@
 			this._otherWindows.Remove(window);
 			this._commonData.Logger.Puts(LogType.Information, sender.ToString(), e);
 			window.Dispose();
+		}
+
+		void screenToolMenuItem_Click(object sender, EventArgs e)
+		{
+			var menuItem = (ScreenToolStripMenuItem)sender;
+			var toolbar = this._toolbarForms[menuItem.Screen];
+
+			toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
+			toolbar.ApplySettingVisible();
 		}
 	}
 }
