@@ -107,7 +107,7 @@
 			ExistsSettingFilePath = Initialize(commandLine, logger);
 			logger.PutsDebug("ExistsSettingFilePath", () => ExistsSettingFilePath);
 
-			CheckUpdateProcessAsync(false);
+			CheckUpdateProcessAsync();
 		}
 
 		#region property
@@ -1478,7 +1478,7 @@
 						}
 
 						if(check) {
-							CheckUpdateProcessAsync(false);
+							CheckUpdateProcessAsync();
 						}
 
 						return true;
@@ -1605,7 +1605,12 @@
 			return updateData;
 		}
 
-		void CheckedUpdate(bool force, UpdateData updateData)
+		/// <summary>
+		/// アップデートを実行するか確認する。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
+		/// <param name="updateData">アップデート情報。</param>
+		void ConfirmUpdate(bool force, UpdateData updateData)
 		{
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				if(updateData != null && updateData.Info != null) {
@@ -1624,24 +1629,29 @@
 			}
 		}
 
-		void CheckUpdateProcessAsync(bool force)
+		/// <summary>
+		/// アップデートチェックを非同期で行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		void CheckUpdateProcessAsync()
 		{
 #if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
-				if(!force) {
-					Thread.Sleep(Literal.updateWaitTime);
-				}
-				return CheckUpdate(force);
+				Thread.Sleep(Literal.updateWaitTime);
+				return CheckUpdate(false);
 			}).ContinueWith(t => {
-				CheckedUpdate(force, t.Result);
+				CheckedUpdate(false, t.Result);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 #endif
 		}
 
+		/// <summary>
+		/// アップデートチェックを同期的に行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
 		void CheckUpdateProcessWait(bool force)
 		{
 			var updateData = CheckUpdate(force);
-			CheckedUpdate(force, updateData);
+			ConfirmUpdate(force, updateData);
 		}
 
 		/// <summary>
@@ -1940,7 +1950,7 @@
 		{
 			if(e.Mode == PowerModes.Resume) {
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
-				CheckUpdateProcessAsync(false);
+				CheckUpdateProcessAsync();
 			}
 		}
 		
