@@ -68,7 +68,16 @@
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#75: アップデート確認を定期的に行う</message>
+				<comments>
+					<comment>とりあえず現状では以下のタイミングで処理する</comment>
+					<comment>起動</comment>
+					<comment>設定保存</comment>
+					<comment>ホームダイアログ終了</comment>
+					<comment>セッション接続接続</comment>
+					<comment>ロック解除</comment>
+					<comment>システム再開</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
