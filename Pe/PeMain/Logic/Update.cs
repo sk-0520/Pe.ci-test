@@ -150,6 +150,7 @@
 				{ "wait",           "true" },
 				{ "no-wait-update", "true" },
 				{ "event",           eventName },
+				{ "script",          Path.Combine(Literal.ApplicationScriptDirPath, "Updater", "UpdaterScript.cs") },
 			};
 			FileUtility.MakeFileParentDirectory(this._downloadPath);
 			if(!Directory.Exists(this._downloadPath)) {
