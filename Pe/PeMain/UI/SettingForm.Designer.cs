@@ -1,12 +1,5 @@
 ﻿using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/15
- * 時刻: 21:39
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
+
 namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	partial class SettingForm
@@ -43,7 +36,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupLauncherStream = new System.Windows.Forms.GroupBox();
-			this.commandLauncherStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
+			this.commandLauncherStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.groupMainSkin = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.selectSkinName = new System.Windows.Forms.ComboBox();
@@ -58,9 +51,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectUpdateCheckRC = new System.Windows.Forms.CheckBox();
 			this.groupMainSystemEnv = new System.Windows.Forms.GroupBox();
 			this.panelMainSystemEnv = new System.Windows.Forms.TableLayoutPanel();
-			this.inputSystemEnvExt = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputSystemEnvExt = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelSystemEnvExt = new System.Windows.Forms.Label();
-			this.inputSystemEnvHiddenFile = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputSystemEnvHiddenFile = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelSystemEnvHiddenFile = new System.Windows.Forms.Label();
 			this.groupMainLog = new System.Windows.Forms.GroupBox();
 			this.selectLogDebugging = new System.Windows.Forms.CheckBox();
@@ -95,7 +88,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelLauncherOption = new System.Windows.Forms.Label();
 			this.commandLauncherIconPath = new System.Windows.Forms.Button();
 			this.labelLauncherWorkDirPath = new System.Windows.Forms.Label();
-			this.inputLauncherIconPath = new ContentTypeTextNet.Pe.PeMain.UI.IconTextBox();
+			this.inputLauncherIconPath = new ContentTypeTextNet.Pe.PeMain.UI.Ex.IconTextBox();
 			this.inputLauncherWorkDirPath = new System.Windows.Forms.TextBox();
 			this.labelLauncherIconPath = new System.Windows.Forms.Label();
 			this.inputLauncherCommand = new System.Windows.Forms.ComboBox();
@@ -122,7 +115,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
 			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
 			this.labelToolbarFont = new System.Windows.Forms.Label();
-			this.commandToolbarFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
+			this.commandToolbarFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
 			this.labelToolbarIcon = new System.Windows.Forms.Label();
 			this.labelToolbarPosition = new System.Windows.Forms.Label();
@@ -138,37 +131,37 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup = new System.Windows.Forms.ToolStrip();
 			this.toolToolbarGroup_addGroup = new System.Windows.Forms.ToolStripButton();
 			this.toolToolbarGroup_addItem = new System.Windows.Forms.ToolStripButton();
-			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolToolbarGroup_up = new System.Windows.Forms.ToolStripButton();
 			this.toolToolbarGroup_down = new System.Windows.Forms.ToolStripButton();
-			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl();
 			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
 			this.labelCommandHotkey = new System.Windows.Forms.Label();
-			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
 			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.labelCommandHideTime = new System.Windows.Forms.Label();
-			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
+			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.tabSetting_pageNote = new System.Windows.Forms.TabPage();
 			this.panelNote = new System.Windows.Forms.TableLayoutPanel();
 			this.panelNoteOthers = new System.Windows.Forms.TableLayoutPanel();
-			this.commandNoteCaptionFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
+			this.commandNoteCaptionFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.labelNoteCaptionFont = new System.Windows.Forms.Label();
 			this.groupNoteKey = new System.Windows.Forms.GroupBox();
 			this.panelNoteKey = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelNoteCreate = new System.Windows.Forms.Label();
-			this.inputNoteCreate = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputNoteCreate = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelNoteHiddent = new System.Windows.Forms.Label();
-			this.inputNoteHidden = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputNoteHidden = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelNoteCompact = new System.Windows.Forms.Label();
-			this.inputNoteCompact = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputNoteCompact = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelNoteShowFront = new System.Windows.Forms.Label();
-			this.inputNoteShowFront = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputNoteShowFront = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
 			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -201,9 +194,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
 			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
 			this.labelClipboardHotkey = new System.Windows.Forms.Label();
-			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl();
+			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelClipboardFont = new System.Windows.Forms.Label();
-			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton();
+			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -2385,7 +2378,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel panelMainOthers;
 		private System.Windows.Forms.TableLayoutPanel panelMainSystemEnv;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherOthers;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteShowFront;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputNoteShowFront;
 		private System.Windows.Forms.Label labelNoteShowFront;
 		private System.Windows.Forms.TableLayoutPanel panelNote;
 		private System.Windows.Forms.TableLayoutPanel panelLauncherEnv;
@@ -2416,14 +2409,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.GroupBox groupNoteItem;
 		private System.Windows.Forms.GroupBox groupNoteKey;
 		private System.Windows.Forms.Label labelNoteCaptionFont;
-		private ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton commandNoteCaptionFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandNoteCaptionFont;
 		private System.Windows.Forms.FlowLayoutPanel panelNoteKey;
 		private System.Windows.Forms.Label labelNoteCompact;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteCompact;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputNoteCompact;
 		private System.Windows.Forms.Label labelNoteHiddent;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteHidden;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputNoteHidden;
 		private System.Windows.Forms.Label labelNoteCreate;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputNoteCreate;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputNoteCreate;
 		private System.Windows.Forms.CheckBox selectLogTrigger_information;
 		private System.Windows.Forms.CheckBox selectLogTrigger_warning;
 		private System.Windows.Forms.CheckBox selectLogTrigger_error;
@@ -2437,8 +2430,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabPage tabLauncher_pageCommon;
 		private System.Windows.Forms.TabControl tabLauncher;
 		private System.Windows.Forms.Label labelSystemEnvExt;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputSystemEnvHiddenFile;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputSystemEnvExt;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputSystemEnvHiddenFile;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputSystemEnvExt;
 		private System.Windows.Forms.Label labelSystemEnvHiddenFile;
 		private System.Windows.Forms.GroupBox groupMainSystemEnv;
 		private System.Windows.Forms.ComboBox selectToolbarItem;
@@ -2446,7 +2439,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelToolbarTextWidth;
 		private System.Windows.Forms.NumericUpDown inputToolbarTextWidth;
 		private System.Windows.Forms.Label labelCommandHotkey;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputCommandHotkey;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;
 		private System.Windows.Forms.CheckBox selectLogVisible;
 		private System.Windows.Forms.GroupBox groupMainLog;
@@ -2455,10 +2448,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectLauncherStdStream;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_remove;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_down;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_up;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_addItem;
 		private System.Windows.Forms.ToolStripButton toolToolbarGroup_addGroup;
 		private System.Windows.Forms.ToolStrip toolToolbarGroup;
@@ -2482,7 +2475,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ComboBox inputLauncherCommand;
 		private System.Windows.Forms.TextBox inputLauncherName;
 		private System.Windows.Forms.TextBox inputLauncherWorkDirPath;
-		private ContentTypeTextNet.Pe.PeMain.UI.IconTextBox inputLauncherIconPath;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.IconTextBox inputLauncherIconPath;
 		private System.Windows.Forms.Label labelLauncherCommand;
 		private System.Windows.Forms.Label labelLauncherName;
 		private System.Windows.Forms.Label labelLauncherWorkDirPath;
@@ -2499,7 +2492,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelToolbarIcon;
 		private System.Windows.Forms.CheckBox selectToolbarVisible;
 		private System.Windows.Forms.Label labelToolbarFont;
-		private ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton commandToolbarFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandToolbarFont;
 		private System.Windows.Forms.CheckBox selectToolbarTopmost;
 		private System.Windows.Forms.SplitContainer splitContainer1;
 		private System.Windows.Forms.TabPage tabSetting_pageNote;
@@ -2508,7 +2501,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label labelCommandHideTime;
 		private System.Windows.Forms.CheckBox selectCommandTopmost;
-		private ContentTypeTextNet.Pe.PeMain.UI.FontSplitButton commandCommandFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandCommandFont;
 		private System.Windows.Forms.Label labelCommandFont;
 		private System.Windows.Forms.ErrorProvider errorProvider;
 		private System.Windows.Forms.TabPage tabSetting_pageCommand;
@@ -2541,16 +2534,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelClipboardSleepTime;
 		private System.Windows.Forms.NumericUpDown inputClipboardSleepTime;
 		private System.Windows.Forms.Label labelClipboardHotkey;
-		private ContentTypeTextNet.Pe.PeMain.UI.PeHotkeyControl inputClipboardHotkey;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputClipboardHotkey;
 		private System.Windows.Forms.GroupBox groupMainSkin;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.ComboBox selectSkinName;
 		private System.Windows.Forms.Button commandSkinAbout;
 		private System.Windows.Forms.CheckBox selectLogDebugging;
 		private System.Windows.Forms.Label labelClipboardFont;
-		private FontSplitButton commandClipboardTextFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandClipboardTextFont;
 		private System.Windows.Forms.GroupBox groupLauncherStream;
-		private FontSplitButton commandLauncherStreamFont;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandLauncherStreamFont;
 		private System.Windows.Forms.Button commandToolbarScreens;
 	}
 }

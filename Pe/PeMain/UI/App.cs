@@ -23,6 +23,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 	using Microsoft.Win32;
 
 	/// <summary>

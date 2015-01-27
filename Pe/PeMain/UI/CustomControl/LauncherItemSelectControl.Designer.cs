@@ -28,11 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.listLauncherItems = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemListBox();
+			this.listLauncherItems = new ContentTypeTextNet.Pe.PeMain.UI.Ex.LauncherItemListBox();
 			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
 			this.toolLauncherItems_create = new System.Windows.Forms.ToolStripButton();
 			this.toolLauncherItems_remove = new System.Windows.Forms.ToolStripButton();
-			this.toolLauncherItems_editSeparator = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.toolLauncherItems_editSeparator = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolLauncherItems_filter = new System.Windows.Forms.ToolStripButton();
 			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolLauncherItems_type_full = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,10 +175,10 @@
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_full;
 		private System.Windows.Forms.ToolStripDropDownButton toolLauncherItems_type;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_filter;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator toolLauncherItems_editSeparator;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator toolLauncherItems_editSeparator;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_remove;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_create;
 		private System.Windows.Forms.ToolStrip toolLauncherItems;
-		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemListBox listLauncherItems;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.LauncherItemListBox listLauncherItems;
 	}
 }

@@ -1,12 +1,12 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
+	using System;
+	using System.Drawing;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// 拡張スプリットボタン基底クラス。
