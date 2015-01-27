@@ -559,56 +559,7 @@
 			parentItem.Name = menuNameWindowToolbar;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
-			parentItem.DropDownOpened += (object sender, EventArgs e) => {
-				var screens = Screen.AllScreens.ToArray();
-				var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
-				var iconSize = IconScale.Small.ToSize();
-				var drawSize = (SizeF)iconSize;
-				var maxArea = new RectangleF() {
-					X = screens.Min(s => s.Bounds.Left),
-					Y = screens.Min(s => s.Bounds.Top)
-				};
-				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
-				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
-
-				var percentage = new SizeF(
-					drawSize.Width / maxArea.Width * 100.0f,
-					drawSize.Height / maxArea.Height * 100.0f
-				);
-
-				foreach(var screen in screens) {
-					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
-						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
-						// 各エリアの描画
-						var alpha = 80;
-						var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
-						using(var g = Graphics.FromImage(baseImage)) {
-							foreach(var inScreen in screens) {
-								var useScreen = inScreen == screen;
-								var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
-								var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
-
-								var baseArea = inScreen.Bounds;
-								baseArea.Offset(basePos);
-
-								var drawArea = new RectangleF(
-									baseArea.X / 100.0f * percentage.Width,
-									baseArea.Y / 100.0f * percentage.Height,
-									baseArea.Width / 100.0f * percentage.Width,
-									baseArea.Height / 100.0f * percentage.Height
-								);
-
-								using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
-									g.DrawImage(img, drawArea.Location);
-								}
-							}
-						}
-						menuItem.Image.ToDispose();
-						menuItem.Image = baseImage;
-						menuItem.Checked = this._toolbarForms[screen].Visible;
-					}
-				}
-			};
+			parentItem.DropDownOpened += ToolbarSubMenu_DropDownOpened;
 		}
 
 		void AttachmentNoteSubMenu(ToolStripMenuItem parentItem)
@@ -2046,6 +1997,59 @@
 
 			toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
 			toolbar.ApplySettingVisible();
+		}
+
+		void ToolbarSubMenu_DropDownOpened(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+			var screens = Screen.AllScreens.ToArray();
+			var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
+			var iconSize = IconScale.Small.ToSize();
+			var drawSize = (SizeF)iconSize;
+			var maxArea = new RectangleF() {
+				X = screens.Min(s => s.Bounds.Left),
+				Y = screens.Min(s => s.Bounds.Top)
+			};
+			maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
+			maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
+
+			var percentage = new SizeF(
+				drawSize.Width / maxArea.Width * 100.0f,
+				drawSize.Height / maxArea.Height * 100.0f
+			);
+
+			foreach(var screen in screens) {
+				if(menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
+					var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
+					// 各エリアの描画
+					var alpha = 80;
+					var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
+					using(var g = Graphics.FromImage(baseImage)) {
+						foreach(var inScreen in screens) {
+							var useScreen = inScreen == screen;
+							var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
+							var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+
+							var baseArea = inScreen.Bounds;
+							baseArea.Offset(basePos);
+
+							var drawArea = new RectangleF(
+								baseArea.X / 100.0f * percentage.Width,
+								baseArea.Y / 100.0f * percentage.Height,
+								baseArea.Width / 100.0f * percentage.Width,
+								baseArea.Height / 100.0f * percentage.Height
+							);
+
+							using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
+								g.DrawImage(img, drawArea.Location);
+							}
+						}
+					}
+					screenMenuItem.Image.ToDispose();
+					screenMenuItem.Image = baseImage;
+					screenMenuItem.Checked = this._toolbarForms[screen].Visible;
+				}
+			}
 		}
 	}
 }
