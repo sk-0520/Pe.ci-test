@@ -627,18 +627,12 @@
 					throw new NullReferenceException("rebuild solution!");
 				}
 #endif
-				var menuItem = new ToolStripMenuItem();
-
-				menuItem.Tag = applicationItem;
-				menuItem.Image = IconUtility.ImageFromIcon(icon, IconScale.Small);
-
-				menuItem.Click += (object sender, EventArgs e) => {
-					if(this._commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
-						this._commonData.ApplicationSetting.KillApplicationItem(launcherItem);
-					} else {
-						Executor.RunItem(launcherItem, this._commonData);
-					}
+				var menuItem = new LauncherToolStripMenuItem(this._commonData) {
+					Tag = applicationItem,
+					Image = IconUtility.ImageFromIcon(icon, IconScale.Small),
+					LauncherItem = launcherItem,
 				};
+				menuItem.Click += ApplicationsMenu_Click; 
 
 				menuList.Add(menuItem);
 			}
@@ -2066,6 +2060,19 @@
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
 
 			OpeningNoteMenu();
+		}
+
+		void ApplicationsMenu_Click(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			var launcherItem = menuItem.LauncherItem;
+			var commonData = menuItem.CommonData;
+
+			if(commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
+				commonData.ApplicationSetting.KillApplicationItem(launcherItem);
+			} else {
+				Executor.RunItem(launcherItem, commonData);
+			}
 		}
 	}
 }
