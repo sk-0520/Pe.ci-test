@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.UI;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 	public partial class ClipboardForm: CommonForm
 	{

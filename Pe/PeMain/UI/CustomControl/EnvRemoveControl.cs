@@ -6,7 +6,7 @@ using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
-namespace ContentTypeTextNet.Pe.PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI.CustomControl
 {
 	/// <summary>
 	///環境変数削除用コントロール。

@@ -37,7 +37,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.toolLauncher = new ContentTypeTextNet.Pe.PeMain.UI.ToolbarToolStrip();
+			this.toolLauncher = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ToolbarToolStrip();
 			this.SuspendLayout();
 			// 
 			// toolLauncher
@@ -82,6 +82,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.ResumeLayout(false);
 
 		}
-		private ContentTypeTextNet.Pe.PeMain.UI.ToolbarToolStrip toolLauncher;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.ToolbarToolStrip toolLauncher;
 	}
 }

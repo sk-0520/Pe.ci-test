@@ -23,6 +23,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 	using Microsoft.Win32;
 
 	/// <summary>
@@ -558,82 +559,29 @@
 			parentItem.Name = menuNameWindowToolbar;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
-			parentItem.DropDownOpened += (object sender, EventArgs e) => {
-				var screens = Screen.AllScreens.ToArray();
-				var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
-				var iconSize = IconScale.Small.ToSize();
-				var drawSize = (SizeF)iconSize;
-				var maxArea = new RectangleF() {
-					X = screens.Min(s => s.Bounds.Left),
-					Y = screens.Min(s => s.Bounds.Top)
-				};
-				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
-				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
-
-				var percentage = new SizeF(
-					drawSize.Width / maxArea.Width * 100.0f,
-					drawSize.Height / maxArea.Height * 100.0f
-				);
-
-				foreach(var screen in screens) {
-					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
-						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
-						// 各エリアの描画
-						var alpha = 80;
-						var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
-						using(var g = Graphics.FromImage(baseImage)) {
-							foreach(var inScreen in screens) {
-								var useScreen = inScreen == screen;
-								var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
-								var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
-
-								var baseArea = inScreen.Bounds;
-								baseArea.Offset(basePos);
-
-								var drawArea = new RectangleF(
-									baseArea.X / 100.0f * percentage.Width,
-									baseArea.Y / 100.0f * percentage.Height,
-									baseArea.Width / 100.0f * percentage.Width,
-									baseArea.Height / 100.0f * percentage.Height
-								);
-
-								using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
-									g.DrawImage(img, drawArea.Location);
-								}
-							}
-						}
-						menuItem.Image.ToDispose();
-						menuItem.Image = baseImage;
-						menuItem.Checked = this._toolbarForms[screen].Visible;
-					}
-				}
-			};
+			parentItem.DropDownOpened += ToolbarSubMenu_DropDownOpened;
 		}
 
 		void AttachmentNoteSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemNoteCreate = new ToolStripMenuItem();
+			// ノート作成
+			var itemNoteCreate = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteCreate,
+			};
+			itemNoteCreate.Click += itemNoteCreate_Click;
+
 			var itemNoteHidden = new ToolStripMenuItem();
 			var itemNoteCompact = new ToolStripMenuItem();
 			var itemNoteShowFront = new ToolStripMenuItem();
+
+			var menuList = new List<ToolStripItem>();
 			menuList.Add(itemNoteCreate);
 			menuList.Add(itemNoteHidden);
 			menuList.Add(itemNoteCompact);
 			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemNoteShowFront);
 
-			// ノート作成
-			itemNoteCreate.Name = menuNameWindowNoteCreate;
-			itemNoteCreate.Click += (object sender, EventArgs e) => {
-				var screen = ScreenUtility.GetCurrentCursor();
-				var area = screen.Bounds;
-				var point = new Point(
-					area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
-					area.Top + area.Height / 2 - Literal.noteSize.Width / 2
-				);
-				CreateNote(point);
-			};
+
 			// ノート非表示
 			itemNoteHidden.Name = menuNameWindowNoteHidden;
 			itemNoteHidden.Click += (object sender, EventArgs e) => {
@@ -2045,6 +1993,70 @@
 
 			toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
 			toolbar.ApplySettingVisible();
+		}
+
+		void ToolbarSubMenu_DropDownOpened(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+			var screens = Screen.AllScreens.ToArray();
+			var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
+			var iconSize = IconScale.Small.ToSize();
+			var drawSize = (SizeF)iconSize;
+			var maxArea = new RectangleF() {
+				X = screens.Min(s => s.Bounds.Left),
+				Y = screens.Min(s => s.Bounds.Top)
+			};
+			maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
+			maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
+
+			var percentage = new SizeF(
+				drawSize.Width / maxArea.Width * 100.0f,
+				drawSize.Height / maxArea.Height * 100.0f
+			);
+
+			foreach(var screen in screens) {
+				if(menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
+					var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
+					// 各エリアの描画
+					var alpha = 80;
+					var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
+					using(var g = Graphics.FromImage(baseImage)) {
+						foreach(var inScreen in screens) {
+							var useScreen = inScreen == screen;
+							var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
+							var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+
+							var baseArea = inScreen.Bounds;
+							baseArea.Offset(basePos);
+
+							var drawArea = new RectangleF(
+								baseArea.X / 100.0f * percentage.Width,
+								baseArea.Y / 100.0f * percentage.Height,
+								baseArea.Width / 100.0f * percentage.Width,
+								baseArea.Height / 100.0f * percentage.Height
+							);
+
+							using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
+								g.DrawImage(img, drawArea.Location);
+							}
+						}
+					}
+					screenMenuItem.Image.ToDispose();
+					screenMenuItem.Image = baseImage;
+					screenMenuItem.Checked = this._toolbarForms[screen].Visible;
+				}
+			}
+		}
+
+		void itemNoteCreate_Click(object sender, EventArgs e)
+		{
+			var screen = ScreenUtility.GetCurrentCursor();
+			var area = screen.Bounds;
+			var point = new Point(
+				area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
+				area.Top + area.Height / 2 - Literal.noteSize.Width / 2
+			);
+			CreateNote(point);
 		}
 	}
 }

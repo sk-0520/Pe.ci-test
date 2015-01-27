@@ -40,9 +40,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.contextMenu_itemTitle = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBody = new System.Windows.Forms.ToolStripMenuItem();
-			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_itemCopy = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem3 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.toolStripMenuItem3 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_font = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_font_change = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_font_reset = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,7 +55,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemForeColor_itemYellow = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemForeColor_itemOrange = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemForeColor_itemPurple = new System.Windows.Forms.ToolStripMenuItem();
-			this.DisableCloseToolStripSeparator5 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator5 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_itemForeColor_itemCustom = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBackColor = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBackColor_itemBlack = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,20 +66,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_itemBackColor_itemYellow = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBackColor_itemOrange = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemBackColor_itemPurple = new System.Windows.Forms.ToolStripMenuItem();
-			this.DisableCloseToolStripSeparator6 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator6 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_itemBackColor_itemCustom = new System.Windows.Forms.ToolStripMenuItem();
-			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_itemLock = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemCompact = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemTopmost = new System.Windows.Forms.ToolStripMenuItem();
-			this.DisableCloseToolStripSeparator3 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator3 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_itemHidden = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemRemove = new System.Windows.Forms.ToolStripMenuItem();
-			this.DisableCloseToolStripSeparator4 = new ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator();
+			this.DisableCloseToolStripSeparator4 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.contextMenu_itemExport = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu_itemImport = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputTitle = new System.Windows.Forms.TextBox();
-			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox();
+			this.inputBody = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteTextBox();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -470,7 +470,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemRemove;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemCustom;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator6;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator6;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemPurple;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemOrange;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemYellow;
@@ -480,7 +480,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemWhite;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor_itemBlack;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemForeColor_itemCustom;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator5;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator5;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemForeColor_itemPurple;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemForeColor_itemOrange;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemForeColor_itemYellow;
@@ -491,25 +491,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemForeColor_itemBlack;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemImport;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemExport;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator4;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator3;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator4;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator3;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTopmost;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_reset;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font_change;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBackColor;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemForeColor;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_font;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator toolStripMenuItem3;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator toolStripMenuItem3;
 		private System.Windows.Forms.TextBox inputTitle;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemHidden;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemCompact;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemLock;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemCopy;
-		private ContentTypeTextNet.Pe.PeMain.UI.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemBody;
 		private System.Windows.Forms.ContextMenuStrip contextMenu;
 		private System.Windows.Forms.ToolStripMenuItem contextMenu_itemTitle;
-		private ContentTypeTextNet.Pe.PeMain.UI.NoteTextBox inputBody;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteTextBox inputBody;
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using ContentTypeTextNet.Pe.PeMain.Data;
 
-namespace ContentTypeTextNet.Pe.PeMain.UI
+namespace ContentTypeTextNet.Pe.PeMain.UI.CustomControl
 {
 	public enum LauncherItemSelecterType
 	{
