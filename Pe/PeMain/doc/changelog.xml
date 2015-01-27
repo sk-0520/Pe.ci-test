@@ -67,7 +67,7 @@
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="da4da48ea40e16fbeb1a6321820025a352bc07bb">
 				<message>#75: アップデート確認を定期的に行う</message>
 				<comments>
 					<comment>とりあえず現状では以下のタイミングで処理する</comment>
