@@ -710,51 +710,68 @@
 				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-dir"], dirPath);;
 				return false;
 			}
-			if(appendOpen) {
-				AttachmentDirectoryOpen(parentItem, dirPath);
-			}
 
-			var menuList = new List<ToolStripItem>();
 			try {
-				// ディレクトリ以下のファイルを列挙
-				var pathItemList = new[] {
-					Directory.GetDirectories(dirPath).Select(f => new { Path = f, IsDirectory = true }),
-					Directory.GetFiles(dirPath).Select(f => new { Path = f, IsDirectory = false }),
-				}.SelectMany(a => a).ToArray();
+				Cursor = Cursors.AppStarting;
 
-				menuList.Capacity = pathItemList.Length;
+				if(appendOpen) {
+					AttachmentDirectoryOpen(parentItem, dirPath);
+				}
 
-				if(pathItemList.Length > 0) {
+				var menuList = new List<ToolStripItem>();
+				try {
+					// ディレクトリ以下のファイルを列挙
+					//var pathItemList = new[] {
+					//	Directory.GetDirectories(dirPath).Select(f => new { Path = f, IsDirectory = true }),
+					//	Directory.GetFiles(dirPath).Select(f => new { Path = f, IsDirectory = false }),
+					//}.SelectMany(a => a).ToArray();
+
+					var pathItemList = new DirectoryInfo(dirPath).GetFileSystemInfos()
+						.Where(fs => fs.Exists)
+						.Select(fs => new {
+							Path = fs.FullName,
+							Name = fs.Name,
+							IsDirectory = fs.Attributes.HasFlag(FileAttributes.Directory),
+							IsHiddenFile = fs.Attributes.HasFlag(FileAttributes.Hidden)
+						})
+						.OrderByDescending(f => f.IsDirectory)
+						.ThenBy(fs => fs.Name)
+						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
+					;
+
 					foreach(var pathItem in pathItemList) {
-						var isAppend = true;
-						var isHiddenFile = File.GetAttributes(pathItem.Path).HasFlag(FileAttributes.Hidden);
-						if(!showHiddenFile && isHiddenFile) {
-							isAppend = false;
-						}
-						if(isAppend) {
-							var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, isHiddenFile);
-							menuList.Add(menuItem);
-						}
+						//var isAppend = true;
+						//var isHiddenFile = File.GetAttributes(pathItem.Path).HasFlag(FileAttributes.Hidden);
+						//if(!showHiddenFile && isHiddenFile) {
+						//	isAppend = false;
+						//}
+						//if(isAppend) {
+						var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, pathItem.IsHiddenFile);
+						menuList.Add(menuItem);
+						//}
 					}
-				} else {
-					var menuItem = new ToolStripMenuItem();
-					menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
-					menuItem.Image = SystemIcons.Information.ToBitmap();
-					menuItem.Enabled = false;
+					if(menuList.Count == 0) {
+						var menuItem = new ToolStripMenuItem();
+						menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
+						menuItem.Image = SystemIcons.Information.ToBitmap();
+						menuItem.Enabled = false;
 
+						menuList.Add(menuItem);
+					}
+				} catch(UnauthorizedAccessException ex) {
+					var menuItem = new ToolStripMenuItem();
+					menuItem.Text = ex.Message;
+					menuItem.Image = SystemIcons.Warning.ToBitmap();
+					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				}
-			} catch(UnauthorizedAccessException ex) {
-				var menuItem = new ToolStripMenuItem();
-				menuItem.Text = ex.Message;
-				menuItem.Image = SystemIcons.Warning.ToBitmap();
-				menuItem.Enabled = false;
-				menuList.Add(menuItem);
+
+				parentItem.DropDownItems.AddRange(menuList.ToArray());
+				ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
+			} finally {
+				Cursor = Cursors.Default;
 			}
-
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
-			ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
-
+			
 			return true;
 		}
 
