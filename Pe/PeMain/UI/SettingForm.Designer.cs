@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabLauncher_pageEnv = new System.Windows.Forms.TabPage();
 			this.panelLauncherEnv = new System.Windows.Forms.TableLayoutPanel();
 			this.envLauncherRemove = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvRemoveControl();
-			this.envLauncherUpdate = new ContentTypeTextNet.Pe.PeMain.UI.EnvUpdateControl();
+			this.envLauncherUpdate = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvUpdateControl();
 			this.selectLauncherEnv = new System.Windows.Forms.CheckBox();
 			this.tabLauncher_pageOthers = new System.Windows.Forms.TabPage();
 			this.panelLauncherOthers = new System.Windows.Forms.TableLayoutPanel();
@@ -2429,7 +2429,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectLogTrigger_error;
 		private System.Windows.Forms.GroupBox groupLogTrigger;
 		private ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvRemoveControl envLauncherRemove;
-		private ContentTypeTextNet.Pe.PeMain.UI.EnvUpdateControl envLauncherUpdate;
+		private ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvUpdateControl envLauncherUpdate;
 		private System.Windows.Forms.CheckBox selectLauncherEnv;
 		private System.Windows.Forms.CheckBox selectLauncherAdmin;
 		private System.Windows.Forms.TabPage tabLauncher_pageOthers;
