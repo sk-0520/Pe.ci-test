@@ -121,6 +121,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SystemSkin\7\Icon\Wait.ico" />
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

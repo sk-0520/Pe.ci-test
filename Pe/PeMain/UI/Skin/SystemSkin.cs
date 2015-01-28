@@ -98,6 +98,7 @@
 				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Command },
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_ToolbarMain },
+				{ SkinIcon.Wait, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Wait },
 			};
 		}
 
@@ -301,7 +302,7 @@
 		public override Image GetImage(SkinImage skinImage)
 		{
 			Image result;
-			if(_skinImageMap.TryGetValue(skinImage, out result)) {
+			if(this._skinImageMap.TryGetValue(skinImage, out result)) {
 				return result;
 			} else {
 				return null;
@@ -311,7 +312,7 @@
 		public override Icon GetIcon(SkinIcon skinIcon)
 		{
 			Icon result;
-			if(_skinIconMap.TryGetValue(skinIcon, out result)) {
+			if(this._skinIconMap.TryGetValue(skinIcon, out result)) {
 				return result;
 			} else {
 				return null;

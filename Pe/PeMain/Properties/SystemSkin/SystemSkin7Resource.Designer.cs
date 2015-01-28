@@ -101,6 +101,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_Wait {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Wait", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Image_Add {

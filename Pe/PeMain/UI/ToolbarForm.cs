@@ -67,6 +67,9 @@
 
 		ToolStripItem _dragStartItem;
 		CustomToolTipForm _tipsLauncher;
+
+		IDictionary<IconScale, Image> _waitImage = new Dictionary<IconScale, Image>();
+
 		#endregion ////////////////////////////////////
 
 		public ToolbarForm()
@@ -312,6 +315,16 @@
 		protected override void ApplySkin()
 		{
 			base.ApplySkin();
+
+			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Large };
+			foreach(var image in this._waitImage.Values) {
+				image.ToDispose();
+			}
+			this._waitImage.Clear();
+			var waitIcon = CommonData.Skin.GetIcon(SkinIcon.Wait);
+			foreach(var iconScale in iconScaleList) {
+				this._waitImage[iconScale] = IconUtility.ImageFromIcon(waitIcon, iconScale);
+			}
 
 			var renderer = new ToolbarRenderer();
 			renderer.Skin = CommonData.Skin;
@@ -639,7 +652,7 @@
 		{
 			var menuItem = new FileImageToolStripMenuItem(commonData) {
 				Path = path,
-			//	IsHiddenFile = isHiddenFile,
+				Image = this._waitImage[UsingToolbarItem.IconScale],
 			};
 
 			if(!isDir && !showExtension) {
@@ -662,7 +675,7 @@
 				try {
 					menuItem.FileImage = t.Result;
 				} catch(Exception ex) {
-					CommonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+					commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
 				} finally {
 					t.Dispose();
 				}
