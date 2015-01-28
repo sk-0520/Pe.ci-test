@@ -13,6 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.UI;
+	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 
 	public static class AppUtility
 	{

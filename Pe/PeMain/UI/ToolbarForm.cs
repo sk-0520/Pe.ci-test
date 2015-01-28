@@ -18,6 +18,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
+	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 	using ObjectDumper;
 
 	/// <summary>
