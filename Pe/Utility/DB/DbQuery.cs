@@ -273,7 +273,7 @@
 				while(reader.Read()) {
 					var dto = new T();
 					foreach(var targetInfo in targetInfos) {
-						var rawValue = reader[targetInfo.TargetNameAttribute.TargetName];
+						var rawValue = reader[targetInfo.EntityMappingAttribute.PhysicalName];
 						var property = targetInfo.PropertyInfo;
 						var convedValue = DBManager.To(rawValue, property.PropertyType);
 						property.SetValue(dto, convedValue);
@@ -313,7 +313,7 @@
 			where T: Row
 		{
 			var tableAttribute = (EntityMappingAttribute)typeof(T).GetCustomAttribute(typeof(EntityMappingAttribute));
-			var tableName = tableAttribute.TargetName;
+			var tableName = tableAttribute.PhysicalName;
 			var columnPropName = GetTargetInfoList<T>();
 
 			return new EntityMappingSet(tableName, columnPropName);
@@ -401,7 +401,7 @@
 		{
 			var targetInfos = GetTargetInfoList<T>();
 			var keyEntity = new T();
-			foreach(var targetInfo in targetInfos.Where(t => t.TargetNameAttribute.PrimaryKey)) {
+			foreach(var targetInfo in targetInfos.Where(t => t.EntityMappingAttribute.PrimaryKey)) {
 				var value = targetInfo.PropertyInfo.GetValue(src);
 				targetInfo.PropertyInfo.SetValue(keyEntity, value);
 			}

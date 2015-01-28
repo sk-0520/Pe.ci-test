@@ -19,19 +19,19 @@
 	)]
 	public sealed class EntityMappingAttribute: Attribute
 	{
-		public EntityMappingAttribute(string name, bool primary)
+		public EntityMappingAttribute(string physicalName, bool primaryKey)
 		{
-			TargetName = name;
-			PrimaryKey = primary;
+			PhysicalName = physicalName;
+			PrimaryKey = primaryKey;
 		}
 
-		public EntityMappingAttribute(string name)
-			: this(name, false)
+		public EntityMappingAttribute(string physicalName)
+			: this(physicalName, false)
 		{ }
 		/// <summary>
 		/// 物理名
 		/// </summary>
-		public string TargetName { get; private set; }
+		public string PhysicalName { get; private set; }
 		/// <summary>
 		/// 主キー
 		/// </summary>
@@ -47,10 +47,10 @@
 	{
 		public EntityMappingInfo(EntityMappingAttribute attribute, PropertyInfo propertyInfo)
 		{
-			TargetNameAttribute = attribute;
+			EntityMappingAttribute = attribute;
 			PropertyInfo = propertyInfo;
 		}
-		public EntityMappingAttribute TargetNameAttribute { get; private set; }
+		public EntityMappingAttribute EntityMappingAttribute { get; private set; }
 		/// <summary>
 		/// TargetNameAttributeで紐付くプロパティ。
 		/// </summary>
