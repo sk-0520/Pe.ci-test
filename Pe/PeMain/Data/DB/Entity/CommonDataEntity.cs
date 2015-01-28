@@ -4,7 +4,7 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
-	public abstract class CommonDataEntity: Entity
+	public abstract class CommonDataEntity: Row
 	{
 		[EntityMapping("CMN_CREATE")]
 		public DateTime CommonCreate { get; set; }

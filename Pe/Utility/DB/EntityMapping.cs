@@ -8,9 +8,9 @@
 	using System.Threading.Tasks;
 
 	/// <summary>
-	/// DTO, Entity で使用するカラム名。
+	/// Dto, Row で使用するカラム名。
 	/// 
-	/// Entity の場合はテーブル名まで指定する。
+	/// 行の場合はテーブル名まで指定する。
 	/// </summary>
 	[AttributeUsage(
 		AttributeTargets.Class | AttributeTargets.Property,

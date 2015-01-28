@@ -240,7 +240,7 @@
 		}
 
 		/// <summary>
-		/// 対象Entity/DTOから物理名・プロパティ紐付一覧を取得。
+		/// 対象Row/Dtoから物理名・プロパティ紐付一覧を取得。
 		/// </summary>
 		/// <returns></returns>
 		private IList<EntityMappingInfo> GetTargetInfoList<T>()
@@ -310,7 +310,7 @@
 		/// </summary>
 		/// <returns></returns>
 		private EntityMappingSet GetEntitySet<T>()
-			where T: Entity
+			where T: Row
 		{
 			var tableAttribute = (EntityMappingAttribute)typeof(T).GetCustomAttribute(typeof(EntityMappingAttribute));
 			var tableName = tableAttribute.TargetName;
@@ -396,10 +396,10 @@
 			return code;
 		}
 
-		protected void SetParameterFromEntitySet(Entity entity, EntityMappingSet entitySet)
+		protected void SetParameterFromEntitySet(Row row, EntityMappingSet entitySet)
 		{
 			foreach(var targetInfo in entitySet.TargetInfos) {
-				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
+				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(row);
 			}
 		}
 
@@ -408,71 +408,71 @@
 		/// 
 		/// 呼び出し時にパラメータ・条件式はクリアされる。
 		/// </summary>
-		/// <param name="entityList"></param>
+		/// <param name="rowList"></param>
 		/// <param name="func">実行するコマンドを生成する処理</param>
-		private void ExecuteEntityCommand<T>(IList<T> entityList, Func<EntityMappingSet, string> func)
-			where T: Entity
+		private void ExecuteEntityCommand<T>(IList<T> rowList, Func<EntityMappingSet, string> func)
+			where T: Row
 		{
 			var entitySet = GetEntitySet<T>();
 			var code = func(entitySet);
-			foreach(var entity in entityList) {
+			foreach(var entity in rowList) {
 				SetParameterFromEntitySet(entity, entitySet);
 				ExecuteCommand(code);
 			}
 		}
 
 		/// <summary>
-		/// Entityの挿入。
+		/// Rowの挿入。
 		/// </summary>
-		/// <param name="entityList"></param>
-		public void ExecuteInsert<T>(IList<T> entityList)
-			where T: Entity
+		/// <param name="rowList"></param>
+		public void ExecuteInsert<T>(IList<T> rowList)
+			where T: Row
 		{
-			ExecuteEntityCommand(entityList, CreateInsertCommandCode);
+			ExecuteEntityCommand(rowList, CreateInsertCommandCode);
 		}
 
 		/// <summary>
-		/// Entityの更新。
+		/// Rowの更新。
 		/// </summary>
-		/// <param name="entityList"></param>
-		public void ExecuteUpdate<T>(IList<T> entityList)
-			where T: Entity
+		/// <param name="rowList"></param>
+		public void ExecuteUpdate<T>(IList<T> rowList)
+			where T: Row
 		{
-			ExecuteEntityCommand(entityList, CreateUpdateCommandCode);
+			ExecuteEntityCommand(rowList, CreateUpdateCommandCode);
 		}
 
 		/// <summary>
-		/// Entityの削除。
+		/// Rowの削除。
 		/// </summary>
-		/// <param name="entityList"></param>
-		public void ExecuteDelete<T>(IList<T> entityList)
-			where T: Entity
+		/// <param name="rowList"></param>
+		public void ExecuteDelete<T>(IList<T> rowList)
+			where T: Row
 		{
-			ExecuteEntityCommand(entityList, CreateDeleteCommandCode);
+			ExecuteEntityCommand(rowList, CreateDeleteCommandCode);
 		}
 
 		/// <summary>
-		/// 指定エンティティから一致するエンティティを取得する。
+		/// 指定行から一致するエンティティを取得する。
 		/// </summary>
-		/// <param name="entity"></param>
-		/// <returns>対象のデータが設定されたエンティティ。見つからない場合は null。</returns>
-		public T GetEntity<T>(T entity)
-			where T: Entity, new()
+		/// <param name="row"></param>
+		/// <returns>対象のデータが設定された行。見つからない場合は null。</returns>
+		public T GetRow<T>(T row)
+			where T: Row, new()
 		{
 			var entitySet = GetEntitySet<T>();
 			var code = CreateSelectCommandCode(entitySet);
-			SetParameterFromEntitySet(entity, entitySet);
+			SetParameterFromEntitySet(row, entitySet);
 
 			return GetDtoListImpl<T>(code).SingleOrDefault();
 		}
 
 		/// <summary>
-		/// 指定エンティティから主キー(将来的には非重複キー)のみのデータを持つエンティティを作成。
+		/// 指定行から主キー(将来的には非重複キー)のみのデータを持つ行を作成。
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public virtual T CreateKeyEntity<T>(T src)
-			where T: Entity, new()
+		public virtual T CreateKeyRow<T>(T src)
+			where T: Row, new()
 		{
 			var targetInfos = GetTargetInfoList<T>();
 			var keyEntity = new T();

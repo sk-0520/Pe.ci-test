@@ -18,7 +18,7 @@
 	/// テーブル行に対応
 	/// TargetNameAttributeを当てて使用する。
 	/// </summary>
-	public abstract class Entity: DbData
+	public abstract class Row: DbData
 	{ }
 
 	/// <summary>

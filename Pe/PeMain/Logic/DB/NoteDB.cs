@@ -104,7 +104,7 @@
 				using(var query = this.db.CreateQuery()) {
 					var entity = new MNoteEntity();
 					entity.Id = item.NoteId;
-					var tempEntity = query.GetEntity(entity);
+					var tempEntity = query.GetRow(entity);
 					var isUpdate = tempEntity != null;
 					if(isUpdate) {
 						entity = tempEntity;
@@ -150,7 +150,7 @@
 				using(var query = this.db.CreateQuery()) {
 					var entity = new TNoteEntity();
 					entity.Id = item.NoteId;
-					var tempEntity = query.GetEntity(entity);
+					var tempEntity = query.GetRow(entity);
 					var isUpdate = tempEntity != null;
 					if(isUpdate) {
 						entity = tempEntity;
@@ -193,7 +193,7 @@
 				using(var query = this.db.CreateQuery()) {
 					var entity = new TNoteStyleEntity();
 					entity.Id = item.NoteId;
-					var tempEntity = query.GetEntity(entity);
+					var tempEntity = query.GetRow(entity);
 					var isUpdate = tempEntity != null;
 					if(isUpdate) {
 						entity = tempEntity;
