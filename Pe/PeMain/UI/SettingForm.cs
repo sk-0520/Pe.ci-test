@@ -14,6 +14,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 	using ContentTypeTextNet.Pe.PeMain.UI.CustomControl;
+	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 
 	/// <summary>
 	/// 設定。
