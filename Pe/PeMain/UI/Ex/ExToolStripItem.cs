@@ -73,6 +73,11 @@
 		public string Path { get; set; }
 	}
 
+	/// <summary>
+	/// ファイルパスに関連するアイコンを保持するメニューアイテム。
+	/// 
+	/// アイコンイメージの取得処理は上位で管理する。
+	/// </summary>
 	public class FileImageToolStripMenuItem: FileToolStripMenuItem
 	{
 		public FileImageToolStripMenuItem(CommonData commonData)

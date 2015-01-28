@@ -663,6 +663,8 @@
 					menuItem.FileImage = t.Result;
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+				} finally {
+					t.Dispose();
 				}
 			});
 
