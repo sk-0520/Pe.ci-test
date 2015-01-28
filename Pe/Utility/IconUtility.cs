@@ -261,14 +261,6 @@
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
 			Icon result = null;
-			var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
-			var fileInfo = new SHFILEINFO() {
-				iIcon = iconIndex,
-			};
-
-			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
-			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
-
 
 			//if(getImageListResult == ComResult.S_OK) {
 				var hIcon = IntPtr.Zero;
@@ -293,6 +285,14 @@
 				}
 
 				if(hIcon == IntPtr.Zero) {
+					var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
+					var fileInfo = new SHFILEINFO() {
+						iIcon = iconIndex,
+					};
+
+					var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
+					var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
+
 					IImageList imageList = null;
 					var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
 					if(getImageListResult == ComResult.S_OK) {
