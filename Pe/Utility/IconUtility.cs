@@ -87,7 +87,7 @@
 			var size = iconScale.ToSize();
 			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 			((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
-
+			Marshal.ReleaseComObject(iShellItem);
 			return BitmapFromhBitmap(hBitmap);
 		}
 
@@ -269,10 +269,8 @@
 			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
 			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 
-			IImageList imageList = null;
-			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
 
-			if(getImageListResult == ComResult.S_OK) {
+			//if(getImageListResult == ComResult.S_OK) {
 				var hIcon = IntPtr.Zero;
 
 				if(hasIcon) {
@@ -295,9 +293,18 @@
 				}
 
 				if(hIcon == IntPtr.Zero) {
-					int n = 0;
-					imageList.GetImageCount(ref n);
-					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+					IImageList imageList = null;
+					var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
+					if(getImageListResult == ComResult.S_OK) {
+						Debug.Assert(imageList != null);
+						try {
+							int n = 0;
+							imageList.GetImageCount(ref n);
+							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+						} finally {
+							Marshal.ReleaseComObject(imageList);
+						}
+					}
 				}
 
 				using(var icon = Icon.FromHandle(hIcon)) {
@@ -306,7 +313,7 @@
 
 				NativeMethods.DestroyIcon(hIcon);
 				NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-			}
+			//}
 
 			// -----------------
 
