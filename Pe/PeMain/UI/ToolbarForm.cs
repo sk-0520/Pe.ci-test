@@ -8,6 +8,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
+	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
@@ -645,16 +646,26 @@
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
-			using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-				Image image = icon.ToBitmap();
-				if(isHiddenFile) {
-					var hiddenFileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
-					image.ToDispose();
-					image = hiddenFileImage;
+
+			Task.Run(() => {
+				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+					if(isHiddenFile) {
+						using(var image = icon.ToBitmap()) {
+							return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+						}
+					}
+					return icon.ToBitmap();
 				}
-				menuItem.Image = image;
-				menuItem.ImageScaling = ToolStripItemImageScaling.None;
-			}
+			}).ContinueWith(t => {
+				try {
+					//Debug.WriteLine(menuItem.Path);
+					menuItem.Image = t.Result;
+					menuItem.ImageScaling = ToolStripItemImageScaling.None;
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+				}
+			//}, TaskScheduler.FromCurrentSynchronizationContext());
+			});
 
 			if(isDir) {
 				AttachmentDirectoryOpen(menuItem, path);
@@ -714,9 +725,9 @@
 			try {
 				Cursor = Cursors.AppStarting;
 
-				if(appendOpen) {
-					AttachmentDirectoryOpen(parentItem, dirPath);
-				}
+				//if(appendOpen) {
+				//	AttachmentDirectoryOpen(parentItem, dirPath);
+				//}
 
 				var menuList = new List<ToolStripItem>();
 				try {
