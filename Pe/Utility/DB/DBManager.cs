@@ -150,6 +150,83 @@
 			#endif
 		}
 
+		/// <summary>
+		/// 行取得用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
+		public virtual string CreateSelectCommandCode(EntityMappingSet entitySet)
+		{
+			// 主キー
+			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
+
+			var code = string.Format(
+				"select * from {0} where {1}",
+				entitySet.TableName,
+				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+			);
+
+			return code;
+		}
+
+		/// <summary>
+		/// 行挿入用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
+		public virtual string CreateInsertCommandCode(EntityMappingSet entitySet)
+		{
+			var code = string.Format(
+				"insert into {0} ({1}) values({2})",
+				entitySet.TableName,
+				string.Join(", ", entitySet.TargetInfos.Select(t => t.TargetNameAttribute.TargetName)),
+				string.Join(", ", entitySet.TargetInfos.Select(t => ":" + t.PropertyInfo.Name))
+			);
+
+			return code;
+		}
+
+		/// <summary>
+		/// エンティティ更新用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
+		public virtual string CreateUpdateCommandCode(EntityMappingSet entitySet)
+		{
+			// 主キー
+			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
+			// 変更データ
+			var data = entitySet.TargetInfos.Where(t => !t.TargetNameAttribute.PrimaryKey);
+
+			var code = string.Format(
+				"update {0} set {1} where {2}",
+				entitySet.TableName,
+				string.Join(", ", data.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name))),
+				string.Join(" and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+			);
+
+			return code;
+		}
+
+		/// <summary>
+		/// エンティティ削除用コードの生成。
+		/// </summary>
+		/// <param name="entitySet"></param>
+		/// <returns></returns>
+		public virtual string CreateDeleteCommandCode(EntityMappingSet entitySet)
+		{
+			// 主キー
+			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
+
+			var code = string.Format(
+				"delete from {0} where {1}",
+				entitySet.TableName,
+				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
+			);
+
+			return code;
+		}
+
 #region IDisposable
 
 		protected virtual void Dispose(bool disposing)

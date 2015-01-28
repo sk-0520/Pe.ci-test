@@ -319,82 +319,7 @@
 			return new EntityMappingSet(tableName, columnPropName);
 		}
 
-		/// <summary>
-		/// エンティティ取得用コードの生成。
-		/// </summary>
-		/// <param name="entitySet"></param>
-		/// <returns></returns>
-		protected virtual string CreateSelectCommandCode(EntityMappingSet entitySet)
-		{
-			// 主キー
-			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
 
-			var code = string.Format(
-				"select * from {0} where {1}",
-				entitySet.TableName,
-				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
-			);
-
-			return code;
-		}
-
-		/// <summary>
-		/// エンティティ挿入用コードの生成。
-		/// </summary>
-		/// <param name="entitySet"></param>
-		/// <returns></returns>
-		protected virtual string CreateInsertCommandCode(EntityMappingSet entitySet)
-		{
-			var code = string.Format(
-				"insert into {0} ({1}) values({2})",
-				entitySet.TableName,
-				string.Join(", ", entitySet.TargetInfos.Select(t => t.TargetNameAttribute.TargetName)),
-				string.Join(", ", entitySet.TargetInfos.Select(t => ":" + t.PropertyInfo.Name))
-			);
-
-			return code;
-		}
-
-		/// <summary>
-		/// エンティティ更新用コードの生成。
-		/// </summary>
-		/// <param name="entitySet"></param>
-		/// <returns></returns>
-		protected virtual string CreateUpdateCommandCode(EntityMappingSet entitySet)
-		{
-			// 主キー
-			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
-			// 変更データ
-			var data = entitySet.TargetInfos.Where(t => !t.TargetNameAttribute.PrimaryKey);
-
-			var code = string.Format(
-				"update {0} set {1} where {2}",
-				entitySet.TableName,
-				string.Join(", ", data.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name))),
-				string.Join(" and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
-			);
-
-			return code;
-		}
-
-		/// <summary>
-		/// エンティティ削除用コードの生成。
-		/// </summary>
-		/// <param name="entitySet"></param>
-		/// <returns></returns>
-		protected virtual string CreateDeleteCommandCode(EntityMappingSet entitySet)
-		{
-			// 主キー
-			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
-
-			var code = string.Format(
-				"delete from {0} where {1}",
-				entitySet.TableName,
-				string.Join("and ", primary.Select(t => string.Format("{0} = :{1}", t.TargetNameAttribute.TargetName, t.PropertyInfo.Name)))
-			);
-
-			return code;
-		}
 
 		protected void SetParameterFromEntitySet(Row row, EntityMappingSet entitySet)
 		{
@@ -428,7 +353,7 @@
 		public void ExecuteInsert<T>(IList<T> rowList)
 			where T: Row
 		{
-			ExecuteEntityCommand(rowList, CreateInsertCommandCode);
+			ExecuteEntityCommand(rowList, DBManager.CreateInsertCommandCode);
 		}
 
 		/// <summary>
@@ -438,7 +363,7 @@
 		public void ExecuteUpdate<T>(IList<T> rowList)
 			where T: Row
 		{
-			ExecuteEntityCommand(rowList, CreateUpdateCommandCode);
+			ExecuteEntityCommand(rowList, DBManager.CreateUpdateCommandCode);
 		}
 
 		/// <summary>
@@ -448,7 +373,7 @@
 		public void ExecuteDelete<T>(IList<T> rowList)
 			where T: Row
 		{
-			ExecuteEntityCommand(rowList, CreateDeleteCommandCode);
+			ExecuteEntityCommand(rowList, DBManager.CreateDeleteCommandCode);
 		}
 
 		/// <summary>
@@ -460,7 +385,7 @@
 			where T: Row, new()
 		{
 			var entitySet = GetEntitySet<T>();
-			var code = CreateSelectCommandCode(entitySet);
+			var code = DBManager.CreateSelectCommandCode(entitySet);
 			SetParameterFromEntitySet(row, entitySet);
 
 			return GetDtoListImpl<T>(code).SingleOrDefault();
