@@ -243,16 +243,16 @@
 		/// 対象Entity/DTOから物理名・プロパティ紐付一覧を取得。
 		/// </summary>
 		/// <returns></returns>
-		private IList<TargetInfo> GetTargetInfoList<T>()
+		private IList<EntityMappingInfo> GetTargetInfoList<T>()
 			where T: DbData
 		{
 			var members = typeof(T).GetMembers();
-			var targetList = new List<TargetInfo>(members.Length);
+			var targetList = new List<EntityMappingInfo>(members.Length);
 			foreach(var member in members) {
-				var tartgetNameAttribute = member.GetCustomAttribute(typeof(TargetNameAttribute)) as TargetNameAttribute;
+				var tartgetNameAttribute = member.GetCustomAttribute(typeof(EntityMappingAttribute)) as EntityMappingAttribute;
 				if(tartgetNameAttribute != null) {
 					var propertyInfo = typeof(T).GetProperty(member.Name);
-					var targetInfo = new TargetInfo(tartgetNameAttribute, propertyInfo);
+					var targetInfo = new EntityMappingInfo(tartgetNameAttribute, propertyInfo);
 					targetList.Add(targetInfo);
 				}
 			}
@@ -309,14 +309,14 @@
 		/// 対象のエンティティからエンティティ一覧情報を取得
 		/// </summary>
 		/// <returns></returns>
-		private EntitySet GetEntitySet<T>()
+		private EntityMappingSet GetEntitySet<T>()
 			where T: Entity
 		{
-			var tableAttribute = (TargetNameAttribute)typeof(T).GetCustomAttribute(typeof(TargetNameAttribute));
+			var tableAttribute = (EntityMappingAttribute)typeof(T).GetCustomAttribute(typeof(EntityMappingAttribute));
 			var tableName = tableAttribute.TargetName;
 			var columnPropName = GetTargetInfoList<T>();
 
-			return new EntitySet(tableName, columnPropName);
+			return new EntityMappingSet(tableName, columnPropName);
 		}
 
 		/// <summary>
@@ -324,7 +324,7 @@
 		/// </summary>
 		/// <param name="entitySet"></param>
 		/// <returns></returns>
-		protected virtual string CreateSelectCommandCode(EntitySet entitySet)
+		protected virtual string CreateSelectCommandCode(EntityMappingSet entitySet)
 		{
 			// 主キー
 			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
@@ -343,7 +343,7 @@
 		/// </summary>
 		/// <param name="entitySet"></param>
 		/// <returns></returns>
-		protected virtual string CreateInsertCommandCode(EntitySet entitySet)
+		protected virtual string CreateInsertCommandCode(EntityMappingSet entitySet)
 		{
 			var code = string.Format(
 				"insert into {0} ({1}) values({2})",
@@ -360,7 +360,7 @@
 		/// </summary>
 		/// <param name="entitySet"></param>
 		/// <returns></returns>
-		protected virtual string CreateUpdateCommandCode(EntitySet entitySet)
+		protected virtual string CreateUpdateCommandCode(EntityMappingSet entitySet)
 		{
 			// 主キー
 			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
@@ -382,7 +382,7 @@
 		/// </summary>
 		/// <param name="entitySet"></param>
 		/// <returns></returns>
-		protected virtual string CreateDeleteCommandCode(EntitySet entitySet)
+		protected virtual string CreateDeleteCommandCode(EntityMappingSet entitySet)
 		{
 			// 主キー
 			var primary = entitySet.TargetInfos.Where(t => t.TargetNameAttribute.PrimaryKey);
@@ -396,7 +396,7 @@
 			return code;
 		}
 
-		protected void SetParameterFromEntitySet(Entity entity, EntitySet entitySet)
+		protected void SetParameterFromEntitySet(Entity entity, EntityMappingSet entitySet)
 		{
 			foreach(var targetInfo in entitySet.TargetInfos) {
 				Parameter[targetInfo.PropertyInfo.Name] = targetInfo.PropertyInfo.GetValue(entity);
@@ -410,7 +410,7 @@
 		/// </summary>
 		/// <param name="entityList"></param>
 		/// <param name="func">実行するコマンドを生成する処理</param>
-		private void ExecuteEntityCommand<T>(IList<T> entityList, Func<EntitySet, string> func)
+		private void ExecuteEntityCommand<T>(IList<T> entityList, Func<EntityMappingSet, string> func)
 			where T: Entity
 		{
 			var entitySet = GetEntitySet<T>();

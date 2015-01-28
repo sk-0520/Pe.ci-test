@@ -9,78 +9,7 @@
 	using System.Reflection;
 	using System.Text.RegularExpressions;
 
-	/// <summary>
-	/// DTO, Entity で使用するカラム名。
-	/// 
-	/// Entity の場合はテーブル名まで指定する。
-	/// </summary>
-	[AttributeUsage(
-		AttributeTargets.Class  | AttributeTargets.Property,
-		AllowMultiple = true,
-		Inherited = true
-	)]
-	public sealed class TargetNameAttribute: Attribute
-	{
-		public TargetNameAttribute(string name, bool primary)
-		{
-			TargetName = name;
-			PrimaryKey = primary;
-		}
-		
-		public TargetNameAttribute(string name): this(name, false)
-		{ }
-		/// <summary>
-		/// 物理名
-		/// </summary>
-		public string TargetName { get; private set; }
-		/// <summary>
-		/// 主キー
-		/// </summary>
-		public bool PrimaryKey { get; private set; }
-	}
 	
-	/// <summary>
-	/// 物理名・プロパティ紐付。
-	/// 
-	/// TargetNameAttributeに紐付く物理名とプロパティ情報。
-	/// </summary>
-	public sealed class TargetInfo
-	{
-		public TargetInfo(TargetNameAttribute attribute, PropertyInfo propertyInfo)
-		{
-			TargetNameAttribute = attribute;
-			PropertyInfo = propertyInfo;
-		}
-		public TargetNameAttribute TargetNameAttribute { get; private set; }
-		/// <summary>
-		/// TargetNameAttributeで紐付くプロパティ。
-		/// </summary>
-		public PropertyInfo PropertyInfo { get; private set; }
-	}
-	
-	/// <summary>
-	/// エンティティ一覧情報
-	/// 
-	/// エンティティとして必要な物理名とエンティティオブジェクトのプロパティ一覧。
-	/// </summary>
-	public sealed class EntitySet
-	{
-		public EntitySet(string tableName, IList<TargetInfo> targetInfos)
-		{
-			TableName = tableName;
-			TargetInfos = targetInfos;
-		}
-		/// <summary>
-		/// テーブル名。
-		/// </summary>
-		public string TableName { get ; private set; }
-		/// <summary>
-		/// 対象TargetInfoの集合
-		/// </summary>
-		public IList<TargetInfo> TargetInfos { get; private set; }
-	}
-	
-
 	/// <summary>
 	/// DB接続・操作の一元化
 	/// 

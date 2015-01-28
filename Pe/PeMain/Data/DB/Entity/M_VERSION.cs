@@ -3,12 +3,12 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
-	[TargetName("M_VERSION")]
+	[EntityMapping("M_VERSION")]
 	public class MVersionEntity: Entity
 	{
-		[TargetName("NAME", true)]
+		[EntityMapping("NAME", true)]
 		public string Name { get; set; }
-		[TargetName("VERSION")]
+		[EntityMapping("VERSION")]
 		public int Version { get; set; }
 	}
 }

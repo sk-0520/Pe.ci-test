@@ -3,12 +3,12 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
-	[TargetName("T_NOTE")]
+	[EntityMapping("T_NOTE")]
 	public class TNoteEntity: CommonDataEntity
 	{
-		[TargetName("NOTE_ID", true)]
+		[EntityMapping("NOTE_ID", true)]
 		public long Id { get; set; }
-		[TargetName("NOTE_BODY")]
+		[EntityMapping("NOTE_BODY")]
 		public string Body { get; set ;}
 	}
 }

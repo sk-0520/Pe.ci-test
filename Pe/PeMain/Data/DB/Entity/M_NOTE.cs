@@ -6,14 +6,14 @@
 	/// <summary>
 	/// Description of M_NOTE.
 	/// </summary>
-	[TargetName("M_NOTE")]
+	[EntityMapping("M_NOTE")]
 	public class MNoteEntity: CommonDataEnabledEntity
 	{
-		[TargetName("NOTE_ID", true)]
+		[EntityMapping("NOTE_ID", true)]
 		public long Id { get; set; }
-		[TargetName("NOTE_TITLE")]
+		[EntityMapping("NOTE_TITLE")]
 		public string Title { get; set; }
-		[TargetName("NOTE_TYPE")]
+		[EntityMapping("NOTE_TYPE")]
 		public int RawType { get; set; }
 	}
 }
