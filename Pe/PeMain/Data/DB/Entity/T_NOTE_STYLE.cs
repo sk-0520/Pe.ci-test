@@ -1,8 +1,9 @@
-﻿using System.Drawing;
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data.DB
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data.DB
 {
+	using System.Drawing;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.Library.Utility.DB;
+
 	/// <summary>
 	/// Description of T_NOTE_STYLE.
 	/// </summary>

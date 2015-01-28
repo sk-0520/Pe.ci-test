@@ -1,8 +1,9 @@
-﻿using System;
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data.DB
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data.DB
 {
+	using System;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.Library.Utility.DB;
+
 	public abstract class CommonDataEntity: Entity
 	{
 		[TargetName("CMN_CREATE")]
