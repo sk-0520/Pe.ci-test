@@ -4,7 +4,7 @@
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
 	[EntityMapping("T_NOTE")]
-	public class TNoteEntity: CommonDataEntity
+	public class TNoteRow: CommonDataRow
 	{
 		[EntityMapping("NOTE_ID", true)]
 		public long Id { get; set; }

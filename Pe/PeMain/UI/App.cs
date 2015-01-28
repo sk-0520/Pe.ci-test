@@ -387,7 +387,7 @@
 				query.ExecuteCommand(command);
 			}
 
-			var entity = new MVersionEntity();
+			var entity = new MVersionRow();
 			entity.Name = tableName;
 			entity.Version = DataTables.map[tableName];
 			using(var query = this._commonData.Database.CreateQuery()) {

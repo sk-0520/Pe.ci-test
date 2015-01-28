@@ -4,7 +4,7 @@
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
 	[EntityMapping("M_VERSION")]
-	public class MVersionEntity: Row
+	public class MVersionRow: Row
 	{
 		[EntityMapping("NAME", true)]
 		public string Name { get; set; }

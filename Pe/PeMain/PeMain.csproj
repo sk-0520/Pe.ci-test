@@ -132,7 +132,7 @@
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
-    <Compile Include="Data\DB\Row\CommonDataEntity.cs" />
+    <Compile Include="Data\DB\Row\CommonDataRow.cs" />
     <Compile Include="Data\DB\Row\M_NOTE.cs" />
     <Compile Include="Data\DB\Row\M_VERSION.cs" />
     <Compile Include="Data\DB\Row\T_NOTE.cs" />

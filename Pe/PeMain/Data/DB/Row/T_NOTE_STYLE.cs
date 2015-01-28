@@ -8,7 +8,7 @@
 	/// Description of T_NOTE_STYLE.
 	/// </summary>
 	[EntityMapping("T_NOTE_STYLE")]
-	public class TNoteStyleEntity: CommonDataEntity
+	public class TNoteStyleRow: CommonDataRow
 	{
 		[EntityMapping("NOTE_ID", true)]
 		public long Id { get; set; }

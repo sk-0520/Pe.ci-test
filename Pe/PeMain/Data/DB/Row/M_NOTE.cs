@@ -7,7 +7,7 @@
 	/// Description of M_NOTE.
 	/// </summary>
 	[EntityMapping("M_NOTE")]
-	public class MNoteEntity: CommonDataEnabledEntity
+	public class MNoteRow: CommonDataEnabledRow
 	{
 		[EntityMapping("NOTE_ID", true)]
 		public long Id { get; set; }
