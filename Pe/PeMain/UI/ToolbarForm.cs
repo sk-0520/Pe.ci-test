@@ -317,7 +317,7 @@
 		{
 			base.ApplySkin();
 
-			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Large };
+			var iconScaleList = new [] { IconScale.Small, IconScale.Normal, IconScale.Big };
 			foreach(var image in this._waitImage.Values) {
 				image.ToDispose();
 			}

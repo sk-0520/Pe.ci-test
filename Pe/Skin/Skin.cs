@@ -1,4 +1,10 @@
-﻿namespace ContentTypeTextNet.Pe.Library.Skin
+﻿//#define SELECT_TARGET
+
+#if BUILD
+#	error Deinfed BUILD!
+#endif
+
+namespace ContentTypeTextNet.Pe.Library.Skin
 {
 	using System;
 	using System.Collections.Generic;
@@ -137,14 +143,16 @@
 
 		protected static SkinTarget GetSkinTarget()
 		{
+#if !SELECT_TARGET
 			var version = Environment.OSVersion;
 			if(version.Version.Major >= 6 && version.Version.Minor > 1) {
 				return SkinTarget.Windows8;
 			} else {
 				return SkinTarget.Windows7;
 			}
-			//return SkinTarget.Windows7;
-			//return SkinTarget.Windows8;
+#else
+			return SkinTarget.Windows8;
+#endif
 		}
 
 		#endregion

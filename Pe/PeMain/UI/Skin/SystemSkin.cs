@@ -170,6 +170,7 @@
 				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Command },
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_ToolbarMain },
+				{ SkinIcon.Wait, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Wait },
 			};
 		}
 
