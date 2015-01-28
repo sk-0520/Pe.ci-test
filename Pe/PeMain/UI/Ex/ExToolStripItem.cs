@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Drawing;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -70,6 +71,31 @@
 		{ }
 
 		public string Path { get; set; }
+	}
+
+	public class FileImageToolStripMenuItem: FileToolStripMenuItem
+	{
+		public FileImageToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public Image FileImage { get; set; }
+
+		public override Image Image
+		{
+			get
+			{
+				if(FileImage != null) {
+					return FileImage;
+				} else {
+					return base.Image;
+				}
+			}
+			set
+			{
+				base.Image = value;
+			}
+		}
 	}
 
 	/// <summary>

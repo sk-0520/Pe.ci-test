@@ -637,8 +637,9 @@
 		
 		ToolStripMenuItem CreateFileListMenuItem(CommonData commonData, string path, bool isDir, bool showExtension, bool isHiddenFile)
 		{
-			var menuItem = new FileToolStripMenuItem(commonData){
+			var menuItem = new FileImageToolStripMenuItem(commonData) {
 				Path = path,
+			//	IsHiddenFile = isHiddenFile,
 			};
 
 			if(!isDir && !showExtension) {
@@ -646,7 +647,26 @@
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
+			// 至上命題: UIスレッドに結合される前に処理完了せよ！
+			Task.Run(() => {
+				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+					if(isHiddenFile) {
+						using(var image = icon.ToBitmap()) {
+							return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+						}
+					} else {
+						return icon.ToBitmap();
+					}
+				}
+			}).ContinueWith(t => {
+				try {
+					menuItem.FileImage = t.Result;
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+				}
+			});
 
+			/*
 			Task.Run(() => {
 				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
 					if(isHiddenFile) {
@@ -664,8 +684,9 @@
 				} catch(Exception ex) {
 					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 				}
-			//}, TaskScheduler.FromCurrentSynchronizationContext());
-			});
+			}, TaskScheduler.FromCurrentSynchronizationContext());
+			//});
+			*/
 
 			if(isDir) {
 				AttachmentDirectoryOpen(menuItem, path);
@@ -737,7 +758,7 @@
 					//	Directory.GetFiles(dirPath).Select(f => new { Path = f, IsDirectory = false }),
 					//}.SelectMany(a => a).ToArray();
 
-					var pathItemList = new DirectoryInfo(dirPath).GetFileSystemInfos()
+					var pathItemList = new DirectoryInfo(dirPath).EnumerateFileSystemInfos()
 						.Where(fs => fs.Exists)
 						.Select(fs => new {
 							Path = fs.FullName,
@@ -779,6 +800,38 @@
 
 				parentItem.DropDownItems.AddRange(menuList.ToArray());
 				ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
+				/*
+				Task.Run(() => {
+					var menuItems = parentItem.DropDownItems.OfType<FileToolStripMenuItem>().ToArray();
+					var map = new Dictionary<FileToolStripMenuItem, Image>(menuItems.Length);
+					foreach(var menuItem in menuItems) {
+						Image image;
+						using(var icon = IconUtility.Load(menuItem.Path, UsingToolbarItem.IconScale, 0)) {
+							if(menuItem.IsHiddenFile) {
+								using(var iconImage = icon.ToBitmap()) {
+									image = DrawUtility.Opacity(iconImage, Literal.hiddenFileOpacity);
+								}
+							} else {
+								image = icon.ToBitmap();
+							}
+						}
+						map[menuItem] = image;
+					}
+
+					return map;
+
+				}).ContinueWith(t => {
+					foreach(var pair in t.Result) {
+						pair.Key.Image = pair.Value;
+					}
+					foreach(var menuItem in t.Result.Keys) {
+						menuItem.ImageScaling = ToolStripItemImageScaling.None;
+					}
+
+				}, TaskScheduler.FromCurrentSynchronizationContext());
+				*/
+				//parentItem.DropDownOpened += (object sender, EventArgs e) => {
+				//};
 			} finally {
 				Cursor = Cursors.Default;
 			}
