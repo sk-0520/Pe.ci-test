@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Skin
 {
 	using System.Drawing;
 	using System.Windows.Forms;

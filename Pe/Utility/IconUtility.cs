@@ -87,7 +87,7 @@
 			var size = iconScale.ToSize();
 			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 			((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
-
+			Marshal.ReleaseComObject(iShellItem);
 			return BitmapFromhBitmap(hBitmap);
 		}
 
@@ -148,9 +148,13 @@
 
 					var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 					foreach(var i in Enumerable.Range(0, iconCount)) {
+						var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
+						if(!binaryGroupIconData.Length.Between(0, readOffset + sizeof(Int32))) {
+							break;
+						}
 						var length = BitConverter.ToInt32(
 							binaryGroupIconData,
-							sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes
+							readOffset
 						);
 						//Debug.WriteLine("[{0}] = {1} byte", i, length);
 						totalSize += length;
@@ -261,18 +265,8 @@
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
 			Icon result = null;
-			var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
-			var fileInfo = new SHFILEINFO() {
-				iIcon = iconIndex,
-			};
 
-			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
-			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
-
-			IImageList imageList = null;
-			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
-
-			if(getImageListResult == ComResult.S_OK) {
+			//if(getImageListResult == ComResult.S_OK) {
 				var hIcon = IntPtr.Zero;
 
 				if(hasIcon) {
@@ -295,9 +289,26 @@
 				}
 
 				if(hIcon == IntPtr.Zero) {
-					int n = 0;
-					imageList.GetImageCount(ref n);
-					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+					var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
+					var fileInfo = new SHFILEINFO() {
+						iIcon = iconIndex,
+					};
+
+					var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
+					var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
+
+					IImageList imageList = null;
+					var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
+					if(getImageListResult == ComResult.S_OK) {
+						Debug.Assert(imageList != null);
+						try {
+							int n = 0;
+							imageList.GetImageCount(ref n);
+							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+						} finally {
+							Marshal.ReleaseComObject(imageList);
+						}
+					}
 				}
 
 				using(var icon = Icon.FromHandle(hIcon)) {
@@ -306,7 +317,7 @@
 
 				NativeMethods.DestroyIcon(hIcon);
 				NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-			}
+			//}
 
 			// -----------------
 

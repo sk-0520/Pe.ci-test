@@ -24,6 +24,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
+	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 	using Microsoft.Win32;
 
 	/// <summary>

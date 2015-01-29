@@ -96,6 +96,18 @@
 					<comment>スクリプト自体は移動したが下位互換等のため/sbin/Updater, /etc/script/Updater を同時配布して整合性を保つ</comment>
 				</comments>
 			</note>
+			<note rev="1aa8fa57442132abe9e08f5e6a4deaf3b967f54b">
+				<message>48px以上のアイコンを読み込み時にリソースを持つファイルでリソース境界範囲外にアクセスする不具合の修正</message>
+			</note>
+			<note rev="">
+				<message>#183: ファイルメニュー構築処理を速度改善する</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
