@@ -148,9 +148,13 @@
 
 					var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 					foreach(var i in Enumerable.Range(0, iconCount)) {
+						var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
+						if(!binaryGroupIconData.Length.Between(0, readOffset + sizeof(Int32))) {
+							break;
+						}
 						var length = BitConverter.ToInt32(
 							binaryGroupIconData,
-							sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes
+							readOffset
 						);
 						//Debug.WriteLine("[{0}] = {1} byte", i, length);
 						totalSize += length;
