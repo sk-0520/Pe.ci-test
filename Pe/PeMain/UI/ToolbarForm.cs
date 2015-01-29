@@ -688,28 +688,6 @@
 				}
 			});
 
-			/*
-			Task.Run(() => {
-				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-					if(isHiddenFile) {
-						using(var image = icon.ToBitmap()) {
-							return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
-						}
-					}
-					return icon.ToBitmap();
-				}
-			}).ContinueWith(t => {
-				try {
-					//Debug.WriteLine(menuItem.Path);
-					menuItem.Image = t.Result;
-					menuItem.ImageScaling = ToolStripItemImageScaling.None;
-				} catch(Exception ex) {
-					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
-				}
-			}, TaskScheduler.FromCurrentSynchronizationContext());
-			//});
-			*/
-
 			if(isDir) {
 				AttachmentDirectoryOpen(menuItem, path);
 			} else {
@@ -768,18 +746,13 @@
 			try {
 				Cursor = Cursors.AppStarting;
 
-				//if(appendOpen) {
-				//	AttachmentDirectoryOpen(parentItem, dirPath);
-				//}
+				if(appendOpen) {
+					AttachmentDirectoryOpen(parentItem, dirPath);
+				}
 
 				var menuList = new List<ToolStripItem>();
 				try {
 					// ディレクトリ以下のファイルを列挙
-					//var pathItemList = new[] {
-					//	Directory.GetDirectories(dirPath).Select(f => new { Path = f, IsDirectory = true }),
-					//	Directory.GetFiles(dirPath).Select(f => new { Path = f, IsDirectory = false }),
-					//}.SelectMany(a => a).ToArray();
-
 					var pathItemList = new DirectoryInfo(dirPath).EnumerateFileSystemInfos()
 						.Where(fs => fs.Exists)
 						.Select(fs => new {
@@ -794,15 +767,8 @@
 					;
 
 					foreach(var pathItem in pathItemList) {
-						//var isAppend = true;
-						//var isHiddenFile = File.GetAttributes(pathItem.Path).HasFlag(FileAttributes.Hidden);
-						//if(!showHiddenFile && isHiddenFile) {
-						//	isAppend = false;
-						//}
-						//if(isAppend) {
 						var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, pathItem.IsHiddenFile);
 						menuList.Add(menuItem);
-						//}
 					}
 					if(menuList.Count == 0) {
 						var menuItem = new ToolStripMenuItem();
@@ -822,38 +788,6 @@
 
 				parentItem.DropDownItems.AddRange(menuList.ToArray());
 				ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
-				/*
-				Task.Run(() => {
-					var menuItems = parentItem.DropDownItems.OfType<FileToolStripMenuItem>().ToArray();
-					var map = new Dictionary<FileToolStripMenuItem, Image>(menuItems.Length);
-					foreach(var menuItem in menuItems) {
-						Image image;
-						using(var icon = IconUtility.Load(menuItem.Path, UsingToolbarItem.IconScale, 0)) {
-							if(menuItem.IsHiddenFile) {
-								using(var iconImage = icon.ToBitmap()) {
-									image = DrawUtility.Opacity(iconImage, Literal.hiddenFileOpacity);
-								}
-							} else {
-								image = icon.ToBitmap();
-							}
-						}
-						map[menuItem] = image;
-					}
-
-					return map;
-
-				}).ContinueWith(t => {
-					foreach(var pair in t.Result) {
-						pair.Key.Image = pair.Value;
-					}
-					foreach(var menuItem in t.Result.Keys) {
-						menuItem.ImageScaling = ToolStripItemImageScaling.None;
-					}
-
-				}, TaskScheduler.FromCurrentSynchronizationContext());
-				*/
-				//parentItem.DropDownOpened += (object sender, EventArgs e) => {
-				//};
 			} finally {
 				Cursor = Cursors.Default;
 			}
