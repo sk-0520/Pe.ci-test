@@ -308,7 +308,7 @@
 							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 						} finally {
 							Marshal.ReleaseComObject(imageList);
-							imageList == null;
+							imageList = null;
 						}
 					}
 				}
