@@ -83,13 +83,18 @@
 		{
 			var hBitmap = IntPtr.Zero;
 			IShellItem iShellItem = null;
-			NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
+			var shellItemResult = NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
 			var size = iconScale.ToSize();
 			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
-			((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
-			Marshal.ReleaseComObject(iShellItem);
-			iShellItem = null;
-			return BitmapFromhBitmap(hBitmap);
+			try {
+				((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
+				Marshal.ReleaseComObject(iShellItem);
+				iShellItem = null;
+				return BitmapFromhBitmap(hBitmap);
+			} catch(COMException ex) {
+				Debug.WriteLine("{0}, {1}", ex, iconPath);
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -102,19 +107,19 @@
 		static byte[] GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
 		{
 			var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
-			if(hGroup == null) {
+			if(hGroup == IntPtr.Zero) {
 				Debug.WriteLine("return FindResource");
 				return null;
 			}
 
 			var hLoadGroup = NativeMethods.LoadResource(hModule, hGroup);
-			if(hLoadGroup == null) {
+			if(hLoadGroup == IntPtr.Zero) {
 				Debug.WriteLine("return LoadResource");
 				return null;
 			}
 
 			var resData = NativeMethods.LockResource(hLoadGroup);
-			if(resData == null) {
+			if(resData == IntPtr.Zero) {
 				Debug.WriteLine("return LockResource");
 				return null;
 			}
@@ -170,7 +175,7 @@
 							stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
 
 							stream.Write(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i, offsetGRPICONDIRENTRY_nID);
-							stream.Write(picOffset); 
+							stream.Write(picOffset);
 
 							stream.Seek(picOffset, SeekOrigin.Begin);
 
@@ -225,7 +230,9 @@
 				if(iconScale == IconScale.Normal) {
 					try {
 						using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-							result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+							if(bitmap != null) {
+								result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+							}
 						}
 					} catch(Exception ex) {
 						Debug.WriteLine(ex);
@@ -285,7 +292,9 @@
 
 				if(hIcon == IntPtr.Zero) {
 					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-						hIcon = bitmap.GetHicon();
+						if(bitmap != null) {
+							hIcon = bitmap.GetHicon();
+						}
 					}
 				}
 
