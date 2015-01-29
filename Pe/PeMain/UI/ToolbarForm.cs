@@ -663,20 +663,26 @@
 			}
 			// 至上命題: UIスレッドに結合される前に処理完了せよ！
 			Task.Run(() => {
-				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-					if(isHiddenFile) {
-						using(var image = icon.ToBitmap()) {
-							return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+				try {
+					using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+						if(isHiddenFile) {
+							using(var image = icon.ToBitmap()) {
+								return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+							}
+						} else {
+							return icon.ToBitmap();
 						}
-					} else {
-						return icon.ToBitmap();
 					}
+				} catch(AggregateException ex) {
+					commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
 				}
+
+				return null;
 			}).ContinueWith(t => {
 				try {
 					menuItem.FileImage = t.Result;
 				} catch(Exception ex) {
-					commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+					commonData.Logger.Puts(LogType.Error, menuItem.Path, ex);
 				} finally {
 					t.Dispose();
 				}
