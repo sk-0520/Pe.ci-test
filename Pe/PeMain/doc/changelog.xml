@@ -103,7 +103,7 @@
 				<message>#183: ファイルメニュー構築処理を速度改善する</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#187: COMの参照が解放されない</message>
 			</note>
 			<note rev="">
 				<message></message>

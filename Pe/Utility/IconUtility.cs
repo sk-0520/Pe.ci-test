@@ -88,6 +88,7 @@
 			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 			((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
 			Marshal.ReleaseComObject(iShellItem);
+			iShellItem = null;
 			return BitmapFromhBitmap(hBitmap);
 		}
 
@@ -307,6 +308,7 @@
 							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
 						} finally {
 							Marshal.ReleaseComObject(imageList);
+							imageList == null;
 						}
 					}
 				}
