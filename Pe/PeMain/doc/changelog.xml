@@ -102,8 +102,11 @@
 			<note rev="9f5a11833cbce15707872ed25975e49d65ae4ac0">
 				<message>#183: ファイルメニュー構築処理を速度改善する</message>
 			</note>
-			<note rev="">
+			<note rev="a27f68b64d054e24d0a3ac3f165f6d5e04a0ad2b">
 				<message>#187: COMの参照が解放されない</message>
+			</note>
+			<note rev="">
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
