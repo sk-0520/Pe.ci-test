@@ -273,7 +273,7 @@
 						flag |= SHGFI.SHGFI_LARGEICON;
 					}
 					var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
-					if(fileInfoResult != IntPtr.Zero) {
+					if(/*fileInfoResult != IntPtr.Zero && */fileInfo.hIcon != IntPtr.Zero) {
 						try {
 							using(var icon = Icon.FromHandle(fileInfo.hIcon)) {
 								return (Icon)icon.Clone();
