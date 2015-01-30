@@ -97,21 +97,21 @@
 			};
 			
 			var colorMatrix = new ColorMatrix(matrixData);
-			var imageAttribute = new ImageAttributes();
-			imageAttribute.SetColorMatrix(colorMatrix);
-			var imageSize = new Size(srcImage.Width, srcImage.Height);
-			var alphaImage = new Bitmap(imageSize.Width, imageSize.Height);
-			using(var graphics = Graphics.FromImage(alphaImage)) {
-				graphics.DrawImage(
-					srcImage,
-					new Rectangle(Point.Empty, imageSize),
-					0, 0, imageSize.Width, imageSize.Height,
-					GraphicsUnit.Pixel,
-					imageAttribute
-				);
+			using(var imageAttribute = new ImageAttributes()) {
+				imageAttribute.SetColorMatrix(colorMatrix);
+				var imageSize = new Size(srcImage.Width, srcImage.Height);
+				var alphaImage = new Bitmap(imageSize.Width, imageSize.Height);
+				using(var graphics = Graphics.FromImage(alphaImage)) {
+					graphics.DrawImage(
+						srcImage,
+						new Rectangle(Point.Empty, imageSize),
+						0, 0, imageSize.Width, imageSize.Height,
+						GraphicsUnit.Pixel,
+						imageAttribute
+					);
+				}
+				return alphaImage;
 			}
-			
-			return alphaImage;
 		}
 
 		/// <summary>
@@ -135,13 +135,13 @@
 				matrix.Matrix33 = opacity;
 
 				//create image attributes  
-				ImageAttributes attributes = new ImageAttributes();
+				using(ImageAttributes attributes = new ImageAttributes()) {
+					//set the color(opacity) of the image  
+					attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 
-				//set the color(opacity) of the image  
-				attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
-				//now draw the image  
-				gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+					//now draw the image  
+					gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+				}
 			}
 
 			return bmp;

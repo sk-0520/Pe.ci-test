@@ -47,7 +47,11 @@
 			if(Detail is Exception || Detail is string) {
 				detailText = Detail.ToString();
 			} else if(Detail != null) {
-				Detail.DumpToString(Title);
+				try {
+					detailText = Detail.DumpToString(Title);
+				} catch(Exception ex) {
+					detailText = Detail.ToString() + "@" + ex.ToString();
+				}
 			}
 
 			return string.Format(

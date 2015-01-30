@@ -8,6 +8,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
+	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -493,23 +494,59 @@
 				MinimumSize = minSize;
 			}
 		}
+
+		IList<IDisposable> DisposeFileToolMenuItem(ToolStripDropDownItem parentItem)
+		{
+			var menuItems = parentItem.DropDownItems.OfType<ToolStripMenuItem>().ToArray();
+			var result = new List<IDisposable>(menuItems.Length);
+			parentItem.DropDownItems.Clear();
+
+			foreach(var menuItem in menuItems) {
+				result.AddRange(DisposeFileToolMenuItem(menuItem));
+
+				var fileImageItem = menuItem as FileImageToolStripMenuItem;
+				if(fileImageItem != null) {
+					result.Add(fileImageItem.FileImage);
+					fileImageItem.FileImage = null;
+				} else {
+					result.Add(menuItem.Image);
+				}
+				menuItem.Image = null;
+			}
+			foreach(var menuItem in menuItems) {
+				menuItem.DropDownItems.Clear();
+				result.Add(menuItem);
+			}
+
+			return result;
+		}
+
+		void DisposeToolButtons()
+		{
+			//Debug.WriteLine("くりあ");
+			var toolItems = this.toolLauncher.Items.Cast<ToolStripItem>().ToArray();
+			this.toolLauncher.Items.Clear();
+			var diposeList = new List<IDisposable>();
+			foreach(var toolItem in toolItems) {
+				var dropdownMenuItem = toolItem as ToolStripDropDownItem;
+				if(dropdownMenuItem != null) {
+					diposeList.AddRange(DisposeFileToolMenuItem(dropdownMenuItem));
+				}
+				//Debug.WriteLine("DisposeToolButtons: " + toolItem.Text);
+				diposeList.Add(toolItem.Image);
+				diposeList.Add(toolItem);
+				toolItem.Image = null;
+			}
+			diposeList.ForEach(d => d.ToDispose());
+			diposeList.Clear();
+		}
 		
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
 		{
 			this.toolLauncher.ImageScalingSize = iconScale.ToSize();
+
+			DisposeToolButtons();
 			
-			/*
-			// アイコン解放
-			var items = this.toolLauncher.Items
-				.Cast<ToolStripItem>()
-				.Where(item => item.Image != null)
-			;
-			foreach(var item in items) {
-				item.Dispose();
-			}
-			 */
-			
-			this.toolLauncher.Items.Clear();
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
 		}
 		
@@ -661,19 +698,29 @@
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
+			//*
 			// 至上命題: UIスレッドに結合される前に処理完了せよ！
 			Task.Run(() => {
 				try {
-					using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-						if(isHiddenFile) {
-							using(var image = icon.ToBitmap()) {
-								return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+					var waitCount = 0;
+					while(waitCount <= Literal.loadIconRetryCount) {
+						using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+							if(icon != null) {
+								if(isHiddenFile) {
+									using(var image = icon.ToBitmap()) {
+										return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+									}
+								} else {
+									return icon.ToBitmap();
+								}
+							} else {
+								commonData.Logger.PutsDebug(menuItem.Path, () => string.Format("Toolbar: wait {0}ms, count: {1}", Literal.loadIconRetryTime.TotalMilliseconds, waitCount));
+								Thread.Sleep(Literal.loadIconRetryTime);
+								waitCount++;
 							}
-						} else {
-							return icon.ToBitmap();
 						}
 					}
-				} catch(AggregateException ex) {
+				} catch(Exception ex) {
 					commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
 				}
 
@@ -687,6 +734,25 @@
 					t.Dispose();
 				}
 			});
+			//*/
+			// スレッド危ないわ
+			//try {
+			//	using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+			//		if(icon != null) {
+			//			if(isHiddenFile) {
+			//				using(var image = icon.ToBitmap()) {
+			//					menuItem.FileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+			//				}
+			//			} else {
+			//				menuItem.FileImage = icon.ToBitmap();
+			//			}
+			//		} else {
+			//			commonData.Logger.Puts(LogType.Error, menuItem.Path, "icon is null");
+			//		}
+			//	}
+			//} catch(/*Aggregate*/Exception ex) {
+			//	commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+			//}
 
 			if(isDir) {
 				AttachmentDirectoryOpen(menuItem, path);
@@ -725,6 +791,7 @@
 			parentItem.DropDownItems.AddRange(menuList);
 
 			parentItem.DropDownOpening += FileListMenu_DropDownOpening;
+			parentItem.DropDownClosed += FileListMenu_DropDownClosed;
 		}
 
 		/// <summary>
@@ -761,9 +828,9 @@
 							IsDirectory = fs.Attributes.HasFlag(FileAttributes.Directory),
 							IsHiddenFile = fs.Attributes.HasFlag(FileAttributes.Hidden)
 						})
+						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
 						.OrderByDescending(f => f.IsDirectory)
 						.ThenBy(fs => fs.Name)
-						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
 					;
 
 					foreach(var pathItem in pathItemList) {
@@ -778,6 +845,12 @@
 
 						menuList.Add(menuItem);
 					}
+				} catch(IOException ex) {
+					var menuItem = new ToolStripMenuItem();
+					menuItem.Text = ex.Message;
+					menuItem.Image = SystemIcons.Error.ToBitmap();
+					menuItem.Enabled = false;
+					menuList.Add(menuItem);
 				} catch(UnauthorizedAccessException ex) {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = ex.Message;
@@ -1191,7 +1264,7 @@
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UsingToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting);
+			var icon = item.GetIcon(UsingToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}
@@ -1849,7 +1922,7 @@
 
 		void FileListMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			var toolItem = sender as ToolStripDropDownItem;
+			var toolItem = (ToolStripDropDownItem)sender;
 			var openItem = toolItem.DropDownItems[menuNameFiles_open];
 			if(openItem.Image == null) {
 				toolItem.DropDownItems[menuNameFiles_open].Image = toolItem.Image;
@@ -1880,6 +1953,12 @@
 				// 起こりえないけど改修実装なんで入れとく
 				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => toolItem.DumpToString(toolItem.Text));
 			}
+		}
+
+		void FileListMenu_DropDownClosed(object sender, EventArgs e)
+		{
+			var toolItem = (ToolStripDropDownItem)sender;
+			toolItem.DropDownItems[menuNameFiles_open].Image = null;
 		}
 
 		void FileListMenu_Click(object sender, EventArgs e)

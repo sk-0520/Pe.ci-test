@@ -60,7 +60,7 @@
 								Application.Run();
 							}
 						}
-						fileLogger.Puts(LogType.Information, "Close", Process.GetCurrentProcess());
+						fileLogger.Puts(LogType.Information, "Close", Process.GetCurrentProcess().Id);
 					} else {
 						fileLogger.Puts(LogType.Error, "duplicate boot", mutexName);
 					}

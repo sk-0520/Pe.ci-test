@@ -112,7 +112,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		/// 隠しファイルを表示する際に使用する透明度。
 		/// </summary>
 		public const float hiddenFileOpacity = 0.6f;
-
+		public static readonly TimeSpan loadIconRetryTime = TimeSpan.FromMilliseconds(250);
+		public const int loadIconRetryCount = 3;
 
 		#region NOTE
 		

@@ -164,7 +164,8 @@
 			var launcherItem = toolStripItem.Tag as LauncherItem;
 
 			if(launcherItem != null) {
-				this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting).ToBitmap();
+				var itemIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
+				this._imageIcon = itemIcon.ToBitmap();
 				this._title = launcherItem.Name;
 				if(launcherItem.LauncherType == LauncherType.Embedded) {
 					var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
