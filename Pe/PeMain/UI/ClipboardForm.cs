@@ -711,12 +711,17 @@
 		{
 			var index = this.listClipboard.SelectedIndex;
 			if(index != -1) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.Items[index];
 				CommonData.MainSetting.Clipboard.Items.RemoveAt(index);
+				clipboardItem.ToDispose();
 			}
 		}
 
 		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
 		{
+			foreach(var item in CommonData.MainSetting.Clipboard.Items.ToArray()) {
+				item.ToDispose();
+			}
 			CommonData.MainSetting.Clipboard.Items.Clear();
 		}
 

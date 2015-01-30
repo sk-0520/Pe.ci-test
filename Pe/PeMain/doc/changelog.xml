@@ -85,6 +85,9 @@
 			<note rev="">
 				<message></message>
 			</note>
+			<note rev="">
+				<message></message>
+			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
 			<note rev="447134f2e1da7933d3e286474705acfabaab012c">
@@ -106,10 +109,13 @@
 				<message>#187: COMの参照が解放されない</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#186: GDIオブジェクトが解放されない</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>アイコン取得時に一回のアクセスで取得できない場合があるので数回アクセスするように変更</message>
+			</note>
+			<note rev="">
+				<message>通常アイコン取得時、API成功でもアイコンハンドルが取得できてない場合に後続処理を行わない</message>
 			</note>
 			<note rev="">
 				<message></message>

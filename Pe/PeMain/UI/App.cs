@@ -622,7 +622,7 @@
 				launcherItem.Command = applicationItem.Name;
 				launcherItem.LauncherType = LauncherType.Embedded;
 
-				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
+				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting, this._commonData.Logger);
 #if DEBUG
 				if(icon == null) {
 					throw new NullReferenceException("rebuild solution!");

@@ -6,12 +6,13 @@
 	using System.Drawing;
 	using System.Linq;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	/// <summary>
 	/// クリップボードのデータ。
 	/// </summary>
-	public class ClipboardItem: NameItem
+	public class ClipboardItem: DisposableNameItem
 	{
 		public ClipboardItem()
 		{
@@ -27,6 +28,15 @@
 		public Image Image { get; set; }
 		public IEnumerable<string> Files { get; set; }
 
+		#region DisposableNameItem
+
+		protected override void Dispose(bool disposing)
+		{
+			Image.ToDispose();
+			base.Dispose(disposing);
+		}
+
+		#endregion
 
 		public bool SetClipboardData(ClipboardType enabledTypes)
 		{

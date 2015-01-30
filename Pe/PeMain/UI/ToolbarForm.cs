@@ -8,6 +8,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
+	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -701,13 +702,22 @@
 			// 至上命題: UIスレッドに結合される前に処理完了せよ！
 			Task.Run(() => {
 				try {
-					using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-						if(isHiddenFile) {
-							using(var image = icon.ToBitmap()) {
-								return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+					var waitCount = 0;
+					while(waitCount <= Literal.loadIconRetryCount) {
+						using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+							if(icon != null) {
+								if(isHiddenFile) {
+									using(var image = icon.ToBitmap()) {
+										return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+									}
+								} else {
+									return icon.ToBitmap();
+								}
+							} else {
+								commonData.Logger.PutsDebug(menuItem.Path, () => string.Format("Toolbar: wait {0}ms, count: {1}", Literal.loadIconRetryTime.TotalMilliseconds, waitCount));
+								Thread.Sleep(Literal.loadIconRetryTime);
+								waitCount++;
 							}
-						} else {
-							return icon.ToBitmap();
 						}
 					}
 				} catch(Exception ex) {
@@ -1254,7 +1264,7 @@
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
-			var icon = item.GetIcon(UsingToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting);
+			var icon = item.GetIcon(UsingToolbarItem.IconScale, item.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
 			if(icon != null) {
 				toolItem.Image = icon.ToBitmap();
 			}
