@@ -287,17 +287,15 @@
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
-			Icon result = null;
 
 			//if(getImageListResult == ComResult.S_OK) {
-				var hIcon = IntPtr.Zero;
 
 				if(hasIcon) {
 					try {
 						var iconList = LoadIconResource(iconPath, iconScale);
 						if(iconIndex < iconList.Count) {
 							using(var ms = new MemoryStream(iconList[iconIndex])) {
-								hIcon = new Icon(ms, iconScale.ToSize()).Handle;
+								return new Icon(ms, iconScale.ToSize());
 							}
 						}
 					} catch(Exception ex) {
@@ -305,15 +303,22 @@
 					}
 				}
 
-				if(hIcon == IntPtr.Zero) {
+				//if(hIcon == IntPtr.Zero) {
 					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
 						if(bitmap != null) {
-							hIcon = bitmap.GetHicon();
+							var hIcon = bitmap.GetHicon();
+							try {
+								using(var icon = Icon.FromHandle(hIcon)) {
+									return (Icon)icon.Clone();
+								}
+							} finally {
+								NativeMethods.DestroyIcon(hIcon);
+							}
 						}
 					}
-				}
+				//}
 
-				if(hIcon == IntPtr.Zero) {
+				//if(hIcon == IntPtr.Zero) {
 					var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
 					var fileInfo = new SHFILEINFO() {
 						iIcon = iconIndex,
@@ -324,25 +329,30 @@
 
 					IImageList imageList = null;
 					var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
+					Icon result = null;
 					if(getImageListResult == ComResult.S_OK) {
 						Debug.Assert(imageList != null);
 						try {
 							int n = 0;
 							imageList.GetImageCount(ref n);
+
+							var hIcon = IntPtr.Zero;
 							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+
+							using(var icon = Icon.FromHandle(hIcon)) {
+								result = (Icon)icon.Clone();
+							}
+
+							NativeMethods.DestroyIcon(hIcon);
+							NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+
 						} finally {
 							Marshal.ReleaseComObject(imageList);
 							imageList = null;
 						}
 					}
-				}
+				//}
 
-				using(var icon = Icon.FromHandle(hIcon)) {
-					result = (Icon)icon.Clone();
-				}
-
-				NativeMethods.DestroyIcon(hIcon);
-				NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 			//}
 
 			// -----------------

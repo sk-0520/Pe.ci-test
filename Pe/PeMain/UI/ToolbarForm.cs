@@ -537,11 +537,10 @@
 				toolItem.ToDispose();
 			}
 			diposeList.ForEach(d => {
-				Debug.WriteLine(d);
+				//Debug.WriteLine(d);
 				d.ToDispose();
 			});
 			diposeList.Clear();
-			GC.Collect();
 		}
 		
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
@@ -711,7 +710,7 @@
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
-			/*
+			//*
 			// 至上命題: UIスレッドに結合される前に処理完了せよ！
 			Task.Run(() => {
 				try {
@@ -738,43 +737,25 @@
 					t.Dispose();
 				}
 			});
-			*/
+			//*/
 			// スレッド危ないわ
-			try {
-				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
-					if(icon != null) {
-						if(isHiddenFile) {
-							using(var image = icon.ToBitmap()) {
-								menuItem.FileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
-							}
-						} else {
-							menuItem.FileImage = icon.ToBitmap();
-						}
-					} else {
-						commonData.Logger.Puts(LogType.Error, menuItem.Path, "icon is null");
-					}
-				}
-			} catch(/*Aggregate*/Exception ex) {
-				commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
-			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			//try {
+			//	using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+			//		if(icon != null) {
+			//			if(isHiddenFile) {
+			//				using(var image = icon.ToBitmap()) {
+			//					menuItem.FileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+			//				}
+			//			} else {
+			//				menuItem.FileImage = icon.ToBitmap();
+			//			}
+			//		} else {
+			//			commonData.Logger.Puts(LogType.Error, menuItem.Path, "icon is null");
+			//		}
+			//	}
+			//} catch(/*Aggregate*/Exception ex) {
+			//	commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+			//}
 
 			if(isDir) {
 				AttachmentDirectoryOpen(menuItem, path);
