@@ -186,8 +186,10 @@
 
 							ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
 							var pic = GetResourceBinaryData(hModule, new IntPtr(id), ResType.ICON);
-							stream.Write(pic, 0, pic.Length);
-							picOffset += pic.Length;
+							if(pic != null) {
+								stream.Write(pic, 0, pic.Length);
+								picOffset += pic.Length;
+							}
 						}
 
 						binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());

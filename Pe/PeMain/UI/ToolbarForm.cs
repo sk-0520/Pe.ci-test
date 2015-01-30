@@ -536,27 +536,14 @@
 				diposeList.Add(toolItem);
 				toolItem.Image = null;
 			}
-			diposeList.ForEach(d => {
-				//Debug.WriteLine(d);
-				d.ToDispose();
-			});
+			diposeList.ForEach(d => d.ToDispose());
 			diposeList.Clear();
 		}
 		
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
 		{
 			this.toolLauncher.ImageScalingSize = iconScale.ToSize();
-			
-			/*
-			// アイコン解放
-			var items = this.toolLauncher.Items
-				.Cast<ToolStripItem>()
-				.Where(item => item.Image != null)
-			;
-			foreach(var item in items) {
-				item.Dispose();
-			}
-			 */
+
 			DisposeToolButtons();
 			
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
