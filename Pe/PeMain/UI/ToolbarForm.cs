@@ -494,20 +494,30 @@
 			}
 		}
 
-		void DisposeFileToolMenuItem(ToolStripDropDownItem parentItem)
+		IList<IDisposable> DisposeFileToolMenuItem(ToolStripDropDownItem parentItem)
 		{
-			var menuItems = parentItem.DropDownItems.OfType<FileImageToolStripMenuItem>().ToArray();
+			var menuItems = parentItem.DropDownItems.OfType<ToolStripMenuItem>().ToArray();
+			var result = new List<IDisposable>(menuItems.Length);
+			parentItem.DropDownItems.Clear();
+
 			foreach(var menuItem in menuItems) {
-				//Debug.WriteLine("DisposeFileToolMenuItem: " + menuItem.Path);
-				menuItem.FileImage.ToDispose();
-				menuItem.FileImage = null;
+				result.AddRange(DisposeFileToolMenuItem(menuItem));
+
+				var fileImageItem = menuItem as FileImageToolStripMenuItem;
+				if(fileImageItem != null) {
+					result.Add(fileImageItem.FileImage);
+					fileImageItem.FileImage = null;
+				} else {
+					result.Add(menuItem.Image);
+				}
 				menuItem.Image = null;
-				DisposeFileToolMenuItem(menuItem);
 			}
 			foreach(var menuItem in menuItems) {
 				menuItem.DropDownItems.Clear();
 				menuItem.ToDispose();
 			}
+
+			return result;
 		}
 
 		void DisposeToolButtons()
@@ -515,16 +525,23 @@
 			//Debug.WriteLine("くりあ");
 			var toolItems = this.toolLauncher.Items.Cast<ToolStripItem>().ToArray();
 			this.toolLauncher.Items.Clear();
+			var diposeList = new List<IDisposable>();
 			foreach(var toolItem in toolItems) {
-				//Debug.WriteLine("DisposeToolButtons: " + toolItem.Text);
-				toolItem.Image.ToDispose();
-				toolItem.Image = null;
 				var dropdownMenuItem = toolItem as ToolStripDropDownItem;
 				if(dropdownMenuItem != null) {
-					DisposeFileToolMenuItem(dropdownMenuItem);
+					diposeList.AddRange(DisposeFileToolMenuItem(dropdownMenuItem));
 				}
+				//Debug.WriteLine("DisposeToolButtons: " + toolItem.Text);
+				diposeList.Add(toolItem.Image);
+				toolItem.Image = null;
 				toolItem.ToDispose();
 			}
+			diposeList.ForEach(d => {
+				Debug.WriteLine(d);
+				d.ToDispose();
+			});
+			diposeList.Clear();
+			GC.Collect();
 		}
 		
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
@@ -694,6 +711,7 @@
 			} else {
 				menuItem.Text = Path.GetFileName(path);
 			}
+			/*
 			// 至上命題: UIスレッドに結合される前に処理完了せよ！
 			Task.Run(() => {
 				try {
@@ -720,6 +738,43 @@
 					t.Dispose();
 				}
 			});
+			*/
+			// スレッド危ないわ
+			try {
+				using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
+					if(icon != null) {
+						if(isHiddenFile) {
+							using(var image = icon.ToBitmap()) {
+								menuItem.FileImage = DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+							}
+						} else {
+							menuItem.FileImage = icon.ToBitmap();
+						}
+					} else {
+						commonData.Logger.Puts(LogType.Error, menuItem.Path, "icon is null");
+					}
+				}
+			} catch(/*Aggregate*/Exception ex) {
+				commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			if(isDir) {
 				AttachmentDirectoryOpen(menuItem, path);

@@ -90,7 +90,12 @@
 				((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
 				Marshal.ReleaseComObject(iShellItem);
 				iShellItem = null;
-				return BitmapFromhBitmap(hBitmap);
+				try {
+					var result = BitmapFromhBitmap(hBitmap);
+					return result;
+				} finally {
+					NativeMethods.DeleteObject(hBitmap);
+				}
 			} catch(COMException ex) {
 				Debug.WriteLine("{0}, {1}", ex, iconPath);
 				return null;
@@ -222,7 +227,10 @@
 					NativeMethods.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 				}
 				if(iconHandle[0] != IntPtr.Zero) {
-					result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
+					//result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
+					using(var icon = Icon.FromHandle(iconHandle[0])) {
+						result = (Icon)icon.Clone();
+					}
 					NativeMethods.DestroyIcon(iconHandle[0]);
 				}
 			}
@@ -231,7 +239,12 @@
 					try {
 						using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
 							if(bitmap != null) {
-								result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+								//result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+								var hIcon = bitmap.GetHicon();
+								using(var icon = Icon.FromHandle(hIcon)) {
+									result = (Icon)icon.Clone();
+								}
+								NativeMethods.DestroyIcon(hIcon);
 							}
 						}
 					} catch(Exception ex) {
@@ -250,7 +263,9 @@
 					}
 					var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
 					if(fileInfoResult != IntPtr.Zero) {
-						result = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
+						using(var icon = Icon.FromHandle(fileInfo.hIcon)) {
+							result = (Icon)icon.Clone();
+						}
 						NativeMethods.DestroyIcon(fileInfo.hIcon);
 					}
 				}
