@@ -493,6 +493,39 @@
 				MinimumSize = minSize;
 			}
 		}
+
+		void DisposeFileToolMenuItem(ToolStripDropDownItem parentItem)
+		{
+			var menuItems = parentItem.DropDownItems.OfType<FileImageToolStripMenuItem>().ToArray();
+			foreach(var menuItem in menuItems) {
+				//Debug.WriteLine("DisposeFileToolMenuItem: " + menuItem.Path);
+				menuItem.FileImage.ToDispose();
+				menuItem.FileImage = null;
+				menuItem.Image = null;
+				DisposeFileToolMenuItem(menuItem);
+			}
+			foreach(var menuItem in menuItems) {
+				menuItem.DropDownItems.Clear();
+				menuItem.ToDispose();
+			}
+		}
+
+		void DisposeToolButtons()
+		{
+			//Debug.WriteLine("くりあ");
+			var toolItems = this.toolLauncher.Items.Cast<ToolStripItem>().ToArray();
+			this.toolLauncher.Items.Clear();
+			foreach(var toolItem in toolItems) {
+				//Debug.WriteLine("DisposeToolButtons: " + toolItem.Text);
+				toolItem.Image.ToDispose();
+				toolItem.Image = null;
+				var dropdownMenuItem = toolItem as ToolStripDropDownItem;
+				if(dropdownMenuItem != null) {
+					DisposeFileToolMenuItem(dropdownMenuItem);
+				}
+				toolItem.ToDispose();
+			}
+		}
 		
 		void SetToolButtons(IconScale iconScale, IEnumerable<ToolStripItem> buttons)
 		{
@@ -508,8 +541,8 @@
 				item.Dispose();
 			}
 			 */
+			DisposeToolButtons();
 			
-			this.toolLauncher.Items.Clear();
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
 		}
 		
@@ -725,6 +758,7 @@
 			parentItem.DropDownItems.AddRange(menuList);
 
 			parentItem.DropDownOpening += FileListMenu_DropDownOpening;
+			parentItem.DropDownClosed += FileListMenu_DropDownClosed;
 		}
 
 		/// <summary>
@@ -761,9 +795,9 @@
 							IsDirectory = fs.Attributes.HasFlag(FileAttributes.Directory),
 							IsHiddenFile = fs.Attributes.HasFlag(FileAttributes.Hidden)
 						})
+						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
 						.OrderByDescending(f => f.IsDirectory)
 						.ThenBy(fs => fs.Name)
-						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
 					;
 
 					foreach(var pathItem in pathItemList) {
@@ -778,6 +812,12 @@
 
 						menuList.Add(menuItem);
 					}
+				} catch(IOException ex) {
+					var menuItem = new ToolStripMenuItem();
+					menuItem.Text = ex.Message;
+					menuItem.Image = SystemIcons.Error.ToBitmap();
+					menuItem.Enabled = false;
+					menuList.Add(menuItem);
 				} catch(UnauthorizedAccessException ex) {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = ex.Message;
@@ -1849,7 +1889,7 @@
 
 		void FileListMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			var toolItem = sender as ToolStripDropDownItem;
+			var toolItem = (ToolStripDropDownItem)sender;
 			var openItem = toolItem.DropDownItems[menuNameFiles_open];
 			if(openItem.Image == null) {
 				toolItem.DropDownItems[menuNameFiles_open].Image = toolItem.Image;
@@ -1880,6 +1920,12 @@
 				// 起こりえないけど改修実装なんで入れとく
 				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => toolItem.DumpToString(toolItem.Text));
 			}
+		}
+
+		void FileListMenu_DropDownClosed(object sender, EventArgs e)
+		{
+			var toolItem = (ToolStripDropDownItem)sender;
+			toolItem.DropDownItems[menuNameFiles_open].Image = null;
 		}
 
 		void FileListMenu_Click(object sender, EventArgs e)
