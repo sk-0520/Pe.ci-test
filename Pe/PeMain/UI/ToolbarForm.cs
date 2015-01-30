@@ -710,7 +710,7 @@
 							return icon.ToBitmap();
 						}
 					}
-				} catch(AggregateException ex) {
+				} catch(Exception ex) {
 					commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
 				}
 

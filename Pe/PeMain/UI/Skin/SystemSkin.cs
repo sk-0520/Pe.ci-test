@@ -598,7 +598,9 @@
 
 			var buttonLayout = GetToolbarButtonLayout(iconScale, false, 0);
 			var iconSize = iconScale.ToSize();
-			e.Graphics.DrawImage(e.Image, PaddingWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
+			if(e.Image != null) {
+				e.Graphics.DrawImage(e.Image, PaddingWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
+			}
 		}
 
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth)

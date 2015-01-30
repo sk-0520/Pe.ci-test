@@ -393,7 +393,7 @@
 	partial class NativeMethods
 	{
 		[DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-		public static extern ComResult SHCreateItemFromParsingName(
+		public static extern void SHCreateItemFromParsingName(
 			[In][MarshalAs(UnmanagedType.LPWStr)] string pszPath,
 			[In] IntPtr pbc,
 			[In][MarshalAs(UnmanagedType.LPStruct)] Guid riid,
