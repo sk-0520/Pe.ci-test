@@ -514,7 +514,7 @@
 			}
 			foreach(var menuItem in menuItems) {
 				menuItem.DropDownItems.Clear();
-				menuItem.ToDispose();
+				result.Add(menuItem);
 			}
 
 			return result;
@@ -533,8 +533,8 @@
 				}
 				//Debug.WriteLine("DisposeToolButtons: " + toolItem.Text);
 				diposeList.Add(toolItem.Image);
+				diposeList.Add(toolItem);
 				toolItem.Image = null;
-				toolItem.ToDispose();
 			}
 			diposeList.ForEach(d => {
 				//Debug.WriteLine(d);
