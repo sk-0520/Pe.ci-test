@@ -21,13 +21,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			return new StringBuilder(max, max);
 		}
-	
-		private static IShellLink CreateShellLink()
+
+		private static UnmanagedComWrapper<IShellLink> CreateShellLink()
 		{
-			return (IShellLink)new ShellLinkObject();
+			return new UnmanagedComWrapper<IShellLink>((IShellLink)new ShellLinkObject());
 		}
 
-		protected IShellLink _shellLink;
+		protected UnmanagedComWrapper<IShellLink> _shellLink;
 
 		/// <summary>
 		/// ショートカットを作成するためにオブジェクト生成。
@@ -49,7 +49,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		private IPersistFile PersistFile {
 			get
 			{
-				var result = this._shellLink as IPersistFile;
+				var result = this._shellLink.Com as IPersistFile;
 				if (result == null) {
 					throw new COMException("cannot create IPersistFile");
 				}
@@ -68,13 +68,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				var resultBuffer = CreateStringBuffer();
 				var findData = new WIN32_FIND_DATA();
 
-				this._shellLink.GetPath(resultBuffer, resultBuffer.MaxCapacity, out findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
+				this._shellLink.Com.GetPath(resultBuffer, resultBuffer.MaxCapacity, out findData, SLGP_FLAGS.SLGP_UNCPRIORITY);
 
 				return resultBuffer.ToString();
 			}
 			set
 			{
-				this._shellLink.SetPath(value);
+				this._shellLink.Com.SetPath(value);
 			}
 		}
 
@@ -88,13 +88,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				var max = 1024;
 				var resultBuffer = CreateStringBuffer(max);
 
-				this._shellLink.GetArguments(resultBuffer, resultBuffer.Capacity);
+				this._shellLink.Com.GetArguments(resultBuffer, resultBuffer.Capacity);
 
 				return resultBuffer.ToString();
 			}
 			set
 			{
-				this._shellLink.SetArguments(value);
+				this._shellLink.Com.SetArguments(value);
 			}
 		}
 
@@ -108,13 +108,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 				var max = 1024 * 5;
 				var resultBuffer = CreateStringBuffer(max);
 
-				this._shellLink.GetDescription(resultBuffer, resultBuffer.Capacity);
+				this._shellLink.Com.GetDescription(resultBuffer, resultBuffer.Capacity);
 
 				return resultBuffer.ToString();
 			}
 			set
 			{
-				this._shellLink.SetDescription(value);
+				this._shellLink.Com.SetDescription(value);
 			}
 		}
 
@@ -127,13 +127,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			{
 				var resultBuffer = CreateStringBuffer();
 
-				this._shellLink.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
+				this._shellLink.Com.GetWorkingDirectory(resultBuffer, resultBuffer.MaxCapacity);
 
 				return resultBuffer.ToString();
 			}
 			set
 			{
-				this._shellLink.SetWorkingDirectory(value);
+				this._shellLink.Com.SetWorkingDirectory(value);
 			}
 		}
 
@@ -146,13 +146,13 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			{
 				int rawShowCommand;
 
-				this._shellLink.GetShowCmd(out rawShowCommand);
+				this._shellLink.Com.GetShowCmd(out rawShowCommand);
 
 				return (SW)rawShowCommand;
 			}
 			set
 			{
-				this._shellLink.SetShowCmd((int)value);
+				this._shellLink.Com.SetShowCmd((int)value);
 			}
 		}
 
@@ -165,7 +165,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			var resultBuffer = CreateStringBuffer();
 			int iconIndex;
 
-			this._shellLink.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
+			this._shellLink.Com.GetIconLocation(resultBuffer, resultBuffer.Capacity, out iconIndex);
 
 			return new IconPath(resultBuffer.ToString(), iconIndex);
 		}
@@ -176,14 +176,14 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		/// <param name="iconPath"></param>
 		public void SetIcon(IconPath iconPath)
 		{
-			this._shellLink.SetIconLocation(iconPath.Path, iconPath.Index);
+			this._shellLink.Com.SetIconLocation(iconPath.Path, iconPath.Index);
 		}
 
 		#region IDisposable
 
 		protected void Dispose(bool disposing)
 		{
-			Marshal.ReleaseComObject(this._shellLink);
+			this._shellLink.ToDispose();
 			this._shellLink = null;
 		}
 
