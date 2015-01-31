@@ -1,8 +1,9 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	using System;
-	using System.Drawing;
-	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+using System.Drawing;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	/// <summary>
 	/// アンマネージドオブジェクトを管理してくれそうな人。
@@ -103,16 +104,28 @@
 	/// </summary>
 	public class UnmanagedDeviceContextBase: UnmanagedHandle
 	{
+		/// <summary>
+		/// デバイスコンテキスト割り当てオブジェクト戻し用。
+		/// 
+		/// Dispose or Rollbackで戻しを実行する。
+		/// Dispose は解放ではなく Rollback を発火するためだけに存在する。
+		/// ファイナライザは実装しないのでGC回収時に戻しが行われることはない。
+		/// 
+		/// 戻しが不要ならそのまま破棄するか IsRollbackTarget を偽に設定する。
+		/// </summary>
 		public class SelectedObject: IDisposable
 		{
 			protected internal SelectedObject(UnmanagedDeviceContextBase hDC, IntPtr handle)
 			{
 				DC = hDC;
 				SelectedHandle = handle;
+				IsRollbackTarget = true;
 			}
 
 			public UnmanagedDeviceContextBase DC { get; private set; }
 			public IntPtr SelectedHandle { get; private set; }
+
+			public bool IsRollbackTarget { get; set; }
 
 			#region IDisposable
 
@@ -125,7 +138,10 @@
 
 			public void Rollback()
 			{
-				NativeMethods.SelectObject(DC.Handle, SelectedHandle);
+				if(IsRollbackTarget) {
+					NativeMethods.SelectObject(DC.Handle, SelectedHandle);
+					IsRollbackTarget = false;
+				}
 			}
 		}
 
@@ -138,6 +154,11 @@
 			var selectedObject = NativeMethods.SelectObject(Handle, gdiObject.Handle);
 
 			return new SelectedObject(this, selectedObject);
+		}
+
+		public Graphics CreateGraphics()
+		{
+			return Graphics.FromHdc(Handle);
 		}
 	}
 
@@ -186,6 +207,27 @@
 			if(Graphics != null) {
 				Graphics.ReleaseHdc(Handle);
 				Graphics = null;
+			}
+		}
+	}
+
+	/// <summary>
+	/// Control紐付けデバイスコンテキスト。
+	/// </summary>
+	public class UnmanagedControlDeviceContext: UnmanagedDeviceContextBase
+	{
+		public UnmanagedControlDeviceContext(Control control)
+			: base(NativeMethods.GetWindowDC(control.Handle))
+		{
+			Control = control;
+		}
+
+		public Control Control { get; private set; }
+
+		protected override void ReleaseHandle()
+		{
+			if(Control != null) {
+				NativeMethods.ReleaseDC(Control.Handle, Handle);
 			}
 		}
 	}
