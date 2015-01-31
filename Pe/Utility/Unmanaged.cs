@@ -29,6 +29,7 @@
 		protected virtual void Dispose(bool disposing)
 		{
 			IsDisposed = true;
+
 		}
 
 		/// <summary>
@@ -37,6 +38,7 @@
 		public void Dispose()
 		{
 			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 
 		#endregion
@@ -84,6 +86,106 @@
 		}
 
 		#endregion
+	}
+
+	/// <summary>
+	/// DCの管理用基底クラス。
+	/// </summary>
+	public class UnmanagedDeviceContextBase: UnmanagedHandle
+	{
+		public class SelectedObject: IDisposable
+		{
+			protected internal SelectedObject(UnmanagedDeviceContextBase hDC, IntPtr handle)
+			{
+				DC = hDC;
+				SelectedHandle = handle;
+			}
+
+			public UnmanagedDeviceContextBase DC { get; private set; }
+			public IntPtr SelectedHandle { get; private set; }
+
+			#region IDisposable
+
+			public void Dispose()
+			{
+				Rollback();
+			}
+
+			#endregion
+
+			public void Rollback()
+			{
+				NativeMethods.SelectObject(DC.Handle, SelectedHandle);
+			}
+		}
+
+		public UnmanagedDeviceContextBase(IntPtr hDC)
+			: base(hDC)
+		{ }
+
+		public SelectedObject SelectObject(UnmanagedHandle gdiObject)
+		{
+			var selectedObject = NativeMethods.SelectObject(Handle, gdiObject.Handle);
+
+			return new SelectedObject(this, selectedObject);
+		}
+	}
+
+	/// <summary>
+	/// メモリデバイスコンテキスト。
+	/// </summary>
+	public class UnmanagedCompatibleDeviceContext: UnmanagedDeviceContextBase
+	{
+		/// <summary>
+		/// デバイスコンテキスト互換のメモリデバイスコンテキストを生成。
+		/// </summary>
+		/// <param name="hDC"></param>
+		public UnmanagedCompatibleDeviceContext(IntPtr hDC)
+			: base(NativeMethods.CreateCompatibleDC(hDC))
+		{ }
+
+		/// <summary>
+		/// アンマネージドデバイスコンテキスト互換のメモリデバイスコンテキストを生成。
+		/// </summary>
+		/// <param name="hDC"></param>
+		public UnmanagedCompatibleDeviceContext(UnmanagedDeviceContextBase hDC)
+			: base(NativeMethods.CreateCompatibleDC(hDC.Handle))
+		{ }
+
+		protected override void ReleaseHandle()
+		{
+			NativeMethods.DeleteDC(Handle);
+		}
+	}
+
+	/// <summary>
+	/// Graphics紐付けデバイスコンテキスト。
+	/// </summary>
+	public class UnmanagedGraphicsDeviceContext: UnmanagedDeviceContextBase
+	{
+		public UnmanagedGraphicsDeviceContext(Graphics g)
+			: base(g.GetHdc())
+		{
+			Graphics = g;
+		}
+
+		protected Graphics Graphics { get; set; }
+
+		protected override void ReleaseHandle()
+		{
+			if(Graphics != null) {
+				Graphics.ReleaseHdc(Handle);
+				Graphics = null;
+			}
+		}
+	}
+
+
+	public class UnmanagedFont: UnmanagedHandle
+	{
+		public UnmanagedFont(IntPtr hFont)
+			: base(hFont)
+		{ }
 	}
 
 	/// <summary>
