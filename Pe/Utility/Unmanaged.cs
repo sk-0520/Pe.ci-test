@@ -228,6 +228,7 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 		{
 			if(Control != null) {
 				NativeMethods.ReleaseDC(Control.Handle, Handle);
+				Control = null;
 			}
 		}
 	}
