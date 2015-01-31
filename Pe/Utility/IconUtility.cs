@@ -232,13 +232,8 @@
 					NativeMethods.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 				}
 				if(iconHandle[0] != IntPtr.Zero) {
-					//result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
-					try {
-						using(var icon = Icon.FromHandle(iconHandle[0])) {
-							return (Icon)icon.Clone();
-						}
-					} finally {
-						NativeMethods.DestroyIcon(iconHandle[0]);
+					using(var hIcon = new UnmanagedIcon(iconHandle[0])) {
+						return hIcon.ToManagedIcon();
 					}
 				}
 			}
@@ -248,13 +243,8 @@
 						using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
 							if(bitmap != null) {
 								//result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
-								var hIcon = bitmap.GetHicon();
-								try {
-									using(var icon = Icon.FromHandle(hIcon)) {
-										return (Icon)icon.Clone();
-									}
-								} finally {
-									NativeMethods.DestroyIcon(hIcon);
+								using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+									return hIcon.ToManagedIcon();
 								}
 							}
 						}
@@ -274,12 +264,8 @@
 					}
 					var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
 					if(/*fileInfoResult != IntPtr.Zero && */fileInfo.hIcon != IntPtr.Zero) {
-						try {
-							using(var icon = Icon.FromHandle(fileInfo.hIcon)) {
-								return (Icon)icon.Clone();
-							}
-						} finally {
-							NativeMethods.DestroyIcon(fileInfo.hIcon);
+						using(var hIcon = new UnmanagedIcon(fileInfo.hIcon)) {
+							return hIcon.ToManagedIcon();
 						}
 					}
 				//}
@@ -321,13 +307,8 @@
 				//if(hIcon == IntPtr.Zero) {
 					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
 						if(bitmap != null) {
-							var hIcon = bitmap.GetHicon();
-							try {
-								using(var icon = Icon.FromHandle(hIcon)) {
-									return (Icon)icon.Clone();
-								}
-							} finally {
-								NativeMethods.DestroyIcon(hIcon);
+							using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+								return hIcon.ToManagedIcon();
 							}
 						}
 					}
@@ -351,15 +332,12 @@
 							int n = 0;
 							imageList.GetImageCount(ref n);
 
-							var hIcon = IntPtr.Zero;
-							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
+							var hResultIcon = IntPtr.Zero;
+							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
 
-							using(var icon = Icon.FromHandle(hIcon)) {
-								result = (Icon)icon.Clone();
+							using(var hIcon = new UnmanagedIcon(hResultIcon)) {
+								result = hIcon.ToManagedIcon();
 							}
-
-							NativeMethods.DestroyIcon(hIcon);
-							NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 
 						} finally {
 							Marshal.ReleaseComObject(imageList);
