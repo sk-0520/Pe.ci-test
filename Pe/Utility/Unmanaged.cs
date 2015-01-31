@@ -1,11 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Drawing;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	/// <summary>
@@ -52,8 +48,13 @@
 	/// </summary>
 	public class UnmanagedHandle: UnmanagedBase
 	{
-		public UnmanagedHandle(IntPtr hHandle): base()
+		public UnmanagedHandle(IntPtr hHandle)
+			: base()
 		{
+			if(hHandle == IntPtr.Zero) {
+				throw new ArgumentNullException("hHandle");
+			}
+
 			Handle = hHandle;
 		}
 
@@ -86,6 +87,25 @@
 	}
 
 	/// <summary>
+	/// ビットマップハンドルを管理。
+	/// </summary>
+	public class UnmanagedBitmap: UnmanagedHandle
+	{
+		public UnmanagedBitmap(IntPtr hBitmap)
+			: base(hBitmap)
+		{ }
+
+		/// <summary>
+		/// ビットマップハンドルを元にマネージドリソースであるビットマップオブジェクトを生成。
+		/// </summary>
+		/// <returns>ビットマップ。UnmanagedIconの管轄外になるので後始末が必要なことに注意。</returns>
+		public Bitmap ToManagedBitmap()
+		{
+			return Image.FromHbitmap(Handle);
+		}
+	}
+
+	/// <summary>
 	/// アイコンハンドルを管理。
 	/// </summary>
 	public class UnmanagedIcon: UnmanagedHandle
@@ -105,12 +125,9 @@
 			return new UnmanagedIcon(hIcon);
 		}
 
-		public UnmanagedIcon(IntPtr hIcon): base(hIcon)
-		{
-			if(hIcon == IntPtr.Zero) {
-				throw new ArgumentNullException("hIcon");
-			}
-		}
+		public UnmanagedIcon(IntPtr hIcon)
+			: base(hIcon)
+		{ }
 
 		#region UnmanagedHandle
 

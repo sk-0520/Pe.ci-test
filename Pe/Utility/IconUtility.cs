@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Drawing.Imaging;
@@ -38,9 +37,9 @@
 		/// </summary>
 		/// <param name="hBitmap"></param>
 		/// <returns></returns>
-		static Bitmap BitmapFromhBitmap(IntPtr hBitmap)
+		static Bitmap BitmapFromhBitmap(UnmanagedBitmap hBitmap)
 		{
-			var plainBitmap = Image.FromHbitmap(hBitmap);
+			var plainBitmap = hBitmap.ToManagedBitmap(); //Image.FromHbitmap(hBitmap.Handle);
 			var bmData = new BitmapData[2];
 			var bounds = new Rectangle(0, 0, plainBitmap.Width, plainBitmap.Height);
 			bmData[0] = plainBitmap.LockBits(bounds, ImageLockMode.ReadOnly, plainBitmap.PixelFormat);
@@ -81,20 +80,18 @@
 		/// <returns></returns>
 		public static Bitmap GetThumbnailImage(string iconPath, IconScale iconScale)
 		{
-			var hBitmap = IntPtr.Zero;
 			IShellItem iShellItem = null;
 			NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
 			var size = iconScale.ToSize();
 			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 			try {
-				((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
+				var hResultBitmap = IntPtr.Zero;
+				((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hResultBitmap);
 				Marshal.ReleaseComObject(iShellItem);
 				iShellItem = null;
-				try {
+				using(var hBitmap = new UnmanagedBitmap(hResultBitmap)) {
 					var result = BitmapFromhBitmap(hBitmap);
 					return result;
-				} finally {
-					NativeMethods.DeleteObject(hBitmap);
 				}
 			} catch(COMException ex) {
 				Debug.WriteLine("{0}, {1}", ex, iconPath);
