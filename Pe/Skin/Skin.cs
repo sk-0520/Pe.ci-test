@@ -1,7 +1,9 @@
 ﻿//#define SELECT_TARGET
 
-#if BUILD
-#	error Deinfed BUILD!
+#if SELECT_TARGET
+#	if BUILD
+#		error Deinfed BUILD!
+#	endif
 #endif
 
 namespace ContentTypeTextNet.Pe.Library.Skin
