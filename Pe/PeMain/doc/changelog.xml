@@ -95,8 +95,8 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
+			<note rev="9681d49628e58b861729ac73ae46e08c235296d8">
+				<message>COMオブジェクトをラップする</message>
 			</note>
 			<note rev="">
 				<message></message>
