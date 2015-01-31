@@ -450,7 +450,6 @@
 			this.toolClipboard_itemType.Name = "toolClipboard_itemType";
 			this.toolClipboard_itemType.Size = new System.Drawing.Size(166, 22);
 			this.toolClipboard_itemType.Text = ":clipboard/select/type";
-			this.toolClipboard_itemType.Visible = false;
 			// 
 			// toolClipboard_itemType_itemClipboard
 			// 
@@ -465,6 +464,7 @@
 			this.toolClipboard_itemType_itemTemplate.Name = "toolClipboard_itemType_itemTemplate";
 			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(224, 22);
 			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
+			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
 			// ClipboardForm
 			// 

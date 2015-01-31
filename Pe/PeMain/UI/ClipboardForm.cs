@@ -226,6 +226,8 @@
 			}
 			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			Visible = CommonData.MainSetting.Clipboard.Visible;
+
+			ChangeSelectListType(CommonData.MainSetting.Clipboard.ClipboardListType);
 		}
 
 		/// <summary>
@@ -236,8 +238,6 @@
 			base.ApplySetting();
 
 			ApplySettingUI();
-
-			ChangeSelectType(this.toolClipboard_itemType_itemClipboard);
 
 			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
 		}
@@ -255,11 +255,39 @@
 			this.toolClipboard_itemEnabled.Checked = enabled;
 		}
 
-		void ChangeSelectType(ToolStripItem item)
+		void ChangeSelectTypeControl(ToolStripItem item)
 		{
 			this.toolClipboard_itemType.Text = item.Text;
 			this.toolClipboard_itemType.Image = item.Image;
+
+			var map = new Dictionary<ToolStripItem, ClipboardListType>() {
+				{ this.toolClipboard_itemType_itemClipboard, ClipboardListType.History },
+				{ this.toolClipboard_itemType_itemTemplate,  ClipboardListType.Template},
+			};
+
+			ChangeSelectType(map[item]);
 		}
+
+		/// <summary>
+		/// だっさいなぁ。
+		/// </summary>
+		/// <param name="type"></param>
+		void ChangeSelectListType(ClipboardListType type)
+		{
+			var map = new Dictionary<ClipboardListType, ToolStripItem>() {
+				{ ClipboardListType.History, this.toolClipboard_itemType_itemClipboard },
+				{ ClipboardListType.Template, this.toolClipboard_itemType_itemTemplate},
+			};
+
+			ChangeSelectTypeControl(map[type]);
+		}
+
+		void ChangeSelectType(ClipboardListType type)
+		{
+			CommonData.MainSetting.Clipboard.ClipboardListType = type;
+		}
+
+
 
 		void ChangeListItemNumber(int index, int count)
 		{
@@ -515,7 +543,7 @@
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
-			ChangeSelectType((ToolStripItem)sender);
+			ChangeSelectTypeControl((ToolStripItem)sender);
 		}
 
 		void Items_ListChanged(object sender, EventArgs e)

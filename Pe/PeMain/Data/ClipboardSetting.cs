@@ -32,6 +32,8 @@
 			WaitTime = Literal.clipboardWaitTime.median;
 
 			ToggleHotKeySetting = new HotKeySetting();
+
+			ClipboardListType = ClipboardListType.History;
 		}
 
 		/// <summary>
@@ -112,6 +114,10 @@
 				}
 			}
 		}
+		/// <summary>
+		/// クリップボードリストのタイプ。
+		/// </summary>
+		public ClipboardListType ClipboardListType { get; set; }
 
 		public override void CorrectionValue()
 		{
