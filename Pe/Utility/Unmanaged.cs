@@ -46,9 +46,9 @@
 	}
 
 	/// <summary>
-	/// オブジェクトハンドルを管理。
+	/// アンマネージドオブジェクトハンドルを管理。
 	/// </summary>
-	public class UnmanagedHandle: UnmanagedBase
+	public abstract class UnmanagedHandle: UnmanagedBase
 	{
 		public UnmanagedHandle(IntPtr hHandle)
 			: base()
@@ -89,6 +89,16 @@
 	}
 
 	/// <summary>
+	/// アンマネージドGDIオブジェクトを管理。
+	/// </summary>
+	public abstract class UnmanagedGDIObject: UnmanagedHandle
+	{
+		public UnmanagedGDIObject(IntPtr hGdiobj)
+			: base(hGdiobj)
+		{ }
+	}
+
+	/// <summary>
 	/// DCの管理用基底クラス。
 	/// </summary>
 	public class UnmanagedDeviceContextBase: UnmanagedHandle
@@ -123,7 +133,7 @@
 			: base(hDC)
 		{ }
 
-		public SelectedObject SelectObject(UnmanagedHandle gdiObject)
+		public SelectedObject SelectObject(UnmanagedGDIObject gdiObject)
 		{
 			var selectedObject = NativeMethods.SelectObject(Handle, gdiObject.Handle);
 
@@ -181,7 +191,7 @@
 	}
 
 
-	public class UnmanagedFont: UnmanagedHandle
+	public class UnmanagedFont: UnmanagedGDIObject
 	{
 		public UnmanagedFont(IntPtr hFont)
 			: base(hFont)
@@ -191,7 +201,7 @@
 	/// <summary>
 	/// ビットマップハンドルを管理。
 	/// </summary>
-	public class UnmanagedBitmap: UnmanagedHandle
+	public class UnmanagedBitmap: UnmanagedGDIObject
 	{
 		public UnmanagedBitmap(IntPtr hBitmap)
 			: base(hBitmap)
