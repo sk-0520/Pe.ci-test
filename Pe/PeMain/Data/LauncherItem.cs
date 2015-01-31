@@ -14,6 +14,7 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// ランチャー設定データ。
@@ -306,7 +307,7 @@
 				}
 				if(hasIcon) {
 					Debug.Assert(useIconPath != null);
-
+					/*
 					var waitCount = 0;
 					while(waitCount <= Literal.loadIconRetryCount) {
 						var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
@@ -319,6 +320,8 @@
 								waitCount++;
 							}
 					}
+					*/
+					this._iconMap[iconScale] = AppUtility.LoadIcon(new IconPath(useIconPath, iconIndex), iconScale, Literal.loadIconRetryTime, Literal.loadIconRetryCount, logger);
 				}
 			}
 

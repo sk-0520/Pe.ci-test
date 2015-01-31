@@ -707,6 +707,7 @@
 			// 至上命題: UIスレッドに結合される前に処理完了せよ！
 			Task.Run(() => {
 				try {
+					/*
 					var waitCount = 0;
 					while(waitCount <= Literal.loadIconRetryCount) {
 						using(var icon = IconUtility.Load(path, UsingToolbarItem.IconScale, 0)) {
@@ -722,6 +723,19 @@
 								commonData.Logger.PutsDebug(menuItem.Path, () => string.Format("Toolbar: wait {0}ms, count: {1}", Literal.loadIconRetryTime.TotalMilliseconds, waitCount));
 								Thread.Sleep(Literal.loadIconRetryTime);
 								waitCount++;
+							}
+						}
+					}
+					*/
+					var icon = AppUtility.LoadIcon(new IconPath(path, 0), UsingToolbarItem.IconScale, Literal.loadIconRetryTime, Literal.loadIconRetryCount, commonData.Logger);
+					if(icon != null) {
+						using(icon) {
+							if(isHiddenFile) {
+								using(var image = icon.ToBitmap()) {
+									return DrawUtility.Opacity(image, Literal.hiddenFileOpacity);
+								}
+							} else {
+								return icon.ToBitmap();
 							}
 						}
 					}
