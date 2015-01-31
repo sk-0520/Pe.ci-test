@@ -82,13 +82,13 @@
 		{
 			IShellItem iShellItem = null;
 			NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
-			var size = iconScale.ToSize();
-			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 			try {
+				var size = iconScale.ToSize();
+				var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 				var hResultBitmap = IntPtr.Zero;
-				((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hResultBitmap);
-				Marshal.ReleaseComObject(iShellItem);
-				iShellItem = null;
+				using(var shellItem = new UnmanagedComWrapper<IShellItem>(iShellItem)) {
+					((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hResultBitmap);
+				}
 				using(var hBitmap = new UnmanagedBitmap(hResultBitmap)) {
 					var result = BitmapFromhBitmap(hBitmap);
 					return result;
@@ -309,25 +309,21 @@
 			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
 			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 
-			IImageList imageList = null;
-			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
+			IImageList resultImageList = null;
+			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out resultImageList);
 
 			if(getImageListResult == ComResult.S_OK) {
-				Debug.Assert(imageList != null);
-				try {
+				Debug.Assert(resultImageList != null);
+				using(var imageList = new UnmanagedComWrapper<IImageList>(resultImageList)) {
 					int n = 0;
-					imageList.GetImageCount(ref n);
+					imageList.Com.GetImageCount(ref n);
 
 					var hResultIcon = IntPtr.Zero;
-					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
+					var hResult = imageList.Com.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
 
 					using(var hIcon = new UnmanagedIcon(hResultIcon)) {
 						return hIcon.ToManagedIcon();
 					}
-
-				} finally {
-					Marshal.ReleaseComObject(imageList);
-					imageList = null;
 				}
 			}
 

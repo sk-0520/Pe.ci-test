@@ -1,9 +1,10 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	using System;
-using System.Drawing;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using System.Drawing;
+	using System.Runtime.InteropServices;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	/// <summary>
 	/// アンマネージドオブジェクトを管理してくれそうな人。
@@ -30,7 +31,6 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 		protected virtual void Dispose(bool disposing)
 		{
 			IsDisposed = true;
-
 		}
 
 		/// <summary>
@@ -64,7 +64,7 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 		/// <summary>
 		/// ハンドル。
 		/// </summary>
-		public IntPtr Handle {get; private set; }
+		public IntPtr Handle { get; private set; }
 
 		/// <summary>
 		/// 解放処理。
@@ -304,6 +304,54 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 				return (Icon)icon.Clone();
 			}
 		}
+	}
+	/// <summary>
+	/// 生のCOMを管理。
+	/// </summary>
+	public abstract class UnmanagedRawComWrapper: UnmanagedBase
+	{
+		public UnmanagedRawComWrapper(object rawComObject)
+			: base()
+		{
+			if(rawComObject == null) {
+				throw new ArgumentNullException("rawComObject");
+			}
+
+			RawComObject = rawComObject;
+		}
+
+		/// <summary>
+		/// COMオブジェクト。
+		/// </summary>
+		public object RawComObject { get; private set; }
+
+
+		#region UnmanagedBase
+
+		protected override void Dispose(bool disposing)
+		{
+			Marshal.ReleaseComObject(RawComObject);
+			RawComObject = null;
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
+	}
+
+	/// <summary>
+	/// 何かしらのCOMを管理。
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class UnmanagedComWrapper<T>: UnmanagedRawComWrapper
+	{
+		public UnmanagedComWrapper(T com)
+			: base(com)
+		{
+			Com = com;
+		}
+
+		public T Com { get; private set; }
 	}
 }
 
