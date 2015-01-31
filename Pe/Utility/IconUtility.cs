@@ -218,7 +218,6 @@
 			Debug.Assert(iconScale.IsIn(IconScale.Small, IconScale.Normal), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
-			//Icon result = null;
 			// 16, 32 px
 			if(hasIcon) {
 				var iconHandle = new IntPtr[1];
@@ -234,42 +233,38 @@
 					}
 				}
 			}
-			//if(result == null) {
-				if(iconScale == IconScale.Normal) {
-					try {
-						using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-							if(bitmap != null) {
-								//result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
-								using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
-									return hIcon.ToManagedIcon();
-								}
+
+			if(iconScale == IconScale.Normal) {
+				try {
+					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
+						if(bitmap != null) {
+							//result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+							using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+								return hIcon.ToManagedIcon();
 							}
 						}
-					} catch(Exception ex) {
-						Debug.WriteLine(ex);
 					}
-				} 
+				} catch(Exception ex) {
+					Debug.WriteLine(ex);
+				}
+			}
 
-				//if(result == null) {
-					var fileInfo = new SHFILEINFO();
-					SHGFI flag = SHGFI.SHGFI_ICON;
-					if(iconScale == IconScale.Small) {
-						flag |= SHGFI.SHGFI_SMALLICON;
-					} else {
-						Debug.Assert(iconScale == IconScale.Normal);
-						flag |= SHGFI.SHGFI_LARGEICON;
-					}
-					var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
-					if(/*fileInfoResult != IntPtr.Zero && */fileInfo.hIcon != IntPtr.Zero) {
-						using(var hIcon = new UnmanagedIcon(fileInfo.hIcon)) {
-							return hIcon.ToManagedIcon();
-						}
-					}
-				//}
-			//}
+			var fileInfo = new SHFILEINFO();
+			SHGFI flag = SHGFI.SHGFI_ICON;
+			if(iconScale == IconScale.Small) {
+				flag |= SHGFI.SHGFI_SMALLICON;
+			} else {
+				Debug.Assert(iconScale == IconScale.Normal);
+				flag |= SHGFI.SHGFI_LARGEICON;
+			}
+			var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
+			if(fileInfo.hIcon != IntPtr.Zero) {
+				using(var hIcon = new UnmanagedIcon(fileInfo.hIcon)) {
+					return hIcon.ToManagedIcon();
+				}
+			}
 
-			//return result;
-					return null;
+			return null;
 		}
 
 		/// <summary>
@@ -285,69 +280,58 @@
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
-
-			//if(getImageListResult == ComResult.S_OK) {
-
-				if(hasIcon) {
-					try {
-						var iconList = LoadIconResource(iconPath, iconScale);
-						if(iconIndex < iconList.Count) {
-							using(var ms = new MemoryStream(iconList[iconIndex])) {
-								return new Icon(ms, iconScale.ToSize());
-							}
+			if(hasIcon) {
+				try {
+					var iconList = LoadIconResource(iconPath, iconScale);
+					if(iconIndex < iconList.Count) {
+						using(var ms = new MemoryStream(iconList[iconIndex])) {
+							return new Icon(ms, iconScale.ToSize());
 						}
-					} catch(Exception ex) {
-						Debug.WriteLine(ex);
+					}
+				} catch(Exception ex) {
+					Debug.WriteLine(ex);
+				}
+			}
+
+			using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
+				if(bitmap != null) {
+					using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+						return hIcon.ToManagedIcon();
 					}
 				}
+			}
 
-				//if(hIcon == IntPtr.Zero) {
-					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-						if(bitmap != null) {
-							using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
-								return hIcon.ToManagedIcon();
-							}
-						}
+			var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
+			var fileInfo = new SHFILEINFO() {
+				iIcon = iconIndex,
+			};
+
+			var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
+			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
+
+			IImageList imageList = null;
+			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
+
+			if(getImageListResult == ComResult.S_OK) {
+				Debug.Assert(imageList != null);
+				try {
+					int n = 0;
+					imageList.GetImageCount(ref n);
+
+					var hResultIcon = IntPtr.Zero;
+					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
+
+					using(var hIcon = new UnmanagedIcon(hResultIcon)) {
+						return hIcon.ToManagedIcon();
 					}
-				//}
 
-				//if(hIcon == IntPtr.Zero) {
-					var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
-					var fileInfo = new SHFILEINFO() {
-						iIcon = iconIndex,
-					};
+				} finally {
+					Marshal.ReleaseComObject(imageList);
+					imageList = null;
+				}
+			}
 
-					var infoFlags = SHGFI.SHGFI_SYSICONINDEX;
-					var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
-
-					IImageList imageList = null;
-					var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
-					Icon result = null;
-					if(getImageListResult == ComResult.S_OK) {
-						Debug.Assert(imageList != null);
-						try {
-							int n = 0;
-							imageList.GetImageCount(ref n);
-
-							var hResultIcon = IntPtr.Zero;
-							var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
-
-							using(var hIcon = new UnmanagedIcon(hResultIcon)) {
-								result = hIcon.ToManagedIcon();
-							}
-
-						} finally {
-							Marshal.ReleaseComObject(imageList);
-							imageList = null;
-						}
-					}
-				//}
-
-			//}
-
-			// -----------------
-
-			return result;
+			return null;
 		}
 
 		public static Icon Load(string iconPath, IconScale iconScale, int iconIndex)
@@ -365,43 +349,6 @@
 
 			return result;
 		}
-
-		//private static System.Drawing.Bitmap GetBitmapFromHbitmap(IntPtr hbitmap)
-		//{
-		//	Bitmap bm1 = Image.FromHbitmap(hbitmap);
-
-		//	var bmData = new System.Drawing.Imaging.BitmapData[2];
-		//	var bounds = new System.Drawing.Rectangle(0, 0, bm1.Width, bm1.Height);
-		//	bmData[0] = bm1.LockBits(bounds, ImageLockMode.ReadOnly, bm1.PixelFormat);
-
-		//	var bm2 = new Bitmap(bmData[0].Width, bmData[0].Height, bmData[0].Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, bmData[0].Scan0);
-		//	bmData[1] = bm2.LockBits(bounds, System.Drawing.Imaging.ImageLockMode.WriteOnly, bm2.PixelFormat);
-
-		//	Debug.WriteLine("{0}, {1}", bm1.Size, bm2.Size);
-
-		//	Marshal.StructureToPtr(bmData[0].Scan0, bmData[1].Scan0, true);
-		//	bm2.UnlockBits(bmData[1]);
-		//	bm1.UnlockBits(bmData[0]);
-
-		//	bool transparent = true;
-		//	for(int y = 0; y < bm2.Height; y++) {
-		//		for(int x = 0; x < bm2.Width; x++) {
-		//			if((x > 0) && (y > 0)) {
-		//				byte alpha = bm2.GetPixel(x, y).A;
-		//				if(alpha > 0) {
-		//					transparent = false;
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	if(transparent == false) {
-		//		return bm2;
-		//	}
-
-		//	return bm1;
-		//}
 
 		public static Image ImageFromIcon(Icon icon, IconScale iconScale)
 		{

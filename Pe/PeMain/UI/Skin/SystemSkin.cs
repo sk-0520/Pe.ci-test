@@ -631,50 +631,27 @@
 				bitmapInfo.bmiHeader.biPlanes = 1;
 				bitmapInfo.bmiHeader.biBitCount = 32;
 
-				//var hDC = e.Graphics.GetHdc();
-				var hDC = new UnmanagedGraphicsDeviceContext(e.Graphics);
-				//var hFont = e.TextFont.ToHfont();
-				var hFont = new UnmanagedFont(e.TextFont.ToHfont());
-				//var hMemDC = NativeMethods.CreateCompatibleDC(hDC);
-				var hMemDC = new UnmanagedCompatibleDeviceContext(hDC);
 				var tempPtr = IntPtr.Zero;
-				var hBitmap = new UnmanagedBitmap(NativeMethods.CreateDIBSection(hDC.Handle, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0));
-				try {
-					//var hOldBitmap = NativeMethods.SelectObject(hMemDC.Handle, hBitmap.Handle);
-					var hOldBitmap = hMemDC.SelectObject(hBitmap);
-					//var hOldFont = NativeMethods.SelectObject(hMemDC.Handle, hFont.Handle);
-					var hOldFont = hMemDC.SelectObject(hFont);
-					try {
-						var ddtOpts = new DTTOPTS() {
-							dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
-							dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor,
-							crText = new COLORREF(e.TextColor),
-							iGlowSize = glowSize,
-						};
+				using(var hDC = new UnmanagedGraphicsDeviceContext(e.Graphics))
+				using(var hFont = new UnmanagedFont(e.TextFont.ToHfont()))
+				using(var hMemDC = new UnmanagedCompatibleDeviceContext(hDC))
+				using(var hBitmap = new UnmanagedBitmap(NativeMethods.CreateDIBSection(hDC.Handle, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0)))
+				using(var hOldBitmap = hMemDC.SelectObject(hBitmap))
+				using(var hOldFont = hMemDC.SelectObject(hFont)) {
+					var ddtOpts = new DTTOPTS() {
+						dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
+						dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor,
+						crText = new COLORREF(e.TextColor),
+						iGlowSize = glowSize,
+					};
 
-						var renderer = new VisualStyleRenderer(VisualStyleElement.Window.Caption.Active);
-						var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
+					var renderer = new VisualStyleRenderer(VisualStyleElement.Window.Caption.Active);
+					var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
 
-						NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC.Handle, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
-						//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
-						var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
-						NativeMethods.AlphaBlend(hDC.Handle, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC.Handle, 0, 0, textArea.Width, textArea.Height, blendfunction);
-					} finally {
-						//NativeMethods.SelectObject(hMemDC.Handle, hOldFont);
-						hOldFont.ToDispose();
-						//NativeMethods.SelectObject(hMemDC.Handle, hOldBitmap);
-						hOldBitmap.ToDispose();
-					}
-				} finally {
-					//NativeMethods.DeleteObject(hBitmap);
-					hBitmap.ToDispose();
-					//NativeMethods.DeleteObject(hFont);
-					hFont.ToDispose();
-					//NativeMethods.DeleteDC(hMemDC);
-					hMemDC.ToDispose();
-
-					//e.Graphics.ReleaseHdc(hDC);
-					hDC.ToDispose();
+					NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC.Handle, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
+					//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
+					var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
+					NativeMethods.AlphaBlend(hDC.Handle, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC.Handle, 0, 0, textArea.Width, textArea.Height, blendfunction);
 				}
 			} else {
 				using(var sf = ToStringFormat(e.TextFormat))
