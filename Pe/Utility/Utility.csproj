@@ -113,6 +113,7 @@
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AppbarFormUtility.cs" />
+    <Compile Include="Unmanaged.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\AppbarForm.resx">
