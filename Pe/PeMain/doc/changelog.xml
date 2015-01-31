@@ -131,8 +131,8 @@
 			<note rev="f403270f80000b5675dfad32222199b1d34104c2">
 				<message>IF適応の漏れを修正</message>
 			</note>
-			<note rev="">
-				<message></message>
+			<note rev="3c264cd5b1b3c524dcebc3d09e85c041127c0727">
+				<message>DBManager担当処理を分割</message>
 			</note>
 		</group>
 	</log>
