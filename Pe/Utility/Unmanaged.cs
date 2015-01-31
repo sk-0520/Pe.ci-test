@@ -1,13 +1,16 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
+	/// <summary>
+	/// アンマネージドオブジェクトを管理してくれそうな人。
+	/// </summary>
 	public abstract class UnmanagedBase: IDisposable
 	{
 		protected UnmanagedBase()
@@ -45,9 +48,47 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	}
 
 	/// <summary>
+	/// オブジェクトハンドルを管理。
+	/// </summary>
+	public class UnmanagedHandle: UnmanagedBase
+	{
+		public UnmanagedHandle(IntPtr hHandle): base()
+		{
+			Handle = hHandle;
+		}
+
+		/// <summary>
+		/// ハンドル。
+		/// </summary>
+		public IntPtr Handle {get; private set; }
+
+		/// <summary>
+		/// 解放処理。
+		/// 
+		/// ハンドルにより処理色々なんでオーバーライドしてごちゃごちゃする。
+		/// </summary>
+		protected virtual void ReleaseHandle()
+		{
+			NativeMethods.DeleteObject(Handle);
+		}
+
+		#region UnmanagedBase
+
+		protected override void Dispose(bool disposing)
+		{
+			ReleaseHandle();
+			Handle = IntPtr.Zero;
+
+			base.Dispose(disposing);
+		}
+
+		#endregion
+	}
+
+	/// <summary>
 	/// アイコンハンドルを管理。
 	/// </summary>
-	public class UnmanagedIcon: UnmanagedBase
+	public class UnmanagedIcon: UnmanagedHandle
 	{
 		/// <summary>
 		/// ビットマップからアンマネージドアイコンの生成。
@@ -64,25 +105,22 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 			return new UnmanagedIcon(hIcon);
 		}
 
-		public UnmanagedIcon(IntPtr hIcon)
+		public UnmanagedIcon(IntPtr hIcon): base(hIcon)
 		{
 			if(hIcon == IntPtr.Zero) {
 				throw new ArgumentNullException("hIcon");
 			}
-
-			IconHandle = hIcon;
 		}
 
-		public IntPtr IconHandle {get; private set; }
+		#region UnmanagedHandle
 
-		protected override void Dispose(bool disposing)
+		protected override void ReleaseHandle()
 		{
-			NativeMethods.DestroyIcon(IconHandle);
-			NativeMethods.SendMessage(IconHandle, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-			IconHandle = IntPtr.Zero;
-
-			base.Dispose(disposing);
+			NativeMethods.DestroyIcon(Handle);
+			NativeMethods.SendMessage(Handle, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
 		}
+
+		#endregion
 
 		/// <summary>
 		/// アイコンハンドルを元にマネージドリソースであるアイコンオブジェクトを生成。
@@ -90,9 +128,10 @@ using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 		/// <returns>アイコン。UnmanagedIconの管轄外になるので後始末が必要なことに注意。</returns>
 		public Icon ToManagedIcon()
 		{
-			using(var icon = Icon.FromHandle(IconHandle)) {
+			using(var icon = Icon.FromHandle(Handle)) {
 				return (Icon)icon.Clone();
 			}
 		}
 	}
 }
+
