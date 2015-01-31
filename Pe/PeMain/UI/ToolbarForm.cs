@@ -696,6 +696,7 @@
 			var menuItem = new FileImageToolStripMenuItem(commonData) {
 				Path = path,
 				Image = this._waitImage[UsingToolbarItem.IconScale],
+				ImageScaling = ToolStripItemImageScaling.None,
 			};
 
 			if(!isDir && !showExtension) {
@@ -878,6 +879,7 @@
 					menuList.Add(menuItem);
 				}
 
+				parentItem.ImageScaling = ToolStripItemImageScaling.None;
 				parentItem.DropDownItems.AddRange(menuList.ToArray());
 				ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
 			} finally {
