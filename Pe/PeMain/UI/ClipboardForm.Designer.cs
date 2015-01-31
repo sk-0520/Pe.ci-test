@@ -53,15 +53,15 @@
 			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageTab = new System.Windows.Forms.ImageList(this.components);
-			this.toolClipboard = new ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip();
+			this.toolClipboard = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip();
 			this.toolClipboard_itemEnabled = new System.Windows.Forms.ToolStripButton();
 			this.toolClipboard_itemTopmost = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+			this.DisableCloseToolStripSeparator2 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolClipboard_itemSave = new System.Windows.Forms.ToolStripButton();
 			this.toolClipboard_itemRemove = new System.Windows.Forms.ToolStripSplitButton();
 			this.toolClipboard_itemClear = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemEmpty = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.DisableCloseToolStripSeparator1 = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
@@ -283,7 +283,7 @@
 			this.viewHtml.ScriptErrorsSuppressed = true;
 			this.viewHtml.Size = new System.Drawing.Size(371, 200);
 			this.viewHtml.TabIndex = 0;
-			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
+			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
 			// tabPreview_pageImage
 			// 
@@ -362,10 +362,10 @@
 			this.toolClipboard.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolClipboard_itemEnabled,
             this.toolClipboard_itemTopmost,
-            this.toolStripSeparator2,
+            this.DisableCloseToolStripSeparator2,
             this.toolClipboard_itemSave,
             this.toolClipboard_itemRemove,
-            this.toolStripSeparator1,
+            this.DisableCloseToolStripSeparator1,
             this.toolClipboard_itemType});
 			this.toolClipboard.Location = new System.Drawing.Point(0, 0);
 			this.toolClipboard.Name = "toolClipboard";
@@ -393,10 +393,10 @@
 			this.toolClipboard_itemTopmost.Text = ":clipboard/tips/topmost";
 			this.toolClipboard_itemTopmost.Click += new System.EventHandler(this.toolClipboard_itemTopmost_Click);
 			// 
-			// toolStripSeparator2
+			// DisableCloseToolStripSeparator2
 			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+			this.DisableCloseToolStripSeparator2.Name = "DisableCloseToolStripSeparator2";
+			this.DisableCloseToolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolClipboard_itemSave
 			// 
@@ -435,10 +435,10 @@
 			this.toolClipboard_itemEmpty.Text = ":clipboard/command/empty";
 			this.toolClipboard_itemEmpty.Click += new System.EventHandler(this.toolClipboard_itemEmpty_Click);
 			// 
-			// toolStripSeparator1
+			// DisableCloseToolStripSeparator1
 			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+			this.DisableCloseToolStripSeparator1.Name = "DisableCloseToolStripSeparator1";
+			this.DisableCloseToolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolClipboard_itemType
 			// 
@@ -519,9 +519,9 @@
 
 		private System.Windows.Forms.ToolStripContainer panelMain;
 		private System.Windows.Forms.StatusStrip statusClipboard;
-		private ContentTypeTextNet.Pe.PeMain.UI.ActiveToolStrip toolClipboard;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip toolClipboard;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemSave;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.SplitContainer panelClipboard;
 		private System.Windows.Forms.TabControl tabPreview;
 		private System.Windows.Forms.TabPage tabPreview_pageText;
@@ -533,7 +533,7 @@
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemType_itemTemplate;
 		private System.Windows.Forms.ListBox listClipboard;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemTopmost;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ImageList imageTab;
 		private System.Windows.Forms.TextBox viewText;
 		private System.Windows.Forms.RichTextBox viewRtf;

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
-	/// <summary>
-	/// Description of ExToolStripControlHost.
-	/// </summary>
+	using System;
+	using System.Windows.Forms;
+
 	public class ExToolStripControlHost: ToolStripControlHost
 	{
 		/// <summary>

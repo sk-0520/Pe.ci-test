@@ -23,6 +23,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			AddShowTrigger = LogType.Warning | LogType.Error;
 
 			Debugging = false;
+#if DEBUG
+			Debugging = true;
+#endif
 		}
 		
 		/// <summary>

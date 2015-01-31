@@ -2,7 +2,6 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Drawing.Imaging;
@@ -38,9 +37,9 @@
 		/// </summary>
 		/// <param name="hBitmap"></param>
 		/// <returns></returns>
-		static Bitmap BitmapFromhBitmap(IntPtr hBitmap)
+		static Bitmap BitmapFromhBitmap(UnmanagedBitmap hBitmap)
 		{
-			var plainBitmap = Image.FromHbitmap(hBitmap);
+			var plainBitmap = hBitmap.ToManagedBitmap(); //Image.FromHbitmap(hBitmap.Handle);
 			var bmData = new BitmapData[2];
 			var bounds = new Rectangle(0, 0, plainBitmap.Width, plainBitmap.Height);
 			bmData[0] = plainBitmap.LockBits(bounds, ImageLockMode.ReadOnly, plainBitmap.PixelFormat);
@@ -81,14 +80,23 @@
 		/// <returns></returns>
 		public static Bitmap GetThumbnailImage(string iconPath, IconScale iconScale)
 		{
-			var hBitmap = IntPtr.Zero;
 			IShellItem iShellItem = null;
 			NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
 			var size = iconScale.ToSize();
 			var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
-			((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hBitmap);
-
-			return BitmapFromhBitmap(hBitmap);
+			try {
+				var hResultBitmap = IntPtr.Zero;
+				((IShellItemImageFactory)iShellItem).GetImage(new SIZE(size.Width, size.Height), siigbf, out hResultBitmap);
+				Marshal.ReleaseComObject(iShellItem);
+				iShellItem = null;
+				using(var hBitmap = new UnmanagedBitmap(hResultBitmap)) {
+					var result = BitmapFromhBitmap(hBitmap);
+					return result;
+				}
+			} catch(COMException ex) {
+				Debug.WriteLine("{0}, {1}", ex, iconPath);
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -101,19 +109,19 @@
 		static byte[] GetResourceBinaryData(IntPtr hModule, IntPtr name, ResType resType)
 		{
 			var hGroup = NativeMethods.FindResource(hModule, name, new IntPtr((int)resType));
-			if(hGroup == null) {
+			if(hGroup == IntPtr.Zero) {
 				Debug.WriteLine("return FindResource");
 				return null;
 			}
 
 			var hLoadGroup = NativeMethods.LoadResource(hModule, hGroup);
-			if(hLoadGroup == null) {
+			if(hLoadGroup == IntPtr.Zero) {
 				Debug.WriteLine("return LoadResource");
 				return null;
 			}
 
 			var resData = NativeMethods.LockResource(hLoadGroup);
-			if(resData == null) {
+			if(resData == IntPtr.Zero) {
 				Debug.WriteLine("return LockResource");
 				return null;
 			}
@@ -148,9 +156,13 @@
 
 					var totalSize = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 					foreach(var i in Enumerable.Range(0, iconCount)) {
+						var readOffset = sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes;
+						if(!binaryGroupIconData.Length.Between(0, readOffset + sizeof(Int32))) {
+							break;
+						}
 						var length = BitConverter.ToInt32(
 							binaryGroupIconData,
-							sizeofICONDIR + (sizeofGRPICONDIRENTRY * i) + offsetGRPICONDIRENTRY_dwBytesInRes
+							readOffset
 						);
 						//Debug.WriteLine("[{0}] = {1} byte", i, length);
 						totalSize += length;
@@ -163,16 +175,21 @@
 						var picOffset = sizeofICONDIR + sizeofICONDIRENTRY * iconCount;
 						foreach(var i in Enumerable.Range(0, iconCount)) {
 							stream.Seek(sizeofICONDIR + sizeofICONDIRENTRY * i, SeekOrigin.Begin);
-
-							stream.Write(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i, offsetGRPICONDIRENTRY_nID);
-							stream.Write(picOffset); 
+							var offsetWrite = sizeofICONDIR + sizeofGRPICONDIRENTRY * i;
+							if(binaryGroupIconData.Length <= offsetWrite + offsetGRPICONDIRENTRY_nID) {
+								continue;
+							}
+							stream.Write(binaryGroupIconData, offsetWrite, offsetGRPICONDIRENTRY_nID);
+							stream.Write(picOffset);
 
 							stream.Seek(picOffset, SeekOrigin.Begin);
 
 							ushort id = BitConverter.ToUInt16(binaryGroupIconData, sizeofICONDIR + sizeofGRPICONDIRENTRY * i + offsetGRPICONDIRENTRY_nID);
 							var pic = GetResourceBinaryData(hModule, new IntPtr(id), ResType.ICON);
-							stream.Write(pic, 0, pic.Length);
-							picOffset += pic.Length;
+							if(pic != null) {
+								stream.Write(pic, 0, pic.Length);
+								picOffset += pic.Length;
+							}
 						}
 
 						binaryList.Add(((MemoryStream)stream.BaseStream).ToArray());
@@ -201,7 +218,6 @@
 			Debug.Assert(iconScale.IsIn(IconScale.Small, IconScale.Normal), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
-			Icon result = null;
 			// 16, 32 px
 			if(hasIcon) {
 				var iconHandle = new IntPtr[1];
@@ -212,39 +228,43 @@
 					NativeMethods.ExtractIconEx(iconPath, iconIndex, iconHandle, null, 1);
 				}
 				if(iconHandle[0] != IntPtr.Zero) {
-					result = (Icon)System.Drawing.Icon.FromHandle(iconHandle[0]).Clone();
-					NativeMethods.DestroyIcon(iconHandle[0]);
+					using(var hIcon = new UnmanagedIcon(iconHandle[0])) {
+						return hIcon.ToManagedIcon();
+					}
 				}
 			}
-			if(result == null) {
-				if(iconScale == IconScale.Normal) {
-					try {
-						using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-							result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+
+			if(iconScale == IconScale.Normal) {
+				try {
+					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
+						if(bitmap != null) {
+							//result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
+							using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+								return hIcon.ToManagedIcon();
+							}
 						}
-					} catch(Exception ex) {
-						Debug.WriteLine(ex);
 					}
-				} 
-
-				if(result == null) {
-					var fileInfo = new SHFILEINFO();
-					SHGFI flag = SHGFI.SHGFI_ICON;
-					if(iconScale == IconScale.Small) {
-						flag |= SHGFI.SHGFI_SMALLICON;
-					} else {
-						Debug.Assert(iconScale == IconScale.Normal);
-						flag |= SHGFI.SHGFI_LARGEICON;
-					}
-					var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
-					if(fileInfoResult != IntPtr.Zero) {
-						result = (Icon)System.Drawing.Icon.FromHandle(fileInfo.hIcon).Clone();
-						NativeMethods.DestroyIcon(fileInfo.hIcon);
-					}
+				} catch(Exception ex) {
+					Debug.WriteLine(ex);
 				}
 			}
 
-			return result;
+			var fileInfo = new SHFILEINFO();
+			SHGFI flag = SHGFI.SHGFI_ICON;
+			if(iconScale == IconScale.Small) {
+				flag |= SHGFI.SHGFI_SMALLICON;
+			} else {
+				Debug.Assert(iconScale == IconScale.Normal);
+				flag |= SHGFI.SHGFI_LARGEICON;
+			}
+			var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
+			if(fileInfo.hIcon != IntPtr.Zero) {
+				using(var hIcon = new UnmanagedIcon(fileInfo.hIcon)) {
+					return hIcon.ToManagedIcon();
+				}
+			}
+
+			return null;
 		}
 
 		/// <summary>
@@ -260,7 +280,27 @@
 			Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
 
-			Icon result = null;
+			if(hasIcon) {
+				try {
+					var iconList = LoadIconResource(iconPath, iconScale);
+					if(iconIndex < iconList.Count) {
+						using(var ms = new MemoryStream(iconList[iconIndex])) {
+							return new Icon(ms, iconScale.ToSize());
+						}
+					}
+				} catch(Exception ex) {
+					Debug.WriteLine(ex);
+				}
+			}
+
+			using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
+				if(bitmap != null) {
+					using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+						return hIcon.ToManagedIcon();
+					}
+				}
+			}
+
 			var shellImageList = iconScale == IconScale.Big ? SHIL.SHIL_EXTRALARGE : SHIL.SHIL_JUMBO;
 			var fileInfo = new SHFILEINFO() {
 				iIcon = iconIndex,
@@ -273,44 +313,25 @@
 			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out imageList);
 
 			if(getImageListResult == ComResult.S_OK) {
-				var hIcon = IntPtr.Zero;
-
-				if(hasIcon) {
-					try {
-						var iconList = LoadIconResource(iconPath, iconScale);
-						if(iconIndex < iconList.Count) {
-							using(var ms = new MemoryStream(iconList[iconIndex])) {
-								hIcon = new Icon(ms, iconScale.ToSize()).Handle;
-							}
-						}
-					} catch(Exception ex) {
-						Debug.WriteLine(ex);
-					}
-				}
-
-				if(hIcon == IntPtr.Zero) {
-					using(var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-						hIcon = bitmap.GetHicon();
-					}
-				}
-
-				if(hIcon == IntPtr.Zero) {
+				Debug.Assert(imageList != null);
+				try {
 					int n = 0;
 					imageList.GetImageCount(ref n);
-					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hIcon);
-				}
 
-				using(var icon = Icon.FromHandle(hIcon)) {
-					result = (Icon)icon.Clone();
-				}
+					var hResultIcon = IntPtr.Zero;
+					var hResult = imageList.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
 
-				NativeMethods.DestroyIcon(hIcon);
-				NativeMethods.SendMessage(hIcon, WM.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+					using(var hIcon = new UnmanagedIcon(hResultIcon)) {
+						return hIcon.ToManagedIcon();
+					}
+
+				} finally {
+					Marshal.ReleaseComObject(imageList);
+					imageList = null;
+				}
 			}
 
-			// -----------------
-
-			return result;
+			return null;
 		}
 
 		public static Icon Load(string iconPath, IconScale iconScale, int iconIndex)
@@ -328,43 +349,6 @@
 
 			return result;
 		}
-
-		//private static System.Drawing.Bitmap GetBitmapFromHbitmap(IntPtr hbitmap)
-		//{
-		//	Bitmap bm1 = Image.FromHbitmap(hbitmap);
-
-		//	var bmData = new System.Drawing.Imaging.BitmapData[2];
-		//	var bounds = new System.Drawing.Rectangle(0, 0, bm1.Width, bm1.Height);
-		//	bmData[0] = bm1.LockBits(bounds, ImageLockMode.ReadOnly, bm1.PixelFormat);
-
-		//	var bm2 = new Bitmap(bmData[0].Width, bmData[0].Height, bmData[0].Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, bmData[0].Scan0);
-		//	bmData[1] = bm2.LockBits(bounds, System.Drawing.Imaging.ImageLockMode.WriteOnly, bm2.PixelFormat);
-
-		//	Debug.WriteLine("{0}, {1}", bm1.Size, bm2.Size);
-
-		//	Marshal.StructureToPtr(bmData[0].Scan0, bmData[1].Scan0, true);
-		//	bm2.UnlockBits(bmData[1]);
-		//	bm1.UnlockBits(bmData[0]);
-
-		//	bool transparent = true;
-		//	for(int y = 0; y < bm2.Height; y++) {
-		//		for(int x = 0; x < bm2.Width; x++) {
-		//			if((x > 0) && (y > 0)) {
-		//				byte alpha = bm2.GetPixel(x, y).A;
-		//				if(alpha > 0) {
-		//					transparent = false;
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	if(transparent == false) {
-		//		return bm2;
-		//	}
-
-		//	return bm1;
-		//}
 
 		public static Image ImageFromIcon(Icon icon, IconScale iconScale)
 		{

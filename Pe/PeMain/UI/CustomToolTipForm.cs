@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 	/// <summary>
 	/// TODO: スキンと内部描画が入り混じっている。描画処理は整理出来たら全部スキンに回す。
@@ -163,7 +164,8 @@
 			var launcherItem = toolStripItem.Tag as LauncherItem;
 
 			if(launcherItem != null) {
-				this._imageIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting).ToBitmap();
+				var itemIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
+				this._imageIcon = itemIcon.ToBitmap();
 				this._title = launcherItem.Name;
 				if(launcherItem.LauncherType == LauncherType.Embedded) {
 					var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);

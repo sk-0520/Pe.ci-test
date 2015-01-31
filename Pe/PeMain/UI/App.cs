@@ -23,6 +23,8 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
+	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 	using Microsoft.Win32;
 
 	/// <summary>
@@ -83,7 +85,7 @@
 		private WindowListItem _tempWindowListItem;
 		FixedSizedList<WindowListItem> _windowListItems; //= new List<WindowListItem>();
 		//private List<WindowListItem> _windowListItemList = new List<WindowListItem>();
-		
+
 		System.Timers.Timer _windowTimer;
 
 		Listener _listener;
@@ -107,9 +109,7 @@
 			ExistsSettingFilePath = Initialize(commandLine, logger);
 			logger.PutsDebug("ExistsSettingFilePath", () => ExistsSettingFilePath);
 
-			#if !DISABLED_UPDATE_CHECK
-			CheckUpdateProcessAsync(false);
-			#endif
+			CheckUpdateProcessAsync();
 		}
 
 		#region property
@@ -388,7 +388,7 @@
 				query.ExecuteCommand(command);
 			}
 
-			var entity = new MVersionEntity();
+			var entity = new MVersionRow();
 			entity.Name = tableName;
 			entity.Version = DataTables.map[tableName];
 			using(var query = this._commonData.Database.CreateQuery()) {
@@ -545,18 +545,11 @@
 		{
 			var menuList = new List<ToolStripMenuItem>();
 			foreach(var screen in Screen.AllScreens) {
-				var menuItem = new ToolStripMenuItem();
-				menuItem.Name = screen.DeviceName;
-				menuItem.Text = ScreenUtility.GetScreenName(screen);
-				menuItem.Click += (object sender, EventArgs e) => {
-					var toolbar = this._toolbarForms[screen];
-					/*
-					toolbar.Visible = !toolbar.Visible;
-					toolbar.UseToolbarItem.Visible = toolbar.Visible;
-					 */
-					toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
-					toolbar.ApplySettingVisible();
+				var menuItem = new ScreenToolStripMenuItem(this._commonData) {
+					Name = screen.DeviceName,
+					Screen = screen,
 				};
+				menuItem.Click += screenToolMenuItem_Click;
 				menuList.Add(menuItem);
 			}
 
@@ -567,123 +560,57 @@
 			parentItem.Name = menuNameWindowToolbar;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
-			parentItem.DropDownOpened += (object sender, EventArgs e) => {
-				var screens = Screen.AllScreens.ToArray();
-				var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
-				var iconSize = IconScale.Small.ToSize();
-				var drawSize = (SizeF)iconSize;
-				var maxArea = new RectangleF() {
-					X = screens.Min(s => s.Bounds.Left),
-					Y = screens.Min(s => s.Bounds.Top)
-				};
-				maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
-				maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
-
-				var percentage = new SizeF(
-					drawSize.Width / maxArea.Width * 100.0f,
-					drawSize.Height / maxArea.Height * 100.0f
-				);
-
-				foreach(var screen in screens) {
-					if(parentItem.DropDownItems.ContainsKey(screen.DeviceName)) {
-						var menuItem = (ToolStripMenuItem)parentItem.DropDownItems[screen.DeviceName];
-						// 各エリアの描画
-						var alpha = 80;
-						var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
-						using(var g = Graphics.FromImage(baseImage)) {
-							foreach(var inScreen in screens) {
-								var useScreen = inScreen == screen;
-								var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
-								var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
-
-								var baseArea = inScreen.Bounds;
-								baseArea.Offset(basePos);
-
-								var drawArea = new RectangleF(
-									baseArea.X / 100.0f * percentage.Width,
-									baseArea.Y / 100.0f * percentage.Height,
-									baseArea.Width / 100.0f * percentage.Width,
-									baseArea.Height / 100.0f * percentage.Height
-								);
-
-								using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
-									g.DrawImage(img, drawArea.Location);
-								}
-							}
-						}
-						menuItem.Image.ToDispose();
-						menuItem.Image = baseImage;
-						menuItem.Checked = this._toolbarForms[screen].Visible;
-					}
-				}
-			};
+			parentItem.DropDownOpened += ToolbarSubMenu_DropDownOpened;
 		}
 
 		void AttachmentNoteSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemNoteCreate = new ToolStripMenuItem();
-			var itemNoteHidden = new ToolStripMenuItem();
-			var itemNoteCompact = new ToolStripMenuItem();
-			var itemNoteShowFront = new ToolStripMenuItem();
-			menuList.Add(itemNoteCreate);
-			menuList.Add(itemNoteHidden);
-			menuList.Add(itemNoteCompact);
-			menuList.Add(new ToolStripSeparator());
-			menuList.Add(itemNoteShowFront);
-
 			// ノート作成
-			itemNoteCreate.Name = menuNameWindowNoteCreate;
-			itemNoteCreate.Click += (object sender, EventArgs e) => {
-				var screen = ScreenUtility.GetCurrentCursor();
-				var area = screen.Bounds;
-				var point = new Point(
-					area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
-					area.Top + area.Height / 2 - Literal.noteSize.Width / 2
-				);
-				CreateNote(point);
+			var itemNoteCreate = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteCreate,
 			};
+			itemNoteCreate.Click += itemNoteCreate_Click;
+
 			// ノート非表示
-			itemNoteHidden.Name = menuNameWindowNoteHidden;
+			var itemNoteHidden = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteHidden,
+			};
 			itemNoteHidden.Click += (object sender, EventArgs e) => {
 				HiddenNote();
 			};
+
 			// ノート最小化
-			itemNoteCompact.Name = menuNameWindowNoteCompact;
+			var itemNoteCompact = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteCompact,
+			};
 			itemNoteCompact.Click += (object sender, EventArgs e) => {
 				CompactNote();
 			};
 
-			// ノートを前面へ
-			itemNoteShowFront.Name = menuNameWindowNoteShowFront;
+			// 前面へ
+			var itemNoteShowFront = new ToolStripMenuItem() {
+				Name = menuNameWindowNoteShowFront,
+			};
 			itemNoteShowFront.Click += (object sender, EventArgs e) => {
 				ShowFrontNote();
 			};
 
+			var menuList = new ToolStripItem[] {
+				itemNoteCreate,
+				itemNoteHidden,
+				itemNoteCompact,
+				new DisableCloseToolStripSeparator(),
+				itemNoteShowFront,
+			};
+
 			// サブメニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownItems.AddRange(menuList);
 
 			// 親アイテム
 			parentItem.Name = menuNameWindowNote;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Note);
 			// 表示
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var hasNote = this._noteWindowList.Count > 0;
-				itemNoteHidden.Enabled = hasNote;
-				itemNoteCompact.Enabled = hasNote;
-				itemNoteShowFront.Enabled = hasNote;
-
-				//itemNoteCreate.ShortcutKeys = this._commonData.MainSetting.Note.CreateHotKey.GetShorcutKey();
-				//itemNoteHidden.ShortcutKeys = this._commonData.MainSetting.Note.HiddenHotKey.GetShorcutKey();
-				//itemNoteCompact.ShortcutKeys = this._commonData.MainSetting.Note.CompactHotKey.GetShorcutKey();
-				//itemNoteShowFront.ShortcutKeys = this._commonData.MainSetting.Note.ShowFrontHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
-
-				OpeningNoteMenu();
-			};
+			parentItem.DropDownOpening += NoteMenu_Opening;
 		}
 
 		void AttachmentApplicationsSubMenu(ToolStripMenuItem parentItem)
@@ -695,24 +622,18 @@
 				launcherItem.Command = applicationItem.Name;
 				launcherItem.LauncherType = LauncherType.Embedded;
 
-				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting);
+				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting, this._commonData.Logger);
 #if DEBUG
 				if(icon == null) {
 					throw new NullReferenceException("rebuild solution!");
 				}
 #endif
-				var menuItem = new ToolStripMenuItem();
-
-				menuItem.Tag = applicationItem;
-				menuItem.Image = IconUtility.ImageFromIcon(icon, IconScale.Small);
-
-				menuItem.Click += (object sender, EventArgs e) => {
-					if(this._commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
-						this._commonData.ApplicationSetting.KillApplicationItem(launcherItem);
-					} else {
-						Executor.RunItem(launcherItem, this._commonData);
-					}
+				var menuItem = new LauncherToolStripMenuItem(this._commonData) {
+					Tag = applicationItem,
+					Image = IconUtility.ImageFromIcon(icon, IconScale.Small),
+					LauncherItem = launcherItem,
 				};
+				menuItem.Click += ApplicationsMenu_Click; 
 
 				menuList.Add(menuItem);
 			}
@@ -722,15 +643,7 @@
 			parentItem.Name = menuNameApplications;
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				var menuItems = parentItem.DropDownItems.OfType<ToolStripMenuItem>();
-				foreach(var menuItem in menuItems) {
-					var applicationItem = menuItem.Tag as ApplicationItem;
-					if(applicationItem != null) {
-						menuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
-					}
-				}
-			};
+			parentItem.DropDownOpening += ApplicationsMenu_Opening;
 		}
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
@@ -738,7 +651,7 @@
 			var menuList = new List<ToolStripItem>();
 			var itemSave = new ToolStripMenuItem();
 			var itemLoad = new ToolStripMenuItem();
-			//var itemSeparator = new ToolStripSeparator();
+			//var itemSeparator = new DisableCloseToolStripSeparator();
 			menuList.Add(itemSave);
 			menuList.Add(itemLoad);
 			//menuList.Add(itemSeparator);
@@ -843,21 +756,21 @@
 			var itemExit = new ToolStripMenuItem();
 
 			menuList.Add(itemSetting);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemToolbar);
 			menuList.Add(itemNote);
 			menuList.Add(itemApplications);
 			menuList.Add(itemLogger);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemSystemEnv);
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemAbout);
 			menuList.Add(itemHelp);
 #if DEBUG
 			var itemDebug = new ToolStripMenuItem();
 			menuList.Add(itemDebug);
 #endif
-			menuList.Add(new ToolStripSeparator());
+			menuList.Add(new DisableCloseToolStripSeparator());
 			menuList.Add(itemExit);
 
 			// ウィンドウ
@@ -1068,6 +981,15 @@
 			this._windowTimer.Enabled = false;
 			this._windowTimer.Interval = this._commonData.MainSetting.WindowSaveTime.TotalMilliseconds;
 			this._windowTimer.Enabled = true;
+
+			//// アップデート
+			//if(this._updateTimer == null) {
+			//	this._updateTimer = new System.Timers.Timer();
+			//	this._updateTimer.Elapsed += Timer_Elapsed;
+			//}
+			//this._updateTimer.Enabled = false;
+			//this._updateTimer.Interval = Literal.updateCheckTime.TotalMilliseconds;
+			//this._updateTimer.Enabled = true;
 		}
 
 		void InitializeListener(CommandLine commandLine, StartupLogger logger)
@@ -1256,7 +1178,6 @@
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
 			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
-
 		}
 		void DetachmentSystemEvent()
 		{
@@ -1480,9 +1401,7 @@
 						}
 
 						if(check) {
-#if !DISABLED_UPDATE_CHECK
-							CheckUpdateProcessAsync(false);
-#endif
+							CheckUpdateProcessAsync();
 						}
 
 						return true;
@@ -1603,13 +1522,19 @@
 		UpdateData CheckUpdate(bool force)
 		{
 			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC, this._commonData);
+			this._commonData.Logger.PutsDebug("update: parameter", () => string.Format("force = {0}, setting = {1}", force, this._commonData.MainSetting.RunningInfo.CheckUpdate));
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				var updateInfo = updateData.Check();
 			}
 			return updateData;
 		}
 
-		void CheckedUpdate(bool force, UpdateData updateData)
+		/// <summary>
+		/// アップデートを実行するか確認する。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
+		/// <param name="updateData">アップデート情報。</param>
+		void ConfirmUpdate(bool force, UpdateData updateData)
 		{
 			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
 				if(updateData != null && updateData.Info != null) {
@@ -1628,22 +1553,32 @@
 			}
 		}
 
-		void CheckUpdateProcessAsync(bool force)
+		/// <summary>
+		/// アップデートチェックを非同期で行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		void CheckUpdateProcessAsync()
 		{
+#if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
-				if(!force) {
-					Thread.Sleep(Literal.updateWaitTime);
-				}
-				return CheckUpdate(force);
+				this._commonData.Logger.PutsDebug("update: check", () => "wait");
+				Thread.Sleep(Literal.updateWaitTime);
+				return CheckUpdate(false);
 			}).ContinueWith(t => {
-				CheckedUpdate(force, t.Result);
+				ConfirmUpdate(false, t.Result);
 			}, TaskScheduler.FromCurrentSynchronizationContext());
+#else
+			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
+#endif
 		}
 
+		/// <summary>
+		/// アップデートチェックを同期的に行い、アップデートが存在すればアップデート確認を行う。
+		/// </summary>
+		/// <param name="force">強制的に確認を行うか。</param>
 		void CheckUpdateProcessWait(bool force)
 		{
 			var updateData = CheckUpdate(force);
-			CheckedUpdate(force, updateData);
+			ConfirmUpdate(force, updateData);
 		}
 
 		/// <summary>
@@ -1714,6 +1649,7 @@
 					}
 				}
 			});
+			CheckUpdateProcessAsync();
 		}
 
 		void OpeningNoteMenu()
@@ -1736,7 +1672,7 @@
 			var noteSmallSize = new Size(noteImageSize.Width, noteImageSize.Height / 2);
 			foreach(var noteItem in noteItems) {
 				if(isStart) {
-					var itemSeparator = new ToolStripSeparator();
+					var itemSeparator = new DisableCloseToolStripSeparator();
 					itemSeparator.Name = menuNameWindowNoteSeparator;
 					itemNoteMenuList.Add(itemSeparator);
 					isStart = false;
@@ -1868,7 +1804,7 @@
 			var isStart = true;
 			foreach(var windowListItem in this._windowListItems) {
 				if(isStart) {
-					var itemSeparator = new ToolStripSeparator();
+					var itemSeparator = new DisableCloseToolStripSeparator();
 					itemSeparator.Name = menuNameSystemEnvWindowSeparator;
 					itemWindowMenuList.Add(itemSeparator);
 					isStart = false;
@@ -1917,8 +1853,9 @@
 		void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
 		{
 			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
-			if(e.Reason == SessionSwitchReason.ConsoleConnect) {
+			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
 				ResetUI();
+				CheckUpdateProcessAsync();
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
 				AppUtility.SaveSetting(this._commonData);
 			}
@@ -1942,9 +1879,7 @@
 		{
 			if(e.Mode == PowerModes.Resume) {
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
-#if !DISABLED_UPDATE_CHECK
-				CheckUpdateProcessAsync(false);
-#endif
+				CheckUpdateProcessAsync();
 			}
 		}
 		
@@ -2024,9 +1959,127 @@
 			this._commonData.Logger.Puts(LogType.Information, sender.ToString(), e);
 			window.Dispose();
 		}
-		
+
+		void screenToolMenuItem_Click(object sender, EventArgs e)
+		{
+			var menuItem = (ScreenToolStripMenuItem)sender;
+			var toolbar = this._toolbarForms[menuItem.Screen];
+
+			toolbar.UsingToolbarItem.Visible = !toolbar.Visible;
+			toolbar.ApplySettingVisible();
+		}
+
+		void ToolbarSubMenu_DropDownOpened(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+			var screens = Screen.AllScreens.ToArray();
+			var basePos = new Point(Math.Abs(screens.Min(s => s.Bounds.Left)), Math.Abs(screens.Min(s => s.Bounds.Top)));
+			var iconSize = IconScale.Small.ToSize();
+			var drawSize = (SizeF)iconSize;
+			var maxArea = new RectangleF() {
+				X = screens.Min(s => s.Bounds.Left),
+				Y = screens.Min(s => s.Bounds.Top)
+			};
+			maxArea.Width = Math.Abs(maxArea.X) + screens.Max(s => s.Bounds.Right);
+			maxArea.Height = Math.Abs(maxArea.Y) + screens.Max(s => s.Bounds.Bottom);
+
+			var percentage = new SizeF(
+				drawSize.Width / maxArea.Width * 100.0f,
+				drawSize.Height / maxArea.Height * 100.0f
+			);
+
+			foreach(var screen in screens) {
+				if(menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
+					var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
+					// 各エリアの描画
+					var alpha = 80;
+					var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
+					using(var g = Graphics.FromImage(baseImage)) {
+						foreach(var inScreen in screens) {
+							var useScreen = inScreen == screen;
+							var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
+							var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+
+							var baseArea = inScreen.Bounds;
+							baseArea.Offset(basePos);
+
+							var drawArea = new RectangleF(
+								baseArea.X / 100.0f * percentage.Width,
+								baseArea.Y / 100.0f * percentage.Height,
+								baseArea.Width / 100.0f * percentage.Width,
+								baseArea.Height / 100.0f * percentage.Height
+							);
+
+							using(var img = this._commonData.Skin.CreateColorBoxImage(foreColor, backColor, drawArea.Size.ToSize())) {
+								g.DrawImage(img, drawArea.Location);
+							}
+						}
+					}
+					screenMenuItem.Image.ToDispose();
+					screenMenuItem.Image = baseImage;
+					screenMenuItem.Checked = this._toolbarForms[screen].Visible;
+				}
+			}
+		}
+
+		void itemNoteCreate_Click(object sender, EventArgs e)
+		{
+			var screen = ScreenUtility.GetCurrentCursor();
+			var area = screen.Bounds;
+			var point = new Point(
+				area.Left + area.Width / 2 - Literal.noteSize.Width / 2,
+				area.Top + area.Height / 2 - Literal.noteSize.Width / 2
+			);
+			CreateNote(point);
+		}
+
+		void NoteMenu_Opening(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+
+			var itemNoteCreate = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteCreate];
+			var itemNoteHidden = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteHidden];
+			var itemNoteCompact = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteCompact];
+			var itemNoteShowFront = (ToolStripMenuItem)menuItem.DropDownItems[menuNameWindowNoteShowFront];
+
+			var hasNote = this._noteWindowList.Count > 0;
+			itemNoteHidden.Enabled = hasNote;
+			itemNoteCompact.Enabled = hasNote;
+			itemNoteShowFront.Enabled = hasNote;
+
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCreate, this._commonData.MainSetting.Note.CreateHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteHidden, this._commonData.MainSetting.Note.HiddenHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
+
+			OpeningNoteMenu();
+		}
+
+		void ApplicationsMenu_Click(object sender, EventArgs e)
+		{
+			var menuItem = (LauncherToolStripMenuItem)sender;
+			var launcherItem = menuItem.LauncherItem;
+			var commonData = menuItem.CommonData;
+
+			if(commonData.ApplicationSetting.IsExecutingItem(launcherItem.Command)) {
+				commonData.ApplicationSetting.KillApplicationItem(launcherItem);
+			} else {
+				Executor.RunItem(launcherItem, commonData);
+			}
+		}
+
+		void ApplicationsMenu_Opening(object sender, EventArgs e)
+		{
+			var menuItem = (ToolStripMenuItem)sender;
+			var appMenuItems = menuItem.DropDownItems.OfType<ToolStripMenuItem>();
+			foreach(var appMenuItem in appMenuItems) {
+				var applicationItem = appMenuItem.Tag as ApplicationItem;
+				if(applicationItem != null) {
+					appMenuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
+				}
+			}
+		}
 
 	}
-	
 }
 

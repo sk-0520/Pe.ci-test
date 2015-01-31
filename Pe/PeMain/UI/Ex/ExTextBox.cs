@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
 	using System;
+	using System.Windows.Forms;
 
 	public abstract class ExTextBox: TextBox
 	{ }

@@ -2,10 +2,14 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Drawing;
 	using System.IO;
 	using System.IO.Compression;
 	using System.Linq;
 	using System.Reflection;
+	using System.Runtime.CompilerServices;
+	using System.Threading;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
@@ -13,6 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.UI;
+	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 
 	public static class AppUtility
 	{
@@ -179,6 +184,25 @@
 			}
 
 			return result;
+		}
+
+		public static Icon LoadIcon(IconPath iconPath, IconScale iconScale, TimeSpan waitTime, int waitMaxCount, ILogger logger, [CallerMemberName] string member = "")
+		{
+			Debug.Assert(FileUtility.Exists(iconPath.Path));
+
+			var waitCount = 0;
+			while(waitCount <= waitMaxCount) {
+				var icon = IconUtility.Load(iconPath.Path, iconScale, iconPath.Index);
+				if(icon != null) {
+					return icon;
+				} else {
+					logger.PutsDebug(iconPath.Path, () => string.Format("{0} -> wait: {1} ms, count: {2}", member, waitTime.TotalMilliseconds, waitCount));
+					Thread.Sleep(Literal.loadIconRetryTime);
+					waitCount++;
+				}
+			}
+
+			return null;
 		}
 	}
 }

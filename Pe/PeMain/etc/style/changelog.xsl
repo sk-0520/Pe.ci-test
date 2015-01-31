@@ -32,7 +32,7 @@
 	
 	</xsl:template>
 	
-	<xsl:template match="log/ul">
+	<xsl:template match="log/group">
 		<dt class="{@type}">
 			<xsl:choose>
 				<xsl:when test="@type='note'">
@@ -56,25 +56,37 @@
 		</dd>
 	</xsl:template>
 	
-	<xsl:template match="log/ul/li">
+	<xsl:template match="log/group/note/message">
 		<xsl:choose>
-			<xsl:when test="@class != ''">
-				<li class="{@class}">
+			<xsl:when test="../@class != ''">
+				<li class="{../@class}">
 					<xsl:value-of select="." />。
-					<xsl:if test="@rev != ''">
-						<a class="rev"><xsl:value-of select="@rev" /></a>
+					<xsl:if test="../@rev != ''">
+						<a class="rev"><xsl:value-of select="../@rev" /></a>
 					</xsl:if>
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
 				<li>
 					<xsl:value-of select="." />。
-					<xsl:if test="@rev != ''">
-						<a class="rev"><xsl:value-of select="@rev" /></a>
+					<xsl:if test="../@rev != ''">
+						<a class="rev"><xsl:value-of select="../@rev" /></a>
 					</xsl:if>
 				</li>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template match="log/group/note/comments">
+		<ul class="comment">
+			<xsl:apply-templates />
+		</ul>
+	</xsl:template>
+	
+	<xsl:template match="log/group/note/comments/comment">
+		<li>
+			<xsl:value-of select="." />。
+		</li>
 	</xsl:template>
 	
 </xsl:transform>

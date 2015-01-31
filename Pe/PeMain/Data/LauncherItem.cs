@@ -7,11 +7,14 @@
 	using System.IO;
 	using System.Linq;
 	using System.Text;
+	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// ランチャー設定データ。
@@ -273,7 +276,7 @@
 		/// <param name = "iconScale">アイコンサイズ</param>
 		/// <param name="iconIndex">アイコンインデックス</param>
 		/// <returns>アイコン</returns>
-		public Icon GetIcon(IconScale iconScale, int iconIndex, ApplicationSetting applicationSetting)
+		public Icon GetIcon(IconScale iconScale, int iconIndex, ApplicationSetting applicationSetting, ILogger logger)
 		{
 			var hasIcon = this._iconMap.ContainsKey(iconScale);
 			if(!hasIcon) {
@@ -304,9 +307,21 @@
 				}
 				if(hasIcon) {
 					Debug.Assert(useIconPath != null);
-
-					var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
-					this._iconMap[iconScale] = icon;
+					/*
+					var waitCount = 0;
+					while(waitCount <= Literal.loadIconRetryCount) {
+						var icon = IconUtility.Load(useIconPath, iconScale, iconIndex);
+							if(icon != null) {
+								this._iconMap[iconScale] = icon;
+								break;
+							} else {
+								logger.PutsDebug(useIconPath, () => string.Format("LauncherItem: wait {0}ms, count: {1}", Literal.loadIconRetryTime.TotalMilliseconds, waitCount));
+								Thread.Sleep(Literal.loadIconRetryTime);
+								waitCount++;
+							}
+					}
+					*/
+					this._iconMap[iconScale] = AppUtility.LoadIcon(new IconPath(useIconPath, iconIndex), iconScale, Literal.loadIconRetryTime, Literal.loadIconRetryCount, logger);
 				}
 			}
 

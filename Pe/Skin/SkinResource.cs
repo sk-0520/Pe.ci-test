@@ -75,6 +75,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		Command,
 		NotFound,
 		ToolbarMain,
+		Wait,
 	}
 }
 

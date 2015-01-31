@@ -1,8 +1,8 @@
-﻿using System.Windows.Forms;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	public abstract class ExContextMenuStrip: ContextMenuStrip
 	{ }
 	

@@ -3,12 +3,12 @@
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	/// <summary>
-	/// CommonDataを受信可能とする。
+	/// CommonDataを設定可能とする。
 	/// </summary>
 	public interface ISetCommonData
 	{
 		/// <summary>
-		/// CommonDataの受信。
+		/// CommonDataの設定。
 		/// </summary>
 		/// <param name="commonData"></param>
 		void SetCommonData(CommonData commonData);

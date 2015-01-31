@@ -62,6 +62,9 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DefineConstants>TRACE;DEBUG;DISABLED_UPDATE_CHECK</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
@@ -118,6 +121,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SystemSkin\8\Icon\Wait.ico" />
+    <None Include="Resources\SystemSkin\7\Icon\Wait.ico" />
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -129,11 +134,11 @@
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
-    <Compile Include="Data\DB\Entity\CommonDataEntity.cs" />
-    <Compile Include="Data\DB\Entity\M_NOTE.cs" />
-    <Compile Include="Data\DB\Entity\M_VERSION.cs" />
-    <Compile Include="Data\DB\Entity\T_NOTE.cs" />
-    <Compile Include="Data\DB\Entity\T_NOTE_STYLE.cs" />
+    <Compile Include="Data\DB\Row\CommonDataRow.cs" />
+    <Compile Include="Data\DB\Row\M_NOTE.cs" />
+    <Compile Include="Data\DB\Row\M_VERSION.cs" />
+    <Compile Include="Data\DB\Row\T_NOTE.cs" />
+    <Compile Include="Data\DB\Row\T_NOTE_STYLE.cs" />
     <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\IconItem.cs" />
     <Compile Include="Data\LauncherHistory.cs" />
@@ -149,13 +154,17 @@
     <Compile Include="Data\ToolbarGroupItem.cs" />
     <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
+    <Content Include="etc\script\Updater\UpdaterScript.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IRootSender.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\ISetLanguage.cs" />
-    <Compile Include="IF\ISetSkin.cs" />
+    <Compile Include="IF\ILanguage.cs" />
+    <Compile Include="IF\IISkin.cs" />
+    <Compile Include="IF\IScreen.cs" />
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Kind\HotKeyId.cs" />

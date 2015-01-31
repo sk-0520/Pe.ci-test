@@ -1,12 +1,4 @@
-﻿/*
- * SharpDevelopによって生成
- * ユーザ: sk
- * 日付: 2013/12/22
- * 時刻: 1:04
- * 
- * このテンプレートを変更する場合「ツール→オプション→コーディング→標準ヘッダの編集」
- */
-namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.CustomControl
 {
 	partial class LauncherItemSelectControl
 	{
@@ -36,11 +28,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.listLauncherItems = new ContentTypeTextNet.Pe.PeMain.UI.LauncherItemListBox();
+			this.listLauncherItems = new ContentTypeTextNet.Pe.PeMain.UI.Ex.LauncherItemListBox();
 			this.toolLauncherItems = new System.Windows.Forms.ToolStrip();
 			this.toolLauncherItems_create = new System.Windows.Forms.ToolStripButton();
 			this.toolLauncherItems_remove = new System.Windows.Forms.ToolStripButton();
-			this.toolLauncherItems_editSeparator = new System.Windows.Forms.ToolStripSeparator();
+			this.toolLauncherItems_editSeparator = new ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator();
 			this.toolLauncherItems_filter = new System.Windows.Forms.ToolStripButton();
 			this.toolLauncherItems_type = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolLauncherItems_type_full = new System.Windows.Forms.ToolStripMenuItem();
@@ -183,10 +175,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ToolStripMenuItem toolLauncherItems_type_full;
 		private System.Windows.Forms.ToolStripDropDownButton toolLauncherItems_type;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_filter;
-		private System.Windows.Forms.ToolStripSeparator toolLauncherItems_editSeparator;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator toolLauncherItems_editSeparator;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_remove;
 		private System.Windows.Forms.ToolStripButton toolLauncherItems_create;
 		private System.Windows.Forms.ToolStrip toolLauncherItems;
-		private ContentTypeTextNet.Pe.PeMain.UI.LauncherItemListBox listLauncherItems;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.LauncherItemListBox listLauncherItems;
 	}
 }

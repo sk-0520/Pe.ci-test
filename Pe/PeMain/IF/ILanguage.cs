@@ -3,14 +3,25 @@
 namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	/// <summary>
-	/// 言語設定を外部から実施するためのインターフェイス。
+	/// Languageを設定可能とする。
 	/// </summary>
 	public interface ISetLanguage
 	{
 		/// <summary>
-		/// Languageの受信。
+		/// Languageの設定。
 		/// </summary>
 		/// <param name="language"></param>
 		void SetLanguage(Language language);
+	}
+
+	/// <summary>
+	/// Languageを参照する。
+	/// </summary>
+	public interface ILanguage
+	{
+		/// <summary>
+		/// 参照するLanguage。
+		/// </summary>
+		Language Language { get; }
 	}
 }

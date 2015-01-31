@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.UI
+﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Skin
 {
 	using System;
 	using System.Collections.Generic;
@@ -98,6 +98,7 @@
 				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Command },
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_ToolbarMain },
+				{ SkinIcon.Wait, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Wait },
 			};
 		}
 
@@ -169,6 +170,7 @@
 				{ SkinIcon.Command, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Command },
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_ToolbarMain },
+				{ SkinIcon.Wait, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Wait },
 			};
 		}
 
@@ -301,7 +303,7 @@
 		public override Image GetImage(SkinImage skinImage)
 		{
 			Image result;
-			if(_skinImageMap.TryGetValue(skinImage, out result)) {
+			if(this._skinImageMap.TryGetValue(skinImage, out result)) {
 				return result;
 			} else {
 				return null;
@@ -311,7 +313,7 @@
 		public override Icon GetIcon(SkinIcon skinIcon)
 		{
 			Icon result;
-			if(_skinIconMap.TryGetValue(skinIcon, out result)) {
+			if(this._skinIconMap.TryGetValue(skinIcon, out result)) {
 				return result;
 			} else {
 				return null;
@@ -596,7 +598,9 @@
 
 			var buttonLayout = GetToolbarButtonLayout(iconScale, false, 0);
 			var iconSize = iconScale.ToSize();
-			e.Graphics.DrawImage(e.Image, PaddingWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
+			if(e.Image != null) {
+				e.Graphics.DrawImage(e.Image, PaddingWidth + buttonLayout.Padding.Left + offset.X, buttonLayout.Padding.Top + offset.Y, iconSize.Width, iconSize.Height);
+			}
 		}
 
 		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth)
@@ -627,39 +631,27 @@
 				bitmapInfo.bmiHeader.biPlanes = 1;
 				bitmapInfo.bmiHeader.biBitCount = 32;
 
-				var hDC = e.Graphics.GetHdc();
-				var hFont = e.TextFont.ToHfont();
-				var hMemDC = NativeMethods.CreateCompatibleDC(hDC);
 				var tempPtr = IntPtr.Zero;
-				var hBitmap = NativeMethods.CreateDIBSection(hDC, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0);
-				try {
-					var hOldBitmap = NativeMethods.SelectObject(hMemDC, hBitmap);
-					var hOldFont = NativeMethods.SelectObject(hMemDC, hFont);
-					try {
-						var ddtOpts = new DTTOPTS() {
-							dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
-							dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor,
-							crText = new COLORREF(e.TextColor),
-							iGlowSize = glowSize,
-						};
+				using(var hDC = new UnmanagedGraphicsDeviceContext(e.Graphics))
+				using(var hFont = new UnmanagedFont(e.TextFont.ToHfont()))
+				using(var hMemDC = new UnmanagedCompatibleDeviceContext(hDC))
+				using(var hBitmap = new UnmanagedBitmap(NativeMethods.CreateDIBSection(hDC.Handle, ref bitmapInfo, 0, out tempPtr, IntPtr.Zero, 0)))
+				using(var hOldBitmap = hMemDC.SelectObject(hBitmap))
+				using(var hOldFont = hMemDC.SelectObject(hFont)) {
+					var ddtOpts = new DTTOPTS() {
+						dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
+						dwFlags = DTT.Composited | DTT.GlowSize | DTT.TextColor,
+						crText = new COLORREF(e.TextColor),
+						iGlowSize = glowSize,
+					};
 
-						var renderer = new VisualStyleRenderer(VisualStyleElement.Window.Caption.Active);
-						var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
+					var renderer = new VisualStyleRenderer(VisualStyleElement.Window.Caption.Active);
+					var flags = DT.DT_LEFT | DT.DT_SINGLELINE | DT.DT_VCENTER | DT.DT_END_ELLIPSIS;
 
-						NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
-						//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
-						var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
-						NativeMethods.AlphaBlend(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, textArea.Width, textArea.Height, blendfunction);
-					} finally {
-						NativeMethods.SelectObject(hMemDC, hOldFont);
-						NativeMethods.SelectObject(hMemDC, hOldBitmap);
-					}
-				} finally {
-					NativeMethods.DeleteObject(hBitmap);
-					NativeMethods.DeleteObject(hFont);
-					NativeMethods.DeleteDC(hMemDC);
-
-					e.Graphics.ReleaseHdc(hDC);
+					NativeMethods.DrawThemeTextEx(renderer.Handle, hMemDC.Handle, 0, 0, e.Text, -1, (int)flags, ref drawArea, ref ddtOpts);
+					//NativeMethods.BitBlt(hDC, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC, 0, 0, ROP.SRCCOPY);
+					var blendfunction = new BLENDFUNCTION(AC.AC_SRC_OVER, 0, 255, AC.AC_SRC_ALPHA);
+					NativeMethods.AlphaBlend(hDC.Handle, textArea.Left, textArea.Top, textArea.Width, textArea.Height, hMemDC.Handle, 0, 0, textArea.Width, textArea.Height, blendfunction);
 				}
 			} else {
 				using(var sf = ToStringFormat(e.TextFormat))

@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 	/// <summary>
 	/// ノート。
@@ -252,13 +253,18 @@
 				case (int)WM.WM_NCPAINT:
 					{
 						if(CommonData != null) {
-							var hDC = NativeMethods.GetWindowDC(Handle);
-							try {
-								using(var g = Graphics.FromHdc(hDC)) {
+							//var hDC = NativeMethods.GetWindowDC(Handle);
+							//try {
+							//	using(var g = Graphics.FromHdc(hDC)) {
+							//		DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
+							//	}
+							//} finally {
+							//	NativeMethods.ReleaseDC(Handle, hDC);
+							//}
+							using(var hDC = new UnmanagedControlDeviceContext(this)) {
+								using(var g = hDC.CreateGraphics()) {
 									DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
 								}
-							} finally {
-								NativeMethods.ReleaseDC(Handle, hDC);
 							}
 							Refresh();
 						}
