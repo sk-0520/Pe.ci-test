@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Drawing;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Data;
+	using System.Data.Common;
+	using System.Drawing;
+	using ContentTypeTextNet.Pe.Library.Utility.DB;
+
 	public class SQLiteDBManager: DBManager
 	{
 		public SQLiteDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)

@@ -97,14 +97,14 @@
 				return;
 			}
 			
-			var updateList = new List<MNoteEntity>();
-			var insertList = new List<MNoteEntity>();
+			var updateList = new List<MNoteRow>();
+			var insertList = new List<MNoteRow>();
 
 			foreach(var item in noteItemList) {
 				using(var query = this.db.CreateQuery()) {
-					var entity = new MNoteEntity();
+					var entity = new MNoteRow();
 					entity.Id = item.NoteId;
-					var tempEntity = query.GetEntity(entity);
+					var tempEntity = query.GetRow(entity);
 					var isUpdate = tempEntity != null;
 					if(isUpdate) {
 						entity = tempEntity;
@@ -143,14 +143,14 @@
 				return;
 			}
 			
-			var updateList = new List<TNoteEntity>();
-			var insertList = new List<TNoteEntity>();
+			var updateList = new List<TNoteRow>();
+			var insertList = new List<TNoteRow>();
 			
 			foreach(var item in noteItemList) {
 				using(var query = this.db.CreateQuery()) {
-					var entity = new TNoteEntity();
+					var entity = new TNoteRow();
 					entity.Id = item.NoteId;
-					var tempEntity = query.GetEntity(entity);
+					var tempEntity = query.GetRow(entity);
 					var isUpdate = tempEntity != null;
 					if(isUpdate) {
 						entity = tempEntity;
@@ -186,14 +186,14 @@
 				return;
 			}
 			
-			var updateList = new List<TNoteStyleEntity>();
-			var insertList = new List<TNoteStyleEntity>();
+			var updateList = new List<TNoteStyleRow>();
+			var insertList = new List<TNoteStyleRow>();
 			
 			foreach(var item in noteItemList) {
 				using(var query = this.db.CreateQuery()) {
-					var entity = new TNoteStyleEntity();
+					var entity = new TNoteStyleRow();
 					entity.Id = item.NoteId;
-					var tempEntity = query.GetEntity(entity);
+					var tempEntity = query.GetRow(entity);
 					var isUpdate = tempEntity != null;
 					if(isUpdate) {
 						entity = tempEntity;

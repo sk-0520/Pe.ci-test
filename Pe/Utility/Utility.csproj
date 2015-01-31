@@ -82,7 +82,11 @@
   <ItemGroup>
     <Compile Include="CommandLine.cs" />
     <Compile Include="DataUtility.cs" />
-    <Compile Include="DBManager.cs" />
+    <Compile Include="DB\DBManager.cs" />
+    <Compile Include="DB\CommandExpression.cs" />
+    <Compile Include="DB\DbData.cs" />
+    <Compile Include="DB\DbQuery.cs" />
+    <Compile Include="DB\EntityMapping.cs" />
     <Compile Include="DialogFilter.cs" />
     <Compile Include="DialogFilterUtility.cs" />
     <Compile Include="DrawUtility.cs" />
