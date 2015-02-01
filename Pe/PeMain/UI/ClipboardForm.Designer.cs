@@ -252,10 +252,10 @@
 			// tabPreview_pageRtf
 			// 
 			this.tabPreview_pageRtf.Controls.Add(this.viewRtf);
-			this.tabPreview_pageRtf.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageRtf.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageRtf.Name = "tabPreview_pageRtf";
 			this.tabPreview_pageRtf.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageRtf.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageRtf.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageRtf.TabIndex = 1;
 			this.tabPreview_pageRtf.Text = "#ClipboardType.Rtf";
 			this.tabPreview_pageRtf.UseVisualStyleBackColor = true;
@@ -269,7 +269,7 @@
 			this.viewRtf.Name = "viewRtf";
 			this.viewRtf.ReadOnly = true;
 			this.viewRtf.ShortcutsEnabled = false;
-			this.viewRtf.Size = new System.Drawing.Size(365, 194);
+			this.viewRtf.Size = new System.Drawing.Size(365, 193);
 			this.viewRtf.TabIndex = 0;
 			this.viewRtf.Text = "";
 			this.viewRtf.WordWrap = false;
@@ -277,9 +277,9 @@
 			// tabPreview_pageHtml
 			// 
 			this.tabPreview_pageHtml.Controls.Add(this.viewHtml);
-			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageHtml.Name = "tabPreview_pageHtml";
-			this.tabPreview_pageHtml.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageHtml.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageHtml.TabIndex = 4;
 			this.tabPreview_pageHtml.Text = "#ClipboardType.Html";
 			this.tabPreview_pageHtml.UseVisualStyleBackColor = true;
@@ -292,17 +292,17 @@
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
 			this.viewHtml.ScriptErrorsSuppressed = true;
-			this.viewHtml.Size = new System.Drawing.Size(371, 200);
+			this.viewHtml.Size = new System.Drawing.Size(371, 199);
 			this.viewHtml.TabIndex = 0;
 			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
 			// tabPreview_pageImage
 			// 
 			this.tabPreview_pageImage.Controls.Add(this.panelImage);
-			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
 			this.tabPreview_pageImage.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageImage.TabIndex = 2;
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
@@ -314,7 +314,7 @@
 			this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelImage.Location = new System.Drawing.Point(3, 3);
 			this.panelImage.Name = "panelImage";
-			this.panelImage.Size = new System.Drawing.Size(365, 194);
+			this.panelImage.Size = new System.Drawing.Size(365, 193);
 			this.panelImage.TabIndex = 1;
 			// 
 			// viewImage
@@ -370,7 +370,7 @@
 			this.tabPreview_pageRawTemplate.Name = "tabPreview_pageRawTemplate";
 			this.tabPreview_pageRawTemplate.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageRawTemplate.TabIndex = 5;
-			this.tabPreview_pageRawTemplate.Text = ":clipboard/text/raw-template";
+			this.tabPreview_pageRawTemplate.Text = ":clipboard/page/raw-template";
 			this.tabPreview_pageRawTemplate.UseVisualStyleBackColor = true;
 			// 
 			// labelTemplateName
@@ -410,11 +410,11 @@
 			// tabPreview_pageReplaceTemplate
 			// 
 			this.tabPreview_pageReplaceTemplate.Controls.Add(this.viewReplaceTemplate);
-			this.tabPreview_pageReplaceTemplate.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageReplaceTemplate.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageReplaceTemplate.Name = "tabPreview_pageReplaceTemplate";
-			this.tabPreview_pageReplaceTemplate.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageReplaceTemplate.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageReplaceTemplate.TabIndex = 6;
-			this.tabPreview_pageReplaceTemplate.Text = ":clipboard/text/replace-template";
+			this.tabPreview_pageReplaceTemplate.Text = ":clipboard/page/replace-template";
 			this.tabPreview_pageReplaceTemplate.UseVisualStyleBackColor = true;
 			// 
 			// viewReplaceTemplate
@@ -423,7 +423,7 @@
 			this.viewReplaceTemplate.Location = new System.Drawing.Point(0, 0);
 			this.viewReplaceTemplate.Name = "viewReplaceTemplate";
 			this.viewReplaceTemplate.ReadOnly = true;
-			this.viewReplaceTemplate.Size = new System.Drawing.Size(371, 200);
+			this.viewReplaceTemplate.Size = new System.Drawing.Size(371, 199);
 			this.viewReplaceTemplate.TabIndex = 0;
 			this.viewReplaceTemplate.Text = "";
 			// 
@@ -533,15 +533,15 @@
 			// 
 			this.toolClipboard_itemType_itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
 			this.toolClipboard_itemType_itemClipboard.Name = "toolClipboard_itemType_itemClipboard";
-			this.toolClipboard_itemType_itemClipboard.Size = new System.Drawing.Size(224, 22);
-			this.toolClipboard_itemType_itemClipboard.Text = ":clipboard/type/clipboard";
+			this.toolClipboard_itemType_itemClipboard.Size = new System.Drawing.Size(248, 22);
+			this.toolClipboard_itemType_itemClipboard.Text = "#ClipboardListType.History";
 			this.toolClipboard_itemType_itemClipboard.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
 			// toolClipboard_itemType_itemTemplate
 			// 
 			this.toolClipboard_itemType_itemTemplate.Name = "toolClipboard_itemType_itemTemplate";
-			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(224, 22);
-			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
+			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(248, 22);
+			this.toolClipboard_itemType_itemTemplate.Text = "#ClipboardListType.Template";
 			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
 			// ClipboardForm

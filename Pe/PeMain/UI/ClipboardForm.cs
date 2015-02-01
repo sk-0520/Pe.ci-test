@@ -149,17 +149,25 @@
 			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemClear.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemEmpty.SetLanguage(CommonData.Language);
-			this.toolClipboard_itemType_itemClipboard.SetLanguage(CommonData.Language);
-			this.toolClipboard_itemType_itemTemplate.SetLanguage(CommonData.Language);
+
+			this.labelTemplateName.SetLanguage(CommonData.Language);
+			this.selectTemplateReplace.SetLanguage(CommonData.Language);
+
+			this.tabPreview_pageRawTemplate.SetLanguage(CommonData.Language);
+			this.tabPreview_pageReplaceTemplate.SetLanguage(CommonData.Language);
 
 			this.columnName.SetLanguage(CommonData.Language);
 			this.columnPath.SetLanguage(CommonData.Language);
+
+			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
+			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
 
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
 			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
+
 		}
 
 		#endregion ////////////////////////////////////////
@@ -175,6 +183,9 @@
 			this.toolClipboard_itemRemove.Image = CommonData.Skin.GetImage(SkinImage.Remove);
 			this.toolClipboard_itemClear.Image = CommonData.Skin.GetImage(SkinImage.Clear);
 			this.toolClipboard_itemEmpty.Image = CommonData.Skin.GetImage(SkinImage.Refresh);
+
+			this.toolClipboard_itemType_itemClipboard.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
+			this.toolClipboard_itemType_itemTemplate.Image = CommonData.Skin.GetImage(SkinImage.RawTemplate);
 
 			var skinItems = new[] {
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardText), Control = this._commandText, Name = imageText },
@@ -823,6 +834,13 @@
 				}
 
 				e.Cancel = true;
+			} else {
+				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+				if(e.TabPage == this.tabPreview_pageReplaceTemplate) {
+					var clipboardItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					// TODO: RTF
+					this.viewReplaceTemplate.Text = clipboardItem.Source;
+				}
 			}
 		}
 

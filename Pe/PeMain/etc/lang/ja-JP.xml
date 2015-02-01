@@ -259,8 +259,11 @@
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
 		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
 		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
-		<Word Name="clipboard/wait/message"    Text="前回取得時間: @[TIME]" />
-		
+		<Word Name="clipboard/page/raw-template"       Text="テンプレート" />
+		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
+		<Word Name="clipboard/label/template-name"     Text="なまえ" />
+		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
+
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />
 		<Word Name="setting/page/launcher/basic"    Text="基本設定" />
@@ -459,7 +462,10 @@
 		<Word Name="enum/clipboard-type/html"   Text="HTML" />
 		<Word Name="enum/clipboard-type/image"  Text="画像" />
 		<Word Name="enum/clipboard-type/file"   Text="ファイル" />
-		
+
+		<Word Name="enum/clipboard-list-type/history"   Text="${clipboard}履歴" />
+		<Word Name="enum/clipboard-list-type/template"  Text="テンプレート" />
+
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />
 		<Word Name="log/init/db-data/mkdir"     Text="DB用ディレクトリ作成" />
