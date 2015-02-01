@@ -406,7 +406,7 @@
 			this.flowLayoutPanel1.Controls.Add(this.inputTemplateName);
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(306, 29);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(363, 29);
 			this.flowLayoutPanel1.TabIndex = 6;
 			// 
 			// labelTemplateName
@@ -421,10 +421,10 @@
 			// 
 			// inputTemplateName
 			// 
-			this.inputTemplateName.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.inputTemplateName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.inputTemplateName.Location = new System.Drawing.Point(203, 3);
 			this.inputTemplateName.Name = "inputTemplateName";
-			this.inputTemplateName.Size = new System.Drawing.Size(100, 23);
+			this.inputTemplateName.Size = new System.Drawing.Size(157, 23);
 			this.inputTemplateName.TabIndex = 0;
 			// 
 			// panelTemplateSource
@@ -443,7 +443,7 @@
 			// panelTemplateSource.Panel2
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.webTemplateComment);
-			this.panelTemplateSource.Size = new System.Drawing.Size(365, 133);
+			this.panelTemplateSource.Size = new System.Drawing.Size(365, 147);
 			this.panelTemplateSource.SplitterDistance = 211;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -454,7 +454,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(211, 133);
+			this.inputTemplateSource.Size = new System.Drawing.Size(211, 147);
 			this.inputTemplateSource.TabIndex = 1;
 			// 
 			// webTemplateComment
@@ -463,7 +463,7 @@
 			this.webTemplateComment.Location = new System.Drawing.Point(0, 0);
 			this.webTemplateComment.MinimumSize = new System.Drawing.Size(20, 20);
 			this.webTemplateComment.Name = "webTemplateComment";
-			this.webTemplateComment.Size = new System.Drawing.Size(150, 133);
+			this.webTemplateComment.Size = new System.Drawing.Size(150, 147);
 			this.webTemplateComment.TabIndex = 4;
 			// 
 			// selectTemplateReplace

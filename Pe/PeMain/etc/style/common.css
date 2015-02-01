@@ -94,3 +94,17 @@ p.uri
 	font-size: 90%;
 }
 
+*.template
+{
+	font-size: 10.5pt;
+}
+
+*.template dt
+{
+	font-weight: bold;
+}
+
+*.template dd
+{
+	margin-left: 1em;
+}
