@@ -245,7 +245,6 @@
 				this.listClipboard.ItemHeight = fontHeight + buttonHeight;
 			}
 			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
-			this.viewReplaceTemplate.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			this.inputTemplateSource.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			Visible = CommonData.MainSetting.Clipboard.Visible;
 
