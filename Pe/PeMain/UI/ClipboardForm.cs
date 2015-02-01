@@ -704,20 +704,38 @@
 		void AddTemplate(TemplateItem templateItem)
 		{
 			var createdItem = CreateTemplate();
-			var items = CommonData.MainSetting.Clipboard.TemplateItems;
 			if(templateItem != null) {
-				var index = items.IndexOf(templateItem);
-				items.Insert(index, createdItem);
+				var index = CommonData.MainSetting.Clipboard.TemplateItems.IndexOf(templateItem);
+				CommonData.MainSetting.Clipboard.TemplateItems.Insert(index, createdItem);
 				this.listClipboard.SelectedIndex = index;
 			}
 		}
 
+		void SwapListItem<T>(IList<T> list, int from, int to)
+		{
+			var swapItem = list[from];
+			list[from] = list[to];
+			list[to] = swapItem;
+			//this.listClipboard.SelectedIndex = to;
+			this.listClipboard.Invalidate();
+		}
+
 		void UpTemplate(TemplateItem templateItem)
 		{
+			var index = CommonData.MainSetting.Clipboard.TemplateItems.IndexOf(templateItem);
+			Debug.Assert(index != -1);
+			if(index != 0) {
+				SwapListItem(CommonData.MainSetting.Clipboard.TemplateItems, index, index -1);
+			}
 		}
 
 		void DownTemplate(TemplateItem templateItem)
 		{
+			var index = CommonData.MainSetting.Clipboard.TemplateItems.IndexOf(templateItem);
+			Debug.Assert(index != -1);
+			if(index + 1 < CommonData.MainSetting.Clipboard.TemplateItems.Count) {
+				SwapListItem(CommonData.MainSetting.Clipboard.TemplateItems, index, index + 1);
+			}
 		}
 
 		void CopyTemplate(TemplateItem templateItem)
