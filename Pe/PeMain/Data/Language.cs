@@ -139,16 +139,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 				//if(text.Any(c => c == '@')) {
 					var systemMap = GetAppMap();
-					IDictionary<string, string> useMap;
+					IDictionary<string, string> usingMap;
 					if(map == null) {
-						useMap = systemMap;
+						usingMap = systemMap;
 					} else {
-						useMap = map;
-						foreach(var pair in systemMap) {
-							useMap[pair.Key] = pair.Value;
+						usingMap = systemMap;
+						foreach(var pair in map) {
+							usingMap[pair.Key] = pair.Value;
 						}
 					}
-					text = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, useMap);
+					text = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, usingMap);
 				//}
 				
 				//if(text.Any(c => c == '$')) {
@@ -162,7 +162,31 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		
 		public string ReplaceAll(string text)
 		{
-			return text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Words, s).Text);
+			return text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s]);
 		}
+
+		public string ReplaceAllWithAppMap(string text, IDictionary<string, string> map, bool evil)
+		{
+			var systemMap = GetAppMap();
+			IDictionary<string, string> usingMap;
+			usingMap = systemMap;
+			foreach(var pair in map) {
+				usingMap[pair.Key] = pair.Value;
+			}
+			var STX = '\x0002';
+			var ETX = '\x0003';
+			if(evil) {
+				usingMap = usingMap.ToDictionary(pair => pair.Key, pair => STX + pair.Value + ETX);
+			}
+			
+			var replacedAppMap = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, usingMap);
+			System.Diagnostics.Debug.WriteLine(BitConverter.ToString(System.Text.Encoding.UTF8.GetBytes(replacedAppMap)));
+			//var replacedUserMap = replacedAppMap.ReplaceRangeFromDictionary("#(", ")", map);
+			//var replacedLang = replacedUserMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Words, s).Text);
+			var replacedLang = replacedAppMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s, usingMap]);
+
+			return replacedLang;
+		}
+
 	}
 }

@@ -245,6 +245,8 @@
 				this.listClipboard.ItemHeight = fontHeight + buttonHeight;
 			}
 			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
+			this.viewReplaceTemplate.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
+			this.inputTemplateSource.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			Visible = CommonData.MainSetting.Clipboard.Visible;
 
 			ChangeSelectListType(CommonData.MainSetting.Clipboard.ClipboardListType);
@@ -740,6 +742,10 @@
 
 		void CopyTemplate(TemplateItem templateItem)
 		{
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			if(!string.IsNullOrEmpty(templateText)) {
+				ClipboardUtility.CopyText(templateText, CommonData);
+			}
 		}
 
 		#endregion ////////////////////////////////////////
@@ -921,9 +927,9 @@
 			} else {
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				if(e.TabPage == this.tabPreview_pageReplaceTemplate) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-					// TODO: RTF
-					this.viewReplaceTemplate.Text = clipboardItem.Source;
+					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, this.viewReplaceTemplate.Font, true);
+					this.viewReplaceTemplate.Rtf = rtf;
 				}
 			}
 		}
