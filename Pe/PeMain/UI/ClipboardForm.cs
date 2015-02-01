@@ -28,7 +28,8 @@
 		const string imageHtml = "image_html";
 		const string imageImage = "image_image";
 		const string imageFile = "image_file";
-		const string imageTemplate = "image_template";
+		const string imageRawTemplate = "image_raw_template";
+		const string imageReplaceTemplate = "image_replace_template";
 
 		class ClipboardWebBrowser: ShowWebBrowser
 		{
@@ -47,8 +48,12 @@
 		Button _commandHtml = new Button();
 		Button _commandImage = new Button();
 		Button _commandFile = new Button();
+
 		Button _commandMulti = new Button();
+
 		Button _commandAdd = new Button();
+		Button _commandUp = new Button();
+		Button _commandDown = new Button();
 
 
 		#endregion ////////////////////////////////////////
@@ -80,6 +85,8 @@
 				this._commandImage,
 				this._commandFile,
 				this._commandAdd,
+				this._commandUp,
+				this._commandDown,
 			};
 			var buttonSize = GetButtonSize();
 
@@ -110,11 +117,11 @@
 			this.tabPreview_pageHtml.ImageKey = imageHtml;
 			this.tabPreview_pageImage.ImageKey = imageImage;
 			this.tabPreview_pageFile.ImageKey = imageFile;
-			this.tabPreview_pageTemplate.ImageKey = imageTemplate;
+			this.tabPreview_pageRawTemplate.ImageKey = imageRawTemplate;
 			
 
-			ChangeCommand(-1);
-			ChangeSelsectedItem(-1);
+			//ChangeCommand(-1);
+			//ChangeSelsectedItem(-1);
 			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
 
 			listClipboard.MouseWheel += listClipboard_MouseWheel;
@@ -175,11 +182,16 @@
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardImage), Control = this._commandImage, Name = imageImage },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardFile), Control = this._commandFile, Name = imageFile },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy), Control = this._commandMulti, Name = string.Empty },
-				new { Image = CommonData.Skin.GetImage(SkinImage.Add), Control = this._commandAdd, Name = imageTemplate },
+				new { Image = CommonData.Skin.GetImage(SkinImage.NotImpl), Control = default(Button), Name = imageRawTemplate},
+				new { Image = CommonData.Skin.GetImage(SkinImage.Add), Control = this._commandAdd, Name = string.Empty },
+				new { Image = CommonData.Skin.GetImage(SkinImage.Up), Control = this._commandUp, Name = string.Empty },
+				new { Image = CommonData.Skin.GetImage(SkinImage.Down), Control = this._commandDown, Name = string.Empty },
 			};
 			this.imageTab.Images.Clear();
 			foreach(var skinItem in skinItems) {
-				skinItem.Control.Image = skinItem.Image;
+				if(skinItem.Control != null) {
+					skinItem.Control.Image = skinItem.Image;
+				}
 				if(!string.IsNullOrEmpty(skinItem.Name)) {
 					this.imageTab.Images.Add(skinItem.Name, skinItem.Image);
 				}
@@ -274,6 +286,9 @@
 			};
 
 			ChangeSelectTypeControl(map[type]);
+
+			ChangeCommand(-1);
+			ChangeSelsectedItem(-1);
 		}
 
 		void ChangeCommandType(ClipboardListType type)
@@ -292,6 +307,8 @@
 				commandList = new[] {
 					this._commandMulti,
 					this._commandAdd,
+					this._commandUp,
+					this._commandDown,
 				};
 			}
 			this._panelClipboradItem.Controls.Clear();
@@ -303,9 +320,9 @@
 		{
 			CommonData.MainSetting.Clipboard.ClipboardListType = type;
 
-			if(type == ClipboardListType.History) {
 				SelectedItemIndex = -1;
 				HoverItemIndex = -1;
+			if(type == ClipboardListType.History) {
 
 				this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.HistoryItems;
 			} else {
@@ -370,15 +387,8 @@
 			this._panelClipboradItem.Visible = HoverItemIndex != -1;
 		}
 
-		void ChangeSelsectedItem(int index)
+		TabPage ChangeSelsectedHistoryItem(ClipboardItem clipboardItem)
 		{
-			//SelectedItemIndex = index;
-			this.tabPreview.Enabled = index != -1;
-
-			if(index == -1) {
-				return;
-			}
-
 			var map = new Dictionary<ClipboardType, TabPage>() {
 				{ ClipboardType.Text, this.tabPreview_pageText },
 				{ ClipboardType.Rtf, this.tabPreview_pageRtf },
@@ -387,29 +397,21 @@
 				{ ClipboardType.File, this.tabPreview_pageFile },
 			};
 
-			this.tabPreview.SuspendLayout();
-			this.tabPreview.TabPages.Clear();
-
-			var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-
 			foreach(var type in clipboardItem.GetClipboardTypeList()) {
 				this.tabPreview.TabPages.Add(map[type]);
 
 				switch(type) {
-					case ClipboardType.Text: 
-						{
+					case ClipboardType.Text: {
 							this.viewText.Text = clipboardItem.Text;
 						}
 						break;
 
-					case ClipboardType.Rtf:
-						{
+					case ClipboardType.Rtf: {
 							this.viewRtf.Rtf = clipboardItem.Rtf;
 						}
 						break;
 
-					case ClipboardType.Html:
-						{
+					case ClipboardType.Html: {
 							ClipboardHtmlDataItem html;
 							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
 
@@ -422,20 +424,18 @@
 						}
 						break;
 
-					case ClipboardType.Image:
-						{
+					case ClipboardType.Image: {
 							this.viewImage.Image = clipboardItem.Image;
 						}
 						break;
 
-					case ClipboardType.File:
-						{
+					case ClipboardType.File: {
 							var imageList = new ImageList();
 							imageList.ColorDepth = ColorDepth.Depth32Bit;
 							imageList.ImageSize = IconScale.Small.ToSize();
 							var listItemList = new List<ListViewItem>(clipboardItem.Files.Count());
 							var showExtentions = SystemEnvironment.IsExtensionShow();
-							Func<string,string> getName;
+							Func<string, string> getName;
 							if(showExtentions) getName = Path.GetFileName; else getName = Path.GetFileNameWithoutExtension;
 							foreach(var path in clipboardItem.Files) {
 								var key = path.GetHashCode().ToString();
@@ -447,7 +447,7 @@
 								} else {
 									icon = LauncherItem.notfoundIconMap[IconScale.Small];
 								}
-								
+
 								imageList.Images.Add(key, icon);
 
 								var listItem = new ListViewItem();
@@ -471,7 +471,41 @@
 						throw new NotImplementedException();
 				}
 			}
-			this.tabPreview.SelectedTab = map[clipboardItem.GetSingleClipboardType()];
+
+			return map[clipboardItem.GetSingleClipboardType()];
+		}
+
+		TabPage ChangeSelsectedTemplateItem(TemplateItem templateItem)
+		{
+			this.tabPreview.TabPages.AddRange(new[] {
+				this.tabPreview_pageRawTemplate,
+				this.tabPreview_pageReplaceTemplate
+			});
+
+			return this.tabPreview_pageRawTemplate;
+		}
+
+		void ChangeSelsectedItem(int index)
+		{
+			//SelectedItemIndex = index;
+			this.tabPreview.Enabled = index != -1;
+
+			if(index == -1) {
+				return;
+			}
+
+			this.tabPreview.SuspendLayout();
+			this.tabPreview.TabPages.Clear();
+
+			TabPage defaultTabPage;
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				defaultTabPage = ChangeSelsectedHistoryItem(clipboardItem);
+			} else {
+				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				defaultTabPage = ChangeSelsectedTemplateItem(templateItem);
+			}
+			this.tabPreview.SelectedTab = defaultTabPage;
 			this.tabPreview.ResumeLayout();
 		}
 
@@ -760,20 +794,23 @@
 			var index = this.listClipboard.SelectedIndex;
 			Debug.Assert(index != -1);
 
-			var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-			var typeList = clipboardItem.GetClipboardTypeList();
-			var list = new[] {
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var typeList = clipboardItem.GetClipboardTypeList();
+				var list = new[] {
 				new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
 				new { TabPage = this.tabPreview_pageRtf, ClipboardType = ClipboardType.Rtf },
 				new { TabPage = this.tabPreview_pageHtml, ClipboardType = ClipboardType.Html },
 				new { TabPage = this.tabPreview_pageImage, ClipboardType = ClipboardType.Image },
 				new { TabPage = this.tabPreview_pageFile, ClipboardType = ClipboardType.File },
 			};
-			foreach(var item in list) {
-				if(e.TabPage == item.TabPage && typeList.Any(t => t.HasFlag(item.ClipboardType))) {
-					return;
+				foreach(var item in list) {
+					if(e.TabPage == item.TabPage && typeList.Any(t => t.HasFlag(item.ClipboardType))) {
+						return;
+					}
 				}
 			}
+
 
 			e.Cancel = true;
 		}
