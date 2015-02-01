@@ -290,7 +290,7 @@
 			ChangeSelectTypeControl(map[type]);
 
 			ChangeCommand(-1);
-			ChangeSelsectedItem(-1);
+			ChangeSelsectedItem(type == ClipboardListType.Template ? 0 : -1);
 		}
 
 		void ChangeCommandType(ClipboardListType type)
@@ -800,21 +800,20 @@
 				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
 				var typeList = clipboardItem.GetClipboardTypeList();
 				var list = new[] {
-				new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
-				new { TabPage = this.tabPreview_pageRtf, ClipboardType = ClipboardType.Rtf },
-				new { TabPage = this.tabPreview_pageHtml, ClipboardType = ClipboardType.Html },
-				new { TabPage = this.tabPreview_pageImage, ClipboardType = ClipboardType.Image },
-				new { TabPage = this.tabPreview_pageFile, ClipboardType = ClipboardType.File },
-			};
+					new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
+					new { TabPage = this.tabPreview_pageRtf, ClipboardType = ClipboardType.Rtf },
+					new { TabPage = this.tabPreview_pageHtml, ClipboardType = ClipboardType.Html },
+					new { TabPage = this.tabPreview_pageImage, ClipboardType = ClipboardType.Image },
+					new { TabPage = this.tabPreview_pageFile, ClipboardType = ClipboardType.File },
+				};
 				foreach(var item in list) {
 					if(e.TabPage == item.TabPage && typeList.Any(t => t.HasFlag(item.ClipboardType))) {
 						return;
 					}
 				}
+
+				e.Cancel = true;
 			}
-
-
-			e.Cancel = true;
 		}
 
 		void command_Click(object sender, EventArgs e)
