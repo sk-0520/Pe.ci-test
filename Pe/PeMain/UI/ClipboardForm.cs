@@ -167,7 +167,6 @@
 			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
-
 		}
 
 		#endregion ////////////////////////////////////////
@@ -643,6 +642,22 @@
 			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged -= Items_ListChanged;
 		}
 
+		void AddTemplate(TemplateItem templateItem)
+		{
+		}
+
+		void UpTemplate(TemplateItem templateItem)
+		{
+		}
+
+		void DownTemplate(TemplateItem templateItem)
+		{
+		}
+
+		void CopyTemplate(TemplateItem templateItem)
+		{
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -849,8 +864,8 @@
 			if(0 > HoverItemIndex) {
 				return;
 			}
-			try {
-				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				try {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
 					var map = new Dictionary<object, ClipboardType>() {
 						{ this._commandText, ClipboardType.Text },
@@ -861,12 +876,18 @@
 						{ this._commandMulti, ClipboardType.All },
 					};
 					CopyItem(clipboardItem, map[sender]);
-				} else {
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[HoverItemIndex];
-					CommonData.Logger.PutsDebug(templateItem.Name, () => templateItem.ToString());
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 				}
-			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+			} else {
+				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[HoverItemIndex];
+				var map = new Dictionary<object, Action<TemplateItem>>() {
+					{ this._commandMulti, CopyTemplate },
+					{ this._commandAdd,   AddTemplate },
+					{ this._commandUp,    UpTemplate },
+					{ this._commandDown,  DownTemplate },
+				};
+				map[sender](templateItem);
 			}
 		}
 
@@ -874,12 +895,17 @@
 		{
 			var index = this.listClipboard.SelectedIndex;
 			if(index != -1) {
-				try {
-					//CopySingleItem(index);
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-					CopyItem(clipboardItem, ClipboardType.All);
-				} catch(Exception ex) {
-					CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+					try {
+						var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+						CopyItem(clipboardItem, ClipboardType.All);
+					} catch(Exception ex) {
+						CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
+					}
+				} else {
+					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					CopyTemplate(templateItem);
 				}
 			}
 		}
