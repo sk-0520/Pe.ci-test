@@ -9,6 +9,7 @@
 	using System.Drawing.Imaging;
 	using System.IO;
 	using System.Linq;
+	using System.Text;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
@@ -127,6 +128,8 @@
 			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
 
 			listClipboard.MouseWheel += listClipboard_MouseWheel;
+
+			CehckedReplaced();
 		}
 
 		void Initialize()
@@ -168,6 +171,13 @@
 			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
+
+			var templateHtml = File.ReadAllText(Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.TemplateFileName));
+			var acceptMap = new Dictionary<string, string>() {
+				{"STYLE", File.ReadAllText(Path.Combine(Literal.ApplicationStyleDirPath, "common.css"), Encoding.UTF8) },
+			};
+			var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
+			this.webTemplateComment.DocumentText = replaced;
 		}
 
 		#endregion ////////////////////////////////////////
@@ -504,10 +514,6 @@
 
 			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
-
-			using(var stream = new FileStream(Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.TemplateFileName), FileMode.Open)) {
-				this.webTemplateComment.DocumentStream = stream;
-			}
 			
 
 			return this.tabPreview_pageRawTemplate;
@@ -750,6 +756,13 @@
 			if(!string.IsNullOrEmpty(templateText)) {
 				ClipboardUtility.CopyText(templateText, CommonData);
 			}
+		}
+
+		void CehckedReplaced()
+		{
+			var check = this.selectTemplateReplace.Checked;
+			this.webTemplateComment.Visible = check;
+			this.panelTemplateSource.Panel2Collapsed = !check;
 		}
 
 		#endregion ////////////////////////////////////////
@@ -1083,10 +1096,7 @@
 
 		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
 		{
-			var check = this.selectTemplateReplace.Checked;
-			this.webTemplateComment.Visible = check;
-			this.panelTemplateSource.Panel2Collapsed = !check;
+			CehckedReplaced();
 		}
-
 	}
 }

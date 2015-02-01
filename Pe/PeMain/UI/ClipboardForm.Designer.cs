@@ -453,6 +453,7 @@
 			this.inputTemplateSource.Location = new System.Drawing.Point(0, 0);
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
+			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.inputTemplateSource.Size = new System.Drawing.Size(211, 133);
 			this.inputTemplateSource.TabIndex = 1;
 			// 
