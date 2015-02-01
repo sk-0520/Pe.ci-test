@@ -505,6 +505,11 @@
 			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
+			using(var stream = new FileStream(Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.TemplateFileName), FileMode.Open)) {
+				this.webTemplateComment.DocumentStream = stream;
+			}
+			
+
 			return this.tabPreview_pageRawTemplate;
 		}
 
@@ -1075,5 +1080,13 @@
 				UIUtility.ShowFrontActive(this);
 			}
 		}
+
+		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
+		{
+			var check = this.selectTemplateReplace.Checked;
+			this.webTemplateComment.Visible = check;
+			this.panelTemplateSource.Panel2Collapsed = !check;
+		}
+
 	}
 }

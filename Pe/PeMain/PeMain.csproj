@@ -157,6 +157,9 @@
     <Compile Include="Data\ToolbarGroupItem.cs" />
     <Compile Include="Data\ToolbarItem.cs" />
     <Compile Include="Data\WindowItem.cs" />
+    <Content Include="etc\lang\ja-JP.template.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

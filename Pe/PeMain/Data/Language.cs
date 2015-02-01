@@ -50,6 +50,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 許諾ダイアログで使用するHTMLファイル名。
 		/// </summary>
 		public string AcceptFileName { get { return string.Format("{0}.accept.html", BaseName); } }
+		/// <summary>
+		/// クリップボードテンプレートで使用するHTMLファイル名。
+		/// </summary>
+		public string TemplateFileName { get { return string.Format("{0}.template.html", BaseName); } }
 
 		/// <summary>
 		/// 定義済みワード一覧。

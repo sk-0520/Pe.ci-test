@@ -34,11 +34,11 @@
 			using(var richTextBox = new RichTextBox()) {
 				richTextBox.Font = fontSetting.Font;
 				
-				if(!item.ReplaceMode) {
+				if(!item.ReplaceMode || string.IsNullOrWhiteSpace(item.Source)) {
 					richTextBox.Text = item.Source;
 					return richTextBox.Rtf;
 				}
-
+				
 				var STX = '\u0002';
 				var ETX = '\u0003';
 				var evil = new Tuple<char, char>(STX, ETX);
