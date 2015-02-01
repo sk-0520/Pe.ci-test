@@ -660,6 +660,7 @@
 				var isActive = Form.ActiveForm == this;
 				var selectedIndex = this.listClipboard.SelectedIndex;
 				this.listClipboard.DataSource = null;
+				this.listClipboard.SelectedIndex = -1;
 
 				if(action != null) {
 					action();
@@ -671,8 +672,10 @@
 				//}
 
 				if(isActive) {
-					if(selectedIndex + 1 < this.listClipboard.Items.Count) {
-						this.listClipboard.SelectedIndex = selectedIndex + 1;
+					if(selectedIndex < this.listClipboard.Items.Count) {
+						this.listClipboard.SelectedIndex = selectedIndex;
+					} else {
+						this.listClipboard.SelectedIndex = this.listClipboard.Items.Count - 1;
 					}
 				} else if(itemList.Any()) {
 					this.listClipboard.SelectedIndex = 0;
@@ -705,6 +708,7 @@
 			if(templateItem != null) {
 				var index = items.IndexOf(templateItem);
 				items.Insert(index, createdItem);
+				this.listClipboard.SelectedIndex = index;
 			}
 		}
 
