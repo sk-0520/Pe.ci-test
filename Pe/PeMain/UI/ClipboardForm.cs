@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.Specialized;
+	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Drawing.Imaging;
@@ -642,37 +643,46 @@
 			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged -= HistoryItems_ListChanged;
 		}
 
-		void ListChanged<T>(ClipboardListType targetType, IList<T> itemList, Action action)
+		void ListChanged<T>(ClipboardListType targetType, EventList<T> itemList, Action action)
 		{
 			if(CommonData.MainSetting.Clipboard.ClipboardListType != targetType) {
 				return;
 			}
+			//var eventMap = new Dictionary<ClipboardListType, EventHandler> {
+			//	{ ClipboardListType.History,  HistoryItems_ListChanged },
+			//	{ ClipboardListType.Template, TemplateItems_ListChanged },
+			//};
+			try {
+				//itemList.ListChanged -= eventMap[targetType];
 
-			this.listClipboard.SuspendLayout();
+				this.listClipboard.SuspendLayout();
 
-			var isActive = Form.ActiveForm == this;
-			var selectedIndex = this.listClipboard.SelectedIndex;
-			this.listClipboard.DataSource = null;
+				var isActive = Form.ActiveForm == this;
+				var selectedIndex = this.listClipboard.SelectedIndex;
+				this.listClipboard.DataSource = null;
 
-			if(action != null) {
-				action();
-			}
-
-			//if(itemList.Any()) {
-				this.listClipboard.DataSource = itemList;
-			//}
-
-			if(isActive) {
-				if(selectedIndex + 1 < this.listClipboard.Items.Count) {
-					this.listClipboard.SelectedIndex = selectedIndex + 1;
+				if(action != null) {
+					action();
 				}
-			} else if(itemList.Any()) {
-				this.listClipboard.SelectedIndex = 0;
-			}
-			this._panelClipboradItem.Visible = false;
-			ChangeCommand(-1);
-			this.listClipboard.ResumeLayout();
 
+				//if(itemList.Any()) {
+				var bindList = new BindingList<T>(itemList);
+				this.listClipboard.DataSource = bindList;
+				//}
+
+				if(isActive) {
+					if(selectedIndex + 1 < this.listClipboard.Items.Count) {
+						this.listClipboard.SelectedIndex = selectedIndex + 1;
+					}
+				} else if(itemList.Any()) {
+					this.listClipboard.SelectedIndex = 0;
+				}
+				this._panelClipboradItem.Visible = false;
+				ChangeCommand(-1);
+			} finally {
+				//itemList.ListChanged += eventMap[targetType];
+				this.listClipboard.ResumeLayout();
+			}
 		}
 
 		TemplateItem CreateTemplate()
@@ -969,7 +979,7 @@
 					// 最後の一つを削除するとあまりよろしくない
 					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
 						var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-						CommonData.MainSetting.Clipboard.HistoryItems.RemoveAt(index);
+						CommonData.MainSetting.Clipboard.TemplateItems.RemoveAt(index);
 					}
 				}
 			}
