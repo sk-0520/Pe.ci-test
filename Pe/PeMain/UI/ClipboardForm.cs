@@ -575,6 +575,63 @@
 
 		#endregion ////////////////////////////////////////
 
+		#region Draw
+
+		void DrawClipboardItem(Graphics g, int itemIndex, Rectangle bounds, Color foreColor)
+		{
+			var item = CommonData.MainSetting.Clipboard.HistoryItems[itemIndex];
+			var map = new Dictionary<ClipboardType, string>() {
+					{ ClipboardType.Text, imageText},
+					{ ClipboardType.Rtf, imageRtf},
+					{ ClipboardType.Html, imageHtml},
+					{ ClipboardType.Image, imageImage},
+					{ ClipboardType.File, imageFile},
+				};
+			var image = this.imageTab.Images[map[item.GetSingleClipboardType()]];
+
+			var drawArea = new Rectangle(bounds.X + this.listClipboard.Margin.Left, bounds.Bottom - image.Height - +this.listClipboard.Margin.Bottom - 1, image.Width, image.Height);
+
+			g.DrawImage(image, drawArea);
+
+			using(var sf = new StringFormat())
+			using(var brush = new SolidBrush(foreColor)) {
+				sf.Alignment = StringAlignment.Near;
+				sf.LineAlignment = StringAlignment.Near;
+				sf.Trimming = StringTrimming.EllipsisCharacter;
+				sf.FormatFlags = StringFormatFlags.NoWrap;
+				g.DrawString(item.Name, Font, brush, bounds, sf);
+
+				sf.Alignment = StringAlignment.Far;
+				sf.LineAlignment = StringAlignment.Far;
+				g.DrawString(item.Timestamp.ToString(), SystemFonts.SmallCaptionFont, brush, bounds, sf);
+			}
+		}
+
+		void DrawTemplateItem(Graphics g, int itemIndex, Rectangle bounds, Color foreColor)
+		{
+			var item = CommonData.MainSetting.Clipboard.TemplateItems[itemIndex];
+			using(var sf = new StringFormat())
+			using(var brush = new SolidBrush(foreColor)) {
+				sf.Alignment = StringAlignment.Near;
+				sf.LineAlignment = StringAlignment.Near;
+				sf.Trimming = StringTrimming.EllipsisCharacter;
+				sf.FormatFlags = StringFormatFlags.NoWrap;
+				g.DrawString(item.Name, Font, brush, bounds, sf);
+			}
+		}
+
+		void DrawItem(DrawItemEventArgs e)
+		{
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				DrawClipboardItem(e.Graphics, e.Index, e.Bounds, e.ForeColor);
+			} else {
+				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+				DrawTemplateItem(e.Graphics, e.Index, e.Bounds, e.ForeColor);
+			}
+		}
+
+		#endregion ////////////////////////////////////////
+
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
 			ChangeSelectTypeControl((ToolStripItem)sender);
@@ -609,35 +666,11 @@
 		private void listClipboard_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if(e.Index != -1) {
-				var item = CommonData.MainSetting.Clipboard.HistoryItems[e.Index];
 
 				e.DrawBackground();
 
-				var map = new Dictionary<ClipboardType, string>() {
-					{ ClipboardType.Text, imageText},
-					{ ClipboardType.Rtf, imageRtf},
-					{ ClipboardType.Html, imageHtml},
-					{ ClipboardType.Image, imageImage},
-					{ ClipboardType.File, imageFile},
-				};
-				var image = this.imageTab.Images[map[item.GetSingleClipboardType()]];
+				DrawItem(e);
 
-				var drawArea = new Rectangle(e.Bounds.X + this.listClipboard.Margin.Left, e.Bounds.Bottom - image.Height - +this.listClipboard.Margin.Bottom - 1, image.Width, image.Height);
-				
-				e.Graphics.DrawImage(image, drawArea);
-				
-				using(var sf = new StringFormat())
-				using(var brush = new SolidBrush(e.ForeColor)) {
-					sf.Alignment = StringAlignment.Near;
-					sf.LineAlignment = StringAlignment.Near;
-					sf.Trimming = StringTrimming.EllipsisCharacter;
-					sf.FormatFlags = StringFormatFlags.NoWrap;
-					e.Graphics.DrawString(item.Name, Font, brush, e.Bounds, sf);
-
-					sf.Alignment = StringAlignment.Far;
-					sf.LineAlignment = StringAlignment.Far;
-					e.Graphics.DrawString(item.Timestamp.ToString(), SystemFonts.SmallCaptionFont, brush, e.Bounds, sf);
-				}
 				using(var pen = new Pen(Color.FromArgb(128, e.ForeColor))) {
 					var bottom = e.Bounds.Bottom - 1;
 					pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
