@@ -108,3 +108,15 @@ p.uri
 {
 	margin-left: 1em;
 }
+
+/* .NET 対応まで気長に待とうさ */
+*.template dd dt:before
+{
+	content: "@["
+}
+
+*.template dd dt:after
+{
+	content: "]";
+}
+
