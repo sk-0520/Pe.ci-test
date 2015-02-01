@@ -36,7 +36,7 @@
 
 			ClipboardListType = ClipboardListType.History;
 
-			TemplateItems = new List<TemplateItem>();
+			TemplateItems = new EventList<TemplateItem>();
 		}
 
 		/// <summary>
@@ -82,7 +82,7 @@
 		public FixedSizedList<ClipboardItem> HistoryItems { get; set; }
 
 		[XmlIgnore]
-		public List<TemplateItem> TemplateItems { get; set; }
+		public EventList<TemplateItem> TemplateItems { get; set; }
 		/// <summary>
 		/// コピーを検知を無視する
 		/// </summary>

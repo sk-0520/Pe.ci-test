@@ -260,7 +260,7 @@
 		
 		void CreateLauncherItem()
 		{
-			var itemName = this._language["control/launcher-selecter/new-item"];
+			var itemName = this._language["new/launcher-item"];
 			if(this._items.Count > 0) {
 				itemName = TextUtility.ToUniqueDefault(itemName, this._items.Select(i => i.Name));
 			}

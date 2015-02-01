@@ -350,9 +350,10 @@
 		<Word Name="about/column/license"    Text="ライセンス" />
 		<Word Name="about/update/check/dialog/caption"   Text="アップデートチェック" />
 		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
-		
-		<Word Name="group/new" Text="新規グループ" />
-		<Word Name="control/launcher-selecter/new-item" Text="新規アイテム" />
+
+		<Word Name="new/group-item"     Text="新規グループ" />
+		<Word Name="new/launcher-item"  Text="新規アイテム" />
+		<Word Name="new/template-item"  Text="新規テンプレート" />
 		
 		<Word Name="item-selecter/command/create"     Text="新規アイテム" />
 		<Word Name="item-selecter/command/remove"     Text="アイテム削除" />

@@ -91,6 +91,7 @@
     <Compile Include="DialogFilterUtility.cs" />
     <Compile Include="DrawUtility.cs" />
     <Compile Include="EnvironmentVariable.cs" />
+    <Compile Include="EventList.cs" />
     <Compile Include="FileUtility.cs" />
     <Compile Include="FixedSizedList.cs" />
     <Compile Include="FixedSizedQueue.cs" />

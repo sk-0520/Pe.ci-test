@@ -247,7 +247,7 @@
 			}
 
 			// 既存グループのうち「新規グループ」に何も格納されていなければ消しちゃう
-			var removeGroupItem = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.SingleOrDefault(g => g.Name == CommonData.Language["group/new"]);
+			var removeGroupItem = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.SingleOrDefault(g => g.Name == CommonData.Language["new/group-item"]);
 			if(removeGroupItem != null && !removeGroupItem.ItemNames.Any()) {
 				CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Remove(removeGroupItem);
 			}

@@ -231,7 +231,8 @@
 
 		void ApplySettingUI()
 		{
-			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged += Items_ListChanged;
+			CommonData.MainSetting.Clipboard.TemplateItems.ListChanged += TemplateItems_ListChanged;
+			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged += HistoryItems_ListChanged;
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
 			ChangeEnabled(CommonData.MainSetting.Clipboard.Enabled);
@@ -341,9 +342,7 @@
 				Debug.Assert(type == ClipboardListType.Template);
 				if(!this.CommonData.MainSetting.Clipboard.TemplateItems.Any()) {
 					// 新規アイテムの生成
-					var newItem = new TemplateItem() {
-						Name = "new, TODO: lang",
-					};
+					var newItem = CreateTemplate();
 					this.CommonData.MainSetting.Clipboard.TemplateItems.Add(newItem);
 				}
 				this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.TemplateItems;
@@ -639,11 +638,64 @@
 
 		public void ClearEvent()
 		{
-			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged -= Items_ListChanged;
+			CommonData.MainSetting.Clipboard.TemplateItems.ListChanged -= TemplateItems_ListChanged;
+			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged -= HistoryItems_ListChanged;
 		}
 
+		void ListChanged<T>(ClipboardListType targetType, IList<T> itemList, Action action)
+		{
+			if(CommonData.MainSetting.Clipboard.ClipboardListType != targetType) {
+				return;
+			}
+
+			this.listClipboard.SuspendLayout();
+
+			var isActive = Form.ActiveForm == this;
+			var selectedIndex = this.listClipboard.SelectedIndex;
+			this.listClipboard.DataSource = null;
+
+			if(action != null) {
+				action();
+			}
+
+			//if(itemList.Any()) {
+				this.listClipboard.DataSource = itemList;
+			//}
+
+			if(isActive) {
+				if(selectedIndex + 1 < this.listClipboard.Items.Count) {
+					this.listClipboard.SelectedIndex = selectedIndex + 1;
+				}
+			} else if(itemList.Any()) {
+				this.listClipboard.SelectedIndex = 0;
+			}
+			this._panelClipboradItem.Visible = false;
+			ChangeCommand(-1);
+			this.listClipboard.ResumeLayout();
+
+		}
+
+		TemplateItem CreateTemplate()
+		{
+			Debug.Assert(CommonData != null);
+
+			return new TemplateItem() {
+				Name = TextUtility.ToUniqueDefault(CommonData.Language["new/template-item"], CommonData.MainSetting.Clipboard.TemplateItems.Select(t => t.Name)),
+			};
+		}
+
+		/// <summary>
+		/// テンプレートを追加。
+		/// </summary>
+		/// <param name="templateItem">追加するテンプレート位置のアイテム</param>
 		void AddTemplate(TemplateItem templateItem)
 		{
+			var createdItem = CreateTemplate();
+			var items = CommonData.MainSetting.Clipboard.TemplateItems;
+			if(templateItem != null) {
+				var index = items.IndexOf(templateItem);
+				items.Insert(index, createdItem);
+			}
 		}
 
 		void UpTemplate(TemplateItem templateItem)
@@ -722,37 +774,22 @@
 			ChangeSelectTypeControl((ToolStripItem)sender);
 		}
 
-		void Items_ListChanged(object sender, EventArgs e)
+		void TemplateItems_ListChanged(object sender, EventArgs e)
 		{
-			if(CommonData.MainSetting.Clipboard.ClipboardListType != ClipboardListType.History) {
-				return;
-			}
+			ListChanged(ClipboardListType.Template, CommonData.MainSetting.Clipboard.TemplateItems, null);
+		}
 
-			this.listClipboard.SuspendLayout();
-			var isActive = Form.ActiveForm == this;
-			var selectedIndex = this.listClipboard.SelectedIndex;
-			this.listClipboard.DataSource = null;
-			if(CommonData.MainSetting.Clipboard.HistoryItems.Count == 0) {
-				this.viewText.ResetText();
-				this.viewRtf.ResetText();
-				this.viewHtml.DocumentText = null;
-				this.viewImage.Image = null;
-				this.viewFile.Items.Clear();
-			}
-			if(this.listClipboard.DataSource != this.CommonData.MainSetting.Clipboard.HistoryItems && this.CommonData.MainSetting.Clipboard.HistoryItems.Any()) {
-				this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.HistoryItems;
-			}
-
-			if(isActive) {
-				if(selectedIndex + 1 < this.listClipboard.Items.Count) {
-					this.listClipboard.SelectedIndex = selectedIndex + 1;
+		void HistoryItems_ListChanged(object sender, EventArgs e)
+		{
+			ListChanged(ClipboardListType.History, CommonData.MainSetting.Clipboard.HistoryItems, () => {
+				if(CommonData.MainSetting.Clipboard.HistoryItems.Count == 0) {
+					this.viewText.ResetText();
+					this.viewRtf.ResetText();
+					this.viewHtml.DocumentText = null;
+					this.viewImage.Image = null;
+					this.viewFile.Items.Clear();
 				}
-			} else if(this.CommonData.MainSetting.Clipboard.HistoryItems.Any()) {
-				this.listClipboard.SelectedIndex = 0;
-			}
-			this._panelClipboradItem.Visible = false;
-			ChangeCommand(-1);
-			this.listClipboard.ResumeLayout();
+			});
 		}
 
 		private void listClipboard_DrawItem(object sender, DrawItemEventArgs e)

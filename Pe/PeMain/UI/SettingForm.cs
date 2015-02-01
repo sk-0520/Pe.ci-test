@@ -1611,7 +1611,7 @@
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
-			ToolbarAddGroup(Language["group/new"]);
+			ToolbarAddGroup(Language["new/group-item"]);
 			ToolbarChangedGroupCount();
 		}
 		
