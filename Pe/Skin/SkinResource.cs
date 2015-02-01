@@ -66,6 +66,8 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		WindowLoad,
 		Windows,
 		WindowSave,
+		RawTemplate,
+		ReplaceTemplate
 	}
 
 	public enum SkinIcon

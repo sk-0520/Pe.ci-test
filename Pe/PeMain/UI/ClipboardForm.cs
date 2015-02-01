@@ -118,6 +118,7 @@
 			this.tabPreview_pageImage.ImageKey = imageImage;
 			this.tabPreview_pageFile.ImageKey = imageFile;
 			this.tabPreview_pageRawTemplate.ImageKey = imageRawTemplate;
+			this.tabPreview_pageReplaceTemplate.ImageKey = imageReplaceTemplate;
 			
 
 			//ChangeCommand(-1);
@@ -182,7 +183,8 @@
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardImage), Control = this._commandImage, Name = imageImage },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardFile), Control = this._commandFile, Name = imageFile },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy), Control = this._commandMulti, Name = string.Empty },
-				new { Image = CommonData.Skin.GetImage(SkinImage.NotImpl), Control = default(Button), Name = imageRawTemplate},
+				new { Image = CommonData.Skin.GetImage(SkinImage.RawTemplate), Control = default(Button), Name = imageRawTemplate},
+				new { Image = CommonData.Skin.GetImage(SkinImage.ReplaceTemplate), Control = default(Button), Name = imageReplaceTemplate},
 				new { Image = CommonData.Skin.GetImage(SkinImage.Add), Control = this._commandAdd, Name = string.Empty },
 				new { Image = CommonData.Skin.GetImage(SkinImage.Up), Control = this._commandUp, Name = string.Empty },
 				new { Image = CommonData.Skin.GetImage(SkinImage.Down), Control = this._commandDown, Name = string.Empty },
