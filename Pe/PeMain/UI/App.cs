@@ -200,7 +200,7 @@
 						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 						clipboardItem.Name = displayText;
 
-						this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+						this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
 					} catch(Exception ex) {
 						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
@@ -1377,8 +1377,8 @@
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
-					mainSetting.Clipboard.Items = this._commonData.MainSetting.Clipboard.Items;
-					mainSetting.Clipboard.Items.LimitSize = mainSetting.Clipboard.Limit;
+					mainSetting.Clipboard.HistoryItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+					mainSetting.Clipboard.HistoryItems.LimitSize = mainSetting.Clipboard.Limit;
 
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					var oldSetting = this._commonData.MainSetting;

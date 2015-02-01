@@ -65,6 +65,8 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
+			this.tabPreview_pageTemplate = new System.Windows.Forms.TabPage();
+			this.inputTemplateName = new System.Windows.Forms.TextBox();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -83,6 +85,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.viewImage)).BeginInit();
 			this.tabPreview_pageFile.SuspendLayout();
 			this.toolClipboard.SuspendLayout();
+			this.tabPreview_pageTemplate.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panelMain
@@ -206,6 +209,7 @@
 			this.tabPreview.Controls.Add(this.tabPreview_pageHtml);
 			this.tabPreview.Controls.Add(this.tabPreview_pageImage);
 			this.tabPreview.Controls.Add(this.tabPreview_pageFile);
+			this.tabPreview.Controls.Add(this.tabPreview_pageTemplate);
 			this.tabPreview.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabPreview.ImageList = this.imageTab;
 			this.tabPreview.Location = new System.Drawing.Point(0, 0);
@@ -241,10 +245,10 @@
 			// tabPreview_pageRtf
 			// 
 			this.tabPreview_pageRtf.Controls.Add(this.viewRtf);
-			this.tabPreview_pageRtf.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageRtf.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageRtf.Name = "tabPreview_pageRtf";
 			this.tabPreview_pageRtf.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageRtf.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageRtf.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageRtf.TabIndex = 1;
 			this.tabPreview_pageRtf.Text = "#ClipboardType.Rtf";
 			this.tabPreview_pageRtf.UseVisualStyleBackColor = true;
@@ -258,7 +262,7 @@
 			this.viewRtf.Name = "viewRtf";
 			this.viewRtf.ReadOnly = true;
 			this.viewRtf.ShortcutsEnabled = false;
-			this.viewRtf.Size = new System.Drawing.Size(365, 194);
+			this.viewRtf.Size = new System.Drawing.Size(365, 193);
 			this.viewRtf.TabIndex = 0;
 			this.viewRtf.Text = "";
 			this.viewRtf.WordWrap = false;
@@ -266,9 +270,9 @@
 			// tabPreview_pageHtml
 			// 
 			this.tabPreview_pageHtml.Controls.Add(this.viewHtml);
-			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageHtml.Name = "tabPreview_pageHtml";
-			this.tabPreview_pageHtml.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageHtml.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageHtml.TabIndex = 4;
 			this.tabPreview_pageHtml.Text = "#ClipboardType.Html";
 			this.tabPreview_pageHtml.UseVisualStyleBackColor = true;
@@ -281,17 +285,17 @@
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
 			this.viewHtml.ScriptErrorsSuppressed = true;
-			this.viewHtml.Size = new System.Drawing.Size(371, 200);
+			this.viewHtml.Size = new System.Drawing.Size(371, 199);
 			this.viewHtml.TabIndex = 0;
 			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
 			// tabPreview_pageImage
 			// 
 			this.tabPreview_pageImage.Controls.Add(this.panelImage);
-			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
 			this.tabPreview_pageImage.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageImage.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageImage.TabIndex = 2;
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
@@ -303,7 +307,7 @@
 			this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelImage.Location = new System.Drawing.Point(3, 3);
 			this.panelImage.Name = "panelImage";
-			this.panelImage.Size = new System.Drawing.Size(365, 194);
+			this.panelImage.Size = new System.Drawing.Size(365, 193);
 			this.panelImage.TabIndex = 1;
 			// 
 			// viewImage
@@ -318,10 +322,10 @@
 			// tabPreview_pageFile
 			// 
 			this.tabPreview_pageFile.Controls.Add(this.viewFile);
-			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 200);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 199);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
@@ -336,7 +340,7 @@
 			this.viewFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.viewFile.Location = new System.Drawing.Point(3, 3);
 			this.viewFile.Name = "viewFile";
-			this.viewFile.Size = new System.Drawing.Size(365, 194);
+			this.viewFile.Size = new System.Drawing.Size(365, 193);
 			this.viewFile.TabIndex = 0;
 			this.viewFile.UseCompatibleStateImageBehavior = false;
 			this.viewFile.View = System.Windows.Forms.View.Details;
@@ -466,6 +470,23 @@
 			this.toolClipboard_itemType_itemTemplate.Text = ":clipboard/type/template";
 			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
+			// tabPreview_pageTemplate
+			// 
+			this.tabPreview_pageTemplate.Controls.Add(this.inputTemplateName);
+			this.tabPreview_pageTemplate.Location = new System.Drawing.Point(4, 27);
+			this.tabPreview_pageTemplate.Name = "tabPreview_pageTemplate";
+			this.tabPreview_pageTemplate.Size = new System.Drawing.Size(371, 199);
+			this.tabPreview_pageTemplate.TabIndex = 5;
+			this.tabPreview_pageTemplate.Text = ":clipboard/text/template";
+			this.tabPreview_pageTemplate.UseVisualStyleBackColor = true;
+			// 
+			// inputTemplateName
+			// 
+			this.inputTemplateName.Location = new System.Drawing.Point(46, 26);
+			this.inputTemplateName.Name = "inputTemplateName";
+			this.inputTemplateName.Size = new System.Drawing.Size(100, 23);
+			this.inputTemplateName.TabIndex = 0;
+			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -511,6 +532,8 @@
 			this.tabPreview_pageFile.ResumeLayout(false);
 			this.toolClipboard.ResumeLayout(false);
 			this.toolClipboard.PerformLayout();
+			this.tabPreview_pageTemplate.ResumeLayout(false);
+			this.tabPreview_pageTemplate.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -554,5 +577,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemClear;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemEnabled;
+		private System.Windows.Forms.TabPage tabPreview_pageTemplate;
+		private System.Windows.Forms.TextBox inputTemplateName;
 	}
 }

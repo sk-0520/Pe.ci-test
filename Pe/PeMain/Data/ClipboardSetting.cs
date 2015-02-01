@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
@@ -34,6 +35,8 @@
 			ToggleHotKeySetting = new HotKeySetting();
 
 			ClipboardListType = ClipboardListType.History;
+
+			TemplateItems = new List<TemplateItem>();
 		}
 
 		/// <summary>
@@ -76,7 +79,10 @@
 		/// クリップボードデータ
 		/// </summary>
 		[XmlIgnore]
-		public FixedSizedList<ClipboardItem> Items { get; set; }
+		public FixedSizedList<ClipboardItem> HistoryItems { get; set; }
+
+		[XmlIgnore]
+		public List<TemplateItem> TemplateItems { get; set; }
 		/// <summary>
 		/// コピーを検知を無視する
 		/// </summary>
@@ -124,7 +130,7 @@
 			base.CorrectionValue();
 
 			Limit = Literal.clipboardLimit.ToRounding(Limit);
-			Items = new FixedSizedList<ClipboardItem>(Limit);
+			HistoryItems = new FixedSizedList<ClipboardItem>(Limit);
 
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);

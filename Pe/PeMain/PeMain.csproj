@@ -149,6 +149,7 @@
     <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\TemplateItem.cs" />
     <Compile Include="Data\ToolbarDropData.cs" />
     <Compile Include="Data\ToolbarGroup.cs" />
     <Compile Include="Data\ToolbarGroupItem.cs" />
