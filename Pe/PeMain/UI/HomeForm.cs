@@ -123,7 +123,7 @@
 		{
 			var path = Literal.ApplicationDefaultLauncherItemPath;
 			var srcBuffer = File.ReadAllText(path);
-			var lngBuffer = CommonData.Language.ReplaceAll(srcBuffer);
+			var lngBuffer = CommonData.Language.ReplaceAllLanguage(srcBuffer);
 			var xml = XElement.Parse(lngBuffer);
 
 			// アイテム取得

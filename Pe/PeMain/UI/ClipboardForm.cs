@@ -928,7 +928,8 @@
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				if(e.TabPage == this.tabPreview_pageReplaceTemplate) {
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-					var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, this.viewReplaceTemplate.Font, true);
+
+					var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
 					this.viewReplaceTemplate.Rtf = rtf;
 				}
 			}

@@ -506,6 +506,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string minute02    = "m:02";
 		public const string second      = "s";
 		public const string second02    = "s:02";
+
+		// -------------------------------------------------
 		
 		public const string groupName   = "GROUP";
 		public const string itemName    = "ITEM";

@@ -160,12 +160,12 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			}
 		}
 		
-		public string ReplaceAll(string text)
+		public string ReplaceAllLanguage(string text)
 		{
 			return text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s]);
 		}
 
-		public string ReplaceAllWithAppMap(string text, IDictionary<string, string> map, bool evil)
+		public string ReplaceAllAppMap(string text, IDictionary<string, string> map, Tuple<char, char> evil)
 		{
 			var systemMap = GetAppMap();
 			IDictionary<string, string> usingMap;
@@ -173,19 +173,17 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			foreach(var pair in map) {
 				usingMap[pair.Key] = pair.Value;
 			}
-			var STX = '\x0002';
-			var ETX = '\x0003';
-			if(evil) {
-				usingMap = usingMap.ToDictionary(pair => pair.Key, pair => STX + pair.Value + ETX);
+			if(evil != null) {
+				usingMap = usingMap.ToDictionary(pair => pair.Key, pair => evil.Item1 + pair.Value + evil.Item2);
 			}
 			
 			var replacedAppMap = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, usingMap);
-			System.Diagnostics.Debug.WriteLine(BitConverter.ToString(System.Text.Encoding.UTF8.GetBytes(replacedAppMap)));
+			//System.Diagnostics.Debug.WriteLine(BitConverter.ToString(System.Text.Encoding.UTF8.GetBytes(replacedAppMap)));
 			//var replacedUserMap = replacedAppMap.ReplaceRangeFromDictionary("#(", ")", map);
 			//var replacedLang = replacedUserMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Words, s).Text);
-			var replacedLang = replacedAppMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s, usingMap]);
+			//var replacedLang = replacedAppMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s, usingMap]);
 
-			return replacedLang;
+			return replacedAppMap;
 		}
 
 	}

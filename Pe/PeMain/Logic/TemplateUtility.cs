@@ -6,8 +6,10 @@
 	using System.Drawing;
 	using System.Linq;
 	using System.Text;
+	using System.Text.RegularExpressions;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	public static class TemplateUtility
@@ -22,26 +24,37 @@
 			if(!item.ReplaceMode) {
 				return item.Source;
 			}
-			var result = language.ReplaceAllWithAppMap(item.Source, GetTemplateMap(), false);
+			var result = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), null);
 			Debug.WriteLine(result);
 			return result;
 		}
 
-		public static string ToRtf(TemplateItem item, Language language, Font font, bool evil)
+		public static string ToRtf(TemplateItem item, Language language, FontSetting fontSetting)
 		{
 			using(var richTextBox = new RichTextBox()) {
-				richTextBox.Text = item.Source;
-				richTextBox.Font = font;
+				richTextBox.Font = fontSetting.Font;
+				
 				if(!item.ReplaceMode) {
+					richTextBox.Text = item.Source;
 					return richTextBox.Rtf;
 				}
-				var trf = richTextBox.Rtf;
 
-				var result = language.ReplaceAllWithAppMap(item.Source, GetTemplateMap(), evil);
+				var STX = '\u0002';
+				var ETX = '\u0003';
+				var evil = new Tuple<char, char>(STX, ETX);
 
-				Debug.WriteLine(result);
+				var replacedEvil = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), evil);
+				richTextBox.Text = replacedEvil;
 
-				return trf;
+				// ちょっちあれな部分を書式設定
+				var esc = @"\'";
+				var map = new Dictionary<string, string>() {
+					{ esc + string.Format("{0:x2}", (int)evil.Item1), @"\b " },
+					{ esc + string.Format("{0:x2}", (int)evil.Item2), @"\b0 " },
+				};
+				var rtf = richTextBox.Rtf.ReplaceFromDictionary(map);
+
+				return rtf;
 			}
 		}
 	}
