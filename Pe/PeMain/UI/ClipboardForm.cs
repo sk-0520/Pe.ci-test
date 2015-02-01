@@ -484,6 +484,16 @@
 				this.tabPreview_pageReplaceTemplate
 			});
 
+			// あれやこれやがだるいのでバインドる。
+			this.inputTemplateName.DataBindings.Clear();
+			this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
+
+			this.inputTemplateSource.DataBindings.Clear();
+			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
+
+			this.selectTemplateReplace.DataBindings.Clear();
+			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
+
 			return this.tabPreview_pageRawTemplate;
 		}
 
