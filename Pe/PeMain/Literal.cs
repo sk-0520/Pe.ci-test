@@ -491,8 +491,10 @@ namespace ContentTypeTextNet.Pe.PeMain
 	/// </summary>
 	public static class AppLanguageName
 	{
-		public const string application = "APPLICATION";
-		public const string version     = "VER";
+		public const string application   = "APPLICATION";
+		public const string versionNumber = "VER-NUMBER";
+		public const string versionHash   = "VER-HASH";
+		public const string versionFull   = "VER-FULL";
 		
 		public const string timestamp      = "TIMESTAMP";
 		public const string year           = "Y";
@@ -513,6 +515,11 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public static IReadOnlyList<string> GetMembersList()
 		{
 			return new[] {
+				application,
+				versionNumber,
+				versionHash,
+				versionFull,
+
 				timestamp,
 				year,
 				year04,

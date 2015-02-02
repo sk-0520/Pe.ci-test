@@ -466,6 +466,27 @@
 
 		<Word Name="enum/clipboard-list-type/history"   Text="${clipboard}履歴" />
 		<Word Name="enum/clipboard-list-type/template"  Text="テンプレート" />
+		
+		<!-- テンプレート -->
+		<Word Name="app/language/name/APPLICATION"  Text="アプリケーション名称" />
+		<Word Name="app/language/name/VER-NUMVER"   Text="@[APPLICATION] バージョン番号" />
+		<Word Name="app/language/name/VER-HASH"     Text="@[APPLICATION] リビジョン" />
+		<Word Name="app/language/name/VER-FULL"     Text="@[APPLICATION] 統合バージョン" />
+		<Word Name="app/language/name/TIMESTAMP"    Text="タイムスタンプ" />
+		<Word Name="app/language/name/Y"            Text="西暦" />
+		<Word Name="app/language/name/Y:04"         Text="西暦(4桁)" />
+		<Word Name="app/language/name/M"            Text="月" />
+		<Word Name="app/language/name/M:02"         Text="月(2桁)" />
+		<Word Name="app/language/name/M:S"          Text="月(ロケールでの短い名称)" />
+		<Word Name="app/language/name/M:L"          Text="月(ロケールでの長い名称)" />
+		<Word Name="app/language/name/D"            Text="日" />
+		<Word Name="app/language/name/D:02"         Text="日(2桁)" />
+		<Word Name="app/language/name/h"            Text="時" />
+		<Word Name="app/language/name/h:02"         Text="時(2桁)" />
+		<Word Name="app/language/name/m"            Text="分" />
+		<Word Name="app/language/name/m:02"         Text="分(2桁)" />
+		<Word Name="app/language/name/s"            Text="秒" />
+		<Word Name="app/language/name/s:02"         Text="秒(2桁)" />
 
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />

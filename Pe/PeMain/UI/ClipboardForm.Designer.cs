@@ -57,10 +57,10 @@
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelTemplateName = new System.Windows.Forms.Label();
 			this.inputTemplateName = new System.Windows.Forms.TextBox();
+			this.selectTemplateReplace = new System.Windows.Forms.CheckBox();
 			this.panelTemplateSource = new System.Windows.Forms.SplitContainer();
 			this.inputTemplateSource = new System.Windows.Forms.TextBox();
 			this.listReplace = new System.Windows.Forms.ListBox();
-			this.selectTemplateReplace = new System.Windows.Forms.CheckBox();
 			this.tabPreview_pageReplaceTemplate = new System.Windows.Forms.TabPage();
 			this.viewReplaceTemplate = new System.Windows.Forms.RichTextBox();
 			this.imageTab = new System.Windows.Forms.ImageList(this.components);
@@ -382,17 +382,15 @@
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.panelTemplateSource, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.selectTemplateReplace, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.panelTemplateSource, 0, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 3;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(371, 219);
@@ -401,12 +399,13 @@
 			// flowLayoutPanel1
 			// 
 			this.flowLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.SetColumnSpan(this.flowLayoutPanel1, 2);
 			this.flowLayoutPanel1.Controls.Add(this.labelTemplateName);
 			this.flowLayoutPanel1.Controls.Add(this.inputTemplateName);
+			this.flowLayoutPanel1.Controls.Add(this.selectTemplateReplace);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(363, 29);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(365, 54);
 			this.flowLayoutPanel1.TabIndex = 6;
 			// 
 			// labelTemplateName
@@ -427,9 +426,20 @@
 			this.inputTemplateName.Size = new System.Drawing.Size(157, 23);
 			this.inputTemplateName.TabIndex = 0;
 			// 
+			// selectTemplateReplace
+			// 
+			this.selectTemplateReplace.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectTemplateReplace.AutoSize = true;
+			this.selectTemplateReplace.Location = new System.Drawing.Point(3, 32);
+			this.selectTemplateReplace.Name = "selectTemplateReplace";
+			this.selectTemplateReplace.Size = new System.Drawing.Size(228, 19);
+			this.selectTemplateReplace.TabIndex = 2;
+			this.selectTemplateReplace.Text = ":clipboard/check/template-replace";
+			this.selectTemplateReplace.UseVisualStyleBackColor = true;
+			this.selectTemplateReplace.CheckedChanged += new System.EventHandler(this.selectTemplateReplace_CheckedChanged);
+			// 
 			// panelTemplateSource
 			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.panelTemplateSource, 2);
 			this.panelTemplateSource.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelTemplateSource.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.panelTemplateSource.Location = new System.Drawing.Point(3, 63);
@@ -456,6 +466,7 @@
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.inputTemplateSource.Size = new System.Drawing.Size(211, 153);
 			this.inputTemplateSource.TabIndex = 1;
+			this.inputTemplateSource.WordWrap = false;
 			// 
 			// listReplace
 			// 
@@ -471,19 +482,6 @@
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
 			this.listReplace.DoubleClick += new System.EventHandler(this.listReplace_DoubleClick);
 			this.listReplace.Resize += new System.EventHandler(this.listReplace_Resize);
-			// 
-			// selectTemplateReplace
-			// 
-			this.selectTemplateReplace.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectTemplateReplace.AutoSize = true;
-			this.tableLayoutPanel1.SetColumnSpan(this.selectTemplateReplace, 2);
-			this.selectTemplateReplace.Location = new System.Drawing.Point(3, 38);
-			this.selectTemplateReplace.Name = "selectTemplateReplace";
-			this.selectTemplateReplace.Size = new System.Drawing.Size(228, 19);
-			this.selectTemplateReplace.TabIndex = 2;
-			this.selectTemplateReplace.Text = ":clipboard/check/template-replace";
-			this.selectTemplateReplace.UseVisualStyleBackColor = true;
-			this.selectTemplateReplace.CheckedChanged += new System.EventHandler(this.selectTemplateReplace_CheckedChanged);
 			// 
 			// tabPreview_pageReplaceTemplate
 			// 
