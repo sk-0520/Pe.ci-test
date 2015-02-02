@@ -1193,8 +1193,10 @@
 		private void listReplace_Resize(object sender, EventArgs e)
 		{
 			this.listReplace.BeginUpdate();
+			var selectedItem = this.listReplace.SelectedItem;
 			try {
 				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList); ;
+				this.listReplace.SelectedItem = selectedItem;
 			} finally {
 				this.listReplace.EndUpdate();
 			}
