@@ -833,6 +833,46 @@
 			}
 		}
 
+		StringFormat GetReplaceTitleFormat()
+		{
+			var sf = new StringFormat();
+			return sf;
+		}
+
+		StringFormat GetReplaceCommentFormat()
+		{
+			var sf = new StringFormat();
+			return sf;
+		}
+
+		int GetReplaceCommentPadding()
+		{
+			return 20;
+		}
+
+		Font GetReplaceTitleFont()
+		{
+			return new Font(Font.FontFamily, Font.SizeInPoints, FontStyle.Bold);
+		}
+
+		Font GetReplaceCommentFont()
+		{
+			return new Font(Font.FontFamily, Font.SizeInPoints, default(FontStyle));
+		}
+
+		void PaintReplaceItem(Graphics g, ReplaceItem replaceItem, Action<Font, Font, StringFormat, StringFormat, int, SizeF> action)
+		{
+			using(var titleFont = GetReplaceTitleFont())
+			using(var commentFont = GetReplaceCommentFont())
+			using(var titleFormat = GetReplaceTitleFormat())
+			using(var commentFormat = GetReplaceCommentFormat()) {
+				var width = this.listReplace.ClientSize.Width - this.listReplace.Margin.Right;
+				var titleSize = g.MeasureString(replaceItem.Name, titleFont, width, titleFormat);
+
+				action(titleFont, commentFont, titleFormat, commentFormat, width, titleSize);
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
@@ -1110,32 +1150,6 @@
 			ChekedReplace();
 		}
 
-		StringFormat GetReplaceTitleFormat()
-		{
-			var sf = new StringFormat();
-			return sf;
-		}
-
-		StringFormat GetReplaceCommentFormat()
-		{
-			var sf = new StringFormat();
-			return sf;
-		}
-
-		int GetReplaceCommentPadding()
-		{
-			return 20;
-		}
-
-		Font GetReplaceTitleFont()
-		{
-			return new Font(Font.FontFamily, Font.SizeInPoints, FontStyle.Bold);
-		}
-
-		Font GetReplaceCommentFont()
-		{
-			return new Font(Font.FontFamily, Font.SizeInPoints, default(FontStyle));
-		}
 
 		private void listReplace_MeasureItem(object sender, MeasureItemEventArgs e)
 		{
@@ -1144,46 +1158,35 @@
 				return;
 			}
 			var replaceItem = this._replaceCommentList[e.Index];
-			using(var titleFont = GetReplaceTitleFont())
-			using(var commentFont = GetReplaceCommentFont())
-			using(var titleFormat = GetReplaceTitleFormat())
-			using(var commentFormat = GetReplaceCommentFormat()) {
-				var width = this.listReplace.ClientSize.Width;
-				var titleSize = e.Graphics.MeasureString(replaceItem.Name, titleFont, width, titleFormat);
+			PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 				var commentSize = e.Graphics.MeasureString(replaceItem.Comment, commentFont, width - GetReplaceCommentPadding(), commentFormat);
-
 				e.ItemHeight = (int)(titleSize.Height + commentSize.Height) + this.listReplace.Margin.Vertical + this.listReplace.Margin.Top;
-				Debug.WriteLine(e.ItemHeight);
-			}
+			});
 		}
 
 		private void listReplace_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if(e.Index != -1) {
 				var replaceItem = this._replaceCommentList[e.Index];
-				using(var titleFont = GetReplaceTitleFont())
-				using(var commentFont = GetReplaceCommentFont())
-				using(var titleFormat = GetReplaceTitleFormat())
-				using(var commentFormat = GetReplaceCommentFormat())
-				using(var foreBrush = new SolidBrush(e.ForeColor)) {
-					var width = this.listReplace.ClientSize.Width - this.listReplace.Margin.Right;
-					var titleSize = e.Graphics.MeasureString(replaceItem.Name, titleFont, width, titleFormat);
-					var titleArea = new RectangleF() {
-						X = e.Bounds.X + this.listReplace.Margin.Left,
-						Y = e.Bounds.Y + this.listReplace.Margin.Top,
-						Width = width,
-						Height = titleSize.Height
-					};
-					var commentArea = new RectangleF() {
-						X = e.Bounds.X + GetReplaceCommentPadding(),
-						Y = e.Bounds.Y + titleSize.Height + this.listReplace.Margin.Top,
-						Width = width - GetReplaceCommentPadding(),
-						Height = e.Bounds.Height - titleSize.Height
-					};
-					e.DrawBackground();
-					e.Graphics.DrawString(replaceItem.Name, titleFont, foreBrush, titleArea);
-					e.Graphics.DrawString(replaceItem.Comment, commentFont, foreBrush, commentArea);
-				}
+				PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
+					using(var foreBrush = new SolidBrush(e.ForeColor)) {
+						var titleArea = new RectangleF() {
+							X = e.Bounds.X + this.listReplace.Margin.Left,
+							Y = e.Bounds.Y + this.listReplace.Margin.Top,
+							Width = width,
+							Height = titleSize.Height
+						};
+						var commentArea = new RectangleF() {
+							X = e.Bounds.X + GetReplaceCommentPadding(),
+							Y = e.Bounds.Y + titleSize.Height + this.listReplace.Margin.Top,
+							Width = width - GetReplaceCommentPadding(),
+							Height = e.Bounds.Height - titleSize.Height
+						};
+						e.DrawBackground();
+						e.Graphics.DrawString(replaceItem.Name, titleFont, foreBrush, titleArea);
+						e.Graphics.DrawString(replaceItem.Comment, commentFont, foreBrush, commentArea);
+					}
+				});
 			}
 		}
 
