@@ -494,21 +494,42 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string application = "APPLICATION";
 		public const string version     = "VER";
 		
-		public const string timestamp   = "TIMESTAMP";
-		public const string year        = "Y";
-		public const string year04      = "Y:04";
-		public const string month       = "M";
-		public const string month02     = "M:02";
+		public const string timestamp      = "TIMESTAMP";
+		public const string year           = "Y";
+		public const string year04         = "Y:04";
+		public const string month          = "M";
+		public const string month02        = "M:02";
 		public const string monthShortName = "M:S";
 		public const string monthLongName  = "M:L";
-		public const string day         = "D";
-		public const string day02       = "D:02";
-		public const string hour        = "h";
-		public const string hour02      = "h:02";
-		public const string minute      = "m";
-		public const string minute02    = "m:02";
-		public const string second      = "s";
-		public const string second02    = "s:02";
+		public const string day            = "D";
+		public const string day02          = "D:02";
+		public const string hour           = "h";
+		public const string hour02         = "h:02";
+		public const string minute         = "m";
+		public const string minute02       = "m:02";
+		public const string second         = "s";
+		public const string second02       = "s:02";
+
+		public static IReadOnlyList<string> GetMembersList()
+		{
+			return new[] {
+				timestamp,
+				year,
+				year04,
+				month,
+				month02,
+				monthShortName,
+				monthLongName,
+				day,
+				day02,
+				hour,
+				hour02,
+				minute,
+				minute02,
+				second,
+				second02,
+			};
+		}
 	}
 
 	/// <summary>
