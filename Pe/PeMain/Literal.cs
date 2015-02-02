@@ -515,11 +515,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public static IReadOnlyList<string> GetMembersList()
 		{
 			return new[] {
-				application,
-				versionNumber,
-				versionHash,
-				versionFull,
-
+				// 時間関係
 				timestamp,
 				year,
 				year04,
@@ -535,6 +531,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 				minute02,
 				second,
 				second02,
+
+				// 普通に使わん子達
+				application,
+				versionFull,
+				versionNumber,
+				versionHash,
 			};
 		}
 	}

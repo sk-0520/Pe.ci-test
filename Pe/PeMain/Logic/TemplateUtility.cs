@@ -31,8 +31,9 @@
 
 		public static string ToRtf(TemplateItem item, Language language, FontSetting fontSetting)
 		{
+			using(var usingFont = new Font(fontSetting.Font.FontFamily, fontSetting.Font.SizeInPoints, default(FontStyle)))
 			using(var richTextBox = new RichTextBox()) {
-				richTextBox.Font = fontSetting.Font;
+				richTextBox.Font = usingFont;
 				
 				if(!item.ReplaceMode || string.IsNullOrWhiteSpace(item.Source)) {
 					richTextBox.Text = item.Source;
