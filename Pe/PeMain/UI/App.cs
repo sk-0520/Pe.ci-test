@@ -183,7 +183,7 @@
 			var now = DateTime.Now;
 			if(now - this._clipboardPrevTime <= this._commonData.MainSetting.Clipboard.WaitTime) {
 				var map = new Dictionary<string, string>() {
-					{ AppLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
+					{ ProgramLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
 				};
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
 				return;

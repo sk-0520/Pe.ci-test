@@ -79,9 +79,9 @@
 			this.AcceptButton = null;
 
 			var map = new Dictionary<string, string>() {
-				{ AppLanguageName.versionNow,  Literal.ApplicationVersion },
-				{ AppLanguageName.versionNext, UpdateData.Info.Version },
-				{ AppLanguageName.versionType, UpdateData.Info.IsRcVersion ? "${version-rc}": "${version-release}" },
+				{ ProgramLanguageName.versionNow,  Literal.ApplicationVersion },
+				{ ProgramLanguageName.versionNext, UpdateData.Info.Version },
+				{ ProgramLanguageName.versionType, UpdateData.Info.IsRcVersion ? "${version-rc}": "${version-release}" },
 			};
 			var version = CommonData.Language[this.labelVersion.Text.Substring(1)];
 			version = CommonData.Language[version, map];

@@ -175,7 +175,7 @@
 				}
 			} else {
 				this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
-				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
+				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { ProgramLanguageName.groupName, groupItem.Name } }];
 				this._message = string.Empty;
 			}
 

@@ -486,6 +486,9 @@ namespace ContentTypeTextNet.Pe.PeMain
 		}
 	}
 	
+	/// <summary>
+	/// アプリケーションが保持する言語置き換え文字列。
+	/// </summary>
 	public static class AppLanguageName
 	{
 		public const string application = "APPLICATION";
@@ -506,17 +509,21 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string minute02    = "m:02";
 		public const string second      = "s";
 		public const string second02    = "s:02";
+	}
 
-		// -------------------------------------------------
-		
-		public const string groupName   = "GROUP";
-		public const string itemName    = "ITEM";
-		
-		public const string noteTitle   = "NOTE";
-		
-		public const string versionNow    = "NOW";
-		public const string versionNext   = "NEXT";
-		public const string versionType   = "TYPE";
+	/// <summary>
+	/// プログラムが色々切り替える言語置き換え文字列。
+	/// </summary>
+	public static class ProgramLanguageName
+	{
+		public const string groupName = "GROUP";
+		public const string itemName = "ITEM";
+
+		public const string noteTitle = "NOTE";
+
+		public const string versionNow = "NOW";
+		public const string versionNext = "NEXT";
+		public const string versionType = "TYPE";
 
 		public const string imageType = "TYPE";
 		public const string imageWidth = "WIDTH";
@@ -527,6 +534,7 @@ namespace ContentTypeTextNet.Pe.PeMain
 		public const string clipboardPrevTime = "TIME";
 		public const string screen = "SCREEN";
 	}
+
 	
 	public static class DataTables
 	{

@@ -140,7 +140,7 @@
 
 			var map = new Dictionary<string, string>();
 			if(Screen != null) {
-				map[AppLanguageName.screen] = ScreenUtility.GetScreenName(Screen);
+				map[ProgramLanguageName.screen] = ScreenUtility.GetScreenName(Screen);
 			}
 
 			UIUtility.SetDefaultText(this, Language, map.Count > 0 ? map : null);
