@@ -158,9 +158,9 @@
 				case ClipboardType.Image:
 					{
 						var map = new Dictionary<string,string>() {
-							{ AppLanguageName.imageType, ClipboardTypeToDisplayText(language, type) },
-							{ AppLanguageName.imageWidth, clipboardItem.Image.Width.ToString() },
-							{ AppLanguageName.imageHeight, clipboardItem.Image.Height.ToString() },
+							{ ProgramLanguageName.imageType, ClipboardTypeToDisplayText(language, type) },
+							{ ProgramLanguageName.imageWidth, clipboardItem.Image.Width.ToString() },
+							{ ProgramLanguageName.imageHeight, clipboardItem.Image.Height.ToString() },
 						};
 
 						result = language["clipboard/title/image", map];
@@ -170,8 +170,8 @@
 				case ClipboardType.File:
 					{
 						var map = new Dictionary<string, string>() {
-							{ AppLanguageName.fileType, ClipboardTypeToDisplayText(language, type) },
-							{ AppLanguageName.fileCount, clipboardItem.Files.Count().ToString() },
+							{ ProgramLanguageName.fileType, ClipboardTypeToDisplayText(language, type) },
+							{ ProgramLanguageName.fileCount, clipboardItem.Files.Count().ToString() },
 						};
 
 						result = language["clipboard/title/file", map];

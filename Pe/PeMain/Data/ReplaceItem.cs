@@ -1,0 +1,26 @@
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+
+	public class ReplaceItem: NameItem, ISetLanguage
+	{
+		public Language Language { get; private set; }
+
+		public string Comment { get; private set; }
+
+		#region ISetLanguage
+
+		public void SetLanguage(Language lang)
+		{
+			Comment = lang["app/language/name/" + Name];
+		}
+
+		#endregion
+	}
+
+}
