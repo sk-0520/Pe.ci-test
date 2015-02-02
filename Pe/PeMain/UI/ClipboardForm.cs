@@ -129,7 +129,7 @@
 
 			listClipboard.MouseWheel += listClipboard_MouseWheel;
 
-			CehckedReplaced();
+			ChekedReplace();
 		}
 
 		void Initialize()
@@ -758,7 +758,7 @@
 			}
 		}
 
-		void CehckedReplaced()
+		void ChekedReplace()
 		{
 			var check = this.selectTemplateReplace.Checked;
 			this.webTemplateComment.Visible = check;
@@ -1096,7 +1096,7 @@
 
 		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
 		{
-			CehckedReplaced();
+			ChekedReplace();
 		}
 	}
 }
