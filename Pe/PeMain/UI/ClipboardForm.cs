@@ -776,6 +776,14 @@
 			this.panelTemplateSource.Panel2Collapsed = !check;
 		}
 
+		void InsertReplaceItem(ReplaceItem replaceItem)
+		{
+			var nowSelectIndex = this.inputTemplateSource.SelectionStart;
+			var replaceWord = replaceItem.ReplaceWord;
+			this.inputTemplateSource.SelectedText = replaceWord;
+			this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1199,6 +1207,14 @@
 				this.listReplace.SelectedItem = selectedItem;
 			} finally {
 				this.listReplace.EndUpdate();
+			}
+		}
+
+		private void listReplace_DoubleClick(object sender, EventArgs e)
+		{
+			var replaceItem = this.listReplace.SelectedItem as ReplaceItem;
+			if(replaceItem != null) {
+				InsertReplaceItem(replaceItem);
 			}
 		}
 	}

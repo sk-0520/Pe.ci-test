@@ -13,6 +13,8 @@
 
 		public string Comment { get; private set; }
 
+		public string ReplaceWord { get { return string.Format("@[{0}]", Name); } }
+
 		#region ISetLanguage
 
 		public void SetLanguage(Language lang)

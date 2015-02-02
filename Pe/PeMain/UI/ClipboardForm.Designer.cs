@@ -449,6 +449,7 @@
 			// inputTemplateSource
 			// 
 			this.inputTemplateSource.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputTemplateSource.HideSelection = false;
 			this.inputTemplateSource.Location = new System.Drawing.Point(0, 0);
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
@@ -468,6 +469,7 @@
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
+			this.listReplace.DoubleClick += new System.EventHandler(this.listReplace_DoubleClick);
 			this.listReplace.Resize += new System.EventHandler(this.listReplace_Resize);
 			// 
 			// selectTemplateReplace
