@@ -57,6 +57,7 @@
 		Button _commandUp = new Button();
 		Button _commandDown = new Button();
 
+		IList<ReplaceItem> _replaceCommentList;
 
 		#endregion ////////////////////////////////////////
 
@@ -129,6 +130,12 @@
 
 			listClipboard.MouseWheel += listClipboard_MouseWheel;
 
+			this._replaceCommentList = AppLanguageName.GetMembersList()
+				.Select(m => new ReplaceItem() { Name = m })
+				.ToList()
+			;
+			this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+
 			ChekedReplace();
 		}
 
@@ -172,12 +179,15 @@
 			this.tabPreview_pageImage.Text = ClipboardType.Image.ToText(CommonData.Language);
 			this.tabPreview_pageFile.Text = ClipboardType.File.ToText(CommonData.Language);
 
-			var templateHtml = File.ReadAllText(Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.TemplateFileName));
-			var acceptMap = new Dictionary<string, string>() {
-				{"STYLE", File.ReadAllText(Path.Combine(Literal.ApplicationStyleDirPath, "common.css"), Encoding.UTF8) },
-			};
-			var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
-			this.webTemplateComment.DocumentText = replaced;
+			//var templateHtml = File.ReadAllText(Path.Combine(Literal.ApplicationLanguageDirPath, CommonData.Language.TemplateFileName));
+			//var acceptMap = new Dictionary<string, string>() {
+			//	{"STYLE", File.ReadAllText(Path.Combine(Literal.ApplicationStyleDirPath, "common.css"), Encoding.UTF8) },
+			//};
+			//var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
+			//this.webTemplateComment.DocumentText = replaced;
+			foreach(var item in this._replaceCommentList) {
+				item.SetLanguage(CommonData.Language);
+			}
 		}
 
 		#endregion ////////////////////////////////////////
@@ -761,7 +771,8 @@
 		void ChekedReplace()
 		{
 			var check = this.selectTemplateReplace.Checked;
-			this.webTemplateComment.Visible = check;
+			//this.webTemplateComment.Visible = check;
+
 			this.panelTemplateSource.Panel2Collapsed = !check;
 		}
 
@@ -1097,6 +1108,93 @@
 		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
 		{
 			ChekedReplace();
+		}
+
+		StringFormat GetReplaceTitleFormat()
+		{
+			var sf = new StringFormat();
+			return sf;
+		}
+
+		StringFormat GetReplaceCommentFormat()
+		{
+			var sf = new StringFormat();
+			return sf;
+		}
+
+		int GetReplaceCommentPadding()
+		{
+			return 20;
+		}
+
+		Font GetReplaceTitleFont()
+		{
+			return new Font(Font.FontFamily, Font.SizeInPoints, FontStyle.Bold);
+		}
+
+		Font GetReplaceCommentFont()
+		{
+			return new Font(Font.FontFamily, Font.SizeInPoints, default(FontStyle));
+		}
+
+		private void listReplace_MeasureItem(object sender, MeasureItemEventArgs e)
+		{
+			Debug.Assert(e.Index != -1);
+			if(!e.Index.Between(0, this._replaceCommentList.Count - 1)) {
+				return;
+			}
+			var replaceItem = this._replaceCommentList[e.Index];
+			using(var titleFont = GetReplaceTitleFont())
+			using(var commentFont = GetReplaceCommentFont())
+			using(var titleFormat = GetReplaceTitleFormat())
+			using(var commentFormat = GetReplaceCommentFormat()) {
+				var width = this.listReplace.ClientSize.Width;
+				var titleSize = e.Graphics.MeasureString(replaceItem.Name, titleFont, width, titleFormat);
+				var commentSize = e.Graphics.MeasureString(replaceItem.Comment, commentFont, width - GetReplaceCommentPadding(), commentFormat);
+
+				e.ItemHeight = (int)(titleSize.Height + commentSize.Height) + this.listReplace.Margin.Vertical + this.listReplace.Margin.Top;
+				Debug.WriteLine(e.ItemHeight);
+			}
+		}
+
+		private void listReplace_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			if(e.Index != -1) {
+				var replaceItem = this._replaceCommentList[e.Index];
+				using(var titleFont = GetReplaceTitleFont())
+				using(var commentFont = GetReplaceCommentFont())
+				using(var titleFormat = GetReplaceTitleFormat())
+				using(var commentFormat = GetReplaceCommentFormat())
+				using(var foreBrush = new SolidBrush(e.ForeColor)) {
+					var width = this.listReplace.ClientSize.Width - this.listReplace.Margin.Right;
+					var titleSize = e.Graphics.MeasureString(replaceItem.Name, titleFont, width, titleFormat);
+					var titleArea = new RectangleF() {
+						X = e.Bounds.X + this.listReplace.Margin.Left,
+						Y = e.Bounds.Y + this.listReplace.Margin.Top,
+						Width = width,
+						Height = titleSize.Height
+					};
+					var commentArea = new RectangleF() {
+						X = e.Bounds.X + GetReplaceCommentPadding(),
+						Y = e.Bounds.Y + titleSize.Height + this.listReplace.Margin.Top,
+						Width = width - GetReplaceCommentPadding(),
+						Height = e.Bounds.Height - titleSize.Height
+					};
+					e.DrawBackground();
+					e.Graphics.DrawString(replaceItem.Name, titleFont, foreBrush, titleArea);
+					e.Graphics.DrawString(replaceItem.Comment, commentFont, foreBrush, commentArea);
+				}
+			}
+		}
+
+		private void listReplace_Resize(object sender, EventArgs e)
+		{
+			this.listReplace.BeginUpdate();
+			try {
+				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList); ;
+			} finally {
+				this.listReplace.EndUpdate();
+			}
 		}
 	}
 }
