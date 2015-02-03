@@ -511,6 +511,13 @@
 				item.CorrectionValue();
 			}
 
+			var templateItemsPath = Literal.UserTemplateItemsPath;
+			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
+			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadFile<EventList<TemplateItem>>(templateItemsPath, true);
+			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
+				item.CorrectionValue();
+			}
+
 			//var clipboardItemsFilePath = Literal.UserClipboardItemsPath;
 			//logger.Puts(LogType.Information, "load clipboard-item", clipboardItemsFilePath);
 			//this._commonData.MainSetting.Clipboard.Items = Serializer.LoadFile<Queue<ClipboardItem>>(clipboardItemsFilePath, true);
@@ -1377,8 +1384,10 @@
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
+					mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
 					mainSetting.Clipboard.HistoryItems = this._commonData.MainSetting.Clipboard.HistoryItems;
-					mainSetting.Clipboard.HistoryItems.LimitSize = mainSetting.Clipboard.Limit;
+					mainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
+					mainSetting.Clipboard.TemplateItems = this._commonData.MainSetting.Clipboard.TemplateItems;
 
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					var oldSetting = this._commonData.MainSetting;

@@ -49,6 +49,8 @@ namespace ContentTypeTextNet.Pe.PeMain
 		//private const string _clipboardItemsFileName = "clipboard-items.xml";
 		private const string _dbFileName             = "db.sqlite3";
 		private const string _backupDirectoryName          = "backup";
+		private const string _clipboardItemsFileName = "clipboard-items.xml";
+		private const string _templateItemsFileName = "template-items.xml";
 
 		private const string _applicationsFileName = "ApplicationSetting.xml";
 		private const string _applicationsSettingBaseDirectoryName = "Applications";
@@ -346,10 +348,26 @@ namespace ContentTypeTextNet.Pe.PeMain
 		{
 			get { return Path.Combine(UserSettingDirectoryPath, _mainSettingFileName); }
 		}
-		
+		/// <summary>
+		/// ランチャーアイテム保存パス。
+		/// </summary>
 		public static string UserLauncherItemsPath
 		{
 			get { return Path.Combine(UserSettingDirectoryPath, _launcherItemsFileName); }
+		}
+		/// <summary>
+		/// クリップボードアイテム保存パス。
+		/// </summary>
+		public static string UserClipboardItemsPath
+		{
+			get { return Path.Combine(UserSettingDirectoryPath, _clipboardItemsFileName); }
+		}
+		/// <summary>
+		/// テンプレートアイテム保存パス
+		/// </summary>
+		public static string UserTemplateItemsPath
+		{
+			get { return Path.Combine(UserSettingDirectoryPath, _templateItemsFileName); }
 		}
 
 		/*
