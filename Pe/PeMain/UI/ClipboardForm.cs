@@ -621,6 +621,17 @@
 			}
 		}
 
+		bool SaveItem(string path, TemplateItem templateItem)
+		{
+			try {
+				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language));
+				return true;
+			} catch(Exception ex) {
+				CommonData.Logger.Puts(LogType.Error, templateItem.Name, ex);
+				return false;
+			}
+		}
+
 		void OpenSaveDialog(ClipboardItem clipboardItem)
 		{
 			var filter = new DialogFilter();
@@ -655,6 +666,20 @@
 					var path = dialog.FileName;
 					var type = item.Value;
 					SaveItem(path, clipboardItem, type);
+				}
+			}
+		}
+
+		void OpenSaveDialog(TemplateItem templateItem)
+		{
+			using(var dialog = new SaveFileDialog()) {
+				var filter = new DialogFilter();
+				filter.Items.Add(new DialogFilterItem(CommonData.Language["clipboard/page/raw-template"], "*.txt"));
+				dialog.Attachment(filter);
+				dialog.FileName = templateItem.Name;
+				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+					var path = dialog.FileName;
+					SaveItem(path, templateItem);
 				}
 			}
 		}
@@ -1067,8 +1092,13 @@
 		{
 			var index = this.listClipboard.SelectedIndex;
 			if(index != -1) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-				OpenSaveDialog(clipboardItem);
+				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					OpenSaveDialog(clipboardItem);
+				} else {
+					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					OpenSaveDialog(templateItem);
+				}
 			}
 		}
 

@@ -261,7 +261,7 @@
 		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
 		<Word Name="clipboard/page/raw-template"       Text="テンプレート" />
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
-		<Word Name="clipboard/label/template-name"     Text="なまえ" />
+		<Word Name="clipboard/label/template-name"     Text="テンプレート名" />
 		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
 
 		<Word Name="setting/page/main"              Text="本体" />
