@@ -71,7 +71,7 @@
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="35b28628c3c076867594504a5d50e2490be7ac6b">
 				<message>#154: 定型文のテンプレート</message>
 			</note>
 			<note rev="">
