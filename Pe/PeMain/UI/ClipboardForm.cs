@@ -601,7 +601,7 @@
 			CopyItem(clipboardItem, clipboardItem.GetSingleClipboardType());
 		}
 
-		bool SaveItem(string path, ClipboardItem clipboardItem, ClipboardType type)
+		bool SaveClipboardItem(string path, ClipboardItem clipboardItem, ClipboardType type)
 		{
 			Debug.Assert(type != ClipboardType.File);
 
@@ -621,7 +621,7 @@
 			}
 		}
 
-		bool SaveItem(string path, TemplateItem templateItem)
+		bool SaveTemplateItem(string path, TemplateItem templateItem)
 		{
 			try {
 				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language));
@@ -632,7 +632,7 @@
 			}
 		}
 
-		void OpenSaveDialog(ClipboardItem clipboardItem)
+		void OpenClipboardItemSaveDialog(ClipboardItem clipboardItem)
 		{
 			var filter = new DialogFilter();
 			var map = new[] {
@@ -665,12 +665,12 @@
 					var item = (DialogFilterValueItem<ClipboardType>)filter.Items[dialog.FilterIndex - 1];
 					var path = dialog.FileName;
 					var type = item.Value;
-					SaveItem(path, clipboardItem, type);
+					SaveClipboardItem(path, clipboardItem, type);
 				}
 			}
 		}
 
-		void OpenSaveDialog(TemplateItem templateItem)
+		void OpenTemplateItemSaveDialog(TemplateItem templateItem)
 		{
 			using(var dialog = new SaveFileDialog()) {
 				var filter = new DialogFilter();
@@ -679,7 +679,7 @@
 				dialog.FileName = templateItem.Name;
 				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
 					var path = dialog.FileName;
-					SaveItem(path, templateItem);
+					SaveTemplateItem(path, templateItem);
 				}
 			}
 		}
@@ -1094,10 +1094,10 @@
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-					OpenSaveDialog(clipboardItem);
+					OpenClipboardItemSaveDialog(clipboardItem);
 				} else {
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-					OpenSaveDialog(templateItem);
+					OpenTemplateItemSaveDialog(templateItem);
 				}
 			}
 		}
