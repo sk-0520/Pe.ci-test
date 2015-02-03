@@ -72,7 +72,7 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#154: 定型文のテンプレート</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -99,7 +99,7 @@
 				<message>COMオブジェクトをラップする</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>0.44.0の更新履歴#186にリビジョンが設定されていなかったので追加</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -148,7 +148,7 @@
 			<note rev="a27f68b64d054e24d0a3ac3f165f6d5e04a0ad2b">
 				<message>#187: COMの参照が解放されない</message>
 			</note>
-			<note rev="">
+			<note rev="fe0aebfc230e0d6459a715a117eadd782bf72638">
 				<message>#186: GDIオブジェクトが解放されない</message>
 				<comments>
 					<comment>アイコン取得時に一回のアクセスで取得できない場合があるので数回アクセスするように変更</comment>

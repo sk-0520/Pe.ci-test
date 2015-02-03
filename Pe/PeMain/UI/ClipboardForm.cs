@@ -517,7 +517,8 @@
 
 			// あれやこれやがだるいのでバインドる。
 			this.inputTemplateName.DataBindings.Clear();
-			this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
+			var bindName = this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
+			bindName.Parse += bindName_Parse;
 
 			this.inputTemplateSource.DataBindings.Clear();
 			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -739,12 +740,17 @@
 			}
 		}
 
+		string GetUniqueTemplateName()
+		{
+			return TextUtility.ToUniqueDefault(CommonData.Language["new/template-item"], CommonData.MainSetting.Clipboard.TemplateItems.Select(t => t.Name));
+		}
+
 		TemplateItem CreateTemplate()
 		{
 			Debug.Assert(CommonData != null);
 
 			return new TemplateItem() {
-				Name = TextUtility.ToUniqueDefault(CommonData.Language["new/template-item"], CommonData.MainSetting.Clipboard.TemplateItems.Select(t => t.Name)),
+				Name = GetUniqueTemplateName(),
 			};
 		}
 
@@ -912,6 +918,15 @@
 		}
 
 		#endregion ////////////////////////////////////////
+
+		void bindName_Parse(object sender, ConvertEventArgs e)
+		{
+			var s = (string)e.Value;
+			if(string.IsNullOrWhiteSpace(s)) {
+				e.Value = GetUniqueTemplateName();
+			}
+			this.listClipboard.Invalidate();
+		}
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
