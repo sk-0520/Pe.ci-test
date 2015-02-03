@@ -90,6 +90,9 @@
 				{ SkinImage.WindowLoad, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_WindowLoad },
 				{ SkinImage.Windows, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_Windows },
 				{ SkinImage.WindowSave, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_WindowSave },
+				{ SkinImage.RawTemplate, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_RawTemplate},
+				{ SkinImage.ReplaceTemplate, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Image_ReplaceTemplate},
+				
 			};
 
 			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {

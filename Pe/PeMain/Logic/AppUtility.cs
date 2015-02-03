@@ -120,6 +120,7 @@
 				Literal.UserMainSettingPath,
 				Literal.UserLauncherItemsPath,
 				Literal.UserDBPath,
+				Literal.UserTemplateItemsPath,
 				Literal.ApplicationSettingBaseDirectoryPath,
 			};
 			BackupSetting(backupFiles, Literal.UserBackupDirectoryPath, Literal.backupCount, commonData.Logger);
@@ -127,7 +128,7 @@
 			// 保存開始
 			// メインデータ
 			Serializer.SaveFile(commonData.MainSetting, Literal.UserMainSettingPath);
-			//ランチャーデータ
+			// ランチャーデータ
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
@@ -136,6 +137,8 @@
 			//// クリップボードデータ
 			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
 			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
+			// テンプレートデータ
+			Serializer.SaveFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
 		}
 
 		/// <summary>

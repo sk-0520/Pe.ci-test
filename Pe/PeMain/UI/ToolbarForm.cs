@@ -438,7 +438,7 @@
 			if(CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Count == 0) {
 				// グループが存在しなければグループを作っておく
 				var toolbarGroupItem = new ToolbarGroupItem();
-				toolbarGroupItem.Name = CommonData.Language["group/new"];
+				toolbarGroupItem.Name = CommonData.Language["new/group-item"];
 				CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 			

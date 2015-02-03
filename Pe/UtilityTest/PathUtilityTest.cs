@@ -28,5 +28,28 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		{
 			Assert.IsTrue(result == PathUtility.IsExecutePath(s));
 		}
+
+		[TestCase("a.txt", "a", "txt")]
+		[TestCase("a.txt.txt", "a.txt", "txt")]
+		[TestCase("a..txt", "a.", "txt")]
+		public void AppendExtension(string result, string path, string ext)
+		{
+			Assert.IsTrue(result == PathUtility.AppendExtension(path, ext));
+		}
+
+		[TestCase("", "")]
+		[TestCase("", " ")]
+		[TestCase("abc", "abc")]
+		[TestCase("_abc", "*abc")]
+		[TestCase("_abc_", "*abc*")]
+		[TestCase("_a_bc_", "*a\\bc*")]
+		[TestCase("_a_b_c_", "*a\\b/c*")]
+		[TestCase("a_b", "a?b")]
+		[TestCase("a_b", "a<b")]
+		[TestCase("a_b", "a>b")]
+		public void ToSafeName(string result, string name)
+		{
+			Assert.IsTrue(result == PathUtility.ToSafeName(name));
+		}
 	}
 }

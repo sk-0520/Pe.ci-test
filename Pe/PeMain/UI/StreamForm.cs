@@ -72,7 +72,7 @@
 			base.ApplyLanguage();
 
 			var map = new Dictionary<string, string>() {
-				{ AppLanguageName.itemName, LauncherItem.Name },
+				{ ProgramLanguageName.itemName, LauncherItem.Name },
 			};
 
 			UIUtility.SetDefaultText(this, CommonData.Language, map);

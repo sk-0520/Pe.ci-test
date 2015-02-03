@@ -88,6 +88,15 @@
 			return src.ReplaceRange(head, tail, s => map.ContainsKey(s) ? map[s]: head + s + tail);
 		}
 
+		public static string ReplaceFromDictionary(this string src, IDictionary<string, string> map)
+		{
+			var result = src;
+			foreach(var pair in map) {
+				result = result.Replace(pair.Key, pair.Value);
+			}
+			return result;
+		}
+
 		/// <summary>
 		/// ホワイトスペースがあれば " で括る。
 		/// </summary>
