@@ -676,7 +676,11 @@
 				var filter = new DialogFilter();
 				filter.Items.Add(new DialogFilterItem(CommonData.Language["clipboard/page/raw-template"], "*.txt"));
 				dialog.Attachment(filter);
-				dialog.FileName = templateItem.Name;
+				var fileName = PathUtility.ToSafeName(templateItem.Name);
+				if(string.IsNullOrWhiteSpace(fileName)) {
+					fileName = Literal.NowTimestampFileName;
+				}
+				dialog.FileName = fileName;
 				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
 					var path = dialog.FileName;
 					SaveTemplateItem(path, templateItem);
