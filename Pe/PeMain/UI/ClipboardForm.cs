@@ -782,6 +782,7 @@
 			var replaceWord = replaceItem.ReplaceWord;
 			this.inputTemplateSource.SelectedText = replaceWord;
 			this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			this.inputTemplateSource.Focus();
 		}
 
 		#endregion ////////////////////////////////////////

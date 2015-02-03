@@ -441,7 +441,7 @@
 			// panelTemplateSource
 			// 
 			this.panelTemplateSource.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelTemplateSource.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.panelTemplateSource.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
 			this.panelTemplateSource.Location = new System.Drawing.Point(3, 63);
 			this.panelTemplateSource.Name = "panelTemplateSource";
 			// 

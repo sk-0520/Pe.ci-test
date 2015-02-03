@@ -72,19 +72,22 @@
 		/// </summary>
 		public bool TopMost { get; set; }
 		/// <summary>
-		/// テキストデータのフォント
+		/// テキストデータのフォント。
 		/// </summary>
 		public FontSetting TextFont { get; set; }
 		/// <summary>
-		/// クリップボードデータ
+		/// クリップボードデータ。
 		/// </summary>
 		[XmlIgnore]
 		public FixedSizedList<ClipboardItem> HistoryItems { get; set; }
 
+		/// <summary>
+		/// テンプレートデータ。
+		/// </summary>
 		[XmlIgnore]
 		public EventList<TemplateItem> TemplateItems { get; set; }
 		/// <summary>
-		/// コピーを検知を無視する
+		/// コピーを検知を無視する。
 		/// </summary>
 		[XmlIgnore]
 		public bool DisabledCopy { get; set; }
