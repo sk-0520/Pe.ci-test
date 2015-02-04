@@ -37,7 +37,7 @@
 			this.statusClipboard_itemLimit = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.panelClipboard = new System.Windows.Forms.SplitContainer();
-			this.listClipboard = new System.Windows.Forms.ListBox();
+			this.listItemStack = new System.Windows.Forms.ListBox();
 			this.tabPreview = new System.Windows.Forms.TabControl();
 			this.tabPreview_pageText = new System.Windows.Forms.TabPage();
 			this.viewText = new System.Windows.Forms.TextBox();
@@ -190,7 +190,7 @@
 			// 
 			// panelClipboard.Panel1
 			// 
-			this.panelClipboard.Panel1.Controls.Add(this.listClipboard);
+			this.panelClipboard.Panel1.Controls.Add(this.listItemStack);
 			// 
 			// panelClipboard.Panel2
 			// 
@@ -199,23 +199,23 @@
 			this.panelClipboard.SplitterDistance = 225;
 			this.panelClipboard.TabIndex = 0;
 			// 
-			// listClipboard
+			// listItemStack
 			// 
-			this.listClipboard.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listClipboard.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.listClipboard.FormattingEnabled = true;
-			this.listClipboard.IntegralHeight = false;
-			this.listClipboard.ItemHeight = 15;
-			this.listClipboard.Location = new System.Drawing.Point(0, 0);
-			this.listClipboard.Name = "listClipboard";
-			this.listClipboard.ScrollAlwaysVisible = true;
-			this.listClipboard.Size = new System.Drawing.Size(225, 250);
-			this.listClipboard.TabIndex = 0;
-			this.listClipboard.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listClipboard_DrawItem);
-			this.listClipboard.SelectedIndexChanged += new System.EventHandler(this.listClipboard_SelectedIndexChanged);
-			this.listClipboard.DoubleClick += new System.EventHandler(this.listClipboard_DoubleClick);
-			this.listClipboard.MouseLeave += new System.EventHandler(this.listClipboard_MouseLeave);
-			this.listClipboard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listClipboard_MouseMove);
+			this.listItemStack.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listItemStack.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.listItemStack.FormattingEnabled = true;
+			this.listItemStack.IntegralHeight = false;
+			this.listItemStack.ItemHeight = 15;
+			this.listItemStack.Location = new System.Drawing.Point(0, 0);
+			this.listItemStack.Name = "listItemStack";
+			this.listItemStack.ScrollAlwaysVisible = true;
+			this.listItemStack.Size = new System.Drawing.Size(225, 250);
+			this.listItemStack.TabIndex = 0;
+			this.listItemStack.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listClipboard_DrawItem);
+			this.listItemStack.SelectedIndexChanged += new System.EventHandler(this.listClipboard_SelectedIndexChanged);
+			this.listItemStack.DoubleClick += new System.EventHandler(this.listClipboard_DoubleClick);
+			this.listItemStack.MouseLeave += new System.EventHandler(this.listClipboard_MouseLeave);
+			this.listItemStack.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listClipboard_MouseMove);
 			// 
 			// tabPreview
 			// 
@@ -339,10 +339,10 @@
 			// tabPreview_pageFile
 			// 
 			this.tabPreview_pageFile.Controls.Add(this.viewFile);
-			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 26);
+			this.tabPreview_pageFile.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 220);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(371, 219);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
@@ -357,7 +357,7 @@
 			this.viewFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.viewFile.Location = new System.Drawing.Point(3, 3);
 			this.viewFile.Name = "viewFile";
-			this.viewFile.Size = new System.Drawing.Size(365, 214);
+			this.viewFile.Size = new System.Drawing.Size(365, 213);
 			this.viewFile.TabIndex = 0;
 			this.viewFile.UseCompatibleStateImageBehavior = false;
 			this.viewFile.View = System.Windows.Forms.View.Details;
@@ -698,7 +698,7 @@
 		private System.Windows.Forms.ToolStripDropDownButton toolClipboard_itemType;
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemType_itemClipboard;
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemType_itemTemplate;
-		private System.Windows.Forms.ListBox listClipboard;
+		private System.Windows.Forms.ListBox listItemStack;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemTopmost;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ImageList imageTab;
