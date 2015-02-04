@@ -1049,9 +1049,13 @@
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				if(e.TabPage == this.tabPreview_pageReplaceTemplate) {
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-
-					var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
-					this.viewReplaceTemplate.Rtf = rtf;
+					if(templateItem.ReplaceMode) {
+						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
+						this.viewReplaceTemplate.Rtf = rtf;
+					} else {
+						// 置き換え処理を行わないのであればプレビューは表示するだけ無駄
+						e.Cancel = true;
+					}
 				}
 			}
 		}
