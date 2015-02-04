@@ -94,7 +94,7 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="e389103cb2f69e10df08106585d103fe7756fdbc">
 				<message>標準CSSに開発時のゴミが混入していたので消しといた</message>
 			</note>
 			<note rev="">
