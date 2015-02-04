@@ -518,7 +518,7 @@
 			// あれやこれやがだるいのでバインドる。
 			this.inputTemplateName.DataBindings.Clear();
 			var bindName = this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
-			bindName.Parse += bindName_Parse;
+			bindName.Parse += TemplateName_Parse;
 
 			this.inputTemplateSource.DataBindings.Clear();
 			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -919,7 +919,7 @@
 
 		#endregion ////////////////////////////////////////
 
-		void bindName_Parse(object sender, ConvertEventArgs e)
+		void TemplateName_Parse(object sender, ConvertEventArgs e)
 		{
 			var s = (string)e.Value;
 			if(string.IsNullOrWhiteSpace(s)) {
