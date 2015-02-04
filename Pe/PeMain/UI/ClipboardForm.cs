@@ -280,7 +280,7 @@
 
 			ApplySettingUI();
 
-			ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count);
+			ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count, CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History);
 		}
 
 		void ChangeTopmost(bool topMost)
@@ -351,30 +351,44 @@
 			this._panelClipboradItem.Size = Size.Empty;
 		}
 
+		/// <summary>
+		/// スタックリストに指定リストをバインドする。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		void BindStackList<T>(IList<T> list)
+		{
+			var bindingList = new BindingList<T>(list);
+			this.listItemStack.DataSource = bindingList;
+		}
+
 		void ChangeSelectType(ClipboardListType type)
 		{
 			CommonData.MainSetting.Clipboard.ClipboardListType = type;
 
+			this.listItemStack.BeginUpdate();
+			try {
 				SelectedItemIndex = -1;
 				HoverItemIndex = -1;
-			if(type == ClipboardListType.History) {
-
-				this.listItemStack.DataSource = this.CommonData.MainSetting.Clipboard.HistoryItems;
-			} else {
-				Debug.Assert(type == ClipboardListType.Template);
-				if(!this.CommonData.MainSetting.Clipboard.TemplateItems.Any()) {
-					// 新規アイテムの生成
-					var newItem = CreateTemplate();
-					this.CommonData.MainSetting.Clipboard.TemplateItems.Add(newItem);
+				if(type == ClipboardListType.History) {
+					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
+				} else {
+					Debug.Assert(type == ClipboardListType.Template);
+					if(!this.CommonData.MainSetting.Clipboard.TemplateItems.Any()) {
+						// 新規アイテムの生成
+						var newItem = CreateTemplate();
+						this.CommonData.MainSetting.Clipboard.TemplateItems.Add(newItem);
+					}
+					BindStackList(this.CommonData.MainSetting.Clipboard.TemplateItems);
 				}
-				this.listItemStack.DataSource = this.CommonData.MainSetting.Clipboard.TemplateItems;
-
+				ChangeCommandType(type);
+			} finally {
+				this.listItemStack.EndUpdate();
 			}
-			ChangeCommandType(type);
 		}
 
 
-		void ChangeListItemNumber(int index, int count)
+		void ChangeListItemNumber(int index, int count, bool showLimit)
 		{
 			if(index == -1) {
 				this.statusClipboard_itemSelectedIndex.Text = "-";
@@ -383,7 +397,13 @@
 			}
 
 			this.statusClipboard_itemCount.Text = count.ToString();
-			this.statusClipboard_itemLimit.Text = CommonData.MainSetting.Clipboard.Limit.ToString();
+
+			this.statusClipboard_itemLimitLeft.Visible = showLimit;
+			this.statusClipboard_itemLimitCount.Visible = showLimit;
+			this.statusClipboard_itemLimitRight.Visible = showLimit;
+			if(showLimit) {
+				this.statusClipboard_itemLimitCount.Text = CommonData.MainSetting.Clipboard.Limit.ToString();
+			}
 		}
 
 		void ChangeCommand(int index)
@@ -407,11 +427,13 @@
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 					var buttons = new[] {
-						this._commandMulti,
-						this._commandAdd,
+						new { Contrl = this._commandMulti, Enbaled = true },
+						new { Contrl = this._commandAdd, Enbaled = true },
+						new { Contrl = this._commandUp, Enbaled = index != 0 },
+						new { Contrl = this._commandDown, Enbaled = index != this.listItemStack.Items.Count - 1 },
 					};
 					foreach(var button in buttons) {
-						button.Enabled = true;
+						button.Contrl.Enabled = button.Enbaled;
 					}
 				}
 			}
@@ -518,7 +540,7 @@
 			// あれやこれやがだるいのでバインドる。
 			this.inputTemplateName.DataBindings.Clear();
 			var bindName = this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
-			bindName.Parse += bindName_Parse;
+			bindName.Parse += TemplateName_Parse;
 
 			this.inputTemplateSource.DataBindings.Clear();
 			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -700,14 +722,9 @@
 			if(CommonData.MainSetting.Clipboard.ClipboardListType != targetType) {
 				return;
 			}
-			//var eventMap = new Dictionary<ClipboardListType, EventHandler> {
-			//	{ ClipboardListType.History,  HistoryItems_ListChanged },
-			//	{ ClipboardListType.Template, TemplateItems_ListChanged },
-			//};
-			try {
-				//itemList.ListChanged -= eventMap[targetType];
 
-				this.listItemStack.SuspendLayout();
+			try {
+				this.listItemStack.BeginUpdate();
 
 				var isActive = Form.ActiveForm == this;
 				var selectedIndex = this.listItemStack.SelectedIndex;
@@ -719,9 +736,10 @@
 				}
 
 				//if(itemList.Any()) {
-				var bindList = new BindingList<T>(itemList);
-				this.listItemStack.DataSource = bindList;
+				//var bindList = new BindingList<T>(itemList);
+				//this.listItemStack.DataSource = bindList;
 				//}
+				BindStackList(itemList);
 
 				if(isActive) {
 					if(selectedIndex < this.listItemStack.Items.Count) {
@@ -735,8 +753,7 @@
 				this._panelClipboradItem.Visible = false;
 				ChangeCommand(-1);
 			} finally {
-				//itemList.ListChanged += eventMap[targetType];
-				this.listItemStack.ResumeLayout();
+				this.listItemStack.EndUpdate();
 			}
 		}
 
@@ -919,7 +936,7 @@
 
 		#endregion ////////////////////////////////////////
 
-		void bindName_Parse(object sender, ConvertEventArgs e)
+		void TemplateName_Parse(object sender, ConvertEventArgs e)
 		{
 			var s = (string)e.Value;
 			if(string.IsNullOrWhiteSpace(s)) {
@@ -976,7 +993,7 @@
 			var index = this.listItemStack.SelectedIndex;
 			if(index != SelectedItemIndex) {
 				SelectedItemIndex = index;
-				ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count);
+				ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count, CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History);
 				ChangeSelsectedItem(this.listItemStack.SelectedIndex);
 				if(Form.ActiveForm == this) {
 					ActiveControl = this.listItemStack;
