@@ -130,6 +130,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#189: UpdaterScript.cs実行時にmscorlibを読み込むか</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

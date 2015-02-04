@@ -342,7 +342,12 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				parameters.CompilerOptions = string.Format("/platform:{0}", platform);
 
 				// 最低限のアセンブリは読み込ませる
-				var asmList = new[] { "System.dll", "System.Core.dll", "System.Data.dll" };
+				var asmList = new[] {
+					"mscorlib.dll",
+					"System.dll",
+					"System.Core.dll",
+					"System.Data.dll"
+				};
 				foreach(var dllName in asmList) {
 					AppendAssembly(parameters, dllName);
 				}
