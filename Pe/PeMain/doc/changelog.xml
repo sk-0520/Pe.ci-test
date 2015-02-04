@@ -107,6 +107,9 @@
 			<note rev="3152fe5638ec901a11e05f052f57c4e4afe3aebd">
 				<message>#190: clean.bat消してない</message>
 			</note>
+			<note rev="040e6b47d01b61339c534d5d5a46249df9363dba">
+				<message>クリップボードウィンドウ周りの文言を変更</message>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
