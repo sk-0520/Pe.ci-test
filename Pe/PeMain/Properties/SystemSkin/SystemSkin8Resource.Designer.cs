@@ -523,6 +523,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_RawTemplate {
+            get {
+                object obj = ResourceManager.GetObject("Image_RawTemplate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_Refresh {
             get {
                 object obj = ResourceManager.GetObject("Image_Refresh", resourceCulture);
@@ -536,6 +546,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Bitmap Image_Remove {
             get {
                 object obj = ResourceManager.GetObject("Image_Remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_ReplaceTemplate {
+            get {
+                object obj = ResourceManager.GetObject("Image_ReplaceTemplate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

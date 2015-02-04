@@ -121,6 +121,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SystemSkin\8\Image\ReplaceTemplate.png" />
+    <None Include="Resources\SystemSkin\8\Image\RawTemplate.png" />
     <None Include="Resources\SystemSkin\7\Image\RawTemplate.png" />
     <None Include="Resources\SystemSkin\7\Image\ReplaceTemplate.png" />
     <None Include="Resources\SystemSkin\8\Icon\Wait.ico" />
