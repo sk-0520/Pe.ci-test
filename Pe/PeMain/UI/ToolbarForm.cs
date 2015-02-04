@@ -1185,7 +1185,7 @@
 		ToolStripDropDownButton CreateMainLauncherButton()
 		{
 			var iconSize = UsingToolbarItem.IconScale.ToSize();
-			var toolItem = new ToolStripDropDownButton();
+			var toolItem = new CommonDataToolStripDropDownButton(CommonData);
 			using(var icon = new Icon(CommonData.Skin.GetIcon(SkinIcon.ToolbarMain), iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
@@ -1221,7 +1221,9 @@
 		
 		ToolStripDropDownButton CreateDirectoryItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripDropDownButton();
+			var toolItem = new LauncherToolStripDropDownButton(CommonData) {
+				LauncherItem = item,
+			};
 			var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 			var showExtension = SystemEnvironment.IsExtensionShow();
 			AttachmentFileList(toolItem, true, Environment.ExpandEnvironmentVariables(item.Command), showHiddenFile, showExtension);
@@ -1231,7 +1233,9 @@
 
 		ToolStripButton CreateCommandItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripButton();
+			var toolItem = new LauncherToolStripButton(CommonData) {
+				LauncherItem = item,
+			};
 
 			toolItem.Click += LauncherTypeFile_ButtonClick;
 
@@ -1240,7 +1244,9 @@
 
 		ToolStripSplitButton CreateEmbeddedItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripSplitButton();
+			var toolItem = new LauncherToolStripSplitButton(CommonData) {
+				LauncherItem = item,
+			};
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 
 			AttachmentEmbeddedLauncherMenu(toolItem, item);
@@ -1281,7 +1287,7 @@
 			}
 
 			toolItem.AutoToolTip = false;
-			toolItem.Tag = item;
+			//toolItem.Tag = item;
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
@@ -1362,7 +1368,7 @@
 		ToolStripItem GetOverButton(Point localPoint)
 		{
 			ToolStripItem overItem = null;
-			foreach(ToolStripItem toolItem in this.toolLauncher.Items) {
+			foreach(var toolItem in this.toolLauncher.Items.Cast<ToolStripItem>()) {
 				//Debug.WriteLine(toolItem.Bounds);
 				if(toolItem.Bounds.Contains(localPoint.X, localPoint.Y)) {
 					overItem = toolItem;
@@ -1380,7 +1386,11 @@
 			
 			result.ToolStripItem = GetOverButton(localPoint);
 			if(result.ToolStripItem != null) {
-				result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
+				//result.LauncherItem = result.ToolStripItem.Tag as LauncherItem;
+				var launcherItem = result.ToolStripItem as ILauncherItem;
+				if(launcherItem != null) {
+					result.LauncherItem = launcherItem.LauncherItem;
+				}
 			}
 			result.DropType = DropType.None;
 			
@@ -1389,14 +1399,20 @@
 					result.DropType = DropType.Files;
 					result.Files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-					
 					if(result.ToolStripItem != null) {
-						if(result.LauncherItem.IsDirectory) {
-							e.Effect = DragDropEffects.None;
+						if(result.LauncherItem != null) {
+							// ランチャーアイテム
+							if(result.LauncherItem.LauncherType == LauncherType.Directory || result.LauncherItem.LauncherType == LauncherType.Embedded || result.LauncherItem.IsDirectory) {
+								e.Effect = DragDropEffects.None;
+							} else {
+								e.Effect = DragDropEffects.Move;
+							}
 						} else {
-							e.Effect = DragDropEffects.Move;
+							// メインボタン
+							e.Effect = DragDropEffects.None;
 						}
-					} else {
+					} else if(result.ToolStripItem == null) {
+						// 空き部分
 						if(result.Files.Count() == 1) {
 							e.Effect = DragDropEffects.Copy;
 						} else {
@@ -1657,7 +1673,7 @@
 		void LauncherTypeFile_ButtonClick(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
-			var launcherItem = (LauncherItem)toolItem.Tag;
+			var launcherItem = ((ILauncherItem)toolItem).LauncherItem;
 			this._tipsLauncher.HideItem();
 			ExecuteItem(launcherItem);
 		}
@@ -1694,6 +1710,7 @@
 		{
 			var dropData = ProcessDropEffect(sender, e);
 			if(dropData.DropType == DropType.Files) {
+				UIUtility.ShowFrontActive(this);
 				ExecuteDropData(dropData);
 			} else {
 				Debug.Assert(dropData.DropType == DropType.Button);
