@@ -56,29 +56,21 @@
 	</log>
 	-->
 
-	<log date="YYYY/MM/DD" version="0.44.1" type="rc">
+	<log date="2015/02/04" version="0.45.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>クリップボードウィンドウにテキストテンプレート(#154)機能が追加されました</message>
+				<comments>
+					<comment>定型文をアイテムとして保存、それをクリップボードへコピーします</comment>
+					<comment>置き換え処理を使用すれば実行時の年月日などを設定できます</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="35b28628c3c076867594504a5d50e2490be7ac6b">
 				<message>#154: 定型文のテンプレート</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes">
@@ -113,11 +105,8 @@
 			<note rev="0b06e1f09a492ea92921ecf4d98418d76ddb0e0d">
 				<message>#185: ファイルメニューに表示するアイコンがシステムのものでスキン所属ではない</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+			<note rev="b2396cb9ff97a1c03b8acf980e73fb0f93cacb7d">
+				<message>#185対応により一部アイコン使用部分まで伝搬</message>
 			</note>
 		</group>
 		<group type="developer">
@@ -143,9 +132,6 @@
 				<comments>
 					<comment>大丈夫、いけるいける信じろって</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
