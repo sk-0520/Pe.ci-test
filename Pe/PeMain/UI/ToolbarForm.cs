@@ -860,7 +860,7 @@
 					if(menuList.Count == 0) {
 						var menuItem = new ToolStripMenuItem();
 						menuItem.Text = CommonData.Language["toolbar/menu/file/ls/not-child-files"];
-						menuItem.Image = SystemIcons.Information.ToBitmap();
+						menuItem.Image = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.Information), UsingToolbarItem.IconScale);
 						menuItem.Enabled = false;
 
 						menuList.Add(menuItem);
@@ -868,13 +868,13 @@
 				} catch(IOException ex) {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = ex.Message;
-					menuItem.Image = SystemIcons.Error.ToBitmap();
+					menuItem.Image = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.Error), UsingToolbarItem.IconScale);
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				} catch(UnauthorizedAccessException ex) {
 					var menuItem = new ToolStripMenuItem();
 					menuItem.Text = ex.Message;
-					menuItem.Image = SystemIcons.Warning.ToBitmap();
+					menuItem.Image = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.Warning), UsingToolbarItem.IconScale);
 					menuItem.Enabled = false;
 					menuList.Add(menuItem);
 				}

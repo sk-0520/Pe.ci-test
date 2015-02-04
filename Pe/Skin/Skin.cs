@@ -1,4 +1,4 @@
-﻿#define SELECT_TARGET
+﻿//#define SELECT_TARGET
 
 #if SELECT_TARGET
 #	if BUILD

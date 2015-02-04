@@ -101,6 +101,9 @@
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_ToolbarMain },
 				{ SkinIcon.Wait, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Wait },
+				{ SkinIcon.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Information},
+				{ SkinIcon.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Warning },
+				{ SkinIcon.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin7Resource.Icon_Error },
 			};
 		}
 
@@ -175,6 +178,9 @@
 				{ SkinIcon.NotFound, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_NotFound },
 				{ SkinIcon.ToolbarMain, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_ToolbarMain },
 				{ SkinIcon.Wait, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Wait },
+				{ SkinIcon.Information, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Information},
+				{ SkinIcon.Warning, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Warning },
+				{ SkinIcon.Error, global::ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin.SystemSkin8Resource.Icon_Error },
 			};
 		}
 

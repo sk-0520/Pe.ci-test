@@ -111,6 +111,12 @@
 				<message>クリップボードウィンドウ周りの文言を変更</message>
 			</note>
 			<note rev="">
+				<message>#185: ファイルメニューに表示するアイコンがシステムのものでスキン所属ではない</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
