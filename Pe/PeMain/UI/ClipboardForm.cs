@@ -351,26 +351,40 @@
 			this._panelClipboradItem.Size = Size.Empty;
 		}
 
+		/// <summary>
+		/// スタックリストに指定リストをバインドする。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		void BindStackList<T>(IList<T> list)
+		{
+			var bindingList = new BindingList<T>(list);
+			this.listItemStack.DataSource = bindingList;
+		}
+
 		void ChangeSelectType(ClipboardListType type)
 		{
 			CommonData.MainSetting.Clipboard.ClipboardListType = type;
 
+			this.listItemStack.BeginUpdate();
+			try {
 				SelectedItemIndex = -1;
 				HoverItemIndex = -1;
-			if(type == ClipboardListType.History) {
-
-				this.listItemStack.DataSource = this.CommonData.MainSetting.Clipboard.HistoryItems;
-			} else {
-				Debug.Assert(type == ClipboardListType.Template);
-				if(!this.CommonData.MainSetting.Clipboard.TemplateItems.Any()) {
-					// 新規アイテムの生成
-					var newItem = CreateTemplate();
-					this.CommonData.MainSetting.Clipboard.TemplateItems.Add(newItem);
+				if(type == ClipboardListType.History) {
+					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
+				} else {
+					Debug.Assert(type == ClipboardListType.Template);
+					if(!this.CommonData.MainSetting.Clipboard.TemplateItems.Any()) {
+						// 新規アイテムの生成
+						var newItem = CreateTemplate();
+						this.CommonData.MainSetting.Clipboard.TemplateItems.Add(newItem);
+					}
+					BindStackList(this.CommonData.MainSetting.Clipboard.TemplateItems);
 				}
-				this.listItemStack.DataSource = this.CommonData.MainSetting.Clipboard.TemplateItems;
-
+				ChangeCommandType(type);
+			} finally {
+				this.listItemStack.EndUpdate();
 			}
-			ChangeCommandType(type);
 		}
 
 
@@ -700,14 +714,9 @@
 			if(CommonData.MainSetting.Clipboard.ClipboardListType != targetType) {
 				return;
 			}
-			//var eventMap = new Dictionary<ClipboardListType, EventHandler> {
-			//	{ ClipboardListType.History,  HistoryItems_ListChanged },
-			//	{ ClipboardListType.Template, TemplateItems_ListChanged },
-			//};
-			try {
-				//itemList.ListChanged -= eventMap[targetType];
 
-				this.listItemStack.SuspendLayout();
+			try {
+				this.listItemStack.BeginUpdate();
 
 				var isActive = Form.ActiveForm == this;
 				var selectedIndex = this.listItemStack.SelectedIndex;
@@ -719,9 +728,10 @@
 				}
 
 				//if(itemList.Any()) {
-				var bindList = new BindingList<T>(itemList);
-				this.listItemStack.DataSource = bindList;
+				//var bindList = new BindingList<T>(itemList);
+				//this.listItemStack.DataSource = bindList;
 				//}
+				BindStackList(itemList);
 
 				if(isActive) {
 					if(selectedIndex < this.listItemStack.Items.Count) {
@@ -735,8 +745,7 @@
 				this._panelClipboradItem.Visible = false;
 				ChangeCommand(-1);
 			} finally {
-				//itemList.ListChanged += eventMap[targetType];
-				this.listItemStack.ResumeLayout();
+				this.listItemStack.EndUpdate();
 			}
 		}
 
