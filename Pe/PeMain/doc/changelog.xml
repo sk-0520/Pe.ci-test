@@ -122,6 +122,13 @@
 			<note rev="c20c62c8192240e53348ba97be2c432b5932a248">
 				<message>#194: 非リリース版のリビジョンバージョン変更</message>
 			</note>
+			<note rev="28c638381428009492ee9cc5680378a2337b2861">
+				<message>あんまり関係ないどうでもいい変更</message>
+				<comments>
+					<comment>sbin/Updaterが戻り値を返す</comment>
+					<comment>CLIでのキー押せ催促を統一</comment>
+				</comments>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
