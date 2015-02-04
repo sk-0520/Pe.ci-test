@@ -105,7 +105,7 @@
 				<message>ツールバーへのD&amp;D終了後にメッセージボックスを表示した際、メッセージボックスが背面に表示されるUIを改善</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#190: clean.bat消してない</message>
 			</note>
 			<note rev="">
 				<message></message>
