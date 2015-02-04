@@ -10,6 +10,20 @@
 
 	public class CommonAppbarForm: ExAppbarForm, ISetCommonData
 	{
+		public CommonAppbarForm()
+		{
+			InitializeComponent();
+		}
+
+		private void InitializeComponent()
+		{
+			this.SuspendLayout();
+
+			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+
+			this.ResumeLayout(false);
+		}
+
 		/// <summary>
 		/// 共通データ。
 		/// </summary>

@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
 	using System.Diagnostics;
+	using System.Drawing;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -13,6 +14,21 @@
 	/// </summary>
 	public class CommonForm: ExForm, ISetCommonData
 	{
+		public CommonForm()
+		{
+			InitializeComponent();
+		}
+
+		private void InitializeComponent()
+		{
+			this.SuspendLayout();
+
+			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+
+			this.ResumeLayout(false);
+		}
+
+
 		/// <summary>
 		/// 共通データ。
 		/// </summary>

@@ -1001,6 +1001,9 @@
 
 		private void ClipboardForm_SizeChanged(object sender, EventArgs e)
 		{
+			if(CommonData == null) {
+				return;
+			}
 			CommonData.MainSetting.Clipboard.Size = Size;
 		}
 
@@ -1254,10 +1257,13 @@
 
 		private void listReplace_Resize(object sender, EventArgs e)
 		{
+			if(this._replaceCommentList == null) {
+				return;
+			}
 			this.listReplace.BeginUpdate();
 			var selectedItem = this.listReplace.SelectedItem;
 			try {
-				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList); ;
+				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
 				this.listReplace.SelectedItem = selectedItem;
 			} finally {
 				this.listReplace.EndUpdate();
