@@ -107,6 +107,9 @@
 			<note rev="">
 				<message></message>
 			</note>
+			<note rev="">
+				<message></message>
+			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
@@ -116,8 +119,11 @@
 			<note rev="">
 				<message>0.44.0の更新履歴#186にリビジョンが設定されていなかったので追加</message>
 			</note>
-			<note rev="">
+			<note rev="c20c62c8192240e53348ba97be2c432b5932a248">
 				<message>#194: 非リリース版のリビジョンバージョン変更</message>
+			</note>
+			<note rev="">
+				<message></message>
 			</note>
 		</group>
 	</log>
