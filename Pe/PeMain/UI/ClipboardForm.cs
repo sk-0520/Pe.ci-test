@@ -427,11 +427,13 @@
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 					var buttons = new[] {
-						this._commandMulti,
-						this._commandAdd,
+						new { Contrl = this._commandMulti, Enbaled = true },
+						new { Contrl = this._commandAdd, Enbaled = true },
+						new { Contrl = this._commandUp, Enbaled = index != 0 },
+						new { Contrl = this._commandDown, Enbaled = index != this.listItemStack.Items.Count - 1 },
 					};
 					foreach(var button in buttons) {
-						button.Enabled = true;
+						button.Contrl.Enabled = button.Enbaled;
 					}
 				}
 			}
