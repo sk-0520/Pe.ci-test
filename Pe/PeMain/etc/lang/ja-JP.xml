@@ -1,49 +1,51 @@
 ﻿<?xml version="1.0"?>
 <Language Name="日本語" Code="ja-JP">
 	<Define>
-		<Word Name="yes"               Text="はい" />
-		<Word Name="no"                Text="いいえ" />
-		<Word Name="cancel"            Text="キャンセル" />
-		<Word Name="ok"                Text="OK" />
-		<Word Name="retry"             Text="再試行" />
-		<Word Name="exit"              Text="終了" />
-		<Word Name="close"             Text="閉じる" />
-		<Word Name="success"           Text="成功" />
-		<Word Name="failure"           Text="失敗" />
-		<Word Name="open-ui"           Text="..." />
-		<Word Name="remove"            Text="削除" />
-		<Word Name="edit"              Text="編集" />
-		<Word Name="show"              Text="表示" />
-		<Word Name="visible"           Text="表示する" />
-		<Word Name="hidden"            Text="非表示" />
-		<Word Name="topmost"           Text="最前面で表示する" />
-		<Word Name="show-front"        Text="前面表示" />
-		<Word Name="option"            Text="オプション" />
-		<Word Name="work-dir"          Text="作業フォルダ" />
-		<Word Name="std-stream"        Text="標準入出力を取得する" />
-		<Word Name="edit-env"          Text="環境変数を編集する" />
-		<Word Name="font"              Text="フォント" />
-		<Word Name="auto-hide"         Text="自動的に隠す" />
-		<Word Name="admin"             Text="管理者として実行" />
-		<Word Name="update-check"      Text="アップデートを確認する" />
-		<Word Name="update-check.RC"   Text="RC版も確認対象とする" />
-		<Word Name="version-release"   Text="リリース版" />
-		<Word Name="version-rc"        Text="RC版" />
-		<Word Name="note"              Text="ノート" />
-		<Word Name="hotkey"            Text="ホットキー" />
-		<Word Name="regist"            Text="登録" />
-		<Word Name="unregist"          Text="解除" />
-		<Word Name="file"              Text="ファイル" />
-		<Word Name="hidden-file"       Text="隠しファイル" />
-		<Word Name="extension"         Text="拡張子" />
-		<Word Name="dir"               Text="ディレクトリ" />
-		<Word Name="log"               Text="ログ" />
-		<Word Name="unknown"           Text="なんか" />
-		<Word Name="tasktray"          Text="通知領域" />
-		<Word Name="env"               Text="環境変数" />
-		<Word Name="copy"              Text="コピー" />
-		<Word Name="create"            Text="作成" />
-		<Word Name="clipboard"         Text="クリップボード" />
+		<Word Name="yes"                 Text="はい" />
+		<Word Name="no"                  Text="いいえ" />
+		<Word Name="cancel"              Text="キャンセル" />
+		<Word Name="ok"                  Text="OK" />
+		<Word Name="retry"               Text="再試行" />
+		<Word Name="exit"                Text="終了" />
+		<Word Name="close"               Text="閉じる" />
+		<Word Name="success"             Text="成功" />
+		<Word Name="failure"             Text="失敗" />
+		<Word Name="open-ui"             Text="..." />
+		<Word Name="remove"              Text="削除" />
+		<Word Name="edit"                Text="編集" />
+		<Word Name="show"                Text="表示" />
+		<Word Name="visible"             Text="表示する" />
+		<Word Name="hidden"              Text="非表示" />
+		<Word Name="topmost"             Text="最前面で表示する" />
+		<Word Name="show-front"          Text="前面表示" />
+		<Word Name="option"              Text="オプション" />
+		<Word Name="work-dir"            Text="作業フォルダ" />
+		<Word Name="std-stream"          Text="標準入出力を取得する" />
+		<Word Name="edit-env"            Text="環境変数を編集する" />
+		<Word Name="font"                Text="フォント" />
+		<Word Name="auto-hide"           Text="自動的に隠す" />
+		<Word Name="admin"               Text="管理者として実行" />
+		<Word Name="update-check"        Text="アップデートを確認する" />
+		<Word Name="update-check.RC"     Text="RC版も確認対象とする" />
+		<Word Name="version-release"     Text="リリース版" />
+		<Word Name="version-rc"          Text="RC版" />
+		<Word Name="note"                Text="ノート" />
+		<Word Name="hotkey"              Text="ホットキー" />
+		<Word Name="regist"              Text="登録" />
+		<Word Name="unregist"            Text="解除" />
+		<Word Name="file"                Text="ファイル" />
+		<Word Name="hidden-file"         Text="隠しファイル" />
+		<Word Name="extension"           Text="拡張子" />
+		<Word Name="dir"                 Text="ディレクトリ" />
+		<Word Name="log"                 Text="ログ" />
+		<Word Name="unknown"             Text="なんか" />
+		<Word Name="tasktray"            Text="通知領域" />
+		<Word Name="env"                 Text="環境変数" />
+		<Word Name="copy"                Text="コピー" />
+		<Word Name="create"              Text="作成" />
+		<Word Name="clipboard"           Text="クリップボード" />
+		<Word Name="template"            Text="テキストテンプレート" />
+		<Word Name="clipboard-template"  Text="クリップボード/テンプレート" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -74,7 +76,7 @@
 		<Word Name="window/about"     Text="@[APPLICATION] 情報" />
 		<Word Name="window/execute"   Text="@[ITEM]を指定して実行" />
 		<Word Name="window/stream"    Text="@[ITEM]の標準入出力" />
-		<Word Name="window/clipboard" Text="${clipboard}" />
+		<Word Name="window/clipboard" Text="${clipboard-template}" />
 		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
 		
@@ -96,7 +98,7 @@
 		<Word Name="main/menu/system-env/window"            Text="ウィンドウ(&amp;W)" />
 		<Word Name="main/menu/system-env/window/save"       Text="現在のウィンドウ状態を保存(&amp;S)" />
 		<Word Name="main/menu/system-env/window/load"       Text="保存しているウィンドウ状態を復帰(&amp;L)" />
-		<Word Name="main/menu/system-env/clipboard"         Text="${clipboard}(&amp;C)" />
+		<Word Name="main/menu/system-env/clipboard"         Text="${clipboard}/${template}(&amp;C)" />
 		
 		<Word Name="main/event/screen/count-change"    Text="ディスプレイ数変更検知" />
 		<Word Name="main/event/power/resume"           Text="レジューム" />
@@ -137,9 +139,9 @@
 		<Word Name="balloon/note/hidden"       Text="編集可能${note}の非表示" />
 		<Word Name="balloon/note/compact"      Text="編集可能${note}の最小化" />
 		<Word Name="balloon/note/show-front"   Text="表示中${note}の${show-front}" />
-		<Word Name="balloon/clipboard/title"     Text="${clipboard}ウィンドウ" />
-		<Word Name="balloon/clipboard/message-show"   Text="${clipboard}を${show}" />
-		<Word Name="balloon/clipboard/message-hidden" Text="${clipboard}を${hidden}" />
+		<Word Name="balloon/clipboard/title"     Text="${clipboard-template}ウィンドウ" />
+		<Word Name="balloon/clipboard/message-show"   Text="${clipboard-template}を${show}" />
+		<Word Name="balloon/clipboard/message-hidden" Text="${clipboard-template}を${hidden}" />
 		
 
 		<Word Name="log/command/save"     Text="ログ保存" />
@@ -246,7 +248,7 @@
 		<Word Name="stream/running-close"   Text="実行中プロセスを閉じることはできません" />
 
 		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
-		<Word Name="clipboard/command/enabled" Text="有効" />
+		<Word Name="clipboard/command/enabled" Text="${clipboard}取込" />
 		<Word Name="clipboard/tips/enabled"    Text="${clipboard}履歴の取り込みを有効にする" />
 		<Word Name="clipboard/command/save"    Text="選択中アイテムの保存" />
 		<Word Name="clipboard/command/remove"  Text="選択中アイテムの削除" />
@@ -259,9 +261,9 @@
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
 		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
 		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
-		<Word Name="clipboard/page/raw-template"       Text="テンプレート" />
+		<Word Name="clipboard/page/raw-template"       Text="${template}" />
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
-		<Word Name="clipboard/label/template-name"     Text="テンプレート名" />
+		<Word Name="clipboard/label/template-name"     Text="${template}名" />
 		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
 
 		<Word Name="setting/page/main"              Text="本体" />
@@ -272,7 +274,7 @@
 		<Word Name="setting/page/command"           Text="コマンド" />
 		<Word Name="setting/page/display"           Text="ディスプレイ" />
 		<Word Name="setting/page/note"              Text="${note}" />
-		<Word Name="setting/page/clipboard"         Text="${clipboard}" />
+		<Word Name="setting/page/clipboard"         Text="${clipboard-template}" />
 		<Word Name="setting/check/startup"         Text="Windows ログオン時に @[APPLICATION] を自動起動する" />
 		<Word Name="setting/group/update-check"    Text="アップデートチェック" />
 		<Word Name="setting/check/update-check"    Text="${update-check}" />
@@ -465,7 +467,7 @@
 		<Word Name="enum/clipboard-type/file"   Text="ファイル" />
 
 		<Word Name="enum/clipboard-list-type/history"   Text="${clipboard}履歴" />
-		<Word Name="enum/clipboard-list-type/template"  Text="テンプレート" />
+		<Word Name="enum/clipboard-list-type/template"  Text="${template}" />
 		
 		<!-- テンプレート -->
 		<Word Name="app/language/name/APPLICATION"  Text="アプリケーション名称" />
