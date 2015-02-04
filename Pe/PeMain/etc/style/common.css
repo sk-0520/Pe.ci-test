@@ -94,29 +94,3 @@ p.uri
 	font-size: 90%;
 }
 
-*.template
-{
-	font-size: 10.5pt;
-}
-
-*.template dt
-{
-	font-weight: bold;
-}
-
-*.template dd
-{
-	margin-left: 1em;
-}
-
-/* .NET 対応まで気長に待とうさ */
-*.template dd dt:before
-{
-	content: "@["
-}
-
-*.template dd dt:after
-{
-	content: "]";
-}
-
