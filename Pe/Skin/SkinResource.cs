@@ -78,6 +78,9 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		NotFound,
 		ToolbarMain,
 		Wait,
+		Information,
+		Warning,
+		Error,
 	}
 }
 
