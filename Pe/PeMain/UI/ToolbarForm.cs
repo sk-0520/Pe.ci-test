@@ -1396,7 +1396,7 @@
 					if(result.ToolStripItem != null) {
 						if(result.LauncherItem != null) {
 							// ランチャーアイテム
-							if(result.LauncherItem.IsDirectory) {
+							if(result.LauncherItem.LauncherType == LauncherType.Directory || result.LauncherItem.LauncherType == LauncherType.Embedded || result.LauncherItem.IsDirectory) {
 								e.Effect = DragDropEffects.None;
 							} else {
 								e.Effect = DragDropEffects.Move;
