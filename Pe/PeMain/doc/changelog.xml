@@ -129,8 +129,11 @@
 					<comment>CLIでのキー押せ催促を統一</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="4a8935ba3110993533457cbac259820bb3387c97">
 				<message>#189: UpdaterScript.cs実行時にmscorlibを読み込むか</message>
+				<comments>
+					<comment>大丈夫、いけるいける信じろって</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
