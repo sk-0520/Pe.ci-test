@@ -83,6 +83,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Icon Icon_Error {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Error", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_Information {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Information", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Icon Icon_NotFound {
             get {
                 object obj = ResourceManager.GetObject("Icon_NotFound", resourceCulture);
@@ -106,6 +126,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Icon Icon_Wait {
             get {
                 object obj = ResourceManager.GetObject("Icon_Wait", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_Warning {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Warning", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
