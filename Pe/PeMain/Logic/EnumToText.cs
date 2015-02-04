@@ -135,6 +135,7 @@
 				return value.ToString();
 			}
 		}
+
 		public static string ToText(this ClipboardType value, Language language)
 		{
 			var key = "enum/clipboard-type/" + new Dictionary<ClipboardType, string>() {
@@ -143,6 +144,16 @@
 				{ ClipboardType.Html,  "html"},
 				{ ClipboardType.Image, "image"},
 				{ ClipboardType.File,  "file"},
+			}[value];
+
+			return language[key];
+		}
+
+		public static string ToText(this ClipboardListType value, Language language)
+		{
+			var key = "enum/clipboard-list-type/" + new Dictionary<ClipboardListType, string>() {
+				{ ClipboardListType.History,  "history"},
+				{ ClipboardListType.Template, "template"},
 			}[value];
 
 			return language[key];

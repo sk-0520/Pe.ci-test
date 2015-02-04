@@ -2,6 +2,18 @@
 {
 	using System;
 
+	public enum ClipboardListType
+	{
+		/// <summary>
+		/// クリップボード履歴。
+		/// </summary>
+		History,
+		/// <summary>
+		/// テンプレート。
+		/// </summary>
+		Template,
+	}
+
 	/// <summary>
 	/// 認識可能とするクリップボード形式。
 	/// </summary>

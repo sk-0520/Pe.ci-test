@@ -190,9 +190,6 @@
   <data name="Image_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Image\Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Image_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SystemSkin\8\Image\Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Image_File" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Image\File.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -219,9 +216,6 @@
   </data>
   <data name="Image_Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Image\Help.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Image_Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SystemSkin\8\Image\Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Image_Kill" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Image\Kill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -286,9 +280,6 @@
   <data name="Image_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Image\Update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Image_Warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SystemSkin\8\Image\Warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Image_WindowList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Image\WindowList.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -303,5 +294,20 @@
   </data>
   <data name="Icon_Wait" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\8\Icon\Wait.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Image_RawTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\SystemSkin\8\Image\RawTemplate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Image_ReplaceTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\SystemSkin\8\Image\ReplaceTemplate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icon_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\SystemSkin\8\Icon\Error.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icon_Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\SystemSkin\8\Icon\Information.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icon_Warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\SystemSkin\8\Icon\Warning.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

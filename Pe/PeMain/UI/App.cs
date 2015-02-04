@@ -183,7 +183,7 @@
 			var now = DateTime.Now;
 			if(now - this._clipboardPrevTime <= this._commonData.MainSetting.Clipboard.WaitTime) {
 				var map = new Dictionary<string, string>() {
-					{ AppLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
+					{ ProgramLanguageName.clipboardPrevTime, this._clipboardPrevTime.ToString() },
 				};
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
 				return;
@@ -200,7 +200,7 @@
 						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 						clipboardItem.Name = displayText;
 
-						this._commonData.MainSetting.Clipboard.Items.Insert(0, clipboardItem);
+						this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
 					} catch(Exception ex) {
 						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
@@ -507,6 +507,13 @@
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
 			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
 			this._commonData.MainSetting.Launcher.Items = Serializer.LoadFile<HashSet<LauncherItem>>(launcherItemsFilePath, true);
+			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
+				item.CorrectionValue();
+			}
+
+			var templateItemsPath = Literal.UserTemplateItemsPath;
+			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
+			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadFile<EventList<TemplateItem>>(templateItemsPath, true);
 			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
 				item.CorrectionValue();
 			}
@@ -1377,8 +1384,10 @@
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
-					mainSetting.Clipboard.Items = this._commonData.MainSetting.Clipboard.Items;
-					mainSetting.Clipboard.Items.LimitSize = mainSetting.Clipboard.Limit;
+					mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
+					mainSetting.Clipboard.HistoryItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+					mainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
+					mainSetting.Clipboard.TemplateItems = this._commonData.MainSetting.Clipboard.TemplateItems;
 
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					var oldSetting = this._commonData.MainSetting;

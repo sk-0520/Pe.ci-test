@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.IO;
+	using System.Linq;
 
 	/// <summary>
 	/// パス関連共通処理。
@@ -46,6 +47,31 @@
 		public static bool IsShortcutPath(string path)
 		{
 			return IsTargetExt(path.ToLower(), s => s.IsIn("lnk", "url"));
+		}
+
+		/// <summary>
+		/// パスに拡張子を追加する。
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="ext"></param>
+		/// <returns></returns>
+		public static string AppendExtension(string path, string ext)
+		{
+			return path + "." + ext;
+		}
+
+		/// <summary>
+		/// ファイル名をそれとなく安全な名称に変更する。
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public static string ToSafeName(string name)
+		{
+			var result = name.Trim();
+			foreach(var c in Path.GetInvalidPathChars().Concat(Path.GetInvalidFileNameChars())) {
+				result = result.Replace(c, '_');
+			}
+			return result;
 		}
 	}
 }

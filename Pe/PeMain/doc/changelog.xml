@@ -52,8 +52,89 @@
 			<note rev="">
 				<message></message>
 			</note>
+		</group>
 	</log>
 	-->
+
+	<log date="2015/02/04" version="0.45.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>クリップボードウィンドウにテキストテンプレート(#154)機能が追加されました</message>
+				<comments>
+					<comment>定型文をアイテムとして保存、それをクリップボードへコピーします</comment>
+					<comment>置き換え処理を使用すれば実行時の年月日などを設定できます</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="35b28628c3c076867594504a5d50e2490be7ac6b">
+				<message>#154: 定型文のテンプレート</message>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="77a41f42b8272e1960557bd509ac123b14f97125">
+				<message>設定データのXML出力時に改行のCRLFがLFになっていた不具合の修正</message>
+			</note>
+			<note rev="">
+				<message>#154対応により「クリップボード」ウィンドウの表示文言を「クリップボード/テンプレート」に変更</message>
+			</note>
+			<note rev="34f1db6c15679c757ae7b1206dd41cfc177fe726">
+				<message>クリップボードリストの最終アイテムを削除した際にArgumentOutOfRangeException初回例外が発生する</message>
+				<comments>
+					<comment>触った感じデバッガ噛ませた場合だけだと信じてる</comment>
+				</comments>
+			</note>
+			<note rev="9fe970b2f13eaf5c8bba43a02bd08556e0a2483d">
+				<message>#188: ツールバーへのD&amp;Dでメインメニューへカーソルを合わせると落ちる</message>
+			</note>
+			<note rev="b8a17da5257ea78ea1921a5eb8aeb82cefc08437">
+				<message>ツールバーへのD&amp;D時にカーソル下のランチャーアイテムが組み込み・ディレクトリの場合もD&amp;D不可とする</message>
+			</note>
+			<note rev="0feb176f9729f2f0d74250f9930334aa30b8de40">
+				<message>ツールバーへのD&amp;D終了後にメッセージボックスを表示した際、メッセージボックスが背面に表示されるUIを改善</message>
+			</note>
+			<note rev="3152fe5638ec901a11e05f052f57c4e4afe3aebd">
+				<message>#190: clean.bat消してない</message>
+			</note>
+			<note rev="040e6b47d01b61339c534d5d5a46249df9363dba">
+				<message>クリップボードウィンドウ周りの文言を変更</message>
+			</note>
+			<note rev="0b06e1f09a492ea92921ecf4d98418d76ddb0e0d">
+				<message>#185: ファイルメニューに表示するアイコンがシステムのものでスキン所属ではない</message>
+			</note>
+			<note rev="b2396cb9ff97a1c03b8acf980e73fb0f93cacb7d">
+				<message>#185対応により一部アイコン使用部分まで伝搬</message>
+			</note>
+		</group>
+		<group type="developer">
+			<sep dummy="==================================================================" />
+			<note rev="9681d49628e58b861729ac73ae46e08c235296d8">
+				<message>COMオブジェクトをラップする</message>
+			</note>
+			<note rev="">
+				<message>0.44.0の更新履歴#186にリビジョンが設定されていなかったので追加</message>
+			</note>
+			<note rev="c20c62c8192240e53348ba97be2c432b5932a248">
+				<message>#194: 非リリース版のリビジョンバージョン変更</message>
+			</note>
+			<note rev="28c638381428009492ee9cc5680378a2337b2861">
+				<message>あんまり関係ないどうでもいい変更</message>
+				<comments>
+					<comment>sbin/Updaterが戻り値を返す</comment>
+					<comment>CLIでのキー押せ催促を統一</comment>
+				</comments>
+			</note>
+			<note rev="4a8935ba3110993533457cbac259820bb3387c97">
+				<message>#189: UpdaterScript.cs実行時にmscorlibを読み込むか</message>
+				<comments>
+					<comment>大丈夫、いけるいける信じろって</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
 	<log date="2015/01/31" version="0.44.0">
 		<group type="note"><sep dummy="==================================================================" />
 			<note rev="">
@@ -96,7 +177,7 @@
 			<note rev="a27f68b64d054e24d0a3ac3f165f6d5e04a0ad2b">
 				<message>#187: COMの参照が解放されない</message>
 			</note>
-			<note rev="">
+			<note rev="fe0aebfc230e0d6459a715a117eadd782bf72638">
 				<message>#186: GDIオブジェクトが解放されない</message>
 				<comments>
 					<comment>アイコン取得時に一回のアクセスで取得できない場合があるので数回アクセスするように変更</comment>

@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Xml;
@@ -32,6 +33,10 @@
 			WaitTime = Literal.clipboardWaitTime.median;
 
 			ToggleHotKeySetting = new HotKeySetting();
+
+			ClipboardListType = ClipboardListType.History;
+
+			TemplateItems = new EventList<TemplateItem>();
 		}
 
 		/// <summary>
@@ -67,16 +72,22 @@
 		/// </summary>
 		public bool TopMost { get; set; }
 		/// <summary>
-		/// テキストデータのフォント
+		/// テキストデータのフォント。
 		/// </summary>
 		public FontSetting TextFont { get; set; }
 		/// <summary>
-		/// クリップボードデータ
+		/// クリップボードデータ。
 		/// </summary>
 		[XmlIgnore]
-		public FixedSizedList<ClipboardItem> Items { get; set; }
+		public FixedSizedList<ClipboardItem> HistoryItems { get; set; }
+
 		/// <summary>
-		/// コピーを検知を無視する
+		/// テンプレートデータ。
+		/// </summary>
+		[XmlIgnore]
+		public EventList<TemplateItem> TemplateItems { get; set; }
+		/// <summary>
+		/// コピーを検知を無視する。
 		/// </summary>
 		[XmlIgnore]
 		public bool DisabledCopy { get; set; }
@@ -112,13 +123,17 @@
 				}
 			}
 		}
+		/// <summary>
+		/// クリップボードリストのタイプ。
+		/// </summary>
+		public ClipboardListType ClipboardListType { get; set; }
 
 		public override void CorrectionValue()
 		{
 			base.CorrectionValue();
 
 			Limit = Literal.clipboardLimit.ToRounding(Limit);
-			Items = new FixedSizedList<ClipboardItem>(Limit);
+			HistoryItems = new FixedSizedList<ClipboardItem>(Limit);
 
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);

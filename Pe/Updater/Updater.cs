@@ -57,9 +57,10 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 	/// </item>
 	class Updater
 	{
-		public static void Main(string[] args)
+		public static int Main(string[] args)
 		{
 			Update update = null;
+			int result = 0;
 			try {
 				var commandLine = new CommandLine(args);
 				if(commandLine.Length == 0) {
@@ -82,14 +83,18 @@ namespace ContentTypeTextNet.Pe.Applications.Updater
 				Console.WriteLine(">> ERROR");
 				Console.WriteLine(">> {0}", (int)ex.UpdaterCode);
 				Console.WriteLine(ex);
+				result = (int)ex.UpdaterCode;
 			} catch(Exception ex) {
 				Console.WriteLine(">> ERROR");
 				Console.WriteLine(ex);
+				result = -1;
 			}
 			if(update != null && update.Wait && !update.WaitSkip)  {
 				Console.WriteLine("Press any key to continue ...");
 				Console.ReadKey(false);
 			}
+
+			return result;
 		}
 	}
 }

@@ -772,7 +772,7 @@
 				this._changed = false;
 #if DEBUG
 				var map = new Dictionary<string, string>() {
-					{ AppLanguageName.noteTitle, NoteItem.Title },
+					{ ProgramLanguageName.noteTitle, NoteItem.Title },
 				};
 				CommonData.Logger.Puts(LogType.Information, CommonData.Language["note/save", map], NoteItem);
 #endif
@@ -1018,7 +1018,7 @@
 						var isRemove = AppUtility.IsExtension();
 						if (isRemove) {
 							var map = new Dictionary<string, string>() {
-								{ AppLanguageName.noteTitle, NoteItem.Title },
+								{ ProgramLanguageName.noteTitle, NoteItem.Title },
 							};
 							var result = MessageBox.Show(CommonData.Language["note/dialog/message", map], CommonData.Language["note/dialog/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 							if (result == DialogResult.Cancel) {

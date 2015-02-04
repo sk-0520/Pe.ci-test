@@ -9,6 +9,7 @@
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
@@ -161,7 +162,8 @@
 			Debug.Assert(toolStripItem != null);
 			Debug.Assert(CommonData != null);
 
-			var launcherItem = toolStripItem.Tag as LauncherItem;
+			var ili = toolStripItem as ILauncherItem;
+			var launcherItem = ili == null ? null : ili.LauncherItem;
 
 			if(launcherItem != null) {
 				var itemIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
@@ -175,7 +177,7 @@
 				}
 			} else {
 				this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
-				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { AppLanguageName.groupName, groupItem.Name } }];
+				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { ProgramLanguageName.groupName, groupItem.Name } }];
 				this._message = string.Empty;
 			}
 

@@ -83,6 +83,26 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         /// <summary>
         ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Icon Icon_Error {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Error", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_Information {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Information", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Icon Icon_NotFound {
             get {
                 object obj = ResourceManager.GetObject("Icon_NotFound", resourceCulture);
@@ -106,6 +126,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Icon Icon_Wait {
             get {
                 object obj = ResourceManager.GetObject("Icon_Wait", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_Warning {
+            get {
+                object obj = ResourceManager.GetObject("Icon_Warning", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -313,16 +343,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Image_Error {
-            get {
-                object obj = ResourceManager.GetObject("Image_Error", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
         internal static System.Drawing.Bitmap Image_File {
             get {
                 object obj = ResourceManager.GetObject("Image_File", resourceCulture);
@@ -406,16 +426,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Bitmap Image_Help {
             get {
                 object obj = ResourceManager.GetObject("Image_Help", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Image_Information {
-            get {
-                object obj = ResourceManager.GetObject("Image_Information", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -523,6 +533,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_RawTemplate {
+            get {
+                object obj = ResourceManager.GetObject("Image_RawTemplate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_Refresh {
             get {
                 object obj = ResourceManager.GetObject("Image_Refresh", resourceCulture);
@@ -536,6 +556,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Bitmap Image_Remove {
             get {
                 object obj = ResourceManager.GetObject("Image_Remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_ReplaceTemplate {
+            get {
+                object obj = ResourceManager.GetObject("Image_ReplaceTemplate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -626,16 +656,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Bitmap Image_Update {
             get {
                 object obj = ResourceManager.GetObject("Image_Update", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Image_Warning {
-            get {
-                object obj = ResourceManager.GetObject("Image_Warning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

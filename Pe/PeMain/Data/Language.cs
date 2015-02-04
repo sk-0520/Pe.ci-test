@@ -50,6 +50,10 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// 許諾ダイアログで使用するHTMLファイル名。
 		/// </summary>
 		public string AcceptFileName { get { return string.Format("{0}.accept.html", BaseName); } }
+		///// <summary>
+		///// クリップボードテンプレートで使用するHTMLファイル名。
+		///// </summary>
+		//public string TemplateFileName { get { return string.Format("{0}.template.html", BaseName); } }
 
 		/// <summary>
 		/// 定義済みワード一覧。
@@ -104,23 +108,25 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			var nowDateTime = DateTime.Now;
 			var systemMap = new Dictionary<string, string>() {
-				{ AppLanguageName.application,  Literal.programName },
-				{ AppLanguageName.version,      Application.ProductVersion },
-				{ AppLanguageName.timestamp,    nowDateTime.ToString() },
-				{ AppLanguageName.year,         nowDateTime.Year.ToString() },
-				{ AppLanguageName.year04,       nowDateTime.Year.ToString("D4") },
-				{ AppLanguageName.month,        nowDateTime.Month.ToString() },
-				{ AppLanguageName.month02,      nowDateTime.Month.ToString("D2") },
+				{ AppLanguageName.application,    Literal.programName },
+				{ AppLanguageName.versionNumber,  Literal.Version.FileVersion },
+				{ AppLanguageName.versionHash,    Application.ProductVersion },
+				{ AppLanguageName.versionFull,    Literal.ApplicationVersion },
+				{ AppLanguageName.timestamp,      nowDateTime.ToString() },
+				{ AppLanguageName.year,           nowDateTime.Year.ToString() },
+				{ AppLanguageName.year04,         nowDateTime.Year.ToString("D4") },
+				{ AppLanguageName.month,          nowDateTime.Month.ToString() },
+				{ AppLanguageName.month02,        nowDateTime.Month.ToString("D2") },
 				{ AppLanguageName.monthShortName, nowDateTime.ToString("MMM") },
 				{ AppLanguageName.monthLongName,  nowDateTime.ToString("MMMM") },
-				{ AppLanguageName.day,          nowDateTime.Day.ToString() },
-				{ AppLanguageName.day02,        nowDateTime.Day.ToString("D2") },
-				{ AppLanguageName.hour,         nowDateTime.Hour.ToString() },
-				{ AppLanguageName.hour02,       nowDateTime.Hour.ToString("D2") },
-				{ AppLanguageName.minute,       nowDateTime.Minute.ToString() },
-				{ AppLanguageName.minute02,     nowDateTime.Minute.ToString("D2") },
-				{ AppLanguageName.second,       nowDateTime.Second.ToString() },
-				{ AppLanguageName.second02,     nowDateTime.Second.ToString("D2") },
+				{ AppLanguageName.day,            nowDateTime.Day.ToString() },
+				{ AppLanguageName.day02,          nowDateTime.Day.ToString("D2") },
+				{ AppLanguageName.hour,           nowDateTime.Hour.ToString() },
+				{ AppLanguageName.hour02,         nowDateTime.Hour.ToString("D2") },
+				{ AppLanguageName.minute,         nowDateTime.Minute.ToString() },
+				{ AppLanguageName.minute02,       nowDateTime.Minute.ToString("D2") },
+				{ AppLanguageName.second,         nowDateTime.Second.ToString() },
+				{ AppLanguageName.second02,       nowDateTime.Second.ToString("D2") },
 			};
 			
 			return systemMap;
@@ -139,16 +145,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 
 				//if(text.Any(c => c == '@')) {
 					var systemMap = GetAppMap();
-					IDictionary<string, string> useMap;
+					IDictionary<string, string> usingMap;
 					if(map == null) {
-						useMap = systemMap;
+						usingMap = systemMap;
 					} else {
-						useMap = map;
-						foreach(var pair in systemMap) {
-							useMap[pair.Key] = pair.Value;
+						usingMap = systemMap;
+						foreach(var pair in map) {
+							usingMap[pair.Key] = pair.Value;
 						}
 					}
-					text = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, useMap);
+					text = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, usingMap);
 				//}
 				
 				//if(text.Any(c => c == '$')) {
@@ -160,9 +166,31 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			}
 		}
 		
-		public string ReplaceAll(string text)
+		public string ReplaceAllLanguage(string text)
 		{
-			return text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Words, s).Text);
+			return text.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s]);
 		}
+
+		public string ReplaceAllAppMap(string text, IDictionary<string, string> map, Tuple<char, char> evil)
+		{
+			var systemMap = GetAppMap();
+			IDictionary<string, string> usingMap;
+			usingMap = systemMap;
+			foreach(var pair in map) {
+				usingMap[pair.Key] = pair.Value;
+			}
+			if(evil != null) {
+				usingMap = usingMap.ToDictionary(pair => pair.Key, pair => evil.Item1 + pair.Value + evil.Item2);
+			}
+			
+			var replacedAppMap = text.ReplaceRangeFromDictionary(RangeApp.Item1, RangeApp.Item2, usingMap);
+			//System.Diagnostics.Debug.WriteLine(BitConverter.ToString(System.Text.Encoding.UTF8.GetBytes(replacedAppMap)));
+			//var replacedUserMap = replacedAppMap.ReplaceRangeFromDictionary("#(", ")", map);
+			//var replacedLang = replacedUserMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => GetWord(Words, s).Text);
+			//var replacedLang = replacedAppMap.ReplaceRange(RangeReplace.Item1, RangeReplace.Item2, s => this[s, usingMap]);
+
+			return replacedAppMap;
+		}
+
 	}
 }

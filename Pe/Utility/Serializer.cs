@@ -1,10 +1,14 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System.Diagnostics;
+	using System.IO;
+	using System.Text;
+	using System.Xml;
+	using System.Xml.Serialization;
+
+	/// <summary>
+	/// シリアライズ・デシリアライズを行う。
+	/// </summary>
 	public static class Serializer
 	{
 		
@@ -19,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			if(File.Exists(path)) {
 				var serializer = new XmlSerializer(typeof(T));
-				using(var stream = new FileStream(path, FileMode.Open)) {
+				using(var stream = new XmlTextReader(new FileStream(path, FileMode.Open))) {
 					return (T)serializer.Deserialize(stream);
 				}
 			}
@@ -33,7 +37,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		public static T LoadString<T>(string buffer)
 		{
 			var serializer = new XmlSerializer(typeof(T));
-			using(var stream = new MemoryStream(Encoding.Unicode.GetBytes(buffer))) {
+			using(var stream = new XmlTextReader(new MemoryStream(Encoding.Unicode.GetBytes(buffer)))) {
 				return (T)serializer.Deserialize(stream);
 			}
 		}

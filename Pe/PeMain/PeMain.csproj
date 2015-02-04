@@ -121,6 +121,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\SystemSkin\7\Icon\Warning.ico" />
+    <None Include="Resources\SystemSkin\7\Icon\Information.ico" />
+    <None Include="Resources\SystemSkin\7\Icon\Error.ico" />
+    <None Include="Resources\SystemSkin\8\Icon\Error.ico" />
+    <None Include="Resources\SystemSkin\8\Icon\Warning.ico" />
+    <None Include="Resources\SystemSkin\8\Icon\Information.ico" />
+    <None Include="Resources\SystemSkin\8\Image\ReplaceTemplate.png" />
+    <None Include="Resources\SystemSkin\8\Image\RawTemplate.png" />
+    <None Include="Resources\SystemSkin\7\Image\RawTemplate.png" />
+    <None Include="Resources\SystemSkin\7\Image\ReplaceTemplate.png" />
     <None Include="Resources\SystemSkin\8\Icon\Wait.ico" />
     <None Include="Resources\SystemSkin\7\Icon\Wait.ico" />
     <None Include="bat\accept.bat">
@@ -146,9 +156,11 @@
     <Compile Include="Data\LogItem.cs" />
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
+    <Compile Include="Data\ReplaceItem.cs" />
     <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
+    <Compile Include="Data\TemplateItem.cs" />
     <Compile Include="Data\ToolbarDropData.cs" />
     <Compile Include="Data\ToolbarGroup.cs" />
     <Compile Include="Data\ToolbarGroupItem.cs" />
@@ -192,6 +204,7 @@
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
+    <Compile Include="Logic\TemplateUtility.cs" />
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

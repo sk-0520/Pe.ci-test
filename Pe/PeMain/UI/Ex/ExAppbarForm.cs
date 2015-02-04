@@ -4,12 +4,18 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public abstract class ExAppbarForm: AppbarForm
 	{ }
 
 	public class CommonAppbarForm: ExAppbarForm, ISetCommonData
 	{
+		public CommonAppbarForm()
+		{
+			UIUtility.InitializeWindow(this);
+		}
+
 		/// <summary>
 		/// 共通データ。
 		/// </summary>

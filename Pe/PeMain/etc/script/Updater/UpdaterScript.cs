@@ -35,6 +35,7 @@ public class UpdaterScript
 			@"PeSkin.dll",
 			@"PeUtility.dll",
 			@"PeUtility.dll.config",
+			@"bat\clean.bat",
 			@"bin\PeUpdater.update-old",
 			@"bin\PeUpdater.exe",
 			@"bin\PeUpdater.exe.config",
