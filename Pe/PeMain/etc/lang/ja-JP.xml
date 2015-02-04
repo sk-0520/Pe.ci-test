@@ -250,8 +250,8 @@
 		<Word Name="clipboard/tips/topmost"    Text="${topmost}" />
 		<Word Name="clipboard/command/enabled" Text="${clipboard}取込" />
 		<Word Name="clipboard/tips/enabled"    Text="${clipboard}履歴の取り込みを有効にする" />
-		<Word Name="clipboard/command/save"    Text="選択中アイテムの保存" />
-		<Word Name="clipboard/command/remove"  Text="選択中アイテムの削除" />
+		<Word Name="clipboard/command/save"    Text="アイテム保存" />
+		<Word Name="clipboard/command/remove"  Text="アイテム削除" />
 		<Word Name="clipboard/command/clear"   Text="アイテムを全てクリア" />
 		<Word Name="clipboard/command/empty"   Text="${clipboard}を空にする" />
 		<Word Name="clipboard/type/clipboard"  Text="${clipboard}" />
