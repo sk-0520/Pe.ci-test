@@ -471,7 +471,7 @@
 		
 		<!-- テンプレート -->
 		<Word Name="app/language/name/APPLICATION"  Text="アプリケーション名称" />
-		<Word Name="app/language/name/VER-NUMVER"   Text="@[APPLICATION] バージョン番号" />
+		<Word Name="app/language/name/VER-NUMBER"   Text="@[APPLICATION] バージョン番号" />
 		<Word Name="app/language/name/VER-HASH"     Text="@[APPLICATION] リビジョン" />
 		<Word Name="app/language/name/VER-FULL"     Text="@[APPLICATION] 統合バージョン" />
 		<Word Name="app/language/name/TIMESTAMP"    Text="タイムスタンプ" />
