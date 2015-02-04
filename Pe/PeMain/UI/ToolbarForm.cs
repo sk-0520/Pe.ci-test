@@ -1185,7 +1185,7 @@
 		ToolStripDropDownButton CreateMainLauncherButton()
 		{
 			var iconSize = UsingToolbarItem.IconScale.ToSize();
-			var toolItem = new ToolStripDropDownButton();
+			var toolItem = new CommonDataToolStripDropDownButton(CommonData);
 			using(var icon = new Icon(CommonData.Skin.GetIcon(SkinIcon.ToolbarMain), iconSize)) {
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
@@ -1221,7 +1221,9 @@
 		
 		ToolStripDropDownButton CreateDirectoryItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripDropDownButton();
+			var toolItem = new LauncherToolStripDropDownButton(CommonData) {
+				LauncherItem = item,
+			};
 			var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 			var showExtension = SystemEnvironment.IsExtensionShow();
 			AttachmentFileList(toolItem, true, Environment.ExpandEnvironmentVariables(item.Command), showHiddenFile, showExtension);
@@ -1231,7 +1233,9 @@
 
 		ToolStripButton CreateCommandItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripButton();
+			var toolItem = new LauncherToolStripButton(CommonData) {
+				LauncherItem = item,
+			};
 
 			toolItem.Click += LauncherTypeFile_ButtonClick;
 
@@ -1240,7 +1244,9 @@
 
 		ToolStripSplitButton CreateEmbeddedItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new ToolStripSplitButton();
+			var toolItem = new LauncherToolStripSplitButton(CommonData) {
+				LauncherItem = item,
+			};
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
 
 			AttachmentEmbeddedLauncherMenu(toolItem, item);
@@ -1281,7 +1287,7 @@
 			}
 
 			toolItem.AutoToolTip = false;
-			toolItem.Tag = item;
+			//toolItem.Tag = item;
 			
 			toolItem.Text = item.Name;
 			//toolItem.ToolTipText = item.Name;
@@ -1667,7 +1673,7 @@
 		void LauncherTypeFile_ButtonClick(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
-			var launcherItem = (LauncherItem)toolItem.Tag;
+			var launcherItem = ((ILauncherItem)toolItem).LauncherItem;
 			this._tipsLauncher.HideItem();
 			ExecuteItem(launcherItem);
 		}

@@ -20,7 +20,13 @@
 	public abstract class ExToolStripItem: ToolStripItem
 	{ }
 
+	public abstract class ExToolStripButton: ToolStripButton
+	{ }
+
 	public abstract class ExToolStripMenuItem: ToolStripMenuItem
+	{ }
+
+	public abstract class ExToolStripDropDownButton: ToolStripDropDownButton
 	{ }
 
 	public abstract class ExToolStripSplitButton: ToolStripSplitButton
@@ -125,12 +131,6 @@
 		}
 	}
 
-	public class MainToolStripMenuItem: CommonDataToolStripMenuItem
-	{
-		public MainToolStripMenuItem(CommonData commonData)
-			: base(commonData)
-		{ }
-	}
 	/// <summary>
 	/// ランチャーアイテムを保持するメニューアイテム。
 	/// </summary>
@@ -145,12 +145,82 @@
 
 	#endregion
 
+	#region ExToolStripButton
+
+	/// <summary>
+	/// 共通データを保持するドロップダウンボタンアイテム。
+	/// </summary>
+	/// <param name="commonData"></param>
+	public class CommonDataToolStripButton: ExToolStripButton, ICommonData
+	{
+		/// <summary>
+		/// 共通データを保持するドロップダウンボタンアイテム。
+		/// </summary>
+		/// <param name="commonData"></param>
+		public CommonDataToolStripButton(CommonData commonData)
+			: base()
+		{
+			CommonData = commonData;
+		}
+
+		public CommonData CommonData { get; private set; }
+	}
+
+	/// <summary>
+	/// ランチャーアイテムを保持するスプリットボタンアイテム。
+	/// </summary>
+	public class LauncherToolStripButton: CommonDataToolStripButton, ILauncherItem
+	{
+		public LauncherToolStripButton(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public LauncherItem LauncherItem { get; set; }
+	}
+
+	#endregion
+
+	#region ExToolStripDropDownButton
+
+	/// <summary>
+	/// 共通データを保持するドロップダウンボタンアイテム。
+	/// </summary>
+	/// <param name="commonData"></param>
+	public class CommonDataToolStripDropDownButton: ExToolStripDropDownButton, ICommonData
+	{
+		/// <summary>
+		/// 共通データを保持するドロップダウンボタンアイテム。
+		/// </summary>
+		/// <param name="commonData"></param>
+		public CommonDataToolStripDropDownButton(CommonData commonData)
+			: base()
+		{
+			CommonData = commonData;
+		}
+
+		public CommonData CommonData { get; private set; }
+	}
+
+	/// <summary>
+	/// ランチャーアイテムを保持するスプリットボタンアイテム。
+	/// </summary>
+	public class LauncherToolStripDropDownButton: CommonDataToolStripDropDownButton, ILauncherItem
+	{
+		public LauncherToolStripDropDownButton(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public LauncherItem LauncherItem { get; set; }
+	}
+
+	#endregion
+
 	#region ExToolStripSplitButton
 
 	public abstract class CommonDataToolStripSplitButton: ExToolStripSplitButton, ICommonData
 	{
 		/// <summary>
-		/// 共通データを保持するすぷちっとボタンアイテム。
+		/// 共通データを保持するスプリットボタンアイテム。
 		/// </summary>
 		/// <param name="commonData"></param>
 		public CommonDataToolStripSplitButton(CommonData commonData)
