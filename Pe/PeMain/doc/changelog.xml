@@ -83,6 +83,18 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
+			<note rev="77a41f42b8272e1960557bd509ac123b14f97125">
+				<message>設定データのXML出力時に改行のCRLFがLFになっていた不具合の修正</message>
+			</note>
+			<note rev="">
+				<message>#154対応により「クリップボード」ウィンドウの表示文言を「クリップボード/テンプレート」に変更</message>
+			</note>
+			<note rev="34f1db6c15679c757ae7b1206dd41cfc177fe726">
+				<message>クリップボードリストの最終アイテムを削除した際にArgumentOutOfRangeException初回例外が発生する</message>
+				<comments>
+					<comment>触った感じデバッガ噛ませた場合だけだと信じてる</comment>
+				</comments>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
