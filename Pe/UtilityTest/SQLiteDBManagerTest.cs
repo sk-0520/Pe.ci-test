@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using NUnit.Framework;
 using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.Library.Utility.DB;
 
 namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {
