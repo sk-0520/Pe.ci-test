@@ -443,7 +443,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Controls.Add(this.inputTitle);
 			this.Controls.Add(this.inputBody);
 			this.DoubleBuffered = true;
-			this.Font = new System.Drawing.Font("Meiryo UI", 9F);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.MaximizeBox = false;

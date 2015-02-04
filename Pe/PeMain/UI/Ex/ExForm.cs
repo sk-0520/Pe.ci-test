@@ -1,17 +1,27 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
 	using System.Diagnostics;
+	using System.Drawing;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public abstract class ExForm: Form
 	{ }
 
+	public class AppForm: ExForm
+	{ 
+		public AppForm()
+		{
+			UIUtility.InitializeWindow(this);
+		}
+	}
+
 	/// <summary>
 	/// アプリケーションで使用する基本Form。
 	/// </summary>
-	public class CommonForm: ExForm, ISetCommonData
+	public class CommonForm: AppForm, ISetCommonData
 	{
 		/// <summary>
 		/// 共通データ。
