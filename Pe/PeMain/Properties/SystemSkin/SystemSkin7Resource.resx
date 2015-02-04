@@ -178,9 +178,6 @@
   <data name="Image_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\Down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Image_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SystemSkin\7\Image\Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Image_File" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\File.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -219,9 +216,6 @@
   </data>
   <data name="Icon_ToolbarMain" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Icon\ToolbarMain.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Image_Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SystemSkin\7\Image\Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Image_Kill" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\Kill.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -285,9 +279,6 @@
   </data>
   <data name="Image_Update" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\Update.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Image_Warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\..\Resources\SystemSkin\7\Image\Warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Image_WindowList" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\..\Resources\SystemSkin\7\Image\WindowList.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

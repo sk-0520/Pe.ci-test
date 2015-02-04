@@ -343,16 +343,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap Image_Error {
-            get {
-                object obj = ResourceManager.GetObject("Image_Error", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
         internal static System.Drawing.Bitmap Image_File {
             get {
                 object obj = ResourceManager.GetObject("Image_File", resourceCulture);
@@ -436,16 +426,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Bitmap Image_Help {
             get {
                 object obj = ResourceManager.GetObject("Image_Help", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Image_Information {
-            get {
-                object obj = ResourceManager.GetObject("Image_Information", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -676,16 +656,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Properties.SystemSkin {
         internal static System.Drawing.Bitmap Image_Update {
             get {
                 object obj = ResourceManager.GetObject("Image_Update", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Bitmap Image_Warning {
-            get {
-                object obj = ResourceManager.GetObject("Image_Warning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

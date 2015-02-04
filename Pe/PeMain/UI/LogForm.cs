@@ -167,9 +167,9 @@
 
 			this._imageLogType.Images.Clear();
 			this._imageLogType.ImageSize = IconScale.Small.ToSize();
-			this._imageLogType.Images.Add(LogType.Information.ToString(), CommonData.Skin.GetImage(SkinImage.Information));
-			this._imageLogType.Images.Add(LogType.Warning.ToString(), CommonData.Skin.GetImage(SkinImage.Warning));
-			this._imageLogType.Images.Add(LogType.Error.ToString(), CommonData.Skin.GetImage(SkinImage.Error));
+			this._imageLogType.Images.Add(LogType.Information.ToString(), IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.Information), IconScale.Small));
+			this._imageLogType.Images.Add(LogType.Warning.ToString(), IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.Warning), IconScale.Small));
+			this._imageLogType.Images.Add(LogType.Error.ToString(), IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.Error), IconScale.Small));
 			this._imageLogType.Images.Add(LogType.Debug.ToString(), CommonData.Skin.GetImage(SkinImage.Debug));
 			this.listLog.SmallImageList = this._imageLogType;
 		}
