@@ -5,30 +5,24 @@
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public abstract class ExForm: Form
 	{ }
 
+	public class AppForm: ExForm
+	{ 
+		public AppForm()
+		{
+			UIUtility.InitializeWindow(this);
+		}
+	}
+
 	/// <summary>
 	/// アプリケーションで使用する基本Form。
 	/// </summary>
-	public class CommonForm: ExForm, ISetCommonData
+	public class CommonForm: AppForm, ISetCommonData
 	{
-		public CommonForm()
-		{
-			InitializeComponent();
-		}
-
-		private void InitializeComponent()
-		{
-			this.SuspendLayout();
-
-			this.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-
-			this.ResumeLayout(false);
-		}
-
-
 		/// <summary>
 		/// 共通データ。
 		/// </summary>

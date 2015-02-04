@@ -14,12 +14,13 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
 	using ContentTypeTextNet.Pe.PeMain.UI.CustomControl;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 
 	/// <summary>
 	/// 設定。
 	/// </summary>
-	public partial class SettingForm : Form
+	public partial class SettingForm: AppForm
 	{
 		#region define
 		const int TREE_LEVEL_GROUP = 0;

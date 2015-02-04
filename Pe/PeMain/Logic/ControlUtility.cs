@@ -459,6 +459,16 @@
 				cancelButton.Text = language["common/command/cancel"];
 			}
 		}
+
+		public static void InitializeWindow(Form form)
+		{
+			form.SuspendLayout();
+
+			form.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+
+			form.ResumeLayout(false);
+		}
+
 		/// <summary>
 		/// NOTE: 絶対的に場所が違う。
 		/// </summary>
