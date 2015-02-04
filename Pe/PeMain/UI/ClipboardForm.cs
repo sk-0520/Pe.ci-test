@@ -280,7 +280,7 @@
 
 			ApplySettingUI();
 
-			ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count);
+			ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count, CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History);
 		}
 
 		void ChangeTopmost(bool topMost)
@@ -388,7 +388,7 @@
 		}
 
 
-		void ChangeListItemNumber(int index, int count)
+		void ChangeListItemNumber(int index, int count, bool showLimit)
 		{
 			if(index == -1) {
 				this.statusClipboard_itemSelectedIndex.Text = "-";
@@ -397,7 +397,13 @@
 			}
 
 			this.statusClipboard_itemCount.Text = count.ToString();
-			this.statusClipboard_itemLimit.Text = CommonData.MainSetting.Clipboard.Limit.ToString();
+
+			this.statusClipboard_itemLimitLeft.Visible = showLimit;
+			this.statusClipboard_itemLimitCount.Visible = showLimit;
+			this.statusClipboard_itemLimitRight.Visible = showLimit;
+			if(showLimit) {
+				this.statusClipboard_itemLimitCount.Text = CommonData.MainSetting.Clipboard.Limit.ToString();
+			}
 		}
 
 		void ChangeCommand(int index)
@@ -985,7 +991,7 @@
 			var index = this.listItemStack.SelectedIndex;
 			if(index != SelectedItemIndex) {
 				SelectedItemIndex = index;
-				ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count);
+				ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count, CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History);
 				ChangeSelsectedItem(this.listItemStack.SelectedIndex);
 				if(Form.ActiveForm == this) {
 					ActiveControl = this.listItemStack;

@@ -33,9 +33,9 @@
 			this.statusClipboard_itemSelectedIndex = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusClipboard_itemCount = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.statusClipboard_itemLimit = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusClipboard_itemLimitLeft = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusClipboard_itemLimitCount = new System.Windows.Forms.ToolStripStatusLabel();
+			this.statusClipboard_itemLimitRight = new System.Windows.Forms.ToolStripStatusLabel();
 			this.panelClipboard = new System.Windows.Forms.SplitContainer();
 			this.listItemStack = new System.Windows.Forms.ListBox();
 			this.tabPreview = new System.Windows.Forms.TabControl();
@@ -137,9 +137,9 @@
             this.statusClipboard_itemSelectedIndex,
             this.toolStripStatusLabel2,
             this.statusClipboard_itemCount,
-            this.toolStripStatusLabel1,
-            this.statusClipboard_itemLimit,
-            this.toolStripStatusLabel4});
+            this.statusClipboard_itemLimitLeft,
+            this.statusClipboard_itemLimitCount,
+            this.statusClipboard_itemLimitRight});
 			this.statusClipboard.Location = new System.Drawing.Point(0, 0);
 			this.statusClipboard.Name = "statusClipboard";
 			this.statusClipboard.Size = new System.Drawing.Size(608, 23);
@@ -163,23 +163,23 @@
 			this.statusClipboard_itemCount.Size = new System.Drawing.Size(20, 18);
 			this.statusClipboard_itemCount.Text = "☃";
 			// 
-			// toolStripStatusLabel1
+			// statusClipboard_itemLimitLeft
 			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(13, 18);
-			this.toolStripStatusLabel1.Text = "(";
+			this.statusClipboard_itemLimitLeft.Name = "statusClipboard_itemLimitLeft";
+			this.statusClipboard_itemLimitLeft.Size = new System.Drawing.Size(13, 18);
+			this.statusClipboard_itemLimitLeft.Text = "(";
 			// 
-			// statusClipboard_itemLimit
+			// statusClipboard_itemLimitCount
 			// 
-			this.statusClipboard_itemLimit.Name = "statusClipboard_itemLimit";
-			this.statusClipboard_itemLimit.Size = new System.Drawing.Size(20, 18);
-			this.statusClipboard_itemLimit.Text = "☃";
+			this.statusClipboard_itemLimitCount.Name = "statusClipboard_itemLimitCount";
+			this.statusClipboard_itemLimitCount.Size = new System.Drawing.Size(20, 18);
+			this.statusClipboard_itemLimitCount.Text = "☃";
 			// 
-			// toolStripStatusLabel4
+			// statusClipboard_itemLimitRight
 			// 
-			this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-			this.toolStripStatusLabel4.Size = new System.Drawing.Size(13, 18);
-			this.toolStripStatusLabel4.Text = ")";
+			this.statusClipboard_itemLimitRight.Name = "statusClipboard_itemLimitRight";
+			this.statusClipboard_itemLimitRight.Size = new System.Drawing.Size(13, 18);
+			this.statusClipboard_itemLimitRight.Text = ")";
 			// 
 			// panelClipboard
 			// 
@@ -247,7 +247,7 @@
 			this.tabPreview_pageText.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageText.Name = "tabPreview_pageText";
 			this.tabPreview_pageText.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageText.Size = new System.Drawing.Size(372, 190);
+			this.tabPreview_pageText.Size = new System.Drawing.Size(372, 212);
 			this.tabPreview_pageText.TabIndex = 0;
 			this.tabPreview_pageText.Text = "#ClipboardType.Text";
 			this.tabPreview_pageText.UseVisualStyleBackColor = true;
@@ -261,7 +261,7 @@
 			this.viewText.Name = "viewText";
 			this.viewText.ReadOnly = true;
 			this.viewText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.viewText.Size = new System.Drawing.Size(366, 186);
+			this.viewText.Size = new System.Drawing.Size(366, 208);
 			this.viewText.TabIndex = 0;
 			this.viewText.WordWrap = false;
 			// 
@@ -272,7 +272,7 @@
 			this.tabPreview_pageRtf.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageRtf.Name = "tabPreview_pageRtf";
 			this.tabPreview_pageRtf.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageRtf.Size = new System.Drawing.Size(334, 207);
+			this.tabPreview_pageRtf.Size = new System.Drawing.Size(372, 212);
 			this.tabPreview_pageRtf.TabIndex = 1;
 			this.tabPreview_pageRtf.Text = "#ClipboardType.Rtf";
 			this.tabPreview_pageRtf.UseVisualStyleBackColor = true;
@@ -287,7 +287,7 @@
 			this.viewRtf.Name = "viewRtf";
 			this.viewRtf.ReadOnly = true;
 			this.viewRtf.ShortcutsEnabled = false;
-			this.viewRtf.Size = new System.Drawing.Size(328, 203);
+			this.viewRtf.Size = new System.Drawing.Size(366, 208);
 			this.viewRtf.TabIndex = 0;
 			this.viewRtf.Text = "";
 			this.viewRtf.WordWrap = false;
@@ -298,7 +298,7 @@
 			this.tabPreview_pageHtml.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageHtml.Name = "tabPreview_pageHtml";
-			this.tabPreview_pageHtml.Size = new System.Drawing.Size(334, 207);
+			this.tabPreview_pageHtml.Size = new System.Drawing.Size(372, 212);
 			this.tabPreview_pageHtml.TabIndex = 4;
 			this.tabPreview_pageHtml.Text = "#ClipboardType.Html";
 			this.tabPreview_pageHtml.UseVisualStyleBackColor = true;
@@ -312,7 +312,7 @@
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
 			this.viewHtml.ScriptErrorsSuppressed = true;
-			this.viewHtml.Size = new System.Drawing.Size(334, 207);
+			this.viewHtml.Size = new System.Drawing.Size(372, 212);
 			this.viewHtml.TabIndex = 0;
 			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
@@ -323,7 +323,7 @@
 			this.tabPreview_pageImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
 			this.tabPreview_pageImage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageImage.Size = new System.Drawing.Size(334, 207);
+			this.tabPreview_pageImage.Size = new System.Drawing.Size(372, 212);
 			this.tabPreview_pageImage.TabIndex = 2;
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
@@ -336,7 +336,7 @@
 			this.panelImage.Location = new System.Drawing.Point(3, 2);
 			this.panelImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panelImage.Name = "panelImage";
-			this.panelImage.Size = new System.Drawing.Size(328, 203);
+			this.panelImage.Size = new System.Drawing.Size(366, 208);
 			this.panelImage.TabIndex = 1;
 			// 
 			// viewImage
@@ -356,7 +356,7 @@
 			this.tabPreview_pageFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageFile.Name = "tabPreview_pageFile";
 			this.tabPreview_pageFile.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPreview_pageFile.Size = new System.Drawing.Size(334, 207);
+			this.tabPreview_pageFile.Size = new System.Drawing.Size(372, 212);
 			this.tabPreview_pageFile.TabIndex = 3;
 			this.tabPreview_pageFile.Text = "#ClipboardType.File";
 			this.tabPreview_pageFile.UseVisualStyleBackColor = true;
@@ -372,7 +372,7 @@
 			this.viewFile.Location = new System.Drawing.Point(3, 2);
 			this.viewFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.viewFile.Name = "viewFile";
-			this.viewFile.Size = new System.Drawing.Size(328, 203);
+			this.viewFile.Size = new System.Drawing.Size(366, 208);
 			this.viewFile.TabIndex = 0;
 			this.viewFile.UseCompatibleStateImageBehavior = false;
 			this.viewFile.View = System.Windows.Forms.View.Details;
@@ -473,7 +473,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 214;
+			this.panelTemplateSource.SplitterDistance = 216;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -486,7 +486,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(214, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(216, 154);
 			this.inputTemplateSource.TabIndex = 1;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -499,7 +499,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(149, 154);
+			this.listReplace.Size = new System.Drawing.Size(147, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -512,7 +512,7 @@
 			this.tabPreview_pageReplaceTemplate.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageReplaceTemplate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageReplaceTemplate.Name = "tabPreview_pageReplaceTemplate";
-			this.tabPreview_pageReplaceTemplate.Size = new System.Drawing.Size(334, 207);
+			this.tabPreview_pageReplaceTemplate.Size = new System.Drawing.Size(372, 212);
 			this.tabPreview_pageReplaceTemplate.TabIndex = 6;
 			this.tabPreview_pageReplaceTemplate.Text = ":clipboard/page/replace-template";
 			this.tabPreview_pageReplaceTemplate.UseVisualStyleBackColor = true;
@@ -526,7 +526,7 @@
 			this.viewReplaceTemplate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.viewReplaceTemplate.Name = "viewReplaceTemplate";
 			this.viewReplaceTemplate.ReadOnly = true;
-			this.viewReplaceTemplate.Size = new System.Drawing.Size(334, 207);
+			this.viewReplaceTemplate.Size = new System.Drawing.Size(372, 212);
 			this.viewReplaceTemplate.TabIndex = 0;
 			this.viewReplaceTemplate.Text = "";
 			// 
@@ -740,9 +740,9 @@
 		private System.Windows.Forms.ColumnHeader columnPath;
 		private System.Windows.Forms.TabPage tabPreview_pageHtml;
 		private ClipboardWebBrowser viewHtml;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.ToolStripStatusLabel statusClipboard_itemLimit;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+		private System.Windows.Forms.ToolStripStatusLabel statusClipboard_itemLimitLeft;
+		private System.Windows.Forms.ToolStripStatusLabel statusClipboard_itemLimitCount;
+		private System.Windows.Forms.ToolStripStatusLabel statusClipboard_itemLimitRight;
 		private System.Windows.Forms.ToolStripMenuItem toolClipboard_itemClear;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemEnabled;
 		private System.Windows.Forms.TabPage tabPreview_pageRawTemplate;
