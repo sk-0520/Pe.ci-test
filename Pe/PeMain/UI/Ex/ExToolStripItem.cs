@@ -125,6 +125,12 @@
 		}
 	}
 
+	public class MainToolStripMenuItem: CommonDataToolStripMenuItem
+	{
+		public MainToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+	}
 	/// <summary>
 	/// ランチャーアイテムを保持するメニューアイテム。
 	/// </summary>
