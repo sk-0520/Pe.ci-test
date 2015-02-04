@@ -95,11 +95,14 @@
 					<comment>触った感じデバッガ噛ませた場合だけだと信じてる</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
+			<note rev="9fe970b2f13eaf5c8bba43a02bd08556e0a2483d">
+				<message>#188: ツールバーへのD&amp;Dでメインメニューへカーソルを合わせると落ちる</message>
 			</note>
-			<note rev="">
-				<message></message>
+			<note rev="b8a17da5257ea78ea1921a5eb8aeb82cefc08437">
+				<message>ツールバーへのD&amp;D時にカーソル下のランチャーアイテムが組み込み・ディレクトリの場合もD&amp;D不可とする</message>
+			</note>
+			<note rev="0feb176f9729f2f0d74250f9930334aa30b8de40">
+				<message>ツールバーへのD&amp;D終了後にメッセージボックスを表示した際、メッセージボックスが背面に表示されるUIを改善</message>
 			</note>
 			<note rev="">
 				<message></message>
