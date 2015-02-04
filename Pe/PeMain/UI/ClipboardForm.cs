@@ -107,7 +107,7 @@
 			this._panelClipboradItem.Size = Size.Empty;
 			this._panelClipboradItem.AutoSize = true;
 			//this._panelClipboradItem.Controls.AddRange(commandButtons);
-			this.listClipboard.Controls.Add(this._panelClipboradItem);
+			this.listItemStack.Controls.Add(this._panelClipboradItem);
 			this._panelClipboradItem.Visible = false;
 		}
 
@@ -128,7 +128,7 @@
 			//ChangeSelsectedItem(-1);
 			WebBrowserUtility.AttachmentNewWindow(this.viewHtml);
 
-			listClipboard.MouseWheel += listClipboard_MouseWheel;
+			listItemStack.MouseWheel += listClipboard_MouseWheel;
 
 			this._replaceCommentList = AppLanguageName.GetMembersList()
 				.Select(m => new ReplaceItem() { Name = m })
@@ -262,7 +262,7 @@
 			using(var g = CreateGraphics()) {
 				var fontHeight = (int)g.MeasureString("☃", Font).Height;
 				var buttonHeight = buttonSize.Height;
-				this.listClipboard.ItemHeight = fontHeight + buttonHeight;
+				this.listItemStack.ItemHeight = fontHeight + buttonHeight;
 			}
 			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			this.inputTemplateSource.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
@@ -280,7 +280,7 @@
 
 			ApplySettingUI();
 
-			ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
+			ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count);
 		}
 
 		void ChangeTopmost(bool topMost)
@@ -359,7 +359,7 @@
 				HoverItemIndex = -1;
 			if(type == ClipboardListType.History) {
 
-				this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.HistoryItems;
+				this.listItemStack.DataSource = this.CommonData.MainSetting.Clipboard.HistoryItems;
 			} else {
 				Debug.Assert(type == ClipboardListType.Template);
 				if(!this.CommonData.MainSetting.Clipboard.TemplateItems.Any()) {
@@ -367,7 +367,7 @@
 					var newItem = CreateTemplate();
 					this.CommonData.MainSetting.Clipboard.TemplateItems.Add(newItem);
 				}
-				this.listClipboard.DataSource = this.CommonData.MainSetting.Clipboard.TemplateItems;
+				this.listItemStack.DataSource = this.CommonData.MainSetting.Clipboard.TemplateItems;
 
 			}
 			ChangeCommandType(type);
@@ -707,12 +707,12 @@
 			try {
 				//itemList.ListChanged -= eventMap[targetType];
 
-				this.listClipboard.SuspendLayout();
+				this.listItemStack.SuspendLayout();
 
 				var isActive = Form.ActiveForm == this;
-				var selectedIndex = this.listClipboard.SelectedIndex;
-				this.listClipboard.DataSource = null;
-				this.listClipboard.SelectedIndex = -1;
+				var selectedIndex = this.listItemStack.SelectedIndex;
+				this.listItemStack.DataSource = null;
+				this.listItemStack.SelectedIndex = -1;
 
 				if(action != null) {
 					action();
@@ -720,23 +720,23 @@
 
 				//if(itemList.Any()) {
 				var bindList = new BindingList<T>(itemList);
-				this.listClipboard.DataSource = bindList;
+				this.listItemStack.DataSource = bindList;
 				//}
 
 				if(isActive) {
-					if(selectedIndex < this.listClipboard.Items.Count) {
-						this.listClipboard.SelectedIndex = selectedIndex;
+					if(selectedIndex < this.listItemStack.Items.Count) {
+						this.listItemStack.SelectedIndex = selectedIndex;
 					} else {
-						this.listClipboard.SelectedIndex = this.listClipboard.Items.Count - 1;
+						this.listItemStack.SelectedIndex = this.listItemStack.Items.Count - 1;
 					}
 				} else if(itemList.Any()) {
-					this.listClipboard.SelectedIndex = 0;
+					this.listItemStack.SelectedIndex = 0;
 				}
 				this._panelClipboradItem.Visible = false;
 				ChangeCommand(-1);
 			} finally {
 				//itemList.ListChanged += eventMap[targetType];
-				this.listClipboard.ResumeLayout();
+				this.listItemStack.ResumeLayout();
 			}
 		}
 
@@ -764,7 +764,7 @@
 			if(templateItem != null) {
 				var index = CommonData.MainSetting.Clipboard.TemplateItems.IndexOf(templateItem);
 				CommonData.MainSetting.Clipboard.TemplateItems.Insert(index, createdItem);
-				this.listClipboard.SelectedIndex = index;
+				this.listItemStack.SelectedIndex = index;
 			}
 		}
 
@@ -774,7 +774,7 @@
 			list[from] = list[to];
 			list[to] = swapItem;
 			//this.listClipboard.SelectedIndex = to;
-			this.listClipboard.Invalidate();
+			this.listItemStack.Invalidate();
 		}
 
 		void UpTemplate(TemplateItem templateItem)
@@ -836,7 +836,7 @@
 				};
 			var image = this.imageTab.Images[map[item.GetSingleClipboardType()]];
 
-			var drawArea = new Rectangle(bounds.X + this.listClipboard.Margin.Left, bounds.Bottom - image.Height - +this.listClipboard.Margin.Bottom - 1, image.Width, image.Height);
+			var drawArea = new Rectangle(bounds.X + this.listItemStack.Margin.Left, bounds.Bottom - image.Height - +this.listItemStack.Margin.Bottom - 1, image.Width, image.Height);
 
 			g.DrawImage(image, drawArea);
 
@@ -925,7 +925,7 @@
 			if(string.IsNullOrWhiteSpace(s)) {
 				e.Value = GetUniqueTemplateName();
 			}
-			this.listClipboard.Invalidate();
+			this.listItemStack.Invalidate();
 		}
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
@@ -973,13 +973,13 @@
 			//Debug.WriteLine(this.listClipboard.SelectedIndex.ToString());
 			//Debug.WriteLine(ActiveControl);
 			//var isActive = ActiveControl == this.listClipboard;
-			var index = this.listClipboard.SelectedIndex;
+			var index = this.listItemStack.SelectedIndex;
 			if(index != SelectedItemIndex) {
 				SelectedItemIndex = index;
-				ChangeListItemNumber(this.listClipboard.SelectedIndex, this.listClipboard.Items.Count);
-				ChangeSelsectedItem(this.listClipboard.SelectedIndex);
+				ChangeListItemNumber(this.listItemStack.SelectedIndex, this.listItemStack.Items.Count);
+				ChangeSelsectedItem(this.listItemStack.SelectedIndex);
 				if(Form.ActiveForm == this) {
-					ActiveControl = this.listClipboard;
+					ActiveControl = this.listItemStack;
 				}
 				//	this.listClipboard.Select();
 			}
@@ -1012,9 +1012,9 @@
 
 		private void listClipboard_MouseMove(object sender, MouseEventArgs e)
 		{
-			var index = this.listClipboard.IndexFromPoint(e.Location);// -this.listClipboard.TopIndex;
-			var showIndex = index - this.listClipboard.TopIndex;
-			var top = this.listClipboard.ItemHeight * (showIndex + 1) - GetButtonSize().Height - 1;
+			var index = this.listItemStack.IndexFromPoint(e.Location);// -this.listClipboard.TopIndex;
+			var showIndex = index - this.listItemStack.TopIndex;
+			var top = this.listItemStack.ItemHeight * (showIndex + 1) - GetButtonSize().Height - 1;
 			
 			if(top != this._panelClipboradItem.Top) {
 				this._panelClipboradItem.Top = top;
@@ -1025,7 +1025,7 @@
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
 		{
 			//Debug.Assert(SelectedItemIndex != -1);
-			var index = this.listClipboard.SelectedIndex;
+			var index = this.listItemStack.SelectedIndex;
 			Debug.Assert(index != -1);
 
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
@@ -1090,7 +1090,7 @@
 
 		private void listClipboard_DoubleClick(object sender, EventArgs e)
 		{
-			var index = this.listClipboard.SelectedIndex;
+			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					try {
@@ -1109,7 +1109,7 @@
 
 		private void toolClipboard_itemSave_Click(object sender, EventArgs e)
 		{
-			var index = this.listClipboard.SelectedIndex;
+			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
@@ -1123,7 +1123,7 @@
 
 		private void toolClipboard_itemClear_ButtonClick(object sender, EventArgs e)
 		{
-			var index = this.listClipboard.SelectedIndex;
+			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
@@ -1171,8 +1171,8 @@
 		private void listClipboard_MouseLeave(object sender, EventArgs e)
 		{
 			if(this._panelClipboradItem.Visible) {
-				var point = this.listClipboard.PointToClient(Cursor.Position);
-				this._panelClipboradItem.Visible = this.listClipboard.DisplayRectangle.Contains(point);
+				var point = this.listItemStack.PointToClient(Cursor.Position);
+				this._panelClipboradItem.Visible = this.listItemStack.DisplayRectangle.Contains(point);
 			}
 		}
 
@@ -1189,7 +1189,7 @@
 
 			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, noDraw, IntPtr.Zero);
 			
-			this.listClipboard.Invalidate();
+			this.listItemStack.Invalidate();
 
 			NativeMethods.SendMessage(Handle, WM.WM_SETREDRAW, onDraw, IntPtr.Zero);
 
