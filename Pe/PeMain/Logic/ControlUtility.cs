@@ -460,11 +460,22 @@
 			}
 		}
 
+		public static Font GetSystemDialogFont()
+		{
+			var baseFont = SystemFonts.MessageBoxFont;
+			//return new Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			var family = FontFamily.Families.FirstOrDefault(f => f.Name == "Meiryo UI");
+			if(family != null) {
+				baseFont = new Font(family, baseFont.SizeInPoints, baseFont.Style, GraphicsUnit.Point);
+			}
+			return baseFont;
+		}
+
 		public static void InitializeWindow(Form form)
 		{
 			form.SuspendLayout();
 
-			form.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			form.Font = GetSystemDialogFont();
 
 			form.ResumeLayout(false);
 		}
