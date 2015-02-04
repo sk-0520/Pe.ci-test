@@ -1710,6 +1710,7 @@
 		{
 			var dropData = ProcessDropEffect(sender, e);
 			if(dropData.DropType == DropType.Files) {
+				UIUtility.ShowFrontActive(this);
 				ExecuteDropData(dropData);
 			} else {
 				Debug.Assert(dropData.DropType == DropType.Button);
