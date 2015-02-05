@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
 	/// <summary>
-	/// コマンドライン引数を分解したりなんやしたり
+	/// コマンドライン引数を分解したりなんやしたり。
+	/// 
+	/// 想定しているのは /xx=xx みたいな キーと値がセパレータでくっついているデータ。
 	/// </summary>
 	public class CommandLine
 	{
@@ -16,7 +18,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			Initialize();
 			
-			Options.AddRange(Environment.GetCommandLineArgs().Skip(1));
+			Options = new List<string>(Environment.GetCommandLineArgs().Skip(1));
 		}
 		/// <summary>
 		/// スタートアップ関数から呼び出されることを想定
@@ -26,7 +28,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		{
 			Initialize();
 			
-			Options.AddRange(args);
+			Options = new List<string>(args);
 		}
 
 		private void Initialize()
@@ -49,7 +51,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		/// <summary>
 		/// 渡されたコマンドラインを統括。
 		/// </summary>
-		public List<string> Options { get; private set; }
+		public IReadOnlyList<string> Options { get; private set; }
 		/// <summary>
 		/// オプション数。
 		/// </summary>
