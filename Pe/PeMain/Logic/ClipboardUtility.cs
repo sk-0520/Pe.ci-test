@@ -101,7 +101,7 @@
 				try {
 					map[key](value);
 				} catch(Exception ex) {
-					logger.Puts(LogType.Warning, ex.Message, new MessageException(key, ex));
+					logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(key, ex));
 				}
 			}
 			//

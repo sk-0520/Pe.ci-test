@@ -176,7 +176,7 @@
 							var skin = (ISkin)instance;
 							result.Add(skin);
 						} catch(Exception ex) {
-							logger.Puts(LogType.Error, ex.Message , new MessageException(skinDll, ex));
+							logger.Puts(LogType.Error, ex.Message , new ExceptionMessage(skinDll, ex));
 						}
 					}
 				}

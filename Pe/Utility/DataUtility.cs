@@ -70,9 +70,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	/// 
 	/// 完全にObjectDumper対策。
 	/// </summary>
-	public class MessageException
+	public class ExceptionMessage
 	{
-		public MessageException(string message, Exception exception)
+		public ExceptionMessage(string message, Exception exception)
 		{
 			Message = message;
 			Exception = exception;

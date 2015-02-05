@@ -131,7 +131,7 @@
 								converted = true;
 							}
 						} catch(RegexMatchTimeoutException ex) {
-							logger.Puts(LogType.Warning, ex.Message, new MessageException("<title>", ex));
+							logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<title>", ex));
 						}
 
 						// h1
@@ -144,7 +144,7 @@
 								converted = true;
 							}
 						} catch(RegexMatchTimeoutException ex) {
-							logger.Puts(LogType.Warning, ex.Message, new MessageException("<header>", ex));
+							logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage("<header>", ex));
 						}
 
 						if(!converted || string.IsNullOrWhiteSpace(text)) {

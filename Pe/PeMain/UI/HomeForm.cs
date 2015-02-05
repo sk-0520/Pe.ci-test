@@ -188,7 +188,7 @@
 					userItemList.Add(item);
 				} catch(Exception ex) {
 					// #68 暫定回避
-					this._logList.Add(new LogItem(LogType.Warning, ex.Message, new MessageException(mergeFile, ex)));
+					this._logList.Add(new LogItem(LogType.Warning, ex.Message, new ExceptionMessage(mergeFile, ex)));
 				}
 			}
 
