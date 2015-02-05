@@ -184,7 +184,7 @@
 			var userItemList = new List<LauncherItem>(mergeFiles.Count());
 			foreach(var mergeFile in mergeFiles) {
 				try {
-					var item = LauncherItem.LoadFile(mergeFile, false);
+					var item = LauncherItemUtility.LoadFile(mergeFile, false);
 					userItemList.Add(item);
 				} catch(Exception ex) {
 					// #68 暫定回避

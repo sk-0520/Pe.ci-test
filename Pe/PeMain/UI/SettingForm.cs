@@ -1341,7 +1341,7 @@
 		{
 			var path = filePath;
 			var useShortcut = false;
-			// TODO: 処理重複
+			// TODO: 処理重複 -> ToolbarForm.ExecuteDropData
 			if(PathUtility.IsShortcutPath(filePath)) {
 				var result = MessageBox.Show(Language["common/dialog/d-d/shortcut/message"], Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 				switch(result) {
@@ -1363,8 +1363,8 @@
 						return;
 				}
 			}
-			var item = LauncherItem.LoadFile(path, useShortcut);
-			var uniqueName = LauncherItem.GetUniqueName(item, this.selecterLauncher.Items);
+			var item = LauncherItemUtility.LoadFile(path, useShortcut);
+			var uniqueName = LauncherItemUtility.GetUniqueName(item, this.selecterLauncher.Items);
 			item.Name = uniqueName;
 			this.selecterLauncher.AddItem(item);
 		}
