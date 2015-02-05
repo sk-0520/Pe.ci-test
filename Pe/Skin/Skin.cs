@@ -273,7 +273,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 			}
 		}
 
-		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth);
+		public abstract SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, Tuple<int, int, int> textWidth);
 		
 #endregion
 		
@@ -293,7 +293,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		public abstract void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		public abstract void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, IconScale iconScale);
-		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth);
+		public abstract void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, Tuple<int, int, int> textWidth);
 
 		public virtual void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth)
 		{

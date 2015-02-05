@@ -12,6 +12,7 @@
 	using System.Threading;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -155,7 +156,7 @@
 			};
 
 			var skinDllList = Directory.EnumerateFiles(Literal.ApplicationSkinDirectoryPath, "?*Skin.dll", SearchOption.TopDirectoryOnly);
-			foreach(var skinDll in skinDllList) {
+			foreach(var skinDll in skinDllList.Where(s => string.Compare("SystemSkin", Path.GetFileNameWithoutExtension(s), true) != 0)) {
 				var assembly = Assembly.LoadFrom(skinDll);
 				foreach(var type in assembly.GetTypes()) {
 					if(!type.IsClass || type.IsAbstract || type.IsNotPublic || !type.IsVisible) {
