@@ -1,5 +1,6 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Skin
 {
+	using System;
 	using System.Drawing;
 	using System.Windows.Forms;
 
@@ -77,7 +78,14 @@
 		Padding GetToolbarBorderPadding(ToolbarPosition toolbarPosition);
 		Rectangle GetToolbarCaptionArea(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
 		Padding GetToolbarTotalPadding(ToolbarPosition toolbarPosition, System.Drawing.Size parentSize);
-		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconSize, bool showText, int textWidth);
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="iconScale"></param>
+		/// <param name="showText"></param>
+		/// <param name="textWidth">最小値, 使用値, 最大値</param>
+		/// <returns></returns>
+		SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, Tuple<int, int, int> textWidth);
 		void ApplyToolbarToolTipRegion(Form target);
 
 		#endregion
@@ -98,7 +106,7 @@
 		void DrawToolbarBackground(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		void DrawToolbarBorder(ToolStripRenderEventArgs e, bool active, ToolbarPosition toolbarPosition);
 		void DrawToolbarButtonImage(ToolStripItemImageRenderEventArgs e, bool active, IconScale iconScale);
-		void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth);
+		void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, Tuple<int, int, int> textWidth);
 		void DrawToolbarArrow(ToolStripArrowRenderEventArgs e, int menuWidth);
 		void DrawToolbarDropDownButtonBackground(ToolStripItemRenderEventArgs e, ToolStripDropDownButton item, bool active, Rectangle itemArea);
 		void DrawToolbarSplitButtonBackground(ToolStripItemRenderEventArgs e, ToolStripSplitButton item, bool active, Rectangle itemArea);

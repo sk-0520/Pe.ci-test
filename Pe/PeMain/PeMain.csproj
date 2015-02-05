@@ -223,16 +223,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\SystemSkin\SystemSkin7Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SystemSkin7Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\SystemSkin\SystemSkin8Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SystemSkin8Resource.resx</DependentUpon>
-    </Compile>
     <Compile Include="UI\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -352,7 +342,6 @@
     <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Skin\SystemSkin.cs" />
     <Compile Include="UI\Skin\ToolbarRenderer.cs" />
     <Compile Include="UI\StreamForm.cs">
       <SubType>Form</SubType>
@@ -378,14 +367,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\SystemSkin\SystemSkin7Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SystemSkin7Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\SystemSkin\SystemSkin8Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SystemSkin8Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -496,6 +477,11 @@
     <ProjectReference Include="..\Skin\Skin.csproj">
       <Project>{5795cabd-7c4e-4ca7-962b-e80c9813ef1b}</Project>
       <Name>Skin</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\SystemSkin\SystemSkin.csproj">
+      <Project>{a435ce59-1963-4fa7-a67c-b2748b05dfa3}</Project>
+      <Name>SystemSkin</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">

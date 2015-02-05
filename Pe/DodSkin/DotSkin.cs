@@ -1,4 +1,4 @@
-﻿namespace DodSkin
+﻿namespace ContentTypeTextNet.Pe.Library.Skin.DotSkin
 {
 	using System;
 	using System.Collections.Generic;
@@ -164,7 +164,7 @@
 			return new Rectangle(point, size);
 		}
 
-		public override SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, int textWidth)
+		public override SkinToolbarButtonLayout GetToolbarButtonLayout(IconScale iconScale, bool showText, Tuple<int,int,int> textWidth)
 		{
 			var iconBox = iconScale.ToSize();
 			var systemBorderSize = SystemInformation.Border3DSize;
@@ -179,7 +179,13 @@
 
 			buttonSize.Width = PaddingWidth + iconBox.Width + padding.Right + padding.Horizontal + MenuWidth;
 			if(showText) {
-				//buttonSize.Width += Literal.toolbarTextWidth.ToRounding(textWidth);
+				var width = textWidth.Item2;
+				if(textWidth.Item3 <= width) {
+					width = textWidth.Item3;
+				} else if(width <= textWidth.Item1) {
+					width = textWidth.Item1;
+				}
+				buttonSize.Width += width;
 			}
 			buttonSize.Height = iconBox.Height + padding.Vertical;
 

@@ -475,8 +475,8 @@
 		{
 			var floatSize = UsingToolbarItem.FloatSize;
 			Padding = CommonData.Skin.GetToolbarTotalPadding(UsingToolbarItem.ToolbarPosition, Size);
-			
-			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
+
+			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, new Tuple<int, int, int>(Literal.toolbarTextWidth.minimum, UsingToolbarItem.TextWidth, Literal.toolbarTextWidth.maximum));
 			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UsingToolbarItem.ToolbarPosition);
 			var borderPadding = CommonData.Skin.GetToolbarBorderPadding(UsingToolbarItem.ToolbarPosition);
 			this.toolLauncher.Padding = borderPadding;
@@ -1157,7 +1157,7 @@
 		static void SetButtonLayout(ToolStripItem toolItem, ISkin skin, IconScale iconSize, bool showText, int textWidth)
 		{
 			var toolSplit = toolItem as ToolStripSplitButton;
-			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, textWidth);
+			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, new Tuple<int, int, int>(Literal.toolbarTextWidth.minimum, textWidth, Literal.toolbarTextWidth.maximum));
 			
 			toolItem.Margin = Padding.Empty;
 			toolItem.Padding = Padding.Empty;
