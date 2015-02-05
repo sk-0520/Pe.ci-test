@@ -96,7 +96,7 @@
 					<comment>VER-HASH -&gt; VER:HASH</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="1dea15676f0727295106dfa429ac8a6f8f4aed4d">
 				<message>#193: クリップボード取得が重い</message>
 				<comments>
 					<comment>難しい、開発機だと再現できん。ロジックは少し変えたけど再発したらまた考える</comment>
