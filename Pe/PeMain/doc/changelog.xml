@@ -97,6 +97,12 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#193: クリップボード取得が重い</message>
+				<comments>
+					<comment>難しい、開発機だと再現できん。ロジックは少し変えたけど再発したらまた考える</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
