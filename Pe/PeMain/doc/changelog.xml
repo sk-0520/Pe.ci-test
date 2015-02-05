@@ -82,7 +82,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="c7499cc0c72f442a61faee79447d3d346ffc38dd">
 				<message>#196: クリップボード/テンプレートウィンドウがリサイズできない</message>
 			</note>
 			<note rev="">
