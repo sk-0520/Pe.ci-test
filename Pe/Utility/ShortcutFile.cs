@@ -1,12 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Diagnostics;
+	using System.IO;
+	using System.Runtime.InteropServices;
+	using System.Text;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+
 	/// <summary>
 	/// ショートカット。
 	/// </summary>

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Windows.Forms;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+
 	/// <summary>
 	/// ホットキー設定。
 	/// </summary>
@@ -50,16 +49,16 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		{
 			if(Enabled) {
 				var mod = Keys.None;
-				if((Modifiers & MOD.MOD_ALT) == MOD.MOD_ALT) {
+				if(Modifiers.HasFlag(MOD.MOD_ALT)) {
 					mod |= Keys.Alt;
 				}
-				if((Modifiers & MOD.MOD_CONTROL) == MOD.MOD_CONTROL) {
+				if(Modifiers.HasFlag(MOD.MOD_CONTROL)) {
 					mod |= Keys.Control;
 				}
-				if((Modifiers & MOD.MOD_SHIFT) == MOD.MOD_SHIFT) {
+				if(Modifiers.HasFlag(MOD.MOD_SHIFT)) {
 					mod |= Keys.Shift;
 				}
-				if((Modifiers & MOD.MOD_WIN) == MOD.MOD_WIN) {
+				if(Modifiers.HasFlag(MOD.MOD_WIN)) {
 					mod |= Keys.LWin | Keys.RWin;
 				}
 				

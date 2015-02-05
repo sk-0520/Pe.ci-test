@@ -20,13 +20,34 @@
 			ClipboardTypes = ClipboardType.None;
 		}
 
+		/// <summary>
+		/// 取り込み日時
+		/// </summary>
 		public DateTime Timestamp { get; set; }
 
+		/// <summary>
+		/// このアイテムが保持するクリップボードの種類。
+		/// </summary>
 		public ClipboardType ClipboardTypes { get; set; }
+		/// <summary>
+		/// 保持するプレーンテキスト。
+		/// </summary>
 		public string Text { get; set; }
+		/// <summary>
+		/// 保持するRTF。
+		/// </summary>
 		public string Rtf { get; set; }
+		/// <summary>
+		/// 保持するクリップボードとして認識可能なHTML。
+		/// </summary>
 		public string Html { get; set; }
+		/// <summary>
+		/// 保持する画像。
+		/// </summary>
 		public Image Image { get; set; }
+		/// <summary>
+		/// 保持するファイル一覧。
+		/// </summary>
 		public IEnumerable<string> Files { get; set; }
 
 		#region DisposableNameItem
@@ -44,6 +65,10 @@
 			return list.Where(t => ClipboardTypes.HasFlag(t));
 		}
 
+		/// <summary>
+		/// このアイテムが保持する有効なデータ種別を列挙する。
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<ClipboardType> GetClipboardTypeList()
 		{
 			Debug.Assert(ClipboardTypes != ClipboardType.None);
@@ -65,6 +90,10 @@
 			return GetEnabledClipboardTypeList(list);
 		}
 
+		/// <summary>
+		/// このアイテムが保持するデータ種別のうち一番優先されるものを取得。
+		/// </summary>
+		/// <returns></returns>
 		public ClipboardType GetSingleClipboardType()
 		{
 			var list = new[] {

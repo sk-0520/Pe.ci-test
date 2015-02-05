@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+
 	/// <summary>
 	/// イベント発行するリスト。
+	/// 
+	/// あーこれラップした方がいいんかねぇ、、、今更無理だけど。
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public class EventList<T>: List<T>

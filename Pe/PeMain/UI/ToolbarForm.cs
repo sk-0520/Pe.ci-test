@@ -1499,8 +1499,8 @@
 							return;
 					}
 				}
-				var item = LauncherItem.LoadFile(path, useShortcut, forceLauncherType, forceType);
-				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
+				var item = LauncherItemUtility.LoadFile(path, useShortcut, forceLauncherType, forceType);
+				var name = LauncherItemUtility.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {
 					// D&Dアイテムが既に登録済みアイテム名と被った場合はただの複製を考慮する

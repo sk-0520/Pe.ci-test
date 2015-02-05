@@ -268,7 +268,7 @@
 		{
 		}
 
-		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, int textWidth)
+		public override void DrawToolbarButtonText(ToolStripItemTextRenderEventArgs e, bool active, IconScale iconScale, bool showText, Tuple<int, int, int> textWidth)
 		{
 		}
 
