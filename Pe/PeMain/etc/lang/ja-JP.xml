@@ -497,15 +497,16 @@
 		<Word Name="log/init/db-data/create"    Text="DB: @[TABLE-NAME] 作成" />
 		<Word Name="log/init/db-data/check"     Text="DB: @[TABLE-NAME] チェック" />
 		
-		<Word Name="log/update/check"      Text="アップデートチェック開始" />
-		<Word Name="log/update/exec"       Text="アップデート処理開始" />
-		<Word Name="log/update/exit"       Text="アップデートのため終了" />
-		<Word Name="log/update/error"      Text="アップデートチェック失敗" />
+		<Word Name="log/update/check"          Text="アップデートチェック開始" />
+		<Word Name="log/update/exec"           Text="アップデート処理開始" />
+		<Word Name="log/update/exit"           Text="アップデートのため終了" />
+		<Word Name="log/update/error"          Text="アップデートチェック失敗" />
 		<Word Name="log/update/error-timeout"  Text="アップデート処理タイムアウト" />
 		<Word Name="log/update/error-process"  Text="アップデートプロセス異常終了" />
-		<Word Name="log/update/check-stop" Text="アップデートチェック中止" />
-		<Word Name="log/update/newest"     Text="最新版です" />
-	
+		<Word Name="log/update/check-stop"     Text="アップデートチェック中止" />
+		<Word Name="log/update/newest"         Text="最新版です" />
+		<Word Name="log/update/nic"            Text="ネットワークインターフェイス非活性" />
+
 		<Word Name="log/init/ui/start"  Text="UI初期化開始" />
 		<Word Name="log/init/ui/end"    Text="UI初期化終了" />
 		
