@@ -1,27 +1,27 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
-    public class InformationGroup
-    {
-        public InformationGroup(string title)
-        {
-            Title = title;
-            Items = new Dictionary<string, object>();
-        }
+	using System.Collections.Generic;
+	using System.IO;
 
-        public string Title { get; private set; }
-        public Dictionary<string, object> Items { get; private set; }
+	public class InformationGroup
+	{
+		public InformationGroup(string title)
+		{
+			Title = title;
+			Items = new Dictionary<string, object>();
+		}
 
-        public override string ToString()
-        {
-            var stream = new StringWriter();
-            stream.WriteLine("{0} =================", Title);
-            foreach(var pair in Items) {
-                stream.WriteLine("{0}: {1}", pair.Key, pair.Value);
-            }
-            return stream.ToString();
-        }
-    }
+		public string Title { get; private set; }
+		public Dictionary<string, object> Items { get; private set; }
+
+		public override string ToString()
+		{
+			var stream = new StringWriter();
+			stream.WriteLine("{0} =================", Title);
+			foreach(var pair in Items) {
+				stream.WriteLine("{0}: {1}", pair.Key, pair.Value);
+			}
+			return stream.ToString();
+		}
+	}
 }
