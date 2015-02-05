@@ -13,7 +13,6 @@
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin.Properties;
 	using ContentTypeTextNet.Pe.Library.Utility;
-	//using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// 標準で使用されるシステム環境にあってるっぽいスキン
