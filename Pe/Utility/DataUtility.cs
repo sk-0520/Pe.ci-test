@@ -62,4 +62,22 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			return value.Rounding(this.minimum, this.maximum);
 		}
 	}
+
+	/// <summary>
+	/// メッセージと例外を持つ。
+	/// 
+	/// ここで言うメッセージはException.Messageを指すものではなく独自のメッセージという意味。
+	/// 
+	/// 完全にObjectDumper対策。
+	/// </summary>
+	public class MessageException
+	{
+		public MessageException(string message, Exception exception)
+		{
+			Message = message;
+			Exception = exception;
+		}
+		public string Message { get; private set; }
+		public Exception Exception { get; private set; }
+	}
 }
