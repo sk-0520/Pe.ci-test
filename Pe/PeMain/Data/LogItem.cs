@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Diagnostics;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ObjectDumper;
 
@@ -46,6 +47,9 @@
 			string detailText = "<NULL>";
 			if(Detail is Exception || Detail is string) {
 				detailText = Detail.ToString();
+			} else if(Detail is ExceptionMessage) {
+				var em = (ExceptionMessage)Detail;
+				detailText = string.Format("{0}{1}--------------{1}{2}", em.Message, Environment.NewLine, em.Exception.ToString());
 			} else if(Detail != null) {
 				try {
 					detailText = Detail.DumpToString(Title);
