@@ -160,7 +160,9 @@
 			}
 			if(isImage) {
 				clipboardItem.Image = Clipboard.GetImage();
-				clipboardItem.ClipboardTypes |= ClipboardType.Image;
+				if(clipboardItem.Image != null) {
+					clipboardItem.ClipboardTypes |= ClipboardType.Image;
+				}
 			}
 			if(isFile) {
 				var files = Clipboard.GetFileDropList().Cast<string>();
