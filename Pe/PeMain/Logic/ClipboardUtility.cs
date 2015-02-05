@@ -121,5 +121,55 @@
 			TryConvertHtmlFromClipbordHtml(clipboardHtml, out temp, logger);
 			return temp;
 		}
+
+		/// <summary>
+		/// 現在のクリップボードからクリップボードアイテムを生成する。
+		/// </summary>
+		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
+		/// <returns>生成されたクリップボードアイテム。生成可能な種別がなければnullを返す。</returns>
+		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes)
+		{
+			var isPlainText = enabledTypes.HasFlag(ClipboardType.Text) && Clipboard.ContainsText(TextDataFormat.Text);
+			var isUnicodeText = enabledTypes.HasFlag(ClipboardType.Text) && Clipboard.ContainsText(TextDataFormat.UnicodeText);
+			var isRtf = enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf);
+			var isHtml = enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html);
+			var isImage = enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage();
+			var isFile = enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList();
+
+			if(!isUnicodeText && !isPlainText && !isRtf && !isHtml && !isImage && !isFile) {
+				return null;
+			}
+
+			var clipboardItem = new ClipboardItem();
+
+			if(isUnicodeText || isPlainText) {
+				if(isUnicodeText) {
+					clipboardItem.Text = Clipboard.GetText(TextDataFormat.UnicodeText);
+				} else {
+					clipboardItem.Text = Clipboard.GetText(TextDataFormat.Text);
+				}
+				clipboardItem.ClipboardTypes |= ClipboardType.Text;
+			}
+			if(isRtf) {
+				clipboardItem.Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+				clipboardItem.ClipboardTypes |= ClipboardType.Rtf;
+			}
+			if(isHtml) {
+				clipboardItem.Html = Clipboard.GetText(TextDataFormat.Html);
+				clipboardItem.ClipboardTypes |= ClipboardType.Html;
+			}
+			if(isImage) {
+				clipboardItem.Image = Clipboard.GetImage();
+				clipboardItem.ClipboardTypes |= ClipboardType.Image;
+			}
+			if(isFile) {
+				var files = Clipboard.GetFileDropList().Cast<string>();
+				clipboardItem.Files = files;
+				clipboardItem.Text = string.Join(Environment.NewLine, files);
+				clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
+			}
+
+			return clipboardItem;
+		}
 	}
 }
