@@ -108,6 +108,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageToolbar = new System.Windows.Forms.TabPage();
 			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
 			this.groupToolbar = new System.Windows.Forms.GroupBox();
+			this.commandToolbarScreens = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
@@ -202,7 +203,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.commandToolbarScreens = new System.Windows.Forms.Button();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupLauncherStream.SuspendLayout();
@@ -980,10 +980,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// tabLauncher_pageEnv
 			// 
 			this.tabLauncher_pageEnv.Controls.Add(this.panelLauncherEnv);
-			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
+			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 266);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 264);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/page/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -1002,7 +1002,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherEnv.RowCount = 2;
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 260);
+			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 258);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
 			// envLauncherRemove
@@ -1041,9 +1041,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// tabLauncher_pageOthers
 			// 
 			this.tabLauncher_pageOthers.Controls.Add(this.panelLauncherOthers);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 266);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 264);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -1068,7 +1068,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 266);
+			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 264);
 			this.panelLauncherOthers.TabIndex = 7;
 			// 
 			// selectLauncherStdStream
@@ -1090,7 +1090,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherNote.Location = new System.Drawing.Point(126, 82);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(407, 161);
+			this.inputLauncherNote.Size = new System.Drawing.Size(407, 159);
 			this.inputLauncherNote.TabIndex = 4;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -1176,6 +1176,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupToolbar.TabIndex = 0;
 			this.groupToolbar.TabStop = false;
 			this.groupToolbar.Text = "☃";
+			// 
+			// commandToolbarScreens
+			// 
+			this.commandToolbarScreens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandToolbarScreens.Location = new System.Drawing.Point(193, 0);
+			this.commandToolbarScreens.Name = "commandToolbarScreens";
+			this.commandToolbarScreens.Size = new System.Drawing.Size(71, 23);
+			this.commandToolbarScreens.TabIndex = 22;
+			this.commandToolbarScreens.Text = ":setting/command/screens";
+			this.commandToolbarScreens.UseVisualStyleBackColor = true;
+			this.commandToolbarScreens.Click += new System.EventHandler(this.commandToolbarScreens_Click);
 			// 
 			// panel1
 			// 
@@ -1830,6 +1842,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems
 			// 
+			this.gridNoteItems.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
 			this.gridNoteItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridNoteItems_columnRemove,
@@ -2259,18 +2272,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// commandToolbarScreens
-			// 
-			this.commandToolbarScreens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandToolbarScreens.Location = new System.Drawing.Point(193, 0);
-			this.commandToolbarScreens.Name = "commandToolbarScreens";
-			this.commandToolbarScreens.Size = new System.Drawing.Size(71, 23);
-			this.commandToolbarScreens.TabIndex = 22;
-			this.commandToolbarScreens.Text = ":setting/command/screens";
-			this.commandToolbarScreens.UseVisualStyleBackColor = true;
-			this.commandToolbarScreens.Click += new System.EventHandler(this.commandToolbarScreens_Click);
 			// 
 			// SettingForm
 			// 
