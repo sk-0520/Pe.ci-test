@@ -11,6 +11,7 @@
 	/// </summary>
 	public static class Functions
 	{
+		/* 2015/02/05: 使ってない, 次にこれを見て気分が乗れば消す。
 		/// <summary>
 		/// 
 		/// </summary>
@@ -53,6 +54,7 @@
 
 			return default(T);
 		}
+		*/
 
 		/// <summary>
 		/// min &lt;= value &lt;= max
