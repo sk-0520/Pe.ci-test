@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain
+﻿namespace ContentTypeTextNet.Pe.PeMain
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Configuration;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
+
 	/// <summary>
 	/// 各種定数
 	/// 
@@ -510,9 +509,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 	public static class AppLanguageName
 	{
 		public const string application   = "APPLICATION";
-		public const string versionNumber = "VER-NUMBER";
-		public const string versionHash   = "VER-HASH";
-		public const string versionFull   = "VER-FULL";
+		public const string versionFull   = "VER";
+		public const string versionNumber = "VER:NUMBER";
+		public const string versionHash   = "VER:HASH";
+		public const string versionNumberOld = "VER-NUMBER";
+		public const string versionHashOld = "VER-HASH";
+		public const string versionFullOld = "VER-FULL";
 		
 		public const string timestamp      = "TIMESTAMP";
 		public const string year           = "Y";
