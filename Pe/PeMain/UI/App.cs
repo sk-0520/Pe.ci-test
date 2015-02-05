@@ -194,16 +194,17 @@
 				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
 			}).ContinueWith(t => {
-				var clipboardItem = new ClipboardItem();
-				if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
-					//this._clipboardPrevTime = DateTime.Now;
-					try {
-						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-						clipboardItem.Name = displayText;
+				if(!this._commonData.MainSetting.Clipboard.DisabledCopy) {
+					var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes);
+					if(clipboardItem != null) {
+						try {
+							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+							clipboardItem.Name = displayText;
 
-						this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
-					} catch(Exception ex) {
-						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+						} catch(Exception ex) {
+							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+						}
 					}
 				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
