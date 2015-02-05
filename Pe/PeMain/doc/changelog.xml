@@ -59,7 +59,7 @@
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>テンプレートの置き換え書式 VER-* が#198により書式が変わりました。#199により少しの間サポートされます</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -82,8 +82,19 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
+			<note rev="c7499cc0c72f442a61faee79447d3d346ffc38dd">
+				<message>#196: クリップボード/テンプレートウィンドウがリサイズできない</message>
+			</note>
+			<note rev="0e92137eaf4d0c9722584c5e712e3da3fab3d2d5">
+				<message>#195: 非インターネット接続環境だと毎回アップデートチェックに失敗するのにログが出てウザい</message>
+			</note>
+			<note rev="7aa5eb0dec14806a6a82d51ed83d9ea1b1d4287e">
+				<message>#198: テンプレートのバージョン書式を他の項目に合わせる</message>
+				<comments>
+					<comment>VER-FULL -&gt; VER</comment>
+					<comment>VER-NUMBER -&gt; VER:NUMBER</comment>
+					<comment>VER-HASH -&gt; VER:HASH</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

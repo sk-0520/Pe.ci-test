@@ -9,6 +9,7 @@
 	using System.Globalization;
 	using System.IO;
 	using System.Linq;
+	using System.Net.NetworkInformation;
 	using System.Text;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -1569,11 +1570,21 @@
 		{
 #if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
-				this._commonData.Logger.PutsDebug("update: check", () => "wait");
-				Thread.Sleep(Literal.updateWaitTime);
-				return CheckUpdate(false);
+				// ネットワーク接続可能か？
+				var nic = NetworkInterface.GetIsNetworkAvailable();
+				if(nic) {
+					this._commonData.Logger.PutsDebug("update: check", () => "wait");
+					Thread.Sleep(Literal.updateWaitTime);
+					return CheckUpdate(false);
+				} else {
+					return null;
+				}
 			}).ContinueWith(t => {
-				ConfirmUpdate(false, t.Result);
+				if(t.Result != null) {
+					ConfirmUpdate(false, t.Result);
+				} else {
+					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check-stop"], this._commonData.Language["log/update/nic"]);
+				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 #else
 			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
