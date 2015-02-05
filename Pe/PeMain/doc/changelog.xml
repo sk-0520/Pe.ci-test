@@ -102,8 +102,11 @@
 					<comment>難しい、開発機だと再現できん。ロジックは少し変えたけど再発したらまた考える</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
+			<note rev="379ef83c9b645ce8e9e017f5a4d087fa3115d533">
+				<message>#171: SystemSkinのでっかいリソース</message>
+				<comments>
+					<comment>PeMainに組み込んでいたSystemSkinをリソースと供にDLL化した</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
