@@ -69,7 +69,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// <summary>
 	/// 解放が必要な名前月アイテム
 	/// </summary>
-	public abstract class DisposableNameItem: DisposableItem, INameItem, IDisposable
+	public abstract class DisposableNameItem: DisposableItem, INameItem
 	{
 		/// <summary>
 		/// 名前

@@ -42,6 +42,7 @@
 	public class DisableCloseToolStripSeparator: ExToolStripSeparator
 	{
 		public DisableCloseToolStripSeparator()
+			: base()
 		{
 			// http://blogs.wankuma.com/youryella/archive/2007/08/19/91000.aspx
 			Enabled = false;
