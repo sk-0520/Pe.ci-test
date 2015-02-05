@@ -1,5 +1,6 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System.Linq;
 	using System.Collections.Generic;
 	using System.Windows.Forms;
 
@@ -33,6 +34,7 @@
 		}
 	}
 
+
 	public class DialogFilterValueItem<T>: DialogFilterItem
 	{
 		public DialogFilterValueItem(T value)
@@ -54,6 +56,25 @@
 
 		public T Value { get; set; }
 	}
+
+	/// <summary>
+	/// ファイルダイアログのフィルタ。
+	/// </summary>
+	public class DialogFilter
+	{
+		public DialogFilter()
+		{
+			Items = new List<DialogFilterItem>();
+		}
+
+		public List<DialogFilterItem> Items { get; private set; }
+
+		public override string ToString()
+		{
+			return string.Join("|", Items.Select(i => i.ToString()));
+		}
+	}
+
 
 	public static class DialogFilterUtility
 	{
