@@ -109,9 +109,14 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			var nowDateTime = DateTime.Now;
 			var systemMap = new Dictionary<string, string>() {
 				{ AppLanguageName.application,    Literal.programName },
+				{ AppLanguageName.versionFull,    Literal.ApplicationVersion },
+				{ AppLanguageName.versionNumber,  Literal.Version.FileVersion },
+				{ AppLanguageName.versionHash,    Application.ProductVersion },
+				//　#199
 				{ AppLanguageName.versionNumberOld,  Literal.Version.FileVersion },
 				{ AppLanguageName.versionHashOld,    Application.ProductVersion },
 				{ AppLanguageName.versionFullOld,    Literal.ApplicationVersion },
+
 				{ AppLanguageName.timestamp,      nowDateTime.ToString() },
 				{ AppLanguageName.year,           nowDateTime.Year.ToString() },
 				{ AppLanguageName.year04,         nowDateTime.Year.ToString("D4") },

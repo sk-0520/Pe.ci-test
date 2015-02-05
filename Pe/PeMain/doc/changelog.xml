@@ -89,6 +89,17 @@
 				<message>#195: 非インターネット接続環境だと毎回アップデートチェックに失敗するのにログが出てウザい</message>
 			</note>
 			<note rev="">
+				<message>#198: テンプレートのバージョン書式を他の項目に合わせる</message>
+				<comments>
+					<comment>VER-FULL -&gt; VER</comment>
+					<comment>VER-NUMBER -&gt; VER:NUMBER</comment>
+					<comment>VER-HASH -&gt; VER:HASH</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
