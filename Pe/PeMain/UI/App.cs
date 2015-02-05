@@ -476,7 +476,6 @@
 		{
 			var accept = this._commonData.MainSetting.RunningInfo.Running;
 			if(!accept) {
-				// TODO: ここから
 				var dialog = new AcceptForm();
 				dialog.SetCommonData(this._commonData);
 				accept = dialog.ShowDialog() == DialogResult.OK;

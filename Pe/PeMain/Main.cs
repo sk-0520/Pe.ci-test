@@ -6,7 +6,7 @@
 	public static class Startup
 	{
 		/// <summary>
-		/// TODO: ちょっと分けたい^^;
+		/// 
 		/// </summary>
 		/// <param name="args"></param>
 		[STAThread]
