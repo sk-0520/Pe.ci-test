@@ -85,7 +85,7 @@
 			<note rev="c7499cc0c72f442a61faee79447d3d346ffc38dd">
 				<message>#196: クリップボード/テンプレートウィンドウがリサイズできない</message>
 			</note>
-			<note rev="">
+			<note rev="0e92137eaf4d0c9722584c5e712e3da3fab3d2d5">
 				<message>#195: 非インターネット接続環境だと毎回アップデートチェックに失敗するのにログが出てウザい</message>
 			</note>
 			<note rev="">
