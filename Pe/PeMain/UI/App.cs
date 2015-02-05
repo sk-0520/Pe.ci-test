@@ -309,6 +309,7 @@
 		}
 
 		#endregion ------------------------------------------
+
 		#endregion //////////////////////////////////////////
 
 		#region initilize
@@ -328,14 +329,7 @@
 			if(string.IsNullOrEmpty(langName)) {
 				langName = CultureInfo.CurrentCulture.Name;
 			}
-			/*
-			var languageFileName = string.Format("{0}.xml", langName);
-			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, languageFileName);
-			if(logger != null) {
-				logger.Puts(LogType.Information, "load language", languageFilePath);
-			}
-			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
-			*/
+
 			var languageFilePath = getLangPath(langName);
 			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
 
@@ -626,10 +620,11 @@
 		{
 			var menuList = new List<ToolStripItem>();
 			foreach(var applicationItem in this._commonData.ApplicationSetting.Items) {
-				var launcherItem = new LauncherItem();
-				launcherItem.Name = applicationItem.Name;
-				launcherItem.Command = applicationItem.Name;
-				launcherItem.LauncherType = LauncherType.Embedded;
+				var launcherItem = new LauncherItem() {
+					Name = applicationItem.Name,
+					Command = applicationItem.Name,
+					LauncherType = LauncherType.Embedded,
+				};
 
 				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting, this._commonData.Logger);
 #if DEBUG
@@ -657,32 +652,34 @@
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemSave = new ToolStripMenuItem();
-			var itemLoad = new ToolStripMenuItem();
-			//var itemSeparator = new DisableCloseToolStripSeparator();
-			menuList.Add(itemSave);
-			menuList.Add(itemLoad);
-			//menuList.Add(itemSeparator);
-
 			// 保存
-			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = this._commonData.Skin.GetImage(SkinImage.WindowSave);
+			var itemSave = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvWindowSave,
+				Image = this._commonData.Skin.GetImage(SkinImage.WindowSave)
+			};
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
 			};
 
+			// 読み込み
+			var itemLoad = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvWindowLoad,
+				Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad),
+			};
 			// 読込
-			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad);
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
 			};
 
+			var menuList = new[] {
+				itemSave,
+				itemLoad,
+			};
+
 			// サブメニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownItems.AddRange(menuList);
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.WindowList);
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
@@ -693,44 +690,48 @@
 
 		void AttachmentSystemEnvSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemHiddenFile = new ToolStripMenuItem();
-			var itemExtension = new ToolStripMenuItem();
-			var itemWindow = new ToolStripMenuItem();
-			var itemClipboard = new ToolStripMenuItem();
-			menuList.Add(itemHiddenFile);
-			menuList.Add(itemExtension);
-			menuList.Add(itemWindow);
-			menuList.Add(itemClipboard);
-
 			// 隠しファイル
-			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
+			var itemHiddenFile = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvHiddenFile,
+			};
 			itemHiddenFile.Click += (object sender, EventArgs e) => {
 				SystemEnvironment.SetHiddenFileShow(!SystemEnvironment.IsHiddenFileShow());
 				SystemEnvironment.RefreshShell();
 			};
 
 			// 拡張子
-			itemExtension.Name = menuNameSystemEnvExtension;
+			var itemExtension = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvExtension,
+			};
 			itemExtension.Click += (object sender, EventArgs e) => {
 				SystemEnvironment.SetExtensionShow(!SystemEnvironment.IsExtensionShow());
 				SystemEnvironment.RefreshShell();
 			};
 
 			// ウィンドウ
-			itemWindow.Name = menuNameSystemEnvWindow;
+			var itemWindow = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvWindow,
+			};
 			AttachmentSystemEnvWindowSubMenu(itemWindow);
 
 			// クリップボード
-			itemClipboard.Name = menuNameSystemEnvClipboard;
-			itemClipboard.Image = this._commonData.Skin.GetImage(SkinImage.Clipboard);
-			
+			var itemClipboard = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvClipboard,
+				Image = this._commonData.Skin.GetImage(SkinImage.Clipboard),
+			};
 			itemClipboard.Click += (object sender, EventArgs e) => {
 				SwitchShowClipboard();
 			};
 
+			var menuList = new [] {
+				itemHiddenFile,
+				itemExtension,
+				itemWindow,
+				itemClipboard,
+			};
+
 			// サブメニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownItems.AddRange(menuList);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
