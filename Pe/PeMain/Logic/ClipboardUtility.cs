@@ -10,6 +10,7 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
@@ -100,7 +101,7 @@
 				try {
 					map[key](value);
 				} catch(Exception ex) {
-					logger.Puts(LogType.Warning, ex.Message, ex);
+					logger.Puts(LogType.Warning, ex.Message, new MessageException(key, ex));
 				}
 			}
 			//

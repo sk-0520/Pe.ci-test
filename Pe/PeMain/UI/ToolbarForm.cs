@@ -589,7 +589,7 @@
 				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 				Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
 			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, new MessageException(launcherItem.Name, ex));
 			}
 		}
 
@@ -599,7 +599,7 @@
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
 				Executor.OpenDirectory(expandPath, CommonData, null);
 			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, new MessageException(path, ex));
 			}
 		}
 		
@@ -1132,8 +1132,8 @@
 				try {
 					Executor.RunCommand(applicationItem.HelpPath, CommonData);
 				} catch(Exception ex) {
-					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, applicationItem.HelpPath);
+					var message = string.Format("{0} - {1} - {2}", launcherItem.Name, launcherItem.Command, applicationItem.HelpPath);
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, new MessageException(message, ex));
 				}
 			};
 
