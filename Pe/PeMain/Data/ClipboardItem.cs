@@ -39,6 +39,11 @@
 
 		#endregion
 
+		private IEnumerable<ClipboardType> GetEnabledClipboardTypeList(IEnumerable<ClipboardType> list)
+		{
+			return list.Where(t => ClipboardTypes.HasFlag(t));
+		}
+
 		public IEnumerable<ClipboardType> GetClipboardTypeList()
 		{
 			Debug.Assert(ClipboardTypes != ClipboardType.None);
@@ -50,11 +55,14 @@
 				ClipboardType.Image,
 				ClipboardType.File,
 			};
+			/*
 			foreach(var type in list) {
 				if((ClipboardTypes & type) == type) {
 					yield return type;
 				}
 			}
+			*/
+			return GetEnabledClipboardTypeList(list);
 		}
 
 		public ClipboardType GetSingleClipboardType()
@@ -66,14 +74,14 @@
 				ClipboardType.Text,
 				ClipboardType.Image,
 			};
+			/*
 			foreach(var type in list) {
 				if((ClipboardTypes & type) == type) {
 					return type;
 				}
 			}
-
-			Debug.Assert(false, ClipboardTypes.ToString());
-			throw new NotImplementedException();
+			*/
+			return GetEnabledClipboardTypeList(list).First();
 		}
 	}
 }
