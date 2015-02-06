@@ -83,7 +83,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandOk.Location = new System.Drawing.Point(523, 227);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(101, 31);
-			this.commandOk.TabIndex = 7;
+			this.commandOk.TabIndex = 8;
 			this.commandOk.Text = "{OK}";
 			this.commandOk.UseVisualStyleBackColor = true;
 			this.commandOk.Click += new System.EventHandler(this.CommandOk_Click);
@@ -146,7 +146,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandExecuteDir.Location = new System.Drawing.Point(523, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
 			this.commandExecuteDir.Size = new System.Drawing.Size(101, 27);
-			this.commandExecuteDir.TabIndex = 2;
+			this.commandExecuteDir.TabIndex = 4;
 			this.commandExecuteDir.Text = ":about/command/execute";
 			this.commandExecuteDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandExecuteDir.UseVisualStyleBackColor = true;
@@ -160,7 +160,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandDataDir.Location = new System.Drawing.Point(523, 44);
 			this.commandDataDir.Name = "commandDataDir";
 			this.commandDataDir.Size = new System.Drawing.Size(101, 27);
-			this.commandDataDir.TabIndex = 3;
+			this.commandDataDir.TabIndex = 5;
 			this.commandDataDir.Text = ":about/command/data";
 			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandDataDir.UseVisualStyleBackColor = true;
@@ -196,7 +196,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandUpdate.Location = new System.Drawing.Point(523, 170);
 			this.commandUpdate.Name = "commandUpdate";
 			this.commandUpdate.Size = new System.Drawing.Size(101, 27);
-			this.commandUpdate.TabIndex = 6;
+			this.commandUpdate.TabIndex = 7;
 			this.commandUpdate.Text = ":about/command/update";
 			this.commandUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandUpdate.UseVisualStyleBackColor = true;
@@ -217,7 +217,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridComponents.ReadOnly = true;
 			this.gridComponents.RowTemplate.Height = 21;
 			this.gridComponents.Size = new System.Drawing.Size(505, 121);
-			this.gridComponents.TabIndex = 1;
+			this.gridComponents.TabIndex = 3;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
 			// 
 			// gridComponents_columnName
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandChangelog.Location = new System.Drawing.Point(523, 137);
 			this.commandChangelog.Name = "commandChangelog";
 			this.commandChangelog.Size = new System.Drawing.Size(101, 27);
-			this.commandChangelog.TabIndex = 5;
+			this.commandChangelog.TabIndex = 6;
 			this.commandChangelog.Text = ":about/command/changelog";
 			this.commandChangelog.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.commandChangelog.UseVisualStyleBackColor = true;
@@ -277,7 +277,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(161, 91);
-			this.tableLayoutPanel1.TabIndex = 10;
+			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// linkDiscussion
 			// 
@@ -303,7 +303,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelWeb.Location = new System.Drawing.Point(179, 12);
 			this.panelWeb.Name = "panelWeb";
 			this.panelWeb.Size = new System.Drawing.Size(338, 91);
-			this.panelWeb.TabIndex = 0;
+			this.panelWeb.TabIndex = 1;
 			// 
 			// panelEnv
 			// 
@@ -313,7 +313,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelEnv.Location = new System.Drawing.Point(12, 109);
 			this.panelEnv.Name = "panelEnv";
 			this.panelEnv.Size = new System.Drawing.Size(505, 22);
-			this.panelEnv.TabIndex = 11;
+			this.panelEnv.TabIndex = 2;
 			// 
 			// labelUserenv
 			// 
