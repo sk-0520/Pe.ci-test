@@ -227,7 +227,7 @@
 			return code;
 		}
 
-#region IDisposable
+		#region IDisposable
 
 		protected virtual void Dispose(bool disposing)
 		{
@@ -242,6 +242,6 @@
 			Dispose(true);
 		}
 
-#endregion
+		#endregion
 	}
 }

@@ -10,6 +10,7 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
@@ -100,7 +101,7 @@
 				try {
 					map[key](value);
 				} catch(Exception ex) {
-					logger.Puts(LogType.Warning, ex.Message, ex);
+					logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(key, ex));
 				}
 			}
 			//
@@ -120,6 +121,57 @@
 			ClipboardHtmlDataItem temp;
 			TryConvertHtmlFromClipbordHtml(clipboardHtml, out temp, logger);
 			return temp;
+		}
+
+		/// <summary>
+		/// 現在のクリップボードからクリップボードアイテムを生成する。
+		/// </summary>
+		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
+		/// <returns>生成されたクリップボードアイテム。生成可能な種別がなければnullを返す。</returns>
+		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes)
+		{
+			var clipboardItem = new ClipboardItem();
+
+			if(enabledTypes.HasFlag(ClipboardType.Text)) {
+				if(Clipboard.ContainsText(TextDataFormat.UnicodeText)) {
+					clipboardItem.Text = Clipboard.GetText(TextDataFormat.UnicodeText);
+					clipboardItem.ClipboardTypes |= ClipboardType.Text;
+				} else if(Clipboard.ContainsText(TextDataFormat.Text)) {
+					clipboardItem.Text = Clipboard.GetText(TextDataFormat.Text);
+					clipboardItem.ClipboardTypes |= ClipboardType.Text;
+				}
+			}
+
+			if(enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf)) {
+				clipboardItem.Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+				clipboardItem.ClipboardTypes |= ClipboardType.Rtf;
+			}
+
+			if(enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html)) {
+				clipboardItem.Html = Clipboard.GetText(TextDataFormat.Html);
+				clipboardItem.ClipboardTypes |= ClipboardType.Html;
+			}
+
+			if(enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage()) {
+				clipboardItem.Image = Clipboard.GetImage();
+				if(clipboardItem.Image != null) {
+					clipboardItem.ClipboardTypes |= ClipboardType.Image;
+				}
+			}
+
+			if(enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList()) {
+				var files = Clipboard.GetFileDropList().Cast<string>();
+				clipboardItem.Files = files;
+				clipboardItem.Text = string.Join(Environment.NewLine, files);
+				clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
+			}
+
+			if(clipboardItem.ClipboardTypes == ClipboardType.None) {
+				clipboardItem.Dispose();
+				return null;
+			}
+
+			return clipboardItem;
 		}
 	}
 }

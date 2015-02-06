@@ -58,8 +58,8 @@
 	
 	<xsl:template match="log/group/note/message">
 		<xsl:choose>
-			<xsl:when test="../@class != ''">
-				<li class="{../@class}">
+			<xsl:when test="@class != ''">
+				<li class="{@class}">
 					<xsl:value-of select="." />。
 					<xsl:if test="../@rev != ''">
 						<a class="rev"><xsl:value-of select="../@rev" /></a>

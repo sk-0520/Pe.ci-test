@@ -130,7 +130,7 @@
 			var defaultItemList = new List<LauncherItem>();
 			var itemElements = xml.Elements("items").Elements("LauncherItem");
 			foreach(var itemElement in itemElements) {
-				var item = Serializer.LoadString<LauncherItem>(itemElement.ToString());
+				var item = Serializer.LoadXMLString<LauncherItem>(itemElement.ToString());
 				var isAdd = false;
 				// データの補正
 				if(item.LauncherType.IsIn(LauncherType.File, LauncherType.Directory)) {
@@ -184,11 +184,11 @@
 			var userItemList = new List<LauncherItem>(mergeFiles.Count());
 			foreach(var mergeFile in mergeFiles) {
 				try {
-					var item = LauncherItem.LoadFile(mergeFile, false);
+					var item = LauncherItemUtility.LoadFile(mergeFile, false);
 					userItemList.Add(item);
 				} catch(Exception ex) {
 					// #68 暫定回避
-					this._logList.Add(new LogItem(LogType.Warning, string.Format("{0}: {1}", ex.Message, mergeFile), ex));
+					this._logList.Add(new LogItem(LogType.Warning, ex.Message, new ExceptionMessage(mergeFile, ex)));
 				}
 			}
 

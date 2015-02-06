@@ -8,6 +8,7 @@
 	using System.Linq;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
@@ -19,6 +20,9 @@
 
 	/// <summary>
 	/// 設定。
+	/// 
+	/// 一気にUIへ設定して一気にUIから取得する気分だったけど完全に設計ミスだわ。
+	/// バインドするなりしておけばよかった。
 	/// </summary>
 	public partial class SettingForm: AppForm
 	{
@@ -210,7 +214,7 @@
 				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
 				.Select(
 					f => new {
-						Language = Serializer.LoadFile<Language>(f, false),
+						Language = Serializer.LoadXmlFile<Language>(f, false),
 						BaseName = Path.GetFileNameWithoutExtension(f),
 					}
 				)
@@ -1340,7 +1344,7 @@
 		{
 			var path = filePath;
 			var useShortcut = false;
-			// TODO: 処理重複
+			// TODO: 処理重複 -> ToolbarForm.ExecuteDropData
 			if(PathUtility.IsShortcutPath(filePath)) {
 				var result = MessageBox.Show(Language["common/dialog/d-d/shortcut/message"], Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 				switch(result) {
@@ -1362,8 +1366,8 @@
 						return;
 				}
 			}
-			var item = LauncherItem.LoadFile(path, useShortcut);
-			var uniqueName = LauncherItem.GetUniqueName(item, this.selecterLauncher.Items);
+			var item = LauncherItemUtility.LoadFile(path, useShortcut);
+			var uniqueName = LauncherItemUtility.GetUniqueName(item, this.selecterLauncher.Items);
 			item.Name = uniqueName;
 			this.selecterLauncher.AddItem(item);
 		}

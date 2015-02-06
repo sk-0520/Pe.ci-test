@@ -129,9 +129,15 @@
 
 			#region IDisposable
 
-			public void Dispose()
+			protected void Dispose(bool disposing)
 			{
 				Rollback();
+			}
+
+			public void Dispose()
+			{
+				Dispose(true);
+				GC.SuppressFinalize(this);
 			}
 
 			#endregion

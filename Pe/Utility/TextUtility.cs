@@ -88,6 +88,12 @@
 			return src.ReplaceRange(head, tail, s => map.ContainsKey(s) ? map[s]: head + s + tail);
 		}
 
+		/// <summary>
+		/// 文字列を連想配列のキーから値に変換する。
+		/// </summary>
+		/// <param name="src"></param>
+		/// <param name="map"></param>
+		/// <returns></returns>
 		public static string ReplaceFromDictionary(this string src, IDictionary<string, string> map)
 		{
 			var result = src;
@@ -126,8 +132,8 @@
 		/// <summary>
 		/// 文字列を改行で区切る。
 		/// </summary>
-		/// <param name="lines"></param>
-		/// <returns></returns>
+		/// <param name="lines">何らかの文字列</param>
+		/// <returns>改行を含めない各行。</returns>
 		public static IEnumerable<string> SplitLines(this string lines)
 		{
 			using(var stream = new StringReader(lines)) {

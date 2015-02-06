@@ -19,7 +19,7 @@
 
 		public void SetLanguage(Language lang)
 		{
-			Comment = lang["app/language/name/" + Name];
+			Comment = lang["template/replace/name/" + Name];
 		}
 
 		#endregion

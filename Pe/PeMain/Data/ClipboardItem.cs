@@ -17,15 +17,37 @@
 		public ClipboardItem()
 		{
 			Timestamp = DateTime.Now;
+			ClipboardTypes = ClipboardType.None;
 		}
 
+		/// <summary>
+		/// 取り込み日時
+		/// </summary>
 		public DateTime Timestamp { get; set; }
 
+		/// <summary>
+		/// このアイテムが保持するクリップボードの種類。
+		/// </summary>
 		public ClipboardType ClipboardTypes { get; set; }
+		/// <summary>
+		/// 保持するプレーンテキスト。
+		/// </summary>
 		public string Text { get; set; }
+		/// <summary>
+		/// 保持するRTF。
+		/// </summary>
 		public string Rtf { get; set; }
+		/// <summary>
+		/// 保持するクリップボードとして認識可能なHTML。
+		/// </summary>
 		public string Html { get; set; }
+		/// <summary>
+		/// 保持する画像。
+		/// </summary>
 		public Image Image { get; set; }
+		/// <summary>
+		/// 保持するファイル一覧。
+		/// </summary>
 		public IEnumerable<string> Files { get; set; }
 
 		#region DisposableNameItem
@@ -38,50 +60,15 @@
 
 		#endregion
 
-		public bool SetClipboardData(ClipboardType enabledTypes)
+		private IEnumerable<ClipboardType> GetEnabledClipboardTypeList(IEnumerable<ClipboardType> list)
 		{
-			var isPlainText = enabledTypes.HasFlag(ClipboardType.Text) && Clipboard.ContainsText(TextDataFormat.Text);
-			var isUnicodeText = enabledTypes.HasFlag(ClipboardType.Text) && Clipboard.ContainsText(TextDataFormat.UnicodeText);
-			var isRtf = enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf);
-			var isHtml = enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html);
-			var isImage = enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage();
-			var isFile = enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList();
-
-			ClipboardTypes = ClipboardType.None;
-			if(!isUnicodeText && !isPlainText && !isRtf && !isHtml && !isImage && !isFile) {
-				return false;
-			}
-
-			if(isUnicodeText || isPlainText) {
-				if(isUnicodeText) {
-					Text = Clipboard.GetText(TextDataFormat.UnicodeText);
-				} else {
-					Text = Clipboard.GetText(TextDataFormat.Text);
-				}
-				ClipboardTypes |= ClipboardType.Text;
-			}
-			if(isRtf) {
-				Rtf = Clipboard.GetText(TextDataFormat.Rtf);
-				ClipboardTypes |= ClipboardType.Rtf;
-			}
-			if(isHtml) {
-				Html = Clipboard.GetText(TextDataFormat.Html);
-				ClipboardTypes |= ClipboardType.Html;
-			}
-			if(isImage) {
-				Image = Clipboard.GetImage();
-				ClipboardTypes |= ClipboardType.Image;
-			}
-			if(isFile) {
-				var files = Clipboard.GetFileDropList().Cast<string>();
-				Files = files;
-				Text = string.Join(Environment.NewLine, files);
-				ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
-			}
-
-			return true;
+			return list.Where(t => ClipboardTypes.HasFlag(t));
 		}
 
+		/// <summary>
+		/// このアイテムが保持する有効なデータ種別を列挙する。
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerable<ClipboardType> GetClipboardTypeList()
 		{
 			Debug.Assert(ClipboardTypes != ClipboardType.None);
@@ -93,13 +80,20 @@
 				ClipboardType.Image,
 				ClipboardType.File,
 			};
+			/*
 			foreach(var type in list) {
 				if((ClipboardTypes & type) == type) {
 					yield return type;
 				}
 			}
+			*/
+			return GetEnabledClipboardTypeList(list);
 		}
 
+		/// <summary>
+		/// このアイテムが保持するデータ種別のうち一番優先されるものを取得。
+		/// </summary>
+		/// <returns></returns>
 		public ClipboardType GetSingleClipboardType()
 		{
 			var list = new[] {
@@ -109,14 +103,14 @@
 				ClipboardType.Text,
 				ClipboardType.Image,
 			};
+			/*
 			foreach(var type in list) {
 				if((ClipboardTypes & type) == type) {
 					return type;
 				}
 			}
-
-			Debug.Assert(false, ClipboardTypes.ToString());
-			throw new NotImplementedException();
+			*/
+			return GetEnabledClipboardTypeList(list).First();
 		}
 	}
 }

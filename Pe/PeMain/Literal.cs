@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-
-using ContentTypeTextNet.Pe.Library.Utility;
-
-namespace ContentTypeTextNet.Pe.PeMain
+﻿namespace ContentTypeTextNet.Pe.PeMain
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Configuration;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.IO;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Utility;
+
 	/// <summary>
 	/// 各種定数
 	/// 
@@ -510,9 +509,12 @@ namespace ContentTypeTextNet.Pe.PeMain
 	public static class AppLanguageName
 	{
 		public const string application   = "APPLICATION";
-		public const string versionNumber = "VER-NUMBER";
-		public const string versionHash   = "VER-HASH";
-		public const string versionFull   = "VER-FULL";
+		public const string versionFull   = "VER";
+		public const string versionNumber = "VER:NUMBER";
+		public const string versionHash   = "VER:HASH";
+		public const string versionNumberOld = "VER-NUMBER";
+		public const string versionHashOld = "VER-HASH";
+		public const string versionFullOld = "VER-FULL";
 		
 		public const string timestamp      = "TIMESTAMP";
 		public const string year           = "Y";
@@ -581,6 +583,27 @@ namespace ContentTypeTextNet.Pe.PeMain
 
 		public const string clipboardPrevTime = "TIME";
 		public const string screen = "SCREEN";
+	}
+
+	/// <summary>
+	/// テンプレート専用で切り替える置き換え文字列。
+	/// </summary>
+	public static class TemplateLanguageName
+	{
+		public static string clipboard = "CLIP";
+		public static string clipboardNobreak = "CLIP:NOBREAK";
+		public static string clipboardHead = "CLIP:HEAD";
+		public static string clipboardTail = "CLIP:TAIL";
+
+		public static IReadOnlyList<string> GetMembersList()
+		{
+			return new[] {
+				clipboard,
+				clipboardNobreak,
+				clipboardHead,
+				clipboardTail,
+			};
+		}
 	}
 
 	

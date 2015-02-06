@@ -27,6 +27,6 @@
 		/// <summary>
 		/// デバッグ。
 		/// </summary>
-		Debug
+		Debug = 0x08,
 	}
 }

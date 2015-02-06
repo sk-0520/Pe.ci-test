@@ -6,7 +6,7 @@
     <ProjectGuid>{32DC6631-7F75-4709-81F1-1ACD8C6ED8A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DodSkin</RootNamespace>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.Skin.DodSkin</RootNamespace>
     <AssemblyName>DodSkin</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

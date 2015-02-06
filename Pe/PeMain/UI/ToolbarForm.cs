@@ -475,8 +475,8 @@
 		{
 			var floatSize = UsingToolbarItem.FloatSize;
 			Padding = CommonData.Skin.GetToolbarTotalPadding(UsingToolbarItem.ToolbarPosition, Size);
-			
-			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
+
+			var buttonLayout = CommonData.Skin.GetToolbarButtonLayout(UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, new Tuple<int, int, int>(Literal.toolbarTextWidth.minimum, UsingToolbarItem.TextWidth, Literal.toolbarTextWidth.maximum));
 			var edgeSize = CommonData.Skin.GetToolbarWindowEdgePadding(UsingToolbarItem.ToolbarPosition);
 			var borderPadding = CommonData.Skin.GetToolbarBorderPadding(UsingToolbarItem.ToolbarPosition);
 			this.toolLauncher.Padding = borderPadding;
@@ -589,7 +589,7 @@
 				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
 				Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
 			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(launcherItem.Name, ex));
 			}
 		}
 
@@ -599,7 +599,7 @@
 				var expandPath = Environment.ExpandEnvironmentVariables(path);
 				Executor.OpenDirectory(expandPath, CommonData, null);
 			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				CommonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(path, ex));
 			}
 		}
 		
@@ -1132,8 +1132,8 @@
 				try {
 					Executor.RunCommand(applicationItem.HelpPath, CommonData);
 				} catch(Exception ex) {
-					var message = string.Format("{0} - {1}", launcherItem.Name, launcherItem.Command);
-					CommonData.Logger.Puts(LogType.Warning, ex.Message, applicationItem.HelpPath);
+					var message = string.Format("{0} - {1} - {2}", launcherItem.Name, launcherItem.Command, applicationItem.HelpPath);
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(message, ex));
 				}
 			};
 
@@ -1157,7 +1157,7 @@
 		static void SetButtonLayout(ToolStripItem toolItem, ISkin skin, IconScale iconSize, bool showText, int textWidth)
 		{
 			var toolSplit = toolItem as ToolStripSplitButton;
-			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, textWidth);
+			var buttonLayout = skin.GetToolbarButtonLayout(iconSize, showText, new Tuple<int, int, int>(Literal.toolbarTextWidth.minimum, textWidth, Literal.toolbarTextWidth.maximum));
 			
 			toolItem.Margin = Padding.Empty;
 			toolItem.Padding = Padding.Empty;
@@ -1499,8 +1499,8 @@
 							return;
 					}
 				}
-				var item = LauncherItem.LoadFile(path, useShortcut, forceLauncherType, forceType);
-				var name = LauncherItem.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
+				var item = LauncherItemUtility.LoadFile(path, useShortcut, forceLauncherType, forceType);
+				var name = LauncherItemUtility.GetUniqueName(item, CommonData.MainSetting.Launcher.Items);
 				var newItem = true;
 				if(item.Name != name) {
 					// D&Dアイテムが既に登録済みアイテム名と被った場合はただの複製を考慮する

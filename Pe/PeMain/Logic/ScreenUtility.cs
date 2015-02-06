@@ -58,28 +58,7 @@
 		public static string GetScreenName(Screen screen, ILogger logger)
 		{
 			Debug.Assert(logger != null);
-			/*
-			var id = new string(screen.DeviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
-			var query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
-			using(var searcher = new ManagementObjectSearcher(query)) {
-				foreach(ManagementObject mng in searcher.Get()) {
-					try {
-						var item = new Win32_DesktopMonitor();
-						item.Import(mng);
-						if(!string.IsNullOrWhiteSpace(item.Name)) {
-							return string.Format("{0}. {1}", id, item.Name);
-						}
-					} catch(Exception ex) {
-						if(logger != null) {
-							logger.Puts(LogType.Warning, ex.Message, ex);
-						} else {
-							Debug.WriteLine(ex);
-						}
-					}
-					break;
-				}
-			}
-			 */
+
 			foreach(var screem in GetScreens(screen.DeviceName, logger)) {
 				if(!string.IsNullOrWhiteSpace(screem.Name)) {
 					var id = NeviceToId(screen.DeviceName);

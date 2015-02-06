@@ -1,5 +1,6 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Skin
 {
+	using System;
 	using System.Drawing;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
@@ -41,7 +42,7 @@
 			if(Skin.IsDefaultDrawToolbarArrow || e.Item is ToolStripMenuItem) {
 				base.OnRenderArrow(e);
 			} else {
-				var buttonLayout = Skin.GetToolbarButtonLayout(ToolbarItem.IconScale, false, 0);
+				var buttonLayout = Skin.GetToolbarButtonLayout(ToolbarItem.IconScale, false, new Tuple<int, int, int>(0, 0, 0));
 				Skin.DrawToolbarArrow(e, buttonLayout.MenuWidth);
 			}
 		}
@@ -60,7 +61,7 @@
 			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarButtonText) {
 				base.OnRenderItemText(e);
 			} else {
-				Skin.DrawToolbarButtonText(e, IsActive(e.ToolStrip), ToolbarItem.IconScale, ToolbarItem.ShowText, ToolbarItem.TextWidth);
+				Skin.DrawToolbarButtonText(e, IsActive(e.ToolStrip), ToolbarItem.IconScale, ToolbarItem.ShowText, new Tuple<int, int, int>(Literal.toolbarTextWidth.minimum, ToolbarItem.TextWidth, Literal.toolbarTextWidth.maximum));
 			}
 		}
 		

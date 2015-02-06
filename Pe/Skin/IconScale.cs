@@ -25,16 +25,36 @@
 		Large = 256,
 	}
 
+	/// <summary>
+	/// IconScale共通処理。
+	/// </summary>
 	public static class IconScaleUtility
 	{
+		/// <summary>
+		/// 高さをpx単位で取得。
+		/// </summary>
+		/// <param name="iconScale"></param>
+		/// <returns></returns>
 		public static int ToHeight(this IconScale iconScale)
 		{
 			return (int)iconScale;
 		}
+
+		/// <summary>
+		/// 横幅をpx単位で取得。
+		/// </summary>
+		/// <param name="iconScale"></param>
+		/// <returns></returns>
 		public static int ToWidth(this IconScale iconScale)
 		{
 			return (int)iconScale;
 		}
+
+		/// <summary>
+		/// 縦横をpx範囲で取得。
+		/// </summary>
+		/// <param name="iconScale"></param>
+		/// <returns></returns>
 		public static Size ToSize(this IconScale iconScale)
 		{
 			var w = iconScale.ToWidth();

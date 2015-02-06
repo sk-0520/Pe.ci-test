@@ -9,6 +9,7 @@
 	using System.Globalization;
 	using System.IO;
 	using System.Linq;
+	using System.Net.NetworkInformation;
 	using System.Text;
 	using System.Threading;
 	using System.Threading.Tasks;
@@ -16,6 +17,7 @@
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.DB;
@@ -193,16 +195,17 @@
 				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
 			}).ContinueWith(t => {
-				var clipboardItem = new ClipboardItem();
-				if(!this._commonData.MainSetting.Clipboard.DisabledCopy && clipboardItem.SetClipboardData(this._commonData.MainSetting.Clipboard.EnabledTypes)) {
-					//this._clipboardPrevTime = DateTime.Now;
-					try {
-						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-						clipboardItem.Name = displayText;
+				if(!this._commonData.MainSetting.Clipboard.DisabledCopy) {
+					var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes);
+					if(clipboardItem != null) {
+						try {
+							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+							clipboardItem.Name = displayText;
 
-						this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
-					} catch(Exception ex) {
-						this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+						} catch(Exception ex) {
+							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+						}
 					}
 				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
@@ -307,6 +310,7 @@
 		}
 
 		#endregion ------------------------------------------
+
 		#endregion //////////////////////////////////////////
 
 		#region initilize
@@ -326,16 +330,9 @@
 			if(string.IsNullOrEmpty(langName)) {
 				langName = CultureInfo.CurrentCulture.Name;
 			}
-			/*
-			var languageFileName = string.Format("{0}.xml", langName);
-			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, languageFileName);
-			if(logger != null) {
-				logger.Puts(LogType.Information, "load language", languageFilePath);
-			}
-			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
-			*/
+
 			var languageFilePath = getLangPath(langName);
-			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
+			this._commonData.Language = Serializer.LoadXmlFile<Language>(languageFilePath, false);
 
 			if(this._commonData.Language == null) {
 				if(logger != null) {
@@ -344,7 +341,7 @@
 				// #110, デフォルトの言語ファイル名
 				langName = Literal.defaultLanguage;
 				languageFilePath = getLangPath(langName);
-				this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, true);
+				this._commonData.Language = Serializer.LoadXmlFile<Language>(languageFilePath, true);
 			}
 			this._commonData.Language.BaseName = langName;
 		}
@@ -367,7 +364,7 @@
 			if(commandLine.HasOption("accept") && commandLine.GetValue("accept") == "force") {
 				// 強制的に使用許諾を表示し、次回実行時も使用許諾を表示できるようデータ保存
 				this._commonData.MainSetting.RunningInfo.Running = false;
-				Serializer.SaveFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
+				Serializer.SaveXmlFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
 			}
 		}
 
@@ -469,7 +466,7 @@
 
 		void InitializeApplicationExecutor(CommandLine commandLine, ILogger logger)
 		{
-			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
+			this._commonData.ApplicationSetting = Serializer.LoadXmlFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
 		}
 		/// <summary>
 		/// Peを使用使用するかユーザーに問い合わせる。
@@ -480,7 +477,6 @@
 		{
 			var accept = this._commonData.MainSetting.RunningInfo.Running;
 			if(!accept) {
-				// TODO: ここから
 				var dialog = new AcceptForm();
 				dialog.SetCommonData(this._commonData);
 				accept = dialog.ShowDialog() == DialogResult.OK;
@@ -501,19 +497,19 @@
 			logger.Puts(LogType.Information, "load main-setting", mainSettingFilePath);
 
 			var existsSettingFilePath = File.Exists(mainSettingFilePath);
-			this._commonData.MainSetting = Serializer.LoadFile<MainSetting>(mainSettingFilePath, true);
+			this._commonData.MainSetting = Serializer.LoadXmlFile<MainSetting>(mainSettingFilePath, true);
 			this._commonData.MainSetting.CorrectionValue();
 
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
 			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
-			this._commonData.MainSetting.Launcher.Items = Serializer.LoadFile<HashSet<LauncherItem>>(launcherItemsFilePath, true);
+			this._commonData.MainSetting.Launcher.Items = Serializer.LoadXmlFile<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
 				item.CorrectionValue();
 			}
 
 			var templateItemsPath = Literal.UserTemplateItemsPath;
 			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
-			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadFile<EventList<TemplateItem>>(templateItemsPath, true);
+			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadXmlFile<EventList<TemplateItem>>(templateItemsPath, true);
 			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
 				item.CorrectionValue();
 			}
@@ -624,10 +620,11 @@
 		{
 			var menuList = new List<ToolStripItem>();
 			foreach(var applicationItem in this._commonData.ApplicationSetting.Items) {
-				var launcherItem = new LauncherItem();
-				launcherItem.Name = applicationItem.Name;
-				launcherItem.Command = applicationItem.Name;
-				launcherItem.LauncherType = LauncherType.Embedded;
+				var launcherItem = new LauncherItem() {
+					Name = applicationItem.Name,
+					Command = applicationItem.Name,
+					LauncherType = LauncherType.Embedded,
+				};
 
 				var icon = launcherItem.GetIcon(IconScale.Small, 0, this._commonData.ApplicationSetting, this._commonData.Logger);
 #if DEBUG
@@ -655,32 +652,34 @@
 
 		void AttachmentSystemEnvWindowSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemSave = new ToolStripMenuItem();
-			var itemLoad = new ToolStripMenuItem();
-			//var itemSeparator = new DisableCloseToolStripSeparator();
-			menuList.Add(itemSave);
-			menuList.Add(itemLoad);
-			//menuList.Add(itemSeparator);
-
 			// 保存
-			itemSave.Name = menuNameSystemEnvWindowSave;
-			itemSave.Image = this._commonData.Skin.GetImage(SkinImage.WindowSave);
+			var itemSave = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvWindowSave,
+				Image = this._commonData.Skin.GetImage(SkinImage.WindowSave)
+			};
 			itemSave.Click += (object sender, EventArgs e) => {
 				var windowListItem = GetWindowListItem(false);
 				this._tempWindowListItem = windowListItem;
 			};
 
+			// 読み込み
+			var itemLoad = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvWindowLoad,
+				Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad),
+			};
 			// 読込
-			itemLoad.Name = menuNameSystemEnvWindowLoad;
-			itemLoad.Image = this._commonData.Skin.GetImage(SkinImage.WindowLoad);
 			itemLoad.Click += (object sender, EventArgs e) => {
 				ChangeWindow(this._tempWindowListItem);
 				//this._tempWindowListItem = null;
 			};
 
+			var menuList = new[] {
+				itemSave,
+				itemLoad,
+			};
+
 			// サブメニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownItems.AddRange(menuList);
 			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.WindowList);
 			parentItem.DropDownOpened += (object sender, EventArgs e) => {
 				itemLoad.Enabled = this._tempWindowListItem != null;
@@ -691,44 +690,48 @@
 
 		void AttachmentSystemEnvSubMenu(ToolStripMenuItem parentItem)
 		{
-			var menuList = new List<ToolStripItem>();
-			var itemHiddenFile = new ToolStripMenuItem();
-			var itemExtension = new ToolStripMenuItem();
-			var itemWindow = new ToolStripMenuItem();
-			var itemClipboard = new ToolStripMenuItem();
-			menuList.Add(itemHiddenFile);
-			menuList.Add(itemExtension);
-			menuList.Add(itemWindow);
-			menuList.Add(itemClipboard);
-
 			// 隠しファイル
-			itemHiddenFile.Name = menuNameSystemEnvHiddenFile;
+			var itemHiddenFile = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvHiddenFile,
+			};
 			itemHiddenFile.Click += (object sender, EventArgs e) => {
 				SystemEnvironment.SetHiddenFileShow(!SystemEnvironment.IsHiddenFileShow());
 				SystemEnvironment.RefreshShell();
 			};
 
 			// 拡張子
-			itemExtension.Name = menuNameSystemEnvExtension;
+			var itemExtension = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvExtension,
+			};
 			itemExtension.Click += (object sender, EventArgs e) => {
 				SystemEnvironment.SetExtensionShow(!SystemEnvironment.IsExtensionShow());
 				SystemEnvironment.RefreshShell();
 			};
 
 			// ウィンドウ
-			itemWindow.Name = menuNameSystemEnvWindow;
+			var itemWindow = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvWindow,
+			};
 			AttachmentSystemEnvWindowSubMenu(itemWindow);
 
 			// クリップボード
-			itemClipboard.Name = menuNameSystemEnvClipboard;
-			itemClipboard.Image = this._commonData.Skin.GetImage(SkinImage.Clipboard);
-			
+			var itemClipboard = new ToolStripMenuItem() {
+				Name = menuNameSystemEnvClipboard,
+				Image = this._commonData.Skin.GetImage(SkinImage.Clipboard),
+			};
 			itemClipboard.Click += (object sender, EventArgs e) => {
 				SwitchShowClipboard();
 			};
 
+			var menuList = new [] {
+				itemHiddenFile,
+				itemExtension,
+				itemWindow,
+				itemClipboard,
+			};
+
 			// サブメニュー設定
-			parentItem.DropDownItems.AddRange(menuList.ToArray());
+			parentItem.DropDownItems.AddRange(menuList);
 
 			parentItem.DropDownOpening += (object sender, EventArgs e) => {
 				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
@@ -1569,11 +1572,21 @@
 		{
 #if !DISABLED_UPDATE_CHECK
 			Task.Factory.StartNew(() => {
-				this._commonData.Logger.PutsDebug("update: check", () => "wait");
-				Thread.Sleep(Literal.updateWaitTime);
-				return CheckUpdate(false);
+				// ネットワーク接続可能か？
+				var nic = NetworkInterface.GetIsNetworkAvailable();
+				if(nic) {
+					this._commonData.Logger.PutsDebug("update: check", () => "wait");
+					Thread.Sleep(Literal.updateWaitTime);
+					return CheckUpdate(false);
+				} else {
+					return null;
+				}
 			}).ContinueWith(t => {
-				ConfirmUpdate(false, t.Result);
+				if(t.Result != null) {
+					ConfirmUpdate(false, t.Result);
+				} else {
+					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check-stop"], this._commonData.Language["log/update/nic"]);
+				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 #else
 			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");

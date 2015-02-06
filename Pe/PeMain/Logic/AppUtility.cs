@@ -12,6 +12,7 @@
 	using System.Threading;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -127,18 +128,18 @@
 			
 			// 保存開始
 			// メインデータ
-			Serializer.SaveFile(commonData.MainSetting, Literal.UserMainSettingPath);
+			Serializer.SaveXmlFile(commonData.MainSetting, Literal.UserMainSettingPath);
 			// ランチャーデータ
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
 			}
-			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
+			Serializer.SaveXmlFile(sortedSet, Literal.UserLauncherItemsPath);
 			//// クリップボードデータ
 			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
 			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
 			// テンプレートデータ
-			Serializer.SaveFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
+			Serializer.SaveXmlFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
 		}
 
 		/// <summary>
@@ -155,7 +156,7 @@
 			};
 
 			var skinDllList = Directory.EnumerateFiles(Literal.ApplicationSkinDirectoryPath, "?*Skin.dll", SearchOption.TopDirectoryOnly);
-			foreach(var skinDll in skinDllList) {
+			foreach(var skinDll in skinDllList.Where(s => string.Compare("SystemSkin", Path.GetFileNameWithoutExtension(s), true) != 0)) {
 				var assembly = Assembly.LoadFrom(skinDll);
 				foreach(var type in assembly.GetTypes()) {
 					if(!type.IsClass || type.IsAbstract || type.IsNotPublic || !type.IsVisible) {
@@ -176,7 +177,7 @@
 							var skin = (ISkin)instance;
 							result.Add(skin);
 						} catch(Exception ex) {
-							logger.Puts(LogType.Error, ex.Message + ": " + skinDll, ex);
+							logger.Puts(LogType.Error, ex.Message , new ExceptionMessage(skinDll, ex));
 						}
 					}
 				}
