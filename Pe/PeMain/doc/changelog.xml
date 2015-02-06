@@ -55,29 +55,23 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.45.1" type="rc">
+	<log date="2015/02/06" version="0.46.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message>テンプレートの置き換え書式 VER-* が#198により書式が変わりました。#199により少しの間サポートされます</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message class="compatibility">テンプレートの置き換え書式 VER-* が#198対応で書式変更となりました。下位互換は#199により保たれます</message>
 			</note>
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="8419d4e468725416f96435de485b62f6d7900b58">
 				<message>#197: テンプレートにクリップボード置き換えを追加</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<comments>
+					<comment>CLIP</comment>
+					<comment>CLIP:NOBREAK</comment>
+					<comment>CLIP:HEAD</comment>
+					<comment>CLIP:TAIL</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="fixes">
@@ -114,26 +108,11 @@
 			<note rev="2a81a822af45849a87fd1f0ea9aed78413d867c1">
 				<message>#191: タブインデックス整理</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="e389103cb2f69e10df08106585d103fe7756fdbc">
 				<message>標準CSSに開発時のゴミが混入していたので消しといた</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
@@ -391,7 +370,7 @@
 	</log>
 	<log date="2015/01/03" version="0.38.1">
 		<group type="note">
-			<note rev="d42011a11cf4e9eba9379e669b1506b2134d821d" class="compatibinotety"><message>#41: アイテムの種類</message><comments><comment>種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</comment></comments></note>
+			<note rev="d42011a11cf4e9eba9379e669b1506b2134d821d"><message class="compatibility">#41: アイテムの種類</message><comments><comment>種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</comment></comments></note>
 			<note rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404"><message>組み込みアイテムを追加しましたが#118対応でのIF試験的意味合いが強いため該当プログラムの機能は弱いです</message></note>
 		</group>
 		<group type="features">
@@ -429,7 +408,7 @@
 	</log>
 	<log date="2014/12/21" version="0.36.0">
 		<group type="note">
-			<note rev="0b63f714daec6126e46322bc94b692a6bad6071c" class="compatibinotety"><message>#65: 下位互換@IconItem</message><comments><comment>Pe 0.29.0 からの下位互換をサポートしなくなりました</comment></comments></note>
+			<note rev="0b63f714daec6126e46322bc94b692a6bad6071c"><message class="compatibility">#65: 下位互換@IconItem</message><comments><comment>Pe 0.29.0 からの下位互換をサポートしなくなりました</comment></comments></note>
 		</group>
 		<group type="features">
 			<note rev="469eadb5d031563d83fac904cadeee2092fc5b51"><message>#115: ノートのタイトル入力を直観的に</message></note>
@@ -447,7 +426,7 @@
 	</log>
 	<log date="2014/12/06" version="0.35.0">
 		<group type="note">
-			<note rev="7e2cd76929891a874fb3494899d7b251d3de232c" class="compatibinotety"><message>#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe を [Pe]/sbin/Updater/Updater.exe に変更したためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</message></note>
+			<note rev="7e2cd76929891a874fb3494899d7b251d3de232c"><message class="compatibility">#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe を [Pe]/sbin/Updater/Updater.exe に変更したためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</message></note>
 			<note rev=""><message>各種パス変更に伴い過去バージョンの不要ファイルが含まれます。削除するには [Pe]/bat/clean.bat を実行してください</message></note>
 		</group>
 		<group type="features">
@@ -532,7 +511,7 @@
 	</log>
 	<log date="2014/11/13" version="0.31.0">
 		<group type="note">
-			<note class="compatibinotety"><message>グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</message></note>
+			<note><message class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</message></note>
 			<note><message>設定ファイルのバックアップアーカイブから戻しを行う場合はグループ名の重複に注意してください</message></note>
 		</group>
 		<group type="features">
@@ -564,7 +543,7 @@
 	</log>
 	<log date="2014/11/05" version="0.29.0">
 		<group type="note">
-			<note class="compatibinotety"><message>将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath</message><comments><comment>IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</comment></comments></note>
+			<note><message class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath</message><comments><comment>IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</comment></comments></note>
 		</group>
 		<group type="features">
 			<note><message>アップデート処理前に設定データを保存</message></note>
