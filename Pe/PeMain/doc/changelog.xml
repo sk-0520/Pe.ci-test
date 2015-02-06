@@ -71,7 +71,7 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#197: テンプレートにクリップボード置き換えを追加</message>
 			</note>
 			<note rev="">
 				<message></message>

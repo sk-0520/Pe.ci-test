@@ -16,8 +16,24 @@
 	{
 		static IDictionary<string, string> GetTemplateMap()
 		{
-			return new Dictionary<string, string>() {
-			};
+			var map = new Dictionary<string, string>();
+
+			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text | ClipboardType.File);
+			if(clipboardItem != null) {
+				var clipboardText = clipboardItem.Text;
+				// そのまんま
+				map[TemplateLanguageName.clipboard] = clipboardText;
+
+				var lines = clipboardText.SplitLines().ToList();
+				// 改行を削除
+				map[TemplateLanguageName.clipboardNobreak] = string.Join(string.Empty, lines);
+				// 先頭行
+				map[TemplateLanguageName.clipboardHead] = lines.FirstOrDefault();
+				// 最終行
+				map[TemplateLanguageName.clipboardTail] = lines.LastOrDefault();
+			}
+
+			return map;
 		}
 		public static string ToPlainText(TemplateItem item, Language language)
 		{

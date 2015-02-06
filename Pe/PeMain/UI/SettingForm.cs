@@ -20,6 +20,9 @@
 
 	/// <summary>
 	/// 設定。
+	/// 
+	/// 一気にUIへ設定して一気にUIから取得する気分だったけど完全に設計ミスだわ。
+	/// バインドするなりしておけばよかった。
 	/// </summary>
 	public partial class SettingForm: AppForm
 	{
