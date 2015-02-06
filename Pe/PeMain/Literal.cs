@@ -585,6 +585,21 @@
 		public const string screen = "SCREEN";
 	}
 
+	/// <summary>
+	/// テンプレート専用で切り替える置き換え文字列。
+	/// </summary>
+	public static class TemplateLanguageName
+	{
+		public static string clipboard = "CLIP";
+
+		public static IReadOnlyList<string> GetMembersList()
+		{
+			return new[] {
+				clipboard,
+			};
+		}
+	}
+
 	
 	public static class DataTables
 	{
