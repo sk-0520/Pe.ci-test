@@ -591,11 +591,17 @@
 	public static class TemplateLanguageName
 	{
 		public static string clipboard = "CLIP";
+		public static string clipboardNobreak = "CLIP:NOBREAK";
+		public static string clipboardHead = "CLIP:HEAD";
+		public static string clipboardTail = "CLIP:TAIL";
 
 		public static IReadOnlyList<string> GetMembersList()
 		{
 			return new[] {
 				clipboard,
+				clipboardNobreak,
+				clipboardHead,
+				clipboardTail,
 			};
 		}
 	}
