@@ -108,6 +108,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageToolbar = new System.Windows.Forms.TabPage();
 			this.splitContainer3 = new System.Windows.Forms.SplitContainer();
 			this.groupToolbar = new System.Windows.Forms.GroupBox();
+			this.commandToolbarScreens = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
@@ -164,15 +165,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteShowFront = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
-			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.gridNoteItems_columnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_columnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.gridNoteItems_columnLocked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.gridNoteItems_columnTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_columnBody = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_columnFont = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.gridNoteItems_columnFore = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.gridNoteItems_columnBack = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
 			this.panelClipboardMain = new System.Windows.Forms.TableLayoutPanel();
@@ -202,7 +194,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.commandToolbarScreens = new System.Windows.Forms.Button();
+			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_columnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_columnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_columnLocked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_columnTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_columnBody = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_columnFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteFontDataGridViewButtonColumn();
+			this.gridNoteItems_columnFore = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
+			this.gridNoteItems_columnBack = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupLauncherStream.SuspendLayout();
@@ -980,10 +980,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// tabLauncher_pageEnv
 			// 
 			this.tabLauncher_pageEnv.Controls.Add(this.panelLauncherEnv);
-			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 22);
+			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 266);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 264);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/page/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -1002,7 +1002,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherEnv.RowCount = 2;
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 260);
+			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 258);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
 			// envLauncherRemove
@@ -1041,9 +1041,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// tabLauncher_pageOthers
 			// 
 			this.tabLauncher_pageOthers.Controls.Add(this.panelLauncherOthers);
-			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 22);
+			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 266);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 264);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -1068,7 +1068,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 266);
+			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 264);
 			this.panelLauncherOthers.TabIndex = 7;
 			// 
 			// selectLauncherStdStream
@@ -1090,7 +1090,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherNote.Location = new System.Drawing.Point(126, 82);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(407, 161);
+			this.inputLauncherNote.Size = new System.Drawing.Size(407, 159);
 			this.inputLauncherNote.TabIndex = 4;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -1176,6 +1176,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupToolbar.TabIndex = 0;
 			this.groupToolbar.TabStop = false;
 			this.groupToolbar.Text = "☃";
+			// 
+			// commandToolbarScreens
+			// 
+			this.commandToolbarScreens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.commandToolbarScreens.Location = new System.Drawing.Point(193, 0);
+			this.commandToolbarScreens.Name = "commandToolbarScreens";
+			this.commandToolbarScreens.Size = new System.Drawing.Size(71, 23);
+			this.commandToolbarScreens.TabIndex = 22;
+			this.commandToolbarScreens.Text = ":setting/command/screens";
+			this.commandToolbarScreens.UseVisualStyleBackColor = true;
+			this.commandToolbarScreens.Click += new System.EventHandler(this.commandToolbarScreens_Click);
 			// 
 			// panel1
 			// 
@@ -1830,6 +1842,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems
 			// 
+			this.gridNoteItems.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
 			this.gridNoteItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridNoteItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.gridNoteItems_columnRemove,
@@ -1850,77 +1863,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridNoteItems.TabIndex = 0;
 			this.gridNoteItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridNoteItems_CellContentClick);
 			this.gridNoteItems.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridNoteItems_CellFormatting);
-			// 
-			// gridNoteItems_columnRemove
-			// 
-			this.gridNoteItems_columnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnRemove.FillWeight = 30F;
-			this.gridNoteItems_columnRemove.HeaderText = ":setting/column/note/remove";
-			this.gridNoteItems_columnRemove.Name = "gridNoteItems_columnRemove";
-			this.gridNoteItems_columnRemove.Width = 189;
-			// 
-			// gridNoteItems_columnId
-			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
-			this.gridNoteItems_columnId.FillWeight = 40F;
-			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
-			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
-			this.gridNoteItems_columnId.ReadOnly = true;
-			this.gridNoteItems_columnId.Width = 40;
-			// 
-			// gridNoteItems_columnVisible
-			// 
-			this.gridNoteItems_columnVisible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnVisible.FillWeight = 30F;
-			this.gridNoteItems_columnVisible.HeaderText = ":setting/column/note/visible";
-			this.gridNoteItems_columnVisible.Name = "gridNoteItems_columnVisible";
-			this.gridNoteItems_columnVisible.Width = 180;
-			// 
-			// gridNoteItems_columnLocked
-			// 
-			this.gridNoteItems_columnLocked.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnLocked.HeaderText = ":setting/column/note/locked";
-			this.gridNoteItems_columnLocked.Name = "gridNoteItems_columnLocked";
-			this.gridNoteItems_columnLocked.Width = 181;
-			// 
-			// gridNoteItems_columnTitle
-			// 
-			this.gridNoteItems_columnTitle.HeaderText = ":setting/column/note/title";
-			this.gridNoteItems_columnTitle.Name = "gridNoteItems_columnTitle";
-			// 
-			// gridNoteItems_columnBody
-			// 
-			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
-			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
-			this.gridNoteItems_columnBody.MinimumWidth = 100;
-			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
-			this.gridNoteItems_columnBody.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			// 
-			// gridNoteItems_columnFont
-			// 
-			this.gridNoteItems_columnFont.FillWeight = 80F;
-			this.gridNoteItems_columnFont.HeaderText = ":setting/column/note/font";
-			this.gridNoteItems_columnFont.Name = "gridNoteItems_columnFont";
-			this.gridNoteItems_columnFont.Width = 80;
-			// 
-			// gridNoteItems_columnFore
-			// 
-			this.gridNoteItems_columnFore.FillWeight = 80F;
-			this.gridNoteItems_columnFore.HeaderText = ":setting/column/note/fore";
-			this.gridNoteItems_columnFore.Name = "gridNoteItems_columnFore";
-			this.gridNoteItems_columnFore.Width = 80;
-			// 
-			// gridNoteItems_columnBack
-			// 
-			this.gridNoteItems_columnBack.FillWeight = 80F;
-			this.gridNoteItems_columnBack.HeaderText = ":setting/column/note/back";
-			this.gridNoteItems_columnBack.Name = "gridNoteItems_columnBack";
-			this.gridNoteItems_columnBack.Width = 80;
 			// 
 			// tabSetting_pageDisplay
 			// 
@@ -2260,17 +2202,79 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// commandToolbarScreens
+			// gridNoteItems_columnRemove
 			// 
-			this.commandToolbarScreens.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandToolbarScreens.Location = new System.Drawing.Point(193, 0);
-			this.commandToolbarScreens.Name = "commandToolbarScreens";
-			this.commandToolbarScreens.Size = new System.Drawing.Size(71, 23);
-			this.commandToolbarScreens.TabIndex = 22;
-			this.commandToolbarScreens.Text = ":setting/command/screens";
-			this.commandToolbarScreens.UseVisualStyleBackColor = true;
-			this.commandToolbarScreens.Click += new System.EventHandler(this.commandToolbarScreens_Click);
+			this.gridNoteItems_columnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnRemove.FillWeight = 30F;
+			this.gridNoteItems_columnRemove.HeaderText = ":setting/column/note/remove";
+			this.gridNoteItems_columnRemove.Name = "gridNoteItems_columnRemove";
+			this.gridNoteItems_columnRemove.Width = 189;
+			// 
+			// gridNoteItems_columnId
+			// 
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			this.gridNoteItems_columnId.FillWeight = 40F;
+			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
+			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
+			this.gridNoteItems_columnId.ReadOnly = true;
+			this.gridNoteItems_columnId.Width = 40;
+			// 
+			// gridNoteItems_columnVisible
+			// 
+			this.gridNoteItems_columnVisible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnVisible.FillWeight = 30F;
+			this.gridNoteItems_columnVisible.HeaderText = ":setting/column/note/visible";
+			this.gridNoteItems_columnVisible.Name = "gridNoteItems_columnVisible";
+			this.gridNoteItems_columnVisible.Width = 180;
+			// 
+			// gridNoteItems_columnLocked
+			// 
+			this.gridNoteItems_columnLocked.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnLocked.HeaderText = ":setting/column/note/locked";
+			this.gridNoteItems_columnLocked.Name = "gridNoteItems_columnLocked";
+			this.gridNoteItems_columnLocked.Width = 181;
+			// 
+			// gridNoteItems_columnTitle
+			// 
+			this.gridNoteItems_columnTitle.HeaderText = ":setting/column/note/title";
+			this.gridNoteItems_columnTitle.Name = "gridNoteItems_columnTitle";
+			// 
+			// gridNoteItems_columnBody
+			// 
+			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
+			this.gridNoteItems_columnBody.MinimumWidth = 100;
+			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
+			this.gridNoteItems_columnBody.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// gridNoteItems_columnFont
+			// 
+			this.gridNoteItems_columnFont.FillWeight = 80F;
+			this.gridNoteItems_columnFont.HeaderText = ":setting/column/note/font";
+			this.gridNoteItems_columnFont.Name = "gridNoteItems_columnFont";
+			this.gridNoteItems_columnFont.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnFont.Width = 80;
+			// 
+			// gridNoteItems_columnFore
+			// 
+			this.gridNoteItems_columnFore.FillWeight = 80F;
+			this.gridNoteItems_columnFore.HeaderText = ":setting/column/note/fore";
+			this.gridNoteItems_columnFore.Name = "gridNoteItems_columnFore";
+			this.gridNoteItems_columnFore.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnFore.Width = 80;
+			// 
+			// gridNoteItems_columnBack
+			// 
+			this.gridNoteItems_columnBack.FillWeight = 80F;
+			this.gridNoteItems_columnBack.HeaderText = ":setting/column/note/back";
+			this.gridNoteItems_columnBack.Name = "gridNoteItems_columnBack";
+			this.gridNoteItems_columnBack.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBack.Width = 80;
 			// 
 			// SettingForm
 			// 
@@ -2395,15 +2399,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.SplitContainer splitContainer3;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnLocked;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnRemove;
-		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_columnBack;
-		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_columnFore;
-		private System.Windows.Forms.DataGridViewButtonColumn gridNoteItems_columnFont;
-		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnBody;
-		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnTitle;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnVisible;
-		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnId;
 		private System.Windows.Forms.DataGridView gridNoteItems;
 		private System.Windows.Forms.GroupBox groupNoteItem;
 		private System.Windows.Forms.GroupBox groupNoteKey;
@@ -2544,5 +2539,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.GroupBox groupLauncherStream;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandLauncherStreamFont;
 		private System.Windows.Forms.Button commandToolbarScreens;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnRemove;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnId;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnVisible;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnLocked;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnTitle;
+		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnBody;
+		private Ex.NoteFontDataGridViewButtonColumn gridNoteItems_columnFont;
+		private Ex.NoteColorDataGridViewButtonColumn gridNoteItems_columnFore;
+		private Ex.NoteColorDataGridViewButtonColumn gridNoteItems_columnBack;
 	}
 }
