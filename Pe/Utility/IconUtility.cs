@@ -142,9 +142,8 @@
 		/// https://github.com/TsudaKageyu/IconExtractor
 		/// </summary>
 		/// <param name="resourcePath"></param>
-		/// <param name="iconScale"></param>
 		/// <returns></returns>
-		static IList<byte[]> LoadIconResource(string resourcePath, IconScale iconScale)
+		static IList<byte[]> LoadIconResource(string resourcePath)
 		{
 			var hModule = NativeMethods.LoadLibraryEx(resourcePath, IntPtr.Zero, LOAD_LIBRARY.LOAD_LIBRARY_AS_DATAFILE);
 			var binaryList = new List<byte[]>();
@@ -282,7 +281,7 @@
 
 			if(hasIcon) {
 				try {
-					var iconList = LoadIconResource(iconPath, iconScale);
+					var iconList = LoadIconResource(iconPath);
 					if(iconIndex < iconList.Count) {
 						using(var ms = new MemoryStream(iconList[iconIndex])) {
 							return new Icon(ms, iconScale.ToSize());
@@ -330,6 +329,13 @@
 			return null;
 		}
 
+		/// <summary>
+		/// アイコンを取得。
+		/// </summary>
+		/// <param name="iconPath"></param>
+		/// <param name="iconScale"></param>
+		/// <param name="iconIndex"></param>
+		/// <returns></returns>
 		public static Icon Load(string iconPath, IconScale iconScale, int iconIndex)
 		{
 			// 実行形式

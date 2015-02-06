@@ -86,6 +86,14 @@
 			}
 		}
 
+		/// <summary>
+		/// 塗りつぶす的な。
+		/// </summary>
+		/// <param name="srcImage"></param>
+		/// <param name="r"></param>
+		/// <param name="g"></param>
+		/// <param name="b"></param>
+		/// <returns></returns>
 		public static Image Coloring(Image srcImage, float r, float g, float b)
 		{
 			var matrixData = new float[5][] {

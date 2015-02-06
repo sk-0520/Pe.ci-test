@@ -128,18 +128,18 @@
 			
 			// 保存開始
 			// メインデータ
-			Serializer.SaveFile(commonData.MainSetting, Literal.UserMainSettingPath);
+			Serializer.SaveXmlFile(commonData.MainSetting, Literal.UserMainSettingPath);
 			// ランチャーデータ
 			var sortedSet = new HashSet<LauncherItem>();
 			foreach(var item in commonData.MainSetting.Launcher.Items.OrderBy(item => item.Name)) {
 				sortedSet.Add(item);
 			}
-			Serializer.SaveFile(sortedSet, Literal.UserLauncherItemsPath);
+			Serializer.SaveXmlFile(sortedSet, Literal.UserLauncherItemsPath);
 			//// クリップボードデータ
 			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
 			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
 			// テンプレートデータ
-			Serializer.SaveFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
+			Serializer.SaveXmlFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
 		}
 
 		/// <summary>

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
+
 	/// <summary>
 	/// デスクトップへのドッキング位置。
 	/// </summary>

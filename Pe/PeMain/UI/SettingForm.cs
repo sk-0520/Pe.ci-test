@@ -211,7 +211,7 @@
 				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
 				.Select(
 					f => new {
-						Language = Serializer.LoadFile<Language>(f, false),
+						Language = Serializer.LoadXmlFile<Language>(f, false),
 						BaseName = Path.GetFileNameWithoutExtension(f),
 					}
 				)

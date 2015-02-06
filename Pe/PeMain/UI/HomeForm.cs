@@ -130,7 +130,7 @@
 			var defaultItemList = new List<LauncherItem>();
 			var itemElements = xml.Elements("items").Elements("LauncherItem");
 			foreach(var itemElement in itemElements) {
-				var item = Serializer.LoadString<LauncherItem>(itemElement.ToString());
+				var item = Serializer.LoadXMLString<LauncherItem>(itemElement.ToString());
 				var isAdd = false;
 				// データの補正
 				if(item.LauncherType.IsIn(LauncherType.File, LauncherType.Directory)) {

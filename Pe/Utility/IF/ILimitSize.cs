@@ -6,6 +6,9 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 	/// </summary>
 	public interface ILimitSize
 	{
+		/// <summary>
+		/// データ長。
+		/// </summary>
 		int LimitSize { get; set; }
 	}
 }

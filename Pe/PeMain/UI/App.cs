@@ -332,7 +332,7 @@
 			}
 
 			var languageFilePath = getLangPath(langName);
-			this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, false);
+			this._commonData.Language = Serializer.LoadXmlFile<Language>(languageFilePath, false);
 
 			if(this._commonData.Language == null) {
 				if(logger != null) {
@@ -341,7 +341,7 @@
 				// #110, デフォルトの言語ファイル名
 				langName = Literal.defaultLanguage;
 				languageFilePath = getLangPath(langName);
-				this._commonData.Language = Serializer.LoadFile<Language>(languageFilePath, true);
+				this._commonData.Language = Serializer.LoadXmlFile<Language>(languageFilePath, true);
 			}
 			this._commonData.Language.BaseName = langName;
 		}
@@ -364,7 +364,7 @@
 			if(commandLine.HasOption("accept") && commandLine.GetValue("accept") == "force") {
 				// 強制的に使用許諾を表示し、次回実行時も使用許諾を表示できるようデータ保存
 				this._commonData.MainSetting.RunningInfo.Running = false;
-				Serializer.SaveFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
+				Serializer.SaveXmlFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
 			}
 		}
 
@@ -466,7 +466,7 @@
 
 		void InitializeApplicationExecutor(CommandLine commandLine, ILogger logger)
 		{
-			this._commonData.ApplicationSetting = Serializer.LoadFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
+			this._commonData.ApplicationSetting = Serializer.LoadXmlFile<ApplicationSetting>(Literal.ApplicationBinAppPath, false);
 		}
 		/// <summary>
 		/// Peを使用使用するかユーザーに問い合わせる。
@@ -497,19 +497,19 @@
 			logger.Puts(LogType.Information, "load main-setting", mainSettingFilePath);
 
 			var existsSettingFilePath = File.Exists(mainSettingFilePath);
-			this._commonData.MainSetting = Serializer.LoadFile<MainSetting>(mainSettingFilePath, true);
+			this._commonData.MainSetting = Serializer.LoadXmlFile<MainSetting>(mainSettingFilePath, true);
 			this._commonData.MainSetting.CorrectionValue();
 
 			var launcherItemsFilePath = Literal.UserLauncherItemsPath;
 			logger.Puts(LogType.Information, "load launcher-item", launcherItemsFilePath);
-			this._commonData.MainSetting.Launcher.Items = Serializer.LoadFile<HashSet<LauncherItem>>(launcherItemsFilePath, true);
+			this._commonData.MainSetting.Launcher.Items = Serializer.LoadXmlFile<HashSet<LauncherItem>>(launcherItemsFilePath, true);
 			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
 				item.CorrectionValue();
 			}
 
 			var templateItemsPath = Literal.UserTemplateItemsPath;
 			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
-			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadFile<EventList<TemplateItem>>(templateItemsPath, true);
+			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadXmlFile<EventList<TemplateItem>>(templateItemsPath, true);
 			foreach(var item in this._commonData.MainSetting.Launcher.Items) {
 				item.CorrectionValue();
 			}

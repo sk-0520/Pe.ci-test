@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ContentTypeTextNet.Pe.Library.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
+	using System;
+
 	/// <summary>
 	/// ペア。
 	/// 
