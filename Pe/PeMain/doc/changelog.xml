@@ -108,6 +108,18 @@
 					<comment>PeMainに組み込んでいたSystemSkinをリソースと供にDLL化した</comment>
 				</comments>
 			</note>
+			<note rev="db81154964d2105023190f87132b556ad43b3c67">
+				<message>設定ダイアログ内でノート各行の高さを本文に合わせる</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
