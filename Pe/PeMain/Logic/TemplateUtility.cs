@@ -16,8 +16,14 @@
 	{
 		static IDictionary<string, string> GetTemplateMap()
 		{
-			return new Dictionary<string, string>() {
-			};
+			var map = new Dictionary<string, string>();
+
+			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text);
+			if(clipboardItem != null) {
+				map[TemplateLanguageName.clipboard] = clipboardItem.Text;
+			}
+
+			return map;
 		}
 		public static string ToPlainText(TemplateItem item, Language language)
 		{

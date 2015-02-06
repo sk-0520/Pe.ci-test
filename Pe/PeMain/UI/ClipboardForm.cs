@@ -130,7 +130,8 @@
 
 			listItemStack.MouseWheel += listClipboard_MouseWheel;
 
-			this._replaceCommentList = AppLanguageName.GetMembersList()
+			this._replaceCommentList = TemplateLanguageName.GetMembersList()
+				.Concat(AppLanguageName.GetMembersList())
 				.Select(m => new ReplaceItem() { Name = m })
 				.ToList()
 			;
