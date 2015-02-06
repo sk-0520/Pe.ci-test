@@ -177,6 +177,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
 			this.panelClipboardMain = new System.Windows.Forms.TableLayoutPanel();
+			this.groupClipboardSaveType = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectClipboardSaveType_text = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_rtf = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
 			this.selectClipboardEnabled = new System.Windows.Forms.CheckBox();
 			this.groupClipboardType = new System.Windows.Forms.GroupBox();
 			this.panelClipboardType = new System.Windows.Forms.FlowLayoutPanel();
@@ -203,13 +210,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.groupClipboardSaveType = new System.Windows.Forms.GroupBox();
-			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-			this.selectClipboardSaveType_text = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_rtf = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
+			this.checkClipboardSave = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupLauncherStream.SuspendLayout();
@@ -264,6 +265,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
 			this.tabSetting_pageClipboard.SuspendLayout();
 			this.panelClipboardMain.SuspendLayout();
+			this.groupClipboardSaveType.SuspendLayout();
+			this.flowLayoutPanel2.SuspendLayout();
 			this.groupClipboardType.SuspendLayout();
 			this.panelClipboardType.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
@@ -272,8 +275,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			this.groupClipboardSaveType.SuspendLayout();
-			this.flowLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -1973,7 +1974,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 232F));
 			this.panelClipboardMain.Controls.Add(this.groupClipboardSaveType, 3, 0);
 			this.panelClipboardMain.Controls.Add(this.selectClipboardEnabled, 0, 0);
 			this.panelClipboardMain.Controls.Add(this.groupClipboardType, 2, 0);
@@ -1990,6 +1991,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.Controls.Add(this.inputClipboardHotkey, 1, 7);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardFont, 0, 8);
 			this.panelClipboardMain.Controls.Add(this.commandClipboardTextFont, 1, 8);
+			this.panelClipboardMain.Controls.Add(this.checkClipboardSave, 2, 7);
 			this.panelClipboardMain.Location = new System.Drawing.Point(6, 6);
 			this.panelClipboardMain.Name = "panelClipboardMain";
 			this.panelClipboardMain.RowCount = 10;
@@ -2005,6 +2007,90 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.panelClipboardMain.Size = new System.Drawing.Size(735, 269);
 			this.panelClipboardMain.TabIndex = 9;
+			// 
+			// groupClipboardSaveType
+			// 
+			this.groupClipboardSaveType.AutoSize = true;
+			this.groupClipboardSaveType.Controls.Add(this.flowLayoutPanel2);
+			this.groupClipboardSaveType.Location = new System.Drawing.Point(583, 3);
+			this.groupClipboardSaveType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
+			this.groupClipboardSaveType.Name = "groupClipboardSaveType";
+			this.panelClipboardMain.SetRowSpan(this.groupClipboardSaveType, 6);
+			this.groupClipboardSaveType.Size = new System.Drawing.Size(172, 147);
+			this.groupClipboardSaveType.TabIndex = 10;
+			this.groupClipboardSaveType.TabStop = false;
+			this.groupClipboardSaveType.Text = ":setting/group/clipboard-type";
+			this.groupClipboardSaveType.Visible = false;
+			// 
+			// flowLayoutPanel2
+			// 
+			this.flowLayoutPanel2.AutoSize = true;
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_text);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_rtf);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_html);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_image);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_file);
+			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
+			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(166, 125);
+			this.flowLayoutPanel2.TabIndex = 0;
+			// 
+			// selectClipboardSaveType_text
+			// 
+			this.selectClipboardSaveType_text.AutoSize = true;
+			this.selectClipboardSaveType_text.Location = new System.Drawing.Point(3, 3);
+			this.selectClipboardSaveType_text.Name = "selectClipboardSaveType_text";
+			this.selectClipboardSaveType_text.Size = new System.Drawing.Size(148, 19);
+			this.selectClipboardSaveType_text.TabIndex = 0;
+			this.selectClipboardSaveType_text.Text = "#ClipboardType.Text";
+			this.selectClipboardSaveType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_text.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardSaveType_rtf
+			// 
+			this.selectClipboardSaveType_rtf.AutoSize = true;
+			this.selectClipboardSaveType_rtf.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardSaveType_rtf.Name = "selectClipboardSaveType_rtf";
+			this.selectClipboardSaveType_rtf.Size = new System.Drawing.Size(139, 19);
+			this.selectClipboardSaveType_rtf.TabIndex = 0;
+			this.selectClipboardSaveType_rtf.Text = "#ClipboardType.Rtf";
+			this.selectClipboardSaveType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_rtf.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardSaveType_html
+			// 
+			this.selectClipboardSaveType_html.AutoSize = true;
+			this.selectClipboardSaveType_html.Location = new System.Drawing.Point(3, 53);
+			this.selectClipboardSaveType_html.Name = "selectClipboardSaveType_html";
+			this.selectClipboardSaveType_html.Size = new System.Drawing.Size(151, 19);
+			this.selectClipboardSaveType_html.TabIndex = 0;
+			this.selectClipboardSaveType_html.Text = "#ClipboardType.Html";
+			this.selectClipboardSaveType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_html.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardSaveType_image
+			// 
+			this.selectClipboardSaveType_image.AutoSize = true;
+			this.selectClipboardSaveType_image.Location = new System.Drawing.Point(3, 78);
+			this.selectClipboardSaveType_image.Name = "selectClipboardSaveType_image";
+			this.selectClipboardSaveType_image.Size = new System.Drawing.Size(160, 19);
+			this.selectClipboardSaveType_image.TabIndex = 0;
+			this.selectClipboardSaveType_image.Text = "#ClipboardType.Image";
+			this.selectClipboardSaveType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_image.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardSaveType_file
+			// 
+			this.selectClipboardSaveType_file.AutoSize = true;
+			this.selectClipboardSaveType_file.Location = new System.Drawing.Point(3, 103);
+			this.selectClipboardSaveType_file.Name = "selectClipboardSaveType_file";
+			this.selectClipboardSaveType_file.Size = new System.Drawing.Size(142, 19);
+			this.selectClipboardSaveType_file.TabIndex = 0;
+			this.selectClipboardSaveType_file.Text = "#ClipboardType.File";
+			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardEnabled
 			// 
@@ -2287,89 +2373,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// groupClipboardSaveType
+			// checkClipboardSave
 			// 
-			this.groupClipboardSaveType.AutoSize = true;
-			this.groupClipboardSaveType.Controls.Add(this.flowLayoutPanel2);
-			this.groupClipboardSaveType.Location = new System.Drawing.Point(561, 3);
-			this.groupClipboardSaveType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
-			this.groupClipboardSaveType.Name = "groupClipboardSaveType";
-			this.panelClipboardMain.SetRowSpan(this.groupClipboardSaveType, 6);
-			this.groupClipboardSaveType.Size = new System.Drawing.Size(171, 147);
-			this.groupClipboardSaveType.TabIndex = 10;
-			this.groupClipboardSaveType.TabStop = false;
-			this.groupClipboardSaveType.Text = ":setting/group/clipboard-type";
-			this.groupClipboardSaveType.Visible = false;
-			// 
-			// flowLayoutPanel2
-			// 
-			this.flowLayoutPanel2.AutoSize = true;
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_text);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_rtf);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_html);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_image);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_file);
-			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
-			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(165, 125);
-			this.flowLayoutPanel2.TabIndex = 0;
-			// 
-			// selectClipboardSaveType_text
-			// 
-			this.selectClipboardSaveType_text.AutoSize = true;
-			this.selectClipboardSaveType_text.Location = new System.Drawing.Point(3, 3);
-			this.selectClipboardSaveType_text.Name = "selectClipboardSaveType_text";
-			this.selectClipboardSaveType_text.Size = new System.Drawing.Size(148, 19);
-			this.selectClipboardSaveType_text.TabIndex = 0;
-			this.selectClipboardSaveType_text.Text = "#ClipboardType.Text";
-			this.selectClipboardSaveType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_text.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_rtf
-			// 
-			this.selectClipboardSaveType_rtf.AutoSize = true;
-			this.selectClipboardSaveType_rtf.Location = new System.Drawing.Point(3, 28);
-			this.selectClipboardSaveType_rtf.Name = "selectClipboardSaveType_rtf";
-			this.selectClipboardSaveType_rtf.Size = new System.Drawing.Size(139, 19);
-			this.selectClipboardSaveType_rtf.TabIndex = 0;
-			this.selectClipboardSaveType_rtf.Text = "#ClipboardType.Rtf";
-			this.selectClipboardSaveType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_rtf.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_html
-			// 
-			this.selectClipboardSaveType_html.AutoSize = true;
-			this.selectClipboardSaveType_html.Location = new System.Drawing.Point(3, 53);
-			this.selectClipboardSaveType_html.Name = "selectClipboardSaveType_html";
-			this.selectClipboardSaveType_html.Size = new System.Drawing.Size(151, 19);
-			this.selectClipboardSaveType_html.TabIndex = 0;
-			this.selectClipboardSaveType_html.Text = "#ClipboardType.Html";
-			this.selectClipboardSaveType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_html.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_image
-			// 
-			this.selectClipboardSaveType_image.AutoSize = true;
-			this.selectClipboardSaveType_image.Location = new System.Drawing.Point(3, 78);
-			this.selectClipboardSaveType_image.Name = "selectClipboardSaveType_image";
-			this.selectClipboardSaveType_image.Size = new System.Drawing.Size(160, 19);
-			this.selectClipboardSaveType_image.TabIndex = 0;
-			this.selectClipboardSaveType_image.Text = "#ClipboardType.Image";
-			this.selectClipboardSaveType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_image.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_file
-			// 
-			this.selectClipboardSaveType_file.AutoSize = true;
-			this.selectClipboardSaveType_file.Location = new System.Drawing.Point(3, 103);
-			this.selectClipboardSaveType_file.Name = "selectClipboardSaveType_file";
-			this.selectClipboardSaveType_file.Size = new System.Drawing.Size(142, 19);
-			this.selectClipboardSaveType_file.TabIndex = 0;
-			this.selectClipboardSaveType_file.Text = "#ClipboardType.File";
-			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
+			this.checkClipboardSave.AutoSize = true;
+			this.checkClipboardSave.Location = new System.Drawing.Point(371, 190);
+			this.checkClipboardSave.Name = "checkClipboardSave";
+			this.checkClipboardSave.Size = new System.Drawing.Size(200, 19);
+			this.checkClipboardSave.TabIndex = 14;
+			this.checkClipboardSave.Text = ":setting/check/clipboard-save";
+			this.checkClipboardSave.UseVisualStyleBackColor = true;
+			this.checkClipboardSave.Visible = false;
 			// 
 			// SettingForm
 			// 
@@ -2459,6 +2472,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageClipboard.ResumeLayout(false);
 			this.panelClipboardMain.ResumeLayout(false);
 			this.panelClipboardMain.PerformLayout();
+			this.groupClipboardSaveType.ResumeLayout(false);
+			this.groupClipboardSaveType.PerformLayout();
+			this.flowLayoutPanel2.ResumeLayout(false);
+			this.flowLayoutPanel2.PerformLayout();
 			this.groupClipboardType.ResumeLayout(false);
 			this.groupClipboardType.PerformLayout();
 			this.panelClipboardType.ResumeLayout(false);
@@ -2470,10 +2487,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.groupClipboardSaveType.ResumeLayout(false);
-			this.groupClipboardSaveType.PerformLayout();
-			this.flowLayoutPanel2.ResumeLayout(false);
-			this.flowLayoutPanel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -2654,5 +2667,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectClipboardSaveType_html;
 		private System.Windows.Forms.CheckBox selectClipboardSaveType_image;
 		private System.Windows.Forms.CheckBox selectClipboardSaveType_file;
+		private System.Windows.Forms.CheckBox checkClipboardSave;
 	}
 }
