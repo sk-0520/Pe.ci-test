@@ -18,7 +18,7 @@
 		{
 			var map = new Dictionary<string, string>();
 
-			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text);
+			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text | ClipboardType.File);
 			if(clipboardItem != null) {
 				var clipboardText = clipboardItem.Text;
 				// そのまんま
