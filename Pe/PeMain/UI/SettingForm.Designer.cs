@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupLauncherStream = new System.Windows.Forms.GroupBox();
@@ -165,6 +165,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteShowFront = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.groupNoteItem = new System.Windows.Forms.GroupBox();
 			this.gridNoteItems = new System.Windows.Forms.DataGridView();
+			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_columnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_columnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_columnLocked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.gridNoteItems_columnTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_columnBody = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gridNoteItems_columnFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteFontDataGridViewButtonColumn();
+			this.gridNoteItems_columnFore = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
+			this.gridNoteItems_columnBack = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
 			this.panelClipboardMain = new System.Windows.Forms.TableLayoutPanel();
@@ -194,15 +203,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.gridNoteItems_columnRemove = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.gridNoteItems_columnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_columnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.gridNoteItems_columnLocked = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.gridNoteItems_columnTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_columnBody = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.gridNoteItems_columnFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteFontDataGridViewButtonColumn();
-			this.gridNoteItems_columnFore = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
-			this.gridNoteItems_columnBack = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
+			this.groupClipboardSaveType = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectClipboardSaveType_text = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_rtf = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupLauncherStream.SuspendLayout();
@@ -265,6 +272,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			this.groupClipboardSaveType.SuspendLayout();
+			this.flowLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -308,7 +317,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupLauncherStream.Location = new System.Drawing.Point(224, 194);
 			this.groupLauncherStream.Name = "groupLauncherStream";
 			this.groupLauncherStream.Size = new System.Drawing.Size(288, 75);
-			this.groupLauncherStream.TabIndex = 5;
+			this.groupLauncherStream.TabIndex = 4;
 			this.groupLauncherStream.TabStop = false;
 			this.groupLauncherStream.Text = ":setting/group/stream";
 			// 
@@ -329,7 +338,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupMainSkin.Location = new System.Drawing.Point(224, 42);
 			this.groupMainSkin.Name = "groupMainSkin";
 			this.groupMainSkin.Size = new System.Drawing.Size(288, 51);
-			this.groupMainSkin.TabIndex = 4;
+			this.groupMainSkin.TabIndex = 2;
 			this.groupMainSkin.TabStop = false;
 			this.groupMainSkin.Text = ":setting/group/skin";
 			// 
@@ -413,7 +422,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupUpdateCheck.Location = new System.Drawing.Point(518, 42);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
 			this.groupUpdateCheck.Size = new System.Drawing.Size(226, 81);
-			this.groupUpdateCheck.TabIndex = 3;
+			this.groupUpdateCheck.TabIndex = 5;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
 			// 
@@ -456,7 +465,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupMainSystemEnv.Location = new System.Drawing.Point(224, 99);
 			this.groupMainSystemEnv.Name = "groupMainSystemEnv";
 			this.groupMainSystemEnv.Size = new System.Drawing.Size(288, 89);
-			this.groupMainSystemEnv.TabIndex = 2;
+			this.groupMainSystemEnv.TabIndex = 3;
 			this.groupMainSystemEnv.TabStop = false;
 			this.groupMainSystemEnv.Text = ":setting/group/system-env";
 			// 
@@ -492,7 +501,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputSystemEnvExt.ReadOnly = true;
 			this.inputSystemEnvExt.Registered = false;
 			this.inputSystemEnvExt.Size = new System.Drawing.Size(123, 23);
-			this.inputSystemEnvExt.TabIndex = 2;
+			this.inputSystemEnvExt.TabIndex = 1;
 			this.inputSystemEnvExt.Text = "None";
 			// 
 			// labelSystemEnvExt
@@ -552,7 +561,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogDebugging.Location = new System.Drawing.Point(16, 183);
 			this.selectLogDebugging.Name = "selectLogDebugging";
 			this.selectLogDebugging.Size = new System.Drawing.Size(175, 19);
-			this.selectLogDebugging.TabIndex = 4;
+			this.selectLogDebugging.TabIndex = 3;
 			this.selectLogDebugging.Text = ":setting/check/debugging";
 			this.selectLogDebugging.UseVisualStyleBackColor = true;
 			// 
@@ -562,7 +571,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectLogFullDetail.Location = new System.Drawing.Point(16, 158);
 			this.selectLogFullDetail.Name = "selectLogFullDetail";
 			this.selectLogFullDetail.Size = new System.Drawing.Size(170, 19);
-			this.selectLogFullDetail.TabIndex = 3;
+			this.selectLogFullDetail.TabIndex = 2;
 			this.selectLogFullDetail.Text = ":setting/check/full-detail";
 			this.selectLogFullDetail.UseVisualStyleBackColor = true;
 			// 
@@ -1069,7 +1078,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 264);
-			this.panelLauncherOthers.TabIndex = 7;
+			this.panelLauncherOthers.TabIndex = 0;
 			// 
 			// selectLauncherStdStream
 			// 
@@ -1091,7 +1100,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
 			this.inputLauncherNote.Size = new System.Drawing.Size(407, 159);
-			this.inputLauncherNote.TabIndex = 4;
+			this.inputLauncherNote.TabIndex = 3;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// inputLauncherTag
@@ -1239,7 +1248,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarVisible.Location = new System.Drawing.Point(3, 225);
 			this.selectToolbarVisible.Name = "selectToolbarVisible";
 			this.selectToolbarVisible.Size = new System.Drawing.Size(157, 19);
-			this.selectToolbarVisible.TabIndex = 13;
+			this.selectToolbarVisible.TabIndex = 8;
 			this.selectToolbarVisible.Text = ":common/label/visible";
 			this.selectToolbarVisible.UseVisualStyleBackColor = true;
 			// 
@@ -1251,7 +1260,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarTopmost.Location = new System.Drawing.Point(3, 200);
 			this.selectToolbarTopmost.Name = "selectToolbarTopmost";
 			this.selectToolbarTopmost.Size = new System.Drawing.Size(170, 19);
-			this.selectToolbarTopmost.TabIndex = 11;
+			this.selectToolbarTopmost.TabIndex = 7;
 			this.selectToolbarTopmost.Text = ":common/label/topmost";
 			this.selectToolbarTopmost.UseVisualStyleBackColor = true;
 			// 
@@ -1270,7 +1279,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 121);
 			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
 			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
-			this.inputToolbarTextWidth.TabIndex = 8;
+			this.inputToolbarTextWidth.TabIndex = 4;
 			this.inputToolbarTextWidth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelToolbarFont
@@ -1290,7 +1299,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandToolbarFont.Location = new System.Drawing.Point(161, 90);
 			this.commandToolbarFont.Name = "commandToolbarFont";
 			this.commandToolbarFont.Size = new System.Drawing.Size(142, 25);
-			this.commandToolbarFont.TabIndex = 6;
+			this.commandToolbarFont.TabIndex = 3;
 			this.commandToolbarFont.Text = "{FAMILY} {PT} ...";
 			this.commandToolbarFont.UseVisualStyleBackColor = true;
 			// 
@@ -1302,7 +1311,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarIcon.Location = new System.Drawing.Point(161, 61);
 			this.selectToolbarIcon.Name = "selectToolbarIcon";
 			this.selectToolbarIcon.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarIcon.TabIndex = 4;
+			this.selectToolbarIcon.TabIndex = 2;
 			// 
 			// labelToolbarIcon
 			// 
@@ -1332,7 +1341,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarPosition.Location = new System.Drawing.Point(161, 32);
 			this.selectToolbarPosition.Name = "selectToolbarPosition";
 			this.selectToolbarPosition.Size = new System.Drawing.Size(142, 23);
-			this.selectToolbarPosition.TabIndex = 2;
+			this.selectToolbarPosition.TabIndex = 1;
 			// 
 			// labelToolbarGroup
 			// 
@@ -1362,7 +1371,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarAutoHide.Location = new System.Drawing.Point(3, 175);
 			this.selectToolbarAutoHide.Name = "selectToolbarAutoHide";
 			this.selectToolbarAutoHide.Size = new System.Drawing.Size(171, 19);
-			this.selectToolbarAutoHide.TabIndex = 10;
+			this.selectToolbarAutoHide.TabIndex = 6;
 			this.selectToolbarAutoHide.Text = ":setting/check/auto-hide";
 			this.selectToolbarAutoHide.UseVisualStyleBackColor = true;
 			// 
@@ -1374,7 +1383,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarShowText.Location = new System.Drawing.Point(3, 150);
 			this.selectToolbarShowText.Name = "selectToolbarShowText";
 			this.selectToolbarShowText.Size = new System.Drawing.Size(175, 19);
-			this.selectToolbarShowText.TabIndex = 9;
+			this.selectToolbarShowText.TabIndex = 5;
 			this.selectToolbarShowText.Text = ":setting/check/show-text";
 			this.selectToolbarShowText.UseVisualStyleBackColor = true;
 			// 
@@ -1690,7 +1699,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandNoteCaptionFont.Location = new System.Drawing.Point(134, 3);
 			this.commandNoteCaptionFont.Name = "commandNoteCaptionFont";
 			this.commandNoteCaptionFont.Size = new System.Drawing.Size(141, 25);
-			this.commandNoteCaptionFont.TabIndex = 1;
+			this.commandNoteCaptionFont.TabIndex = 0;
 			this.commandNoteCaptionFont.Text = "{FAMILY} {PT} ...";
 			this.commandNoteCaptionFont.UseVisualStyleBackColor = true;
 			// 
@@ -1825,7 +1834,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputNoteShowFront.ReadOnly = true;
 			this.inputNoteShowFront.Registered = false;
 			this.inputNoteShowFront.Size = new System.Drawing.Size(211, 23);
-			this.inputNoteShowFront.TabIndex = 6;
+			this.inputNoteShowFront.TabIndex = 3;
 			this.inputNoteShowFront.Text = "None";
 			// 
 			// groupNoteItem
@@ -1836,7 +1845,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupNoteItem.Name = "groupNoteItem";
 			this.panelNote.SetRowSpan(this.groupNoteItem, 2);
 			this.groupNoteItem.Size = new System.Drawing.Size(506, 294);
-			this.groupNoteItem.TabIndex = 12;
+			this.groupNoteItem.TabIndex = 1;
 			this.groupNoteItem.TabStop = false;
 			this.groupNoteItem.Text = ":setting/group/item";
 			// 
@@ -1864,6 +1873,80 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridNoteItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridNoteItems_CellContentClick);
 			this.gridNoteItems.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridNoteItems_CellFormatting);
 			// 
+			// gridNoteItems_columnRemove
+			// 
+			this.gridNoteItems_columnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnRemove.FillWeight = 30F;
+			this.gridNoteItems_columnRemove.HeaderText = ":setting/column/note/remove";
+			this.gridNoteItems_columnRemove.Name = "gridNoteItems_columnRemove";
+			this.gridNoteItems_columnRemove.Width = 189;
+			// 
+			// gridNoteItems_columnId
+			// 
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			this.gridNoteItems_columnId.FillWeight = 40F;
+			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
+			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
+			this.gridNoteItems_columnId.ReadOnly = true;
+			this.gridNoteItems_columnId.Width = 40;
+			// 
+			// gridNoteItems_columnVisible
+			// 
+			this.gridNoteItems_columnVisible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnVisible.FillWeight = 30F;
+			this.gridNoteItems_columnVisible.HeaderText = ":setting/column/note/visible";
+			this.gridNoteItems_columnVisible.Name = "gridNoteItems_columnVisible";
+			this.gridNoteItems_columnVisible.Width = 180;
+			// 
+			// gridNoteItems_columnLocked
+			// 
+			this.gridNoteItems_columnLocked.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+			this.gridNoteItems_columnLocked.HeaderText = ":setting/column/note/locked";
+			this.gridNoteItems_columnLocked.Name = "gridNoteItems_columnLocked";
+			this.gridNoteItems_columnLocked.Width = 181;
+			// 
+			// gridNoteItems_columnTitle
+			// 
+			this.gridNoteItems_columnTitle.HeaderText = ":setting/column/note/title";
+			this.gridNoteItems_columnTitle.Name = "gridNoteItems_columnTitle";
+			// 
+			// gridNoteItems_columnBody
+			// 
+			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
+			this.gridNoteItems_columnBody.MinimumWidth = 100;
+			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
+			this.gridNoteItems_columnBody.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// gridNoteItems_columnFont
+			// 
+			this.gridNoteItems_columnFont.FillWeight = 80F;
+			this.gridNoteItems_columnFont.HeaderText = ":setting/column/note/font";
+			this.gridNoteItems_columnFont.Name = "gridNoteItems_columnFont";
+			this.gridNoteItems_columnFont.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnFont.Width = 80;
+			// 
+			// gridNoteItems_columnFore
+			// 
+			this.gridNoteItems_columnFore.FillWeight = 80F;
+			this.gridNoteItems_columnFore.HeaderText = ":setting/column/note/fore";
+			this.gridNoteItems_columnFore.Name = "gridNoteItems_columnFore";
+			this.gridNoteItems_columnFore.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnFore.Width = 80;
+			// 
+			// gridNoteItems_columnBack
+			// 
+			this.gridNoteItems_columnBack.FillWeight = 80F;
+			this.gridNoteItems_columnBack.HeaderText = ":setting/column/note/back";
+			this.gridNoteItems_columnBack.Name = "gridNoteItems_columnBack";
+			this.gridNoteItems_columnBack.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBack.Width = 80;
+			// 
 			// tabSetting_pageDisplay
 			// 
 			this.tabSetting_pageDisplay.Location = new System.Drawing.Point(4, 24);
@@ -1886,10 +1969,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// panelClipboardMain
 			// 
-			this.panelClipboardMain.ColumnCount = 3;
+			this.panelClipboardMain.ColumnCount = 4;
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.Controls.Add(this.groupClipboardSaveType, 3, 0);
 			this.panelClipboardMain.Controls.Add(this.selectClipboardEnabled, 0, 0);
 			this.panelClipboardMain.Controls.Add(this.groupClipboardType, 2, 0);
 			this.panelClipboardMain.Controls.Add(this.selectClipboardAppEnabled, 0, 1);
@@ -1918,7 +2003,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelClipboardMain.Size = new System.Drawing.Size(519, 269);
+			this.panelClipboardMain.Size = new System.Drawing.Size(735, 269);
 			this.panelClipboardMain.TabIndex = 9;
 			// 
 			// selectClipboardEnabled
@@ -1941,7 +2026,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupClipboardType.Name = "groupClipboardType";
 			this.panelClipboardMain.SetRowSpan(this.groupClipboardType, 6);
 			this.groupClipboardType.Size = new System.Drawing.Size(172, 147);
-			this.groupClipboardType.TabIndex = 8;
+			this.groupClipboardType.TabIndex = 9;
 			this.groupClipboardType.TabStop = false;
 			this.groupClipboardType.Text = ":setting/group/clipboard-type";
 			// 
@@ -2041,7 +2126,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardLimit.Location = new System.Drawing.Point(197, 53);
 			this.inputClipboardLimit.Name = "inputClipboardLimit";
 			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardLimit.TabIndex = 4;
+			this.inputClipboardLimit.TabIndex = 2;
 			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelClipboardLimit
@@ -2059,7 +2144,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardWaitTime.Location = new System.Drawing.Point(197, 82);
 			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
 			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardWaitTime.TabIndex = 5;
+			this.inputClipboardWaitTime.TabIndex = 3;
 			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// selectClipboardTopMost
@@ -2069,7 +2154,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardTopMost.Location = new System.Drawing.Point(3, 165);
 			this.selectClipboardTopMost.Name = "selectClipboardTopMost";
 			this.selectClipboardTopMost.Size = new System.Drawing.Size(222, 19);
-			this.selectClipboardTopMost.TabIndex = 3;
+			this.selectClipboardTopMost.TabIndex = 6;
 			this.selectClipboardTopMost.Text = ":setting/check/clipboard-topmost";
 			this.selectClipboardTopMost.UseVisualStyleBackColor = true;
 			// 
@@ -2080,7 +2165,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardVisible.Location = new System.Drawing.Point(3, 140);
 			this.selectClipboardVisible.Name = "selectClipboardVisible";
 			this.selectClipboardVisible.Size = new System.Drawing.Size(209, 19);
-			this.selectClipboardVisible.TabIndex = 2;
+			this.selectClipboardVisible.TabIndex = 5;
 			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
 			this.selectClipboardVisible.UseVisualStyleBackColor = true;
 			// 
@@ -2099,7 +2184,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardSleepTime.Location = new System.Drawing.Point(197, 111);
 			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
 			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardSleepTime.TabIndex = 10;
+			this.inputClipboardSleepTime.TabIndex = 4;
 			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labelClipboardHotkey
@@ -2125,7 +2210,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardHotkey.ReadOnly = true;
 			this.inputClipboardHotkey.Registered = false;
 			this.inputClipboardHotkey.Size = new System.Drawing.Size(168, 23);
-			this.inputClipboardHotkey.TabIndex = 12;
+			this.inputClipboardHotkey.TabIndex = 7;
 			this.inputClipboardHotkey.Text = "None";
 			// 
 			// labelClipboardFont
@@ -2145,7 +2230,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 219);
 			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
 			this.commandClipboardTextFont.Size = new System.Drawing.Size(168, 25);
-			this.commandClipboardTextFont.TabIndex = 14;
+			this.commandClipboardTextFont.TabIndex = 8;
 			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
 			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
 			// 
@@ -2202,79 +2287,89 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// gridNoteItems_columnRemove
+			// groupClipboardSaveType
 			// 
-			this.gridNoteItems_columnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnRemove.FillWeight = 30F;
-			this.gridNoteItems_columnRemove.HeaderText = ":setting/column/note/remove";
-			this.gridNoteItems_columnRemove.Name = "gridNoteItems_columnRemove";
-			this.gridNoteItems_columnRemove.Width = 189;
+			this.groupClipboardSaveType.AutoSize = true;
+			this.groupClipboardSaveType.Controls.Add(this.flowLayoutPanel2);
+			this.groupClipboardSaveType.Location = new System.Drawing.Point(561, 3);
+			this.groupClipboardSaveType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
+			this.groupClipboardSaveType.Name = "groupClipboardSaveType";
+			this.panelClipboardMain.SetRowSpan(this.groupClipboardSaveType, 6);
+			this.groupClipboardSaveType.Size = new System.Drawing.Size(171, 147);
+			this.groupClipboardSaveType.TabIndex = 10;
+			this.groupClipboardSaveType.TabStop = false;
+			this.groupClipboardSaveType.Text = ":setting/group/clipboard-type";
+			this.groupClipboardSaveType.Visible = false;
 			// 
-			// gridNoteItems_columnId
+			// flowLayoutPanel2
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
-			this.gridNoteItems_columnId.FillWeight = 40F;
-			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
-			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
-			this.gridNoteItems_columnId.ReadOnly = true;
-			this.gridNoteItems_columnId.Width = 40;
+			this.flowLayoutPanel2.AutoSize = true;
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_text);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_rtf);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_html);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_image);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_file);
+			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
+			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(165, 125);
+			this.flowLayoutPanel2.TabIndex = 0;
 			// 
-			// gridNoteItems_columnVisible
+			// selectClipboardSaveType_text
 			// 
-			this.gridNoteItems_columnVisible.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnVisible.FillWeight = 30F;
-			this.gridNoteItems_columnVisible.HeaderText = ":setting/column/note/visible";
-			this.gridNoteItems_columnVisible.Name = "gridNoteItems_columnVisible";
-			this.gridNoteItems_columnVisible.Width = 180;
+			this.selectClipboardSaveType_text.AutoSize = true;
+			this.selectClipboardSaveType_text.Location = new System.Drawing.Point(3, 3);
+			this.selectClipboardSaveType_text.Name = "selectClipboardSaveType_text";
+			this.selectClipboardSaveType_text.Size = new System.Drawing.Size(148, 19);
+			this.selectClipboardSaveType_text.TabIndex = 0;
+			this.selectClipboardSaveType_text.Text = "#ClipboardType.Text";
+			this.selectClipboardSaveType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_text.UseVisualStyleBackColor = true;
 			// 
-			// gridNoteItems_columnLocked
+			// selectClipboardSaveType_rtf
 			// 
-			this.gridNoteItems_columnLocked.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-			this.gridNoteItems_columnLocked.HeaderText = ":setting/column/note/locked";
-			this.gridNoteItems_columnLocked.Name = "gridNoteItems_columnLocked";
-			this.gridNoteItems_columnLocked.Width = 181;
+			this.selectClipboardSaveType_rtf.AutoSize = true;
+			this.selectClipboardSaveType_rtf.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardSaveType_rtf.Name = "selectClipboardSaveType_rtf";
+			this.selectClipboardSaveType_rtf.Size = new System.Drawing.Size(139, 19);
+			this.selectClipboardSaveType_rtf.TabIndex = 0;
+			this.selectClipboardSaveType_rtf.Text = "#ClipboardType.Rtf";
+			this.selectClipboardSaveType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_rtf.UseVisualStyleBackColor = true;
 			// 
-			// gridNoteItems_columnTitle
+			// selectClipboardSaveType_html
 			// 
-			this.gridNoteItems_columnTitle.HeaderText = ":setting/column/note/title";
-			this.gridNoteItems_columnTitle.Name = "gridNoteItems_columnTitle";
+			this.selectClipboardSaveType_html.AutoSize = true;
+			this.selectClipboardSaveType_html.Location = new System.Drawing.Point(3, 53);
+			this.selectClipboardSaveType_html.Name = "selectClipboardSaveType_html";
+			this.selectClipboardSaveType_html.Size = new System.Drawing.Size(151, 19);
+			this.selectClipboardSaveType_html.TabIndex = 0;
+			this.selectClipboardSaveType_html.Text = "#ClipboardType.Html";
+			this.selectClipboardSaveType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_html.UseVisualStyleBackColor = true;
 			// 
-			// gridNoteItems_columnBody
+			// selectClipboardSaveType_image
 			// 
-			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
-			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
-			this.gridNoteItems_columnBody.MinimumWidth = 100;
-			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
-			this.gridNoteItems_columnBody.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.selectClipboardSaveType_image.AutoSize = true;
+			this.selectClipboardSaveType_image.Location = new System.Drawing.Point(3, 78);
+			this.selectClipboardSaveType_image.Name = "selectClipboardSaveType_image";
+			this.selectClipboardSaveType_image.Size = new System.Drawing.Size(160, 19);
+			this.selectClipboardSaveType_image.TabIndex = 0;
+			this.selectClipboardSaveType_image.Text = "#ClipboardType.Image";
+			this.selectClipboardSaveType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_image.UseVisualStyleBackColor = true;
 			// 
-			// gridNoteItems_columnFont
+			// selectClipboardSaveType_file
 			// 
-			this.gridNoteItems_columnFont.FillWeight = 80F;
-			this.gridNoteItems_columnFont.HeaderText = ":setting/column/note/font";
-			this.gridNoteItems_columnFont.Name = "gridNoteItems_columnFont";
-			this.gridNoteItems_columnFont.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnFont.Width = 80;
-			// 
-			// gridNoteItems_columnFore
-			// 
-			this.gridNoteItems_columnFore.FillWeight = 80F;
-			this.gridNoteItems_columnFore.HeaderText = ":setting/column/note/fore";
-			this.gridNoteItems_columnFore.Name = "gridNoteItems_columnFore";
-			this.gridNoteItems_columnFore.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnFore.Width = 80;
-			// 
-			// gridNoteItems_columnBack
-			// 
-			this.gridNoteItems_columnBack.FillWeight = 80F;
-			this.gridNoteItems_columnBack.HeaderText = ":setting/column/note/back";
-			this.gridNoteItems_columnBack.Name = "gridNoteItems_columnBack";
-			this.gridNoteItems_columnBack.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBack.Width = 80;
+			this.selectClipboardSaveType_file.AutoSize = true;
+			this.selectClipboardSaveType_file.Location = new System.Drawing.Point(3, 103);
+			this.selectClipboardSaveType_file.Name = "selectClipboardSaveType_file";
+			this.selectClipboardSaveType_file.Size = new System.Drawing.Size(142, 19);
+			this.selectClipboardSaveType_file.TabIndex = 0;
+			this.selectClipboardSaveType_file.Text = "#ClipboardType.File";
+			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -2375,6 +2470,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.groupClipboardSaveType.ResumeLayout(false);
+			this.groupClipboardSaveType.PerformLayout();
+			this.flowLayoutPanel2.ResumeLayout(false);
+			this.flowLayoutPanel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -2548,5 +2647,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private Ex.NoteFontDataGridViewButtonColumn gridNoteItems_columnFont;
 		private Ex.NoteColorDataGridViewButtonColumn gridNoteItems_columnFore;
 		private Ex.NoteColorDataGridViewButtonColumn gridNoteItems_columnBack;
+		private System.Windows.Forms.GroupBox groupClipboardSaveType;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+		private System.Windows.Forms.CheckBox selectClipboardSaveType_text;
+		private System.Windows.Forms.CheckBox selectClipboardSaveType_rtf;
+		private System.Windows.Forms.CheckBox selectClipboardSaveType_html;
+		private System.Windows.Forms.CheckBox selectClipboardSaveType_image;
+		private System.Windows.Forms.CheckBox selectClipboardSaveType_file;
 	}
 }

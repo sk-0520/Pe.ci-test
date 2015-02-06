@@ -53,13 +53,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.selectEnvironment = new System.Windows.Forms.CheckBox();
 			this.groupUpdate = new System.Windows.Forms.GroupBox();
+			this.envUpdate = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvUpdateControl();
 			this.groupRemove = new System.Windows.Forms.GroupBox();
+			this.envRemove = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvRemoveControl();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
-			this.envUpdate = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvUpdateControl();
-			this.envRemove = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.EnvRemoveControl();
 			this.tabExecute.SuspendLayout();
 			this.tabExecute_pageBasic.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -102,7 +102,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputWorkDirPath.Location = new System.Drawing.Point(154, 63);
 			this.inputWorkDirPath.Name = "inputWorkDirPath";
 			this.inputWorkDirPath.Size = new System.Drawing.Size(429, 23);
-			this.inputWorkDirPath.TabIndex = 2;
+			this.inputWorkDirPath.TabIndex = 3;
 			this.inputWorkDirPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.InputWorkDirPath_DragDrop);
 			this.inputWorkDirPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.InputWorkDirPath_DragEnter);
 			// 
@@ -168,7 +168,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectAdministrator.Location = new System.Drawing.Point(3, 119);
 			this.selectAdministrator.Name = "selectAdministrator";
 			this.selectAdministrator.Size = new System.Drawing.Size(163, 19);
-			this.selectAdministrator.TabIndex = 5;
+			this.selectAdministrator.TabIndex = 6;
 			this.selectAdministrator.Text = ":common/check/admin";
 			this.selectAdministrator.UseVisualStyleBackColor = true;
 			// 
@@ -189,7 +189,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectStdStream.Location = new System.Drawing.Point(3, 94);
 			this.selectStdStream.Name = "selectStdStream";
 			this.selectStdStream.Size = new System.Drawing.Size(187, 19);
-			this.selectStdStream.TabIndex = 4;
+			this.selectStdStream.TabIndex = 5;
 			this.selectStdStream.Text = ":execute/check/std-stream";
 			this.selectStdStream.UseVisualStyleBackColor = true;
 			// 
@@ -219,7 +219,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandWorkDirPath.Location = new System.Drawing.Point(589, 63);
 			this.commandWorkDirPath.Name = "commandWorkDirPath";
 			this.commandWorkDirPath.Size = new System.Drawing.Size(28, 25);
-			this.commandWorkDirPath.TabIndex = 3;
+			this.commandWorkDirPath.TabIndex = 4;
 			this.commandWorkDirPath.UseVisualStyleBackColor = true;
 			this.commandWorkDirPath.Click += new System.EventHandler(this.CommandWorkDirPath_Click);
 			// 
@@ -230,7 +230,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandOption_dir.Location = new System.Drawing.Point(623, 32);
 			this.commandOption_dir.Name = "commandOption_dir";
 			this.commandOption_dir.Size = new System.Drawing.Size(28, 25);
-			this.commandOption_dir.TabIndex = 6;
+			this.commandOption_dir.TabIndex = 2;
 			this.commandOption_dir.UseVisualStyleBackColor = true;
 			this.commandOption_dir.Click += new System.EventHandler(this.CommandOption_dir_Click);
 			// 
@@ -258,7 +258,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(660, 175);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(654, 175);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
 			// selectEnvironment
@@ -267,7 +267,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectEnvironment.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.selectEnvironment.Location = new System.Drawing.Point(3, 3);
 			this.selectEnvironment.Name = "selectEnvironment";
-			this.selectEnvironment.Size = new System.Drawing.Size(654, 24);
+			this.selectEnvironment.Size = new System.Drawing.Size(648, 24);
 			this.selectEnvironment.TabIndex = 0;
 			this.selectEnvironment.Text = ":execute/check/edit-env";
 			this.selectEnvironment.UseVisualStyleBackColor = true;
@@ -279,21 +279,39 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupUpdate.Location = new System.Drawing.Point(3, 33);
 			this.groupUpdate.Name = "groupUpdate";
-			this.groupUpdate.Size = new System.Drawing.Size(400, 139);
+			this.groupUpdate.Size = new System.Drawing.Size(397, 139);
 			this.groupUpdate.TabIndex = 1;
 			this.groupUpdate.TabStop = false;
 			this.groupUpdate.Text = ":common/label/edit";
+			// 
+			// envUpdate
+			// 
+			this.envUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.envUpdate.Location = new System.Drawing.Point(3, 19);
+			this.envUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.envUpdate.Name = "envUpdate";
+			this.envUpdate.Size = new System.Drawing.Size(391, 117);
+			this.envUpdate.TabIndex = 0;
 			// 
 			// groupRemove
 			// 
 			this.groupRemove.Controls.Add(this.envRemove);
 			this.groupRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupRemove.Location = new System.Drawing.Point(409, 33);
+			this.groupRemove.Location = new System.Drawing.Point(406, 33);
 			this.groupRemove.Name = "groupRemove";
-			this.groupRemove.Size = new System.Drawing.Size(248, 139);
+			this.groupRemove.Size = new System.Drawing.Size(245, 139);
 			this.groupRemove.TabIndex = 2;
 			this.groupRemove.TabStop = false;
 			this.groupRemove.Text = ":common/label/remove";
+			// 
+			// envRemove
+			// 
+			this.envRemove.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.envRemove.Location = new System.Drawing.Point(3, 19);
+			this.envRemove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.envRemove.Name = "envRemove";
+			this.envRemove.Size = new System.Drawing.Size(239, 117);
+			this.envRemove.TabIndex = 0;
 			// 
 			// splitContainer1
 			// 
@@ -349,24 +367,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandSubmit.UseVisualStyleBackColor = true;
 			this.commandSubmit.Click += new System.EventHandler(this.CommandSubmit_Click);
 			// 
-			// envUpdate
-			// 
-			this.envUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.envUpdate.Location = new System.Drawing.Point(3, 19);
-			this.envUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.envUpdate.Name = "envUpdate";
-			this.envUpdate.Size = new System.Drawing.Size(394, 117);
-			this.envUpdate.TabIndex = 0;
-			// 
-			// envRemove
-			// 
-			this.envRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.envRemove.Location = new System.Drawing.Point(3, 19);
-			this.envRemove.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.envRemove.Name = "envRemove";
-			this.envRemove.Size = new System.Drawing.Size(242, 117);
-			this.envRemove.TabIndex = 0;
-			// 
 			// ExecuteForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -380,7 +380,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ExecuteForm";
-			this.ShowInTaskbar = true;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = ":window/execute";
 			this.tabExecute.ResumeLayout(false);

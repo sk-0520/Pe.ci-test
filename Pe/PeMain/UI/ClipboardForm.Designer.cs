@@ -423,7 +423,7 @@
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(366, 50);
-			this.flowLayoutPanel1.TabIndex = 6;
+			this.flowLayoutPanel1.TabIndex = 0;
 			// 
 			// labelTemplateName
 			// 
@@ -452,7 +452,7 @@
 			this.selectTemplateReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.selectTemplateReplace.Name = "selectTemplateReplace";
 			this.selectTemplateReplace.Size = new System.Drawing.Size(228, 19);
-			this.selectTemplateReplace.TabIndex = 2;
+			this.selectTemplateReplace.TabIndex = 1;
 			this.selectTemplateReplace.Text = ":clipboard/check/template-replace";
 			this.selectTemplateReplace.UseVisualStyleBackColor = true;
 			this.selectTemplateReplace.CheckedChanged += new System.EventHandler(this.selectTemplateReplace_CheckedChanged);
@@ -473,7 +473,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 222;
+			this.panelTemplateSource.SplitterDistance = 223;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -486,8 +486,8 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(222, 154);
-			this.inputTemplateSource.TabIndex = 1;
+			this.inputTemplateSource.Size = new System.Drawing.Size(223, 154);
+			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
 			// listReplace
@@ -499,7 +499,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(141, 154);
+			this.listReplace.Size = new System.Drawing.Size(140, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
