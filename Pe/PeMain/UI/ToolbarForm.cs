@@ -8,7 +8,6 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
-	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -76,16 +75,12 @@
 
 		public ToolbarForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
 			
 			Initialize();
 		}
 
 		#region property
-		//CommonData CommonData { get; set; }
 
 		ToolbarGroupItem SelectedGroupItem { get; set; }
 		public ToolbarItem UsingToolbarItem { get; private set; }
@@ -112,24 +107,10 @@
 		}
 		#endregion ////////////////////////////////////
 
-		#region ISetCommonData
-		//public void SetCommonData(CommonData commonData)
-		//{
-		//	CommonData = commonData;
-		//	this.Initialized = false;
-
-		//	this._tipsLauncher.SetCommonData(CommonData);
-		//	ApplySetting();
-
-		//	this.Initialized = true;
-		//}
-		#endregion ////////////////////////////////////
-
 		#region override
 
 		protected override void OnPaintBackground(PaintEventArgs e)
 		{
-			//pevent.Graphics.Clear()
 			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
 				base.OnPaintBackground(e);
 			} else {
@@ -181,14 +162,6 @@
 					case (int)WM.WM_NCPAINT:
 						{
 							if(CommonData != null) {
-								//var hDC = NativeMethods.GetWindowDC(Handle);
-								//try {
-								//	using(var g = Graphics.FromHdc(hDC)) {
-								//		DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
-								//	}
-								//} finally {
-								//	NativeMethods.ReleaseDC(Handle, hDC);
-								//}
 								using(var hDC = new UnmanagedControlDeviceContext(this)) {
 									using(var g = hDC.CreateGraphics()) {
 										DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
@@ -234,16 +207,6 @@
 							}
 						}
 						break;
-
-					/*
-				case (int)WM.WM_CONTEXTMENU:
-					{
-						//Debug.WriteLine(m.WParam);
-						//NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
-					}
-					//return;
-					break;
-					 */
 
 					case (int)WM.WM_MOVING:
 						{
@@ -294,8 +257,6 @@
 			Visible = false;
 
 			this._tipsLauncher = new LauncherToolTipForm();
-
-			//this.tipsLauncher.SetToolTip(this.toolLauncher, "#");
 		}
 
 		void Initialize()
@@ -344,12 +305,6 @@
 		
 		void ApplySettingPosition()
 		{
-			/*
-			if(false) {
-				HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
-				HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
-			}
-			//*/
 			if(UsingToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;
@@ -1297,15 +1252,7 @@
 			}
 			
 			toolItem.MouseDown += LauncherButton_MouseDown;
-			/*
-			toolItem.MouseDown += (object sender, MouseEventArgs e) => {
-				if(Control.ModifierKeys == Keys.Alt) {
-					this._dragStartItem = toolItem;
-					Debug.WriteLine(this._dragStartItem);
-					this.toolLauncher.DoDragDrop(toolItem, DragDropEffects.Copy);
-				}
-			};
-			 */
+
 			return toolItem;
 		}
 		
@@ -1318,6 +1265,8 @@
 			} else {
 				toolItem = CreateItemLauncherButton(item);
 			}
+			//toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+			//toolItem.TextAlign = ContentAlignment.MiddleLeft;
 			
 			SetButtonLayout(toolItem, CommonData.Skin, UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
 			toolItem.Visible = true;

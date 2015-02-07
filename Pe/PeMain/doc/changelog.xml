@@ -86,6 +86,9 @@
 				<message>#99: オーバーフロー時のツールチップ表示</message>
 			</note>
 			<note rev="">
+				<message>オーバーフロー表示されたランチャーアイテムの描画をスーパークラスに委譲する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
