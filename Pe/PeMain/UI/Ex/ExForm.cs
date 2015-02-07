@@ -3,6 +3,7 @@
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
@@ -61,5 +62,53 @@
 		{
 			Debug.Assert(CommonData.Skin != null);
 		}
+	}
+
+	/// <summary>
+	/// ツールチップ用フォーム。
+	/// </summary>
+	public class CommonToolTipForm: CommonForm
+	{
+		public CommonToolTipForm()
+		{
+			Visible = false;
+			FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			ShowIcon = false;
+			ShowInTaskbar = false;
+			TopMost = true;
+			ForeColor = SystemColors.InfoText;
+			BackColor = SystemColors.Info;
+		}
+
+		protected override bool ShowWithoutActivation { get { return true; } }
+
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				var result = base.CreateParams;
+
+				result.ExStyle |= (int)(WS_EX.WS_EX_NOACTIVATE | WS_EX.WS_EX_TOOLWINDOW);
+				result.ClassStyle |= (int)CS.CS_DROPSHADOW;
+
+				return result;
+			}
+		}
+
+		protected override void OnPaintBackground(PaintEventArgs e)
+		{
+			if(CommonData != null && CommonData.Skin != null) {
+				if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
+					base.OnPaintBackground(e);
+					//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+				} else {
+					CommonData.Skin.DrawToolTipBackground(e.Graphics, e.ClipRectangle);
+				}
+			} else {
+				base.OnPaintBackground(e);
+			}
+		}
+
+
 	}
 }

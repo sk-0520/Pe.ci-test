@@ -13,8 +13,8 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
-	
-	public partial class LauncherToolTipForm: CommonForm
+
+	public partial class LauncherToolTipForm: CommonToolTipForm
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -54,34 +54,34 @@
 		#endregion ////////////////////////////////////
 
 		#region override
-		protected override bool ShowWithoutActivation { get { return true; } }
+		//protected override bool ShowWithoutActivation { get { return true; } }
 
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				var result = base.CreateParams;
+		//protected override CreateParams CreateParams
+		//{
+		//	get
+		//	{
+		//		var result = base.CreateParams;
 
-				result.ExStyle |= (int)(WS_EX.WS_EX_NOACTIVATE | WS_EX.WS_EX_TOOLWINDOW);
-				result.ClassStyle |= (int)CS.CS_DROPSHADOW;
+		//		result.ExStyle |= (int)(WS_EX.WS_EX_NOACTIVATE | WS_EX.WS_EX_TOOLWINDOW);
+		//		result.ClassStyle |= (int)CS.CS_DROPSHADOW;
 
-				return result;
-			}
-		}
+		//		return result;
+		//	}
+		//}
 
-		protected override void OnPaintBackground(PaintEventArgs e)
-		{
-			if(CommonData != null && CommonData.Skin != null) {
-				if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
-					base.OnPaintBackground(e);
-					//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
-				} else {
-					CommonData.Skin.DrawToolTipBackground(e.Graphics, e.ClipRectangle);
-				}
-			} else {
-				base.OnPaintBackground(e);
-			}
-		}
+		//protected override void OnPaintBackground(PaintEventArgs e)
+		//{
+		//	if(CommonData != null && CommonData.Skin != null) {
+		//		if(CommonData.Skin.IsDefaultDrawToolbarToolTipBackground) {
+		//			base.OnPaintBackground(e);
+		//			//e.Graphics.FillEllipse(SystemBrushes.InfoText, e.ClipRectangle);
+		//		} else {
+		//			CommonData.Skin.DrawToolTipBackground(e.Graphics, e.ClipRectangle);
+		//		}
+		//	} else {
+		//		base.OnPaintBackground(e);
+		//	}
+		//}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
@@ -121,17 +121,17 @@
 		#endregion ////////////////////////////////////
 
 		#region language
-		protected override void ApplyLanguage()
-		{
-			base.ApplyLanguage();
-		}
+		//protected override void ApplyLanguage()
+		//{
+		//	base.ApplyLanguage();
+		//}
 		#endregion ////////////////////////////////////
 
 		#region function
-		protected override void ApplySetting()
-		{
-			base.ApplySetting();
-		}
+		//protected override void ApplySetting()
+		//{
+		//	base.ApplySetting();
+		//}
 
 		bool HasMessage()
 		{
