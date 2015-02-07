@@ -387,6 +387,9 @@
     <EmbeddedResource Include="UI\HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\LauncherToolTipForm.resx">
+      <DependentUpon>LauncherToolTipForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>

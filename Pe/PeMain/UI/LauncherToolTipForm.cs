@@ -110,15 +110,6 @@
 		void Initialize()
 		{
 			Visible = false;
-			FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			ShowInTaskbar = false;
-			TopMost = true;
-			Padding = new Padding(3);
-
-			BackColor = SystemColors.Info;
-			ForeColor = SystemColors.InfoText;
-
-			//this._fadeState = FadeState.None;
 
 			TipPadding = new Size(4, 4);
 			TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
