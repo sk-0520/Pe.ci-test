@@ -17,7 +17,7 @@
 	/// <summary>
 	/// TODO: スキンと内部描画が入り混じっている。描画処理は整理出来たら全部スキンに回す。
 	/// </summary>
-	public partial class CustomToolTipForm: CommonForm
+	public partial class LauncherToolTipForm: CommonForm
 	{
 		//CommonData CommonData { get; set; }
 
@@ -31,7 +31,7 @@
 
 		float _titleHeight;
 
-		public CustomToolTipForm()
+		public LauncherToolTipForm()
 		{
 			//Opacity = 0;
 			Visible = false;
