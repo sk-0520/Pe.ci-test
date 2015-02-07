@@ -83,7 +83,7 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#99: オーバーフロー時のツールチップ表示</message>
 			</note>
 			<note rev="">
 				<message></message>

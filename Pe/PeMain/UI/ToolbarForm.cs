@@ -68,7 +68,7 @@
 		bool _menuOpening = false;
 
 		ToolStripItem _dragStartItem;
-		CustomToolTipForm _tipsLauncher;
+		LauncherToolTipForm _tipsLauncher;
 
 		IDictionary<IconScale, Image> _waitImage = new Dictionary<IconScale, Image>();
 
@@ -293,7 +293,7 @@
 
 			Visible = false;
 
-			this._tipsLauncher = new CustomToolTipForm();
+			this._tipsLauncher = new LauncherToolTipForm();
 
 			//this.tipsLauncher.SetToolTip(this.toolLauncher, "#");
 		}
