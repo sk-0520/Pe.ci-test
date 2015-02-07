@@ -174,30 +174,8 @@
 			ToHide();
 		}
 
-		public void ShowItem(Screen screen, ToolStripItem toolStripItem, ToolbarGroupItem groupItem, ToolbarItem toolbarItem)
+		void SetSize(Screen screen)
 		{
-			Debug.Assert(toolStripItem != null);
-			Debug.Assert(CommonData != null);
-
-			var ili = toolStripItem as ILauncherItem;
-			var launcherItem = ili == null ? null : ili.LauncherItem;
-
-			if(launcherItem != null) {
-				var itemIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
-				this._imageIcon = itemIcon.ToBitmap();
-				this._title = launcherItem.Name;
-				if(launcherItem.LauncherType == LauncherType.Embedded) {
-					var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
-					this._message = LanguageUtility.ApplicationItemToComment(CommonData.Language, applicationItem);
-				} else {
-					this._message = launcherItem.Note;
-				}
-			} else {
-				this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
-				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { ProgramLanguageName.groupName, groupItem.Name } }];
-				this._message = string.Empty;
-			}
-
 			// 描画サイズ生成
 			using(var g = CreateGraphics())
 			using(var titleFormat = CreateTitleFormat())
@@ -215,8 +193,10 @@
 			}
 
 			CommonData.Skin.ApplyToolbarToolTipRegion(this);
+		}
 
-			// 表示位置設定
+		void SetPosition(Screen screen, ToolbarItem toolbarItem, ToolStripItem toolStripItem)
+		{
 			var itemArea = toolStripItem.Bounds;
 			if(toolStripItem.OwnerItem != null) {
 				var ownerItemLocation = toolStripItem.OwnerItem.Bounds.Location;
@@ -254,6 +234,37 @@
 				default:
 					throw new NotImplementedException();
 			}
+		}
+
+		public void ShowItem(Screen screen, ToolStripItem toolStripItem, ToolbarGroupItem groupItem, ToolbarItem toolbarItem)
+		{
+			Debug.Assert(toolStripItem != null);
+			Debug.Assert(CommonData != null);
+
+			var ili = toolStripItem as ILauncherItem;
+			var launcherItem = ili == null ? null : ili.LauncherItem;
+
+			if(launcherItem != null) {
+				var itemIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
+				this._imageIcon = itemIcon.ToBitmap();
+				this._title = launcherItem.Name;
+				if(launcherItem.LauncherType == LauncherType.Embedded) {
+					var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
+					this._message = LanguageUtility.ApplicationItemToComment(CommonData.Language, applicationItem);
+				} else {
+					this._message = launcherItem.Note;
+				}
+			} else {
+				this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
+				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { ProgramLanguageName.groupName, groupItem.Name } }];
+				this._message = string.Empty;
+			}
+
+			SetSize(screen);
+			SetPosition(screen, toolbarItem, toolStripItem);
+	
+			// 表示位置設定
+
 
 			ToShow();
 		}
