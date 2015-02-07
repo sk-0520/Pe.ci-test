@@ -13,51 +13,47 @@
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
-
-	/// <summary>
-	/// TODO: スキンと内部描画が入り混じっている。描画処理は整理出来たら全部スキンに回す。
-	/// </summary>
+	
 	public partial class LauncherToolTipForm: CommonForm
 	{
-		//CommonData CommonData { get; set; }
+		#region define
+		#endregion ////////////////////////////////////
 
-		FontSetting TitleFontSetting { get; set; }
-		FontSetting MessageFontSetting { get; set; }
-		IconScale IconScale { get; set; }
-		Size TipPadding { get; set; }
+		#region static
+		#endregion ////////////////////////////////////
+
+		#region variable
 
 		string _title, _message;
 		Image _imageIcon;
 
 		float _titleHeight;
 
+		#endregion ////////////////////////////////////
+
+		#region event
+		#endregion ////////////////////////////////////
+
 		public LauncherToolTipForm()
 		{
-			//Opacity = 0;
-			Visible = false;
-			FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			ShowInTaskbar = false;
-			TopMost = true;
-			Padding = new Padding(3);
+			InitializeComponent();
 
-			BackColor = SystemColors.Info;
-			ForeColor = SystemColors.InfoText;
-
-			//this._fadeState = FadeState.None;
-
-			TipPadding = new Size(4, 4);
-			TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
-			MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
-			IconScale = IconScale.Normal;
+			Initialize();
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			_imageIcon.ToDispose();
+		#region property
 
-			base.Dispose(disposing);
-		}
+		FontSetting TitleFontSetting { get; set; }
+		FontSetting MessageFontSetting { get; set; }
+		IconScale IconScale { get; set; }
+		Size TipPadding { get; set; }
 
+		#endregion ////////////////////////////////////
+
+		#region ISetCommonData
+		#endregion ////////////////////////////////////
+
+		#region override
 		protected override bool ShowWithoutActivation { get { return true; } }
 
 		protected override CreateParams CreateParams
@@ -71,42 +67,6 @@
 
 				return result;
 			}
-		}
-
-		protected override void ApplyLanguage()
-		{
-			base.ApplyLanguage();
-		}
-
-		protected override void ApplySetting()
-		{
-			base.ApplySetting();
-		}
-
-		bool HasMessage()
-		{
-			return !string.IsNullOrWhiteSpace(this._message);
-		}
-
-		StringFormat CreateTitleFormat()
-		{
-			var sf = new StringFormat();
-
-			sf.Alignment = StringAlignment.Near;
-			sf.LineAlignment = StringAlignment.Center;
-			sf.Trimming = StringTrimming.EllipsisCharacter;
-
-			return sf;
-		}
-		StringFormat CreateMessageFormat()
-		{
-			var sf = new StringFormat();
-
-			sf.Alignment = StringAlignment.Near;
-			sf.LineAlignment = StringAlignment.Near;
-			sf.Trimming = StringTrimming.EllipsisCharacter;
-
-			return sf;
 		}
 
 		protected override void OnPaintBackground(PaintEventArgs e)
@@ -140,6 +100,72 @@
 					e.Graphics.DrawString(this._message, MessageFontSetting.Font, brush, messageArea, sf);
 				}
 			}
+		}
+
+
+		#endregion ////////////////////////////////////
+
+		#region initialize
+
+		void Initialize()
+		{
+			Visible = false;
+			FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			ShowInTaskbar = false;
+			TopMost = true;
+			Padding = new Padding(3);
+
+			BackColor = SystemColors.Info;
+			ForeColor = SystemColors.InfoText;
+
+			//this._fadeState = FadeState.None;
+
+			TipPadding = new Size(4, 4);
+			TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
+			MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
+			IconScale = IconScale.Normal;
+
+		}
+
+		#endregion ////////////////////////////////////
+
+		#region language
+		protected override void ApplyLanguage()
+		{
+			base.ApplyLanguage();
+		}
+		#endregion ////////////////////////////////////
+
+		#region function
+		protected override void ApplySetting()
+		{
+			base.ApplySetting();
+		}
+
+		bool HasMessage()
+		{
+			return !string.IsNullOrWhiteSpace(this._message);
+		}
+
+		StringFormat CreateTitleFormat()
+		{
+			var sf = new StringFormat();
+
+			sf.Alignment = StringAlignment.Near;
+			sf.LineAlignment = StringAlignment.Center;
+			sf.Trimming = StringTrimming.EllipsisCharacter;
+
+			return sf;
+		}
+		StringFormat CreateMessageFormat()
+		{
+			var sf = new StringFormat();
+
+			sf.Alignment = StringAlignment.Near;
+			sf.LineAlignment = StringAlignment.Near;
+			sf.Trimming = StringTrimming.EllipsisCharacter;
+
+			return sf;
 		}
 
 		void ToShow()
@@ -240,5 +266,8 @@
 
 			ToShow();
 		}
+
+		#endregion ////////////////////////////////////
+
 	}
 }

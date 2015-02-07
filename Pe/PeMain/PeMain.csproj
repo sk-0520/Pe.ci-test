@@ -252,6 +252,9 @@
     <Compile Include="UI\LauncherToolTipForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\LauncherToolTipForm.Designer.cs">
+      <DependentUpon>LauncherToolTipForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>
     </Compile>
