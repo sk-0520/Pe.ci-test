@@ -198,11 +198,17 @@
 		void SetPosition(Screen screen, ToolbarItem toolbarItem, ToolStripItem toolStripItem)
 		{
 			var itemArea = toolStripItem.Bounds;
+
+			Point screenPoint;
 			if(toolStripItem.OwnerItem != null) {
-				var ownerItemLocation = toolStripItem.OwnerItem.Bounds.Location;
-				itemArea.Offset(ownerItemLocation);
+				var flowButton = (ToolStripOverflowButton)toolStripItem.OwnerItem;
+				var ownerItemLocation = flowButton.DropDown.Bounds.Location;
+				ownerItemLocation.Offset(itemArea.Location);
+				screenPoint = ownerItemLocation;
+			} else {
+				screenPoint = toolStripItem.Owner.PointToScreen(itemArea.Location);
 			}
-			var screenPoint = toolStripItem.Owner.PointToScreen(itemArea.Location);
+			//Debug.WriteLine("{0}, {1}", screenPoint, itemArea.Location);
 			switch(toolbarItem.ToolbarPosition) {
 				case ToolbarPosition.DesktopFloat:
 				case ToolbarPosition.DesktopTop:
