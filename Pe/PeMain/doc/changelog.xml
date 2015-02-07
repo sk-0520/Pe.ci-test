@@ -85,7 +85,7 @@
 			<note rev="5b5bc48e8ca1acfe43b61a05f48a747d58dc44e6">
 				<message>#99: オーバーフロー時のツールチップ表示</message>
 			</note>
-			<note rev="">
+			<note rev="c98046857eae6e790a48ac2845f94711b8a4d8b7">
 				<message>オーバーフロー表示されたランチャーアイテムの描画をスーパークラスに委譲する</message>
 			</note>
 			<note rev="">
