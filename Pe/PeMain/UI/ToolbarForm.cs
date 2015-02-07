@@ -1318,6 +1318,8 @@
 			} else {
 				toolItem = CreateItemLauncherButton(item);
 			}
+			toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+			toolItem.TextAlign = ContentAlignment.MiddleLeft;
 			
 			SetButtonLayout(toolItem, CommonData.Skin, UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
 			toolItem.Visible = true;

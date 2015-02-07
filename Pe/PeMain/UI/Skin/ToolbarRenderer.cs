@@ -58,7 +58,7 @@
 		
 		protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
 		{
-			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarButtonText) {
+			if((e.ToolStrip.IsDropDown && e.Item is ToolStripMenuItem) || Skin.IsDefaultDrawToolbarButtonText) {
 				base.OnRenderItemText(e);
 			} else {
 				Skin.DrawToolbarButtonText(e, IsActive(e.ToolStrip), ToolbarItem.IconScale, ToolbarItem.ShowText, new Tuple<int, int, int>(Literal.toolbarTextWidth.minimum, ToolbarItem.TextWidth, Literal.toolbarTextWidth.maximum));
@@ -67,7 +67,7 @@
 		
 		protected override void OnRenderDropDownButtonBackground(ToolStripItemRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarDropDownButtonBackground) {
+			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarDropDownButtonBackground) {
 				base.OnRenderDropDownButtonBackground(e);
 			} else {
 				var itemArea = new Rectangle(Point.Empty, e.Item.Size);
@@ -77,7 +77,7 @@
 		
 		protected override void OnRenderSplitButtonBackground(ToolStripItemRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarSplitButtonBackground) {
+			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarSplitButtonBackground) {
 				base.OnRenderSplitButtonBackground(e);
 			} else {
 				var itemArea = new Rectangle(Point.Empty, e.Item.Size);
@@ -87,7 +87,7 @@
 
 		protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e)
 		{
-			if(Skin.IsDefaultDrawToolbarButtonBackground) {
+			if(e.ToolStrip.IsDropDown || Skin.IsDefaultDrawToolbarButtonBackground) {
 				base.OnRenderButtonBackground(e);
 			} else {
 				var itemArea = new Rectangle(Point.Empty, e.Item.Size);
