@@ -1515,11 +1515,11 @@
 			// 現在の並びをデータとして取得
 			var groupItemNames = new List<string>(SelectedGroupItem.ItemNames.Count);
 			foreach(var item in this.toolLauncher.Items.Cast<ToolStripItem>()) {
-				var launcherItem = item.Tag as LauncherItem;
-				if(launcherItem == null) {
+				var ili = item as ILauncherItem;
+				if(ili == null) {
 					continue;
 				}
-				groupItemNames.Add(launcherItem.Name);
+				groupItemNames.Add(ili.LauncherItem.Name);
 			}
 			SelectedGroupItem.ItemNames = groupItemNames;
 		}
@@ -1667,6 +1667,8 @@
 				Debug.Assert(dropData.DropType == DropType.Button);
 				ChangeDropDataLauncherItemPosition(dropData);
 				this._dragStartItem = null;
+				// 他のツールバーにアイテム変更を教える
+				CommonData.RootSender.ChangedLauncherGroupItems(UsingToolbarItem, SelectedGroupItem);
 			}
 		}
 		

@@ -98,6 +98,12 @@
 				<message>#200: 指定して実行ウィンドウのアイコンが汚い</message>
 			</note>
 			<note rev="">
+				<message>複数のツールバーを表示しているときツールバーへファイルをD&amp;Dで登録したとき対象ツールバー以外のグループがクリアされる不具合の修正</message>
+			</note>
+			<note rev="">
+				<message>複数のツールバーを表示しているときにランチャーアイテムをD&amp;Dして並べ替えた際に他のツールバーのアイテム順序が追従しない不具合の修正</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
