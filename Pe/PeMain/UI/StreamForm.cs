@@ -111,6 +111,7 @@
 			Process.EnableRaisingEvents = true;
 			Process.Exited += new EventHandler(Process_Exited);
 
+			/*
 			// アイコン設定、アイテムに設定されているアイコンとは別に実行プロセスのアイコンを指定する
 			try {
 				var iconPath = Environment.ExpandEnvironmentVariables(LauncherItem.Command);
@@ -123,11 +124,14 @@
 				Debug.WriteLine(ex);
 				Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
 			}
+			*/
 		}
 
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
+
+			Icon = AppUtility.GetAppLauncherItem(CommonData, LauncherItem, IconScale.Normal);
 
 			this.propertyProcess.SelectedObject = Process;
 			this.propertyProperty.SelectedObject = Process.StartInfo;

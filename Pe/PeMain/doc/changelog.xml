@@ -95,6 +95,9 @@
 				<message>#201: 自動的に隠す非フロート状態からフロート状態にすると表明に引っ掛かる</message>
 			</note>
 			<note rev="">
+				<message>#200: 指定して実行ウィンドウのアイコンが汚い</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
