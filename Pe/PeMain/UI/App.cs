@@ -1734,43 +1734,41 @@
 
 			var myProcess = Process.GetCurrentProcess();
 
-			NativeMethods.EnumWindows(
-				(hWnd, lParam) => {
-					int processId;
-					NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
-					var process = Process.GetProcessById(processId);
-					if(!getAppWindow) {
-						if(myProcess.Id == process.Id) {
-							return true;
-						}
-					}
-
-					if(!NativeMethods.IsWindowVisible(hWnd)) {
+			NativeMethods.EnumWindows((hWnd, lParam) => {
+				int processId;
+				NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
+				var process = Process.GetProcessById(processId);
+				if(!getAppWindow) {
+					if(myProcess.Id == process.Id) {
 						return true;
 					}
+				}
 
-					var classBuffer = new StringBuilder(WindowsUtility.classNameLength);
-					NativeMethods.GetClassName(hWnd, classBuffer, classBuffer.Capacity);
-					var className = classBuffer.ToString();
-					if(skipClassName.Any(s => s == className)) {
-						return true;
-					}
-
-					var titleLength = NativeMethods.GetWindowTextLength(hWnd);
-					var titleBuffer = new StringBuilder(titleLength + 1);
-					NativeMethods.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
-					var rawRect = new RECT();
-					NativeMethods.GetWindowRect(hWnd, out rawRect);
-					var windowItem = new WindowItem();
-					windowItem.Name = titleBuffer.ToString();
-					windowItem.Process = process;
-					windowItem.WindowHandle = hWnd;
-					windowItem.Rectangle = new Rectangle(rawRect.X, rawRect.Y, rawRect.Width, rawRect.Height);
-					//Debug.WriteLine("{0}, {1}, {2}", className, windowItem.Name, windowItem.Rectangle);
-					windowItemList.Items.Add(windowItem);
+				if(!NativeMethods.IsWindowVisible(hWnd)) {
 					return true;
-				},
-				IntPtr.Zero
+				}
+
+				var classBuffer = new StringBuilder(WindowsUtility.classNameLength);
+				NativeMethods.GetClassName(hWnd, classBuffer, classBuffer.Capacity);
+				var className = classBuffer.ToString();
+				if(skipClassName.Any(s => s == className)) {
+					return true;
+				}
+
+				var titleLength = NativeMethods.GetWindowTextLength(hWnd);
+				var titleBuffer = new StringBuilder(titleLength + 1);
+				NativeMethods.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
+				var rawRect = new RECT();
+				NativeMethods.GetWindowRect(hWnd, out rawRect);
+				var windowItem = new WindowItem();
+				windowItem.Name = titleBuffer.ToString();
+				windowItem.Process = process;
+				windowItem.WindowHandle = hWnd;
+				windowItem.Rectangle = new Rectangle(rawRect.X, rawRect.Y, rawRect.Width, rawRect.Height);
+				//Debug.WriteLine("{0}, {1}, {2}", className, windowItem.Name, windowItem.Rectangle);
+				windowItemList.Items.Add(windowItem);
+				return true;
+			}, IntPtr.Zero
 			);
 
 			return windowItemList;
