@@ -376,8 +376,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			bool autoHideResult = false;
 			if(autoHide) {
 				var hideWnd = ExistsHideWindow(dockType);
-				if(hideWnd.ToInt32() == 0 || hideWnd == Handle) {
-					//if(hideWnd == null || hideWnd == Handle) {
+				if(hideWnd == IntPtr.Zero || hideWnd == Handle) {
 					// 自動的に隠す
 					var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
 					autoHideResult = result.ToInt32() != 0;
