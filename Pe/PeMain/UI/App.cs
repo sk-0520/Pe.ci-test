@@ -559,9 +559,6 @@
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
 
-			// 親アイテム
-			parentItem.Name = menuNameWindowToolbar;
-			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Toolbar);
 			// 表示
 			parentItem.DropDownOpened += ToolbarSubMenu_DropDownOpened;
 		}
@@ -609,9 +606,6 @@
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList);
 
-			// 親アイテム
-			parentItem.Name = menuNameWindowNote;
-			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Note);
 			// 表示
 			parentItem.DropDownOpening += NoteMenu_Opening;
 		}
@@ -643,9 +637,6 @@
 			}
 
 			parentItem.DropDownItems.AddRange(menuList.ToArray());
-
-			parentItem.Name = menuNameApplications;
-			parentItem.Image = this._commonData.Skin.GetImage(SkinImage.Applications);
 
 			parentItem.DropDownOpening += ApplicationsMenu_Opening;
 		}
@@ -742,67 +733,56 @@
 		/// <returns></returns>
 		private void AttachmentMainMenu()
 		{
-			var menuList = new List<ToolStripItem>();
-			//var itemWindow = new MenuItem();
-			var itemToolbar = new ToolStripMenuItem();
-			var itemNote = new ToolStripMenuItem();
-			var itemApplications = new ToolStripMenuItem();
-			var itemLogger = new ToolStripMenuItem();
-			var itemSystemEnv = new ToolStripMenuItem();
-			var itemSetting = new ToolStripMenuItem();
-			var itemAbout = new ToolStripMenuItem();
-			var itemHelp = new ToolStripMenuItem();
-			var itemExit = new ToolStripMenuItem();
-
-			menuList.Add(itemSetting);
-			menuList.Add(new DisableCloseToolStripSeparator());
-			menuList.Add(itemToolbar);
-			menuList.Add(itemNote);
-			menuList.Add(itemApplications);
-			menuList.Add(itemLogger);
-			menuList.Add(new DisableCloseToolStripSeparator());
-			menuList.Add(itemSystemEnv);
-			menuList.Add(new DisableCloseToolStripSeparator());
-			menuList.Add(itemAbout);
-			menuList.Add(itemHelp);
-#if DEBUG
-			var itemDebug = new ToolStripMenuItem();
-			menuList.Add(itemDebug);
-#endif
-			menuList.Add(new DisableCloseToolStripSeparator());
-			menuList.Add(itemExit);
-
-			// ウィンドウ
-			//itemWindow.Name = menuNameWindow;
-			//AttachmentWindowSubMenu(itemWindow);
+			// ツールバー
+			var itemToolbar = new ToolStripMenuItem() {
+				Name = menuNameWindowToolbar,
+				Image = this._commonData.Skin.GetImage(SkinImage.Toolbar),
+			};
 			AttachmentToolbarSubMenu(itemToolbar);
 
+			// ノート
+			var itemNote = new ToolStripMenuItem() {
+				Name = menuNameWindowNote,
+				Image = this._commonData.Skin.GetImage(SkinImage.Note),
+			};
 			AttachmentNoteSubMenu(itemNote);
 
+			// 組み込みアイテム
+			var itemApplications = new ToolStripMenuItem() {
+				Name = menuNameApplications,
+				Image = this._commonData.Skin.GetImage(SkinImage.Applications),
+			};
 			AttachmentApplicationsSubMenu(itemApplications);
-			
+
 			// ログ
-			itemLogger.Name = menuNameWindowLogger;
-			itemLogger.Image = this._commonData.Skin.GetImage(SkinImage.Log);
+			var itemLogger = new ToolStripMenuItem() {
+				Name = menuNameWindowLogger,
+				Image = this._commonData.Skin.GetImage(SkinImage.Log),
+			};
 			itemLogger.Click += (object sender, EventArgs e) => {
 				this._logForm.Visible = !this._logForm.Visible;
 				this._commonData.MainSetting.Log.Visible = this._logForm.Visible;
 			};
 
 			// システム環境
-			itemSystemEnv.Name = menuNameSystemEnv;
-			itemSystemEnv.Image = this._commonData.Skin.GetImage(SkinImage.SystemEnvironment);
+			var itemSystemEnv = new ToolStripMenuItem() {
+				Name = menuNameSystemEnv,
+				Image = this._commonData.Skin.GetImage(SkinImage.SystemEnvironment),
+			};
 			AttachmentSystemEnvSubMenu(itemSystemEnv);
 
 			// 設定
-			itemSetting.Name = menuNameSetting;
-			itemSetting.Image = this._commonData.Skin.GetImage(SkinImage.Config);
+			var itemSetting = new ToolStripMenuItem() {
+				Name = menuNameSetting,
+				Image = this._commonData.Skin.GetImage(SkinImage.Config),
+			};
 			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
 
 			// 情報
-			itemAbout.Name = menuNameAbout;
-
-			itemAbout.Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small);
+			var itemAbout = new ToolStripMenuItem() {
+				Name = menuNameAbout,
+				Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small),
+			};
 			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
@@ -818,27 +798,53 @@
 			});
 
 			// ヘルプ
-			itemHelp.Name = menuNameHelp;
-			itemHelp.Image = this._commonData.Skin.GetImage(SkinImage.Help);
+			var itemHelp = new ToolStripMenuItem() {
+				Name = menuNameHelp,
+				Image = this._commonData.Skin.GetImage(SkinImage.Help),
+			};
 			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
 			// 終了
-			itemExit.Name = menuNameExit;
-			itemExit.Image = this._commonData.Skin.GetImage(SkinImage.Close);
+			var itemExit = new ToolStripMenuItem() {
+				Name = menuNameExit,
+				Image = this._commonData.Skin.GetImage(SkinImage.Close),
+			};
 			itemExit.Click += (object sender, EventArgs e) => CloseApplication(true);
 
 #if DEBUG
+			var itemDebug = new ToolStripMenuItem();
 			itemDebug.Name = menuNameDebug;
 			itemDebug.Image = this._commonData.Skin.GetImage(SkinImage.Debug);
 			itemDebug.Text = "!DEBUG!";
 			itemDebug.Click += (o, e) => DebugProcess();
 #endif
+
+			var menuList = new ToolStripItem[] {
+				itemSetting,
+				new DisableCloseToolStripSeparator(),
+				itemToolbar,
+				itemNote,
+				itemApplications,
+				itemLogger,
+				new DisableCloseToolStripSeparator(),
+				itemSystemEnv,
+				new DisableCloseToolStripSeparator(),
+				itemAbout,
+				itemHelp,
+#if DEBUG
+				new DisableCloseToolStripSeparator(),
+				itemDebug,
+				new DisableCloseToolStripSeparator(),
+#endif
+				itemExit,
+			};
+
+			this._contextMenu.Items.AddRange(menuList);
+
 			// メインメニュー
 			this._contextMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
 			};
-
-			this._contextMenu.Items.AddRange(menuList.ToArray());
 		}
 
 		void InitializeSkin(CommandLine commandLine, ILogger logger)
