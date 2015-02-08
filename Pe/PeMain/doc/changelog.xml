@@ -94,7 +94,7 @@
 			<note rev="664ebe458e7a5ac24afdc4cb220a73e567881efc">
 				<message>#201: 自動的に隠す非フロート状態からフロート状態にすると表明に引っ掛かる</message>
 			</note>
-			<note rev="">
+			<note rev="2819d8a092d3aedbc809ee623ca3111c6db1a4e1">
 				<message>#200: 指定して実行ウィンドウのアイコンが汚い</message>
 			</note>
 			<note rev="">
