@@ -3,7 +3,7 @@
 <changelog>
 	<!--
 			<note rev="">
-				<message></message>
+				<message class="compatibility"></message>
 				<comments>
 					<comment></comment>
 				</comments>
@@ -55,6 +55,42 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/02/08" version="0.47.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>バグ修正！</message>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="5b5bc48e8ca1acfe43b61a05f48a747d58dc44e6">
+				<message>#99: オーバーフロー時のツールチップ表示</message>
+			</note>
+			<note rev="c98046857eae6e790a48ac2845f94711b8a4d8b7">
+				<message>オーバーフロー表示されたランチャーアイテムの描画をスーパークラスに委譲する</message>
+			</note>
+			<note rev="a10fef85a324e360368e513758e672ec5b5c5715">
+				<message>#182: ツールバーの自動的に隠す状態はタスクバーに干渉するべきでない</message>
+			</note>
+			<note rev="664ebe458e7a5ac24afdc4cb220a73e567881efc">
+				<message>#201: 自動的に隠す非フロート状態からフロート状態にすると表明に引っ掛かる</message>
+			</note>
+			<note rev="2819d8a092d3aedbc809ee623ca3111c6db1a4e1">
+				<message>#200: 指定して実行ウィンドウのアイコンが汚い</message>
+			</note>
+			<note rev="f0bc4c1e0bd489e86cf2156602a2ec6989260a35">
+				<message>複数のツールバーを表示での各不具合を修正</message>
+				<comments>
+					<comment>ツールバーへファイルをD&amp;Dで登録した際に対象ツールバー以外のグループがクリアされる</comment>
+					<comment>ランチャーアイテムをD&amp;Dして並べ替えた際に他のツールバーのアイテム順序が追従しない</comment>
+				</comments>
+			</note>
+			<note rev="8cbd6f6c7cfeec80b19fe8a4846c9d725f2e05d2">
+				<message>ツールバーのランチャーアイテムをホイールクリックしてもランチャーアイテムメニューが表示できなくなっていた</message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/02/06" version="0.46.0">
 		<group type="note">
 			<sep dummy="==================================================================" />

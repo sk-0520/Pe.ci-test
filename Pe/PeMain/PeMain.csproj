@@ -249,8 +249,11 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CustomToolTipForm.cs">
+    <Compile Include="UI\LauncherToolTipForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\LauncherToolTipForm.Designer.cs">
+      <DependentUpon>LauncherToolTipForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\ExecuteForm.cs">
       <SubType>Form</SubType>
@@ -383,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LauncherToolTipForm.resx">
+      <DependentUpon>LauncherToolTipForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>

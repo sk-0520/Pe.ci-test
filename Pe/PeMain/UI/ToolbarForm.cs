@@ -8,7 +8,6 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
-	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -68,7 +67,7 @@
 		bool _menuOpening = false;
 
 		ToolStripItem _dragStartItem;
-		CustomToolTipForm _tipsLauncher;
+		LauncherToolTipForm _tipsLauncher;
 
 		IDictionary<IconScale, Image> _waitImage = new Dictionary<IconScale, Image>();
 
@@ -76,16 +75,12 @@
 
 		public ToolbarForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
 			InitializeComponent();
 			
 			Initialize();
 		}
 
 		#region property
-		//CommonData CommonData { get; set; }
 
 		ToolbarGroupItem SelectedGroupItem { get; set; }
 		public ToolbarItem UsingToolbarItem { get; private set; }
@@ -112,24 +107,10 @@
 		}
 		#endregion ////////////////////////////////////
 
-		#region ISetCommonData
-		//public void SetCommonData(CommonData commonData)
-		//{
-		//	CommonData = commonData;
-		//	this.Initialized = false;
-
-		//	this._tipsLauncher.SetCommonData(CommonData);
-		//	ApplySetting();
-
-		//	this.Initialized = true;
-		//}
-		#endregion ////////////////////////////////////
-
 		#region override
 
 		protected override void OnPaintBackground(PaintEventArgs e)
 		{
-			//pevent.Graphics.Clear()
 			if(CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
 				base.OnPaintBackground(e);
 			} else {
@@ -181,14 +162,6 @@
 					case (int)WM.WM_NCPAINT:
 						{
 							if(CommonData != null) {
-								//var hDC = NativeMethods.GetWindowDC(Handle);
-								//try {
-								//	using(var g = Graphics.FromHdc(hDC)) {
-								//		DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
-								//	}
-								//} finally {
-								//	NativeMethods.ReleaseDC(Handle, hDC);
-								//}
 								using(var hDC = new UnmanagedControlDeviceContext(this)) {
 									using(var g = hDC.CreateGraphics()) {
 										DrawNoClient(g, new Rectangle(Point.Empty, Size), this == Form.ActiveForm);
@@ -234,16 +207,6 @@
 							}
 						}
 						break;
-
-					/*
-				case (int)WM.WM_CONTEXTMENU:
-					{
-						//Debug.WriteLine(m.WParam);
-						//NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_ARROW));
-					}
-					//return;
-					break;
-					 */
 
 					case (int)WM.WM_MOVING:
 						{
@@ -293,9 +256,7 @@
 
 			Visible = false;
 
-			this._tipsLauncher = new CustomToolTipForm();
-
-			//this.tipsLauncher.SetToolTip(this.toolLauncher, "#");
+			this._tipsLauncher = new LauncherToolTipForm();
 		}
 
 		void Initialize()
@@ -344,12 +305,6 @@
 		
 		void ApplySettingPosition()
 		{
-			/*
-			if(false) {
-				HiddenWaitTime = UseToolbarItem.HiddenWaitTime;
-				HiddenAnimateTime = UseToolbarItem.HiddenAnimateTime;
-			}
-			//*/
 			if(UsingToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;
@@ -360,6 +315,8 @@
 					
 					if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {
 						AutoHide = UsingToolbarItem.AutoHide;
+					} else {
+						AutoHide = false;
 					}
 					
 					if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {
@@ -1297,15 +1254,7 @@
 			}
 			
 			toolItem.MouseDown += LauncherButton_MouseDown;
-			/*
-			toolItem.MouseDown += (object sender, MouseEventArgs e) => {
-				if(Control.ModifierKeys == Keys.Alt) {
-					this._dragStartItem = toolItem;
-					Debug.WriteLine(this._dragStartItem);
-					this.toolLauncher.DoDragDrop(toolItem, DragDropEffects.Copy);
-				}
-			};
-			 */
+
 			return toolItem;
 		}
 		
@@ -1318,6 +1267,8 @@
 			} else {
 				toolItem = CreateItemLauncherButton(item);
 			}
+			//toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+			//toolItem.TextAlign = ContentAlignment.MiddleLeft;
 			
 			SetButtonLayout(toolItem, CommonData.Skin, UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
 			toolItem.Visible = true;
@@ -1564,11 +1515,11 @@
 			// 現在の並びをデータとして取得
 			var groupItemNames = new List<string>(SelectedGroupItem.ItemNames.Count);
 			foreach(var item in this.toolLauncher.Items.Cast<ToolStripItem>()) {
-				var launcherItem = item.Tag as LauncherItem;
-				if(launcherItem == null) {
+				var ili = item as ILauncherItem;
+				if(ili == null) {
 					continue;
 				}
-				groupItemNames.Add(launcherItem.Name);
+				groupItemNames.Add(ili.LauncherItem.Name);
 			}
 			SelectedGroupItem.ItemNames = groupItemNames;
 		}
@@ -1716,6 +1667,8 @@
 				Debug.Assert(dropData.DropType == DropType.Button);
 				ChangeDropDataLauncherItemPosition(dropData);
 				this._dragStartItem = null;
+				// 他のツールバーにアイテム変更を教える
+				CommonData.RootSender.ChangedLauncherGroupItems(UsingToolbarItem, SelectedGroupItem);
 			}
 		}
 		
@@ -1819,10 +1772,11 @@
 			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
 				// #148
 				var toolItem = (ToolStripItem)sender;
-				var launcherItem = toolItem.Tag as LauncherItem;
-				if(launcherItem == null) {
+				var ili = toolItem as ILauncherItem;
+				if(ili == null) {
 					return;
 				}
+				var launcherItem = ili.LauncherItem;
 				var menuTypes = new [] {
 					LauncherType.File,
 					LauncherType.Directory,
