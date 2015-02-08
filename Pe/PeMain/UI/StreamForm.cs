@@ -131,7 +131,7 @@
 		{
 			base.ApplySetting();
 
-			Icon = AppUtility.GetAppLauncherItem(CommonData.Skin, LauncherItem, IconScale.Normal);
+			Icon = AppUtility.GetAppLauncherItem(CommonData, LauncherItem, IconScale.Normal);
 
 			this.propertyProcess.SelectedObject = Process;
 			this.propertyProperty.SelectedObject = Process.StartInfo;

@@ -216,9 +216,24 @@
 		/// <param name="launcherItem"></param>
 		/// <param name="iconScale"></param>
 		/// <returns></returns>
-		public static Icon GetAppLauncherItem(ISkin skin, LauncherItem launcherItem, IconScale iconScale)
+		public static Icon GetAppLauncherItem(CommonData commonData, LauncherItem launcherItem, IconScale iconScale)
 		{
-			return null;
+			var bitmapSize = iconScale.ToSize();
+
+			using(var bitmap = new Bitmap(bitmapSize.Width, bitmapSize.Height)) {
+				using(var g = Graphics.FromImage(bitmap)) {
+					g.DrawIcon(commonData.Skin.GetIcon(SkinIcon.App), 0, 0);
+					// アイテムの描画
+					// TODO: 引数のアイコンサイズから動的に変わってない。
+					var icon = launcherItem.GetIcon(IconScale.Small, launcherItem.IconItem.Index, commonData.ApplicationSetting, commonData.Logger);
+					var iconSize = IconScale.Small.ToSize();
+					g.DrawIcon(icon, iconSize.Width, iconSize.Height);
+				}
+
+				using(var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
+					return hIcon.ToManagedIcon();
+				}
+			}
 		}
 	}
 }
