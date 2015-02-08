@@ -1482,11 +1482,7 @@
 			noteForm.NoteItem = noteItem;
 			noteForm.SetCommonData(this._commonData);
 			noteForm.Show();
-			noteForm.Closed += (object sender, EventArgs e) => {
-				if(noteForm.Visible) {
-					this._noteWindowList.Remove(noteForm);
-				}
-			};
+			noteForm.Closed += noteForm_Closed;
 			this._noteWindowList.Add(noteForm);
 			return noteForm;
 		}
@@ -2115,7 +2111,13 @@
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
 		}
 
-
+		void noteForm_Closed(object sender, EventArgs e)
+		{
+			var noteForm = (NoteForm)sender; ;
+			if(noteForm.Visible) {
+				this._noteWindowList.Remove(noteForm);
+			}
+		}
 	}
 }
 
