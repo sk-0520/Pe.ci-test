@@ -82,7 +82,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="733fb123f24d29a6c2fa4a7763c0a4bce5c3991b">
 				<message>#159: イベントに割り当てたラムダ式のメモリ解放</message>
 				<comments>
 					<comment>とりあえず見える範囲でキャプチャ切ったから勘弁して</comment>
