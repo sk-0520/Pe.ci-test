@@ -104,7 +104,7 @@
 					<comment>ランチャーアイテムをD&amp;Dして並べ替えた際に他のツールバーのアイテム順序が追従しない</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="8cbd6f6c7cfeec80b19fe8a4846c9d725f2e05d2">
 				<message>ツールバーのランチャーアイテムをホイールクリックしてもランチャーアイテムメニューが表示できなくなっていた</message>
 			</note>
 			<note rev="">
