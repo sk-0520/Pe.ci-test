@@ -83,7 +83,10 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#159: イベントに割り当てたラムダ式のメモリ解放</message>
+				<comments>
+					<comment>とりあえず見える範囲でキャプチャ切ったから勘弁して</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

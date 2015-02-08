@@ -1220,20 +1220,26 @@
 
 		void ExecuteExItem(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
-			var form = new ExecuteForm();
-			form.SetParameter(launcherItem, exOptions);
+			var form = new ExecuteForm() {
+				LauncherItem = launcherItem,
+				ExOptions = exOptions,
+			};
 			form.SetCommonData(CommonData);
 			//form.TopMost = TopMost;
 			CommonData.RootSender.AppendWindow(form);
 			form.Show();
-			form.FormClosed += (IRootSender, e) => {
-				if(form.DialogResult == DialogResult.OK) {
-					var editedItem = form.EditedLauncherItem;
-					if(ExecuteItem(editedItem)) {
-						launcherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
-					}
+			form.FormClosed += ExecuteFormClosed;
+		}
+
+		void ExecuteFormClosed(object sender, FormClosedEventArgs e)
+		{
+			var form = (ExecuteForm)sender;
+			if(form.DialogResult == DialogResult.OK) {
+				var editedItem = form.EditedLauncherItem;
+				if(ExecuteItem(editedItem)) {
+					form.LauncherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
 				}
-			};
+			}
 		}
 
 		ToolStripItem GetOverButton(Point localPoint)
