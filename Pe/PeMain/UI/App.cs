@@ -733,18 +733,7 @@
 			// サブメニュー設定
 			parentItem.DropDownItems.AddRange(menuList);
 
-			parentItem.DropDownOpening += (object sender, EventArgs e) => {
-				itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
-				itemExtension.Checked = SystemEnvironment.IsExtensionShow();
-				itemClipboard.Checked = this._commonData.MainSetting.Clipboard.Visible;
-
-				//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
-				//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
-			};
-
+			parentItem.DropDownOpening += SystemEnvSubMenu_DropDownOpening;
 		}
 
 		/// <summary>
@@ -2101,6 +2090,25 @@
 				}
 			}
 		}
+
+		private void SystemEnvSubMenu_DropDownOpening(object sender, EventArgs e)
+		{
+			var parentItem = (ToolStripMenuItem)sender;
+			var itemHiddenFile = (ToolStripMenuItem)parentItem.DropDownItems[menuNameSystemEnvHiddenFile];
+			var itemExtension = (ToolStripMenuItem)parentItem.DropDownItems[menuNameSystemEnvExtension];
+			var itemWindow = (ToolStripMenuItem)parentItem.DropDownItems[menuNameSystemEnvWindow];
+			var itemClipboard = (ToolStripMenuItem)parentItem.DropDownItems[menuNameSystemEnvClipboard];
+			itemHiddenFile.Checked = SystemEnvironment.IsHiddenFileShow();
+			itemExtension.Checked = SystemEnvironment.IsExtensionShow();
+			itemClipboard.Checked = this._commonData.MainSetting.Clipboard.Visible;
+
+			//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
+			//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
+		}
+
 
 	}
 }
