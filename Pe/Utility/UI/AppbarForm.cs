@@ -353,15 +353,15 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			}
 		}
 		
-		public IntPtr ExistsHideWindow(DesktopDockType desktopDockType)
+		public bool ExistsHideWindow(DesktopDockType desktopDockType)
 		{
 			Debug.Assert(desktopDockType != DesktopDockType.None);
 			
 			var appBar = new APPBARDATA(Handle);
 			appBar.uEdge = desktopDockType.ToABE();
-			var nowWnd = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
-			
-			return nowWnd;
+			var exists = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
+
+			return exists != IntPtr.Zero;
 		}
 		
 		private void DockingFromParameter(DesktopDockType dockType, bool autoHide)
@@ -375,8 +375,8 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 			
 			bool autoHideResult = false;
 			if(autoHide) {
-				var hideWnd = ExistsHideWindow(dockType);
-				if(hideWnd.ToInt32() == 0 || hideWnd == Handle) {
+				var exists = ExistsHideWindow(dockType);
+				if(!exists) {
 				//if(hideWnd == null || hideWnd == Handle) {
 					// 自動的に隠す
 					var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
