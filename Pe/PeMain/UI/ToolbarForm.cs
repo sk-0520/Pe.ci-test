@@ -600,51 +600,31 @@
 			// 親ディレクトリを開く
 			openParentDirItem.Name = menuNamePath_openParentDir;
 			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			//openParentDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem);
 			openParentDirItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
 			// 作業ディレクトリを開く
 			openWorkDirItem.Name = menuNamePath_openWorkDir;
 			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			//openWorkDirItem.Click += (object sender, EventArgs e) => OpenDir(launcherItem.WorkDirPath);
 			openWorkDirItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
-			//copyCommandItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.Command);
 			copyCommandItem.Click += FileLauncherItemPathMenu_CopyCommand;
 			// 親ディレクトリをコピー
 			copyParentDirItem.Name = menuNamePath_copyParentDir;
 			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
-			//copyParentDirItem.Click += (object sender, EventArgs e) => CopyText(Path.GetDirectoryName(launcherItem.Command));
 			copyParentDirItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
 			// 作業ディレクトリをコピー
 			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
 			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
-			//copyWorkDirItem.Click += (object sender, EventArgs e) => CopyText(launcherItem.WorkDirPath);
 			copyWorkDirItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
-			//propertyItem.Click += (object sender, EventArgs e) => OpenProperty(launcherItem.Command);
 			propertyItem.Click += FileLauncherItemPathMenu_OpenProperty;
 			
 			// メニュー構築
 			parentItem.DropDownItems.AddRange(itemList.ToArray());
-			//parentItem.DropDownOpening += (object sender, EventArgs e) => {
-			//	// コマンド有無
-			//	var commandEnabled = launcherItem.IsExists;
-			//	copyCommandItem.Enabled = commandEnabled;
-			//	propertyItem.Enabled = commandEnabled;
-			//	// 親ディレクトリ有無
-			//	var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
-			//	var parentDirEnabled = !string.IsNullOrEmpty(parentDirPath) && Path.GetPathRoot(parentDirPath) != parentDirPath && Directory.Exists(parentDirPath);
-			//	openParentDirItem.Enabled = parentDirEnabled;
-			//	copyParentDirItem.Enabled = parentDirEnabled;
-			//	// 作業ディレクトリ有無
-			//	var workDirEnabled = !string.IsNullOrEmpty(launcherItem.WorkDirPath) && Directory.Exists(Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath));
-			//	openWorkDirItem.Enabled = workDirEnabled;
-			//	copyWorkDirItem.Enabled = workDirEnabled;
-			//};
+
 			parentItem.DropDownOpening += FileLauncherItemPathMenu_DropDownOpening;
 		}
 		
@@ -968,15 +948,7 @@
 				Name = menuNameMainAutoHide,
 				Text = CommonData.Language["toolbar/menu/main/auto-hide"],
 			};
-			autoHideItem.Click += (object sender, EventArgs e) => {
-				UsingToolbarItem.AutoHide = !autoHideItem.Checked;
-				ApplySettingPosition();
-				if(DesktopDockType != DesktopDockType.None) {
-					UsingToolbarItem.AutoHide = AutoHide;
-				} else {
-					UsingToolbarItem.AutoHide = false;
-				}
-			};
+			autoHideItem.Click += AutoHideItem_Click;
 
 			// 非表示
 			var hiddenItem = new ToolStripMenuItem() {
@@ -1974,5 +1946,18 @@
 		}
 
 		#endregion
+
+		void AutoHideItem_Click(object sender, EventArgs e)
+		{
+			var autoHideItem = (ToolStripMenuItem)sender;
+			UsingToolbarItem.AutoHide = !autoHideItem.Checked;
+			ApplySettingPosition();
+			if(DesktopDockType != DesktopDockType.None) {
+				UsingToolbarItem.AutoHide = AutoHide;
+			} else {
+				UsingToolbarItem.AutoHide = false;
+			}
+		}
+
 	}
 }
