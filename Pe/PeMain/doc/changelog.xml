@@ -97,11 +97,12 @@
 			<note rev="2819d8a092d3aedbc809ee623ca3111c6db1a4e1">
 				<message>#200: 指定して実行ウィンドウのアイコンが汚い</message>
 			</note>
-			<note rev="">
-				<message>複数のツールバーを表示しているときツールバーへファイルをD&amp;Dで登録したとき対象ツールバー以外のグループがクリアされる不具合の修正</message>
-			</note>
-			<note rev="">
-				<message>複数のツールバーを表示しているときにランチャーアイテムをD&amp;Dして並べ替えた際に他のツールバーのアイテム順序が追従しない不具合の修正</message>
+			<note rev="f0bc4c1e0bd489e86cf2156602a2ec6989260a35">
+				<message>複数のツールバーを表示での各不具合を修正</message>
+				<comments>
+					<comment>ツールバーへファイルをD&amp;Dで登録した際に対象ツールバー以外のグループがクリアされる</comment>
+					<comment>ランチャーアイテムをD&amp;Dして並べ替えた際に他のツールバーのアイテム順序が追従しない</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
