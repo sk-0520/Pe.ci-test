@@ -315,6 +315,8 @@
 					
 					if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {
 						AutoHide = UsingToolbarItem.AutoHide;
+					} else {
+						AutoHide = false;
 					}
 					
 					if(ToolbarPositionUtility.IsDockingMode(UsingToolbarItem.ToolbarPosition)) {

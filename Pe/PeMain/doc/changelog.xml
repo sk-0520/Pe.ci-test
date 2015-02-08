@@ -89,7 +89,10 @@
 				<message>オーバーフロー表示されたランチャーアイテムの描画をスーパークラスに委譲する</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#182: ツールバーの自動的に隠す状態はタスクバーに干渉するべきでない</message>
+			</note>
+			<note rev="">
+				<message>#201: 自動的に隠す非フロート状態からフロート状態にすると表明に引っ掛かる</message>
 			</note>
 			<note rev="">
 				<message></message>
