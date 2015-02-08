@@ -55,29 +55,11 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.46.1" type="rc">
+	<log date="2015/02/08" version="0.47.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>バグ修正！</message>
 			</note>
 		</group>
 		<group type="fixes">
@@ -106,21 +88,6 @@
 			</note>
 			<note rev="8cbd6f6c7cfeec80b19fe8a4846c9d725f2e05d2">
 				<message>ツールバーのランチャーアイテムをホイールクリックしてもランチャーアイテムメニューが表示できなくなっていた</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
