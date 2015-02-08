@@ -1691,24 +1691,18 @@
 					isStart = false;
 				}
 
-				var menuItem = new ToolStripMenuItem();
-				menuItem.Text = noteItem.Title;
+				var menuItem = new NoteItemToolStripMenuItem(this._commonData) {
+					NoteItem = noteItem,
+					Text = noteItem.Title,
+					ImageScaling = ToolStripItemImageScaling.None,
+					Checked = noteItem.Visible,
+				};
 				if(noteItem.Compact) {
-					menuItem.ImageScaling = ToolStripItemImageScaling.None;
 					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
 				} else {
 					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
 				}
-				menuItem.Checked = noteItem.Visible;
-				menuItem.Click += (object sender, EventArgs e) => {
-					if(noteItem.Visible) {
-						_noteWindowList.Single(n => n.NoteItem.NoteId == noteItem.NoteId).ToClose(false);
-					} else {
-						noteItem.Visible = true;
-						var noteWindow = CreateNote(noteItem);
-						noteWindow.SaveItem();
-					}
-				};
+				menuItem.Click += NoteMenuItem_Click;
 
 				itemNoteMenuList.Add(menuItem);
 			}
@@ -1716,13 +1710,6 @@
 			if(itemNoteMenuList.Count > 0) {
 				parentItem.DropDownItems.AddRange(itemNoteMenuList.ToArray());
 			}
-			/*
-				var noteDB = new NoteDB(this._commonData.Database);
-					Debug.WriteLine(noteDB);
-				foreach(var item in noteDB.GetNoteItemList(true).Where(item => item.Visible)) {
-					Debug.WriteLine(item);
-				}
-			 */
 		}
 
 		/// <summary>
@@ -2118,6 +2105,20 @@
 				this._noteWindowList.Remove(noteForm);
 			}
 		}
+
+		void NoteMenuItem_Click(object sender, EventArgs e)
+		{
+			var noteMenuItem = (NoteItemToolStripMenuItem)sender;
+			var noteItem = noteMenuItem.NoteItem;
+			if(noteItem.Visible) {
+				_noteWindowList.Single(n => n.NoteItem.NoteId == noteItem.NoteId).ToClose(false);
+			} else {
+				noteItem.Visible = true;
+				var noteWindow = CreateNote(noteItem);
+				noteWindow.SaveItem();
+			}
+		}
+
 	}
 }
 
