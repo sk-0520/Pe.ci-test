@@ -1772,10 +1772,11 @@
 			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
 				// #148
 				var toolItem = (ToolStripItem)sender;
-				var launcherItem = toolItem.Tag as LauncherItem;
-				if(launcherItem == null) {
+				var ili = toolItem as ILauncherItem;
+				if(ili == null) {
 					return;
 				}
+				var launcherItem = ili.LauncherItem;
 				var menuTypes = new [] {
 					LauncherType.File,
 					LauncherType.Directory,

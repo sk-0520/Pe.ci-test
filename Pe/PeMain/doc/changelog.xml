@@ -105,6 +105,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>ツールバーのランチャーアイテムをホイールクリックしてもランチャーアイテムメニューが表示できなくなっていた</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
