@@ -208,5 +208,17 @@
 
 			return null;
 		}
+
+		/// <summary>
+		/// アプリケーションアイコンとランチャーアイテムのアイコンをうまいこと結合する。
+		/// </summary>
+		/// <param name="skin"></param>
+		/// <param name="launcherItem"></param>
+		/// <param name="iconScale"></param>
+		/// <returns></returns>
+		public static Icon GetAppLauncherItem(ISkin skin, LauncherItem launcherItem, IconScale iconScale)
+		{
+			return null;
+		}
 	}
 }

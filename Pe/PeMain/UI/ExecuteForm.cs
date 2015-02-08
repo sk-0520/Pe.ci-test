@@ -121,7 +121,8 @@
 		{
 			base.ApplySetting();
 
-			Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
+			//Icon = LauncherItem.GetIcon(IconScale.Small, LauncherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
+			Icon = AppUtility.GetAppLauncherItem(CommonData.Skin, LauncherItem, IconScale.Normal);
 
 			this.viewCommand.Text = LauncherItem.Command;
 			this.inputOption.Items.AddRange(LauncherItem.LauncherHistory.Options.ToArray());
