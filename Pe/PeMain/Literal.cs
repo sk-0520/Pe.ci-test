@@ -7,6 +7,7 @@
 	using System.Drawing;
 	using System.IO;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 
 	/// <summary>
@@ -115,7 +116,12 @@
 		public const float hiddenFileOpacity = 0.6f;
 		public static readonly TimeSpan loadIconRetryTime = TimeSpan.FromMilliseconds(250);
 		public const int loadIconRetryCount = 3;
-		public static readonly TimeSpan loadFileIconWait = TimeSpan.FromMilliseconds(50);
+		public static readonly TimeSpan loadFileIconWaitTime = TimeSpan.FromMilliseconds(50);
+		public static readonly IReadOnlyDictionary<IconScale, int> loadFileIconCount = new Dictionary<IconScale, int> {
+			{ IconScale.Small, 50 },
+			{ IconScale.Normal, 35 },
+			{ IconScale.Big, 20 },
+		};
 
 		#region NOTE
 		

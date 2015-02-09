@@ -1904,28 +1904,27 @@
 		void FileList_DropDownOpened(object sender, EventArgs e)
 		{
 			var parentItem = (ToolStripDropDownItem)sender;
-			var menuItems = parentItem.DropDownItems.OfType<FileImageToolStripMenuItem>().ToArray();
+			// 運用上おそらく上位しか表示されないので指定分のみ
+			// TODO: ちゃんと計算すべき
+			var menuItems = parentItem.DropDownItems
+				.OfType<FileImageToolStripMenuItem>()
+				.Take(Literal.loadFileIconCount[UsingToolbarItem.IconScale])
+				.ToArray()
+			;
 			if(menuItems.All(m => m.FileImage != null)) {
 				// ファイルイメージ生成済みであればさようなら
 				CommonData.Logger.PutsDebug("opend: skip", () => parentItem.Text);
 				return;
 			}
-			var waitItems = new List<FileImageToolStripMenuItem>(menuItems);
 
 			Task.Run(() => {
+				var waitItems = new List<FileImageToolStripMenuItem>(menuItems);
 #if DEBUG
 				var sw = new Stopwatch();
-#endif
-#if DEBUG
 				sw.Start();
 #endif
-				var firstCheck = true;
 				do {
-					if(firstCheck) {
-						firstCheck = false;
-					} else {
-						Thread.Sleep(Literal.loadFileIconWait);
-					}
+					Thread.Sleep(Literal.loadFileIconWaitTime);
 					waitItems = waitItems.Where(m => m.FileImage == null).ToList();
 				} while(waitItems.Any());
 #if DEBUG
@@ -1942,9 +1941,12 @@
 #if DEBUG
 				Debug.WriteLine("{0}, time: {1} ms, count: {2}", t.Result.Menu.Text, t.Result.Time.TotalMilliseconds, t.Result.Items.Length);
 #endif
-				foreach(var menuItem in t.Result.Items) {
+				// イメージをファイルイメージへ強制
+				foreach(var menuItem in t.Result.Items.ToArray()) {
 					menuItem.Image = null;
 				}
+
+				t.Dispose();
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 

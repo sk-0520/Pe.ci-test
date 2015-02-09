@@ -92,6 +92,14 @@
 				<message>#202: グループ作成で名前に重複がある場合に例外が発生する</message>
 			</note>
 			<note rev="">
+				<message>ファイルメニュー展開後に読み込み終了したアイコンを待機中イメージから置き換える</message>
+				<comments>
+					<comment>全項目に適用するとアホみたいに遅くなるし現在表示項目数が取得できないので上位項目に適用する</comment>
+					<comment>ファイル数が多いとクッソ怪しい動作</comment>
+					<comment>system32なんて誰も表示しないだろうという一握の望み</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
