@@ -89,6 +89,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#202: グループ作成で名前に重複がある場合に例外が発生する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
