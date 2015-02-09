@@ -88,7 +88,7 @@
 					<comment>とりあえず見える範囲でキャプチャ切ったから勘弁して</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="49286e2c2acd9587f56e5bdc02e41fee7da13e65">
 				<message>#202: グループ作成で名前に重複がある場合に例外が発生する</message>
 			</note>
 			<note rev="">
