@@ -91,7 +91,7 @@
 			<note rev="49286e2c2acd9587f56e5bdc02e41fee7da13e65">
 				<message>#202: グループ作成で名前に重複がある場合に例外が発生する</message>
 			</note>
-			<note rev="">
+			<note rev="71940970976125a393c0a186e1cfcf462dd6a7c3">
 				<message>ファイルメニュー展開後に読み込み終了したアイコンを待機中イメージから置き換える</message>
 				<comments>
 					<comment>全項目に適用するとアホみたいに遅くなるし現在表示項目数が取得できないので上位項目に適用する</comment>
