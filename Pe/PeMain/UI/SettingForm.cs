@@ -1449,7 +1449,7 @@
 		TreeNode ToolbarAddGroup(string groupName)
 		{
 			var node = new TreeNode();
-			node.Text = TextUtility.ToUnique(groupName, this.treeToolbarItemGroup.Nodes.Cast<TreeNode>().Select(n => n.Text), null);
+			node.Text = TextUtility.ToUniqueDefault(groupName, this.treeToolbarItemGroup.Nodes.Cast<TreeNode>().Select(n => n.Text));
 			node.ImageIndex = TREE_TYPE_GROUP;
 			node.SelectedImageIndex = TREE_TYPE_GROUP;
 			this.treeToolbarItemGroup.Nodes.Add(node);
