@@ -86,7 +86,7 @@
 		public static readonly TripleRange<int> toolbarTextWidth = new TripleRange<int>(40, 80, 200);
 		public static readonly TripleRange<TimeSpan> toolbarHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(10));
 		public static readonly TripleRange<TimeSpan> toolbarAnimateTime = new TripleRange<TimeSpan>(TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(500), TimeSpan.FromSeconds(1000));
-			
+
 		public const int waitCountForGetScreenCount = 10;
 		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
 		
@@ -115,6 +115,7 @@
 		public const float hiddenFileOpacity = 0.6f;
 		public static readonly TimeSpan loadIconRetryTime = TimeSpan.FromMilliseconds(250);
 		public const int loadIconRetryCount = 3;
+		public static readonly TimeSpan loadFileIconWait = TimeSpan.FromMilliseconds(50);
 
 		#region NOTE
 		

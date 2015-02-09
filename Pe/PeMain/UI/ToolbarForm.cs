@@ -8,6 +8,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.InteropServices;
+	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
@@ -813,6 +814,7 @@
 				parentItem.ImageScaling = ToolStripItemImageScaling.None;
 				parentItem.DropDownItems.AddRange(menuList.ToArray());
 				ToolStripUtility.AttachmentOpeningMenuInScreen(parentItem);
+				parentItem.DropDownOpened += FileList_DropDownOpened;
 			} finally {
 				Cursor = Cursors.Default;
 			}
@@ -1897,6 +1899,39 @@
 				// 起こりえないけど改修実装なんで入れとく
 				CommonData.Logger.PutsDebug("cast error: FileToolStripMenuItem", () => sender.DumpToString(sender.GetType().ToString()));
 			}
+		}
+
+		void FileList_DropDownOpened(object sender, EventArgs e)
+		{
+			Task.Run(() => {
+#if DEBUG
+				var sw = new Stopwatch();
+#endif
+				var parentItem = (ToolStripDropDownItem)sender;
+				var menuItems = parentItem.DropDownItems.OfType<FileImageToolStripMenuItem>().ToArray();
+				var waitItems = new List<FileImageToolStripMenuItem>(menuItems);
+#if DEBUG
+				sw.Start();
+#endif
+				do {
+					Thread.Sleep(Literal.loadFileIconWait);
+					waitItems = waitItems.Where(m => m.FileImage == null).ToList();
+				} while(waitItems.Any());
+#if DEBUG
+				sw.Stop();
+#endif
+				return new {
+					Menu = parentItem,
+					Items = menuItems,
+#if DEBUG
+					Time = sw.Elapsed,
+#endif
+				};
+			}).ContinueWith(t => {
+#if DEBUG
+				Debug.WriteLine("{0}, time: {1} ms, count: {2}", t.Result.Menu.Text, t.Result.Time.TotalMilliseconds, t.Result.Items.Length);
+#endif
+			});
 		}
 
 		#endregion
