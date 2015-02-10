@@ -113,6 +113,9 @@
 				</comments>
 				</note>
 			<note rev="">
+				<message>クリップボード/テンプレートのタブ一覧が設定ウィンドウ確定後一時的に無効になる不具合の修正</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

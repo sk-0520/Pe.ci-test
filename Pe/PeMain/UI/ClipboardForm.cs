@@ -324,7 +324,10 @@
 			ChangeSelectTypeControl(map[type]);
 
 			ChangeCommand(-1);
-			ChangeSelsectedItem(type == ClipboardListType.Template ? 0 : -1);
+
+			//ChangeSelsectedItem(type == ClipboardListType.Template ? 0 : -1);
+			//ChangeSelsectedItem(type == ClipboardListType.Template ? 0 : -1);
+			ChangeSelsectedItem(-1);
 		}
 
 		void ChangeCommandType(ClipboardListType type)
@@ -555,8 +558,9 @@
 
 		void ChangeSelsectedItem(int index)
 		{
-			//SelectedItemIndex = index;
-			this.tabPreview.Enabled = index != -1;
+			if(Initialized) {
+				this.tabPreview.Enabled = index != -1;
+			}
 
 			if(index == -1) {
 				return;
