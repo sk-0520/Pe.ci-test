@@ -189,7 +189,6 @@
     <Compile Include="Logic\LauncherItemUtility.cs" />
     <Compile Include="Logic\Listener.cs" />
     <Compile Include="Logic\NullLogger.cs" />
-    <Compile Include="Logic\ScreenForms.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
