@@ -15,56 +15,97 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
+	/// <summary>
+	/// クリップボード関係の共通処理。
+	/// </summary>
 	public class ClipboardUtility
 	{
-		static void Copy(Action action, CommonData commonData)
+		static void Copy(Action action, ClipboardSetting clipboardSetting)
 		{
 			//var prevCopy = false;
-			if(commonData != null) {
+			if(clipboardSetting != null) {
 				//prevCopy = commonData.MainSetting.Clipboard.DisabledCopy;
-				commonData.MainSetting.Clipboard.DisabledCopy = !commonData.MainSetting.Clipboard.EnabledApplicationCopy;
+				clipboardSetting.DisabledCopy = !clipboardSetting.EnabledApplicationCopy;
 				//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 			}
 			action();
-			if(commonData != null) {
+			if(clipboardSetting != null) {
 				Task.Factory.StartNew(() => {
-					Thread.Sleep(commonData.MainSetting.Clipboard.SleepTime);
-					commonData.MainSetting.Clipboard.DisabledCopy = !commonData.MainSetting.Clipboard.DisabledCopy;
+					Thread.Sleep(clipboardSetting.SleepTime);
+					clipboardSetting.DisabledCopy = !clipboardSetting.DisabledCopy;
 					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 				});
 			}
 		}
 
-		public static void CopyText(string text, CommonData commonData)
+		/// <summary>
+		/// 文字列をクリップボードへ転写。
+		/// </summary>
+		/// <param name="text">対象文字列。</param>
+		/// <param name="clipboardSetting">クリップボード設定。</param>
+		public static void CopyText(string text, ClipboardSetting clipboardSetting)
 		{
-			Copy(() => Clipboard.SetText(text, TextDataFormat.UnicodeText), commonData);
+			Copy(() => Clipboard.SetText(text, TextDataFormat.UnicodeText), clipboardSetting);
 		}
 
-		public static void CopyRtf(string rtf, CommonData commonData)
+		/// <summary>
+		/// RTFをクリップボードへ転写。
+		/// </summary>
+		/// <param name="rtf">対象RTF。</param>
+		/// <param name="clipboardSetting">クリップボード設定。</param>
+		public static void CopyRtf(string rtf, ClipboardSetting clipboardSetting)
 		{
-			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Rtf), commonData);
-		}
-		public static void CopyHtml(string html, CommonData commonData)
-		{
-			Copy(() => Clipboard.SetText(html, TextDataFormat.Html), commonData);
-		}
-		public static void CopyImage(Image image, CommonData commonData)
-		{
-			Copy(() => Clipboard.SetImage(image), commonData);
+			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Rtf), clipboardSetting);
 		}
 
-		public static void CopyFile(IEnumerable<string> file, CommonData commonData)
+		/// <summary>
+		/// HTMLをクリップボードへ転写。
+		/// </summary>
+		/// <param name="html">対象HTML。</param>
+		/// <param name="clipboardSetting">クリップボード設定。</param>
+		public static void CopyHtml(string html, ClipboardSetting clipboardSetting)
+		{
+			Copy(() => Clipboard.SetText(html, TextDataFormat.Html), clipboardSetting);
+		}
+
+		/// <summary>
+		/// 画像をクリップボードへ転写。
+		/// </summary>
+		/// <param name="image">対象画像。</param>
+		/// <param name="clipboardSetting">クリップボード設定。</param>
+		public static void CopyImage(Image image, ClipboardSetting clipboardSetting)
+		{
+			Copy(() => Clipboard.SetImage(image), clipboardSetting);
+		}
+
+		/// <summary>
+		/// ファイルをクリップボードへ転写。
+		/// </summary>
+		/// <param name="file">対象ファイル。</param>
+		/// <param name="clipboardSetting">クリップボード設定。</param>
+		public static void CopyFile(IEnumerable<string> file, ClipboardSetting clipboardSetting)
 		{
 			var sc = new StringCollection();
 			sc.AddRange(file.ToArray());
-			Copy(() => Clipboard.SetFileDropList(sc), commonData);
+			Copy(() => Clipboard.SetFileDropList(sc), clipboardSetting);
 		}
 
-		public static void CopyDataObject(IDataObject data, CommonData commonData)
+		/// <summary>
+		/// 複合データをクリップノードへ転写。
+		/// </summary>
+		/// <param name="data"></param>
+		/// <param name="clipboardSetting">クリップボード設定。</param>
+		public static void CopyDataObject(IDataObject data, ClipboardSetting clipboardSetting)
 		{
-			Copy(() => Clipboard.SetDataObject(data), commonData);
+			Copy(() => Clipboard.SetDataObject(data), clipboardSetting);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="range"></param>
+		/// <param name="data"></param>
+		/// <returns></returns>
 		static string ConvertStringFromRawHtml(RangeItem<int> range, byte[] data)
 		{
 			if(-1 < range.Start && -1 < range.End && range.Start <= range.End) {
@@ -75,6 +116,13 @@
 			return null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="clipboardHtml"></param>
+		/// <param name="convertResult"></param>
+		/// <param name="logger"></param>
+		/// <returns></returns>
 		public static bool TryConvertHtmlFromClipbordHtml(string clipboardHtml, out ClipboardHtmlDataItem convertResult, ILogger logger)
 		{
 			var result = new ClipboardHtmlDataItem();
@@ -116,6 +164,12 @@
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="clipboardHtml"></param>
+		/// <param name="logger"></param>
+		/// <returns></returns>
 		public static ClipboardHtmlDataItem ConvertHtmlFromClipbordHtml(string clipboardHtml, ILogger logger)
 		{
 			ClipboardHtmlDataItem temp;
