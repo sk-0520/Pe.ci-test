@@ -27,8 +27,8 @@
 	public partial class SettingForm: AppForm
 	{
 		#region define
-		const int TREE_LEVEL_GROUP = 0;
-		const int TREE_LEVEL_ITEM = 1;
+		//const int TREE_LEVEL_GROUP = 0;
+		//const int TREE_LEVEL_ITEM = 1;
 
 		const int TREE_TYPE_NONE = 0;
 		const int TREE_TYPE_GROUP = 1;
@@ -1626,8 +1626,8 @@
 			var selectedNode = this.treeToolbarItemGroup.SelectedNode;
 			if(selectedNode != null) {
 				var parentNode = selectedNode as GroupItemTreeNode;
-				if(selectedNode.Level == TREE_LEVEL_ITEM) {
-					parentNode = selectedNode.Parent as GroupItemTreeNode;
+				if(parentNode == null) {
+					parentNode = (GroupItemTreeNode)selectedNode.Parent;
 				}
 				
 				var items = this.selecterToolbar.Items;
@@ -1669,8 +1669,8 @@
 		void TreeToolbarItemGroup_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			var node = this.treeToolbarItemGroup.SelectedNode;
-			if(node.Level == TREE_LEVEL_ITEM) {
-				var launcherItemNode = (LauncherItemTreeNode)node;
+			var launcherItemNode = node as LauncherItemTreeNode;
+			if(launcherItemNode != null) {
 				ToolbarSelectedChangeGroupItem(launcherItemNode.LauncherItem);
 			}
 		}
@@ -1679,7 +1679,7 @@
 		{
 			var item = this.selecterToolbar.SelectedItem;
 			var node = this.treeToolbarItemGroup.SelectedNode as LauncherItemTreeNode;
-			if(item != null && node != null && node.Level == TREE_LEVEL_ITEM) {
+			if(item != null && node != null && node != null) {
 				ToolbarSetItem(node, item);
 			}
 		}
@@ -1713,7 +1713,9 @@
 				Debug.Assert(false);
 				return;
 			}
-			e.CancelEdit = node.Level != TREE_LEVEL_GROUP;
+			
+			//e.CancelEdit = node.Level != TREE_LEVEL_GROUP;
+			e.CancelEdit = !(node is GroupItemTreeNode);
 		}
 		
 		
@@ -1851,7 +1853,7 @@
 		
 		void treeToolbarItemGroup_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
 		{
-			Debug.Assert(e.Node.Level == TREE_LEVEL_GROUP);
+			//Debug.Assert(e.Node.Level == TREE_LEVEL_GROUP);
 			if(e.Label == null) {
 				// なんもしてない
 				return;
