@@ -112,10 +112,10 @@
 					<comment>再現性皆無でデバッグ時しか発生を確認できていないのでとりあえず空catch</comment>
 				</comments>
 				</note>
-			<note rev="">
+			<note rev="0182cf25e210342ef2dbf72a80b275827a36678c">
 				<message>クリップボード/テンプレートのタブ一覧が設定ウィンドウ確定後一時的に無効になる不具合の修正</message>
 			</note>
-			<note rev="">
+			<note rev="f95bb3b6afa6f859db0f0d254d64b1dfa2b0e2a8">
 				<message>タスクトレイコンテキストメニューに表示されるクリップボード/テキストテンプレート項目表示文字列をウィンドウ名に合わせる</message>
 			</note>
 			<note rev="">
