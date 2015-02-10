@@ -38,6 +38,7 @@
 		public event EventHandler<CreateItemEventArg> CreateItem;
 		public event EventHandler<RemovedItemEventArg> RemovedItem;
 		public event EventHandler<SelectedItemEventArg> SelectChangedItem;
+		public event EventHandler<LauncherItemSelecterEventArgs> ListDoubleClick;
 		#endregion ////////////////////////////////////
 
 		public LauncherItemSelectControl()
@@ -419,6 +420,18 @@
 		void ToolLauncherItems_input_TextChanged(object sender, EventArgs e)
 		{
 			Filtering = this.toolLauncherItems_input.TextLength > 0;
+		}
+
+		private void listLauncherItems_DoubleClick(object sender, EventArgs e)
+		{
+			if(ListDoubleClick != null) {
+				var index = this.listLauncherItems.SelectedIndex;
+				var ev = new SelectedItemEventArg();
+				if(index != -1) {
+					ev.Item = (LauncherItem)this.listLauncherItems.Items[index];
+				}
+				ListDoubleClick(this, ev);
+			}
 		}
 	}
 }

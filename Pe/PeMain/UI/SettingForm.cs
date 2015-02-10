@@ -1678,9 +1678,16 @@
 		void SelecterToolbar_SelectChangedItem(object sender, SelectedItemEventArg e)
 		{
 			var item = this.selecterToolbar.SelectedItem;
-			var node = this.treeToolbarItemGroup.SelectedNode as LauncherItemTreeNode;
-			if(item != null && node != null && node != null) {
-				ToolbarSetItem(node, item);
+			if(item != null) {
+				var launcherItemNode = this.treeToolbarItemGroup.SelectedNode as LauncherItemTreeNode;
+				if(launcherItemNode != null) {
+					// 選択中ノードのランチャーアイテムを切り替える
+					ToolbarSetItem(launcherItemNode, item);
+				} else {
+					// 選択中グループにランチャーアイテムを設定する
+					var groupItemNode = (GroupItemTreeNode)this.treeToolbarItemGroup.SelectedNode;
+
+				}
 			}
 		}
 		

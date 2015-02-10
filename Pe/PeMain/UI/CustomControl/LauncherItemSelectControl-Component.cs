@@ -10,19 +10,20 @@ namespace ContentTypeTextNet.Pe.PeMain.UI.CustomControl
 		Tag
 	}
 
-	public abstract class ItemEventArgs: EventArgs
+	public class LauncherItemSelecterEventArgs: EventArgs
+	{}
+
+	public abstract class LauncherItemSelecterItemEventArgs: LauncherItemSelecterEventArgs
 	{
 		public LauncherItem Item { get; set; }
 	}
-	public class CreateItemEventArg: ItemEventArgs
-	{
-	}
 
-	public class RemovedItemEventArg: ItemEventArgs
-	{
-	}
+	public class CreateItemEventArg: LauncherItemSelecterItemEventArgs
+	{ }
 
-	public class SelectedItemEventArg: ItemEventArgs
-	{
-	}
+	public class RemovedItemEventArg: LauncherItemSelecterItemEventArgs
+	{ }
+
+	public class SelectedItemEventArg: LauncherItemSelecterItemEventArgs
+	{ }
 }
