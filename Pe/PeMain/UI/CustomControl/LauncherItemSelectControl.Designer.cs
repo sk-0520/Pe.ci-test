@@ -55,6 +55,7 @@
 			this.listLauncherItems.TabIndex = 4;
 			this.listLauncherItems.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ListLauncherItems_DrawItem);
 			this.listLauncherItems.SelectedIndexChanged += new System.EventHandler(this.ListLauncherItemsSelectedIndexChanged);
+			this.listLauncherItems.DoubleClick += new System.EventHandler(this.listLauncherItems_DoubleClick);
 			// 
 			// toolLauncherItems
 			// 

@@ -27,11 +27,13 @@
 	public partial class SettingForm: AppForm
 	{
 		#region define
-		const int TREE_LEVEL_GROUP = 0;
-		const int TREE_LEVEL_ITEM = 1;
+		//const int TREE_LEVEL_GROUP = 0;
+		//const int TREE_LEVEL_ITEM = 1;
 
 		const int TREE_TYPE_NONE = 0;
 		const int TREE_TYPE_GROUP = 1;
+
+		const string ddTreeNode = "tree-node";
 
 		class NoteWrapItem
 		{
@@ -1446,9 +1448,9 @@
 			this._toolbarSelectedToolbarItem = toolbarItem;
 		}
 
-		TreeNode ToolbarAddGroup(string groupName)
+		GroupItemTreeNode ToolbarAddGroup(string groupName)
 		{
-			var node = new TreeNode();
+			var node = new GroupItemTreeNode();
 			node.Text = TextUtility.ToUniqueDefault(groupName, this.treeToolbarItemGroup.Nodes.Cast<TreeNode>().Select(n => n.Text));
 			node.ImageIndex = TREE_TYPE_GROUP;
 			node.SelectedImageIndex = TREE_TYPE_GROUP;
@@ -1457,7 +1459,7 @@
 			return node;
 		}
 
-		void ToolbarSetItem(TreeNode node, LauncherItem item)
+		void ToolbarSetItem(LauncherItemTreeNode node, LauncherItem item)
 		{
 			Debug.Assert(node != null);
 			Debug.Assert(item != null);
@@ -1470,10 +1472,11 @@
 			//	node.ImageIndex = TREE_TYPE_NONE;
 			//	node.SelectedImageIndex = TREE_TYPE_NONE;
 			//}
-			node.Tag = item;
+			//node.Tag = item;
+			node.LauncherItem = item;
 		}
 
-		void ToolbarAddItem(TreeNode parentNode, LauncherItem item)
+		void ToolbarAddItem(GroupItemTreeNode parentNode, LauncherItem item)
 		{
 			Debug.Assert(parentNode != null);
 			/*
@@ -1491,7 +1494,7 @@
 				}
 			}
 			*/
-			var node = new TreeNode();
+			var node = new LauncherItemTreeNode();
 			ToolbarSetItem(node, item);
 			parentNode.Nodes.Add(node);
 			if(!parentNode.IsExpanded) {
@@ -1624,9 +1627,9 @@
 		{
 			var selectedNode = this.treeToolbarItemGroup.SelectedNode;
 			if(selectedNode != null) {
-				var parentNode = selectedNode;
-				if(selectedNode.Level == TREE_LEVEL_ITEM) {
-					parentNode = selectedNode.Parent;
+				var parentNode = selectedNode as GroupItemTreeNode;
+				if(parentNode == null) {
+					parentNode = (GroupItemTreeNode)selectedNode.Parent;
 				}
 				
 				var items = this.selecterToolbar.Items;
@@ -1668,20 +1671,36 @@
 		void TreeToolbarItemGroup_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			var node = this.treeToolbarItemGroup.SelectedNode;
-			if(node.Level == TREE_LEVEL_ITEM) {
-				ToolbarSelectedChangeGroupItem((LauncherItem)node.Tag);
+			var launcherItemNode = node as LauncherItemTreeNode;
+			if(launcherItemNode != null) {
+				ToolbarSelectedChangeGroupItem(launcherItemNode.LauncherItem);
 			}
 		}
 		
 		void SelecterToolbar_SelectChangedItem(object sender, SelectedItemEventArg e)
 		{
 			var item = this.selecterToolbar.SelectedItem;
-			var node = this.treeToolbarItemGroup.SelectedNode;
-			if(item != null && node != null && node.Level == TREE_LEVEL_ITEM) {
-				ToolbarSetItem(node, item);
+			if(item != null) {
+				var launcherItemNode = this.treeToolbarItemGroup.SelectedNode as LauncherItemTreeNode;
+				if(launcherItemNode != null) {
+					// 選択中ノードのランチャーアイテムを切り替える
+					ToolbarSetItem(launcherItemNode, item);
+				}
 			}
 		}
-		
+
+		private void selecterToolbar_ListDoubleClick(object sender, LauncherItemSelecterEventArgs e)
+		{
+			var item = this.selecterToolbar.SelectedItem;
+			if(item != null) {
+				var groupItemNode = this.treeToolbarItemGroup.SelectedNode as GroupItemTreeNode;
+				if(groupItemNode != null) {
+					// 選択中グループにランチャーアイテムを設定する
+					ToolbarAddItem(groupItemNode, item);
+				}
+			}
+		}
+
 		void PageLauncher_DragEnter(object sender, DragEventArgs e)
 		{
 			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
@@ -1711,7 +1730,9 @@
 				Debug.Assert(false);
 				return;
 			}
-			e.CancelEdit = node.Level != TREE_LEVEL_GROUP;
+			
+			//e.CancelEdit = node.Level != TREE_LEVEL_GROUP;
+			e.CancelEdit = !(node is GroupItemTreeNode);
 		}
 		
 		
@@ -1849,7 +1870,7 @@
 		
 		void treeToolbarItemGroup_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
 		{
-			Debug.Assert(e.Node.Level == TREE_LEVEL_GROUP);
+			//Debug.Assert(e.Node.Level == TREE_LEVEL_GROUP);
 			if(e.Label == null) {
 				// なんもしてない
 				return;
@@ -1918,5 +1939,102 @@
 		{
 			ShowScreenWindow();
 		}
+
+		private void treeToolbarItemGroup_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+			this.treeToolbarItemGroup.SelectedNode = (TreeNode)e.Item;
+			var data = new DataObject(ddTreeNode, e.Item);
+			this.treeToolbarItemGroup.DoDragDrop(data, DragDropEffects.All);
+		}
+
+		private void treeToolbarItemGroup_DragOver(object sender, DragEventArgs e)
+		{
+			var treeNode = e.Data.GetData(ddTreeNode) as TreeNode;
+			if(treeNode == null) {
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			var clientPoint = this.treeToolbarItemGroup.PointToClient(new Point(e.X, e.Y));
+			var overNode = this.treeToolbarItemGroup.GetNodeAt(clientPoint);
+
+			if(overNode == treeNode) {
+				// 自分自身は無視
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			// 子を持つのであれば展開する
+			if(overNode != null && overNode.Nodes.Count > 0 && !overNode.IsExpanded) {
+				overNode.Expand();
+			}
+
+			if(treeNode is LauncherItemTreeNode) {
+				// ランチャーアイテム
+				if(overNode != null && overNode != treeNode.Parent) {
+					e.Effect = DragDropEffects.Move;
+				} else {
+					e.Effect = DragDropEffects.None;
+				}
+			} else {
+				// グループアイテム
+				if(overNode == null) {
+					e.Effect = DragDropEffects.Move;
+				} else {
+					if(overNode is GroupItemTreeNode) {
+						e.Effect = DragDropEffects.Move;
+					} else {
+						// ランチャーアイテムノードには移動できない
+						e.Effect = DragDropEffects.None;
+					}
+				}
+			}
+		}
+
+		private void treeToolbarItemGroup_DragDrop(object sender, DragEventArgs e)
+		{
+			var treeNode = e.Data.GetData(ddTreeNode) as TreeNode;
+			if(treeNode == null) {
+				return;
+			}
+			var clientPoint = this.treeToolbarItemGroup.PointToClient(new Point(e.X, e.Y));
+			var overNode = this.treeToolbarItemGroup.GetNodeAt(clientPoint);
+
+			if(overNode == treeNode) {
+				// 自分自身は無視
+				return;
+			}
+
+			this.treeToolbarItemGroup.BeginUpdate();
+			treeNode.Remove();
+			if(treeNode is LauncherItemTreeNode) {
+				// 指定ノードの下に移動
+				Debug.Assert(overNode != null);
+				Debug.Assert(overNode != treeNode.Parent);
+				if(overNode is GroupItemTreeNode) {
+					// グループの下
+					overNode.Nodes.Add(treeNode);
+				} else {
+					// ランチャーアイテムの位置
+					var groupNode = overNode.Parent;
+					groupNode.Nodes.Insert(overNode.Index, treeNode);
+				}
+			} else {
+				// グループアイテム
+				if(overNode == null) {
+					// 一番下に移動
+					this.treeToolbarItemGroup.Nodes.Add(treeNode);
+				} else {
+					Debug.Assert(overNode is GroupItemTreeNode);
+					// 指定グループの上に移動
+					if(overNode.Index == 0) {
+						this.treeToolbarItemGroup.Nodes.Insert(0, treeNode);
+					} else {
+						this.treeToolbarItemGroup.Nodes.Insert(overNode.Index, treeNode);
+					}
+				}
+			}
+			this.treeToolbarItemGroup.SelectedNode = treeNode;
+			this.treeToolbarItemGroup.EndUpdate();
+		}
+
 	}
 }

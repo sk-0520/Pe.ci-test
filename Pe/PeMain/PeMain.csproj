@@ -249,6 +249,7 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Ex\ExTreeNode.cs" />
     <Compile Include="UI\LauncherToolTipForm.cs">
       <SubType>Form</SubType>
     </Compile>
