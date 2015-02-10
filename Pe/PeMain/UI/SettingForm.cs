@@ -1683,14 +1683,22 @@
 				if(launcherItemNode != null) {
 					// 選択中ノードのランチャーアイテムを切り替える
 					ToolbarSetItem(launcherItemNode, item);
-				} else {
-					// 選択中グループにランチャーアイテムを設定する
-					var groupItemNode = (GroupItemTreeNode)this.treeToolbarItemGroup.SelectedNode;
-
 				}
 			}
 		}
-		
+
+		private void selecterToolbar_ListDoubleClick(object sender, LauncherItemSelecterEventArgs e)
+		{
+			var item = this.selecterToolbar.SelectedItem;
+			if(item != null) {
+				var groupItemNode = this.treeToolbarItemGroup.SelectedNode as GroupItemTreeNode;
+				if(groupItemNode != null) {
+					// 選択中グループにランチャーアイテムを設定する
+					ToolbarAddItem(groupItemNode, item);
+				}
+			}
+		}
+
 		void PageLauncher_DragEnter(object sender, DragEventArgs e)
 		{
 			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
@@ -1929,5 +1937,6 @@
 		{
 			ShowScreenWindow();
 		}
+
 	}
 }

@@ -31,8 +31,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupLauncherStream = new System.Windows.Forms.GroupBox();
@@ -205,12 +205,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelClipboardFont = new System.Windows.Forms.Label();
 			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
+			this.checkClipboardSave = new System.Windows.Forms.CheckBox();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.checkClipboardSave = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupLauncherStream.SuspendLayout();
@@ -686,8 +686,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterLauncher.SelectedItem = null;
 			this.selecterLauncher.Size = new System.Drawing.Size(193, 292);
 			this.selecterLauncher.TabIndex = 0;
-			this.selecterLauncher.CreateItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
-			this.selecterLauncher.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
+			this.selecterLauncher.ItemCreate += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
+			this.selecterLauncher.SelectItemChanged += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
 			// 
 			// tabLauncher
 			// 
@@ -1545,7 +1545,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterToolbar.SelectedItem = null;
 			this.selecterToolbar.Size = new System.Drawing.Size(189, 300);
 			this.selecterToolbar.TabIndex = 0;
-			this.selecterToolbar.SelectChangedItem += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
+			this.selecterToolbar.SelectItemChanged += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
+			this.selecterToolbar.ListDoubleClick += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelecterEventArgs>(this.selecterToolbar_ListDoubleClick);
 			// 
 			// tabSetting_pageCommand
 			// 
@@ -1884,8 +1885,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1915,9 +1916,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -2320,6 +2321,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
 			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
 			// 
+			// checkClipboardSave
+			// 
+			this.checkClipboardSave.AutoSize = true;
+			this.checkClipboardSave.Location = new System.Drawing.Point(371, 190);
+			this.checkClipboardSave.Name = "checkClipboardSave";
+			this.checkClipboardSave.Size = new System.Drawing.Size(200, 19);
+			this.checkClipboardSave.TabIndex = 14;
+			this.checkClipboardSave.Text = ":setting/check/clipboard-save";
+			this.checkClipboardSave.UseVisualStyleBackColor = true;
+			this.checkClipboardSave.Visible = false;
+			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -2372,17 +2384,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// errorProvider
 			// 
 			this.errorProvider.ContainerControl = this;
-			// 
-			// checkClipboardSave
-			// 
-			this.checkClipboardSave.AutoSize = true;
-			this.checkClipboardSave.Location = new System.Drawing.Point(371, 190);
-			this.checkClipboardSave.Name = "checkClipboardSave";
-			this.checkClipboardSave.Size = new System.Drawing.Size(200, 19);
-			this.checkClipboardSave.TabIndex = 14;
-			this.checkClipboardSave.Text = ":setting/check/clipboard-save";
-			this.checkClipboardSave.UseVisualStyleBackColor = true;
-			this.checkClipboardSave.Visible = false;
 			// 
 			// SettingForm
 			// 
