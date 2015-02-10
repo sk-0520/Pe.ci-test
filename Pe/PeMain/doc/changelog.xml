@@ -107,6 +107,12 @@
 				<message>ログウィンドウで一部のログが表示できない不具合の修正</message>
 			</note>
 			<note rev="">
+				<message>大きなアイコン取得時にIImageListが生成できずInvalidCastExceptionがブン投げられる</message>
+				<comments>
+					<comment>再現性皆無でデバッグ時しか発生を確認できていないのでとりあえず空catch</comment>
+				</comments>
+				</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
