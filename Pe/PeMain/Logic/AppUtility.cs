@@ -17,15 +17,16 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
-	using ContentTypeTextNet.Pe.PeMain.UI;
-	using ContentTypeTextNet.Pe.PeMain.UI.Skin;
 
+	/// <summary>
+	/// アプリケーションの共通処理。
+	/// </summary>
 	public static class AppUtility
 	{
 		/// <summary>
 		/// 自身のショートカットを作成。
 		/// </summary>
-		/// <param name="savePath"></param>
+		/// <param name="savePath">保存先パス。</param>
 		public static void MakeAppShortcut(string savePath)
 		{
 			using(var shortcut = new ShortcutFile()) {
@@ -43,23 +44,6 @@
 		public static bool IsExtension()
 		{
 			return Control.ModifierKeys == Keys.Shift;
-		}
-		
-		public static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirPath)
-		{
-			var entryPath = path.Substring(baseDirPath.Length);
-			while(entryPath.First() == Path.DirectorySeparatorChar) {
-				entryPath = entryPath.Substring(1);
-			}
-
-			var entry = archive.CreateEntry(entryPath);
-
-			using(var entryStream = new BinaryWriter(entry.Open())) {
-				var buffer = FileUtility.ToBinary(path);
-				entryStream.Write(buffer);
-			}
-
-			return entry;
 		}
 
 		public static void RotateFile(string baseFile, string targetWildcardName, int count, ILogger logger)
@@ -81,24 +65,33 @@
 			}
 		}
 
-		public static void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int count, ILogger logger)
+		static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirPath)
 		{
-			var enabledFiles = targetFiles.Where(FileUtility.Exists);
-			if (!enabledFiles.Any()) {
-				return;
+			var entryPath = path.Substring(baseDirPath.Length);
+			while(entryPath.First() == Path.DirectorySeparatorChar) {
+				entryPath = entryPath.Substring(1);
 			}
-			
-			// バックアップ世代交代
-			RotateFile(saveDirPath, "*.zip", count, logger);
-			
-			var fileName = Literal.NowTimestampFileName + ".zip";
-			var saveFilePath = Path.Combine(saveDirPath, fileName);
-			FileUtility.MakeFileParentDirectory(saveFilePath);
-			
-			// zip
+
+			var entry = archive.CreateEntry(entryPath);
+
+			using(var entryStream = new BinaryWriter(entry.Open())) {
+				var buffer = FileUtility.ToBinary(path);
+				entryStream.Write(buffer);
+			}
+
+			return entry;
+		}
+
+		/// <summary>
+		/// 指定パスにZIP形式でアーカイブを作成。
+		/// </summary>
+		/// <param name="saveFilePath">保存先パス。</param>
+		/// <param name="basePath">基準とするディレクトリパス。</param>
+		/// <param name="targetFiles">取り込み対象パス。</param>
+		public static void WriteZip(string saveFilePath, string basePath, IEnumerable<string> targetFiles)
+		{
 			using(var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
-				var basePath = Literal.UserSettingDirectoryPath;
-				foreach(var filePath in enabledFiles) {
+				foreach(var filePath in targetFiles) {
 					if(File.Exists(filePath)) {
 						WriteArchive(zip, filePath, basePath);
 					} else if(Directory.Exists(filePath)) {
@@ -109,6 +102,31 @@
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// 設定バックアップ。
+		/// </summary>
+		/// <param name="targetFiles">保存対象パス。</param>
+		/// <param name="saveDirPath">保存ディレクトリ。</param>
+		/// <param name="rotateCount">ローテート対象となるファイル数。</param>
+		/// <param name="logger"></param>
+		public static void BackupSetting(IEnumerable<string> targetFiles, string saveDirPath, int rotateCount, ILogger logger)
+		{
+			var enabledFiles = targetFiles.Where(FileUtility.Exists);
+			if (!enabledFiles.Any()) {
+				return;
+			}
+			
+			// バックアップ世代交代
+			RotateFile(saveDirPath, "*.zip", rotateCount, logger);
+			
+			var fileName = Literal.NowTimestampFileName + ".zip";
+			var saveFilePath = Path.Combine(saveDirPath, fileName);
+			FileUtility.MakeFileParentDirectory(saveFilePath);
+			
+			// zip
+			WriteZip(saveFilePath, Literal.UserSettingDirectoryPath, enabledFiles);
 		}
 
 		/// <summary>
@@ -147,6 +165,7 @@
 		/// 
 		/// 取得したスキンはISkin.Loadまで処理する。
 		/// </summary>
+		/// <remarks></remarks>
 		/// <param name="logger"></param>
 		/// <returns></returns>
 		public static HashSet<ISkin> GetSkins(ILogger logger)
@@ -190,6 +209,18 @@
 			return result;
 		}
 
+		/// <summary>
+		/// アイコン読み込み処理。
+		/// 
+		/// なんやかんや色々あるけどアイコン再読み込みとか泥臭い処理を頑張る最上位の子。
+		/// </summary>
+		/// <param name="iconPath">アイコンパス(とインデックス)。</param>
+		/// <param name="iconScale">アイコンサイズ。</param>
+		/// <param name="waitTime">待ち時間</param>
+		/// <param name="waitMaxCount">待ちを何回繰り返すか</param>
+		/// <param name="logger"></param>
+		/// <param name="member"></param>
+		/// <returns></returns>
 		public static Icon LoadIcon(IconPath iconPath, IconScale iconScale, TimeSpan waitTime, int waitMaxCount, ILogger logger, [CallerMemberName] string member = "")
 		{
 			Debug.Assert(FileUtility.Exists(iconPath.Path));
