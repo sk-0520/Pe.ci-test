@@ -583,23 +583,23 @@
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
 		{
-			var map = new Dictionary<ClipboardType, Action<CommonData>>() {
-				{ ClipboardType.Text, (setting) => {
-					ClipboardUtility.CopyText(clipboardItem.Text, setting);
+			var map = new Dictionary<ClipboardType, Action<ClipboardSetting>>() {
+				{ ClipboardType.Text, (clipboardSetting) => {
+					ClipboardUtility.CopyText(clipboardItem.Text, clipboardSetting);
 				} },
-				{ ClipboardType.Rtf, (setting) => {
-					ClipboardUtility.CopyRtf(clipboardItem.Rtf, setting);
+				{ ClipboardType.Rtf, (clipboardSetting) => {
+					ClipboardUtility.CopyRtf(clipboardItem.Rtf, clipboardSetting);
 				} },
-				{ ClipboardType.Html, (setting) => {
-					ClipboardUtility.CopyHtml(clipboardItem.Html, setting);
+				{ ClipboardType.Html, (clipboardSetting) => {
+					ClipboardUtility.CopyHtml(clipboardItem.Html, clipboardSetting);
 				} },
-				{ ClipboardType.Image, (setting) => {
-					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
+				{ ClipboardType.Image, (clipboardSetting) => {
+					ClipboardUtility.CopyImage(clipboardItem.Image, clipboardSetting);
 				} },
-				{ ClipboardType.File, (setting) => {
-					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), setting);
+				{ ClipboardType.File, (clipboardSetting) => {
+					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), clipboardSetting);
 				} },
-				{ ClipboardType.All, (setting) => {
+				{ ClipboardType.All, (clipboardSetting) => {
 					var data = new DataObject();
 					var typeFuncs = new Dictionary<ClipboardType, Action>() {
 						{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
@@ -615,10 +615,10 @@
 					foreach(var type in clipboardItem.GetClipboardTypeList()) {
 						typeFuncs[type]();
 					}
-					ClipboardUtility.CopyDataObject(data, setting);
+					ClipboardUtility.CopyDataObject(data, clipboardSetting);
 				} },
 			};
-			map[clipboardType](CommonData);
+			map[clipboardType](CommonData.MainSetting.Clipboard);
 		}
 
 		void CopySingleItem(int index)
@@ -821,7 +821,7 @@
 		{
 			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
 			if(!string.IsNullOrEmpty(templateText)) {
-				ClipboardUtility.CopyText(templateText, CommonData);
+				ClipboardUtility.CopyText(templateText, CommonData.MainSetting.Clipboard);
 			}
 		}
 

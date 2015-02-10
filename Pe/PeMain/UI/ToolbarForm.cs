@@ -557,7 +557,7 @@
 
 		void CopyText(string text)
 		{
-			ClipboardUtility.CopyText(text, CommonData);
+			ClipboardUtility.CopyText(text, CommonData.MainSetting.Clipboard);
 		}
 
 		void AttachmentFileLauncherPathSubMenu(ToolStripMenuItem parentItem, LauncherItem launcherItem)

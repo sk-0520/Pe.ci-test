@@ -1,4 +1,9 @@
 ﻿//#define USE_MOUSE_HOOK
+#if USE_MOUSE_HOOK
+#	if BUILD
+#		error Deinfed BUILD!
+#	endif
+#endif
 
 namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
@@ -30,11 +35,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Logic
 			get
 			{
 #if USE_MOUSE_HOOK
-#	if BUILD
-#		error Deinfed BUILD!
-#	else
 				return Mouse.Enabled | Keyboard.Enabled;
-#	endif
 #else
 				return Keyboard.Enabled;
 #endif

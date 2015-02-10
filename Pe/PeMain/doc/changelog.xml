@@ -124,8 +124,8 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
+			<note rev="5fdaf73ea51d2a1e9b638833655f14a8a0f3eb04">
+				<message>ホームダイアログのボタンがなんかちっさくなってたんで考えることを放棄してDock.Fillした</message>
 			</note>
 			<note rev="">
 				<message></message>

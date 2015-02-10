@@ -62,6 +62,11 @@
 			}
 		}
 
+		/// <summary>
+		/// フォントダイアログにFontSettingを適用する。
+		/// </summary>
+		/// <param name="dialog"></param>
+		/// <param name="fontSetting"></param>
 		public static void SetFontSetting(this FontDialog dialog, FontSetting fontSetting)
 		{
 			if(!fontSetting.IsDefault) {
@@ -107,7 +112,7 @@
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <returns></returns>
-		public static List<TreeNode> GetChildrenNodes(this TreeNode parent)
+		public static IList<TreeNode> GetChildrenNodes(this TreeNode parent)
 		{
 			var result = new List<TreeNode>();
 			
