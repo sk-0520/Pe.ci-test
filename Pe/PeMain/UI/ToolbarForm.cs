@@ -673,7 +673,7 @@
 						}
 					}
 				} catch(Exception ex) {
-					commonData.Logger.Puts(LogType.Warning, menuItem.Path, ex);
+					commonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(menuItem.Path, ex));
 				}
 
 				return null;
@@ -681,7 +681,7 @@
 				try {
 					menuItem.FileImage = t.Result;
 				} catch(Exception ex) {
-					commonData.Logger.Puts(LogType.Error, menuItem.Path, ex);
+					commonData.Logger.Puts(LogType.Error, ex.Message, new ExceptionMessage(menuItem.Path, ex));
 				} finally {
 					t.Dispose();
 				}
