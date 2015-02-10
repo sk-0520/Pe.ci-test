@@ -1446,9 +1446,9 @@
 			this._toolbarSelectedToolbarItem = toolbarItem;
 		}
 
-		TreeNode ToolbarAddGroup(string groupName)
+		GroupItemTreeNode ToolbarAddGroup(string groupName)
 		{
-			var node = new TreeNode();
+			var node = new GroupItemTreeNode();
 			node.Text = TextUtility.ToUniqueDefault(groupName, this.treeToolbarItemGroup.Nodes.Cast<TreeNode>().Select(n => n.Text));
 			node.ImageIndex = TREE_TYPE_GROUP;
 			node.SelectedImageIndex = TREE_TYPE_GROUP;
@@ -1457,7 +1457,7 @@
 			return node;
 		}
 
-		void ToolbarSetItem(TreeNode node, LauncherItem item)
+		void ToolbarSetItem(LauncherItemTreeNode node, LauncherItem item)
 		{
 			Debug.Assert(node != null);
 			Debug.Assert(item != null);
@@ -1470,10 +1470,11 @@
 			//	node.ImageIndex = TREE_TYPE_NONE;
 			//	node.SelectedImageIndex = TREE_TYPE_NONE;
 			//}
-			node.Tag = item;
+			//node.Tag = item;
+			node.LauncherItem = item;
 		}
 
-		void ToolbarAddItem(TreeNode parentNode, LauncherItem item)
+		void ToolbarAddItem(GroupItemTreeNode parentNode, LauncherItem item)
 		{
 			Debug.Assert(parentNode != null);
 			/*
@@ -1491,7 +1492,7 @@
 				}
 			}
 			*/
-			var node = new TreeNode();
+			var node = new LauncherItemTreeNode();
 			ToolbarSetItem(node, item);
 			parentNode.Nodes.Add(node);
 			if(!parentNode.IsExpanded) {
@@ -1624,9 +1625,9 @@
 		{
 			var selectedNode = this.treeToolbarItemGroup.SelectedNode;
 			if(selectedNode != null) {
-				var parentNode = selectedNode;
+				var parentNode = selectedNode as GroupItemTreeNode;
 				if(selectedNode.Level == TREE_LEVEL_ITEM) {
-					parentNode = selectedNode.Parent;
+					parentNode = selectedNode.Parent as GroupItemTreeNode;
 				}
 				
 				var items = this.selecterToolbar.Items;
@@ -1669,14 +1670,15 @@
 		{
 			var node = this.treeToolbarItemGroup.SelectedNode;
 			if(node.Level == TREE_LEVEL_ITEM) {
-				ToolbarSelectedChangeGroupItem((LauncherItem)node.Tag);
+				var launcherItemNode = (LauncherItemTreeNode)node;
+				ToolbarSelectedChangeGroupItem(launcherItemNode.LauncherItem);
 			}
 		}
 		
 		void SelecterToolbar_SelectChangedItem(object sender, SelectedItemEventArg e)
 		{
 			var item = this.selecterToolbar.SelectedItem;
-			var node = this.treeToolbarItemGroup.SelectedNode;
+			var node = this.treeToolbarItemGroup.SelectedNode as LauncherItemTreeNode;
 			if(item != null && node != null && node.Level == TREE_LEVEL_ITEM) {
 				ToolbarSetItem(node, item);
 			}
