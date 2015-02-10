@@ -310,11 +310,7 @@
 
 			// 
 			//this.viewDetail.Text = string.Join(Environment.NewLine, ObjectToStringList(logItem.Detail));
-			if(logItem.Detail is Exception || logItem.Detail is string) {
-				this.viewDetail.Text = logItem.Detail.ToString();
-			} else {
-				this.viewDetail.Text = logItem.Detail.DumpToString(logItem.Title);
-			}
+			this.viewDetail.Text = logItem.DetailText;
 
 			//
 			var listitemList = new List<ListViewItem>(logItem.StackTrace.FrameCount);

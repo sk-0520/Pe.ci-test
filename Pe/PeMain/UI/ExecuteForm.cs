@@ -16,7 +16,7 @@
 	/// <summary>
 	/// 指定して実行。
 	/// </summary>
-	public partial class ExecuteForm : CommonForm
+	public partial class ExecuteForm : CommonForm, ILauncherItem
 	{
 		#region define
 		#endregion ////////////////////////////////////
@@ -36,8 +36,8 @@
 
 		#region property
 		//CommonData CommonData { get; set; }
-		LauncherItem LauncherItem { get; set; }
-		IEnumerable<string> ExOptions { get; set; }
+		public LauncherItem LauncherItem { get;  set; }
+		public IEnumerable<string> ExOptions { get; set; }
 
 		public LauncherItem EditedLauncherItem { get; private set; }
 		#endregion ////////////////////////////////////
@@ -111,11 +111,6 @@
 		#endregion ////////////////////////////////////
 
 		#region function
-		public void SetParameter(LauncherItem launcherItem, IEnumerable<string> exOptions)
-		{
-			LauncherItem = launcherItem;
-			ExOptions = exOptions;
-		}
 
 		protected override void ApplySetting()
 		{

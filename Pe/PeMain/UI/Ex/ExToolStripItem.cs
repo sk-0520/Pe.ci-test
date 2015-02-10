@@ -144,6 +144,19 @@
 		public LauncherItem LauncherItem { get; set; }
 	}
 
+	/// <summary>
+	/// ノートを保持するメニューアイテム。
+	/// </summary>
+	public class NoteItemToolStripMenuItem: CommonDataToolStripMenuItem
+	{
+		public NoteItemToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public NoteItem NoteItem { get; set; }
+	}
+
+
 	#endregion
 
 	#region ExToolStripButton

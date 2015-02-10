@@ -309,21 +309,25 @@
 			var hImgSmall = NativeMethods.SHGetFileInfo(iconPath, (int)FILE_ATTRIBUTE.FILE_ATTRIBUTE_NORMAL, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), infoFlags);
 
 			IImageList resultImageList = null;
-			var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out resultImageList);
+			try {
+				var getImageListResult = NativeMethods.SHGetImageList((int)shellImageList, ref NativeMethods.IID_IImageList, out resultImageList);
 
-			if(getImageListResult == ComResult.S_OK) {
-				Debug.Assert(resultImageList != null);
-				using(var imageList = new UnmanagedComWrapper<IImageList>(resultImageList)) {
-					int n = 0;
-					imageList.Com.GetImageCount(ref n);
+				if(getImageListResult == ComResult.S_OK) {
+					Debug.Assert(resultImageList != null);
+					using(var imageList = new UnmanagedComWrapper<IImageList>(resultImageList)) {
+						int n = 0;
+						imageList.Com.GetImageCount(ref n);
 
-					var hResultIcon = IntPtr.Zero;
-					var hResult = imageList.Com.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
+						var hResultIcon = IntPtr.Zero;
+						var hResult = imageList.Com.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
 
-					using(var hIcon = new UnmanagedIcon(hResultIcon)) {
-						return hIcon.ToManagedIcon();
+						using(var hIcon = new UnmanagedIcon(hResultIcon)) {
+							return hIcon.ToManagedIcon();
+						}
 					}
 				}
+			} catch(InvalidCastException ex) {
+				Debug.WriteLine(ex);
 			}
 
 			return null;

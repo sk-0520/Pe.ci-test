@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
 	using System.Text.RegularExpressions;
@@ -20,6 +21,8 @@
 		/// <returns></returns>
 		public static string ToUnique(string target, IEnumerable<string> list, Func<string, int, string> dg)
 		{
+			Debug.Assert(dg != null);
+
 			var changeName = target;
 
 			int n = 1;

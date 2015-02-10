@@ -55,6 +55,59 @@
 		</group>
 	</log>
 	-->
+	<log date="2015/02/11" version="0.48.0">
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="c2586268379c8eda8592699b18caa332afcd4952">
+				<message>#203: 設定画面のツールバーグループ設定を直観的にする</message>
+				<comments>
+					<comment>グループノード選択時にランチャーアイテム一覧をダブルクリックすると選択中ランチャーアイテムが追加されます</comment>
+					<comment>各ノードをD&amp;Dで移動出来るようになりました</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="733fb123f24d29a6c2fa4a7763c0a4bce5c3991b">
+				<message>#159: イベントに割り当てたラムダ式のメモリ解放</message>
+				<comments>
+					<comment>とりあえず見える範囲でキャプチャ切ったから勘弁して</comment>
+				</comments>
+			</note>
+			<note rev="49286e2c2acd9587f56e5bdc02e41fee7da13e65">
+				<message>#202: グループ作成で名前に重複がある場合に例外が発生する</message>
+			</note>
+			<note rev="71940970976125a393c0a186e1cfcf462dd6a7c3">
+				<message>ファイルメニュー展開後に読み込み終了したアイコンを待機中イメージから置き換える</message>
+				<comments>
+					<comment>全項目に適用するとアホみたいに遅くなるし現在表示項目数が取得できないので上位項目に適用する</comment>
+					<comment>ファイル数が多いとクッソ怪しい動作</comment>
+					<comment>system32なんて誰も表示しないだろうという一握の望み</comment>
+				</comments>
+			</note>
+			<note rev="e24fa1d27cb81f2e7e39bb8920a2d51e421082b0">
+				<message>ログウィンドウで一部のログが表示できない不具合の修正</message>
+			</note>
+			<note rev="589affc8d5d144791fda6d4f80e3e0859a326617">
+				<message>大きなアイコン取得時にIImageListが生成できずInvalidCastExceptionがブン投げられる</message>
+				<comments>
+					<comment>再現性皆無でデバッグ時しか発生を確認できていないのでとりあえず空catch</comment>
+				</comments>
+				</note>
+			<note rev="0182cf25e210342ef2dbf72a80b275827a36678c">
+				<message>クリップボード/テンプレートのタブ一覧が設定ウィンドウ確定後一時的に無効になる不具合の修正</message>
+			</note>
+			<note rev="f95bb3b6afa6f859db0f0d254d64b1dfa2b0e2a8">
+				<message>タスクトレイコンテキストメニューに表示されるクリップボード/テキストテンプレート項目表示文字列をウィンドウ名に合わせる</message>
+			</note>
+		</group>
+		<group type="developer">
+			<sep dummy="==================================================================" />
+			<note rev="5fdaf73ea51d2a1e9b638833655f14a8a0f3eb04">
+				<message>ホームダイアログのボタンがなんかちっさくなってたんで考えることを放棄してDock.Fillした</message>
+			</note>
+		</group>
+	</log>
 	<log date="2015/02/08" version="0.47.0">
 		<group type="note">
 			<sep dummy="==================================================================" />

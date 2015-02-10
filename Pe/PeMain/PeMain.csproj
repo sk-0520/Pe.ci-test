@@ -189,7 +189,6 @@
     <Compile Include="Logic\LauncherItemUtility.cs" />
     <Compile Include="Logic\Listener.cs" />
     <Compile Include="Logic\NullLogger.cs" />
-    <Compile Include="Logic\ScreenForms.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
@@ -249,6 +248,7 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Ex\ExTreeNode.cs" />
     <Compile Include="UI\LauncherToolTipForm.cs">
       <SubType>Form</SubType>
     </Compile>
