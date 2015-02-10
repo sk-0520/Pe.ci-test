@@ -33,6 +33,8 @@
 		const int TREE_TYPE_NONE = 0;
 		const int TREE_TYPE_GROUP = 1;
 
+		const string ddTreeNode = "tree-node";
+
 		class NoteWrapItem
 		{
 			public NoteWrapItem(NoteItem item)
@@ -1936,6 +1938,59 @@
 		private void commandToolbarScreens_Click(object sender, EventArgs e)
 		{
 			ShowScreenWindow();
+		}
+
+		private void treeToolbarItemGroup_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+			this.treeToolbarItemGroup.SelectedNode = (TreeNode)e.Item;
+			var data = new DataObject(ddTreeNode, e.Item);
+			this.treeToolbarItemGroup.DoDragDrop(data, DragDropEffects.All);
+		}
+
+		private void treeToolbarItemGroup_DragOver(object sender, DragEventArgs e)
+		{
+			var treeNode = e.Data.GetData(ddTreeNode) as TreeNode;
+			if(treeNode == null) {
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			var clientPoint = this.treeToolbarItemGroup.PointToClient(new Point(e.X, e.Y));
+			var overNode = this.treeToolbarItemGroup.GetNodeAt(clientPoint);
+
+			if(overNode == treeNode) {
+				// 自分自身は無視
+				e.Effect = DragDropEffects.None;
+				return;
+			}
+			// 子を持つのであれば展開する
+			if(overNode != null && overNode.Nodes.Count > 0 && !overNode.IsExpanded) {
+				overNode.Expand();
+			}
+
+			var launcherItemNode = treeNode as LauncherItemTreeNode;
+
+			if(launcherItemNode != null) {
+				// ランチャーアイテム
+				e.Effect = DragDropEffects.Move;
+			} else {
+				// グループアイテム
+				if(overNode == null) {
+					e.Effect = DragDropEffects.Move;
+				} else {
+					var groupItemNode = (GroupItemTreeNode)treeNode;
+					if(overNode is GroupItemTreeNode) {
+						e.Effect = DragDropEffects.Move;
+					} else {
+						// ランチャーアイテムノードには移動できない
+						e.Effect = DragDropEffects.None;
+					}
+				}
+			}
+		}
+
+		private void treeToolbarItemGroup_DragDrop(object sender, DragEventArgs e)
+		{
+
 		}
 
 	}
