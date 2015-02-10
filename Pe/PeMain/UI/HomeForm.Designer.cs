@@ -104,12 +104,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandLauncher
 			// 
-			this.commandLauncher.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.commandLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.commandLauncher.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Finder;
-			this.commandLauncher.Location = new System.Drawing.Point(20, 10);
+			this.commandLauncher.Location = new System.Drawing.Point(4, 4);
 			this.commandLauncher.Margin = new System.Windows.Forms.Padding(4);
 			this.commandLauncher.Name = "commandLauncher";
-			this.commandLauncher.Size = new System.Drawing.Size(200, 200);
+			this.commandLauncher.Size = new System.Drawing.Size(233, 212);
 			this.commandLauncher.TabIndex = 0;
 			this.commandLauncher.Text = ":home/command/launcher";
 			this.commandLauncher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -118,12 +118,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandNotify
 			// 
-			this.commandNotify.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.commandNotify.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.commandNotify.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Flag;
-			this.commandNotify.Location = new System.Drawing.Point(261, 10);
+			this.commandNotify.Location = new System.Drawing.Point(245, 4);
 			this.commandNotify.Margin = new System.Windows.Forms.Padding(4);
 			this.commandNotify.Name = "commandNotify";
-			this.commandNotify.Size = new System.Drawing.Size(200, 200);
+			this.commandNotify.Size = new System.Drawing.Size(233, 212);
 			this.commandNotify.TabIndex = 0;
 			this.commandNotify.Text = ":home/command/notify";
 			this.commandNotify.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -132,12 +132,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandStartup
 			// 
-			this.commandStartup.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.commandStartup.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.commandStartup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Windows;
-			this.commandStartup.Location = new System.Drawing.Point(503, 10);
+			this.commandStartup.Location = new System.Drawing.Point(486, 4);
 			this.commandStartup.Margin = new System.Windows.Forms.Padding(4);
 			this.commandStartup.Name = "commandStartup";
-			this.commandStartup.Size = new System.Drawing.Size(200, 200);
+			this.commandStartup.Size = new System.Drawing.Size(235, 212);
 			this.commandStartup.TabIndex = 0;
 			this.commandStartup.Text = ":home/command/startup";
 			this.commandStartup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
