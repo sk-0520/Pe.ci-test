@@ -103,7 +103,7 @@
 					<comment>system32なんて誰も表示しないだろうという一握の望み</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="e24fa1d27cb81f2e7e39bb8920a2d51e421082b0">
 				<message>ログウィンドウで一部のログが表示できない不具合の修正</message>
 			</note>
 			<note rev="">
