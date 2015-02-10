@@ -116,6 +116,9 @@
 				<message>クリップボード/テンプレートのタブ一覧が設定ウィンドウ確定後一時的に無効になる不具合の修正</message>
 			</note>
 			<note rev="">
+				<message>タスクトレイコンテキストメニューに表示されるクリップボード/テキストテンプレート項目表示文字列をウィンドウ名に合わせる</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
