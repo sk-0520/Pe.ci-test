@@ -55,19 +55,7 @@
 		</group>
 	</log>
 	-->
-	<log date="YYYY/MM/DD" version="0.47.1" type="rc">
-		<group type="note">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
+	<log date="2015/02/11" version="0.48.0">
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="c2586268379c8eda8592699b18caa332afcd4952">
@@ -76,12 +64,6 @@
 					<comment>グループノード選択時にランチャーアイテム一覧をダブルクリックすると選択中ランチャーアイテムが追加されます</comment>
 					<comment>各ノードをD&amp;Dで移動出来るようになりました</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes">
@@ -118,20 +100,11 @@
 			<note rev="f95bb3b6afa6f859db0f0d254d64b1dfa2b0e2a8">
 				<message>タスクトレイコンテキストメニューに表示されるクリップボード/テキストテンプレート項目表示文字列をウィンドウ名に合わせる</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="5fdaf73ea51d2a1e9b638833655f14a8a0f3eb04">
 				<message>ホームダイアログのボタンがなんかちっさくなってたんで考えることを放棄してDock.Fillした</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
