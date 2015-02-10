@@ -1967,17 +1967,18 @@
 				overNode.Expand();
 			}
 
-			var launcherItemNode = treeNode as LauncherItemTreeNode;
-
-			if(launcherItemNode != null) {
+			if(treeNode is LauncherItemTreeNode) {
 				// ランチャーアイテム
-				e.Effect = DragDropEffects.Move;
+				if(overNode != null && overNode != treeNode.Parent) {
+					e.Effect = DragDropEffects.Move;
+				} else {
+					e.Effect = DragDropEffects.None;
+				}
 			} else {
 				// グループアイテム
 				if(overNode == null) {
 					e.Effect = DragDropEffects.Move;
 				} else {
-					var groupItemNode = (GroupItemTreeNode)treeNode;
 					if(overNode is GroupItemTreeNode) {
 						e.Effect = DragDropEffects.Move;
 					} else {
@@ -1990,7 +1991,49 @@
 
 		private void treeToolbarItemGroup_DragDrop(object sender, DragEventArgs e)
 		{
+			var treeNode = e.Data.GetData(ddTreeNode) as TreeNode;
+			if(treeNode == null) {
+				return;
+			}
+			var clientPoint = this.treeToolbarItemGroup.PointToClient(new Point(e.X, e.Y));
+			var overNode = this.treeToolbarItemGroup.GetNodeAt(clientPoint);
 
+			if(overNode == treeNode) {
+				// 自分自身は無視
+				return;
+			}
+
+			this.treeToolbarItemGroup.BeginUpdate();
+			treeNode.Remove();
+			if(treeNode is LauncherItemTreeNode) {
+				// 指定ノードの下に移動
+				Debug.Assert(overNode != null);
+				Debug.Assert(overNode != treeNode.Parent);
+				if(overNode is GroupItemTreeNode) {
+					// グループの下
+					overNode.Nodes.Add(treeNode);
+				} else {
+					// ランチャーアイテムの位置
+					var groupNode = overNode.Parent;
+					groupNode.Nodes.Insert(overNode.Index, treeNode);
+				}
+			} else {
+				// グループアイテム
+				if(overNode == null) {
+					// 一番下に移動
+					this.treeToolbarItemGroup.Nodes.Add(treeNode);
+				} else {
+					Debug.Assert(overNode is GroupItemTreeNode);
+					// 指定グループの上に移動
+					if(overNode.Index == 0) {
+						this.treeToolbarItemGroup.Nodes.Insert(0, treeNode);
+					} else {
+						this.treeToolbarItemGroup.Nodes.Insert(overNode.Index, treeNode);
+					}
+				}
+			}
+			this.treeToolbarItemGroup.SelectedNode = treeNode;
+			this.treeToolbarItemGroup.EndUpdate();
 		}
 
 	}

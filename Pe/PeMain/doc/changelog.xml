@@ -71,7 +71,11 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>203: 設定画面のツールバーグループ設定を直観的にする</message>
+				<comment>
+					<comment>グループノード選択時にランチャーアイテム一覧をダブルクリックすると選択中グループに選択中ランチャーアイテムが追加されます</comment>
+					<comment>各ノードをD&amp;Dで移動出来るように改修しました</comment>
+				</comment>
 			</note>
 			<note rev="">
 				<message></message>
