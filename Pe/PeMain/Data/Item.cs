@@ -69,6 +69,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// <summary>
 	/// 解放が必要な名前月アイテム
 	/// </summary>
+	[Serializable]
 	public abstract class DisposableNameItem: DisposableItem, INameItem
 	{
 		/// <summary>
@@ -78,6 +79,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public string Name { get; set; }
 	}
 
+	[Serializable]
 	public class RangeItem<T>: IRangeItem<T>
 	{
 		public T Start { get; set; }

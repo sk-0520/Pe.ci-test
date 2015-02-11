@@ -139,6 +139,7 @@
 				Literal.UserMainSettingPath,
 				Literal.UserLauncherItemsPath,
 				Literal.UserDBPath,
+				Literal.UserClipboardItemsPath,
 				Literal.UserTemplateItemsPath,
 				Literal.ApplicationSettingBaseDirectoryPath,
 			};
@@ -154,8 +155,9 @@
 			}
 			Serializer.SaveXmlFile(sortedSet, Literal.UserLauncherItemsPath);
 			//// クリップボードデータ
-			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
-			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
+			var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.HistoryItems);
+			Serializer.SaveXmlFile(list, Literal.UserClipboardItemsPath);
+
 			// テンプレートデータ
 			Serializer.SaveXmlFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
 		}

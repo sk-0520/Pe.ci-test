@@ -215,7 +215,7 @@
 
 			if(enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList()) {
 				var files = Clipboard.GetFileDropList().Cast<string>();
-				clipboardItem.Files = files;
+				clipboardItem.Files = new List<string>(files);
 				clipboardItem.Text = string.Join(Environment.NewLine, files);
 				clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
 			}
