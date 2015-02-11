@@ -30,7 +30,7 @@
 			EnabledTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
 
 			SaveHistory = false;
-			SaveTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html;
+			SaveTypes = ClipboardType.Text | ClipboardType.Rtf;
 
 			SleepTime = Literal.clipboardSleepTime.median;
 			WaitTime = Literal.clipboardWaitTime.median;
