@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
@@ -89,13 +90,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		[XmlElement("WindowSaveTime", DataType = "duration")]
 		public string _WindowSaveTime
 		{
-			get { return XmlConvert.ToString(WindowSaveTime); }
-			set 
-			{
-				if(!string.IsNullOrWhiteSpace(value)) {
-					WindowSaveTime = XmlConvert.ToTimeSpan(value);
-				}
-			}
+			get { return PropertyUtility.MixinTimeSpanGetter(WindowSaveTime); }
+			set { WindowSaveTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 
 		public ClipboardSetting Clipboard { get; set; }
