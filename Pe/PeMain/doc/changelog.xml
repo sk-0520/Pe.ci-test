@@ -111,7 +111,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>System.TimeSpanのシリアライズ・デシリアライズ統一</message>
 			</note>
 			<note rev="">
 				<message></message>
