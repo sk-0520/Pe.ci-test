@@ -214,12 +214,10 @@
 			// TODO: 泥臭い
 			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
 				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
-				.Select(
-					f => new {
-						Language = Serializer.LoadXmlFile<Language>(f, false),
-						BaseName = Path.GetFileNameWithoutExtension(f),
-					}
-				)
+				.Select(f => new {
+					Language = Serializer.LoadXmlFile<Language>(f, false),
+					BaseName = Path.GetFileNameWithoutExtension(f),
+				})
 				.ToArray()
 				;
 			var languagePairList = new List<Language>(languageTempList.Length);
@@ -228,12 +226,10 @@
 				languagePairList.Add(lang.Language);
 			}
 			var langList = languagePairList
-				.Select(
-					l => new {
-						DisplayValue = new LanguageDisplayValue(l),
-						Language = l,
-					}
-				)
+				.Select(l => new {
+					DisplayValue = new LanguageDisplayValue(l),
+					Language = l,
+				})
 				;
 			var selectedItem = langList.SingleOrDefault(l => l.Language.BaseName == languageName);
 			Language selectedLang = null;
@@ -650,12 +646,21 @@
 			this.selectClipboardAppEnabled.SetLanguage(Language);
 			this.selectClipboardTopMost.SetLanguage(Language);
 			this.selectClipboardVisible.SetLanguage(Language);
+			this.selectClipboardSave.SetLanguage(Language);
 			this.groupClipboardType.SetLanguage(Language);
+			this.groupClipboardSaveType.SetLanguage(Language);
+
 			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
 			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
 			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
 			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
 			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+
+			this.selectClipboardSaveType_text.Text = ClipboardType.Text.ToText(Language);
+			this.selectClipboardSaveType_rtf.Text = ClipboardType.Rtf.ToText(Language);
+			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(Language);
+			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(Language);
+			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(Language);
 		}
 
 		void ApplyLanguage()
