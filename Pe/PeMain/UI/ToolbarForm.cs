@@ -974,13 +974,14 @@
 				itemGroupSeparator,
 			};
 
-			foreach(var group in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
-				var itemGroup = new ToolStripMenuItem();
-				itemGroup.Text = group.Name;
-				itemGroup.Name = MakeGroupItemName(group.Name);
-				itemGroup.Tag = group;
-				itemGroup.CheckState = CheckState.Indeterminate;
-				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var itemGroup = new ToolbarGroupItemToolStripMenuItem(CommonData) {
+					Text = groupItem.Name,
+					Name = MakeGroupItemName(groupItem.Name),
+					ToolbarGroupItem = groupItem,
+					CheckState = CheckState.Indeterminate
+				};
+				itemGroup.Click += ToolbarMenuGroupItem_Click;
 				menuList.Add(itemGroup);
 			}
 
@@ -1716,6 +1717,13 @@
 			}
 		}
 
+		void ToolbarMenuGroupItem_Click(object sender, EventArgs e)
+		{
+			var toolItem = (ToolbarGroupItemToolStripMenuItem)sender;
+			var groupItem = toolItem.ToolbarGroupItem;
+			SelectedGroup(groupItem);
+		}
+
 		#region File Launcher Menu
 
 		void FileLauncherItemPathMenu_OpenParentDirectory(object sender, EventArgs e)
@@ -1998,8 +2006,8 @@
 			autoHideItem.Enabled = IsDocking;
 
 			// グループ
-			foreach(var groupItem in parentItem.DropDownItems.OfType<ToolStripMenuItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal))) {
-				groupItem.Checked = groupItem.Tag == SelectedGroupItem;
+			foreach(var groupItem in parentItem.DropDownItems.OfType<ToolbarGroupItemToolStripMenuItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal))) {
+				groupItem.Checked = groupItem.ToolbarGroupItem == SelectedGroupItem;
 			}
 		}
 

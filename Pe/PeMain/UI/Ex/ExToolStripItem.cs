@@ -132,6 +132,15 @@
 		}
 	}
 
+	public class ToolbarGroupItemToolStripMenuItem: CommonDataToolStripMenuItem, IToolbarGroupItem
+	{
+		public ToolbarGroupItemToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public ToolbarGroupItem ToolbarGroupItem { get; set; }
+	}
+
 	/// <summary>
 	/// ランチャーアイテムを保持するメニューアイテム。
 	/// </summary>
