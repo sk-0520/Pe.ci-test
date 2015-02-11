@@ -69,7 +69,7 @@
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#205: ツールバーのグループ選択コンテキストメニューに対するチェックマーク</message>
 			</note>
 			<note rev="">
 				<message></message>
