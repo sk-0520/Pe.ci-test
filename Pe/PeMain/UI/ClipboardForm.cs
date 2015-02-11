@@ -1049,6 +1049,10 @@
 
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
 		{
+			if(!Created) {
+				e.Cancel = true;
+				return;
+			}
 			//Debug.Assert(SelectedItemIndex != -1);
 			var index = this.listItemStack.SelectedIndex;
 			if(index == -1) {
