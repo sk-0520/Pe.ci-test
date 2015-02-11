@@ -332,6 +332,7 @@
 		<Word Name="setting/group/save-clipboard-type"    Text="保存種類" />
 		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
 		<Word Name="setting/check/clipboard-save"         Text="クリップボードを保存する" />
+		<Word Name="setting/label/clipboard-list"         Text="表示タイプ" />
 		<Word Name="setting/group/skin"       Text="スキン" />
 		<Word Name="setting/command/skin"     Text="設定" />
 		<Word Name="setting/group/stream"     Text="標準入出力" />
