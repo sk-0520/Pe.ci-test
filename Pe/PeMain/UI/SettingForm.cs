@@ -413,6 +413,15 @@
 
 			this.commandClipboardTextFont.FontSetting.Import(setting.TextFont);
 			this.commandClipboardTextFont.RefreshView();
+
+			var clipboardListTypeValues = new List<ClipboardListTypeDisplayValue>();
+			foreach(var type in new [] { ClipboardListType.History, ClipboardListType.Template }) {
+				var dv = new ClipboardListTypeDisplayValue(type);
+				dv.SetLanguage(Language);
+				clipboardListTypeValues.Add(dv);
+			}
+			this.selectClipboardListType.Attachment(clipboardListTypeValues, setting.ClipboardListType);
+
 		}
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
@@ -657,6 +666,7 @@
 			this.selectClipboardSave.SetLanguage(Language);
 			this.groupClipboardType.SetLanguage(Language);
 			this.groupClipboardSaveType.SetLanguage(Language);
+			this.labelClipboardListType.SetLanguage(Language);
 
 			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
 			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
@@ -983,6 +993,8 @@
 			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
 			setting.Visible = this.selectClipboardVisible.Checked;
 			setting.TopMost = this.selectClipboardTopMost.Checked;
+
+			setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
 
 			var enabledTypeMap = new Dictionary<ClipboardType, bool>() {
 				{ ClipboardType.Text, this.selectClipboardType_text.Checked },
