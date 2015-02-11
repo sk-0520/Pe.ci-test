@@ -395,11 +395,19 @@
 			this.selectClipboardVisible.Checked = setting.Visible;
 			this.selectClipboardTopMost.Checked = setting.TopMost;
 
+			this.selectClipboardSave.Checked = setting.SaveHistory;
+
 			this.selectClipboardType_text.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Text);
 			this.selectClipboardType_rtf.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Rtf);
 			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
 			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
 			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
+
+			this.selectClipboardSaveType_text.Checked = setting.SaveTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardSaveType_rtf.Checked = setting.SaveTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardSaveType_html.Checked = setting.SaveTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardSaveType_image.Checked = setting.SaveTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardSaveType_file.Checked = setting.SaveTypes.HasFlag(ClipboardType.File);
 
 			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
 
@@ -976,18 +984,32 @@
 			setting.Visible = this.selectClipboardVisible.Checked;
 			setting.TopMost = this.selectClipboardTopMost.Checked;
 
-			var map = new Dictionary<ClipboardType, bool>() {
+			var enabledTypeMap = new Dictionary<ClipboardType, bool>() {
 				{ ClipboardType.Text, this.selectClipboardType_text.Checked },
 				{ ClipboardType.Rtf,  this.selectClipboardType_rtf.Checked },
 				{ ClipboardType.Html, this.selectClipboardType_html.Checked },
 				{ ClipboardType.Image,this.selectClipboardType_image.Checked },
 				{ ClipboardType.File, this.selectClipboardType_file.Checked },
 			};
-			var clipboardType = ClipboardType.None;
-			foreach(var type in map.Where(p => p.Value).Select(p => p.Key)) {
-				clipboardType |= type;
+			var enabledClipboardTypes = ClipboardType.None;
+			foreach(var type in enabledTypeMap.Where(p => p.Value).Select(p => p.Key)) {
+				enabledClipboardTypes |= type;
 			}
-			setting.EnabledTypes = clipboardType;
+			setting.EnabledTypes = enabledClipboardTypes;
+
+			var saveTypeMap = new Dictionary<ClipboardType, bool>() {
+				{ ClipboardType.Text, this.selectClipboardSaveType_text.Checked },
+				{ ClipboardType.Rtf,  this.selectClipboardSaveType_rtf.Checked },
+				{ ClipboardType.Html, this.selectClipboardSaveType_html.Checked },
+				{ ClipboardType.Image,this.selectClipboardSaveType_image.Checked },
+				{ ClipboardType.File, this.selectClipboardSaveType_file.Checked },
+			};
+			var saveClipboardTypes = ClipboardType.None;
+			foreach(var type in saveTypeMap.Where(p => p.Value).Select(p => p.Key)) {
+				saveClipboardTypes |= type;
+			}
+			setting.SaveTypes = saveClipboardTypes;
+			setting.SaveHistory = this.selectClipboardSave.Checked;
 
 			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
 

@@ -227,5 +227,10 @@
 
 			return clipboardItem;
 		}
+
+		public static IList<ClipboardItem> FilterClipboardItemList(IReadOnlyList<ClipboardItem> list, ClipboardType types)
+		{
+			return null;
+		}
 	}
 }

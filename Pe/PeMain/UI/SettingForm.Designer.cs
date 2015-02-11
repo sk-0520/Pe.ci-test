@@ -177,21 +177,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
 			this.panelClipboardMain = new System.Windows.Forms.TableLayoutPanel();
-			this.groupClipboardSaveType = new System.Windows.Forms.GroupBox();
-			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-			this.selectClipboardSaveType_text = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_rtf = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
-			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
 			this.selectClipboardEnabled = new System.Windows.Forms.CheckBox();
-			this.groupClipboardType = new System.Windows.Forms.GroupBox();
-			this.panelClipboardType = new System.Windows.Forms.FlowLayoutPanel();
-			this.selectClipboardType_text = new System.Windows.Forms.CheckBox();
-			this.selectClipboardType_rtf = new System.Windows.Forms.CheckBox();
-			this.selectClipboardType_html = new System.Windows.Forms.CheckBox();
-			this.selectClipboardType_image = new System.Windows.Forms.CheckBox();
-			this.selectClipboardType_file = new System.Windows.Forms.CheckBox();
 			this.selectClipboardAppEnabled = new System.Windows.Forms.CheckBox();
 			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
 			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
@@ -206,6 +192,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelClipboardFont = new System.Windows.Forms.Label();
 			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.selectClipboardSave = new System.Windows.Forms.CheckBox();
+			this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+			this.groupClipboardType = new System.Windows.Forms.GroupBox();
+			this.panelClipboardType = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectClipboardType_text = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_rtf = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_html = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_image = new System.Windows.Forms.CheckBox();
+			this.selectClipboardType_file = new System.Windows.Forms.CheckBox();
+			this.groupClipboardSaveType = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectClipboardSaveType_text = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_rtf = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
+			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -265,13 +266,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
 			this.tabSetting_pageClipboard.SuspendLayout();
 			this.panelClipboardMain.SuspendLayout();
-			this.groupClipboardSaveType.SuspendLayout();
-			this.flowLayoutPanel2.SuspendLayout();
-			this.groupClipboardType.SuspendLayout();
-			this.panelClipboardType.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
+			this.flowLayoutPanel4.SuspendLayout();
+			this.groupClipboardType.SuspendLayout();
+			this.panelClipboardType.SuspendLayout();
+			this.groupClipboardSaveType.SuspendLayout();
+			this.flowLayoutPanel2.SuspendLayout();
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -1980,23 +1982,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelClipboardMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 232F));
-			this.panelClipboardMain.Controls.Add(this.groupClipboardSaveType, 3, 0);
 			this.panelClipboardMain.Controls.Add(this.selectClipboardEnabled, 0, 0);
-			this.panelClipboardMain.Controls.Add(this.groupClipboardType, 2, 0);
 			this.panelClipboardMain.Controls.Add(this.selectClipboardAppEnabled, 0, 1);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardWaitTaime, 0, 3);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardLimit, 1, 2);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardLimit, 0, 2);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardWaitTime, 1, 3);
-			this.panelClipboardMain.Controls.Add(this.selectClipboardTopMost, 0, 6);
 			this.panelClipboardMain.Controls.Add(this.selectClipboardVisible, 0, 5);
 			this.panelClipboardMain.Controls.Add(this.labelClipboardSleepTime, 0, 4);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardSleepTime, 1, 4);
-			this.panelClipboardMain.Controls.Add(this.labelClipboardHotkey, 0, 7);
 			this.panelClipboardMain.Controls.Add(this.inputClipboardHotkey, 1, 7);
-			this.panelClipboardMain.Controls.Add(this.labelClipboardFont, 0, 8);
 			this.panelClipboardMain.Controls.Add(this.commandClipboardTextFont, 1, 8);
-			this.panelClipboardMain.Controls.Add(this.selectClipboardSave, 2, 7);
+			this.panelClipboardMain.Controls.Add(this.flowLayoutPanel4, 2, 7);
+			this.panelClipboardMain.Controls.Add(this.selectClipboardSave, 2, 6);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardFont, 0, 9);
+			this.panelClipboardMain.Controls.Add(this.labelClipboardHotkey, 0, 8);
+			this.panelClipboardMain.Controls.Add(this.selectClipboardTopMost, 0, 7);
 			this.panelClipboardMain.Location = new System.Drawing.Point(6, 6);
 			this.panelClipboardMain.Name = "panelClipboardMain";
 			this.panelClipboardMain.RowCount = 10;
@@ -2010,91 +2011,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelClipboardMain.Size = new System.Drawing.Size(735, 269);
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.panelClipboardMain.Size = new System.Drawing.Size(735, 288);
 			this.panelClipboardMain.TabIndex = 9;
-			// 
-			// groupClipboardSaveType
-			// 
-			this.groupClipboardSaveType.AutoSize = true;
-			this.groupClipboardSaveType.Controls.Add(this.flowLayoutPanel2);
-			this.groupClipboardSaveType.Location = new System.Drawing.Point(583, 3);
-			this.groupClipboardSaveType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
-			this.groupClipboardSaveType.Name = "groupClipboardSaveType";
-			this.panelClipboardMain.SetRowSpan(this.groupClipboardSaveType, 6);
-			this.groupClipboardSaveType.Size = new System.Drawing.Size(172, 147);
-			this.groupClipboardSaveType.TabIndex = 10;
-			this.groupClipboardSaveType.TabStop = false;
-			this.groupClipboardSaveType.Text = ":setting/group/save-clipboard-type";
-			// 
-			// flowLayoutPanel2
-			// 
-			this.flowLayoutPanel2.AutoSize = true;
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_text);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_rtf);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_html);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_image);
-			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_file);
-			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
-			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(166, 125);
-			this.flowLayoutPanel2.TabIndex = 0;
-			// 
-			// selectClipboardSaveType_text
-			// 
-			this.selectClipboardSaveType_text.AutoSize = true;
-			this.selectClipboardSaveType_text.Location = new System.Drawing.Point(3, 3);
-			this.selectClipboardSaveType_text.Name = "selectClipboardSaveType_text";
-			this.selectClipboardSaveType_text.Size = new System.Drawing.Size(148, 19);
-			this.selectClipboardSaveType_text.TabIndex = 0;
-			this.selectClipboardSaveType_text.Text = "#ClipboardType.Text";
-			this.selectClipboardSaveType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_text.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_rtf
-			// 
-			this.selectClipboardSaveType_rtf.AutoSize = true;
-			this.selectClipboardSaveType_rtf.Location = new System.Drawing.Point(3, 28);
-			this.selectClipboardSaveType_rtf.Name = "selectClipboardSaveType_rtf";
-			this.selectClipboardSaveType_rtf.Size = new System.Drawing.Size(139, 19);
-			this.selectClipboardSaveType_rtf.TabIndex = 0;
-			this.selectClipboardSaveType_rtf.Text = "#ClipboardType.Rtf";
-			this.selectClipboardSaveType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_rtf.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_html
-			// 
-			this.selectClipboardSaveType_html.AutoSize = true;
-			this.selectClipboardSaveType_html.Location = new System.Drawing.Point(3, 53);
-			this.selectClipboardSaveType_html.Name = "selectClipboardSaveType_html";
-			this.selectClipboardSaveType_html.Size = new System.Drawing.Size(151, 19);
-			this.selectClipboardSaveType_html.TabIndex = 0;
-			this.selectClipboardSaveType_html.Text = "#ClipboardType.Html";
-			this.selectClipboardSaveType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_html.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_image
-			// 
-			this.selectClipboardSaveType_image.AutoSize = true;
-			this.selectClipboardSaveType_image.Location = new System.Drawing.Point(3, 78);
-			this.selectClipboardSaveType_image.Name = "selectClipboardSaveType_image";
-			this.selectClipboardSaveType_image.Size = new System.Drawing.Size(160, 19);
-			this.selectClipboardSaveType_image.TabIndex = 0;
-			this.selectClipboardSaveType_image.Text = "#ClipboardType.Image";
-			this.selectClipboardSaveType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_image.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSaveType_file
-			// 
-			this.selectClipboardSaveType_file.AutoSize = true;
-			this.selectClipboardSaveType_file.Location = new System.Drawing.Point(3, 103);
-			this.selectClipboardSaveType_file.Name = "selectClipboardSaveType_file";
-			this.selectClipboardSaveType_file.Size = new System.Drawing.Size(142, 19);
-			this.selectClipboardSaveType_file.TabIndex = 0;
-			this.selectClipboardSaveType_file.Text = "#ClipboardType.File";
-			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
 			// 
 			// selectClipboardEnabled
 			// 
@@ -2107,14 +2030,169 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardEnabled.Text = ":setting/check/clipboard-enabled";
 			this.selectClipboardEnabled.UseVisualStyleBackColor = true;
 			// 
+			// selectClipboardAppEnabled
+			// 
+			this.selectClipboardAppEnabled.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardAppEnabled, 2);
+			this.selectClipboardAppEnabled.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardAppEnabled.Name = "selectClipboardAppEnabled";
+			this.selectClipboardAppEnabled.Size = new System.Drawing.Size(244, 19);
+			this.selectClipboardAppEnabled.TabIndex = 1;
+			this.selectClipboardAppEnabled.Text = ":setting/check/clipboard-app-enabled";
+			this.selectClipboardAppEnabled.UseVisualStyleBackColor = true;
+			// 
+			// labelClipboardWaitTaime
+			// 
+			this.labelClipboardWaitTaime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardWaitTaime.AutoSize = true;
+			this.labelClipboardWaitTaime.Location = new System.Drawing.Point(3, 86);
+			this.labelClipboardWaitTaime.Name = "labelClipboardWaitTaime";
+			this.labelClipboardWaitTaime.Size = new System.Drawing.Size(173, 15);
+			this.labelClipboardWaitTaime.TabIndex = 7;
+			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
+			// 
+			// inputClipboardLimit
+			// 
+			this.inputClipboardLimit.Location = new System.Drawing.Point(187, 53);
+			this.inputClipboardLimit.Name = "inputClipboardLimit";
+			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardLimit.TabIndex = 2;
+			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// labelClipboardLimit
+			// 
+			this.labelClipboardLimit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardLimit.AutoSize = true;
+			this.labelClipboardLimit.Location = new System.Drawing.Point(3, 57);
+			this.labelClipboardLimit.Name = "labelClipboardLimit";
+			this.labelClipboardLimit.Size = new System.Drawing.Size(174, 15);
+			this.labelClipboardLimit.TabIndex = 6;
+			this.labelClipboardLimit.Text = ":setting/label/clipboard-limit";
+			// 
+			// inputClipboardWaitTime
+			// 
+			this.inputClipboardWaitTime.Location = new System.Drawing.Point(187, 82);
+			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
+			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardWaitTime.TabIndex = 3;
+			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// selectClipboardTopMost
+			// 
+			this.selectClipboardTopMost.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardTopMost, 2);
+			this.selectClipboardTopMost.Location = new System.Drawing.Point(3, 190);
+			this.selectClipboardTopMost.Name = "selectClipboardTopMost";
+			this.selectClipboardTopMost.Size = new System.Drawing.Size(222, 19);
+			this.selectClipboardTopMost.TabIndex = 6;
+			this.selectClipboardTopMost.Text = ":setting/check/clipboard-topmost";
+			this.selectClipboardTopMost.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardVisible
+			// 
+			this.selectClipboardVisible.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.selectClipboardVisible, 2);
+			this.selectClipboardVisible.Location = new System.Drawing.Point(3, 140);
+			this.selectClipboardVisible.Name = "selectClipboardVisible";
+			this.selectClipboardVisible.Size = new System.Drawing.Size(209, 19);
+			this.selectClipboardVisible.TabIndex = 5;
+			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
+			this.selectClipboardVisible.UseVisualStyleBackColor = true;
+			// 
+			// labelClipboardSleepTime
+			// 
+			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardSleepTime.AutoSize = true;
+			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 115);
+			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
+			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
+			this.labelClipboardSleepTime.TabIndex = 9;
+			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
+			// 
+			// inputClipboardSleepTime
+			// 
+			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 111);
+			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
+			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardSleepTime.TabIndex = 4;
+			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// labelClipboardHotkey
+			// 
+			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardHotkey.AutoSize = true;
+			this.labelClipboardHotkey.Location = new System.Drawing.Point(313, 304);
+			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
+			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
+			this.labelClipboardHotkey.TabIndex = 11;
+			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
+			// 
+			// inputClipboardHotkey
+			// 
+			this.inputClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
+			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputClipboardHotkey.HotKeySetting = null;
+			this.inputClipboardHotkey.Location = new System.Drawing.Point(313, 190);
+			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
+			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
+			this.inputClipboardHotkey.ReadOnly = true;
+			this.inputClipboardHotkey.Registered = false;
+			this.inputClipboardHotkey.Size = new System.Drawing.Size(168, 23);
+			this.inputClipboardHotkey.TabIndex = 7;
+			this.inputClipboardHotkey.Text = "None";
+			// 
+			// labelClipboardFont
+			// 
+			this.labelClipboardFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardFont.AutoSize = true;
+			this.labelClipboardFont.Location = new System.Drawing.Point(313, 410);
+			this.labelClipboardFont.Name = "labelClipboardFont";
+			this.labelClipboardFont.Size = new System.Drawing.Size(125, 15);
+			this.labelClipboardFont.TabIndex = 13;
+			this.labelClipboardFont.Text = ":common/label/font";
+			// 
+			// commandClipboardTextFont
+			// 
+			this.commandClipboardTextFont.AutoSize = true;
+			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandClipboardTextFont.Location = new System.Drawing.Point(519, 219);
+			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
+			this.commandClipboardTextFont.Size = new System.Drawing.Size(226, 186);
+			this.commandClipboardTextFont.TabIndex = 8;
+			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
+			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardSave
+			// 
+			this.selectClipboardSave.AutoSize = true;
+			this.selectClipboardSave.Location = new System.Drawing.Point(313, 165);
+			this.selectClipboardSave.Name = "selectClipboardSave";
+			this.selectClipboardSave.Size = new System.Drawing.Size(200, 19);
+			this.selectClipboardSave.TabIndex = 14;
+			this.selectClipboardSave.Text = ":setting/check/clipboard-save";
+			this.selectClipboardSave.UseVisualStyleBackColor = true;
+			// 
+			// flowLayoutPanel4
+			// 
+			this.flowLayoutPanel4.AutoSize = true;
+			this.panelClipboardMain.SetColumnSpan(this.flowLayoutPanel4, 2);
+			this.flowLayoutPanel4.Controls.Add(this.groupClipboardType);
+			this.flowLayoutPanel4.Controls.Add(this.groupClipboardSaveType);
+			this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 219);
+			this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+			this.panelClipboardMain.SetRowSpan(this.flowLayoutPanel4, 7);
+			this.flowLayoutPanel4.Size = new System.Drawing.Size(184, 306);
+			this.flowLayoutPanel4.TabIndex = 15;
+			// 
 			// groupClipboardType
 			// 
 			this.groupClipboardType.AutoSize = true;
 			this.groupClipboardType.Controls.Add(this.panelClipboardType);
-			this.groupClipboardType.Location = new System.Drawing.Point(377, 3);
+			this.groupClipboardType.Location = new System.Drawing.Point(9, 3);
 			this.groupClipboardType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
 			this.groupClipboardType.Name = "groupClipboardType";
-			this.panelClipboardMain.SetRowSpan(this.groupClipboardType, 6);
 			this.groupClipboardType.Size = new System.Drawing.Size(172, 147);
 			this.groupClipboardType.TabIndex = 9;
 			this.groupClipboardType.TabStop = false;
@@ -2190,149 +2268,87 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardType_file.UseVisualStyleBackColor = true;
 			// 
-			// selectClipboardAppEnabled
+			// groupClipboardSaveType
 			// 
-			this.selectClipboardAppEnabled.AutoSize = true;
-			this.panelClipboardMain.SetColumnSpan(this.selectClipboardAppEnabled, 2);
-			this.selectClipboardAppEnabled.Location = new System.Drawing.Point(3, 28);
-			this.selectClipboardAppEnabled.Name = "selectClipboardAppEnabled";
-			this.selectClipboardAppEnabled.Size = new System.Drawing.Size(244, 19);
-			this.selectClipboardAppEnabled.TabIndex = 1;
-			this.selectClipboardAppEnabled.Text = ":setting/check/clipboard-app-enabled";
-			this.selectClipboardAppEnabled.UseVisualStyleBackColor = true;
+			this.groupClipboardSaveType.AutoSize = true;
+			this.groupClipboardSaveType.Controls.Add(this.flowLayoutPanel2);
+			this.groupClipboardSaveType.Location = new System.Drawing.Point(9, 156);
+			this.groupClipboardSaveType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
+			this.groupClipboardSaveType.Name = "groupClipboardSaveType";
+			this.groupClipboardSaveType.Size = new System.Drawing.Size(172, 147);
+			this.groupClipboardSaveType.TabIndex = 10;
+			this.groupClipboardSaveType.TabStop = false;
+			this.groupClipboardSaveType.Text = ":setting/group/save-clipboard-type";
 			// 
-			// labelClipboardWaitTaime
+			// flowLayoutPanel2
 			// 
-			this.labelClipboardWaitTaime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardWaitTaime.AutoSize = true;
-			this.labelClipboardWaitTaime.Location = new System.Drawing.Point(3, 86);
-			this.labelClipboardWaitTaime.Name = "labelClipboardWaitTaime";
-			this.labelClipboardWaitTaime.Size = new System.Drawing.Size(173, 15);
-			this.labelClipboardWaitTaime.TabIndex = 7;
-			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
+			this.flowLayoutPanel2.AutoSize = true;
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_text);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_rtf);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_html);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_image);
+			this.flowLayoutPanel2.Controls.Add(this.selectClipboardSaveType_file);
+			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 19);
+			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(166, 125);
+			this.flowLayoutPanel2.TabIndex = 0;
 			// 
-			// inputClipboardLimit
+			// selectClipboardSaveType_text
 			// 
-			this.inputClipboardLimit.Location = new System.Drawing.Point(197, 53);
-			this.inputClipboardLimit.Name = "inputClipboardLimit";
-			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardLimit.TabIndex = 2;
-			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.selectClipboardSaveType_text.AutoSize = true;
+			this.selectClipboardSaveType_text.Location = new System.Drawing.Point(3, 3);
+			this.selectClipboardSaveType_text.Name = "selectClipboardSaveType_text";
+			this.selectClipboardSaveType_text.Size = new System.Drawing.Size(148, 19);
+			this.selectClipboardSaveType_text.TabIndex = 0;
+			this.selectClipboardSaveType_text.Text = "#ClipboardType.Text";
+			this.selectClipboardSaveType_text.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_text.UseVisualStyleBackColor = true;
 			// 
-			// labelClipboardLimit
+			// selectClipboardSaveType_rtf
 			// 
-			this.labelClipboardLimit.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardLimit.AutoSize = true;
-			this.labelClipboardLimit.Location = new System.Drawing.Point(3, 57);
-			this.labelClipboardLimit.Name = "labelClipboardLimit";
-			this.labelClipboardLimit.Size = new System.Drawing.Size(174, 15);
-			this.labelClipboardLimit.TabIndex = 6;
-			this.labelClipboardLimit.Text = ":setting/label/clipboard-limit";
+			this.selectClipboardSaveType_rtf.AutoSize = true;
+			this.selectClipboardSaveType_rtf.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardSaveType_rtf.Name = "selectClipboardSaveType_rtf";
+			this.selectClipboardSaveType_rtf.Size = new System.Drawing.Size(139, 19);
+			this.selectClipboardSaveType_rtf.TabIndex = 0;
+			this.selectClipboardSaveType_rtf.Text = "#ClipboardType.Rtf";
+			this.selectClipboardSaveType_rtf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_rtf.UseVisualStyleBackColor = true;
 			// 
-			// inputClipboardWaitTime
+			// selectClipboardSaveType_html
 			// 
-			this.inputClipboardWaitTime.Location = new System.Drawing.Point(197, 82);
-			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
-			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardWaitTime.TabIndex = 3;
-			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.selectClipboardSaveType_html.AutoSize = true;
+			this.selectClipboardSaveType_html.Location = new System.Drawing.Point(3, 53);
+			this.selectClipboardSaveType_html.Name = "selectClipboardSaveType_html";
+			this.selectClipboardSaveType_html.Size = new System.Drawing.Size(151, 19);
+			this.selectClipboardSaveType_html.TabIndex = 0;
+			this.selectClipboardSaveType_html.Text = "#ClipboardType.Html";
+			this.selectClipboardSaveType_html.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_html.UseVisualStyleBackColor = true;
 			// 
-			// selectClipboardTopMost
+			// selectClipboardSaveType_image
 			// 
-			this.selectClipboardTopMost.AutoSize = true;
-			this.panelClipboardMain.SetColumnSpan(this.selectClipboardTopMost, 2);
-			this.selectClipboardTopMost.Location = new System.Drawing.Point(3, 165);
-			this.selectClipboardTopMost.Name = "selectClipboardTopMost";
-			this.selectClipboardTopMost.Size = new System.Drawing.Size(222, 19);
-			this.selectClipboardTopMost.TabIndex = 6;
-			this.selectClipboardTopMost.Text = ":setting/check/clipboard-topmost";
-			this.selectClipboardTopMost.UseVisualStyleBackColor = true;
+			this.selectClipboardSaveType_image.AutoSize = true;
+			this.selectClipboardSaveType_image.Location = new System.Drawing.Point(3, 78);
+			this.selectClipboardSaveType_image.Name = "selectClipboardSaveType_image";
+			this.selectClipboardSaveType_image.Size = new System.Drawing.Size(160, 19);
+			this.selectClipboardSaveType_image.TabIndex = 0;
+			this.selectClipboardSaveType_image.Text = "#ClipboardType.Image";
+			this.selectClipboardSaveType_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_image.UseVisualStyleBackColor = true;
 			// 
-			// selectClipboardVisible
+			// selectClipboardSaveType_file
 			// 
-			this.selectClipboardVisible.AutoSize = true;
-			this.panelClipboardMain.SetColumnSpan(this.selectClipboardVisible, 2);
-			this.selectClipboardVisible.Location = new System.Drawing.Point(3, 140);
-			this.selectClipboardVisible.Name = "selectClipboardVisible";
-			this.selectClipboardVisible.Size = new System.Drawing.Size(209, 19);
-			this.selectClipboardVisible.TabIndex = 5;
-			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
-			this.selectClipboardVisible.UseVisualStyleBackColor = true;
-			// 
-			// labelClipboardSleepTime
-			// 
-			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardSleepTime.AutoSize = true;
-			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 115);
-			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
-			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
-			this.labelClipboardSleepTime.TabIndex = 9;
-			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
-			// 
-			// inputClipboardSleepTime
-			// 
-			this.inputClipboardSleepTime.Location = new System.Drawing.Point(197, 111);
-			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
-			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardSleepTime.TabIndex = 4;
-			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// labelClipboardHotkey
-			// 
-			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardHotkey.AutoSize = true;
-			this.labelClipboardHotkey.Location = new System.Drawing.Point(3, 194);
-			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
-			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
-			this.labelClipboardHotkey.TabIndex = 11;
-			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
-			// 
-			// inputClipboardHotkey
-			// 
-			this.inputClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
-			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputClipboardHotkey.HotKeySetting = null;
-			this.inputClipboardHotkey.Location = new System.Drawing.Point(197, 190);
-			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
-			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
-			this.inputClipboardHotkey.ReadOnly = true;
-			this.inputClipboardHotkey.Registered = false;
-			this.inputClipboardHotkey.Size = new System.Drawing.Size(168, 23);
-			this.inputClipboardHotkey.TabIndex = 7;
-			this.inputClipboardHotkey.Text = "None";
-			// 
-			// labelClipboardFont
-			// 
-			this.labelClipboardFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardFont.AutoSize = true;
-			this.labelClipboardFont.Location = new System.Drawing.Point(3, 224);
-			this.labelClipboardFont.Name = "labelClipboardFont";
-			this.labelClipboardFont.Size = new System.Drawing.Size(125, 15);
-			this.labelClipboardFont.TabIndex = 13;
-			this.labelClipboardFont.Text = ":common/label/font";
-			// 
-			// commandClipboardTextFont
-			// 
-			this.commandClipboardTextFont.AutoSize = true;
-			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 219);
-			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
-			this.commandClipboardTextFont.Size = new System.Drawing.Size(168, 25);
-			this.commandClipboardTextFont.TabIndex = 8;
-			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
-			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardSave
-			// 
-			this.selectClipboardSave.AutoSize = true;
-			this.selectClipboardSave.Location = new System.Drawing.Point(371, 190);
-			this.selectClipboardSave.Name = "selectClipboardSave";
-			this.selectClipboardSave.Size = new System.Drawing.Size(200, 19);
-			this.selectClipboardSave.TabIndex = 14;
-			this.selectClipboardSave.Text = ":setting/check/clipboard-save";
-			this.selectClipboardSave.UseVisualStyleBackColor = true;
+			this.selectClipboardSaveType_file.AutoSize = true;
+			this.selectClipboardSaveType_file.Location = new System.Drawing.Point(3, 103);
+			this.selectClipboardSaveType_file.Name = "selectClipboardSaveType_file";
+			this.selectClipboardSaveType_file.Size = new System.Drawing.Size(142, 19);
+			this.selectClipboardSaveType_file.TabIndex = 0;
+			this.selectClipboardSaveType_file.Text = "#ClipboardType.File";
+			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
 			// 
 			// commandCancel
 			// 
@@ -2475,17 +2491,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageClipboard.ResumeLayout(false);
 			this.panelClipboardMain.ResumeLayout(false);
 			this.panelClipboardMain.PerformLayout();
-			this.groupClipboardSaveType.ResumeLayout(false);
-			this.groupClipboardSaveType.PerformLayout();
-			this.flowLayoutPanel2.ResumeLayout(false);
-			this.flowLayoutPanel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
+			this.flowLayoutPanel4.ResumeLayout(false);
+			this.flowLayoutPanel4.PerformLayout();
 			this.groupClipboardType.ResumeLayout(false);
 			this.groupClipboardType.PerformLayout();
 			this.panelClipboardType.ResumeLayout(false);
 			this.panelClipboardType.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
+			this.groupClipboardSaveType.ResumeLayout(false);
+			this.groupClipboardSaveType.PerformLayout();
+			this.flowLayoutPanel2.ResumeLayout(false);
+			this.flowLayoutPanel2.PerformLayout();
 			this.panelSetting.ResumeLayout(false);
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
@@ -2671,5 +2689,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectClipboardSaveType_image;
 		private System.Windows.Forms.CheckBox selectClipboardSaveType_file;
 		private System.Windows.Forms.CheckBox selectClipboardSave;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
 	}
 }
