@@ -90,7 +90,7 @@
 			</note>
 		</group>
 		<group type="developer"><sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="fcaddc12f59f9de232ea59e2dc4315ed11c57c35">
 				<message>#204: Control.Tagの絶滅</message>
 				<comments>
 					<comment>ToolStripUtility.AttachmentOpeningMenuInScreen(Control)だけは諸事情により無理</comment>
