@@ -99,7 +99,7 @@
 			<note rev="3cc54f61292f9b88f4229c7cb9cefe6c370c30e7">
 				<message>#207: ツールバーメインボタンのホイールクリックでメニューが表示されない</message>
 			</note>
-			<note rev="">
+			<note rev="7b1c94a748eeffaed50f84a703666482de8d6d8a">
 				<message>#208: クリップボードが空で保持クリップボードも空の場合にタブ移動で表明違反</message>
 			</note>
 			<note rev="">
