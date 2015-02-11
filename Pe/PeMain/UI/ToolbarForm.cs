@@ -1181,8 +1181,6 @@
 				toolItem.Image = icon.ToBitmap();
 			}
 
-			toolItem.MouseDown += LauncherButton_MouseDown;
-
 			return toolItem;
 		}
 
@@ -1195,8 +1193,9 @@
 			} else {
 				toolItem = CreateItemLauncherButton(item);
 			}
-			//toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
-			//toolItem.TextAlign = ContentAlignment.MiddleLeft;
+			toolItem.MouseDown += LauncherButton_MouseDown;
+
+
 
 			SetButtonLayout(toolItem, CommonData.Skin, UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
 			toolItem.Visible = true;
@@ -1700,25 +1699,13 @@
 
 		void LauncherButton_MouseDown(object sender, MouseEventArgs e)
 		{
-			if(Control.ModifierKeys == Keys.Alt) {
+			if(Control.ModifierKeys == Keys.Alt && sender is ILauncherItem) {
 				this._dragStartItem = (ToolStripItem)sender;
 				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
 			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
-				// #148
-				var toolItem = (ToolStripItem)sender;
-				var ili = toolItem as ILauncherItem;
-				if(ili == null) {
-					return;
-				}
-				var launcherItem = ili.LauncherItem;
-				var menuTypes = new[] {
-					LauncherType.File,
-					LauncherType.Directory,
-					LauncherType.Embedded
-				};
-				if(menuTypes.Any(l => l == launcherItem.LauncherType)) {
-					var menuItem = (ToolStripDropDownItem)toolItem;
-					menuItem.ShowDropDown();
+				var toolItem = sender as ToolStripDropDownItem;
+				if(toolItem != null) {
+					toolItem.ShowDropDown();
 				}
 			}
 		}
