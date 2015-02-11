@@ -516,6 +516,7 @@
 			SelectedGroupItem = groupItem;
 
 			toolItem.Checked = true;
+			toolItem.RadioCheck = true;
 
 			// 表示アイテム生成
 			var toolButtonList = new List<ToolStripItem>();
