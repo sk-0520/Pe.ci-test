@@ -273,7 +273,9 @@
 				foreach(var t in item.GetClipboardTypeList()) {
 					copyFunc(types, t, item, clipboardItem);
 				}
-				result.Add(clipboardItem);
+				if(clipboardItem.ClipboardTypes != ClipboardType.None) {
+					result.Add(clipboardItem);
+				}
 			}
 			return result;
 		}
