@@ -100,6 +100,9 @@
 				<message>#207: ツールバーメインボタンのホイールクリックでメニューが表示されない</message>
 			</note>
 			<note rev="">
+				<message>#208: クリップボードが空で保持クリップボードも空の場合にタブ移動で表明違反</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

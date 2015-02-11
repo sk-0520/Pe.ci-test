@@ -1049,9 +1049,16 @@
 
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
 		{
+			if(!Created) {
+				e.Cancel = true;
+				return;
+			}
 			//Debug.Assert(SelectedItemIndex != -1);
 			var index = this.listItemStack.SelectedIndex;
-			Debug.Assert(index != -1);
+			if(index == -1) {
+				e.Cancel = true;
+				return;
+			}
 
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
