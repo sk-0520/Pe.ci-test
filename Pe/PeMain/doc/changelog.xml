@@ -68,7 +68,7 @@
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="166f3b7a796f7517b13525ddd1023c869a75ccba">
 				<message>#184: クリップボード履歴の保存</message>
 				<comments>
 					<comment>圧縮してはいるものの、データよっては保存ファイルのサイズが大きくなるので保存機能はデフォルトでは無効になっています</comment>
