@@ -139,6 +139,7 @@
 				Literal.UserMainSettingPath,
 				Literal.UserLauncherItemsPath,
 				Literal.UserDBPath,
+				Literal.UserClipboardItemsPath,
 				Literal.UserTemplateItemsPath,
 				Literal.ApplicationSettingBaseDirectoryPath,
 			};
@@ -153,9 +154,23 @@
 				sortedSet.Add(item);
 			}
 			Serializer.SaveXmlFile(sortedSet, Literal.UserLauncherItemsPath);
-			//// クリップボードデータ
-			//var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.Items);
-			//Serializer.SaveFile(list, Literal.UserClipboardItemsPath);
+			// クリップボードデータ
+			if(commonData.MainSetting.Clipboard.SaveHistory && commonData.MainSetting.Clipboard.SaveTypes != ClipboardType.None) {
+				var saveList = ClipboardUtility.FilterClipboardItemList(commonData.MainSetting.Clipboard.HistoryItems, commonData.MainSetting.Clipboard.SaveTypes);
+				if(saveList.Any()) {
+					Serializer.SaveCompressFile(saveList, Literal.UserClipboardItemsPath);
+				} else {
+					// 削除する
+					if(File.Exists(Literal.UserClipboardItemsPath)) {
+						try {
+							File.Delete(Literal.UserClipboardItemsPath);
+						} catch(Exception ex) {
+							commonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(Literal.UserClipboardItemsPath, ex));
+						}
+					}
+				}
+			}
+
 			// テンプレートデータ
 			Serializer.SaveXmlFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
 		}

@@ -29,6 +29,9 @@
 			Enabled = true;
 			EnabledTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
 
+			SaveHistory = false;
+			SaveTypes = ClipboardType.Text | ClipboardType.Rtf;
+
 			SleepTime = Literal.clipboardSleepTime.median;
 			WaitTime = Literal.clipboardWaitTime.median;
 
@@ -40,13 +43,22 @@
 		}
 
 		/// <summary>
-		/// クリップボードユーティリティを使用するか。
+		/// クリップボード履歴を取り込むか。
 		/// </summary>
 		public bool Enabled { get; set; }
 		/// <summary>
-		/// クリップボード通知対象。
+		/// クリップボード取り込み対象。
 		/// </summary>
 		public ClipboardType EnabledTypes { get; set; }
+		/// <summary>
+		/// クリップボード履歴を保存するか。
+		/// </summary>
+		public bool SaveHistory { get; set; }
+		/// <summary>
+		/// クリップボード履歴保存対象。
+		/// </summary>
+		public ClipboardType SaveTypes { get; set; }
+
 		/// <summary>
 		/// サイズ。
 		/// </summary>

@@ -68,8 +68,16 @@
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
-			<note rev="f7ee22c7b013c085540afe8abb54787da97b835b">
-				<message>#205: ツールバーのグループ選択コンテキストメニューに対するチェックマーク</message>
+			<note rev="">
+				<message>#184: クリップボード履歴の保存</message>
+				<comments>
+					<comment>圧縮してはいるものの、データよっては保存ファイルのサイズが大きくなるので保存機能はデフォルトでは無効になっています</comment>
+					<comment>保存機能を有能しても保存種別が未チェックであればデータは保存されません</comment>
+					<comment>保存種別(特に画像)によっては保存ファイルのサイズが肥大化しますので注意してください</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -79,6 +87,9 @@
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
+			<note rev="f7ee22c7b013c085540afe8abb54787da97b835b">
+				<message>#205: ツールバーのグループ選択コンテキストメニューに対するチェックマーク</message>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>

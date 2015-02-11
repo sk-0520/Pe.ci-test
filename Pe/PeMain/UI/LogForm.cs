@@ -202,7 +202,7 @@
 		void ShowLast()
 		{
 
-			if(Created) {
+			if(Created && this.listLog.Items.Count > 0) {
 				this.listLog.VirtualListSize = this._logs.Count;
 				this.listLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 

@@ -49,7 +49,7 @@
 		//private const string _clipboardItemsFileName = "clipboard-items.xml";
 		private const string _dbFileName             = "db.sqlite3";
 		private const string _backupDirectoryName          = "backup";
-		private const string _clipboardItemsFileName = "clipboard-items.xml";
+		private const string _clipboardItemsFileName = "clipboard-items.xml.gz";
 		private const string _templateItemsFileName = "template-items.xml";
 
 		private const string _applicationsFileName = "ApplicationSetting.xml";

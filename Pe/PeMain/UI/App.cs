@@ -507,6 +507,14 @@
 				item.CorrectionValue();
 			}
 
+			var clipboardItemsPath = Literal.UserClipboardItemsPath;
+			logger.Puts(LogType.Information, "load clipboard-item", clipboardItemsPath);
+			this._commonData.MainSetting.Clipboard.HistoryItems = Serializer.LoadCompressFile<FixedSizedList<ClipboardItem>>(clipboardItemsPath, true);
+			this._commonData.MainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
+			foreach(var item in this._commonData.MainSetting.Clipboard.HistoryItems) {
+				item.CorrectionValue();
+			}
+
 			var templateItemsPath = Literal.UserTemplateItemsPath;
 			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
 			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadXmlFile<EventList<TemplateItem>>(templateItemsPath, true);
@@ -1382,7 +1390,7 @@
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
-					mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
+					//mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
 					mainSetting.Clipboard.HistoryItems = this._commonData.MainSetting.Clipboard.HistoryItems;
 					mainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
 					mainSetting.Clipboard.TemplateItems = this._commonData.MainSetting.Clipboard.TemplateItems;
