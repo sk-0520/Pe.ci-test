@@ -508,31 +508,36 @@
 
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
-			var toolItems = this._menuGroup.MenuItems.Cast<ToolbarGroupItemMenuItem>();
-			foreach(var item in toolItems) {
-				item.Checked = false;
-			}
-			var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.ToolbarGroupItem == groupItem);
-			SelectedGroupItem = groupItem;
-
-			toolItem.Checked = true;
-			toolItem.RadioCheck = true;
-
-			// 表示アイテム生成
-			var toolButtonList = new List<ToolStripItem>();
-			var mainButton = CreateLauncherButton(null);
-			mainButton.Text = groupItem.Name;
-			//mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
-
-			toolButtonList.Add(mainButton);
-			foreach(var itemName in groupItem.ItemNames) {
-				var launcherItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
-				if(launcherItem != null) {
-					var itemButton = CreateLauncherButton(launcherItem);
-					toolButtonList.Add(itemButton);
+			Cursor = Cursors.WaitCursor;
+			try {
+				var toolItems = this._menuGroup.MenuItems.Cast<ToolbarGroupItemMenuItem>();
+				foreach(var item in toolItems) {
+					item.Checked = false;
 				}
+				var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.ToolbarGroupItem == groupItem);
+				SelectedGroupItem = groupItem;
+
+				toolItem.Checked = true;
+				toolItem.RadioCheck = true;
+
+				// 表示アイテム生成
+				var toolButtonList = new List<ToolStripItem>();
+				var mainButton = CreateLauncherButton(null);
+				mainButton.Text = groupItem.Name;
+				//mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
+
+				toolButtonList.Add(mainButton);
+				foreach(var itemName in groupItem.ItemNames) {
+					var launcherItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+					if(launcherItem != null) {
+						var itemButton = CreateLauncherButton(launcherItem);
+						toolButtonList.Add(itemButton);
+					}
+				}
+				SetToolButtons(UsingToolbarItem.IconScale, toolButtonList);
+			} finally {
+				Cursor = Cursors.Default;
 			}
-			SetToolButtons(UsingToolbarItem.IconScale, toolButtonList);
 		}
 
 		void OpenParentDirectory(LauncherItem launcherItem)
