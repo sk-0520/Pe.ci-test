@@ -396,13 +396,12 @@
 
 			// グループメニュー基盤構築
 			this._menuGroup.MenuItems.Clear();
-			foreach(var groupName in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
-				var menuItem = new MenuItem();
-
-				menuItem.Text = groupName.Name;
-				menuItem.Tag = groupName;
-
-				menuItem.Click += new EventHandler(ToolbarForm_MenuItem_Click);
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var menuItem = new ToolbarGroupItemMenuItem(CommonData) {
+					Text = groupItem.Name,
+					ToolbarGroupItem = groupItem,
+				};
+				menuItem.Click += ToolbarForm_MenuItem_Click;
 
 				this._menuGroup.MenuItems.Add(menuItem);
 			}
@@ -509,11 +508,11 @@
 
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
-			var toolItems = this._menuGroup.MenuItems.Cast<MenuItem>();
+			var toolItems = this._menuGroup.MenuItems.Cast<ToolbarGroupItemMenuItem>();
 			foreach(var item in toolItems) {
 				item.Checked = false;
 			}
-			var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.Tag == groupItem);
+			var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.ToolbarGroupItem == groupItem);
 			SelectedGroupItem = groupItem;
 
 			toolItem.Checked = true;
@@ -1544,8 +1543,8 @@
 
 		void ToolbarForm_MenuItem_Click(object sender, EventArgs e)
 		{
-			var menuItem = (MenuItem)sender;
-			var group = (ToolbarGroupItem)menuItem.Tag;
+			var menuItem = (ToolbarGroupItemMenuItem)sender;
+			var group = menuItem.ToolbarGroupItem;
 			SelectedGroup(group);
 		}
 

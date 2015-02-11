@@ -166,6 +166,7 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IISkin.cs" />
     <Compile Include="IF\IScreen.cs" />
+    <Compile Include="IF\IToolbarGroupItem.cs" />
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Kind\HotKeyId.cs" />
@@ -248,6 +249,9 @@
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Ex\ExMenuItem.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExTreeNode.cs" />
     <Compile Include="UI\LauncherToolTipForm.cs">
