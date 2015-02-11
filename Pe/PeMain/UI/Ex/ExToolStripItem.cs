@@ -144,6 +144,15 @@
 		public LauncherItem LauncherItem { get; set; }
 	}
 
+	public class ApplicationItemToolStripMenuItem: LauncherToolStripMenuItem, IApplicationItem
+	{
+		public ApplicationItemToolStripMenuItem(CommonData commonData)
+			: base(commonData)
+		{ }
+
+		public ApplicationItem ApplicationItem { get; set; }
+	}
+
 	/// <summary>
 	/// ノートを保持するメニューアイテム。
 	/// </summary>

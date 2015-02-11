@@ -320,9 +320,10 @@
 
 						var hResultIcon = IntPtr.Zero;
 						var hResult = imageList.Com.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
-
-						using(var hIcon = new UnmanagedIcon(hResultIcon)) {
-							return hIcon.ToManagedIcon();
+						if(hResultIcon != IntPtr.Zero) {
+							using(var hIcon = new UnmanagedIcon(hResultIcon)) {
+								return hIcon.ToManagedIcon();
+							}
 						}
 					}
 				}

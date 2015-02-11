@@ -157,6 +157,7 @@
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="IF\IApplicationItem.cs" />
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
