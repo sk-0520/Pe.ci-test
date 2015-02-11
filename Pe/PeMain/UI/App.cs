@@ -626,10 +626,10 @@
 					throw new NullReferenceException("rebuild solution!");
 				}
 #endif
-				var menuItem = new LauncherToolStripMenuItem(this._commonData) {
-					Tag = applicationItem,
-					Image = IconUtility.ImageFromIcon(icon, IconScale.Small),
+				var menuItem = new ApplicationItemToolStripMenuItem(this._commonData) {
 					LauncherItem = launcherItem,
+					ApplicationItem = applicationItem,
+					Image = IconUtility.ImageFromIcon(icon, IconScale.Small),
 				};
 				menuItem.Click += ApplicationsMenu_Click; 
 
@@ -1126,9 +1126,9 @@
 
 		void ApplyLanguageApplicationsMenu(ToolStripDropDownItem parentItem)
 		{
-			var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+			var menuItems = parentItem.DropDownItems.OfType<ApplicationItemToolStripMenuItem>();
 			foreach(var menuItem in menuItems) {
-				var applicationItem = menuItem.Tag as ApplicationItem;
+				var applicationItem = menuItem.ApplicationItem;
 				if(applicationItem != null) {
 					menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
 				}
@@ -2055,7 +2055,7 @@
 
 		void ApplicationsMenu_Click(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (ApplicationItemToolStripMenuItem)sender;
 			var launcherItem = menuItem.LauncherItem;
 			var commonData = menuItem.CommonData;
 
@@ -2069,9 +2069,9 @@
 		void ApplicationsMenu_Opening(object sender, EventArgs e)
 		{
 			var menuItem = (ToolStripMenuItem)sender;
-			var appMenuItems = menuItem.DropDownItems.OfType<ToolStripMenuItem>();
+			var appMenuItems = menuItem.DropDownItems.OfType<ApplicationItemToolStripMenuItem>();
 			foreach(var appMenuItem in appMenuItems) {
-				var applicationItem = appMenuItem.Tag as ApplicationItem;
+				var applicationItem = appMenuItem.ApplicationItem;
 				if(applicationItem != null) {
 					appMenuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
 				}
