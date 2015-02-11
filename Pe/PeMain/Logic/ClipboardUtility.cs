@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.Specialized;
+	using System.Diagnostics;
 	using System.Drawing;
 	using System.Linq;
 	using System.Text;
@@ -228,9 +229,53 @@
 			return clipboardItem;
 		}
 
-		public static IList<ClipboardItem> FilterClipboardItemList(IReadOnlyList<ClipboardItem> list, ClipboardType types)
+		/// <summary>
+		/// クリップボードアイテム一覧から指定したクリップボードのみのデータを抽出。
+		/// </summary>
+		/// <param name="list"></param>
+		/// <param name="types"></param>
+		/// <returns></returns>
+		public static List<ClipboardItem> FilterClipboardItemList(IReadOnlyList<ClipboardItem> list, ClipboardType types)
 		{
-			return null;
+			Debug.Assert(types != ClipboardType.None);
+
+			Action<ClipboardType, ClipboardType, ClipboardItem, ClipboardItem> copyFunc = (filterTypes, type, src, dst) => {
+				if(filterTypes.HasFlag(type) && src.ClipboardTypes.HasFlag(type)) {
+					dst.ClipboardTypes |= type;
+					switch(type) {
+						case ClipboardType.Text:
+							dst.Text = src.Text;
+							break;
+						case ClipboardType.Rtf:
+							dst.Rtf = src.Rtf;
+							break;
+						case ClipboardType.Html:
+							dst.Html = src.Html;
+							break;
+						case ClipboardType.Image:
+							dst.Image = src.Image;
+							break;
+						case ClipboardType.File:
+							dst.Files = src.Files;
+							break;
+						default:
+							throw new NotImplementedException();
+					}
+				}
+			};
+			var result = new List<ClipboardItem>(list.Count);
+			foreach(var item in list.Where(i => (i.ClipboardTypes & types) != 0)) {
+				var clipboardItem = new ClipboardItem() {
+					Name = item.Name,
+					Timestamp = item.Timestamp,
+					ClipboardTypes = ClipboardType.None,
+				};
+				foreach(var t in item.GetClipboardTypeList()) {
+					copyFunc(types, t, item, clipboardItem);
+				}
+				result.Add(clipboardItem);
+			}
+			return result;
 		}
 	}
 }
