@@ -176,6 +176,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridNoteItems_columnBack = new ContentTypeTextNet.Pe.PeMain.UI.Ex.NoteColorDataGridViewButtonColumn();
 			this.tabSetting_pageDisplay = new System.Windows.Forms.TabPage();
 			this.tabSetting_pageClipboard = new System.Windows.Forms.TabPage();
+			this.flowLayoutPanel9 = new System.Windows.Forms.FlowLayoutPanel();
 			this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
 			this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
 			this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
@@ -184,21 +185,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardSave = new System.Windows.Forms.CheckBox();
 			this.selectClipboardTopMost = new System.Windows.Forms.CheckBox();
 			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.labelClipboardLimit = new System.Windows.Forms.Label();
-			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
-			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
-			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
-			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
-			this.inputClipboardWaitTime = new System.Windows.Forms.NumericUpDown();
 			this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.labelClipboardListType = new System.Windows.Forms.Label();
-			this.labelClipboardHotkey = new System.Windows.Forms.Label();
-			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
-			this.labelClipboardFont = new System.Windows.Forms.Label();
-			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
-			this.selectClipboardListType = new System.Windows.Forms.ComboBox();
 			this.panelClipboardTypes = new System.Windows.Forms.FlowLayoutPanel();
 			this.groupClipboardType = new System.Windows.Forms.GroupBox();
 			this.panelClipboardType = new System.Windows.Forms.FlowLayoutPanel();
@@ -214,6 +201,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
 			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
 			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
+			this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.labelClipboardListType = new System.Windows.Forms.Label();
+			this.labelClipboardHotkey = new System.Windows.Forms.Label();
+			this.inputClipboardHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
+			this.labelClipboardFont = new System.Windows.Forms.Label();
+			this.commandClipboardTextFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
+			this.selectClipboardListType = new System.Windows.Forms.ComboBox();
+			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			this.labelClipboardLimit = new System.Windows.Forms.Label();
+			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
+			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
+			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
+			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
+			this.inputClipboardWaitTime = new System.Windows.Forms.NumericUpDown();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -272,20 +274,22 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupNoteItem.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).BeginInit();
 			this.tabSetting_pageClipboard.SuspendLayout();
+			this.flowLayoutPanel9.SuspendLayout();
 			this.flowLayoutPanel7.SuspendLayout();
 			this.flowLayoutPanel5.SuspendLayout();
 			this.flowLayoutPanel4.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).BeginInit();
 			this.flowLayoutPanel6.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
 			this.panelClipboardTypes.SuspendLayout();
 			this.groupClipboardType.SuspendLayout();
 			this.panelClipboardType.SuspendLayout();
 			this.groupClipboardSaveType.SuspendLayout();
 			this.flowLayoutPanel2.SuspendLayout();
+			this.flowLayoutPanel8.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
+			this.tableLayoutPanel3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).BeginInit();
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -305,7 +309,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting.Name = "tabSetting";
 			this.tabSetting.SelectedIndex = 0;
-			this.tabSetting.Size = new System.Drawing.Size(792, 353);
+			this.tabSetting.Size = new System.Drawing.Size(778, 331);
 			this.tabSetting.TabIndex = 0;
 			this.tabSetting.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabSetting_Selecting);
 			// 
@@ -321,7 +325,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageMain.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting_pageMain.Name = "tabSetting_pageMain";
 			this.tabSetting_pageMain.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tabSetting_pageMain.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageMain.Size = new System.Drawing.Size(770, 303);
 			this.tabSetting_pageMain.TabIndex = 0;
 			this.tabSetting_pageMain.Text = ":setting/page/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
@@ -659,7 +663,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.tabSetting_pageLauncher.Name = "tabSetting_pageLauncher";
 			this.tabSetting_pageLauncher.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tabSetting_pageLauncher.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageLauncher.Size = new System.Drawing.Size(770, 283);
 			this.tabSetting_pageLauncher.TabIndex = 1;
 			this.tabSetting_pageLauncher.Text = ":setting/page/launcher";
 			this.tabSetting_pageLauncher.UseVisualStyleBackColor = true;
@@ -682,7 +686,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.tabLauncher);
 			this.splitContainer1.Panel2.Enabled = false;
-			this.splitContainer1.Size = new System.Drawing.Size(778, 317);
+			this.splitContainer1.Size = new System.Drawing.Size(764, 275);
 			this.splitContainer1.SplitterDistance = 193;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -698,7 +702,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterLauncher.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterLauncher.Name = "selecterLauncher";
 			this.selecterLauncher.SelectedItem = null;
-			this.selecterLauncher.Size = new System.Drawing.Size(193, 317);
+			this.selecterLauncher.Size = new System.Drawing.Size(193, 275);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.ItemCreate += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
 			this.selecterLauncher.SelectItemChanged += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
@@ -712,7 +716,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabLauncher.Location = new System.Drawing.Point(0, 0);
 			this.tabLauncher.Name = "tabLauncher";
 			this.tabLauncher.SelectedIndex = 0;
-			this.tabLauncher.Size = new System.Drawing.Size(581, 317);
+			this.tabLauncher.Size = new System.Drawing.Size(567, 275);
 			this.tabLauncher.TabIndex = 0;
 			// 
 			// tabLauncher_pageCommon
@@ -721,7 +725,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabLauncher_pageCommon.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageCommon.Name = "tabLauncher_pageCommon";
 			this.tabLauncher_pageCommon.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageCommon.Size = new System.Drawing.Size(573, 289);
+			this.tabLauncher_pageCommon.Size = new System.Drawing.Size(559, 247);
 			this.tabLauncher_pageCommon.TabIndex = 0;
 			this.tabLauncher_pageCommon.Text = ":setting/page/launcher/basic";
 			this.tabLauncher_pageCommon.UseVisualStyleBackColor = true;
@@ -762,7 +766,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(567, 283);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(553, 241);
 			this.tableLayoutPanel4.TabIndex = 11;
 			// 
 			// groupLauncherType
@@ -772,7 +776,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupLauncherType.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupLauncherType.Location = new System.Drawing.Point(3, 3);
 			this.groupLauncherType.Name = "groupLauncherType";
-			this.groupLauncherType.Size = new System.Drawing.Size(561, 56);
+			this.groupLauncherType.Size = new System.Drawing.Size(547, 56);
 			this.groupLauncherType.TabIndex = 0;
 			this.groupLauncherType.TabStop = false;
 			this.groupLauncherType.Text = ":setting/group/item-type";
@@ -786,7 +790,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 19);
 			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(555, 34);
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(541, 34);
 			this.flowLayoutPanel3.TabIndex = 2;
 			// 
 			// selectLauncherType_file
@@ -840,7 +844,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandLauncherOptionDirPath
 			// 
 			this.commandLauncherOptionDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
-			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(526, 125);
+			this.commandLauncherOptionDirPath.Location = new System.Drawing.Point(512, 125);
 			this.commandLauncherOptionDirPath.Name = "commandLauncherOptionDirPath";
 			this.commandLauncherOptionDirPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherOptionDirPath.TabIndex = 7;
@@ -853,14 +857,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherOption.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherOption.Location = new System.Drawing.Point(165, 125);
 			this.inputLauncherOption.Name = "inputLauncherOption";
-			this.inputLauncherOption.Size = new System.Drawing.Size(311, 23);
+			this.inputLauncherOption.Size = new System.Drawing.Size(297, 23);
 			this.inputLauncherOption.TabIndex = 5;
 			this.inputLauncherOption.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// commandLauncherDirPath
 			// 
 			this.commandLauncherDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
-			this.commandLauncherDirPath.Location = new System.Drawing.Point(526, 94);
+			this.commandLauncherDirPath.Location = new System.Drawing.Point(512, 94);
 			this.commandLauncherDirPath.Name = "commandLauncherDirPath";
 			this.commandLauncherDirPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherDirPath.TabIndex = 4;
@@ -871,7 +875,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandLauncherFilePath
 			// 
 			this.commandLauncherFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
-			this.commandLauncherFilePath.Location = new System.Drawing.Point(482, 94);
+			this.commandLauncherFilePath.Location = new System.Drawing.Point(468, 94);
 			this.commandLauncherFilePath.Name = "commandLauncherFilePath";
 			this.commandLauncherFilePath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherFilePath.TabIndex = 3;
@@ -885,14 +889,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherName.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherName.Location = new System.Drawing.Point(165, 65);
 			this.inputLauncherName.Name = "inputLauncherName";
-			this.inputLauncherName.Size = new System.Drawing.Size(399, 23);
+			this.inputLauncherName.Size = new System.Drawing.Size(385, 23);
 			this.inputLauncherName.TabIndex = 1;
 			this.inputLauncherName.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
 			// commandLauncherOptionFilePath
 			// 
 			this.commandLauncherOptionFilePath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
-			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(482, 125);
+			this.commandLauncherOptionFilePath.Location = new System.Drawing.Point(468, 125);
 			this.commandLauncherOptionFilePath.Name = "commandLauncherOptionFilePath";
 			this.commandLauncherOptionFilePath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherOptionFilePath.TabIndex = 6;
@@ -923,7 +927,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandLauncherWorkDirPath
 			// 
 			this.commandLauncherWorkDirPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
-			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(482, 156);
+			this.commandLauncherWorkDirPath.Location = new System.Drawing.Point(468, 156);
 			this.commandLauncherWorkDirPath.Name = "commandLauncherWorkDirPath";
 			this.commandLauncherWorkDirPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherWorkDirPath.TabIndex = 9;
@@ -944,7 +948,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandLauncherIconPath
 			// 
 			this.commandLauncherIconPath.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_File;
-			this.commandLauncherIconPath.Location = new System.Drawing.Point(482, 187);
+			this.commandLauncherIconPath.Location = new System.Drawing.Point(468, 187);
 			this.commandLauncherIconPath.Name = "commandLauncherIconPath";
 			this.commandLauncherIconPath.Size = new System.Drawing.Size(33, 25);
 			this.commandLauncherIconPath.TabIndex = 11;
@@ -968,7 +972,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherIconPath.IconIndex = 0;
 			this.inputLauncherIconPath.Location = new System.Drawing.Point(165, 187);
 			this.inputLauncherIconPath.Name = "inputLauncherIconPath";
-			this.inputLauncherIconPath.Size = new System.Drawing.Size(311, 23);
+			this.inputLauncherIconPath.Size = new System.Drawing.Size(297, 23);
 			this.inputLauncherIconPath.TabIndex = 10;
 			this.inputLauncherIconPath.IconIndexChanged += new System.EventHandler(this.inputLauncherIconPath_IconIndexChanged);
 			this.inputLauncherIconPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
@@ -978,7 +982,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherWorkDirPath.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherWorkDirPath.Location = new System.Drawing.Point(165, 156);
 			this.inputLauncherWorkDirPath.Name = "inputLauncherWorkDirPath";
-			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(311, 23);
+			this.inputLauncherWorkDirPath.Size = new System.Drawing.Size(297, 23);
 			this.inputLauncherWorkDirPath.TabIndex = 8;
 			this.inputLauncherWorkDirPath.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -997,7 +1001,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherCommand.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputLauncherCommand.Location = new System.Drawing.Point(165, 94);
 			this.inputLauncherCommand.Name = "inputLauncherCommand";
-			this.inputLauncherCommand.Size = new System.Drawing.Size(311, 23);
+			this.inputLauncherCommand.Size = new System.Drawing.Size(297, 23);
 			this.inputLauncherCommand.TabIndex = 2;
 			this.inputLauncherCommand.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -1007,7 +1011,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabLauncher_pageEnv.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageEnv.Name = "tabLauncher_pageEnv";
 			this.tabLauncher_pageEnv.Padding = new System.Windows.Forms.Padding(3);
-			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(536, 264);
+			this.tabLauncher_pageEnv.Size = new System.Drawing.Size(559, 277);
 			this.tabLauncher_pageEnv.TabIndex = 1;
 			this.tabLauncher_pageEnv.Text = ":common/page/env";
 			this.tabLauncher_pageEnv.UseVisualStyleBackColor = true;
@@ -1026,16 +1030,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherEnv.RowCount = 2;
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.panelLauncherEnv.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelLauncherEnv.Size = new System.Drawing.Size(530, 258);
+			this.panelLauncherEnv.Size = new System.Drawing.Size(553, 271);
 			this.panelLauncherEnv.TabIndex = 19;
 			// 
 			// envLauncherRemove
 			// 
 			this.envLauncherRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.envLauncherRemove.Location = new System.Drawing.Point(374, 32);
+			this.envLauncherRemove.Location = new System.Drawing.Point(390, 32);
 			this.envLauncherRemove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.envLauncherRemove.Name = "envLauncherRemove";
-			this.envLauncherRemove.Size = new System.Drawing.Size(153, 226);
+			this.envLauncherRemove.Size = new System.Drawing.Size(160, 267);
 			this.envLauncherRemove.TabIndex = 0;
 			this.envLauncherRemove.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherRemove_ValueChanged);
 			// 
@@ -1045,7 +1049,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.envLauncherUpdate.Location = new System.Drawing.Point(3, 32);
 			this.envLauncherUpdate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.envLauncherUpdate.Name = "envLauncherUpdate";
-			this.envLauncherUpdate.Size = new System.Drawing.Size(365, 226);
+			this.envLauncherUpdate.Size = new System.Drawing.Size(381, 267);
 			this.envLauncherUpdate.TabIndex = 0;
 			this.envLauncherUpdate.ValueChanged += new System.EventHandler<System.EventArgs>(this.EnvLauncherUpdate_ValueChanged);
 			// 
@@ -1067,7 +1071,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabLauncher_pageOthers.Controls.Add(this.panelLauncherOthers);
 			this.tabLauncher_pageOthers.Location = new System.Drawing.Point(4, 24);
 			this.tabLauncher_pageOthers.Name = "tabLauncher_pageOthers";
-			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(536, 264);
+			this.tabLauncher_pageOthers.Size = new System.Drawing.Size(559, 277);
 			this.tabLauncher_pageOthers.TabIndex = 2;
 			this.tabLauncher_pageOthers.Text = ":setting/page/launcher/others";
 			this.tabLauncher_pageOthers.UseVisualStyleBackColor = true;
@@ -1092,7 +1096,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelLauncherOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelLauncherOthers.Size = new System.Drawing.Size(536, 264);
+			this.panelLauncherOthers.Size = new System.Drawing.Size(559, 277);
 			this.panelLauncherOthers.TabIndex = 0;
 			// 
 			// selectLauncherStdStream
@@ -1114,7 +1118,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherNote.Location = new System.Drawing.Point(126, 82);
 			this.inputLauncherNote.Multiline = true;
 			this.inputLauncherNote.Name = "inputLauncherNote";
-			this.inputLauncherNote.Size = new System.Drawing.Size(407, 159);
+			this.inputLauncherNote.Size = new System.Drawing.Size(430, 172);
 			this.inputLauncherNote.TabIndex = 3;
 			this.inputLauncherNote.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -1123,7 +1127,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputLauncherTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.inputLauncherTag.Location = new System.Drawing.Point(126, 53);
 			this.inputLauncherTag.Name = "inputLauncherTag";
-			this.inputLauncherTag.Size = new System.Drawing.Size(407, 23);
+			this.inputLauncherTag.Size = new System.Drawing.Size(430, 23);
 			this.inputLauncherTag.TabIndex = 2;
 			this.inputLauncherTag.TextChanged += new System.EventHandler(this.InputLauncherName_TextChanged);
 			// 
@@ -1164,7 +1168,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageToolbar.Controls.Add(this.splitContainer3);
 			this.tabSetting_pageToolbar.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageToolbar.Name = "tabSetting_pageToolbar";
-			this.tabSetting_pageToolbar.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageToolbar.Size = new System.Drawing.Size(770, 283);
 			this.tabSetting_pageToolbar.TabIndex = 3;
 			this.tabSetting_pageToolbar.Text = ":setting/page/toolbar";
 			this.tabSetting_pageToolbar.UseVisualStyleBackColor = true;
@@ -1184,7 +1188,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// splitContainer3.Panel2
 			// 
 			this.splitContainer3.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer3.Size = new System.Drawing.Size(784, 325);
+			this.splitContainer3.Size = new System.Drawing.Size(770, 283);
 			this.splitContainer3.SplitterDistance = 270;
 			this.splitContainer3.TabIndex = 19;
 			// 
@@ -1196,7 +1200,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupToolbar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupToolbar.Location = new System.Drawing.Point(0, 0);
 			this.groupToolbar.Name = "groupToolbar";
-			this.groupToolbar.Size = new System.Drawing.Size(270, 325);
+			this.groupToolbar.Size = new System.Drawing.Size(270, 283);
 			this.groupToolbar.TabIndex = 0;
 			this.groupToolbar.TabStop = false;
 			this.groupToolbar.Text = "☃";
@@ -1426,8 +1430,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// splitContainer2.Panel2
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.selecterToolbar);
-			this.splitContainer2.Size = new System.Drawing.Size(510, 325);
-			this.splitContainer2.SplitterDistance = 301;
+			this.splitContainer2.Size = new System.Drawing.Size(496, 283);
+			this.splitContainer2.SplitterDistance = 291;
 			this.splitContainer2.TabIndex = 15;
 			// 
 			// toolStripContainer1
@@ -1437,13 +1441,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolStripContainer1.ContentPanel
 			// 
 			this.toolStripContainer1.ContentPanel.Controls.Add(this.treeToolbarItemGroup);
-			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(301, 300);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(291, 258);
 			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.toolStripContainer1.LeftToolStripPanelVisible = false;
 			this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
 			this.toolStripContainer1.Name = "toolStripContainer1";
 			this.toolStripContainer1.RightToolStripPanelVisible = false;
-			this.toolStripContainer1.Size = new System.Drawing.Size(301, 325);
+			this.toolStripContainer1.Size = new System.Drawing.Size(291, 283);
 			this.toolStripContainer1.TabIndex = 0;
 			this.toolStripContainer1.Text = "toolStripContainer1";
 			// 
@@ -1460,7 +1464,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.treeToolbarItemGroup.Location = new System.Drawing.Point(0, 0);
 			this.treeToolbarItemGroup.Name = "treeToolbarItemGroup";
 			this.treeToolbarItemGroup.ShowPlusMinus = false;
-			this.treeToolbarItemGroup.Size = new System.Drawing.Size(301, 300);
+			this.treeToolbarItemGroup.Size = new System.Drawing.Size(291, 258);
 			this.treeToolbarItemGroup.TabIndex = 0;
 			this.treeToolbarItemGroup.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.TreeToolbarItemGroup_BeforeLabelEdit);
 			this.treeToolbarItemGroup.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeToolbarItemGroup_AfterLabelEdit);
@@ -1484,7 +1488,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
             this.toolToolbarGroup_remove});
 			this.toolToolbarGroup.Location = new System.Drawing.Point(0, 0);
 			this.toolToolbarGroup.Name = "toolToolbarGroup";
-			this.toolToolbarGroup.Size = new System.Drawing.Size(301, 25);
+			this.toolToolbarGroup.Size = new System.Drawing.Size(291, 25);
 			this.toolToolbarGroup.Stretch = true;
 			this.toolToolbarGroup.TabIndex = 0;
 			this.toolToolbarGroup.Text = "toolStrip1";
@@ -1561,7 +1565,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.selecterToolbar.Name = "selecterToolbar";
 			this.selecterToolbar.SelectedItem = null;
-			this.selecterToolbar.Size = new System.Drawing.Size(205, 325);
+			this.selecterToolbar.Size = new System.Drawing.Size(201, 283);
 			this.selecterToolbar.TabIndex = 0;
 			this.selecterToolbar.SelectItemChanged += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterToolbar_SelectChangedItem);
 			this.selecterToolbar.ListDoubleClick += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelecterEventArgs>(this.selecterToolbar_ListDoubleClick);
@@ -1580,7 +1584,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageCommand.Name = "tabSetting_pageCommand";
 			this.tabSetting_pageCommand.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSetting_pageCommand.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageCommand.Size = new System.Drawing.Size(770, 283);
 			this.tabSetting_pageCommand.TabIndex = 2;
 			this.tabSetting_pageCommand.Text = ":setting/page/command";
 			this.tabSetting_pageCommand.UseVisualStyleBackColor = true;
@@ -1673,7 +1677,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageNote.Controls.Add(this.panelNote);
 			this.tabSetting_pageNote.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageNote.Name = "tabSetting_pageNote";
-			this.tabSetting_pageNote.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageNote.Size = new System.Drawing.Size(770, 283);
 			this.tabSetting_pageNote.TabIndex = 6;
 			this.tabSetting_pageNote.Text = ":setting/page/note";
 			this.tabSetting_pageNote.UseVisualStyleBackColor = true;
@@ -1692,7 +1696,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNote.RowCount = 2;
 			this.panelNote.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelNote.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelNote.Size = new System.Drawing.Size(784, 325);
+			this.panelNote.Size = new System.Drawing.Size(770, 283);
 			this.panelNote.TabIndex = 14;
 			// 
 			// panelNoteOthers
@@ -1703,7 +1707,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNoteOthers.Controls.Add(this.commandNoteCaptionFont, 1, 1);
 			this.panelNoteOthers.Controls.Add(this.labelNoteCaptionFont, 0, 1);
 			this.panelNoteOthers.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelNoteOthers.Location = new System.Drawing.Point(3, 272);
+			this.panelNoteOthers.Location = new System.Drawing.Point(3, 230);
 			this.panelNoteOthers.Name = "panelNoteOthers";
 			this.panelNoteOthers.RowCount = 3;
 			this.panelNoteOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1739,7 +1743,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupNoteKey.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupNoteKey.Location = new System.Drawing.Point(3, 3);
 			this.groupNoteKey.Name = "groupNoteKey";
-			this.groupNoteKey.Size = new System.Drawing.Size(229, 263);
+			this.groupNoteKey.Size = new System.Drawing.Size(229, 221);
 			this.groupNoteKey.TabIndex = 0;
 			this.groupNoteKey.TabStop = false;
 			this.groupNoteKey.Text = ":setting/group/key";
@@ -1758,7 +1762,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNoteKey.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelNoteKey.Location = new System.Drawing.Point(3, 19);
 			this.panelNoteKey.Name = "panelNoteKey";
-			this.panelNoteKey.Size = new System.Drawing.Size(223, 241);
+			this.panelNoteKey.Size = new System.Drawing.Size(223, 199);
 			this.panelNoteKey.TabIndex = 8;
 			// 
 			// labelNoteCreate
@@ -1864,7 +1868,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupNoteItem.Location = new System.Drawing.Point(238, 3);
 			this.groupNoteItem.Name = "groupNoteItem";
 			this.panelNote.SetRowSpan(this.groupNoteItem, 2);
-			this.groupNoteItem.Size = new System.Drawing.Size(543, 319);
+			this.groupNoteItem.Size = new System.Drawing.Size(529, 277);
 			this.groupNoteItem.TabIndex = 1;
 			this.groupNoteItem.TabStop = false;
 			this.groupNoteItem.Text = ":setting/group/item";
@@ -1888,7 +1892,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridNoteItems.MultiSelect = false;
 			this.gridNoteItems.Name = "gridNoteItems";
 			this.gridNoteItems.RowTemplate.Height = 21;
-			this.gridNoteItems.Size = new System.Drawing.Size(537, 297);
+			this.gridNoteItems.Size = new System.Drawing.Size(523, 255);
 			this.gridNoteItems.TabIndex = 0;
 			this.gridNoteItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridNoteItems_CellContentClick);
 			this.gridNoteItems.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridNoteItems_CellFormatting);
@@ -1971,42 +1975,51 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.tabSetting_pageDisplay.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageDisplay.Name = "tabSetting_pageDisplay";
-			this.tabSetting_pageDisplay.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageDisplay.Size = new System.Drawing.Size(770, 283);
 			this.tabSetting_pageDisplay.TabIndex = 5;
 			this.tabSetting_pageDisplay.Text = ":setting/page/display";
 			this.tabSetting_pageDisplay.UseVisualStyleBackColor = true;
 			// 
 			// tabSetting_pageClipboard
 			// 
-			this.tabSetting_pageClipboard.Controls.Add(this.flowLayoutPanel7);
+			this.tabSetting_pageClipboard.Controls.Add(this.flowLayoutPanel9);
 			this.tabSetting_pageClipboard.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageClipboard.Name = "tabSetting_pageClipboard";
 			this.tabSetting_pageClipboard.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSetting_pageClipboard.Size = new System.Drawing.Size(784, 325);
+			this.tabSetting_pageClipboard.Size = new System.Drawing.Size(770, 283);
 			this.tabSetting_pageClipboard.TabIndex = 7;
 			this.tabSetting_pageClipboard.Text = ":setting/page/clipboard";
 			this.tabSetting_pageClipboard.UseVisualStyleBackColor = true;
 			// 
+			// flowLayoutPanel9
+			// 
+			this.flowLayoutPanel9.AutoScroll = true;
+			this.flowLayoutPanel9.Controls.Add(this.flowLayoutPanel7);
+			this.flowLayoutPanel9.Controls.Add(this.flowLayoutPanel8);
+			this.flowLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel9.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel9.Location = new System.Drawing.Point(3, 3);
+			this.flowLayoutPanel9.Name = "flowLayoutPanel9";
+			this.flowLayoutPanel9.Size = new System.Drawing.Size(764, 277);
+			this.flowLayoutPanel9.TabIndex = 22;
+			// 
 			// flowLayoutPanel7
 			// 
-			this.flowLayoutPanel7.AutoScroll = true;
+			this.flowLayoutPanel7.AutoSize = true;
 			this.flowLayoutPanel7.Controls.Add(this.flowLayoutPanel5);
 			this.flowLayoutPanel7.Controls.Add(this.flowLayoutPanel6);
-			this.flowLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel7.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flowLayoutPanel7.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel7.Name = "flowLayoutPanel7";
-			this.flowLayoutPanel7.Size = new System.Drawing.Size(778, 319);
+			this.flowLayoutPanel7.Size = new System.Drawing.Size(642, 165);
 			this.flowLayoutPanel7.TabIndex = 20;
 			// 
 			// flowLayoutPanel5
 			// 
 			this.flowLayoutPanel5.AutoSize = true;
 			this.flowLayoutPanel5.Controls.Add(this.flowLayoutPanel4);
-			this.flowLayoutPanel5.Controls.Add(this.tableLayoutPanel3);
 			this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-			this.flowLayoutPanel5.Size = new System.Drawing.Size(572, 131);
+			this.flowLayoutPanel5.Size = new System.Drawing.Size(256, 131);
 			this.flowLayoutPanel5.TabIndex = 18;
 			// 
 			// flowLayoutPanel4
@@ -2073,187 +2086,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
 			this.selectClipboardVisible.UseVisualStyleBackColor = true;
 			// 
-			// tableLayoutPanel3
-			// 
-			this.tableLayoutPanel3.AutoSize = true;
-			this.tableLayoutPanel3.ColumnCount = 2;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel3.Controls.Add(this.labelClipboardLimit, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.labelClipboardWaitTaime, 0, 1);
-			this.tableLayoutPanel3.Controls.Add(this.labelClipboardSleepTime, 0, 2);
-			this.tableLayoutPanel3.Controls.Add(this.inputClipboardLimit, 1, 0);
-			this.tableLayoutPanel3.Controls.Add(this.inputClipboardSleepTime, 1, 2);
-			this.tableLayoutPanel3.Controls.Add(this.inputClipboardWaitTime, 1, 1);
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(259, 3);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 4;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(310, 95);
-			this.tableLayoutPanel3.TabIndex = 17;
-			// 
-			// labelClipboardLimit
-			// 
-			this.labelClipboardLimit.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardLimit.AutoSize = true;
-			this.labelClipboardLimit.Location = new System.Drawing.Point(3, 7);
-			this.labelClipboardLimit.Name = "labelClipboardLimit";
-			this.labelClipboardLimit.Size = new System.Drawing.Size(174, 15);
-			this.labelClipboardLimit.TabIndex = 6;
-			this.labelClipboardLimit.Text = ":setting/label/clipboard-limit";
-			// 
-			// labelClipboardWaitTaime
-			// 
-			this.labelClipboardWaitTaime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardWaitTaime.AutoSize = true;
-			this.labelClipboardWaitTaime.Location = new System.Drawing.Point(3, 36);
-			this.labelClipboardWaitTaime.Name = "labelClipboardWaitTaime";
-			this.labelClipboardWaitTaime.Size = new System.Drawing.Size(173, 15);
-			this.labelClipboardWaitTaime.TabIndex = 7;
-			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
-			// 
-			// labelClipboardSleepTime
-			// 
-			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardSleepTime.AutoSize = true;
-			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 65);
-			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
-			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
-			this.labelClipboardSleepTime.TabIndex = 9;
-			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
-			// 
-			// inputClipboardLimit
-			// 
-			this.inputClipboardLimit.Location = new System.Drawing.Point(187, 3);
-			this.inputClipboardLimit.Name = "inputClipboardLimit";
-			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardLimit.TabIndex = 2;
-			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// inputClipboardSleepTime
-			// 
-			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 61);
-			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
-			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardSleepTime.TabIndex = 4;
-			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// inputClipboardWaitTime
-			// 
-			this.inputClipboardWaitTime.Location = new System.Drawing.Point(187, 32);
-			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
-			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardWaitTime.TabIndex = 3;
-			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
 			// flowLayoutPanel6
 			// 
 			this.flowLayoutPanel6.AutoSize = true;
-			this.flowLayoutPanel6.Controls.Add(this.tableLayoutPanel1);
 			this.flowLayoutPanel6.Controls.Add(this.panelClipboardTypes);
-			this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 140);
+			this.flowLayoutPanel6.Location = new System.Drawing.Point(265, 3);
 			this.flowLayoutPanel6.Name = "flowLayoutPanel6";
-			this.flowLayoutPanel6.Size = new System.Drawing.Size(721, 159);
+			this.flowLayoutPanel6.Size = new System.Drawing.Size(374, 159);
 			this.flowLayoutPanel6.TabIndex = 19;
-			// 
-			// tableLayoutPanel1
-			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.labelClipboardListType, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.labelClipboardHotkey, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.inputClipboardHotkey, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.labelClipboardFont, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.commandClipboardTextFont, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.selectClipboardListType, 1, 2);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 4;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(341, 97);
-			this.tableLayoutPanel1.TabIndex = 16;
-			// 
-			// labelClipboardListType
-			// 
-			this.labelClipboardListType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardListType.AutoSize = true;
-			this.labelClipboardListType.Location = new System.Drawing.Point(3, 67);
-			this.labelClipboardListType.Name = "labelClipboardListType";
-			this.labelClipboardListType.Size = new System.Drawing.Size(165, 15);
-			this.labelClipboardListType.TabIndex = 14;
-			this.labelClipboardListType.Text = ":setting/label/clipboard-list";
-			// 
-			// labelClipboardHotkey
-			// 
-			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardHotkey.AutoSize = true;
-			this.labelClipboardHotkey.Location = new System.Drawing.Point(3, 7);
-			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
-			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
-			this.labelClipboardHotkey.TabIndex = 11;
-			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
-			// 
-			// inputClipboardHotkey
-			// 
-			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
-			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.inputClipboardHotkey.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
-			this.inputClipboardHotkey.HotKeySetting = null;
-			this.inputClipboardHotkey.Location = new System.Drawing.Point(197, 3);
-			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
-			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
-			this.inputClipboardHotkey.ReadOnly = true;
-			this.inputClipboardHotkey.Registered = false;
-			this.inputClipboardHotkey.Size = new System.Drawing.Size(141, 23);
-			this.inputClipboardHotkey.TabIndex = 7;
-			this.inputClipboardHotkey.Text = "None";
-			// 
-			// labelClipboardFont
-			// 
-			this.labelClipboardFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardFont.AutoSize = true;
-			this.labelClipboardFont.Location = new System.Drawing.Point(3, 37);
-			this.labelClipboardFont.Name = "labelClipboardFont";
-			this.labelClipboardFont.Size = new System.Drawing.Size(125, 15);
-			this.labelClipboardFont.TabIndex = 13;
-			this.labelClipboardFont.Text = ":common/label/font";
-			// 
-			// commandClipboardTextFont
-			// 
-			this.commandClipboardTextFont.AutoSize = true;
-			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 32);
-			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
-			this.commandClipboardTextFont.Size = new System.Drawing.Size(141, 25);
-			this.commandClipboardTextFont.TabIndex = 8;
-			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
-			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
-			// 
-			// selectClipboardListType
-			// 
-			this.selectClipboardListType.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.selectClipboardListType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectClipboardListType.FormattingEnabled = true;
-			this.selectClipboardListType.Location = new System.Drawing.Point(197, 63);
-			this.selectClipboardListType.Name = "selectClipboardListType";
-			this.selectClipboardListType.Size = new System.Drawing.Size(141, 23);
-			this.selectClipboardListType.TabIndex = 15;
 			// 
 			// panelClipboardTypes
 			// 
 			this.panelClipboardTypes.AutoSize = true;
 			this.panelClipboardTypes.Controls.Add(this.groupClipboardType);
 			this.panelClipboardTypes.Controls.Add(this.groupClipboardSaveType);
-			this.panelClipboardTypes.Location = new System.Drawing.Point(350, 3);
+			this.panelClipboardTypes.Location = new System.Drawing.Point(3, 3);
 			this.panelClipboardTypes.Name = "panelClipboardTypes";
 			this.panelClipboardTypes.Size = new System.Drawing.Size(368, 153);
 			this.panelClipboardTypes.TabIndex = 15;
@@ -2422,6 +2269,181 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
 			// 
+			// flowLayoutPanel8
+			// 
+			this.flowLayoutPanel8.AutoSize = true;
+			this.flowLayoutPanel8.Controls.Add(this.tableLayoutPanel1);
+			this.flowLayoutPanel8.Controls.Add(this.tableLayoutPanel3);
+			this.flowLayoutPanel8.Location = new System.Drawing.Point(651, 3);
+			this.flowLayoutPanel8.Name = "flowLayoutPanel8";
+			this.flowLayoutPanel8.Size = new System.Drawing.Size(347, 204);
+			this.flowLayoutPanel8.TabIndex = 21;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.AutoSize = true;
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.Controls.Add(this.labelClipboardListType, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.labelClipboardHotkey, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.inputClipboardHotkey, 1, 0);
+			this.tableLayoutPanel1.Controls.Add(this.labelClipboardFont, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.commandClipboardTextFont, 1, 1);
+			this.tableLayoutPanel1.Controls.Add(this.selectClipboardListType, 1, 2);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 4;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(341, 97);
+			this.tableLayoutPanel1.TabIndex = 16;
+			// 
+			// labelClipboardListType
+			// 
+			this.labelClipboardListType.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardListType.AutoSize = true;
+			this.labelClipboardListType.Location = new System.Drawing.Point(3, 67);
+			this.labelClipboardListType.Name = "labelClipboardListType";
+			this.labelClipboardListType.Size = new System.Drawing.Size(165, 15);
+			this.labelClipboardListType.TabIndex = 14;
+			this.labelClipboardListType.Text = ":setting/label/clipboard-list";
+			// 
+			// labelClipboardHotkey
+			// 
+			this.labelClipboardHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardHotkey.AutoSize = true;
+			this.labelClipboardHotkey.Location = new System.Drawing.Point(3, 7);
+			this.labelClipboardHotkey.Name = "labelClipboardHotkey";
+			this.labelClipboardHotkey.Size = new System.Drawing.Size(188, 15);
+			this.labelClipboardHotkey.TabIndex = 11;
+			this.labelClipboardHotkey.Text = ":setting/label/clipboard-hotkey";
+			// 
+			// inputClipboardHotkey
+			// 
+			this.inputClipboardHotkey.BackColor = System.Drawing.Color.White;
+			this.inputClipboardHotkey.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.inputClipboardHotkey.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.inputClipboardHotkey.Hotkey = System.Windows.Forms.Keys.None;
+			this.inputClipboardHotkey.HotKeySetting = null;
+			this.inputClipboardHotkey.Location = new System.Drawing.Point(197, 3);
+			this.inputClipboardHotkey.Modifiers = ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows.MOD.None;
+			this.inputClipboardHotkey.Name = "inputClipboardHotkey";
+			this.inputClipboardHotkey.ReadOnly = true;
+			this.inputClipboardHotkey.Registered = false;
+			this.inputClipboardHotkey.Size = new System.Drawing.Size(141, 23);
+			this.inputClipboardHotkey.TabIndex = 7;
+			this.inputClipboardHotkey.Text = "None";
+			// 
+			// labelClipboardFont
+			// 
+			this.labelClipboardFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardFont.AutoSize = true;
+			this.labelClipboardFont.Location = new System.Drawing.Point(3, 37);
+			this.labelClipboardFont.Name = "labelClipboardFont";
+			this.labelClipboardFont.Size = new System.Drawing.Size(125, 15);
+			this.labelClipboardFont.TabIndex = 13;
+			this.labelClipboardFont.Text = ":common/label/font";
+			// 
+			// commandClipboardTextFont
+			// 
+			this.commandClipboardTextFont.AutoSize = true;
+			this.commandClipboardTextFont.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.commandClipboardTextFont.Location = new System.Drawing.Point(197, 32);
+			this.commandClipboardTextFont.Name = "commandClipboardTextFont";
+			this.commandClipboardTextFont.Size = new System.Drawing.Size(141, 25);
+			this.commandClipboardTextFont.TabIndex = 8;
+			this.commandClipboardTextFont.Text = "{FAMILY} {PT} ...";
+			this.commandClipboardTextFont.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardListType
+			// 
+			this.selectClipboardListType.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.selectClipboardListType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectClipboardListType.FormattingEnabled = true;
+			this.selectClipboardListType.Location = new System.Drawing.Point(197, 63);
+			this.selectClipboardListType.Name = "selectClipboardListType";
+			this.selectClipboardListType.Size = new System.Drawing.Size(141, 23);
+			this.selectClipboardListType.TabIndex = 15;
+			// 
+			// tableLayoutPanel3
+			// 
+			this.tableLayoutPanel3.AutoSize = true;
+			this.tableLayoutPanel3.ColumnCount = 2;
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel3.Controls.Add(this.labelClipboardLimit, 0, 0);
+			this.tableLayoutPanel3.Controls.Add(this.labelClipboardWaitTaime, 0, 1);
+			this.tableLayoutPanel3.Controls.Add(this.labelClipboardSleepTime, 0, 2);
+			this.tableLayoutPanel3.Controls.Add(this.inputClipboardLimit, 1, 0);
+			this.tableLayoutPanel3.Controls.Add(this.inputClipboardSleepTime, 1, 2);
+			this.tableLayoutPanel3.Controls.Add(this.inputClipboardWaitTime, 1, 1);
+			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 106);
+			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+			this.tableLayoutPanel3.RowCount = 4;
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(310, 95);
+			this.tableLayoutPanel3.TabIndex = 17;
+			// 
+			// labelClipboardLimit
+			// 
+			this.labelClipboardLimit.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardLimit.AutoSize = true;
+			this.labelClipboardLimit.Location = new System.Drawing.Point(3, 7);
+			this.labelClipboardLimit.Name = "labelClipboardLimit";
+			this.labelClipboardLimit.Size = new System.Drawing.Size(174, 15);
+			this.labelClipboardLimit.TabIndex = 6;
+			this.labelClipboardLimit.Text = ":setting/label/clipboard-limit";
+			// 
+			// labelClipboardWaitTaime
+			// 
+			this.labelClipboardWaitTaime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardWaitTaime.AutoSize = true;
+			this.labelClipboardWaitTaime.Location = new System.Drawing.Point(3, 36);
+			this.labelClipboardWaitTaime.Name = "labelClipboardWaitTaime";
+			this.labelClipboardWaitTaime.Size = new System.Drawing.Size(173, 15);
+			this.labelClipboardWaitTaime.TabIndex = 7;
+			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
+			// 
+			// labelClipboardSleepTime
+			// 
+			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelClipboardSleepTime.AutoSize = true;
+			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 65);
+			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
+			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
+			this.labelClipboardSleepTime.TabIndex = 9;
+			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
+			// 
+			// inputClipboardLimit
+			// 
+			this.inputClipboardLimit.Location = new System.Drawing.Point(187, 3);
+			this.inputClipboardLimit.Name = "inputClipboardLimit";
+			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardLimit.TabIndex = 2;
+			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// inputClipboardSleepTime
+			// 
+			this.inputClipboardSleepTime.Location = new System.Drawing.Point(187, 61);
+			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
+			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardSleepTime.TabIndex = 4;
+			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// inputClipboardWaitTime
+			// 
+			this.inputClipboardWaitTime.Location = new System.Drawing.Point(187, 32);
+			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
+			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
+			this.inputClipboardWaitTime.TabIndex = 3;
+			this.inputClipboardWaitTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// commandCancel
 			// 
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -2457,7 +2479,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelSetting.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelSetting.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.panelSetting.Size = new System.Drawing.Size(798, 404);
+			this.panelSetting.Size = new System.Drawing.Size(784, 382);
 			this.panelSetting.TabIndex = 2;
 			// 
 			// panelCommand
@@ -2466,7 +2488,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelCommand.Controls.Add(this.commandSubmit);
 			this.panelCommand.Controls.Add(this.commandCancel);
 			this.panelCommand.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panelCommand.Location = new System.Drawing.Point(609, 364);
+			this.panelCommand.Location = new System.Drawing.Point(595, 342);
 			this.panelCommand.Name = "panelCommand";
 			this.panelCommand.Size = new System.Drawing.Size(186, 37);
 			this.panelCommand.TabIndex = 3;
@@ -2481,10 +2503,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.commandCancel;
-			this.ClientSize = new System.Drawing.Size(798, 404);
+			this.ClientSize = new System.Drawing.Size(784, 382);
 			this.Controls.Add(this.panelSetting);
 			this.Icon = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Icon_App;
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.MinimumSize = new System.Drawing.Size(800, 420);
 			this.Name = "SettingForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/setting";
@@ -2561,21 +2584,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupNoteItem.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridNoteItems)).EndInit();
 			this.tabSetting_pageClipboard.ResumeLayout(false);
+			this.flowLayoutPanel9.ResumeLayout(false);
+			this.flowLayoutPanel9.PerformLayout();
 			this.flowLayoutPanel7.ResumeLayout(false);
 			this.flowLayoutPanel7.PerformLayout();
 			this.flowLayoutPanel5.ResumeLayout(false);
 			this.flowLayoutPanel5.PerformLayout();
 			this.flowLayoutPanel4.ResumeLayout(false);
 			this.flowLayoutPanel4.PerformLayout();
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.tableLayoutPanel3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
 			this.flowLayoutPanel6.ResumeLayout(false);
 			this.flowLayoutPanel6.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
 			this.panelClipboardTypes.ResumeLayout(false);
 			this.panelClipboardTypes.PerformLayout();
 			this.groupClipboardType.ResumeLayout(false);
@@ -2586,6 +2604,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupClipboardSaveType.PerformLayout();
 			this.flowLayoutPanel2.ResumeLayout(false);
 			this.flowLayoutPanel2.PerformLayout();
+			this.flowLayoutPanel8.ResumeLayout(false);
+			this.flowLayoutPanel8.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
+			this.tableLayoutPanel3.ResumeLayout(false);
+			this.tableLayoutPanel3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
 			this.panelSetting.ResumeLayout(false);
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
@@ -2776,8 +2803,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label labelClipboardListType;
 		private System.Windows.Forms.ComboBox selectClipboardListType;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel7;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel9;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel7;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel8;
 	}
 }
