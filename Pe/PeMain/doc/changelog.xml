@@ -96,7 +96,7 @@
 					<comment>多分大丈夫なんで0.44.0からの下位互換維持を打ち切り</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="3cc54f61292f9b88f4229c7cb9cefe6c370c30e7">
 				<message>#207: ツールバーメインボタンのホイールクリックでメニューが表示されない</message>
 			</note>
 			<note rev="">
