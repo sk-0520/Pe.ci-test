@@ -8,6 +8,7 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]
 	public class ClipboardSetting: DisposableItem
@@ -111,13 +112,8 @@
 		[XmlElement("WaitTime", DataType = "duration")]
 		public string _WaitTime
 		{
-			get { return XmlConvert.ToString(WaitTime); }
-			set
-			{
-				if(!string.IsNullOrWhiteSpace(value)) {
-					WaitTime = XmlConvert.ToTimeSpan(value);
-				}
-			}
+			get { return PropertyUtility.MixinTimeSpanGetter(WaitTime); }
+			set { WaitTime =  PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 		/// <summary>
 		/// 
@@ -127,13 +123,8 @@
 		[XmlElement("SleepTime", DataType = "duration")]
 		public string _SleepTime
 		{
-			get { return XmlConvert.ToString(SleepTime); }
-			set
-			{
-				if(!string.IsNullOrWhiteSpace(value)) {
-					SleepTime = XmlConvert.ToTimeSpan(value);
-				}
-			}
+			get { return PropertyUtility.MixinTimeSpanGetter(SleepTime); }
+			set { SleepTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 		/// <summary>
 		/// クリップボードリストのタイプ。
