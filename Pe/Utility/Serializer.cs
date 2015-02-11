@@ -2,6 +2,8 @@
 {
 	using System.Diagnostics;
 	using System.IO;
+	using System.IO.Compression;
+	using System.Runtime.Serialization.Formatters.Binary;
 	using System.Text;
 	using System.Xml;
 	using System.Xml.Serialization;
@@ -61,6 +63,42 @@
 			using(var stream = new FileStream(savePath, FileMode.Create)) {
 				var serializer = new XmlSerializer(typeof(T));
 				serializer.Serialize(stream, saveData);
+			}
+		}
+
+		public static T LoadCompressFile<T>(string loadPath, bool failToNew)
+			where T: new()
+		{
+			if(File.Exists(loadPath)) {
+				using(var loadStream = new FileStream(loadPath, FileMode.Create)) {
+					using(var compressStream = new GZipStream(loadStream, CompressionMode.Decompress, true)) {
+						var serializer = new XmlSerializer(typeof(T));
+						using(var stream = new XmlTextReader(compressStream)) {
+							return (T)serializer.Deserialize(stream);
+						}
+					}
+				}
+			}
+			if(failToNew) {
+				return new T();
+			} else {
+				return default(T);
+			}
+		}
+		public static void SaveCompressFile<T>(T saveData, string savePath)
+		{
+			Debug.Assert(saveData != null);
+			FileUtility.MakeFileParentDirectory(savePath);
+
+			using(var saveStream = new FileStream(savePath, FileMode.Create)) {
+				using(var memoryStream = new MemoryStream())
+				using(var compressStream =new GZipStream(memoryStream, CompressionLevel.Fastest)) {
+					var serializer = new XmlSerializer(typeof(T));
+					serializer.Serialize(compressStream, saveData);
+					
+					memoryStream.Seek(0, SeekOrigin.Begin);
+					memoryStream.CopyTo(saveStream);
+				}
 			}
 		}
 	}

@@ -156,7 +156,7 @@
 			Serializer.SaveXmlFile(sortedSet, Literal.UserLauncherItemsPath);
 			//// クリップボードデータ
 			var list = new List<ClipboardItem>(commonData.MainSetting.Clipboard.HistoryItems);
-			Serializer.SaveXmlFile(list, Literal.UserClipboardItemsPath);
+			Serializer.SaveCompressFile(list, Literal.UserClipboardItemsPath);
 
 			// テンプレートデータ
 			Serializer.SaveXmlFile(commonData.MainSetting.Clipboard.TemplateItems, Literal.UserTemplateItemsPath);
