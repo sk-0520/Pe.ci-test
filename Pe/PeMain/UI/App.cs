@@ -507,6 +507,14 @@
 				item.CorrectionValue();
 			}
 
+			var clipboardItemsPath = Literal.UserClipboardItemsPath;
+			logger.Puts(LogType.Information, "load clipboard-item", clipboardItemsPath);
+			this._commonData.MainSetting.Clipboard.HistoryItems = Serializer.LoadCompressFile<FixedSizedList<ClipboardItem>>(clipboardItemsPath, true);
+			this._commonData.MainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
+			foreach(var item in this._commonData.MainSetting.Clipboard.HistoryItems) {
+				item.CorrectionValue();
+			}
+
 			var templateItemsPath = Literal.UserTemplateItemsPath;
 			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
 			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadXmlFile<EventList<TemplateItem>>(templateItemsPath, true);

@@ -70,15 +70,14 @@
 			where T: new()
 		{
 			if(File.Exists(loadPath)) {
-				using(var loadStream = new FileStream(loadPath, FileMode.Create)) {
-					using(var compressStream = new GZipStream(loadStream, CompressionMode.Decompress, true)) {
-						var serializer = new XmlSerializer(typeof(T));
-						using(var stream = new XmlTextReader(compressStream)) {
-							return (T)serializer.Deserialize(stream);
-						}
-					}
+				using(var loadStream = new FileStream(loadPath, FileMode.Open))
+				using(var compressStream = new GZipStream(loadStream, CompressionMode.Decompress))
+				using(var stream = new XmlTextReader(compressStream)) {
+					var serializer = new XmlSerializer(typeof(T));
+					return (T)serializer.Deserialize(stream);
 				}
 			}
+			
 			if(failToNew) {
 				return new T();
 			} else {
@@ -90,15 +89,10 @@
 			Debug.Assert(saveData != null);
 			FileUtility.MakeFileParentDirectory(savePath);
 
-			using(var saveStream = new FileStream(savePath, FileMode.Create)) {
-				using(var memoryStream = new MemoryStream())
-				using(var compressStream =new GZipStream(memoryStream, CompressionLevel.Fastest)) {
-					var serializer = new XmlSerializer(typeof(T));
-					serializer.Serialize(compressStream, saveData);
-					
-					memoryStream.Seek(0, SeekOrigin.Begin);
-					memoryStream.CopyTo(saveStream);
-				}
+			using(var saveStream = new FileStream(savePath, FileMode.Create))
+			using(var compressStream = new GZipStream(saveStream, CompressionLevel.Fastest)) {
+				var serializer = new XmlSerializer(typeof(T));
+				serializer.Serialize(compressStream, saveData);
 			}
 		}
 	}
