@@ -3,6 +3,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 namespace ContentTypeTextNet.Pe.PeMain.Data
 {
@@ -53,13 +54,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		[XmlElement("HiddenTime", DataType = "duration")]
 		public string _HiddenTime
 		{
-			get { return XmlConvert.ToString(HiddenTime); }
-			set
-			{
-				if(!string.IsNullOrWhiteSpace(value)) {
-					HiddenTime = XmlConvert.ToTimeSpan(value);
-				}
-			}
+			get { return PropertyUtility.MixinTimeSpanGetter(HiddenTime); }
+			set { HiddenTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 
 		/// <summary>
