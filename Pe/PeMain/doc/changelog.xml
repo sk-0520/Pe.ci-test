@@ -91,7 +91,10 @@
 				<message>#205: ツールバーのグループ選択コンテキストメニューに対するチェックマーク</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message class="compatibility">#144: UpdateScriptをPe/etc/scriptに移動する</message>
+				<comments>
+					<comment>多分大丈夫なんで0.44.0からの下位互換維持を打ち切り</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
