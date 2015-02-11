@@ -135,16 +135,16 @@
 	/// <summary>
 	/// ランチャーアイテムを保持するメニューアイテム。
 	/// </summary>
-	public class LauncherToolStripMenuItem: CommonDataToolStripMenuItem, ILauncherItem
+	public class LauncherItemToolStripMenuItem: CommonDataToolStripMenuItem, ILauncherItem
 	{
-		public LauncherToolStripMenuItem(CommonData commonData)
+		public LauncherItemToolStripMenuItem(CommonData commonData)
 			: base(commonData)
 		{ }
 
 		public LauncherItem LauncherItem { get; set; }
 	}
 
-	public class ApplicationItemToolStripMenuItem: LauncherToolStripMenuItem, IApplicationItem
+	public class ApplicationItemToolStripMenuItem: LauncherItemToolStripMenuItem, IApplicationItem
 	{
 		public ApplicationItemToolStripMenuItem(CommonData commonData)
 			: base(commonData)
@@ -192,9 +192,9 @@
 	/// <summary>
 	/// ランチャーアイテムを保持するスプリットボタンアイテム。
 	/// </summary>
-	public class LauncherToolStripButton: CommonDataToolStripButton, ILauncherItem
+	public class LauncherItemToolStripButton: CommonDataToolStripButton, ILauncherItem
 	{
-		public LauncherToolStripButton(CommonData commonData)
+		public LauncherItemToolStripButton(CommonData commonData)
 			: base(commonData)
 		{ }
 
@@ -227,9 +227,9 @@
 	/// <summary>
 	/// ランチャーアイテムを保持するスプリットボタンアイテム。
 	/// </summary>
-	public class LauncherToolStripDropDownButton: CommonDataToolStripDropDownButton, ILauncherItem
+	public class LauncherItemToolStripDropDownButton: CommonDataToolStripDropDownButton, ILauncherItem
 	{
-		public LauncherToolStripDropDownButton(CommonData commonData)
+		public LauncherItemToolStripDropDownButton(CommonData commonData)
 			: base(commonData)
 		{ }
 
@@ -258,9 +258,9 @@
 	/// <summary>
 	/// ランチャーアイテムを保持するスプリットボタンアイテム。
 	/// </summary>
-	public class LauncherToolStripSplitButton: CommonDataToolStripSplitButton, ILauncherItem
+	public class LauncherItemToolStripSplitButton: CommonDataToolStripSplitButton, ILauncherItem
 	{
-		public LauncherToolStripSplitButton(CommonData commonData)
+		public LauncherItemToolStripSplitButton(CommonData commonData)
 			: base(commonData)
 		{ }
 
