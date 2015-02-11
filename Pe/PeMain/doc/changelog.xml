@@ -110,7 +110,7 @@
 					<comment>ToolStripUtility.AttachmentOpeningMenuInScreen(Control)だけは諸事情により無理</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="df2f5fa6f0eab035dfa15370193f5b5ab8204530">
 				<message>System.TimeSpanのシリアライズ・デシリアライズ統一</message>
 			</note>
 			<note rev="">
