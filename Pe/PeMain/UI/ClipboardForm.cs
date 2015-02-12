@@ -600,7 +600,8 @@
 				return;
 			}
 
-			this.tabPreview.SuspendLayout();
+			//this.tabPreview.SuspendLayout();
+			WindowsUtility.SetRedraw(this.tabPreview, false);
 			this.tabPreview.TabPages.Clear();
 
 			TabPage defaultTabPage;
@@ -612,7 +613,8 @@
 				defaultTabPage = ChangeSelsectedTemplateItem(templateItem);
 			}
 			this.tabPreview.SelectedTab = defaultTabPage;
-			this.tabPreview.ResumeLayout();
+			//this.tabPreview.ResumeLayout();
+			WindowsUtility.SetRedraw(this.tabPreview, true);
 		}
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)

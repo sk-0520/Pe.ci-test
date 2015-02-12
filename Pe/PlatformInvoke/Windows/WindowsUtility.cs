@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		static readonly IntPtr noDraw = new IntPtr(0);
 		static readonly IntPtr onDraw = new IntPtr(1);
 
-		public static void SetReDraw(Control target, bool isDraw)
+		public static void SetRedraw(Control target, bool isDraw)
 		{
 			var draw = isDraw ? onDraw : noDraw;
 			NativeMethods.SendMessage(target.Handle, WM.WM_SETREDRAW, draw, IntPtr.Zero);
