@@ -595,7 +595,11 @@
 		/// </summary>
 		void ResetControlInTabPage()
 		{
+			this.viewText.ResetText();
+			this.viewRtf.ResetText();
+			this.viewHtml.DocumentText = null;
 			this.viewImage.Image = null;
+			this.viewFile.Items.Clear();
 		}
 
 		void ChangeSelsectedItem(int index)
@@ -1056,11 +1060,7 @@
 		{
 			ListChanged(ClipboardListType.History, CommonData.MainSetting.Clipboard.HistoryItems, () => {
 				if(CommonData.MainSetting.Clipboard.HistoryItems.Count == 0) {
-					this.viewText.ResetText();
-					this.viewRtf.ResetText();
-					this.viewHtml.DocumentText = null;
-					this.viewImage.Image = null;
-					this.viewFile.Items.Clear();
+					ResetControlInTabPage();
 				}
 			});
 		}
