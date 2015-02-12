@@ -114,7 +114,7 @@
 			<note rev="ce755ce057ebfbad3003f47a65d5c5dfd61d196c">
 				<message>使用許諾でキャンセルするとNullReferenceExceptionが投げられるという嫌がらせに近い不具合の修正</message>
 			</note>
-			<note rev="">
+			<note rev="5029100f2ef16deeb7629ab897f4ee78c658060e">
 				<message>クリップボード/テンプレートアイテムのリスト変更時のちらつきを抑制</message>
 			</note>
 			<note rev="">
