@@ -50,8 +50,12 @@
 			this.commandHtmlUri = new System.Windows.Forms.Button();
 			this.viewHtmlUri = new System.Windows.Forms.TextBox();
 			this.tabPreview_pageImage = new System.Windows.Forms.TabPage();
+			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.panelImage = new System.Windows.Forms.Panel();
 			this.viewImage = new System.Windows.Forms.PictureBox();
+			this.toolImage = new System.Windows.Forms.ToolStrip();
+			this.toolImage_itemRaw = new System.Windows.Forms.ToolStripButton();
+			this.toolImage_itemFill = new System.Windows.Forms.ToolStripButton();
 			this.tabPreview_pageFile = new System.Windows.Forms.TabPage();
 			this.viewFile = new System.Windows.Forms.ListView();
 			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -95,8 +99,12 @@
 			this.tabPreview_pageHtml.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.tabPreview_pageImage.SuspendLayout();
+			this.toolStripContainer1.ContentPanel.SuspendLayout();
+			this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
+			this.toolStripContainer1.SuspendLayout();
 			this.panelImage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.viewImage)).BeginInit();
+			this.toolImage.SuspendLayout();
 			this.tabPreview_pageFile.SuspendLayout();
 			this.tabPreview_pageRawTemplate.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -372,7 +380,7 @@
 			// 
 			// tabPreview_pageImage
 			// 
-			this.tabPreview_pageImage.Controls.Add(this.panelImage);
+			this.tabPreview_pageImage.Controls.Add(this.toolStripContainer1);
 			this.tabPreview_pageImage.Location = new System.Drawing.Point(4, 27);
 			this.tabPreview_pageImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPreview_pageImage.Name = "tabPreview_pageImage";
@@ -382,15 +390,36 @@
 			this.tabPreview_pageImage.Text = "#ClipboardType.Image";
 			this.tabPreview_pageImage.UseVisualStyleBackColor = true;
 			// 
+			// toolStripContainer1
+			// 
+			this.toolStripContainer1.BottomToolStripPanelVisible = false;
+			// 
+			// toolStripContainer1.ContentPanel
+			// 
+			this.toolStripContainer1.ContentPanel.Controls.Add(this.panelImage);
+			this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(366, 183);
+			this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.toolStripContainer1.LeftToolStripPanelVisible = false;
+			this.toolStripContainer1.Location = new System.Drawing.Point(3, 2);
+			this.toolStripContainer1.Name = "toolStripContainer1";
+			this.toolStripContainer1.RightToolStripPanelVisible = false;
+			this.toolStripContainer1.Size = new System.Drawing.Size(366, 208);
+			this.toolStripContainer1.TabIndex = 2;
+			this.toolStripContainer1.Text = "toolStripContainer1";
+			// 
+			// toolStripContainer1.TopToolStripPanel
+			// 
+			this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolImage);
+			// 
 			// panelImage
 			// 
 			this.panelImage.AutoScroll = true;
 			this.panelImage.Controls.Add(this.viewImage);
 			this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelImage.Location = new System.Drawing.Point(3, 2);
+			this.panelImage.Location = new System.Drawing.Point(0, 0);
 			this.panelImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.panelImage.Name = "panelImage";
-			this.panelImage.Size = new System.Drawing.Size(366, 208);
+			this.panelImage.Size = new System.Drawing.Size(366, 183);
 			this.panelImage.TabIndex = 1;
 			// 
 			// viewImage
@@ -402,6 +431,36 @@
 			this.viewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.viewImage.TabIndex = 0;
 			this.viewImage.TabStop = false;
+			// 
+			// toolImage
+			// 
+			this.toolImage.Dock = System.Windows.Forms.DockStyle.None;
+			this.toolImage.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.toolImage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolImage_itemFill,
+            this.toolImage_itemRaw});
+			this.toolImage.Location = new System.Drawing.Point(3, 0);
+			this.toolImage.Name = "toolImage";
+			this.toolImage.Size = new System.Drawing.Size(303, 25);
+			this.toolImage.TabIndex = 0;
+			// 
+			// toolImage_itemRaw
+			// 
+			this.toolImage_itemRaw.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolImage_itemRaw.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolImage_itemRaw.Name = "toolImage_itemRaw";
+			this.toolImage_itemRaw.Size = new System.Drawing.Size(139, 22);
+			this.toolImage_itemRaw.Text = ":clipboard/image/raw";
+			this.toolImage_itemRaw.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
+			// 
+			// toolImage_itemFill
+			// 
+			this.toolImage_itemFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolImage_itemFill.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolImage_itemFill.Name = "toolImage_itemFill";
+			this.toolImage_itemFill.Size = new System.Drawing.Size(130, 22);
+			this.toolImage_itemFill.Text = ":clipboard/image/fill";
+			this.toolImage_itemFill.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
 			// tabPreview_pageFile
 			// 
@@ -527,7 +586,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 231;
+			this.panelTemplateSource.SplitterDistance = 234;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -540,7 +599,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(231, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(234, 154);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -553,7 +612,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(132, 154);
+			this.listReplace.Size = new System.Drawing.Size(129, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -742,9 +801,16 @@
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			this.tabPreview_pageImage.ResumeLayout(false);
+			this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+			this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+			this.toolStripContainer1.TopToolStripPanel.PerformLayout();
+			this.toolStripContainer1.ResumeLayout(false);
+			this.toolStripContainer1.PerformLayout();
 			this.panelImage.ResumeLayout(false);
 			this.panelImage.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.viewImage)).EndInit();
+			this.toolImage.ResumeLayout(false);
+			this.toolImage.PerformLayout();
 			this.tabPreview_pageFile.ResumeLayout(false);
 			this.tabPreview_pageRawTemplate.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -817,5 +883,9 @@
 		private System.Windows.Forms.TextBox viewHtmlUri;
 		private System.Windows.Forms.Button commandHtmlUri;
 		private System.Windows.Forms.Label labelHtmlUri;
+		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+		private System.Windows.Forms.ToolStrip toolImage;
+		private System.Windows.Forms.ToolStripButton toolImage_itemRaw;
+		private System.Windows.Forms.ToolStripButton toolImage_itemFill;
 	}
 }
