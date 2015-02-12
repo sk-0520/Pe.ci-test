@@ -54,6 +54,7 @@
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	-->
 	<log date="YYYY/MM/DD" version="0.48.1" type="rc">
 		<group type="note"><sep dummy="==================================================================" />
@@ -128,10 +129,11 @@
 				<message>System.TimeSpanのシリアライズ・デシリアライズ統一</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>スキン置き換え画像はPeMainで保持しない</message>
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/11" version="0.48.0">
 		<group type="features">
 			<sep dummy="==================================================================" />
@@ -185,6 +187,7 @@
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/08" version="0.47.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
@@ -221,6 +224,7 @@
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/06" version="0.46.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
@@ -282,6 +286,7 @@
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/04" version="0.45.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
@@ -361,6 +366,7 @@
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/31" version="0.44.0">
 		<group type="note"><sep dummy="==================================================================" />
 			<note rev="">
@@ -426,6 +432,7 @@
 			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/25" version="0.43.0">
 		<group type="note">
 			<note rev=""><message>ファイル・ディレクトリアイテムのファイルメニューからディレクトリを開くには下位メニューから「ここを開く」を選択してください</message></note>
@@ -448,6 +455,7 @@
 			<note rev=""><message>0.42.1の更新履歴で「リリースビルドバッチ整理」が#160になっていたのを#165に修正</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/22" version="0.42.1">
 		<group type="features">
 			<note rev="7a38fc15197655ea9a941744f4c0e24860ff5d28"><message>#167: 標準入出力ダイアログのフォントを設定項目に表示する</message></note>
@@ -469,6 +477,7 @@
 			<note rev="11f6e6e7e3e9f55ec8f7c7729038bfee64490163"><message>#160: リリースビルド時に変なdefineがある場合にエラーとする</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/20" version="0.41.0">
 		<group type="note">
 			<note rev=""><message>#55対応によりノートの本文入力方法が変わりました。Windowsの付箋に近くなった感じです</message></note>
@@ -490,6 +499,7 @@
 			<note rev="e031432aaf5a4947e0f12c65c367780e58805655"><message>アップデート処理で bin\PeUpdater.exe.config の削除処理が抜けていた</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/15" version="0.40.1">
 		<group type="features">
 			<note rev=""><message>指定して実行ダイアログをタスクバーに表示する</message></note>
@@ -510,6 +520,7 @@
 			<note rev="113d6f59d0b1a1cd4d5b100043b4c4b389c9e0d7"><message>準備だけして使いもしていなかったマウスフックを無効にした</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/11" version="0.39.0">
 		<group type="note">
 			<note rev=""><message>本バージョンからアップデートチェックに使用するアドレスが変更となります</message></note>
@@ -534,6 +545,7 @@
 			<note rev="13e7be2ba5ce325c942992d3f26d9cbbc1cd72b2"><message>バックアップファイル世代対象を*.zipに限定し、バックアップ対象をディレクトリまで広げる</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/01/03" version="0.38.1">
 		<group type="note">
 			<note rev="d42011a11cf4e9eba9379e669b1506b2134d821d"><message class="compatibility">#41: アイテムの種類</message><comments><comment>種別「URI」を廃止して「コマンド」を追加しました。下位互換のためURIアイテムの読み込みはサポートされますがコマンドアイテムへ変換されます</comment></comments></note>
@@ -558,6 +570,7 @@
 			<note rev="bf46dfbbd00221f810f2954bc2ba3b6e9f241404"><message>#118: 自前プログラム呼び出し方法</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/12/23" version="0.37.0">
 		<group type="note">
 			<note rev=""><message>0.36.0でクリップボード処理がバグりまくっていたので修正しました</message></note>
@@ -572,6 +585,7 @@
 			<note rev=""><message>クリップボードアイテムがファイルの場合にファイルが存在しない場合はコピー対象としない</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/12/21" version="0.36.0">
 		<group type="note">
 			<note rev="0b63f714daec6126e46322bc94b692a6bad6071c"><message class="compatibility">#65: 下位互換@IconItem</message><comments><comment>Pe 0.29.0 からの下位互換をサポートしなくなりました</comment></comments></note>
@@ -590,6 +604,7 @@
 			<note rev="97945be931fb097ecdc831580cbbff57fd389a4d"><message>#114: ウィンドウを親依存でなく独立して保持する</message><comments><comment>#113も解決</comment></comments></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/12/06" version="0.35.0">
 		<group type="note">
 			<note rev="7e2cd76929891a874fb3494899d7b251d3de232c"><message class="compatibility">#54に関連して各種パスを変更しました。ユーザー操作に影響する部分として [Pe]/bin/PeUpdater.exe を [Pe]/sbin/Updater/Updater.exe に変更したためファイアウォール、アンチウイルスソフト等の設定変更が必要な可能性があります</message></note>
@@ -615,200 +630,457 @@
 			<note rev=""><message>バージョン 0.33.0 での開発環境変更を追記</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/30" version="0.34.0">
 		<group type="note">
-			<note rev=""><message>#26対応によりバージョン表記を a.b.c.d から a.b.c.d-xxxx... に変更しました。ユーザー操作に影響はありませんが報告用情報の内容が変更されます</message></note>
+			<note rev="">
+				<message>#26対応によりバージョン表記を a.b.c.d から a.b.c.d-xxxx... に変更しました。ユーザー操作に影響はありませんが報告用情報の内容が変更されます</message>
+			</note>
 		</group>
 		<group type="features">
-			<note rev="57ce440b369426c073965b71c49a2141398ffe53"><message>#100: 情報ダイアログからコピーする報告用情報に罫線</message></note>
-			<note rev="5a519d4305a269af7bdf505c2ca4e1834e0b9972"><message>#97: コンポーネント情報整理</message></note>
-			<note rev="bcb2155a0c7905a65b3d4e33756c43a0743bb631"><message>#102: 使用許諾ダイアログをユーザー意志で再表示</message></note>
-			<note rev="8c9b33f16ba69bad9036abbd934d3191e035ae65"><message>#26: git commit hash</message></note>
-			<note rev="05fb65035835bc4fad48885c3fd3ca0f8109712c"><message>#63: 自動アップデート時に優しく殺す</message></note>
+			<note rev="57ce440b369426c073965b71c49a2141398ffe53">
+				<message>#100: 情報ダイアログからコピーする報告用情報に罫線</message>
+			</note>
+			<note rev="5a519d4305a269af7bdf505c2ca4e1834e0b9972">
+				<message>#97: コンポーネント情報整理</message>
+			</note>
+			<note rev="bcb2155a0c7905a65b3d4e33756c43a0743bb631">
+				<message>#102: 使用許諾ダイアログをユーザー意志で再表示</message>
+			</note>
+			<note rev="8c9b33f16ba69bad9036abbd934d3191e035ae65">
+				<message>#26: git commit hash</message>
+			</note>
+			<note rev="05fb65035835bc4fad48885c3fd3ca0f8109712c">
+				<message>#63: 自動アップデート時に優しく殺す</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note rev="0d8c9432db5b921669eb6a0343f1ff8cb2460c9b"><message>#98: 「現在選択中グループ」のツールチップ文字列</message></note>
-			<note rev="022e666df7daddb560dc3319bce175c798ddfb0c"><message>#103: 更新履歴のリビジョンを行末に。ついでにスタイルシートちょこっと設定</message></note>
-			<note rev="7f5a04985721d44741030dd699fdca68749c3265"><message>ログ表示処理が非リリース構成で例外になる不具合の修正</message></note>
-			<note rev="2a01315de61388e0b99bb26f01ba4c9bcfb826e6"><message>設定→ランチャ→その他の入力項目をウィンドウサイズ可変に対応できていなった不具合の修正</message></note>
-			<note rev="8c9b33f16ba69bad9036abbd934d3191e035ae65"><message>#26によりバージョン情報ダイアログの表示項目順、バージョン情報・構成情報を入れ替え</message></note>
+			<note rev="0d8c9432db5b921669eb6a0343f1ff8cb2460c9b">
+				<message>#98: 「現在選択中グループ」のツールチップ文字列</message>
+			</note>
+			<note rev="022e666df7daddb560dc3319bce175c798ddfb0c">
+				<message>#103: 更新履歴のリビジョンを行末に。ついでにスタイルシートちょこっと設定</message>
+			</note>
+			<note rev="7f5a04985721d44741030dd699fdca68749c3265">
+				<message>ログ表示処理が非リリース構成で例外になる不具合の修正</message>
+			</note>
+			<note rev="2a01315de61388e0b99bb26f01ba4c9bcfb826e6">
+				<message>設定→ランチャ→その他の入力項目をウィンドウサイズ可変に対応できていなった不具合の修正</message>
+			</note>
+			<note rev="8c9b33f16ba69bad9036abbd934d3191e035ae65">
+				<message>#26によりバージョン情報ダイアログの表示項目順、バージョン情報・構成情報を入れ替え</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note rev="4f56e98cbfa2680ffb7ed2b7ebcbca8af6b3557f"><message>#87: DBManager使用時のスパゲッティ具合</message></note>
-			<note rev="5c6d563da2cb6a30ce3cadbc9176628e881b0f12"><message>#64: app.config の切り替え</message></note>
-			<note rev="82d8307979942b749d0e3607464c5d6a1aee5c8f"><message>PeMain以外の各種アセンブリバージョン修正</message></note>
+			<note rev="4f56e98cbfa2680ffb7ed2b7ebcbca8af6b3557f">
+				<message>#87: DBManager使用時のスパゲッティ具合</message>
+			</note>
+			<note rev="5c6d563da2cb6a30ce3cadbc9176628e881b0f12">
+				<message>#64: app.config の切り替え</message>
+			</note>
+			<note rev="82d8307979942b749d0e3607464c5d6a1aee5c8f">
+				<message>PeMain以外の各種アセンブリバージョン修正</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/24" version="0.33.0">
 		<group type="fixes">
-			<note rev="65c905ae5b74109082263b1972aead5d7a6cda30"><message>#92: 環境変数で指定したファイル アイテムのプロパティが表示されない</message></note>
-			<note rev="2d6a501969e86fb4776b31777b61731cf725b713"><message>#93: ファイルアイテムが環境変数を含む場合にファイルメニューが非活性</message></note>
-			<note rev=""><message>#92, #93に関連して環境変数を含む親ディレクトリ、作業ディレクトリのパスコピー・表示の不具合修正</message></note>
-			<note rev="20f4d6b558d59e70b8aa8f635364d8b5fa003406"><message>#91: ツールチップがメニューを覆う</message><comments><comment>#78を含む</comment></comments></note>
-			<note rev="5f532dd9c09c3d01d0af55c81712e1e2ce029371"><message>#62: メニューに表示するホットキーが頭おかしい</message></note>
-			<note rev="888da4e58a8ad763ba8fd73a642e812b0fb31c41"><message>#95: よろしくないホットキーのメニューショットカット割り当てで例外</message></note>
-			<note rev="9cc9b57861d742d72e77ee8a8989d386732578f4"><message>#96: 認証が必要なネットワークでの更新履歴取得失敗</message></note>
+			<note rev="65c905ae5b74109082263b1972aead5d7a6cda30">
+				<message>#92: 環境変数で指定したファイル アイテムのプロパティが表示されない</message>
+			</note>
+			<note rev="2d6a501969e86fb4776b31777b61731cf725b713">
+				<message>#93: ファイルアイテムが環境変数を含む場合にファイルメニューが非活性</message>
+			</note>
+			<note rev="">
+				<message>#92, #93に関連して環境変数を含む親ディレクトリ、作業ディレクトリのパスコピー・表示の不具合修正</message>
+			</note>
+			<note rev="20f4d6b558d59e70b8aa8f635364d8b5fa003406">
+				<message>#91: ツールチップがメニューを覆う</message>
+				<comments>
+					<comment>#78を含む</comment>
+				</comments>
+			</note>
+			<note rev="5f532dd9c09c3d01d0af55c81712e1e2ce029371">
+				<message>#62: メニューに表示するホットキーが頭おかしい</message>
+			</note>
+			<note rev="888da4e58a8ad763ba8fd73a642e812b0fb31c41">
+				<message>#95: よろしくないホットキーのメニューショットカット割り当てで例外</message>
+			</note>
+			<note rev="9cc9b57861d742d72e77ee8a8989d386732578f4">
+				<message>#96: 認証が必要なネットワークでの更新履歴取得失敗</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note rev="288f2be6be13360028f79515eb571ed5e6e33b36"><message>#69: ユニットテスト書こうぜ！</message></note>
-			<note rev="a70ce895c81d7261a93e3345ea0299a3121ce737"><message>#89: ソース整理</message></note>
-			<note rev="ef51dcde150cff0a4c3e7b781c43f31312f999a9"><message>#94: 変更履歴にコミットのリビジョンを含める</message></note>
-			<note rev=""><message>開発環境を SharpDevelop 5.0 から Microsoft Visual Studio Community 2013 に変更</message></note>
+			<note rev="288f2be6be13360028f79515eb571ed5e6e33b36">
+				<message>#69: ユニットテスト書こうぜ！</message>
+			</note>
+			<note rev="a70ce895c81d7261a93e3345ea0299a3121ce737">
+				<message>#89: ソース整理</message>
+			</note>
+			<note rev="ef51dcde150cff0a4c3e7b781c43f31312f999a9">
+				<message>#94: 変更履歴にコミットのリビジョンを含める</message>
+			</note>
+			<note rev="">
+				<message>開発環境を SharpDevelop 5.0 から Microsoft Visual Studio Community 2013 に変更</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/19" version="0.32.0">
 		<group type="features">
-			<note><message>#82: ポーズ時のタスクトレイアイコン</message></note>
-			<note><message>#74: ランチャーアイテムをツールバー上で移動させる</message></note>
-			<note><message>#84: ツールバーメインボタンでグループ切り替え</message></note>
-			<note><message>#85: ショートカットファイルの登録処理</message></note>
-			<note><message>#41: アイテムの種類</message><comments><comment>URI追加</comment></comments></note>
-			<note><message>#86: 使用者の環境情報を定型として出力</message></note>
+			<note>
+				<message>#82: ポーズ時のタスクトレイアイコン</message>
+			</note>
+			<note>
+				<message>#74: ランチャーアイテムをツールバー上で移動させる</message>
+			</note>
+			<note>
+				<message>#84: ツールバーメインボタンでグループ切り替え</message>
+			</note>
+			<note>
+				<message>#85: ショートカットファイルの登録処理</message>
+			</note>
+			<note>
+				<message>#41: アイテムの種類</message>
+				<comments>
+					<comment>URI追加</comment>
+				</comments>
+			</note>
+			<note>
+				<message>#86: 使用者の環境情報を定型として出力</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>#80: toolbar/main/tips の ${version-release}</message></note>
-			<note><message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception</message><comments><comment>#41により対応不要</comment></comments></note>
-			<note><message>#83: バッチ ファイルにパラメタが渡らない</message></note>
-			<note><message>ツールバーのボタンサイズに左側余白を若干追加しました</message></note>
+			<note>
+				<message>#80: toolbar/main/tips の ${version-release}</message>
+			</note>
+			<note>
+				<message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception</message>
+				<comments>
+					<comment>#41により対応不要</comment>
+				</comments>
+			</note>
+			<note>
+				<message>#83: バッチ ファイルにパラメタが渡らない</message>
+			</note>
+			<note>
+				<message>ツールバーのボタンサイズに左側余白を若干追加しました</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>Visual Studio Community使いたいでありんす</message></note>
+			<note>
+				<message>Visual Studio Community使いたいでありんす</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/13" version="0.31.0">
 		<group type="note">
-			<note><message class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</message></note>
-			<note><message>設定ファイルのバックアップアーカイブから戻しを行う場合はグループ名の重複に注意してください</message></note>
+			<note>
+				<message class="compatibility">グループ名の重複を許容しなくなりました。旧バージョンや手動設定でグループ名を重複させた場合に動作が不安定になる可能性があります</message>
+			</note>
+			<note>
+				<message>設定ファイルのバックアップアーカイブから戻しを行う場合はグループ名の重複に注意してください</message>
+			</note>
 		</group>
 		<group type="features">
-			<note><message>#71: 環境情報出力時にディスプレイ情報を出力する</message></note>
-			<note><message>#72: ディレクトリのD&amp;D登録時にアイテム種別の選択</message></note>
-			<note><message>#73: ツールバーに対する初期グループの設定</message></note>
+			<note>
+				<message>#71: 環境情報出力時にディスプレイ情報を出力する</message>
+			</note>
+			<note>
+				<message>#72: ディレクトリのD&amp;D登録時にアイテム種別の選択</message>
+			</note>
+			<note>
+				<message>#73: ツールバーに対する初期グループの設定</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>#70: ディレクトリアイテムで環境変数が展開されない</message></note>
-			<note><message>設定ダイアログのランチャーアイコン設定処理のインデックス関連を改善</message></note>
-			<note><message>#73の影響によりグループ名の重複時に連番を自動採番するように変更</message></note>
-			<note><message>#73の影響によりグループ名編集時に trim</message></note>
-			<note><message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception</message><comments><comment>暫定対応により例外握り潰し</comment></comments></note>
+			<note>
+				<message>#70: ディレクトリアイテムで環境変数が展開されない</message>
+			</note>
+			<note>
+				<message>設定ダイアログのランチャーアイコン設定処理のインデックス関連を改善</message>
+			</note>
+			<note>
+				<message>#73の影響によりグループ名の重複時に連番を自動採番するように変更</message>
+			</note>
+			<note>
+				<message>#73の影響によりグループ名編集時に trim</message>
+			</note>
+			<note>
+				<message>#77: ShellFolder アイテムのドロップダウン表示で Unhandled exception</message>
+				<comments>
+					<comment>暫定対応により例外握り潰し</comment>
+				</comments>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/09" version="0.30.0">
 		<group type="features">
-			<note><message>#67: ランチャアイテムの自動登録</message><comments><comment>基盤処理実装、細かい修正や defagroupt-launcher.xml の定義が必要</comment></comments></note>
-			<note><message>設定ダイアログで新規グループ作成時の初期グループ名に連番を設定する</message></note>
+			<note>
+				<message>#67: ランチャアイテムの自動登録</message>
+				<comments>
+					<comment>基盤処理実装、細かい修正や defagroupt-launcher.xml の定義が必要</comment>
+				</comments>
+			</note>
+			<note>
+				<message>設定ダイアログで新規グループ作成時の初期グループ名に連番を設定する</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>#66: UNC 環境での SQLite オープン</message></note>
-			<note><message>ランチャー種別切り替え時の挙動を修正</message></note>
-			<note><message>マルチディスプレイ環境でホームダイアログが非プライマリディスプレイに表示されることがあったためプライマリディスプレイに固定表示するように変更</message></note>
+			<note>
+				<message>#66: UNC 環境での SQLite オープン</message>
+			</note>
+			<note>
+				<message>ランチャー種別切り替え時の挙動を修正</message>
+			</note>
+			<note>
+				<message>マルチディスプレイ環境でホームダイアログが非プライマリディスプレイに表示されることがあったためプライマリディスプレイに固定表示するように変更</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>すっかり忘れていた Hotkey Control</message><comments><comment>SpnotetButton をコンポーネント情報に追加と名前空間整理</comment></comments></note>
+			<note>
+				<message>すっかり忘れていた Hotkey Control</message>
+				<comments>
+					<comment>SpnotetButton をコンポーネント情報に追加と名前空間整理</comment>
+				</comments>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/05" version="0.29.0">
 		<group type="note">
-			<note><message class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath</message><comments><comment>IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</comment></comments></note>
+			<note>
+				<message class="compatibility">将来的な拡張に備えられるよう launcher-items.xml が変更されます。IconPath</message>
+				<comments>
+					<comment>IconIndex 要素は IconItem 要素の子として Path, Index 要素に置き換わります。古い各要素は手動設定を考慮して互換性のため保持されますが将来バージョンでは排除されます</comment>
+				</comments>
+			</note>
 		</group>
 		<group type="features">
-			<note><message>アップデート処理前に設定データを保存</message></note>
-			<note><message>#61: ${env}を編集する</message></note>
-			<note><message>リリースビルドのバッチを修正。x86版で[Pe]/x64, x64版で[Pe]/x86を除外した</message></note>
+			<note>
+				<message>アップデート処理前に設定データを保存</message>
+			</note>
+			<note>
+				<message>#61: ${env}を編集する</message>
+			</note>
+			<note>
+				<message>リリースビルドのバッチを修正。x86版で[Pe]/x64, x64版で[Pe]/x86を除外した</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>ランチャーアイテムのアイコンデータ整理</message></note>
-			<note><message>使用許諾、アップデートチェック画面のリンク選択時にIEでなくシステムの標準のブラウザでリンクを開くように変更</message></note>
+			<note>
+				<message>ランチャーアイテムのアイコンデータ整理</message>
+			</note>
+			<note>
+				<message>使用許諾、アップデートチェック画面のリンク選択時にIEでなくシステムの標準のブラウザでリンクを開くように変更</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>開発環境を SharpDevelop 4.4 から SharpDevelop 5.0 に変更</message></note>
+			<note>
+				<message>開発環境を SharpDevelop 4.4 から SharpDevelop 5.0 に変更</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/11/01" version="0.28.0">
 		<group type="features">
-			<note><message>システム環境のアイコンを Windows ちっくに置き換え</message></note>
-			<note><message>タスクトレイコンテキストのノートに現在有効なノート一覧を表示する</message></note>
-			<note><message>ノートのコンテキストメニューに拡張メニュー実装</message></note>
-			<note><message>ノートのコンテキストメニュー項目、最小化にアイコン設定</message></note>
-			<note><message>画面上のウィンドウ表示位置を保存・復帰させる機能の追加</message></note>
+			<note>
+				<message>システム環境のアイコンを Windows ちっくに置き換え</message>
+			</note>
+			<note>
+				<message>タスクトレイコンテキストのノートに現在有効なノート一覧を表示する</message>
+			</note>
+			<note>
+				<message>ノートのコンテキストメニューに拡張メニュー実装</message>
+			</note>
+			<note>
+				<message>ノートのコンテキストメニュー項目、最小化にアイコン設定</message>
+			</note>
+			<note>
+				<message>画面上のウィンドウ表示位置を保存・復帰させる機能の追加</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>タスクトレイ Pe アイコンダブルクリック時の処理がデバッグコードのままだった</message></note>
-			<note><message>タスクトレイ Pe アイコンコンテキストメニューのツールバーアイコンを変更</message></note>
-			<note><message>#59: TimeSpanがシリアライズされない</message></note>
-			<note><message>システムイベントのメモリリークを修正</message></note>
-			<note><message>#58: メニューに表示するホットキーが近い</message></note>
-			<note><message>#17: Aero描画の切り替え</message></note>
-			<note><message>ツールバーの文字列幅を制限</message></note>
+			<note>
+				<message>タスクトレイ Pe アイコンダブルクリック時の処理がデバッグコードのままだった</message>
+			</note>
+			<note>
+				<message>タスクトレイ Pe アイコンコンテキストメニューのツールバーアイコンを変更</message>
+			</note>
+			<note>
+				<message>#59: TimeSpanがシリアライズされない</message>
+			</note>
+			<note>
+				<message>システムイベントのメモリリークを修正</message>
+			</note>
+			<note>
+				<message>#58: メニューに表示するホットキーが近い</message>
+			</note>
+			<note>
+				<message>#17: Aero描画の切り替え</message>
+			</note>
+			<note>
+				<message>ツールバーの文字列幅を制限</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>changelog.xml の 0.27.0 公開日が10/25になっていたので10/26に直した</message></note>
-			<note><message>[PE]/etc/style, [PE]/etc/script を追加、それに伴い関連部分を色々と変更</message></note>
+			<note>
+				<message>changelog.xml の 0.27.0 公開日が10/25になっていたので10/26に直した</message>
+			</note>
+			<note>
+				<message>[PE]/etc/style, [PE]/etc/script を追加、それに伴い関連部分を色々と変更</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/26" version="0.27.0">
 		<group type="features">
-			<note><message>ツールバーメインメニューに非表示を追加</message></note>
-			<note><message>#8, #34とかの成果として、タスクトレイのコンテキストメニューを .NET Framework の推奨である ContextMenuStrip に変更(Forms非推奨？ 聞こえんなぁ)</message></note>
-			<note><message>ContextMenuStrip への変更にあたりアイコンを設定</message></note>
-			<note><message>ノートのカスタムカラーアイコンを非選択時は固定のアイコンを表示するように変更</message></note>
+			<note>
+				<message>ツールバーメインメニューに非表示を追加</message>
+			</note>
+			<note>
+				<message>#8, #34とかの成果として、タスクトレイのコンテキストメニューを .NET Framework の推奨である ContextMenuStrip に変更(Forms非推奨？ 聞こえんなぁ)</message>
+			</note>
+			<note>
+				<message>ContextMenuStrip への変更にあたりアイコンを設定</message>
+			</note>
+			<note>
+				<message>ノートのカスタムカラーアイコンを非選択時は固定のアイコンを表示するように変更</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>ログフォームのタイトルがアホになっていた</message></note>
-			<note><message>#57: ツールバーのコンテキストメニューでカーソルが移動用</message></note>
-			<note><message>通常スキンでノートのキャプションボタンを密着するよう変更</message></note>
-			<note><message>Windowsからのユーザー切り替え時に表示UIの再描画処理を見直し</message></note>
+			<note>
+				<message>ログフォームのタイトルがアホになっていた</message>
+			</note>
+			<note>
+				<message>#57: ツールバーのコンテキストメニューでカーソルが移動用</message>
+			</note>
+			<note>
+				<message>通常スキンでノートのキャプションボタンを密着するよう変更</message>
+			</note>
+			<note>
+				<message>Windowsからのユーザー切り替え時に表示UIの再描画処理を見直し</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>SystemEvents.UserPreferenceChanged イベントを受信</message></note>
-			<note><message>SystemEvents.SessionSwitch イベントを受信</message></note>
+			<note>
+				<message>SystemEvents.UserPreferenceChanged イベントを受信</message>
+			</note>
+			<note>
+				<message>SystemEvents.SessionSwitch イベントを受信</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/25" version="0.26.0">
 		<group type="note">
-			<note><message>バージョン 0.23.0, 0.24.0, 0.25.0 の 64bit版を使用している場合、アップデートは下記URLから手動で行ってください</message></note>
-			<note><message>https://bitbucket.org/sk_0520/pe/downloads/Pe_0-26-0_x64.zip</message></note>
+			<note>
+				<message>バージョン 0.23.0, 0.24.0, 0.25.0 の 64bit版を使用している場合、アップデートは下記URLから手動で行ってください</message>
+			</note>
+			<note>
+				<message>https://bitbucket.org/sk_0520/pe/downloads/Pe_0-26-0_x64.zip</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>64bit版 PeUpdater が 32bit で生成されていたため旧プロセスを殺せなかった</message></note>
+			<note>
+				<message>64bit版 PeUpdater が 32bit で生成されていたため旧プロセスを殺せなかった</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>PeUodaterプロジェクト設定見直し</message></note>
-			<note><message>0.1.0 - 0.9.0 までのタグを削除</message></note>
+			<note>
+				<message>PeUodaterプロジェクト設定見直し</message>
+			</note>
+			<note>
+				<message>0.1.0 - 0.9.0 までのタグを削除</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/25" version="0.25.0">
 		<group type="features">
-			<note><message>ノートの有無によってタスクトレイPeコンテキストメニュー内容の有効・無効切り替え</message></note>
-			<note><message>ツールバーのグリップ部、ノートのキャプションにカーソルを持って行ったときに移動を示すカーソルに変更</message></note>
-			<note><message>ノートのコンテキストメニューにアイコンべたべたはっつけてみた</message><comments><comment>最小化のアイコンは未定</comment></comments></note>
+			<note>
+				<message>ノートの有無によってタスクトレイPeコンテキストメニュー内容の有効・無効切り替え</message>
+			</note>
+			<note>
+				<message>ツールバーのグリップ部、ノートのキャプションにカーソルを持って行ったときに移動を示すカーソルに変更</message>
+			</note>
+			<note>
+				<message>ノートのコンテキストメニューにアイコンべたべたはっつけてみた</message>
+				<comments>
+					<comment>最小化のアイコンは未定</comment>
+				</comments>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>前面表示処理が死んでた</message></note>
-			<note><message>ツールバー最小化時に設定状態に関係なく最前面に表示するよう変更</message></note>
-			<note><message>ドッキング状態により自動的に隠すメニューの有効無効を切り替える</message></note>
-			<note><message>ツールバー位置のメニュー項目のチェックは丸で表示する</message></note>
+			<note>
+				<message>前面表示処理が死んでた</message>
+			</note>
+			<note>
+				<message>ツールバー最小化時に設定状態に関係なく最前面に表示するよう変更</message>
+			</note>
+			<note>
+				<message>ドッキング状態により自動的に隠すメニューの有効無効を切り替える</message>
+			</note>
+			<note>
+				<message>ツールバー位置のメニュー項目のチェックは丸で表示する</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/21" version="0.24.0">
 		<group type="features">
-			<note><message>ノートの現在選択色を親メニューにも表示</message></note>
-			<note><message>システムレジューム時にアップデートチェック実施</message></note>
-			<note><message>#20関連として入力処理をサポート</message></note>
+			<note>
+				<message>ノートの現在選択色を親メニューにも表示</message>
+			</note>
+			<note>
+				<message>システムレジューム時にアップデートチェック実施</message>
+			</note>
+			<note>
+				<message>#20関連として入力処理をサポート</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>ノートの前面表示が常時最前面表示となっていた</message></note>
-			<note><message>#38: 多言語によるUIの自動調整</message><comments><comment>設定/本体 気が付けば終わってた</comment></comments></note>
-			<note><message>使用許諾ダイアログ、ホームダイアログ、アップデートダイアログの前面移動を実装</message></note>
-			<note><message>初回起動時のホームダイアログがウィンドウプロシージャを経由していない不具合を力技修正()</message></note>
-			<note><message>#20: 準出力取得時に取得ウィンドウを閉じると例外</message><comments><comment>閉じないようにした</comment></comments></note>
-			<note><message>標準出力ダイアログのタブに当たる言語設定が古かった</message></note>
-			<note><message>標準出力ダイアログをツールダイアログから通常ウィンドウへ変更</message></note>
+			<note>
+				<message>ノートの前面表示が常時最前面表示となっていた</message>
+			</note>
+			<note>
+				<message>#38: 多言語によるUIの自動調整</message>
+				<comments>
+					<comment>設定/本体 気が付けば終わってた</comment>
+				</comments>
+			</note>
+			<note>
+				<message>使用許諾ダイアログ、ホームダイアログ、アップデートダイアログの前面移動を実装</message>
+			</note>
+			<note>
+				<message>初回起動時のホームダイアログがウィンドウプロシージャを経由していない不具合を力技修正()</message>
+			</note>
+			<note>
+				<message>#20: 準出力取得時に取得ウィンドウを閉じると例外</message>
+				<comments>
+					<comment>閉じないようにした</comment>
+				</comments>
+			</note>
+			<note>
+				<message>標準出力ダイアログのタブに当たる言語設定が古かった</message>
+			</note>
+			<note>
+				<message>標準出力ダイアログをツールダイアログから通常ウィンドウへ変更</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>#53: デフォルト引数なくしたい</message><comments><comment>ﾋｬｯﾎｰｲ!!</comment></comments></note>
+			<note>
+				<message>#53: デフォルト引数なくしたい</message>
+				<comments>
+					<comment>ﾋｬｯﾎｰｲ!!</comment>
+				</comments>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/18" version="0.23.0">
 		<group type="note">
 			<note><message>フォーラム(https://groups.google.com/d/forum/pe_development)作成</message></note>
@@ -841,76 +1113,158 @@
 			<note><message>使用許諾の各URIを app.config で置き換える</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/13" version="0.22.0">
 		<group type="features">
-			<note><message>ノートの前景色・背景色をノートコンテキストメニューから変更可能に</message></note>
-			<note><message>全ウィンドウ非表示状態で非表示ウィンドウから表示された場合に復帰させないようにした</message></note>
-			<note><message>ノートの内容を出力(入力は未実装)</message></note>
+			<note>
+				<message>ノートの前景色・背景色をノートコンテキストメニューから変更可能に</message>
+			</note>
+			<note>
+				<message>全ウィンドウ非表示状態で非表示ウィンドウから表示された場合に復帰させないようにした</message>
+			</note>
+			<note>
+				<message>ノートの内容を出力(入力は未実装)</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>ノート最小化時の描画処理で本文が描画されないように修正</message></note>
+			<note>
+				<message>ノート最小化時の描画処理で本文が描画されないように修正</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>デバッグ時のデバッグ設定見直し</message></note>
+			<note>
+				<message>デバッグ時のデバッグ設定見直し</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/05" version="0.21.0">
 		<group type="note">
-			<note><message>ObjectDumper使用</message></note>
+			<note>
+				<message>ObjectDumper使用</message>
+			</note>
 		</group>
 		<group type="features">
-			<note><message>アップデート処理後に異常処理がなければコンソール画面を閉じる</message></note>
-			<note><message>情報ダイアログに更新履歴表示ボタン追加</message></note>
-			<note><message>情報ダイアログから手動アップデートチェックを行う際に確認ダイアログを表示</message></note>
+			<note>
+				<message>アップデート処理後に異常処理がなければコンソール画面を閉じる</message>
+			</note>
+			<note>
+				<message>情報ダイアログに更新履歴表示ボタン追加</message>
+			</note>
+			<note>
+				<message>情報ダイアログから手動アップデートチェックを行う際に確認ダイアログを表示</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>アップデート確認ダイアログに最新バージョンが表示されない不具合</message></note>
-			<note><message>#41: アイテムの種類</message><comments><comment>ファイルとディレクトリで分岐させる。その他は未実装</comment></comments></note>
-			<note><message>ファイルランチャーメニューのファイルで列挙されたディレクトリを選択した際にディレクトリが存在しなければ例外</message></note>
+			<note>
+				<message>アップデート確認ダイアログに最新バージョンが表示されない不具合</message>
+			</note>
+			<note>
+				<message>#41: アイテムの種類</message>
+				<comments>
+					<comment>ファイルとディレクトリで分岐させる。その他は未実装</comment>
+				</comments>
+			</note>
+			<note>
+				<message>ファイルランチャーメニューのファイルで列挙されたディレクトリを選択した際にディレクトリが存在しなければ例外</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>紆余曲折あった更新履歴の原本はXMLで統一</message></note>
-			<note><message>SQLiteのx86/x64切り替え処理が自動化されたのかなんか知らんけど両方のDLLが含まれるようになってデブくなった</message></note>
+			<note>
+				<message>紆余曲折あった更新履歴の原本はXMLで統一</message>
+			</note>
+			<note>
+				<message>SQLiteのx86/x64切り替え処理が自動化されたのかなんか知らんけど両方のDLLが含まれるようになってデブくなった</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/03" version="0.20.0">
 		<group type="note">
-			<note><message>#49未対応版が本バージョンを正常に落とせるように一時的にRC版をアップデート確認リソースから外す。そのためバージョン0.22.0までRC版は配布しない</message></note>
+			<note>
+				<message>#49未対応版が本バージョンを正常に落とせるように一時的にRC版をアップデート確認リソースから外す。そのためバージョン0.22.0までRC版は配布しない</message>
+			</note>
 		</group>
 		<group type="features">
-			<note><message>アップデートの結果ログとログ出力内容をまとめた</message></note>
-			<note><message>ツールバーのボタンへのD&amp;Dで指定して実行ダイアログを表示</message></note>
-			<note><message>ログダイアログの詳細部分表示方法を全面と分割の切り替え</message></note>
-			<note><message>#48: 全ノートに対する操作でロック状態は省く</message></note>
+			<note>
+				<message>アップデートの結果ログとログ出力内容をまとめた</message>
+			</note>
+			<note>
+				<message>ツールバーのボタンへのD&amp;Dで指定して実行ダイアログを表示</message>
+			</note>
+			<note>
+				<message>ログダイアログの詳細部分表示方法を全面と分割の切り替え</message>
+			</note>
+			<note>
+				<message>#48: 全ノートに対する操作でロック状態は省く</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>使用許諾ダイアログ内の文言が他のUIテキストと異なっていた</message></note>
-			<note><message>過去バージョンからの強制使用許諾表示が使用設定より優先される不具合</message></note>
-			<note><message>マルチディスプレイで自動的に隠したツールバーの隠れた位置と表示位置が変な不具合</message></note>
-			<note><message>#9: ディスプレイ名を分かりやすく</message></note>
-			<note><message>#49: アップデートチェック処置でRC版のチェックが死んでる</message></note>
-			<note><message>#50: アップデートチェック時にキャッシュされたデータを参照する</message></note>
-			<note><message>#3: ツールバーメニューチェック表示がアイコンサイズに依存</message></note>
-			<note><message>領域内に収まらないランチャーアイテムのメニュー表示で例外発生</message></note>
-			<note><message>領域内に収まらないランチャーアイテムのファイル一覧がどんな設定でもやたらスリム</message></note>
+			<note>
+				<message>使用許諾ダイアログ内の文言が他のUIテキストと異なっていた</message>
+			</note>
+			<note>
+				<message>過去バージョンからの強制使用許諾表示が使用設定より優先される不具合</message>
+			</note>
+			<note>
+				<message>マルチディスプレイで自動的に隠したツールバーの隠れた位置と表示位置が変な不具合</message>
+			</note>
+			<note>
+				<message>#9: ディスプレイ名を分かりやすく</message>
+			</note>
+			<note>
+				<message>#49: アップデートチェック処置でRC版のチェックが死んでる</message>
+			</note>
+			<note>
+				<message>#50: アップデートチェック時にキャッシュされたデータを参照する</message>
+			</note>
+			<note>
+				<message>#3: ツールバーメニューチェック表示がアイコンサイズに依存</message>
+			</note>
+			<note>
+				<message>領域内に収まらないランチャーアイテムのメニュー表示で例外発生</message>
+			</note>
+			<note>
+				<message>領域内に収まらないランチャーアイテムのファイル一覧がどんな設定でもやたらスリム</message>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>ランチャーアイテム種別選択を実装まで無効化</message></note>
+			<note>
+				<message>ランチャーアイテム種別選択を実装まで無効化</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/01" version="0.19.0">
 		<group type="note">
-			<note><message>0.18.0対応としての高速リリース</message></note>
+			<note>
+				<message>0.18.0対応としての高速リリース</message>
+			</note>
 		</group>
 		<group type="fixes">
-			<note><message>ツールバーでコンテキストが表示できないの修正</message></note>
-			<note><message>#34: 付箋フォームのコンテキストメニューがマルチディスプレイで（ｒｙ</message><comments><comment>再修正</comment></comments></note>
-			<note><message>#35: 付箋の再描画</message><comments><comment>再修正</comment></comments></note>
+			<note>
+				<message>ツールバーでコンテキストが表示できないの修正</message>
+			</note>
+			<note>
+				<message>#34: 付箋フォームのコンテキストメニューがマルチディスプレイで（ｒｙ</message>
+				<comments>
+					<comment>再修正</comment>
+				</comments>
+			</note>
+			<note>
+				<message>#35: 付箋の再描画</message>
+				<comments>
+					<comment>再修正</comment>
+				</comments>
+			</note>
 		</group>
 		<group type="developer">
-			<note><message>PeUpdater大幅改修</message></note>
+			<note>
+				<message>PeUpdater大幅改修</message>
+			</note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/10/01" version="0.18.0">
 		<group type="features">
 			<note><message>サードパーティコンポーネント一覧追加</message></note>
@@ -929,6 +1283,7 @@
 			<note><message>アップデート用チェンジログをリリース/RC版で分離、0.20.0で現行チェンジログ削除予定</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/09/28" version="0.17.1">
 		<group type="note">
 			<note><message>次回バージョンアップを兼ねて少しだけバージョンアップ</message></note>
@@ -946,6 +1301,7 @@
 			<note><message>change.log -&gt; changelog.xml</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/09/23" version="0.17.0">
 		<group type="features">
 			<note><message>標準出力取得ウィンドウに最前面固定の切り替え機能を追加</message></note>
@@ -960,6 +1316,7 @@
 			<note><message>#46: 設定ダイアログから設定保存後の再起動で使用許諾ダイアログ表示</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/09/21" version="0.16.0">
 		<group type="features">
 			<note><message>64bit 対応版配布開始</message></note>
@@ -976,6 +1333,7 @@
 			<note><message>配布アーカイブの圧縮形式を 7z -> zip へ変更</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/09/15" version="0.15.0">
 		<group type="features">
 			<note><message>#22: 標準出力取得ウィンドウの機能実装</message></note>
@@ -989,6 +1347,7 @@
 			<note><message>内部実装: 出力取得でエラー取得時に標準出力とマークされていた</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/09/11" version="0.14.0">
 		<group type="features">
 			<note><message>情報ウィンドウで各種ディレクトリを開くボタンの追加</message></note>
@@ -1000,6 +1359,7 @@
 			<note><message>設定ウィンドウからツールバー位置変更で位置とサイズが変になる不具合の修正</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/09/07" version="0.13.0">
 		<group type="features">
 			<note><message>指定して実行ダイアログへのD&amp;Dで値設定</message></note>
@@ -1018,12 +1378,14 @@
 			<note><message>ToolStripItemへの言語設定でツールチップ設定がちょっと変だったのを修正</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/08/29" version="0.12.0">
 		<group type="fixes">
 			<note><message>#11: ツールバー メインアイコン</message></note>
 			<note><message>タスクトレイアイコンを変更</message></note>
 		</group>
 	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/08/28" version="0.11.0">
 		<group type="note">
 			<note><message>お小遣い帳レベルで更新履歴をつけてみる</message></note>
