@@ -1404,10 +1404,12 @@
 
 		void viewImage_MouseDown(object sender, MouseEventArgs e)
 		{
-			if(this.panelImage.HorizontalScroll.Visible || this.panelImage.VerticalScroll.Visible) {
-				ImageDragging = true;
-				ImageDragPosition = e.Location;
-				Cursor = Cursors.NoMove2D;
+			if(e.Button == MouseButtons.Left) {
+				if(this.panelImage.HorizontalScroll.Visible || this.panelImage.VerticalScroll.Visible) {
+					ImageDragging = true;
+					ImageDragPosition = e.Location;
+					Cursor = Cursors.NoMove2D;
+				}
 			}
 		}
 
@@ -1418,7 +1420,6 @@
 					-this.panelImage.AutoScrollPosition.X - (e.Location.X - ImageDragPosition.X),
 					-this.panelImage.AutoScrollPosition.Y - (e.Location.Y - ImageDragPosition.Y)
 				);
-				Debug.WriteLine(movePoint);
 				this.panelImage.AutoScrollPosition = movePoint;
 			}
 		}
