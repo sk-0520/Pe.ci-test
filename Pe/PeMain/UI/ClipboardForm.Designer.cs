@@ -47,6 +47,7 @@
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.viewHtml = new ContentTypeTextNet.Pe.PeMain.UI.ClipboardForm.ClipboardWebBrowser();
 			this.labelHtmlUri = new System.Windows.Forms.Label();
+			this.commandHtmlUri = new System.Windows.Forms.Button();
 			this.viewHtmlUri = new System.Windows.Forms.TextBox();
 			this.tabPreview_pageImage = new System.Windows.Forms.TabPage();
 			this.panelImage = new System.Windows.Forms.Panel();
@@ -309,11 +310,13 @@
 			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.ColumnCount = 2;
+			this.tableLayoutPanel2.ColumnCount = 3;
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel2.Controls.Add(this.labelHtmlUri, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.viewHtml, 0, 1);
+			this.tableLayoutPanel2.Controls.Add(this.labelHtmlUri, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.commandHtmlUri, 2, 0);
 			this.tableLayoutPanel2.Controls.Add(this.viewHtmlUri, 1, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -326,15 +329,15 @@
 			// 
 			// viewHtml
 			// 
-			this.tableLayoutPanel2.SetColumnSpan(this.viewHtml, 2);
+			this.tableLayoutPanel2.SetColumnSpan(this.viewHtml, 3);
 			this.viewHtml.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.viewHtml.IsWebBrowserContextMenuEnabled = false;
-			this.viewHtml.Location = new System.Drawing.Point(3, 31);
+			this.viewHtml.Location = new System.Drawing.Point(3, 33);
 			this.viewHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.viewHtml.MinimumSize = new System.Drawing.Size(20, 20);
 			this.viewHtml.Name = "viewHtml";
 			this.viewHtml.ScriptErrorsSuppressed = true;
-			this.viewHtml.Size = new System.Drawing.Size(366, 179);
+			this.viewHtml.Size = new System.Drawing.Size(366, 177);
 			this.viewHtml.TabIndex = 0;
 			this.viewHtml.ShowMessage += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.Ex.ShowMessageEventArgs>(this.viewHtml_ShowMessage);
 			// 
@@ -342,20 +345,29 @@
 			// 
 			this.labelHtmlUri.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelHtmlUri.AutoSize = true;
-			this.labelHtmlUri.Location = new System.Drawing.Point(3, 7);
+			this.labelHtmlUri.Location = new System.Drawing.Point(3, 8);
 			this.labelHtmlUri.Name = "labelHtmlUri";
 			this.labelHtmlUri.Size = new System.Drawing.Size(118, 15);
-			this.labelHtmlUri.TabIndex = 0;
+			this.labelHtmlUri.TabIndex = 3;
 			this.labelHtmlUri.Text = ":clipboard/label/uri";
+			// 
+			// commandHtmlUri
+			// 
+			this.commandHtmlUri.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
+			this.commandHtmlUri.Location = new System.Drawing.Point(341, 3);
+			this.commandHtmlUri.Name = "commandHtmlUri";
+			this.commandHtmlUri.Size = new System.Drawing.Size(28, 25);
+			this.commandHtmlUri.TabIndex = 2;
+			this.commandHtmlUri.UseVisualStyleBackColor = true;
+			this.commandHtmlUri.Click += new System.EventHandler(this.commandHtmlUri_Click);
 			// 
 			// viewHtmlUri
 			// 
-			this.viewHtmlUri.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.viewHtmlUri.Location = new System.Drawing.Point(127, 3);
+			this.viewHtmlUri.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.viewHtmlUri.Location = new System.Drawing.Point(127, 4);
 			this.viewHtmlUri.Name = "viewHtmlUri";
 			this.viewHtmlUri.ReadOnly = true;
-			this.viewHtmlUri.Size = new System.Drawing.Size(242, 23);
+			this.viewHtmlUri.Size = new System.Drawing.Size(208, 23);
 			this.viewHtmlUri.TabIndex = 1;
 			// 
 			// tabPreview_pageImage
@@ -515,7 +527,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 226;
+			this.panelTemplateSource.SplitterDistance = 231;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -528,7 +540,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(226, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(231, 154);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -541,7 +553,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(137, 154);
+			this.listReplace.Size = new System.Drawing.Size(132, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -802,7 +814,8 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.ListBox listReplace;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-		private System.Windows.Forms.Label labelHtmlUri;
 		private System.Windows.Forms.TextBox viewHtmlUri;
+		private System.Windows.Forms.Button commandHtmlUri;
+		private System.Windows.Forms.Label labelHtmlUri;
 	}
 }

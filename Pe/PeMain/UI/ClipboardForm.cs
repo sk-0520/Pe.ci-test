@@ -210,6 +210,8 @@
 			this.toolClipboard_itemType_itemClipboard.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
 			this.toolClipboard_itemType_itemTemplate.Image = CommonData.Skin.GetImage(SkinImage.RawTemplate);
 
+			this.commandHtmlUri.Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy);
+
 			var skinItems = new[] {
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardText), Control = this._commandText, Name = imageText },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardRichTextFormat), Control = this._commandRtf, Name = imageRtf },
@@ -1307,6 +1309,15 @@
 			var replaceItem = this.listReplace.SelectedItem as ReplaceItem;
 			if(replaceItem != null) {
 				InsertReplaceItem(replaceItem);
+			}
+		}
+
+		private void commandHtmlUri_Click(object sender, EventArgs e)
+		{
+			// 現在URI表示欄に表示されている項目をこぴる
+			var uri = this.viewHtmlUri.Text;
+			if(!string.IsNullOrWhiteSpace(uri)) {
+				ClipboardUtility.CopyText(uri, CommonData.MainSetting.Clipboard);
 			}
 		}
 	}
