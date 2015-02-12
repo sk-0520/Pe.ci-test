@@ -99,7 +99,14 @@
 			}
 		}
 
+		/// <summary>
+		/// 自動的に隠すか。
+		/// </summary>
 		public bool AutoHide { get; set; }
+		/// <summary>
+		/// 隠されているか。
+		/// </summary>
+		public bool IsHidden { get; protected set; }
 
 		/// <summary>
 		/// ドッキングしているか
@@ -528,6 +535,9 @@
 			HiddenView(!force, new Rectangle(pos, size));
 		}
 		
+		/// <summary>
+		/// 自動的に隠す状態から復帰
+		/// </summary>
 		protected virtual void ToShow()
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
@@ -571,6 +581,7 @@
 			}
 			
 			Bounds = new Rectangle(pos, size);
+			IsHidden = false;
 		}
 		
 		static AW ToAW(DesktopDockType type, bool show)
@@ -589,6 +600,11 @@
 			return result;
 		}
 
+		/// <summary>
+		/// 自動的に隠すの実際の処理。
+		/// </summary>
+		/// <param name="animation"></param>
+		/// <param name="area"></param>
 		protected virtual void HiddenView(bool animation, Rectangle area)
 		{
 			var prevVisible = Visible;
@@ -598,6 +614,7 @@
 				}
 				Bounds = area;
 				Visible = prevVisible;
+				IsHidden = true;
 			}
 		}
 		#endregion ////////////////////////////////////
