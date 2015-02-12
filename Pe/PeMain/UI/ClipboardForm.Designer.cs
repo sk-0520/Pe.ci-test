@@ -53,9 +53,9 @@
 			this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
 			this.panelImage = new System.Windows.Forms.Panel();
 			this.viewImage = new System.Windows.Forms.PictureBox();
-			this.toolImage = new System.Windows.Forms.ToolStrip();
-			this.toolImage_itemRaw = new System.Windows.Forms.ToolStripButton();
+			this.toolImage = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip();
 			this.toolImage_itemFill = new System.Windows.Forms.ToolStripButton();
+			this.toolImage_itemRaw = new System.Windows.Forms.ToolStripButton();
 			this.tabPreview_pageFile = new System.Windows.Forms.TabPage();
 			this.viewFile = new System.Windows.Forms.ListView();
 			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -434,24 +434,15 @@
 			// 
 			// toolImage
 			// 
-			this.toolImage.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolImage.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolImage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolImage_itemFill,
             this.toolImage_itemRaw});
-			this.toolImage.Location = new System.Drawing.Point(3, 0);
+			this.toolImage.Location = new System.Drawing.Point(0, 0);
 			this.toolImage.Name = "toolImage";
-			this.toolImage.Size = new System.Drawing.Size(303, 25);
+			this.toolImage.Size = new System.Drawing.Size(366, 25);
+			this.toolImage.Stretch = true;
 			this.toolImage.TabIndex = 0;
-			// 
-			// toolImage_itemRaw
-			// 
-			this.toolImage_itemRaw.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.toolImage_itemRaw.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolImage_itemRaw.Name = "toolImage_itemRaw";
-			this.toolImage_itemRaw.Size = new System.Drawing.Size(139, 22);
-			this.toolImage_itemRaw.Text = ":clipboard/image/raw";
-			this.toolImage_itemRaw.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
 			// toolImage_itemFill
 			// 
@@ -461,6 +452,15 @@
 			this.toolImage_itemFill.Size = new System.Drawing.Size(130, 22);
 			this.toolImage_itemFill.Text = ":clipboard/image/fill";
 			this.toolImage_itemFill.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
+			// 
+			// toolImage_itemRaw
+			// 
+			this.toolImage_itemRaw.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolImage_itemRaw.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolImage_itemRaw.Name = "toolImage_itemRaw";
+			this.toolImage_itemRaw.Size = new System.Drawing.Size(139, 22);
+			this.toolImage_itemRaw.Text = ":clipboard/image/raw";
+			this.toolImage_itemRaw.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
 			// tabPreview_pageFile
 			// 
@@ -586,7 +586,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 234;
+			this.panelTemplateSource.SplitterDistance = 235;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -599,7 +599,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(234, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(235, 154);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -612,7 +612,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(129, 154);
+			this.listReplace.Size = new System.Drawing.Size(128, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -884,7 +884,7 @@
 		private System.Windows.Forms.Button commandHtmlUri;
 		private System.Windows.Forms.Label labelHtmlUri;
 		private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-		private System.Windows.Forms.ToolStrip toolImage;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip toolImage;
 		private System.Windows.Forms.ToolStripButton toolImage_itemRaw;
 		private System.Windows.Forms.ToolStripButton toolImage_itemFill;
 	}
