@@ -88,9 +88,6 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message>#211: 使用許諾ウィンドウのボタンがなんか変</message>
-			</note>
-			<note rev="">
 				<message></message>
 			</note>
 		</group>
@@ -109,6 +106,12 @@
 			</note>
 			<note rev="7b1c94a748eeffaed50f84a703666482de8d6d8a">
 				<message>#208: クリップボードが空で保持クリップボードも空の場合にタブ移動で表明違反</message>
+			</note>
+			<note rev="a3e3842468a1e2e5e5f20d082c6c0f2be9640f85">
+				<message>#211: 使用許諾ウィンドウのボタンがなんか変</message>
+			</note>
+			<note rev="ce755ce057ebfbad3003f47a65d5c5dfd61d196c">
+				<message>使用許諾でキャンセルするとNullReferenceExceptionが投げられるという嫌がらせに近い不具合の修正</message>
 			</note>
 			<note rev="">
 				<message></message>
