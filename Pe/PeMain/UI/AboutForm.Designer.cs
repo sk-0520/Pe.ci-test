@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandExecuteDir
 			// 
 			this.commandExecuteDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandExecuteDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
+			this.commandExecuteDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandExecuteDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandExecuteDir.Location = new System.Drawing.Point(523, 12);
 			this.commandExecuteDir.Name = "commandExecuteDir";
@@ -155,7 +155,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandDataDir
 			// 
 			this.commandDataDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandDataDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Dir;
+			this.commandDataDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandDataDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandDataDir.Location = new System.Drawing.Point(523, 44);
 			this.commandDataDir.Name = "commandDataDir";
@@ -191,7 +191,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandUpdate
 			// 
 			this.commandUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandUpdate.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Update;
+			this.commandUpdate.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandUpdate.Location = new System.Drawing.Point(523, 170);
 			this.commandUpdate.Name = "commandUpdate";
@@ -249,7 +249,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandChangelog
 			// 
 			this.commandChangelog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandChangelog.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Changelog;
+			this.commandChangelog.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandChangelog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.commandChangelog.Location = new System.Drawing.Point(523, 137);
 			this.commandChangelog.Name = "commandChangelog";

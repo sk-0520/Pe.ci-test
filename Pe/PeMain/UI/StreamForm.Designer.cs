@@ -78,7 +78,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolStream_itemTopmost
 			// 
 			this.toolStream_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin;
+			this.toolStream_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolStream_itemTopmost.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_itemTopmost.Name = "toolStream_itemTopmost";
 			this.toolStream_itemTopmost.Size = new System.Drawing.Size(23, 22);
@@ -93,7 +93,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolStream_itemSave
 			// 
 			this.toolStream_itemSave.Enabled = false;
-			this.toolStream_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
+			this.toolStream_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolStream_itemSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_itemSave.Name = "toolStream_itemSave";
 			this.toolStream_itemSave.Size = new System.Drawing.Size(172, 22);
@@ -104,7 +104,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolStream_itemClear
 			// 
 			this.toolStream_itemClear.Enabled = false;
-			this.toolStream_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear;
+			this.toolStream_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolStream_itemClear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_itemClear.Name = "toolStream_itemClear";
 			this.toolStream_itemClear.Size = new System.Drawing.Size(173, 22);
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// toolStream_itemRefresh
 			// 
 			this.toolStream_itemRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_itemRefresh.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Refresh;
+			this.toolStream_itemRefresh.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolStream_itemRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_itemRefresh.Name = "toolStream_itemRefresh";
 			this.toolStream_itemRefresh.Size = new System.Drawing.Size(23, 22);
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.toolStream_itemKill.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
 			this.toolStream_itemKill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStream_itemKill.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Kill;
+			this.toolStream_itemKill.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolStream_itemKill.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStream_itemKill.Name = "toolStream_itemKill";
 			this.toolStream_itemKill.Size = new System.Drawing.Size(23, 22);

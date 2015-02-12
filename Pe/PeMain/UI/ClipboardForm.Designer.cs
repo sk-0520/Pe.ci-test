@@ -362,7 +362,7 @@
 			// 
 			// commandHtmlUri
 			// 
-			this.commandHtmlUri.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
+			this.commandHtmlUri.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandHtmlUri.Location = new System.Drawing.Point(341, 3);
 			this.commandHtmlUri.Name = "commandHtmlUri";
 			this.commandHtmlUri.Size = new System.Drawing.Size(28, 25);
@@ -672,7 +672,7 @@
 			// 
 			// toolClipboard_itemEnabled
 			// 
-			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemEnabled.Name = "toolClipboard_itemEnabled";
 			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(200, 22);
@@ -683,7 +683,7 @@
 			// toolClipboard_itemTopmost
 			// 
 			this.toolClipboard_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolClipboard_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin;
+			this.toolClipboard_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemTopmost.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemTopmost.Name = "toolClipboard_itemTopmost";
 			this.toolClipboard_itemTopmost.Size = new System.Drawing.Size(23, 22);
@@ -697,7 +697,7 @@
 			// 
 			// toolClipboard_itemSave
 			// 
-			this.toolClipboard_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
+			this.toolClipboard_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemSave.Name = "toolClipboard_itemSave";
 			this.toolClipboard_itemSave.Size = new System.Drawing.Size(182, 22);
@@ -709,7 +709,7 @@
 			this.toolClipboard_itemRemove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolClipboard_itemClear,
             this.toolClipboard_itemEmpty});
-			this.toolClipboard_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove;
+			this.toolClipboard_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemRemove.Name = "toolClipboard_itemRemove";
 			this.toolClipboard_itemRemove.Size = new System.Drawing.Size(212, 22);
@@ -718,7 +718,7 @@
 			// 
 			// toolClipboard_itemClear
 			// 
-			this.toolClipboard_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear;
+			this.toolClipboard_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemClear.Name = "toolClipboard_itemClear";
 			this.toolClipboard_itemClear.Size = new System.Drawing.Size(241, 22);
 			this.toolClipboard_itemClear.Text = ":clipboard/command/clear";
@@ -726,7 +726,7 @@
 			// 
 			// toolClipboard_itemEmpty
 			// 
-			this.toolClipboard_itemEmpty.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Refresh;
+			this.toolClipboard_itemEmpty.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemEmpty.Name = "toolClipboard_itemEmpty";
 			this.toolClipboard_itemEmpty.Size = new System.Drawing.Size(241, 22);
 			this.toolClipboard_itemEmpty.Text = ":clipboard/command/empty";
@@ -750,7 +750,7 @@
 			// 
 			// toolClipboard_itemType_itemClipboard
 			// 
-			this.toolClipboard_itemType_itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
+			this.toolClipboard_itemType_itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemType_itemClipboard.Name = "toolClipboard_itemType_itemClipboard";
 			this.toolClipboard_itemType_itemClipboard.Size = new System.Drawing.Size(248, 22);
 			this.toolClipboard_itemType_itemClipboard.Text = "#ClipboardListType.History";
