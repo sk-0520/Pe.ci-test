@@ -90,6 +90,9 @@
 			}
 		}
 
+		bool ImageDragging { get; set; }
+		Point ImageDragPosition { get; set; }
+
 		#endregion ////////////////////////////////////////
 
 		#region Initialize
@@ -871,6 +874,21 @@
 			this.inputTemplateSource.Focus();
 		}
 
+		void AttachmentImageDrag()
+		{
+			ImageDragging = false;
+			this.viewImage.MouseDown += viewImage_MouseDown;
+			this.viewImage.MouseUp += viewImage_MouseUp;
+			this.viewImage.MouseMove += viewImage_MouseMove;
+		}
+
+		void DetachmentImageDrag()
+		{
+			this.viewImage.MouseDown -= viewImage_MouseDown;
+			this.viewImage.MouseMove -= viewImage_MouseMove;
+			this.viewImage.MouseUp -= viewImage_MouseUp;
+		}
+
 		void ChangeImageSize(ImageViewSize imageViewSize)
 		{
 			var controlMap = new Dictionary<ImageViewSize, ToolStripButton>() {
@@ -886,12 +904,14 @@
 				case ImageViewSize.Fill:
 					this.viewImage.Dock = DockStyle.Fill;
 					this.viewImage.SizeMode = PictureBoxSizeMode.Zoom;
+					DetachmentImageDrag();
 					break;
 
 				case ImageViewSize.Raw:
 					this.viewImage.Dock = DockStyle.None;
 					this.viewImage.Size = Size.Empty;
 					this.viewImage.SizeMode = PictureBoxSizeMode.AutoSize;
+					AttachmentImageDrag();
 					break;
 
 				default:
@@ -1380,6 +1400,36 @@
 				{ this.toolImage_itemRaw, ImageViewSize.Raw },
 			};
 			ImageSize = map[sender];
+		}
+
+		void viewImage_MouseDown(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Left) {
+				if(this.panelImage.HorizontalScroll.Visible || this.panelImage.VerticalScroll.Visible) {
+					ImageDragging = true;
+					ImageDragPosition = e.Location;
+					Cursor = Cursors.NoMove2D;
+				}
+			}
+		}
+
+		void viewImage_MouseMove(object sender, MouseEventArgs e)
+		{
+			if(ImageDragging) {
+				var movePoint = new Point(
+					-this.panelImage.AutoScrollPosition.X - (e.Location.X - ImageDragPosition.X),
+					-this.panelImage.AutoScrollPosition.Y - (e.Location.Y - ImageDragPosition.Y)
+				);
+				this.panelImage.AutoScrollPosition = movePoint;
+			}
+		}
+
+		void viewImage_MouseUp(object sender, MouseEventArgs e)
+		{
+			if(ImageDragging) {
+				ImageDragging = false;
+				Cursor = Cursors.Default;
+			}
 		}
 	}
 }
