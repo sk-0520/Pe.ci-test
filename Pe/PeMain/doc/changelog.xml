@@ -128,7 +128,7 @@
 			<note rev="df2f5fa6f0eab035dfa15370193f5b5ab8204530">
 				<message>System.TimeSpanのシリアライズ・デシリアライズ統一</message>
 			</note>
-			<note rev="">
+			<note rev="800662f938031704d7bbda79f75a77796c1bce50">
 				<message>スキン置き換え画像はPeMainで保持しない</message>
 			</note>
 		</group>
