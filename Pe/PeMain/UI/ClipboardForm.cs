@@ -590,6 +590,14 @@
 			return this.tabPreview_pageRawTemplate;
 		}
 
+		/// <summary>
+		/// タブ内の各コントロールを初期化する。
+		/// </summary>
+		void ResetControlInTabPage()
+		{
+			this.viewImage.Image = null;
+		}
+
 		void ChangeSelsectedItem(int index)
 		{
 			if(Initialized) {
@@ -603,6 +611,8 @@
 			//this.tabPreview.SuspendLayout();
 			WindowsUtility.SetRedraw(this, false);
 			this.tabPreview.TabPages.Clear();
+			// タブ内のコントロールを初期化
+			ResetControlInTabPage();
 
 			TabPage defaultTabPage;
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
