@@ -2050,6 +2050,20 @@
 			helpItem.Enabled = !string.IsNullOrWhiteSpace(applicationItem.File.Help);
 		}
 
+		private void ToolbarForm_DragEnter(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				if(AutoHide) {
+					ToShow();
+				}
+			}
+		}
+
+		private void ToolbarForm_DragLeave(object sender, EventArgs e)
+		{
+			SwitchHidden();
+		}
+
 
 
 	}

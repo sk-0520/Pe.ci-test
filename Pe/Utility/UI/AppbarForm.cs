@@ -9,6 +9,8 @@
 
 	/// <summary>
 	/// アプリケーションデスクトップツールバー。
+	/// 
+	/// 久しぶりに見るとなにやってんのか全くわからん。
 	/// </summary>
 	public partial class AppbarForm : Form
 	{
@@ -99,7 +101,14 @@
 			}
 		}
 
+		/// <summary>
+		/// 自動的に隠すか。
+		/// </summary>
 		public bool AutoHide { get; set; }
+		/// <summary>
+		/// 隠されているか。
+		/// </summary>
+		public bool IsHidden { get; protected set; }
 
 		/// <summary>
 		/// ドッキングしているか
@@ -135,9 +144,6 @@
 		/// 
 		/// </summary>
 		public string MessageString { get; set; }
-		#endregion ////////////////////////////////////
-
-		#region ISetCommonData
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -444,6 +450,9 @@
 			DockingFromParameter(dockType, AutoHide);
 		}
 		
+		/// <summary>
+		/// 非表示切り替え。
+		/// </summary>
 		protected void SwitchHidden()
 		{
 			if(AutoHide) {
@@ -451,6 +460,9 @@
 			}
 		}
 		
+		/// <summary>
+		/// 非表示状態への待ちを取りやめ。
+		/// </summary>
 		void StopHidden()
 		{
 			//Debug.WriteLine("StopHidden");
@@ -461,6 +473,9 @@
 			ToShow();
 		}
 		
+		/// <summary>
+		/// 非表示状態への待ちを開始。
+		/// </summary>
 		void WaitHidden()
 		{
 			Debug.Assert(AutoHide);
@@ -469,6 +484,9 @@
 			}
 		}
 		
+		/// <summary>
+		/// 強制的に非表示状態へ。
+		/// </summary>
 		public void Hidden()
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
@@ -477,6 +495,10 @@
 			ToHidden(true);
 		}
 
+		/// <summary>
+		/// 非表示状態へ遷移。
+		/// </summary>
+		/// <param name="force">強制的に遷移するか。</param>
 		protected void ToHidden(bool force)
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
@@ -528,6 +550,9 @@
 			HiddenView(!force, new Rectangle(pos, size));
 		}
 		
+		/// <summary>
+		/// 自動的に隠す状態から復帰
+		/// </summary>
 		protected virtual void ToShow()
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
@@ -571,6 +596,7 @@
 			}
 			
 			Bounds = new Rectangle(pos, size);
+			IsHidden = false;
 		}
 		
 		static AW ToAW(DesktopDockType type, bool show)
@@ -589,6 +615,11 @@
 			return result;
 		}
 
+		/// <summary>
+		/// 自動的に隠すの実際の処理。
+		/// </summary>
+		/// <param name="animation"></param>
+		/// <param name="area"></param>
 		protected virtual void HiddenView(bool animation, Rectangle area)
 		{
 			var prevVisible = Visible;
@@ -598,6 +629,7 @@
 				}
 				Bounds = area;
 				Visible = prevVisible;
+				IsHidden = true;
 			}
 		}
 		#endregion ////////////////////////////////////
