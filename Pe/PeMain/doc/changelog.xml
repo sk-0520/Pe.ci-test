@@ -79,7 +79,7 @@
 			<note rev="8771dac472311aae4f1a1f2fee692b44205023ae">
 				<message>#209: 自動的に隠す状態でのD&amp;D</message>
 			</note>
-			<note rev="">
+			<note rev="e8a5c4791cc5e7100e44aba19e949f19998f5a9b">
 				<message>#206: クリップボードプレビュー画面の機能改善</message>
 				<comments>
 					<comment>HTMLクリップボードはクリップボード取得時のURIの表示・コピーが追加されました</comment>
