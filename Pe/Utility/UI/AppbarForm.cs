@@ -9,6 +9,8 @@
 
 	/// <summary>
 	/// アプリケーションデスクトップツールバー。
+	/// 
+	/// 久しぶりに見るとなにやってんのか全くわからん。
 	/// </summary>
 	public partial class AppbarForm : Form
 	{
@@ -142,9 +144,6 @@
 		/// 
 		/// </summary>
 		public string MessageString { get; set; }
-		#endregion ////////////////////////////////////
-
-		#region ISetCommonData
 		#endregion ////////////////////////////////////
 
 		#region override
@@ -451,6 +450,9 @@
 			DockingFromParameter(dockType, AutoHide);
 		}
 		
+		/// <summary>
+		/// 非表示切り替え。
+		/// </summary>
 		protected void SwitchHidden()
 		{
 			if(AutoHide) {
@@ -458,6 +460,9 @@
 			}
 		}
 		
+		/// <summary>
+		/// 非表示状態への待ちを取りやめ。
+		/// </summary>
 		void StopHidden()
 		{
 			//Debug.WriteLine("StopHidden");
@@ -468,6 +473,9 @@
 			ToShow();
 		}
 		
+		/// <summary>
+		/// 非表示状態への待ちを開始。
+		/// </summary>
 		void WaitHidden()
 		{
 			Debug.Assert(AutoHide);
@@ -476,6 +484,9 @@
 			}
 		}
 		
+		/// <summary>
+		/// 強制的に非表示状態へ。
+		/// </summary>
 		public void Hidden()
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
@@ -484,6 +495,10 @@
 			ToHidden(true);
 		}
 
+		/// <summary>
+		/// 非表示状態へ遷移。
+		/// </summary>
+		/// <param name="force">強制的に遷移するか。</param>
 		protected void ToHidden(bool force)
 		{
 			Debug.Assert(DesktopDockType != DesktopDockType.None);
