@@ -76,7 +76,7 @@
 					<comment>保存種別(特に画像)によっては保存ファイルのサイズが肥大化しますので注意してください</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="8771dac472311aae4f1a1f2fee692b44205023ae">
 				<message>#209: 自動的に隠す状態でのD&amp;D</message>
 			</note>
 			<note rev="">
