@@ -171,6 +171,8 @@
 			this.columnName.SetLanguage(CommonData.Language);
 			this.columnPath.SetLanguage(CommonData.Language);
 
+			this.labelHtmlUri.SetLanguage(CommonData.Language);
+
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
 
@@ -470,10 +472,11 @@
 						}
 						break;
 
-					case ClipboardType.Html: {
+					case ClipboardType.Html:
+						{
 							ClipboardHtmlDataItem html;
 							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
-
+							this.viewHtmlUri.Text = html.SourceURL.ToString();
 							if(result) {
 								this.viewHtml.DocumentText = html.ToHtml();
 							} else {

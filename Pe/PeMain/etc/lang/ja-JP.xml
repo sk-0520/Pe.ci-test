@@ -265,7 +265,8 @@
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
 		<Word Name="clipboard/label/template-name"     Text="${template}名" />
 		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
-
+		<Word Name="clipboard/label/uri"     Text="URI:" />
+		:
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />
 		<Word Name="setting/page/launcher/basic"    Text="基本設定" />
