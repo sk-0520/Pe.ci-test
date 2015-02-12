@@ -1588,7 +1588,9 @@
 				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 #else
-			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
+			if(this._commonData.Logger != null) {
+				this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
+			}
 #endif
 		}
 
