@@ -56,16 +56,10 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.48.1" type="rc">
+	<log date="2015/02/12" version="0.49.0">
 		<group type="note"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>クリップボード周りが癌細胞化してる</message>
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
@@ -74,7 +68,7 @@
 				<comments>
 					<comment>圧縮してはいるものの、データよっては保存ファイルのサイズが大きくなるので保存機能はデフォルトでは無効になっています</comment>
 					<comment>保存機能を有能しても保存種別が未チェックであればデータは保存されません</comment>
-					<comment>保存種別(特に画像)によっては保存ファイルのサイズが肥大化しますので注意してください</comment>
+					<comment>保存種別(特に画像)によっては保存ファイルサイズが肥大化しますので注意してください</comment>
 				</comments>
 			</note>
 			<note rev="8771dac472311aae4f1a1f2fee692b44205023ae">
@@ -83,13 +77,10 @@
 			<note rev="e8a5c4791cc5e7100e44aba19e949f19998f5a9b">
 				<message>#206: クリップボードプレビュー画面の機能改善</message>
 				<comments>
-					<comment>HTMLクリップボードはクリップボード取得時のURIの表示・コピーが追加されました</comment>
+					<comment>HTMLクリップボードはクリップボード取得時のURIの表示・コピーを追加しました</comment>
 					<comment>画像は初期状態でウィンドウサイズに合わせて表示されます</comment>
 					<comment>画像を原寸表示している場合に左クリックのD&amp;Dでスクロールします</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
@@ -99,7 +90,7 @@
 			<note rev="e199016d9f61204f65accf0c10dc3530f535099e">
 				<message class="compatibility">#144: UpdateScriptをPe/etc/scriptに移動する</message>
 				<comments>
-					<comment>多分大丈夫なんで0.44.0からの下位互換維持を打ち切り</comment>
+					<comment>多分大丈夫なんでPe 0.44.0からの下位互換維持を打ち切り</comment>
 				</comments>
 			</note>
 			<note rev="3cc54f61292f9b88f4229c7cb9cefe6c370c30e7">
@@ -112,16 +103,13 @@
 				<message>#211: 使用許諾ウィンドウのボタンがなんか変</message>
 			</note>
 			<note rev="ce755ce057ebfbad3003f47a65d5c5dfd61d196c">
-				<message>使用許諾でキャンセルするとNullReferenceExceptionが投げられるという嫌がらせに近い不具合の修正</message>
+				<message>使用許諾でキャンセルするとNullReferenceExceptionが投げられる嫌がらせみたいな不具合の修正</message>
 			</note>
 			<note rev="5029100f2ef16deeb7629ab897f4ee78c658060e">
-				<message>クリップボード/テンプレートアイテムのリスト変更時のちらつきを抑制</message>
+				<message>クリップボード/テンプレートアイテムのリストアイテム選択変更時におけるちらつきを抑制</message>
 			</note>
 			<note rev="f8e255c719d4638adbe3b53f8532dc7c3732cd99">
 				<message>#212: クリップボード/テンプレートウィンドウで画像を含むデータを個別で二回以上破棄すると例外</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="developer"><sep dummy="==================================================================" />

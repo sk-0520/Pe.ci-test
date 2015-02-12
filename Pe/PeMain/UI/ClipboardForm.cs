@@ -296,9 +296,9 @@
 			}
 			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			this.inputTemplateSource.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
-			Visible = CommonData.MainSetting.Clipboard.Visible;
 
 			ChangeSelectListType(CommonData.MainSetting.Clipboard.ClipboardListType);
+			Visible = CommonData.MainSetting.Clipboard.Visible;
 		}
 
 		/// <summary>
@@ -613,7 +613,9 @@
 			}
 
 			//this.tabPreview.SuspendLayout();
-			WindowsUtility.SetRedraw(this, false);
+			if(Visible) {
+				WindowsUtility.SetRedraw(this, false);
+			}
 			this.tabPreview.TabPages.Clear();
 			// タブ内のコントロールを初期化
 			ResetControlInTabPage();
@@ -628,8 +630,10 @@
 			}
 			this.tabPreview.SelectedTab = defaultTabPage;
 			//this.tabPreview.ResumeLayout();
-			WindowsUtility.SetRedraw(this, true);
-			Refresh();
+			if(Visible) {
+				WindowsUtility.SetRedraw(this, true);
+				Refresh();
+			}
 		}
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
