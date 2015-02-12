@@ -173,6 +173,9 @@
 
 			this.labelHtmlUri.SetLanguage(CommonData.Language);
 
+			this.toolImage_itemRaw.SetLanguage(CommonData.Language);
+			this.toolImage_itemFill.SetLanguage(CommonData.Language);
+
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
 
@@ -478,7 +481,11 @@
 						{
 							ClipboardHtmlDataItem html;
 							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
-							this.viewHtmlUri.Text = html.SourceURL.ToString();
+							if(html.SourceURL != null) {
+								this.viewHtmlUri.Text = html.SourceURL.ToString();
+							} else {
+								this.viewHtmlUri.Text = string.Empty;
+							}
 							if(result) {
 								this.viewHtml.DocumentText = html.ToHtml();
 							} else {
