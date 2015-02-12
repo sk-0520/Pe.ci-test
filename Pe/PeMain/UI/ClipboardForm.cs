@@ -40,6 +40,12 @@
 			{ }
 		}
 
+		enum ImageViewSize
+		{
+			Fill,
+			Raw,
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Variable
@@ -59,6 +65,8 @@
 
 		IList<ReplaceItem> _replaceCommentList;
 
+		ImageViewSize _imageSize;
+
 		#endregion ////////////////////////////////////////
 
 		public ClipboardForm()
@@ -73,6 +81,14 @@
 		//CommonData CommonData { get; set; }
 		int HoverItemIndex { get; set; }
 		int SelectedItemIndex { get; set; }
+
+		ImageViewSize ImageSize {
+			get { return this._imageSize; }
+			set {
+				this._imageSize = value;
+				ChangeImageSize(this._imageSize);
+			}
+		}
 
 		#endregion ////////////////////////////////////////
 
@@ -143,6 +159,7 @@
 		void Initialize()
 		{
 			InitializeUI();
+			ImageSize = ImageViewSize.Fill;
 		}
 
 		#endregion ////////////////////////////////////////
@@ -854,6 +871,34 @@
 			this.inputTemplateSource.Focus();
 		}
 
+		void ChangeImageSize(ImageViewSize imageViewSize)
+		{
+			var controlMap = new Dictionary<ImageViewSize, ToolStripButton>() {
+				{ ImageViewSize.Raw,  this.toolImage_itemRaw },
+				{ ImageViewSize.Fill, this.toolImage_itemFill },
+			};
+			foreach(var control in controlMap.Values) {
+				control.Checked = false;
+			}
+			controlMap[imageViewSize].Checked = true;
+
+			switch(imageViewSize) {
+				case ImageViewSize.Fill:
+					this.viewImage.Dock = DockStyle.Fill;
+					this.viewImage.SizeMode = PictureBoxSizeMode.Zoom;
+					break;
+
+				case ImageViewSize.Raw:
+					this.viewImage.Dock = DockStyle.None;
+					this.viewImage.Size = Size.Empty;
+					this.viewImage.SizeMode = PictureBoxSizeMode.AutoSize;
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1326,6 +1371,15 @@
 			if(!string.IsNullOrWhiteSpace(uri)) {
 				ClipboardUtility.CopyText(uri, CommonData.MainSetting.Clipboard);
 			}
+		}
+
+		private void toolImage_itemRaw_Click(object sender, EventArgs e)
+		{
+			var map = new Dictionary<object, ImageViewSize>() {
+				{ this.toolImage_itemFill, ImageViewSize.Fill },
+				{ this.toolImage_itemRaw, ImageViewSize.Raw },
+			};
+			ImageSize = map[sender];
 		}
 	}
 }
