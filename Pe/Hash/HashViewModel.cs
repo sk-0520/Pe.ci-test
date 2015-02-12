@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				if(!string.IsNullOrWhiteSpace(EventName)) {
 					// イベント取得
 					this._waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, this._model.EventName);
-					Task.Factory.StartNew(() => {
+					Task.Run(() => {
 						if(this._waitEvent.WaitOne(Timeout.Infinite, true)) {
 							ForceExit = true;
 						}
@@ -125,7 +125,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 						//var b = hash.ComputeHash(binary);
 						decimal doneSize = 0;
 						int percent = 0;
-						Task.Factory.StartNew(() => {
+						Task.Run(() => {
 							for(int offset = 0; offset < binaryLength; offset += blockSize) {
 								if(offset + blockSize < binaryLength) {
 									hashItem.Hash.TransformBlock(binary, offset, blockSize, null, 0);

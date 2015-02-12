@@ -190,7 +190,7 @@
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
 				return;
 			}
-			Task.Factory.StartNew(() => {
+			Task.Run(() => {
 				var time = Literal.clipboardThreadWaitTime.median;
 				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
@@ -235,7 +235,7 @@
 				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
 				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
 				//bool isTimeout = false;
-				Task.Factory.StartNew(() => {
+				Task.Run(() => {
 					const int waitMax = Literal.waitCountForGetScreenCount;
 					int waitCount = 0;
 
@@ -1570,7 +1570,7 @@
 		void CheckUpdateProcessAsync()
 		{
 #if !DISABLED_UPDATE_CHECK
-			Task.Factory.StartNew(() => {
+			Task.Run(() => {
 				// ネットワーク接続可能か？
 				var nic = NetworkInterface.GetIsNetworkAvailable();
 				if(nic) {
