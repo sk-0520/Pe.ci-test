@@ -105,7 +105,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandLauncher
 			// 
 			this.commandLauncher.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandLauncher.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Finder;
+			this.commandLauncher.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandLauncher.Location = new System.Drawing.Point(4, 4);
 			this.commandLauncher.Margin = new System.Windows.Forms.Padding(4);
 			this.commandLauncher.Name = "commandLauncher";
@@ -119,7 +119,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandNotify
 			// 
 			this.commandNotify.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandNotify.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Flag;
+			this.commandNotify.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandNotify.Location = new System.Drawing.Point(245, 4);
 			this.commandNotify.Margin = new System.Windows.Forms.Padding(4);
 			this.commandNotify.Name = "commandNotify";
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandStartup
 			// 
 			this.commandStartup.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.commandStartup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Windows;
+			this.commandStartup.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandStartup.Location = new System.Drawing.Point(486, 4);
 			this.commandStartup.Margin = new System.Windows.Forms.Padding(4);
 			this.commandStartup.Name = "commandStartup";

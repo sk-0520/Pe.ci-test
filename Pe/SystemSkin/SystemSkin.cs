@@ -89,6 +89,8 @@
 				{ SkinImage.WindowSave, SystemSkin7Resource.Image_WindowSave },
 				{ SkinImage.RawTemplate, SystemSkin7Resource.Image_RawTemplate},
 				{ SkinImage.ReplaceTemplate, SystemSkin7Resource.Image_ReplaceTemplate},
+				{ SkinImage.ImageFill, SystemSkin7Resource.Image_ImageFill},
+				{ SkinImage.ImageRaw, SystemSkin7Resource.Image_ImageRaw},
 			};
 
 			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {
@@ -163,6 +165,8 @@
 				{ SkinImage.WindowSave, SystemSkin8Resource.Image_WindowSave },
 				{ SkinImage.RawTemplate, SystemSkin8Resource.Image_RawTemplate},
 				{ SkinImage.ReplaceTemplate, SystemSkin8Resource.Image_ReplaceTemplate},
+				{ SkinImage.ImageFill, SystemSkin8Resource.Image_ImageFill},
+				{ SkinImage.ImageRaw, SystemSkin8Resource.Image_ImageRaw},
 			};
 
 			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {

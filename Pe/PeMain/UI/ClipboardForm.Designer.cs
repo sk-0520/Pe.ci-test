@@ -28,6 +28,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClipboardForm));
 			this.panelMain = new System.Windows.Forms.ToolStripContainer();
 			this.statusClipboard = new System.Windows.Forms.StatusStrip();
 			this.statusClipboard_itemSelectedIndex = new System.Windows.Forms.ToolStripStatusLabel();
@@ -361,7 +362,7 @@
 			// 
 			// commandHtmlUri
 			// 
-			this.commandHtmlUri.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
+			this.commandHtmlUri.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandHtmlUri.Location = new System.Drawing.Point(341, 3);
 			this.commandHtmlUri.Name = "commandHtmlUri";
 			this.commandHtmlUri.Size = new System.Drawing.Size(28, 25);
@@ -434,6 +435,7 @@
 			// 
 			// toolImage
 			// 
+			this.toolImage.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolImage.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolImage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolImage_itemFill,
@@ -446,19 +448,19 @@
 			// 
 			// toolImage_itemFill
 			// 
-			this.toolImage_itemFill.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolImage_itemFill.Image = ((System.Drawing.Image)(resources.GetObject("toolImage_itemFill.Image")));
 			this.toolImage_itemFill.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolImage_itemFill.Name = "toolImage_itemFill";
-			this.toolImage_itemFill.Size = new System.Drawing.Size(130, 22);
+			this.toolImage_itemFill.Size = new System.Drawing.Size(146, 22);
 			this.toolImage_itemFill.Text = ":clipboard/image/fill";
 			this.toolImage_itemFill.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
 			// toolImage_itemRaw
 			// 
-			this.toolImage_itemRaw.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.toolImage_itemRaw.Image = ((System.Drawing.Image)(resources.GetObject("toolImage_itemRaw.Image")));
 			this.toolImage_itemRaw.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolImage_itemRaw.Name = "toolImage_itemRaw";
-			this.toolImage_itemRaw.Size = new System.Drawing.Size(139, 22);
+			this.toolImage_itemRaw.Size = new System.Drawing.Size(155, 22);
 			this.toolImage_itemRaw.Text = ":clipboard/image/raw";
 			this.toolImage_itemRaw.Click += new System.EventHandler(this.toolImage_itemRaw_Click);
 			// 
@@ -586,7 +588,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 235;
+			this.panelTemplateSource.SplitterDistance = 236;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -599,7 +601,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(235, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(236, 154);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -612,7 +614,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(128, 154);
+			this.listReplace.Size = new System.Drawing.Size(127, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -670,7 +672,7 @@
 			// 
 			// toolClipboard_itemEnabled
 			// 
-			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clipboard;
+			this.toolClipboard_itemEnabled.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemEnabled.Name = "toolClipboard_itemEnabled";
 			this.toolClipboard_itemEnabled.Size = new System.Drawing.Size(200, 22);
@@ -681,7 +683,7 @@
 			// toolClipboard_itemTopmost
 			// 
 			this.toolClipboard_itemTopmost.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolClipboard_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin;
+			this.toolClipboard_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemTopmost.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemTopmost.Name = "toolClipboard_itemTopmost";
 			this.toolClipboard_itemTopmost.Size = new System.Drawing.Size(23, 22);
@@ -695,7 +697,7 @@
 			// 
 			// toolClipboard_itemSave
 			// 
-			this.toolClipboard_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
+			this.toolClipboard_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemSave.Name = "toolClipboard_itemSave";
 			this.toolClipboard_itemSave.Size = new System.Drawing.Size(182, 22);
@@ -707,7 +709,7 @@
 			this.toolClipboard_itemRemove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolClipboard_itemClear,
             this.toolClipboard_itemEmpty});
-			this.toolClipboard_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove;
+			this.toolClipboard_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemRemove.Name = "toolClipboard_itemRemove";
 			this.toolClipboard_itemRemove.Size = new System.Drawing.Size(212, 22);
@@ -716,7 +718,7 @@
 			// 
 			// toolClipboard_itemClear
 			// 
-			this.toolClipboard_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear;
+			this.toolClipboard_itemClear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemClear.Name = "toolClipboard_itemClear";
 			this.toolClipboard_itemClear.Size = new System.Drawing.Size(241, 22);
 			this.toolClipboard_itemClear.Text = ":clipboard/command/clear";
@@ -724,7 +726,7 @@
 			// 
 			// toolClipboard_itemEmpty
 			// 
-			this.toolClipboard_itemEmpty.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Refresh;
+			this.toolClipboard_itemEmpty.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemEmpty.Name = "toolClipboard_itemEmpty";
 			this.toolClipboard_itemEmpty.Size = new System.Drawing.Size(241, 22);
 			this.toolClipboard_itemEmpty.Text = ":clipboard/command/empty";
@@ -748,7 +750,7 @@
 			// 
 			// toolClipboard_itemType_itemClipboard
 			// 
-			this.toolClipboard_itemType_itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
+			this.toolClipboard_itemType_itemClipboard.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemType_itemClipboard.Name = "toolClipboard_itemType_itemClipboard";
 			this.toolClipboard_itemType_itemClipboard.Size = new System.Drawing.Size(248, 22);
 			this.toolClipboard_itemType_itemClipboard.Text = "#ClipboardListType.History";

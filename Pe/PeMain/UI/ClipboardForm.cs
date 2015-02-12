@@ -233,6 +233,8 @@
 			this.toolClipboard_itemType_itemClipboard.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
 			this.toolClipboard_itemType_itemTemplate.Image = CommonData.Skin.GetImage(SkinImage.RawTemplate);
 
+			this.toolImage_itemRaw.Image = CommonData.Skin.GetImage(SkinImage.ImageRaw);
+			this.toolImage_itemFill.Image = CommonData.Skin.GetImage(SkinImage.ImageFill);
 			this.commandHtmlUri.Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy);
 
 			var skinItems = new[] {

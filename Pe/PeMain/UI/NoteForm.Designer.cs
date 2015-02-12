@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemTitle
 			// 
-			this.contextMenu_itemTitle.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteTitle;
+			this.contextMenu_itemTitle.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemTitle.Name = "contextMenu_itemTitle";
 			this.contextMenu_itemTitle.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemTitle.Text = ":note/menu/title";
@@ -120,7 +120,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemBody
 			// 
-			this.contextMenu_itemBody.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_NoteBody;
+			this.contextMenu_itemBody.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemBody.Name = "contextMenu_itemBody";
 			this.contextMenu_itemBody.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemBody.Text = ":note/menu/body";
@@ -133,7 +133,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemCopy
 			// 
-			this.contextMenu_itemCopy.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ClipboardCopy;
+			this.contextMenu_itemCopy.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemCopy.Name = "contextMenu_itemCopy";
 			this.contextMenu_itemCopy.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemCopy.Text = ":note/menu/copy";
@@ -149,14 +149,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.contextMenu_font.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.contextMenu_font_change,
             this.contextMenu_font_reset});
-			this.contextMenu_font.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Font;
+			this.contextMenu_font.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_font.Name = "contextMenu_font";
 			this.contextMenu_font.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_font.Text = ":note/menu/font";
 			// 
 			// contextMenu_font_change
 			// 
-			this.contextMenu_font_change.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_FontStyle;
+			this.contextMenu_font_change.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_font_change.Name = "contextMenu_font_change";
 			this.contextMenu_font_change.Size = new System.Drawing.Size(211, 22);
 			this.contextMenu_font_change.Text = "<FONT-CHANGE>";
@@ -360,7 +360,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemTopmost
 			// 
-			this.contextMenu_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Pin;
+			this.contextMenu_itemTopmost.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemTopmost.Name = "contextMenu_itemTopmost";
 			this.contextMenu_itemTopmost.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemTopmost.Text = ":note/menu/topmost";
@@ -373,7 +373,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemHidden
 			// 
-			this.contextMenu_itemHidden.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Close;
+			this.contextMenu_itemHidden.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemHidden.Name = "contextMenu_itemHidden";
 			this.contextMenu_itemHidden.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemHidden.Text = ":note/menu/hidden";
@@ -381,7 +381,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemRemove
 			// 
-			this.contextMenu_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Remove;
+			this.contextMenu_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemRemove.Name = "contextMenu_itemRemove";
 			this.contextMenu_itemRemove.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemRemove.Text = ":note/menu/remove";
@@ -394,7 +394,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// contextMenu_itemExport
 			// 
-			this.contextMenu_itemExport.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
+			this.contextMenu_itemExport.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemExport.Name = "contextMenu_itemExport";
 			this.contextMenu_itemExport.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemExport.Text = ":note/menu/export";
@@ -403,7 +403,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// contextMenu_itemImport
 			// 
 			this.contextMenu_itemImport.Enabled = false;
-			this.contextMenu_itemImport.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_OpenDir;
+			this.contextMenu_itemImport.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.contextMenu_itemImport.Name = "contextMenu_itemImport";
 			this.contextMenu_itemImport.Size = new System.Drawing.Size(212, 22);
 			this.contextMenu_itemImport.Text = ":note/menu/import";
