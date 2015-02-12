@@ -601,7 +601,7 @@
 			}
 
 			//this.tabPreview.SuspendLayout();
-			WindowsUtility.SetRedraw(this.tabPreview, false);
+			WindowsUtility.SetRedraw(this, false);
 			this.tabPreview.TabPages.Clear();
 
 			TabPage defaultTabPage;
@@ -614,7 +614,8 @@
 			}
 			this.tabPreview.SelectedTab = defaultTabPage;
 			//this.tabPreview.ResumeLayout();
-			WindowsUtility.SetRedraw(this.tabPreview, true);
+			WindowsUtility.SetRedraw(this, true);
+			Refresh();
 		}
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
