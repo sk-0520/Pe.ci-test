@@ -1271,10 +1271,12 @@
 		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
 		{
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				foreach(var item in CommonData.MainSetting.Clipboard.HistoryItems.ToArray()) {
+				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
+				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
+				ResetControlInTabPage();
+				foreach(var item in items) {
 					item.ToDispose();
 				}
-				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
 			} else {
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
