@@ -31,7 +31,7 @@
 			}
 			action();
 			if(clipboardSetting != null) {
-				Task.Factory.StartNew(() => {
+				Task.Run(() => {
 					Thread.Sleep(clipboardSetting.SleepTime);
 					clipboardSetting.DisabledCopy = !clipboardSetting.DisabledCopy;
 					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);

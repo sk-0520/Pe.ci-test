@@ -80,7 +80,12 @@
 				<message>#209: 自動的に隠す状態でのD&amp;D</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#206: クリップボードプレビュー画面の機能改善</message>
+				<comments>
+					<comment>HTMLクリップボードはクリップボード取得時のURIの表示・コピーが追加されました</comment>
+					<comment>画像は初期状態でウィンドウサイズに合わせて表示されます</comment>
+					<comment>画像を原寸表示している場合に左クリックのD&amp;Dでスクロールします</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
