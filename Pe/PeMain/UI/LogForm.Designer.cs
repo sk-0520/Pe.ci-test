@@ -233,7 +233,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// toolLog_save
 			// 
-			this.toolLog_save.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Save;
+			this.toolLog_save.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolLog_save.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_save.Name = "toolLog_save";
 			this.toolLog_save.Size = new System.Drawing.Size(147, 22);
@@ -243,7 +243,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// toolLog_clear
 			// 
-			this.toolLog_clear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_Clear;
+			this.toolLog_clear.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolLog_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolLog_clear.Name = "toolLog_clear";
 			this.toolLog_clear.Size = new System.Drawing.Size(148, 22);

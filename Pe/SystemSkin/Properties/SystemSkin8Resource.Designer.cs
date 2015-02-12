@@ -433,6 +433,26 @@ namespace ContentTypeTextNet.Pe.Library.Skin.SystemSkin.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_ImageFill {
+            get {
+                object obj = ResourceManager.GetObject("Image_ImageFill", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Image_ImageRaw {
+            get {
+                object obj = ResourceManager.GetObject("Image_ImageRaw", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_Kill {
             get {
                 object obj = ResourceManager.GetObject("Image_Kill", resourceCulture);

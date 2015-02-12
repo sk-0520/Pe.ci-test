@@ -190,7 +190,7 @@
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
 				return;
 			}
-			Task.Factory.StartNew(() => {
+			Task.Run(() => {
 				var time = Literal.clipboardThreadWaitTime.median;
 				this._clipboardPrevTime = now;
 				Thread.Sleep(time);
@@ -235,7 +235,7 @@
 				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
 				bool changedScreenCount = this._toolbarForms.Count != rawScreenCount;
 				//bool isTimeout = false;
-				Task.Factory.StartNew(() => {
+				Task.Run(() => {
 					const int waitMax = Literal.waitCountForGetScreenCount;
 					int waitCount = 0;
 
@@ -507,6 +507,14 @@
 				item.CorrectionValue();
 			}
 
+			var clipboardItemsPath = Literal.UserClipboardItemsPath;
+			logger.Puts(LogType.Information, "load clipboard-item", clipboardItemsPath);
+			this._commonData.MainSetting.Clipboard.HistoryItems = Serializer.LoadCompressFile<FixedSizedList<ClipboardItem>>(clipboardItemsPath, true);
+			this._commonData.MainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
+			foreach(var item in this._commonData.MainSetting.Clipboard.HistoryItems) {
+				item.CorrectionValue();
+			}
+
 			var templateItemsPath = Literal.UserTemplateItemsPath;
 			logger.Puts(LogType.Information, "load template-item", templateItemsPath);
 			this._commonData.MainSetting.Clipboard.TemplateItems = Serializer.LoadXmlFile<EventList<TemplateItem>>(templateItemsPath, true);
@@ -626,10 +634,10 @@
 					throw new NullReferenceException("rebuild solution!");
 				}
 #endif
-				var menuItem = new LauncherToolStripMenuItem(this._commonData) {
-					Tag = applicationItem,
-					Image = IconUtility.ImageFromIcon(icon, IconScale.Small),
+				var menuItem = new ApplicationItemToolStripMenuItem(this._commonData) {
 					LauncherItem = launcherItem,
+					ApplicationItem = applicationItem,
+					Image = IconUtility.ImageFromIcon(icon, IconScale.Small),
 				};
 				menuItem.Click += ApplicationsMenu_Click; 
 
@@ -1126,9 +1134,9 @@
 
 		void ApplyLanguageApplicationsMenu(ToolStripDropDownItem parentItem)
 		{
-			var menuItems = parentItem.DropDownItems.Cast<ToolStripItem>();
+			var menuItems = parentItem.DropDownItems.OfType<ApplicationItemToolStripMenuItem>();
 			foreach(var menuItem in menuItems) {
-				var applicationItem = menuItem.Tag as ApplicationItem;
+				var applicationItem = menuItem.ApplicationItem;
 				if(applicationItem != null) {
 					menuItem.Text = LanguageUtility.ApplicationItemToTitle(this._commonData.Language, applicationItem);
 				}
@@ -1382,7 +1390,7 @@
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
-					mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
+					//mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
 					mainSetting.Clipboard.HistoryItems = this._commonData.MainSetting.Clipboard.HistoryItems;
 					mainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
 					mainSetting.Clipboard.TemplateItems = this._commonData.MainSetting.Clipboard.TemplateItems;
@@ -1562,7 +1570,7 @@
 		void CheckUpdateProcessAsync()
 		{
 #if !DISABLED_UPDATE_CHECK
-			Task.Factory.StartNew(() => {
+			Task.Run(() => {
 				// ネットワーク接続可能か？
 				var nic = NetworkInterface.GetIsNetworkAvailable();
 				if(nic) {
@@ -1580,7 +1588,9 @@
 				}
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 #else
-			this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
+			if(this._commonData.Logger != null) {
+				this._commonData.Logger.PutsDebug("update: check", () => "DISABLED_UPDATE_CHECK");
+			}
 #endif
 		}
 
@@ -2055,7 +2065,7 @@
 
 		void ApplicationsMenu_Click(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (ApplicationItemToolStripMenuItem)sender;
 			var launcherItem = menuItem.LauncherItem;
 			var commonData = menuItem.CommonData;
 
@@ -2069,9 +2079,9 @@
 		void ApplicationsMenu_Opening(object sender, EventArgs e)
 		{
 			var menuItem = (ToolStripMenuItem)sender;
-			var appMenuItems = menuItem.DropDownItems.OfType<ToolStripMenuItem>();
+			var appMenuItems = menuItem.DropDownItems.OfType<ApplicationItemToolStripMenuItem>();
 			foreach(var appMenuItem in appMenuItems) {
-				var applicationItem = appMenuItem.Tag as ApplicationItem;
+				var applicationItem = appMenuItem.ApplicationItem;
 				if(applicationItem != null) {
 					appMenuItem.Checked = this._commonData.ApplicationSetting.IsExecutingItem(applicationItem.Name);
 				}

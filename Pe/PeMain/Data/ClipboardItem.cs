@@ -2,16 +2,20 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Linq;
 	using System.Windows.Forms;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// クリップボードのデータ。
 	/// </summary>
+	[Serializable]
 	public class ClipboardItem: DisposableNameItem
 	{
 		public ClipboardItem()
@@ -44,11 +48,25 @@
 		/// <summary>
 		/// 保持する画像。
 		/// </summary>
+		[XmlIgnore]
 		public Image Image { get; set; }
+		[XmlElement("Image")]
+		public byte[] _Image
+		{
+			get
+			{
+				return PropertyUtility.MixinImageGetter(Image);
+			}
+			set
+			{
+				Image = PropertyUtility.MixinImageSetter(value); 
+			}
+		}
+
 		/// <summary>
 		/// 保持するファイル一覧。
 		/// </summary>
-		public IEnumerable<string> Files { get; set; }
+		public List<string> Files { get; set; }
 
 		#region DisposableNameItem
 

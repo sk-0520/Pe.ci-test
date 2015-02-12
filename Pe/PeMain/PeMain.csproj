@@ -121,6 +121,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Image\ReplaceSkin.png" />
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -157,6 +158,7 @@
     <Content Include="etc\script\Updater\UpdaterScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="IF\IApplicationItem.cs" />
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IISkin.cs" />
     <Compile Include="IF\IScreen.cs" />
+    <Compile Include="IF\IToolbarGroupItem.cs" />
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
     <Compile Include="Kind\HotKeyId.cs" />
@@ -189,6 +192,7 @@
     <Compile Include="Logic\LauncherItemUtility.cs" />
     <Compile Include="Logic\Listener.cs" />
     <Compile Include="Logic\NullLogger.cs" />
+    <Compile Include="Logic\PropertyUtility.cs" />
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
@@ -247,6 +251,9 @@
     </Compile>
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Ex\ExMenuItem.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExTreeNode.cs" />
     <Compile Include="UI\LauncherToolTipForm.cs">

@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Applications.Hash
 				EventWaitHandle eventHandle;
 				if(EventWaitHandle.TryOpenExisting(eventName, out eventHandle)) {
 					Event = eventHandle;
-					Task.Factory.StartNew(() =>{
+					Task.Run(() =>{
 						return Event.WaitOne(Timeout.InfiniteTimeSpan);
 					}).ContinueWith(t => {
 						if(t.Result) {

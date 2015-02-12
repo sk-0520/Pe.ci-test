@@ -214,12 +214,10 @@
 			// TODO: 泥臭い
 			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
 				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
-				.Select(
-					f => new {
-						Language = Serializer.LoadXmlFile<Language>(f, false),
-						BaseName = Path.GetFileNameWithoutExtension(f),
-					}
-				)
+				.Select(f => new {
+					Language = Serializer.LoadXmlFile<Language>(f, false),
+					BaseName = Path.GetFileNameWithoutExtension(f),
+				})
 				.ToArray()
 				;
 			var languagePairList = new List<Language>(languageTempList.Length);
@@ -228,12 +226,10 @@
 				languagePairList.Add(lang.Language);
 			}
 			var langList = languagePairList
-				.Select(
-					l => new {
-						DisplayValue = new LanguageDisplayValue(l),
-						Language = l,
-					}
-				)
+				.Select(l => new {
+					DisplayValue = new LanguageDisplayValue(l),
+					Language = l,
+				})
 				;
 			var selectedItem = langList.SingleOrDefault(l => l.Language.BaseName == languageName);
 			Language selectedLang = null;
@@ -399,16 +395,33 @@
 			this.selectClipboardVisible.Checked = setting.Visible;
 			this.selectClipboardTopMost.Checked = setting.TopMost;
 
+			this.selectClipboardSave.Checked = setting.SaveHistory;
+
 			this.selectClipboardType_text.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Text);
 			this.selectClipboardType_rtf.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Rtf);
 			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
 			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
 			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
 
+			this.selectClipboardSaveType_text.Checked = setting.SaveTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardSaveType_rtf.Checked = setting.SaveTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardSaveType_html.Checked = setting.SaveTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardSaveType_image.Checked = setting.SaveTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardSaveType_file.Checked = setting.SaveTypes.HasFlag(ClipboardType.File);
+
 			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
 
 			this.commandClipboardTextFont.FontSetting.Import(setting.TextFont);
 			this.commandClipboardTextFont.RefreshView();
+
+			var clipboardListTypeValues = new List<ClipboardListTypeDisplayValue>();
+			foreach(var type in new [] { ClipboardListType.History, ClipboardListType.Template }) {
+				var dv = new ClipboardListTypeDisplayValue(type);
+				dv.SetLanguage(Language);
+				clipboardListTypeValues.Add(dv);
+			}
+			this.selectClipboardListType.Attachment(clipboardListTypeValues, setting.ClipboardListType);
+
 		}
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
@@ -650,12 +663,22 @@
 			this.selectClipboardAppEnabled.SetLanguage(Language);
 			this.selectClipboardTopMost.SetLanguage(Language);
 			this.selectClipboardVisible.SetLanguage(Language);
+			this.selectClipboardSave.SetLanguage(Language);
 			this.groupClipboardType.SetLanguage(Language);
+			this.groupClipboardSaveType.SetLanguage(Language);
+			this.labelClipboardListType.SetLanguage(Language);
+
 			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
 			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
 			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
 			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
 			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+
+			this.selectClipboardSaveType_text.Text = ClipboardType.Text.ToText(Language);
+			this.selectClipboardSaveType_rtf.Text = ClipboardType.Rtf.ToText(Language);
+			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(Language);
+			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(Language);
+			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(Language);
 		}
 
 		void ApplyLanguage()
@@ -971,18 +994,34 @@
 			setting.Visible = this.selectClipboardVisible.Checked;
 			setting.TopMost = this.selectClipboardTopMost.Checked;
 
-			var map = new Dictionary<ClipboardType, bool>() {
+			setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
+
+			var enabledTypeMap = new Dictionary<ClipboardType, bool>() {
 				{ ClipboardType.Text, this.selectClipboardType_text.Checked },
 				{ ClipboardType.Rtf,  this.selectClipboardType_rtf.Checked },
 				{ ClipboardType.Html, this.selectClipboardType_html.Checked },
 				{ ClipboardType.Image,this.selectClipboardType_image.Checked },
 				{ ClipboardType.File, this.selectClipboardType_file.Checked },
 			};
-			var clipboardType = ClipboardType.None;
-			foreach(var type in map.Where(p => p.Value).Select(p => p.Key)) {
-				clipboardType |= type;
+			var enabledClipboardTypes = ClipboardType.None;
+			foreach(var type in enabledTypeMap.Where(p => p.Value).Select(p => p.Key)) {
+				enabledClipboardTypes |= type;
 			}
-			setting.EnabledTypes = clipboardType;
+			setting.EnabledTypes = enabledClipboardTypes;
+
+			var saveTypeMap = new Dictionary<ClipboardType, bool>() {
+				{ ClipboardType.Text, this.selectClipboardSaveType_text.Checked },
+				{ ClipboardType.Rtf,  this.selectClipboardSaveType_rtf.Checked },
+				{ ClipboardType.Html, this.selectClipboardSaveType_html.Checked },
+				{ ClipboardType.Image,this.selectClipboardSaveType_image.Checked },
+				{ ClipboardType.File, this.selectClipboardSaveType_file.Checked },
+			};
+			var saveClipboardTypes = ClipboardType.None;
+			foreach(var type in saveTypeMap.Where(p => p.Value).Select(p => p.Key)) {
+				saveClipboardTypes |= type;
+			}
+			setting.SaveTypes = saveClipboardTypes;
+			setting.SaveHistory = this.selectClipboardSave.Checked;
 
 			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
 

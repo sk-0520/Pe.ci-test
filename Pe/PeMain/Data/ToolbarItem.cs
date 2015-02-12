@@ -5,6 +5,7 @@
 	using System.Xml;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// ツールバーの設定。
@@ -114,13 +115,8 @@
 		[XmlElement("HiddenWaitTime", DataType = "duration")]
 		public string _HiddenWaitTime
 		{
-			get { return XmlConvert.ToString(HiddenWaitTime); }
-			set
-			{
-				if(!string.IsNullOrWhiteSpace(value)) {
-					HiddenWaitTime = XmlConvert.ToTimeSpan(value);
-				}
-			}
+			get { return PropertyUtility.MixinTimeSpanGetter(HiddenWaitTime); }
+			set { HiddenWaitTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 		/// <summary>
 		/// 非表示のアニメーション時間
@@ -130,13 +126,8 @@
 		[XmlElement("HiddenAnimateTime", DataType = "duration")]
 		public string _HiddenAnimateTime
 		{
-			get { return XmlConvert.ToString(HiddenAnimateTime); }
-			set
-			{
-				if(!string.IsNullOrWhiteSpace(value)) {
-					HiddenAnimateTime = XmlConvert.ToTimeSpan(value);
-				}
-			}
+			get { return PropertyUtility.MixinTimeSpanGetter(HiddenAnimateTime); }
+			set { HiddenAnimateTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 
 		/// <summary>

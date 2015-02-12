@@ -80,7 +80,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandAccept
 			// 
-			this.commandAccept.AutoSize = true;
+			this.commandAccept.Dock = System.Windows.Forms.DockStyle.Left;
 			this.commandAccept.Location = new System.Drawing.Point(3, 413);
 			this.commandAccept.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandAccept.Name = "commandAccept";
@@ -92,9 +92,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandCancel
 			// 
-			this.commandCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandCancel.AutoSize = true;
 			this.commandCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.commandCancel.Dock = System.Windows.Forms.DockStyle.Right;
 			this.commandCancel.Location = new System.Drawing.Point(477, 413);
 			this.commandCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.commandCancel.Name = "commandCancel";

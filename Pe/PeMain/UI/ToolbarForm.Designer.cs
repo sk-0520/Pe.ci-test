@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolLauncher.Padding = new System.Windows.Forms.Padding(0);
 			this.toolLauncher.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.toolLauncher.ShowItemToolTips = false;
-			this.toolLauncher.Size = new System.Drawing.Size(154, 15);
+			this.toolLauncher.Size = new System.Drawing.Size(180, 19);
 			this.toolLauncher.TabIndex = 1;
 			this.toolLauncher.Text = "toolStrip1";
 			this.toolLauncher.DragDrop += new System.Windows.Forms.DragEventHandler(this.ToolLauncherDragDrop);
@@ -59,9 +59,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// ToolbarForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AllowDrop = true;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(154, 15);
+			this.ClientSize = new System.Drawing.Size(180, 19);
 			this.Controls.Add(this.toolLauncher);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -77,6 +78,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.Shown += new System.EventHandler(this.ToolbarFormShown);
 			this.LocationChanged += new System.EventHandler(this.ToolbarForm_LocationChanged);
 			this.SizeChanged += new System.EventHandler(this.ToolbarForm_SizeChanged);
+			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ToolbarForm_DragEnter);
+			this.DragLeave += new System.EventHandler(this.ToolbarForm_DragLeave);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ToolbarForm_Paint);
 			this.ResumeLayout(false);
 

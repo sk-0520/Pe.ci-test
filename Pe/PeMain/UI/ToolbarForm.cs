@@ -396,13 +396,12 @@
 
 			// グループメニュー基盤構築
 			this._menuGroup.MenuItems.Clear();
-			foreach(var groupName in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
-				var menuItem = new MenuItem();
-
-				menuItem.Text = groupName.Name;
-				menuItem.Tag = groupName;
-
-				menuItem.Click += new EventHandler(ToolbarForm_MenuItem_Click);
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var menuItem = new ToolbarGroupItemMenuItem(CommonData) {
+					Text = groupItem.Name,
+					ToolbarGroupItem = groupItem,
+				};
+				menuItem.Click += ToolbarForm_MenuItem_Click;
 
 				this._menuGroup.MenuItems.Add(menuItem);
 			}
@@ -509,30 +508,36 @@
 
 		void SelectedGroup(ToolbarGroupItem groupItem)
 		{
-			var toolItems = this._menuGroup.MenuItems.Cast<MenuItem>();
-			foreach(var item in toolItems) {
-				item.Checked = false;
-			}
-			var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.Tag == groupItem);
-			SelectedGroupItem = groupItem;
-
-			toolItem.Checked = true;
-
-			// 表示アイテム生成
-			var toolButtonList = new List<ToolStripItem>();
-			var mainButton = CreateLauncherButton(null);
-			mainButton.Text = groupItem.Name;
-			//mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
-
-			toolButtonList.Add(mainButton);
-			foreach(var itemName in groupItem.ItemNames) {
-				var launcherItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
-				if(launcherItem != null) {
-					var itemButton = CreateLauncherButton(launcherItem);
-					toolButtonList.Add(itemButton);
+			Cursor = Cursors.WaitCursor;
+			try {
+				var toolItems = this._menuGroup.MenuItems.Cast<ToolbarGroupItemMenuItem>();
+				foreach(var item in toolItems) {
+					item.Checked = false;
 				}
+				var toolItem = toolItems.Single(item => (ToolbarGroupItem)item.ToolbarGroupItem == groupItem);
+				SelectedGroupItem = groupItem;
+
+				toolItem.Checked = true;
+				toolItem.RadioCheck = true;
+
+				// 表示アイテム生成
+				var toolButtonList = new List<ToolStripItem>();
+				var mainButton = CreateLauncherButton(null);
+				mainButton.Text = groupItem.Name;
+				//mainButton.ToolTipText = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() {{AppLanguageName.groupName, groupItem.Name}}];
+
+				toolButtonList.Add(mainButton);
+				foreach(var itemName in groupItem.ItemNames) {
+					var launcherItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+					if(launcherItem != null) {
+						var itemButton = CreateLauncherButton(launcherItem);
+						toolButtonList.Add(itemButton);
+					}
+				}
+				SetToolButtons(UsingToolbarItem.IconScale, toolButtonList);
+			} finally {
+				Cursor = Cursors.Default;
 			}
-			SetToolButtons(UsingToolbarItem.IconScale, toolButtonList);
 		}
 
 		void OpenParentDirectory(LauncherItem launcherItem)
@@ -564,22 +569,22 @@
 		{
 			var itemList = new List<ToolStripItem>();
 
-			var openParentDirItem = new LauncherToolStripMenuItem(CommonData) {
+			var openParentDirItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var openWorkDirItem = new LauncherToolStripMenuItem(CommonData) {
+			var openWorkDirItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyCommandItem = new LauncherToolStripMenuItem(CommonData) {
+			var copyCommandItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyParentDirItem = new LauncherToolStripMenuItem(CommonData) {
+			var copyParentDirItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyWorkDirItem = new LauncherToolStripMenuItem(CommonData) {
+			var copyWorkDirItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var propertyItem = new LauncherToolStripMenuItem(CommonData) {
+			var propertyItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 
@@ -825,7 +830,7 @@
 		void AttachmentFileLauncherMenu(ToolStripDropDownItem parentItem, LauncherItem launcherItem)
 		{
 			// 通常実行
-			var executeItem = new LauncherToolStripMenuItem(CommonData) {
+			var executeItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 				Name = menuNameExecute,
 				Text = CommonData.Language["toolbar/menu/file/execute"],
@@ -833,7 +838,7 @@
 			executeItem.Click += FileLauncherItemMenu_Execute;
 
 			// 指定実行
-			var executeExItem = new LauncherToolStripMenuItem(CommonData) {
+			var executeExItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 				Name = menuNameExecuteEx,
 				Text = CommonData.Language["toolbar/menu/file/execute-ex"],
@@ -841,7 +846,7 @@
 			executeExItem.Click += FileLauncherItemMenu_ExecuteEx;
 
 			// パス関係
-			var pathItem = new LauncherToolStripMenuItem(CommonData) {
+			var pathItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 				Name = menuNamePath,
 				Text = CommonData.Language["toolbar/menu/file/path"],
@@ -975,13 +980,14 @@
 				itemGroupSeparator,
 			};
 
-			foreach(var group in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
-				var itemGroup = new ToolStripMenuItem();
-				itemGroup.Text = group.Name;
-				itemGroup.Name = MakeGroupItemName(group.Name);
-				itemGroup.Tag = group;
-				itemGroup.CheckState = CheckState.Indeterminate;
-				itemGroup.Click += (object sender, EventArgs e) => SelectedGroup(group);
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var itemGroup = new ToolbarGroupItemToolStripMenuItem(CommonData) {
+					Text = groupItem.Name,
+					Name = MakeGroupItemName(groupItem.Name),
+					ToolbarGroupItem = groupItem,
+					CheckState = CheckState.Indeterminate
+				};
+				itemGroup.Click += ToolbarMenuGroupItem_Click;
 				menuList.Add(itemGroup);
 			}
 
@@ -996,10 +1002,10 @@
 			parentItem.DropDownOpening += ToolbarMenu_DropDownOpening;
 		}
 
-		void AttachmentEmbeddedLauncherMenu(LauncherToolStripSplitButton parentItem, LauncherItem launcherItem)
+		void AttachmentEmbeddedLauncherMenu(LauncherItemToolStripSplitButton parentItem, LauncherItem launcherItem)
 		{
 			// 起動
-			var execItem = new LauncherToolStripMenuItem(CommonData) {
+			var execItem = new LauncherItemToolStripMenuItem(CommonData) {
 				Name = menuNameApplicationExecute,
 				Text = CommonData.Language["toolbar/menu/application/execute"],
 				LauncherItem = launcherItem,
@@ -1007,7 +1013,7 @@
 			execItem.Click += execItem_Click;
 
 			// 終了
-			var closeItem = new LauncherToolStripMenuItem(CommonData) {
+			var closeItem = new LauncherItemToolStripMenuItem(CommonData) {
 				Name = menuNameApplicationClose,
 				Text = CommonData.Language["toolbar/menu/application/close"],
 				LauncherItem = launcherItem,
@@ -1015,7 +1021,7 @@
 			closeItem.Click += closeItem_Click;
 
 			// ヘルプ
-			var helpItem = new LauncherToolStripMenuItem(CommonData) {
+			var helpItem = new LauncherItemToolStripMenuItem(CommonData) {
 				Name = menuNameApplicationHelp,
 				Text = CommonData.Language["toolbar/menu/application/help"],
 				LauncherItem = launcherItem,
@@ -1088,7 +1094,7 @@
 		/// <returns></returns>
 		ToolStripSplitButton CreateFileItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new LauncherToolStripSplitButton(CommonData) {
+			var toolItem = new LauncherItemToolStripSplitButton(CommonData) {
 				LauncherItem = item,
 			};
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
@@ -1100,7 +1106,7 @@
 
 		ToolStripDropDownButton CreateDirectoryItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new LauncherToolStripDropDownButton(CommonData) {
+			var toolItem = new LauncherItemToolStripDropDownButton(CommonData) {
 				LauncherItem = item,
 			};
 			var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
@@ -1112,7 +1118,7 @@
 
 		ToolStripButton CreateCommandItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new LauncherToolStripButton(CommonData) {
+			var toolItem = new LauncherItemToolStripButton(CommonData) {
 				LauncherItem = item,
 			};
 
@@ -1123,7 +1129,7 @@
 
 		ToolStripSplitButton CreateEmbeddedItemLauncherButton(LauncherItem item)
 		{
-			var toolItem = new LauncherToolStripSplitButton(CommonData) {
+			var toolItem = new LauncherItemToolStripSplitButton(CommonData) {
 				LauncherItem = item,
 			};
 			toolItem.ButtonClick += LauncherTypeFile_ButtonClick;
@@ -1175,8 +1181,6 @@
 				toolItem.Image = icon.ToBitmap();
 			}
 
-			toolItem.MouseDown += LauncherButton_MouseDown;
-
 			return toolItem;
 		}
 
@@ -1189,8 +1193,9 @@
 			} else {
 				toolItem = CreateItemLauncherButton(item);
 			}
-			//toolItem.TextImageRelation = TextImageRelation.ImageBeforeText;
-			//toolItem.TextAlign = ContentAlignment.MiddleLeft;
+			toolItem.MouseDown += LauncherButton_MouseDown;
+
+
 
 			SetButtonLayout(toolItem, CommonData.Skin, UsingToolbarItem.IconScale, UsingToolbarItem.ShowText, UsingToolbarItem.TextWidth);
 			toolItem.Visible = true;
@@ -1544,8 +1549,8 @@
 
 		void ToolbarForm_MenuItem_Click(object sender, EventArgs e)
 		{
-			var menuItem = (MenuItem)sender;
-			var group = (ToolbarGroupItem)menuItem.Tag;
+			var menuItem = (ToolbarGroupItemMenuItem)sender;
+			var group = menuItem.ToolbarGroupItem;
 			SelectedGroup(group);
 		}
 
@@ -1694,64 +1699,59 @@
 
 		void LauncherButton_MouseDown(object sender, MouseEventArgs e)
 		{
-			if(Control.ModifierKeys == Keys.Alt) {
+			if(Control.ModifierKeys == Keys.Alt && sender is ILauncherItem) {
 				this._dragStartItem = (ToolStripItem)sender;
 				this.toolLauncher.DoDragDrop(sender, DragDropEffects.Move);
 			} else if(e.Button == System.Windows.Forms.MouseButtons.Middle) {
-				// #148
-				var toolItem = (ToolStripItem)sender;
-				var ili = toolItem as ILauncherItem;
-				if(ili == null) {
-					return;
-				}
-				var launcherItem = ili.LauncherItem;
-				var menuTypes = new[] {
-					LauncherType.File,
-					LauncherType.Directory,
-					LauncherType.Embedded
-				};
-				if(menuTypes.Any(l => l == launcherItem.LauncherType)) {
-					var menuItem = (ToolStripDropDownItem)toolItem;
-					menuItem.ShowDropDown();
+				var toolItem = sender as ToolStripDropDownItem;
+				if(toolItem != null) {
+					toolItem.ShowDropDown();
 				}
 			}
+		}
+
+		void ToolbarMenuGroupItem_Click(object sender, EventArgs e)
+		{
+			var toolItem = (ToolbarGroupItemToolStripMenuItem)sender;
+			var groupItem = toolItem.ToolbarGroupItem;
+			SelectedGroup(groupItem);
 		}
 
 		#region File Launcher Menu
 
 		void FileLauncherItemPathMenu_OpenParentDirectory(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			OpenParentDirectory(menuItem.LauncherItem);
 		}
 
 		void FileLauncherItemPathMenu_OpenWorkDirectory(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			OpenDirectory(menuItem.LauncherItem.WorkDirPath);
 		}
 
 		void FileLauncherItemPathMenu_CopyCommand(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			CopyText(menuItem.LauncherItem.Command);
 		}
 
 		void FileLauncherItemPathMenu_CopyParentDirectory(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			CopyText(Path.GetDirectoryName(menuItem.LauncherItem.Command));
 		}
 
 		void FileLauncherItemPathMenu_CopyWorkDirectory(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			CopyText(menuItem.LauncherItem.WorkDirPath);
 		}
 
 		void FileLauncherItemPathMenu_OpenProperty(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			var expandPath = Environment.ExpandEnvironmentVariables(menuItem.LauncherItem.Command);
 
 			Executor.OpenProperty(expandPath, Handle);
@@ -1759,7 +1759,7 @@
 
 		void FileLauncherItemPathMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			var launcherItem = menuItem.LauncherItem;
 
 			var openParentDirItem = (ToolStripItem)menuItem.DropDownItems[menuNamePath_openParentDir];
@@ -1786,19 +1786,19 @@
 
 		void FileLauncherItemMenu_Execute(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			ExecuteItem(menuItem.LauncherItem);
 		}
 
 		void FileLauncherItemMenu_ExecuteEx(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			ExecuteExItem(menuItem.LauncherItem, null);
 		}
 
 		void FileLauncherItemMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripSplitButton)sender;
+			var menuItem = (LauncherItemToolStripSplitButton)sender;
 			var launcherItem = menuItem.LauncherItem;
 
 			var executeItem = (ToolStripMenuItem)menuItem.DropDownItems[menuNameExecute];
@@ -1999,20 +1999,20 @@
 			autoHideItem.Enabled = IsDocking;
 
 			// グループ
-			foreach(var groupItem in parentItem.DropDownItems.OfType<ToolStripMenuItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal))) {
-				groupItem.Checked = groupItem.Tag == SelectedGroupItem;
+			foreach(var groupItem in parentItem.DropDownItems.OfType<ToolbarGroupItemToolStripMenuItem>().Where(i => i.Name.StartsWith(menuNameMainGroupItem, StringComparison.Ordinal))) {
+				groupItem.Checked = groupItem.ToolbarGroupItem == SelectedGroupItem;
 			}
 		}
 
 		void execItem_Click(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 			ExecuteItem(menuItem.LauncherItem);
 		}
 
 		void closeItem_Click(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 
 			try {
 				CommonData.ApplicationSetting.KillApplicationItem(menuItem.LauncherItem);
@@ -2024,7 +2024,7 @@
 
 		void helpItem_Click(object sender, EventArgs e)
 		{
-			var menuItem = (LauncherToolStripMenuItem)sender;
+			var menuItem = (LauncherItemToolStripMenuItem)sender;
 
 			var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(menuItem.LauncherItem);
 			try {
@@ -2037,7 +2037,7 @@
 
 		void EmbeddedLauncherMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
-			var parentItem = (LauncherToolStripSplitButton)sender;
+			var parentItem = (LauncherItemToolStripSplitButton)sender;
 
 			var execItem = parentItem.DropDownItems[menuNameApplicationExecute];
 			var closeItem = parentItem.DropDownItems[menuNameApplicationClose];
@@ -2048,6 +2048,20 @@
 			execItem.Enabled = !isRunning;
 			closeItem.Enabled = isRunning;
 			helpItem.Enabled = !string.IsNullOrWhiteSpace(applicationItem.File.Help);
+		}
+
+		private void ToolbarForm_DragEnter(object sender, DragEventArgs e)
+		{
+			if(e.Data.GetDataPresent(DataFormats.FileDrop)) {
+				if(AutoHide) {
+					ToShow();
+				}
+			}
+		}
+
+		private void ToolbarForm_DragLeave(object sender, EventArgs e)
+		{
+			SwitchHidden();
 		}
 
 

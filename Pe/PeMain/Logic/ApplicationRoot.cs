@@ -51,7 +51,7 @@
 								app.CloseApplication(false);
 							} else {
 								if(!app.ExistsSettingFilePath) {
-									Task.Factory.StartNew(() => {
+									Task.Run(() => {
 										Thread.Sleep(Literal.startHomeDialogWaitTime);
 									}).ContinueWith(t => {
 										app.ShowHomeDialog();

@@ -40,6 +40,12 @@
 			{ }
 		}
 
+		enum ImageViewSize
+		{
+			Fill,
+			Raw,
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Variable
@@ -59,6 +65,8 @@
 
 		IList<ReplaceItem> _replaceCommentList;
 
+		ImageViewSize _imageSize;
+
 		#endregion ////////////////////////////////////////
 
 		public ClipboardForm()
@@ -73,6 +81,17 @@
 		//CommonData CommonData { get; set; }
 		int HoverItemIndex { get; set; }
 		int SelectedItemIndex { get; set; }
+
+		ImageViewSize ImageSize {
+			get { return this._imageSize; }
+			set {
+				this._imageSize = value;
+				ChangeImageSize(this._imageSize);
+			}
+		}
+
+		bool ImageDragging { get; set; }
+		Point ImageDragPosition { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -143,6 +162,7 @@
 		void Initialize()
 		{
 			InitializeUI();
+			ImageSize = ImageViewSize.Fill;
 		}
 
 		#endregion ////////////////////////////////////////
@@ -170,6 +190,11 @@
 
 			this.columnName.SetLanguage(CommonData.Language);
 			this.columnPath.SetLanguage(CommonData.Language);
+
+			this.labelHtmlUri.SetLanguage(CommonData.Language);
+
+			this.toolImage_itemRaw.SetLanguage(CommonData.Language);
+			this.toolImage_itemFill.SetLanguage(CommonData.Language);
 
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
@@ -207,6 +232,10 @@
 
 			this.toolClipboard_itemType_itemClipboard.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
 			this.toolClipboard_itemType_itemTemplate.Image = CommonData.Skin.GetImage(SkinImage.RawTemplate);
+
+			this.toolImage_itemRaw.Image = CommonData.Skin.GetImage(SkinImage.ImageRaw);
+			this.toolImage_itemFill.Image = CommonData.Skin.GetImage(SkinImage.ImageFill);
+			this.commandHtmlUri.Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy);
 
 			var skinItems = new[] {
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardText), Control = this._commandText, Name = imageText },
@@ -267,9 +296,9 @@
 			}
 			this.viewText.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
 			this.inputTemplateSource.Font = this.CommonData.MainSetting.Clipboard.TextFont.Font;
-			Visible = CommonData.MainSetting.Clipboard.Visible;
 
 			ChangeSelectListType(CommonData.MainSetting.Clipboard.ClipboardListType);
+			Visible = CommonData.MainSetting.Clipboard.Visible;
 		}
 
 		/// <summary>
@@ -470,10 +499,15 @@
 						}
 						break;
 
-					case ClipboardType.Html: {
+					case ClipboardType.Html:
+						{
 							ClipboardHtmlDataItem html;
 							var result = ClipboardUtility.TryConvertHtmlFromClipbordHtml(clipboardItem.Html, out html, CommonData.Logger);
-
+							if(html.SourceURL != null) {
+								this.viewHtmlUri.Text = html.SourceURL.ToString();
+							} else {
+								this.viewHtmlUri.Text = string.Empty;
+							}
 							if(result) {
 								this.viewHtml.DocumentText = html.ToHtml();
 							} else {
@@ -556,6 +590,18 @@
 			return this.tabPreview_pageRawTemplate;
 		}
 
+		/// <summary>
+		/// タブ内の各コントロールを初期化する。
+		/// </summary>
+		void ResetControlInTabPage()
+		{
+			this.viewText.ResetText();
+			this.viewRtf.ResetText();
+			this.viewHtml.DocumentText = null;
+			this.viewImage.Image = null;
+			this.viewFile.Items.Clear();
+		}
+
 		void ChangeSelsectedItem(int index)
 		{
 			if(Initialized) {
@@ -566,8 +612,13 @@
 				return;
 			}
 
-			this.tabPreview.SuspendLayout();
+			//this.tabPreview.SuspendLayout();
+			if(Visible) {
+				WindowsUtility.SetRedraw(this, false);
+			}
 			this.tabPreview.TabPages.Clear();
+			// タブ内のコントロールを初期化
+			ResetControlInTabPage();
 
 			TabPage defaultTabPage;
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
@@ -578,7 +629,11 @@
 				defaultTabPage = ChangeSelsectedTemplateItem(templateItem);
 			}
 			this.tabPreview.SelectedTab = defaultTabPage;
-			this.tabPreview.ResumeLayout();
+			//this.tabPreview.ResumeLayout();
+			if(Visible) {
+				WindowsUtility.SetRedraw(this, true);
+				Refresh();
+			}
 		}
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
@@ -842,6 +897,51 @@
 			this.inputTemplateSource.Focus();
 		}
 
+		void AttachmentImageDrag()
+		{
+			ImageDragging = false;
+			this.viewImage.MouseDown += viewImage_MouseDown;
+			this.viewImage.MouseUp += viewImage_MouseUp;
+			this.viewImage.MouseMove += viewImage_MouseMove;
+		}
+
+		void DetachmentImageDrag()
+		{
+			this.viewImage.MouseDown -= viewImage_MouseDown;
+			this.viewImage.MouseMove -= viewImage_MouseMove;
+			this.viewImage.MouseUp -= viewImage_MouseUp;
+		}
+
+		void ChangeImageSize(ImageViewSize imageViewSize)
+		{
+			var controlMap = new Dictionary<ImageViewSize, ToolStripButton>() {
+				{ ImageViewSize.Raw,  this.toolImage_itemRaw },
+				{ ImageViewSize.Fill, this.toolImage_itemFill },
+			};
+			foreach(var control in controlMap.Values) {
+				control.Checked = false;
+			}
+			controlMap[imageViewSize].Checked = true;
+
+			switch(imageViewSize) {
+				case ImageViewSize.Fill:
+					this.viewImage.Dock = DockStyle.Fill;
+					this.viewImage.SizeMode = PictureBoxSizeMode.Zoom;
+					DetachmentImageDrag();
+					break;
+
+				case ImageViewSize.Raw:
+					this.viewImage.Dock = DockStyle.None;
+					this.viewImage.Size = Size.Empty;
+					this.viewImage.SizeMode = PictureBoxSizeMode.AutoSize;
+					AttachmentImageDrag();
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -964,11 +1064,7 @@
 		{
 			ListChanged(ClipboardListType.History, CommonData.MainSetting.Clipboard.HistoryItems, () => {
 				if(CommonData.MainSetting.Clipboard.HistoryItems.Count == 0) {
-					this.viewText.ResetText();
-					this.viewRtf.ResetText();
-					this.viewHtml.DocumentText = null;
-					this.viewImage.Image = null;
-					this.viewFile.Items.Clear();
+					ResetControlInTabPage();
 				}
 			});
 		}
@@ -1049,9 +1145,16 @@
 
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
 		{
+			if(!Created) {
+				e.Cancel = true;
+				return;
+			}
 			//Debug.Assert(SelectedItemIndex != -1);
 			var index = this.listItemStack.SelectedIndex;
-			Debug.Assert(index != -1);
+			if(index == -1) {
+				e.Cancel = true;
+				return;
+			}
 
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
@@ -1172,10 +1275,12 @@
 		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
 		{
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				foreach(var item in CommonData.MainSetting.Clipboard.HistoryItems.ToArray()) {
+				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
+				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
+				ResetControlInTabPage();
+				foreach(var item in items) {
 					item.ToDispose();
 				}
-				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
 			} else {
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
@@ -1297,6 +1402,54 @@
 			var replaceItem = this.listReplace.SelectedItem as ReplaceItem;
 			if(replaceItem != null) {
 				InsertReplaceItem(replaceItem);
+			}
+		}
+
+		private void commandHtmlUri_Click(object sender, EventArgs e)
+		{
+			// 現在URI表示欄に表示されている項目をこぴる
+			var uri = this.viewHtmlUri.Text;
+			if(!string.IsNullOrWhiteSpace(uri)) {
+				ClipboardUtility.CopyText(uri, CommonData.MainSetting.Clipboard);
+			}
+		}
+
+		private void toolImage_itemRaw_Click(object sender, EventArgs e)
+		{
+			var map = new Dictionary<object, ImageViewSize>() {
+				{ this.toolImage_itemFill, ImageViewSize.Fill },
+				{ this.toolImage_itemRaw, ImageViewSize.Raw },
+			};
+			ImageSize = map[sender];
+		}
+
+		void viewImage_MouseDown(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Left) {
+				if(this.panelImage.HorizontalScroll.Visible || this.panelImage.VerticalScroll.Visible) {
+					ImageDragging = true;
+					ImageDragPosition = e.Location;
+					Cursor = Cursors.NoMove2D;
+				}
+			}
+		}
+
+		void viewImage_MouseMove(object sender, MouseEventArgs e)
+		{
+			if(ImageDragging) {
+				var movePoint = new Point(
+					-this.panelImage.AutoScrollPosition.X - (e.Location.X - ImageDragPosition.X),
+					-this.panelImage.AutoScrollPosition.Y - (e.Location.Y - ImageDragPosition.Y)
+				);
+				this.panelImage.AutoScrollPosition = movePoint;
+			}
+		}
+
+		void viewImage_MouseUp(object sender, MouseEventArgs e)
+		{
+			if(ImageDragging) {
+				ImageDragging = false;
+				Cursor = Cursors.Default;
 			}
 		}
 	}

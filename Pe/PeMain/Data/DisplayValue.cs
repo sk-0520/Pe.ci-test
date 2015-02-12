@@ -203,8 +203,15 @@
 		{
 			get { return Value.About.Name; }
 		}
-
 	}
+
+	public class ClipboardListTypeDisplayValue: UseLanguageDisplayValue<ClipboardListType>
+	{
+		public ClipboardListTypeDisplayValue(ClipboardListType value) : base(value) { }
+
+		public override string Display { get { return Value.ToText(Language); } }
+	}
+
 	
 
 }
