@@ -118,6 +118,9 @@
 				<message>クリップボード/テンプレートアイテムのリスト変更時のちらつきを抑制</message>
 			</note>
 			<note rev="">
+				<message>#212: クリップボード/テンプレートウィンドウで画像を含むデータを個別で二回以上破棄すると例外</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

@@ -590,6 +590,18 @@
 			return this.tabPreview_pageRawTemplate;
 		}
 
+		/// <summary>
+		/// タブ内の各コントロールを初期化する。
+		/// </summary>
+		void ResetControlInTabPage()
+		{
+			this.viewText.ResetText();
+			this.viewRtf.ResetText();
+			this.viewHtml.DocumentText = null;
+			this.viewImage.Image = null;
+			this.viewFile.Items.Clear();
+		}
+
 		void ChangeSelsectedItem(int index)
 		{
 			if(Initialized) {
@@ -603,6 +615,8 @@
 			//this.tabPreview.SuspendLayout();
 			WindowsUtility.SetRedraw(this, false);
 			this.tabPreview.TabPages.Clear();
+			// タブ内のコントロールを初期化
+			ResetControlInTabPage();
 
 			TabPage defaultTabPage;
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
@@ -1046,11 +1060,7 @@
 		{
 			ListChanged(ClipboardListType.History, CommonData.MainSetting.Clipboard.HistoryItems, () => {
 				if(CommonData.MainSetting.Clipboard.HistoryItems.Count == 0) {
-					this.viewText.ResetText();
-					this.viewRtf.ResetText();
-					this.viewHtml.DocumentText = null;
-					this.viewImage.Image = null;
-					this.viewFile.Items.Clear();
+					ResetControlInTabPage();
 				}
 			});
 		}
@@ -1261,10 +1271,12 @@
 		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
 		{
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				foreach(var item in CommonData.MainSetting.Clipboard.HistoryItems.ToArray()) {
+				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
+				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
+				ResetControlInTabPage();
+				foreach(var item in items) {
 					item.ToDispose();
 				}
-				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
 			} else {
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
