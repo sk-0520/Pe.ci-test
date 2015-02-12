@@ -117,7 +117,7 @@
 			<note rev="5029100f2ef16deeb7629ab897f4ee78c658060e">
 				<message>クリップボード/テンプレートアイテムのリスト変更時のちらつきを抑制</message>
 			</note>
-			<note rev="">
+			<note rev="f8e255c719d4638adbe3b53f8532dc7c3732cd99">
 				<message>#212: クリップボード/テンプレートウィンドウで画像を含むデータを個別で二回以上破棄すると例外</message>
 			</note>
 			<note rev="">
