@@ -83,7 +83,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="9211586bc2b66d7a20ce61e3ca85dd00d86551a5">
 				<message>#215: ランチャーアイテム設定画面のコントロールのアイコンが笑ってる</message>
 			</note>
 			<note rev="">
