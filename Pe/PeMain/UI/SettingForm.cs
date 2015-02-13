@@ -706,11 +706,11 @@
 			this.envLauncherUpdate.SetSkin(Skin);
 			this.envLauncherRemove.SetSkin(Skin);
 
-			toolToolbarGroup_addGroup.Image = Skin.GetImage(SkinImage.Group);
-			toolToolbarGroup_addItem.Image = Skin.GetImage(SkinImage.AddItem);
-			toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
-			toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
-			toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
+			this.toolToolbarGroup_addGroup.Image = Skin.GetImage(SkinImage.Group);
+			this.toolToolbarGroup_addItem.Image = Skin.GetImage(SkinImage.AddItem);
+			this.toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
+			this.toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
+			this.toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
 
 			this.commandLauncherFilePath.Image = Skin.GetImage(SkinImage.File);
 			this.commandLauncherDirPath.Image = Skin.GetImage(SkinImage.Dir);
