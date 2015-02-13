@@ -711,6 +711,13 @@
 			toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
 			toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
 			toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
+
+			this.commandLauncherFilePath.Image = Skin.GetImage(SkinImage.File);
+			this.commandLauncherDirPath.Image = Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherOptionFilePath.Image = Skin.GetImage(SkinImage.File);
+			this.commandLauncherOptionDirPath.Image = Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherWorkDirPath.Image = Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherIconPath.Image = Skin.GetImage(SkinImage.File);
 		}
 
 		void ApplySkinToolbar()
