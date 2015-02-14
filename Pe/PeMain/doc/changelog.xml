@@ -98,7 +98,7 @@
 			<note rev="7972ea041fbef24aff4cf090b204d829c9fafba5">
 				<message>ランチャーアイテム変更時にグループ内アイテムも追従させる</message>
 			</note>
-			<note rev="">
+			<note rev="ca580dc9c26948838934067e5a049453fb84fe32">
 				<message>AppbarForm.Dispose中にInvalidOperationException</message>
 			</note>
 			<note rev="">
