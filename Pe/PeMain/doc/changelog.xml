@@ -94,9 +94,9 @@
 			</note>
 			<note rev="">
 				<message>#216: ランチャーアイテム名が重複していても登録できる</message>
-				<comments>
-					<comment>ついでに</comment>
-				</comments>
+			</note>
+			<note rev="7972ea041fbef24aff4cf090b204d829c9fafba5">
+				<message>ランチャーアイテム変更時にグループ内アイテムも追従させる</message>
 			</note>
 			<note rev="">
 				<message></message>
