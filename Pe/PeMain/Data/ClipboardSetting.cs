@@ -32,6 +32,10 @@
 
 			SaveHistory = false;
 			SaveTypes = ClipboardType.Text | ClipboardType.Rtf;
+#if DEBUG
+			SaveHistory = true;
+			SaveTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
+#endif
 
 			SleepTime = Literal.clipboardSleepTime.median;
 			WaitTime = Literal.clipboardWaitTime.median;
