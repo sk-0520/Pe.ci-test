@@ -245,8 +245,9 @@
 					}
 				}
 			}
-
-			base.WndProc(ref m);
+			if(!Disposing) {
+				base.WndProc(ref m);
+			}
 		}
 
 		#endregion ////////////////////////////////////
