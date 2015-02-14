@@ -93,6 +93,12 @@
 				<message>#214: 設定→クリップボード/テンプレートのタブインデックスが狂ってる</message>
 			</note>
 			<note rev="">
+				<message>#216: ランチャーアイテム名が重複していても登録できる</message>
+				<comments>
+					<comment>ついでに</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

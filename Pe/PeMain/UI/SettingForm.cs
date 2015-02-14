@@ -983,7 +983,7 @@
 				toolbarGroupItem.Name = groupName;
 
 				// グループに紐付くアイテム名
-				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
+				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
 
 				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
@@ -1458,6 +1458,12 @@
 			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, this._applicationSetting, new NullLogger()) }).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
+			}
+
+			// 各ランチャーアイテムノードを更新
+			foreach(var node in this.treeToolbarItemGroup.GetChildrenNodes().OfType<LauncherItemTreeNode>()) {
+				node.Text = node.LauncherItem.Name;
+				node.ImageKey = node.LauncherItem.Name;
 			}
 
 			// イメージリスト再設定のために一度null初期化
