@@ -983,7 +983,7 @@
 				toolbarGroupItem.Name = groupName;
 
 				// グループに紐付くアイテム名
-				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.Cast<TreeNode>().Select(node => node.Text));
+				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
 
 				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
@@ -1221,7 +1221,20 @@
 			 */
 			var oldIcon = new IconItem(item.IconItem.Path, item.IconItem.Index);
 			item.LauncherType = LauncherGetSelectedType();
-			item.Name = this.inputLauncherName.Text.Trim();
+			//item.Name = this.inputLauncherName.Text.Trim();
+			var name = this.inputLauncherName.Text.Trim();
+			if(this._launcherItems.Count > 1) {
+				// 重複している場合はちょっと細工
+				var uniqName = TextUtility.ToUniqueDefault(name, this._launcherItems.Where(i => i != item).Select(i => i.Name));
+				if(!item.IsNameEqual(uniqName)) {
+					var prevEvent = this._launcherItemEvent;
+					this._launcherItemEvent = false;
+					this.inputLauncherName.Text = uniqName;
+					this._launcherItemEvent = prevEvent;
+					name = uniqName;
+				}
+			}
+			item.Name = name;
 			if(item.LauncherType == LauncherType.Embedded) {
 				var applicationItem = this.inputLauncherCommand.SelectedValue as ApplicationItem;
 				if(applicationItem != null) {
@@ -1445,6 +1458,12 @@
 			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, this._applicationSetting, new NullLogger()) }).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
+			}
+
+			// 各ランチャーアイテムノードを更新
+			foreach(var node in this.treeToolbarItemGroup.GetChildrenNodes().OfType<LauncherItemTreeNode>()) {
+				node.Text = node.LauncherItem.Name;
+				node.ImageKey = node.LauncherItem.Name;
 			}
 
 			// イメージリスト再設定のために一度null初期化
