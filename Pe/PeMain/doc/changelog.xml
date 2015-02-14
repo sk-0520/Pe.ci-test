@@ -86,9 +86,6 @@
 			<note rev="9211586bc2b66d7a20ce61e3ca85dd00d86551a5">
 				<message>#215: ランチャーアイテム設定画面のコントロールのアイコンが笑ってる</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 			<note rev="1e4d5b862b9817d1caf528c7edef475546ac88bb">
 				<message>#214: 設定→クリップボード/テンプレートのタブインデックスが狂ってる</message>
 			</note>
@@ -100,6 +97,9 @@
 			</note>
 			<note rev="ca580dc9c26948838934067e5a049453fb84fe32">
 				<message>AppbarForm.Dispose中にInvalidOperationException</message>
+			</note>
+			<note rev="">
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
