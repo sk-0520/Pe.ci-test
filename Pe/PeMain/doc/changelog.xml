@@ -71,7 +71,7 @@
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="0062f3516b199b5219ac5ff1f6aefc6e1c5ad49f">
 				<message>#217: 取得したクリップボードが直近のクリップボードアイテムと同じであれば履歴に追加しない</message>
 				<comments>
 					<comment>画像の判定はちょっと厳しいので後回し</comment>
