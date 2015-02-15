@@ -190,25 +190,24 @@
 				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/wait/title"], this._commonData.Language["clipboard/wait/message", map]);
 				return;
 			}
-			Task.Run(() => {
-				var time = Literal.clipboardThreadWaitTime.median;
-				this._clipboardPrevTime = now;
-				Thread.Sleep(time);
-			}).ContinueWith(t => {
-				if(!this._commonData.MainSetting.Clipboard.DisabledCopy) {
-					var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes);
-					if(clipboardItem != null) {
-						try {
-							var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-							clipboardItem.Name = displayText;
 
+			if(!this._commonData.MainSetting.Clipboard.DisabledCopy) {
+				this._clipboardPrevTime = now;
+
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle: IntPtr.Zero);
+				if(clipboardItem != null) {
+					Task.Run(() => {
+						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+						clipboardItem.Name = displayText;
+					}).ContinueWith(t => {
+						try {
 							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
 						} catch(Exception ex) {
 							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 						}
-					}
+					}, TaskScheduler.FromCurrentSynchronizationContext());
 				}
-			}, TaskScheduler.FromCurrentSynchronizationContext());
+			}
 		}
 
 		public void SendHotKey(HotKeyId hotKeyId, MOD mod, Keys key)
