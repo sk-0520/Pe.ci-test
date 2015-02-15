@@ -308,8 +308,49 @@
 			return result;
 		}
 
+		static bool EqualClipboardItem_Impl(ClipboardItem a, ClipboardItem b, ClipboardType type)
+		{
+			switch(type) {
+				case ClipboardType.Text:
+					return a.Text.GetHashCode() == b.Text.GetHashCode();
+				case ClipboardType.Rtf:
+					return a.Rtf.GetHashCode() == b.Rtf.GetHashCode();
+				case ClipboardType.Html:
+					return a.Html.GetHashCode() == b.Html.GetHashCode();
+				case ClipboardType.Image:
+					return a.Image.GetHashCode() == b.Image.GetHashCode();
+				case ClipboardType.File:
+					return a.Files.GetHashCode() == b.Files.GetHashCode();
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
 		public static bool EqualClipboardItem(ClipboardItem a, ClipboardItem b)
 		{
+			Debug.Assert(a != null);
+			Debug.Assert(b != null);
+
+			if(a.ClipboardTypes != b.ClipboardTypes) {
+				return false;
+			}
+
+			var types = new[] {
+				ClipboardType.Text,
+				ClipboardType.Rtf,
+				ClipboardType.Html,
+				ClipboardType.Image,
+				ClipboardType.File,
+			};
+			foreach(var type in types) {
+				if(a.ClipboardTypes.HasFlag(type) && b.ClipboardTypes.HasFlag(type)) {
+					var result = EqualClipboardItem_Impl(a, b, type);
+					if(!result) {
+						return false;
+					}
+				}
+			}
+
 			return true;
 		}
 	}

@@ -202,7 +202,7 @@
 						if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
 							// 先頭と同じデータであれば追加しない
 							var head = this._commonData.MainSetting.Clipboard.HistoryItems.First();
-							return ClipboardUtility.EqualClipboardItem(head, clipboardItem);
+							return !ClipboardUtility.EqualClipboardItem(head, clipboardItem);
 						}
 						return true;
 					}).ContinueWith(t => {
