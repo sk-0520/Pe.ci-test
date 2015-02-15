@@ -56,17 +56,14 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.49.1" type="rc">
+	<log date="2015/02/15" version="0.50.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message class="compatibility">
+					#216対応によりランチャーアイテム名の重複を許容しなくなりました。
+					旧バージョンや手動設定でランチャーアイテム名を重複させた場合に動作が不安定になる可能性があります
+				</message>
 			</note>
 		</group>
 		<group type="features">
@@ -77,12 +74,6 @@
 					<comment>画像の判定はちょっと厳しいので後回し</comment>
 					<comment>画像は暇な時にビット深度が固定・変動するのか調べて実装する</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes">
@@ -104,21 +95,6 @@
 			</note>
 			<note rev="2c9c6d75b07090a3d32dee8491e1976acda09987">
 				<message>#213: 画像を含むクリップボードデータの取得に失敗する</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
