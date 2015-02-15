@@ -199,11 +199,21 @@
 					Task.Run(() => {
 						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 						clipboardItem.Name = displayText;
+						if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
+							// 先頭と同じデータであれば追加しない
+							var head = this._commonData.MainSetting.Clipboard.HistoryItems.First();
+							return !ClipboardUtility.EqualClipboardItem(head, clipboardItem);
+						}
+						return true;
 					}).ContinueWith(t => {
-						try {
-							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
-						} catch(Exception ex) {
-							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+						if(t.Result) {
+							try {
+								this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+							} catch(Exception ex) {
+								this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+							}
+						} else {
+							this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
 						}
 					}, TaskScheduler.FromCurrentSynchronizationContext());
 				}

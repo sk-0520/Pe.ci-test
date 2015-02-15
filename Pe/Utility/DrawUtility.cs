@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Drawing.Imaging;
@@ -153,6 +154,85 @@
 			}
 
 			return bmp;
+		}
+
+		/// <summary>
+		/// http://codereview.stackexchange.com/questions/39980/is-there-a-faster-way-to-compare-if-2-images-are-the-same
+		/// </summary>
+		/// <param name="a"></param>
+		/// <param name="b"></param>
+		/// <returns></returns>
+		unsafe static bool IsEqualBitmap(Bitmap a, Bitmap b)
+		{
+			Debug.Assert(a != null);
+			Debug.Assert(b != null);
+			//bool equals = true;
+			//var rect = new Rectangle(0, 0, a.Width, a.Height);
+			//var bmpDataA = a.LockBits(rect, ImageLockMode.ReadOnly, a.PixelFormat);
+			//var bmpDataB = b.LockBits(rect, ImageLockMode.ReadOnly, b.PixelFormat);
+			//try {
+			//	unsafe {
+			//		byte* ptrA = (byte*)bmpDataA.Scan0.ToPointer();
+			//		byte* ptrB = (byte*)bmpDataB.Scan0.ToPointer();
+			//		var pxMap = new Dictionary<PixelFormat, int>() {
+			//				{ PixelFormat.Format16bppArgb1555, 2 },
+			//				{ PixelFormat.Format16bppGrayScale, 2 },
+			//				{ PixelFormat.Format16bppRgb565, 2 },
+			//				{ PixelFormat.Format24bppRgb, 3 },
+			//				{ PixelFormat.Format32bppArgb, 4 },
+			//				{ PixelFormat.Format32bppPArgb, 4 },
+			//				{ PixelFormat.Format32bppRgb, 4 },
+			//			};
+			//		var px = pxMap[a.PixelFormat];
+			//		int width = rect.Width * px; // for 24bpp pixel data
+			//		for(int y = 0; equals && y < rect.Height; y++) {
+			//			for(int x = 0; x < width; x++) {
+			//				if(*ptrA != *ptrB) {
+			//					equals = false;
+			//					break;
+			//				}
+			//				ptrA++;
+			//				ptrB++;
+			//			}
+			//			ptrA += bmpDataA.Stride - width;
+			//			ptrB += bmpDataB.Stride - width;
+			//		}
+			//	}
+			//} finally {
+			//	a.UnlockBits(bmpDataA);
+			//	b.UnlockBits(bmpDataB);
+			//}
+			//return equals;
+			return false;
+		}
+
+		public static bool IsEqualImage(Image a, Image b)
+		{
+			if(a == null) {
+				throw new ArgumentNullException("a");
+			}
+			if(b == null) {
+				throw new ArgumentNullException("b");
+			}
+
+			if(a.Size != b.Size) {
+				return false;
+			}
+
+			if(a.PixelFormat != b.PixelFormat) {
+				return false;
+			}
+
+			var typeA = a.GetType();
+			var typeB = b.GetType();
+
+			if(typeA == typeof(Bitmap) && typeB == typeof(Bitmap)) {
+				var bmpA = (Bitmap)a;
+				var bmpB = (Bitmap)b;
+				return IsEqualBitmap(bmpA, bmpB);
+			}
+
+			return false;
 		}
 	}
 }

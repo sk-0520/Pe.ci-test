@@ -72,7 +72,11 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#217: 取得したクリップボードが直近のクリップボードアイテムと同じであれば履歴に追加しない</message>
+				<comments>
+					<comment>画像の判定はちょっと厳しいので後回し</comment>
+					<comment>画像は暇な時にビット深度が固定・変動するのか調べて実装する</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
