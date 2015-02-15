@@ -307,5 +307,10 @@
 			}
 			return result;
 		}
+
+		public static bool EqualClipboardItem(ClipboardItem a, ClipboardItem b)
+		{
+			return true;
+		}
 	}
 }
