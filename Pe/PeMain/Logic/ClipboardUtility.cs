@@ -179,58 +179,60 @@
 			return temp;
 		}
 
-		static ClipboardItem CreateClipboardItemFromPInvoke(ClipboardType enabledTypes, IntPtr hWnd)
-		{
-			var clipboardItem = new ClipboardItem();
+		//static ClipboardItem CreateClipboardItemFromPInvoke(ClipboardType enabledTypes, IntPtr hWnd)
+		//{
+		//	var clipboardItem = new ClipboardItem();
 
-			NativeMethods.OpenClipboard(hWnd);
-			try {
-				var formatCount = NativeMethods.CountClipboardFormats();
+		//	NativeMethods.OpenClipboard(hWnd);
+		//	try {
+		//		var formatCount = NativeMethods.CountClipboardFormats();
 
-				var format = NativeMethods.EnumClipboardFormats(0);
-				while(format != 0) {
-					format = NativeMethods.EnumClipboardFormats(format);
-				}
-			} finally {
-				NativeMethods.CloseClipboard();
-			}
+		//		var format = NativeMethods.EnumClipboardFormats(0);
+		//		while(format != 0) {
+		//			format = NativeMethods.EnumClipboardFormats(format);
+		//		}
+		//	} finally {
+		//		NativeMethods.CloseClipboard();
+		//	}
 
-			return clipboardItem;
-		}
+		//	return clipboardItem;
+		//}
 
 		static ClipboardItem CreateClipboardItemFromFramework(ClipboardType enabledTypes)
 		{
 			var clipboardItem = new ClipboardItem();
+			var clipboardData = Clipboard.GetDataObject();
 
 			if(enabledTypes.HasFlag(ClipboardType.Text)) {
-				if(Clipboard.ContainsText(TextDataFormat.UnicodeText)) {
-					clipboardItem.Text = Clipboard.GetText(TextDataFormat.UnicodeText);
+				if(clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
+					clipboardItem.Text = (string)clipboardData.GetData(DataFormats.UnicodeText);
 					clipboardItem.ClipboardTypes |= ClipboardType.Text;
-				} else if(Clipboard.ContainsText(TextDataFormat.Text)) {
-					clipboardItem.Text = Clipboard.GetText(TextDataFormat.Text);
+				} else if(clipboardData.GetDataPresent(DataFormats.Text)) {
+					clipboardItem.Text = (string)clipboardData.GetData(DataFormats.Text);
 					clipboardItem.ClipboardTypes |= ClipboardType.Text;
 				}
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf)) {
-				clipboardItem.Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+			if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
+				clipboardItem.Rtf = (string)clipboardData.GetData(DataFormats.Rtf);
 				clipboardItem.ClipboardTypes |= ClipboardType.Rtf;
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html)) {
-				clipboardItem.Html = Clipboard.GetText(TextDataFormat.Html);
+			if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
+				clipboardItem.Html = (string)clipboardData.GetData(DataFormats.Html);
 				clipboardItem.ClipboardTypes |= ClipboardType.Html;
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage()) {
-				clipboardItem.Image = Clipboard.GetImage();
-				if(clipboardItem.Image != null) {
+			if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
+				var image = clipboardData.GetData(DataFormats.Bitmap) as Bitmap;
+				if(image != null) {
+					clipboardItem.Image = (Bitmap)image.Clone();
 					clipboardItem.ClipboardTypes |= ClipboardType.Image;
 				}
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList()) {
-				var files = Clipboard.GetFileDropList().Cast<string>();
+			if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
+				var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
 				clipboardItem.Files = new List<string>(files);
 				clipboardItem.Text = string.Join(Environment.NewLine, files);
 				clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;

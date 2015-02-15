@@ -99,7 +99,7 @@
 				<message>AppbarForm.Dispose中にInvalidOperationException</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#213: 画像を含むクリップボードデータの取得に失敗する</message>
 			</note>
 			<note rev="">
 				<message></message>
