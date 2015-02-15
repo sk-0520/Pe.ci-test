@@ -183,7 +183,7 @@
 		/// </summary>
 		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
 		/// <returns>生成されたクリップボードアイテム。生成可能な種別がなければnullを返す。</returns>
-		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes)
+		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes, IntPtr hWnd)
 		{
 			var clipboardItem = new ClipboardItem();
 

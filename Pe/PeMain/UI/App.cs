@@ -194,7 +194,7 @@
 			if(!this._commonData.MainSetting.Clipboard.DisabledCopy) {
 				this._clipboardPrevTime = now;
 
-				var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes);
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow.Handle);
 				if(clipboardItem != null) {
 					Task.Run(() => {
 						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
