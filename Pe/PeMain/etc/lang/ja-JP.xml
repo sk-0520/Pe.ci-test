@@ -261,6 +261,7 @@
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
 		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
 		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
+		<Word Name="clipboard/dup/title"       Text="${clipboard}: 直近のクリップボードアイテムと同じため無視" />
 		<Word Name="clipboard/page/raw-template"       Text="${template}" />
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
 		<Word Name="clipboard/label/template-name"     Text="${template}名" />

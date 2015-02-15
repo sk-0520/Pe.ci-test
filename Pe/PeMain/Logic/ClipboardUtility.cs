@@ -321,11 +321,11 @@
 					Debug.WriteLine("html: {0:D8}, {1:D8}", a.Html.GetHashCode(), b.Html.GetHashCode());
 					return a.Html.GetHashCode() == b.Html.GetHashCode();
 				case ClipboardType.Image:
-					Debug.WriteLine("image: {0:D8}, {1:D8}", a.Image.GetHashCode(), b.Image.GetHashCode());
+					Debug.WriteLine("image: {0:D8}, {1:D8}, {2}, {3}", a.Image.GetHashCode(), b.Image.GetHashCode(), a.Image.GetType(), b.Image.GetType());
 					return a.Image.GetHashCode() == b.Image.GetHashCode();
 				case ClipboardType.File:
 					Debug.WriteLine("file: {0:D8}, {1:D8}", a.Files.GetHashCode(), b.Files.GetHashCode());
-					return a.Files.GetHashCode() == b.Files.GetHashCode();
+					return a.Files.SequenceEqual(b.Files);
 				default:
 					throw new NotImplementedException();
 			}

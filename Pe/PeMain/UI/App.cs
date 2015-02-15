@@ -212,6 +212,8 @@
 							} catch(Exception ex) {
 								this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 							}
+						} else {
+							this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
 						}
 					}, TaskScheduler.FromCurrentSynchronizationContext());
 				}
