@@ -1838,6 +1838,31 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[return: MarshalAs(UnmanagedType.Bool)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool OpenClipboard(IntPtr hWndNewOwner);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool CloseClipboard();
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern uint EnumClipboardFormats(uint format);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern int CountClipboardFormats();
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern IntPtr GetClipboardData(uint uFormat);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern int GetClipboardFormatName(uint format, [Out] StringBuilder lpszFormatName, int cchMaxCount);
+
 	}
 
 

@@ -56,6 +56,49 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="2015/02/15" version="0.50.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message class="compatibility">
+					#216対応によりランチャーアイテム名の重複を許容しなくなりました。
+					旧バージョンや手動設定でランチャーアイテム名を重複させた場合に動作が不安定になる可能性があります
+				</message>
+			</note>
+		</group>
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="0062f3516b199b5219ac5ff1f6aefc6e1c5ad49f">
+				<message>#217: 取得したクリップボードが直近のクリップボードアイテムと同じであれば履歴に追加しない</message>
+				<comments>
+					<comment>画像の判定はちょっと厳しいので後回し</comment>
+					<comment>画像は暇な時にビット深度が固定・変動するのか調べて実装する</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="9211586bc2b66d7a20ce61e3ca85dd00d86551a5">
+				<message>#215: ランチャーアイテム設定画面のコントロールのアイコンが笑ってる</message>
+			</note>
+			<note rev="1e4d5b862b9817d1caf528c7edef475546ac88bb">
+				<message>#214: 設定→クリップボード/テンプレートのタブインデックスが狂ってる</message>
+			</note>
+			<note rev="10af64c6dc453a942136a7da9997e8822d00f509">
+				<message>#216: ランチャーアイテム名が重複していても登録できる</message>
+			</note>
+			<note rev="7972ea041fbef24aff4cf090b204d829c9fafba5">
+				<message>ランチャーアイテム変更時にグループ内アイテムも追従させる</message>
+			</note>
+			<note rev="ca580dc9c26948838934067e5a049453fb84fe32">
+				<message>AppbarForm.Dispose中にInvalidOperationException</message>
+			</note>
+			<note rev="2c9c6d75b07090a3d32dee8491e1976acda09987">
+				<message>#213: 画像を含むクリップボードデータの取得に失敗する</message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/13" version="0.49.0">
 		<group type="note"><sep dummy="==================================================================" />
 			<note rev="">

@@ -103,6 +103,7 @@
 			TimeSpan.FromMilliseconds(500),
 			TimeSpan.FromSeconds(1)
 		);
+		[Obsolete("癌")]
 		public static readonly TripleRange<TimeSpan> clipboardThreadWaitTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(50),
 			TimeSpan.FromMilliseconds(200),

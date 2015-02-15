@@ -11,6 +11,7 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -178,44 +179,60 @@
 			return temp;
 		}
 
-		/// <summary>
-		/// 現在のクリップボードからクリップボードアイテムを生成する。
-		/// </summary>
-		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
-		/// <returns>生成されたクリップボードアイテム。生成可能な種別がなければnullを返す。</returns>
-		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes)
+		//static ClipboardItem CreateClipboardItemFromPInvoke(ClipboardType enabledTypes, IntPtr hWnd)
+		//{
+		//	var clipboardItem = new ClipboardItem();
+
+		//	NativeMethods.OpenClipboard(hWnd);
+		//	try {
+		//		var formatCount = NativeMethods.CountClipboardFormats();
+
+		//		var format = NativeMethods.EnumClipboardFormats(0);
+		//		while(format != 0) {
+		//			format = NativeMethods.EnumClipboardFormats(format);
+		//		}
+		//	} finally {
+		//		NativeMethods.CloseClipboard();
+		//	}
+
+		//	return clipboardItem;
+		//}
+
+		static ClipboardItem CreateClipboardItemFromFramework(ClipboardType enabledTypes)
 		{
 			var clipboardItem = new ClipboardItem();
+			var clipboardData = Clipboard.GetDataObject();
 
 			if(enabledTypes.HasFlag(ClipboardType.Text)) {
-				if(Clipboard.ContainsText(TextDataFormat.UnicodeText)) {
-					clipboardItem.Text = Clipboard.GetText(TextDataFormat.UnicodeText);
+				if(clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
+					clipboardItem.Text = (string)clipboardData.GetData(DataFormats.UnicodeText);
 					clipboardItem.ClipboardTypes |= ClipboardType.Text;
-				} else if(Clipboard.ContainsText(TextDataFormat.Text)) {
-					clipboardItem.Text = Clipboard.GetText(TextDataFormat.Text);
+				} else if(clipboardData.GetDataPresent(DataFormats.Text)) {
+					clipboardItem.Text = (string)clipboardData.GetData(DataFormats.Text);
 					clipboardItem.ClipboardTypes |= ClipboardType.Text;
 				}
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Rtf) && Clipboard.ContainsText(TextDataFormat.Rtf)) {
-				clipboardItem.Rtf = Clipboard.GetText(TextDataFormat.Rtf);
+			if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
+				clipboardItem.Rtf = (string)clipboardData.GetData(DataFormats.Rtf);
 				clipboardItem.ClipboardTypes |= ClipboardType.Rtf;
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Html) && Clipboard.ContainsText(TextDataFormat.Html)) {
-				clipboardItem.Html = Clipboard.GetText(TextDataFormat.Html);
+			if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
+				clipboardItem.Html = (string)clipboardData.GetData(DataFormats.Html);
 				clipboardItem.ClipboardTypes |= ClipboardType.Html;
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Image) && Clipboard.ContainsImage()) {
-				clipboardItem.Image = Clipboard.GetImage();
-				if(clipboardItem.Image != null) {
+			if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
+				var image = clipboardData.GetData(DataFormats.Bitmap) as Bitmap;
+				if(image != null) {
+					clipboardItem.Image = (Bitmap)image.Clone();
 					clipboardItem.ClipboardTypes |= ClipboardType.Image;
 				}
 			}
 
-			if(enabledTypes.HasFlag(ClipboardType.File) && Clipboard.ContainsFileDropList()) {
-				var files = Clipboard.GetFileDropList().Cast<string>();
+			if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
+				var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
 				clipboardItem.Files = new List<string>(files);
 				clipboardItem.Text = string.Join(Environment.NewLine, files);
 				clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
@@ -226,6 +243,17 @@
 				return null;
 			}
 
+			return clipboardItem;
+		}
+
+		/// <summary>
+		/// 現在のクリップボードからクリップボードアイテムを生成する。
+		/// </summary>
+		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
+		/// <returns>生成されたクリップボードアイテム。生成可能な種別がなければnullを返す。</returns>
+		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes, IntPtr hWnd)
+		{
+			var clipboardItem = CreateClipboardItemFromFramework(enabledTypes);
 			return clipboardItem;
 		}
 
@@ -278,6 +306,58 @@
 				}
 			}
 			return result;
+		}
+
+		static bool EqualClipboardItem_Impl(ClipboardItem a, ClipboardItem b, ClipboardType type)
+		{
+			switch(type) {
+				case ClipboardType.Text:
+					Debug.WriteLine("text: {0:D8}, {1:D8}", a.Text.GetHashCode(), b.Text.GetHashCode());
+					return a.Text.GetHashCode() == b.Text.GetHashCode();
+				case ClipboardType.Rtf:
+					Debug.WriteLine("rtf: {0:D8}, {1:D8}", a.Rtf.GetHashCode(), b.Rtf.GetHashCode());
+					return a.Rtf.GetHashCode() == b.Rtf.GetHashCode();
+				case ClipboardType.Html:
+					Debug.WriteLine("html: {0:D8}, {1:D8}", a.Html.GetHashCode(), b.Html.GetHashCode());
+					return a.Html.GetHashCode() == b.Html.GetHashCode();
+				case ClipboardType.Image:
+					Debug.WriteLine("image: {0:D8}, {1:D8}, {2}, {3}", a.Image.GetHashCode(), b.Image.GetHashCode(), a.Image.GetType(), b.Image.GetType());
+					//return a.Image.GetHashCode() == b.Image.GetHashCode();
+					return DrawUtility.IsEqualImage(a.Image, b.Image);
+				case ClipboardType.File:
+					Debug.WriteLine("file: {0:D8}, {1:D8}", a.Files.GetHashCode(), b.Files.GetHashCode());
+					return a.Files.SequenceEqual(b.Files);
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+		public static bool EqualClipboardItem(ClipboardItem a, ClipboardItem b)
+		{
+			Debug.Assert(a != null);
+			Debug.Assert(b != null);
+
+			if(a.ClipboardTypes != b.ClipboardTypes) {
+				return false;
+			}
+
+			var types = new[] {
+				ClipboardType.Text,
+				ClipboardType.Rtf,
+				ClipboardType.Html,
+				ClipboardType.Image,
+				ClipboardType.File,
+			};
+			foreach(var type in types) {
+				if(a.ClipboardTypes.HasFlag(type) && b.ClipboardTypes.HasFlag(type)) {
+					var result = EqualClipboardItem_Impl(a, b, type);
+					if(!result) {
+						return false;
+					}
+				}
+			}
+
+			return true;
 		}
 	}
 }
