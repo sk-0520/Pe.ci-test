@@ -11,6 +11,7 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -178,6 +179,25 @@
 			return temp;
 		}
 
+		static ClipboardItem CreateClipboardItemFromPInvoke(ClipboardType enabledTypes, IntPtr hWnd)
+		{
+			var clipboardItem = new ClipboardItem();
+
+			NativeMethods.OpenClipboard(hWnd);
+			try {
+				var formatCount = NativeMethods.CountClipboardFormats();
+
+				var format = NativeMethods.EnumClipboardFormats(0);
+				while(format != 0) {
+					format = NativeMethods.EnumClipboardFormats(format);
+				}
+			} finally {
+				NativeMethods.CloseClipboard();
+			}
+
+			return clipboardItem;
+		}
+
 		static ClipboardItem CreateClipboardItemFromFramework(ClipboardType enabledTypes)
 		{
 			var clipboardItem = new ClipboardItem();
@@ -232,7 +252,6 @@
 		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes, IntPtr hWnd)
 		{
 			var clipboardItem = CreateClipboardItemFromFramework(enabledTypes);
-
 			return clipboardItem;
 		}
 
