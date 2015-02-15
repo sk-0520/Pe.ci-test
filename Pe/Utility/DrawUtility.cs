@@ -154,5 +154,42 @@
 
 			return bmp;
 		}
+
+		static bool IsEqualBitmap(Bitmap a, Bitmap b)
+		{
+			Debug.Assert(a != null);
+			Debug.Assert(b != null);
+
+			return false;
+		}
+
+		public static bool IsEqualImage(Image a, Image b)
+		{
+			if(a == null) {
+				throw new ArgumentNullException("a");
+			}
+			if(b == null) {
+				throw new ArgumentNullException("b");
+			}
+
+			if(a.Size != b.Size) {
+				return false;
+			}
+
+			if(a.PixelFormat != b.PixelFormat) {
+				return false;
+			}
+
+			var typeA = a.GetType();
+			var typeB = b.GetType();
+
+			if(typeA == typeof(Bitmap) && typeB == typeof(Bitmap)) {
+				var bmpA = (Bitmap)a;
+				var bmpB = (Bitmap)b;
+				return IsEqualBitmap(bmpA, bmpB);
+			}
+
+			return false;
+		}
 	}
 }
