@@ -58,6 +58,7 @@
 		Button _commandFile = new Button();
 
 		Button _commandMulti = new Button();
+		Button _commandOutputTarget = new Button();
 
 		Button _commandAdd = new Button();
 		Button _commandUp = new Button();
@@ -100,7 +101,9 @@
 		void InitializeCommand()
 		{
 			var commandButtons = new[] {
+				this._commandOutputTarget,
 				this._commandMulti,
+				
 				this._commandText,
 				this._commandRtf,
 				this._commandHtml,
@@ -244,6 +247,7 @@
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardImage), Control = this._commandImage, Name = imageImage },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardFile), Control = this._commandFile, Name = imageFile },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy), Control = this._commandMulti, Name = string.Empty },
+				new { Image = CommonData.Skin.GetImage(SkinImage.OutputTarget), Control = this._commandOutputTarget, Name = string.Empty },
 				new { Image = CommonData.Skin.GetImage(SkinImage.RawTemplate), Control = default(Button), Name = imageRawTemplate},
 				new { Image = CommonData.Skin.GetImage(SkinImage.ReplaceTemplate), Control = default(Button), Name = imageReplaceTemplate},
 				new { Image = CommonData.Skin.GetImage(SkinImage.Add), Control = this._commandAdd, Name = string.Empty },
@@ -364,6 +368,7 @@
 			Control[] commandList;
 			if(type == ClipboardListType.History) {
 				commandList = new[] {
+					this._commandOutputTarget,
 					this._commandMulti,
 					this._commandText,
 					this._commandRtf,
@@ -373,6 +378,7 @@
 				};
 			} else {
 				commandList = new[] {
+					this._commandOutputTarget,
 					this._commandMulti,
 					this._commandAdd,
 					this._commandUp,
@@ -1193,7 +1199,9 @@
 			if(0 > HoverItemIndex) {
 				return;
 			}
-			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+			if(sender == this._commandOutputTarget) {
+				Debug.WriteLine("asd");
+			} else if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				try {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
 					var map = new Dictionary<object, ClipboardType>() {
