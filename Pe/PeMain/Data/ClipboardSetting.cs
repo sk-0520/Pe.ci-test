@@ -45,6 +45,8 @@
 			ClipboardListType = ClipboardListType.History;
 
 			TemplateItems = new EventList<TemplateItem>();
+
+			ClipboardRepeated = Literal.clipboardRepeated.median;
 		}
 
 		/// <summary>
@@ -135,6 +137,15 @@
 		/// </summary>
 		public ClipboardListType ClipboardListType { get; set; }
 
+		/// <summary>
+		/// 重複判定範囲。
+		/// 
+		/// -1: 全て
+		/// 0: 無し
+		/// +N: Nを含む範囲
+		/// </summary>
+		public int ClipboardRepeated { get; set; }
+
 		public override void CorrectionValue()
 		{
 			base.CorrectionValue();
@@ -144,6 +155,11 @@
 
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
+
+			// -1補正
+			if(ClipboardRepeated < Literal.clipboardRepeated.minimum) {
+				ClipboardRepeated = Literal.clipboardRepeated.minimum;
+			}
 		}
 
 		public HotKeySetting ToggleHotKeySetting { get; set; }
