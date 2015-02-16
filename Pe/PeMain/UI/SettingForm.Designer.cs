@@ -185,7 +185,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardSave = new System.Windows.Forms.CheckBox();
 			this.selectClipboardTopMost = new System.Windows.Forms.CheckBox();
 			this.selectClipboardVisible = new System.Windows.Forms.CheckBox();
-			this.selectClipboardOutputUsingClipboard = new System.Windows.Forms.CheckBox();
 			this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
 			this.panelClipboardTypes = new System.Windows.Forms.FlowLayoutPanel();
 			this.groupClipboardType = new System.Windows.Forms.GroupBox();
@@ -202,6 +201,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardSaveType_html = new System.Windows.Forms.CheckBox();
 			this.selectClipboardSaveType_image = new System.Windows.Forms.CheckBox();
 			this.selectClipboardSaveType_file = new System.Windows.Forms.CheckBox();
+			this.groupClipboardOutput = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanel10 = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectClipboardItemWClickToOutput = new System.Windows.Forms.CheckBox();
+			this.selectClipboardOutputUsingClipboard = new System.Windows.Forms.CheckBox();
 			this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.labelClipboardListType = new System.Windows.Forms.Label();
@@ -287,6 +290,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardType.SuspendLayout();
 			this.groupClipboardSaveType.SuspendLayout();
 			this.flowLayoutPanel2.SuspendLayout();
+			this.groupClipboardOutput.SuspendLayout();
+			this.flowLayoutPanel10.SuspendLayout();
 			this.flowLayoutPanel8.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
@@ -2014,7 +2019,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel7.Controls.Add(this.flowLayoutPanel6);
 			this.flowLayoutPanel7.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel7.Name = "flowLayoutPanel7";
-			this.flowLayoutPanel7.Size = new System.Drawing.Size(701, 165);
+			this.flowLayoutPanel7.Size = new System.Drawing.Size(951, 165);
 			this.flowLayoutPanel7.TabIndex = 0;
 			// 
 			// flowLayoutPanel5
@@ -2023,7 +2028,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel5.Controls.Add(this.flowLayoutPanel4);
 			this.flowLayoutPanel5.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-			this.flowLayoutPanel5.Size = new System.Drawing.Size(315, 156);
+			this.flowLayoutPanel5.Size = new System.Drawing.Size(256, 131);
 			this.flowLayoutPanel5.TabIndex = 18;
 			// 
 			// flowLayoutPanel4
@@ -2034,11 +2039,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel4.Controls.Add(this.selectClipboardSave);
 			this.flowLayoutPanel4.Controls.Add(this.selectClipboardTopMost);
 			this.flowLayoutPanel4.Controls.Add(this.selectClipboardVisible);
-			this.flowLayoutPanel4.Controls.Add(this.selectClipboardOutputUsingClipboard);
 			this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 3);
 			this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-			this.flowLayoutPanel4.Size = new System.Drawing.Size(309, 150);
+			this.flowLayoutPanel4.Size = new System.Drawing.Size(250, 125);
 			this.flowLayoutPanel4.TabIndex = 0;
 			// 
 			// selectClipboardEnabled
@@ -2091,23 +2095,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardVisible.Text = ":setting/check/clipboard-visible";
 			this.selectClipboardVisible.UseVisualStyleBackColor = true;
 			// 
-			// selectClipboardOutputUsingClipboard
-			// 
-			this.selectClipboardOutputUsingClipboard.AutoSize = true;
-			this.selectClipboardOutputUsingClipboard.Location = new System.Drawing.Point(3, 128);
-			this.selectClipboardOutputUsingClipboard.Name = "selectClipboardOutputUsingClipboard";
-			this.selectClipboardOutputUsingClipboard.Size = new System.Drawing.Size(303, 19);
-			this.selectClipboardOutputUsingClipboard.TabIndex = 5;
-			this.selectClipboardOutputUsingClipboard.Text = ":setting/check/clipboard-output-using-clipboard";
-			this.selectClipboardOutputUsingClipboard.UseVisualStyleBackColor = true;
-			// 
 			// flowLayoutPanel6
 			// 
 			this.flowLayoutPanel6.AutoSize = true;
 			this.flowLayoutPanel6.Controls.Add(this.panelClipboardTypes);
-			this.flowLayoutPanel6.Location = new System.Drawing.Point(324, 3);
+			this.flowLayoutPanel6.Location = new System.Drawing.Point(265, 3);
 			this.flowLayoutPanel6.Name = "flowLayoutPanel6";
-			this.flowLayoutPanel6.Size = new System.Drawing.Size(374, 159);
+			this.flowLayoutPanel6.Size = new System.Drawing.Size(683, 159);
 			this.flowLayoutPanel6.TabIndex = 19;
 			// 
 			// panelClipboardTypes
@@ -2115,17 +2109,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelClipboardTypes.AutoSize = true;
 			this.panelClipboardTypes.Controls.Add(this.groupClipboardType);
 			this.panelClipboardTypes.Controls.Add(this.groupClipboardSaveType);
+			this.panelClipboardTypes.Controls.Add(this.groupClipboardOutput);
 			this.panelClipboardTypes.Location = new System.Drawing.Point(3, 3);
 			this.panelClipboardTypes.Name = "panelClipboardTypes";
-			this.panelClipboardTypes.Size = new System.Drawing.Size(368, 153);
+			this.panelClipboardTypes.Size = new System.Drawing.Size(677, 153);
 			this.panelClipboardTypes.TabIndex = 15;
 			// 
 			// groupClipboardType
 			// 
 			this.groupClipboardType.AutoSize = true;
 			this.groupClipboardType.Controls.Add(this.panelClipboardType);
-			this.groupClipboardType.Location = new System.Drawing.Point(9, 3);
-			this.groupClipboardType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
+			this.groupClipboardType.Location = new System.Drawing.Point(3, 3);
 			this.groupClipboardType.Name = "groupClipboardType";
 			this.groupClipboardType.Size = new System.Drawing.Size(172, 147);
 			this.groupClipboardType.TabIndex = 9;
@@ -2206,8 +2200,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.groupClipboardSaveType.AutoSize = true;
 			this.groupClipboardSaveType.Controls.Add(this.flowLayoutPanel2);
-			this.groupClipboardSaveType.Location = new System.Drawing.Point(193, 3);
-			this.groupClipboardSaveType.Margin = new System.Windows.Forms.Padding(9, 3, 3, 3);
+			this.groupClipboardSaveType.Location = new System.Drawing.Point(181, 3);
 			this.groupClipboardSaveType.Name = "groupClipboardSaveType";
 			this.groupClipboardSaveType.Size = new System.Drawing.Size(172, 147);
 			this.groupClipboardSaveType.TabIndex = 10;
@@ -2283,6 +2276,49 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectClipboardSaveType_file.Text = "#ClipboardType.File";
 			this.selectClipboardSaveType_file.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.selectClipboardSaveType_file.UseVisualStyleBackColor = true;
+			// 
+			// groupClipboardOutput
+			// 
+			this.groupClipboardOutput.AutoSize = true;
+			this.groupClipboardOutput.Controls.Add(this.flowLayoutPanel10);
+			this.groupClipboardOutput.Location = new System.Drawing.Point(359, 3);
+			this.groupClipboardOutput.Name = "groupClipboardOutput";
+			this.groupClipboardOutput.Size = new System.Drawing.Size(315, 72);
+			this.groupClipboardOutput.TabIndex = 11;
+			this.groupClipboardOutput.TabStop = false;
+			this.groupClipboardOutput.Text = ":setting/group/clipboard-output";
+			// 
+			// flowLayoutPanel10
+			// 
+			this.flowLayoutPanel10.AutoSize = true;
+			this.flowLayoutPanel10.Controls.Add(this.selectClipboardItemWClickToOutput);
+			this.flowLayoutPanel10.Controls.Add(this.selectClipboardOutputUsingClipboard);
+			this.flowLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel10.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel10.Location = new System.Drawing.Point(3, 19);
+			this.flowLayoutPanel10.Name = "flowLayoutPanel10";
+			this.flowLayoutPanel10.Size = new System.Drawing.Size(309, 50);
+			this.flowLayoutPanel10.TabIndex = 0;
+			// 
+			// selectClipboardItemWClickToOutput
+			// 
+			this.selectClipboardItemWClickToOutput.AutoSize = true;
+			this.selectClipboardItemWClickToOutput.Location = new System.Drawing.Point(3, 3);
+			this.selectClipboardItemWClickToOutput.Name = "selectClipboardItemWClickToOutput";
+			this.selectClipboardItemWClickToOutput.Size = new System.Drawing.Size(268, 19);
+			this.selectClipboardItemWClickToOutput.TabIndex = 0;
+			this.selectClipboardItemWClickToOutput.Text = ":setting/check/clipboard-item-doubleclick";
+			this.selectClipboardItemWClickToOutput.UseVisualStyleBackColor = true;
+			// 
+			// selectClipboardOutputUsingClipboard
+			// 
+			this.selectClipboardOutputUsingClipboard.AutoSize = true;
+			this.selectClipboardOutputUsingClipboard.Location = new System.Drawing.Point(3, 28);
+			this.selectClipboardOutputUsingClipboard.Name = "selectClipboardOutputUsingClipboard";
+			this.selectClipboardOutputUsingClipboard.Size = new System.Drawing.Size(303, 19);
+			this.selectClipboardOutputUsingClipboard.TabIndex = 1;
+			this.selectClipboardOutputUsingClipboard.Text = ":setting/check/clipboard-output-using-clipboard";
+			this.selectClipboardOutputUsingClipboard.UseVisualStyleBackColor = true;
 			// 
 			// flowLayoutPanel8
 			// 
@@ -2640,6 +2676,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupClipboardSaveType.PerformLayout();
 			this.flowLayoutPanel2.ResumeLayout(false);
 			this.flowLayoutPanel2.PerformLayout();
+			this.groupClipboardOutput.ResumeLayout(false);
+			this.groupClipboardOutput.PerformLayout();
+			this.flowLayoutPanel10.ResumeLayout(false);
+			this.flowLayoutPanel10.PerformLayout();
 			this.flowLayoutPanel8.ResumeLayout(false);
 			this.flowLayoutPanel8.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -2848,5 +2888,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelClipboardRepeated;
 		private System.Windows.Forms.NumericUpDown inputClipboardRepeated;
 		private System.Windows.Forms.CheckBox selectClipboardOutputUsingClipboard;
+		private System.Windows.Forms.GroupBox groupClipboardOutput;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel10;
+		private System.Windows.Forms.CheckBox selectClipboardItemWClickToOutput;
 	}
 }
