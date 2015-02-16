@@ -71,7 +71,7 @@
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="60b5f56f14fe02c3574a1393aa87e765aeaf2258">
 				<message>#220: クリップボード重複判定に範囲を含める</message>
 				<comments>
 					<comment>履歴数やその内容によって負荷が異なりますのでユーザー設定で対応してください</comment>
