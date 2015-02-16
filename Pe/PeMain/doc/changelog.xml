@@ -102,7 +102,7 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="78e314c6cfd0c13c95e697ac39fd17df186dc7e1">
 				<message>別スレッドからのクリップボート・テンプレートのリスト変更を安全にする</message>
 				<comments>
 					<comment>今のところ呼び出し自体はUIスレッドだから不具合にはなってないはず</comment>
