@@ -271,7 +271,7 @@
 		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
 		<Word Name="clipboard/output/empty"            Text="出力文字列が空のため無効" />
 		<Word Name="clipboard/output/notfound-window"  Text="出力先ウィンドウが発見できないため無効" />
-		:
+		
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />
 		<Word Name="setting/page/launcher/basic"    Text="基本設定" />
@@ -335,6 +335,7 @@
 		<Word Name="setting/label/clipboard-repeated"     Text="クリップボード重複判定(@[ALL]で全て対象)" />
 		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
+		<Word Name="setting/check/clipboard-output-using-clipboard"  Text="テキスト転送にクリップボードを経由する" />
 		<Word Name="setting/group/clipboard-type"         Text="取込種類" />
 		<Word Name="setting/group/save-clipboard-type"    Text="保存種類" />
 		<Word Name="setting/label/clipboard-hotkey"       Text="表示切り替え" />
