@@ -60,7 +60,7 @@
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message>#221: クリップボード/テンプレートウィンドウからの選択データを前回フォーカスウィンドウに転送する</message>
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -77,6 +77,9 @@
 					<comment>履歴数やその内容によって負荷が異なりますのでユーザー設定で対応してください</comment>
 					<comment>Pe 0.50.0の挙動と同じにするには値を 1 に設定してください</comment>
 				</comments>
+			</note>
+			<note rev="62eb5eede80f08c3ede1305fa70cceb17d883a4d">
+				<message>#221: クリップボード/テンプレートウィンドウからの選択データを前回フォーカスウィンドウに転送する</message>
 			</note>
 			<note rev="">
 				<message></message>
