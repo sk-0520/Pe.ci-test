@@ -774,6 +774,11 @@
 				return;
 			}
 
+			if(InvokeRequired) {
+				BeginInvoke((MethodInvoker)delegate() { ListChanged(targetType, itemList, action); });
+				return;
+			}
+
 			try {
 				this.listItemStack.BeginUpdate();
 
