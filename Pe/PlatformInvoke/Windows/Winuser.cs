@@ -38,6 +38,7 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_ERASEBKGND = 0x0014,
 		WM_CLOSE = 0x0010,
 		WM_SETTEXT = 0x000c,
+		WM_PASTE = 0x0302,
 	}
 	
 	public enum WS_EX
@@ -1606,7 +1607,13 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		GW_CHILD = 5,
 		GW_ENABLEDPOPUP = 6
 	}
-	
+
+	[Flags]
+	public enum KEYEVENTF: uint
+	{
+		KEYEVENTF_EXTENDEDKEY = 0x0001,
+		KEYEVENTF_KEYUP = 0x0002,
+	}
 	/// <summary>
 	/// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
 	/// </summary>
@@ -1667,6 +1674,14 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 		
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool keybd_event(byte bVk, byte bScan, KEYEVENTF dwFlags, UIntPtr dwExtraInfo);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool keybd_event(byte bVk, byte bScan, KEYEVENTF dwFlags, int dwExtraInfo);
+
 		/// <summary>
 		/// http://www.pinvoke.net/default.aspx/user32.registerwindowmessage
 		/// </summary>

@@ -661,22 +661,7 @@
 					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), clipboardSetting);
 				} },
 				{ ClipboardType.All, (clipboardSetting) => {
-					var data = new DataObject();
-					var typeFuncs = new Dictionary<ClipboardType, Action>() {
-						{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
-						{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Rtf, TextDataFormat.Rtf) },
-						{ ClipboardType.Html, () => data.SetText(clipboardItem.Html, TextDataFormat.Html) },
-						{ ClipboardType.Image, () => data.SetImage(clipboardItem.Image) },
-						{ ClipboardType.File, () => {
-							var sc = new StringCollection();
-							sc.AddRange(clipboardItem.Files.ToArray());
-							data.SetFileDropList(sc); 
-						}},
-					};
-					foreach(var type in clipboardItem.GetClipboardTypeList()) {
-						typeFuncs[type]();
-					}
-					ClipboardUtility.CopyDataObject(data, clipboardSetting);
+					ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardSetting);
 				} },
 			};
 			map[clipboardType](CommonData.MainSetting.Clipboard);
@@ -968,8 +953,17 @@
 			}
 
 			NativeMethods.SetForegroundWindow(hWnd);
-			if(usingClipboard) {
-
+			if(!usingClipboard) {
+				// 現在クリップボードを一時退避
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, Handle);
+				try {
+					ClipboardUtility.CopyText(outputText, CommonData.MainSetting.Clipboard);
+					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
+				} finally {
+					if(clipboardItem != null && clipboardItem.ClipboardTypes != ClipboardType.None) {
+						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData.MainSetting.Clipboard);
+					}
+				}
 			} else {
 				SendKeys.Send(outputText);
 			}
