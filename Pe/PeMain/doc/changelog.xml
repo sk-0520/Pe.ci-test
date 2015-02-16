@@ -60,7 +60,7 @@
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#221: クリップボード/テンプレートウィンドウからの選択データを前回フォーカスウィンドウに転送する</message>
 			</note>
 			<note rev="">
 				<message></message>

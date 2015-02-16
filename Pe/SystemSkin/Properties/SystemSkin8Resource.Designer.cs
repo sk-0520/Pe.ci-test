@@ -543,6 +543,16 @@ namespace ContentTypeTextNet.Pe.Library.Skin.SystemSkin.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_OutputTarget {
+            get {
+                object obj = ResourceManager.GetObject("Image_OutputTarget", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_Pin {
             get {
                 object obj = ResourceManager.GetObject("Image_Pin", resourceCulture);

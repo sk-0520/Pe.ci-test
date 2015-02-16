@@ -94,12 +94,35 @@
 
 		/// <summary>
 		/// 複合データをクリップノードへ転写。
+		/// <para>基本的にはvoid CopyClipboardItem(ClipboardItem, ClipboardSetting)を使用する</para>
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
 		public static void CopyDataObject(IDataObject data, ClipboardSetting clipboardSetting)
 		{
 			Copy(() => Clipboard.SetDataObject(data), clipboardSetting);
+		}
+
+		public static void CopyClipboardItem(ClipboardItem clipboardItem, ClipboardSetting clipboardSetting)
+		{
+			Debug.Assert(clipboardItem.ClipboardTypes != ClipboardType.None);
+
+			var data = new DataObject();
+			var typeFuncs = new Dictionary<ClipboardType, Action>() {
+				{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
+				{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Rtf, TextDataFormat.Rtf) },
+				{ ClipboardType.Html, () => data.SetText(clipboardItem.Html, TextDataFormat.Html) },
+				{ ClipboardType.Image, () => data.SetImage(clipboardItem.Image) },
+				{ ClipboardType.File, () => {
+					var sc = new StringCollection();
+					sc.AddRange(clipboardItem.Files.ToArray());
+					data.SetFileDropList(sc); 
+				}},
+			};
+			foreach(var type in clipboardItem.GetClipboardTypeList()) {
+				typeFuncs[type]();
+			}
+			CopyDataObject(data, clipboardSetting);
 		}
 
 		/// <summary>
