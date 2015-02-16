@@ -429,12 +429,16 @@
 
 		private void LogForm_SizeChanged(object sender, EventArgs e)
 		{
-			CommonData.MainSetting.Log.Size = Size;
+			if(CommonData != null) {
+				CommonData.MainSetting.Log.Size = Size;
+			}
 		}
 
 		private void LogForm_LocationChanged(object sender, EventArgs e)
 		{
-			CommonData.MainSetting.Log.Point = Location;
+			if(CommonData != null) {
+				CommonData.MainSetting.Log.Point = Location;
+			}
 		}
 	}
 }
