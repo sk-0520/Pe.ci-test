@@ -155,11 +155,7 @@
 
 			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
-
-			// -1補正
-			if(ClipboardRepeated < Literal.clipboardRepeated.minimum) {
-				ClipboardRepeated = Literal.clipboardRepeated.minimum;
-			}
+			ClipboardRepeated = Literal.clipboardRepeated.ToRounding(ClipboardRepeated);
 		}
 
 		public HotKeySetting ToggleHotKeySetting { get; set; }

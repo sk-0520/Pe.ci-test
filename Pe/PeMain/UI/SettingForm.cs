@@ -388,6 +388,7 @@
 			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, setting.Limit);
 			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, setting.WaitTime);
 			this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
+			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, setting.ClipboardRepeated);
 
 			this.selectClipboardEnabled.Checked = setting.Enabled;
 			this.selectClipboardAppEnabled.Checked = setting.EnabledApplicationCopy;
@@ -667,6 +668,9 @@
 			this.groupClipboardType.SetLanguage(Language);
 			this.groupClipboardSaveType.SetLanguage(Language);
 			this.labelClipboardListType.SetLanguage(Language);
+			this.labelClipboardRepeated.SetLanguage(Language, new Dictionary<string, string>() {
+				{ ProgramLanguageName.clipboardRepeatedAll, Literal.clipboardRepeated.minimum.ToString("D") },
+			});
 
 			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
 			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
@@ -995,6 +999,7 @@
 			setting.Limit = (int)this.inputClipboardLimit.Value;
 			setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
 			setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
+			setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
 
 			setting.Enabled = this.selectClipboardEnabled.Checked;
 			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
@@ -1034,6 +1039,7 @@
 
 			// フォント
 			setting.TextFont = this.commandClipboardTextFont.FontSetting;
+
 		}
 		#endregion ////////////////////////////////////
 
