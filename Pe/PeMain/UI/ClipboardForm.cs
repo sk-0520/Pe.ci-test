@@ -948,10 +948,30 @@
 			}
 		}
 
-		void OutputText(string s)
+		void OutputText(string outputText, bool usingClipboard)
 		{
-			if(string.IsNullOrEmpty(s)) {
+			if(string.IsNullOrEmpty(outputText)) {
+				CommonData.Logger.Puts(LogType.Information, CommonData.Language["clipboard/output/empty"], string.Empty);
 				return;
+			}
+
+			var windowHandles = new List<IntPtr>();
+			var hWnd = Handle;
+			do {
+				hWnd = NativeMethods.GetWindow(hWnd, GW.GW_HWNDNEXT);
+				windowHandles.Add(hWnd);
+			} while(!NativeMethods.IsWindowVisible(hWnd));
+
+			if(hWnd == IntPtr.Zero) {
+				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["clipboard/output/notfound-window"], windowHandles);
+				return;
+			}
+
+			NativeMethods.SetForegroundWindow(hWnd);
+			if(usingClipboard) {
+
+			} else {
+				SendKeys.Send(outputText);
 			}
 		}
 
@@ -960,7 +980,7 @@
 			Debug.Assert(clipboardItem != null);
 			Debug.Assert(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text));
 
-			OutputText(clipboardItem.Text);
+			OutputText(clipboardItem.Text, CommonData.MainSetting.Clipboard.SendUsingClipboard);
 		}
 
 		void OutputTemplateItem(TemplateItem templateItem)
@@ -968,7 +988,7 @@
 			Debug.Assert(templateItem != null);
 
 			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
-			OutputText(templateText);
+			OutputText(templateText, CommonData.MainSetting.Clipboard.SendUsingClipboard);
 		}
 
 		void OutputTargetClick_Impl(int index)

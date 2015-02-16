@@ -146,6 +146,10 @@
 		/// </summary>
 		public int ClipboardRepeated { get; set; }
 
+		public bool SendUsingClipboard { get; set; }
+
+		public HotKeySetting ToggleHotKeySetting { get; set; }
+
 		public override void CorrectionValue()
 		{
 			base.CorrectionValue();
@@ -157,8 +161,6 @@
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
 			ClipboardRepeated = Literal.clipboardRepeated.ToRounding(ClipboardRepeated);
 		}
-
-		public HotKeySetting ToggleHotKeySetting { get; set; }
 
 		#region DisposableItem
 

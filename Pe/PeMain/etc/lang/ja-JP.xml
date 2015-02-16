@@ -269,6 +269,8 @@
 		<Word Name="clipboard/label/uri"     Text="URI:" />
 		<Word Name="clipboard/image/raw"     Text="原寸表示" />
 		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
+		<Word Name="clipboard/output/empty"            Text="出力文字列が空のため無効" />
+		<Word Name="clipboard/output/notfound-window"  Text="出力先ウィンドウが発見できないため無効" />
 		:
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />

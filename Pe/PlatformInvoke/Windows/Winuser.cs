@@ -36,7 +36,8 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_MOUSEHWHEEL = 0x020e,
 		WM_NOTIFY = 0x004e,
 		WM_ERASEBKGND = 0x0014,
-		WM_CLOSE = 0x0010
+		WM_CLOSE = 0x0010,
+		WM_SETTEXT = 0x000c,
 	}
 	
 	public enum WS_EX
@@ -1594,6 +1595,17 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		/// </summary>
 		DI_NORMAL = 3,
 	}
+
+	public enum GW: uint
+	{
+		GW_HWNDFIRST = 0,
+		GW_HWNDLAST = 1,
+		GW_HWNDNEXT = 2,
+		GW_HWNDPREV = 3,
+		GW_OWNER = 4,
+		GW_CHILD = 5,
+		GW_ENABLEDPOPUP = 6
+	}
 	
 	/// <summary>
 	/// http://pinvoke.net/default.aspx/Structures.WINDOWPOS
@@ -1647,9 +1659,12 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, string lParam);
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		[return: MarshalAs(UnmanagedType.Bool)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 		
 		/// <summary>
@@ -1806,11 +1821,11 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[DllImport("user32.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr GetForegroundWindow();
-		
+
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-		private static extern bool SetForegroundWindow(IntPtr hWnd);
+		public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
@@ -1863,6 +1878,9 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern int GetClipboardFormatName(uint format, [Out] StringBuilder lpszFormatName, int cchMaxCount);
 
+		[DllImport("user32.dll", SetLastError = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern IntPtr GetWindow(IntPtr hWnd, GW uCommand);
 	}
 
 
