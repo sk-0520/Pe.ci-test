@@ -1286,14 +1286,22 @@
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					try {
 						var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-						CopyItem(clipboardItem, ClipboardType.All);
+						if(CommonData.MainSetting.Clipboard.DoubleClickToOutput) {
+							OutputClipboardItem(clipboardItem);
+						} else {
+							CopyItem(clipboardItem, ClipboardType.All);
+						}
 					} catch(Exception ex) {
 						CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-					CopyTemplate(templateItem);
+					if(CommonData.MainSetting.Clipboard.DoubleClickToOutput) {
+						OutputTemplateItem(templateItem);
+					} else {
+						CopyTemplate(templateItem);
+					}
 				}
 			}
 		}
