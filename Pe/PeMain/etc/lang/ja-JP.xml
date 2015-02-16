@@ -261,7 +261,7 @@
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
 		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
 		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
-		<Word Name="clipboard/dup/title"       Text="${clipboard}: 直近のクリップボードアイテムと同じため無視" />
+		<Word Name="clipboard/dup/title"       Text="${clipboard}: 重複したクリップボードアイテムが存在するため無視" />
 		<Word Name="clipboard/page/raw-template"       Text="${template}" />
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
 		<Word Name="clipboard/label/template-name"     Text="${template}名" />
@@ -330,6 +330,7 @@
 		<Word Name="setting/label/clipboard-limit"        Text="保持する履歴数" />
 		<Word Name="setting/label/clipboard-wait"         Text="前回コピーからの待機時間(ミリ秒)" />
 		<Word Name="setting/label/clipboard-sleep"        Text="@[APPLICATION]操作猶予時間(ミリ秒)" />
+		<Word Name="setting/label/clipboard-repeated"     Text="クリップボード重複判定(@[ALL]で全て対象)" />
 		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />
 		<Word Name="setting/group/clipboard-type"         Text="取込種類" />

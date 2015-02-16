@@ -200,9 +200,18 @@
 						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 						clipboardItem.Name = displayText;
 						if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
-							// 先頭と同じデータであれば追加しない
-							var head = this._commonData.MainSetting.Clipboard.HistoryItems.First();
-							return !ClipboardUtility.EqualClipboardItem(head, clipboardItem);
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated == 0) {
+								// 範囲チェックを行わないのであれば無条件で追加
+								return true;
+							}
+
+							// 指定範囲内に同じデータがあれば追加しない
+							IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated != Literal.clipboardRepeated.minimum) {
+								clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
+							}
+							var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
+							return hitItem == null;
 						}
 						return true;
 					}).ContinueWith(t => {
