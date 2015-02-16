@@ -395,6 +395,7 @@
 
 			this.selectClipboardVisible.Checked = setting.Visible;
 			this.selectClipboardTopMost.Checked = setting.TopMost;
+			this.selectClipboardOutputUsingClipboard.Checked = setting.OutputUsingClipboard;
 
 			this.selectClipboardSave.Checked = setting.SaveHistory;
 
@@ -664,6 +665,7 @@
 			this.selectClipboardAppEnabled.SetLanguage(Language);
 			this.selectClipboardTopMost.SetLanguage(Language);
 			this.selectClipboardVisible.SetLanguage(Language);
+			this.selectClipboardOutputUsingClipboard.SetLanguage(Language);
 			this.selectClipboardSave.SetLanguage(Language);
 			this.groupClipboardType.SetLanguage(Language);
 			this.groupClipboardSaveType.SetLanguage(Language);
@@ -1005,6 +1007,7 @@
 			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
 			setting.Visible = this.selectClipboardVisible.Checked;
 			setting.TopMost = this.selectClipboardTopMost.Checked;
+			setting.OutputUsingClipboard = this.selectClipboardOutputUsingClipboard.Checked;
 
 			setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
 

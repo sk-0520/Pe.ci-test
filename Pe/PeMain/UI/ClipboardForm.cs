@@ -953,7 +953,7 @@
 			}
 
 			NativeMethods.SetForegroundWindow(hWnd);
-			if(!usingClipboard) {
+			if(usingClipboard) {
 				// 現在クリップボードを一時退避
 				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, Handle);
 				try {
@@ -974,7 +974,7 @@
 			Debug.Assert(clipboardItem != null);
 			Debug.Assert(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text));
 
-			OutputText(clipboardItem.Text, CommonData.MainSetting.Clipboard.SendUsingClipboard);
+			OutputText(clipboardItem.Text, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 
 		void OutputTemplateItem(TemplateItem templateItem)
@@ -982,7 +982,7 @@
 			Debug.Assert(templateItem != null);
 
 			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
-			OutputText(templateText, CommonData.MainSetting.Clipboard.SendUsingClipboard);
+			OutputText(templateText, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 
 		void OutputTargetClick_Impl(int index)

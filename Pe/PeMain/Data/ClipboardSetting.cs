@@ -146,7 +146,7 @@
 		/// </summary>
 		public int ClipboardRepeated { get; set; }
 
-		public bool SendUsingClipboard { get; set; }
+		public bool OutputUsingClipboard { get; set; }
 
 		public HotKeySetting ToggleHotKeySetting { get; set; }
 
