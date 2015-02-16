@@ -948,6 +948,43 @@
 			}
 		}
 
+		void OutputText(string s)
+		{
+			if(string.IsNullOrEmpty(s)) {
+				return;
+			}
+		}
+
+		void OutputClipboardItem(ClipboardItem clipboardItem)
+		{
+			Debug.Assert(clipboardItem != null);
+			Debug.Assert(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text));
+
+			OutputText(clipboardItem.Text);
+		}
+
+		void OutputTemplateItem(TemplateItem templateItem)
+		{
+			Debug.Assert(templateItem != null);
+
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			OutputText(templateText);
+		}
+
+		void OutputTargetClick_Impl(int index)
+		{
+			Debug.Assert(index != -1);
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				if(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text)) {
+					OutputClipboardItem(clipboardItem);
+				}
+			} else {
+				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				OutputTemplateItem(templateItem);
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1200,7 +1237,7 @@
 				return;
 			}
 			if(sender == this._commandOutputTarget) {
-				Debug.WriteLine("asd");
+				OutputTargetClick_Impl(HoverItemIndex);
 			} else if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				try {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
