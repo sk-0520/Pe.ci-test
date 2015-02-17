@@ -60,7 +60,7 @@
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>スリープだとかロックだとか休止状態だとかでアップデートチェック用のタイミングがボロボロだったのでログオンのみに限定しました</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -97,7 +97,11 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#218: アップデートチェック時に死ぬ</message>
+				<comments>
+					<comment>セッションを引き金とするアップデートチェックをログオン時に限定</comment>
+					<comment>ツールバー破棄後のウィンドウハンドルアクセスも同時に修正</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

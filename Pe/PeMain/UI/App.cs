@@ -1207,7 +1207,7 @@
 			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+			//SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
 		}
 		void DetachmentSystemEvent()
@@ -1215,7 +1215,7 @@
 			SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
 			SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
 			SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-			SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
+			//SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
 		}
 
@@ -1881,7 +1881,9 @@
 			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
 			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
 				ResetUI();
-				CheckUpdateProcessAsync();
+				if(e.Reason == SessionSwitchReason.SessionUnlock) {
+					CheckUpdateProcessAsync();
+				}
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
 				AppUtility.SaveSetting(this._commonData);
 			}
@@ -1899,14 +1901,6 @@
 		{
 			this._logForm.Puts(LogType.Information, "SessionEnding", e);
 			AppUtility.SaveSetting(this._commonData);
-		}
-		
-		void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
-		{
-			if(e.Mode == PowerModes.Resume) {
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
-				CheckUpdateProcessAsync();
-			}
 		}
 		
 		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)

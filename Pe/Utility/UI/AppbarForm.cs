@@ -182,8 +182,10 @@
 		
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
-			if(IsDocking) {
-				UnResistAppBar();
+			if(Created) {
+				if(IsDocking) {
+					UnResistAppBar();
+				}
 			}
 			
 			base.OnFormClosed(e);
