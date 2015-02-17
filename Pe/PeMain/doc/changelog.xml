@@ -84,7 +84,7 @@
 			<note rev="a2e6f85f50724a8df49acdf9d61bbd61d094bde7">
 				<message>#181: 標準入出力ウィンドウをもうちっとこう……</message>
 			</note>
-			<note rev="">
+			<note rev="5b7e5f5a73e30c7d9fcf737aa223b69bfcd1e29f">
 				<message>ランチャーアイテム種類がコマンドの場合に種類がファイルの時と同じような動作を行う</message>
 				<comments>
 					<comment>コマンドアイテムでも標準入出力を操作できるようになりました</comment>
