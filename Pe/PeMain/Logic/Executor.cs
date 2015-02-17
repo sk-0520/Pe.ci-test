@@ -72,23 +72,24 @@
 			}
 			
 			try {
+				if(getOutput) {
+					streamForm = new StreamForm();
+					streamForm.SetParameter(process, launcherItem);
+					streamForm.SetCommonData(commonData);
+					commonData.RootSender.AppendWindow(streamForm);
+				}
+
 				process.Start();
+
+				if(getOutput) {
+					streamForm.StartStream();
+					streamForm.Show();
+				}
 			} catch(Win32Exception) {
 				if(streamForm != null) {
 					streamForm.Dispose();
 				}
 				throw;
-			}
-			
-			if(getOutput) {
-				streamForm = new StreamForm();
-				streamForm.SetParameter(process, launcherItem);
-				streamForm.SetCommonData(commonData);
-				streamForm.Show();
-				commonData.RootSender.AppendWindow(streamForm);
-				
-				process.BeginOutputReadLine();
-				process.BeginErrorReadLine();
 			}
 			
 			return process;

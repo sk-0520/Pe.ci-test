@@ -46,7 +46,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStream_itemKill = new System.Windows.Forms.ToolStripButton();
 			this.tabStream = new System.Windows.Forms.TabControl();
 			this.tabStream_pageStream = new System.Windows.Forms.TabPage();
-			this.inputOutput = new System.Windows.Forms.TextBox();
+			this.inputOutput = new System.Windows.Forms.RichTextBox();
 			this.tabStream_pageProcess = new System.Windows.Forms.TabPage();
 			this.propertyProcess = new System.Windows.Forms.PropertyGrid();
 			this.tabStream_pageProperty = new System.Windows.Forms.TabPage();
@@ -62,13 +62,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.toolStream.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStream.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolStream_itemTopmost,
-									this.DisableCloseToolStripSeparator2,
-									this.toolStream_itemSave,
-									this.toolStream_itemClear,
-									this.DisableCloseToolStripSeparator1,
-									this.toolStream_itemRefresh,
-									this.toolStream_itemKill});
+            this.toolStream_itemTopmost,
+            this.DisableCloseToolStripSeparator2,
+            this.toolStream_itemSave,
+            this.toolStream_itemClear,
+            this.DisableCloseToolStripSeparator1,
+            this.toolStream_itemRefresh,
+            this.toolStream_itemKill});
 			this.toolStream.Location = new System.Drawing.Point(0, 0);
 			this.toolStream.Name = "toolStream";
 			this.toolStream.Size = new System.Drawing.Size(471, 25);
@@ -163,17 +163,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputOutput
 			// 
-			this.inputOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.inputOutput.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputOutput.Location = new System.Drawing.Point(0, 0);
-			this.inputOutput.Multiline = true;
 			this.inputOutput.Name = "inputOutput";
-			this.inputOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.inputOutput.Size = new System.Drawing.Size(463, 227);
 			this.inputOutput.TabIndex = 0;
-			this.inputOutput.WordWrap = false;
-			this.inputOutput.TextChanged += new System.EventHandler(this.ViewOutput_TextChanged);
-			this.inputOutput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ViewOutput_KeyPress);
+			this.inputOutput.Text = "";
+			this.inputOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputOutput_KeyDown);
 			// 
 			// tabStream_pageProcess
 			// 
@@ -228,11 +224,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStream.PerformLayout();
 			this.tabStream.ResumeLayout(false);
 			this.tabStream_pageStream.ResumeLayout(false);
-			this.tabStream_pageStream.PerformLayout();
 			this.tabStream_pageProcess.ResumeLayout(false);
 			this.tabStream_pageProperty.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator2;
 		private System.Windows.Forms.ToolStripButton toolStream_itemTopmost;
@@ -241,7 +237,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.PropertyGrid propertyProperty;
 		private System.Windows.Forms.TabPage tabStream_pageProperty;
 		private System.Windows.Forms.PropertyGrid propertyProcess;
-		private System.Windows.Forms.TextBox inputOutput;
 		private System.Windows.Forms.ToolStripButton toolStream_itemClear;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.DisableCloseToolStripSeparator DisableCloseToolStripSeparator1;
 		private System.Windows.Forms.TabPage tabStream_pageProcess;
@@ -249,5 +244,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabControl tabStream;
 		private System.Windows.Forms.ToolStripButton toolStream_itemSave;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.ActiveToolStrip toolStream;
+		private System.Windows.Forms.RichTextBox inputOutput;
 	}
 }
