@@ -119,7 +119,10 @@
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
 
-			return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
+			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
+			var fileLauncherItem = (LauncherItem)launcherItem.Clone();
+			fileLauncherItem.LauncherType = LauncherType.File;
+			return RunFileItem(fileLauncherItem, commonData);
 		}
 		
 		/// <summary>
