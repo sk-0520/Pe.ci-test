@@ -96,7 +96,7 @@
 					<comment>とりあえず、とりあえず動くようにした</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="b95b2c0a88c2fa65a9e27280947a2861d746cd25">
 				<message>#218: アップデートチェック時に死ぬ</message>
 				<comments>
 					<comment>セッションを引き金とするアップデートチェックをログオン時に限定</comment>
