@@ -155,6 +155,7 @@
 			foreach(var command in this.panelCommand.Controls.OfType<Button>()) {
 				command.Size = Size.Empty;
 				command.AutoSize = true;
+				command.Size = new Size(command.Width, this.commandOk.Height);
 			}
 		}
 
