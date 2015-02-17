@@ -78,6 +78,9 @@
 					<comment>Pe 0.50.0の挙動と同じにするには値を 1 に設定してください</comment>
 				</comments>
 			</note>
+			<note rev="62eb5eede80f08c3ede1305fa70cceb17d883a4d">
+				<message>#221: クリップボード/テンプレートウィンドウからの選択データを前回フォーカスウィンドウに転送する</message>
+			</note>
 			<note rev="">
 				<message></message>
 			</note>
@@ -102,8 +105,11 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
+			<note rev="78e314c6cfd0c13c95e697ac39fd17df186dc7e1">
+				<message>別スレッドからのクリップボート・テンプレートのリスト変更を安全にする</message>
+				<comments>
+					<comment>今のところ呼び出し自体はUIスレッドだから不具合にはなってないはず</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
