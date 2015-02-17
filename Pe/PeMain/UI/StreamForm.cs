@@ -70,6 +70,8 @@
 		{
 			InputStartPosition = -1;
 			OutputLastPosition = -1;
+
+			this.inputOutput.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
 		}
 
 		#endregion ////////////////////////////////////
