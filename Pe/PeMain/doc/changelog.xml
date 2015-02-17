@@ -103,7 +103,7 @@
 					<comment>ツールバー破棄後のウィンドウハンドルアクセスも同時に修正</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a4effdd845104b71dcc4b44377beafd6f0bda8c3">
 				<message>クリップボード/メニューウィンドウの切り替えメニューにチェックをつける</message>
 			</note>
 			<note rev="">
@@ -116,6 +116,7 @@
 				<message>別スレッドからのクリップボート・テンプレートのリスト変更を安全にする</message>
 				<comments>
 					<comment>今のところ呼び出し自体はUIスレッドだから不具合にはなってないはず</comment>
+					<comment>……はず</comment>
 				</comments>
 			</note>
 			<note rev="">
