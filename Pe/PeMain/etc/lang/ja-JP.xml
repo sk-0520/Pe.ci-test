@@ -360,6 +360,8 @@
 		<Word Name="about/column/license"    Text="ライセンス" />
 		<Word Name="about/update/check/dialog/caption"   Text="アップデートチェック" />
 		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
+		<Word Name="about/page/app"          Text="@[APPLICATION]情報" />
+		<Word Name="about/page/component"    Text="コンポーネント情報" />
 
 		<Word Name="new/group-item"     Text="新規グループ" />
 		<Word Name="new/launcher-item"  Text="新規アイテム" />

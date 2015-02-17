@@ -128,6 +128,9 @@
 			this.gridComponents_columnName.SetLanguage(CommonData.Language);
 			this.gridComponents_columnType.SetLanguage(CommonData.Language);
 			this.gridComponents_columnLicense.SetLanguage(CommonData.Language);
+
+			this.tabAbout_pageApp.SetLanguage(CommonData.Language);
+			this.tabAbout_pageComponent.SetLanguage(CommonData.Language);
 		}
 		#endregion ////////////////////////////////////
 
