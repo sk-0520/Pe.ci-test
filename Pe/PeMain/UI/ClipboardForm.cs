@@ -330,16 +330,19 @@
 			this.toolClipboard_itemEnabled.Checked = enabled;
 		}
 
-		void ChangeSelectTypeControl(ToolStripItem item)
+		void ChangeSelectTypeControl(ToolStripMenuItem item)
 		{
 			this.toolClipboard_itemType.Text = item.Text;
 			this.toolClipboard_itemType.Image = item.Image;
 
-			var map = new Dictionary<ToolStripItem, ClipboardListType>() {
+			var map = new Dictionary<ToolStripMenuItem, ClipboardListType>() {
 				{ this.toolClipboard_itemType_itemClipboard, ClipboardListType.History },
 				{ this.toolClipboard_itemType_itemTemplate,  ClipboardListType.Template},
 			};
-
+			foreach(var menuItem in map.Keys) {
+				menuItem.Checked = false;
+			}
+			item.Checked = true;
 			ChangeSelectType(map[item]);
 		}
 
@@ -349,7 +352,7 @@
 		/// <param name="type"></param>
 		void ChangeSelectListType(ClipboardListType type)
 		{
-			var map = new Dictionary<ClipboardListType, ToolStripItem>() {
+			var map = new Dictionary<ClipboardListType, ToolStripMenuItem>() {
 				{ ClipboardListType.History, this.toolClipboard_itemType_itemClipboard },
 				{ ClipboardListType.Template, this.toolClipboard_itemType_itemTemplate},
 			};
@@ -1114,7 +1117,7 @@
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
-			ChangeSelectTypeControl((ToolStripItem)sender);
+			ChangeSelectTypeControl((ToolStripMenuItem)sender);
 		}
 
 		void TemplateItems_ListChanged(object sender, EventArgs e)

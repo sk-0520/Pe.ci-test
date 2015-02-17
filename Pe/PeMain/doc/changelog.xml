@@ -104,6 +104,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>クリップボード/メニューウィンドウの切り替えメニューにチェックをつける</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
