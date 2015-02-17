@@ -45,6 +45,10 @@
 		Process Process { get; set; }
 		public LauncherItem LauncherItem { get; private set; }
 		public bool ProcessRunning { get { return Process != null && !Process.HasExited; } }
+
+		TextReader OutputReader { get; set; }
+		TextReader ErrorReader { get; set; }
+
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
