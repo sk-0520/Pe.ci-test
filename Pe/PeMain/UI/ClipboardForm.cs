@@ -339,7 +339,10 @@
 				{ this.toolClipboard_itemType_itemClipboard, ClipboardListType.History },
 				{ this.toolClipboard_itemType_itemTemplate,  ClipboardListType.Template},
 			};
-			//item
+			foreach(var menuItem in map.Keys) {
+				menuItem.Checked = false;
+			}
+			item.Checked = true;
 			ChangeSelectType(map[item]);
 		}
 
