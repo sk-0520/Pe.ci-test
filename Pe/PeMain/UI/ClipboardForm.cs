@@ -94,6 +94,8 @@
 		bool ImageDragging { get; set; }
 		Point ImageDragPosition { get; set; }
 
+		bool UsedWheel { get; set; }
+
 		#endregion ////////////////////////////////////////
 
 		#region Initialize
@@ -160,6 +162,8 @@
 			this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
 
 			ChekedReplace();
+
+			this.listItemStack.MouseWheel += ListItemStack_MouseWheel;
 		}
 
 		void Initialize()
@@ -1205,7 +1209,15 @@
 			if(top != this._panelClipboradItem.Top) {
 				this._panelClipboradItem.Top = top;
 			}
+
+			var redraw = HoverItemIndex != index;
+
 			ChangeCommand(index);
+			if(UsedWheel) {
+				this._panelClipboradItem.Refresh();
+				this.listItemStack.Refresh();
+				UsedWheel = false;
+			}
 		}
 
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
@@ -1526,6 +1538,11 @@
 				ImageDragging = false;
 				Cursor = Cursors.Default;
 			}
+		}
+
+		void ListItemStack_MouseWheel(object sender, MouseEventArgs e)
+		{
+			UsedWheel = true;
 		}
 	}
 }

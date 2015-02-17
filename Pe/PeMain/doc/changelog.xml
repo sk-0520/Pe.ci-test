@@ -116,6 +116,12 @@
 				<message>クリップボード/メニューウィンドウの切り替えメニューにチェックをつける</message>
 			</note>
 			<note rev="">
+				<message>クリップボード/テンプレートのアイテム一覧をマウスホイールでアイテムに紐付くコントロールが再描画されない不具合の修正</message>
+				<comments>
+					<comment>これ前に対応した気がする</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
