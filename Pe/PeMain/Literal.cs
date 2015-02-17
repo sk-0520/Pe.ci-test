@@ -591,9 +591,11 @@
 		public const string fileCount = "COUNT";
 
 		public const string clipboardPrevTime = "TIME";
+		public const string clipboardRepeatedAll = "ALL";
+
 		public const string screen = "SCREEN";
 
-		public const string clipboardRepeatedAll = "ALL";
+		public const string tableName = "TABLE-NAME";
 	}
 
 	/// <summary>

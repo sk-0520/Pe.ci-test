@@ -394,7 +394,7 @@
 				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteStyleTransactionTable },
 			};
 			var langMap = new Dictionary<string, string>() {
-				{ "TABLE-NAME", tableName },
+				{ ProgramLanguageName.tableName, tableName },
 			};
 
 			var command = map[tableName];
@@ -424,7 +424,7 @@
 		void InitializeNoteTableChange(string tableName, int version, StartupLogger logger)
 		{
 			var langMap = new Dictionary<string, string>() {
-				{ "TABLE-NAME", tableName },
+				{ ProgramLanguageName.tableName, tableName },
 			};
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/check", langMap], new { TableName = tableName, Version = version, });
 
