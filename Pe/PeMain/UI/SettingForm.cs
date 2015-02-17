@@ -1337,6 +1337,9 @@
 
 				case LauncherType.URI:
 				case LauncherType.Command:
+					disabledControls = new Control[] {
+						this.selectLauncherAdmin,
+					};
 					break;
 					
 				case LauncherType.Embedded: 
