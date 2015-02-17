@@ -87,7 +87,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="e5cf1ba9246ae0051d0f6fc68069493b69361339">
 				<message>#101: DPIが開発環境と異なる場合に色々と残念</message>
 				<comments>
 					<comment>とりあえず、とりあえず動くようにした</comment>
