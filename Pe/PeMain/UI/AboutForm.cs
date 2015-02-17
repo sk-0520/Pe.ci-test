@@ -152,6 +152,10 @@
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
+			foreach(var command in this.panelCommand.Controls.OfType<Button>()) {
+				command.Size = Size.Empty;
+				command.AutoSize = true;
+			}
 		}
 
 		void OpenDirectory(string path)

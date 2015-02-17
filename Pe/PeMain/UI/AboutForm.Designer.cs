@@ -62,11 +62,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkCopyLong = new System.Windows.Forms.LinkLabel();
 			this.tabAbout = new System.Windows.Forms.TabControl();
 			this.tabAbout_pageApp = new System.Windows.Forms.TabPage();
-			this.tabAbout_pageComponent = new System.Windows.Forms.TabPage();
 			this.panelApp = new System.Windows.Forms.FlowLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.tabAbout_pageComponent = new System.Windows.Forms.TabPage();
+			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.panel1 = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -74,11 +74,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelEnv.SuspendLayout();
 			this.tabAbout.SuspendLayout();
 			this.tabAbout_pageApp.SuspendLayout();
-			this.tabAbout_pageComponent.SuspendLayout();
 			this.panelApp.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
+			this.tabAbout_pageComponent.SuspendLayout();
+			this.panelCommand.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
-			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// imageIcon
@@ -94,7 +94,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// commandOk
 			// 
 			this.commandOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.commandOk.Location = new System.Drawing.Point(526, 9);
+			this.commandOk.Location = new System.Drawing.Point(532, 236);
 			this.commandOk.Name = "commandOk";
 			this.commandOk.Size = new System.Drawing.Size(101, 31);
 			this.commandOk.TabIndex = 8;
@@ -121,7 +121,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelAppVersion.Location = new System.Drawing.Point(3, 62);
 			this.labelAppVersion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
 			this.labelAppVersion.Name = "labelAppVersion";
-			this.labelAppVersion.Size = new System.Drawing.Size(171, 29);
+			this.labelAppVersion.Size = new System.Drawing.Size(202, 29);
 			this.labelAppVersion.TabIndex = 2;
 			this.labelAppVersion.Text = "labelAppVersion";
 			this.labelAppVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -154,12 +154,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandExecuteDir
 			// 
-			this.commandExecuteDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.commandExecuteDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandExecuteDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandExecuteDir.Location = new System.Drawing.Point(4, 9);
+			this.commandExecuteDir.Location = new System.Drawing.Point(3, 3);
 			this.commandExecuteDir.Name = "commandExecuteDir";
-			this.commandExecuteDir.Size = new System.Drawing.Size(101, 31);
+			this.commandExecuteDir.Size = new System.Drawing.Size(97, 31);
 			this.commandExecuteDir.TabIndex = 4;
 			this.commandExecuteDir.Text = ":about/command/execute";
 			this.commandExecuteDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -168,12 +167,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandDataDir
 			// 
-			this.commandDataDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.commandDataDir.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandDataDir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandDataDir.Location = new System.Drawing.Point(111, 10);
+			this.commandDataDir.Location = new System.Drawing.Point(106, 3);
 			this.commandDataDir.Name = "commandDataDir";
-			this.commandDataDir.Size = new System.Drawing.Size(101, 31);
+			this.commandDataDir.Size = new System.Drawing.Size(97, 31);
 			this.commandDataDir.TabIndex = 5;
 			this.commandDataDir.Text = ":about/command/data";
 			this.commandDataDir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -204,12 +202,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandUpdate
 			// 
-			this.commandUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandUpdate.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandUpdate.Location = new System.Drawing.Point(419, 10);
+			this.commandUpdate.Location = new System.Drawing.Point(312, 3);
 			this.commandUpdate.Name = "commandUpdate";
-			this.commandUpdate.Size = new System.Drawing.Size(101, 31);
+			this.commandUpdate.Size = new System.Drawing.Size(97, 31);
 			this.commandUpdate.TabIndex = 7;
 			this.commandUpdate.Text = ":about/command/update";
 			this.commandUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -231,7 +228,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.gridComponents.Name = "gridComponents";
 			this.gridComponents.ReadOnly = true;
 			this.gridComponents.RowTemplate.Height = 21;
-			this.gridComponents.Size = new System.Drawing.Size(491, 187);
+			this.gridComponents.Size = new System.Drawing.Size(616, 187);
 			this.gridComponents.TabIndex = 3;
 			this.gridComponents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridComponents_CellContentClick);
 			// 
@@ -263,12 +260,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// commandChangelog
 			// 
-			this.commandChangelog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.commandChangelog.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.commandChangelog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.commandChangelog.Location = new System.Drawing.Point(312, 9);
+			this.commandChangelog.Location = new System.Drawing.Point(209, 3);
 			this.commandChangelog.Name = "commandChangelog";
-			this.commandChangelog.Size = new System.Drawing.Size(101, 31);
+			this.commandChangelog.Size = new System.Drawing.Size(97, 31);
 			this.commandChangelog.TabIndex = 6;
 			this.commandChangelog.Text = ":about/command/changelog";
 			this.commandChangelog.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -368,13 +364,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// tabAbout
 			// 
+			this.tableLayoutPanel2.SetColumnSpan(this.tabAbout, 2);
 			this.tabAbout.Controls.Add(this.tabAbout_pageApp);
 			this.tabAbout.Controls.Add(this.tabAbout_pageComponent);
 			this.tabAbout.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabAbout.Location = new System.Drawing.Point(3, 3);
 			this.tabAbout.Name = "tabAbout";
 			this.tabAbout.SelectedIndex = 0;
-			this.tabAbout.Size = new System.Drawing.Size(630, 214);
+			this.tabAbout.Size = new System.Drawing.Size(630, 221);
 			this.tabAbout.TabIndex = 9;
 			// 
 			// tabAbout_pageApp
@@ -383,31 +380,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabAbout_pageApp.Location = new System.Drawing.Point(4, 24);
 			this.tabAbout_pageApp.Name = "tabAbout_pageApp";
 			this.tabAbout_pageApp.Padding = new System.Windows.Forms.Padding(3);
-			this.tabAbout_pageApp.Size = new System.Drawing.Size(622, 186);
+			this.tabAbout_pageApp.Size = new System.Drawing.Size(622, 193);
 			this.tabAbout_pageApp.TabIndex = 0;
 			this.tabAbout_pageApp.Text = ":about/page/app";
 			this.tabAbout_pageApp.UseVisualStyleBackColor = true;
 			// 
-			// tabAbout_pageComponent
-			// 
-			this.tabAbout_pageComponent.Controls.Add(this.gridComponents);
-			this.tabAbout_pageComponent.Location = new System.Drawing.Point(4, 24);
-			this.tabAbout_pageComponent.Name = "tabAbout_pageComponent";
-			this.tabAbout_pageComponent.Padding = new System.Windows.Forms.Padding(3);
-			this.tabAbout_pageComponent.Size = new System.Drawing.Size(497, 193);
-			this.tabAbout_pageComponent.TabIndex = 1;
-			this.tabAbout_pageComponent.Text = ":about/page/component";
-			this.tabAbout_pageComponent.UseVisualStyleBackColor = true;
-			// 
 			// panelApp
 			// 
+			this.panelApp.AutoScroll = true;
 			this.panelApp.Controls.Add(this.flowLayoutPanel1);
 			this.panelApp.Controls.Add(this.panelEnv);
 			this.panelApp.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panelApp.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelApp.Location = new System.Drawing.Point(3, 3);
 			this.panelApp.Name = "panelApp";
-			this.panelApp.Size = new System.Drawing.Size(616, 180);
+			this.panelApp.Size = new System.Drawing.Size(616, 187);
 			this.panelApp.TabIndex = 0;
 			// 
 			// flowLayoutPanel1
@@ -420,12 +407,37 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(334, 97);
 			this.flowLayoutPanel1.TabIndex = 1;
 			// 
+			// tabAbout_pageComponent
+			// 
+			this.tabAbout_pageComponent.Controls.Add(this.gridComponents);
+			this.tabAbout_pageComponent.Location = new System.Drawing.Point(4, 24);
+			this.tabAbout_pageComponent.Name = "tabAbout_pageComponent";
+			this.tabAbout_pageComponent.Padding = new System.Windows.Forms.Padding(3);
+			this.tabAbout_pageComponent.Size = new System.Drawing.Size(622, 193);
+			this.tabAbout_pageComponent.TabIndex = 1;
+			this.tabAbout_pageComponent.Text = ":about/page/component";
+			this.tabAbout_pageComponent.UseVisualStyleBackColor = true;
+			// 
+			// panelCommand
+			// 
+			this.panelCommand.AutoSize = true;
+			this.panelCommand.Controls.Add(this.commandExecuteDir);
+			this.panelCommand.Controls.Add(this.commandDataDir);
+			this.panelCommand.Controls.Add(this.commandChangelog);
+			this.panelCommand.Controls.Add(this.commandUpdate);
+			this.panelCommand.Location = new System.Drawing.Point(3, 230);
+			this.panelCommand.Name = "panelCommand";
+			this.panelCommand.Size = new System.Drawing.Size(412, 37);
+			this.panelCommand.TabIndex = 12;
+			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.ColumnCount = 1;
+			this.tableLayoutPanel2.ColumnCount = 2;
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Controls.Add(this.panel1, 0, 1);
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.Controls.Add(this.tabAbout, 0, 0);
+			this.tableLayoutPanel2.Controls.Add(this.commandOk, 1, 1);
+			this.tableLayoutPanel2.Controls.Add(this.panelCommand, 0, 1);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -434,20 +446,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(636, 270);
 			this.tableLayoutPanel2.TabIndex = 10;
-			// 
-			// panel1
-			// 
-			this.panel1.AutoSize = true;
-			this.panel1.Controls.Add(this.commandOk);
-			this.panel1.Controls.Add(this.commandUpdate);
-			this.panel1.Controls.Add(this.commandChangelog);
-			this.panel1.Controls.Add(this.commandDataDir);
-			this.panel1.Controls.Add(this.commandExecuteDir);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(3, 223);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(630, 44);
-			this.panel1.TabIndex = 11;
 			// 
 			// AboutForm
 			// 
@@ -476,14 +474,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelEnv.PerformLayout();
 			this.tabAbout.ResumeLayout(false);
 			this.tabAbout_pageApp.ResumeLayout(false);
-			this.tabAbout_pageComponent.ResumeLayout(false);
 			this.panelApp.ResumeLayout(false);
 			this.panelApp.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
 			this.flowLayoutPanel1.PerformLayout();
+			this.tabAbout_pageComponent.ResumeLayout(false);
+			this.panelCommand.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
-			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -516,6 +514,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel panelApp;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.FlowLayoutPanel panelCommand;
 	}
 }
