@@ -1036,7 +1036,7 @@
 
 		void NoteForm_Resize(object sender, EventArgs e)
 		{
-			if (!this.Initialized && NoteItem.Compact) {
+			if (!this.Initialized && (CommonData == null || NoteItem.Compact)) {
 				Height = 20;
 			} else {
 				ResizeInputTitleArea();

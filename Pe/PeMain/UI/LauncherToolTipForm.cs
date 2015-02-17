@@ -85,8 +85,9 @@
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var iconTop = this._titleHeight / 2 - IconScale.ToHeight() / 2;
-			e.Graphics.DrawImage(this._imageIcon, new Point(Padding.Left, Padding.Top + (int)iconTop));
+			var iconSize = IconScale.ToSize();
+			var iconTop = this._titleHeight / 2 - iconSize.Height / 2;
+			e.Graphics.DrawImage(this._imageIcon, Padding.Left, Padding.Top + (int)iconTop, iconSize.Width, iconSize.Height);
 			var iconWidth = Padding.Left + IconScale.ToWidth() + Padding.Left;
 			var titleArea = new Rectangle(iconWidth, Padding.Top, Width - iconWidth, (int)this._titleHeight);
 			var messageArea = new Rectangle(Padding.Left, titleArea.Bottom, Width - Padding.Horizontal, Height - titleArea.Height - Padding.Vertical);
@@ -250,9 +251,9 @@
 			var ili = toolStripItem as ILauncherItem;
 			var launcherItem = ili == null ? null : ili.LauncherItem;
 
+			Icon showIcon;
 			if(launcherItem != null) {
-				var itemIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
-				this._imageIcon = itemIcon.ToBitmap();
+				showIcon = launcherItem.GetIcon(IconScale.Normal, launcherItem.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
 				this._title = launcherItem.Name;
 				if(launcherItem.LauncherType == LauncherType.Embedded) {
 					var applicationItem = CommonData.ApplicationSetting.GetApplicationItem(launcherItem);
@@ -261,16 +262,15 @@
 					this._message = launcherItem.Note;
 				}
 			} else {
-				this._imageIcon = IconUtility.ImageFromIcon(CommonData.Skin.GetIcon(SkinIcon.App), IconScale.Normal);
+				showIcon = CommonData.Skin.GetIcon(SkinIcon.App);
 				this._title = CommonData.Language["toolbar/main/tips", new Dictionary<string, string>() { { ProgramLanguageName.groupName, groupItem.Name } }];
 				this._message = string.Empty;
 			}
+			this._imageIcon = IconUtility.ImageFromIcon(showIcon, IconScale.Normal);
 
 			SetSize(screen);
-			SetPosition(screen, toolbarItem, toolStripItem);
-	
 			// 表示位置設定
-
+			SetPosition(screen, toolbarItem, toolStripItem);
 
 			ToShow();
 		}

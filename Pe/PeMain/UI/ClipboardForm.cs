@@ -58,6 +58,7 @@
 		Button _commandFile = new Button();
 
 		Button _commandMulti = new Button();
+		Button _commandOutputTarget = new Button();
 
 		Button _commandAdd = new Button();
 		Button _commandUp = new Button();
@@ -93,6 +94,8 @@
 		bool ImageDragging { get; set; }
 		Point ImageDragPosition { get; set; }
 
+		bool UsedWheel { get; set; }
+
 		#endregion ////////////////////////////////////////
 
 		#region Initialize
@@ -100,7 +103,9 @@
 		void InitializeCommand()
 		{
 			var commandButtons = new[] {
+				this._commandOutputTarget,
 				this._commandMulti,
+				
 				this._commandText,
 				this._commandRtf,
 				this._commandHtml,
@@ -157,6 +162,8 @@
 			this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
 
 			ChekedReplace();
+
+			this.listItemStack.MouseWheel += ListItemStack_MouseWheel;
 		}
 
 		void Initialize()
@@ -244,6 +251,7 @@
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardImage), Control = this._commandImage, Name = imageImage },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardFile), Control = this._commandFile, Name = imageFile },
 				new { Image = CommonData.Skin.GetImage(SkinImage.ClipboardCopy), Control = this._commandMulti, Name = string.Empty },
+				new { Image = CommonData.Skin.GetImage(SkinImage.OutputTarget), Control = this._commandOutputTarget, Name = string.Empty },
 				new { Image = CommonData.Skin.GetImage(SkinImage.RawTemplate), Control = default(Button), Name = imageRawTemplate},
 				new { Image = CommonData.Skin.GetImage(SkinImage.ReplaceTemplate), Control = default(Button), Name = imageReplaceTemplate},
 				new { Image = CommonData.Skin.GetImage(SkinImage.Add), Control = this._commandAdd, Name = string.Empty },
@@ -326,16 +334,19 @@
 			this.toolClipboard_itemEnabled.Checked = enabled;
 		}
 
-		void ChangeSelectTypeControl(ToolStripItem item)
+		void ChangeSelectTypeControl(ToolStripMenuItem item)
 		{
 			this.toolClipboard_itemType.Text = item.Text;
 			this.toolClipboard_itemType.Image = item.Image;
 
-			var map = new Dictionary<ToolStripItem, ClipboardListType>() {
+			var map = new Dictionary<ToolStripMenuItem, ClipboardListType>() {
 				{ this.toolClipboard_itemType_itemClipboard, ClipboardListType.History },
 				{ this.toolClipboard_itemType_itemTemplate,  ClipboardListType.Template},
 			};
-
+			foreach(var menuItem in map.Keys) {
+				menuItem.Checked = false;
+			}
+			item.Checked = true;
 			ChangeSelectType(map[item]);
 		}
 
@@ -345,7 +356,7 @@
 		/// <param name="type"></param>
 		void ChangeSelectListType(ClipboardListType type)
 		{
-			var map = new Dictionary<ClipboardListType, ToolStripItem>() {
+			var map = new Dictionary<ClipboardListType, ToolStripMenuItem>() {
 				{ ClipboardListType.History, this.toolClipboard_itemType_itemClipboard },
 				{ ClipboardListType.Template, this.toolClipboard_itemType_itemTemplate},
 			};
@@ -364,6 +375,7 @@
 			Control[] commandList;
 			if(type == ClipboardListType.History) {
 				commandList = new[] {
+					this._commandOutputTarget,
 					this._commandMulti,
 					this._commandText,
 					this._commandRtf,
@@ -373,6 +385,7 @@
 				};
 			} else {
 				commandList = new[] {
+					this._commandOutputTarget,
 					this._commandMulti,
 					this._commandAdd,
 					this._commandUp,
@@ -655,22 +668,7 @@
 					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), clipboardSetting);
 				} },
 				{ ClipboardType.All, (clipboardSetting) => {
-					var data = new DataObject();
-					var typeFuncs = new Dictionary<ClipboardType, Action>() {
-						{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
-						{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Rtf, TextDataFormat.Rtf) },
-						{ ClipboardType.Html, () => data.SetText(clipboardItem.Html, TextDataFormat.Html) },
-						{ ClipboardType.Image, () => data.SetImage(clipboardItem.Image) },
-						{ ClipboardType.File, () => {
-							var sc = new StringCollection();
-							sc.AddRange(clipboardItem.Files.ToArray());
-							data.SetFileDropList(sc); 
-						}},
-					};
-					foreach(var type in clipboardItem.GetClipboardTypeList()) {
-						typeFuncs[type]();
-					}
-					ClipboardUtility.CopyDataObject(data, clipboardSetting);
+					ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardSetting);
 				} },
 			};
 			map[clipboardType](CommonData.MainSetting.Clipboard);
@@ -780,6 +778,11 @@
 		void ListChanged<T>(ClipboardListType targetType, EventList<T> itemList, Action action)
 		{
 			if(CommonData.MainSetting.Clipboard.ClipboardListType != targetType) {
+				return;
+			}
+
+			if(InvokeRequired) {
+				BeginInvoke((MethodInvoker)delegate() { ListChanged(targetType, itemList, action); });
 				return;
 			}
 
@@ -942,6 +945,72 @@
 			}
 		}
 
+		void OutputText(string outputText, bool usingClipboard)
+		{
+			if(string.IsNullOrEmpty(outputText)) {
+				CommonData.Logger.Puts(LogType.Information, CommonData.Language["clipboard/output/empty"], string.Empty);
+				return;
+			}
+
+			var windowHandles = new List<IntPtr>();
+			var hWnd = Handle;
+			do {
+				hWnd = NativeMethods.GetWindow(hWnd, GW.GW_HWNDNEXT);
+				windowHandles.Add(hWnd);
+			} while(!NativeMethods.IsWindowVisible(hWnd));
+
+			if(hWnd == IntPtr.Zero) {
+				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["clipboard/output/notfound-window"], windowHandles);
+				return;
+			}
+
+			NativeMethods.SetForegroundWindow(hWnd);
+			if(usingClipboard) {
+				// 現在クリップボードを一時退避
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, Handle);
+				try {
+					ClipboardUtility.CopyText(outputText, CommonData.MainSetting.Clipboard);
+					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
+				} finally {
+					if(clipboardItem != null && clipboardItem.ClipboardTypes != ClipboardType.None) {
+						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData.MainSetting.Clipboard);
+					}
+				}
+			} else {
+				SendKeys.Send(outputText);
+			}
+		}
+
+		void OutputClipboardItem(ClipboardItem clipboardItem)
+		{
+			Debug.Assert(clipboardItem != null);
+			Debug.Assert(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text));
+
+			OutputText(clipboardItem.Text, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
+		}
+
+		void OutputTemplateItem(TemplateItem templateItem)
+		{
+			Debug.Assert(templateItem != null);
+
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			OutputText(templateText, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
+		}
+
+		void OutputTargetClick_Impl(int index)
+		{
+			Debug.Assert(index != -1);
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				if(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text)) {
+					OutputClipboardItem(clipboardItem);
+				}
+			} else {
+				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				OutputTemplateItem(templateItem);
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1052,7 +1121,7 @@
 
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
-			ChangeSelectTypeControl((ToolStripItem)sender);
+			ChangeSelectTypeControl((ToolStripMenuItem)sender);
 		}
 
 		void TemplateItems_ListChanged(object sender, EventArgs e)
@@ -1140,7 +1209,15 @@
 			if(top != this._panelClipboradItem.Top) {
 				this._panelClipboradItem.Top = top;
 			}
+
+			var redraw = HoverItemIndex != index;
+
 			ChangeCommand(index);
+			if(UsedWheel) {
+				this._panelClipboradItem.Refresh();
+				this.listItemStack.Refresh();
+				UsedWheel = false;
+			}
 		}
 
 		private void tabPreview_Selecting(object sender, TabControlCancelEventArgs e)
@@ -1193,7 +1270,9 @@
 			if(0 > HoverItemIndex) {
 				return;
 			}
-			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+			if(sender == this._commandOutputTarget) {
+				OutputTargetClick_Impl(HoverItemIndex);
+			} else if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				try {
 					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
 					var map = new Dictionary<object, ClipboardType>() {
@@ -1227,14 +1306,22 @@
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					try {
 						var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-						CopyItem(clipboardItem, ClipboardType.All);
+						if(CommonData.MainSetting.Clipboard.DoubleClickToOutput) {
+							OutputClipboardItem(clipboardItem);
+						} else {
+							CopyItem(clipboardItem, ClipboardType.All);
+						}
 					} catch(Exception ex) {
 						CommonData.Logger.Puts(LogType.Error, ex.Message, ex);
 					}
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-					CopyTemplate(templateItem);
+					if(CommonData.MainSetting.Clipboard.DoubleClickToOutput) {
+						OutputTemplateItem(templateItem);
+					} else {
+						CopyTemplate(templateItem);
+					}
 				}
 			}
 		}
@@ -1451,6 +1538,11 @@
 				ImageDragging = false;
 				Cursor = Cursors.Default;
 			}
+		}
+
+		void ListItemStack_MouseWheel(object sender, MouseEventArgs e)
+		{
+			UsedWheel = true;
 		}
 	}
 }

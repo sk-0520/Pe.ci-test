@@ -94,12 +94,35 @@
 
 		/// <summary>
 		/// 複合データをクリップノードへ転写。
+		/// <para>基本的にはvoid CopyClipboardItem(ClipboardItem, ClipboardSetting)を使用する</para>
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
 		public static void CopyDataObject(IDataObject data, ClipboardSetting clipboardSetting)
 		{
 			Copy(() => Clipboard.SetDataObject(data), clipboardSetting);
+		}
+
+		public static void CopyClipboardItem(ClipboardItem clipboardItem, ClipboardSetting clipboardSetting)
+		{
+			Debug.Assert(clipboardItem.ClipboardTypes != ClipboardType.None);
+
+			var data = new DataObject();
+			var typeFuncs = new Dictionary<ClipboardType, Action>() {
+				{ ClipboardType.Text, () => data.SetText(clipboardItem.Text, TextDataFormat.UnicodeText) },
+				{ ClipboardType.Rtf, () => data.SetText(clipboardItem.Rtf, TextDataFormat.Rtf) },
+				{ ClipboardType.Html, () => data.SetText(clipboardItem.Html, TextDataFormat.Html) },
+				{ ClipboardType.Image, () => data.SetImage(clipboardItem.Image) },
+				{ ClipboardType.File, () => {
+					var sc = new StringCollection();
+					sc.AddRange(clipboardItem.Files.ToArray());
+					data.SetFileDropList(sc); 
+				}},
+			};
+			foreach(var type in clipboardItem.GetClipboardTypeList()) {
+				typeFuncs[type]();
+			}
+			CopyDataObject(data, clipboardSetting);
 		}
 
 		/// <summary>
@@ -312,20 +335,20 @@
 		{
 			switch(type) {
 				case ClipboardType.Text:
-					Debug.WriteLine("text: {0:D8}, {1:D8}", a.Text.GetHashCode(), b.Text.GetHashCode());
+					//Debug.WriteLine("text: {0:D8}, {1:D8}", a.Text.GetHashCode(), b.Text.GetHashCode());
 					return a.Text.GetHashCode() == b.Text.GetHashCode();
 				case ClipboardType.Rtf:
-					Debug.WriteLine("rtf: {0:D8}, {1:D8}", a.Rtf.GetHashCode(), b.Rtf.GetHashCode());
+					//Debug.WriteLine("rtf: {0:D8}, {1:D8}", a.Rtf.GetHashCode(), b.Rtf.GetHashCode());
 					return a.Rtf.GetHashCode() == b.Rtf.GetHashCode();
 				case ClipboardType.Html:
-					Debug.WriteLine("html: {0:D8}, {1:D8}", a.Html.GetHashCode(), b.Html.GetHashCode());
+					//Debug.WriteLine("html: {0:D8}, {1:D8}", a.Html.GetHashCode(), b.Html.GetHashCode());
 					return a.Html.GetHashCode() == b.Html.GetHashCode();
 				case ClipboardType.Image:
-					Debug.WriteLine("image: {0:D8}, {1:D8}, {2}, {3}", a.Image.GetHashCode(), b.Image.GetHashCode(), a.Image.GetType(), b.Image.GetType());
+					//Debug.WriteLine("image: {0:D8}, {1:D8}, {2}, {3}", a.Image.GetHashCode(), b.Image.GetHashCode(), a.Image.GetType(), b.Image.GetType());
 					//return a.Image.GetHashCode() == b.Image.GetHashCode();
 					return DrawUtility.IsEqualImage(a.Image, b.Image);
 				case ClipboardType.File:
-					Debug.WriteLine("file: {0:D8}, {1:D8}", a.Files.GetHashCode(), b.Files.GetHashCode());
+					//Debug.WriteLine("file: {0:D8}, {1:D8}", a.Files.GetHashCode(), b.Files.GetHashCode());
 					return a.Files.SequenceEqual(b.Files);
 				default:
 					throw new NotImplementedException();

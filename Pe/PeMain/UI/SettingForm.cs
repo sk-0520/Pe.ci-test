@@ -388,12 +388,15 @@
 			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, setting.Limit);
 			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, setting.WaitTime);
 			this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
+			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, setting.ClipboardRepeated);
 
 			this.selectClipboardEnabled.Checked = setting.Enabled;
 			this.selectClipboardAppEnabled.Checked = setting.EnabledApplicationCopy;
 
 			this.selectClipboardVisible.Checked = setting.Visible;
 			this.selectClipboardTopMost.Checked = setting.TopMost;
+			this.selectClipboardItemWClickToOutput.Checked = setting.DoubleClickToOutput;
+			this.selectClipboardOutputUsingClipboard.Checked = setting.OutputUsingClipboard;
 
 			this.selectClipboardSave.Checked = setting.SaveHistory;
 
@@ -663,10 +666,16 @@
 			this.selectClipboardAppEnabled.SetLanguage(Language);
 			this.selectClipboardTopMost.SetLanguage(Language);
 			this.selectClipboardVisible.SetLanguage(Language);
+			this.selectClipboardItemWClickToOutput.SetLanguage(Language);
+			this.selectClipboardOutputUsingClipboard.SetLanguage(Language);
 			this.selectClipboardSave.SetLanguage(Language);
 			this.groupClipboardType.SetLanguage(Language);
 			this.groupClipboardSaveType.SetLanguage(Language);
+			this.groupClipboardOutput.SetLanguage(Language);
 			this.labelClipboardListType.SetLanguage(Language);
+			this.labelClipboardRepeated.SetLanguage(Language, new Dictionary<string, string>() {
+				{ ProgramLanguageName.clipboardRepeatedAll, Literal.clipboardRepeated.minimum.ToString("D") },
+			});
 
 			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
 			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
@@ -995,11 +1004,14 @@
 			setting.Limit = (int)this.inputClipboardLimit.Value;
 			setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
 			setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
+			setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
 
 			setting.Enabled = this.selectClipboardEnabled.Checked;
 			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
 			setting.Visible = this.selectClipboardVisible.Checked;
 			setting.TopMost = this.selectClipboardTopMost.Checked;
+			setting.DoubleClickToOutput = this.selectClipboardItemWClickToOutput.Checked;
+			setting.OutputUsingClipboard = this.selectClipboardOutputUsingClipboard.Checked;
 
 			setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
 
@@ -1034,6 +1046,7 @@
 
 			// フォント
 			setting.TextFont = this.commandClipboardTextFont.FontSetting;
+
 		}
 		#endregion ////////////////////////////////////
 
@@ -1205,9 +1218,9 @@
 			
 			this._launcherItemEvent = true;
 			
-			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = true;
-			}
+			//if(item.LauncherType == LauncherType.File) {
+			//	this.selectLauncherAdmin.Enabled = true;
+			//}
 		}
 		
 		void LauncherInputValueToItem(LauncherItem item)
@@ -1272,9 +1285,9 @@
 			
 			LauncherApplyType(item.LauncherType);
 			
-			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = true;
-			}
+			//if(item.LauncherType == LauncherType.File) {
+			//	this.selectLauncherAdmin.Enabled = true;
+			//}
 		}
 		
 		void LauncherApplyType(LauncherType type)
@@ -1299,7 +1312,7 @@
 				this.envLauncherUpdate,
 				this.envLauncherRemove,
 			};
-			var disabledControls = new Control[]{};
+			IEnumerable<Control> disabledControls = null;
 			switch(type) {
 				case LauncherType.File:
 					break;
@@ -1324,22 +1337,9 @@
 
 				case LauncherType.URI:
 				case LauncherType.Command:
-					{
-						disabledControls = new Control[] {
-							this.commandLauncherFilePath,
-							this.commandLauncherDirPath,
-							this.commandLauncherOptionFilePath,
-							this.commandLauncherOptionDirPath,
-							this.commandLauncherWorkDirPath,
-							//this.inputLauncherOption,
-							this.inputLauncherWorkDirPath,
-							this.selectLauncherStdStream,
-							this.selectLauncherAdmin,
-							this.selectLauncherEnv,
-							this.envLauncherUpdate,
-							this.envLauncherRemove,
-						};
-					}
+					disabledControls = new Control[] {
+						this.selectLauncherAdmin,
+					};
 					break;
 					
 				case LauncherType.Embedded: 

@@ -72,23 +72,24 @@
 			}
 			
 			try {
+				if(getOutput) {
+					streamForm = new StreamForm();
+					streamForm.SetParameter(process, launcherItem);
+					streamForm.SetCommonData(commonData);
+					commonData.RootSender.AppendWindow(streamForm);
+				}
+
 				process.Start();
+
+				if(getOutput) {
+					streamForm.StartStream();
+					streamForm.Show();
+				}
 			} catch(Win32Exception) {
 				if(streamForm != null) {
 					streamForm.Dispose();
 				}
 				throw;
-			}
-			
-			if(getOutput) {
-				streamForm = new StreamForm();
-				streamForm.SetParameter(process, launcherItem);
-				streamForm.SetCommonData(commonData);
-				streamForm.Show();
-				commonData.RootSender.AppendWindow(streamForm);
-				
-				process.BeginOutputReadLine();
-				process.BeginErrorReadLine();
 			}
 			
 			return process;
@@ -118,7 +119,14 @@
 		{
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
 
-			return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
+			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
+			var fileLauncherItem = (LauncherItem)launcherItem.Clone();
+			// ファイルアイテムに変換
+			fileLauncherItem.LauncherType = LauncherType.File;
+			// 管理者権限はどうにも効かなさそう
+			fileLauncherItem.Administrator = false;
+
+			return RunFileItem(fileLauncherItem, commonData);
 		}
 		
 		/// <summary>

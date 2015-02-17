@@ -56,6 +56,85 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="2014/02/17" version="0.51.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>スリープだとかロックだとか休止状態だとかでアップデートチェック用のタイミングがボロボロだったのでログオンのみに限定しました</message>
+			</note>
+			<note rev="">
+				<message>Pe 0.44.0-0.50.0でアップデートチェックからの自動アップデートで死ぬかもなのでご注意を</message>
+				<comments>
+					<comment>本バージョンで対応したつもりですよ</comment>
+					<comment>アップデート用スレッドとか無関係そうなツールバーのリソース処理とか色々あったぽいのですよ</comment>
+					<comment>バージョンアップに失敗し、プログラムが強制終了した場合はPeを再起動して(Windowsセッション接続維持中に)タスクトレイコンテキストメニュー → Pe情報 → アップデートを実行してみてください</comment>
+					<comment>どうしようもなくアップデートできない場合は https://bitbucket.org/sk_0520/pe/downloads からダウンロードしてください。。。Vectorは公開依頼してから公開までが遅いのです</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="60b5f56f14fe02c3574a1393aa87e765aeaf2258">
+				<message>#220: クリップボード重複判定に範囲を含める</message>
+				<comments>
+					<comment>履歴数やその内容によって負荷が異なりますのでユーザー設定で対応してください</comment>
+					<comment>Pe 0.50.0の挙動と同じにするには値を 1 に設定してください</comment>
+				</comments>
+			</note>
+			<note rev="62eb5eede80f08c3ede1305fa70cceb17d883a4d">
+				<message>#221: クリップボード/テンプレートウィンドウからの選択データを前回フォーカスウィンドウに転送する</message>
+			</note>
+			<note rev="a2e6f85f50724a8df49acdf9d61bbd61d094bde7">
+				<message>#181: 標準入出力ウィンドウをもうちっとこう……</message>
+			</note>
+			<note rev="5b7e5f5a73e30c7d9fcf737aa223b69bfcd1e29f">
+				<message>ランチャーアイテム種類がコマンドの場合に種類がファイルの時と同じような動作を行う</message>
+				<comments>
+					<comment>コマンドアイテムでも標準入出力を操作できるようになりました</comment>
+					<comment>管理者として実行するにはきちんとファイルアイテムで登録してください</comment>
+					<comment>指定コマンドが実行可能か、設定パラメーターが伝搬するかはコマンドに左右されるため注意して下さい</comment>
+					<comment>コマンドアイテムはパラメーターが設定済みであることを期待します。その都度パラメーターを変更する用途にはファイルアイテムが適切です</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="e5cf1ba9246ae0051d0f6fc68069493b69361339">
+				<message>#101: DPIが開発環境と異なる場合に色々と残念</message>
+				<comments>
+					<comment>とりあえず、とりあえず動くようにした</comment>
+					<comment>本対応に伴い情報ウィンドウのレイアウトが変更となりました</comment>
+				</comments>
+			</note>
+			<note rev="b95b2c0a88c2fa65a9e27280947a2861d746cd25">
+				<message>#218: アップデートチェック時に死ぬ</message>
+				<comments>
+					<comment>セッションを引き金とするアップデートチェックをログオン時に限定</comment>
+					<comment>ツールバー破棄後のウィンドウハンドルアクセスも同時に修正</comment>
+				</comments>
+			</note>
+			<note rev="a4effdd845104b71dcc4b44377beafd6f0bda8c3">
+				<message>クリップボード/メニューウィンドウの切り替えメニューにチェックをつける</message>
+			</note>
+			<note rev="e3455b380051480a5e34dd5456c8ae5ec2c3b20f">
+				<message>クリップボード/テンプレートのアイテム一覧をマウスホイールでアイテムに紐付くコントロールが再描画されない不具合の修正</message>
+				<comments>
+					<comment>これ前に対応した気がする</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="developer">
+			<sep dummy="==================================================================" />
+			<note rev="78e314c6cfd0c13c95e697ac39fd17df186dc7e1">
+				<message>別スレッドからのクリップボート・テンプレートのリスト変更を安全にする</message>
+				<comments>
+					<comment>今のところ呼び出し自体はUIスレッドだから不具合にはなってないはず</comment>
+					<comment>……はず</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/15" version="0.50.0">
 		<group type="note">
 			<sep dummy="==================================================================" />

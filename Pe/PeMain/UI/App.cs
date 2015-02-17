@@ -200,9 +200,18 @@
 						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 						clipboardItem.Name = displayText;
 						if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
-							// 先頭と同じデータであれば追加しない
-							var head = this._commonData.MainSetting.Clipboard.HistoryItems.First();
-							return !ClipboardUtility.EqualClipboardItem(head, clipboardItem);
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated == 0) {
+								// 範囲チェックを行わないのであれば無条件で追加
+								return true;
+							}
+
+							// 指定範囲内に同じデータがあれば追加しない
+							IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated != Literal.clipboardRepeated.minimum) {
+								clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
+							}
+							var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
+							return hitItem == null;
 						}
 						return true;
 					}).ContinueWith(t => {
@@ -385,7 +394,7 @@
 				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteStyleTransactionTable },
 			};
 			var langMap = new Dictionary<string, string>() {
-				{ "TABLE-NAME", tableName },
+				{ ProgramLanguageName.tableName, tableName },
 			};
 
 			var command = map[tableName];
@@ -415,7 +424,7 @@
 		void InitializeNoteTableChange(string tableName, int version, StartupLogger logger)
 		{
 			var langMap = new Dictionary<string, string>() {
-				{ "TABLE-NAME", tableName },
+				{ ProgramLanguageName.tableName, tableName },
 			};
 			logger.Puts(LogType.Information, this._commonData.Language["log/init/db-data/check", langMap], new { TableName = tableName, Version = version, });
 
@@ -1198,7 +1207,7 @@
 			SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
 			SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
 			SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-			SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+			//SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging += SystemEvents_DisplaySettingsChanging;
 		}
 		void DetachmentSystemEvent()
@@ -1206,7 +1215,7 @@
 			SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
 			SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
 			SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-			SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
+			//SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
 			SystemEvents.DisplaySettingsChanging -= SystemEvents_DisplaySettingsChanging;
 		}
 
@@ -1872,7 +1881,9 @@
 			this._logForm.Puts(LogType.Information, "SessionSwitch", e);
 			if(e.Reason == SessionSwitchReason.ConsoleConnect || e.Reason == SessionSwitchReason.SessionUnlock) {
 				ResetUI();
-				CheckUpdateProcessAsync();
+				if(e.Reason == SessionSwitchReason.SessionUnlock) {
+					CheckUpdateProcessAsync();
+				}
 			} else if(e.Reason == SessionSwitchReason.ConsoleDisconnect) {
 				AppUtility.SaveSetting(this._commonData);
 			}
@@ -1890,14 +1901,6 @@
 		{
 			this._logForm.Puts(LogType.Information, "SessionEnding", e);
 			AppUtility.SaveSetting(this._commonData);
-		}
-		
-		void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
-		{
-			if(e.Mode == PowerModes.Resume) {
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/power/resume"], e);
-				CheckUpdateProcessAsync();
-			}
 		}
 		
 		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)
