@@ -1312,7 +1312,7 @@
 				this.envLauncherUpdate,
 				this.envLauncherRemove,
 			};
-			var disabledControls = new Control[]{};
+			IEnumerable<Control> disabledControls = null;
 			switch(type) {
 				case LauncherType.File:
 					break;
