@@ -85,6 +85,15 @@
 				<message>#181: 標準入出力ウィンドウをもうちっとこう……</message>
 			</note>
 			<note rev="">
+				<message>ランチャーアイテム種類がコマンドの場合に種類がファイルの時と同じような動作を行う</message>
+				<comments>
+					<comment>コマンドアイテムでも標準入出力を操作できるようになりました</comment>
+					<comment>管理者として実行するにはきちんとファイルアイテムで登録してください</comment>
+					<comment>指定コマンドが実行可能か、設定パラメーターが伝搬するかはコマンドに左右されるため注意して下さい</comment>
+					<comment>コマンドアイテムはパラメーターが設定済みであることを期待します。その都度パラメーターを変更する用途にはファイルアイテムが適切です</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

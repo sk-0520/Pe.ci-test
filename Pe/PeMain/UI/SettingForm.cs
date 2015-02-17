@@ -1218,9 +1218,9 @@
 			
 			this._launcherItemEvent = true;
 			
-			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = true;
-			}
+			//if(item.LauncherType == LauncherType.File) {
+			//	this.selectLauncherAdmin.Enabled = true;
+			//}
 		}
 		
 		void LauncherInputValueToItem(LauncherItem item)
@@ -1285,9 +1285,9 @@
 			
 			LauncherApplyType(item.LauncherType);
 			
-			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = true;
-			}
+			//if(item.LauncherType == LauncherType.File) {
+			//	this.selectLauncherAdmin.Enabled = true;
+			//}
 		}
 		
 		void LauncherApplyType(LauncherType type)
@@ -1312,7 +1312,7 @@
 				this.envLauncherUpdate,
 				this.envLauncherRemove,
 			};
-			var disabledControls = new Control[]{};
+			IEnumerable<Control> disabledControls = null;
 			switch(type) {
 				case LauncherType.File:
 					break;
@@ -1337,22 +1337,9 @@
 
 				case LauncherType.URI:
 				case LauncherType.Command:
-					{
-						disabledControls = new Control[] {
-							this.commandLauncherFilePath,
-							this.commandLauncherDirPath,
-							this.commandLauncherOptionFilePath,
-							this.commandLauncherOptionDirPath,
-							this.commandLauncherWorkDirPath,
-							//this.inputLauncherOption,
-							this.inputLauncherWorkDirPath,
-							this.selectLauncherStdStream,
-							this.selectLauncherAdmin,
-							this.selectLauncherEnv,
-							this.envLauncherUpdate,
-							this.envLauncherRemove,
-						};
-					}
+					disabledControls = new Control[] {
+						this.selectLauncherAdmin,
+					};
 					break;
 					
 				case LauncherType.Embedded: 
