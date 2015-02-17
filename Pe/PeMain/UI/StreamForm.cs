@@ -324,12 +324,18 @@
 			if(e.KeyCode == Keys.Return) {
 				if(InputStartPosition != -1) {
 					// エンター！
-					var inputValue = this.inputOutput.Text.Substring(InputStartPosition, this.inputOutput.TextLength - InputStartPosition);
+					var start = InputStartPosition;
+					var length = this.inputOutput.TextLength - InputStartPosition;
+					var inputValue = this.inputOutput.Text.Substring(start, length);
+					// 入力済み文字列の除外
+					this.inputOutput.Select(start, length);
+					this.inputOutput.SelectedText = string.Empty;
 					Process.StandardInput.WriteLine(inputValue);
 				} else {
 					// 入力開始されていないのでエンターキーだけ渡しておく
 					Process.StandardInput.WriteLine();
 				}
+				e.SuppressKeyPress = true;
 				InputStartPosition = -1;
 			} else {
 				if(InputStartPosition == -1) {
