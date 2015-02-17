@@ -1218,9 +1218,9 @@
 			
 			this._launcherItemEvent = true;
 			
-			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = true;
-			}
+			//if(item.LauncherType == LauncherType.File) {
+			//	this.selectLauncherAdmin.Enabled = true;
+			//}
 		}
 		
 		void LauncherInputValueToItem(LauncherItem item)
@@ -1285,9 +1285,9 @@
 			
 			LauncherApplyType(item.LauncherType);
 			
-			if(item.LauncherType == LauncherType.File) {
-				this.selectLauncherAdmin.Enabled = true;
-			}
+			//if(item.LauncherType == LauncherType.File) {
+			//	this.selectLauncherAdmin.Enabled = true;
+			//}
 		}
 		
 		void LauncherApplyType(LauncherType type)
@@ -1337,22 +1337,6 @@
 
 				case LauncherType.URI:
 				case LauncherType.Command:
-					{
-						disabledControls = new Control[] {
-							this.commandLauncherFilePath,
-							this.commandLauncherDirPath,
-							this.commandLauncherOptionFilePath,
-							this.commandLauncherOptionDirPath,
-							this.commandLauncherWorkDirPath,
-							//this.inputLauncherOption,
-							this.inputLauncherWorkDirPath,
-							this.selectLauncherStdStream,
-							this.selectLauncherAdmin,
-							this.selectLauncherEnv,
-							this.envLauncherUpdate,
-							this.envLauncherRemove,
-						};
-					}
 					break;
 					
 				case LauncherType.Embedded: 
