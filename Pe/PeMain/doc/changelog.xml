@@ -56,17 +56,20 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.50.1" type="rc">
+	<log date="2014/02/17" version="0.51.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
 				<message>スリープだとかロックだとか休止状態だとかでアップデートチェック用のタイミングがボロボロだったのでログオンのみに限定しました</message>
 			</note>
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>Pe 0.44.0-0.50.0でアップデートチェックからの自動アップデートで死ぬかもなのでご注意を</message>
+				<comments>
+					<comment>本バージョンで対応したつもりですよ</comment>
+					<comment>アップデート用スレッドとか無関係そうなツールバーのリソース処理とか色々あったぽいのですよ</comment>
+					<comment>バージョンアップに失敗し、プログラムが強制終了した場合はPeを再起動して(Windowsセッション接続維持中に)タスクトレイコンテキストメニュー → Pe情報 → アップデートを実行してみてください</comment>
+					<comment>どうしようもなくアップデートできない場合は https://bitbucket.org/sk_0520/pe/downloads からダウンロードしてください。。。Vectorは公開依頼してから公開までが遅いのです</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features">
@@ -93,9 +96,6 @@
 					<comment>コマンドアイテムはパラメーターが設定済みであることを期待します。その都度パラメーターを変更する用途にはファイルアイテムが適切です</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
@@ -103,6 +103,7 @@
 				<message>#101: DPIが開発環境と異なる場合に色々と残念</message>
 				<comments>
 					<comment>とりあえず、とりあえず動くようにした</comment>
+					<comment>本対応に伴い情報ウィンドウのレイアウトが変更となりました</comment>
 				</comments>
 			</note>
 			<note rev="b95b2c0a88c2fa65a9e27280947a2861d746cd25">
@@ -121,9 +122,6 @@
 					<comment>これ前に対応した気がする</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
@@ -133,12 +131,6 @@
 					<comment>今のところ呼び出し自体はUIスレッドだから不具合にはなってないはず</comment>
 					<comment>……はず</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>

@@ -335,20 +335,20 @@
 		{
 			switch(type) {
 				case ClipboardType.Text:
-					Debug.WriteLine("text: {0:D8}, {1:D8}", a.Text.GetHashCode(), b.Text.GetHashCode());
+					//Debug.WriteLine("text: {0:D8}, {1:D8}", a.Text.GetHashCode(), b.Text.GetHashCode());
 					return a.Text.GetHashCode() == b.Text.GetHashCode();
 				case ClipboardType.Rtf:
-					Debug.WriteLine("rtf: {0:D8}, {1:D8}", a.Rtf.GetHashCode(), b.Rtf.GetHashCode());
+					//Debug.WriteLine("rtf: {0:D8}, {1:D8}", a.Rtf.GetHashCode(), b.Rtf.GetHashCode());
 					return a.Rtf.GetHashCode() == b.Rtf.GetHashCode();
 				case ClipboardType.Html:
-					Debug.WriteLine("html: {0:D8}, {1:D8}", a.Html.GetHashCode(), b.Html.GetHashCode());
+					//Debug.WriteLine("html: {0:D8}, {1:D8}", a.Html.GetHashCode(), b.Html.GetHashCode());
 					return a.Html.GetHashCode() == b.Html.GetHashCode();
 				case ClipboardType.Image:
-					Debug.WriteLine("image: {0:D8}, {1:D8}, {2}, {3}", a.Image.GetHashCode(), b.Image.GetHashCode(), a.Image.GetType(), b.Image.GetType());
+					//Debug.WriteLine("image: {0:D8}, {1:D8}, {2}, {3}", a.Image.GetHashCode(), b.Image.GetHashCode(), a.Image.GetType(), b.Image.GetType());
 					//return a.Image.GetHashCode() == b.Image.GetHashCode();
 					return DrawUtility.IsEqualImage(a.Image, b.Image);
 				case ClipboardType.File:
-					Debug.WriteLine("file: {0:D8}, {1:D8}", a.Files.GetHashCode(), b.Files.GetHashCode());
+					//Debug.WriteLine("file: {0:D8}, {1:D8}", a.Files.GetHashCode(), b.Files.GetHashCode());
 					return a.Files.SequenceEqual(b.Files);
 				default:
 					throw new NotImplementedException();

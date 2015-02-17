@@ -315,15 +315,7 @@
 				}
 			}
 		}
-		
-		/*
-		public static void EventDropDownMouseWheel(object sender, MouseEventArgs e)
-		{
-			Debug.WriteLine(sender);
-			Debug.WriteLine(e);
-		}
-		 */
-		
+
 		/// <summary>
 		/// 位置補正イベントのアタッチ。
 		/// </summary>
