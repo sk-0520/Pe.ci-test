@@ -5,6 +5,7 @@
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.IO;
+	using System.Linq;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
@@ -46,8 +47,8 @@
 		public LauncherItem LauncherItem { get; private set; }
 		public bool ProcessRunning { get { return Process != null && !Process.HasExited; } }
 
-		TextReader OutputReader { get; set; }
-		TextReader ErrorReader { get; set; }
+		int InputStartPosition { get; set; }
+		int OutputLastPosition { get; set; }
 
 		#endregion ////////////////////////////////////
 
@@ -66,7 +67,10 @@
 
 		#region initialize
 		void Initialize()
-		{ }
+		{
+			InputStartPosition = -1;
+			OutputLastPosition = -1;
+		}
 
 		#endregion ////////////////////////////////////
 
@@ -114,7 +118,10 @@
 			LauncherItem = launcherItem;
 
 			Process.EnableRaisingEvents = true;
-			Process.Exited += new EventHandler(Process_Exited);
+			Process.Exited += Process_Exited;
+
+			Process.OutputDataReceived += Process_OutputDataReceived;
+			Process.ErrorDataReceived += Process_ErrorDataReceived;
 
 			/*
 			// アイコン設定、アイテムに設定されているアイコンとは別に実行プロセスのアイコンを指定する
@@ -146,9 +153,6 @@
 			this.propertyProcess.SelectedObject = Process;
 			this.propertyProperty.SelectedObject = Process.StartInfo;
 
-			Process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
-			Process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
-
 			this.inputOutput.Font = CommonData.MainSetting.Launcher.StreamFontSetting.Font;
 		}
 
@@ -161,13 +165,13 @@
 			}
 			 */
 
-			this.inputOutput.BeginInvoke(
-				(MethodInvoker)delegate() {
+			this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
 				this.inputOutput.Text += line + Environment.NewLine;
 				this.inputOutput.SelectionStart = this.inputOutput.TextLength;
+				OutputLastPosition = this.inputOutput.TextLength;
+				InputStartPosition = -1;
 				this.inputOutput.ScrollToCaret();
-			}
-			);
+			});
 		}
 
 		void RefreshProperty()
@@ -185,10 +189,14 @@
 			}
 			 */
 
+			Process.OutputDataReceived -= Process_OutputDataReceived;
+			Process.ErrorDataReceived -= Process_ErrorDataReceived;
+
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
 			this.toolStream_itemRefresh.Enabled = false;
 			this.inputOutput.ReadOnly = true;
+
 			RefreshProperty();
 
 			Text += String.Format(": {0}", Process.ExitCode);
@@ -285,15 +293,15 @@
 			SwitchTopmost();
 		}
 
-		void ViewOutput_KeyPress(object sender, KeyPressEventArgs e)
-		{
-			//Debug.WriteLine((int)e.KeyChar);
-			if(e.KeyChar == 0x0a || e.KeyChar == 0x0d) {
-				Process.StandardInput.WriteLine();
-			} else {
-				Process.StandardInput.Write(e.KeyChar);
-			}
-		}
+		//void ViewOutput_KeyPress(object sender, KeyPressEventArgs e)
+		//{
+		//	//Debug.WriteLine((int)e.KeyChar);
+		//	if(e.KeyChar == 0x0a || e.KeyChar == 0x0d) {
+		//		Process.StandardInput.WriteLine();
+		//	} else {
+		//		Process.StandardInput.Write(e.KeyChar);
+		//	}
+		//}
 		
 		void StreamForm_Shown(object sender, EventArgs e)
 		{
@@ -306,6 +314,53 @@
 			if(!Process.HasExited) {
 				e.Cancel = true;
 				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["stream/running-close"], Process.ToString());
+			}
+		}
+
+		private void inputOutput_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode == Keys.Return) {
+				if(InputStartPosition != -1) {
+					// エンター！
+					var inputValue = this.inputOutput.Text.Substring(InputStartPosition, this.inputOutput.TextLength - InputStartPosition);
+					Process.StandardInput.WriteLine(inputValue);
+				} else {
+					// 入力開始されていないのでエンターキーだけ渡しておく
+					Process.StandardInput.WriteLine();
+				}
+				InputStartPosition = -1;
+			} else {
+				if(InputStartPosition == -1) {
+					var ignoreKeys = new[] {
+						Keys.Left,
+						Keys.Right,
+						Keys.Up,
+						Keys.Down,
+						Keys.PageUp,
+						Keys.PageDown,
+						Keys.Home,
+						Keys.End,
+						Keys.Shift,
+						Keys.Control,
+						Keys.Alt,
+					};
+
+					if(this.inputOutput.SelectionStart >= OutputLastPosition) {
+						if(ignoreKeys.Any(k => k == e.KeyCode)) {
+							// 入力可能位置でも移動系のカーソルは無視
+							return;
+						}
+
+						// このデータから取得を開始する
+						InputStartPosition = this.inputOutput.SelectionStart;
+					} else {
+						// すでに出力済みの項目にはなんもしない
+						// ただし移動系入力は素通りさせる
+						e.SuppressKeyPress = !ignoreKeys.Any(k => k == e.KeyCode);
+					}
+				}
+				//Debug.WriteLine(">> " + e.KeyCode + " > " + e.KeyData + " @ " + e.KeyValue);
+				//Process.StandardInput.Write(e.KeyCode);
 			}
 		}
 	}

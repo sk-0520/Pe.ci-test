@@ -169,6 +169,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputOutput.Size = new System.Drawing.Size(463, 227);
 			this.inputOutput.TabIndex = 0;
 			this.inputOutput.Text = "";
+			this.inputOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputOutput_KeyDown);
 			// 
 			// tabStream_pageProcess
 			// 
