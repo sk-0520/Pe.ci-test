@@ -121,7 +121,11 @@
 
 			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
 			var fileLauncherItem = (LauncherItem)launcherItem.Clone();
+			// ファイルアイテムに変換
 			fileLauncherItem.LauncherType = LauncherType.File;
+			// 管理者権限はどうにも効かなさそう
+			fileLauncherItem.Administrator = false;
+
 			return RunFileItem(fileLauncherItem, commonData);
 		}
 		
