@@ -103,6 +103,7 @@
 		#endregion ////////////////////////////////////
 
 		#region function
+
 		public void SetParameter(Process process, LauncherItem launcherItem)
 		{
 			Process = process;
@@ -127,6 +128,11 @@
 			*/
 		}
 
+		public void StartStream()
+		{
+			Process.BeginOutputReadLine();
+			Process.BeginErrorReadLine();
+		}
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
@@ -138,8 +144,6 @@
 
 			Process.OutputDataReceived += new DataReceivedEventHandler(Process_OutputDataReceived);
 			Process.ErrorDataReceived += new DataReceivedEventHandler(Process_ErrorDataReceived);
-
-			//this._inputStream = Process.StandardInput;
 
 			this.inputOutput.Font = CommonData.MainSetting.Launcher.StreamFontSetting.Font;
 		}
