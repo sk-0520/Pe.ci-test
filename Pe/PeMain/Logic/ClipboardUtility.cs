@@ -30,20 +30,29 @@
 		/// <param name="watcher">コピー処理をクリップボード監視に渡さない場合の抑制IF。</param>
 		static void Copy(Action action, bool appCopy, IClipboardWatcher watcher)
 		{
-			////var prevCopy = false;
-			//if(clipboardSetting != null) {
-			//	//prevCopy = commonData.MainSetting.Clipboard.DisabledCopy;
-			//	//clipboardSetting.DisabledCopy = !clipboardSetting.EnabledApplicationCopy;
-			//	//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
-			//}
-			action();
-			//if(clipboardSetting != null) {
-			//	Task.Run(() => {
-			//		//Thread.Sleep(clipboardSetting.SleepTime);
-			//		//clipboardSetting.DisabledCopy = !clipboardSetting.DisabledCopy;
-			//		//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
-			//	});
-			//}
+			bool? enabledWatch = null;
+			if(!appCopy) {
+				if(watcher == null) {
+					throw new ArgumentNullException("watcher");
+				}
+				enabledWatch = watcher.ClipboardWatching;
+				if(enabledWatch.Value) {
+					watcher.WatchClipboard(false);
+				}
+			}
+
+			try {
+				action();
+			} finally {
+				if(enabledWatch.HasValue) {
+					Debug.Assert(!appCopy);
+					Debug.Assert(watcher != null);
+
+					if(enabledWatch.Value) {
+						watcher.WatchClipboard(true);
+					}
+				}
+			}
 		}
 
 		/// <summary>

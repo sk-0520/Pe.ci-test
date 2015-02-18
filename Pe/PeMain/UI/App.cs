@@ -247,6 +247,8 @@
 			}
 		}
 
+		public bool ClipboardWatching { get { return this._messageWindow.ClipboardRegisted; } }
+
 
 		#region IRootSender-Receive
 
