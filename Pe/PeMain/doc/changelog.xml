@@ -71,7 +71,7 @@
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="00618396318a5197cdd977dc1df08614b048076e">
 				<message>#219: 画像データのクリップボード重複判定</message>
 			</note>
 			<note rev="">
