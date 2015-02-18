@@ -93,10 +93,18 @@
 			process.StartInfo.RedirectStandardError = true;
 
 			process.OutputDataReceived += (object sender, DataReceivedEventArgs e) => {
-				lines.Add(e.Data);
+				lock(lines) {
+					if(e.Data != null) {
+						lines.Add(e.Data);
+					}
+				}
 			};
 			process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) => {
-				lines.Add(e.Data);
+				lock(lines) {
+					if(e.Data != null) {
+						lines.Add(e.Data);
+					}
+				}
 			};
 			
 			process.Start();
