@@ -1080,7 +1080,7 @@
 			} else {
 				copyText = NoteItem.Body;
 			}
-			ClipboardUtility.CopyText(copyText, CommonData.MainSetting.Clipboard);
+			ClipboardUtility.CopyText(copyText, CommonData);
 		}
 		
 		void ContextMenu_font_change_Click(object sender, EventArgs e)

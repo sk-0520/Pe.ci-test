@@ -387,7 +387,7 @@
 		{
 			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, setting.Limit);
 			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, setting.WaitTime);
-			this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
+			//this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
 			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, setting.ClipboardRepeated);
 
 			this.selectClipboardEnabled.Checked = setting.Enabled;
@@ -660,7 +660,7 @@
 
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);
-			this.labelClipboardSleepTime.SetLanguage(Language);
+			//this.labelClipboardSleepTime.SetLanguage(Language);
 			this.labelClipboardHotkey.SetLanguage(Language);
 			this.selectClipboardEnabled.SetLanguage(Language);
 			this.selectClipboardAppEnabled.SetLanguage(Language);
@@ -1003,7 +1003,7 @@
 		{
 			setting.Limit = (int)this.inputClipboardLimit.Value;
 			setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
-			setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
+			//setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
 			setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
 
 			setting.Enabled = this.selectClipboardEnabled.Checked;

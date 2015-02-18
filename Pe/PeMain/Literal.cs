@@ -93,6 +93,7 @@
 		
 		public static readonly TripleRange<TimeSpan> commandHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(20));
 
+		[Obsolete("#225")]
 		public static readonly TripleRange<TimeSpan> clipboardSleepTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMilliseconds(15),
 			TimeSpan.FromMilliseconds(250),

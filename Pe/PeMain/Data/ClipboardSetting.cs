@@ -37,7 +37,7 @@
 			SaveTypes = ClipboardType.Text | ClipboardType.Rtf | ClipboardType.Html | ClipboardType.Image | ClipboardType.File;
 #endif
 
-			SleepTime = Literal.clipboardSleepTime.median;
+			//SleepTime = Literal.clipboardSleepTime.median;
 			WaitTime = Literal.clipboardWaitTime.median;
 
 			ToggleHotKeySetting = new HotKeySetting();
@@ -109,6 +109,7 @@
 		/// コピーを検知を無視する。
 		/// </summary>
 		[XmlIgnore]
+		[Obsolete("#225")]
 		public bool DisabledCopy { get; set; }
 		/// <summary>
 		/// 
@@ -125,12 +126,14 @@
 		/// 
 		/// </summary>
 		[XmlIgnore]
+		[Obsolete("#225")]
 		public TimeSpan SleepTime { get; set; }
 		[XmlElement("SleepTime", DataType = "duration")]
+		[Obsolete("#225")]
 		public string _SleepTime
 		{
-			get { return PropertyUtility.MixinTimeSpanGetter(SleepTime); }
-			set { SleepTime = PropertyUtility.MixinTimeSpanSetter(value); }
+			get; //{ return PropertyUtility.MixinTimeSpanGetter(SleepTime); }
+			set; //{ SleepTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 		/// <summary>
 		/// クリップボードリストのタイプ。
@@ -158,7 +161,7 @@
 			Limit = Literal.clipboardLimit.ToRounding(Limit);
 			HistoryItems = new FixedSizedList<ClipboardItem>(Limit);
 
-			SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
+			//SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
 			ClipboardRepeated = Literal.clipboardRepeated.ToRounding(ClipboardRepeated);
 		}

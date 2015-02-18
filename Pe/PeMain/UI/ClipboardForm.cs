@@ -651,27 +651,27 @@
 
 		void CopyItem(ClipboardItem clipboardItem, ClipboardType clipboardType)
 		{
-			var map = new Dictionary<ClipboardType, Action<ClipboardSetting>>() {
-				{ ClipboardType.Text, (clipboardSetting) => {
-					ClipboardUtility.CopyText(clipboardItem.Text, clipboardSetting);
+			var map = new Dictionary<ClipboardType, Action<CommonData>>() {
+				{ ClipboardType.Text, (setting) => {
+					ClipboardUtility.CopyText(clipboardItem.Text, setting);
 				} },
-				{ ClipboardType.Rtf, (clipboardSetting) => {
-					ClipboardUtility.CopyRtf(clipboardItem.Rtf, clipboardSetting);
+				{ ClipboardType.Rtf, (setting) => {
+					ClipboardUtility.CopyRtf(clipboardItem.Rtf, setting);
 				} },
-				{ ClipboardType.Html, (clipboardSetting) => {
-					ClipboardUtility.CopyHtml(clipboardItem.Html, clipboardSetting);
+				{ ClipboardType.Html, (setting) => {
+					ClipboardUtility.CopyHtml(clipboardItem.Html, setting);
 				} },
-				{ ClipboardType.Image, (clipboardSetting) => {
-					ClipboardUtility.CopyImage(clipboardItem.Image, clipboardSetting);
+				{ ClipboardType.Image, (setting) => {
+					ClipboardUtility.CopyImage(clipboardItem.Image, setting);
 				} },
-				{ ClipboardType.File, (clipboardSetting) => {
-					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), clipboardSetting);
+				{ ClipboardType.File, (setting) => {
+					ClipboardUtility.CopyFile(clipboardItem.Files.Where(f => FileUtility.Exists(f)), setting);
 				} },
-				{ ClipboardType.All, (clipboardSetting) => {
-					ClipboardUtility.CopyClipboardItem(clipboardItem, clipboardSetting);
+				{ ClipboardType.All, (setting) => {
+					ClipboardUtility.CopyClipboardItem(clipboardItem, setting);
 				} },
 			};
-			map[clipboardType](CommonData.MainSetting.Clipboard);
+			map[clipboardType](CommonData);
 		}
 
 		void CopySingleItem(int index)
@@ -879,7 +879,7 @@
 		{
 			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
 			if(!string.IsNullOrEmpty(templateText)) {
-				ClipboardUtility.CopyText(templateText, CommonData.MainSetting.Clipboard);
+				ClipboardUtility.CopyText(templateText, CommonData);
 			}
 		}
 
@@ -969,11 +969,11 @@
 				// 現在クリップボードを一時退避
 				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, Handle);
 				try {
-					ClipboardUtility.CopyText(outputText, CommonData.MainSetting.Clipboard);
+					ClipboardUtility.CopyText(outputText, CommonData);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
 				} finally {
 					if(clipboardItem != null && clipboardItem.ClipboardTypes != ClipboardType.None) {
-						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData.MainSetting.Clipboard);
+						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData);
 					}
 				}
 			} else {
@@ -1497,7 +1497,7 @@
 			// 現在URI表示欄に表示されている項目をこぴる
 			var uri = this.viewHtmlUri.Text;
 			if(!string.IsNullOrWhiteSpace(uri)) {
-				ClipboardUtility.CopyText(uri, CommonData.MainSetting.Clipboard);
+				ClipboardUtility.CopyText(uri, CommonData);
 			}
 		}
 
