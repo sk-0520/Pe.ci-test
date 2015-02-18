@@ -72,7 +72,7 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#219: 画像データのクリップボード重複判定</message>
 			</note>
 			<note rev="">
 				<message></message>

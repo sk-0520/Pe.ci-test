@@ -6,6 +6,7 @@
 	using System.Drawing;
 	using System.Drawing.Imaging;
 	using System.Linq;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	/// <summary>
 	/// 描画等々の共通処理。
@@ -157,7 +158,7 @@
 		}
 
 		/// <summary>
-		/// http://codereview.stackexchange.com/questions/39980/is-there-a-faster-way-to-compare-if-2-images-are-the-same
+		/// http://stackoverflow.com/questions/2031217/what-is-the-fastest-way-i-can-compare-two-equal-size-bitmaps-to-determine-whethe
 		/// </summary>
 		/// <param name="a"></param>
 		/// <param name="b"></param>
@@ -166,44 +167,30 @@
 		{
 			Debug.Assert(a != null);
 			Debug.Assert(b != null);
-			//bool equals = true;
-			//var rect = new Rectangle(0, 0, a.Width, a.Height);
-			//var bmpDataA = a.LockBits(rect, ImageLockMode.ReadOnly, a.PixelFormat);
-			//var bmpDataB = b.LockBits(rect, ImageLockMode.ReadOnly, b.PixelFormat);
-			//try {
-			//	unsafe {
-			//		byte* ptrA = (byte*)bmpDataA.Scan0.ToPointer();
-			//		byte* ptrB = (byte*)bmpDataB.Scan0.ToPointer();
-			//		var pxMap = new Dictionary<PixelFormat, int>() {
-			//				{ PixelFormat.Format16bppArgb1555, 2 },
-			//				{ PixelFormat.Format16bppGrayScale, 2 },
-			//				{ PixelFormat.Format16bppRgb565, 2 },
-			//				{ PixelFormat.Format24bppRgb, 3 },
-			//				{ PixelFormat.Format32bppArgb, 4 },
-			//				{ PixelFormat.Format32bppPArgb, 4 },
-			//				{ PixelFormat.Format32bppRgb, 4 },
-			//			};
-			//		var px = pxMap[a.PixelFormat];
-			//		int width = rect.Width * px; // for 24bpp pixel data
-			//		for(int y = 0; equals && y < rect.Height; y++) {
-			//			for(int x = 0; x < width; x++) {
-			//				if(*ptrA != *ptrB) {
-			//					equals = false;
-			//					break;
-			//				}
-			//				ptrA++;
-			//				ptrB++;
-			//			}
-			//			ptrA += bmpDataA.Stride - width;
-			//			ptrB += bmpDataB.Stride - width;
-			//		}
-			//	}
-			//} finally {
-			//	a.UnlockBits(bmpDataA);
-			//	b.UnlockBits(bmpDataB);
-			//}
-			//return equals;
-			return false;
+			Debug.Assert(a.Size == b.Size);
+			Debug.Assert(a.PixelFormat == b.PixelFormat);
+
+			var imageArea = new Rectangle(new Point(0, 0), a.Size);
+
+			var bmpDataA = a.LockBits(imageArea, ImageLockMode.ReadOnly, a.PixelFormat);
+			try {
+				var bmpDataB = b.LockBits(imageArea, ImageLockMode.ReadOnly, b.PixelFormat);
+				try {
+					var ptrA = bmpDataA.Scan0;
+					var ptrB = bmpDataB.Scan0;
+
+					int stride = bmpDataA.Stride;
+					int length = stride * bmpDataA.Height;
+
+					var cmpResult = NativeMethods.memcmp(ptrA, ptrB, length);
+					Debug.WriteLine("cmpResult: " + cmpResult);
+					return cmpResult == 0;
+				} finally {
+					b.UnlockBits(bmpDataB);
+				}
+			} finally {
+				a.UnlockBits(bmpDataA);
+			}
 		}
 
 		public static bool IsEqualImage(Image a, Image b)

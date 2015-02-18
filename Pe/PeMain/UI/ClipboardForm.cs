@@ -967,7 +967,7 @@
 			NativeMethods.SetForegroundWindow(hWnd);
 			if(usingClipboard) {
 				// 現在クリップボードを一時退避
-				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, Handle);
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.All, Handle, CommonData.Logger);
 				try {
 					ClipboardUtility.CopyText(outputText, CommonData);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
