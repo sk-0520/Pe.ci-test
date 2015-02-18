@@ -13,6 +13,5 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 		/// </summary>
 		/// <param name="watch">真の場合に監視する</param>
 		void WatchClipboard(bool watch);
-
 	}
 }
