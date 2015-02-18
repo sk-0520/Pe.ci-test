@@ -56,29 +56,16 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.51.1" type="rc">
+	<log date="2015/02/18" version="0.52.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>本バージョン(Pe 0.52.0)未満でのアップデート処理は詳しく調査すると笑顔で地雷原を走り回っている状態でした</message>
+				<comments>
+					<comment>バージョンアップに失敗し、プログラムが強制終了した場合はPeを再起動してタスクトレイコンテキストメニュー → Pe情報 → アップデートを実行してみてくださいよ！</comment>
+					<comment>どうしようもなくアップデートできない場合は https://bitbucket.org/sk_0520/pe/downloads からダウンロードしてください。。。Vectorは公開依頼してから公開までが遅いのですよ！</comment>
+					<comment>もう大丈夫だ、大丈夫、これで落ちない、大丈夫大丈夫。大丈夫だから忘れよう</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="fixes">
@@ -103,21 +90,9 @@
 			</note>
 			<note rev="5b73080306b3b600efcafea820a31056ada21e6a">
 				<message>#227: アップデートチェック時に死ぬ、再び</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<comments>
+					<comment>たまに報告いただいてたなーんもしてないのに落ちたってのは恐らくこれが原因かと思われます</comment>
+				</comments>
 			</note>
 		</group>
 	</log>
