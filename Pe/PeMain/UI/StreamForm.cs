@@ -275,6 +275,8 @@
 		{
 			// #22
 			this.inputOutput.Clear();
+			InputStartPosition = -1;
+			OutputLastPosition = -1;
 		}
 		
 		void ToolStream_save_Click(object sender, EventArgs e)
