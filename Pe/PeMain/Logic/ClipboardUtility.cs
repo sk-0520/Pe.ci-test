@@ -6,6 +6,7 @@
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Linq;
+	using System.Runtime.InteropServices;
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using System.Windows.Forms;
@@ -233,44 +234,49 @@
 		//	return clipboardItem;
 		//}
 
-		static ClipboardItem CreateClipboardItemFromFramework(ClipboardType enabledTypes)
+		static ClipboardItem CreateClipboardItemFromFramework(ClipboardType enabledTypes, ILogger logger)
 		{
 			var clipboardItem = new ClipboardItem();
-			var clipboardData = Clipboard.GetDataObject();
 
-			if(enabledTypes.HasFlag(ClipboardType.Text)) {
-				if(clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
-					clipboardItem.Text = (string)clipboardData.GetData(DataFormats.UnicodeText);
-					clipboardItem.ClipboardTypes |= ClipboardType.Text;
-				} else if(clipboardData.GetDataPresent(DataFormats.Text)) {
-					clipboardItem.Text = (string)clipboardData.GetData(DataFormats.Text);
-					clipboardItem.ClipboardTypes |= ClipboardType.Text;
+			try {
+				var clipboardData = Clipboard.GetDataObject();
+
+				if(enabledTypes.HasFlag(ClipboardType.Text)) {
+					if(clipboardData.GetDataPresent(DataFormats.UnicodeText)) {
+						clipboardItem.Text = (string)clipboardData.GetData(DataFormats.UnicodeText);
+						clipboardItem.ClipboardTypes |= ClipboardType.Text;
+					} else if(clipboardData.GetDataPresent(DataFormats.Text)) {
+						clipboardItem.Text = (string)clipboardData.GetData(DataFormats.Text);
+						clipboardItem.ClipboardTypes |= ClipboardType.Text;
+					}
 				}
-			}
 
-			if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
-				clipboardItem.Rtf = (string)clipboardData.GetData(DataFormats.Rtf);
-				clipboardItem.ClipboardTypes |= ClipboardType.Rtf;
-			}
-
-			if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
-				clipboardItem.Html = (string)clipboardData.GetData(DataFormats.Html);
-				clipboardItem.ClipboardTypes |= ClipboardType.Html;
-			}
-
-			if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
-				var image = clipboardData.GetData(DataFormats.Bitmap) as Bitmap;
-				if(image != null) {
-					clipboardItem.Image = (Bitmap)image.Clone();
-					clipboardItem.ClipboardTypes |= ClipboardType.Image;
+				if(enabledTypes.HasFlag(ClipboardType.Rtf) && clipboardData.GetDataPresent(DataFormats.Rtf)) {
+					clipboardItem.Rtf = (string)clipboardData.GetData(DataFormats.Rtf);
+					clipboardItem.ClipboardTypes |= ClipboardType.Rtf;
 				}
-			}
 
-			if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
-				var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
-				clipboardItem.Files = new List<string>(files);
-				clipboardItem.Text = string.Join(Environment.NewLine, files);
-				clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
+				if(enabledTypes.HasFlag(ClipboardType.Html) && clipboardData.GetDataPresent(DataFormats.Html)) {
+					clipboardItem.Html = (string)clipboardData.GetData(DataFormats.Html);
+					clipboardItem.ClipboardTypes |= ClipboardType.Html;
+				}
+
+				if(enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
+					var image = clipboardData.GetData(DataFormats.Bitmap) as Bitmap;
+					if(image != null) {
+						clipboardItem.Image = (Bitmap)image.Clone();
+						clipboardItem.ClipboardTypes |= ClipboardType.Image;
+					}
+				}
+
+				if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
+					var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
+					clipboardItem.Files = new List<string>(files);
+					clipboardItem.Text = string.Join(Environment.NewLine, files);
+					clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
+				}
+			} catch(COMException ex) {
+				logger.Puts(LogType.Error, ex.Message, ex);
 			}
 
 			if(clipboardItem.ClipboardTypes == ClipboardType.None) {
@@ -286,9 +292,9 @@
 		/// </summary>
 		/// <param name="enabledTypes">取り込み対象とするクリップボード種別。</param>
 		/// <returns>生成されたクリップボードアイテム。生成可能な種別がなければnullを返す。</returns>
-		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes, IntPtr hWnd)
+		public static ClipboardItem CreateClipboardItem(ClipboardType enabledTypes, IntPtr hWnd, ILogger logger)
 		{
-			var clipboardItem = CreateClipboardItemFromFramework(enabledTypes);
+			var clipboardItem = CreateClipboardItemFromFramework(enabledTypes, logger);
 			return clipboardItem;
 		}
 

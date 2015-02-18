@@ -193,7 +193,7 @@
 
 			this._clipboardPrevTime = now;
 
-			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero);
+			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
 			if(clipboardItem != null) {
 				Task.Run(() => {
 					var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
@@ -214,6 +214,7 @@
 					}
 					return true;
 				}).ContinueWith(t => {
+					Debug.WriteLine("Clipboard: " + t.Result);
 					if(t.Result) {
 						try {
 							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
@@ -223,6 +224,8 @@
 					} else {
 						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
 					}
+
+					t.ToDispose();
 				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 		}
