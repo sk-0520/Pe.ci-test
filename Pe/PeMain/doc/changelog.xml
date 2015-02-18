@@ -90,7 +90,7 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#223: 標準入出力をファイルに保存した時改行がLFになる</message>
 			</note>
 			<note rev="">
 				<message></message>

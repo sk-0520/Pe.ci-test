@@ -223,7 +223,10 @@
 		void SaveStream(string path)
 		{
 			using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
-				stream.Write(this.inputOutput.Text);
+				var lines = this.inputOutput.Text.SplitLines();
+				foreach(var line in lines) {
+					stream.WriteLine(line);
+				}
 			}
 		}
 
