@@ -27,14 +27,14 @@
 			//var prevCopy = false;
 			if(clipboardSetting != null) {
 				//prevCopy = commonData.MainSetting.Clipboard.DisabledCopy;
-				clipboardSetting.DisabledCopy = !clipboardSetting.EnabledApplicationCopy;
+				//clipboardSetting.DisabledCopy = !clipboardSetting.EnabledApplicationCopy;
 				//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 			}
 			action();
 			if(clipboardSetting != null) {
 				Task.Run(() => {
-					Thread.Sleep(clipboardSetting.SleepTime);
-					clipboardSetting.DisabledCopy = !clipboardSetting.DisabledCopy;
+					//Thread.Sleep(clipboardSetting.SleepTime);
+					//clipboardSetting.DisabledCopy = !clipboardSetting.DisabledCopy;
 					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
 				});
 			}
