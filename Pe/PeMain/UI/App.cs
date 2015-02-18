@@ -1598,7 +1598,7 @@
 		/// </summary>
 		void CheckUpdateProcessAsync()
 		{
-#if !_DISABLED_UPDATE_CHECK
+#if !DISABLED_UPDATE_CHECK
 			Task.Run(() => {
 				// ネットワーク接続可能か？
 				var nic = NetworkInterface.GetIsNetworkAvailable();

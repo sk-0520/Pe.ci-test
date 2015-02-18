@@ -166,6 +166,10 @@
 				return;
 			}
 			 */
+			if(line == null) {
+				// 最終受信
+				return;
+			}
 
 			this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
 				this.inputOutput.Text += line + Environment.NewLine;
