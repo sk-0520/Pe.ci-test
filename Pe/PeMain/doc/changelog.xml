@@ -101,7 +101,7 @@
 					<comment>Win8以上のアイコンに合わせる</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="5b73080306b3b600efcafea820a31056ada21e6a">
 				<message>#227: アップデートチェック時に死ぬ、再び</message>
 			</note>
 			<note rev="">
