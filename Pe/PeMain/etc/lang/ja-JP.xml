@@ -331,7 +331,6 @@
 		<Word Name="setting/check/clipboard-app-enabled"  Text="@[APPLICATION]のコピー操作も履歴へ取り込む" />
 		<Word Name="setting/label/clipboard-limit"        Text="保持する履歴数" />
 		<Word Name="setting/label/clipboard-wait"         Text="前回コピーからの待機時間(ミリ秒)" />
-		<Word Name="setting/label/clipboard-sleep"        Text="@[APPLICATION]操作猶予時間(ミリ秒)" />
 		<Word Name="setting/label/clipboard-repeated"     Text="クリップボード重複判定(@[ALL]で全て対象)" />
 		<Word Name="setting/check/clipboard-visible"      Text="${visible}" />
 		<Word Name="setting/check/clipboard-topmost"      Text="${topmost}" />

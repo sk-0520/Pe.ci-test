@@ -166,6 +166,10 @@
 				return;
 			}
 			 */
+			if(line == null) {
+				// 最終受信
+				return;
+			}
 
 			this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
 				this.inputOutput.Text += line + Environment.NewLine;
@@ -223,7 +227,10 @@
 		void SaveStream(string path)
 		{
 			using(var stream = new StreamWriter(new FileStream(path, FileMode.Create))) {
-				stream.Write(this.inputOutput.Text);
+				var lines = this.inputOutput.Text.SplitLines();
+				foreach(var line in lines) {
+					stream.WriteLine(line);
+				}
 			}
 		}
 
@@ -275,6 +282,8 @@
 		{
 			// #22
 			this.inputOutput.Clear();
+			InputStartPosition = -1;
+			OutputLastPosition = -1;
 		}
 		
 		void ToolStream_save_Click(object sender, EventArgs e)

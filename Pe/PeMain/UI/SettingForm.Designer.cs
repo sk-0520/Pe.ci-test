@@ -216,9 +216,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.labelClipboardLimit = new System.Windows.Forms.Label();
 			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
-			this.labelClipboardSleepTime = new System.Windows.Forms.Label();
 			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
-			this.inputClipboardSleepTime = new System.Windows.Forms.NumericUpDown();
 			this.inputClipboardWaitTime = new System.Windows.Forms.NumericUpDown();
 			this.labelClipboardRepeated = new System.Windows.Forms.Label();
 			this.inputClipboardRepeated = new System.Windows.Forms.NumericUpDown();
@@ -296,7 +294,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardRepeated)).BeginInit();
 			this.panelSetting.SuspendLayout();
@@ -2327,7 +2324,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel8.Controls.Add(this.tableLayoutPanel3);
 			this.flowLayoutPanel8.Location = new System.Drawing.Point(3, 174);
 			this.flowLayoutPanel8.Name = "flowLayoutPanel8";
-			this.flowLayoutPanel8.Size = new System.Drawing.Size(685, 130);
+			this.flowLayoutPanel8.Size = new System.Drawing.Size(685, 103);
 			this.flowLayoutPanel8.TabIndex = 1;
 			// 
 			// tableLayoutPanel1
@@ -2427,21 +2424,18 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel3.Controls.Add(this.labelClipboardLimit, 0, 0);
 			this.tableLayoutPanel3.Controls.Add(this.labelClipboardWaitTaime, 0, 1);
-			this.tableLayoutPanel3.Controls.Add(this.labelClipboardSleepTime, 0, 2);
 			this.tableLayoutPanel3.Controls.Add(this.inputClipboardLimit, 1, 0);
-			this.tableLayoutPanel3.Controls.Add(this.inputClipboardSleepTime, 1, 2);
 			this.tableLayoutPanel3.Controls.Add(this.inputClipboardWaitTime, 1, 1);
-			this.tableLayoutPanel3.Controls.Add(this.labelClipboardRepeated, 0, 3);
-			this.tableLayoutPanel3.Controls.Add(this.inputClipboardRepeated, 1, 3);
+			this.tableLayoutPanel3.Controls.Add(this.labelClipboardRepeated, 0, 2);
+			this.tableLayoutPanel3.Controls.Add(this.inputClipboardRepeated, 1, 2);
 			this.tableLayoutPanel3.Location = new System.Drawing.Point(350, 3);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 5;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel3.RowCount = 4;
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(332, 124);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(332, 95);
 			this.tableLayoutPanel3.TabIndex = 17;
 			// 
 			// labelClipboardLimit
@@ -2464,16 +2458,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelClipboardWaitTaime.TabIndex = 7;
 			this.labelClipboardWaitTaime.Text = ":setting/label/clipboard-wait";
 			// 
-			// labelClipboardSleepTime
-			// 
-			this.labelClipboardSleepTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelClipboardSleepTime.AutoSize = true;
-			this.labelClipboardSleepTime.Location = new System.Drawing.Point(3, 65);
-			this.labelClipboardSleepTime.Name = "labelClipboardSleepTime";
-			this.labelClipboardSleepTime.Size = new System.Drawing.Size(178, 15);
-			this.labelClipboardSleepTime.TabIndex = 9;
-			this.labelClipboardSleepTime.Text = ":setting/label/clipboard-sleep";
-			// 
 			// inputClipboardLimit
 			// 
 			this.inputClipboardLimit.Location = new System.Drawing.Point(209, 3);
@@ -2481,14 +2465,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardLimit.TabIndex = 1;
 			this.inputClipboardLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// inputClipboardSleepTime
-			// 
-			this.inputClipboardSleepTime.Location = new System.Drawing.Point(209, 61);
-			this.inputClipboardSleepTime.Name = "inputClipboardSleepTime";
-			this.inputClipboardSleepTime.Size = new System.Drawing.Size(120, 23);
-			this.inputClipboardSleepTime.TabIndex = 3;
-			this.inputClipboardSleepTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// inputClipboardWaitTime
 			// 
@@ -2502,7 +2478,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.labelClipboardRepeated.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelClipboardRepeated.AutoSize = true;
-			this.labelClipboardRepeated.Location = new System.Drawing.Point(3, 94);
+			this.labelClipboardRepeated.Location = new System.Drawing.Point(3, 65);
 			this.labelClipboardRepeated.Name = "labelClipboardRepeated";
 			this.labelClipboardRepeated.Size = new System.Drawing.Size(200, 15);
 			this.labelClipboardRepeated.TabIndex = 10;
@@ -2510,7 +2486,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardRepeated
 			// 
-			this.inputClipboardRepeated.Location = new System.Drawing.Point(209, 90);
+			this.inputClipboardRepeated.Location = new System.Drawing.Point(209, 61);
 			this.inputClipboardRepeated.Name = "inputClipboardRepeated";
 			this.inputClipboardRepeated.Size = new System.Drawing.Size(120, 23);
 			this.inputClipboardRepeated.TabIndex = 11;
@@ -2687,7 +2663,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tableLayoutPanel3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardLimit)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.inputClipboardSleepTime)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardWaitTime)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.inputClipboardRepeated)).EndInit();
 			this.panelSetting.ResumeLayout(false);
@@ -2843,8 +2818,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.Label labelClipboardLimit;
 		private System.Windows.Forms.GroupBox groupClipboardType;
 		private System.Windows.Forms.FlowLayoutPanel panelClipboardType;
-		private System.Windows.Forms.Label labelClipboardSleepTime;
-		private System.Windows.Forms.NumericUpDown inputClipboardSleepTime;
 		private System.Windows.Forms.Label labelClipboardHotkey;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputClipboardHotkey;
 		private System.Windows.Forms.GroupBox groupMainSkin;
@@ -2885,11 +2858,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel9;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel7;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel8;
-		private System.Windows.Forms.Label labelClipboardRepeated;
-		private System.Windows.Forms.NumericUpDown inputClipboardRepeated;
 		private System.Windows.Forms.CheckBox selectClipboardOutputUsingClipboard;
 		private System.Windows.Forms.GroupBox groupClipboardOutput;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel10;
 		private System.Windows.Forms.CheckBox selectClipboardItemWClickToOutput;
+		private System.Windows.Forms.Label labelClipboardRepeated;
+		private System.Windows.Forms.NumericUpDown inputClipboardRepeated;
 	}
 }

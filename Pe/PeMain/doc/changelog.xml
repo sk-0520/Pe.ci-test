@@ -56,6 +56,47 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="2015/02/18" version="0.52.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>本バージョン(Pe 0.52.0)未満でのアップデート処理は詳しく調査すると笑顔で地雷原を走り回っている状態でした</message>
+				<comments>
+					<comment>バージョンアップに失敗し、プログラムが強制終了した場合はPeを再起動してタスクトレイコンテキストメニュー → Pe情報 → アップデートを実行してみてくださいよ！</comment>
+					<comment>どうしようもなくアップデートできない場合は https://bitbucket.org/sk_0520/pe/downloads からダウンロードしてください。。。Vectorは公開依頼してから公開までが遅いのですよ！</comment>
+					<comment>もう大丈夫だ、大丈夫、これで落ちない、大丈夫大丈夫。大丈夫だから忘れよう</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="69800b89e653f7d52952c922175dff628b3bc5b2">
+				<message>#225: クリップボード/テンプレートのアイテムをクリップボード経由でテキスト転送した後クリップボードの履歴が取り込めない</message>
+				<comments>
+					<comment>対応に伴い設定 → クリップボード/テンプレート → Pe操作猶予時間 を廃止しました</comment>
+				</comments>
+			</note>
+			<note rev="f60c25a3be357ccb77773b50f0ee0dbe52f9da69">
+				<message>#223: 標準入出力をファイルに保存した時改行がLFになる</message>
+			</note>
+			<note rev="3085e5cf2f5377e9865b1f4bf9ed011ce18f13a9">
+				<message>#226: 標準入出力の出力クリア後に標準入力が行えない</message>
+			</note>
+			<note rev="c54593bf8850c44340097f7cabfd6f7355a47e9c">
+				<message>#224: タスクトレイコンテキストメニューのツールバーアイコンがWin7以下とWin8以上で意味合いが異なる</message>
+				<comments>
+					<comment>Win8以上のアイコンに合わせる</comment>
+				</comments>
+			</note>
+			<note rev="5b73080306b3b600efcafea820a31056ada21e6a">
+				<message>#227: アップデートチェック時に死ぬ、再び</message>
+				<comments>
+					<comment>たまに報告いただいてたなーんもしてないのに落ちたってのは恐らくこれが原因かと思われます</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2014/02/17" version="0.51.0">
 		<group type="note">
 			<sep dummy="==================================================================" />

@@ -8,10 +8,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Text.RegularExpressions;
-	using System.Threading;
-	using System.Threading.Tasks;
 	using System.Windows.Forms;
-	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -22,21 +19,36 @@
 	/// </summary>
 	public class ClipboardUtility
 	{
-		static void Copy(Action action, ClipboardSetting clipboardSetting)
+		/// <summary>
+		/// コピー処理の親玉。
+		/// </summary>
+		/// <param name="action">コピー処理。</param>
+		/// <param name="appCopy">コピー処理をクリップボード監視に引き渡すか。</param>
+		/// <param name="watcher">コピー処理をクリップボード監視に渡さない場合の抑制IF。</param>
+		static void Copy(Action action, bool appCopy, IClipboardWatcher watcher)
 		{
-			//var prevCopy = false;
-			if(clipboardSetting != null) {
-				//prevCopy = commonData.MainSetting.Clipboard.DisabledCopy;
-				clipboardSetting.DisabledCopy = !clipboardSetting.EnabledApplicationCopy;
-				//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
+			bool? enabledWatch = null;
+			if(!appCopy) {
+				if(watcher == null) {
+					throw new ArgumentNullException("watcher");
+				}
+				enabledWatch = watcher.ClipboardWatching;
+				if(enabledWatch.Value) {
+					watcher.WatchClipboard(false);
+				}
 			}
-			action();
-			if(clipboardSetting != null) {
-				Task.Run(() => {
-					Thread.Sleep(clipboardSetting.SleepTime);
-					clipboardSetting.DisabledCopy = !clipboardSetting.DisabledCopy;
-					//Debug.WriteLine(commonData.MainSetting.Clipboard.DisabledCopy);
-				});
+
+			try {
+				action();
+			} finally {
+				if(enabledWatch.HasValue) {
+					Debug.Assert(!appCopy);
+					Debug.Assert(watcher != null);
+
+					if(enabledWatch.Value) {
+						watcher.WatchClipboard(true);
+					}
+				}
 			}
 		}
 
@@ -45,9 +57,9 @@
 		/// </summary>
 		/// <param name="text">対象文字列。</param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
-		public static void CopyText(string text, ClipboardSetting clipboardSetting)
+		public static void CopyText(string text, CommonData commonData)
 		{
-			Copy(() => Clipboard.SetText(text, TextDataFormat.UnicodeText), clipboardSetting);
+			Copy(() => Clipboard.SetText(text, TextDataFormat.UnicodeText), commonData.MainSetting.Clipboard.EnabledApplicationCopy, commonData.RootSender);
 		}
 
 		/// <summary>
@@ -55,9 +67,9 @@
 		/// </summary>
 		/// <param name="rtf">対象RTF。</param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
-		public static void CopyRtf(string rtf, ClipboardSetting clipboardSetting)
+		public static void CopyRtf(string rtf, CommonData commonData)
 		{
-			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Rtf), clipboardSetting);
+			Copy(() => Clipboard.SetText(rtf, TextDataFormat.Rtf), commonData.MainSetting.Clipboard.EnabledApplicationCopy, commonData.RootSender);
 		}
 
 		/// <summary>
@@ -65,9 +77,9 @@
 		/// </summary>
 		/// <param name="html">対象HTML。</param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
-		public static void CopyHtml(string html, ClipboardSetting clipboardSetting)
+		public static void CopyHtml(string html, CommonData commonData)
 		{
-			Copy(() => Clipboard.SetText(html, TextDataFormat.Html), clipboardSetting);
+			Copy(() => Clipboard.SetText(html, TextDataFormat.Html), commonData.MainSetting.Clipboard.EnabledApplicationCopy, commonData.RootSender);
 		}
 
 		/// <summary>
@@ -75,9 +87,9 @@
 		/// </summary>
 		/// <param name="image">対象画像。</param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
-		public static void CopyImage(Image image, ClipboardSetting clipboardSetting)
+		public static void CopyImage(Image image, CommonData commonData)
 		{
-			Copy(() => Clipboard.SetImage(image), clipboardSetting);
+			Copy(() => Clipboard.SetImage(image), commonData.MainSetting.Clipboard.EnabledApplicationCopy, commonData.RootSender);
 		}
 
 		/// <summary>
@@ -85,11 +97,11 @@
 		/// </summary>
 		/// <param name="file">対象ファイル。</param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
-		public static void CopyFile(IEnumerable<string> file, ClipboardSetting clipboardSetting)
+		public static void CopyFile(IEnumerable<string> file, CommonData commonData)
 		{
 			var sc = new StringCollection();
 			sc.AddRange(file.ToArray());
-			Copy(() => Clipboard.SetFileDropList(sc), clipboardSetting);
+			Copy(() => Clipboard.SetFileDropList(sc), commonData.MainSetting.Clipboard.EnabledApplicationCopy, commonData.RootSender);
 		}
 
 		/// <summary>
@@ -98,12 +110,12 @@
 		/// </summary>
 		/// <param name="data"></param>
 		/// <param name="clipboardSetting">クリップボード設定。</param>
-		public static void CopyDataObject(IDataObject data, ClipboardSetting clipboardSetting)
+		public static void CopyDataObject(IDataObject data, CommonData commonData)
 		{
-			Copy(() => Clipboard.SetDataObject(data), clipboardSetting);
+			Copy(() => Clipboard.SetDataObject(data), commonData.MainSetting.Clipboard.EnabledApplicationCopy, commonData.RootSender);
 		}
 
-		public static void CopyClipboardItem(ClipboardItem clipboardItem, ClipboardSetting clipboardSetting)
+		public static void CopyClipboardItem(ClipboardItem clipboardItem, CommonData commonData)
 		{
 			Debug.Assert(clipboardItem.ClipboardTypes != ClipboardType.None);
 
@@ -122,7 +134,7 @@
 			foreach(var type in clipboardItem.GetClipboardTypeList()) {
 				typeFuncs[type]();
 			}
-			CopyDataObject(data, clipboardSetting);
+			CopyDataObject(data, commonData);
 		}
 
 		/// <summary>
