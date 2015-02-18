@@ -93,6 +93,9 @@
 				<message>#223: 標準入出力をファイルに保存した時改行がLFになる</message>
 			</note>
 			<note rev="">
+				<message>#226: 標準入出力の出力クリア後に標準入力が行えない</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
