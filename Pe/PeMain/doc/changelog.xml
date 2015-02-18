@@ -89,20 +89,20 @@
 					<comment>対応に伴い設定 → クリップボード/テンプレート → Pe操作猶予時間 を廃止しました</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="f60c25a3be357ccb77773b50f0ee0dbe52f9da69">
 				<message>#223: 標準入出力をファイルに保存した時改行がLFになる</message>
 			</note>
-			<note rev="">
+			<note rev="3085e5cf2f5377e9865b1f4bf9ed011ce18f13a9">
 				<message>#226: 標準入出力の出力クリア後に標準入力が行えない</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
+			<note rev="c54593bf8850c44340097f7cabfd6f7355a47e9c">
 				<message>#224: タスクトレイコンテキストメニューのツールバーアイコンがWin7以下とWin8以上で意味合いが異なる</message>
 				<comments>
 					<comment>Win8以上のアイコンに合わせる</comment>
 				</comments>
+			</note>
+			<note rev="">
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
