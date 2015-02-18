@@ -8,7 +8,7 @@
 	/// <summary>
 	/// 送信機。
 	/// </summary>
-	public interface IRootSender
+	public interface IRootSender: IClipboardWatcher
 	{
 		/// <summary>
 		/// バルーンの表示。
@@ -49,11 +49,5 @@
 		/// </summary>
 		/// <param name="changeDevice"></param>
 		void SendDeviceChanged(ChangeDevice changeDevice);
-
-		/// <summary>
-		/// クリップボード監視の設定
-		/// </summary>
-		/// <param name="watching">真の場合に監視する</param>
-		void WatcheClipboard(bool watching);
 	}
 }
