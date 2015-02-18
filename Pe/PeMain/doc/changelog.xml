@@ -98,6 +98,15 @@
 			<note rev="">
 				<message></message>
 			</note>
+			<note rev="">
+				<message>#224: タスクトレイコンテキストメニューのツールバーアイコンがWin7以下とWin8以上で意味合いが異なる</message>
+				<comments>
+					<comment>Win8以上のアイコンに合わせる</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
