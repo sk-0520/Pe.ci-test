@@ -8,10 +8,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Text.RegularExpressions;
-	using System.Threading;
-	using System.Threading.Tasks;
 	using System.Windows.Forms;
-	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;

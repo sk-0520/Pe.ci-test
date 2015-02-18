@@ -660,7 +660,7 @@
 
 			this.labelClipboardLimit.SetLanguage(Language);
 			this.labelClipboardWaitTaime.SetLanguage(Language);
-			this.labelClipboardSleepTime.SetLanguage(Language);
+			//this.labelClipboardSleepTime.SetLanguage(Language);
 			this.labelClipboardHotkey.SetLanguage(Language);
 			this.selectClipboardEnabled.SetLanguage(Language);
 			this.selectClipboardAppEnabled.SetLanguage(Language);

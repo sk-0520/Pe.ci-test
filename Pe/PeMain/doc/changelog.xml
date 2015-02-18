@@ -84,7 +84,10 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#225: クリップボード/テンプレートのアイテムをクリップボード経由でテキスト転送した後クリップボードの履歴が取り込めない</message>
+				<comments>
+					<comment>対応に伴い設定 → クリップボード/テンプレート → Pe操作猶予時間 を廃止しました</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
