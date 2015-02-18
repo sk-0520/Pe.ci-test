@@ -239,6 +239,12 @@
 			ReceiveDeviceChanged(changeDevice);
 		}
 
+		public void WatcheClipboard(bool watching)
+		{
+			Debug.WriteLine(watching);
+		}
+
+
 		#region IRootSender-Receive
 
 		public void ReceiveDeviceChanged(ChangeDevice changeDevice)

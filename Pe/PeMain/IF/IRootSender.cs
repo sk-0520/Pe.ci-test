@@ -50,5 +50,10 @@
 		/// <param name="changeDevice"></param>
 		void SendDeviceChanged(ChangeDevice changeDevice);
 
+		/// <summary>
+		/// クリップボード監視の設定
+		/// </summary>
+		/// <param name="watching">真の場合に監視する</param>
+		void WatcheClipboard(bool watching);
 	}
 }

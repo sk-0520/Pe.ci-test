@@ -47,7 +47,7 @@
 		//CommonData CommonData { get; set; }
 		public ILogger StartupLogger { get; set; }
 		//IntPtr NextWndHandle { get; set; }
-		bool ClipboardRegisted { get; set; }
+		public bool ClipboardRegisted { get; private set; }
 
 		#endregion ////////////////////////////////
 
@@ -181,11 +181,27 @@
 
 			ApplyHotKey();
 
-			//NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
+			////NextWndHandle = NativeMethods.SetClipboardViewer(Handle);
+			//if(ClipboardRegisted) {
+			//	NativeMethods.RemoveClipboardFormatListener(Handle);
+			//}
+			//ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
+			RegistClipboardListener();
+		}
+
+		public void RegistClipboardListener()
+		{
+			if(!ClipboardRegisted) {
+				ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
+			}
+		}
+
+		public void UnRegistClipboardListener()
+		{
 			if(ClipboardRegisted) {
 				NativeMethods.RemoveClipboardFormatListener(Handle);
+				ClipboardRegisted = false;
 			}
-			ClipboardRegisted = NativeMethods.AddClipboardFormatListener(Handle);
 		}
 
 		#endregion /////////////////////////////////
