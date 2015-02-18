@@ -84,36 +84,38 @@
 			var map = new Dictionary<string,string>() {
 				{ "checkonly", "true" }
 			};
-			var process = CreateProcess(map);
-			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], process.StartInfo.Arguments);
-			
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.StartInfo.RedirectStandardError = true;
+			using(var process = CreateProcess(map)) {
 
-			process.OutputDataReceived += (object sender, DataReceivedEventArgs e) => {
-				lock(lines) {
-					if(e.Data != null) {
-						lines.Add(e.Data);
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/check"], process.StartInfo.Arguments);
+
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.CreateNoWindow = true;
+				process.StartInfo.RedirectStandardOutput = true;
+				process.StartInfo.RedirectStandardError = true;
+
+				process.OutputDataReceived += (object sender, DataReceivedEventArgs e) => {
+					lock(lines) {
+						if(e.Data != null) {
+							lines.Add(e.Data);
+						}
 					}
-				}
-			};
-			process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) => {
-				lock(lines) {
-					if(e.Data != null) {
-						lines.Add(e.Data);
+				};
+				process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) => {
+					lock(lines) {
+						if(e.Data != null) {
+							lines.Add(e.Data);
+						}
 					}
-				}
-			};
-			
-			process.Start();
-			
-			process.BeginOutputReadLine();
-			process.BeginErrorReadLine();
-			
-			process.WaitForExit();
-			
+				};
+
+				process.Start();
+
+				process.BeginOutputReadLine();
+				process.BeginErrorReadLine();
+
+				process.WaitForExit();
+			}
+
 			var info = new UpdateInfo(lines);
 			
 			if(lines.Count > 0) {
@@ -169,38 +171,39 @@
 
 			//var pipe = new NamedPipeServerStream(pipeName, PipeDirection.In);
 			var waitEvent = new EventWaitHandle(false, EventResetMode.AutoReset, eventName);
-			
-			var process = CreateProcess(map);
-			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
 
-			var result = false;
+			using(var process = CreateProcess(map)) {
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exec"], process.StartInfo.Arguments);
 
-			process.Start();
-			var processEvent =  new EventWaitHandle(false, EventResetMode.AutoReset) {
-				SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
-			};
-			var handles = new [] { waitEvent, processEvent };
-			var waitResult = WaitHandle.WaitAny(handles, TimeSpan.FromMinutes(3));
-			this._commonData.Logger.PutsDebug("WaitHandle.WaitAny", () => waitResult);
-			if(0 <= waitResult && waitResult < handles.Length) {
-				if(handles[waitResult] == waitEvent) {
-					// イベントが立てられたので終了
-					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exit"], process.StartInfo.Arguments);
-					result = true;
-				} else if(handles[waitResult] == processEvent) {
-					// Updaterがイベント立てる前に死んだ
-					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/error-process"], process.ExitCode);
+				var result = false;
+
+				process.Start();
+				var processEvent = new EventWaitHandle(false, EventResetMode.AutoReset) {
+					SafeWaitHandle = new SafeWaitHandle(process.Handle, false),
+				};
+				var handles = new[] { waitEvent, processEvent };
+				var waitResult = WaitHandle.WaitAny(handles, TimeSpan.FromMinutes(3));
+				this._commonData.Logger.PutsDebug("WaitHandle.WaitAny", () => waitResult);
+				if(0 <= waitResult && waitResult < handles.Length) {
+					if(handles[waitResult] == waitEvent) {
+						// イベントが立てられたので終了
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/exit"], process.StartInfo.Arguments);
+						result = true;
+					} else if(handles[waitResult] == processEvent) {
+						// Updaterがイベント立てる前に死んだ
+						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/error-process"], process.ExitCode);
+					}
+				} else {
+					// タイムアウト
+					if(!process.HasExited) {
+						// まだ生きてるなら強制的に殺す
+						process.Kill();
+					}
+					this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/error-timeout"], process.ExitCode);
 				}
-			} else {
-				// タイムアウト
-				if(!process.HasExited) {
-					// まだ生きてるなら強制的に殺す
-					process.Kill();
-				}
-				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["log/update/error-timeout"], process.ExitCode);
+
+				return result;
 			}
-
-			return result;
 		}
 
 
