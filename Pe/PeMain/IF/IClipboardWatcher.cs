@@ -11,8 +11,8 @@ namespace ContentTypeTextNet.Pe.PeMain.IF
 		/// <summary>
 		/// クリップボード監視の設定
 		/// </summary>
-		/// <param name="watching">真の場合に監視する</param>
-		void WatcheClipboard(bool watching);
+		/// <param name="watch">真の場合に監視する</param>
+		void WatchClipboard(bool watch);
 
 	}
 }

@@ -237,9 +237,14 @@
 			ReceiveDeviceChanged(changeDevice);
 		}
 
-		public void WatcheClipboard(bool watching)
+		public void WatchClipboard(bool watch)
 		{
-			Debug.WriteLine(watching);
+			Debug.WriteLine(watch);
+			if(watch) {
+				this._messageWindow.RegistClipboardListener();
+			} else {
+				this._messageWindow.UnRegistClipboardListener();
+			}
 		}
 
 
