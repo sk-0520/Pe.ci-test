@@ -216,11 +216,17 @@
 
 		void ApplyUI()
 		{
-			Size = CommonData.MainSetting.Log.Size;
-			Location = CommonData.MainSetting.Log.Point;
-			Visible = CommonData.MainSetting.Log.Visible;
+			SizeChanged -= LogForm_SizeChanged;
+			try {
+				Location = CommonData.MainSetting.Log.Point;
+				Size = CommonData.MainSetting.Log.Size;
 
-			ChangeDetail(CommonData.MainSetting.Log.FullDetail);
+				Visible = CommonData.MainSetting.Log.Visible;
+
+				ChangeDetail(CommonData.MainSetting.Log.FullDetail);
+			} finally {
+				SizeChanged += LogForm_SizeChanged;
+			}
 		}
 
 		protected override void ApplySetting()
@@ -427,17 +433,17 @@
 			ShowLast();
 		}
 
-		private void LogForm_SizeChanged(object sender, EventArgs e)
-		{
-			if(CommonData != null) {
-				CommonData.MainSetting.Log.Size = Size;
-			}
-		}
-
 		private void LogForm_LocationChanged(object sender, EventArgs e)
 		{
 			if(CommonData != null) {
 				CommonData.MainSetting.Log.Point = Location;
+			}
+		}
+
+		private void LogForm_SizeChanged(object sender, EventArgs e)
+		{
+			if(CommonData != null) {
+				CommonData.MainSetting.Log.Size = Size;
 			}
 		}
 	}
