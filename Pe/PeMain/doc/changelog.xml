@@ -95,7 +95,7 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="d8d9bfec547304962930674e67e035c56c004180">
 				<message>β版出力をCIに追加</message>
 			</note>
 			<note rev="">
