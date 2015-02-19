@@ -60,7 +60,7 @@
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>開発中リリース構成出力モジュールをCIに追加しました</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -96,7 +96,7 @@
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>β版出力をCIに追加</message>
 			</note>
 			<note rev="">
 				<message></message>
