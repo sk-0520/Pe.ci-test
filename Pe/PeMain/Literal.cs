@@ -93,10 +93,10 @@
 
 		public static readonly Color streamBasicForeground = Color.WhiteSmoke;
 		public static readonly Color streamBasicBackground = Color.Black;
-		public static readonly Color streamInputForeground = Color.White;
-		public static readonly Color streamInputBackground = Color.DarkGray;
+		public static readonly Color streamInputForeground = Color.Black;
+		public static readonly Color streamInputBackground = Color.WhiteSmoke;
 		public static readonly Color streamErrorForeground = Color.Red;
-		public static readonly Color streamErrorBackground = Color.Black;
+		public static readonly Color streamErrorBackground = Color.DarkGray;
 
 		
 		public static readonly TripleRange<TimeSpan> commandHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(20));

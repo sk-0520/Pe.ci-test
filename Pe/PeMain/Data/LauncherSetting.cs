@@ -22,6 +22,10 @@
 			Items = new HashSet<LauncherItem>();
 			
 			StreamFontSetting = new FontSetting(SystemFonts.DefaultFont);
+
+			StreamBasicColor = new ColorPairItem();
+			StreamInputColor = new ColorPairItem();
+			StreamErrorColor = new ColorPairItem();
 		}
 		
 		/// <summary>
