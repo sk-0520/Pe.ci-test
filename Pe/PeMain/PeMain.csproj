@@ -130,6 +130,7 @@
     <Compile Include="Data\ClipboardHtmlDataItem.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />
+    <Compile Include="Data\ColorItem.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />

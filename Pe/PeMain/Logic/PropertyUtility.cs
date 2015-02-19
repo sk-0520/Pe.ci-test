@@ -44,5 +44,14 @@
 			
 			return default(TimeSpan);
 		}
+
+		public static string MixinColorGetter(Color color)
+		{
+			return ColorTranslator.ToHtml(color);
+		}
+		public static Color MixinColorSetter(string color)
+		{
+			return ColorTranslator.FromHtml(color);
+		}
 	}
 }

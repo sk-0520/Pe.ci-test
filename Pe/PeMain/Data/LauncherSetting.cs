@@ -35,6 +35,19 @@
 		/// </summary>
 		public FontSetting StreamFontSetting { get; set; }
 
+		/// <summary>
+		/// 通常。
+		/// </summary>
+		public ColorPairItem StreamBasicColor { get; set; }
+		/// <summary>
+		/// 入力時。
+		/// </summary>
+		public ColorPairItem StreamInputColor { get; set; }
+		/// <summary>
+		/// エラー。
+		/// </summary>
+		public ColorPairItem StreamErrorColor { get; set; }
+
 		protected override void Dispose(bool disposing)
 		{
 			foreach(var item in Items) {
@@ -42,6 +55,16 @@
 			}
 
 			base.Dispose(disposing);
+		}
+
+		public override void CorrectionValue()
+		{
+			base.CorrectionValue();
+
+			// #228より色追加
+			StreamBasicColor.CorrectionColor(Literal.streamBasicForeground, Literal.streamBasicBackground);
+			StreamInputColor.CorrectionColor(Literal.streamInputForeground, Literal.streamInputBackground);
+			StreamErrorColor.CorrectionColor(Literal.streamErrorForeground, Literal.streamErrorBackground);
 		}
 	}
 }
