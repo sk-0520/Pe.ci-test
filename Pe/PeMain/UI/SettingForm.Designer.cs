@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupStream = new System.Windows.Forms.GroupBox();
@@ -362,7 +362,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupStream.Location = new System.Drawing.Point(518, 42);
 			this.groupStream.Name = "groupStream";
 			this.groupStream.Size = new System.Drawing.Size(540, 189);
-			this.groupStream.TabIndex = 4;
+			this.groupStream.TabIndex = 5;
 			this.groupStream.TabStop = false;
 			this.groupStream.Text = ":setting/group/stream";
 			// 
@@ -374,7 +374,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.flowLayoutPanel11.Location = new System.Drawing.Point(9, 19);
 			this.flowLayoutPanel11.Name = "flowLayoutPanel11";
 			this.flowLayoutPanel11.Size = new System.Drawing.Size(278, 31);
-			this.flowLayoutPanel11.TabIndex = 6;
+			this.flowLayoutPanel11.TabIndex = 0;
 			// 
 			// labelStreamFont
 			// 
@@ -423,7 +423,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelStreamColor.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelStreamColor.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
 			this.panelStreamColor.Size = new System.Drawing.Size(525, 110);
-			this.panelStreamColor.TabIndex = 5;
+			this.panelStreamColor.TabIndex = 1;
 			// 
 			// labelStreamFore
 			// 
@@ -443,7 +443,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamErrorBackColor.Location = new System.Drawing.Point(425, 76);
 			this.commnadStreamErrorBackColor.Name = "commnadStreamErrorBackColor";
 			this.commnadStreamErrorBackColor.Size = new System.Drawing.Size(29, 23);
-			this.commnadStreamErrorBackColor.TabIndex = 2;
+			this.commnadStreamErrorBackColor.TabIndex = 5;
 			this.commnadStreamErrorBackColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commnadStreamErrorBackColor.UseVisualStyleBackColor = true;
 			this.commnadStreamErrorBackColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
@@ -466,7 +466,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamErrorForeColor.Location = new System.Drawing.Point(256, 76);
 			this.commnadStreamErrorForeColor.Name = "commnadStreamErrorForeColor";
 			this.commnadStreamErrorForeColor.Size = new System.Drawing.Size(29, 23);
-			this.commnadStreamErrorForeColor.TabIndex = 1;
+			this.commnadStreamErrorForeColor.TabIndex = 4;
 			this.commnadStreamErrorForeColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commnadStreamErrorForeColor.UseVisualStyleBackColor = true;
 			this.commnadStreamErrorForeColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
@@ -479,7 +479,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamInputBackColor.Location = new System.Drawing.Point(425, 47);
 			this.commnadStreamInputBackColor.Name = "commnadStreamInputBackColor";
 			this.commnadStreamInputBackColor.Size = new System.Drawing.Size(29, 23);
-			this.commnadStreamInputBackColor.TabIndex = 2;
+			this.commnadStreamInputBackColor.TabIndex = 3;
 			this.commnadStreamInputBackColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commnadStreamInputBackColor.UseVisualStyleBackColor = true;
 			this.commnadStreamInputBackColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
@@ -502,7 +502,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamInputForeColor.Location = new System.Drawing.Point(256, 47);
 			this.commnadStreamInputForeColor.Name = "commnadStreamInputForeColor";
 			this.commnadStreamInputForeColor.Size = new System.Drawing.Size(29, 23);
-			this.commnadStreamInputForeColor.TabIndex = 1;
+			this.commnadStreamInputForeColor.TabIndex = 2;
 			this.commnadStreamInputForeColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commnadStreamInputForeColor.UseVisualStyleBackColor = true;
 			this.commnadStreamInputForeColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
@@ -515,7 +515,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamGeneralBackColor.Location = new System.Drawing.Point(425, 18);
 			this.commnadStreamGeneralBackColor.Name = "commnadStreamGeneralBackColor";
 			this.commnadStreamGeneralBackColor.Size = new System.Drawing.Size(29, 23);
-			this.commnadStreamGeneralBackColor.TabIndex = 2;
+			this.commnadStreamGeneralBackColor.TabIndex = 1;
 			this.commnadStreamGeneralBackColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commnadStreamGeneralBackColor.UseVisualStyleBackColor = true;
 			this.commnadStreamGeneralBackColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
@@ -548,7 +548,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamGeneralForeColor.Location = new System.Drawing.Point(256, 18);
 			this.commnadStreamGeneralForeColor.Name = "commnadStreamGeneralForeColor";
 			this.commnadStreamGeneralForeColor.Size = new System.Drawing.Size(29, 23);
-			this.commnadStreamGeneralForeColor.TabIndex = 1;
+			this.commnadStreamGeneralForeColor.TabIndex = 0;
 			this.commnadStreamGeneralForeColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.commnadStreamGeneralForeColor.UseVisualStyleBackColor = true;
 			this.commnadStreamGeneralForeColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
@@ -644,7 +644,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupUpdateCheck.Location = new System.Drawing.Point(224, 194);
 			this.groupUpdateCheck.Name = "groupUpdateCheck";
 			this.groupUpdateCheck.Size = new System.Drawing.Size(226, 81);
-			this.groupUpdateCheck.TabIndex = 5;
+			this.groupUpdateCheck.TabIndex = 4;
 			this.groupUpdateCheck.TabStop = false;
 			this.groupUpdateCheck.Text = ":setting/group/update-check";
 			// 
@@ -774,7 +774,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.groupMainLog.Location = new System.Drawing.Point(15, 42);
 			this.groupMainLog.Name = "groupMainLog";
 			this.groupMainLog.Size = new System.Drawing.Size(200, 227);
-			this.groupMainLog.TabIndex = 0;
+			this.groupMainLog.TabIndex = 1;
 			this.groupMainLog.TabStop = false;
 			this.groupMainLog.Text = ":setting/group/log";
 			// 
@@ -1416,7 +1416,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commandToolbarScreens.Location = new System.Drawing.Point(193, 0);
 			this.commandToolbarScreens.Name = "commandToolbarScreens";
 			this.commandToolbarScreens.Size = new System.Drawing.Size(71, 23);
-			this.commandToolbarScreens.TabIndex = 22;
+			this.commandToolbarScreens.TabIndex = 1;
 			this.commandToolbarScreens.Text = ":setting/command/screens";
 			this.commandToolbarScreens.UseVisualStyleBackColor = true;
 			this.commandToolbarScreens.Click += new System.EventHandler(this.commandToolbarScreens_Click);
@@ -1918,7 +1918,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNoteOthers.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.panelNoteOthers.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.panelNoteOthers.Size = new System.Drawing.Size(229, 50);
-			this.panelNoteOthers.TabIndex = 12;
+			this.panelNoteOthers.TabIndex = 0;
 			// 
 			// commandNoteCaptionFont
 			// 
@@ -1967,7 +1967,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelNoteKey.Location = new System.Drawing.Point(3, 19);
 			this.panelNoteKey.Name = "panelNoteKey";
 			this.panelNoteKey.Size = new System.Drawing.Size(223, 249);
-			this.panelNoteKey.TabIndex = 8;
+			this.panelNoteKey.TabIndex = 0;
 			// 
 			// labelNoteCreate
 			// 
@@ -2111,8 +2111,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -2142,9 +2142,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
