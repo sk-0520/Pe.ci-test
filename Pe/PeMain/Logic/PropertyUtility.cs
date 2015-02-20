@@ -6,6 +6,9 @@
 	using System.IO;
 	using System.Xml;
 
+	/// <summary>
+	/// プロパティに関する共通処理。
+	/// </summary>
 	public static class PropertyUtility
 	{
 		public static byte[] MixinImageGetter(Image image)

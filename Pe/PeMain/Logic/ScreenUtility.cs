@@ -19,7 +19,7 @@
 	/// </summary>
 	public static class ScreenUtility
 	{
-		private static string NeviceToId(string deviceName)
+		private static string DeviceToId(string deviceName)
 		{
 			return new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
 		}
@@ -31,7 +31,7 @@
 			string query = "SELECT * FROM Win32_DesktopMonitor";
 			if(!string.IsNullOrWhiteSpace(deviceName)) {
 				//var id = new string(deviceName.Trim().SkipWhile(c => !char.IsNumber(c)).ToArray());
-				var id = NeviceToId(deviceName);
+				var id = DeviceToId(deviceName);
 				query = string.Format("SELECT * FROM Win32_DesktopMonitor where DeviceID like \"DesktopMonitor{0}\"", id);
 			}
 			using(var searcher = new ManagementObjectSearcher(query)) {
@@ -61,7 +61,7 @@
 
 			foreach(var screem in GetScreens(screen.DeviceName, logger)) {
 				if(!string.IsNullOrWhiteSpace(screem.Name)) {
-					var id = NeviceToId(screen.DeviceName);
+					var id = DeviceToId(screen.DeviceName);
 					return string.Format("{0}. {1}", id, screem.Name);
 				}
 				break;
