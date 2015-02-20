@@ -90,7 +90,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="4983d06b4b23773fdc8b698a970f1db2f368e2d8">
 				<message>#230: ログウィンドウが地味に身長伸びてね？</message>
 			</note>
 			<note rev="0ae956498965c3e1e550a1690614af0f5a753d0a">
