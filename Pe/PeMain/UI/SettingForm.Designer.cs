@@ -36,21 +36,21 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
-			this.groupLauncherStream = new System.Windows.Forms.GroupBox();
+			this.groupStream = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel11 = new System.Windows.Forms.FlowLayoutPanel();
-			this.labelLauncherStreamFont = new System.Windows.Forms.Label();
-			this.commandLauncherStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
+			this.labelStreamFont = new System.Windows.Forms.Label();
+			this.commandStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.panelStreamColor = new System.Windows.Forms.TableLayoutPanel();
-			this.labelLauncherStreamFore = new System.Windows.Forms.Label();
+			this.labelStreamFore = new System.Windows.Forms.Label();
 			this.commnadStreamErrorBackColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
-			this.labelLauncherStreamError = new System.Windows.Forms.Label();
+			this.labelStreamError = new System.Windows.Forms.Label();
 			this.commnadStreamErrorForeColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
 			this.commnadStreamInputBackColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
-			this.labelLauncherStreamBack = new System.Windows.Forms.Label();
+			this.labelStreamBack = new System.Windows.Forms.Label();
 			this.commnadStreamInputForeColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
 			this.commnadStreamGeneralBackColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
-			this.labelLauncherStreamInput = new System.Windows.Forms.Label();
-			this.labelLauncherStreamGeneral = new System.Windows.Forms.Label();
+			this.labelStreamInput = new System.Windows.Forms.Label();
+			this.labelStreamGeneral = new System.Windows.Forms.Label();
 			this.commnadStreamGeneralForeColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
 			this.groupMainSkin = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
-			this.groupLauncherStream.SuspendLayout();
+			this.groupStream.SuspendLayout();
 			this.flowLayoutPanel11.SuspendLayout();
 			this.panelStreamColor.SuspendLayout();
 			this.groupMainSkin.SuspendLayout();
@@ -339,7 +339,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// tabSetting_pageMain
 			// 
 			this.tabSetting_pageMain.AutoScroll = true;
-			this.tabSetting_pageMain.Controls.Add(this.groupLauncherStream);
+			this.tabSetting_pageMain.Controls.Add(this.groupStream);
 			this.tabSetting_pageMain.Controls.Add(this.groupMainSkin);
 			this.tabSetting_pageMain.Controls.Add(this.panelMainOthers);
 			this.tabSetting_pageMain.Controls.Add(this.groupUpdateCheck);
@@ -354,47 +354,47 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageMain.Text = ":setting/page/main";
 			this.tabSetting_pageMain.UseVisualStyleBackColor = true;
 			// 
-			// groupLauncherStream
+			// groupStream
 			// 
-			this.groupLauncherStream.AutoSize = true;
-			this.groupLauncherStream.Controls.Add(this.flowLayoutPanel11);
-			this.groupLauncherStream.Controls.Add(this.panelStreamColor);
-			this.groupLauncherStream.Location = new System.Drawing.Point(518, 42);
-			this.groupLauncherStream.Name = "groupLauncherStream";
-			this.groupLauncherStream.Size = new System.Drawing.Size(540, 189);
-			this.groupLauncherStream.TabIndex = 4;
-			this.groupLauncherStream.TabStop = false;
-			this.groupLauncherStream.Text = ":setting/group/stream";
+			this.groupStream.AutoSize = true;
+			this.groupStream.Controls.Add(this.flowLayoutPanel11);
+			this.groupStream.Controls.Add(this.panelStreamColor);
+			this.groupStream.Location = new System.Drawing.Point(518, 42);
+			this.groupStream.Name = "groupStream";
+			this.groupStream.Size = new System.Drawing.Size(540, 189);
+			this.groupStream.TabIndex = 4;
+			this.groupStream.TabStop = false;
+			this.groupStream.Text = ":setting/group/stream";
 			// 
 			// flowLayoutPanel11
 			// 
 			this.flowLayoutPanel11.AutoSize = true;
-			this.flowLayoutPanel11.Controls.Add(this.labelLauncherStreamFont);
-			this.flowLayoutPanel11.Controls.Add(this.commandLauncherStreamFont);
+			this.flowLayoutPanel11.Controls.Add(this.labelStreamFont);
+			this.flowLayoutPanel11.Controls.Add(this.commandStreamFont);
 			this.flowLayoutPanel11.Location = new System.Drawing.Point(9, 19);
 			this.flowLayoutPanel11.Name = "flowLayoutPanel11";
 			this.flowLayoutPanel11.Size = new System.Drawing.Size(278, 31);
 			this.flowLayoutPanel11.TabIndex = 6;
 			// 
-			// labelLauncherStreamFont
+			// labelStreamFont
 			// 
-			this.labelLauncherStreamFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherStreamFont.AutoSize = true;
-			this.labelLauncherStreamFont.Location = new System.Drawing.Point(3, 8);
-			this.labelLauncherStreamFont.Name = "labelLauncherStreamFont";
-			this.labelLauncherStreamFont.Size = new System.Drawing.Size(125, 15);
-			this.labelLauncherStreamFont.TabIndex = 6;
-			this.labelLauncherStreamFont.Text = ":common/label/font";
+			this.labelStreamFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelStreamFont.AutoSize = true;
+			this.labelStreamFont.Location = new System.Drawing.Point(3, 8);
+			this.labelStreamFont.Name = "labelStreamFont";
+			this.labelStreamFont.Size = new System.Drawing.Size(125, 15);
+			this.labelStreamFont.TabIndex = 6;
+			this.labelStreamFont.Text = ":common/label/font";
 			// 
-			// commandLauncherStreamFont
+			// commandStreamFont
 			// 
-			this.commandLauncherStreamFont.AutoSize = true;
-			this.commandLauncherStreamFont.Location = new System.Drawing.Point(134, 3);
-			this.commandLauncherStreamFont.Name = "commandLauncherStreamFont";
-			this.commandLauncherStreamFont.Size = new System.Drawing.Size(141, 25);
-			this.commandLauncherStreamFont.TabIndex = 0;
-			this.commandLauncherStreamFont.Text = "{FAMILY} {PT} ...";
-			this.commandLauncherStreamFont.UseVisualStyleBackColor = true;
+			this.commandStreamFont.AutoSize = true;
+			this.commandStreamFont.Location = new System.Drawing.Point(134, 3);
+			this.commandStreamFont.Name = "commandStreamFont";
+			this.commandStreamFont.Size = new System.Drawing.Size(141, 25);
+			this.commandStreamFont.TabIndex = 0;
+			this.commandStreamFont.Text = "{FAMILY} {PT} ...";
+			this.commandStreamFont.UseVisualStyleBackColor = true;
 			// 
 			// panelStreamColor
 			// 
@@ -403,16 +403,16 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelStreamColor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelStreamColor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.panelStreamColor.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.panelStreamColor.Controls.Add(this.labelLauncherStreamFore, 1, 0);
+			this.panelStreamColor.Controls.Add(this.labelStreamFore, 1, 0);
 			this.panelStreamColor.Controls.Add(this.commnadStreamErrorBackColor, 2, 3);
-			this.panelStreamColor.Controls.Add(this.labelLauncherStreamError, 0, 3);
+			this.panelStreamColor.Controls.Add(this.labelStreamError, 0, 3);
 			this.panelStreamColor.Controls.Add(this.commnadStreamErrorForeColor, 1, 3);
 			this.panelStreamColor.Controls.Add(this.commnadStreamInputBackColor, 2, 2);
-			this.panelStreamColor.Controls.Add(this.labelLauncherStreamBack, 2, 0);
+			this.panelStreamColor.Controls.Add(this.labelStreamBack, 2, 0);
 			this.panelStreamColor.Controls.Add(this.commnadStreamInputForeColor, 1, 2);
 			this.panelStreamColor.Controls.Add(this.commnadStreamGeneralBackColor, 2, 1);
-			this.panelStreamColor.Controls.Add(this.labelLauncherStreamInput, 0, 2);
-			this.panelStreamColor.Controls.Add(this.labelLauncherStreamGeneral, 0, 1);
+			this.panelStreamColor.Controls.Add(this.labelStreamInput, 0, 2);
+			this.panelStreamColor.Controls.Add(this.labelStreamGeneral, 0, 1);
 			this.panelStreamColor.Controls.Add(this.commnadStreamGeneralForeColor, 1, 1);
 			this.panelStreamColor.Location = new System.Drawing.Point(9, 57);
 			this.panelStreamColor.Name = "panelStreamColor";
@@ -425,15 +425,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelStreamColor.Size = new System.Drawing.Size(525, 110);
 			this.panelStreamColor.TabIndex = 5;
 			// 
-			// labelLauncherStreamFore
+			// labelStreamFore
 			// 
-			this.labelLauncherStreamFore.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherStreamFore.AutoSize = true;
-			this.labelLauncherStreamFore.Location = new System.Drawing.Point(190, 0);
-			this.labelLauncherStreamFore.Name = "labelLauncherStreamFore";
-			this.labelLauncherStreamFore.Size = new System.Drawing.Size(161, 15);
-			this.labelLauncherStreamFore.TabIndex = 3;
-			this.labelLauncherStreamFore.Text = ":setting/label/stream-fore";
+			this.labelStreamFore.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelStreamFore.AutoSize = true;
+			this.labelStreamFore.Location = new System.Drawing.Point(190, 0);
+			this.labelStreamFore.Name = "labelStreamFore";
+			this.labelStreamFore.Size = new System.Drawing.Size(161, 15);
+			this.labelStreamFore.TabIndex = 3;
+			this.labelStreamFore.Text = ":setting/label/stream-fore";
 			// 
 			// commnadStreamErrorBackColor
 			// 
@@ -448,15 +448,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamErrorBackColor.UseVisualStyleBackColor = true;
 			this.commnadStreamErrorBackColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
 			// 
-			// labelLauncherStreamError
+			// labelStreamError
 			// 
-			this.labelLauncherStreamError.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherStreamError.AutoSize = true;
-			this.labelLauncherStreamError.Location = new System.Drawing.Point(3, 80);
-			this.labelLauncherStreamError.Name = "labelLauncherStreamError";
-			this.labelLauncherStreamError.Size = new System.Drawing.Size(167, 15);
-			this.labelLauncherStreamError.TabIndex = 4;
-			this.labelLauncherStreamError.Text = ":setting/label/stream-error";
+			this.labelStreamError.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelStreamError.AutoSize = true;
+			this.labelStreamError.Location = new System.Drawing.Point(3, 80);
+			this.labelStreamError.Name = "labelStreamError";
+			this.labelStreamError.Size = new System.Drawing.Size(167, 15);
+			this.labelStreamError.TabIndex = 4;
+			this.labelStreamError.Text = ":setting/label/stream-error";
 			// 
 			// commnadStreamErrorForeColor
 			// 
@@ -484,15 +484,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamInputBackColor.UseVisualStyleBackColor = true;
 			this.commnadStreamInputBackColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
 			// 
-			// labelLauncherStreamBack
+			// labelStreamBack
 			// 
-			this.labelLauncherStreamBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherStreamBack.AutoSize = true;
-			this.labelLauncherStreamBack.Location = new System.Drawing.Point(357, 0);
-			this.labelLauncherStreamBack.Name = "labelLauncherStreamBack";
-			this.labelLauncherStreamBack.Size = new System.Drawing.Size(165, 15);
-			this.labelLauncherStreamBack.TabIndex = 4;
-			this.labelLauncherStreamBack.Text = ":setting/label/stream-back";
+			this.labelStreamBack.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelStreamBack.AutoSize = true;
+			this.labelStreamBack.Location = new System.Drawing.Point(357, 0);
+			this.labelStreamBack.Name = "labelStreamBack";
+			this.labelStreamBack.Size = new System.Drawing.Size(165, 15);
+			this.labelStreamBack.TabIndex = 4;
+			this.labelStreamBack.Text = ":setting/label/stream-back";
 			// 
 			// commnadStreamInputForeColor
 			// 
@@ -520,25 +520,25 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.commnadStreamGeneralBackColor.UseVisualStyleBackColor = true;
 			this.commnadStreamGeneralBackColor.Click += new System.EventHandler(this.commnadStreamGeneralForeColor_Click);
 			// 
-			// labelLauncherStreamInput
+			// labelStreamInput
 			// 
-			this.labelLauncherStreamInput.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherStreamInput.AutoSize = true;
-			this.labelLauncherStreamInput.Location = new System.Drawing.Point(3, 51);
-			this.labelLauncherStreamInput.Name = "labelLauncherStreamInput";
-			this.labelLauncherStreamInput.Size = new System.Drawing.Size(167, 15);
-			this.labelLauncherStreamInput.TabIndex = 4;
-			this.labelLauncherStreamInput.Text = ":setting/label/stream-input";
+			this.labelStreamInput.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelStreamInput.AutoSize = true;
+			this.labelStreamInput.Location = new System.Drawing.Point(3, 51);
+			this.labelStreamInput.Name = "labelStreamInput";
+			this.labelStreamInput.Size = new System.Drawing.Size(167, 15);
+			this.labelStreamInput.TabIndex = 4;
+			this.labelStreamInput.Text = ":setting/label/stream-input";
 			// 
-			// labelLauncherStreamGeneral
+			// labelStreamGeneral
 			// 
-			this.labelLauncherStreamGeneral.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLauncherStreamGeneral.AutoSize = true;
-			this.labelLauncherStreamGeneral.Location = new System.Drawing.Point(3, 22);
-			this.labelLauncherStreamGeneral.Name = "labelLauncherStreamGeneral";
-			this.labelLauncherStreamGeneral.Size = new System.Drawing.Size(181, 15);
-			this.labelLauncherStreamGeneral.TabIndex = 4;
-			this.labelLauncherStreamGeneral.Text = ":setting/label/stream-general";
+			this.labelStreamGeneral.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelStreamGeneral.AutoSize = true;
+			this.labelStreamGeneral.Location = new System.Drawing.Point(3, 22);
+			this.labelStreamGeneral.Name = "labelStreamGeneral";
+			this.labelStreamGeneral.Size = new System.Drawing.Size(181, 15);
+			this.labelStreamGeneral.TabIndex = 4;
+			this.labelStreamGeneral.Text = ":setting/label/stream-general";
 			// 
 			// commnadStreamGeneralForeColor
 			// 
@@ -2760,8 +2760,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting.ResumeLayout(false);
 			this.tabSetting_pageMain.ResumeLayout(false);
 			this.tabSetting_pageMain.PerformLayout();
-			this.groupLauncherStream.ResumeLayout(false);
-			this.groupLauncherStream.PerformLayout();
+			this.groupStream.ResumeLayout(false);
+			this.groupStream.PerformLayout();
 			this.flowLayoutPanel11.ResumeLayout(false);
 			this.flowLayoutPanel11.PerformLayout();
 			this.panelStreamColor.ResumeLayout(false);
@@ -3030,8 +3030,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectLogDebugging;
 		private System.Windows.Forms.Label labelClipboardFont;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandClipboardTextFont;
-		private System.Windows.Forms.GroupBox groupLauncherStream;
-		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandLauncherStreamFont;
+		private System.Windows.Forms.GroupBox groupStream;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandStreamFont;
 		private System.Windows.Forms.Button commandToolbarScreens;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn gridNoteItems_columnRemove;
 		private System.Windows.Forms.DataGridViewTextBoxColumn gridNoteItems_columnId;
@@ -3073,13 +3073,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private Ex.ColorImageButton commnadStreamErrorForeColor;
 		private Ex.ColorImageButton commnadStreamInputForeColor;
 		private Ex.ColorImageButton commnadStreamGeneralForeColor;
-		private System.Windows.Forms.Label labelLauncherStreamError;
-		private System.Windows.Forms.Label labelLauncherStreamInput;
-		private System.Windows.Forms.Label labelLauncherStreamGeneral;
-		private System.Windows.Forms.Label labelLauncherStreamBack;
-		private System.Windows.Forms.Label labelLauncherStreamFore;
+		private System.Windows.Forms.Label labelStreamError;
+		private System.Windows.Forms.Label labelStreamInput;
+		private System.Windows.Forms.Label labelStreamGeneral;
+		private System.Windows.Forms.Label labelStreamBack;
+		private System.Windows.Forms.Label labelStreamFore;
 		private System.Windows.Forms.TableLayoutPanel panelStreamColor;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel11;
-		private System.Windows.Forms.Label labelLauncherStreamFont;
+		private System.Windows.Forms.Label labelStreamFont;
 	}
 }

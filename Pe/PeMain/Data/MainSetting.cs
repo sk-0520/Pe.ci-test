@@ -21,6 +21,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Log = new LogSetting();
 			SystemEnv = new SystemEnvSetting();
 			Launcher = new LauncherSetting();
+			Stream = new StreamSetting();
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
 
 			Launcher.CorrectionValue();
+			Stream.CorrectionValue();
 			Log.CorrectionValue();
 			SystemEnv.CorrectionValue();
 			Command.CorrectionValue();
@@ -57,6 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// ランチャアイテム統括。
 		/// </summary>
 		public LauncherSetting Launcher { get; set; }
+		public StreamSetting Stream { get; set; }
 		/// <summary>
 		/// ログ設定
 		/// </summary>
