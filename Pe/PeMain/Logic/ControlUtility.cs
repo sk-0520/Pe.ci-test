@@ -13,6 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 	/// <summary>
 	/// コモンダイアログ共通処理。
@@ -578,14 +579,19 @@
 	/// </summary>
 	public static class UpDownUtility
 	{
-		public static void SetRange(this NumericUpDown target, int min, int max)
+		static void SetRange(this NumericUpDown target, int min, int max)
 		{
 			target.Minimum = min;
 			target.Maximum = max;
 		}
+
 		public static void SetRange(this NumericUpDown target, TripleRange<int> range)
 		{
 			SetRange(target, range.minimum, range.maximum);
+			var defaultValueUpDown = target as DefaultValueNumericUpDown;
+			if(defaultValueUpDown != null) {
+				defaultValueUpDown.DefaultValue = range.median;
+			}
 		}
 		public static void SetValue(this NumericUpDown target, TripleRange<int> range, int value)
 		{
@@ -594,8 +600,8 @@
 		}
 		public static void SetValue(this NumericUpDown target, TripleRange<TimeSpan> range, TimeSpan value)
 		{
-			SetRange(target, (int)range.minimum.TotalMilliseconds, (int)range.maximum.TotalMilliseconds);
-			target.Value = (int)value.TotalMilliseconds;
+			var msRange = new TripleRange<int>((int)range.minimum.TotalMilliseconds, (int)range.median.TotalMilliseconds, (int)range.maximum.TotalMilliseconds);
+			SetValue(target, msRange, (int)value.TotalMilliseconds);
 		}
 	}
 }
