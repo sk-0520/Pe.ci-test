@@ -1183,6 +1183,9 @@
 
 		private void ClipboardForm_LocationChanged(object sender, EventArgs e)
 		{
+			if(CommonData == null) {
+				return;
+			}
 			CommonData.MainSetting.Clipboard.Location = Location;
 		}
 

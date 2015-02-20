@@ -219,9 +219,9 @@
 			SizeChanged -= LogForm_SizeChanged;
 			try {
 				Location = CommonData.MainSetting.Log.Point;
-				Size = CommonData.MainSetting.Log.Size;
 
 				Visible = CommonData.MainSetting.Log.Visible;
+				Size = CommonData.MainSetting.Log.Size;
 
 				ChangeDetail(CommonData.MainSetting.Log.FullDetail);
 			} finally {
@@ -435,16 +435,19 @@
 
 		private void LogForm_LocationChanged(object sender, EventArgs e)
 		{
-			if(CommonData != null) {
-				CommonData.MainSetting.Log.Point = Location;
+			if(CommonData == null) {
+				return;
 			}
+			CommonData.MainSetting.Log.Point = Location;
 		}
 
 		private void LogForm_SizeChanged(object sender, EventArgs e)
 		{
-			if(CommonData != null) {
-				CommonData.MainSetting.Log.Size = Size;
+			if(CommonData == null) {
+				return;
 			}
+			Debug.WriteLine("@" + DateTime.Today);
+			CommonData.MainSetting.Log.Size = Size;
 		}
 	}
 }
