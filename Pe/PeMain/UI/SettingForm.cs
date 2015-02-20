@@ -245,15 +245,15 @@
 
 		void InitializeStream(StreamSetting setting)
 		{
-			this.commandLauncherStreamFont.FontSetting.Import(setting.StreamFontSetting);
+			this.commandLauncherStreamFont.FontSetting.Import(setting.FontSetting);
 			this.commandLauncherStreamFont.RefreshView();
 
-			this.commnadStreamGeneralForeColor.Color = setting.StreamGeneralColor.Foreground.Color;
-			this.commnadStreamGeneralBackColor.Color = setting.StreamGeneralColor.Background.Color;
-			this.commnadStreamInputForeColor.Color = setting.StreamInputColor.Foreground.Color;
-			this.commnadStreamInputBackColor.Color = setting.StreamInputColor.Background.Color;
-			this.commnadStreamErrorForeColor.Color = setting.StreamErrorColor.Foreground.Color;
-			this.commnadStreamErrorBackColor.Color = setting.StreamErrorColor.Background.Color;
+			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Foreground.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Background.Color;
+			this.commnadStreamInputForeColor.Color = setting.InputColor.Foreground.Color;
+			this.commnadStreamInputBackColor.Color = setting.InputColor.Background.Color;
+			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Foreground.Color;
+			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Background.Color;
 		}
 
 		void InitializeMainSetting(MainSetting mainSetting)
@@ -970,14 +970,14 @@
 
 		void ExportStreamSetting(StreamSetting setting)
 		{
-			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
+			setting.FontSetting = this.commandLauncherStreamFont.FontSetting;
 
-			setting.StreamGeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
-			setting.StreamGeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
-			setting.StreamInputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
-			setting.StreamInputColor.Background.Color = this.commnadStreamInputBackColor.Color;
-			setting.StreamErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
-			setting.StreamErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;
+			setting.GeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.GeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.InputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
+			setting.InputColor.Background.Color = this.commnadStreamInputBackColor.Color;
+			setting.ErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
+			setting.ErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;
 		}
 
 		void ExportMainSetting(MainSetting mainSetting)
