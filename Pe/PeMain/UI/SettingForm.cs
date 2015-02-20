@@ -1694,17 +1694,17 @@
 		
 		void CommandLauncherFilePath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogWithFilePath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherWorkDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherWorkDirPath);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherWorkDirPath);
 		}
 		
 		void CommandLauncherIconPath_Click(object sender, EventArgs e)
@@ -1714,12 +1714,12 @@
 		
 		void CommandLauncherOptionFilePath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputLauncherOption);
+			DialogUtility.OpenDialogWithFilePath(this.inputLauncherOption);
 		}
 		
 		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherOption);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherOption);
 		}
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)

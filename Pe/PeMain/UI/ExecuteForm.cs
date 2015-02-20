@@ -156,17 +156,17 @@
 
 		void CommandOption_file_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputOption);
+			DialogUtility.OpenDialogWithFilePath(this.inputOption);
 		}
 		
 		void CommandOption_dir_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputOption);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputOption);
 		}
 		
 		void CommandWorkDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputWorkDirPath);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputWorkDirPath);
 		}
 		
 		void SelectUserDefault_CheckedChanged(object sender, EventArgs e)
