@@ -2127,8 +2127,8 @@
 
 			//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 			//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
-			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
-			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnvironment.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnvironment.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
 		}
 

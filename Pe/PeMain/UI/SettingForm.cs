@@ -167,7 +167,7 @@
 			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
 		}
 
-		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)
+		void InitializeSystemEnv(SystemEnvironmentSetting systemEnvSetting)
 		{
 			/*
 			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
@@ -262,7 +262,7 @@
 			this.selectMainStartup.Checked = File.Exists(linkPath);
 
 			InitializeLog(mainSetting.Log);
-			InitializeSystemEnv(mainSetting.SystemEnv);
+			InitializeSystemEnv(mainSetting.SystemEnvironment);
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
 			InitializeSkin(mainSetting.Skin);
@@ -942,7 +942,7 @@
 			logSetting.AddShowTrigger = logType;
 		}
 
-		void ExportSystemEnvSetting(SystemEnvSetting systemEnvSetting)
+		void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
 		{
 			/*
 			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
@@ -992,7 +992,7 @@
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
-			ExportSystemEnvSetting(mainSetting.SystemEnv);
+			ExportSystemEnvSetting(mainSetting.SystemEnvironment);
 			ExportRunningInfoSetting(mainSetting.RunningInfo);
 
 			ExportLanguageSetting(mainSetting);
