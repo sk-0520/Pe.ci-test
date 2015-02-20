@@ -31,11 +31,17 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupLauncherStream = new System.Windows.Forms.GroupBox();
+			this.commnadStreamErrorBackColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
+			this.commnadStreamInputBackColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
+			this.commnadStreamGeneralBackColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
+			this.commnadStreamErrorForeColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
+			this.commnadStreamInputForeColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
+			this.commnadStreamGeneralForeColor = new ContentTypeTextNet.Pe.PeMain.UI.Ex.ColorImageButton();
 			this.commandLauncherStreamFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.groupMainSkin = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -338,13 +344,79 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// groupLauncherStream
 			// 
+			this.groupLauncherStream.Controls.Add(this.commnadStreamErrorBackColor);
+			this.groupLauncherStream.Controls.Add(this.commnadStreamInputBackColor);
+			this.groupLauncherStream.Controls.Add(this.commnadStreamGeneralBackColor);
+			this.groupLauncherStream.Controls.Add(this.commnadStreamErrorForeColor);
+			this.groupLauncherStream.Controls.Add(this.commnadStreamInputForeColor);
+			this.groupLauncherStream.Controls.Add(this.commnadStreamGeneralForeColor);
 			this.groupLauncherStream.Controls.Add(this.commandLauncherStreamFont);
 			this.groupLauncherStream.Location = new System.Drawing.Point(224, 194);
 			this.groupLauncherStream.Name = "groupLauncherStream";
-			this.groupLauncherStream.Size = new System.Drawing.Size(288, 75);
+			this.groupLauncherStream.Size = new System.Drawing.Size(454, 75);
 			this.groupLauncherStream.TabIndex = 4;
 			this.groupLauncherStream.TabStop = false;
 			this.groupLauncherStream.Text = ":setting/group/stream";
+			// 
+			// commnadStreamErrorBackColor
+			// 
+			this.commnadStreamErrorBackColor.Color = System.Drawing.Color.Red;
+			this.commnadStreamErrorBackColor.Location = new System.Drawing.Point(297, 45);
+			this.commnadStreamErrorBackColor.Name = "commnadStreamErrorBackColor";
+			this.commnadStreamErrorBackColor.Size = new System.Drawing.Size(29, 23);
+			this.commnadStreamErrorBackColor.TabIndex = 2;
+			this.commnadStreamErrorBackColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.commnadStreamErrorBackColor.UseVisualStyleBackColor = true;
+			// 
+			// commnadStreamInputBackColor
+			// 
+			this.commnadStreamInputBackColor.Color = System.Drawing.Color.Red;
+			this.commnadStreamInputBackColor.Location = new System.Drawing.Point(259, 45);
+			this.commnadStreamInputBackColor.Name = "commnadStreamInputBackColor";
+			this.commnadStreamInputBackColor.Size = new System.Drawing.Size(29, 23);
+			this.commnadStreamInputBackColor.TabIndex = 2;
+			this.commnadStreamInputBackColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.commnadStreamInputBackColor.UseVisualStyleBackColor = true;
+			// 
+			// commnadStreamGeneralBackColor
+			// 
+			this.commnadStreamGeneralBackColor.Color = System.Drawing.Color.Red;
+			this.commnadStreamGeneralBackColor.Location = new System.Drawing.Point(222, 46);
+			this.commnadStreamGeneralBackColor.Name = "commnadStreamGeneralBackColor";
+			this.commnadStreamGeneralBackColor.Size = new System.Drawing.Size(29, 23);
+			this.commnadStreamGeneralBackColor.TabIndex = 2;
+			this.commnadStreamGeneralBackColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.commnadStreamGeneralBackColor.UseVisualStyleBackColor = true;
+			// 
+			// commnadStreamErrorForeColor
+			// 
+			this.commnadStreamErrorForeColor.Color = System.Drawing.Color.Red;
+			this.commnadStreamErrorForeColor.Location = new System.Drawing.Point(297, 23);
+			this.commnadStreamErrorForeColor.Name = "commnadStreamErrorForeColor";
+			this.commnadStreamErrorForeColor.Size = new System.Drawing.Size(29, 23);
+			this.commnadStreamErrorForeColor.TabIndex = 1;
+			this.commnadStreamErrorForeColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.commnadStreamErrorForeColor.UseVisualStyleBackColor = true;
+			// 
+			// commnadStreamInputForeColor
+			// 
+			this.commnadStreamInputForeColor.Color = System.Drawing.Color.Red;
+			this.commnadStreamInputForeColor.Location = new System.Drawing.Point(259, 23);
+			this.commnadStreamInputForeColor.Name = "commnadStreamInputForeColor";
+			this.commnadStreamInputForeColor.Size = new System.Drawing.Size(29, 23);
+			this.commnadStreamInputForeColor.TabIndex = 1;
+			this.commnadStreamInputForeColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.commnadStreamInputForeColor.UseVisualStyleBackColor = true;
+			// 
+			// commnadStreamGeneralForeColor
+			// 
+			this.commnadStreamGeneralForeColor.Color = System.Drawing.Color.Red;
+			this.commnadStreamGeneralForeColor.Location = new System.Drawing.Point(222, 24);
+			this.commnadStreamGeneralForeColor.Name = "commnadStreamGeneralForeColor";
+			this.commnadStreamGeneralForeColor.Size = new System.Drawing.Size(29, 23);
+			this.commnadStreamGeneralForeColor.TabIndex = 1;
+			this.commnadStreamGeneralForeColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+			this.commnadStreamGeneralForeColor.UseVisualStyleBackColor = true;
 			// 
 			// commandLauncherStreamFont
 			// 
@@ -1913,8 +1985,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -1944,9 +2016,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -2864,5 +2936,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectClipboardItemWClickToOutput;
 		private System.Windows.Forms.Label labelClipboardRepeated;
 		private System.Windows.Forms.NumericUpDown inputClipboardRepeated;
+		private Ex.ColorImageButton commnadStreamErrorBackColor;
+		private Ex.ColorImageButton commnadStreamInputBackColor;
+		private Ex.ColorImageButton commnadStreamGeneralBackColor;
+		private Ex.ColorImageButton commnadStreamErrorForeColor;
+		private Ex.ColorImageButton commnadStreamInputForeColor;
+		private Ex.ColorImageButton commnadStreamGeneralForeColor;
 	}
 }

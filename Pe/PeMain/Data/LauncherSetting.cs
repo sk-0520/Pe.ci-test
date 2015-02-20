@@ -23,7 +23,7 @@
 			
 			StreamFontSetting = new FontSetting(SystemFonts.DefaultFont);
 
-			StreamBasicColor = new ColorPairItem();
+			StreamGeneralColor = new ColorPairItem();
 			StreamInputColor = new ColorPairItem();
 			StreamErrorColor = new ColorPairItem();
 		}
@@ -42,7 +42,7 @@
 		/// <summary>
 		/// 通常。
 		/// </summary>
-		public ColorPairItem StreamBasicColor { get; set; }
+		public ColorPairItem StreamGeneralColor { get; set; }
 		/// <summary>
 		/// 入力時。
 		/// </summary>
@@ -66,7 +66,7 @@
 			base.CorrectionValue();
 
 			// #228より色追加
-			StreamBasicColor.CorrectionColor(Literal.streamBasicForeground, Literal.streamBasicBackground);
+			StreamGeneralColor.CorrectionColor(Literal.streamGeneralForeground, Literal.streamGeneralBackground);
 			StreamInputColor.CorrectionColor(Literal.streamInputForeground, Literal.streamInputBackground);
 			StreamErrorColor.CorrectionColor(Literal.streamErrorForeground, Literal.streamErrorBackground);
 		}

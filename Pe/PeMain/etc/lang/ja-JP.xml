@@ -346,7 +346,7 @@
 		<Word Name="setting/command/skin"     Text="設定" />
 		<Word Name="setting/group/stream"     Text="標準入出力" />
 		<Word Name="setting/command/screens"  Text="識別" />
-		<Word Name="setting/header/stream-basic" Text="標準" />
+		<Word Name="setting/header/stream-general" Text="共通" />
 		<Word Name="setting/header/stream-input" Text="入力" />
 		<Word Name="setting/header/stream-error" Text="エラー" />
 		<Word Name="setting/header/stream-fore" Text="前景色" />

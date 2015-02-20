@@ -47,12 +47,25 @@
 			set
 			{
 				if(this._color != value) {
+					var prevColor = this._color;
 					this._color = value;
-					ColorChanged(this, new ColorChangedEventArg(this._color));
+					OnChangedColor(prevColor);
 				}
 			}
 		}
 
+		protected virtual void OnChangedColor(Color prevColor)
+		{
+			ColorChanged(this, new ColorChangedEventArg(this._color));
+		}
+	}
 
+	public class ColorImageButton: ColorButton
+	{
+		public override string Text
+		{
+			get { return string.Empty; }
+			set { base.Text = value; }
+		}
 	}
 }

@@ -156,8 +156,8 @@
 			this.propertyProperty.SelectedObject = Process.StartInfo;
 
 			this.inputOutput.Font = CommonData.MainSetting.Launcher.StreamFontSetting.Font;
-			this.inputOutput.ForeColor = CommonData.MainSetting.Launcher.StreamBasicColor.Foreground.Color;
-			this.inputOutput.BackColor = CommonData.MainSetting.Launcher.StreamBasicColor.Background.Color;
+			this.inputOutput.ForeColor = CommonData.MainSetting.Launcher.StreamGeneralColor.Foreground.Color;
+			this.inputOutput.BackColor = CommonData.MainSetting.Launcher.StreamGeneralColor.Background.Color;
 		}
 
 		void OutputStreamReceived(string line, bool stdOutput)
