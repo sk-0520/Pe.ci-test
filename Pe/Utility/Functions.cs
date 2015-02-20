@@ -11,51 +11,6 @@
 	/// </summary>
 	public static class Functions
 	{
-		/* 2015/02/05: 使ってない, 次にこれを見て気分が乗れば消す。
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		private static BaseNumberConverter CreateNumberVar<T>()
-		{
-			var typeInfo = typeof(T);
-
-			if (typeInfo == typeof(Byte)) return new ByteConverter();
-			if (typeInfo == typeof(Decimal)) return new DecimalConverter();
-			if (typeInfo == typeof(Double)) return new DoubleConverter();
-			if (typeInfo == typeof(Int16)) return new Int16Converter();
-			if (typeInfo == typeof(Int32)) return new Int32Converter();
-			if (typeInfo == typeof(Int64)) return new Int64Converter();
-			if (typeInfo == typeof(SByte)) return new SByteConverter();
-			if (typeInfo == typeof(Single)) return new SingleConverter();
-			if (typeInfo == typeof(UInt16)) return new UInt32Converter();
-			if (typeInfo == typeof(UInt32)) return new UInt32Converter();
-			if (typeInfo == typeof(UInt64)) return new UInt32Converter();
-
-			return null;
-		}
-		/// <summary>
-		/// 数値へ変換。
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="source"></param>
-		/// <returns></returns>
-		public static T ToNumber<T>(this string source)
-		{
-			try {
-				var converter = CreateNumberVar<T>();
-				if (converter != null && converter.CanConvertFrom(typeof(String))) {
-					return (T)converter.ConvertFromString(source);
-				}
-			} catch (Exception ex) {
-				Debug.WriteLine(ex);
-			}
-
-			return default(T);
-		}
-		*/
-
 		/// <summary>
 		/// min &lt;= value &lt;= max
 		/// </summary>
