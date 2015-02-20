@@ -63,7 +63,8 @@
 
 				var dotExt = Path.GetExtension(expandPath);
 				switch(dotExt.ToLower()) {
-					case ".lnk": {
+					case ".lnk":
+						{
 							if(!useShortcut) {
 								using(var shortcut = new ShortcutFile(expandPath)) {
 									item.Command = shortcut.TargetPath;
@@ -82,7 +83,8 @@
 					break;
 					 */
 
-					case ".exe": {
+					case ".exe":
+						{
 							var verInfo = FileVersionInfo.GetVersionInfo(item.Command);
 							if(!string.IsNullOrEmpty(verInfo.ProductName)) {
 								item.Name = verInfo.ProductName;

@@ -239,7 +239,9 @@
 		}
 	}
 
-
+	/// <summary>
+	/// フォントハンドルを管理。
+	/// </summary>
 	public class UnmanagedFont: UnmanagedGDIObject
 	{
 		public UnmanagedFont(IntPtr hFont)

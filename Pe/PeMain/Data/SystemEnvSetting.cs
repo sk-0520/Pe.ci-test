@@ -6,9 +6,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	/// システム環境に対する操作設定。
 	/// </summary>
 	[Serializable]
-	public class SystemEnvSetting: Item
+	public class SystemEnvironmentSetting: Item
 	{
-		public SystemEnvSetting()
+		public SystemEnvironmentSetting()
 		{
 			HiddenFileShowHotKey = new HotKeySetting();
 			ExtensionShowHotKey = new HotKeySetting();

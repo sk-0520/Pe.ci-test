@@ -121,7 +121,7 @@
 			// バックアップ世代交代
 			RotateFile(saveDirPath, "*.zip", rotateCount, logger);
 			
-			var fileName = Literal.NowTimestampFileName + ".zip";
+			var fileName = PathUtility.AppendExtension(Literal.NowTimestampFileName, ".zip");
 			var saveFilePath = Path.Combine(saveDirPath, fileName);
 			FileUtility.MakeFileParentDirectory(saveFilePath);
 			

@@ -83,13 +83,13 @@
 			}
 			public Color Fore
 			{
-				get { return NoteItem.Style.ForeColor; }
-				set { NoteItem.Style.ForeColor = value; }
+				get { return NoteItem.Style.Color.Fore.Color; }
+				set { NoteItem.Style.Color.Fore.Color = value; }
 			}
 			public Color Back
 			{
-				get { return NoteItem.Style.BackColor; }
-				set { NoteItem.Style.BackColor = value; }
+				get { return NoteItem.Style.Color.Back.Color; }
+				set { NoteItem.Style.Color.Back.Color = value; }
 			}
 			#endregion
 		}
@@ -167,7 +167,7 @@
 			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
 		}
 
-		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)
+		void InitializeSystemEnv(SystemEnvironmentSetting systemEnvSetting)
 		{
 			/*
 			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
@@ -248,12 +248,12 @@
 			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
 			this.commandStreamFont.RefreshView();
 
-			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Foreground.Color;
-			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Background.Color;
-			this.commnadStreamInputForeColor.Color = setting.InputColor.Foreground.Color;
-			this.commnadStreamInputBackColor.Color = setting.InputColor.Background.Color;
-			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Foreground.Color;
-			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Background.Color;
+			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Fore.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Back.Color;
+			this.commnadStreamInputForeColor.Color = setting.InputColor.Fore.Color;
+			this.commnadStreamInputBackColor.Color = setting.InputColor.Back.Color;
+			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Fore.Color;
+			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Back.Color;
 		}
 
 		void InitializeMainSetting(MainSetting mainSetting)
@@ -262,7 +262,7 @@
 			this.selectMainStartup.Checked = File.Exists(linkPath);
 
 			InitializeLog(mainSetting.Log);
-			InitializeSystemEnv(mainSetting.SystemEnv);
+			InitializeSystemEnv(mainSetting.SystemEnvironment);
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
 			InitializeSkin(mainSetting.Skin);
@@ -942,7 +942,7 @@
 			logSetting.AddShowTrigger = logType;
 		}
 
-		void ExportSystemEnvSetting(SystemEnvSetting systemEnvSetting)
+		void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
 		{
 			/*
 			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
@@ -981,18 +981,18 @@
 		{
 			setting.FontSetting = this.commandStreamFont.FontSetting;
 
-			setting.GeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
-			setting.GeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
-			setting.InputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
-			setting.InputColor.Background.Color = this.commnadStreamInputBackColor.Color;
-			setting.ErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
-			setting.ErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;
+			setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
+			setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
+			setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
+			setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
 		}
 
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
-			ExportSystemEnvSetting(mainSetting.SystemEnv);
+			ExportSystemEnvSetting(mainSetting.SystemEnvironment);
 			ExportRunningInfoSetting(mainSetting.RunningInfo);
 
 			ExportLanguageSetting(mainSetting);
@@ -1694,17 +1694,17 @@
 		
 		void CommandLauncherFilePath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogWithFilePath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherWorkDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherWorkDirPath);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherWorkDirPath);
 		}
 		
 		void CommandLauncherIconPath_Click(object sender, EventArgs e)
@@ -1714,12 +1714,12 @@
 		
 		void CommandLauncherOptionFilePath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputLauncherOption);
+			DialogUtility.OpenDialogWithFilePath(this.inputLauncherOption);
 		}
 		
 		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherOption);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherOption);
 		}
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)

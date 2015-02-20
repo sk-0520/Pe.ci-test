@@ -1740,9 +1740,9 @@
 					Checked = noteItem.Visible,
 				};
 				if(noteItem.Compact) {
-					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteSmallSize);
 				} else {
-					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteImageSize);
 				}
 				menuItem.Click += NoteMenuItem_Click;
 
@@ -2127,8 +2127,8 @@
 
 			//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 			//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
-			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
-			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnvironment.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnvironment.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
 		}
 

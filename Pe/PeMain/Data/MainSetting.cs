@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			RunningInfo = new RunningInfo();
 			
 			Log = new LogSetting();
-			SystemEnv = new SystemEnvSetting();
+			SystemEnvironment = new SystemEnvironmentSetting();
 			Launcher = new LauncherSetting();
 			Stream = new StreamSetting();
 			Command = new CommandSetting();
@@ -42,7 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Launcher.CorrectionValue();
 			Stream.CorrectionValue();
 			Log.CorrectionValue();
-			SystemEnv.CorrectionValue();
+			SystemEnvironment.CorrectionValue();
 			Command.CorrectionValue();
 			Toolbar.CorrectionValue();
 			Note.CorrectionValue();
@@ -67,7 +67,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// システム環境セッティング
 		/// </summary>
-		public SystemEnvSetting SystemEnv { get; set; }
+		[XmlElement("SystemEnv")]
+		public SystemEnvironmentSetting SystemEnvironment { get; set; }
 		/// <summary>
 		/// コマンドランチャ設定。
 		/// </summary>

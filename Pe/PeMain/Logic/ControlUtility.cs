@@ -25,7 +25,7 @@
 		/// </summary>
 		/// <param name="input"></param>
 		/// <param name="whitespaceIsQuotation"></param>
-		public static void OpenDialogFilePath(Control input, bool whitespaceIsQuotation = true)
+		public static void OpenDialogWithFilePath(Control input, bool whitespaceIsQuotation = true)
 		{
 			var path = input.Text.Trim();
 			using(var dialog = new OpenFileDialog()) {
@@ -47,7 +47,7 @@
 		/// コントロールに対してフォルダダイアログを適用する。
 		/// </summary>
 		/// <param name="input"></param>
-		public static void OpenDialogDirPath(Control input)
+		public static void OpenDialogWithDirectoryPath(Control input)
 		{
 			var path = input.Text.Trim();
 			using(var dialog = new FolderBrowserDialog()) {

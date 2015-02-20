@@ -37,27 +37,27 @@
 	{
 		public ColorPairItem()
 		{
-			Foreground = new ColorItem();
-			Background = new ColorItem();
+			Fore = new ColorItem();
+			Back = new ColorItem();
 		}
 
 		/// <summary>
 		/// 前景色。
 		/// </summary>
-		public ColorItem Foreground { get; set; }
+		public ColorItem Fore { get; set; }
 		/// <summary>
 		/// 背景色。
 		/// </summary>
-		public ColorItem Background { get; set; }
+		public ColorItem Back { get; set; }
 
 		public void CorrectionColor(Color fore, Color back)
 		{
-			if(Foreground.Color.IsEmpty) {
-				Foreground.Color = fore;
+			if(Fore.Color.IsEmpty) {
+				Fore.Color = fore;
 			}
 
-			if(Background.Color.IsEmpty) {
-				Background.Color = back;
+			if(Back.Color.IsEmpty) {
+				Back.Color = back;
 			}
 		}
 	}
