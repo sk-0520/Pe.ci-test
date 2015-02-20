@@ -2138,7 +2138,16 @@
 
 		private void commnadStreamGeneralForeColor_Click(object sender, EventArgs e)
 		{
-
+			var button = (ColorButton)sender;
+			using(var dialog = new ColorDialog()) {
+				dialog.CustomColors = new [] { button.Color }
+					.Select(c => ColorTranslator.ToWin32(c))
+					.ToArray()
+				;
+				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+					button.Color = dialog.Color;
+				}
+			}
 		}
 
 	}
