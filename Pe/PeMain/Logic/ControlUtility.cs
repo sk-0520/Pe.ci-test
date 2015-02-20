@@ -579,13 +579,13 @@
 	/// </summary>
 	public static class UpDownUtility
 	{
-		static void SetRange(this NumericUpDown target, int min, int max)
+		static void SetRange(this NumericUpDown target, decimal min, decimal max)
 		{
 			target.Minimum = min;
 			target.Maximum = max;
 		}
 
-		public static void SetRange(this NumericUpDown target, TripleRange<int> range)
+		public static void SetRange(this NumericUpDown target, TripleRange<decimal> range)
 		{
 			SetRange(target, range.minimum, range.maximum);
 			var defaultValueUpDown = target as DefaultValueNumericUpDown;
@@ -593,15 +593,39 @@
 				defaultValueUpDown.DefaultValue = range.median;
 			}
 		}
-		public static void SetValue(this NumericUpDown target, TripleRange<int> range, int value)
+		public static void SetRange(this NumericUpDown target, TripleRange<int> range)
+		{
+			var convertedRange = new TripleRange<decimal>(
+				range.minimum,
+				range.median,
+				range.maximum
+			);
+			SetRange(target, convertedRange);
+		}
+
+		public static void SetValue(this NumericUpDown target, TripleRange<decimal> range, decimal value)
 		{
 			SetRange(target, range);
 			target.Value = value;
 		}
+		public static void SetValue(this NumericUpDown target, TripleRange<int> range, int value)
+		{
+			var convertedRange = new TripleRange<decimal>(
+				range.minimum,
+				range.median,
+				range.maximum
+			);
+			SetValue(target, convertedRange, (decimal)value);
+		}
+
 		public static void SetValue(this NumericUpDown target, TripleRange<TimeSpan> range, TimeSpan value)
 		{
-			var msRange = new TripleRange<int>((int)range.minimum.TotalMilliseconds, (int)range.median.TotalMilliseconds, (int)range.maximum.TotalMilliseconds);
-			SetValue(target, msRange, (int)value.TotalMilliseconds);
+			var msRange = new TripleRange<decimal>(
+				(decimal)range.minimum.TotalMilliseconds,
+				(decimal)range.median.TotalMilliseconds,
+				(decimal)range.maximum.TotalMilliseconds
+			);
+			SetValue(target, msRange, (decimal)value.TotalMilliseconds);
 		}
 	}
 }
