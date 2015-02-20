@@ -245,8 +245,8 @@
 
 		void InitializeStream(StreamSetting setting)
 		{
-			this.commandLauncherStreamFont.FontSetting.Import(setting.FontSetting);
-			this.commandLauncherStreamFont.RefreshView();
+			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
+			this.commandStreamFont.RefreshView();
 
 			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Foreground.Color;
 			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Background.Color;
@@ -540,6 +540,21 @@
 			this.commandSkinAbout.SetLanguage(Language);
 		}
 
+		void ApplyLanguageStream()
+		{
+			this.groupStream.SetLanguage(Language);
+			this.commandStreamFont.SetLanguage(Language);
+
+			this.labelStreamFont.SetLanguage(Language);
+			this.labelStreamFore.SetLanguage(Language);
+			this.labelStreamBack.SetLanguage(Language);
+			this.labelStreamGeneral.SetLanguage(Language);
+			this.labelStreamInput.SetLanguage(Language);
+			this.labelStreamError.SetLanguage(Language);
+
+			UIUtility.ResizeAutoSize(this.groupStream, true);
+		}
+
 		void ApplyLanguageRunningInfo()
 		{
 			this.groupUpdateCheck.SetLanguage(Language);
@@ -558,6 +573,7 @@
 			ApplyLanguageSystemEnv();
 			ApplyLanguageRunningInfo();
 			ApplyLanguageSkin();
+			ApplyLanguageStream();
 		}
 		
 		void ApplyLanguageLauncher()
@@ -589,18 +605,6 @@
 			
 			this.selectLauncherStdStream.SetLanguage(Language);
 			this.selectLauncherAdmin.SetLanguage(Language);
-
-			this.groupLauncherStream.SetLanguage(Language);
-			this.commandLauncherStreamFont.SetLanguage(Language);
-
-			this.labelLauncherStreamFont.SetLanguage(Language);
-			this.labelLauncherStreamFore.SetLanguage(Language);
-			this.labelLauncherStreamBack.SetLanguage(Language);
-			this.labelLauncherStreamGeneral.SetLanguage(Language);
-			this.labelLauncherStreamInput.SetLanguage(Language);
-			this.labelLauncherStreamError.SetLanguage(Language);
-
-			UIUtility.ResizeAutoSize(this.groupLauncherStream, true);
 		}
 		
 		void ApplyLanguageToolbar()
@@ -970,7 +974,7 @@
 
 		void ExportStreamSetting(StreamSetting setting)
 		{
-			setting.FontSetting = this.commandLauncherStreamFont.FontSetting;
+			setting.FontSetting = this.commandStreamFont.FontSetting;
 
 			setting.GeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
 			setting.GeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
