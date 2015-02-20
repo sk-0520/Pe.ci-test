@@ -83,13 +83,17 @@
 		public NoteStyle()
 		{
 			FontSetting = new FontSetting();
-			ForeColor = Literal.noteFore;
-			BackColor = Literal.noteBack;
+			//ForeColor = Literal.noteFore;
+			//BackColor = Literal.noteBack;
+			Color = new ColorPairItem();
+			Color.Foreground.Color = Literal.noteFore;
+			Color.Background.Color = Literal.noteBack;
 		}
 		
 		public FontSetting FontSetting { get; set; }
-		public Color ForeColor { get; set; }
-		public Color BackColor { get; set; }
+		//public Color ForeColor { get; set; }
+		//public Color BackColor { get; set; }
+		public ColorPairItem Color { get; set; }
 
 		protected override void Dispose(bool disposing)
 		{

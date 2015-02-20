@@ -49,8 +49,10 @@
 						noteItem.Location = new Point(dto.X, dto.Y);
 						noteItem.Size = new Size(dto.Width, dto.Height);
 
-						noteItem.Style.ForeColor = dto.ForeColor;
-						noteItem.Style.BackColor = dto.BackColor;
+						//noteItem.Style.ForeColor = dto.ForeColor;
+						//noteItem.Style.BackColor = dto.BackColor;
+						noteItem.Style.Color.Foreground.Color = dto.ForeColor;
+						noteItem.Style.Color.Background.Color = dto.BackColor;
 						if(!string.IsNullOrWhiteSpace(dto.FontFamily) && dto.FontHeight > 0) {
 							noteItem.Style.FontSetting.Family = dto.FontFamily;
 							noteItem.Style.FontSetting.Height = dto.FontHeight;
@@ -202,8 +204,10 @@
 					}
 					entity.CommonUpdate = timestamp;
 
-					entity.ForeColor = item.Style.ForeColor;
-					entity.BackColor = item.Style.BackColor;
+					//entity.ForeColor = item.Style.ForeColor;
+					//entity.BackColor = item.Style.BackColor;
+					entity.ForeColor = item.Style.Color.Foreground.Color;
+					entity.BackColor = item.Style.Color.Background.Color;
 					if(item.Style.FontSetting.IsDefault) {
 						entity.FontFamily = string.Empty;
 					} else {

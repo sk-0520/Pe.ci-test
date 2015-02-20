@@ -83,13 +83,13 @@
 			}
 			public Color Fore
 			{
-				get { return NoteItem.Style.ForeColor; }
-				set { NoteItem.Style.ForeColor = value; }
+				get { return NoteItem.Style.Color.Foreground.Color; }
+				set { NoteItem.Style.Color.Foreground.Color = value; }
 			}
 			public Color Back
 			{
-				get { return NoteItem.Style.BackColor; }
-				set { NoteItem.Style.BackColor = value; }
+				get { return NoteItem.Style.Color.Background.Color; }
+				set { NoteItem.Style.Color.Background.Color = value; }
 			}
 			#endregion
 		}

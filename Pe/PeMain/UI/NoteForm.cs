@@ -829,7 +829,7 @@
 		void ApplyBodyStyle()
 		{
 			this.inputBody.Font = NoteItem.Style.FontSetting.Font;
-			this.inputBody.ForeColor = NoteItem.Style.ForeColor;
+			this.inputBody.ForeColor = NoteItem.Style.Color.Foreground.Color;
 		}
 
 		#endregion ////////////////////////////////////
@@ -837,7 +837,7 @@
 		#region draw
 		void DrawEdge(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
-			CommonData.Skin.DrawNoteWindowEdge(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor);
+			CommonData.Skin.DrawNoteWindowEdge(g, drawArea, active, noteStatus, NoteItem.Style.Color.Foreground.Color, NoteItem.Style.Color.Background.Color);
 		}
 		
 		void DrawCaption(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
@@ -848,10 +848,10 @@
 			#if DEBUG
 			title = string.Format("(DEBUG) {0}", title);
 			#endif
-			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, CommonData.MainSetting.Note.CaptionFontSetting.Font, title);
+			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.Color.Foreground.Color, NoteItem.Style.Color.Background.Color, CommonData.MainSetting.Note.CaptionFontSetting.Font, title);
 			foreach(var command in GetCommandList()) {
 				var commandArea = CommonData.Skin.GetNoteCommandArea(drawArea, command);
-				CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, buttonState);
+				CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.Color.Foreground.Color, NoteItem.Style.Color.Background.Color, command, buttonState);
 			}
 		}
 
@@ -859,7 +859,7 @@
 		{
 			var noteStatus = GetNoteStatus();
 			//if(!CommonData.Skin.IsDefaultDrawToolbarWindowBackground) {
-				CommonData.Skin.DrawNoteWindowBackground(g, drawArea, active, noteStatus, NoteItem.Style.BackColor);
+				CommonData.Skin.DrawNoteWindowBackground(g, drawArea, active, noteStatus, NoteItem.Style.Color.Background.Color);
 			//}
 			
 			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
@@ -874,7 +874,7 @@
 		void DrawBody(Graphics g, Rectangle drawArea, bool active, SkinNoteStatus noteStatus)
 		{
 			if(!noteStatus.Compact) {
-				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor);
+				CommonData.Skin.DrawNoteBody(g, drawArea, active, noteStatus, NoteItem.Style.Color.Foreground.Color, NoteItem.Style.Color.Background.Color);
 			}
 		}
 		
@@ -914,7 +914,7 @@
 									prevDrawDg(command);
 								}
 								if(nowState != prevState && this.Created) {
-									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, command, nowState);
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.Color.Foreground.Color, NoteItem.Style.Color.Background.Color, command, nowState);
 									this._commandStateMap[command] = nowState;
 								}
 							}
@@ -929,7 +929,7 @@
 							foreach(var pair in this._commandStateMap) {
 								if(pair.Value != SkinButtonState.Normal) {
 									var commandArea = CommonData.Skin.GetNoteCommandArea(captionArea, pair.Key);
-									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.ForeColor, NoteItem.Style.BackColor, pair.Key, SkinButtonState.Normal);
+									CommonData.Skin.DrawNoteCommand(g, commandArea, active, noteStatus, NoteItem.Style.Color.Foreground.Color, NoteItem.Style.Color.Background.Color, pair.Key, SkinButtonState.Normal);
 								}
 							}
 							foreach(var key in this._commandStateMap.Keys.ToArray()) {
@@ -1181,12 +1181,12 @@
 			
 			var foreMenuList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
 			var backMenuList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
-			checkColor(this.contextMenu_itemForeColor, foreMenuList, this.contextMenu_itemForeColor_itemCustom, NoteItem.Style.ForeColor);
-			checkColor(this.contextMenu_itemBackColor, backMenuList, this.contextMenu_itemBackColor_itemCustom, NoteItem.Style.BackColor);
+			checkColor(this.contextMenu_itemForeColor, foreMenuList, this.contextMenu_itemForeColor_itemCustom, NoteItem.Style.Color.Foreground.Color);
+			checkColor(this.contextMenu_itemBackColor, backMenuList, this.contextMenu_itemBackColor_itemCustom, NoteItem.Style.Color.Background.Color);
 			// 最小化状態
 			this.contextMenu_itemCompact.ImageScaling = ToolStripItemImageScaling.None;
 			this.contextMenu_itemCompact.Image.ToDispose();
-			this.contextMenu_itemCompact.Image = CommonData.Skin.CreateNoteBoxImage(NoteItem.Style.BackColor, new Size(menuIconSize.Width, menuIconSize.Height / 2));
+			this.contextMenu_itemCompact.Image = CommonData.Skin.CreateNoteBoxImage(NoteItem.Style.Color.Background.Color, new Size(menuIconSize.Width, menuIconSize.Height / 2));
 			
 			// 入出力
 			this.contextMenu_itemExport.Enabled = NoteItem.Body.Length > 0;
@@ -1221,7 +1221,7 @@
 		void ContextMenu_itemForeColor_itemClick(object sender, EventArgs e)
 		{
 			var colorItemList = GetColorMenuList(this.contextMenu_itemForeColor, Literal.GetNoteForeColorList());
-			NoteItem.Style.ForeColor = SelectedPlainColor((ToolStripItem)sender, colorItemList);
+			NoteItem.Style.Color.Foreground.Color = SelectedPlainColor((ToolStripItem)sender, colorItemList);
 			ApplyBodyStyle();
 			Refresh();
 		}
@@ -1229,20 +1229,20 @@
 		void ContextMenu_itemBackColor_itemClick(object sender, EventArgs e)
 		{
 			var colorItemList = GetColorMenuList(this.contextMenu_itemBackColor, Literal.GetNoteBackColorList());
-			NoteItem.Style.BackColor = SelectedPlainColor((ToolStripItem)sender, colorItemList);
+			NoteItem.Style.Color.Background.Color = SelectedPlainColor((ToolStripItem)sender, colorItemList);
 			Refresh();
 		}
 		
 		void ContextMenu_itemForeColor_itemCustom_Click(object sender, EventArgs e)
 		{
-			NoteItem.Style.ForeColor = SelectedCustomColor(NoteItem.Style.ForeColor);
+			NoteItem.Style.Color.Foreground.Color = SelectedCustomColor(NoteItem.Style.Color.Foreground.Color);
 			ApplyBodyStyle();
 			Refresh();
 		}
 		
 		void ContextMenu_itemBackColor_itemCustom_Click(object sender, EventArgs e)
 		{
-			NoteItem.Style.BackColor = SelectedCustomColor(NoteItem.Style.BackColor);
+			NoteItem.Style.Color.Background.Color = SelectedCustomColor(NoteItem.Style.Color.Background.Color);
 			Refresh();
 		}
 		
