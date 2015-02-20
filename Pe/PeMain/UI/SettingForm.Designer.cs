@@ -129,7 +129,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selectToolbarVisible = new System.Windows.Forms.CheckBox();
 			this.selectToolbarTopmost = new System.Windows.Forms.CheckBox();
 			this.labelToolbarTextWidth = new System.Windows.Forms.Label();
-			this.inputToolbarTextWidth = new System.Windows.Forms.NumericUpDown();
+			this.inputToolbarTextWidth = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
 			this.labelToolbarFont = new System.Windows.Forms.Label();
 			this.commandToolbarFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.selectToolbarIcon = new System.Windows.Forms.ComboBox();
@@ -158,7 +158,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
-			this.inputCommandHideTime = new System.Windows.Forms.NumericUpDown();
+			this.inputCommandHideTime = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
 			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.labelCommandHideTime = new System.Windows.Forms.Label();
 			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
@@ -231,10 +231,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.labelClipboardLimit = new System.Windows.Forms.Label();
 			this.labelClipboardWaitTaime = new System.Windows.Forms.Label();
-			this.inputClipboardLimit = new System.Windows.Forms.NumericUpDown();
-			this.inputClipboardWaitTime = new System.Windows.Forms.NumericUpDown();
+			this.inputClipboardLimit = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
+			this.inputClipboardWaitTime = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
 			this.labelClipboardRepeated = new System.Windows.Forms.Label();
-			this.inputClipboardRepeated = new System.Windows.Forms.NumericUpDown();
+			this.inputClipboardRepeated = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
 			this.commandCancel = new System.Windows.Forms.Button();
 			this.commandSubmit = new System.Windows.Forms.Button();
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
@@ -2928,7 +2928,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.ComboBox selectToolbarItem;
 		private System.Windows.Forms.GroupBox groupToolbar;
 		private System.Windows.Forms.Label labelToolbarTextWidth;
-		private System.Windows.Forms.NumericUpDown inputToolbarTextWidth;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown inputToolbarTextWidth;
 		private System.Windows.Forms.Label labelCommandHotkey;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl inputCommandHotkey;
 		private System.Windows.Forms.CheckBox selectLogAddShow;
@@ -2989,7 +2989,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabPage tabSetting_pageNote;
 		private System.Windows.Forms.TabPage tabSetting_pageDisplay;
 		private System.Windows.Forms.TabPage tabSetting_pageToolbar;
-		private System.Windows.Forms.NumericUpDown inputCommandHideTime;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label labelCommandHideTime;
 		private System.Windows.Forms.CheckBox selectCommandTopmost;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandCommandFont;
@@ -3015,8 +3015,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.CheckBox selectClipboardTopMost;
 		private System.Windows.Forms.CheckBox selectClipboardVisible;
 		private System.Windows.Forms.CheckBox selectClipboardAppEnabled;
-		private System.Windows.Forms.NumericUpDown inputClipboardWaitTime;
-		private System.Windows.Forms.NumericUpDown inputClipboardLimit;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown inputClipboardWaitTime;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown inputClipboardLimit;
 		private System.Windows.Forms.Label labelClipboardWaitTaime;
 		private System.Windows.Forms.Label labelClipboardLimit;
 		private System.Windows.Forms.GroupBox groupClipboardType;
@@ -3066,7 +3066,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel10;
 		private System.Windows.Forms.CheckBox selectClipboardItemWClickToOutput;
 		private System.Windows.Forms.Label labelClipboardRepeated;
-		private System.Windows.Forms.NumericUpDown inputClipboardRepeated;
+		private ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown inputClipboardRepeated;
 		private Ex.ColorImageButton commnadStreamErrorBackColor;
 		private Ex.ColorImageButton commnadStreamInputBackColor;
 		private Ex.ColorImageButton commnadStreamGeneralBackColor;
