@@ -265,6 +265,13 @@
 
 			this.commandLauncherStreamFont.FontSetting.Import(launcherSetting.StreamFontSetting);
 			this.commandLauncherStreamFont.RefreshView();
+
+			this.commnadStreamGeneralForeColor.Color = launcherSetting.StreamGeneralColor.Foreground.Color;
+			this.commnadStreamGeneralBackColor.Color = launcherSetting.StreamGeneralColor.Background.Color;
+			this.commnadStreamInputForeColor.Color = launcherSetting.StreamInputColor.Foreground.Color;
+			this.commnadStreamInputBackColor.Color = launcherSetting.StreamInputColor.Background.Color;
+			this.commnadStreamErrorForeColor.Color = launcherSetting.StreamErrorColor.Foreground.Color;
+			this.commnadStreamErrorBackColor.Color = launcherSetting.StreamErrorColor.Background.Color;
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -581,6 +588,15 @@
 
 			this.groupLauncherStream.SetLanguage(Language);
 			this.commandLauncherStreamFont.SetLanguage(Language);
+
+			this.labelLauncherStreamFont.SetLanguage(Language);
+			this.labelLauncherStreamFore.SetLanguage(Language);
+			this.labelLauncherStreamBack.SetLanguage(Language);
+			this.labelLauncherStreamGeneral.SetLanguage(Language);
+			this.labelLauncherStreamInput.SetLanguage(Language);
+			this.labelLauncherStreamError.SetLanguage(Language);
+
+			UIUtility.ResizeAutoSize(this.groupLauncherStream, true);
 		}
 		
 		void ApplyLanguageToolbar()
@@ -892,6 +908,13 @@
 			}
 
 			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
+
+			setting.StreamGeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.StreamGeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.StreamInputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
+			setting.StreamInputColor.Background.Color = this.commnadStreamInputBackColor.Color;
+			setting.StreamErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
+			setting.StreamErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;  
 		}
 
 		void ExportLogSetting(LogSetting logSetting)
@@ -2099,6 +2122,11 @@
 			}
 			this.treeToolbarItemGroup.SelectedNode = treeNode;
 			this.treeToolbarItemGroup.EndUpdate();
+		}
+
+		private void commnadStreamGeneralForeColor_Click(object sender, EventArgs e)
+		{
+
 		}
 
 	}
