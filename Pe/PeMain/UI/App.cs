@@ -1740,9 +1740,9 @@
 					Checked = noteItem.Visible,
 				};
 				if(noteItem.Compact) {
-					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Foreground.Color, noteItem.Style.Color.Background.Color, noteSmallSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteSmallSize);
 				} else {
-					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Foreground.Color, noteItem.Style.Color.Background.Color, noteImageSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteImageSize);
 				}
 				menuItem.Click += NoteMenuItem_Click;
 

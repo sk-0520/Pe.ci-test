@@ -83,13 +83,13 @@
 			}
 			public Color Fore
 			{
-				get { return NoteItem.Style.Color.Foreground.Color; }
-				set { NoteItem.Style.Color.Foreground.Color = value; }
+				get { return NoteItem.Style.Color.Fore.Color; }
+				set { NoteItem.Style.Color.Fore.Color = value; }
 			}
 			public Color Back
 			{
-				get { return NoteItem.Style.Color.Background.Color; }
-				set { NoteItem.Style.Color.Background.Color = value; }
+				get { return NoteItem.Style.Color.Back.Color; }
+				set { NoteItem.Style.Color.Back.Color = value; }
 			}
 			#endregion
 		}
@@ -248,12 +248,12 @@
 			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
 			this.commandStreamFont.RefreshView();
 
-			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Foreground.Color;
-			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Background.Color;
-			this.commnadStreamInputForeColor.Color = setting.InputColor.Foreground.Color;
-			this.commnadStreamInputBackColor.Color = setting.InputColor.Background.Color;
-			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Foreground.Color;
-			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Background.Color;
+			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Fore.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Back.Color;
+			this.commnadStreamInputForeColor.Color = setting.InputColor.Fore.Color;
+			this.commnadStreamInputBackColor.Color = setting.InputColor.Back.Color;
+			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Fore.Color;
+			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Back.Color;
 		}
 
 		void InitializeMainSetting(MainSetting mainSetting)
@@ -981,12 +981,12 @@
 		{
 			setting.FontSetting = this.commandStreamFont.FontSetting;
 
-			setting.GeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
-			setting.GeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
-			setting.InputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
-			setting.InputColor.Background.Color = this.commnadStreamInputBackColor.Color;
-			setting.ErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
-			setting.ErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;
+			setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
+			setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
+			setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
+			setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
 		}
 
 		void ExportMainSetting(MainSetting mainSetting)

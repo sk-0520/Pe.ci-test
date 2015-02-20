@@ -86,8 +86,8 @@
 			//ForeColor = Literal.noteFore;
 			//BackColor = Literal.noteBack;
 			Color = new ColorPairItem();
-			Color.Foreground.Color = Literal.noteFore;
-			Color.Background.Color = Literal.noteBack;
+			Color.Fore.Color = Literal.noteFore;
+			Color.Back.Color = Literal.noteBack;
 		}
 		
 		public FontSetting FontSetting { get; set; }
