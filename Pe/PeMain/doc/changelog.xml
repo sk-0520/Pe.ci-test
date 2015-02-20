@@ -63,7 +63,11 @@
 				<message>開発中リリース構成出力モジュールをCIに追加しました</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message class="compatibility">標準入出力のフォント設定が本バージョン初回起動時にリセットされます</message>
+				<comments>
+					<comment>標準入出力関係の設定データを内部的に独立させました</comment>
+					<comment>元の設定項目が一つだけでロジックに影響せずUIだけが影響されるものであるため下位互換を維持するだけの価値がないのでバッサリ切りました</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -75,7 +79,7 @@
 				<message>#219: 画像データのクリップボード重複判定</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#228: 標準入出力画面に色を設定する</message>
 			</note>
 			<note rev="">
 				<message></message>

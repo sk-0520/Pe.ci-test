@@ -155,7 +155,9 @@
 			this.propertyProcess.SelectedObject = Process;
 			this.propertyProperty.SelectedObject = Process.StartInfo;
 
-			this.inputOutput.Font = CommonData.MainSetting.Launcher.StreamFontSetting.Font;
+			this.inputOutput.Font = CommonData.MainSetting.Stream.FontSetting.Font;
+			this.inputOutput.ForeColor = CommonData.MainSetting.Stream.GeneralColor.Foreground.Color;
+			this.inputOutput.BackColor = CommonData.MainSetting.Stream.GeneralColor.Background.Color;
 		}
 
 		void OutputStreamReceived(string line, bool stdOutput)
@@ -172,7 +174,14 @@
 			}
 
 			this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
-				this.inputOutput.Text += line + Environment.NewLine;
+				var startPosition = this.inputOutput.TextLength;
+				this.inputOutput.AppendText(line + Environment.NewLine);
+				if(!stdOutput) {
+					// 標準エラー
+					this.inputOutput.Select(startPosition, line.Length);
+					this.inputOutput.SelectionColor = CommonData.MainSetting.Stream.ErrorColor.Foreground.Color;
+					this.inputOutput.SelectionBackColor = CommonData.MainSetting.Stream.ErrorColor.Background.Color;
+				}
 				this.inputOutput.SelectionStart = this.inputOutput.TextLength;
 				OutputLastPosition = this.inputOutput.TextLength;
 				InputStartPosition = -1;
@@ -370,6 +379,8 @@
 
 						// このデータから取得を開始する
 						InputStartPosition = this.inputOutput.SelectionStart;
+						this.inputOutput.SelectionColor = CommonData.MainSetting.Stream.InputColor.Foreground.Color;
+						this.inputOutput.SelectionBackColor = CommonData.MainSetting.Stream.InputColor.Background.Color;
 					} else {
 						// すでに出力済みの項目にはなんもしない
 						// ただし移動系入力は素通りさせる

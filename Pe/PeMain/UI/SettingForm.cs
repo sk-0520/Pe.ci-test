@@ -243,6 +243,19 @@
 			}
 		}
 
+		void InitializeStream(StreamSetting setting)
+		{
+			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
+			this.commandStreamFont.RefreshView();
+
+			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Foreground.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Background.Color;
+			this.commnadStreamInputForeColor.Color = setting.InputColor.Foreground.Color;
+			this.commnadStreamInputBackColor.Color = setting.InputColor.Background.Color;
+			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Foreground.Color;
+			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Background.Color;
+		}
+
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			var linkPath = Literal.StartupShortcutPath;
@@ -253,6 +266,7 @@
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
 			InitializeSkin(mainSetting.Skin);
+			InitializeStream(mainSetting.Stream);
 		}
 
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -262,9 +276,6 @@
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
 			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
-
-			this.commandLauncherStreamFont.FontSetting.Import(launcherSetting.StreamFontSetting);
-			this.commandLauncherStreamFont.RefreshView();
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -529,6 +540,21 @@
 			this.commandSkinAbout.SetLanguage(Language);
 		}
 
+		void ApplyLanguageStream()
+		{
+			this.groupStream.SetLanguage(Language);
+			this.commandStreamFont.SetLanguage(Language);
+
+			this.labelStreamFont.SetLanguage(Language);
+			this.labelStreamFore.SetLanguage(Language);
+			this.labelStreamBack.SetLanguage(Language);
+			this.labelStreamGeneral.SetLanguage(Language);
+			this.labelStreamInput.SetLanguage(Language);
+			this.labelStreamError.SetLanguage(Language);
+
+			UIUtility.ResizeAutoSize(this.groupStream, true);
+		}
+
 		void ApplyLanguageRunningInfo()
 		{
 			this.groupUpdateCheck.SetLanguage(Language);
@@ -547,6 +573,7 @@
 			ApplyLanguageSystemEnv();
 			ApplyLanguageRunningInfo();
 			ApplyLanguageSkin();
+			ApplyLanguageStream();
 		}
 		
 		void ApplyLanguageLauncher()
@@ -578,9 +605,6 @@
 			
 			this.selectLauncherStdStream.SetLanguage(Language);
 			this.selectLauncherAdmin.SetLanguage(Language);
-
-			this.groupLauncherStream.SetLanguage(Language);
-			this.commandLauncherStreamFont.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageToolbar()
@@ -890,8 +914,6 @@
 			foreach(var item in this.selecterLauncher.Items) {
 				setting.Items.Add(item);
 			}
-
-			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
 		}
 
 		void ExportLogSetting(LogSetting logSetting)
@@ -950,6 +972,18 @@
 			setting.Name = skin.About.Name;
 		}
 
+		void ExportStreamSetting(StreamSetting setting)
+		{
+			setting.FontSetting = this.commandStreamFont.FontSetting;
+
+			setting.GeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.GeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.InputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
+			setting.InputColor.Background.Color = this.commnadStreamInputBackColor.Color;
+			setting.ErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
+			setting.ErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;
+		}
+
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
@@ -958,6 +992,7 @@
 
 			ExportLanguageSetting(mainSetting);
 			ExportSkinSetting(mainSetting.Skin);
+			ExportStreamSetting(mainSetting.Stream);
 		}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
@@ -2099,6 +2134,20 @@
 			}
 			this.treeToolbarItemGroup.SelectedNode = treeNode;
 			this.treeToolbarItemGroup.EndUpdate();
+		}
+
+		private void commnadStreamGeneralForeColor_Click(object sender, EventArgs e)
+		{
+			var button = (ColorButton)sender;
+			using(var dialog = new ColorDialog()) {
+				dialog.CustomColors = new [] { button.Color }
+					.Select(c => ColorTranslator.ToWin32(c))
+					.ToArray()
+				;
+				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+					button.Color = dialog.Color;
+				}
+			}
 		}
 
 	}

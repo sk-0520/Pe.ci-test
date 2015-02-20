@@ -554,6 +554,23 @@
 			);
 		}
 
+		/// <summary>
+		/// AutoSizeの設定された項目をうまい具合に再設定する
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="recursive"></param>
+		public static void ResizeAutoSize(Control target, bool recursive)
+		{
+			if(recursive && target.HasChildren) {
+				foreach(var control in target.Controls.Cast<Control>()) {
+					ResizeAutoSize(control, recursive);
+				}
+			}
+			if(target.AutoSize) {
+				target.Size = Size.Empty;
+			}
+		}
+
 	}
 
 	/// <summary>

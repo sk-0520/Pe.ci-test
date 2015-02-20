@@ -20,8 +20,6 @@
 		public LauncherSetting()
 		{
 			Items = new HashSet<LauncherItem>();
-			
-			StreamFontSetting = new FontSetting(SystemFonts.DefaultFont);
 		}
 		
 		/// <summary>
@@ -30,11 +28,6 @@
 		[XmlIgnoreAttribute()]
 		public HashSet<LauncherItem> Items { get; set; }
 		
-		/// <summary>
-		/// 標準出力フォント。
-		/// </summary>
-		public FontSetting StreamFontSetting { get; set; }
-
 		protected override void Dispose(bool disposing)
 		{
 			foreach(var item in Items) {
@@ -42,6 +35,11 @@
 			}
 
 			base.Dispose(disposing);
+		}
+
+		public override void CorrectionValue()
+		{
+			base.CorrectionValue();
 		}
 	}
 }
