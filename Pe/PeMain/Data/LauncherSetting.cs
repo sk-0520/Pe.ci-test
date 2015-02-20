@@ -20,12 +20,6 @@
 		public LauncherSetting()
 		{
 			Items = new HashSet<LauncherItem>();
-			
-			StreamFontSetting = new FontSetting(SystemFonts.DefaultFont);
-
-			StreamGeneralColor = new ColorPairItem();
-			StreamInputColor = new ColorPairItem();
-			StreamErrorColor = new ColorPairItem();
 		}
 		
 		/// <summary>
@@ -34,24 +28,6 @@
 		[XmlIgnoreAttribute()]
 		public HashSet<LauncherItem> Items { get; set; }
 		
-		/// <summary>
-		/// 標準出力フォント。
-		/// </summary>
-		public FontSetting StreamFontSetting { get; set; }
-
-		/// <summary>
-		/// 通常。
-		/// </summary>
-		public ColorPairItem StreamGeneralColor { get; set; }
-		/// <summary>
-		/// 入力時。
-		/// </summary>
-		public ColorPairItem StreamInputColor { get; set; }
-		/// <summary>
-		/// エラー。
-		/// </summary>
-		public ColorPairItem StreamErrorColor { get; set; }
-
 		protected override void Dispose(bool disposing)
 		{
 			foreach(var item in Items) {
@@ -64,11 +40,6 @@
 		public override void CorrectionValue()
 		{
 			base.CorrectionValue();
-
-			// #228より色追加
-			StreamGeneralColor.CorrectionColor(Literal.streamGeneralForeground, Literal.streamGeneralBackground);
-			StreamInputColor.CorrectionColor(Literal.streamInputForeground, Literal.streamInputBackground);
-			StreamErrorColor.CorrectionColor(Literal.streamErrorForeground, Literal.streamErrorBackground);
 		}
 	}
 }

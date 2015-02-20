@@ -243,6 +243,19 @@
 			}
 		}
 
+		void InitializeStream(StreamSetting setting)
+		{
+			this.commandLauncherStreamFont.FontSetting.Import(setting.StreamFontSetting);
+			this.commandLauncherStreamFont.RefreshView();
+
+			this.commnadStreamGeneralForeColor.Color = setting.StreamGeneralColor.Foreground.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.StreamGeneralColor.Background.Color;
+			this.commnadStreamInputForeColor.Color = setting.StreamInputColor.Foreground.Color;
+			this.commnadStreamInputBackColor.Color = setting.StreamInputColor.Background.Color;
+			this.commnadStreamErrorForeColor.Color = setting.StreamErrorColor.Foreground.Color;
+			this.commnadStreamErrorBackColor.Color = setting.StreamErrorColor.Background.Color;
+		}
+
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			var linkPath = Literal.StartupShortcutPath;
@@ -253,6 +266,7 @@
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
 			InitializeSkin(mainSetting.Skin);
+			InitializeStream(mainSetting.Stream);
 		}
 
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -262,16 +276,6 @@
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
 			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
-
-			this.commandLauncherStreamFont.FontSetting.Import(launcherSetting.StreamFontSetting);
-			this.commandLauncherStreamFont.RefreshView();
-
-			this.commnadStreamGeneralForeColor.Color = launcherSetting.StreamGeneralColor.Foreground.Color;
-			this.commnadStreamGeneralBackColor.Color = launcherSetting.StreamGeneralColor.Background.Color;
-			this.commnadStreamInputForeColor.Color = launcherSetting.StreamInputColor.Foreground.Color;
-			this.commnadStreamInputBackColor.Color = launcherSetting.StreamInputColor.Background.Color;
-			this.commnadStreamErrorForeColor.Color = launcherSetting.StreamErrorColor.Foreground.Color;
-			this.commnadStreamErrorBackColor.Color = launcherSetting.StreamErrorColor.Background.Color;
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -906,15 +910,6 @@
 			foreach(var item in this.selecterLauncher.Items) {
 				setting.Items.Add(item);
 			}
-
-			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
-
-			setting.StreamGeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
-			setting.StreamGeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
-			setting.StreamInputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
-			setting.StreamInputColor.Background.Color = this.commnadStreamInputBackColor.Color;
-			setting.StreamErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
-			setting.StreamErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;  
 		}
 
 		void ExportLogSetting(LogSetting logSetting)
@@ -973,6 +968,18 @@
 			setting.Name = skin.About.Name;
 		}
 
+		void ExportStreamSetting(StreamSetting setting)
+		{
+			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
+
+			setting.StreamGeneralColor.Foreground.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.StreamGeneralColor.Background.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.StreamInputColor.Foreground.Color = this.commnadStreamInputForeColor.Color;
+			setting.StreamInputColor.Background.Color = this.commnadStreamInputBackColor.Color;
+			setting.StreamErrorColor.Foreground.Color = this.commnadStreamErrorForeColor.Color;
+			setting.StreamErrorColor.Background.Color = this.commnadStreamErrorBackColor.Color;
+		}
+
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
@@ -981,6 +988,7 @@
 
 			ExportLanguageSetting(mainSetting);
 			ExportSkinSetting(mainSetting.Skin);
+			ExportStreamSetting(mainSetting.Stream);
 		}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
