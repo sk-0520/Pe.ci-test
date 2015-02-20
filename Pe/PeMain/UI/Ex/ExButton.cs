@@ -87,9 +87,13 @@
 			RefreshColorImage();
 		}
 
+		/// <summary>
+		/// うーん、こだわらなくていいや。
+		/// </summary>
+		/// <returns></returns>
 		protected virtual Image CreateColorImage()
 		{
-			var image = new Bitmap(ClientSize.Width, ClientSize.Height);
+			var image = new Bitmap(Size.Width, Size.Height / 2);
 			
 			using(var g = Graphics.FromImage(image)) {
 				using(var brush = new SolidBrush(Color)) {
