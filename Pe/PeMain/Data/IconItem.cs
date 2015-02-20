@@ -12,7 +12,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	{
 		public IconItem(): base()
 		{ }
-		
+
+		[Obsolete]
 		public IconItem(string iconPath): base(iconPath)
 		{ }
 		
