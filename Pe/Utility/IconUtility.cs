@@ -337,10 +337,10 @@
 		/// <summary>
 		/// アイコンを取得。
 		/// </summary>
-		/// <param name="iconPath"></param>
-		/// <param name="iconScale"></param>
-		/// <param name="iconIndex"></param>
-		/// <returns></returns>
+		/// <param name="iconPath">対象ファイルパス。</param>
+		/// <param name="iconScale">アイコンサイズ。</param>
+		/// <param name="iconIndex">アイコンインデックス。</param>
+		/// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
 		public static Icon Load(string iconPath, IconScale iconScale, int iconIndex)
 		{
 			// 実行形式
@@ -357,6 +357,12 @@
 			return result;
 		}
 
+		/// <summary>
+		/// アイコンからイメージ作成。
+		/// </summary>
+		/// <param name="icon">アイコン。</param>
+		/// <param name="iconScale">アイコンサイズ。</param>
+		/// <returns>イメージ。呼び出し側で破棄が必要。</returns>
 		public static Image ImageFromIcon(Icon icon, IconScale iconScale)
 		{
 			var iconSize = iconScale.ToSize();
