@@ -261,6 +261,9 @@
     <Compile Include="UI\Ex\ExMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Ex\ExNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Ex\ExTreeNode.cs" />
     <Compile Include="UI\LauncherToolTipForm.cs">
       <SubType>Form</SubType>

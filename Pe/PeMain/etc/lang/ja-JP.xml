@@ -386,6 +386,8 @@
 		
 		<Word Name="env-updater/header/key"   Text="キー" />
 		<Word Name="env-updater/header/value" Text="値" />
+
+		<Word Name="updown/revert" Text="初期値へ戻す" />
 		
 		<Word Name="save-window/timer"   Text="タイマー保存: @[TIMESTAMP]" />
 		<Word Name="save-window/display" Text="ディスプレイ変更: @[TIMESTAMP]" />

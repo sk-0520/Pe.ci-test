@@ -629,6 +629,7 @@
 			this.toolToolbarGroup_down.SetLanguage(Language);
 			this.toolToolbarGroup_remove.SetLanguage(Language);
 
+			this.inputToolbarTextWidth.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageCommand()
@@ -712,6 +713,10 @@
 			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(Language);
 			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(Language);
 			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(Language);
+
+			this.inputClipboardLimit.SetLanguage(Language);
+			this.inputClipboardWaitTime.SetLanguage(Language);
+			this.inputClipboardRepeated.SetLanguage(Language);
 		}
 
 		void ApplyLanguage()

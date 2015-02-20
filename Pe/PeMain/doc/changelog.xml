@@ -82,6 +82,9 @@
 				<message>#228: 標準入出力画面に色を設定する</message>
 			</note>
 			<note rev="">
+				<message>#229: スピンコントロールにデフォルト値を示すようにする</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
