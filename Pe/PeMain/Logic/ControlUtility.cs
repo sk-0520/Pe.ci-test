@@ -13,6 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 	/// <summary>
 	/// コモンダイアログ共通処理。
@@ -24,7 +25,7 @@
 		/// </summary>
 		/// <param name="input"></param>
 		/// <param name="whitespaceIsQuotation"></param>
-		public static void OpenDialogFilePath(Control input, bool whitespaceIsQuotation = true)
+		public static void OpenDialogWithFilePath(Control input, bool whitespaceIsQuotation = true)
 		{
 			var path = input.Text.Trim();
 			using(var dialog = new OpenFileDialog()) {
@@ -46,7 +47,7 @@
 		/// コントロールに対してフォルダダイアログを適用する。
 		/// </summary>
 		/// <param name="input"></param>
-		public static void OpenDialogDirPath(Control input)
+		public static void OpenDialogWithDirectoryPath(Control input)
 		{
 			var path = input.Text.Trim();
 			using(var dialog = new FolderBrowserDialog()) {
@@ -554,6 +555,23 @@
 			);
 		}
 
+		/// <summary>
+		/// AutoSizeの設定された項目をうまい具合に再設定する
+		/// </summary>
+		/// <param name="control"></param>
+		/// <param name="recursive"></param>
+		public static void ResizeAutoSize(Control target, bool recursive)
+		{
+			if(recursive && target.HasChildren) {
+				foreach(var control in target.Controls.Cast<Control>()) {
+					ResizeAutoSize(control, recursive);
+				}
+			}
+			if(target.AutoSize) {
+				target.Size = Size.Empty;
+			}
+		}
+
 	}
 
 	/// <summary>
@@ -561,24 +579,53 @@
 	/// </summary>
 	public static class UpDownUtility
 	{
-		public static void SetRange(this NumericUpDown target, int min, int max)
+		static void SetRange(this NumericUpDown target, decimal min, decimal max)
 		{
 			target.Minimum = min;
 			target.Maximum = max;
 		}
-		public static void SetRange(this NumericUpDown target, TripleRange<int> range)
+
+		public static void SetRange(this NumericUpDown target, TripleRange<decimal> range)
 		{
 			SetRange(target, range.minimum, range.maximum);
+			var defaultValueUpDown = target as DefaultValueNumericUpDown;
+			if(defaultValueUpDown != null) {
+				defaultValueUpDown.DefaultValue = range.median;
+			}
 		}
-		public static void SetValue(this NumericUpDown target, TripleRange<int> range, int value)
+		public static void SetRange(this NumericUpDown target, TripleRange<int> range)
+		{
+			var convertedRange = new TripleRange<decimal>(
+				range.minimum,
+				range.median,
+				range.maximum
+			);
+			SetRange(target, convertedRange);
+		}
+
+		public static void SetValue(this NumericUpDown target, TripleRange<decimal> range, decimal value)
 		{
 			SetRange(target, range);
 			target.Value = value;
 		}
+		public static void SetValue(this NumericUpDown target, TripleRange<int> range, int value)
+		{
+			var convertedRange = new TripleRange<decimal>(
+				range.minimum,
+				range.median,
+				range.maximum
+			);
+			SetValue(target, convertedRange, (decimal)value);
+		}
+
 		public static void SetValue(this NumericUpDown target, TripleRange<TimeSpan> range, TimeSpan value)
 		{
-			SetRange(target, (int)range.minimum.TotalMilliseconds, (int)range.maximum.TotalMilliseconds);
-			target.Value = (int)value.TotalMilliseconds;
+			var msRange = new TripleRange<decimal>(
+				(decimal)range.minimum.TotalMilliseconds,
+				(decimal)range.median.TotalMilliseconds,
+				(decimal)range.maximum.TotalMilliseconds
+			);
+			SetValue(target, msRange, (decimal)value.TotalMilliseconds);
 		}
 	}
 }

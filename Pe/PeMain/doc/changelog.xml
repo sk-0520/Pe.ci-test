@@ -56,6 +56,55 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="2015/02/21" version="0.53.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>開発中のリリース構成アーカイブをCIに追加しました</message>
+				<comments>
+					<comment>詳細はプロジェクトページを参照してください</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message class="compatibility">アップデートに限り標準入出力のフォント設定が本バージョン初回起動時にリセットされます</message>
+				<comments>
+					<comment>標準入出力関係の設定データを内部的に独立させました</comment>
+					<comment>元の設定項目が一つだけでロジックに影響せずUIだけが影響されるものであるため下位互換を維持するだけの価値がないのでバッサリ切りました</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="00618396318a5197cdd977dc1df08614b048076e">
+				<message>#219: 画像データのクリップボード重複判定</message>
+			</note>
+			<note rev="4ad62e273c4477e5d944c0032270e375b4f2be45">
+				<message>#228: 標準入出力画面に色を設定する</message>
+			</note>
+			<note rev="9619719ab7e2c2d70e3a7c11257c04e9b12cc711">
+				<message>#229: スピンコントロールにデフォルト値を示すようにする</message>
+				<comments>
+					<cooment>コンテキストメニューでデフォルト値に戻します</cooment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="4983d06b4b23773fdc8b698a970f1db2f368e2d8">
+				<message>#230: ログウィンドウが地味に身長伸びてね？</message>
+			</note>
+			<note rev="0ae956498965c3e1e550a1690614af0f5a753d0a">
+				<message>#231: 言語ファイルに clipboard/wait/message が未定義</message>
+			</note>
+		</group>
+		<group type="developer">
+			<sep dummy="==================================================================" />
+			<note rev="d8d9bfec547304962930674e67e035c56c004180">
+				<message>β版出力をCIに追加</message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/18" version="0.52.0">
 		<group type="note">
 			<sep dummy="==================================================================" />

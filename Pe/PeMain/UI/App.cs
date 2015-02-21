@@ -193,7 +193,7 @@
 
 			this._clipboardPrevTime = now;
 
-			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero);
+			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
 			if(clipboardItem != null) {
 				Task.Run(() => {
 					var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
@@ -214,6 +214,7 @@
 					}
 					return true;
 				}).ContinueWith(t => {
+					Debug.WriteLine("Clipboard: " + t.Result);
 					if(t.Result) {
 						try {
 							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
@@ -223,6 +224,8 @@
 					} else {
 						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
 					}
+
+					t.ToDispose();
 				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 		}
@@ -1737,9 +1740,9 @@
 					Checked = noteItem.Visible,
 				};
 				if(noteItem.Compact) {
-					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteSmallSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteSmallSize);
 				} else {
-					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.ForeColor, noteItem.Style.BackColor, noteImageSize);
+					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteImageSize);
 				}
 				menuItem.Click += NoteMenuItem_Click;
 
@@ -2124,8 +2127,8 @@
 
 			//itemHiddenFile.ShortcutKeys = this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey.GetShorcutKey();
 			//itemExtension.ShortcutKeys = this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey.GetShorcutKey();
-			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnv.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
-			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnv.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemHiddenFile, this._commonData.MainSetting.SystemEnvironment.HiddenFileShowHotKey, this._commonData.Language, this._commonData.Logger);
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemExtension, this._commonData.MainSetting.SystemEnvironment.ExtensionShowHotKey, this._commonData.Language, this._commonData.Logger);
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemClipboard, this._commonData.MainSetting.Clipboard.ToggleHotKeySetting, this._commonData.Language, this._commonData.Logger);
 		}
 

@@ -6,6 +6,9 @@
 	using System.IO;
 	using System.Xml;
 
+	/// <summary>
+	/// プロパティに関する共通処理。
+	/// </summary>
 	public static class PropertyUtility
 	{
 		public static byte[] MixinImageGetter(Image image)
@@ -43,6 +46,15 @@
 			}
 			
 			return default(TimeSpan);
+		}
+
+		public static string MixinColorGetter(Color color)
+		{
+			return ColorTranslator.ToHtml(color);
+		}
+		public static Color MixinColorSetter(string color)
+		{
+			return ColorTranslator.FromHtml(color);
 		}
 	}
 }

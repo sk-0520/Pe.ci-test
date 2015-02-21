@@ -130,6 +130,7 @@
     <Compile Include="Data\ClipboardHtmlDataItem.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />
+    <Compile Include="Data\ColorItem.cs" />
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\DB\Dto\CommonDto.cs" />
     <Compile Include="Data\DB\Dto\NoteItemDto.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Data\ReplaceItem.cs" />
     <Compile Include="Data\RunningInfo.cs" />
     <Compile Include="Data\SkinSetting.cs" />
+    <Compile Include="Data\StreamSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
     <Compile Include="Data\TemplateItem.cs" />
     <Compile Include="Data\ToolbarDropData.cs" />
@@ -253,7 +255,13 @@
     <Compile Include="UI\CustomControl\LauncherItemSelectControl.Designer.cs">
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Ex\ExButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Ex\ExMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExNumericUpDown.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExTreeNode.cs" />

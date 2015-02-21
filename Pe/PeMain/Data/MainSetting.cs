@@ -19,8 +19,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			RunningInfo = new RunningInfo();
 			
 			Log = new LogSetting();
-			SystemEnv = new SystemEnvSetting();
+			SystemEnvironment = new SystemEnvironmentSetting();
 			Launcher = new LauncherSetting();
+			Stream = new StreamSetting();
 			Command = new CommandSetting();
 			Toolbar = new ToolbarSetting();
 			Note = new NoteSetting();
@@ -39,8 +40,9 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
 
 			Launcher.CorrectionValue();
+			Stream.CorrectionValue();
 			Log.CorrectionValue();
-			SystemEnv.CorrectionValue();
+			SystemEnvironment.CorrectionValue();
 			Command.CorrectionValue();
 			Toolbar.CorrectionValue();
 			Note.CorrectionValue();
@@ -57,6 +59,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// ランチャアイテム統括。
 		/// </summary>
 		public LauncherSetting Launcher { get; set; }
+		public StreamSetting Stream { get; set; }
 		/// <summary>
 		/// ログ設定
 		/// </summary>
@@ -64,7 +67,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		/// <summary>
 		/// システム環境セッティング
 		/// </summary>
-		public SystemEnvSetting SystemEnv { get; set; }
+		[XmlElement("SystemEnv")]
+		public SystemEnvironmentSetting SystemEnvironment { get; set; }
 		/// <summary>
 		/// コマンドランチャ設定。
 		/// </summary>

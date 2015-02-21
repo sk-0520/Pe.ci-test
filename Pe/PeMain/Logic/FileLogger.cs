@@ -27,6 +27,7 @@
 
 			if(this._stream != null) {
 				this._stream.Dispose();
+				this._stream = null;
 			}
 		}
 		

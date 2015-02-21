@@ -90,6 +90,14 @@
 
 		public const int waitCountForGetScreenCount = 10;
 		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
+
+		public static readonly Color streamGeneralForeground = Color.WhiteSmoke;
+		public static readonly Color streamGeneralBackground = Color.Black;
+		public static readonly Color streamInputForeground = Color.Black;
+		public static readonly Color streamInputBackground = Color.WhiteSmoke;
+		public static readonly Color streamErrorForeground = Color.Red;
+		public static readonly Color streamErrorBackground = Color.DarkGray;
+
 		
 		public static readonly TripleRange<TimeSpan> commandHiddenTime = new TripleRange<TimeSpan>(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(20));
 

@@ -83,13 +83,13 @@
 			}
 			public Color Fore
 			{
-				get { return NoteItem.Style.ForeColor; }
-				set { NoteItem.Style.ForeColor = value; }
+				get { return NoteItem.Style.Color.Fore.Color; }
+				set { NoteItem.Style.Color.Fore.Color = value; }
 			}
 			public Color Back
 			{
-				get { return NoteItem.Style.BackColor; }
-				set { NoteItem.Style.BackColor = value; }
+				get { return NoteItem.Style.Color.Back.Color; }
+				set { NoteItem.Style.Color.Back.Color = value; }
 			}
 			#endregion
 		}
@@ -167,7 +167,7 @@
 			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
 		}
 
-		void InitializeSystemEnv(SystemEnvSetting systemEnvSetting)
+		void InitializeSystemEnv(SystemEnvironmentSetting systemEnvSetting)
 		{
 			/*
 			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
@@ -243,16 +243,30 @@
 			}
 		}
 
+		void InitializeStream(StreamSetting setting)
+		{
+			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
+			this.commandStreamFont.RefreshView();
+
+			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Fore.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Back.Color;
+			this.commnadStreamInputForeColor.Color = setting.InputColor.Fore.Color;
+			this.commnadStreamInputBackColor.Color = setting.InputColor.Back.Color;
+			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Fore.Color;
+			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Back.Color;
+		}
+
 		void InitializeMainSetting(MainSetting mainSetting)
 		{
 			var linkPath = Literal.StartupShortcutPath;
 			this.selectMainStartup.Checked = File.Exists(linkPath);
 
 			InitializeLog(mainSetting.Log);
-			InitializeSystemEnv(mainSetting.SystemEnv);
+			InitializeSystemEnv(mainSetting.SystemEnvironment);
 			InitializeRunningInfo(mainSetting.RunningInfo);
 			InitializeLanguage(mainSetting.LanguageName, Language);
 			InitializeSkin(mainSetting.Skin);
+			InitializeStream(mainSetting.Stream);
 		}
 
 		void InitializeLauncher(LauncherSetting launcherSetting)
@@ -262,9 +276,6 @@
 				this._launcherItems.Add((LauncherItem)item.Clone());
 			}
 			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
-
-			this.commandLauncherStreamFont.FontSetting.Import(launcherSetting.StreamFontSetting);
-			this.commandLauncherStreamFont.RefreshView();
 		}
 
 		void InitializeCommand(CommandSetting commandSetting)
@@ -529,6 +540,21 @@
 			this.commandSkinAbout.SetLanguage(Language);
 		}
 
+		void ApplyLanguageStream()
+		{
+			this.groupStream.SetLanguage(Language);
+			this.commandStreamFont.SetLanguage(Language);
+
+			this.labelStreamFont.SetLanguage(Language);
+			this.labelStreamFore.SetLanguage(Language);
+			this.labelStreamBack.SetLanguage(Language);
+			this.labelStreamGeneral.SetLanguage(Language);
+			this.labelStreamInput.SetLanguage(Language);
+			this.labelStreamError.SetLanguage(Language);
+
+			UIUtility.ResizeAutoSize(this.groupStream, true);
+		}
+
 		void ApplyLanguageRunningInfo()
 		{
 			this.groupUpdateCheck.SetLanguage(Language);
@@ -547,6 +573,7 @@
 			ApplyLanguageSystemEnv();
 			ApplyLanguageRunningInfo();
 			ApplyLanguageSkin();
+			ApplyLanguageStream();
 		}
 		
 		void ApplyLanguageLauncher()
@@ -578,9 +605,6 @@
 			
 			this.selectLauncherStdStream.SetLanguage(Language);
 			this.selectLauncherAdmin.SetLanguage(Language);
-
-			this.groupLauncherStream.SetLanguage(Language);
-			this.commandLauncherStreamFont.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageToolbar()
@@ -605,6 +629,7 @@
 			this.toolToolbarGroup_down.SetLanguage(Language);
 			this.toolToolbarGroup_remove.SetLanguage(Language);
 
+			this.inputToolbarTextWidth.SetLanguage(Language);
 		}
 		
 		void ApplyLanguageCommand()
@@ -688,6 +713,10 @@
 			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(Language);
 			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(Language);
 			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(Language);
+
+			this.inputClipboardLimit.SetLanguage(Language);
+			this.inputClipboardWaitTime.SetLanguage(Language);
+			this.inputClipboardRepeated.SetLanguage(Language);
 		}
 
 		void ApplyLanguage()
@@ -890,8 +919,6 @@
 			foreach(var item in this.selecterLauncher.Items) {
 				setting.Items.Add(item);
 			}
-
-			setting.StreamFontSetting = this.commandLauncherStreamFont.FontSetting;
 		}
 
 		void ExportLogSetting(LogSetting logSetting)
@@ -915,7 +942,7 @@
 			logSetting.AddShowTrigger = logType;
 		}
 
-		void ExportSystemEnvSetting(SystemEnvSetting systemEnvSetting)
+		void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
 		{
 			/*
 			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
@@ -950,14 +977,27 @@
 			setting.Name = skin.About.Name;
 		}
 
+		void ExportStreamSetting(StreamSetting setting)
+		{
+			setting.FontSetting = this.commandStreamFont.FontSetting;
+
+			setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
+			setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
+			setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
+			setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
+		}
+
 		void ExportMainSetting(MainSetting mainSetting)
 		{
 			ExportLogSetting(mainSetting.Log);
-			ExportSystemEnvSetting(mainSetting.SystemEnv);
+			ExportSystemEnvSetting(mainSetting.SystemEnvironment);
 			ExportRunningInfoSetting(mainSetting.RunningInfo);
 
 			ExportLanguageSetting(mainSetting);
 			ExportSkinSetting(mainSetting.Skin);
+			ExportStreamSetting(mainSetting.Stream);
 		}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
@@ -1654,17 +1694,17 @@
 		
 		void CommandLauncherFilePath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogWithFilePath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherCommand);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherCommand);
 		}
 		
 		void CommandLauncherWorkDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherWorkDirPath);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherWorkDirPath);
 		}
 		
 		void CommandLauncherIconPath_Click(object sender, EventArgs e)
@@ -1674,12 +1714,12 @@
 		
 		void CommandLauncherOptionFilePath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogFilePath(this.inputLauncherOption);
+			DialogUtility.OpenDialogWithFilePath(this.inputLauncherOption);
 		}
 		
 		void CommandLauncherOptionDirPath_Click(object sender, EventArgs e)
 		{
-			DialogUtility.OpenDialogDirPath(this.inputLauncherOption);
+			DialogUtility.OpenDialogWithDirectoryPath(this.inputLauncherOption);
 		}
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
@@ -2099,6 +2139,20 @@
 			}
 			this.treeToolbarItemGroup.SelectedNode = treeNode;
 			this.treeToolbarItemGroup.EndUpdate();
+		}
+
+		private void commnadStreamGeneralForeColor_Click(object sender, EventArgs e)
+		{
+			var button = (ColorButton)sender;
+			using(var dialog = new ColorDialog()) {
+				dialog.CustomColors = new [] { button.Color }
+					.Select(c => ColorTranslator.ToWin32(c))
+					.ToArray()
+				;
+				if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+					button.Color = dialog.Color;
+				}
+			}
 		}
 
 	}

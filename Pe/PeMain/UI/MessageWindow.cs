@@ -132,8 +132,8 @@
 		{
 			var hotKeyDatas = new[] {
 					new { Id = HotKeyId.ShowCommand,   HotKey = CommonData.MainSetting.Command.HotKey,                 UnRegistMessageName = "hotkey/unregist/command",         RegistMessageName = "hotkey/regist/command" },
-					new { Id = HotKeyId.HiddenFile,    HotKey = CommonData.MainSetting.SystemEnv.HiddenFileShowHotKey, UnRegistMessageName = "hotkey/unregist/hidden-file",     RegistMessageName = "hotkey/regist/hidden-file" },
-					new { Id = HotKeyId.Extension,     HotKey = CommonData.MainSetting.SystemEnv.ExtensionShowHotKey,  UnRegistMessageName = "hotkey/unregist/extension",       RegistMessageName = "hotkey/regist/extension" },
+					new { Id = HotKeyId.HiddenFile,    HotKey = CommonData.MainSetting.SystemEnvironment.HiddenFileShowHotKey, UnRegistMessageName = "hotkey/unregist/hidden-file",     RegistMessageName = "hotkey/regist/hidden-file" },
+					new { Id = HotKeyId.Extension,     HotKey = CommonData.MainSetting.SystemEnvironment.ExtensionShowHotKey,  UnRegistMessageName = "hotkey/unregist/extension",       RegistMessageName = "hotkey/regist/extension" },
 					new { Id = HotKeyId.CreateNote,    HotKey = CommonData.MainSetting.Note.CreateHotKey,              UnRegistMessageName = "hotkey/unregist/create-note",     RegistMessageName = "hotkey/regist/create-note" },
 					new { Id = HotKeyId.HiddenNote,    HotKey = CommonData.MainSetting.Note.HiddenHotKey,              UnRegistMessageName = "hotkey/unregist/hidden-note",     RegistMessageName = "hotkey/regist/hidden-note" },
 					new { Id = HotKeyId.CompactNote,   HotKey = CommonData.MainSetting.Note.CompactHotKey,             UnRegistMessageName = "hotkey/unregist/compact-note",    RegistMessageName = "hotkey/regist/compact-note" },

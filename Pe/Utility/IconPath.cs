@@ -1,4 +1,5 @@
 ﻿
+using System;
 namespace ContentTypeTextNet.Pe.Library.Utility
 {
 	/// <summary>
@@ -16,6 +17,7 @@ namespace ContentTypeTextNet.Pe.Library.Utility
 		/// アイコンのファイルパスを作成。
 		/// </summary>
 		/// <param name="iconPath"></param>
+		[Obsolete]
 		public IconPath(string iconPath)
 		{
 			var index = iconPath.LastIndexOf(',');

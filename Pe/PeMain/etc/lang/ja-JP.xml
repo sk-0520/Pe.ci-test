@@ -261,6 +261,7 @@
 		<Word Name="clipboard/title/image"     Text="@[TYPE]: @[WIDTH] × @[HEIGHT]" />
 		<Word Name="clipboard/title/file"      Text="@[TYPE]: 選択数 @[COUNT]個" />
 		<Word Name="clipboard/wait/title"      Text="${clipboard}: 待ち時間中のため無視" />
+		<Word Name="clipboard/wait/message"    Text="@[TIME]に${clipboard}データを取り込んだため履歴取込をキャンセル" />
 		<Word Name="clipboard/dup/title"       Text="${clipboard}: 重複したクリップボードアイテムが存在するため無視" />
 		<Word Name="clipboard/page/raw-template"       Text="${template}" />
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
@@ -346,6 +347,11 @@
 		<Word Name="setting/command/skin"     Text="設定" />
 		<Word Name="setting/group/stream"     Text="標準入出力" />
 		<Word Name="setting/command/screens"  Text="識別" />
+		<Word Name="setting/label/stream-general" Text="共通" />
+		<Word Name="setting/label/stream-input" Text="入力" />
+		<Word Name="setting/label/stream-error" Text="エラー" />
+		<Word Name="setting/label/stream-fore" Text="前景色" />
+		<Word Name="setting/label/stream-back" Text="背景色" />
 
 		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
 		<Word Name="screen/primary/false"  Text="" />
@@ -380,6 +386,8 @@
 		
 		<Word Name="env-updater/header/key"   Text="キー" />
 		<Word Name="env-updater/header/value" Text="値" />
+
+		<Word Name="updown/revert" Text="デフォルト値を設定" />
 		
 		<Word Name="save-window/timer"   Text="タイマー保存: @[TIMESTAMP]" />
 		<Word Name="save-window/display" Text="ディスプレイ変更: @[TIMESTAMP]" />
