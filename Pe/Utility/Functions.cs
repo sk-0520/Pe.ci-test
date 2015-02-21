@@ -112,7 +112,7 @@
 		/// </returns>
 		public static int VersionCheck(Tuple<ushort,ushort,ushort> a, Tuple<ushort,ushort,ushort> b)
 		{
-			const string format = "{0:000}{1:000}{2:000}";
+			const string format = "{0:D8}{1:D8}{2:D8}";
 			var sa = string.Format(format, a.Item1, a.Item2, a.Item3);
 			var sb = string.Format(format, b.Item1, b.Item2, b.Item3);
 			var na = int.Parse(sa);
