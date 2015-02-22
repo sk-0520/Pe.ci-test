@@ -41,6 +41,7 @@
 			this.panelItemStack = new System.Windows.Forms.ToolStripContainer();
 			this.listItemStack = new System.Windows.Forms.ListBox();
 			this.toolItemStack = new System.Windows.Forms.ToolStrip();
+			this.toolItemStack_itemFiltering = new System.Windows.Forms.ToolStripButton();
 			this.toolItemStack_itemFilter = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FillToolStripTextBox();
 			this.tabPreview = new System.Windows.Forms.TabControl();
 			this.tabPreview_pageText = new System.Windows.Forms.TabPage();
@@ -88,7 +89,6 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolItemStack_itemFiltering = new System.Windows.Forms.ToolStripButton();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -274,6 +274,16 @@
 			this.toolItemStack.Size = new System.Drawing.Size(225, 25);
 			this.toolItemStack.Stretch = true;
 			this.toolItemStack.TabIndex = 0;
+			// 
+			// toolItemStack_itemFiltering
+			// 
+			this.toolItemStack_itemFiltering.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolItemStack_itemFiltering.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
+			this.toolItemStack_itemFiltering.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolItemStack_itemFiltering.Name = "toolItemStack_itemFiltering";
+			this.toolItemStack_itemFiltering.Size = new System.Drawing.Size(23, 22);
+			this.toolItemStack_itemFiltering.Text = ":clipboard/tool/filtering";
+			this.toolItemStack_itemFiltering.Click += new System.EventHandler(this.toolItemStack_itemFiltering_Click);
 			// 
 			// toolItemStack_itemFilter
 			// 
@@ -635,7 +645,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 242;
+			this.panelTemplateSource.SplitterDistance = 243;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -648,7 +658,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(242, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(243, 154);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -661,7 +671,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(121, 154);
+			this.listReplace.Size = new System.Drawing.Size(120, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -809,16 +819,6 @@
 			this.toolClipboard_itemType_itemTemplate.Size = new System.Drawing.Size(248, 22);
 			this.toolClipboard_itemType_itemTemplate.Text = "#ClipboardListType.Template";
 			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
-			// 
-			// toolItemStack_itemFiltering
-			// 
-			this.toolItemStack_itemFiltering.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolItemStack_itemFiltering.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
-			this.toolItemStack_itemFiltering.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolItemStack_itemFiltering.Name = "toolItemStack_itemFiltering";
-			this.toolItemStack_itemFiltering.Size = new System.Drawing.Size(23, 22);
-			this.toolItemStack_itemFiltering.Text = ":clipboard/tool/filtering";
-			this.toolItemStack_itemFiltering.Click += new System.EventHandler(this.toolItemStack_itemFiltering_Click);
 			// 
 			// ClipboardForm
 			// 
