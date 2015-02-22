@@ -1076,6 +1076,16 @@
 			Filtering = true;
 		}
 
+		void ResetFilter()
+		{
+			var text = this.toolItemStack_itemFilter.Text;
+			if(string.IsNullOrWhiteSpace(text)) {
+				ClearFilter();
+			} else {
+				SetFilter(text.Trim());
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1422,7 +1432,7 @@
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
 					var clipboardItem = GetListItem<ClipboardItem>(index);
-					CommonData.MainSetting.Clipboard.HistoryItems.RemoveAt(index);
+					CommonData.MainSetting.Clipboard.HistoryItems.Remove(clipboardItem);
 					clipboardItem.ToDispose();
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
@@ -1430,9 +1440,10 @@
 					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
 						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 						var templateItem = GetListItem<TemplateItem>(index);
-						CommonData.MainSetting.Clipboard.TemplateItems.RemoveAt(index);
+						CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
 					}
 				}
+				ResetFilter();
 			}
 		}
 
@@ -1624,12 +1635,7 @@
 
 		private void toolItemStack_itemFilter_TextChanged(object sender, EventArgs e)
 		{
-			var text = ((ToolStripItem)sender).Text;
-			if(string.IsNullOrWhiteSpace(text)) {
-				ClearFilter();
-			} else {
-				SetFilter(text.Trim());
-			}
+			ResetFilter();
 			this.toolItemStack_itemFilter.Focus();
 		}
 	}
