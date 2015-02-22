@@ -1011,6 +1011,14 @@
 			}
 		}
 
+		void ClearFilter()
+		{
+		}
+
+		void SetFilter(string s)
+		{
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1546,6 +1554,16 @@
 		void ListItemStack_MouseWheel(object sender, MouseEventArgs e)
 		{
 			UsedWheel = true;
+		}
+
+		private void toolItemStack_itemFilter_TextChanged(object sender, EventArgs e)
+		{
+			var text = ((ToolStripItem)sender).Text;
+			if(string.IsNullOrWhiteSpace(text)) {
+				ClearFilter();
+			} else {
+				SetFilter(text.Trim());
+			}
 		}
 	}
 }

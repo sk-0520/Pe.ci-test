@@ -277,6 +277,7 @@
 			// 
 			this.toolItemStack_itemFilter.Name = "toolItemStack_itemFilter";
 			this.toolItemStack_itemFilter.Size = new System.Drawing.Size(191, 25);
+			this.toolItemStack_itemFilter.TextChanged += new System.EventHandler(this.toolItemStack_itemFilter_TextChanged);
 			// 
 			// tabPreview
 			// 
