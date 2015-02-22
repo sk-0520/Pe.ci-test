@@ -109,6 +109,7 @@
 			{
 				this._filtering = value;
 				this.toolItemStack_itemFiltering.Checked = this._filtering;
+				ChangeCommand(-1);
 			}
 		}
 
@@ -502,9 +503,9 @@
 					var templateItem = GetListItem<TemplateItem>(index);
 					var buttons = new[] {
 						new { Contrl = this._commandMulti, Enbaled = true },
-						new { Contrl = this._commandAdd, Enbaled = true },
-						new { Contrl = this._commandUp, Enbaled = index != 0 },
-						new { Contrl = this._commandDown, Enbaled = index != this.listItemStack.Items.Count - 1 },
+						new { Contrl = this._commandAdd, Enbaled = !Filtering },
+						new { Contrl = this._commandUp, Enbaled = !Filtering && index != 0 },
+						new { Contrl = this._commandDown, Enbaled = !Filtering && index != this.listItemStack.Items.Count - 1 },
 					};
 					foreach(var button in buttons) {
 						button.Contrl.Enabled = button.Enbaled;
@@ -1052,6 +1053,16 @@
 		{
 			SelectedItemIndex = -1;
 			HoverItemIndex = -1;
+		}
+
+		void SilentClearFilterText()
+		{
+			this.toolItemStack_itemFilter.TextChanged -= this.toolItemStack_itemFilter_TextChanged;
+			try {
+				this.toolItemStack_itemFilter.TextBox.ResetText();
+			} finally {
+				this.toolItemStack_itemFilter.TextChanged += this.toolItemStack_itemFilter_TextChanged;
+			}
 		}
 
 		void ClearFilter()
