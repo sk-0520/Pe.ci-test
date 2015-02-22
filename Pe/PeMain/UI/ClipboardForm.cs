@@ -288,6 +288,12 @@
 		//	ApplySetting();
 		//}
 
+		T GetListItem<T>(int index)
+		{
+			var item = this.listItemStack.Items[index];
+			return (T)item;
+		}
+
 		void ApplySettingUI()
 		{
 			CommonData.MainSetting.Clipboard.TemplateItems.ListChanged += TemplateItems_ListChanged;
@@ -457,7 +463,8 @@
 			//if((index != -1 && HoverItemIndex != index) || (index != -1 && HoverItemIndex == -1)) {
 			if((index > -1 && HoverItemIndex != index)) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					var clipboardItem = GetListItem<ClipboardItem>(index);
 					var map = new Dictionary<ClipboardType, Control>() {
 						{ ClipboardType.Text, this._commandText },
 						{ ClipboardType.Rtf, this._commandRtf },
@@ -471,7 +478,8 @@
 					}
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					var buttons = new[] {
 						new { Contrl = this._commandMulti, Enbaled = true },
 						new { Contrl = this._commandAdd, Enbaled = true },
@@ -635,10 +643,12 @@
 
 			TabPage defaultTabPage;
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var clipboardItem = GetListItem<ClipboardItem>(index);
 				defaultTabPage = ChangeSelsectedHistoryItem(clipboardItem);
 			} else {
-				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				var templateItem = GetListItem<TemplateItem>(index);
 				defaultTabPage = ChangeSelsectedTemplateItem(templateItem);
 			}
 			this.tabPreview.SelectedTab = defaultTabPage;
@@ -677,7 +687,8 @@
 		void CopySingleItem(int index)
 		{
 			Debug.Assert(index != -1);
-			
+
+			//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
 			var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
 			CopyItem(clipboardItem, clipboardItem.GetSingleClipboardType());
 		}
@@ -1001,12 +1012,14 @@
 		{
 			Debug.Assert(index != -1);
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var clipboardItem = GetListItem<ClipboardItem>(index);
 				if(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text)) {
 					OutputClipboardItem(clipboardItem);
 				}
 			} else {
-				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				var templateItem = GetListItem<TemplateItem>(index);
 				OutputTemplateItem(templateItem);
 			}
 		}
@@ -1025,7 +1038,8 @@
 
 		void DrawClipboardItem(Graphics g, int itemIndex, Rectangle bounds, Color foreColor)
 		{
-			var item = CommonData.MainSetting.Clipboard.HistoryItems[itemIndex];
+			//var item = CommonData.MainSetting.Clipboard.HistoryItems[itemIndex];
+			var item = GetListItem<ClipboardItem>(itemIndex);
 			var map = new Dictionary<ClipboardType, string>() {
 					{ ClipboardType.Text, imageText},
 					{ ClipboardType.Rtf, imageRtf},
@@ -1245,7 +1259,8 @@
 			}
 
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var clipboardItem = GetListItem<ClipboardItem>(index);
 				var typeList = clipboardItem.GetClipboardTypeList();
 				var list = new[] {
 					new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
@@ -1264,7 +1279,8 @@
 			} else {
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				if(e.TabPage == this.tabPreview_pageReplaceTemplate) {
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					if(templateItem.ReplaceMode) {
 						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
 						this.viewReplaceTemplate.Rtf = rtf;
@@ -1285,7 +1301,8 @@
 				OutputTargetClick_Impl(HoverItemIndex);
 			} else if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				try {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
+					var clipboardItem = GetListItem<ClipboardItem>(HoverItemIndex);
 					var map = new Dictionary<object, ClipboardType>() {
 						{ this._commandText, ClipboardType.Text },
 						{ this._commandRtf, ClipboardType.Rtf },
@@ -1327,7 +1344,8 @@
 					}
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					if(CommonData.MainSetting.Clipboard.DoubleClickToOutput) {
 						OutputTemplateItem(templateItem);
 					} else {
@@ -1342,10 +1360,12 @@
 			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					var clipboardItem = GetListItem<ClipboardItem>(index);
 					OpenClipboardItemSaveDialog(clipboardItem);
 				} else {
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					OpenTemplateItemSaveDialog(templateItem);
 				}
 			}
@@ -1356,14 +1376,16 @@
 			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					var clipboardItem = GetListItem<ClipboardItem>(index);
 					CommonData.MainSetting.Clipboard.HistoryItems.RemoveAt(index);
 					clipboardItem.ToDispose();
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 					// 最後の一つを削除するとあまりよろしくない
 					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
-						var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+						var templateItem = GetListItem<TemplateItem>(index);
 						CommonData.MainSetting.Clipboard.TemplateItems.RemoveAt(index);
 					}
 				}
