@@ -820,6 +820,10 @@
 			try {
 				this.listItemStack.BeginUpdate();
 
+				if(Filtering) {
+					Filtering = false;
+				}
+
 				var isActive = Form.ActiveForm == this;
 				var selectedIndex = this.listItemStack.SelectedIndex;
 				this.listItemStack.DataSource = null;
