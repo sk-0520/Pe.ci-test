@@ -69,6 +69,8 @@
 
 		ImageViewSize _imageSize;
 
+		bool _filtering;
+
 		#endregion ////////////////////////////////////////
 
 		public ClipboardForm()
@@ -100,7 +102,15 @@
 		/// <summary>
 		/// フィルタリング中か。
 		/// </summary>
-		bool Filtering { get; set; }
+		bool Filtering 
+		{ 
+			get { return this._filtering; } 
+			set
+			{
+				this._filtering = value;
+				this.toolItemStack_itemFiltering.Checked = this._filtering;
+			}
+		}
 
 		#endregion ////////////////////////////////////////
 
@@ -444,6 +454,7 @@
 				}
 				ChangeCommandType(type);
 			} finally {
+				Filtering = false;
 				this.listItemStack.EndUpdate();
 			}
 		}
@@ -1045,7 +1056,6 @@
 				ResetItemIndex();
 				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
 			}
-			this.toolItemStack_itemFiltering.Checked = false;
 			Filtering = false;
 		}
 
@@ -1063,7 +1073,6 @@
 			;
 			if(filterItems.Count > 0) {
 				BindStackList(filterItems);
-				this.toolItemStack_itemFiltering.Checked = true;
 				Filtering = true;
 				this.listItemStack.SelectedIndex = -1;
 				this.listItemStack.SelectedIndex = 0;
