@@ -10,6 +10,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Text;
+	using System.Text.RegularExpressions;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
@@ -95,6 +96,11 @@
 		Point ImageDragPosition { get; set; }
 
 		bool UsedWheel { get; set; }
+
+		/// <summary>
+		/// フィルタリング中か。
+		/// </summary>
+		bool Filtering { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -420,8 +426,7 @@
 
 			this.listItemStack.BeginUpdate();
 			try {
-				SelectedItemIndex = -1;
-				HoverItemIndex = -1;
+				ResetItemIndex();
 				if(type == ClipboardListType.History) {
 					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
 				} else {
@@ -1024,12 +1029,51 @@
 			}
 		}
 
+		void ResetItemIndex()
+		{
+			SelectedItemIndex = -1;
+			HoverItemIndex = -1;
+		}
+
 		void ClearFilter()
 		{
+			if(Filtering) {
+				ResetItemIndex();
+				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
+			}
+			Filtering = false;
 		}
 
 		void SetFilter(string s)
 		{
+			Debug.Assert(!string.IsNullOrWhiteSpace(s));
+
+			var wldPattern = TextUtility.RegexPatternToWildcard(s);
+			var reg = new Regex(wldPattern);
+
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				var filterItems = this.CommonData.MainSetting.Clipboard.HistoryItems
+					.Where(item => reg.IsMatch(item.Name))
+					.ToList()
+				;
+				if(filterItems.Count > 0) {
+					BindStackList(filterItems);
+				} else {
+					ClearFilter();
+				}
+			} else {
+				var filterItems = this.CommonData.MainSetting.Clipboard.TemplateItems
+					.Where(item => reg.IsMatch(item.Name))
+					.ToList()
+				;
+				if(filterItems.Count > 0) {
+					BindStackList(filterItems);
+				} else {
+					ClearFilter();
+				}
+			}
+
+			Filtering = true;
 		}
 
 		#endregion ////////////////////////////////////////
@@ -1586,6 +1630,7 @@
 			} else {
 				SetFilter(text.Trim());
 			}
+			this.toolItemStack_itemFilter.Focus();
 		}
 	}
 }
