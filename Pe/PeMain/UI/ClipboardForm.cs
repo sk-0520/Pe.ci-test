@@ -1200,7 +1200,7 @@
 
 		void DrawTemplateItem(Graphics g, int itemIndex, Rectangle bounds, Color foreColor)
 		{
-			var item = CommonData.MainSetting.Clipboard.TemplateItems[itemIndex];
+			var item = GetListItem<TemplateItem>(itemIndex);
 			using(var sf = new StringFormat())
 			using(var brush = new SolidBrush(foreColor)) {
 				sf.Alignment = StringAlignment.Near;
