@@ -1058,6 +1058,9 @@
 			;
 			if(filterItems.Count > 0) {
 				BindStackList(filterItems);
+				Filtering = true;
+				this.listItemStack.SelectedIndex = -1;
+				this.listItemStack.SelectedIndex = 0;
 			} else {
 				ClearFilter();
 			}
@@ -1072,8 +1075,6 @@
 			} else {
 				SetFilter_Impl(s, this.CommonData.MainSetting.Clipboard.TemplateItems);
 			}
-
-			Filtering = true;
 		}
 
 		/// <summary>
