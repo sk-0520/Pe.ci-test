@@ -212,6 +212,8 @@
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
 
+			this.toolItemStack_itemFiltering.SetLanguage(CommonData.Language);
+
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
 			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
@@ -245,6 +247,8 @@
 
 			this.toolClipboard_itemType_itemClipboard.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
 			this.toolClipboard_itemType_itemTemplate.Image = CommonData.Skin.GetImage(SkinImage.RawTemplate);
+
+			this.toolItemStack_itemFiltering.Image = CommonData.Skin.GetImage(SkinImage.Filter);
 
 			this.toolImage_itemRaw.Image = CommonData.Skin.GetImage(SkinImage.ImageRaw);
 			this.toolImage_itemFill.Image = CommonData.Skin.GetImage(SkinImage.ImageFill);
@@ -1041,6 +1045,7 @@
 				ResetItemIndex();
 				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
 			}
+			this.toolItemStack_itemFiltering.Checked = false;
 			Filtering = false;
 		}
 
@@ -1058,6 +1063,7 @@
 			;
 			if(filterItems.Count > 0) {
 				BindStackList(filterItems);
+				this.toolItemStack_itemFiltering.Checked = true;
 				Filtering = true;
 				this.listItemStack.SelectedIndex = -1;
 				this.listItemStack.SelectedIndex = 0;
@@ -1684,6 +1690,11 @@
 		{
 			ResetFilter();
 			this.toolItemStack_itemFilter.Focus();
+		}
+
+		private void toolItemStack_itemFiltering_Click(object sender, EventArgs e)
+		{
+			ClearFilter();
 		}
 	}
 }

@@ -88,6 +88,7 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolItemStack_itemFiltering = new System.Windows.Forms.ToolStripButton();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -266,6 +267,7 @@
 			this.toolItemStack.Dock = System.Windows.Forms.DockStyle.None;
 			this.toolItemStack.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolItemStack.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolItemStack_itemFiltering,
             this.toolItemStack_itemFilter});
 			this.toolItemStack.Location = new System.Drawing.Point(0, 0);
 			this.toolItemStack.Name = "toolItemStack";
@@ -276,7 +278,7 @@
 			// toolItemStack_itemFilter
 			// 
 			this.toolItemStack_itemFilter.Name = "toolItemStack_itemFilter";
-			this.toolItemStack_itemFilter.Size = new System.Drawing.Size(191, 25);
+			this.toolItemStack_itemFilter.Size = new System.Drawing.Size(168, 25);
 			this.toolItemStack_itemFilter.TextChanged += new System.EventHandler(this.toolItemStack_itemFilter_TextChanged);
 			// 
 			// tabPreview
@@ -633,7 +635,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 154);
-			this.panelTemplateSource.SplitterDistance = 241;
+			this.panelTemplateSource.SplitterDistance = 242;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -646,7 +648,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(241, 154);
+			this.inputTemplateSource.Size = new System.Drawing.Size(242, 154);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -659,7 +661,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(122, 154);
+			this.listReplace.Size = new System.Drawing.Size(121, 154);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -808,6 +810,16 @@
 			this.toolClipboard_itemType_itemTemplate.Text = "#ClipboardListType.Template";
 			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
+			// toolItemStack_itemFiltering
+			// 
+			this.toolItemStack_itemFiltering.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolItemStack_itemFiltering.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
+			this.toolItemStack_itemFiltering.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolItemStack_itemFiltering.Name = "toolItemStack_itemFiltering";
+			this.toolItemStack_itemFiltering.Size = new System.Drawing.Size(23, 22);
+			this.toolItemStack_itemFiltering.Text = ":clipboard/tool/filtering";
+			this.toolItemStack_itemFiltering.Click += new System.EventHandler(this.toolItemStack_itemFiltering_Click);
+			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -944,5 +956,6 @@
 		private System.Windows.Forms.ToolStripContainer panelItemStack;
 		private System.Windows.Forms.ToolStrip toolItemStack;
 		private Ex.FillToolStripTextBox toolItemStack_itemFilter;
+		private System.Windows.Forms.ToolStripButton toolItemStack_itemFiltering;
 	}
 }
