@@ -46,6 +46,8 @@
 		<Word Name="clipboard"           Text="クリップボード" />
 		<Word Name="template"            Text="テキストテンプレート" />
 		<Word Name="clipboard-template"  Text="クリップボード/テンプレート" />
+		<Word Name="item-filter"         Text="アイテム抽出" />
+		<Word Name="tips-wildcard"       Text="ワイルドカードが使用できます。&#x0d;&#x0a;&lt;?&gt; 任意の1文字にマッチします。&#x0d;&#x0a;&lt;*&gt; 任意の0文字以上にマッチします。" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -272,7 +274,8 @@
 		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
 		<Word Name="clipboard/output/empty"            Text="出力文字列が空のため無効" />
 		<Word Name="clipboard/output/notfound-window"  Text="出力先ウィンドウが発見できないため無効" />
-		
+		<Word Name="clipboard/tool/filtering"          Text="${item-filter}&#x0d;&#x0a;${tips-wildcard}" />
+
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />
 		<Word Name="setting/page/launcher/basic"    Text="基本設定" />
@@ -379,7 +382,7 @@
 		
 		<Word Name="item-selecter/command/create"     Text="新規アイテム" />
 		<Word Name="item-selecter/command/remove"     Text="アイテム削除" />
-		<Word Name="item-selecter/command/filtering"  Text="アイテム抽出" />
+		<Word Name="item-selecter/command/filtering"  Text="${item-filter}&#x0d;&#x0a;${tips-wildcard}" />
 		<Word Name="item-selecter/command/type-full"  Text="自動抽出" />
 		<Word Name="item-selecter/command/type-name"  Text="アイテム名から抽出" />
 		<Word Name="item-selecter/command/type-tag"   Text="タグから抽出" />

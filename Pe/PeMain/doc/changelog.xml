@@ -72,7 +72,11 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>クリップボード/テンプレートアイテム一覧にフィルタor検索機能追加</message>
+				<comments>
+					<comment>フィルタリング機能を追加しました</comment>
+					<comment>フィルタリング中はテンプレートアイテムの追加・移動が抑制されます</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
