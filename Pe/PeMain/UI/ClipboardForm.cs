@@ -1044,33 +1044,33 @@
 			Filtering = false;
 		}
 
-		void SetFilter(string s)
+		void SetFilter_Impl<T>(string s, IEnumerable<T> srcItems)
+			where T: INameItem
 		{
 			Debug.Assert(!string.IsNullOrWhiteSpace(s));
 
 			var wldPattern = TextUtility.RegexPatternToWildcard(s);
 			var reg = new Regex(wldPattern);
 
-			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var filterItems = this.CommonData.MainSetting.Clipboard.HistoryItems
-					.Where(item => reg.IsMatch(item.Name))
-					.ToList()
-				;
-				if(filterItems.Count > 0) {
-					BindStackList(filterItems);
-				} else {
-					ClearFilter();
-				}
+			var filterItems = srcItems
+				.Where(item => reg.IsMatch(item.Name))
+				.ToList()
+			;
+			if(filterItems.Count > 0) {
+				BindStackList(filterItems);
 			} else {
-				var filterItems = this.CommonData.MainSetting.Clipboard.TemplateItems
-					.Where(item => reg.IsMatch(item.Name))
-					.ToList()
-				;
-				if(filterItems.Count > 0) {
-					BindStackList(filterItems);
-				} else {
-					ClearFilter();
-				}
+				ClearFilter();
+			}
+		}
+
+		void SetFilter(string s)
+		{
+			Debug.Assert(!string.IsNullOrWhiteSpace(s));
+
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				SetFilter_Impl(s, this.CommonData.MainSetting.Clipboard.HistoryItems);
+			} else {
+				SetFilter_Impl(s, this.CommonData.MainSetting.Clipboard.TemplateItems);
 			}
 
 			Filtering = true;
