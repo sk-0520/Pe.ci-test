@@ -1076,6 +1076,9 @@
 			Filtering = true;
 		}
 
+		/// <summary>
+		/// フィルタを再設定。
+		/// </summary>
 		void ResetFilter()
 		{
 			var text = this.toolItemStack_itemFilter.Text;
@@ -1084,6 +1087,80 @@
 			} else {
 				SetFilter(text.Trim());
 			}
+		}
+
+		void ClearSelectItem()
+		{
+			var index = this.listItemStack.SelectedIndex;
+			if(index != -1) {
+				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					var clipboardItem = GetListItem<ClipboardItem>(index);
+					CommonData.MainSetting.Clipboard.HistoryItems.Remove(clipboardItem);
+					clipboardItem.ToDispose();
+				} else {
+					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+					// 最後の一つを削除するとあまりよろしくない
+					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
+						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+						var templateItem = GetListItem<TemplateItem>(index);
+						CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
+					}
+				}
+				ResetFilter();
+			}
+		}
+
+		void ClearDisplayClipboardItems()
+		{
+			var removedItems = new List<ClipboardItem>();
+			if(Filtering) {
+				var items = this.listItemStack.Items.Cast<ClipboardItem>();
+				foreach(var item in items) {
+					CommonData.MainSetting.Clipboard.HistoryItems.Remove(item);
+					removedItems.Add(item);
+				}
+			} else {
+				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
+				removedItems.AddRange(items);
+				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
+			}
+			ResetControlInTabPage();
+			foreach(var item in removedItems) {
+				item.ToDispose();
+			}
+		}
+
+		void ClearDisplayTemplateItems()
+		{
+			var allClear = !Filtering;
+			if(Filtering) {
+				allClear = this.listItemStack.Items.Count == CommonData.MainSetting.Clipboard.TemplateItems.Count;
+			}
+
+			if(allClear) {
+				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
+				if(lastItem != null) {
+					CommonData.MainSetting.Clipboard.TemplateItems.Clear();
+					CommonData.MainSetting.Clipboard.TemplateItems.Add(lastItem);
+				}
+			} else {
+				foreach(var item in this.listItemStack.Items.Cast<TemplateItem>()) {
+					CommonData.MainSetting.Clipboard.TemplateItems.Remove(item);
+				}
+			}
+		}
+
+		void ClearDisplayItems()
+		{
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				ClearDisplayClipboardItems();
+			} else {
+				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+				ClearDisplayTemplateItems();
+			}
+
+			ClearFilter();
 		}
 
 		#endregion ////////////////////////////////////////
@@ -1427,43 +1504,12 @@
 
 		private void toolClipboard_itemClear_ButtonClick(object sender, EventArgs e)
 		{
-			var index = this.listItemStack.SelectedIndex;
-			if(index != -1) {
-				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-					var clipboardItem = GetListItem<ClipboardItem>(index);
-					CommonData.MainSetting.Clipboard.HistoryItems.Remove(clipboardItem);
-					clipboardItem.ToDispose();
-				} else {
-					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					// 最後の一つを削除するとあまりよろしくない
-					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
-						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-						var templateItem = GetListItem<TemplateItem>(index);
-						CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
-					}
-				}
-				ResetFilter();
-			}
+			ClearSelectItem();
 		}
 
 		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
 		{
-			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
-				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
-				ResetControlInTabPage();
-				foreach(var item in items) {
-					item.ToDispose();
-				}
-			} else {
-				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
-				if(lastItem != null) {
-					CommonData.MainSetting.Clipboard.TemplateItems.Clear();
-					CommonData.MainSetting.Clipboard.TemplateItems.Add(lastItem);
-				}
-			}
+			ClearDisplayItems();
 		}
 
 		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
