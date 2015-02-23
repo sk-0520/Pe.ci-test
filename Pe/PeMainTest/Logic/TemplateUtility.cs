@@ -12,9 +12,12 @@
 	[TestFixture]
 	public class TemplateUtilityTest
 	{
+		[TestCase(true, "a", "a")]
+		[TestCase(true, "=LENGTH(a)", "1")]
+		[TestCase(true, "=LENGTH(a)=LENGTH(B)", "11")]
 		public void ConvertFromMacroTest(bool test, string src, string result)
 		{
-
+			Assert.IsTrue((TemplateUtility.ConvertFromMacro(src) == result) == test);
 		}
 		
 		Language CreateLanguage(string name)
