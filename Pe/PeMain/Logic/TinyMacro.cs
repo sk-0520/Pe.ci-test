@@ -23,7 +23,7 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
-			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>[\s\S]+)?(?'CLOSE-OPEN'\))", RegexOptions.Singleline);
+			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))", RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 			return ConvertImpl(source, regex);
 		}
 
