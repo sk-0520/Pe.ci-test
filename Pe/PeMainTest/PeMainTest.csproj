@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Literal.cs" />
     <Compile Include="Logic\TemplateUtility.cs" />
+    <Compile Include="Logic\TinyMacro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

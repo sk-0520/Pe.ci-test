@@ -4,12 +4,28 @@
 	using System.Collections.Generic;
 	using System.Globalization;
 	using System.Linq;
+	using System.Text.RegularExpressions;
 
 	/// <summary>
-	/// ネストすら許されない簡易マクロ。
+	/// 簡易マクロ。
 	/// </summary>
 	public class TinyMacro
 	{
+		public static string Convert(string src)
+		{
+			var reg = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))");
+
+			var result = reg.Replace(src, (Match m) => {
+				var macro = new TinyMacro(
+					m.Groups["MACRO"].Value,
+					m.Success ? Convert(m.Groups["PARAMS"].Value) : string.Empty
+				);
+				return macro.Execute();
+			});
+
+			return result;
+		}
+
 		public TinyMacro(string name, string rawParam)
 		{
 			Name = name;
@@ -50,5 +66,7 @@
 
 			return "#" + Name + "#";
 		}
+
+
 	}
 }
