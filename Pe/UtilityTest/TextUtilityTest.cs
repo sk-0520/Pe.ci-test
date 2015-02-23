@@ -69,5 +69,18 @@
 			Assert.IsTrue((q.First() == '"' && q.Last() == '"') == hasQ);
 		}
 
+		[TestCase(0, "")]
+		[TestCase(1, "a")]
+		[TestCase(1, "a\r\n")]
+		[TestCase(2, "a\r\nb")]
+		[TestCase(2, "a\rb")]
+		[TestCase(2, "a\nb")]
+		[TestCase(2, " a \r b ")]
+		[TestCase(2, " a \n b ")]
+		[TestCase(2, " a \r\n b ")]
+		public void SplitLinesTest(int result, string s)
+		{
+			Assert.IsTrue(s.SplitLines().Count() == result);
+		}
 	}
 }

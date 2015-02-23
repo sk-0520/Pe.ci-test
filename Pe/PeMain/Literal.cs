@@ -633,6 +633,7 @@
 		public const string length = "len";
 		public const string trim = "trim";
 		public const string trimLines = "trimLines";
+		public const string line = "line";
 	}
 
 	

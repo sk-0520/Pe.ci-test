@@ -10,9 +10,19 @@
 
 	/// <summary>
 	/// 簡易マクロ。
+	/// 
+	/// 指定する値は 1 始まりとする。
 	/// </summary>
 	public class TinyMacro
 	{
+		const string errorHead = "#";
+		const string errorTail = "#";
+
+		string PutError(string s)
+		{
+			return string.Format("{0} {1} {2}", errorHead, s, errorTail);
+		}
+
 		/// <summary>
 		/// マクロ展開。
 		/// <para>
@@ -23,7 +33,7 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
-			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))", RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>([^*]|\*[^/])*)?(?'CLOSE-OPEN'\))", RegexOptions.ExplicitCapture | RegexOptions.Multiline);
 			return ConvertImpl(source, regex);
 		}
 
@@ -31,7 +41,7 @@
 		/// 指定正規表現を使用してマクロ展開。
 		/// </summary>
 		/// <param name="source">置き換え前文字列。</param>
-		/// <param name="regex">正規表現。</param>
+		/// <param name="regex">MACRO, PARAMSが定義された正規表現。</param>
 		/// <returns>置き換え後文字列。</returns>
 		static string ConvertImpl(string source, Regex regex)
 		{
@@ -81,7 +91,7 @@
 		/// 生パラメータの文字数取得。
 		/// </summary>
 		/// <returns></returns>
-		string ExecuteLength()
+		protected virtual string ExecuteLength()
 		{
 			return RawParameter.Length.ToString();
 		}
@@ -91,7 +101,7 @@
 		/// <para>改行を含むならtimeLines。</para>
 		/// </summary>
 		/// <returns></returns>
-		string ExecuteTrim()
+		protected virtual string ExecuteTrim()
 		{
 			return RawParameter.Trim();
 		}
@@ -100,9 +110,33 @@
 		/// 生パラメータを行毎にトリムる。
 		/// </summary>
 		/// <returns></returns>
-		string ExecuteTrimLines()
+		protected virtual string ExecuteTrimLines()
 		{
-			return string.Join(Environment.NewLine, RawParameter.SplitLines().Select(s => s.Trim()));
+			return string.Join(
+				Environment.NewLine, 
+				RawParameter
+					.SplitLines()
+					.Select(s => s.Trim())
+			);
+		}
+
+		protected virtual string ExecuteLine()
+		{
+			if(ParameterList.Count == 1) {
+				return PutError("Parameter: single");
+			}
+			var number = ParameterList[1];
+			int lineNumber;
+			if(!int.TryParse(number, out lineNumber)) {
+				return PutError("Line number: " + number);
+			}
+
+			var lines = ParameterList.First().SplitLines().ToArray();
+			if(lineNumber.Between(1, lines.Length)) {
+				return lines[lineNumber - 1];
+			} else {
+				return PutError("Out range: line");
+			}
 		}
 
 		/// <summary>
@@ -115,6 +149,7 @@
 				{ MacroName.length, ExecuteLength },
 				{ MacroName.trim, ExecuteTrim },
 				{ MacroName.trimLines, ExecuteTrimLines },
+				{ MacroName.line, ExecuteLine},
 			}.ToDictionary(p => p.Key.ToLower(), p => p.Value);
 
 			Func<string> fn;
@@ -122,7 +157,7 @@
 				return fn();
 			}
 
-			return "#" + Name + "#";
+			return PutError(Name);
 		}
 
 
