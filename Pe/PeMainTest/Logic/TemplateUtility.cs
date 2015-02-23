@@ -17,6 +17,7 @@
 		[TestCase(true, "=LENGTH(a)=LENGTH(B)", "11")]
 		[TestCase(true, "=LENGTH()", "0")]
 		[TestCase(true, "=LENGTH(abc)", "3")]
+		[TestCase(true, "=LENGTH(=LENGTH(1))", "1")]
 		public void ConvertFromMacroTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TemplateUtility.ConvertFromMacro(src) == result) == test);
