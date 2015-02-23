@@ -14,7 +14,11 @@
 		public static string Convert(string src)
 		{
 			var reg = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))");
+			return ConvertImpl(src, reg);
+		}
 
+		static string ConvertImpl(string src, Regex reg)
+		{
 			var result = reg.Replace(src, (Match m) => {
 				var macro = new TinyMacro(
 					m.Groups["MACRO"].Value,
