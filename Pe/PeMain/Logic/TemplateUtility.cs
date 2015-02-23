@@ -35,6 +35,7 @@
 
 			return map;
 		}
+
 		public static string ToPlainText(TemplateItem item, Language language)
 		{
 			if(!item.ReplaceMode) {
