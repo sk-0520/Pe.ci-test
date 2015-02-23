@@ -14,6 +14,10 @@
 		/// </summary>
 		public bool ReplaceMode { get; set; }
 		/// <summary>
+		/// 関数置き換えを使用するか。
+		/// </summary>
+		public bool Macro { get; set; }
+		/// <summary>
 		/// 対象文字列。
 		/// </summary>
 		public string Source { get; set; }

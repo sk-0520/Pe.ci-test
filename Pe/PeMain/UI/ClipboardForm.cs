@@ -208,6 +208,7 @@
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
+			this.selectTemplateMacro.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageRawTemplate.SetLanguage(CommonData.Language);
 			this.tabPreview_pageReplaceTemplate.SetLanguage(CommonData.Language);
@@ -627,7 +628,9 @@
 
 			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
-			
+
+			this.selectTemplateMacro.DataBindings.Clear();
+			this.selectTemplateMacro.DataBindings.Add("Checked", templateItem, "Macro", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			return this.tabPreview_pageRawTemplate;
 		}

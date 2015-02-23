@@ -269,6 +269,7 @@
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
 		<Word Name="clipboard/label/template-name"     Text="${template}名" />
 		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
+		<Word Name="clipboard/check/template-macro"    Text="マクロ" />
 		<Word Name="clipboard/label/uri"     Text="URI:" />
 		<Word Name="clipboard/image/raw"     Text="原寸表示" />
 		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
