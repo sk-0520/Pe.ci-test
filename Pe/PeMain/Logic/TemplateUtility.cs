@@ -56,9 +56,12 @@
 					return richTextBox.Rtf;
 				}
 				
-				var STX = '\u0002';
-				var ETX = '\u0003';
-				var evil = new Tuple<char, char>(STX, ETX);
+				var AsciiSTX = '\u0002';
+				var AsciiETX = '\u0003';
+				var evil = new Tuple<char, char>(AsciiSTX, AsciiETX);
+
+				var rtfBoldHead = @"\b ";
+				var rtfBoldTail = @"\b0 ";
 
 				var replacedEvil = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), evil);
 				richTextBox.Text = replacedEvil;
@@ -66,8 +69,8 @@
 				// ちょっちあれな部分を書式設定
 				var esc = @"\'";
 				var map = new Dictionary<string, string>() {
-					{ esc + string.Format("{0:x2}", (int)evil.Item1), @"\b " },
-					{ esc + string.Format("{0:x2}", (int)evil.Item2), @"\b0 " },
+					{ esc + string.Format("{0:x2}", (int)evil.Item1), rtfBoldHead },
+					{ esc + string.Format("{0:x2}", (int)evil.Item2), rtfBoldTail },
 				};
 				var rtf = richTextBox.Rtf.ReplaceFromDictionary(map);
 
