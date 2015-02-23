@@ -30,5 +30,17 @@
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
+
+		[TestCase(true, "=TRIM(a)", "a")]
+		[TestCase(true, "=TRIM( a)", "a")]
+		[TestCase(true, "=TRIM( a )", "a")]
+		[TestCase(true, "=TRIM( a b )", "a b")]
+		[TestCase(true, "=TRIM( a \r b )", "a \r b")]
+		[TestCase(true, "=TRIM( a \n b )", "a \n b")]
+		[TestCase(true, "=TRIM( a \r\n b )", "a \r\n b")]
+		public void Convert_TrimTest(bool test, string src, string result)
+		{
+			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
+		}
 	}
 }

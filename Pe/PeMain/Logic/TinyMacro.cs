@@ -22,7 +22,7 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
-			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))");
+			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))", RegexOptions.Singleline);
 			return ConvertImpl(source, regex);
 		}
 
@@ -85,6 +85,11 @@
 			return RawParameter.Length.ToString();
 		}
 
+		string ExecuteTrim()
+		{
+			return RawParameter.Trim();
+		}
+
 		/// <summary>
 		/// 現在のマクロ名から処理実行。
 		/// </summary>
@@ -93,6 +98,7 @@
 		{
 			var map = new Dictionary<string, Func<string>>() {
 					{ MacroName.length, ExecuteLength },
+					{ MacroName.trim, ExecuteTrim },
 				};
 			Func<string> fn;
 			if(map.TryGetValue(Name.ToLower(CultureInfo.InvariantCulture), out fn)) {

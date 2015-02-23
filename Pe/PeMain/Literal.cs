@@ -631,6 +631,7 @@
 	public static class MacroName
 	{
 		public const string length = "length";
+		public const string trim = "trim";
 	}
 
 	
