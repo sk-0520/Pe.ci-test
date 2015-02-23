@@ -84,9 +84,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Literal.cs" />
-    <Compile Include="Logic\TemplateUtility.cs" />
-    <Compile Include="Logic\TinyMacro.cs" />
+    <Compile Include="LiteralTest.cs" />
+    <Compile Include="Logic\TemplateUtilityTest.cs" />
+    <Compile Include="Logic\TinyMacroTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
