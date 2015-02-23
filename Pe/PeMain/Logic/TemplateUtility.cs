@@ -38,7 +38,17 @@
 
 		public static string ConvertFromMacro(string src)
 		{
-			return src;
+			var reg = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))");
+
+			var result = reg.Replace(src, (Match m) => {
+				var macro = new TinyMacro(
+					m.Groups["MACRO"].Value,
+					m.Success ? ConvertFromMacro(m.Groups["PARAMS"].Value) : string.Empty
+				);
+				return macro.Execute();
+			});
+
+			return result;
 		}
 
 		public static string ToPlainText(TemplateItem item, Language language)
