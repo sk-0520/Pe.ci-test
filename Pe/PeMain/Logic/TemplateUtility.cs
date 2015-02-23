@@ -36,14 +36,20 @@
 			return map;
 		}
 
+		public static string ConvertFromMacro(string src)
+		{
+			return src;
+		}
+
 		public static string ToPlainText(TemplateItem item, Language language)
 		{
 			if(!item.ReplaceMode) {
 				return item.Source;
 			}
-			var result = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), null);
-			Debug.WriteLine(result);
-			return result;
+			var replacedText = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), null);
+			Debug.WriteLine("replacedText: " + replacedText);
+
+			return replacedText;
 		}
 
 		public static string ToRtf(TemplateItem item, Language language, FontSetting fontSetting)

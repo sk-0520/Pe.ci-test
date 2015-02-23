@@ -14,18 +14,18 @@
 		[TestCase("a(2)", "a", "a")]
 		[TestCase("A", "A", "A(2)")]
 		[TestCase("a(3)", "a", "a(5)", "a(2)", "a(4)", "a")]
-		public void ToUniqueDefault(string result, string src, params string[] list)
+		public void ToUniqueDefault(string test, string src, params string[] list)
 		{
-			Assert.IsTrue(TextUtility.ToUniqueDefault(src, list) == result);
+			Assert.IsTrue(TextUtility.ToUniqueDefault(src, list) == test);
 		}
 
 		[TestCase("a", "a")]
 		[TestCase(".*", "*")]
 		[TestCase(".", "?")]
 		[TestCase("..", "??")]
-		public void RegexPatternToWildcard(string result, string s)
+		public void RegexPatternToWildcard(string test, string s)
 		{
-			Assert.IsTrue(TextUtility.RegexPatternToWildcard(s) == result);
+			Assert.IsTrue(TextUtility.RegexPatternToWildcard(s) == test);
 		}
 
 		[TestCase("a", "<", ">", "a")]

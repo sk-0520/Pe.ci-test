@@ -12,6 +12,11 @@
 	[TestFixture]
 	public class TemplateUtilityTest
 	{
+		public void ConvertFromMacroTest(bool test, string src, string result)
+		{
+
+		}
+		
 		Language CreateLanguage(string name)
 		{
 			return new Language();
@@ -24,14 +29,14 @@
 		[TestCase(true, "@[A", "@[A", "")]
 		[TestCase(true, "@[A]", "@[A]", "")]
 		[TestCase(true, "@[]", "@[]", "")]
-		public void ToPlainText_Text(bool result, string templateText, string plainText, string langName)
+		public void ToPlainText_Text(bool test, string src, string result, string langName)
 		{
 			var lang = CreateLanguage(langName);
 			var item = new TemplateItem() {
-				Source = templateText,
+				Source = src,
 			};
 			var convertedText = TemplateUtility.ToPlainText(item, lang);
-			Assert.IsTrue((convertedText == plainText) == result);
+			Assert.IsTrue((convertedText == result) == test);
 		}
 
 		[TestCase(true, "a", "a", "")]
@@ -41,15 +46,15 @@
 		[TestCase(true, "@[A", "@[A", "")]
 		[TestCase(true, "@[A]", "@[A]", "")]
 		[TestCase(true, "@[]", "@[]", "")]
-		public void ToPlainText_Replace(bool result, string templateText, string plainText, string langName)
+		public void ToPlainText_Replace(bool test, string src, string result, string langName)
 		{
 			var lang = CreateLanguage(langName);
 			var item = new TemplateItem() {
-				Source = templateText,
+				Source = src,
 				ReplaceMode = true,
 			};
 			var convertedText = TemplateUtility.ToPlainText(item, lang);
-			Assert.IsTrue((convertedText == plainText) == result);
+			Assert.IsTrue((convertedText == result) == test);
 		}
 
 	}
