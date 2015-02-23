@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Globalization;
 	using System.Linq;
 	using System.Text.RegularExpressions;
@@ -11,18 +12,34 @@
 	/// </summary>
 	public class TinyMacro
 	{
-		public static string Convert(string src)
+		/// <summary>
+		/// マクロ展開。
+		/// <para>
+		/// =MACRO(params,...)を展開する。
+		/// </para>
+		/// </summary>
+		/// <param name="source">置き換え前文字列。</param>
+		/// <returns>置き換え後文字列。</returns>
+		public static string Convert(string source)
 		{
-			var reg = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))");
-			return ConvertImpl(src, reg);
+			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))");
+			return ConvertImpl(source, regex);
 		}
 
-		static string ConvertImpl(string src, Regex reg)
+		/// <summary>
+		/// 指定正規表現を使用してマクロ展開。
+		/// </summary>
+		/// <param name="source">置き換え前文字列。</param>
+		/// <param name="regex">正規表現。</param>
+		/// <returns>置き換え後文字列。</returns>
+		static string ConvertImpl(string source, Regex regex)
 		{
-			var result = reg.Replace(src, (Match m) => {
+			Debug.Assert(regex != null);
+
+			var result = regex.Replace(source, (Match m) => {
 				var macro = new TinyMacro(
 					m.Groups["MACRO"].Value,
-					m.Success ? Convert(m.Groups["PARAMS"].Value) : string.Empty
+					m.Success ? ConvertImpl(m.Groups["PARAMS"].Value, regex) : string.Empty
 				);
 				return macro.Execute();
 			});
@@ -30,6 +47,11 @@
 			return result;
 		}
 
+		/// <summary>
+		/// 生成。
+		/// </summary>
+		/// <param name="name">マクロ名。</param>
+		/// <param name="rawParam">パラメータ。</param>
 		public TinyMacro(string name, string rawParam)
 		{
 			Name = name;
@@ -41,8 +63,17 @@
 			}
 		}
 
-		public string Name { get; set; }
-		public string RawParameter { get; set; }
+		/// <summary>
+		/// マクロ名。
+		/// </summary>
+		public string Name { get; private set; }
+		/// <summary>
+		/// 渡された生のパラメータ。
+		/// </summary>
+		public string RawParameter { get; private set; }
+		/// <summary>
+		/// 生パラメータをいい感じに分割したパラメータリスト。
+		/// </summary>
 		public IReadOnlyList<string> ParameterList { get; private set; }
 
 		/// <summary>
