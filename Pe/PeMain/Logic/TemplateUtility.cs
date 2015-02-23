@@ -36,48 +36,12 @@
 			return map;
 		}
 
-		class Macro
-		{
-			public Macro(string name, string rawParam)
-			{
-				Name = name;
-				RawParameter = rawParam;
-				if(string.IsNullOrWhiteSpace(rawParam)) {
-					ParameterList = new string[0];
-				} else {
-					ParameterList = rawParam.Split(',').Select(s => s.Trim()).ToArray();
-				}
-			}
-
-			public string Name { get; set; }
-			public string RawParameter { get; set; }
-			public IReadOnlyList<string> ParameterList { get; private set; }
-
-			string ExecuteLength()
-			{
-				return RawParameter.Length.ToString(); ;
-			}
-
-			public string Execute()
-			{
-				var map = new Dictionary<string, Func<string>>() {
-					{ "LENGTH", ExecuteLength },
-				};
-				Func<string> fn;
-				if(map.TryGetValue(Name, out fn)) {
-					return fn();
-				}
-
-				return "#" + Name + "#";
-			}
-		}
-
 		public static string ConvertFromMacro(string src)
 		{
 			var reg = new Regex(@"=(?<MACRO>\w+)\((?<PARAMS>.*)?\)");
 
 			var result = reg.Replace(src, (Match m) => {
-				var macro = new Macro(
+				var macro = new TinyMacro(
 					m.Groups["MACRO"].Value, 
 					m.Success ? m.Groups["PARAMS"].Value: string.Empty
 				);

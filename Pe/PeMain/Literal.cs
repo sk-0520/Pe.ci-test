@@ -612,10 +612,10 @@
 	/// </summary>
 	public static class TemplateLanguageName
 	{
-		public static string clipboard = "CLIP";
-		public static string clipboardNobreak = "CLIP:NOBREAK";
-		public static string clipboardHead = "CLIP:HEAD";
-		public static string clipboardTail = "CLIP:TAIL";
+		public const string clipboard = "CLIP";
+		public const string clipboardNobreak = "CLIP:NOBREAK";
+		public const string clipboardHead = "CLIP:HEAD";
+		public const string clipboardTail = "CLIP:TAIL";
 
 		public static IReadOnlyList<string> GetMembersList()
 		{
@@ -626,6 +626,11 @@
 				clipboardTail,
 			};
 		}
+	}
+
+	public static class MacroName
+	{
+		public const string length = "length";
 	}
 
 	
