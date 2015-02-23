@@ -630,8 +630,9 @@
 
 	public static class MacroName
 	{
-		public const string length = "length";
+		public const string length = "len";
 		public const string trim = "trim";
+		public const string trimLines = "trimLines";
 	}
 
 	

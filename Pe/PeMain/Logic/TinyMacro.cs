@@ -6,6 +6,7 @@
 	using System.Globalization;
 	using System.Linq;
 	using System.Text.RegularExpressions;
+	using ContentTypeTextNet.Pe.Library.Utility;
 
 	/// <summary>
 	/// 簡易マクロ。
@@ -22,7 +23,7 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
-			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>.+)?(?'CLOSE-OPEN'\))", RegexOptions.Singleline);
+			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>[\s\S]+)?(?'CLOSE-OPEN'\))", RegexOptions.Singleline);
 			return ConvertImpl(source, regex);
 		}
 
@@ -85,9 +86,23 @@
 			return RawParameter.Length.ToString();
 		}
 
+		/// <summary>
+		/// 生パラメータをトリムする。
+		/// <para>改行を含むならtimeLines。</para>
+		/// </summary>
+		/// <returns></returns>
 		string ExecuteTrim()
 		{
 			return RawParameter.Trim();
+		}
+
+		/// <summary>
+		/// 生パラメータを行毎にトリムる。
+		/// </summary>
+		/// <returns></returns>
+		string ExecuteTrimLines()
+		{
+			return string.Join(Environment.NewLine, RawParameter.SplitLines().Select(s => s.Trim()));
 		}
 
 		/// <summary>
@@ -97,9 +112,11 @@
 		public string Execute()
 		{
 			var map = new Dictionary<string, Func<string>>() {
-					{ MacroName.length, ExecuteLength },
-					{ MacroName.trim, ExecuteTrim },
-				};
+				{ MacroName.length, ExecuteLength },
+				{ MacroName.trim, ExecuteTrim },
+				{ MacroName.trimLines, ExecuteTrimLines },
+			}.ToDictionary(p => p.Key.ToLower(), p => p.Value);
+
 			Func<string> fn;
 			if(map.TryGetValue(Name.ToLower(CultureInfo.InvariantCulture), out fn)) {
 				return fn();

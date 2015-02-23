@@ -18,27 +18,39 @@
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
 
-		[TestCase(true, "=LENGTH(a)", "1")]
-		[TestCase(true, "=LENGTH(a)=LENGTH(B)", "11")]
-		[TestCase(true, "=LENGTH()", "0")]
-		[TestCase(true, "=LENGTH(abc)", "3")]
-		[TestCase(true, "=LENGTH(=LENGTH(A))", "1")]
-		[TestCase(true, "=LENGTH(=LENGTH(abcdefghij))", "2")]
-		[TestCase(true, "=LENGTH(=LENGTH())", "1")]
-		[TestCase(true, "-=LENGTH(=LENGTH(=LENGTH(=LENGTH(=LENGTH()))))+", "-1+")]
+		[TestCase(true, "=len(a)", "1")]
+		[TestCase(true, "=len(a)=length(B)", "11")]
+		[TestCase(true, "=len()", "0")]
+		[TestCase(true, "=len(abc)", "3")]
+		[TestCase(true, "=len(=len(A))", "1")]
+		[TestCase(true, "=len(=len(abcdefghij))", "2")]
+		[TestCase(true, "=len(=len())", "1")]
+		[TestCase(true, "-=len(=len(=len(=len(=len()))))+", "-1+")]
 		public void Convert_LengthTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
 
-		[TestCase(true, "=TRIM(a)", "a")]
-		[TestCase(true, "=TRIM( a)", "a")]
-		[TestCase(true, "=TRIM( a )", "a")]
-		[TestCase(true, "=TRIM( a b )", "a b")]
-		[TestCase(true, "=TRIM( a \r b )", "a \r b")]
-		[TestCase(true, "=TRIM( a \n b )", "a \n b")]
-		[TestCase(true, "=TRIM( a \r\n b )", "a \r\n b")]
+		[TestCase(true, "=trim(a)", "a")]
+		[TestCase(true, "=trim( a)", "a")]
+		[TestCase(true, "=trim( a )", "a")]
+		[TestCase(true, "=trim( a b )", "a b")]
+		[TestCase(true, "=trim( a \r b )", "a \r b")]
+		[TestCase(true, "=trim( a \n b )", "a \n b")]
+		[TestCase(true, "=trim( a \r\n b )", "a \r\n b")]
 		public void Convert_TrimTest(bool test, string src, string result)
+		{
+			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
+		}
+
+		[TestCase(true, "=trimLines(a)", "a")]
+		[TestCase(true, "=trimLines( a)", "a")]
+		[TestCase(true, "=trimLines( a )", "a")]
+		[TestCase(true, "=trimLines( a b )", "a b")]
+		[TestCase(true, "=trimLines( a \r b )", "a\rb")]
+		[TestCase(true, "=trimLines( a \n b )", "a\nb")]
+		[TestCase(true, "=trimLines( a \r\n b )", "a\r\nb")]
+		public void Convert_TrimLinesTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
