@@ -13,7 +13,7 @@
 		[TestCase(true, "=(a", "=(a")]
 		[TestCase(true, "=(a)", "=(a)")]
 		[TestCase(true, "=?(a)", "=?(a)")]
-		public void ConvertFromMacro_PlainTest(bool test, string src, string result)
+		public void Convert_PlainTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
@@ -26,7 +26,7 @@
 		[TestCase(true, "=LENGTH(=LENGTH(abcdefghij))", "2")]
 		[TestCase(true, "=LENGTH(=LENGTH())", "1")]
 		[TestCase(true, "-=LENGTH(=LENGTH(=LENGTH(=LENGTH(=LENGTH()))))+", "-1+")]
-		public void ConvertFromMacro_LengthTest(bool test, string src, string result)
+		public void Convert_LengthTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
