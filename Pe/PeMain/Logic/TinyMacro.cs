@@ -275,9 +275,9 @@
 			Debug.Assert(length >= 0);
 
 			if(leftToRight) {
-				return new string(target.Skip(start).Take(length).ToArray());
+				return string.Concat(target.Skip(start).Take(length).ToArray());
 			} else {
-				return new string(target.Reverse().Skip(start).Take(length).Reverse().ToArray());
+				return string.Concat(target.Reverse().Skip(start).Take(length).Reverse().ToArray());
 			}
 		}
 
@@ -330,6 +330,13 @@
 			return ExecuteSubstring_Impl(ParameterList[0], safeStart, safeLength, true);
 		}
 
+		protected string ExecuteRepeat()
+		{
+			EnforceParameterCount(2);
+			var count = EnforceConvertIntegerFromParameter(1);
+			return string.Concat(Enumerable.Repeat(ParameterList[0], count));
+		}
+
 		#endregion
 
 		/// <summary>
@@ -347,6 +354,7 @@
 				{ MacroName.left, ExecuteLeft },
 				{ MacroName.right, ExecuteRight },
 				{ MacroName.substring, ExecuteSubstring },
+				{ MacroName.repeat, ExecuteRepeat },
 			}.ToDictionary(p => p.Key.ToLower(), p => p.Value);
 
 			try {

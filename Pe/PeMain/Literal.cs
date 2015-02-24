@@ -638,6 +638,7 @@
 		public const string left = "left";
 		public const string right = "right";
 		public const string substring = "mid";
+		public const string repeat = "rept";
 	}
 
 	

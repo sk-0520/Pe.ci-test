@@ -21,6 +21,7 @@
 
 		[TestCase("=trim(    =len(123)   )", "3")]
 		[TestCase("=mid(=right(=left(abcdefg, 4), 3), 2, 1)", "c")]
+		[TestCase("=rept(=right(=left(abcdefg, 4), 3), 2)", "bcdbcd")]
 		public void Convert_Multi(string src, string result)
 		{
 			Assert.IsTrue(TinyMacro.Convert(src) == result);
@@ -35,6 +36,10 @@
 		[TestCase(true, "=len(=len(abcdefghij))", "2")]
 		[TestCase(true, "=len(=len())", "1")]
 		[TestCase(true, "-=len(=len(=len(=len(=len()))))+", "-1+")]
+		[TestCase(true, "=len(あ)", "1")]
+		[TestCase(true, "=len(が)", "1")]
+		[TestCase(true, "=len(ｱ)", "1")]
+		[TestCase(true, "=len(ｱｱ)", "2")]
 		public void Convert_LengthTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
@@ -134,6 +139,21 @@
 		[TestCase(true, "=mid(abc,4,2)", "")]
 		[TestCase(false, "=mid(abc,a,2)", "err")]
 		public void Convert_Substring(bool test, string src, string result)
+		{
+			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
+		}
+
+		[TestCase(false, "=rept(a)", "err")]
+		[TestCase(false, "=rept(a,)", "err")]
+		[TestCase(false, "=rept(a,b)", "err")]
+		[TestCase(true, "=rept(a,0)", "")]
+		[TestCase(true, "=rept(a,1)", "a")]
+		[TestCase(true, "=rept(a,2)", "aa")]
+		[TestCase(true, "=rept(aa,2)", "aaaa")]
+		[TestCase(true, "=rept(あ,0)", "")]
+		[TestCase(true, "=rept(あ,1)", "あ")]
+		[TestCase(true, "=rept(あ,2)", "ああ")]
+		public void Convert_Repeat(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
