@@ -43,6 +43,11 @@
 			}
 			var replacedText = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), null);
 			Debug.WriteLine("replacedText: " + replacedText);
+			
+			if(item.Macro) {
+				var macroText = TinyMacro.Convert(replacedText);
+				return macroText;
+			}
 
 			return replacedText;
 		}
@@ -60,20 +65,35 @@
 				
 				var AsciiSTX = '\u0002';
 				var AsciiETX = '\u0003';
-				var evil = new Tuple<char, char>(AsciiSTX, AsciiETX);
+				var evilReplace = new Tuple<char, char>(AsciiSTX, AsciiETX);
+
+				var AsciiSI = '\u000F';
+				var AsciiEO = '\u000E';
+				var evilMacro = new Tuple<char, char>(AsciiSI, AsciiEO);
 
 				var rtfBoldHead = @"\b ";
 				var rtfBoldTail = @"\b0 ";
 
-				var replacedEvil = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), evil);
-				richTextBox.Text = replacedEvil;
+				var rtfItalicHead = @"\u ";
+				var rtfItalicTail = @"\u0 ";
+
+				var replacedEvil = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), evilReplace);
+				if(item.Macro) {
+					var macroText = TinyMacro.Convert(replacedEvil, evilMacro);
+					richTextBox.Text = macroText;
+				} else {
+					richTextBox.Text = replacedEvil;
+				}
 
 				// ちょっちあれな部分を書式設定
 				var esc = @"\'";
 				var map = new Dictionary<string, string>() {
-					{ esc + string.Format("{0:x2}", (int)evil.Item1), rtfBoldHead },
-					{ esc + string.Format("{0:x2}", (int)evil.Item2), rtfBoldTail },
+					{ esc + string.Format("{0:x2}", (int)evilReplace.Item1), rtfBoldHead },
+					{ esc + string.Format("{0:x2}", (int)evilReplace.Item2), rtfBoldTail },
+					{ esc + string.Format("{0:x2}", (int)evilMacro.Item1), rtfItalicHead },
+					{ esc + string.Format("{0:x2}", (int)evilMacro.Item2), rtfItalicTail },
 				};
+
 				var rtf = richTextBox.Rtf.ReplaceFromDictionary(map);
 
 				return rtf;

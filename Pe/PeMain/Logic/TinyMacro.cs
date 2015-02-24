@@ -78,6 +78,8 @@
 	/// 簡易マクロ。
 	/// 
 	/// 指定する値は 1 始まりとする。
+	/// 
+	/// ちょっときもいなぁ、将来的にまともにしよう。
 	/// </summary>
 	public class TinyMacro
 	{
@@ -91,6 +93,10 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
+			return Convert(source, null);
+		}
+		public static string Convert(string source, Tuple<char, char> evil)
+		{
 			var regex = new Regex(@"
 				(?'OPEN' =(?<MACRO> \w+)\( )
 				(?<PARAMS> ([^*]|\*[^/])*)?
@@ -99,8 +105,10 @@
 				",
 				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
 			);
+			var evilHead = evil != null ? evil.Item1.ToString() : string.Empty;
+			var evilTail = evil != null ? evil.Item2.ToString() : string.Empty;
 
-			var result = source.ReplaceRange("<%", "%>", s => ConvertImpl(s.Trim(), regex));
+			var result = source.ReplaceRange("<%", "%>", s => evilHead + ConvertImpl(s.Trim(), regex) + evilTail);
 			Debug.WriteLine("[ {0} ] -> [ {1} ]", source, result);
 			return result;
 		}
@@ -307,6 +315,10 @@
 			return safeLength;
 		}
 
+		/// <summary>
+		/// 変換パラメーター1から変換パラメータ2だけ抜き出す
+		/// </summary>
+		/// <returns></returns>
 		protected virtual string ExecuteLeft()
 		{
 			var safeLength = ExecuteSubstring_GetLength(1, 1);
@@ -314,6 +326,10 @@
 			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, true);
 		}
 
+		/// <summary>
+		/// 変換パラメーター1の右から変換パラメータ2だけ抜き出す
+		/// </summary>
+		/// <returns></returns>
 		protected virtual string ExecuteRight()
 		{
 			var safeLength = ExecuteSubstring_GetLength(1, 1);
@@ -321,6 +337,10 @@
 			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, false);
 		}
 
+		/// <summary>
+		/// 変換パラメーター1の変換パラメーター2から変換パラメーター3だけ抜き出す。
+		/// </summary>
+		/// <returns></returns>
 		protected virtual string ExecuteSubstring()
 		{
 			EnforceParameterCountMoreThan(2);
@@ -330,6 +350,7 @@
 			if(safeStart < 1) {
 				throw new TinyMacroParseException(this, "start", safeStart);
 			}
+
 			// マクロ引数から内部用に位置を補正
 			safeStart -= 1;
 
@@ -342,6 +363,10 @@
 			return ExecuteSubstring_Impl(ParameterList[0], safeStart, safeLength, true);
 		}
 
+		/// <summary>
+		/// 変換パラメーター1を変換パラメーター2回繰り返す
+		/// </summary>
+		/// <returns></returns>
 		protected string ExecuteRepeat()
 		{
 			EnforceParameterCount(2);
