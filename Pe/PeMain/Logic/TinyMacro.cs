@@ -8,6 +8,71 @@
 	using System.Text.RegularExpressions;
 	using ContentTypeTextNet.Pe.Library.Utility;
 
+	#region exception
+	
+	/// <summary>
+	/// TinyMacroで明示的に投げられる例外の親。
+	/// </summary>
+	public abstract class TinyMacroException: Exception
+	{
+		const string errorHead = "#";
+		const string errorTail = "!";
+
+		public TinyMacroException(TinyMacro tinyMacro)
+			: base()
+		{
+			TinyMacro = tinyMacro;
+		}
+
+		public TinyMacroException(TinyMacro tinyMacro, string message)
+			: base(message)
+		{
+			TinyMacro = tinyMacro;
+		}
+
+		public TinyMacro TinyMacro { get; private set; }
+
+		public virtual string ErrorMessage
+		{
+			get { return MakeErrorMessage(Message); }
+		}
+
+		protected virtual string MakeErrorMessage(string message)
+		{
+			return string.Format("{0}{1}{2}", errorHead, message, errorTail);
+		}
+	}
+
+	/// <summary>
+	/// マクロ実行時に投げられる例外。
+	/// </summary>
+	public class TinyMacroExecuteException: TinyMacroException
+	{
+		public TinyMacroExecuteException(TinyMacro tinyMacro, string message)
+			: base(tinyMacro, message)
+		{ }
+	}
+
+	/// <summary>
+	/// マクロのパラメーター解析中に投げられる例外。
+	/// </summary>
+	public class TinyMacroParseException: TinyMacroException
+	{
+		public TinyMacroParseException(TinyMacro tinyMacro, string message, params object[] infos)
+			: base(tinyMacro, message)
+		{
+			if(infos.Length > 0) {
+				ErrorInfos = infos;
+			} else {
+				ErrorInfos = new object[0];
+			}
+		}
+
+		public IReadOnlyList<object> ErrorInfos { get; private set; }
+	}
+
+	#endregion
+
 	/// <summary>
 	/// 簡易マクロ。
 	/// 
@@ -15,23 +80,6 @@
 	/// </summary>
 	public class TinyMacro
 	{
-		const string errorHead = "#";
-		const string errorTail = "!";
-
-		string PutError(string message, params object[] infos)
-		{
-			if(infos.Length == 0) {
-				return string.Format("{0} {1}: {2} {3}", errorHead, Name, message, errorTail);
-			} else {
-				var param = new List<string>(infos.Length);
-				foreach(var info in infos) {
-					param.Add(info.ToString());
-				}
-				return string.Format("{0} {1}: {2}[{3}] {4}", errorHead, Name, message, string.Join(", ", param), errorTail);
-			}
-
-		}
-
 		/// <summary>
 		/// マクロ展開。
 		/// <para>
@@ -136,19 +184,19 @@
 		protected virtual string ExecuteLine()
 		{
 			if(ParameterList.Count == 1) {
-				return PutError("parameter", "single");
+				throw new TinyMacroParseException(this, "parameter count", "single");
 			}
 			var number = ParameterList[1];
 			int lineNumber;
 			if(!int.TryParse(number, out lineNumber)) {
-				return PutError("line number", number);
+				throw new TinyMacroParseException(this, "line number", number);
 			}
 
 			var lines = ParameterList.First().SplitLines().ToArray();
 			if(lineNumber.Between(1, lines.Length)) {
 				return lines[lineNumber - 1];
 			} else {
-				return PutError("out range", lineNumber);
+				throw new TinyMacroParseException(this, "out range", lineNumber);
 			}
 		}
 
@@ -184,7 +232,7 @@
 				safeLength = 1;
 			}
 			if(safeLength < 0) {
-				return PutError("length", safeLength);
+				throw new TinyMacroParseException(this, "length", safeLength);
 			}
 
 			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, true);
@@ -198,7 +246,7 @@
 				safeLength = 1;
 			}
 			if(safeLength < 0) {
-				return PutError("length", safeLength);
+				throw new TinyMacroParseException(this, "length", safeLength);
 			}
 
 			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, false);
@@ -207,16 +255,16 @@
 		protected virtual string ExecuteSubstring()
 		{
 			if(ParameterList.Count == 1) {
-				return PutError("parameter", "single");
+				throw new TinyMacroParseException(this, "parameter count", "single");
 			}
 
 			var rawStart = ParameterList[1];
 			int safeStart;
 			if(!int.TryParse(rawStart, out safeStart)) {
-				return PutError("start", rawStart);
+				throw new TinyMacroParseException(this, "start", rawStart);
 			}
 			if(safeStart < 1) {
-				return PutError("start", safeStart);
+				throw new TinyMacroParseException(this, "start", safeStart);
 			}
 			// マクロ引数から内部用に位置を補正
 			safeStart -= 1;
@@ -227,7 +275,7 @@
 				safeLength = 0;
 			}
 			if(safeLength < 0) {
-				return PutError("length", safeLength);
+				throw new TinyMacroParseException(this, "length", safeLength);
 			}
 			if(ParameterList[0].Length < safeStart) {
 				return string.Empty;
@@ -253,12 +301,17 @@
 				{ MacroName.substring, ExecuteSubstring },
 			}.ToDictionary(p => p.Key.ToLower(), p => p.Value);
 
-			Func<string> fn;
-			if(map.TryGetValue(Name.ToLower(CultureInfo.InvariantCulture), out fn)) {
-				return fn();
+			try {
+				Func<string> fn;
+				if(map.TryGetValue(Name.ToLower(CultureInfo.InvariantCulture), out fn)) {
+					return fn();
+				} else {
+					throw new TinyMacroExecuteException(this, "undefined");
+				}
+			} catch(TinyMacroException ex) {
+				Debug.WriteLine(ex);
+				return ex.ErrorMessage;
 			}
-
-			return PutError("undefined");
 		}
 
 
