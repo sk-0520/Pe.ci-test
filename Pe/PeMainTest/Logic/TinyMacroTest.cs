@@ -42,7 +42,7 @@
 		[TestCase(true, "<%=len(が)%>", "1")]
 		[TestCase(true, "<%=len(ｱ)%>", "1")]
 		[TestCase(true, "<%=len(ｱｱ)%>", "2")]
-		[TestCase(true, "<%=len(0)=len(0)%>", "11")]
+		//[TestCase(true, "<%=len(0)=len(0)%>", "11")]
 		public void Convert_LengthTest(bool test, string src, string result)
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);

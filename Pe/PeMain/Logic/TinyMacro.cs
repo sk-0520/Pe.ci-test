@@ -98,10 +98,10 @@
 		public static string Convert(string source, Tuple<char, char> evil)
 		{
 			var regex = new Regex(@"
-(
+				(
 				(?'OPEN' =(?<MACRO> \w+)\( )
-#				(?<PARAMS> ( [^*]|\*[^/]|(?! =\w+ )|(?! \) ) ) )
-				(?<PARAMS> (?! ( =\w+ )|( \) ) )* )
+				(?<PARAMS> ( [^*]|\*[^/]|(?! =\w+ )|(?! \) ) )* )
+#				(?<PARAMS> (?! ( =\w+ )|( \) ) )* )
 				)+
 				(
 				(?'CLOSE-OPEN' \) )
