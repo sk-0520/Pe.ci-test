@@ -98,9 +98,15 @@
 		public static string Convert(string source, Tuple<char, char> evil)
 		{
 			var regex = new Regex(@"
+(
 				(?'OPEN' =(?<MACRO> \w+)\( )
-				(?<PARAMS> ([^*]|\*[^/])*)?
+#				(?<PARAMS> ( [^*]|\*[^/]|(?! =\w+ )|(?! \) ) ) )
+				(?<PARAMS> (?! ( =\w+ )|( \) ) )* )
+				)+
+				(
 				(?'CLOSE-OPEN' \) )
+				)+
+
 				(?(OPEN)(?!))
 				",
 				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
