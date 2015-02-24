@@ -91,7 +91,6 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
-			/*
 			var regex = new Regex(@"
 				(?'OPEN' =(?<MACRO> \w+)\( )
 				(?<PARAMS> ([^*]|\*[^/])*)?
@@ -100,45 +99,10 @@
 				",
 				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
 			);
-			*/
-			/*
-			var regex = new Regex(@"
-				^(?! ( =\w+\( )|( \) ) )*
-				(
-				((?'OPEN' =(?<MACRO> \w+)\( ) )+
-#				(?<PARAMS> ([^*]|\*[^/])+)?
-				(?<PARAMS> (?! ( =\w+\( )|( \) ) ))+ )?
-				((?'CLOSE-OPEN' \) )(?! ( =\w+\( )|( \) ) )* )+
-				)*
-				(?(OPEN)(?!))$
-				",//#(?(OPEN)(?!))
-				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
-			);
-			*/
-			/*
-			var regex = new Regex(@"
-=(?<MACRO>\w+)\( (
-	(?:
-	(?<PARAMS> ([^*]|\*[^/])*)
-	|
-	(?<open> =(\w+)\( )
-	|
-	(?<-open> \) )
-	)+
-	(?(open)(!?))
-) \)
-			", RegexOptions.IgnorePatternWhitespace);
-			*/
-			var result = ConvertImpl(source);
+
+			var result = source.ReplaceRange("<%", "%>", s => ConvertImpl(s.Trim(), regex));
 			Debug.WriteLine("[ {0} ] -> [ {1} ]", source, result);
 			return result;
-		}
-
-		static string ConvertImpl(string source)
-		{
-			var result = new StringBuilder((int)(source.Length * 1.5));
-
-			return result.ToString();
 		}
 
 		/// <summary>
@@ -150,11 +114,11 @@
 		static string ConvertImpl(string source, Regex regex)
 		{
 			Debug.Assert(regex != null);
-
+			Debug.WriteLine(source);
 			var result = regex.Replace(source, (Match m) => {
 				var macro = new TinyMacro(
 					m.Groups["MACRO"].Value,
-					m.Success ? (m.Groups["PARAMS"].Value/*, regex*/) : string.Empty
+					m.Success ? ConvertImpl(m.Groups["PARAMS"].Value, regex) : string.Empty
 				);
 				return macro.Execute();
 			});
