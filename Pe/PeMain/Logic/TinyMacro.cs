@@ -5,6 +5,7 @@
 	using System.Diagnostics;
 	using System.Globalization;
 	using System.Linq;
+	using System.Text;
 	using System.Text.RegularExpressions;
 	using ContentTypeTextNet.Pe.Library.Utility;
 
@@ -90,6 +91,7 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
+			/*
 			var regex = new Regex(@"
 				(?'OPEN' =(?<MACRO> \w+)\( )
 				(?<PARAMS> ([^*]|\*[^/])*)?
@@ -98,7 +100,45 @@
 				",
 				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
 			);
-			return ConvertImpl(source, regex);
+			*/
+			/*
+			var regex = new Regex(@"
+				^(?! ( =\w+\( )|( \) ) )*
+				(
+				((?'OPEN' =(?<MACRO> \w+)\( ) )+
+#				(?<PARAMS> ([^*]|\*[^/])+)?
+				(?<PARAMS> (?! ( =\w+\( )|( \) ) ))+ )?
+				((?'CLOSE-OPEN' \) )(?! ( =\w+\( )|( \) ) )* )+
+				)*
+				(?(OPEN)(?!))$
+				",//#(?(OPEN)(?!))
+				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
+			);
+			*/
+			/*
+			var regex = new Regex(@"
+=(?<MACRO>\w+)\( (
+	(?:
+	(?<PARAMS> ([^*]|\*[^/])*)
+	|
+	(?<open> =(\w+)\( )
+	|
+	(?<-open> \) )
+	)+
+	(?(open)(!?))
+) \)
+			", RegexOptions.IgnorePatternWhitespace);
+			*/
+			var result = ConvertImpl(source);
+			Debug.WriteLine("[ {0} ] -> [ {1} ]", source, result);
+			return result;
+		}
+
+		static string ConvertImpl(string source)
+		{
+			var result = new StringBuilder((int)(source.Length * 1.5));
+
+			return result.ToString();
 		}
 
 		/// <summary>
@@ -114,13 +154,14 @@
 			var result = regex.Replace(source, (Match m) => {
 				var macro = new TinyMacro(
 					m.Groups["MACRO"].Value,
-					m.Success ? ConvertImpl(m.Groups["PARAMS"].Value, regex) : string.Empty
+					m.Success ? (m.Groups["PARAMS"].Value/*, regex*/) : string.Empty
 				);
 				return macro.Execute();
 			});
 
 			return result;
 		}
+
 
 		/// <summary>
 		/// 生成。
