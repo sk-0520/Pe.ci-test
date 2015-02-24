@@ -161,6 +161,81 @@
 			return Environment.ExpandEnvironmentVariables(RawParameter);
 		}
 
+		string ExecuteSubstring_Impl(string target, int start, int length, bool leftToRight)
+		{
+			if(length == 0) {
+				return string.Empty;
+			}
+			Debug.Assert(start >= 0);
+			Debug.Assert(length >= 0);
+
+			if(leftToRight) {
+				return new string(target.Skip(start).Take(length).ToArray());
+			} else {
+				return new string(target.Reverse().Skip(start).Take(length).Reverse().ToArray());
+			}
+		}
+
+		protected virtual string ExecuteLeft()
+		{
+			var rawLength = ParameterList.ElementAtOrDefault(1);
+			int safeLength;
+			if(!int.TryParse(rawLength, out safeLength)) {
+				safeLength = 1;
+			}
+			if(safeLength < 0) {
+				return PutError("length", safeLength);
+			}
+
+			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, true);
+		}
+
+		protected virtual string ExecuteRight()
+		{
+			var rawLength = ParameterList.ElementAtOrDefault(1);
+			int safeLength;
+			if(!int.TryParse(rawLength, out safeLength)) {
+				safeLength = 1;
+			}
+			if(safeLength < 0) {
+				return PutError("length", safeLength);
+			}
+
+			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, false);
+		}
+
+		protected virtual string ExecuteSubstring()
+		{
+			if(ParameterList.Count == 1) {
+				return PutError("parameter", "single");
+			}
+
+			var rawStart = ParameterList[1];
+			int safeStart;
+			if(!int.TryParse(rawStart, out safeStart)) {
+				return PutError("start", rawStart);
+			}
+			if(safeStart < 1) {
+				return PutError("start", safeStart);
+			}
+			// マクロ引数から内部用に位置を補正
+			safeStart -= 1;
+
+			var rawLength = ParameterList.ElementAtOrDefault(2);
+			int safeLength;
+			if(!int.TryParse(rawLength, out safeLength)) {
+				safeLength = 0;
+			}
+			if(safeLength < 0) {
+				return PutError("length", safeLength);
+			}
+			if(ParameterList[0].Length < safeStart) {
+				return string.Empty;
+			}
+
+			return ExecuteSubstring_Impl(ParameterList[0], safeStart, safeLength, true);
+		}
+
 		/// <summary>
 		/// 現在のマクロ名から処理実行。
 		/// </summary>
@@ -172,7 +247,10 @@
 				{ MacroName.trim, ExecuteTrim },
 				{ MacroName.trimLines, ExecuteTrimLines },
 				{ MacroName.line, ExecuteLine},
-				{ MacroName.environment, ExecuteEnvironment }
+				{ MacroName.environment, ExecuteEnvironment },
+				{ MacroName.left, ExecuteLeft },
+				{ MacroName.right, ExecuteRight },
+				{ MacroName.substring, ExecuteSubstring },
 			}.ToDictionary(p => p.Key.ToLower(), p => p.Value);
 
 			Func<string> fn;

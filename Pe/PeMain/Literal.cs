@@ -635,6 +635,9 @@
 		public const string trimLines = "trimLines";
 		public const string line = "line";
 		public const string environment = "env";
+		public const string left = "left";
+		public const string right = "right";
+		public const string substring = "mid";
 	}
 
 	
