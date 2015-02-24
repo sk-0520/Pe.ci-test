@@ -160,5 +160,13 @@
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
+
+		//[TestCase("<abc>", "")]
+		//[TestCase("<abc><def>", "")]
+		//[TestCase("<abc><def<ghq>>/<xyz>/<<<a>b<c>>>", "")]
+		//public void aConvert2(string s, string result)
+		//{
+		//	TinyMacro.Convert2(s);
+		//}
 	}
 }

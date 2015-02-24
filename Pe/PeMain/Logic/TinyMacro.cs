@@ -118,6 +118,50 @@
 			Debug.WriteLine("[ {0} ] -> [ {1} ]", source, result);
 			return result;
 		}
+//		public static string Convert2(string source)
+//		{
+//			var regex = new Regex(
+//				@"
+//					^[^<>]*
+//					(?<CAP>
+//					((?'Open'<)[^<>]*)+
+//					((?'Close-Open'>)[^<>]*)+
+//					)*
+//					(?(Open)(?!))$
+//				",
+//				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
+//			);
+
+//			var m = regex.Match(source);
+//			if(m.Success == true) {
+//				Console.WriteLine("Input: \"{0}\" \nMatch: \"{1}\"", source, m);
+//				int grpCtr = 0;
+//				foreach(Group grp in m.Groups) {
+//					Console.WriteLine("   Group {0}: {1}", grpCtr, grp.Value);
+//					grpCtr++;
+//					int capCtr = 0;
+//					foreach(Capture cap in grp.Captures) {
+//						Console.WriteLine("      Capture {0}: {1}", capCtr, cap.Value);
+//						capCtr++;
+//					}
+//				}
+//				Console.WriteLine("@{0}", m.Groups["CAP"]);
+//				grpCtr = 0;
+//				regex.Replace(source, (Match match) => {
+//					foreach(Group g in match.Groups) {
+//						Console.WriteLine("   Group {0}: {1}", grpCtr, g.Value);
+//						grpCtr++;
+//						int capCtr = 0;
+//						foreach(Capture cap in g.Captures) {
+//							Console.WriteLine("      Capture {0}: {1}", capCtr, cap.Value);
+//						}
+//					}
+//					return "";
+//				});
+//			}
+
+//			return null;
+//		}
 
 		/// <summary>
 		/// 指定正規表現を使用してマクロ展開。
