@@ -131,6 +131,8 @@
 			}
 		}
 
+		#region property
+
 		/// <summary>
 		/// マクロ名。
 		/// </summary>
@@ -143,6 +145,60 @@
 		/// 生パラメーターをいい感じに分割したパラメーターリスト。
 		/// </summary>
 		public IReadOnlyList<string> ParameterList { get; private set; }
+
+		#endregion
+
+		#region check
+
+		/// <summary>
+		/// パラメーター数は指定値でなければならない。
+		/// </summary>
+		/// <param name="count"></param>
+		void EnforceParameterCount(int count)
+		{
+			if(ParameterList.Count != count) {
+				throw new TinyMacroParseException(this, "parameter count", ParameterList.Count, count);
+			}
+		}
+		/// <summary>
+		/// パラメーター数は指定値以上でなければならない。
+		/// </summary>
+		/// <param name="count"></param>
+		void EnforceParameterCountMoreThan(int count)
+		{
+			if(ParameterList.Count < count) {
+				throw new TinyMacroParseException(this, "parameter count", ParameterList.Count, count);
+			}
+		}
+
+		/// <summary>
+		/// 値をintへ変換する。
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		int EnforceConvertInteger(string value)
+		{
+			int result;
+			if(!int.TryParse(value, out result)) {
+				throw new TinyMacroParseException(this, "convert", typeof(int).ToString(), value);
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// パラメーターをintへ変換する。
+		/// </summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		int EnforceConvertIntegerFromParameter(int index)
+		{
+			var rawParam = ParameterList.ElementAtOrDefault(index);
+			return EnforceConvertInteger(rawParam);
+		}
+
+		#endregion
+
+		#region Macro
 
 		/// <summary>
 		/// 生パラメーターの文字数取得。
@@ -183,14 +239,15 @@
 		/// <returns></returns>
 		protected virtual string ExecuteLine()
 		{
-			if(ParameterList.Count == 1) {
-				throw new TinyMacroParseException(this, "parameter count", "single");
-			}
+			EnforceParameterCountMoreThan(2);
+			/*
 			var number = ParameterList[1];
 			int lineNumber;
 			if(!int.TryParse(number, out lineNumber)) {
 				throw new TinyMacroParseException(this, "line number", number);
 			}
+			*/
+			var lineNumber = EnforceConvertIntegerFromParameter(1);
 
 			var lines = ParameterList.First().SplitLines().ToArray();
 			if(lineNumber.Between(1, lines.Length)) {
@@ -224,65 +281,56 @@
 			}
 		}
 
-		protected virtual string ExecuteLeft()
+		int ExecuteSubstring_GetLength(int index, int defaultValue)
 		{
-			var rawLength = ParameterList.ElementAtOrDefault(1);
+			var rawLength = ParameterList.ElementAtOrDefault(index);
 			int safeLength;
 			if(!int.TryParse(rawLength, out safeLength)) {
-				safeLength = 1;
+				safeLength = defaultValue;
 			}
 			if(safeLength < 0) {
 				throw new TinyMacroParseException(this, "length", safeLength);
 			}
+
+			return safeLength;
+		}
+
+		protected virtual string ExecuteLeft()
+		{
+			var safeLength = ExecuteSubstring_GetLength(1, 1);
 
 			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, true);
 		}
 
 		protected virtual string ExecuteRight()
 		{
-			var rawLength = ParameterList.ElementAtOrDefault(1);
-			int safeLength;
-			if(!int.TryParse(rawLength, out safeLength)) {
-				safeLength = 1;
-			}
-			if(safeLength < 0) {
-				throw new TinyMacroParseException(this, "length", safeLength);
-			}
+			var safeLength = ExecuteSubstring_GetLength(1, 1);
 
 			return ExecuteSubstring_Impl(ParameterList[0], 0, safeLength, false);
 		}
 
 		protected virtual string ExecuteSubstring()
 		{
-			if(ParameterList.Count == 1) {
-				throw new TinyMacroParseException(this, "parameter count", "single");
-			}
+			EnforceParameterCountMoreThan(2);
 
 			var rawStart = ParameterList[1];
-			int safeStart;
-			if(!int.TryParse(rawStart, out safeStart)) {
-				throw new TinyMacroParseException(this, "start", rawStart);
-			}
+			int safeStart = EnforceConvertIntegerFromParameter(1);
 			if(safeStart < 1) {
 				throw new TinyMacroParseException(this, "start", safeStart);
 			}
 			// マクロ引数から内部用に位置を補正
 			safeStart -= 1;
 
-			var rawLength = ParameterList.ElementAtOrDefault(2);
-			int safeLength;
-			if(!int.TryParse(rawLength, out safeLength)) {
-				safeLength = 0;
-			}
-			if(safeLength < 0) {
-				throw new TinyMacroParseException(this, "length", safeLength);
-			}
+			var safeLength = ExecuteSubstring_GetLength(2, 0);
+
 			if(ParameterList[0].Length < safeStart) {
 				return string.Empty;
 			}
 
 			return ExecuteSubstring_Impl(ParameterList[0], safeStart, safeLength, true);
 		}
+
+		#endregion
 
 		/// <summary>
 		/// 現在のマクロ名から処理実行。
