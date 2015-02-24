@@ -27,7 +27,7 @@
 				foreach(var info in infos) {
 					param.Add(info.ToString());
 				}
-				return string.Format("{0} {1}: {2}[{3}] {4}", errorHead, Name, message, string.Join(", ", param(, errorTail);
+				return string.Format("{0} {1}: {2}[{3}] {4}", errorHead, Name, message, string.Join(", ", param), errorTail);
 			}
 
 		}
@@ -88,16 +88,16 @@
 		/// </summary>
 		public string Name { get; private set; }
 		/// <summary>
-		/// 渡された生のパラメータ。
+		/// 渡された生のパラメーター。
 		/// </summary>
 		public string RawParameter { get; private set; }
 		/// <summary>
-		/// 生パラメータをいい感じに分割したパラメータリスト。
+		/// 生パラメーターをいい感じに分割したパラメーターリスト。
 		/// </summary>
 		public IReadOnlyList<string> ParameterList { get; private set; }
 
 		/// <summary>
-		/// 生パラメータの文字数取得。
+		/// 生パラメーターの文字数取得。
 		/// </summary>
 		/// <returns></returns>
 		protected virtual string ExecuteLength()
@@ -116,7 +116,7 @@
 		}
 
 		/// <summary>
-		/// 生パラメータを行毎にトリムる。
+		/// 生パラメーターを行毎にトリムる。
 		/// </summary>
 		/// <returns></returns>
 		protected virtual string ExecuteTrimLines()
@@ -130,7 +130,7 @@
 		}
 
 		/// <summary>
-		/// 複数行から指定行を抽出する。
+		/// 変換パラメータ1の各行から変換パラメータ2で指定された行数のみを取得する。
 		/// </summary>
 		/// <returns></returns>
 		protected virtual string ExecuteLine()
@@ -153,6 +153,15 @@
 		}
 
 		/// <summary>
+		/// 生パラメーターから環境変数(%xx%)を展開する。
+		/// </summary>
+		/// <returns></returns>
+		protected virtual string ExecuteEnvironment()
+		{
+			return Environment.ExpandEnvironmentVariables(RawParameter);
+		}
+
+		/// <summary>
 		/// 現在のマクロ名から処理実行。
 		/// </summary>
 		/// <returns></returns>
@@ -163,6 +172,7 @@
 				{ MacroName.trim, ExecuteTrim },
 				{ MacroName.trimLines, ExecuteTrimLines },
 				{ MacroName.line, ExecuteLine},
+				{ MacroName.environment, ExecuteEnvironment }
 			}.ToDictionary(p => p.Key.ToLower(), p => p.Value);
 
 			Func<string> fn;

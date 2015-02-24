@@ -73,5 +73,13 @@
 		{
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
+
+		[TestCase(true, "=env(temp)", "temp")]
+		[TestCase(true, "=env(%temp)", "%temp")]
+		//[TestCase(true, "=env(%SystemRoot%)", @"C:\Windows")]
+		public void Convert_Environment(bool test, string src, string result)
+		{
+			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
+		}
 	}
 }
