@@ -16,11 +16,20 @@
 	public class TinyMacro
 	{
 		const string errorHead = "#";
-		const string errorTail = "#";
+		const string errorTail = "!";
 
-		string PutError(string s)
+		string PutError(string message, params object[] infos)
 		{
-			return string.Format("{0} {1} {2}", errorHead, s, errorTail);
+			if(infos.Length == 0) {
+				return string.Format("{0} {1}: {2} {3}", errorHead, Name, message, errorTail);
+			} else {
+				var param = new List<string>(infos.Length);
+				foreach(var info in infos) {
+					param.Add(info.ToString());
+				}
+				return string.Format("{0} {1}: {2}[{3}] {4}", errorHead, Name, message, string.Join(", ", param(, errorTail);
+			}
+
 		}
 
 		/// <summary>
@@ -120,22 +129,26 @@
 			);
 		}
 
+		/// <summary>
+		/// 複数行から指定行を抽出する。
+		/// </summary>
+		/// <returns></returns>
 		protected virtual string ExecuteLine()
 		{
 			if(ParameterList.Count == 1) {
-				return PutError("Parameter: single");
+				return PutError("parameter", "single");
 			}
 			var number = ParameterList[1];
 			int lineNumber;
 			if(!int.TryParse(number, out lineNumber)) {
-				return PutError("Line number: " + number);
+				return PutError("line number", number);
 			}
 
 			var lines = ParameterList.First().SplitLines().ToArray();
 			if(lineNumber.Between(1, lines.Length)) {
 				return lines[lineNumber - 1];
 			} else {
-				return PutError("Out range: line");
+				return PutError("out range", lineNumber);
 			}
 		}
 
@@ -157,7 +170,7 @@
 				return fn();
 			}
 
-			return PutError(Name);
+			return PutError("undefined");
 		}
 
 
