@@ -43,11 +43,6 @@
 			}
 			var replacedText = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), null);
 			Debug.WriteLine("replacedText: " + replacedText);
-			
-			if(item.Macro) {
-				var macroText = TinyMacro.Convert(replacedText);
-				return macroText;
-			}
 
 			return replacedText;
 		}
@@ -78,12 +73,8 @@
 				var rtfItalicTail = @"\u0 ";
 
 				var replacedEvil = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), evilReplace);
-				if(item.Macro) {
-					var macroText = TinyMacro.Convert(replacedEvil, evilMacro);
-					richTextBox.Text = macroText;
-				} else {
-					richTextBox.Text = replacedEvil;
-				}
+
+				richTextBox.Text = replacedEvil;
 
 				// ちょっちあれな部分を書式設定
 				var esc = @"\'";

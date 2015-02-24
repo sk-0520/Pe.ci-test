@@ -5,9 +5,9 @@
 	using NUnit.Framework;
 
 	[TestFixture]
-	class TextTemplatingTest
+	class T4TemplateTest
 	{
-		[Test]
+		//[Test]
 		public void test()
 		{
 			var s = @"
@@ -19,7 +19,7 @@ var sessionHost = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionH
 var mx = (int)sessionHost.Session[""maxCount""];
 #>
 			";
-			TextTemplating.test(s);
+			T4Template.test(s);
 		}
 	}
 }

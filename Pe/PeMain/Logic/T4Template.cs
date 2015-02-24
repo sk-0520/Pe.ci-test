@@ -14,12 +14,12 @@
 	//using Microsoft.VisualStudio.TextTemplating;
 	using Mono.TextTemplating;
 
-	public static class TextTemplating
+	public static class T4Template
 	{
 		public static string test(string templateContent)
 		{
-			var host = new TextTemplatingEngineHostImpl();
-			host.Session = new TextTemplatingSessionImpl();
+			var host = new TextTemplatingEngineHost();
+			host.Session = new TextTemplatingSession();
 
 			host.TemplateFile = "TemplateSample1.tt";
 			host.Session["maxCount"] = 2;
@@ -87,14 +87,10 @@
 	}
 
 	/// <summary>
-	/// TextTemplatingEngineHostの実装.
-	/// 大まかな実装はMSDNの以下のページを参考とした.
-	/// http://msdn.microsoft.com/ja-jp/library/bb126579.aspx
+	/// http://d.hatena.ne.jp/seraphy/20140419
 	/// </summary>
 	[Serializable]
-	class TextTemplatingEngineHostImpl
-		: ITextTemplatingEngineHost
-		, ITextTemplatingSessionHost
+	public class TextTemplatingEngineHost: ITextTemplatingEngineHost, ITextTemplatingSessionHost
 	{
 		/// <summary>
 		/// 現在処理中のテンプレートファイル
@@ -281,12 +277,11 @@
 		{
 			get
 			{
-				var ret = new string[]
-                {
-                    typeof(System.Uri).Assembly.Location, // System名前空間用
-                    typeof(System.Linq.Enumerable).Assembly.Location, // Linq名前空間用
-                    typeof(ITextTemplatingEngineHost).Assembly.Location, // T4エンジンのホストインターフェイス用
-                };
+				var ret = new string[] {
+					typeof(System.Uri).Assembly.Location, // System名前空間用
+					typeof(System.Linq.Enumerable).Assembly.Location, // Linq名前空間用
+					typeof(ITextTemplatingEngineHost).Assembly.Location, // T4エンジンのホストインターフェイス用
+				};
 				return ret;
 			}
 		}
@@ -298,13 +293,12 @@
 		{
 			get
 			{
-				return new string[]
-                {
-                    "System",
-                    "System.Collections.Generic",
-                    "System.Linq",
-                    "System.Text"
-                };
+				return new string[] {
+					"System",
+					"System.Collections.Generic",
+					"System.Linq",
+					"System.Text"
+				};
 			}
 		}
 	}
@@ -314,27 +308,21 @@
 	/// 単純にDictionaryと、IDを持っているだけのコレクションクラスである.
 	/// </summary>
 	[Serializable]
-	public sealed class TextTemplatingSessionImpl
-		: Dictionary<string, Object>
-		, ITextTemplatingSession
-		, ISerializable
+	public sealed class TextTemplatingSession: Dictionary<string, Object>, ITextTemplatingSession, ISerializable
 	{
-		public TextTemplatingSessionImpl()
+		public TextTemplatingSession()
 		{
 			this.Id = Guid.NewGuid();
 		}
 
-		private TextTemplatingSessionImpl(
-		   SerializationInfo info,
-		   StreamingContext context)
+		private TextTemplatingSession(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{
 			this.Id = (Guid)info.GetValue("Id", typeof(Guid));
 		}
 
 		[SecurityCritical]
-		void ISerializable.GetObjectData(SerializationInfo info,
-		   StreamingContext context)
+		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			base.GetObjectData(info, context);
 			info.AddValue("Id", this.Id);

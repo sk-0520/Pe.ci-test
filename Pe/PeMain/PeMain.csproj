@@ -203,8 +203,7 @@
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
-    <Compile Include="Logic\TextTemplating.cs" />
-    <Compile Include="Logic\TinyMacro.cs" />
+    <Compile Include="Logic\T4Template.cs" />
     <Compile Include="Logic\TemplateUtility.cs" />
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />
