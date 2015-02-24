@@ -90,7 +90,14 @@
 		/// <returns>置き換え後文字列。</returns>
 		public static string Convert(string source)
 		{
-			var regex = new Regex(@"(?'OPEN'=(?<MACRO>\w+)\()(?<PARAMS>([^*]|\*[^/])*)?(?'CLOSE-OPEN'\))", RegexOptions.ExplicitCapture | RegexOptions.Multiline);
+			var regex = new Regex(@"
+				(?'OPEN' =(?<MACRO> \w+)\( )
+				(?<PARAMS> ([^*]|\*[^/])*)?
+				(?'CLOSE-OPEN' \) )
+				(?(OPEN)(?!))
+				",
+				RegexOptions.ExplicitCapture | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace
+			);
 			return ConvertImpl(source, regex);
 		}
 

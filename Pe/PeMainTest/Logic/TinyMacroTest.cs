@@ -19,7 +19,9 @@
 			Assert.IsTrue((TinyMacro.Convert(src) == result) == test);
 		}
 
+		[TestCase("A=trim(    =len(123)   )", "A3")]
 		[TestCase("=trim(    =len(123)   )", "3")]
+		[TestCase("=trim(    =len(123)   )  =len(abc)", "3  3")]
 		[TestCase("=mid(=right(=left(abcdefg, 4), 3), 2, 1)", "c")]
 		[TestCase("=rept(=right(=left(abcdefg, 4), 3), 2)", "bcdbcd")]
 		public void Convert_Multi(string src, string result)
