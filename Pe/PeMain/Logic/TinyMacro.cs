@@ -162,6 +162,10 @@
 
 //			return null;
 //		}
+		public static string Convert3(string source)
+		{
+			return null;
+		}
 
 		/// <summary>
 		/// 指定正規表現を使用してマクロ展開。
