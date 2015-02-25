@@ -1096,6 +1096,14 @@
 			if(Filtering) {
 				ResetItemIndex();
 				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
+			} else {
+				if(this.CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
+				} else {
+					BindStackList(this.CommonData.MainSetting.Clipboard.TemplateItems);
+				}
+				
+				this.listItemStack.Refresh();
 			}
 			Filtering = false;
 		}
