@@ -5,7 +5,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]
-	public class TemplateItem: NameItem
+	public class TemplateItem: DisposableNameItem
 	{
 		/// <summary>
 		/// 置き換えモードを使用するか。

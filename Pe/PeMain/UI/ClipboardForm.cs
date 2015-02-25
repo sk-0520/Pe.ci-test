@@ -904,11 +904,22 @@
 
 		void SwapListItem<T>(IList<T> list, int from, int to)
 		{
-			var swapItem = list[from];
-			list[from] = list[to];
-			list[to] = swapItem;
-			//this.listClipboard.SelectedIndex = to;
-			this.listItemStack.Invalidate();
+			this.listItemStack.BeginUpdate();
+			try {
+				var swapItem = list[from];
+				list[from] = list[to];
+				list[to] = swapItem;
+				//this.listClipboard.SelectedIndex = to;
+				//this.listItemStack.Refresh();
+				var index = this.listItemStack.SelectedIndex;
+				//this.listItemStack.DataSource = null;
+				BindStackList(list);
+				if(index != -1) {
+					this.listItemStack.SelectedIndex = index;
+				}
+			} finally {
+				this.listItemStack.EndUpdate();
+			}
 		}
 
 		void UpTemplate(TemplateItem templateItem)
@@ -1169,6 +1180,7 @@
 						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 						var templateItem = GetListItem<TemplateItem>(index);
 						CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
+						templateItem.ToDispose();
 					}
 				}
 				ResetFilter();
@@ -1177,7 +1189,7 @@
 
 		void ClearDisplayClipboardItems()
 		{
-			var removedItems = new List<ClipboardItem>();
+			var removedItems = new List<DisposableItem>();
 			if(Filtering) {
 				var items = this.listItemStack.Items.Cast<ClipboardItem>();
 				foreach(var item in items) {
@@ -1202,16 +1214,23 @@
 				allClear = this.listItemStack.Items.Count == CommonData.MainSetting.Clipboard.TemplateItems.Count;
 			}
 
+			var removedItems = new List<DisposableItem>();
+
 			if(allClear) {
 				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
 				if(lastItem != null) {
+					removedItems.AddRange(CommonData.MainSetting.Clipboard.TemplateItems.Where(i => i != lastItem));
 					CommonData.MainSetting.Clipboard.TemplateItems.Clear();
 					CommonData.MainSetting.Clipboard.TemplateItems.Add(lastItem);
 				}
 			} else {
 				foreach(var item in this.listItemStack.Items.Cast<TemplateItem>()) {
+					removedItems.Add(item);
 					CommonData.MainSetting.Clipboard.TemplateItems.Remove(item);
 				}
+			}
+			foreach(var item in removedItems) {
+				item.ToDispose();
 			}
 		}
 
