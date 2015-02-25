@@ -1,10 +1,8 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]
 	public class TemplateItem: NameItem
@@ -21,5 +19,8 @@
 		/// 対象文字列。
 		/// </summary>
 		public string Source { get; set; }
+
+		[XmlIgnore]
+		public TemplateProcessor Processor { get; set; }
 	}
 }

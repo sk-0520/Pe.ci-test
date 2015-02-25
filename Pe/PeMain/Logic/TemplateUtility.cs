@@ -36,13 +36,50 @@
 			return map;
 		}
 
+		/// <summary>
+		/// テンプレートアイテムからテンプレートプロセッサ作成。
+		/// </summary>
+		/// <param name="item">テンプレートアイテム。テンプレートプロセッサが設定される。</param>
+		/// <param name="language">使用言語。</param>
+		/// <returns>作成されたテンプレートプロセッサ。</returns>
+		public static TemplateProcessor MakeTemplateProcessor(TemplateItem item, Language language)
+		{
+			Debug.Assert(item.ReplaceMode);
+			Debug.Assert(item.Program);
+
+			if(item.Processor != null) {
+				item.Processor.Language = language;
+				item.Processor.TemplateSource = item.Source;
+
+				return item.Processor;
+			}
+
+			var processor = new TemplateProcessor() {
+				Language = language,
+				TemplateSource = item.Source,
+			};
+
+			item.Processor = processor;
+
+			return processor;
+		}
+
 		public static string ToPlainText(TemplateItem item, Language language)
 		{
 			if(!item.ReplaceMode) {
 				return item.Source;
 			}
 			if(item.Program) {
-				return "program";
+				var process = MakeTemplateProcessor(item, language);
+				if(process.Compiled) {
+					return process.TransformText();
+				}
+				process.AllProcess();
+				if(process.GeneratedErrorList.Any() || process.CompileErrorList.Any()) {
+					// エラーあり
+					return string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => e.ToString()));
+				}
+				return process.TransformText();
 			} else {
 				var replacedText = language.ReplaceAllAppMap(item.Source, GetTemplateMap(), null);
 				Debug.WriteLine("replacedText: " + replacedText);

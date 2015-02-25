@@ -77,7 +77,8 @@
 			if(eventHost != null) {
 				eventHost.Error += WithEvent_Error;
 			}
-			CompileMessage = string.Empty;
+
+			Initialize();
 		}
 
 		~T4TemplateProcessor()
@@ -87,13 +88,6 @@
 				eventHost.Error -= WithEvent_Error;
 			}
 		}
-
-		void WithEvent_Error(object sender, TextTemplatingErrorEventArgs e)
-		{
-			var list = e.CompilerErrorCollection.Cast<CompilerError>();
-			this._generatedErrorList.AddRange(list);
-		}
-
 
 		/// <summary>
 		/// T4ソース。
@@ -199,10 +193,36 @@
 		/// </summary>
 		dynamic InstanceTemplate { get; set; }
 
+		protected virtual void Initialize()
+		{
+			CompileMessage = string.Empty;
+		}
+
+		protected virtual string MakeTemplateSource()
+		{
+			return TemplateSource + Environment.NewLine;
+		}
+
+		protected virtual string MakeProgramSource()
+		{
+			var source = new StringBuilder(GeneratedSource.Length + 40);
+
+			source.AppendLine("#pragma warning disable 1709");
+			source.AppendLine(GeneratedSource);
+			source.AppendLine("#pragma warning restore 1709");
+
+			return source.ToString();
+		}
+
 		/// <summary>
 		/// T4を言語ソースに変換。
 		/// </summary>
 		public void GeneratSource()
+		{
+			GeneratSourceImpl();
+		}
+
+		protected virtual void GeneratSourceImpl()
 		{
 			if(string.IsNullOrWhiteSpace(NamespaceName)) {
 				throw new InvalidOperationException("Namespace");
@@ -216,11 +236,13 @@
 
 			this._generatedErrorList.Clear();
 
+			var templateSource = MakeTemplateSource();
+
 			string programmingLanguage;
 			string[] references;
 			var engine = new Engine();
 			string sourceCode = engine.PreprocessTemplate(
-				TemplateSource,
+				templateSource,
 				Host,
 				ClassName,
 				NamespaceName,
@@ -264,6 +286,15 @@
 		/// <param name="option">コンパイルオプション。</param>
 		public void CompileSource(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
 		{
+			CompileSourceImpl(
+				warningLevel,
+				warningIsError,
+				option
+			);
+		}
+
+		protected virtual void CompileSourceImpl(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
+		{
 			if(!Generated) {
 				throw new InvalidOperationException("Generated");
 			}
@@ -288,11 +319,8 @@
 
 			// コンパイル
 			// プリプロセッサ #line のファイル名対応
-			var source = new StringBuilder(GeneratedSource.Length + 40);
-			source.AppendLine("#pragma warning disable 1709");
-			source.AppendLine(GeneratedSource);
-			source.AppendLine("#pragma warning restore 1709");
-			var compileResult = codeDomProv.CompileAssemblyFromSource(compilerParameters, source.ToString());
+			var source = MakeProgramSource();
+			var compileResult = codeDomProv.CompileAssemblyFromSource(compilerParameters, source);
 			CompileMessage = string.Join(Environment.NewLine, compileResult.Output.Cast<string>());
 			this._compileErrorList.AddRange(compileResult.Errors.Cast<CompilerError>());
 
@@ -311,6 +339,11 @@
 
 		public string TransformText()
 		{
+			return TransformTextImpl();
+		}
+
+		protected virtual string TransformTextImpl()
+		{
 			if(!Compiled) {
 				throw new InvalidOperationException("Compiled");
 			}
@@ -319,6 +352,21 @@
 			//Debug.Assert(InstanceTemplate != null);
 			
 			return InstanceTemplate.TransformText();
+		}
+
+		public void AllProcess()
+		{
+			GeneratSource();
+
+			if(Generated) {
+				CompileSource();
+			}
+		}
+
+		void WithEvent_Error(object sender, TextTemplatingErrorEventArgs e)
+		{
+			var list = e.CompilerErrorCollection.Cast<CompilerError>();
+			this._generatedErrorList.AddRange(list);
 		}
 	}
 
