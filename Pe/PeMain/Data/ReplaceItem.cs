@@ -31,15 +31,28 @@
 		{
 			get
 			{
-				if(Bracket == null) {
-					return Name;
-				} else {
-					return Bracket.Item1 + Name + Bracket.Item2;
-				}
+				var name = Bracket == null
+					? Name
+					: Bracket.Item1 + Name + Bracket.Item2;
+				;
+
+				return GetReplaceWord(name);
 			}
 		}
 
 		public Tuple<string, string> Bracket { get; set; }
+
+		public Type Type { get; set; }
+
+		public bool CaretInSpace { get; set; }
+
+		string GetReplaceWord(string word)
+		{
+			if(Type != null) {
+				return string.Format("({0}{1}", Type.Name, word);
+			}
+			return word;
+		}
 
 		public override void SetLanguage(Language lang)
 		{

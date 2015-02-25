@@ -665,6 +665,26 @@
 				versionHash,
 			};
 		}
+
+		public static IReadOnlyDictionary<string, Type> GetTypeMembers()
+		{
+			return new Dictionary<string, Type>() {
+				{ timestamp, typeof(DateTime) },
+
+				{ application, typeof(string) },
+				{ versionFull, typeof(string) },
+				{ versionNumber, typeof(string) },
+				{ versionHash, typeof(string)},
+			};
+		}
+
+		public static IReadOnlyList<string> GetCaretInSpaceMembers()
+		{
+			return new[] {
+				code,
+				expr,
+			};
+		}
 	}
 	
 	public static class DataTables

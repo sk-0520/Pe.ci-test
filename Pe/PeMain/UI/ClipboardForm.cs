@@ -186,6 +186,11 @@
 						? new Tuple<string,string>("app[\"", "\"]")
 						: null
 					,
+					Type = TemplateProgramLanguageName.GetTypeMembers().ContainsKey(m)
+						? TemplateProgramLanguageName.GetTypeMembers()[m]
+						: null
+					,
+					CaretInSpace = TemplateProgramLanguageName.GetCaretInSpaceMembers().Any(s => s == m),
 				})
 				.ToList()
 			;
@@ -969,7 +974,20 @@
 			var nowSelectIndex = this.inputTemplateSource.SelectionStart;
 			var replaceWord = replaceItem.ReplaceWord;
 			this.inputTemplateSource.SelectedText = replaceWord;
-			this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			var programReplaceItem = replaceItem as ProgramReplaceItem;
+			var selected = false;
+			if(programReplaceItem != null && programReplaceItem.CaretInSpace) {
+				var index = replaceWord.IndexOf(' ');
+				if(index != -1) {
+					var count = replaceWord.Skip(index).TakeWhile(c => c == ' ').Count();
+					var targetIndex = index + (int)(count / 2);
+					this.inputTemplateSource.Select(nowSelectIndex + targetIndex, 0);
+					selected = true;
+				}
+			} 
+			if(!selected) {
+				this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			}
 			this.inputTemplateSource.Focus();
 		}
 
