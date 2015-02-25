@@ -280,11 +280,6 @@
 				logger.Puts(LogType.Error, ex.Message, ex);
 			}
 
-			if(clipboardItem.ClipboardTypes == ClipboardType.None) {
-				clipboardItem.Dispose();
-				return null;
-			}
-
 			return clipboardItem;
 		}
 
