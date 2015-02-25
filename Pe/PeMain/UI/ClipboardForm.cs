@@ -1097,13 +1097,12 @@
 				ResetItemIndex();
 				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
 			} else {
+				this.listItemStack.DataSource = null;
 				if(this.CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
 				} else {
 					BindStackList(this.CommonData.MainSetting.Clipboard.TemplateItems);
 				}
-				
-				this.listItemStack.Refresh();
 			}
 			Filtering = false;
 		}
