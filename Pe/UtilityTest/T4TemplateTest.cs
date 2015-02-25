@@ -17,7 +17,7 @@
 		[TestCase(" ", "a", "", true)]
 		[TestCase("a", "a", "a", true)]
 		[TestCase("a", "a", "<#@ template language=\"C#\" #>", false)]
-		public void GeneratTemplate_ErrorTest(string name, string cls, string ts, bool isError)
+		public void GeneratSource_ErrorTest(string name, string cls, string ts, bool isError)
 		{
 			var t4 = new T4TemplateProcessor() {
 				Namespace = name,
@@ -26,7 +26,7 @@
 			};
 			bool hasError;
 			try {
-				t4.GeneratTemplate();
+				t4.GeneratSource();
 				hasError = t4.GeneratedErrorList.Count > 0;
 			} catch(InvalidOperationException ex) {
 				Debug.WriteLine(ex);
