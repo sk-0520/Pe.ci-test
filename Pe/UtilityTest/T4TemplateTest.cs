@@ -113,7 +113,6 @@ foo is <#= foo #>
 			var ts
 				= "<#@ template language=\"C#\" debug=\"true\" hostSpecific=\"true\" #>" + Environment.NewLine
 				+ "<# var host = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host; #>"+ Environment.NewLine
-				//+ "<# var host = (ContentTypeTextNet.Pe.Library.Utility.TextTemplatingSession) Host; #>" + Environment.NewLine
 				+ src;
 			
 			var t4 = new T4TemplateProcessor() {
@@ -129,27 +128,46 @@ foo is <#= foo #>
 			var output = t4.TransformText();
 			Assert.IsTrue(output == result);
 		}
+
+		[TestCase("host", "host", "host")]
+		[TestCase("<#= host.Session[\"a\"] #>", "123", "456")]
+		public void TransformText_CSharpHostValueTest(string src, string result1, string result2)
+		{
+			var ts
+				= "<#@ template language=\"C#\" debug=\"true\" hostSpecific=\"true\" #>" + Environment.NewLine
+				+ "<# var host = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host; #>" + Environment.NewLine
+				+ src;
+
+			var t4 = new T4TemplateProcessor() {
+				NamespaceName = "a",
+				ClassName = "b",
+				TemplateSource = ts,
+			};
+			var session = t4.Variable;
+			session["a"] = "123";
+			t4.GeneratSource();
+			t4.CompileSource();
+			
+			var output1 = t4.TransformText();
+			Assert.IsTrue(output1 == result1);
+
+			session["a"] = "456";
+			var output2 = t4.TransformText();
+			Assert.IsTrue(output2 == result2);
+		}
 	}
 
 
 	[TestFixture]
-	class T4TemplateTest
+	class T4TemplateUtilityTest
 	{
-		[Test]
-		public void test()
+		[TestCase("abc", "abc")]
+		[TestCase("<#= 1 + 1 #>", "2")]
+		public void TransformTextTest(string src, string result)
 		{
-			var s = @"
-<#@ template language=""C#"" debug=""true"" hostSpecific=""true"" #>
-...
-<#
-// ""Host""変数を有効とするために、hostSpecific=""true"" とすること。
-var sessionHost = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host;
-var mx = (int)sessionHost.Session[""maxCount""];
-#>
-へんすう<#= mx #>。
-			";
-			var r = T4TemplateUtility.Convert(s);
-			Debug.WriteLine(r);
+			var s = @"<#@ template language=""C#"" hostSpecific=""true"" #>" + Environment.NewLine + src;
+			var output = T4TemplateUtility.TransformText(s);
+			Assert.IsTrue(output == result);
 		}
 	}
 }

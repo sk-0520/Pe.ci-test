@@ -22,6 +22,8 @@
 
 	/// <summary>
 	/// 各種変換、実行をサポートする。
+	/// 
+	/// Bugs: VBはその、コンパイルできん。
 	/// </summary>
 	public class T4TemplateProcessor
 	{
@@ -293,22 +295,30 @@
 		}
 	}
 
+	/// <summary>
+	/// T4Templateの便利処理。
+	/// </summary>
 	public static class T4TemplateUtility
 	{
-		public static string Convert(string templateContent)
+		public static string TransformText(string templateContent)
 		{
 			var host = new TextTemplatingEngineHost();
 			host.Session = new TextTemplatingSession();
 
-			//host.TemplateFile = "TemplateSample1.tt";
-			//host.Session["maxCount"] = 2;
-	
-			// T4 Engine
 			var engine = new Engine();
+			return engine.ProcessTemplate(templateContent, host);
+		}
 
-			var put = engine.ProcessTemplate(templateContent, host);
+		public static string TransformTextWidthVariable(string templateContent, IDictionary<string, object> variable)
+		{
+			var host = new TextTemplatingEngineHost();
+			host.Session = new TextTemplatingSession();
+			foreach(var pair in variable) {
+				host.Session.Add(pair);
+			}
 
-			return put;
+			var engine = new Engine();
+			return engine.ProcessTemplate(templateContent, host);
 		}
 	}
 
