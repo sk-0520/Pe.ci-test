@@ -8,31 +8,31 @@
 	[TestFixture]
 	class T4TemplateProcessorTest
 	{
-		[TestCase("", "", true)]
-		[TestCase(" ", "", true)]
-		[TestCase("", " ", true)]
-		[TestCase("a", "", true)]
-		[TestCase("a", " ", true)]
-		[TestCase("", "a", true)]
-		[TestCase(" ", "a", true)]
-		[TestCase("a", "a", false)]
-		public void GeneratTemplate_ErrorTest(string name, string cls, bool throwResult)
+		[TestCase("", "", "", true)]
+		[TestCase(" ", "", "", true)]
+		[TestCase("", " ", "", true)]
+		[TestCase("a", "", "", true)]
+		[TestCase("a", " ", "", true)]
+		[TestCase("", "a", "", true)]
+		[TestCase(" ", "a", "", true)]
+		[TestCase("a", "a", "a", true)]
+		[TestCase("a", "a", "<#@ template language=\"C#\" #>", false)]
+		public void GeneratTemplate_ErrorTest(string name, string cls, string ts, bool isError)
 		{
 			var t4 = new T4TemplateProcessor() {
 				Namespace = name,
 				ClassName = cls,
+				TemplateSource = ts,
 			};
-			bool isThrow;
+			bool hasError;
 			try {
 				t4.GeneratTemplate();
-				isThrow = false;
+				hasError = t4.GeneratedErrorList.Count > 0;
 			} catch(InvalidOperationException ex) {
 				Debug.WriteLine(ex);
-				isThrow = true;
-			} catch(Exception) {
-				return;
+				hasError = true;
 			}
-			Assert.IsTrue(isThrow == throwResult);
+			Assert.IsTrue(hasError == isError);
 		}
 	}
 

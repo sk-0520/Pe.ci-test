@@ -3,6 +3,7 @@
 	using System;
 	using System.CodeDom.Compiler;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
@@ -47,7 +48,8 @@
 
 		void WithEvent_Error(object sender, TextTemplatingErrorEventArgs e)
 		{
-			this._generatedErrorList.AddRange(e.CompilerErrorCollection.Cast<CompilerError>());
+			var list = e.CompilerErrorCollection.Cast<CompilerError>();
+			this._generatedErrorList.AddRange(list);
 		}
 
 
@@ -115,8 +117,14 @@
 			if(string.IsNullOrWhiteSpace(ClassName)) {
 				throw new InvalidOperationException("ClassName");
 			}
+			if(string.IsNullOrEmpty(TemplateSource)) {
+				throw new InvalidOperationException("TemplateSource");
+			}
+
 
 			this._generatedErrorList.Clear();
+
+
 			string language;
 			string[] references;
 			var engine = new Engine();
@@ -129,9 +137,12 @@
 				out references
 			);
 
-			this.GeneratedSource = sourceCode;
-			this._language = language;
-			References = references;
+			if(!GeneratedErrorList.Any()) {
+				Generated = true;
+				GeneratedSource = sourceCode;
+				this._language = language;
+				References = references;
+			}
 		}
 	}
 
@@ -214,7 +225,9 @@
 	public class TextTemplatingErrorEventArgs: EventArgs
 	{
 		public TextTemplatingErrorEventArgs(CompilerErrorCollection errors)
-		{ }
+		{
+			CompilerErrorCollection = errors;
+		}
 
 		public CompilerErrorCollection CompilerErrorCollection { get; private set; }
 	}
