@@ -610,7 +610,7 @@
 	/// <summary>
 	/// テンプレート専用で切り替える置き換え文字列。
 	/// </summary>
-	public static class TemplateLanguageName
+	public static class TemplateTextLanguageName
 	{
 		public const string clipboard = "CLIP";
 		public const string clipboardNobreak = "CLIP:NOBREAK";
@@ -628,19 +628,20 @@
 		}
 	}
 
-	public static class MacroName
+	public static class TemplateTemplatingLanguageName
 	{
-		public const string length = "len";
-		public const string trim = "trim";
-		public const string trimLines = "trimLines";
-		public const string line = "line";
-		public const string environment = "env";
-		public const string left = "left";
-		public const string right = "right";
-		public const string substring = "mid";
-		public const string repeat = "rept";
-	}
+		public const string code = "<#  #>";
+		public const string expr = "<#=  #>";
 
+
+		public static IReadOnlyList<string> GetMembersList()
+		{
+			return new[] {
+				code,
+				expr,
+			};
+		}
+	}
 	
 	public static class DataTables
 	{

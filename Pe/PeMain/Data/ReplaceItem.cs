@@ -13,13 +13,15 @@
 
 		public string Comment { get; private set; }
 
+		public string Key { get; set; }
+
 		public string ReplaceWord { get { return string.Format("@[{0}]", Name); } }
 
 		#region ISetLanguage
 
 		public void SetLanguage(Language lang)
 		{
-			Comment = lang["template/replace/name/" + Name];
+			Comment = lang["template/replace/" + Key + "/name/" + Name];
 		}
 
 		#endregion

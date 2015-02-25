@@ -71,6 +71,7 @@
 			this.labelTemplateName = new System.Windows.Forms.Label();
 			this.inputTemplateName = new System.Windows.Forms.TextBox();
 			this.selectTemplateReplace = new System.Windows.Forms.CheckBox();
+			this.selectTemplateTemplating = new System.Windows.Forms.CheckBox();
 			this.panelTemplateSource = new System.Windows.Forms.SplitContainer();
 			this.inputTemplateSource = new System.Windows.Forms.TextBox();
 			this.listReplace = new System.Windows.Forms.ListBox();
@@ -89,7 +90,6 @@
 			this.toolClipboard_itemType = new System.Windows.Forms.ToolStripDropDownButton();
 			this.toolClipboard_itemType_itemClipboard = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolClipboard_itemType_itemTemplate = new System.Windows.Forms.ToolStripMenuItem();
-			this.selectTemplateMacro = new System.Windows.Forms.CheckBox();
 			this.panelMain.BottomToolStripPanel.SuspendLayout();
 			this.panelMain.ContentPanel.SuspendLayout();
 			this.panelMain.TopToolStripPanel.SuspendLayout();
@@ -591,7 +591,7 @@
 			this.flowLayoutPanel1.Controls.Add(this.labelTemplateName);
 			this.flowLayoutPanel1.Controls.Add(this.inputTemplateName);
 			this.flowLayoutPanel1.Controls.Add(this.selectTemplateReplace);
-			this.flowLayoutPanel1.Controls.Add(this.selectTemplateMacro);
+			this.flowLayoutPanel1.Controls.Add(this.selectTemplateTemplating);
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 2);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -631,6 +631,19 @@
 			this.selectTemplateReplace.UseVisualStyleBackColor = true;
 			this.selectTemplateReplace.CheckedChanged += new System.EventHandler(this.selectTemplateReplace_CheckedChanged);
 			// 
+			// selectTemplateTemplating
+			// 
+			this.selectTemplateTemplating.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.selectTemplateTemplating.AutoSize = true;
+			this.selectTemplateTemplating.Location = new System.Drawing.Point(3, 52);
+			this.selectTemplateTemplating.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.selectTemplateTemplating.Name = "selectTemplateTemplating";
+			this.selectTemplateTemplating.Size = new System.Drawing.Size(249, 19);
+			this.selectTemplateTemplating.TabIndex = 4;
+			this.selectTemplateTemplating.Text = ":clipboard/check/template-templating";
+			this.selectTemplateTemplating.UseVisualStyleBackColor = true;
+			this.selectTemplateTemplating.CheckedChanged += new System.EventHandler(this.selectTemplateMacro_CheckedChanged);
+			// 
 			// panelTemplateSource
 			// 
 			this.panelTemplateSource.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -647,7 +660,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 131);
-			this.panelTemplateSource.SplitterDistance = 244;
+			this.panelTemplateSource.SplitterDistance = 246;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -660,7 +673,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(244, 131);
+			this.inputTemplateSource.Size = new System.Drawing.Size(246, 131);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -673,7 +686,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(119, 131);
+			this.listReplace.Size = new System.Drawing.Size(117, 131);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -822,18 +835,6 @@
 			this.toolClipboard_itemType_itemTemplate.Text = "#ClipboardListType.Template";
 			this.toolClipboard_itemType_itemTemplate.Click += new System.EventHandler(this.toolClipboard_itemType_itemClipboard_Click);
 			// 
-			// selectTemplateFunction
-			// 
-			this.selectTemplateMacro.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.selectTemplateMacro.AutoSize = true;
-			this.selectTemplateMacro.Location = new System.Drawing.Point(3, 52);
-			this.selectTemplateMacro.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.selectTemplateMacro.Name = "selectTemplateMacro";
-			this.selectTemplateMacro.Size = new System.Drawing.Size(232, 19);
-			this.selectTemplateMacro.TabIndex = 4;
-			this.selectTemplateMacro.Text = ":clipboard/check/template-macro";
-			this.selectTemplateMacro.UseVisualStyleBackColor = true;
-			// 
 			// ClipboardForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -971,6 +972,6 @@
 		private System.Windows.Forms.ToolStrip toolItemStack;
 		private Ex.FillToolStripTextBox toolItemStack_itemFilter;
 		private System.Windows.Forms.ToolStripButton toolItemStack_itemFiltering;
-		private System.Windows.Forms.CheckBox selectTemplateMacro;
+		private System.Windows.Forms.CheckBox selectTemplateTemplating;
 	}
 }

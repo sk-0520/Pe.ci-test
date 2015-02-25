@@ -309,66 +309,12 @@
 			var put = engine.ProcessTemplate(templateContent, host);
 
 			return put;
-			/*
-			// テンプレートをソースコードに変換する.(実行時テンプレート)
-			string className = "GeneratedClass";
-			string namespaceName = "TemplateEngineExample";
-			string lang;
-			string[] references;
-			string generatedSource = engine.PreprocessTemplate(
-				templateContent, // テンプレート
-				host, // ホスト
-				className, // 生成するテンプレートクラス名
-				namespaceName, // 生成するテンプレートクラスの名前空間
-				out lang, // 生成するソースコードの種別が返される
-				out references // 参照しているアセンブリの一覧が返される
-				);
-			
-			
-			// コンパイラを取得する.
-			var codeDomProv = CodeDomProvider.CreateProvider(lang);
-
-			// 参照するアセンブリの定義
-			var compilerParameters = new CompilerParameters(references);
-
-			// アセンブリはインメモリで作成する.
-			compilerParameters.GenerateInMemory = true;
-
-			// コンパイルする.
-			var result = codeDomProv.CompileAssemblyFromSource(
-				compilerParameters, generatedSource);
-
-			// エラーがあれば例外を返す.
-			if(result.Errors.Count > 0) {
-				var msg = new StringBuilder();
-				foreach(CompilerError error in result.Errors) {
-					msg.Append(error.FileName).Append(": line ").Append(error.Line)
-						.Append("(").Append(error.Column).Append(")[")
-						.Append(error.ErrorNumber).Append("]")
-						.Append(error.ErrorText).AppendLine();
-				}
-				throw new ApplicationException(msg.ToString());
-			}
-
-			// エラーがなければアセンブリを取得し、
-			// テンプレートクラスのインスタンスを作成する.
-			Assembly assembly = result.CompiledAssembly;
-			var fqClassName = namespaceName + "." + className;
-			//var instance = assembly.CreateInstance(fqClassName); // 名前空間.クラス名を指定してクラスを取得
-			//Type type = instance.GetType();
-			//type.InvokeMember("TransformText", BindingFlags.InvokeMethod, null, instance, null);
-			//MethodInfo methid = type.GetMethod("TransformText");
-			//var ret = methid.Invoke(instance, null);
-			//return ret.ToString();
-			Type type = assembly.GetType(fqClassName); // 名前空間.クラス名を指定してクラスを取得
-			dynamic templateInstance = Activator.CreateInstance(type);
-			templateInstance.Host = host;
-			string output = templateInstance.TransformText();
-			return output;
-			*/
 		}
 	}
 
+	/// <summary>
+	/// T4変換時のエラー出力イベント。
+	/// </summary>
 	public class TextTemplatingErrorEventArgs: EventArgs
 	{
 		public TextTemplatingErrorEventArgs(CompilerErrorCollection errors)

@@ -65,7 +65,8 @@
 		Button _commandUp = new Button();
 		Button _commandDown = new Button();
 
-		IList<ReplaceItem> _replaceCommentList;
+		IList<ReplaceItem> _replaceTextCommentList;
+		IList<ReplaceItem> _replaceTemplatingCommentList;
 
 		ImageViewSize _imageSize;
 
@@ -112,6 +113,8 @@
 				ChangeCommand(-1);
 			}
 		}
+
+		BindingList<ReplaceItem> ReplaceItemList { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -171,12 +174,17 @@
 
 			listItemStack.MouseWheel += listClipboard_MouseWheel;
 
-			this._replaceCommentList = TemplateLanguageName.GetMembersList()
+			this._replaceTextCommentList = TemplateTextLanguageName.GetMembersList()
 				.Concat(AppLanguageName.GetMembersList())
-				.Select(m => new ReplaceItem() { Name = m })
+				.Select(m => new ReplaceItem() { Name = m, Key = "text" })
 				.ToList()
 			;
-			this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+			this._replaceTemplatingCommentList = TemplateTemplatingLanguageName.GetMembersList()
+				.Select(m => new ReplaceItem() { Name = m, Key = "templating" })
+				.ToList()
+			;
+
+			//this.listReplace.DataSource = ReplaceItemList;
 
 			ChekedReplace();
 
@@ -208,7 +216,7 @@
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
-			this.selectTemplateMacro.SetLanguage(CommonData.Language);
+			this.selectTemplateTemplating.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageRawTemplate.SetLanguage(CommonData.Language);
 			this.tabPreview_pageReplaceTemplate.SetLanguage(CommonData.Language);
@@ -238,7 +246,7 @@
 			//};
 			//var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
 			//this.webTemplateComment.DocumentText = replaced;
-			foreach(var item in this._replaceCommentList) {
+			foreach(var item in this._replaceTextCommentList.Concat(this._replaceTemplatingCommentList)) {
 				item.SetLanguage(CommonData.Language);
 			}
 		}
@@ -629,8 +637,9 @@
 			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectTemplateMacro.DataBindings.Clear();
-			this.selectTemplateMacro.DataBindings.Add("Checked", templateItem, "Macro", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectTemplateTemplating.DataBindings.Clear();
+			this.selectTemplateTemplating.DataBindings.Add("Checked", templateItem, "Macro", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectTemplateTemplating.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			return this.tabPreview_pageRawTemplate;
 		}
@@ -925,7 +934,15 @@
 		void ChekedReplace()
 		{
 			var check = this.selectTemplateReplace.Checked;
-			//this.webTemplateComment.Visible = check;
+
+			if(check) {
+				if(this.selectTemplateTemplating.Checked) {
+					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTemplatingCommentList);
+				} else {
+					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTextCommentList);
+				}
+				this.listReplace.DataSource = ReplaceItemList;
+			}
 
 			this.panelTemplateSource.Panel2Collapsed = !check;
 		}
@@ -1601,10 +1618,10 @@
 		private void listReplace_MeasureItem(object sender, MeasureItemEventArgs e)
 		{
 			Debug.Assert(e.Index != -1);
-			if(!e.Index.Between(0, this._replaceCommentList.Count - 1)) {
+			if(!e.Index.Between(0, ReplaceItemList.Count - 1)) {
 				return;
 			}
-			var replaceItem = this._replaceCommentList[e.Index];
+			var replaceItem = ReplaceItemList[e.Index];
 			PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 				var commentSize = e.Graphics.MeasureString(replaceItem.Comment, commentFont, width - GetReplaceCommentPadding(), commentFormat);
 				e.ItemHeight = (int)(titleSize.Height + commentSize.Height) + this.listReplace.Margin.Vertical + this.listReplace.Margin.Top;
@@ -1614,7 +1631,7 @@
 		private void listReplace_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if(e.Index != -1) {
-				var replaceItem = this._replaceCommentList[e.Index];
+				var replaceItem = ReplaceItemList[e.Index];
 				PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 					using(var foreBrush = new SolidBrush(e.ForeColor)) {
 						var titleArea = new RectangleF() {
@@ -1639,13 +1656,14 @@
 
 		private void listReplace_Resize(object sender, EventArgs e)
 		{
-			if(this._replaceCommentList == null) {
+			if(ReplaceItemList == null) {
 				return;
 			}
 			this.listReplace.BeginUpdate();
 			var selectedItem = this.listReplace.SelectedItem;
 			try {
-				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+				this.listReplace.DataSource = null;
+				this.listReplace.DataSource = ReplaceItemList;
 				this.listReplace.SelectedItem = selectedItem;
 			} finally {
 				this.listReplace.EndUpdate();
@@ -1722,6 +1740,11 @@
 		private void toolItemStack_itemFiltering_Click(object sender, EventArgs e)
 		{
 			ClearFilter();
+		}
+
+		private void selectTemplateMacro_CheckedChanged(object sender, EventArgs e)
+		{
+			ChekedReplace();
 		}
 	}
 }
