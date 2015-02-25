@@ -36,9 +36,30 @@
 			Assert.IsTrue(hasError == isError);
 		}
 
-		[TestCase(" ", true)]
-		[TestCase("<#@ template language=\"C#\" #>", false)]
-		public void CompileSource_ErrorTest(string ts, bool isError)
+		[TestCase(false, " ")]
+		[TestCase(true, "<#@ template language=\"C#\" #>")]
+		[TestCase(true, @"
+<#@ template language=""C#"" #>
+test
+")]
+		[TestCase(false, @"
+<#@ template language=""C#"" #>
+<# test #>
+")]
+		[TestCase(false, @"
+<#@ template language=""C#"" #>
+<#= test #>
+")]
+		[TestCase(true, @"
+<#@ template language=""C#"" #>
+<#= ""test"" #>
+")]
+		[TestCase(true, @"
+<#@ template language=""C#"" #>
+<# var foo = ""bar""; #>
+foo is <#= foo #>
+")]
+		public void CompileSource_ErrorTest(bool test, string ts)
 		{
 			Debug.Assert(!string.IsNullOrEmpty(ts), "GeneratSource_ErrorTest!");
 
@@ -59,9 +80,54 @@
 			if(hasError) {
 				Debug.WriteLine("T: " +  string.Join(Environment.NewLine, t4.GeneratedErrorList.Select(e => e.ToString())));
 				Debug.WriteLine("S: " + string.Join(Environment.NewLine, t4.CompileErrorList.Select(e => e.ToString())));
+			} else {
+				Debug.WriteLine(t4.GeneratedSource);
 			}
 
-			Assert.IsTrue(hasError == isError);
+			Assert.IsTrue(hasError != test);
+		}
+
+		[TestCase("1", "1")]
+		[TestCase("<#= 1+1 #>", "2")]
+		public void TransformText_CSharpSimpleTest(string src, string result)
+		{
+			var ts = "<#@ template language=\"C#\" #>" + Environment.NewLine + src;
+			var t4 = new T4TemplateProcessor() {
+				NamespaceName = "a",
+				ClassName = "b",
+				TemplateSource = ts,
+			};
+			t4.GeneratSource();
+			t4.CompileSource();
+			var output = t4.TransformText();
+			Assert.IsTrue(output == result);
+		}
+
+		[TestCase("host", "host")]
+		[TestCase("<#= host.Session[\"a\"] #>", "123")]
+		[TestCase("<#= host.Session[\"A\"] #>", "123")]
+		[TestCase("<#= (string)host.Session[\"a\"] + 4 #>", "1234")]
+		[TestCase("<#= (int)host.Session[\"A\"] + 4 #>", "127")]
+		public void TransformText_CSharpHostTest(string src, string result)
+		{
+			var ts
+				= "<#@ template language=\"C#\" debug=\"true\" hostSpecific=\"true\" #>" + Environment.NewLine
+				+ "<# var host = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host; #>"+ Environment.NewLine
+				//+ "<# var host = (ContentTypeTextNet.Pe.Library.Utility.TextTemplatingSession) Host; #>" + Environment.NewLine
+				+ src;
+			
+			var t4 = new T4TemplateProcessor() {
+				NamespaceName = "a",
+				ClassName = "b",
+				TemplateSource = ts,
+			};
+			var session = t4.Variable;
+			session["a"] = "123";
+			session["A"] = 123;
+			t4.GeneratSource();
+			t4.CompileSource();
+			var output = t4.TransformText();
+			Assert.IsTrue(output == result);
 		}
 	}
 
@@ -82,7 +148,8 @@ var mx = (int)sessionHost.Session[""maxCount""];
 #>
 へんすう<#= mx #>。
 			";
-			T4TemplateUtility.Convert(s);
+			var r = T4TemplateUtility.Convert(s);
+			Debug.WriteLine(r);
 		}
 	}
 }

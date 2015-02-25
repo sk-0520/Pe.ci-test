@@ -38,9 +38,12 @@
 			})
 		{ }
 
-		public T4TemplateProcessor(ITextTemplatingEngineHost host)
+		public T4TemplateProcessor(TextTemplatingEngineHost host)
 		{
+			Session = host.Session;
 			Host = host;
+			Variable = Session as TextTemplatingSession;
+
 			var eventHost = Host as TextTemplatingEngineHost;
 			if(eventHost != null) {
 				eventHost.Error += WithEvent_Error;
@@ -101,6 +104,14 @@
 		/// ホスト。
 		/// </summary>
 		public ITextTemplatingEngineHost Host { get; private set; }
+		/// <summary>
+		/// セッション。
+		/// </summary>
+		public ITextTemplatingSession Session { get; private set; }
+		/// <summary>
+		/// セッションに乗せとくデータ。
+		/// </summary>
+		public IDictionary<string, object> Variable { get; private set; }
 
 		/// <summary>
 		/// 参照アセンブリ。
@@ -154,6 +165,10 @@
 		/// コンパイル済みアセンブリ。
 		/// </summary>
 		public Assembly CompiledAssembly { get; private set; }
+		/// <summary>
+		/// コンパイル後の生成オブジェクト。
+		/// </summary>
+		dynamic InstanceTemplate { get; set; }
 
 		/// <summary>
 		/// T4を言語ソースに変換。
@@ -199,7 +214,11 @@
 		{
 			CompileSource(WarningLevel.Full, true);
 		}
-
+		/// <summary>
+		/// 言語ソースをコンパイルする。
+		/// </summary>
+		/// <param name="warningLevel">警告レベル。</param>
+		/// <param name="warningIsError">警告をエラーとして扱うか。</param>
 		public void CompileSource(WarningLevel warningLevel, bool warningIsError)
 		{
 			CompileSource(
@@ -208,6 +227,12 @@
 				new Dictionary<string, string>()
 			);
 		}
+		/// <summary>
+		/// 言語ソースをコンパイルする。
+		/// </summary>
+		/// <param name="warningLevel">警告レベル。</param>
+		/// <param name="warningIsError">警告をエラーとして扱うか。</param>
+		/// <param name="option">コンパイルオプション。</param>
 		public void CompileSource(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
 		{
 			if(!Generated) {
@@ -215,9 +240,12 @@
 			}
 			Debug.Assert(!string.IsNullOrEmpty(Language));
 			Debug.Assert(!string.IsNullOrEmpty(GeneratedSource));
+			Debug.Assert(!string.IsNullOrWhiteSpace(NamespaceName));
+			Debug.Assert(!string.IsNullOrWhiteSpace(ClassName));
 
 			Compiled = false;
 			CompiledAssembly = null;
+			InstanceTemplate = null;
 			this._compileErrorList.Clear();
 			this.CompileMessage = string.Empty;
 
@@ -230,14 +258,38 @@
 			};
 
 			// コンパイル
-			var compileResult = codeDomProv.CompileAssemblyFromSource(compilerParameters, GeneratedSource);
+			// プリプロセッサ #line のファイル名対応
+			var source = new StringBuilder(GeneratedSource.Length + 40);
+			source.AppendLine("#pragma warning disable 1709");
+			source.AppendLine(GeneratedSource);
+			source.AppendLine("#pragma warning restore 1709");
+			var compileResult = codeDomProv.CompileAssemblyFromSource(compilerParameters, source.ToString());
 			CompileMessage = string.Join(Environment.NewLine, compileResult.Output.Cast<string>());
 			this._compileErrorList.AddRange(compileResult.Errors.Cast<CompilerError>());
 
 			if(!this._compileErrorList.Any()) {
 				Compiled = true;
 				CompiledAssembly = compileResult.CompiledAssembly;
+
+				var fullyQualifiedClassName = string.Format("{0}.{1}", NamespaceName, ClassName);
+				var classType = CompiledAssembly.GetType(fullyQualifiedClassName);
+				InstanceTemplate = Activator.CreateInstance(classType);
+				if(classType.GetProperty("Host") != null) {
+					InstanceTemplate.Host = Host;
+				}
 			}
+		}
+
+		public string TransformText()
+		{
+			if(!Compiled) {
+				throw new InvalidOperationException("Compiled");
+			}
+
+			Debug.Assert(CompiledAssembly != null);
+			//Debug.Assert(InstanceTemplate != null);
+			
+			return InstanceTemplate.TransformText();
 		}
 	}
 
@@ -345,27 +397,12 @@
 		/// </summary>
 		public AppDomain AppDomain { set; get; }
 
-		/// <summary>
-		/// テンプレートに引き渡すデータを保持するセッション
-		/// </summary>
-		private ITextTemplatingSession session = null;
-
 		public ITextTemplatingSession CreateSession()
 		{
-			return session;
+			return Session;
 		}
 
-		public ITextTemplatingSession Session
-		{
-			get
-			{
-				return session;
-			}
-			set
-			{
-				session = value;
-			}
-		}
+		public ITextTemplatingSession Session { get; set; }
 
 		/// <summary>
 		/// オプションを処理する.
