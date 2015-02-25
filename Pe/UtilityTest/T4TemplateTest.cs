@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {
 	using System;
+	using System.Linq;
 	using System.Diagnostics;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using NUnit.Framework;
@@ -20,7 +21,7 @@
 		public void GeneratSource_ErrorTest(string name, string cls, string ts, bool isError)
 		{
 			var t4 = new T4TemplateProcessor() {
-				Namespace = name,
+				NamespaceName = name,
 				ClassName = cls,
 				TemplateSource = ts,
 			};
@@ -34,7 +35,36 @@
 			}
 			Assert.IsTrue(hasError == isError);
 		}
+
+		[TestCase(" ", true)]
+		[TestCase("<#@ template language=\"C#\" #>", false)]
+		public void CompileSource_ErrorTest(string ts, bool isError)
+		{
+			Debug.Assert(!string.IsNullOrEmpty(ts), "GeneratSource_ErrorTest!");
+
+			var t4 = new T4TemplateProcessor() {
+				NamespaceName = "a",
+				ClassName = "b",
+				TemplateSource = ts,
+			};
+
+			t4.GeneratSource();
+			bool hasError;
+			try {
+				t4.CompileSource();
+				hasError = t4.CompileErrorList.Count > 0;
+			} catch(InvalidOperationException) {
+				hasError = true;
+			}
+			if(hasError) {
+				Debug.WriteLine("T: " +  string.Join(Environment.NewLine, t4.GeneratedErrorList.Select(e => e.ToString())));
+				Debug.WriteLine("S: " + string.Join(Environment.NewLine, t4.CompileErrorList.Select(e => e.ToString())));
+			}
+
+			Assert.IsTrue(hasError == isError);
+		}
 	}
+
 
 	[TestFixture]
 	class T4TemplateTest

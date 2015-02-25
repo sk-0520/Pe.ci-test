@@ -27,6 +27,8 @@
 	{
 		private string _templateSource;
 		private string _language;
+		private string _namespaceName;
+		private string _className;
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
 		private List<CompilerError> _compileErrorList = new List<CompilerError>();
 
@@ -113,11 +115,33 @@
 		/// <summary>
 		/// 言語ソースの名前空間。
 		/// </summary>
-		public string Namespace { get; set; }
+		public string NamespaceName
+		{
+			get { return this._namespaceName; }
+			set 
+			{
+				if(Generated) {
+					throw new InvalidOperationException("NamespaceName");
+				}
+
+				this._namespaceName = value;
+			}
+		}
 		/// <summary>
 		/// 言語ソースのクラス名。
 		/// </summary>
-		public string ClassName { get; set; }
+		public string ClassName
+		{
+			get { return this._className; }
+			set
+			{
+				if(Generated) {
+					throw new InvalidOperationException("ClassName");
+				}
+
+				this._className = value;
+			}
+		}
 		/// <summary>
 		/// コンパイルエラー。
 		/// </summary>
@@ -129,14 +153,14 @@
 		/// <summary>
 		/// コンパイル済みアセンブリ。
 		/// </summary>
-		Assembly CompiledAssembly { get; private set; }
+		public Assembly CompiledAssembly { get; private set; }
 
 		/// <summary>
 		/// T4を言語ソースに変換。
 		/// </summary>
 		public void GeneratSource()
 		{
-			if(string.IsNullOrWhiteSpace(Namespace)) {
+			if(string.IsNullOrWhiteSpace(NamespaceName)) {
 				throw new InvalidOperationException("Namespace");
 			}
 			if(string.IsNullOrWhiteSpace(ClassName)) {
@@ -155,7 +179,7 @@
 				TemplateSource,
 				Host,
 				ClassName,
-				Namespace,
+				NamespaceName,
 				out language,
 				out references
 			);
