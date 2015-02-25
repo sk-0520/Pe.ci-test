@@ -7,7 +7,7 @@
 	[TestFixture]
 	class T4TemplateTest
 	{
-		//[Test]
+		[Test]
 		public void test()
 		{
 			var s = @"
@@ -18,8 +18,9 @@
 var sessionHost = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host;
 var mx = (int)sessionHost.Session[""maxCount""];
 #>
+へんすう<#= mx #>。
 			";
-			T4Template.test(s);
+			T4TemplateUtility.Convert(s);
 		}
 	}
 }

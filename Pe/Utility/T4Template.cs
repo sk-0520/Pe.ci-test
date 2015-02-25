@@ -13,19 +13,145 @@
 	using Microsoft.VisualStudio.TextTemplating;
 	using Mono.TextTemplating;
 
-	public static class T4Template
+	/// <summary>
+	/// 各種変換、実行をサポートする。
+	/// </summary>
+	public class T4TemplateProcessor
 	{
-		public static string test(string templateContent)
+		private string _templateSource;
+		private string _language;
+		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
+
+		public T4TemplateProcessor()
+			: this(new TextTemplatingEngineHost() {
+				Session = new TextTemplatingSession()
+			})
+		{ }
+
+		public T4TemplateProcessor(ITextTemplatingEngineHost host)
+		{
+			TextTemplatingEngineHost = host;
+			var withEvent = TextTemplatingEngineHost as TextTemplatingEngineHostWithEvent;
+			if(withEvent != null) {
+				withEvent.Error += WithEvent_Error;
+			}
+		}
+
+		~T4TemplateProcessor()
+		{
+			var withEvent = TextTemplatingEngineHost as TextTemplatingEngineHostWithEvent;
+			if(withEvent != null) {
+				withEvent.Error -= WithEvent_Error;
+			}
+		}
+
+		void WithEvent_Error(object sender, TextTemplatingErrorEventArgs e)
+		{
+			this._generatedErrorList.AddRange(e.CompilerErrorCollection.Cast<CompilerError>());
+		}
+
+
+		/// <summary>
+		/// T4ソース。
+		/// </summary>
+		public string TemplateSource 
+		{
+			get { return this._templateSource; }
+			set {
+				if(this._templateSource != value) {
+					Generated = false;
+					this._templateSource = value;
+				}
+			}
+		}
+		/// <summary>
+		/// T4から変換されているか
+		/// </summary>
+		public bool Generated { get; private set; }
+		/// <summary>
+		/// T4で使用される言語。
+		/// </summary>
+		public string Language
+		{
+			get { return this._language; }
+		}
+		/// <summary>
+		/// T4から変換された言語ソース。
+		/// </summary>
+		public string GeneratedSource { get; protected set; }
+
+		/// <summary>
+		/// ホスト。
+		/// </summary>
+		public ITextTemplatingEngineHost TextTemplatingEngineHost { get; private set; }
+
+		/// <summary>
+		/// 参照アセンブリ。
+		/// </summary>
+		public IReadOnlyList<string> References { get; private set; }
+
+		/// <summary>
+		/// T4変換時のエラー。
+		/// </summary>
+		public IReadOnlyList<CompilerError> GeneratedErrorList { get { return this._generatedErrorList; } }
+
+		/// <summary>
+		/// 言語ソースの名前空間。
+		/// </summary>
+		public string Namespace { get; set; }
+		/// <summary>
+		/// 言語ソースのクラス名。
+		/// </summary>
+		public string ClassName { get; set; }
+
+		/// <summary>
+		/// T4を言語ソースに変換。
+		/// </summary>
+		public void GeneratTemplate()
+		{
+			if(string.IsNullOrWhiteSpace(Namespace)) {
+				throw new InvalidOperationException("Namespace");
+			}
+			if(string.IsNullOrWhiteSpace(ClassName)) {
+				throw new InvalidOperationException("ClassName");
+			}
+
+			this._generatedErrorList.Clear();
+			string language;
+			string[] references;
+			var engine = new Engine();
+			string sourceCode = engine.PreprocessTemplate(
+				TemplateSource,
+				TextTemplatingEngineHost,
+				ClassName,
+				Namespace,
+				out language,
+				out references
+			);
+
+			this.GeneratedSource = sourceCode;
+			this._language = language;
+			References = references;
+		}
+	}
+
+	public static class T4TemplateUtility
+	{
+		public static string Convert(string templateContent)
 		{
 			var host = new TextTemplatingEngineHost();
 			host.Session = new TextTemplatingSession();
 
-			host.TemplateFile = "TemplateSample1.tt";
-			host.Session["maxCount"] = 2;
+			//host.TemplateFile = "TemplateSample1.tt";
+			//host.Session["maxCount"] = 2;
 	
 			// T4 Engine
 			var engine = new Engine();
 
+			var put = engine.ProcessTemplate(templateContent, host);
+
+			return put;
+			/*
 			// テンプレートをソースコードに変換する.(実行時テンプレート)
 			string className = "GeneratedClass";
 			string namespaceName = "TemplateEngineExample";
@@ -39,9 +165,8 @@
 				out lang, // 生成するソースコードの種別が返される
 				out references // 参照しているアセンブリの一覧が返される
 				);
-
-
-
+			
+			
 			// コンパイラを取得する.
 			var codeDomProv = CodeDomProvider.CreateProvider(lang);
 
@@ -82,6 +207,7 @@
 			templateInstance.Host = host;
 			string output = templateInstance.TransformText();
 			return output;
+			*/
 		}
 	}
 
@@ -213,7 +339,7 @@
 			return false;
 		}
 
-		public void LogErrors(CompilerErrorCollection errors)
+		public virtual void LogErrors(CompilerErrorCollection errors)
 		{
 			foreach(CompilerError error in errors) {
 				Console.Error.WriteLine(error.Line + ":" + error.Column +
@@ -299,6 +425,26 @@
 					"System.Text"
 				};
 			}
+		}
+	}
+
+	public class TextTemplatingErrorEventArgs: EventArgs
+	{
+		public TextTemplatingErrorEventArgs(CompilerErrorCollection errors)
+		{ }
+
+		public CompilerErrorCollection CompilerErrorCollection { get; private set; }
+	}
+
+	[Serializable]
+	public class TextTemplatingEngineHostWithEvent: TextTemplatingEngineHost
+	{
+		public event EventHandler<TextTemplatingErrorEventArgs> Error = delegate { };
+
+		public override void LogErrors(CompilerErrorCollection errors)
+		{
+ 			//base.LogErrors(errors);
+			Error(this, new TextTemplatingErrorEventArgs(errors));
 		}
 	}
 
