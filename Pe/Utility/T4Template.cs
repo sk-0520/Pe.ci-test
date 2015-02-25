@@ -30,18 +30,18 @@
 
 		public T4TemplateProcessor(ITextTemplatingEngineHost host)
 		{
-			TextTemplatingEngineHost = host;
-			var withEvent = TextTemplatingEngineHost as TextTemplatingEngineHostWithEvent;
-			if(withEvent != null) {
-				withEvent.Error += WithEvent_Error;
+			Host = host;
+			var eventHost = Host as TextTemplatingEngineHost;
+			if(eventHost != null) {
+				eventHost.Error += WithEvent_Error;
 			}
 		}
 
 		~T4TemplateProcessor()
 		{
-			var withEvent = TextTemplatingEngineHost as TextTemplatingEngineHostWithEvent;
-			if(withEvent != null) {
-				withEvent.Error -= WithEvent_Error;
+			var eventHost = Host as TextTemplatingEngineHost;
+			if(eventHost != null) {
+				eventHost.Error -= WithEvent_Error;
 			}
 		}
 
@@ -83,7 +83,7 @@
 		/// <summary>
 		/// ホスト。
 		/// </summary>
-		public ITextTemplatingEngineHost TextTemplatingEngineHost { get; private set; }
+		public ITextTemplatingEngineHost Host { get; private set; }
 
 		/// <summary>
 		/// 参照アセンブリ。
@@ -122,7 +122,7 @@
 			var engine = new Engine();
 			string sourceCode = engine.PreprocessTemplate(
 				TemplateSource,
-				TextTemplatingEngineHost,
+				Host,
 				ClassName,
 				Namespace,
 				out language,
@@ -211,12 +211,22 @@
 		}
 	}
 
+	public class TextTemplatingErrorEventArgs: EventArgs
+	{
+		public TextTemplatingErrorEventArgs(CompilerErrorCollection errors)
+		{ }
+
+		public CompilerErrorCollection CompilerErrorCollection { get; private set; }
+	}
+
 	/// <summary>
 	/// http://d.hatena.ne.jp/seraphy/20140419
 	/// </summary>
 	[Serializable]
 	public class TextTemplatingEngineHost: ITextTemplatingEngineHost, ITextTemplatingSessionHost
 	{
+		public event EventHandler<TextTemplatingErrorEventArgs> Error = delegate { };
+
 		/// <summary>
 		/// 現在処理中のテンプレートファイル
 		/// </summary>
@@ -341,10 +351,7 @@
 
 		public virtual void LogErrors(CompilerErrorCollection errors)
 		{
-			foreach(CompilerError error in errors) {
-				Console.Error.WriteLine(error.Line + ":" + error.Column +
-					" #" + error.ErrorNumber + " " + error.ErrorText);
-			}
+			Error(this, new TextTemplatingErrorEventArgs(errors));
 		}
 
 		public string ResolveParameterValue(string directiveId, string processorName, string parameterName)
@@ -425,26 +432,6 @@
 					"System.Text"
 				};
 			}
-		}
-	}
-
-	public class TextTemplatingErrorEventArgs: EventArgs
-	{
-		public TextTemplatingErrorEventArgs(CompilerErrorCollection errors)
-		{ }
-
-		public CompilerErrorCollection CompilerErrorCollection { get; private set; }
-	}
-
-	[Serializable]
-	public class TextTemplatingEngineHostWithEvent: TextTemplatingEngineHost
-	{
-		public event EventHandler<TextTemplatingErrorEventArgs> Error = delegate { };
-
-		public override void LogErrors(CompilerErrorCollection errors)
-		{
- 			//base.LogErrors(errors);
-			Error(this, new TextTemplatingErrorEventArgs(errors));
 		}
 	}
 
