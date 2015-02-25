@@ -7,6 +7,19 @@
 	using NUnit.Framework;
 
 	[TestFixture]
+	class T4TemplateUtilityTest
+	{
+		[TestCase("abc", "abc")]
+		[TestCase("<#= 1 + 1 #>", "2")]
+		public void TransformTextTest(string src, string result)
+		{
+			var s = @"<#@ template language=""C#"" hostSpecific=""true"" #>" + Environment.NewLine + src;
+			var output = T4TemplateUtility.TransformText(s);
+			Assert.IsTrue(output == result);
+		}
+	}
+
+	[TestFixture]
 	class T4TemplateProcessorTest
 	{
 		[TestCase("", "", "", true)]
@@ -154,20 +167,6 @@ foo is <#= foo #>
 			session["a"] = "456";
 			var output2 = t4.TransformText();
 			Assert.IsTrue(output2 == result2);
-		}
-	}
-
-
-	[TestFixture]
-	class T4TemplateUtilityTest
-	{
-		[TestCase("abc", "abc")]
-		[TestCase("<#= 1 + 1 #>", "2")]
-		public void TransformTextTest(string src, string result)
-		{
-			var s = @"<#@ template language=""C#"" hostSpecific=""true"" #>" + Environment.NewLine + src;
-			var output = T4TemplateUtility.TransformText(s);
-			Assert.IsTrue(output == result);
 		}
 	}
 }

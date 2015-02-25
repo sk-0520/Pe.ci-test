@@ -525,6 +525,9 @@
 		<Word Name="template/replace/program/name/&lt;#  #&gt;"  Text="コード" />
 		<Word Name="template/replace/program/name/&lt;#=  #&gt;"  Text="式" />
 
+		<Word Name="template/convert/error/text"     Text="" />
+		<Word Name="template/convert/error/program"  Text="" />
+
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />
 		<Word Name="log/init/db-data/mkdir"     Text="DB用ディレクトリ作成" />

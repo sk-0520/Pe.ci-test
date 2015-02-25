@@ -21,6 +21,33 @@
 	}
 
 	/// <summary>
+	/// T4Templateの便利処理。
+	/// </summary>
+	public static class T4TemplateUtility
+	{
+		public static string TransformText(string templateContent)
+		{
+			var host = new TextTemplatingEngineHost();
+			host.Session = new TextTemplatingSession();
+
+			var engine = new Engine();
+			return engine.ProcessTemplate(templateContent, host);
+		}
+
+		public static string TransformTextWidthVariable(string templateContent, IDictionary<string, object> variable)
+		{
+			var host = new TextTemplatingEngineHost();
+			host.Session = new TextTemplatingSession();
+			foreach(var pair in variable) {
+				host.Session.Add(pair);
+			}
+
+			var engine = new Engine();
+			return engine.ProcessTemplate(templateContent, host);
+		}
+	}
+
+	/// <summary>
 	/// 各種変換、実行をサポートする。
 	/// 
 	/// Bugs: VBはその、コンパイルできん。
@@ -28,7 +55,7 @@
 	public class T4TemplateProcessor
 	{
 		private string _templateSource;
-		private string _language;
+		private string _programmingLanguage;
 		private string _namespaceName;
 		private string _className;
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
@@ -93,9 +120,9 @@
 		/// <summary>
 		/// T4で使用される言語。
 		/// </summary>
-		public string Language
+		public string ProgrammingLanguage
 		{
-			get { return this._language; }
+			get { return this._programmingLanguage; }
 		}
 		/// <summary>
 		/// T4から変換された言語ソース。
@@ -189,7 +216,7 @@
 
 			this._generatedErrorList.Clear();
 
-			string language;
+			string programmingLanguage;
 			string[] references;
 			var engine = new Engine();
 			string sourceCode = engine.PreprocessTemplate(
@@ -197,14 +224,14 @@
 				Host,
 				ClassName,
 				NamespaceName,
-				out language,
+				out programmingLanguage,
 				out references
 			);
 
 			if(!GeneratedErrorList.Any()) {
 				Generated = true;
 				GeneratedSource = sourceCode;
-				this._language = language;
+				this._programmingLanguage = programmingLanguage;
 				References = references;
 			}
 		}
@@ -240,7 +267,7 @@
 			if(!Generated) {
 				throw new InvalidOperationException("Generated");
 			}
-			Debug.Assert(!string.IsNullOrEmpty(Language));
+			Debug.Assert(!string.IsNullOrEmpty(ProgrammingLanguage));
 			Debug.Assert(!string.IsNullOrEmpty(GeneratedSource));
 			Debug.Assert(!string.IsNullOrWhiteSpace(NamespaceName));
 			Debug.Assert(!string.IsNullOrWhiteSpace(ClassName));
@@ -252,7 +279,7 @@
 			this.CompileMessage = string.Empty;
 
 			// コンパイル準備
-			var codeDomProv = CodeDomProvider.CreateProvider(Language, option);
+			var codeDomProv = CodeDomProvider.CreateProvider(ProgrammingLanguage, option);
 			var compilerParameters = new CompilerParameters(References.ToArray()) {
 				GenerateInMemory = true,
 				WarningLevel = (int)warningLevel,
@@ -295,32 +322,6 @@
 		}
 	}
 
-	/// <summary>
-	/// T4Templateの便利処理。
-	/// </summary>
-	public static class T4TemplateUtility
-	{
-		public static string TransformText(string templateContent)
-		{
-			var host = new TextTemplatingEngineHost();
-			host.Session = new TextTemplatingSession();
-
-			var engine = new Engine();
-			return engine.ProcessTemplate(templateContent, host);
-		}
-
-		public static string TransformTextWidthVariable(string templateContent, IDictionary<string, object> variable)
-		{
-			var host = new TextTemplatingEngineHost();
-			host.Session = new TextTemplatingSession();
-			foreach(var pair in variable) {
-				host.Session.Add(pair);
-			}
-
-			var engine = new Engine();
-			return engine.ProcessTemplate(templateContent, host);
-		}
-	}
 
 	/// <summary>
 	/// T4変換時のエラー出力イベント。
