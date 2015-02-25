@@ -27,7 +27,19 @@
 
 	public class ProgramReplaceItem : ReplaceItem
 	{
-		public override string ReplaceWord { get { return Name; } }
+		public override string ReplaceWord
+		{
+			get
+			{
+				if(Bracket == null) {
+					return Name;
+				} else {
+					return Bracket.Item1 + Name + Bracket.Item2;
+				}
+			}
+		}
+
+		public Tuple<string, string> Bracket { get; set; }
 
 		public override void SetLanguage(Language lang)
 		{

@@ -98,6 +98,7 @@
 			set {
 				if(this._templateSource != value) {
 					Generated = false;
+					Compiled = false;
 					this._templateSource = value;
 				}
 			}
@@ -191,7 +192,8 @@
 		/// <summary>
 		/// コンパイル後の生成オブジェクト。
 		/// </summary>
-		dynamic InstanceTemplate { get; set; }
+		object InstanceTemplate { get; set; }
+		MethodInfo InstanceTemplateTransformText { get; set; }
 
 		protected virtual void Initialize()
 		{
@@ -331,9 +333,13 @@
 				var fullyQualifiedClassName = string.Format("{0}.{1}", NamespaceName, ClassName);
 				var classType = CompiledAssembly.GetType(fullyQualifiedClassName);
 				InstanceTemplate = Activator.CreateInstance(classType);
-				if(classType.GetProperty("Host") != null) {
-					InstanceTemplate.Host = Host;
+				var propHost = classType.GetProperty("Host");
+				if(propHost != null) {
+					//ResetBindException初回例外がしんどいのでdynamic使わない。
+					//InstanceTemplate.Host = Host;
+					propHost.SetValue(InstanceTemplate, Host);
 				}
+				InstanceTemplateTransformText = classType.GetMethod("TransformText");
 			}
 		}
 
@@ -349,9 +355,10 @@
 			}
 
 			Debug.Assert(CompiledAssembly != null);
-			//Debug.Assert(InstanceTemplate != null);
-			
-			return InstanceTemplate.TransformText();
+			Debug.Assert(InstanceTemplate != null);
+
+			return (string)InstanceTemplateTransformText.Invoke(InstanceTemplate, null);
+			//InstanceTemplate.TransformText();
 		}
 
 		public void AllProcess()

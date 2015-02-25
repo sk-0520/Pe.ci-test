@@ -180,7 +180,13 @@
 				.ToList()
 			;
 			this._replaceProgramCommentList = TemplateProgramLanguageName.GetMembersList()
-				.Select(m => new ProgramReplaceItem() { Name = m })
+				.Select(m => new ProgramReplaceItem() { 
+					Name = m,
+					Bracket = TemplateProgramLanguageName.GetVariableMembers().Any(s => s == m) 
+						? new Tuple<string,string>("app[\"", "\"]")
+						: null
+					,
+				})
 				.ToList()
 			;
 

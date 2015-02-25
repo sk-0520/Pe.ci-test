@@ -1,17 +1,16 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
-	using System.Text;
-	using ContentTypeTextNet.Pe.Library.Utility;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
+	using System;
+using System.Text;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
 	/// </summary>
 	public class TemplateProcessor: T4TemplateProcessor, ILanguage
 	{
-		private string _templateDdirective = "<#@ template language=\"C#\" hostspecific=\"true\" #>";
-
 		public TemplateProcessor()
 			: base()
 		{ }
@@ -23,11 +22,7 @@
 		/// <summary>
 		/// テンプレートディレクティブ。
 		/// </summary>
-		public string TemplateDdirective
-		{
-			get { return this._templateDdirective; }
-			set { this._templateDdirective = value; }
-		}
+		public string TemplateDdirective {get;set;}
 
 		public Language Language { get; set; }
 
@@ -35,6 +30,14 @@
 		{
 			NamespaceName = "ContentTypeTextNet.Pe.PeMain.Logic.TemplateProcessorGenerator";
 			ClassName = "TextProcessor";
+
+			TemplateDdirective = string.Join(Environment.NewLine, new[] {
+				"<#@ template language=\"C#\" hostspecific=\"true\" #>",
+				"<#",
+				"var __host    = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host;",
+				"var app = __host.Session;",
+				"#>",
+			});
 
 			base.Initialize();
 		}
@@ -51,7 +54,11 @@
 
 		protected void ResetVariable()
 		{
-
+			Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
+			Variable[TemplateProgramLanguageName.application] = Literal.programName;
+			Variable[TemplateProgramLanguageName.versionFull] = Literal.ApplicationVersion;
+			Variable[TemplateProgramLanguageName.versionNumber] = Literal.Version.FileVersion;
+			Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
 		}
 
 		protected override string TransformTextImpl()

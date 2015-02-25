@@ -633,11 +633,36 @@
 		public const string code = "<#  #>";
 		public const string expr = "<#=  #>";
 
+		public const string application = AppLanguageName.application;
+		public const string versionFull = AppLanguageName.versionFull;
+		public const string versionNumber = AppLanguageName.versionNumber;
+		public const string versionHash = AppLanguageName.versionHash;
+		public const string timestamp = AppLanguageName.timestamp;
+
 		public static IReadOnlyList<string> GetMembersList()
 		{
 			return new[] {
 				code,
 				expr,
+
+				timestamp,
+
+				application,
+				versionFull,
+				versionNumber,
+				versionHash,
+			};
+		}
+
+		public static IReadOnlyList<string> GetVariableMembers()
+		{
+			return new[] {
+				timestamp,
+
+				application,
+				versionFull,
+				versionNumber,
+				versionHash,
 			};
 		}
 	}
