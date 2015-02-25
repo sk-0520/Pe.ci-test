@@ -74,11 +74,6 @@
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.TextTemplating">
-      <HintPath>..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="MouseKeyboardActivityMonitor">
       <HintPath>..\packages\MouseKeyboardActivityMonitor.4.0.5150.10665\lib\net20\MouseKeyboardActivityMonitor.dll</HintPath>
       <Private>False</Private>
@@ -204,7 +199,6 @@
     <Compile Include="Logic\ScreenUtility.cs" />
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
-    <Compile Include="Logic\T4Template.cs" />
     <Compile Include="Logic\TemplateUtility.cs" />
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />

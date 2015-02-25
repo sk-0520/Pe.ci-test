@@ -1,7 +1,7 @@
-﻿namespace ContentTypeTextNet.Pe.Test.ApplicationTest.Logic
+﻿namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {
 	using System;
-	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using NUnit.Framework;
 
 	[TestFixture]

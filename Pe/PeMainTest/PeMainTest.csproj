@@ -86,7 +86,6 @@
   <ItemGroup>
     <Compile Include="LiteralTest.cs" />
     <Compile Include="Logic\TemplateUtilityTest.cs" />
-    <Compile Include="Logic\T4TemplateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

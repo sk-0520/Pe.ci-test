@@ -103,6 +103,7 @@
     <Compile Include="CommandLineTest.cs" />
     <Compile Include="PathUtilityTest.cs" />
     <Compile Include="SQLiteDBManagerTest.cs" />
+    <Compile Include="T4TemplateTest.cs" />
     <Compile Include="TextUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
