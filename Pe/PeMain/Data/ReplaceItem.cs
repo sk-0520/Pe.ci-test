@@ -11,20 +11,28 @@
 	{
 		public Language Language { get; private set; }
 
-		public string Comment { get; private set; }
+		public string Comment { get; protected set; }
 
-		public string Key { get; set; }
-
-		public string ReplaceWord { get { return string.Format("@[{0}]", Name); } }
+		public virtual string ReplaceWord { get { return string.Format("@[{0}]", Name); } }
 
 		#region ISetLanguage
 
-		public void SetLanguage(Language lang)
+		public virtual void SetLanguage(Language lang)
 		{
-			Comment = lang["template/replace/" + Key + "/name/" + Name];
+			Comment = lang["template/replace/text/name/" + Name];
 		}
 
 		#endregion
+	}
+
+	public class ProgramReplaceItem : ReplaceItem
+	{
+		public override string ReplaceWord { get { return Name; } }
+
+		public override void SetLanguage(Language lang)
+		{
+			Comment = lang["template/replace/program/name/" + Name];
+		}
 	}
 
 }

@@ -66,7 +66,7 @@
 		Button _commandDown = new Button();
 
 		IList<ReplaceItem> _replaceTextCommentList;
-		IList<ReplaceItem> _replaceTemplatingCommentList;
+		IList<ProgramReplaceItem> _replaceProgramCommentList;
 
 		ImageViewSize _imageSize;
 
@@ -176,11 +176,11 @@
 
 			this._replaceTextCommentList = TemplateTextLanguageName.GetMembersList()
 				.Concat(AppLanguageName.GetMembersList())
-				.Select(m => new ReplaceItem() { Name = m, Key = "text" })
+				.Select(m => new ReplaceItem() { Name = m })
 				.ToList()
 			;
-			this._replaceTemplatingCommentList = TemplateTemplatingLanguageName.GetMembersList()
-				.Select(m => new ReplaceItem() { Name = m, Key = "templating" })
+			this._replaceProgramCommentList = TemplateProgramLanguageName.GetMembersList()
+				.Select(m => new ProgramReplaceItem() { Name = m })
 				.ToList()
 			;
 
@@ -216,7 +216,7 @@
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
-			this.selectTemplateTemplating.SetLanguage(CommonData.Language);
+			this.selectTemplateProgram.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageRawTemplate.SetLanguage(CommonData.Language);
 			this.tabPreview_pageReplaceTemplate.SetLanguage(CommonData.Language);
@@ -246,7 +246,7 @@
 			//};
 			//var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
 			//this.webTemplateComment.DocumentText = replaced;
-			foreach(var item in this._replaceTextCommentList.Concat(this._replaceTemplatingCommentList)) {
+			foreach(var item in this._replaceTextCommentList.Concat(this._replaceProgramCommentList)) {
 				item.SetLanguage(CommonData.Language);
 			}
 		}
@@ -637,9 +637,9 @@
 			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectTemplateTemplating.DataBindings.Clear();
-			this.selectTemplateTemplating.DataBindings.Add("Checked", templateItem, "Macro", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.selectTemplateTemplating.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectTemplateProgram.DataBindings.Clear();
+			this.selectTemplateProgram.DataBindings.Add("Checked", templateItem, "Program", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectTemplateProgram.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			return this.tabPreview_pageRawTemplate;
 		}
@@ -936,8 +936,8 @@
 			var check = this.selectTemplateReplace.Checked;
 
 			if(check) {
-				if(this.selectTemplateTemplating.Checked) {
-					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTemplatingCommentList);
+				if(this.selectTemplateProgram.Checked) {
+					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceProgramCommentList.Cast<ReplaceItem>().ToList());
 				} else {
 					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTextCommentList);
 				}

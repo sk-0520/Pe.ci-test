@@ -269,7 +269,7 @@
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
 		<Word Name="clipboard/label/template-name"     Text="${template}名" />
 		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
-		<Word Name="clipboard/check/template-templating" Text="T4" />
+		<Word Name="clipboard/check/template-program"  Text="T4" />
 		<Word Name="clipboard/label/uri"     Text="URI:" />
 		<Word Name="clipboard/image/raw"     Text="原寸表示" />
 		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
@@ -522,8 +522,8 @@
 		<Word Name="template/replace/text/name/CLIP:NOBREAK" Text="改行なしクリップボードテキスト" />
 		<Word Name="template/replace/text/name/CLIP:HEAD"    Text="先頭行のみクリップボードテキスト" />
 		<Word Name="template/replace/text/name/CLIP:TAIL"    Text="最終行のみクリップボードテキスト" />
-		<Word Name="template/replace/templating/name/&lt;#  #&gt;"  Text="コード" />
-		<Word Name="template/replace/templating/name/&lt;#=  #&gt;"  Text="式" />
+		<Word Name="template/replace/program/name/&lt;#  #&gt;"  Text="コード" />
+		<Word Name="template/replace/program/name/&lt;#=  #&gt;"  Text="式" />
 
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />

@@ -14,9 +14,9 @@
 		/// </summary>
 		public bool ReplaceMode { get; set; }
 		/// <summary>
-		/// 関数置き換えを使用するか。
+		/// プログラム的置き換えを使用するか。
 		/// </summary>
-		public bool Macro { get; set; }
+		public bool Program { get; set; }
 		/// <summary>
 		/// 対象文字列。
 		/// </summary>

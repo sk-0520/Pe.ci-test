@@ -628,11 +628,10 @@
 		}
 	}
 
-	public static class TemplateTemplatingLanguageName
+	public static class TemplateProgramLanguageName
 	{
 		public const string code = "<#  #>";
 		public const string expr = "<#=  #>";
-
 
 		public static IReadOnlyList<string> GetMembersList()
 		{
