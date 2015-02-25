@@ -54,7 +54,10 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		protected void ResetVariable()
 		{
+			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text, IntPtr.Zero, new NullLogger());
+
 			Variable[TemplateProgramLanguageName.timestamp] = DateTime.Now;
+			Variable[TemplateProgramLanguageName.clipboard] = clipboardItem.Text ?? string.Empty;
 			Variable[TemplateProgramLanguageName.application] = Literal.programName;
 			Variable[TemplateProgramLanguageName.versionFull] = Literal.ApplicationVersion;
 			Variable[TemplateProgramLanguageName.versionNumber] = Literal.Version.FileVersion;

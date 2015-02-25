@@ -608,7 +608,7 @@
 	}
 
 	/// <summary>
-	/// テンプレート専用で切り替える置き換え文字列。
+	/// テキストテンプレート専用で切り替える置き換え文字列。
 	/// </summary>
 	public static class TemplateTextLanguageName
 	{
@@ -628,6 +628,9 @@
 		}
 	}
 
+	/// <summary>
+	/// プログラムテンプレート専用で切り替える置き換え文字列。
+	/// </summary>
 	public static class TemplateProgramLanguageName
 	{
 		public const string code = "<#  #>";
@@ -638,6 +641,7 @@
 		public const string versionNumber = AppLanguageName.versionNumber;
 		public const string versionHash = AppLanguageName.versionHash;
 		public const string timestamp = AppLanguageName.timestamp;
+		public const string clipboard = TemplateTextLanguageName.clipboard;
 
 		public static IReadOnlyList<string> GetMembersList()
 		{
@@ -646,6 +650,7 @@
 				expr,
 
 				timestamp,
+				clipboard,
 
 				application,
 				versionFull,
@@ -658,6 +663,7 @@
 		{
 			return new[] {
 				timestamp,
+				clipboard,
 
 				application,
 				versionFull,
@@ -670,6 +676,7 @@
 		{
 			return new Dictionary<string, Type>() {
 				{ timestamp, typeof(DateTime) },
+				{ clipboard, typeof(string) },
 
 				{ application, typeof(string) },
 				{ versionFull, typeof(string) },
