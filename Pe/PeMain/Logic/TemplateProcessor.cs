@@ -64,11 +64,11 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
 		}
 
-		protected override string TransformTextImpl()
+		protected override string TransformText_Impl()
 		{
 			ResetVariable();
 
-			return base.TransformTextImpl();
+			return base.TransformText_Impl();
 		}
 	}
 }

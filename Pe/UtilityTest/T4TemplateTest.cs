@@ -40,7 +40,7 @@
 			};
 			bool hasError;
 			try {
-				t4.GeneratSource();
+				t4.GeneratProgramSource();
 				hasError = t4.GeneratedErrorList.Count > 0;
 			} catch(InvalidOperationException ex) {
 				Debug.WriteLine(ex);
@@ -82,10 +82,10 @@ foo is <#= foo #>
 				TemplateSource = ts,
 			};
 
-			t4.GeneratSource();
+			t4.GeneratProgramSource();
 			bool hasError;
 			try {
-				t4.CompileSource();
+				t4.CompileProgramSource();
 				hasError = t4.CompileErrorList.Count > 0;
 			} catch(InvalidOperationException) {
 				hasError = true;
@@ -94,7 +94,7 @@ foo is <#= foo #>
 				Debug.WriteLine("T: " +  string.Join(Environment.NewLine, t4.GeneratedErrorList.Select(e => e.ToString())));
 				Debug.WriteLine("S: " + string.Join(Environment.NewLine, t4.CompileErrorList.Select(e => e.ToString())));
 			} else {
-				Debug.WriteLine(t4.GeneratedSource);
+				Debug.WriteLine(t4.GeneratedProgramSource);
 			}
 
 			Assert.IsTrue(hasError != test);
@@ -110,8 +110,8 @@ foo is <#= foo #>
 				ClassName = "b",
 				TemplateSource = ts,
 			};
-			t4.GeneratSource();
-			t4.CompileSource();
+			t4.GeneratProgramSource();
+			t4.CompileProgramSource();
 			var output = t4.TransformText();
 			Assert.IsTrue(output == result);
 		}
@@ -136,8 +136,8 @@ foo is <#= foo #>
 			var session = t4.Variable;
 			session["a"] = "123";
 			session["A"] = 123;
-			t4.GeneratSource();
-			t4.CompileSource();
+			t4.GeneratProgramSource();
+			t4.CompileProgramSource();
 			var output = t4.TransformText();
 			Assert.IsTrue(output == result);
 		}
@@ -158,8 +158,8 @@ foo is <#= foo #>
 			};
 			var session = t4.Variable;
 			session["a"] = "123";
-			t4.GeneratSource();
-			t4.CompileSource();
+			t4.GeneratProgramSource();
+			t4.CompileProgramSource();
 			
 			var output1 = t4.TransformText();
 			Assert.IsTrue(output1 == result1);
