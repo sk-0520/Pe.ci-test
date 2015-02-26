@@ -19,7 +19,7 @@
 			var map = new Dictionary<string, string>();
 
 			var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text | ClipboardType.File, IntPtr.Zero, new NullLogger());
-			if(clipboardItem != null) {
+			if(clipboardItem.ClipboardTypes != ClipboardType.None) {
 				var clipboardText = clipboardItem.Text;
 				// そのまんま
 				map[TemplateTextLanguageName.clipboard] = clipboardText;

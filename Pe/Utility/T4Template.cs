@@ -56,6 +56,7 @@
 	{
 		private string _templateSource;
 		private string _programmingLanguage;
+		private string _templateAppDomainName;
 		private string _namespaceName;
 		private string _className;
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
@@ -177,6 +178,21 @@
 				this._className = value;
 			}
 		}
+
+		public string TemplateAppDomainName
+		{
+			get { return this._templateAppDomainName; }
+			set
+			{
+				if(Compiled) {
+					throw new InvalidOperationException("Compiled");
+				}
+
+				this._templateAppDomainName = value;
+			}
+		}
+
+
 		/// <summary>
 		/// コンパイルエラー。
 		/// </summary>
@@ -195,6 +211,9 @@
 		object InstanceTemplate { get; set; }
 		MethodInfo InstanceTemplateTransformText { get; set; }
 
+		protected AppDomain TemplateAppDomain { get; set; }
+		protected RuntimeTextTemplateProxy TemplateProxy { get; set; }
+
 		protected virtual void Initialize()
 		{
 			CompileMessage = string.Empty;
@@ -202,7 +221,7 @@
 
 		protected virtual string MakeTemplateSource()
 		{
-			return TemplateSource + Environment.NewLine;
+			return TemplateSource;
 		}
 
 		protected virtual string MakeProgramSource()
@@ -329,6 +348,13 @@
 			if(!this._compileErrorList.Any()) {
 				Compiled = true;
 				CompiledAssembly = compileResult.CompiledAssembly;
+
+				if(string.IsNullOrEmpty(TemplateAppDomainName)) {
+					TemplateAppDomain = AppDomain.CurrentDomain;
+				} else {
+					TemplateAppDomain = AppDomain.CreateDomain(TemplateAppDomainName);
+				}
+				//InstanceProxy = new RuntimeTextTemplateProxy();
 
 				var fullyQualifiedClassName = string.Format("{0}.{1}", NamespaceName, ClassName);
 				var classType = CompiledAssembly.GetType(fullyQualifiedClassName);
@@ -645,208 +671,208 @@
 		}
 	}
 
-	///// <summary>
-	///// 実行時テンプレートのインターフェイス
-	///// </summary>
-	//public interface IRuntimeTextTemplate: IDisposable
-	//{
-	//	/// <summary>
-	//	/// ホスト
-	//	/// </summary>
-	//	ITextTemplatingEngineHost Host { set; get; }
+	/// <summary>
+	/// 実行時テンプレートのインターフェイス
+	/// </summary>
+	public interface IRuntimeTextTemplate: IDisposable
+	{
+		/// <summary>
+		/// ホスト
+		/// </summary>
+		ITextTemplatingEngineHost Host { set; get; }
 
-	//	/// <summary>
-	//	/// テンプレート変換を実施する.
-	//	/// </summary>
-	//	/// <returns></returns>
-	//	string TransformText();
-	//}
+		/// <summary>
+		/// テンプレート変換を実施する.
+		/// </summary>
+		/// <returns></returns>
+		string TransformText();
+	}
 
-	///// <summary>
-	///// テンプレートクラスをAppDomain間で利用できるようするProxy
-	///// </summary>
-	//public class RuntimeTextTemplateProxy: MarshalByRefObject, IRuntimeTextTemplate
-	//{
-	//	/// <summary>
-	//	/// テンプレートクラスのインスタンス
-	//	/// </summary>
-	//	private dynamic templateInstance;
+	/// <summary>
+	/// テンプレートクラスをAppDomain間で利用できるようするProxy
+	/// </summary>
+	public class RuntimeTextTemplateProxy: MarshalByRefObject, IRuntimeTextTemplate
+	{
+		/// <summary>
+		/// テンプレートクラスのインスタンス
+		/// </summary>
+		private dynamic templateInstance;
 
-	//	/// <summary>
-	//	/// 破棄済みフラグ
-	//	/// </summary>
-	//	private bool _disposed;
+		/// <summary>
+		/// 破棄済みフラグ
+		/// </summary>
+		private bool _disposed;
 
-	//	/// <summary>
-	//	/// 初期化。アセンブリをロードする.
-	//	/// </summary>
-	//	/// <param name="assemblyBytes">ロードするアセンブリの内容</param>
-	//	/// <param name="fqClassName">名前空間・クラス名</param>
-	//	public void LoadAssembly(byte[] assemblyBytes, string fqClassName)
-	//	{
-	//		var assembly = Assembly.Load(assemblyBytes);
-	//		templateInstance = (dynamic)assembly.CreateInstance(fqClassName);
-	//	}
+		/// <summary>
+		/// 初期化。アセンブリをロードする.
+		/// </summary>
+		/// <param name="assemblyBytes">ロードするアセンブリの内容</param>
+		/// <param name="fqClassName">名前空間・クラス名</param>
+		public void LoadAssembly(byte[] assemblyBytes, string fqClassName)
+		{
+			var assembly = Assembly.Load(assemblyBytes);
+			templateInstance = (dynamic)assembly.CreateInstance(fqClassName);
+		}
 
-	//	~RuntimeTextTemplateProxy()
-	//	{
-	//		Dispose(false);
-	//	}
+		~RuntimeTextTemplateProxy()
+		{
+			Dispose(false);
+		}
 
-	//	public void Dispose()
-	//	{
-	//		GC.SuppressFinalize(this);
-	//		Dispose(true);
-	//	}
+		public void Dispose()
+		{
+			GC.SuppressFinalize(this);
+			Dispose(true);
+		}
 
-	//	protected virtual void Dispose(bool disposing)
-	//	{
-	//		if(!_disposed) {
-	//			templateInstance = null;
+		protected virtual void Dispose(bool disposing)
+		{
+			if(!_disposed) {
+				templateInstance = null;
 
-	//			RemotingServices.Disconnect(this);
-	//			_disposed = true;
-	//		}
-	//	}
+				RemotingServices.Disconnect(this);
+				_disposed = true;
+			}
+		}
 
-	//	public ITextTemplatingEngineHost Host
-	//	{
-	//		set
-	//		{
-	//			templateInstance.Host = value;
-	//		}
+		public ITextTemplatingEngineHost Host
+		{
+			set
+			{
+				templateInstance.Host = value;
+			}
 
-	//		get
-	//		{
-	//			return templateInstance.Host;
-	//		}
-	//	}
+			get
+			{
+				return templateInstance.Host;
+			}
+		}
 
-	//	public string TransformText()
-	//	{
-	//		System.Diagnostics.Debug.WriteLine("current appdomain=" + AppDomain.CurrentDomain.FriendlyName);
-	//		return templateInstance.TransformText();
-	//	}
+		public string TransformText()
+		{
+			Debug.WriteLine("current appdomain=" + AppDomain.CurrentDomain.FriendlyName);
+			return templateInstance.TransformText();
+		}
 
-	//	public sealed override object InitializeLifetimeService()
-	//	{
-	//		// AppDomainを越えてアクセスするため、マーシャリングされているが
-	//		// 使用期間は不明であるため無期限とする.
-	//		// そのため、使い終わったらDisposeメソッドを呼び出し、Disconnectする必要がある.
-	//		return null;
-	//	}
-	//}
+		public sealed override object InitializeLifetimeService()
+		{
+			// AppDomainを越えてアクセスするため、マーシャリングされているが
+			// 使用期間は不明であるため無期限とする.
+			// そのため、使い終わったらDisposeメソッドを呼び出し、Disconnectする必要がある.
+			return null;
+		}
+	}
 
-	///// <summary>
-	///// テンプレートクラスを構築するファクトリ
-	///// </summary>
-	//public class RuntimeTextTemplateFactory
-	//{
-	//	/// <summary>
-	//	/// 生成したテンプレートクラスをロードするAppDomain
-	//	/// </summary>
-	//	public AppDomain TemplateAppDomain { get; set; }
+	/// <summary>
+	/// テンプレートクラスを構築するファクトリ
+	/// </summary>
+	public class RuntimeTextTemplateFactory
+	{
+		/// <summary>
+		/// 生成したテンプレートクラスをロードするAppDomain
+		/// </summary>
+		public AppDomain TemplateAppDomain { get; set; }
 
-	//	/// <summary>
-	//	/// T4テンプレートエンジン
-	//	/// </summary>
-	//	private Engine engine;
+		/// <summary>
+		/// T4テンプレートエンジン
+		/// </summary>
+		private Engine engine;
 
-	//	public RuntimeTextTemplateFactory()
-	//	{
-	//		this.engine = new Engine();
-	//		this.TemplateAppDomain = AppDomain.CurrentDomain;
-	//	}
+		public RuntimeTextTemplateFactory()
+		{
+			this.engine = new Engine();
+			this.TemplateAppDomain = AppDomain.CurrentDomain;
+		}
 
-	//	/// <summary>
-	//	/// ファイルを指定してテンプレートを構築する.
-	//	/// </summary>
-	//	/// <param name="templateFile">テンプレートファイル</param>
-	//	/// <returns>テンプレートクラスのインスタンス</returns>
-	//	public IRuntimeTextTemplate Generate(string templateFile)
-	//	{
-	//		string templateContent = File.ReadAllText(templateFile);
-	//		return Generate(templateContent, templateFile);
-	//	}
+		/// <summary>
+		/// ファイルを指定してテンプレートを構築する.
+		/// </summary>
+		/// <param name="templateFile">テンプレートファイル</param>
+		/// <returns>テンプレートクラスのインスタンス</returns>
+		public IRuntimeTextTemplate Generate(string templateFile)
+		{
+			string templateContent = File.ReadAllText(templateFile);
+			return Generate(templateContent, templateFile);
+		}
 
-	//	/// <summary>
-	//	/// テンプレートとファイルの位置を指定してテンプレートを構築する.
-	//	/// </summary>
-	//	/// <param name="templateContent">テンプレートの内容</param>
-	//	/// <param name="templateFile">テンプレートファイルの位置</param>
-	//	/// <returns>テンプレートクラスのインスタンス</returns>
-	//	public IRuntimeTextTemplate Generate(string templateContent, string templateFile)
-	//	{
-	//		TextTemplatingEngineHost　host = new TextTemplatingEngineHost();
-	//		host.TemplateFile = templateFile;
+		/// <summary>
+		/// テンプレートとファイルの位置を指定してテンプレートを構築する.
+		/// </summary>
+		/// <param name="templateContent">テンプレートの内容</param>
+		/// <param name="templateFile">テンプレートファイルの位置</param>
+		/// <returns>テンプレートクラスのインスタンス</returns>
+		public IRuntimeTextTemplate Generate(string templateContent, string templateFile)
+		{
+			TextTemplatingEngineHost host = new TextTemplatingEngineHost();
+			host.TemplateFile = templateFile;
 
-	//		// 生成するクラス名をランダムに作成する.
-	//		// (アセンブリが毎回異なるので必須ではないが、一応。)
-	//		Guid id = Guid.NewGuid();
-	//		String className = "Generated" +
-	//			BitConverter.ToString(id.ToByteArray()).Replace("-", "");
+			// 生成するクラス名をランダムに作成する.
+			// (アセンブリが毎回異なるので必須ではないが、一応。)
+			Guid id = Guid.NewGuid();
+			String className = "Generated" +
+				BitConverter.ToString(id.ToByteArray()).Replace("-", "");
 
-	//		// テンプレートをソースコードに変換する.(実行時テンプレート)
-	//		string lang;
-	//		string[] references;
-	//		string generatedSource = engine.PreprocessTemplate(
-	//			templateContent,
-	//			host,
-	//			className,
-	//			"TemplateEngineExample",
-	//			out lang,
-	//			out references
-	//			);
-	//		string fqClassName = "TemplateEngineExample." + className;
+			// テンプレートをソースコードに変換する.(実行時テンプレート)
+			string lang;
+			string[] references;
+			string generatedSource = engine.PreprocessTemplate(
+				templateContent,
+				host,
+				className,
+				"TemplateEngineExample",
+				out lang,
+				out references
+				);
+			string fqClassName = "TemplateEngineExample." + className;
 
-	//		// アセンブリの位置が確定していないものは先に確定しておく
-	//		var resolvedReferences = references.Select(host.ResolveAssemblyReference)
-	//			.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+			// アセンブリの位置が確定していないものは先に確定しておく
+			var resolvedReferences = references.Select(host.ResolveAssemblyReference)
+				.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
 
-	//		// コンパイラを取得する.
-	//		var codeDomProv = CodeDomProvider.CreateProvider(lang);
+			// コンパイラを取得する.
+			var codeDomProv = CodeDomProvider.CreateProvider(lang);
 
-	//		// 参照するアセンブリの定義
-	//		// アセンブリはテンポラリに作成する.
-	//		var compilerParameters = new CompilerParameters(references);
+			// 参照するアセンブリの定義
+			// アセンブリはテンポラリに作成する.
+			var compilerParameters = new CompilerParameters(references);
 
-	//		// コンパイルする.
-	//		var result = codeDomProv.CompileAssemblyFromSource(
-	//			compilerParameters, generatedSource);
+			// コンパイルする.
+			var result = codeDomProv.CompileAssemblyFromSource(
+				compilerParameters, generatedSource);
 
-	//		// エラーがあれば例外を返す.
-	//		if(result.Errors.Count > 0) {
-	//			var msg = new StringBuilder();
-	//			foreach(CompilerError error in result.Errors) {
-	//				msg.Append(error.FileName).Append(": line ").Append(error.Line)
-	//					.Append("(").Append(error.Column).Append(")[")
-	//					.Append(error.ErrorNumber).Append("]")
-	//					.Append(error.ErrorText).AppendLine();
-	//			}
-	//			throw new ApplicationException(msg.ToString());
-	//		}
+			// エラーがあれば例外を返す.
+			if(result.Errors.Count > 0) {
+				var msg = new StringBuilder();
+				foreach(CompilerError error in result.Errors) {
+					msg.Append(error.FileName).Append(": line ").Append(error.Line)
+						.Append("(").Append(error.Column).Append(")[")
+						.Append(error.ErrorNumber).Append("]")
+						.Append(error.ErrorText).AppendLine();
+				}
+				throw new ApplicationException(msg.ToString());
+			}
 
-	//		// エラーがなければ生成されたアセンブリを取得する.
-	//		byte[] assemblyBytes = File.ReadAllBytes(result.PathToAssembly);
+			// エラーがなければ生成されたアセンブリを取得する.
+			byte[] assemblyBytes = File.ReadAllBytes(result.PathToAssembly);
 
-	//		try {
-	//			// 生成されたアセンブリファイルは不要になるので削除する.
-	//			File.Delete(result.PathToAssembly);
-	//		} catch(Exception ex) {
-	//			System.Diagnostics.Debug.WriteLine("Can't delete file: " + ex);
-	//			// 削除失敗しても無視して継続する.
-	//		}
+			try {
+				// 生成されたアセンブリファイルは不要になるので削除する.
+				File.Delete(result.PathToAssembly);
+			} catch(Exception ex) {
+				System.Diagnostics.Debug.WriteLine("Can't delete file: " + ex);
+				// 削除失敗しても無視して継続する.
+			}
 
-	//		// ターゲットのAppDomain内でアセンブリをロードするためのプロキシを作成する.
-	//		var proxy = (RuntimeTextTemplateProxy)TemplateAppDomain.CreateInstanceAndUnwrap(
-	//			typeof(RuntimeTextTemplateProxy).Assembly.FullName,
-	//			typeof(RuntimeTextTemplateProxy).FullName);
+			// ターゲットのAppDomain内でアセンブリをロードするためのプロキシを作成する.
+			var proxy = (RuntimeTextTemplateProxy)TemplateAppDomain.CreateInstanceAndUnwrap(
+				typeof(RuntimeTextTemplateProxy).Assembly.FullName,
+				typeof(RuntimeTextTemplateProxy).FullName);
 
-	//		// アセンブリをロードさせる.
-	//		proxy.LoadAssembly(assemblyBytes, fqClassName);
+			// アセンブリをロードさせる.
+			proxy.LoadAssembly(assemblyBytes, fqClassName);
 
-	//		return proxy;
-	//	}
-	//}
+			return proxy;
+		}
+	}
 }
