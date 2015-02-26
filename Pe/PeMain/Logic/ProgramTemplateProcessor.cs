@@ -29,9 +29,9 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		protected override void Initialize()
 		{
-			NamespaceName = "ContentTypeTextNet.Pe.PeMain.Logic.TemplateProcessorGenerator";
-			ClassName = "TextProcessor";
-			TemplateAppDomainName = "asdfghjk";
+			NamespaceName = "ContentTypeTextNet.Pe.PeMain.Logic.ProgramTemplateProcessor.Generator";
+			ClassName = "ProgramTemplateProcessor";
+			TemplateAppDomainName = "TemplateAppDomain";
 
 			TemplateDdirective = string.Join(Environment.NewLine, new[] {
 				"<#@ template language=\"C#\" hostspecific=\"true\" #>",
