@@ -1063,7 +1063,7 @@
 					ClipboardUtility.CopyText(outputText, CommonData);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
 				} finally {
-					if(clipboardItem != null && clipboardItem.ClipboardTypes != ClipboardType.None) {
+					if(clipboardItem.ClipboardTypes != ClipboardType.None) {
 						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData);
 					}
 				}

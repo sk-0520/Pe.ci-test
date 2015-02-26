@@ -194,7 +194,7 @@
 			this._clipboardPrevTime = now;
 
 			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
-			if(clipboardItem != null) {
+			if(clipboardItem.ClipboardTypes != ClipboardType.None) {
 				Task.Run(() => {
 					var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 					clipboardItem.Name = displayText;
