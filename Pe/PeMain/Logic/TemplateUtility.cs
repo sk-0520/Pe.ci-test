@@ -45,7 +45,7 @@
 		/// <param name="item">テンプレートアイテム。テンプレートプロセッサが設定される。</param>
 		/// <param name="language">使用言語。</param>
 		/// <returns>作成されたテンプレートプロセッサ。</returns>
-		public static TemplateProcessor MakeTemplateProcessor(TemplateItem item, Language language, ILogger logger)
+		public static ProgramTemplateProcessor MakeTemplateProcessor(TemplateItem item, Language language, ILogger logger)
 		{
 			Debug.Assert(item.ReplaceMode);
 			Debug.Assert(item.Program);
@@ -61,7 +61,7 @@
 				return item.Processor;
 			}
 
-			var processor = new TemplateProcessor() {
+			var processor = new ProgramTemplateProcessor() {
 				Language = language,
 				TemplateSource = item.Source,
 			};

@@ -22,7 +22,7 @@
 		public string Source { get; set; }
 
 		[XmlIgnore]
-		public TemplateProcessor Processor { get; set; }
+		public ProgramTemplateProcessor Processor { get; set; }
 
 		protected override void Dispose(bool disposing)
 		{

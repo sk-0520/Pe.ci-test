@@ -204,7 +204,7 @@
     <Compile Include="Logic\StartupLogger.cs" />
     <Compile Include="Logic\SystemEnvironment.cs" />
     <Compile Include="Logic\TemplateUtility.cs" />
-    <Compile Include="Logic\TemplateProcessor.cs" />
+    <Compile Include="Logic\ProgramTemplateProcessor.cs" />
     <Compile Include="Logic\Update.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

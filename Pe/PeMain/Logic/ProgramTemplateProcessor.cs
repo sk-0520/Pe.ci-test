@@ -10,13 +10,13 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
 	/// </summary>
 	[Serializable]
-	public class TemplateProcessor: T4TemplateProcessor, ILanguage
+	public class ProgramTemplateProcessor: T4TemplateProcessor, ILanguage
 	{
-		public TemplateProcessor()
+		public ProgramTemplateProcessor()
 			: base()
 		{ }
 
-		public TemplateProcessor(TextTemplatingEngineHost host)
+		public ProgramTemplateProcessor(TextTemplatingEngineHost host)
 			: base(host)
 		{ }
 

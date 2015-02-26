@@ -9,16 +9,16 @@
 	using NUnit.Framework;
 
 	[TestFixture]
-	class TemplateProcessorTest
+	class ProgramTemplateProcessorTest
 	{
 		[TestCase("", "")]
 		[TestCase("<#= app[\"APPLICATION\"] #>", "Pe")]
 		public void SimpleTest(string src, string result)
 		{
-			var tp = new TemplateProcessor();
-			tp.TemplateSource = src;
-			tp.AllProcess();
-			var output = tp.TransformText();
+			var pp = new ProgramTemplateProcessor();
+			pp.TemplateSource = src;
+			pp.AllProcess();
+			var output = pp.TransformText();
 			Assert.IsTrue(result == output);
 		}
 	}
