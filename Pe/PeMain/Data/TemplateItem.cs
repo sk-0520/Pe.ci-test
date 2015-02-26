@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]
@@ -22,5 +23,12 @@
 
 		[XmlIgnore]
 		public TemplateProcessor Processor { get; set; }
+
+		protected override void Dispose(bool disposing)
+		{
+			Processor.ToDispose();
+
+			base.Dispose(disposing);
+		}
 	}
 }

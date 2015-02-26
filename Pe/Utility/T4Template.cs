@@ -90,6 +90,7 @@
 			if(eventHost != null) {
 				eventHost.Error -= WithEvent_Error;
 			}
+			Dispose(false);
 		}
 
 		/// <summary>
@@ -234,7 +235,9 @@
 		#region IDisposable
 
 		protected virtual void Dispose(bool disposing)
-		{}
+		{
+			DisposeTemplateSource();
+		}
 
 		public void Dispose()
 		{
@@ -461,8 +464,6 @@
 
 		public string TransformText()
 		{
-			TemplateProxy.Host = Host;
-
 			return TransformText_Impl();
 		}
 
@@ -474,6 +475,8 @@
 
 			//Debug.Assert(CompiledAssembly != null);
 			Debug.Assert(TemplateProxy != null);
+
+			TemplateProxy.Host = Host;
 
 			//return (string)InstanceTemplateTransformText.Invoke(InstanceTemplate, null);
 			//InstanceTemplate.TransformText();
