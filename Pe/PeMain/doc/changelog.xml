@@ -85,7 +85,7 @@
 					<comment>プログラム書ける人でかつ大規模なテンプレートを書かない人が対象です</comment>
 					<comment>T4はMono.TextTemplatingを使用しているためMS製T4と動作が違うかもです</comment>
 					<comment>T4と異なり &lt;#@ template="" language="C#" hostspecific="true" #&gt; が行頭に挿入されます</comment>
-					<comment>自動的に __host(内部使用), app(IDictionary&lt;string,object &gt;) が定義されます。Pe側で提供するデータには app[string] でアクセスしてください</comment>
+					<comment>自動的に __host(内部使用), app(IDictionary&lt;string,object>) が定義されます。Pe側で提供するデータには app[string] でアクセスしてください</comment>
 					<comment>将来的にはもうちっと頑張ろうと思いますがとりあえず#233実装はここまで</comment>
 				</comments>
 			</note>

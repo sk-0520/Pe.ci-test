@@ -73,8 +73,8 @@
 		{
 			var escHead = Regex.Escape(head);
 			var escTail = Regex.Escape(tail);
-			var pattern = escHead + @"(([^*]|\*[^/])*?)" + escTail;
-			var replacedText = Regex.Replace(src, pattern, (Match m) => dg(m.Groups[1].Value), RegexOptions.Multiline);
+			var pattern = escHead + "(.*?)" + escTail;
+			var replacedText = Regex.Replace(src, pattern, (Match m) => dg(m.Groups[1].Value));
 			return replacedText;
 		}
 		

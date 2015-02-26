@@ -25,7 +25,6 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 					Assert.Throws(typeof(SQLiteException), () => query.ExecuteCommand("create table TEST(COL1 integer, COL2 text)"));
 				}
 			}
-
 		}
 	}
 }

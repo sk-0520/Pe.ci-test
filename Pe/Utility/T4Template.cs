@@ -12,11 +12,19 @@
 	using System.Security;
 	using System.Text;
 	using Microsoft.VisualStudio.TextTemplating;
-	using Mono.TextTemplating;
 
+	/// <summary>
+	/// 警告レベル。
+	/// </summary>
 	public enum WarningLevel
 	{
+		/// <summary>
+		/// 警告として出力しない。
+		/// </summary>
 		None = 0,
+		/// <summary>
+		/// 最大限の警告レベル。
+		/// </summary>
 		Full = 4,
 	}
 
@@ -56,21 +64,52 @@
 	[Serializable]
 	public class T4TemplateProcessor: IDisposable
 	{
+		/// <summary>
+		/// テンプレートソース。
+		/// </summary>
 		private string _templateSource;
+		/// <summary>
+		/// プログラミング言語。
+		/// </summary>
 		private string _programmingLanguage;
+		/// <summary>
+		/// アプリケーションドメイン名。
+		/// </summary>
 		private string _templateAppDomainName;
+		/// <summary>
+		/// ネームスペース名。
+		/// </summary>
 		private string _namespaceName;
+		/// <summary>
+		/// クラス名。
+		/// </summary>
 		private string _className;
+		/// <summary>
+		/// テンプレートソース -> プログラムソースでのエラー。
+		/// </summary>
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
+		/// <summary>
+		/// プログラムソース -> アセンブリでのエラー。
+		/// </summary>
 		private List<CompilerError> _compileErrorList = new List<CompilerError>();
+		/// <summary>
+		/// ファイナライズ中か。
+		/// </summary>
 		bool _finalizeing = false;
 
+		/// <summary>
+		/// デフォルト値での生成。
+		/// </summary>
 		public T4TemplateProcessor()
 			: this(new TextTemplatingEngineHost() {
 				Session = new TextTemplatingSession()
 			})
 		{ }
 
+		/// <summary>
+		/// 指定データでの生成。
+		/// </summary>
+		/// <param name="host">セッション定義済みのホスト環境。</param>
 		public T4TemplateProcessor(TextTemplatingEngineHost host)
 		{
 			//Session = host.Session;
@@ -85,6 +124,9 @@
 			Initialize();
 		}
 
+		/// <summary>
+		/// これを明示的に通すのは勘弁な。
+		/// </summary>
 		~T4TemplateProcessor()
 		{
 			var eventHost = Host as TextTemplatingEngineHost;
@@ -134,10 +176,6 @@
 		/// ホスト。
 		/// </summary>
 		public ITextTemplatingEngineHost Host { get; private set; }
-		/// <summary>
-		/// セッション。
-		/// </summary>
-		//public ITextTemplatingSession Session { get; private set; }
 		/// <summary>
 		/// セッションに乗せとくデータ。
 		/// </summary>
@@ -253,6 +291,9 @@
 
 		#endregion
 
+		/// <summary>
+		/// コンストラクタからの初期化。
+		/// </summary>
 		protected virtual void Initialize()
 		{
 			CompileMessage = string.Empty;
@@ -348,6 +389,9 @@
 			GeneratProgramSource_Impl();
 		}
 
+		/// <summary>
+		/// T4を言語ソースに変換する実装。
+		/// </summary>
 		protected virtual void GeneratProgramSource_Impl()
 		{
 			if(string.IsNullOrWhiteSpace(NamespaceName)) {
@@ -420,6 +464,12 @@
 			);
 		}
 
+		/// <summary>
+		/// 言語ソースをコンパイルする実装。
+		/// </summary>
+		/// <param name="warningLevel">警告レベル。</param>
+		/// <param name="warningIsError">警告をエラーとして扱うか。</param>
+		/// <param name="option">コンパイルオプション。</param>
 		protected virtual void CompileProgramSource_Impl(WarningLevel warningLevel, bool warningIsError, IDictionary<string, string> option)
 		{
 			if(!Generated) {
@@ -485,6 +535,10 @@
 			}
 		}
 
+		/// <summary>
+		/// コンパイル済みプログラムから出力。
+		/// </summary>
+		/// <returns></returns>
 		public string TransformText()
 		{
 			try {
@@ -495,6 +549,10 @@
 			}
 		}
 
+		/// <summary>
+		/// コンパイル済みプログラムから出力する実装。
+		/// </summary>
+		/// <returns></returns>
 		protected virtual string TransformText_Impl()
 		{
 			if(!Compiled) {
@@ -511,6 +569,9 @@
 			return TemplateProxy.TransformText();
 		}
 
+		/// <summary>
+		/// T4 -> プログラムソース -> アセンブリまで一直線。
+		/// </summary>
 		public void AllProcess()
 		{
 			GeneratProgramSource();
@@ -538,6 +599,9 @@
 			CompilerErrorCollection = errors;
 		}
 
+		/// <summary>
+		/// エラー内容。
+		/// </summary>
 		public CompilerErrorCollection CompilerErrorCollection { get; private set; }
 	}
 

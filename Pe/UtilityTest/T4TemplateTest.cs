@@ -1,15 +1,10 @@
 ﻿namespace ContentTypeTextNet.Pe.Test.UtilityTest
 {
 	using System;
-	using System.Linq;
 	using System.Diagnostics;
+	using System.Linq;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using NUnit.Framework;
-	using System.Collections.Generic;
-using Microsoft.VisualStudio.TextTemplating;
-	using System.IO;
-	using System.Text;
-	using System.CodeDom.Compiler;
 
 	[TestFixture]
 	class T4TemplateUtilityTest
@@ -175,7 +170,7 @@ foo is <#= foo #>
 		}
 
 		[TestCase("host", "host", "host")]
-		//[TestCase("<#= host.Session[\"a\"] #>", "123", "456")]
+		[TestCase("<#= host.Session[\"a\"] #>", "123", "456")]
 		public void TransformText_CSharpHostValueDomainTest(string src, string result1, string result2)
 		{
 			var ts
