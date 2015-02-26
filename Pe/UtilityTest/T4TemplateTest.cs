@@ -5,6 +5,11 @@
 	using System.Diagnostics;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using NUnit.Framework;
+	using System.Collections.Generic;
+using Microsoft.VisualStudio.TextTemplating;
+	using System.IO;
+	using System.Text;
+	using System.CodeDom.Compiler;
 
 	[TestFixture]
 	class T4TemplateUtilityTest
@@ -91,7 +96,7 @@ foo is <#= foo #>
 				hasError = true;
 			}
 			if(hasError) {
-				Debug.WriteLine("T: " +  string.Join(Environment.NewLine, t4.GeneratedErrorList.Select(e => e.ToString())));
+				Debug.WriteLine("T: " + string.Join(Environment.NewLine, t4.GeneratedErrorList.Select(e => e.ToString())));
 				Debug.WriteLine("S: " + string.Join(Environment.NewLine, t4.CompileErrorList.Select(e => e.ToString())));
 			} else {
 				Debug.WriteLine(t4.GeneratedProgramSource);
@@ -125,9 +130,9 @@ foo is <#= foo #>
 		{
 			var ts
 				= "<#@ template language=\"C#\" debug=\"true\" hostSpecific=\"true\" #>" + Environment.NewLine
-				+ "<# var host = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host; #>"+ Environment.NewLine
+				+ "<# var host = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host; #>" + Environment.NewLine
 				+ src;
-			
+
 			var t4 = new T4TemplateProcessor() {
 				NamespaceName = "a",
 				ClassName = "b",
@@ -156,17 +161,47 @@ foo is <#= foo #>
 				ClassName = "b",
 				TemplateSource = ts,
 			};
-			var session = t4.Variable;
-			session["a"] = "123";
+			t4.Variable["a"] = 123;
+
 			t4.GeneratProgramSource();
 			t4.CompileProgramSource();
-			
+
 			var output1 = t4.TransformText();
 			Assert.IsTrue(output1 == result1);
 
-			session["a"] = "456";
+			t4.Variable["a"] = "456";
 			var output2 = t4.TransformText();
 			Assert.IsTrue(output2 == result2);
+		}
+
+		[TestCase("host", "host", "host")]
+		//[TestCase("<#= host.Session[\"a\"] #>", "123", "456")]
+		public void TransformText_CSharpHostValueDomainTest(string src, string result1, string result2)
+		{
+			var ts
+				= "<#@ template language=\"C#\" debug=\"true\" hostSpecific=\"true\" #>" + Environment.NewLine
+				+ "<# var host = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host; #>" + Environment.NewLine
+				+ src;
+
+			using(var t4 = new T4TemplateProcessor() {
+				NamespaceName = "a",
+				ClassName = "b",
+				TemplateSource = ts,
+				TemplateAppDomainName = "c",
+			}) {
+				t4.Variable["a"] = "123";
+				t4.GeneratProgramSource();
+				t4.CompileProgramSource();
+
+				var output1 = t4.TransformText();
+				Debug.WriteLine("output1: " + output1);
+				Assert.IsTrue(output1 == result1);
+
+				t4.Variable["a"] = "456";
+				var output2 = t4.TransformText();
+				Debug.WriteLine("output2: " + output2);
+				Assert.IsTrue(output2 == result2);
+			}
 		}
 	}
 }

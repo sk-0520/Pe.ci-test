@@ -51,7 +51,9 @@
 	/// 各種変換、実行をサポートする。
 	/// 
 	/// Bugs: VBはその、コンパイルできん。
+	/// <para>これSerializableいらんと思うんだけどなぁ。</para>
 	/// </summary>
+	[Serializable]
 	public class T4TemplateProcessor: IDisposable
 	{
 		private string _templateSource;
@@ -70,9 +72,9 @@
 
 		public T4TemplateProcessor(TextTemplatingEngineHost host)
 		{
-			Session = host.Session;
+			//Session = host.Session;
 			Host = host;
-			Variable = Session as TextTemplatingSession;
+			Variable = host.Session as TextTemplatingSession;
 
 			var eventHost = Host as TextTemplatingEngineHost;
 			if(eventHost != null) {
@@ -131,7 +133,7 @@
 		/// <summary>
 		/// セッション。
 		/// </summary>
-		public ITextTemplatingSession Session { get; private set; }
+		//public ITextTemplatingSession Session { get; private set; }
 		/// <summary>
 		/// セッションに乗せとくデータ。
 		/// </summary>
@@ -178,6 +180,11 @@
 			}
 		}
 
+		public string FullyQualifiedClassName 
+		{ 
+			get { return string.Format("{0}.{1}", NamespaceName, ClassName); } 
+		}
+
 		/// <summary>
 		/// テンプレート実行時に使用するアプリケーションドメイン名。
 		/// </summary>
@@ -208,10 +215,21 @@
 		/// アセンブリの走るアプリケーションドメイン。
 		/// </summary>
 		protected AppDomain TemplateAppDomain { get; set; }
+		protected bool IsOtherAppDomain
+		{
+			get
+			{
+				if(TemplateAppDomain == null) {
+					throw new InvalidOperationException("IsOtherAppDomain");
+				}
+
+				return AppDomain.CurrentDomain != TemplateAppDomain;
+			}
+		}
 		/// <summary>
 		/// アセンブリを走らせるためのプロクシ。
 		/// </summary>
-		protected RuntimeTextTemplateProxy TemplateProxy { get; set; }
+		public IRuntimeTextTemplate TemplateProxy { get; set; }
 
 		#region IDisposable
 
@@ -265,7 +283,7 @@
 				TemplateProxy = null;
 			}
 			if(TemplateAppDomain != null) {
-				if(TemplateAppDomain != AppDomain.CurrentDomain) {
+				if(IsOtherAppDomain) {
 					AppDomain.Unload(TemplateAppDomain);
 				}
 				TemplateAppDomain = null;
@@ -415,22 +433,35 @@
 
 				if(string.IsNullOrEmpty(TemplateAppDomainName)) {
 					TemplateAppDomain = AppDomain.CurrentDomain;
+					Debug.Assert(!IsOtherAppDomain);
 				} else {
-					TemplateAppDomain = AppDomain.CreateDomain(TemplateAppDomainName);
+					TemplateAppDomain = AppDomain.CreateDomain(
+						TemplateAppDomainName,
+						null,
+						new AppDomainSetup() {
+							ApplicationBase = AppDomain.CurrentDomain.SetupInformation.ApplicationBase
+						}
+					);
+					//TemplateAppDomain = AppDomain.CreateDomain(TemplateAppDomainName);
+					Debug.Assert(IsOtherAppDomain);
 				}
 
-				TemplateProxy = (RuntimeTextTemplateProxy)TemplateAppDomain.CreateInstanceAndUnwrap(
+				var fullyQualifiedClassName = FullyQualifiedClassName;
+
+				var templateProxy = (RuntimeTextTemplateProxy)TemplateAppDomain.CreateInstanceAndUnwrap(
 					typeof(RuntimeTextTemplateProxy).Assembly.FullName,
 					typeof(RuntimeTextTemplateProxy).FullName
 				);
 
-				var fullyQualifiedClassName = string.Format("{0}.{1}", NamespaceName, ClassName);
-				TemplateProxy.LoadAssembly(binaryAssembly, fullyQualifiedClassName, Host);
+				templateProxy.LoadAssembly(binaryAssembly, fullyQualifiedClassName);
+				TemplateProxy = templateProxy;
 			}
 		}
 
 		public string TransformText()
 		{
+			TemplateProxy.Host = Host;
+
 			return TransformText_Impl();
 		}
 
@@ -684,7 +715,7 @@
 	/// 単純にDictionaryと、IDを持っているだけのコレクションクラスである.
 	/// </summary>
 	[Serializable]
-	public sealed class TextTemplatingSession: Dictionary<string, Object>, ITextTemplatingSession, ISerializable
+	public sealed class TextTemplatingSession: Dictionary<string, Object>, ITextTemplatingSession, ISerializable 
 	{
 		public TextTemplatingSession()
 		{
@@ -737,6 +768,8 @@
 	/// </summary>
 	public interface IRuntimeTextTemplate: IDisposable
 	{
+		ITextTemplatingEngineHost Host { get; set; }
+
 		/// <summary>
 		/// テンプレート変換を実施する.
 		/// </summary>
@@ -756,9 +789,12 @@
 
 		/// <summary>
 		/// コンパイル後の生成オブジェクト。
+		/// 
+		/// ResetBindException初回例外がしんどいのでdynamic使わない。
 		/// </summary>
 		object InstanceTemplate { get; set; }
-		//PropertyInfo InstanceTemplateHost { get; set; }
+
+		PropertyInfo InstanceTemplateHost { get; set; }
 		MethodInfo InstanceTemplateTransformText { get; set; }
 
 		/// <summary>
@@ -766,18 +802,13 @@
 		/// </summary>
 		/// <param name="assemblyBytes">ロードするアセンブリの内容</param>
 		/// <param name="fullyQualifiedClassName">名前空間・クラス名</param>
-		public void LoadAssembly(byte[] assemblyBytes, string fullyQualifiedClassName, ITextTemplatingEngineHost host)
+		public void LoadAssembly(byte[] assemblyBytes, string fullyQualifiedClassName)
 		{
 			var assembly = Assembly.Load(assemblyBytes);
 			InstanceTemplate = assembly.CreateInstance(fullyQualifiedClassName);
 
 			var classType = assembly.GetType(fullyQualifiedClassName);
-			var propHost = classType.GetProperty("Host");
-			if(propHost != null) {
-				//ResetBindException初回例外がしんどいのでdynamic使わない。
-				//TemplateInstance.Host = Host;
-				propHost.SetValue(InstanceTemplate, host);
-			}
+			InstanceTemplateHost = classType.GetProperty("Host");
 			InstanceTemplateTransformText = classType.GetMethod("TransformText");
 
 		}
@@ -800,6 +831,24 @@
 
 				RemotingServices.Disconnect(this);
 				_disposed = true;
+			}
+		}
+
+		public ITextTemplatingEngineHost Host
+		{
+			get
+			{
+				if(InstanceTemplateHost != null) {
+					return InstanceTemplateHost.GetValue(InstanceTemplate) as ITextTemplatingEngineHost;
+				}
+
+				return null;
+			}
+			set
+			{
+				if(InstanceTemplateHost != null) {
+					InstanceTemplateHost.SetValue(InstanceTemplate, value);
+				}
 			}
 		}
 
