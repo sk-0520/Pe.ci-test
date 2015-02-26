@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
+	using System.Linq;
 	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Windows.Forms;
@@ -171,6 +172,9 @@
 		protected override void Dispose(bool disposing)
 		{
 			TextFont.ToDispose();
+			foreach(var item in HistoryItems.Cast<DisposableItem>().Concat(TemplateItems)) {
+				item.ToDispose();
+			}
 
 			base.Dispose(disposing);
 		}

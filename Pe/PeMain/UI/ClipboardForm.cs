@@ -197,7 +197,8 @@
 
 			//this.listReplace.DataSource = ReplaceItemList;
 
-			ChekedReplace();
+			//ChekedReplace();
+			this.selectTemplateProgram.Enabled = false;
 
 			this.listItemStack.MouseWheel += ListItemStack_MouseWheel;
 		}
@@ -639,18 +640,20 @@
 
 			// あれやこれやがだるいのでバインドる。
 			this.inputTemplateName.DataBindings.Clear();
+			this.inputTemplateSource.DataBindings.Clear();
+			this.selectTemplateReplace.DataBindings.Clear();
+			this.selectTemplateProgram.DataBindings.Clear();
+
 			var bindName = this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
 			bindName.Parse += TemplateName_Parse;
 
-			this.inputTemplateSource.DataBindings.Clear();
+
 			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectTemplateProgram.DataBindings.Clear();
 			this.selectTemplateProgram.DataBindings.Add("Checked", templateItem, "Program", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.selectTemplateProgram.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
+			//this.selectTemplateProgram.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			return this.tabPreview_pageRawTemplate;
 		}
@@ -760,7 +763,7 @@
 		bool SaveTemplateItem(string path, TemplateItem templateItem)
 		{
 			try {
-				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language));
+				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger));
 				return true;
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, templateItem.Name, ex);
@@ -947,7 +950,7 @@
 
 		void CopyTemplate(TemplateItem templateItem)
 		{
-			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger);
 			if(!string.IsNullOrEmpty(templateText)) {
 				ClipboardUtility.CopyText(templateText, CommonData);
 			}
@@ -1084,7 +1087,7 @@
 		{
 			Debug.Assert(templateItem != null);
 
-			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger);
 			OutputText(templateText, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 
@@ -1514,7 +1517,7 @@
 					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 					var templateItem = GetListItem<TemplateItem>(index);
 					if(templateItem.ReplaceMode) {
-						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
+						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont, CommonData.Logger);
 						this.viewReplaceTemplate.Rtf = rtf;
 					} else {
 						// 置き換え処理を行わないのであればプレビューは表示するだけ無駄
@@ -1661,6 +1664,7 @@
 
 		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
 		{
+			this.selectTemplateProgram.Enabled = this.selectTemplateReplace.Checked;
 			ChekedReplace();
 		}
 

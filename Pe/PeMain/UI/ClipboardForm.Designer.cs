@@ -660,12 +660,14 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 131);
-			this.panelTemplateSource.SplitterDistance = 247;
+			this.panelTemplateSource.SplitterDistance = 248;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
 			// inputTemplateSource
 			// 
+			this.inputTemplateSource.AcceptsReturn = true;
+			this.inputTemplateSource.AcceptsTab = true;
 			this.inputTemplateSource.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.inputTemplateSource.HideSelection = false;
 			this.inputTemplateSource.Location = new System.Drawing.Point(0, 0);
@@ -673,7 +675,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(247, 131);
+			this.inputTemplateSource.Size = new System.Drawing.Size(248, 131);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -686,7 +688,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(116, 131);
+			this.listReplace.Size = new System.Drawing.Size(115, 131);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);

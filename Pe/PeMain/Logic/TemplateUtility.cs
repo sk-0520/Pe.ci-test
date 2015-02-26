@@ -5,12 +5,15 @@
 	using System.Diagnostics;
 	using System.Drawing;
 	using System.Linq;
+	using System.Runtime.Remoting;
 	using System.Text;
 	using System.Text.RegularExpressions;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	public static class TemplateUtility
 	{
@@ -42,14 +45,18 @@
 		/// <param name="item">テンプレートアイテム。テンプレートプロセッサが設定される。</param>
 		/// <param name="language">使用言語。</param>
 		/// <returns>作成されたテンプレートプロセッサ。</returns>
-		public static TemplateProcessor MakeTemplateProcessor(TemplateItem item, Language language)
+		public static TemplateProcessor MakeTemplateProcessor(TemplateItem item, Language language, ILogger logger)
 		{
 			Debug.Assert(item.ReplaceMode);
 			Debug.Assert(item.Program);
 
 			if(item.Processor != null) {
 				item.Processor.Language = language;
-				item.Processor.TemplateSource = item.Source;
+				try {
+					item.Processor.TemplateSource = item.Source;
+				} catch(RemotingException ex) {
+					logger.Puts(LogType.Error, ex.Message, ex);
+				}
 
 				return item.Processor;
 			}
@@ -64,13 +71,13 @@
 			return processor;
 		}
 
-		public static string ToPlainText(TemplateItem item, Language language)
+		public static string ToPlainText(TemplateItem item, Language language, ILogger logger)
 		{
 			if(!item.ReplaceMode) {
 				return item.Source;
 			}
 			if(item.Program) {
-				var process = MakeTemplateProcessor(item, language);
+				var process = MakeTemplateProcessor(item, language, logger);
 				if(process.Compiled) {
 					return process.TransformText();
 				}
@@ -87,7 +94,7 @@
 			}
 		}
 
-		public static string ToRtf(TemplateItem item, Language language, FontSetting fontSetting)
+		public static string ToRtf(TemplateItem item, Language language, FontSetting fontSetting, ILogger logger)
 		{
 			using(var usingFont = new Font(fontSetting.Font.FontFamily, fontSetting.Font.SizeInPoints, default(FontStyle)))
 			using(var richTextBox = new RichTextBox()) {
@@ -99,7 +106,7 @@
 				}
 
 				if(item.Program) {
-					richTextBox.Text = ToPlainText(item, language);
+					richTextBox.Text = ToPlainText(item, language, logger);
 					return richTextBox.Rtf;
 				} else {
 					var AsciiSTX = '\u0002';

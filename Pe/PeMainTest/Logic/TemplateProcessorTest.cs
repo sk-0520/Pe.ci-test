@@ -12,6 +12,7 @@
 	class TemplateProcessorTest
 	{
 		[TestCase("", "")]
+		[TestCase("<#= app[\"APPLICATION\"] #>", "Pe")]
 		public void SimpleTest(string src, string result)
 		{
 			var tp = new TemplateProcessor();

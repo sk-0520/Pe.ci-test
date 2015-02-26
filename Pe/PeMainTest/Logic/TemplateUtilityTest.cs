@@ -30,7 +30,7 @@
 			var item = new TemplateItem() {
 				Source = src,
 			};
-			var convertedText = TemplateUtility.ToPlainText(item, lang);
+			var convertedText = TemplateUtility.ToPlainText(item, lang, new NullLogger());
 			Assert.IsTrue((convertedText == result) == test);
 		}
 
@@ -48,7 +48,7 @@
 				Source = src,
 				ReplaceMode = true,
 			};
-			var convertedText = TemplateUtility.ToPlainText(item, lang);
+			var convertedText = TemplateUtility.ToPlainText(item, lang, new NullLogger());
 			Assert.IsTrue((convertedText == result) == test);
 		}
 

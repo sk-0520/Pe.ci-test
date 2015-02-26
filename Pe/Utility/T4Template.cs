@@ -63,6 +63,7 @@
 		private string _className;
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
 		private List<CompilerError> _compileErrorList = new List<CompilerError>();
+		bool _finalizeing = false;
 
 		public T4TemplateProcessor()
 			: this(new TextTemplatingEngineHost() {
@@ -90,7 +91,9 @@
 			if(eventHost != null) {
 				eventHost.Error -= WithEvent_Error;
 			}
+			this._finalizeing = true;
 			Dispose(false);
+			this._finalizeing = false;
 		}
 
 		/// <summary>
@@ -231,6 +234,10 @@
 		/// アセンブリを走らせるためのプロクシ。
 		/// </summary>
 		public IRuntimeTextTemplate TemplateProxy { get; set; }
+		/// <summary>
+		/// 実行になんかあったエラー。
+		/// </summary>
+		public Exception TransformError { get; protected set; }
 
 		#region IDisposable
 
@@ -282,12 +289,28 @@
 		protected virtual void DisposeAssembly()
 		{
 			if(TemplateProxy != null) {
-				TemplateProxy.ToDispose();
+				if(this._finalizeing) {
+					try {
+						TemplateProxy.ToDispose();
+					} catch(RemotingException ex) {
+						Debug.WriteLine(ex);
+					}
+				} else {
+					TemplateProxy.ToDispose();
+				}
 				TemplateProxy = null;
 			}
 			if(TemplateAppDomain != null) {
 				if(IsOtherAppDomain) {
-					AppDomain.Unload(TemplateAppDomain);
+					if(this._finalizeing) {
+						try {
+							AppDomain.Unload(TemplateAppDomain);
+						} catch(CannotUnloadAppDomainException ex) {
+							Debug.WriteLine(ex);
+						}
+					} else {
+						AppDomain.Unload(TemplateAppDomain);
+					}
 				}
 				TemplateAppDomain = null;
 			}
@@ -464,7 +487,12 @@
 
 		public string TransformText()
 		{
-			return TransformText_Impl();
+			try {
+				return TransformText_Impl();
+			} catch(Exception ex) {
+				TransformError = ex;
+				return ex.ToString();
+			}
 		}
 
 		protected virtual string TransformText_Impl()
@@ -831,6 +859,8 @@
 		protected virtual void Dispose(bool disposing)
 		{
 			if(!_disposed) {
+				InstanceTemplateHost = null;
+				InstanceTemplateTransformText = null;
 				InstanceTemplate = null;
 
 				RemotingServices.Disconnect(this);
@@ -858,9 +888,9 @@
 
 		public string TransformText()
 		{
-			Debug.WriteLine("current appdomain=" + AppDomain.CurrentDomain.FriendlyName);
+			Debug.Assert(InstanceTemplateTransformText != null);
+			//Debug.WriteLine("current appdomain=" + AppDomain.CurrentDomain.FriendlyName);
 			return (string)InstanceTemplateTransformText.Invoke(InstanceTemplate, null);
-
 		}
 
 		public sealed override object InitializeLifetimeService()
