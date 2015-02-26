@@ -608,14 +608,14 @@
 	}
 
 	/// <summary>
-	/// テンプレート専用で切り替える置き換え文字列。
+	/// テキストテンプレート専用で切り替える置き換え文字列。
 	/// </summary>
-	public static class TemplateLanguageName
+	public static class TemplateTextLanguageName
 	{
-		public static string clipboard = "CLIP";
-		public static string clipboardNobreak = "CLIP:NOBREAK";
-		public static string clipboardHead = "CLIP:HEAD";
-		public static string clipboardTail = "CLIP:TAIL";
+		public const string clipboard = "CLIP";
+		public const string clipboardNobreak = "CLIP:NOBREAK";
+		public const string clipboardHead = "CLIP:HEAD";
+		public const string clipboardTail = "CLIP:TAIL";
 
 		public static IReadOnlyList<string> GetMembersList()
 		{
@@ -628,6 +628,71 @@
 		}
 	}
 
+	/// <summary>
+	/// プログラムテンプレート専用で切り替える置き換え文字列。
+	/// </summary>
+	public static class TemplateProgramLanguageName
+	{
+		public const string code = "<#  #>";
+		public const string expr = "<#=  #>";
+
+		public const string application = AppLanguageName.application;
+		public const string versionFull = AppLanguageName.versionFull;
+		public const string versionNumber = AppLanguageName.versionNumber;
+		public const string versionHash = AppLanguageName.versionHash;
+		public const string timestamp = AppLanguageName.timestamp;
+		public const string clipboard = TemplateTextLanguageName.clipboard;
+
+		public static IReadOnlyList<string> GetMembersList()
+		{
+			return new[] {
+				code,
+				expr,
+
+				timestamp,
+				clipboard,
+
+				application,
+				versionFull,
+				versionNumber,
+				versionHash,
+			};
+		}
+
+		public static IReadOnlyList<string> GetVariableMembers()
+		{
+			return new[] {
+				timestamp,
+				clipboard,
+
+				application,
+				versionFull,
+				versionNumber,
+				versionHash,
+			};
+		}
+
+		public static IReadOnlyDictionary<string, Type> GetTypeMembers()
+		{
+			return new Dictionary<string, Type>() {
+				{ timestamp, typeof(DateTime) },
+				{ clipboard, typeof(string) },
+
+				{ application, typeof(string) },
+				{ versionFull, typeof(string) },
+				{ versionNumber, typeof(string) },
+				{ versionHash, typeof(string)},
+			};
+		}
+
+		public static IReadOnlyList<string> GetCaretInSpaceMembers()
+		{
+			return new[] {
+				code,
+				expr,
+			};
+		}
+	}
 	
 	public static class DataTables
 	{

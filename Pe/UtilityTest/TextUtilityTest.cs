@@ -14,18 +14,18 @@
 		[TestCase("a(2)", "a", "a")]
 		[TestCase("A", "A", "A(2)")]
 		[TestCase("a(3)", "a", "a(5)", "a(2)", "a(4)", "a")]
-		public void ToUniqueDefault(string result, string src, params string[] list)
+		public void ToUniqueDefault(string test, string src, params string[] list)
 		{
-			Assert.IsTrue(TextUtility.ToUniqueDefault(src, list) == result);
+			Assert.IsTrue(TextUtility.ToUniqueDefault(src, list) == test);
 		}
 
 		[TestCase("a", "a")]
 		[TestCase(".*", "*")]
 		[TestCase(".", "?")]
 		[TestCase("..", "??")]
-		public void RegexPatternToWildcard(string result, string s)
+		public void RegexPatternToWildcard(string test, string s)
 		{
-			Assert.IsTrue(TextUtility.RegexPatternToWildcard(s) == result);
+			Assert.IsTrue(TextUtility.RegexPatternToWildcard(s) == test);
 		}
 
 		[TestCase("a", "<", ">", "a")]
@@ -69,5 +69,18 @@
 			Assert.IsTrue((q.First() == '"' && q.Last() == '"') == hasQ);
 		}
 
+		[TestCase(0, "")]
+		[TestCase(1, "a")]
+		[TestCase(1, "a\r\n")]
+		[TestCase(2, "a\r\nb")]
+		[TestCase(2, "a\rb")]
+		[TestCase(2, "a\nb")]
+		[TestCase(2, " a \r b ")]
+		[TestCase(2, " a \n b ")]
+		[TestCase(2, " a \r\n b ")]
+		public void SplitLinesTest(int result, string s)
+		{
+			Assert.IsTrue(s.SplitLines().Count() == result);
+		}
 	}
 }

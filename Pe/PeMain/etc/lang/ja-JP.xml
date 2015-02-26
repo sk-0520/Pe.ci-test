@@ -48,6 +48,12 @@
 		<Word Name="clipboard-template"  Text="クリップボード/テンプレート" />
 		<Word Name="item-filter"         Text="アイテム抽出" />
 		<Word Name="tips-wildcard"       Text="ワイルドカードが使用できます。&#x0d;&#x0a;&lt;?&gt; 任意の1文字にマッチします。&#x0d;&#x0a;&lt;*&gt; 任意の0文字以上にマッチします。" />
+		<Word Name="template-APPLICATION"  Text="アプリケーション名称" />
+		<Word Name="template-VER"          Text="統合バージョン" />
+		<Word Name="template-VER:NUMBER"   Text="バージョン番号" />
+		<Word Name="template-VER:HASH"     Text="バージョンリビジョン" />
+		<Word Name="template-TIMESTAMP"    Text="タイムスタンプ" />
+		<Word Name="template-CLIP"         Text="クリップボードテキスト" />
 	</Define>
 	<Words>
 		<Word Name="common/command/ok"                  Text="${ok}" />
@@ -267,8 +273,9 @@
 		<Word Name="clipboard/dup/title"       Text="${clipboard}: 重複したクリップボードアイテムが存在するため無視" />
 		<Word Name="clipboard/page/raw-template"       Text="${template}" />
 		<Word Name="clipboard/page/replace-template"   Text="プレビュー" />
-		<Word Name="clipboard/label/template-name"     Text="${template}名" />
+		<Word Name="clipboard/label/template-name"     Text="テンプレート名" />
 		<Word Name="clipboard/check/template-replace"  Text="置き換え処理" />
+		<Word Name="clipboard/check/template-program"  Text="T4" />
 		<Word Name="clipboard/label/uri"     Text="URI:" />
 		<Word Name="clipboard/image/raw"     Text="原寸表示" />
 		<Word Name="clipboard/image/fill"    Text="ウィンドウに合わせる" />
@@ -495,32 +502,43 @@
 		<Word Name="enum/clipboard-list-type/template"  Text="${template}" />
 		
 		<!-- テンプレート -->
-		<Word Name="template/replace/name/APPLICATION"  Text="アプリケーション名称" />
-		<Word Name="template/replace/name/VER"          Text="@[APPLICATION] 統合バージョン" />
-		<Word Name="template/replace/name/VER:NUMBER"   Text="@[APPLICATION] バージョン番号" />
-		<Word Name="template/replace/name/VER:HASH"     Text="@[APPLICATION] リビジョン" />
-		<Word Name="template/replace/name/VER-NUMBER"   Text="@[APPLICATION] バージョン番号" />
-		<Word Name="template/replace/name/VER-HASH"     Text="@[APPLICATION] リビジョン" />
-		<Word Name="template/replace/name/VER-FULL"     Text="@[APPLICATION] 統合バージョン" />
-		<Word Name="template/replace/name/TIMESTAMP"    Text="タイムスタンプ" />
-		<Word Name="template/replace/name/Y"            Text="西暦" />
-		<Word Name="template/replace/name/Y:04"         Text="西暦(4桁)" />
-		<Word Name="template/replace/name/M"            Text="月" />
-		<Word Name="template/replace/name/M:02"         Text="月(2桁)" />
-		<Word Name="template/replace/name/M:S"          Text="月(ロケールでの短い名称)" />
-		<Word Name="template/replace/name/M:L"          Text="月(ロケールでの長い名称)" />
-		<Word Name="template/replace/name/D"            Text="日" />
-		<Word Name="template/replace/name/D:02"         Text="日(2桁)" />
-		<Word Name="template/replace/name/h"            Text="時" />
-		<Word Name="template/replace/name/h:02"         Text="時(2桁)" />
-		<Word Name="template/replace/name/m"            Text="分" />
-		<Word Name="template/replace/name/m:02"         Text="分(2桁)" />
-		<Word Name="template/replace/name/s"            Text="秒" />
-		<Word Name="template/replace/name/s:02"         Text="秒(2桁)" />
-		<Word Name="template/replace/name/CLIP"         Text="クリップボードテキスト" />
-		<Word Name="template/replace/name/CLIP:NOBREAK" Text="改行なしクリップボードテキスト" />
-		<Word Name="template/replace/name/CLIP:HEAD"    Text="先頭行のみクリップボードテキスト" />
-		<Word Name="template/replace/name/CLIP:TAIL"    Text="最終行のみクリップボードテキスト" />
+		<Word Name="template/replace/text/name/APPLICATION"  Text="${template-APPLICATION}" />
+		<Word Name="template/replace/text/name/VER"          Text="@[APPLICATION] ${template-VER}" />
+		<Word Name="template/replace/text/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
+		<Word Name="template/replace/text/name/VER:HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
+		<Word Name="template/replace/text/name/VER-NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
+		<Word Name="template/replace/text/name/VER-HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
+		<Word Name="template/replace/text/name/VER-FULL"     Text="@[APPLICATION] ${template-VER}" />
+		<Word Name="template/replace/text/name/TIMESTAMP"    Text="${template-TIMESTAMP}" />
+		<Word Name="template/replace/text/name/Y"            Text="西暦" />
+		<Word Name="template/replace/text/name/Y:04"         Text="西暦(4桁)" />
+		<Word Name="template/replace/text/name/M"            Text="月" />
+		<Word Name="template/replace/text/name/M:02"         Text="月(2桁)" />
+		<Word Name="template/replace/text/name/M:S"          Text="月(ロケールでの短い名称)" />
+		<Word Name="template/replace/text/name/M:L"          Text="月(ロケールでの長い名称)" />
+		<Word Name="template/replace/text/name/D"            Text="日" />
+		<Word Name="template/replace/text/name/D:02"         Text="日(2桁)" />
+		<Word Name="template/replace/text/name/h"            Text="時" />
+		<Word Name="template/replace/text/name/h:02"         Text="時(2桁)" />
+		<Word Name="template/replace/text/name/m"            Text="分" />
+		<Word Name="template/replace/text/name/m:02"         Text="分(2桁)" />
+		<Word Name="template/replace/text/name/s"            Text="秒" />
+		<Word Name="template/replace/text/name/s:02"         Text="秒(2桁)" />
+		<Word Name="template/replace/text/name/CLIP"         Text="${template-CLIP}" />
+		<Word Name="template/replace/text/name/CLIP:NOBREAK" Text="改行なし${template-CLIP}" />
+		<Word Name="template/replace/text/name/CLIP:HEAD"    Text="先頭行のみ${template-CLIP}" />
+		<Word Name="template/replace/text/name/CLIP:TAIL"    Text="最終行のみ${template-CLIP}" />
+		<Word Name="template/replace/program/name/&lt;#  #&gt;"  Text="コード" />
+		<Word Name="template/replace/program/name/&lt;#=  #&gt;"  Text="式" />
+		<Word Name="template/replace/program/name/APPLICATION"  Text="${template-APPLICATION}" />
+		<Word Name="template/replace/program/name/VER"          Text="@[APPLICATION] ${template-VER}" />
+		<Word Name="template/replace/program/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
+		<Word Name="template/replace/program/name/VER:HASH"     Text="@[APPLICATION] ${template-VER:HASH}" />
+		<Word Name="template/replace/program/name/TIMESTAMP"    Text="${template-TIMESTAMP}" />
+		<Word Name="template/replace/program/name/CLIP"         Text="${template-CLIP}" />
+		
+		<Word Name="template/convert/error/text"     Text="" />
+		<Word Name="template/convert/error/program"  Text="" />
 
 		<!-- ログ出力項目 -->
 		<Word Name="log/init/db-data/load"      Text="DB読み込み" />

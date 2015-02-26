@@ -65,7 +65,8 @@
 		Button _commandUp = new Button();
 		Button _commandDown = new Button();
 
-		IList<ReplaceItem> _replaceCommentList;
+		IList<ReplaceItem> _replaceTextCommentList;
+		IList<ProgramReplaceItem> _replaceProgramCommentList;
 
 		ImageViewSize _imageSize;
 
@@ -112,6 +113,8 @@
 				ChangeCommand(-1);
 			}
 		}
+
+		BindingList<ReplaceItem> ReplaceItemList { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -171,14 +174,31 @@
 
 			listItemStack.MouseWheel += listClipboard_MouseWheel;
 
-			this._replaceCommentList = TemplateLanguageName.GetMembersList()
+			this._replaceTextCommentList = TemplateTextLanguageName.GetMembersList()
 				.Concat(AppLanguageName.GetMembersList())
 				.Select(m => new ReplaceItem() { Name = m })
 				.ToList()
 			;
-			this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+			this._replaceProgramCommentList = TemplateProgramLanguageName.GetMembersList()
+				.Select(m => new ProgramReplaceItem() { 
+					Name = m,
+					Bracket = TemplateProgramLanguageName.GetVariableMembers().Any(s => s == m) 
+						? new Tuple<string,string>("app[\"", "\"]")
+						: null
+					,
+					Type = TemplateProgramLanguageName.GetTypeMembers().ContainsKey(m)
+						? TemplateProgramLanguageName.GetTypeMembers()[m]
+						: null
+					,
+					CaretInSpace = TemplateProgramLanguageName.GetCaretInSpaceMembers().Any(s => s == m),
+				})
+				.ToList()
+			;
 
-			ChekedReplace();
+			//this.listReplace.DataSource = ReplaceItemList;
+
+			//ChekedReplace();
+			this.selectTemplateProgram.Enabled = false;
 
 			this.listItemStack.MouseWheel += ListItemStack_MouseWheel;
 		}
@@ -208,6 +228,7 @@
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
+			this.selectTemplateProgram.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageRawTemplate.SetLanguage(CommonData.Language);
 			this.tabPreview_pageReplaceTemplate.SetLanguage(CommonData.Language);
@@ -237,7 +258,7 @@
 			//};
 			//var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
 			//this.webTemplateComment.DocumentText = replaced;
-			foreach(var item in this._replaceCommentList) {
+			foreach(var item in this._replaceTextCommentList.Concat(this._replaceProgramCommentList)) {
 				item.SetLanguage(CommonData.Language);
 			}
 		}
@@ -619,15 +640,20 @@
 
 			// あれやこれやがだるいのでバインドる。
 			this.inputTemplateName.DataBindings.Clear();
+			this.inputTemplateSource.DataBindings.Clear();
+			this.selectTemplateReplace.DataBindings.Clear();
+			this.selectTemplateProgram.DataBindings.Clear();
+
 			var bindName = this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
 			bindName.Parse += TemplateName_Parse;
 
-			this.inputTemplateSource.DataBindings.Clear();
+
 			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
-			
+
+			this.selectTemplateProgram.DataBindings.Add("Checked", templateItem, "Program", false, DataSourceUpdateMode.OnPropertyChanged);
+			//this.selectTemplateProgram.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			return this.tabPreview_pageRawTemplate;
 		}
@@ -737,7 +763,7 @@
 		bool SaveTemplateItem(string path, TemplateItem templateItem)
 		{
 			try {
-				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language));
+				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger));
 				return true;
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, templateItem.Name, ex);
@@ -886,11 +912,22 @@
 
 		void SwapListItem<T>(IList<T> list, int from, int to)
 		{
-			var swapItem = list[from];
-			list[from] = list[to];
-			list[to] = swapItem;
-			//this.listClipboard.SelectedIndex = to;
-			this.listItemStack.Invalidate();
+			this.listItemStack.BeginUpdate();
+			try {
+				var swapItem = list[from];
+				list[from] = list[to];
+				list[to] = swapItem;
+				//this.listClipboard.SelectedIndex = to;
+				//this.listItemStack.Refresh();
+				var index = this.listItemStack.SelectedIndex;
+				//this.listItemStack.DataSource = null;
+				BindStackList(list);
+				if(index != -1) {
+					this.listItemStack.SelectedIndex = index;
+				}
+			} finally {
+				this.listItemStack.EndUpdate();
+			}
 		}
 
 		void UpTemplate(TemplateItem templateItem)
@@ -913,7 +950,7 @@
 
 		void CopyTemplate(TemplateItem templateItem)
 		{
-			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger);
 			if(!string.IsNullOrEmpty(templateText)) {
 				ClipboardUtility.CopyText(templateText, CommonData);
 			}
@@ -922,7 +959,15 @@
 		void ChekedReplace()
 		{
 			var check = this.selectTemplateReplace.Checked;
-			//this.webTemplateComment.Visible = check;
+
+			if(check) {
+				if(this.selectTemplateProgram.Checked) {
+					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceProgramCommentList.Cast<ReplaceItem>().ToList());
+				} else {
+					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTextCommentList);
+				}
+				this.listReplace.DataSource = ReplaceItemList;
+			}
 
 			this.panelTemplateSource.Panel2Collapsed = !check;
 		}
@@ -932,7 +977,20 @@
 			var nowSelectIndex = this.inputTemplateSource.SelectionStart;
 			var replaceWord = replaceItem.ReplaceWord;
 			this.inputTemplateSource.SelectedText = replaceWord;
-			this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			var programReplaceItem = replaceItem as ProgramReplaceItem;
+			var selected = false;
+			if(programReplaceItem != null && programReplaceItem.CaretInSpace) {
+				var index = replaceWord.IndexOf(' ');
+				if(index != -1) {
+					var count = replaceWord.Skip(index).TakeWhile(c => c == ' ').Count();
+					var targetIndex = index + (int)(count / 2);
+					this.inputTemplateSource.Select(nowSelectIndex + targetIndex, 0);
+					selected = true;
+				}
+			} 
+			if(!selected) {
+				this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			}
 			this.inputTemplateSource.Focus();
 		}
 
@@ -1008,7 +1066,7 @@
 					ClipboardUtility.CopyText(outputText, CommonData);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
 				} finally {
-					if(clipboardItem != null && clipboardItem.ClipboardTypes != ClipboardType.None) {
+					if(clipboardItem.ClipboardTypes != ClipboardType.None) {
 						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData);
 					}
 				}
@@ -1029,7 +1087,7 @@
 		{
 			Debug.Assert(templateItem != null);
 
-			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger);
 			OutputText(templateText, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 
@@ -1070,6 +1128,13 @@
 			if(Filtering) {
 				ResetItemIndex();
 				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
+			} else {
+				this.listItemStack.DataSource = null;
+				if(this.CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
+				} else {
+					BindStackList(this.CommonData.MainSetting.Clipboard.TemplateItems);
+				}
 			}
 			Filtering = false;
 		}
@@ -1136,6 +1201,7 @@
 						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 						var templateItem = GetListItem<TemplateItem>(index);
 						CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
+						templateItem.ToDispose();
 					}
 				}
 				ResetFilter();
@@ -1144,7 +1210,7 @@
 
 		void ClearDisplayClipboardItems()
 		{
-			var removedItems = new List<ClipboardItem>();
+			var removedItems = new List<DisposableItem>();
 			if(Filtering) {
 				var items = this.listItemStack.Items.Cast<ClipboardItem>();
 				foreach(var item in items) {
@@ -1169,16 +1235,23 @@
 				allClear = this.listItemStack.Items.Count == CommonData.MainSetting.Clipboard.TemplateItems.Count;
 			}
 
+			var removedItems = new List<DisposableItem>();
+
 			if(allClear) {
 				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
 				if(lastItem != null) {
+					removedItems.AddRange(CommonData.MainSetting.Clipboard.TemplateItems.Where(i => i != lastItem));
 					CommonData.MainSetting.Clipboard.TemplateItems.Clear();
 					CommonData.MainSetting.Clipboard.TemplateItems.Add(lastItem);
 				}
 			} else {
 				foreach(var item in this.listItemStack.Items.Cast<TemplateItem>()) {
+					removedItems.Add(item);
 					CommonData.MainSetting.Clipboard.TemplateItems.Remove(item);
 				}
+			}
+			foreach(var item in removedItems) {
+				item.ToDispose();
 			}
 		}
 
@@ -1444,7 +1517,7 @@
 					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
 					var templateItem = GetListItem<TemplateItem>(index);
 					if(templateItem.ReplaceMode) {
-						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
+						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont, CommonData.Logger);
 						this.viewReplaceTemplate.Rtf = rtf;
 					} else {
 						// 置き換え処理を行わないのであればプレビューは表示するだけ無駄
@@ -1591,6 +1664,7 @@
 
 		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
 		{
+			this.selectTemplateProgram.Enabled = this.selectTemplateReplace.Checked;
 			ChekedReplace();
 		}
 
@@ -1598,10 +1672,10 @@
 		private void listReplace_MeasureItem(object sender, MeasureItemEventArgs e)
 		{
 			Debug.Assert(e.Index != -1);
-			if(!e.Index.Between(0, this._replaceCommentList.Count - 1)) {
+			if(!e.Index.Between(0, ReplaceItemList.Count - 1)) {
 				return;
 			}
-			var replaceItem = this._replaceCommentList[e.Index];
+			var replaceItem = ReplaceItemList[e.Index];
 			PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 				var commentSize = e.Graphics.MeasureString(replaceItem.Comment, commentFont, width - GetReplaceCommentPadding(), commentFormat);
 				e.ItemHeight = (int)(titleSize.Height + commentSize.Height) + this.listReplace.Margin.Vertical + this.listReplace.Margin.Top;
@@ -1611,7 +1685,7 @@
 		private void listReplace_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if(e.Index != -1) {
-				var replaceItem = this._replaceCommentList[e.Index];
+				var replaceItem = ReplaceItemList[e.Index];
 				PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 					using(var foreBrush = new SolidBrush(e.ForeColor)) {
 						var titleArea = new RectangleF() {
@@ -1636,13 +1710,14 @@
 
 		private void listReplace_Resize(object sender, EventArgs e)
 		{
-			if(this._replaceCommentList == null) {
+			if(ReplaceItemList == null) {
 				return;
 			}
 			this.listReplace.BeginUpdate();
 			var selectedItem = this.listReplace.SelectedItem;
 			try {
-				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+				this.listReplace.DataSource = null;
+				this.listReplace.DataSource = ReplaceItemList;
 				this.listReplace.SelectedItem = selectedItem;
 			} finally {
 				this.listReplace.EndUpdate();
@@ -1719,6 +1794,11 @@
 		private void toolItemStack_itemFiltering_Click(object sender, EventArgs e)
 		{
 			ClearFilter();
+		}
+
+		private void selectTemplateMacro_CheckedChanged(object sender, EventArgs e)
+		{
+			ChekedReplace();
 		}
 	}
 }
