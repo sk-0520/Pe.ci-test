@@ -78,7 +78,7 @@
 					<comment>フィルタリング中はテンプレートアイテムの追加・移動が抑制されます</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="89cde990d7b393ecdb2de95dd496a99c76818f50">
 				<message>#233: テキストテンプレート拡張</message>
 				<comments>
 					<comment>置き換え処理が有効であればさらにT4テンプレートエンジンを使用した置き換えを行えます</comment>
