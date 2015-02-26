@@ -330,13 +330,14 @@
 			if(string.IsNullOrWhiteSpace(ClassName)) {
 				throw new InvalidOperationException("ClassName");
 			}
-			if(string.IsNullOrEmpty(TemplateSource)) {
+			
+			var templateSource = MakeTemplateSource();
+
+			if(string.IsNullOrEmpty(templateSource)) {
 				throw new InvalidOperationException("TemplateSource");
 			}
 
 			this._generatedErrorList.Clear();
-
-			var templateSource = MakeTemplateSource();
 
 			string programmingLanguage;
 			string[] references;

@@ -9,6 +9,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 	/// <summary>
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
 	/// </summary>
+	[Serializable]
 	public class TemplateProcessor: T4TemplateProcessor, ILanguage
 	{
 		public TemplateProcessor()
@@ -30,6 +31,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		{
 			NamespaceName = "ContentTypeTextNet.Pe.PeMain.Logic.TemplateProcessorGenerator";
 			ClassName = "TextProcessor";
+			TemplateAppDomainName = "asdfghjk";
 
 			TemplateDdirective = string.Join(Environment.NewLine, new[] {
 				"<#@ template language=\"C#\" hostspecific=\"true\" #>",
