@@ -56,6 +56,53 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="YYYY/MM/DD" version="0.54.1" type="rc">
+		<group type="note"><sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="features"><sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="fixes"><sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="developer"><sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/28" version="0.54.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
