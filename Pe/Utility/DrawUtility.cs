@@ -19,9 +19,9 @@
 #	if DEBUG
 			var color = Color.Red;
 #	elif BETA
-			var color = 90, Color.Blue;
+			var color = Color.Blue;
 #	else
-#		error build type
+			var color = Color.Lime;
 #	endif
 			using(var brush = new SolidBrush(Color.FromArgb(90, color))) {
 				g.FillRectangle(brush, drawArea);
