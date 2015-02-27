@@ -90,6 +90,14 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>#235: β版をとりあえずすぐ試せるようにする</message>
+				<comments>
+					<comment>[Pe]/bat/beta.bat を実行すると現行バージョンに影響することなくβバージョンを実行することができます</comment>
+					<comment>beta.bat 実行時に デスクトップ/Pe-beta が存在しなければ現行バージョンの設定データ(デフォルトパス)を デスクトップ/Pe-beta にコピーします</comment>
+					<comment>あくまでβバージョンとして動作させるための機能ですのでリリース版では実行する意味はありません</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
