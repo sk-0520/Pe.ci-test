@@ -125,6 +125,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bat\beta.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Image\ReplaceSkin.png" />
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -738,7 +741,9 @@
     <None Include="Resources\Image\Debug.png" />
     <None Include="Resources\Image\Applications.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)\etc\lang\ja-JP.xml" "$(OutDir)\etc\lang\default.xml"
