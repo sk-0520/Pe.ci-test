@@ -37,7 +37,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 				"<#@ template language=\"C#\" hostspecific=\"true\" #>",
 				"<#",
 				"var __host    = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host;",
-				"var app = __host.Session;",
+				"var app = (IReadOnlyDictionary<string, object>)__host.Session;",
 				"#>",
 			});
 

@@ -84,17 +84,17 @@
 					<comment>置き換え処理が有効であればさらにT4テンプレートエンジンを使用した置き換えを行えます</comment>
 					<comment>プログラム書ける人でかつ大規模なテンプレートを書かない人が対象です</comment>
 					<comment>T4はMono.TextTemplatingを使用しているためMS製T4と動作が違うかもです</comment>
-					<comment>T4と異なり &lt;#@ template="" language="C#" hostspecific="true" #&gt; が行頭に挿入されます</comment>
-					<comment>自動的に __host(内部使用), app(IDictionary&lt;string,object>) が定義されます。Pe側で提供するデータには app[string] でアクセスしてください</comment>
+					<comment>暗黙的に &lt;#@ template="" language="C#" hostspecific="true" #&gt; が行頭に挿入されます</comment>
+					<comment>Pe側で __host(内部使用), app(IReadOnlyDictionary&lt;string,object>) を予約します。Pe側で提供するデータには app[string] でアクセスしてください</comment>
 					<comment>将来的にはもうちっと頑張ろうと思いますがとりあえず#233実装はここまで</comment>
 				</comments>
 			</note>
 			<note rev="a68f08edf4921eff8b339778ad30e19be0d11168">
 				<message>#235: β版をとりあえずすぐ試せるようにする</message>
 				<comments>
-					<comment>[Pe]/bat/beta.bat を実行すると現行バージョンに影響することなくβバージョンを実行することができます</comment>
-					<comment>beta.bat 実行時に デスクトップ/Pe-beta が存在しなければ現行バージョンの設定データ(デフォルトパス)を デスクトップ/Pe-beta にコピーします</comment>
-					<comment>あくまでβバージョンとして動作させるための機能ですのでリリース版では実行する意味はありません</comment>
+					<comment>&lt;Pe>/bat/beta.bat を実行すると現行バージョンに影響することなくβバージョンを実行することができます</comment>
+					<comment>beta.bat 実行時に デスクトップ/Pe-beta ディレクトリが存在しなければ現行バージョンの設定データ(デフォルトパス)を デスクトップ/Pe-beta ディレクトリにコピーします</comment>
+					<comment>あくまでβバージョンとして動作させるための機能ですのでリリース版で実行する意味はありません</comment>
 				</comments>
 			</note>
 			<note rev="">
