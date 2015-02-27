@@ -961,12 +961,18 @@
 			var check = this.selectTemplateReplace.Checked;
 
 			if(check) {
-				if(this.selectTemplateProgram.Checked) {
-					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceProgramCommentList.Cast<ReplaceItem>().ToList());
-				} else {
-					ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTextCommentList);
+				this.listReplace.BeginUpdate();
+				try {
+					if(this.selectTemplateProgram.Checked) {
+						ReplaceItemList = new BindingList<ReplaceItem>(this._replaceProgramCommentList.Cast<ReplaceItem>().ToList());
+					} else {
+						ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTextCommentList);
+					}
+
+					this.listReplace.DataSource = ReplaceItemList;
+				} finally {
+					this.listReplace.EndUpdate();
 				}
-				this.listReplace.DataSource = ReplaceItemList;
 			}
 
 			this.panelTemplateSource.Panel2Collapsed = !check;
