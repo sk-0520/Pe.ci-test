@@ -113,11 +113,6 @@
 			Host = host;
 			Variable = host.Session as TextTemplatingSession;
 
-			var eventHost = Host as TextTemplatingEngineHost;
-			if(eventHost != null) {
-				eventHost.Error += WithEvent_Error;
-			}
-
 			Initialize();
 		}
 
@@ -126,10 +121,7 @@
 		/// </summary>
 		~T4TemplateProcessor()
 		{
-			var eventHost = Host as TextTemplatingEngineHost;
-			if(eventHost != null) {
-				eventHost.Error -= WithEvent_Error;
-			}
+			Debug.WriteLine(TemplateAppDomainName);
 			Dispose(false);
 		}
 
@@ -281,6 +273,7 @@
 
 		public void Dispose()
 		{
+			GC.SuppressFinalize(this);
 			Dispose(true);
 		}
 
@@ -381,7 +374,19 @@
 		/// </summary>
 		public void GeneratProgramSource()
 		{
-			GeneratProgramSource_Impl();
+			var eventHost = Host as TextTemplatingEngineHost;
+
+			try {
+				if(eventHost != null) {
+					eventHost.Error += WithEvent_Error;
+				}
+
+				GeneratProgramSource_Impl();
+			} finally {
+				if(eventHost != null) {
+					eventHost.Error -= WithEvent_Error;
+				}
+			}
 		}
 
 		/// <summary>
