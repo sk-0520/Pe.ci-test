@@ -111,7 +111,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 				{ AppLanguageName.application,    Literal.programName },
 				{ AppLanguageName.versionFull,    Literal.ApplicationVersion },
 				{ AppLanguageName.versionNumber,  Literal.Version.FileVersion },
-				{ AppLanguageName.versionHash,    Application.ProductVersion },
+				{ AppLanguageName.versionHash,    Literal.Version.ProductVersion },
 				//　#199
 				{ AppLanguageName.versionNumberOld,  Literal.Version.FileVersion },
 				{ AppLanguageName.versionHashOld,    Application.ProductVersion },

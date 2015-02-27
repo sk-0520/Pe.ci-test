@@ -82,12 +82,8 @@
 			this.labelAppVersion.Text = Literal.ApplicationVersion;
 			this.labelConfiguration.Text = string.Format(
 				"{0}: {1}bit",
-#if DEBUG
-				"DEBUG",
-#else
-				"RELEASE",
-#endif
- Environment.Is64BitProcess ? "64" : "32"
+				Literal.BuildType,
+				Literal.BuildProcess
 			);
 
 			this.linkAbout.Text = Literal.AboutWebURL;
@@ -99,6 +95,8 @@
 			ComponentInfoList = xml
 				.Elements()
 				.Select(e => new ComponentInfo(e))
+				.OrderBy(ci => ci.Type.ToLower() != "Library".ToLower())
+				.ThenBy(ci => ci.Name)
 				.ToList()
 			;
 			this.gridComponents_columnName.DataPropertyName = "Name";
@@ -235,14 +233,8 @@
 			var list = new List<string>();
 			list.Add("Software: " + Literal.Version.ProductName);
 			list.Add("Version: " + Literal.ApplicationVersion);
-			list.Add("Type: " +
-				#if DEBUG
-				"DEBUG"
-				#else
-				"RELEASE"
-				#endif
-			);
-			list.Add("Process: " + (Environment.Is64BitProcess ? "64": "32"));
+			list.Add("Type: " + Literal.BuildType);
+			list.Add("Process: " + Literal.BuildProcess);
 			list.Add("Platform: " + (Environment.Is64BitOperatingSystem ? "64": "32"));
 			list.Add("OS: " + System.Environment.OSVersion);
 			list.Add("CLI: " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion());

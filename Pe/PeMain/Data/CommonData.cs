@@ -42,6 +42,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		
 		public void Dispose()
 		{
+			MainSetting.ToDispose();
 			ApplicationSetting.ToDispose();
 			Database.ToDispose();
 		}

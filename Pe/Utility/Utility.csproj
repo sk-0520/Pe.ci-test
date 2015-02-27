@@ -69,6 +69,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mono.TextTemplating, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.TextTemplating.1.0.0\lib\Mono.TextTemplating.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
@@ -113,6 +118,7 @@
     <Compile Include="Serializer.cs" />
     <Compile Include="ShortcutFile.cs" />
     <Compile Include="DB\SQLiteDBManager.cs" />
+    <Compile Include="T4Template.cs" />
     <Compile Include="TextUtility.cs" />
     <Compile Include="UI\AppbarForm.cs">
       <SubType>Form</SubType>
@@ -136,7 +142,11 @@
     <ProjectReference Include="..\PlatformInvoke\PlatformInvoke.csproj">
       <Project>{2E80DF8C-5682-4B45-9172-846BAD85C305}</Project>
       <Name>PlatformInvoke</Name>
+      <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

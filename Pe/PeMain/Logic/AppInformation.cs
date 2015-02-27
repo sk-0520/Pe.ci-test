@@ -12,5 +12,14 @@
 		{
 			get { return FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location); }
 		}
+
+		public override InformationGroup GetApplication()
+		{
+			var result = base.GetApplication();
+
+			result.Items.Add("BuildType", Literal.BuildType);
+			
+			return result;
+		}
 	}
 }

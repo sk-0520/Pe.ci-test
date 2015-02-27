@@ -194,7 +194,7 @@
 			this._clipboardPrevTime = now;
 
 			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
-			if(clipboardItem != null) {
+			if(clipboardItem.ClipboardTypes != ClipboardType.None) {
 				Task.Run(() => {
 					var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
 					clipboardItem.Name = displayText;
@@ -930,9 +930,7 @@
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawImage(IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.Tasktray), IconScale.Small), iconRect);
-#if DEBUG
-					DrawUtility.MarkingDebug(g, iconRect);
-#endif
+					DrawUtility.MarkingBuildType(g, iconRect);
 				}
 				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			}
@@ -1430,6 +1428,9 @@
 					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
 					var oldSetting = this._commonData.MainSetting;
 					this._commonData.MainSetting = mainSetting;
+					// 切断しとく
+					oldSetting.Clipboard.HistoryItems = new FixedSizedList<ClipboardItem>(0,0);
+					oldSetting.Clipboard.TemplateItems = new EventList<TemplateItem>(0);
 					oldSetting.ToDispose();
 					settingForm.SaveFiles();
 					settingForm.SaveDB(this._commonData.Database);

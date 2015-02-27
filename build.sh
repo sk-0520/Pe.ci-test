@@ -16,7 +16,7 @@ find -name 'AssemblyInfo.cs' -print0 | xargs -0 sed -E -i "s/<YEAR>/`date +%Y`/"
 
 # ビルド
 pushd Build
-    cmd.exe //c build.bat
+    cmd.exe //c build.bat ${BUILD_TYPE}
 popd
 
 # バージョン戻し

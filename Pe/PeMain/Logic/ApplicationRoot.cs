@@ -16,6 +16,28 @@
 		{
 		}
 #endif
+		/// <summary>
+		/// プログラム重複判定用のmutex名を取得。
+		/// </summary>
+		/// <param name="commandLine"></param>
+		/// <returns></returns>
+		static string GetMutexName(CommandLine commandLine)
+		{
+			string mutexName = string.Empty;
+			
+			if(commandLine.HasValue("mutex")) {
+				mutexName = commandLine.GetValue("mutex");
+			}
+			if(string.IsNullOrWhiteSpace(mutexName)) {
+				mutexName = Literal.programName;
+#if DEBUG
+				mutexName += "_debug";
+				//mutexName += new Random().Next().ToString();
+#endif
+			}
+
+			return mutexName;
+		}
 
 		internal static void Execute(string[] args)
 		{
@@ -33,12 +55,9 @@
 				fileLogger.Puts(LogType.Information, "Information", new AppInformation().ToString());
 			}
 
+			string mutexName = GetMutexName(commandLine);
+
 			bool isFirstInstance;
-			var mutexName = Literal.programName;
-#if DEBUG
-			mutexName += "_debug";
-			//mutexName += new Random().Next().ToString();
-#endif
 			fileLogger.Puts(LogType.Information, "mutex name", mutexName);
 			using(fileLogger) {
 #if RELEASE

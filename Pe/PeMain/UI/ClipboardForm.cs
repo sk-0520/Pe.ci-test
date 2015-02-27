@@ -10,6 +10,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Text;
+	using System.Text.RegularExpressions;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
@@ -64,9 +65,12 @@
 		Button _commandUp = new Button();
 		Button _commandDown = new Button();
 
-		IList<ReplaceItem> _replaceCommentList;
+		IList<ReplaceItem> _replaceTextCommentList;
+		IList<ProgramReplaceItem> _replaceProgramCommentList;
 
 		ImageViewSize _imageSize;
+
+		bool _filtering;
 
 		#endregion ////////////////////////////////////////
 
@@ -95,6 +99,22 @@
 		Point ImageDragPosition { get; set; }
 
 		bool UsedWheel { get; set; }
+
+		/// <summary>
+		/// フィルタリング中か。
+		/// </summary>
+		bool Filtering 
+		{ 
+			get { return this._filtering; } 
+			set
+			{
+				this._filtering = value;
+				this.toolItemStack_itemFiltering.Checked = this._filtering;
+				ChangeCommand(-1);
+			}
+		}
+
+		BindingList<ReplaceItem> ReplaceItemList { get; set; }
 
 		#endregion ////////////////////////////////////////
 
@@ -154,14 +174,31 @@
 
 			listItemStack.MouseWheel += listClipboard_MouseWheel;
 
-			this._replaceCommentList = TemplateLanguageName.GetMembersList()
+			this._replaceTextCommentList = TemplateTextLanguageName.GetMembersList()
 				.Concat(AppLanguageName.GetMembersList())
 				.Select(m => new ReplaceItem() { Name = m })
 				.ToList()
 			;
-			this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+			this._replaceProgramCommentList = TemplateProgramLanguageName.GetMembersList()
+				.Select(m => new ProgramReplaceItem() { 
+					Name = m,
+					Bracket = TemplateProgramLanguageName.GetVariableMembers().Any(s => s == m) 
+						? new Tuple<string,string>("app[\"", "\"]")
+						: null
+					,
+					Type = TemplateProgramLanguageName.GetTypeMembers().ContainsKey(m)
+						? TemplateProgramLanguageName.GetTypeMembers()[m]
+						: null
+					,
+					CaretInSpace = TemplateProgramLanguageName.GetCaretInSpaceMembers().Any(s => s == m),
+				})
+				.ToList()
+			;
 
-			ChekedReplace();
+			//this.listReplace.DataSource = ReplaceItemList;
+
+			//ChekedReplace();
+			this.selectTemplateProgram.Enabled = false;
 
 			this.listItemStack.MouseWheel += ListItemStack_MouseWheel;
 		}
@@ -191,6 +228,7 @@
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
+			this.selectTemplateProgram.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageRawTemplate.SetLanguage(CommonData.Language);
 			this.tabPreview_pageReplaceTemplate.SetLanguage(CommonData.Language);
@@ -206,6 +244,8 @@
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
 
+			this.toolItemStack_itemFiltering.SetLanguage(CommonData.Language);
+
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
 			this.tabPreview_pageHtml.Text = ClipboardType.Html.ToText(CommonData.Language);
@@ -218,7 +258,7 @@
 			//};
 			//var replaced = templateHtml.ReplaceRangeFromDictionary("${", "}", acceptMap);
 			//this.webTemplateComment.DocumentText = replaced;
-			foreach(var item in this._replaceCommentList) {
+			foreach(var item in this._replaceTextCommentList.Concat(this._replaceProgramCommentList)) {
 				item.SetLanguage(CommonData.Language);
 			}
 		}
@@ -239,6 +279,8 @@
 
 			this.toolClipboard_itemType_itemClipboard.Image = CommonData.Skin.GetImage(SkinImage.Clipboard);
 			this.toolClipboard_itemType_itemTemplate.Image = CommonData.Skin.GetImage(SkinImage.RawTemplate);
+
+			this.toolItemStack_itemFiltering.Image = CommonData.Skin.GetImage(SkinImage.Filter);
 
 			this.toolImage_itemRaw.Image = CommonData.Skin.GetImage(SkinImage.ImageRaw);
 			this.toolImage_itemFill.Image = CommonData.Skin.GetImage(SkinImage.ImageFill);
@@ -287,6 +329,12 @@
 
 		//	ApplySetting();
 		//}
+
+		T GetListItem<T>(int index)
+		{
+			var item = this.listItemStack.Items[index];
+			return (T)item;
+		}
 
 		void ApplySettingUI()
 		{
@@ -414,8 +462,7 @@
 
 			this.listItemStack.BeginUpdate();
 			try {
-				SelectedItemIndex = -1;
-				HoverItemIndex = -1;
+				ResetItemIndex();
 				if(type == ClipboardListType.History) {
 					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
 				} else {
@@ -429,6 +476,7 @@
 				}
 				ChangeCommandType(type);
 			} finally {
+				Filtering = false;
 				this.listItemStack.EndUpdate();
 			}
 		}
@@ -457,7 +505,8 @@
 			//if((index != -1 && HoverItemIndex != index) || (index != -1 && HoverItemIndex == -1)) {
 			if((index > -1 && HoverItemIndex != index)) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					var clipboardItem = GetListItem<ClipboardItem>(index);
 					var map = new Dictionary<ClipboardType, Control>() {
 						{ ClipboardType.Text, this._commandText },
 						{ ClipboardType.Rtf, this._commandRtf },
@@ -471,12 +520,13 @@
 					}
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					var buttons = new[] {
 						new { Contrl = this._commandMulti, Enbaled = true },
-						new { Contrl = this._commandAdd, Enbaled = true },
-						new { Contrl = this._commandUp, Enbaled = index != 0 },
-						new { Contrl = this._commandDown, Enbaled = index != this.listItemStack.Items.Count - 1 },
+						new { Contrl = this._commandAdd, Enbaled = !Filtering },
+						new { Contrl = this._commandUp, Enbaled = !Filtering && index != 0 },
+						new { Contrl = this._commandDown, Enbaled = !Filtering && index != this.listItemStack.Items.Count - 1 },
 					};
 					foreach(var button in buttons) {
 						button.Contrl.Enabled = button.Enbaled;
@@ -590,15 +640,20 @@
 
 			// あれやこれやがだるいのでバインドる。
 			this.inputTemplateName.DataBindings.Clear();
+			this.inputTemplateSource.DataBindings.Clear();
+			this.selectTemplateReplace.DataBindings.Clear();
+			this.selectTemplateProgram.DataBindings.Clear();
+
 			var bindName = this.inputTemplateName.DataBindings.Add("Text", templateItem, "Name", false, DataSourceUpdateMode.OnPropertyChanged);
 			bindName.Parse += TemplateName_Parse;
 
-			this.inputTemplateSource.DataBindings.Clear();
+
 			this.inputTemplateSource.DataBindings.Add("Text", templateItem, "Source", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectTemplateReplace.DataBindings.Clear();
 			this.selectTemplateReplace.DataBindings.Add("Checked", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
-			
+
+			this.selectTemplateProgram.DataBindings.Add("Checked", templateItem, "Program", false, DataSourceUpdateMode.OnPropertyChanged);
+			//this.selectTemplateProgram.DataBindings.Add("Enabled", templateItem, "ReplaceMode", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			return this.tabPreview_pageRawTemplate;
 		}
@@ -635,17 +690,20 @@
 
 			TabPage defaultTabPage;
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var clipboardItem = GetListItem<ClipboardItem>(index);
 				defaultTabPage = ChangeSelsectedHistoryItem(clipboardItem);
 			} else {
-				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				var templateItem = GetListItem<TemplateItem>(index);
 				defaultTabPage = ChangeSelsectedTemplateItem(templateItem);
 			}
 			this.tabPreview.SelectedTab = defaultTabPage;
 			//this.tabPreview.ResumeLayout();
 			if(Visible) {
 				WindowsUtility.SetRedraw(this, true);
-				Refresh();
+				//Refresh();
+				Invalidate();
 			}
 		}
 
@@ -677,7 +735,8 @@
 		void CopySingleItem(int index)
 		{
 			Debug.Assert(index != -1);
-			
+
+			//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
 			var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
 			CopyItem(clipboardItem, clipboardItem.GetSingleClipboardType());
 		}
@@ -705,7 +764,7 @@
 		bool SaveTemplateItem(string path, TemplateItem templateItem)
 		{
 			try {
-				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language));
+				File.WriteAllText(path, TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger));
 				return true;
 			} catch(Exception ex) {
 				CommonData.Logger.Puts(LogType.Error, templateItem.Name, ex);
@@ -789,6 +848,10 @@
 			try {
 				this.listItemStack.BeginUpdate();
 
+				if(Filtering) {
+					Filtering = false;
+				}
+
 				var isActive = Form.ActiveForm == this;
 				var selectedIndex = this.listItemStack.SelectedIndex;
 				this.listItemStack.DataSource = null;
@@ -850,11 +913,22 @@
 
 		void SwapListItem<T>(IList<T> list, int from, int to)
 		{
-			var swapItem = list[from];
-			list[from] = list[to];
-			list[to] = swapItem;
-			//this.listClipboard.SelectedIndex = to;
-			this.listItemStack.Invalidate();
+			this.listItemStack.BeginUpdate();
+			try {
+				var swapItem = list[from];
+				list[from] = list[to];
+				list[to] = swapItem;
+				//this.listClipboard.SelectedIndex = to;
+				//this.listItemStack.Refresh();
+				var index = this.listItemStack.SelectedIndex;
+				this.listItemStack.DataSource = null;
+				BindStackList(list);
+				if(index != -1) {
+					this.listItemStack.SelectedIndex = index;
+				}
+			} finally {
+				this.listItemStack.EndUpdate();
+			}
 		}
 
 		void UpTemplate(TemplateItem templateItem)
@@ -877,7 +951,7 @@
 
 		void CopyTemplate(TemplateItem templateItem)
 		{
-			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger);
 			if(!string.IsNullOrEmpty(templateText)) {
 				ClipboardUtility.CopyText(templateText, CommonData);
 			}
@@ -886,7 +960,21 @@
 		void ChekedReplace()
 		{
 			var check = this.selectTemplateReplace.Checked;
-			//this.webTemplateComment.Visible = check;
+
+			if(check) {
+				this.listReplace.BeginUpdate();
+				try {
+					if(this.selectTemplateProgram.Checked) {
+						ReplaceItemList = new BindingList<ReplaceItem>(this._replaceProgramCommentList.Cast<ReplaceItem>().ToList());
+					} else {
+						ReplaceItemList = new BindingList<ReplaceItem>(this._replaceTextCommentList);
+					}
+
+					this.listReplace.DataSource = ReplaceItemList;
+				} finally {
+					this.listReplace.EndUpdate();
+				}
+			}
 
 			this.panelTemplateSource.Panel2Collapsed = !check;
 		}
@@ -896,7 +984,20 @@
 			var nowSelectIndex = this.inputTemplateSource.SelectionStart;
 			var replaceWord = replaceItem.ReplaceWord;
 			this.inputTemplateSource.SelectedText = replaceWord;
-			this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			var programReplaceItem = replaceItem as ProgramReplaceItem;
+			var selected = false;
+			if(programReplaceItem != null && programReplaceItem.CaretInSpace) {
+				var index = replaceWord.IndexOf(' ');
+				if(index != -1) {
+					var count = replaceWord.Skip(index).TakeWhile(c => c == ' ').Count();
+					var targetIndex = index + (int)(count / 2);
+					this.inputTemplateSource.Select(nowSelectIndex + targetIndex, 0);
+					selected = true;
+				}
+			} 
+			if(!selected) {
+				this.inputTemplateSource.Select(nowSelectIndex, replaceWord.Length);
+			}
 			this.inputTemplateSource.Focus();
 		}
 
@@ -972,7 +1073,7 @@
 					ClipboardUtility.CopyText(outputText, CommonData);
 					NativeMethods.SendMessage(hWnd, WM.WM_PASTE, IntPtr.Zero, IntPtr.Zero);
 				} finally {
-					if(clipboardItem != null && clipboardItem.ClipboardTypes != ClipboardType.None) {
+					if(clipboardItem.ClipboardTypes != ClipboardType.None) {
 						ClipboardUtility.CopyClipboardItem(clipboardItem, CommonData);
 					}
 				}
@@ -993,7 +1094,7 @@
 		{
 			Debug.Assert(templateItem != null);
 
-			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language);
+			var templateText = TemplateUtility.ToPlainText(templateItem, CommonData.Language, CommonData.Logger);
 			OutputText(templateText, CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 
@@ -1001,14 +1102,186 @@
 		{
 			Debug.Assert(index != -1);
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var clipboardItem = GetListItem<ClipboardItem>(index);
 				if(clipboardItem.ClipboardTypes.HasFlag(ClipboardType.Text)) {
 					OutputClipboardItem(clipboardItem);
 				}
 			} else {
-				var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+				var templateItem = GetListItem<TemplateItem>(index);
 				OutputTemplateItem(templateItem);
 			}
+		}
+
+		void ResetItemIndex()
+		{
+			SelectedItemIndex = -1;
+			HoverItemIndex = -1;
+		}
+
+		void SilentClearFilterText()
+		{
+			this.toolItemStack_itemFilter.TextChanged -= this.toolItemStack_itemFilter_TextChanged;
+			try {
+				this.toolItemStack_itemFilter.TextBox.ResetText();
+			} finally {
+				this.toolItemStack_itemFilter.TextChanged += this.toolItemStack_itemFilter_TextChanged;
+			}
+		}
+
+		void ClearFilter()
+		{
+			if(Filtering) {
+				ResetItemIndex();
+				ChangeSelectType(CommonData.MainSetting.Clipboard.ClipboardListType);
+			} else {
+				this.listItemStack.DataSource = null;
+				if(this.CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+					BindStackList(this.CommonData.MainSetting.Clipboard.HistoryItems);
+				} else {
+					BindStackList(this.CommonData.MainSetting.Clipboard.TemplateItems);
+				}
+			}
+			Filtering = false;
+		}
+
+		void SetFilter_Impl<T>(string s, IEnumerable<T> srcItems)
+			where T: INameItem
+		{
+			Debug.Assert(!string.IsNullOrWhiteSpace(s));
+
+			var wldPattern = TextUtility.RegexPatternToWildcard(s);
+			var reg = new Regex(wldPattern);
+
+			var filterItems = srcItems
+				.Where(item => reg.IsMatch(item.Name))
+				.ToList()
+			;
+			if(filterItems.Count > 0) {
+				BindStackList(filterItems);
+				Filtering = true;
+				this.listItemStack.SelectedIndex = -1;
+				this.listItemStack.SelectedIndex = 0;
+			} else {
+				ClearFilter();
+			}
+		}
+
+		void SetFilter(string s)
+		{
+			Debug.Assert(!string.IsNullOrWhiteSpace(s));
+
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				SetFilter_Impl(s, this.CommonData.MainSetting.Clipboard.HistoryItems);
+			} else {
+				SetFilter_Impl(s, this.CommonData.MainSetting.Clipboard.TemplateItems);
+			}
+		}
+
+		/// <summary>
+		/// フィルタを再設定。
+		/// </summary>
+		void ResetFilter()
+		{
+			var text = this.toolItemStack_itemFilter.Text;
+			if(string.IsNullOrWhiteSpace(text)) {
+				ClearFilter();
+			} else {
+				SetFilter(text.Trim());
+			}
+		}
+
+		void ClearSelectItem()
+		{
+			var index = this.listItemStack.SelectedIndex;
+			if(index != -1) {
+				this.listItemStack.BeginUpdate();
+				try {
+					if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+						//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+						var clipboardItem = GetListItem<ClipboardItem>(index);
+						CommonData.MainSetting.Clipboard.HistoryItems.Remove(clipboardItem);
+						clipboardItem.ToDispose();
+					} else {
+						Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+						// 最後の一つを削除するとあまりよろしくない
+						if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
+							//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+							var templateItem = GetListItem<TemplateItem>(index);
+							CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
+							templateItem.ToDispose();
+						}
+					}
+					ResetFilter();
+					if(this.listItemStack.Items.Count > index) {
+						this.listItemStack.SelectedIndex = index;
+					} else if(this.listItemStack.Items.Count != 0) {
+						this.listItemStack.SelectedIndex = this.listItemStack.Items.Count - 1;
+					}
+				} finally {
+					this.listItemStack.EndUpdate();
+				}
+			}
+		}
+
+		void ClearDisplayClipboardItems()
+		{
+			var removedItems = new List<DisposableItem>();
+			if(Filtering) {
+				var items = this.listItemStack.Items.Cast<ClipboardItem>();
+				foreach(var item in items) {
+					CommonData.MainSetting.Clipboard.HistoryItems.Remove(item);
+					removedItems.Add(item);
+				}
+			} else {
+				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
+				removedItems.AddRange(items);
+				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
+			}
+			ResetControlInTabPage();
+			foreach(var item in removedItems) {
+				item.ToDispose();
+			}
+		}
+
+		void ClearDisplayTemplateItems()
+		{
+			var allClear = !Filtering;
+			if(Filtering) {
+				allClear = this.listItemStack.Items.Count == CommonData.MainSetting.Clipboard.TemplateItems.Count;
+			}
+
+			var removedItems = new List<DisposableItem>();
+
+			if(allClear) {
+				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
+				if(lastItem != null) {
+					removedItems.AddRange(CommonData.MainSetting.Clipboard.TemplateItems.Where(i => i != lastItem));
+					CommonData.MainSetting.Clipboard.TemplateItems.Clear();
+					CommonData.MainSetting.Clipboard.TemplateItems.Add(lastItem);
+				}
+			} else {
+				foreach(var item in this.listItemStack.Items.Cast<TemplateItem>()) {
+					removedItems.Add(item);
+					CommonData.MainSetting.Clipboard.TemplateItems.Remove(item);
+				}
+			}
+			foreach(var item in removedItems) {
+				item.ToDispose();
+			}
+		}
+
+		void ClearDisplayItems()
+		{
+			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+				ClearDisplayClipboardItems();
+			} else {
+				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+				ClearDisplayTemplateItems();
+			}
+
+			ClearFilter();
 		}
 
 		#endregion ////////////////////////////////////////
@@ -1017,7 +1290,8 @@
 
 		void DrawClipboardItem(Graphics g, int itemIndex, Rectangle bounds, Color foreColor)
 		{
-			var item = CommonData.MainSetting.Clipboard.HistoryItems[itemIndex];
+			//var item = CommonData.MainSetting.Clipboard.HistoryItems[itemIndex];
+			var item = GetListItem<ClipboardItem>(itemIndex);
 			var map = new Dictionary<ClipboardType, string>() {
 					{ ClipboardType.Text, imageText},
 					{ ClipboardType.Rtf, imageRtf},
@@ -1047,7 +1321,7 @@
 
 		void DrawTemplateItem(Graphics g, int itemIndex, Rectangle bounds, Color foreColor)
 		{
-			var item = CommonData.MainSetting.Clipboard.TemplateItems[itemIndex];
+			var item = GetListItem<TemplateItem>(itemIndex);
 			using(var sf = new StringFormat())
 			using(var brush = new SolidBrush(foreColor)) {
 				sf.Alignment = StringAlignment.Near;
@@ -1122,6 +1396,7 @@
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
 			ChangeSelectTypeControl((ToolStripMenuItem)sender);
+			this.toolClipboard.Refresh();
 		}
 
 		void TemplateItems_ListChanged(object sender, EventArgs e)
@@ -1237,7 +1512,8 @@
 			}
 
 			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+				var clipboardItem = GetListItem<ClipboardItem>(index);
 				var typeList = clipboardItem.GetClipboardTypeList();
 				var list = new[] {
 					new { TabPage = this.tabPreview_pageText, ClipboardType = ClipboardType.Text },
@@ -1256,9 +1532,10 @@
 			} else {
 				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
 				if(e.TabPage == this.tabPreview_pageReplaceTemplate) {
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					if(templateItem.ReplaceMode) {
-						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont);
+						var rtf = TemplateUtility.ToRtf(templateItem, CommonData.Language, CommonData.MainSetting.Clipboard.TextFont, CommonData.Logger);
 						this.viewReplaceTemplate.Rtf = rtf;
 					} else {
 						// 置き換え処理を行わないのであればプレビューは表示するだけ無駄
@@ -1277,7 +1554,8 @@
 				OutputTargetClick_Impl(HoverItemIndex);
 			} else if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
 				try {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[HoverItemIndex];
+					var clipboardItem = GetListItem<ClipboardItem>(HoverItemIndex);
 					var map = new Dictionary<object, ClipboardType>() {
 						{ this._commandText, ClipboardType.Text },
 						{ this._commandRtf, ClipboardType.Rtf },
@@ -1319,7 +1597,8 @@
 					}
 				} else {
 					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					if(CommonData.MainSetting.Clipboard.DoubleClickToOutput) {
 						OutputTemplateItem(templateItem);
 					} else {
@@ -1334,10 +1613,12 @@
 			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
 				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+					var clipboardItem = GetListItem<ClipboardItem>(index);
 					OpenClipboardItemSaveDialog(clipboardItem);
 				} else {
-					var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+					var templateItem = GetListItem<TemplateItem>(index);
 					OpenTemplateItemSaveDialog(templateItem);
 				}
 			}
@@ -1345,40 +1626,12 @@
 
 		private void toolClipboard_itemClear_ButtonClick(object sender, EventArgs e)
 		{
-			var index = this.listItemStack.SelectedIndex;
-			if(index != -1) {
-				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-					CommonData.MainSetting.Clipboard.HistoryItems.RemoveAt(index);
-					clipboardItem.ToDispose();
-				} else {
-					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					// 最後の一つを削除するとあまりよろしくない
-					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
-						var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-						CommonData.MainSetting.Clipboard.TemplateItems.RemoveAt(index);
-					}
-				}
-			}
+			ClearSelectItem();
 		}
 
 		private void toolClipboard_itemClear_Click(object sender, EventArgs e)
 		{
-			if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-				var items = CommonData.MainSetting.Clipboard.HistoryItems.ToArray();
-				CommonData.MainSetting.Clipboard.HistoryItems.Clear();
-				ResetControlInTabPage();
-				foreach(var item in items) {
-					item.ToDispose();
-				}
-			} else {
-				Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-				var lastItem = CommonData.MainSetting.Clipboard.TemplateItems.LastOrDefault();
-				if(lastItem != null) {
-					CommonData.MainSetting.Clipboard.TemplateItems.Clear();
-					CommonData.MainSetting.Clipboard.TemplateItems.Add(lastItem);
-				}
-			}
+			ClearDisplayItems();
 		}
 
 		private void toolClipboard_itemEmpty_Click(object sender, EventArgs e)
@@ -1429,6 +1682,7 @@
 
 		private void selectTemplateReplace_CheckedChanged(object sender, EventArgs e)
 		{
+			this.selectTemplateProgram.Enabled = this.selectTemplateReplace.Checked;
 			ChekedReplace();
 		}
 
@@ -1436,10 +1690,10 @@
 		private void listReplace_MeasureItem(object sender, MeasureItemEventArgs e)
 		{
 			Debug.Assert(e.Index != -1);
-			if(!e.Index.Between(0, this._replaceCommentList.Count - 1)) {
+			if(!e.Index.Between(0, ReplaceItemList.Count - 1)) {
 				return;
 			}
-			var replaceItem = this._replaceCommentList[e.Index];
+			var replaceItem = ReplaceItemList[e.Index];
 			PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 				var commentSize = e.Graphics.MeasureString(replaceItem.Comment, commentFont, width - GetReplaceCommentPadding(), commentFormat);
 				e.ItemHeight = (int)(titleSize.Height + commentSize.Height) + this.listReplace.Margin.Vertical + this.listReplace.Margin.Top;
@@ -1449,7 +1703,7 @@
 		private void listReplace_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if(e.Index != -1) {
-				var replaceItem = this._replaceCommentList[e.Index];
+				var replaceItem = ReplaceItemList[e.Index];
 				PaintReplaceItem(e.Graphics, replaceItem, (titleFont, commentFont, titleFormat, commentFormat, width, titleSize) => {
 					using(var foreBrush = new SolidBrush(e.ForeColor)) {
 						var titleArea = new RectangleF() {
@@ -1474,13 +1728,14 @@
 
 		private void listReplace_Resize(object sender, EventArgs e)
 		{
-			if(this._replaceCommentList == null) {
+			if(ReplaceItemList == null) {
 				return;
 			}
 			this.listReplace.BeginUpdate();
 			var selectedItem = this.listReplace.SelectedItem;
 			try {
-				this.listReplace.DataSource = new BindingList<ReplaceItem>(this._replaceCommentList);
+				this.listReplace.DataSource = null;
+				this.listReplace.DataSource = ReplaceItemList;
 				this.listReplace.SelectedItem = selectedItem;
 			} finally {
 				this.listReplace.EndUpdate();
@@ -1546,6 +1801,22 @@
 		void ListItemStack_MouseWheel(object sender, MouseEventArgs e)
 		{
 			UsedWheel = true;
+		}
+
+		private void toolItemStack_itemFilter_TextChanged(object sender, EventArgs e)
+		{
+			ResetFilter();
+			this.toolItemStack_itemFilter.Focus();
+		}
+
+		private void toolItemStack_itemFiltering_Click(object sender, EventArgs e)
+		{
+			ClearFilter();
+		}
+
+		private void selectTemplateMacro_CheckedChanged(object sender, EventArgs e)
+		{
+			ChekedReplace();
 		}
 	}
 }

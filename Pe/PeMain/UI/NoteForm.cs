@@ -845,9 +845,9 @@
 			var buttonState = SkinButtonState.Normal;
 			
 			var title = NoteItem.Title;
-			#if DEBUG
-			title = string.Format("(DEBUG) {0}", title);
-			#endif
+#if DEBUG || BETA
+			title = string.Format("({0}) {1}", Literal.BuildType, title);
+#endif
 			CommonData.Skin.DrawNoteCaption(g, drawArea, active, noteStatus, NoteItem.Style.Color.Fore.Color, NoteItem.Style.Color.Back.Color, CommonData.MainSetting.Note.CaptionFontSetting.Font, title);
 			foreach(var command in GetCommandList()) {
 				var commandArea = CommonData.Skin.GetNoteCommandArea(drawArea, command);

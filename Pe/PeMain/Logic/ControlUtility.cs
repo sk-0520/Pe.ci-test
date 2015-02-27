@@ -443,10 +443,10 @@
 		public static void SetDefaultText(Form target, Language language, IDictionary<string, string> map = null)
 		{
 			target.SetLanguage(language, map);
-			#if DEBUG
-			target.Text = "(DEBUG) " + target.Text;
-			#endif
-			
+#if DEBUG || BETA
+			target.Text = "(" + Literal.BuildType + ") " + target.Text;
+#endif
+
 			var acceptButton = target.AcceptButton as Button;
 			if(acceptButton != null) {
 				acceptButton.Text = language["common/command/ok"];

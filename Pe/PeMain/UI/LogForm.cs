@@ -139,8 +139,8 @@
 			base.ApplyLanguage();
 
 			Text = CommonData.Language["window/log"];
-#if DEBUG
-			Text = "(DEBUG) " + Text;
+#if DEBUG || BETA
+			Text = "(" + Literal.BuildType + ") " + Text;
 #endif
 
 			this.toolLog_save.Text = CommonData.Language["log/command/save"];
