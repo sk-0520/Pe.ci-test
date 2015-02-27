@@ -24,12 +24,14 @@
 		public const string programName = "Pe";
 		public const string updateProgramDirectoryName = "Updater";
 		public const string updateProgramName = updateProgramDirectoryName + ".exe";
-		#if DEBUG
+#if DEBUG
 		public const string shortcutName = "Pe(DEBUG).lnk";
-		#else
+#elif BETA
+		public const string shortcutName = "Pe(BETA).lnk";
+#else
 		public const string shortcutName = "Pe.lnk";
-		#endif
-		
+#endif
+
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
@@ -501,6 +503,22 @@
 			_initialized = true;
 			#endif
 		}
+
+		public static string BuildType
+		{
+			get
+			{
+#if DEBUG
+				return "DEBUG";
+#elif BETA
+				return "β";
+#else
+				return "RELEASE";
+#endif
+			}
+		}
+
+		public static string BuildProcess { get { return Environment.Is64BitProcess ? "64" : "32"; } }
 		
 		/// <summary>
 		/// 文字列リテラルを書式で変換。

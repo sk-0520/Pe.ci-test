@@ -13,20 +13,24 @@
 	/// </summary>
 	public static class DrawUtility
 	{
-		/// <summary>
-		/// デバッグ時にデバッグ用と分かるように印付け。
-		/// </summary>
-		/// <param name="g">描画対象</param>
-		/// <param name="drawArea">描画領域</param>
-		[Conditional("DEBUG")]
-		public static void MarkingDebug(Graphics g, Rectangle drawArea)
+		public static void MarkingBuildType(Graphics g, Rectangle drawArea)
 		{
-			using(var brush = new SolidBrush(Color.FromArgb(90, Color.Red))) {
+#if DEBUG || BETA
+#	if DEBUG
+			var color = Color.Red;
+#	elif BETA
+			var color = Color.Blue;
+#	else
+			var color = Color.Lime;
+#	endif
+			using(var brush = new SolidBrush(Color.FromArgb(90, color))) {
 				g.FillRectangle(brush, drawArea);
 			}
+#else
+			return;
+#endif
 		}
-		
-		
+
 		/// <summary>
 		/// RGB反転。
 		/// </summary>

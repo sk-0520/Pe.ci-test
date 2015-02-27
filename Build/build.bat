@@ -25,11 +25,11 @@ if "%PROCESSOR_ARCHITECTURE%" NEQ "x86" (
 )
 
 echo build x86
-"%MB%" Pe\Pe.sln /p:DefineConstants=BUILD /p:Configuration=Release;Platform=x86 /t:Rebuild /m
+"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x86 /t:Rebuild /m
 set ERROR_X86=%ERRORLEVEL%
 
 echo build x64
-"%MB%" Pe\Pe.sln /p:DefineConstants=BUILD /p:Configuration=Release;Platform=x64 /t:Rebuild /m
+"%MB%" Pe\Pe.sln /p:DefineConstants="BUILD;%1" /p:Configuration=Release;Platform=x64 /t:Rebuild /m
 set ERROR_X64=%ERRORLEVEL%
 
 if not %ERROR_X86% == 0 echo "build error x86: %ERROR_X86%" >> "%ERROR%"
