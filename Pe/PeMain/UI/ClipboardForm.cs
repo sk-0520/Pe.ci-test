@@ -702,7 +702,8 @@
 			//this.tabPreview.ResumeLayout();
 			if(Visible) {
 				WindowsUtility.SetRedraw(this, true);
-				Refresh();
+				//Refresh();
+				Invalidate();
 			}
 		}
 
@@ -920,7 +921,7 @@
 				//this.listClipboard.SelectedIndex = to;
 				//this.listItemStack.Refresh();
 				var index = this.listItemStack.SelectedIndex;
-				//this.listItemStack.DataSource = null;
+				this.listItemStack.DataSource = null;
 				BindStackList(list);
 				if(index != -1) {
 					this.listItemStack.SelectedIndex = index;
@@ -1195,22 +1196,32 @@
 		{
 			var index = this.listItemStack.SelectedIndex;
 			if(index != -1) {
-				if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
-					//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
-					var clipboardItem = GetListItem<ClipboardItem>(index);
-					CommonData.MainSetting.Clipboard.HistoryItems.Remove(clipboardItem);
-					clipboardItem.ToDispose();
-				} else {
-					Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
-					// 最後の一つを削除するとあまりよろしくない
-					if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
-						//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
-						var templateItem = GetListItem<TemplateItem>(index);
-						CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
-						templateItem.ToDispose();
+				this.listItemStack.BeginUpdate();
+				try {
+					if(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.History) {
+						//var clipboardItem = CommonData.MainSetting.Clipboard.HistoryItems[index];
+						var clipboardItem = GetListItem<ClipboardItem>(index);
+						CommonData.MainSetting.Clipboard.HistoryItems.Remove(clipboardItem);
+						clipboardItem.ToDispose();
+					} else {
+						Debug.Assert(CommonData.MainSetting.Clipboard.ClipboardListType == ClipboardListType.Template);
+						// 最後の一つを削除するとあまりよろしくない
+						if(CommonData.MainSetting.Clipboard.TemplateItems.Count != 1) {
+							//var templateItem = CommonData.MainSetting.Clipboard.TemplateItems[index];
+							var templateItem = GetListItem<TemplateItem>(index);
+							CommonData.MainSetting.Clipboard.TemplateItems.Remove(templateItem);
+							templateItem.ToDispose();
+						}
 					}
+					ResetFilter();
+					if(this.listItemStack.Items.Count > index) {
+						this.listItemStack.SelectedIndex = index;
+					} else if(this.listItemStack.Items.Count != 0) {
+						this.listItemStack.SelectedIndex = this.listItemStack.Items.Count - 1;
+					}
+				} finally {
+					this.listItemStack.EndUpdate();
 				}
-				ResetFilter();
 			}
 		}
 
@@ -1385,6 +1396,7 @@
 		private void toolClipboard_itemType_itemClipboard_Click(object sender, EventArgs e)
 		{
 			ChangeSelectTypeControl((ToolStripMenuItem)sender);
+			this.toolClipboard.Refresh();
 		}
 
 		void TemplateItems_ListChanged(object sender, EventArgs e)
