@@ -89,7 +89,7 @@
 					<comment>将来的にはもうちっと頑張ろうと思いますがとりあえず#233実装はここまで</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a68f08edf4921eff8b339778ad30e19be0d11168">
 				<message>#235: β版をとりあえずすぐ試せるようにする</message>
 				<comments>
 					<comment>[Pe]/bat/beta.bat を実行すると現行バージョンに影響することなくβバージョンを実行することができます</comment>
