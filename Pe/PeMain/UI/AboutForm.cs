@@ -95,6 +95,8 @@
 			ComponentInfoList = xml
 				.Elements()
 				.Select(e => new ComponentInfo(e))
+				.OrderBy(ci => ci.Type.ToLower() != "Library".ToLower())
+				.ThenBy(ci => ci.Name)
 				.ToList()
 			;
 			this.gridComponents_columnName.DataPropertyName = "Name";
