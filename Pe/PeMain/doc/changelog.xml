@@ -56,17 +56,11 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.53.1" type="rc">
+	<log date="2015/02/28" version="0.54.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>使わない人は一生使わないであろう機能を頑張って実装</message>
 			</note>
 		</group>
 		<group type="features">
@@ -84,8 +78,8 @@
 					<comment>置き換え処理が有効であればさらにT4テンプレートエンジンを使用した置き換えを行えます</comment>
 					<comment>プログラム書ける人でかつ大規模なテンプレートを書かない人が対象です</comment>
 					<comment>T4はMono.TextTemplatingを使用しているためMS製T4と動作が違うかもです</comment>
-					<comment>暗黙的に &lt;#@ template="" language="C#" hostspecific="true" #&gt; が行頭に挿入されます</comment>
-					<comment>Pe側で __host(内部使用), app(IReadOnlyDictionary&lt;string,object>) を予約します。Pe側で提供するデータには app[string] でアクセスしてください</comment>
+					<comment>暗黙的に &lt;#@ template language="C#" hostspecific="true" culture="使用言語の言語コード" #&gt; が先頭行に挿入されます</comment>
+					<comment>Pe側で __host(内部使用), app(IReadOnlyDictionary&lt;string,object>) を予約します。Peの提供するデータには app[string] でアクセスしてください</comment>
 					<comment>将来的にはもうちっと頑張ろうと思いますがとりあえず#233実装はここまで</comment>
 				</comments>
 			</note>
@@ -96,33 +90,6 @@
 					<comment>beta.bat 実行時に デスクトップ/Pe-beta ディレクトリが存在しなければ現行バージョンの設定データ(デフォルトパス)を デスクトップ/Pe-beta ディレクトリにコピーします</comment>
 					<comment>あくまでβバージョンとして動作させるための機能ですのでリリース版で実行する意味はありません</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="fixes">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
