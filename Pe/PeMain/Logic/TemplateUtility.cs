@@ -82,9 +82,13 @@
 					return process.TransformText();
 				}
 				process.AllProcess();
-				if(process.GeneratedErrorList.Any() || process.CompileErrorList.Any()) {
+				if(process.Error != null || process.GeneratedErrorList.Any() || process.CompileErrorList.Any()) {
 					// エラーあり
-					return string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => e.ToString()));
+					if(process.Error != null) {
+						return process.Error.ToString() + Environment.NewLine + string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => e.ToString()));
+					} else {
+						return string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => e.ToString()));
+					}
 				}
 				return process.TransformText();
 			} else {

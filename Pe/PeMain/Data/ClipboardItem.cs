@@ -73,6 +73,7 @@
 		protected override void Dispose(bool disposing)
 		{
 			Image.ToDispose();
+			Image = null;
 			base.Dispose(disposing);
 		}
 

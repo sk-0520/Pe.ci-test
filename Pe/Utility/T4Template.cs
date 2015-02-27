@@ -12,6 +12,7 @@
 	using System.Security;
 	using System.Text;
 	using Microsoft.VisualStudio.TextTemplating;
+	using Mono.TextTemplating;
 
 	/// <summary>
 	/// 警告レベル。
@@ -92,10 +93,6 @@
 		/// プログラムソース -> アセンブリでのエラー。
 		/// </summary>
 		private List<CompilerError> _compileErrorList = new List<CompilerError>();
-		/// <summary>
-		/// ファイナライズ中か。
-		/// </summary>
-		bool _finalizeing = false;
 
 		/// <summary>
 		/// デフォルト値での生成。
@@ -133,9 +130,7 @@
 			if(eventHost != null) {
 				eventHost.Error -= WithEvent_Error;
 			}
-			this._finalizeing = true;
 			Dispose(false);
-			this._finalizeing = false;
 		}
 
 		/// <summary>
@@ -146,7 +141,7 @@
 			get { return this._templateSource; }
 			set {
 				if(this._templateSource != value) {
-					DisposeTemplateSource();
+					DisposeTemplateSource(true);
 					this._templateSource = value;
 				}
 			}
@@ -275,13 +270,13 @@
 		/// <summary>
 		/// 実行になんかあったエラー。
 		/// </summary>
-		public Exception TransformError { get; protected set; }
+		public Exception Error { get; protected set; }
 
 		#region IDisposable
 
 		protected virtual void Dispose(bool disposing)
 		{
-			DisposeTemplateSource();
+			DisposeTemplateSource(disposing);
 		}
 
 		public void Dispose()
@@ -302,9 +297,9 @@
 		/// <summary>
 		/// テンプレートソース破棄。
 		/// </summary>
-		protected virtual void DisposeTemplateSource()
+		protected virtual void DisposeTemplateSource(bool disposing)
 		{
-			DisposeProgramSource();
+			DisposeProgramSource(disposing);
 
 			//TemplateSource = string.Empty;
 			this._generatedErrorList.Clear();
@@ -314,9 +309,9 @@
 		/// <summary>
 		/// プログラムソース破棄。
 		/// </summary>
-		protected virtual void DisposeProgramSource()
+		protected virtual void DisposeProgramSource(bool disposing)
 		{
-			DisposeAssembly();
+			DisposeAssembly(disposing);
 
 			this._compileErrorList.Clear();
 			Compiled = false;
@@ -327,10 +322,10 @@
 		/// <summary>
 		/// アセンブリ破棄。
 		/// </summary>
-		protected virtual void DisposeAssembly()
+		protected virtual void DisposeAssembly(bool disposing)
 		{
 			if(TemplateProxy != null) {
-				if(this._finalizeing) {
+				if(!disposing) {
 					try {
 						TemplateProxy.ToDispose();
 					} catch(RemotingException ex) {
@@ -343,7 +338,7 @@
 			}
 			if(TemplateAppDomain != null) {
 				if(IsOtherAppDomain) {
-					if(this._finalizeing) {
+					if(!disposing) {
 						try {
 							AppDomain.Unload(TemplateAppDomain);
 						} catch(CannotUnloadAppDomainException ex) {
@@ -409,17 +404,24 @@
 
 			this._generatedErrorList.Clear();
 
-			string programmingLanguage;
-			string[] references;
+			string sourceCode = string.Empty;
+			string programmingLanguage = string.Empty;
+			string[] references = null;
 			var engine = new Engine();
-			string sourceCode = engine.PreprocessTemplate(
-				templateSource,
-				Host,
-				ClassName,
-				NamespaceName,
-				out programmingLanguage,
-				out references
-			);
+			try {
+				sourceCode = engine.PreprocessTemplate(
+					templateSource,
+					Host,
+					ClassName,
+					NamespaceName,
+					out programmingLanguage,
+					out references
+				);
+			} catch(ParserException ex) {
+				Error = ex;
+				return;
+			}
+			Error = null;
 
 			if(!GeneratedErrorList.Any()) {
 				Generated = true;
@@ -480,7 +482,7 @@
 			Debug.Assert(!string.IsNullOrWhiteSpace(NamespaceName));
 			Debug.Assert(!string.IsNullOrWhiteSpace(ClassName));
 
-			DisposeProgramSource();
+			DisposeProgramSource(true);
 
 			// コンパイル準備
 			var codeDomProv = CodeDomProvider.CreateProvider(ProgrammingLanguage, option);
@@ -542,9 +544,10 @@
 		public string TransformText()
 		{
 			try {
+				Error = null;
 				return TransformText_Impl();
 			} catch(Exception ex) {
-				TransformError = ex;
+				Error = ex;
 				return ex.ToString();
 			}
 		}
