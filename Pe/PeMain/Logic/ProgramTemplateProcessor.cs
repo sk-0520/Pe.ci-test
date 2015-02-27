@@ -1,10 +1,11 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
 	using System;
-using System.Text;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Collections.Generic;
+	using System.Text;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// C#限定でムリくりアプリケーション用テンプレート処理。
@@ -12,6 +13,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 	[Serializable]
 	public class ProgramTemplateProcessor: T4TemplateProcessor, ILanguage
 	{
+		const string directiveLang = "LANGUAGE";
+			
 		public ProgramTemplateProcessor()
 			: base()
 		{ }
@@ -23,32 +26,43 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		/// <summary>
 		/// テンプレートディレクティブ。
 		/// </summary>
-		public string TemplateDdirective {get;set;}
+		public string TemplateDirective {get;set;}
 
 		public Language Language { get; set; }
 
 		protected override void Initialize()
 		{
+			base.Initialize();
+
 			NamespaceName = "ContentTypeTextNet.Pe.PeMain.Logic.ProgramTemplateProcessor.Generator";
 			ClassName = "ProgramTemplateProcessor";
 			TemplateAppDomainName = "TemplateAppDomain";
 
-			TemplateDdirective = string.Join(Environment.NewLine, new[] {
-				"<#@ template language=\"C#\" hostspecific=\"true\" #>",
+			var templateDirective = new[] {
+				"<#@ template language=\"C#\" hostspecific=\"true\" {{" + directiveLang + "}} #>",
 				"<#",
 				"var __host    = (Microsoft.VisualStudio.TextTemplating.ITextTemplatingSessionHost) Host;",
 				"var app = (IReadOnlyDictionary<string, object>)__host.Session;",
 				"#>",
-			});
+			};
+			TemplateDirective = string.Join(Environment.NewLine, templateDirective);
 
-			base.Initialize();
+			FirstLineNumber = templateDirective.Length;
 		}
 
 		protected override string MakeTemplateSource()
 		{
 			var templateSource = new StringBuilder(TemplateSource.Length + 40);
 
-			templateSource.AppendLine(TemplateDdirective);
+			var map = new Dictionary<string, string>() {
+				{ directiveLang, string.Empty },
+			};
+			if(Language != null) {
+				map[directiveLang] = string.Format("culture=\"{0}\"", Language.Code);
+			}
+			var templateDirective = TemplateDirective.ReplaceRangeFromDictionary("{{", "}}", map);
+
+			templateSource.AppendLine(templateDirective);
 			templateSource.Append(base.MakeTemplateSource());
 
 			return templateSource.ToString();

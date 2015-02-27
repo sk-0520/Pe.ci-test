@@ -89,6 +89,7 @@
 		/// テンプレートソース -> プログラムソースでのエラー。
 		/// </summary>
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
+		public int FirstLineNumber { get; protected set; }
 		/// <summary>
 		/// プログラムソース -> アセンブリでのエラー。
 		/// </summary>
@@ -285,6 +286,7 @@
 		protected virtual void Initialize()
 		{
 			CompileMessage = string.Empty;
+			FirstLineNumber = 1;
 		}
 
 		/// <summary>
