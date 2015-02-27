@@ -653,6 +653,7 @@
 	{
 		public const string code = "<#  #>";
 		public const string expr = "<#=  #>";
+		public const string define = "<#+  #>";
 
 		public const string application = AppLanguageName.application;
 		public const string versionFull = AppLanguageName.versionFull;
@@ -674,6 +675,8 @@
 				versionFull,
 				versionNumber,
 				versionHash,
+
+				define,
 			};
 		}
 
@@ -708,6 +711,7 @@
 			return new[] {
 				code,
 				expr,
+				define,
 			};
 		}
 	}

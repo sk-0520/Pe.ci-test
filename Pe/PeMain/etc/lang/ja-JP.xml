@@ -530,6 +530,7 @@
 		<Word Name="template/replace/text/name/CLIP:TAIL"    Text="最終行のみ${template-CLIP}" />
 		<Word Name="template/replace/program/name/&lt;#  #&gt;"  Text="コード" />
 		<Word Name="template/replace/program/name/&lt;#=  #&gt;"  Text="式" />
+		<Word Name="template/replace/program/name/&lt;#+  #&gt;"  Text="定義" />
 		<Word Name="template/replace/program/name/APPLICATION"  Text="${template-APPLICATION}" />
 		<Word Name="template/replace/program/name/VER"          Text="@[APPLICATION] ${template-VER}" />
 		<Word Name="template/replace/program/name/VER:NUMBER"   Text="@[APPLICATION] ${template-VER:NUMBER}" />
