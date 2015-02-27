@@ -4,7 +4,16 @@ for /F "skip=2 tokens=3* delims= " %%a in ('reg query "HKEY_CURRENT_USER\Softwar
 for /F "usebackq" %%s in (`echo %DesktopFolder%`) do set DESKTOP=%%s
 
 set BETA=Pe-beta
-set SETTING_DIR=%DESKTOP%\%BETA%
+set BETA_ROOT_DIR=%DESKTOP%\%BETA%
+set BETA_DIR=%BETA_ROOT_DIR%\Pe
 
-start PeMain.exe /setting-root=%SETTING_DIR% /mutex=Pe_beta
+set RELEASE_DIR=%APPDATA%\Pe
+
+rem 既存データをパクってくる
+mkdir "%BETA_DIR%"  2>NUL
+copy  "%RELEASE_DIR%\*.xml"      "%BETA_DIR%" /Y
+copy  "%RELEASE_DIR%\*.sqlite3"  "%BETA_DIR%" /Y
+copy  "%RELEASE_DIR%\*.gz"       "%BETA_DIR%" /Y
+
+start PeMain.exe /setting-root=%BETA_ROOT_DIR% /mutex=Pe_beta
 
