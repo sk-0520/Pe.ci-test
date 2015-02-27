@@ -1075,9 +1075,7 @@
 				var img = new Bitmap(iconSize.Width, iconSize.Height);
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawIcon(icon, new Rectangle(Point.Empty, UsingToolbarItem.IconScale.ToSize()));
-#if DEBUG
-					DrawUtility.MarkingDebug(g, new Rectangle(Point.Empty, UsingToolbarItem.IconScale.ToSize()));
-#endif
+					DrawUtility.MarkingBuildType(g, new Rectangle(Point.Empty, UsingToolbarItem.IconScale.ToSize()));
 				}
 				toolItem.Image = img;
 			}

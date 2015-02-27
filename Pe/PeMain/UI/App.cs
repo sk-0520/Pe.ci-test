@@ -930,9 +930,7 @@
 			using(var img = new Bitmap(iconSize.Width, iconSize.Height)) {
 				using(var g = Graphics.FromImage(img)) {
 					g.DrawImage(IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.Tasktray), IconScale.Small), iconRect);
-#if DEBUG
-					DrawUtility.MarkingDebug(g, iconRect);
-#endif
+					DrawUtility.MarkingBuildType(g, iconRect);
 				}
 				this._notifyIcon.Icon = Icon.FromHandle(img.GetHicon());
 			}
