@@ -94,7 +94,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="9b1d3dc746847260a64425985c4a038b7b199c8f">
 				<message>設定データのバックアップファイル拡張子が ..zip となっていた不具合の修正</message>
 			</note>
 		</group>
