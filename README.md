@@ -46,12 +46,6 @@ Bitbucket へログイン可能なアカウントを持っていれば課題を�
 
 [Pe-β](https://ci.appveyor.com/project/sk_0520/pe-4vo6i)
 
-CIとは微妙に独立していますが、β版としてPeを出力しています。
-なのでビルド環境が手元になくても最新版が取得できます。
-
-プログラム自体は **リリース版** ですが開発側としてはあくまでリリース用構成で出力された **非リリース版** となります。
-さらにビルド自体が Windows Server 2012 R2 という開発環境と異なるOSと謎構成(調べりゃわかるけどそこまでする価値も記載する意味ない)なのでリリース版とは動作異なるかもです。
-
  * **current** [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-4vo6i)
  * **mater** [![Build status](https://ci.appveyor.com/api/projects/status/ll41wy1edp5546hn/branch/master?svg=true)](https://ci.appveyor.com/project/sk_0520/pe-4vo6i/branch/master)
 
