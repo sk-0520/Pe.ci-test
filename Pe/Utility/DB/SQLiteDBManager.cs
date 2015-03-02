@@ -7,6 +7,9 @@
 	using System.Drawing;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
+	/// <summary>
+	/// DBManager を SQLite で使えるようにする。
+	/// </summary>
 	public class SQLiteDBManager: DBManager
 	{
 		public SQLiteDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)

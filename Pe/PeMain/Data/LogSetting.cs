@@ -1,10 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using ContentTypeTextNet.Pe.PeMain.Kind;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Drawing;
+	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
+
 	/// <summary>
 	/// ログ設定。
 	/// </summary>

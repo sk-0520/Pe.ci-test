@@ -1,14 +1,12 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
-	using System.Linq;
-	using System.Collections.Generic;
 	using System.Drawing;
+	using System.Linq;
 	using System.Windows.Forms;
 	using System.Xml;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Utility;
-	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]

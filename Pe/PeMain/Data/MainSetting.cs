@@ -1,13 +1,13 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Reflection;
+	using System.Windows.Forms;
+	using System.Xml;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 設定統括
 	/// </summary>

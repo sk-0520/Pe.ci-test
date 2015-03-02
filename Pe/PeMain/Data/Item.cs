@@ -1,9 +1,9 @@
-﻿using System;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.PeMain.IF;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+
 	/// <summary>
 	/// なんかを保持するアイテムの基底。
 	/// </summary>
