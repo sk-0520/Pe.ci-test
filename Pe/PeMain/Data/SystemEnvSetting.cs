@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+
 	/// <summary>
 	/// システム環境に対する操作設定。
 	/// </summary>
