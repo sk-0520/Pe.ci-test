@@ -130,6 +130,12 @@
 		{
 			return HasValue(option, 0);
 		}
+		/// <summary>
+		/// 値を持つ KeyValueHeader + option が存在するかを確認。
+		/// </summary>
+		/// <param name="option">オプション。</param>
+		/// <param name="index">指定オプション内で何番目(0ベース)を対象とするか。</param>
+		/// <returns></returns>
 		public bool HasValue(string option, int index = 0)
 		{
 			var keyOption = GetKeyOption(option);
