@@ -61,10 +61,12 @@
 				var noteDB = new NoteDB(this);
 				noteDB.DeleteDisableItem();
 				tran.Commit();
+
 				return true;
 			} catch(Exception ex) {
 				logger.Puts(LogType.Error, ex.Message, ex);
 				tran.Rollback();
+
 				return false;
 			}
 		}
