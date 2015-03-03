@@ -1318,9 +1318,11 @@
 				Func<int, bool> checkCount = n => this._commonData.MainSetting.Running.ExecuteCount > 0 && (this._commonData.MainSetting.Running.ExecuteCount % n) == 0;
 
 				if(checkCount(Literal.dbDisableDeleteMultipleCount)) {
+					this._commonData.Logger.Puts(LogType.Information, "delete: disable item", new { Literal.dbDisableDeleteMultipleCount, this._commonData.MainSetting.Running.ExecuteCount });
 					this._commonData.Database.DeleteDisableItem(this._commonData.Logger);
 				}
 				if(checkCount(Literal.dbAnalyzeMultipleCount)) {
+					this._commonData.Logger.Puts(LogType.Information, "analyze", new { Literal.dbAnalyzeMultipleCount, this._commonData.MainSetting.Running.ExecuteCount });
 					this._commonData.Database.Analyze(this._commonData.Logger);
 				}
 			}
