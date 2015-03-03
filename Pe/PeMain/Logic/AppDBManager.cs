@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using System.Collections.Generic;
 	using System;
+	using System.Diagnostics;
 
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
@@ -77,6 +78,10 @@
 		/// <param name="logger"></param>
 		public void Analyze(ILogger logger)
 		{
+			using(var query = CreateQuery()) {
+				query.ExecuteCommand("REINDEX");
+				query.ExecuteCommand("ANALYZE");
+			}
 		}
 	}
 }
