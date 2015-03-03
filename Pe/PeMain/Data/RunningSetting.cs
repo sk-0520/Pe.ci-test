@@ -11,7 +11,7 @@
 	/// 実行情報。
 	/// </summary>
 	[Serializable]
-	public class RunningInfo: Item
+	public class RunningSetting: Item
 	{
 		/// <summary>
 		/// 自動アップデートチェック。

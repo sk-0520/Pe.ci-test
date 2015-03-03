@@ -97,15 +97,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			base.ApplySetting();
 
-			this.selectUpdateCheck.Checked = CommonData.MainSetting.RunningInfo.CheckUpdate;
-			this.selectUpdateCheckRC.Checked = CommonData.MainSetting.RunningInfo.CheckUpdateRC;
+			this.selectUpdateCheck.Checked = CommonData.MainSetting.Running.CheckUpdate;
+			this.selectUpdateCheckRC.Checked = CommonData.MainSetting.Running.CheckUpdateRC;
 		}
 		#endregion ////////////////////////////////////
 
 		void CommandAccept_Click(object sender, EventArgs e)
 		{
-			CommonData.MainSetting.RunningInfo.CheckUpdate = this.selectUpdateCheck.Checked;
-			CommonData.MainSetting.RunningInfo.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
+			CommonData.MainSetting.Running.CheckUpdate = this.selectUpdateCheck.Checked;
+			CommonData.MainSetting.Running.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
 			
 			DialogResult = DialogResult.OK;
 		}

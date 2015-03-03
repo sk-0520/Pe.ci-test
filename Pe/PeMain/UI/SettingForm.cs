@@ -182,7 +182,7 @@
 			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
 		}
 
-		void InitializeRunningInfo(RunningInfo setting)
+		void InitializeRunningInfo(RunningSetting setting)
 		{
 			this.selectUpdateCheck.Checked = setting.CheckUpdate;
 			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
@@ -263,7 +263,7 @@
 
 			InitializeLog(mainSetting.Log);
 			InitializeSystemEnv(mainSetting.SystemEnvironment);
-			InitializeRunningInfo(mainSetting.RunningInfo);
+			InitializeRunningInfo(mainSetting.Running);
 			InitializeLanguage(mainSetting.LanguageName, Language);
 			InitializeSkin(mainSetting.Skin);
 			InitializeStream(mainSetting.Stream);
@@ -822,8 +822,8 @@
 			var mainSetting = new MainSetting();
 
 			// 現在状況
-			mainSetting.RunningInfo.Running = true;
-			mainSetting.RunningInfo.SetDefaultVersion();
+			mainSetting.Running.Running = true;
+			mainSetting.Running.SetDefaultVersion();
 
 			// 本体
 			ExportMainSetting(mainSetting);
@@ -957,7 +957,7 @@
 			systemEnvSetting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
 		}
 
-		void ExportRunningInfoSetting(RunningInfo setting)
+		void ExportRunningInfoSetting(RunningSetting setting)
 		{
 			setting.CheckUpdate = this.selectUpdateCheck.Checked;
 			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
@@ -993,7 +993,7 @@
 		{
 			ExportLogSetting(mainSetting.Log);
 			ExportSystemEnvSetting(mainSetting.SystemEnvironment);
-			ExportRunningInfoSetting(mainSetting.RunningInfo);
+			ExportRunningInfoSetting(mainSetting.Running);
 
 			ExportLanguageSetting(mainSetting);
 			ExportSkinSetting(mainSetting.Skin);

@@ -157,7 +157,7 @@
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
     <Compile Include="Data\ReplaceItem.cs" />
-    <Compile Include="Data\RunningInfo.cs" />
+    <Compile Include="Data\RunningSetting.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\StreamSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />

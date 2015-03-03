@@ -84,7 +84,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\RunningInfoTest.cs" />
+    <Compile Include="Data\RunningSettingTest.cs" />
     <Compile Include="LiteralTest.cs" />
     <Compile Include="Logic\ProgramTemplateProcessorTest.cs" />
     <Compile Include="Logic\TemplateUtilityTest.cs" />

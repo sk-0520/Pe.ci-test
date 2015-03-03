@@ -4,7 +4,7 @@
 	using NUnit.Framework;
 
 	[TestFixture]
-	class RunningInfoTest
+	class RunningSettingTest
 	{
 		[TestCase(0, 1)]
 		[TestCase(-1, 0)]
@@ -12,7 +12,7 @@
 		[TestCase(int.MaxValue , int.MaxValue)]
 		public void IncrementExecuteCountTest(int init, int result)
 		{
-			var ri = new RunningInfo() {
+			var ri = new RunningSetting() {
 				ExecuteCount = init,
 			};
 			ri.IncrementExecuteCount();

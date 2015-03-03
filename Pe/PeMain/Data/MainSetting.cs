@@ -16,7 +16,7 @@
 	{
 		public MainSetting()
 		{
-			RunningInfo = new RunningInfo();
+			Running = new RunningSetting();
 			
 			Log = new LogSetting();
 			SystemEnvironment = new SystemEnvironmentSetting();
@@ -49,7 +49,11 @@
 			Clipboard.CorrectionValue();
 		}
 		
-		public RunningInfo RunningInfo { get; set; }
+		/// <summary>
+		/// 実行許可とかそんな感じ。
+		/// </summary>
+		[XmlElement("RunningInfo")]
+		public RunningSetting Running { get; set; }
 		
 		/// <summary>
 		/// 使用言語。
