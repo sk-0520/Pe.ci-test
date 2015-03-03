@@ -31,6 +31,11 @@
 		public ushort VersionRevision { get; set; }
 		public ushort VersionBuild { get; set; }
 
+		/// <summary>
+		/// プログラムの実行回数。
+		/// </summary>
+		public int ExecuteCount { get; set; }
+
 		public void SetDefaultVersion()
 		{
 			var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
@@ -38,6 +43,13 @@
 			VersionMinor = (ushort)assemblyVersion.Minor;
 			VersionRevision = (ushort)assemblyVersion.Revision;
 			VersionBuild = (ushort)assemblyVersion.Build;
+		}
+
+		public void IncrementExecuteCount()
+		{
+			if(ExecuteCount < int.MaxValue) {
+				ExecuteCount += 1;
+			}
 		}
 	}
 }

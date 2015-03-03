@@ -567,6 +567,9 @@
 				Initialized = false;
 				return existsSettingFilePath;
 			}
+			// 実行許可が下りてるのでプログラム実行回数を増やす
+			this._commonData.MainSetting.RunningInfo.IncrementExecuteCount();
+
 			this._commonData.MainSetting.RunningInfo.Running = true;
 
 			InitializeDB(commandLine, logger);
