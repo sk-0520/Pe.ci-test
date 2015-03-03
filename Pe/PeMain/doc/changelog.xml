@@ -72,7 +72,7 @@
 			<note rev="ac5959d98883d26dad53ca20a942c3e0a3b99839">
 				<message>#168: DBの論理削除後始末</message>
 			</note>
-			<note rev="">
+			<note rev="98e707adb5d3e12c9758e45b6e1c71911c703412">
 				<message>#169: DBのアナライズ</message>
 				<comments>
 					<comment>一定タイミングで REINDEX, ANALYZEを指定なし実行</comment>
