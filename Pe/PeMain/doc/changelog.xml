@@ -69,7 +69,7 @@
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="ac5959d98883d26dad53ca20a942c3e0a3b99839">
 				<message>#168: DBの論理削除後始末</message>
 			</note>
 			<note rev="">
