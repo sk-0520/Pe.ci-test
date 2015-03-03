@@ -400,13 +400,18 @@
 			}
 		}
 
-		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
+		public static IReadOnlyDictionary<string, string> GetTableCreatCommand()
 		{
-			var map = new Dictionary<string, string>() {
+			return new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteMasterTable },
 				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteTransactionTable },
 				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteStyleTransactionTable },
 			};
+		}
+
+		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
+		{
+			var map = GetTableCreatCommand();
 			var langMap = new Dictionary<string, string>() {
 				{ ProgramLanguageName.tableName, tableName },
 			};
@@ -1313,7 +1318,7 @@
 				Func<int, bool> checkCount = n => this._commonData.MainSetting.Running.ExecuteCount > 0 && (this._commonData.MainSetting.Running.ExecuteCount % n) == 0;
 
 				if(checkCount(Literal.dbDisableDeleteMultipleCount)) {
-					this._commonData.Database.Delete(this._commonData.Logger);
+					this._commonData.Database.DeleteDisableItem(this._commonData.Logger);
 				}
 				if(checkCount(Literal.dbAnalyzeMultipleCount)) {
 					this._commonData.Database.Analyze(this._commonData.Logger);

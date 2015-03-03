@@ -2,12 +2,13 @@
 {
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// T_NOTE行。
 	/// </summary>
 	[EntityMapping("T_NOTE")]
-	public class TNoteRow: CommonDataRow
+	public class TNoteRow: CommonDataRow, INoteId
 	{
 		/// <summary>
 		/// ノートID。

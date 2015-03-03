@@ -175,6 +175,7 @@
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
+    <Compile Include="IF\INote.cs" />
     <Compile Include="IF\IRootSender.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILanguage.cs" />

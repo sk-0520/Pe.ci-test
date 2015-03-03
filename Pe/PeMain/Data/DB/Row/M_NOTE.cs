@@ -2,12 +2,13 @@
 {
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// M_NOTEの行。
 	/// </summary>
 	[EntityMapping("M_NOTE")]
-	public class MNoteRow: CommonDataEnabledRow
+	public class MNoteRow: CommonDataEnabledRow, INoteId
 	{
 		/// <summary>
 		/// ノートID。
