@@ -59,5 +59,19 @@
 			
 			return base.DbValueFromValue(value, type);
 		}
+
+		/// <summary>
+		/// テーブル一覧を取得する。
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetTables()
+		{
+			using(var query = CreateQuery()) {
+				var reader = query.ExecuteReader(global::ContentTypeTextNet.Pe.Library.Utility.Properties.Resources.SQL_GetTables);
+				while(reader.Read()) {
+					yield return To<string>(reader["NAME"]);
+				}
+			}
+		}
 	}
 }

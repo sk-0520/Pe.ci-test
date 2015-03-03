@@ -73,6 +73,12 @@
 				<message>#168: DBの論理削除後始末</message>
 			</note>
 			<note rev="">
+				<message>#169: DBのアナライズ</message>
+				<comments>
+					<comment>一定タイミングで REINDEX, ANALYZEを指定なし実行</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 			<note rev="">
