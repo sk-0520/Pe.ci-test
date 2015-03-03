@@ -3,12 +3,13 @@
 	using System.Drawing;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// T_NOTE_STYLE行。
 	/// </summary>
 	[EntityMapping("T_NOTE_STYLE")]
-	public class TNoteStyleRow: CommonDataRow
+	public class TNoteStyleRow: CommonDataRow, INoteId
 	{
 		/// <summary>
 		/// ノートID。
