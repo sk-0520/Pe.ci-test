@@ -1302,12 +1302,22 @@
 		/// <param name="save"></param>
 		public void CloseApplication(bool save)
 		{
+
 			if(this._commonData.ApplicationSetting != null) {
 				this._commonData.ApplicationSetting.KillAllApplication();
 			}
 
 			if(save) {
 				AppUtility.SaveSetting(this._commonData);
+
+				Func<int, bool> checkCount = n => this._commonData.MainSetting.Running.ExecuteCount > 0 && (this._commonData.MainSetting.Running.ExecuteCount % n) == 0;
+
+				if(checkCount(Literal.dbDisableDeleteMultipleCount)) {
+					this._commonData.Database.Delete(this._commonData.Logger);
+				}
+				if(checkCount(Literal.dbAnalyzeMultipleCount)) {
+					this._commonData.Database.Analyze(this._commonData.Logger);
+				}
 			}
 
 			Application.Exit();

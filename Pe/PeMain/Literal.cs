@@ -74,6 +74,27 @@
 
 		public static readonly TimeSpan startHomeDialogWaitTime = TimeSpan.FromSeconds(1.5);
 
+		/// <summary>
+		/// 無効データの削除を実施する起動回数の倍数。
+		/// </summary>
+		public const int dbDisableDeleteMultipleCount = 
+#if DEBUG
+			2
+#else
+			20
+#endif
+		;
+		/// <summary>
+		/// DBのアナライズを実施する起動回数の倍数。
+		/// </summary>
+		public const int dbAnalyzeMultipleCount =
+#if DEBUG
+			2
+#else
+			20
+#endif
+		;
+
 		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(3, 10, 20);
 		public static readonly TripleRange<TimeSpan> windowSaveTime = new TripleRange<TimeSpan>(
 			TimeSpan.FromMinutes(1),

@@ -4,6 +4,8 @@
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 	using ContentTypeTextNet.Pe.PeMain.Data.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	/// <summary>
 	/// DBManagerをSQLiteとPe用に特化。
@@ -31,6 +33,21 @@
 				return query.GetResultSingle<SingleIdDto>(global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_GetId);
 			}
 		}
-		
+
+		/// <summary>
+		/// 不要データを削除。
+		/// </summary>
+		/// <param name="logger"></param>
+		public void Delete(ILogger logger)
+		{
+		}
+
+		/// <summary>
+		/// アナライズだったりインデックスだったり。
+		/// </summary>
+		/// <param name="logger"></param>
+		public void Analyze(ILogger logger)
+		{
+		}
 	}
 }
