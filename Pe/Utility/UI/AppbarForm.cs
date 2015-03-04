@@ -508,6 +508,11 @@
 			Debug.Assert(AutoHide);
 			
 			this.timerAutoHidden.Stop();
+
+			if(!Created) {
+				// 生成されていない場合、タイマー待ち中に破棄された可能性がある
+				return;
+			}
 			
 			if(!force && ClientRectangle.Contains(this.PointToClient(Control.MousePosition))) {
 				return;
@@ -656,6 +661,8 @@
 		
 		void TimerAutoHide_Tick(object sender, EventArgs e)
 		{
+			Debug.Assert(Created);
+
 			if(IsDocking) {
 				ToHidden(false);
 			} else {

@@ -114,6 +114,8 @@
 		public const int waitCountForGetScreenCount = 10;
 		public static readonly TimeSpan screenCountWaitTime = TimeSpan.FromMilliseconds(250);
 
+		public static readonly TimeSpan screenSettingChangedWaitTime = TimeSpan.FromSeconds(1);
+
 		public static readonly Color streamGeneralForeground = Color.WhiteSmoke;
 		public static readonly Color streamGeneralBackground = Color.Black;
 		public static readonly Color streamInputForeground = Color.Black;

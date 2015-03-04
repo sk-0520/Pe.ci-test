@@ -1348,18 +1348,21 @@
 			InitializeMain(null, null);
 		}
 
+		void CloseToolbar()
+		{
+			foreach(var toolbar in this._toolbarForms.Values) {
+				toolbar.ToDispose();
+			}
+			this._toolbarForms.Clear();
+		}
+
 		/// <summary>
 		/// ツール―バー状態のリセット。
 		/// </summary>
 		void ResetToolbar()
 		{
 			//Debug.WriteLine("ResetToolbar");
-			foreach(var toolbar in this._toolbarForms.Values) {
-				//toolbar.SetCommonData(this._commonData);
-				toolbar.ToDispose();
-			}
-			this._toolbarForms.Clear();
-
+			CloseToolbar();
 			InitializeToolbarForm(null, null);
 
 			// メニュー構築
@@ -1372,16 +1375,19 @@
 			AttachmentToolbarSubMenu(menuItem);
 		}
 
+		void CloseNote()
+		{
+			foreach(var note in this._noteWindowList.ToArray()) {
+				note.Dispose();
+			}
+			this._noteWindowList.Clear();
+		}
 		/// <summary>
 		/// ノート状態をリセット。
 		/// </summary>
 		void ResetNote()
 		{
-			foreach(var note in this._noteWindowList.ToArray()) {
-				//note.Close();
-				note.Dispose();
-			}
-			this._noteWindowList.Clear();
+			CloseNote();
 			InitializeNoteForm(null, null);
 		}
 
@@ -1940,12 +1946,21 @@
 		
 		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)
 		{
+			CloseNote();
+			CloseToolbar();
+
 			var windowItemList = GetWindowListItem(false);
 			windowItemList.Name = this._commonData.Language["save-window/display"];
 			PushWindowListItem(windowItemList);
-			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
-			// #56
-			ResetToolbar();
+
+			Task.Run(() => {
+				Thread.Sleep(Literal.screenSettingChangedWaitTime);
+			}).ContinueWith(t => {
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
+				// #56
+				ResetUI();
+				//ResetToolbar();
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
