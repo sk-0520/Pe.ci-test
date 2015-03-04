@@ -1943,9 +1943,14 @@
 			var windowItemList = GetWindowListItem(false);
 			windowItemList.Name = this._commonData.Language["save-window/display"];
 			PushWindowListItem(windowItemList);
-			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
-			// #56
-			ResetToolbar();
+
+			Task.Run(() => {
+				Thread.Sleep(Literal.screenSettingChangedWaitTime);
+			}).ContinueWith(t => {
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
+				// #56
+				ResetToolbar();
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
