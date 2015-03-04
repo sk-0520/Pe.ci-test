@@ -98,7 +98,10 @@
 		</group>
 		<group type="developer"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#242: 古いブランチいらねーんじゃねーの？</message>
+				<cooments>
+					<comment>タグは全履歴あるしrcブランチ全部消してもいいけど過去3世代くらい残しとく</comment>
+				</cooments>
 			</note>
 			<note rev="">
 				<message></message>
