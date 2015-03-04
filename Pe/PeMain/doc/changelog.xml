@@ -94,7 +94,7 @@
 					<comment>なので発生し得る環境がかなり限定されるが修正箇所自体は全環境に恩恵があると思うのでマージした</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="a0108537a5ec63f3a52eb9d1e5da24700ec33920">
 				<message>#246: クリップボード/テンプレートのアイテムリスト上コマンドボタンが消えない</message>
 			</note>
 			<note rev="">
