@@ -1615,6 +1615,8 @@
 		void ToolbarFormShown(object sender, EventArgs e)
 		{
 			// この子のおかげでちかちかする。でも実装してるからなんか理由あのかもしれんけど調べる気にもならん。
+			// ↑
+			// 実装してないと非表示→表示の動きが変だった
 			ApplySettingPosition();
 		}
 

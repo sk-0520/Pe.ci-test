@@ -87,7 +87,12 @@
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#247: 画面解像度を二回以上切り替えるとツールバー・ノートの位置・サイズがおかしい</message>
+				<comments>
+					<comment>ディスプレイ関係は切り替えやすいラップトップで作業してて分かったけど、tpscrex.exe(ThinkPadの解像度変更用ユーティリティ)を使用した場合にのみ強制的にリサイズされノートのサイズがおかしくなる</comment>
+					<comment>ツールバーも同じようにサイズ・位置が強制的に変更されていたがデスクトップツールバーとしてPe側でさらに強制的にリサイズしていたので表面化しなかった模様</comment>
+					<comment>なので発生し得る環境がかなり限定されるが修正箇所自体は全環境に恩恵があると思うのでマージした</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -99,9 +104,9 @@
 		<group type="developer"><sep dummy="==================================================================" />
 			<note rev="">
 				<message>#242: 古いブランチいらねーんじゃねーの？</message>
-				<cooments>
+				<comments>
 					<comment>タグは全履歴あるしrcブランチ全部消してもいいけど過去3世代くらい残しとく</comment>
-				</cooments>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
