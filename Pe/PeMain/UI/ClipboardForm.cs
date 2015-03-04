@@ -142,6 +142,7 @@
 				//command.FlatStyle = FlatStyle.Flat;
 				command.Margin = Padding.Empty;
 				command.Click += command_Click;
+				command.MouseLeave += listClipboard_MouseLeave;
 			}
 			this._commandMulti.Margin = new Padding(0, 0, NativeMethods.GetSystemMetrics(SM.SM_CXEDGE), 0);
 			this._panelClipboradItem.Padding = Padding.Empty;
@@ -151,6 +152,8 @@
 			this._panelClipboradItem.Size = Size.Empty;
 			this._panelClipboradItem.AutoSize = true;
 			//this._panelClipboradItem.Controls.AddRange(commandButtons);
+			this._panelClipboradItem.MouseLeave += listClipboard_MouseLeave;
+
 			this.listItemStack.Controls.Add(this._panelClipboradItem);
 			this._panelClipboradItem.Visible = false;
 		}
