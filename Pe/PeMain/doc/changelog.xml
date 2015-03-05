@@ -118,6 +118,9 @@
 				</comments>
 			</note>
 			<note rev="">
+				<message>SQLite を 1.0.94.1 から 1.0.96.0 にバージョンアップ</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
