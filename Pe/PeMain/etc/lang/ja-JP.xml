@@ -382,6 +382,11 @@
 		<Word Name="about/update/check/dialog/message"   Text="情報ダイアログを閉じてアップデートチェックを開始しますか？" />
 		<Word Name="about/page/app"          Text="@[APPLICATION]情報" />
 		<Word Name="about/page/component"    Text="コンポーネント情報" />
+		<Word Name="about/label/page-about"       Text="WEBサイト" />
+		<Word Name="about/label/mail-address"     Text="連絡先(メーラーが起動します)" />
+		<Word Name="about/label/page-development" Text="開発ページ" />
+		<Word Name="about/label/page-discussion"  Text="フォーラム" />
+		<Word Name="about/label/page-feedback"    Text="フィードバック(アンケート的な)" />
 
 		<Word Name="new/group-item"     Text="新規グループ" />
 		<Word Name="new/launcher-item"  Text="新規アイテム" />

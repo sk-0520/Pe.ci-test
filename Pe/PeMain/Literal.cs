@@ -476,6 +476,13 @@
 		{
 			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-discussion"]); }
 		}
+		/// <summary>
+		/// フィードバック用アドレス
+		/// </summary>
+		public static string FeedbackURL
+		{
+			get { return ReplaceLiteralText(ConfigurationManager.AppSettings["page-feedback"]); }
+		}
 		
 		public static string HelpDocumentURI
 		{
