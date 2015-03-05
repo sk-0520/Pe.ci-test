@@ -63,10 +63,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabAbout = new System.Windows.Forms.TabControl();
 			this.tabAbout_pageApp = new System.Windows.Forms.TabPage();
 			this.panelApp = new System.Windows.Forms.FlowLayoutPanel();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.tabAbout_pageComponent = new System.Windows.Forms.TabPage();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.linkFeedback = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -75,7 +75,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabAbout.SuspendLayout();
 			this.tabAbout_pageApp.SuspendLayout();
 			this.panelApp.SuspendLayout();
-			this.flowLayoutPanel1.SuspendLayout();
 			this.tabAbout_pageComponent.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -115,13 +114,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// labelAppVersion
 			// 
+			this.labelAppVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelAppVersion.AutoEllipsis = true;
+			this.labelAppVersion.AutoSize = true;
 			this.tableLayoutPanel1.SetColumnSpan(this.labelAppVersion, 2);
-			this.labelAppVersion.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labelAppVersion.Location = new System.Drawing.Point(3, 62);
 			this.labelAppVersion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
 			this.labelAppVersion.Name = "labelAppVersion";
-			this.labelAppVersion.Size = new System.Drawing.Size(202, 29);
+			this.labelAppVersion.Size = new System.Drawing.Size(98, 15);
 			this.labelAppVersion.TabIndex = 2;
 			this.labelAppVersion.Text = "labelAppVersion";
 			this.labelAppVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -133,10 +133,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkAbout.Location = new System.Drawing.Point(3, 0);
 			this.linkAbout.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
 			this.linkAbout.Name = "linkAbout";
-			this.linkAbout.Size = new System.Drawing.Size(112, 15);
+			this.linkAbout.Size = new System.Drawing.Size(150, 15);
 			this.linkAbout.TabIndex = 0;
 			this.linkAbout.TabStop = true;
-			this.linkAbout.Text = "http://page-about";
+			this.linkAbout.Text = ":about/label/page-about";
 			this.linkAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// linkDevelopment
@@ -146,10 +146,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkDevelopment.Location = new System.Drawing.Point(3, 40);
 			this.linkDevelopment.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
 			this.linkDevelopment.Name = "linkDevelopment";
-			this.linkDevelopment.Size = new System.Drawing.Size(155, 15);
+			this.linkDevelopment.Size = new System.Drawing.Size(193, 15);
 			this.linkDevelopment.TabIndex = 2;
 			this.linkDevelopment.TabStop = true;
-			this.linkDevelopment.Text = "http://page-development";
+			this.linkDevelopment.Text = ":about/label/page-development";
 			this.linkDevelopment.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// commandExecuteDir
@@ -194,10 +194,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkMail.Location = new System.Drawing.Point(3, 20);
 			this.linkMail.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
 			this.linkMail.Name = "linkMail";
-			this.linkMail.Size = new System.Drawing.Size(124, 15);
+			this.linkMail.Size = new System.Drawing.Size(159, 15);
 			this.linkMail.TabIndex = 1;
 			this.linkMail.TabStop = true;
-			this.linkMail.Text = "mailto:mail-address";
+			this.linkMail.Text = ":about/label/mail-address";
 			this.linkMail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// commandUpdate
@@ -273,6 +273,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// tableLayoutPanel1
 			// 
+			this.tableLayoutPanel1.AutoSize = true;
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 60F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -286,8 +287,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(161, 91);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(177, 77);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// linkDiscussion
@@ -297,10 +297,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkDiscussion.Location = new System.Drawing.Point(3, 60);
 			this.linkDiscussion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
 			this.linkDiscussion.Name = "linkDiscussion";
-			this.linkDiscussion.Size = new System.Drawing.Size(137, 15);
+			this.linkDiscussion.Size = new System.Drawing.Size(175, 15);
 			this.linkDiscussion.TabIndex = 3;
 			this.linkDiscussion.TabStop = true;
-			this.linkDiscussion.Text = "http://page-discussion";
+			this.linkDiscussion.Text = ":about/label/page-discussion";
 			this.linkDiscussion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// panelWeb
@@ -311,10 +311,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelWeb.Controls.Add(this.linkMail);
 			this.panelWeb.Controls.Add(this.linkDevelopment);
 			this.panelWeb.Controls.Add(this.linkDiscussion);
+			this.panelWeb.Controls.Add(this.linkFeedback);
 			this.panelWeb.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.panelWeb.Location = new System.Drawing.Point(170, 3);
+			this.panelWeb.Location = new System.Drawing.Point(186, 3);
 			this.panelWeb.Name = "panelWeb";
-			this.panelWeb.Size = new System.Drawing.Size(161, 80);
+			this.panelWeb.Size = new System.Drawing.Size(199, 100);
 			this.panelWeb.TabIndex = 1;
 			// 
 			// panelEnv
@@ -323,7 +324,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelEnv.Controls.Add(this.labelUserenv);
 			this.panelEnv.Controls.Add(this.linkCopyShort);
 			this.panelEnv.Controls.Add(this.linkCopyLong);
-			this.panelEnv.Location = new System.Drawing.Point(3, 106);
+			this.panelEnv.Location = new System.Drawing.Point(3, 109);
 			this.panelEnv.Name = "panelEnv";
 			this.panelEnv.Size = new System.Drawing.Size(417, 15);
 			this.panelEnv.TabIndex = 2;
@@ -388,24 +389,14 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// panelApp
 			// 
 			this.panelApp.AutoScroll = true;
-			this.panelApp.Controls.Add(this.flowLayoutPanel1);
+			this.panelApp.Controls.Add(this.tableLayoutPanel1);
+			this.panelApp.Controls.Add(this.panelWeb);
 			this.panelApp.Controls.Add(this.panelEnv);
 			this.panelApp.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelApp.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelApp.Location = new System.Drawing.Point(3, 3);
 			this.panelApp.Name = "panelApp";
 			this.panelApp.Size = new System.Drawing.Size(616, 187);
 			this.panelApp.TabIndex = 0;
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.AutoSize = true;
-			this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel1);
-			this.flowLayoutPanel1.Controls.Add(this.panelWeb);
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(334, 97);
-			this.flowLayoutPanel1.TabIndex = 1;
 			// 
 			// tabAbout_pageComponent
 			// 
@@ -447,6 +438,19 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(636, 270);
 			this.tableLayoutPanel2.TabIndex = 10;
 			// 
+			// linkFeedback
+			// 
+			this.linkFeedback.AutoEllipsis = true;
+			this.linkFeedback.AutoSize = true;
+			this.linkFeedback.Location = new System.Drawing.Point(3, 80);
+			this.linkFeedback.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
+			this.linkFeedback.Name = "linkFeedback";
+			this.linkFeedback.Size = new System.Drawing.Size(169, 15);
+			this.linkFeedback.TabIndex = 4;
+			this.linkFeedback.TabStop = true;
+			this.linkFeedback.Text = ":about/label/page-feedback";
+			this.linkFeedback.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.commandOk;
@@ -476,8 +480,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabAbout_pageApp.ResumeLayout(false);
 			this.panelApp.ResumeLayout(false);
 			this.panelApp.PerformLayout();
-			this.flowLayoutPanel1.ResumeLayout(false);
-			this.flowLayoutPanel1.PerformLayout();
 			this.tabAbout_pageComponent.ResumeLayout(false);
 			this.panelCommand.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
@@ -512,8 +514,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabPage tabAbout_pageApp;
 		private System.Windows.Forms.TabPage tabAbout_pageComponent;
 		private System.Windows.Forms.FlowLayoutPanel panelApp;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.FlowLayoutPanel panelCommand;
+		private System.Windows.Forms.LinkLabel linkFeedback;
 	}
 }
