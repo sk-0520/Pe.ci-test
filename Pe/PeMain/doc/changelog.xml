@@ -111,7 +111,7 @@
 					<comment>タグは全履歴あるしrcブランチ全部消してもいいけど過去3世代くらい残しとく</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="ff1b9793ff8d78bd188f57a58ce44c61d515075f">
 				<message>#240: フォーラムへの書き込み</message>
 				<comments>
 					<comment>フォーラムへの書き込みはメールアドレスが必須になってくるのでGoogle フォームを用いた方式にした</comment>
