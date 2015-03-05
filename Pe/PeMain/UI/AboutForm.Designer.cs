@@ -56,6 +56,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.linkDiscussion = new System.Windows.Forms.LinkLabel();
 			this.panelWeb = new System.Windows.Forms.FlowLayoutPanel();
+			this.linkFeedback = new System.Windows.Forms.LinkLabel();
 			this.panelEnv = new System.Windows.Forms.FlowLayoutPanel();
 			this.labelUserenv = new System.Windows.Forms.Label();
 			this.linkCopyShort = new System.Windows.Forms.LinkLabel();
@@ -66,7 +67,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabAbout_pageComponent = new System.Windows.Forms.TabPage();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.linkFeedback = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.gridComponents)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -131,7 +131,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.linkAbout.AutoEllipsis = true;
 			this.linkAbout.AutoSize = true;
 			this.linkAbout.Location = new System.Drawing.Point(3, 0);
-			this.linkAbout.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
+			this.linkAbout.Margin = new System.Windows.Forms.Padding(3, 0, 3, 4);
 			this.linkAbout.Name = "linkAbout";
 			this.linkAbout.Size = new System.Drawing.Size(150, 15);
 			this.linkAbout.TabIndex = 0;
@@ -143,8 +143,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.linkDevelopment.AutoEllipsis = true;
 			this.linkDevelopment.AutoSize = true;
-			this.linkDevelopment.Location = new System.Drawing.Point(3, 40);
-			this.linkDevelopment.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
+			this.linkDevelopment.Location = new System.Drawing.Point(3, 38);
+			this.linkDevelopment.Margin = new System.Windows.Forms.Padding(3, 0, 3, 4);
 			this.linkDevelopment.Name = "linkDevelopment";
 			this.linkDevelopment.Size = new System.Drawing.Size(193, 15);
 			this.linkDevelopment.TabIndex = 2;
@@ -191,8 +191,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.linkMail.AutoEllipsis = true;
 			this.linkMail.AutoSize = true;
-			this.linkMail.Location = new System.Drawing.Point(3, 20);
-			this.linkMail.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
+			this.linkMail.Location = new System.Drawing.Point(3, 19);
+			this.linkMail.Margin = new System.Windows.Forms.Padding(3, 0, 3, 4);
 			this.linkMail.Name = "linkMail";
 			this.linkMail.Size = new System.Drawing.Size(159, 15);
 			this.linkMail.TabIndex = 1;
@@ -294,8 +294,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.linkDiscussion.AutoEllipsis = true;
 			this.linkDiscussion.AutoSize = true;
-			this.linkDiscussion.Location = new System.Drawing.Point(3, 60);
-			this.linkDiscussion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
+			this.linkDiscussion.Location = new System.Drawing.Point(3, 57);
+			this.linkDiscussion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 4);
 			this.linkDiscussion.Name = "linkDiscussion";
 			this.linkDiscussion.Size = new System.Drawing.Size(175, 15);
 			this.linkDiscussion.TabIndex = 3;
@@ -305,8 +305,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// panelWeb
 			// 
+			this.panelWeb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelWeb.AutoScroll = true;
-			this.panelWeb.AutoSize = true;
 			this.panelWeb.Controls.Add(this.linkAbout);
 			this.panelWeb.Controls.Add(this.linkMail);
 			this.panelWeb.Controls.Add(this.linkDevelopment);
@@ -314,9 +315,23 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelWeb.Controls.Add(this.linkFeedback);
 			this.panelWeb.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.panelWeb.Location = new System.Drawing.Point(186, 3);
+			this.panelWeb.Margin = new System.Windows.Forms.Padding(3, 3, 3, 4);
 			this.panelWeb.Name = "panelWeb";
-			this.panelWeb.Size = new System.Drawing.Size(199, 100);
+			this.panelWeb.Size = new System.Drawing.Size(320, 120);
 			this.panelWeb.TabIndex = 1;
+			// 
+			// linkFeedback
+			// 
+			this.linkFeedback.AutoEllipsis = true;
+			this.linkFeedback.AutoSize = true;
+			this.linkFeedback.Location = new System.Drawing.Point(3, 76);
+			this.linkFeedback.Margin = new System.Windows.Forms.Padding(3, 0, 3, 4);
+			this.linkFeedback.Name = "linkFeedback";
+			this.linkFeedback.Size = new System.Drawing.Size(169, 15);
+			this.linkFeedback.TabIndex = 4;
+			this.linkFeedback.TabStop = true;
+			this.linkFeedback.Text = ":about/label/page-feedback";
+			this.linkFeedback.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// panelEnv
 			// 
@@ -324,7 +339,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelEnv.Controls.Add(this.labelUserenv);
 			this.panelEnv.Controls.Add(this.linkCopyShort);
 			this.panelEnv.Controls.Add(this.linkCopyLong);
-			this.panelEnv.Location = new System.Drawing.Point(3, 109);
+			this.panelEnv.Location = new System.Drawing.Point(3, 130);
 			this.panelEnv.Name = "panelEnv";
 			this.panelEnv.Size = new System.Drawing.Size(417, 15);
 			this.panelEnv.TabIndex = 2;
@@ -437,19 +452,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(636, 270);
 			this.tableLayoutPanel2.TabIndex = 10;
-			// 
-			// linkFeedback
-			// 
-			this.linkFeedback.AutoEllipsis = true;
-			this.linkFeedback.AutoSize = true;
-			this.linkFeedback.Location = new System.Drawing.Point(3, 80);
-			this.linkFeedback.Margin = new System.Windows.Forms.Padding(3, 0, 3, 5);
-			this.linkFeedback.Name = "linkFeedback";
-			this.linkFeedback.Size = new System.Drawing.Size(169, 15);
-			this.linkFeedback.TabIndex = 4;
-			this.linkFeedback.TabStop = true;
-			this.linkFeedback.Text = ":about/label/page-feedback";
-			this.linkFeedback.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Link_LinkClicked);
 			// 
 			// AboutForm
 			// 
