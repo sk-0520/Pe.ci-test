@@ -120,7 +120,7 @@
 			<note rev="34e3066e6e913d5c42681b81c25191f2da1807cd">
 				<message>SQLite を 1.0.94.0 から 1.0.96.0 にバージョンアップ</message>
 			</note>
-			<note rev="">
+			<note rev="756dc38de309638bac4c04755b4ea14e89981f9e">
 				<message>ショートカット登録処理でツールバーと設定画面の重複部分を統一</message>
 			</note>
 			<note rev="">
