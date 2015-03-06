@@ -1336,35 +1336,19 @@
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
 
-				var path = dropData.Files.First();
-				var useShortcut = false;
-				var forceLauncherType = false;
-				var forceType = LauncherType.None;
+				var filePath = dropData.Files.First();
+				var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, CommonData.Language, CommonData.Logger);
+				var useShortcut = checkPath == filePath;
+				var path = checkPath;
 				var checkDirectory = false;
-				if(PathUtility.IsShortcutPath(path)) {
-					var result = MessageBox.Show(CommonData.Language["common/dialog/d-d/shortcut/message"], CommonData.Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-					switch(result) {
-						case DialogResult.Yes:
-							try {
-								using(var sf = new ShortcutFile(path)) {
-									var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
-									checkDirectory = Directory.Exists(expandPath);
-									path = sf.TargetPath;
-								}
-							} catch(ArgumentException ex) {
-								CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-							}
-							break;
-
-						case DialogResult.No:
-							useShortcut = true;
-							break;
-
-						default:
-							return;
-					}
+				if(useShortcut) {
+					var expandPath = Environment.ExpandEnvironmentVariables(path);
+					checkDirectory = Directory.Exists(expandPath);
 				}
 
+				var forceLauncherType = false;
+				var forceType = LauncherType.None;
+				
 				if(checkDirectory || Directory.Exists(path)) {
 					var result = MessageBox.Show(CommonData.Language["toolbar/dialog/d-d/directory/message"], CommonData.Language["toolbar/dialog/d-d/directory/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 					switch(result) {

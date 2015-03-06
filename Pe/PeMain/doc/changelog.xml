@@ -121,6 +121,9 @@
 				<message>SQLite を 1.0.94.0 から 1.0.96.0 にバージョンアップ</message>
 			</note>
 			<note rev="">
+				<message>ショートカット登録処理でツールバーと設定画面の重複部分を統一</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

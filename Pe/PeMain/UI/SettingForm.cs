@@ -1443,30 +1443,10 @@
 		
 		void LauncherAddFile(string filePath)
 		{
-			var path = filePath;
-			var useShortcut = false;
-			// TODO: 処理重複 -> ToolbarForm.ExecuteDropData
-			if(PathUtility.IsShortcutPath(filePath)) {
-				var result = MessageBox.Show(Language["common/dialog/d-d/shortcut/message"], Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-				switch(result) {
-					case DialogResult.Yes:
-						try {
-							using(var sf = new ShortcutFile(filePath)) {
-								path = sf.TargetPath;
-							}
-						} catch(ArgumentException ex) {
-							Debug.WriteLine(ex);
-						}
-						break;
-						
-					case DialogResult.No:
-						useShortcut = true;
-						break;
-						
-					default:
-						return;
-				}
-			}
+			var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, Language, new NullLogger());
+			var useShortcut = checkPath == filePath;
+			var path = checkPath;
+
 			var item = LauncherItemUtility.LoadFile(path, useShortcut);
 			var uniqueName = LauncherItemUtility.GetUniqueName(item, this.selecterLauncher.Items);
 			item.Name = uniqueName;
