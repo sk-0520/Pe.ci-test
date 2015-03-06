@@ -1336,39 +1336,16 @@
 				// 追加
 				Debug.Assert(dropData.Files.Count() == 1);
 
-				var path = dropData.Files.First();
-				var checkPath = LauncherItemUtility.InquiryUseShocutTarget(path, CommonData.Language, CommonData.Logger);
-				var useShortcut = checkPath != path;
-				path = checkPath;
+				var filePath = dropData.Files.First();
+				var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, CommonData.Language, CommonData.Logger);
+				var useShortcut = checkPath == filePath;
+				var path = checkPath;
 				var checkDirectory = false;
 				if(useShortcut) {
 					var expandPath = Environment.ExpandEnvironmentVariables(path);
 					checkDirectory = Directory.Exists(expandPath);
 				}
 
-				//if(PathUtility.IsShortcutPath(path)) {
-				//	var result = MessageBox.Show(CommonData.Language["common/dialog/d-d/shortcut/message"], CommonData.Language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-				//	switch(result) {
-				//		case DialogResult.Yes:
-				//			try {
-				//				using(var sf = new ShortcutFile(path)) {
-				//					var expandPath = Environment.ExpandEnvironmentVariables(sf.TargetPath);
-				//					checkDirectory = Directory.Exists(expandPath);
-				//					path = sf.TargetPath;
-				//				}
-				//			} catch(ArgumentException ex) {
-				//				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-				//			}
-				//			break;
-
-				//		case DialogResult.No:
-				//			useShortcut = true;
-				//			break;
-
-				//		default:
-				//			return;
-				//	}
-				//}
 				var forceLauncherType = false;
 				var forceType = LauncherType.None;
 				
