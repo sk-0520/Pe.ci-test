@@ -56,16 +56,13 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.54.1" type="rc">
+	<log date="2015/03/07" version="0.55.0">
 		<group type="note"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>フィードバック用ページを作りました</message>
+				<comments>
+					<comment>タスクトレイコンテキストメニュー → 情報 → フィードバック から遷移できます</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
@@ -77,12 +74,6 @@
 				<comments>
 					<comment>一定タイミングで REINDEX, ANALYZEを指定なし実行</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
@@ -96,12 +87,6 @@
 			</note>
 			<note rev="a0108537a5ec63f3a52eb9d1e5da24700ec33920">
 				<message>#246: クリップボード/テンプレートのアイテムリスト上コマンドボタンが消えない</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="developer"><sep dummy="==================================================================" />
@@ -122,9 +107,6 @@
 			</note>
 			<note rev="756dc38de309638bac4c04755b4ea14e89981f9e">
 				<message>ショートカット登録処理でツールバーと設定画面の重複部分を統一</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
