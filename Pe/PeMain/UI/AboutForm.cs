@@ -86,10 +86,14 @@
 				Literal.BuildProcess
 			);
 
-			this.linkAbout.Text = Literal.AboutWebURL;
-			this.linkMail.Text = "mailto:" + Literal.AboutMailAddress;
-			this.linkDevelopment.Text = Literal.AboutDevelopmentURL;
-			this.linkDiscussion.Text = Literal.DiscussionURL;
+			Action<LinkLabel, string> setLink = (linkLabel, path) => {
+				linkLabel.Links.Add(new LinkLabel.Link(0, path.Length, path));
+			};
+			setLink(this.linkAbout, Literal.AboutWebURL);
+			setLink(this.linkMail, "mailto:" + Literal.AboutMailAddress);
+			setLink(this.linkDevelopment, Literal.AboutDevelopmentURL);
+			setLink(this.linkDiscussion, Literal.DiscussionURL);
+			setLink(this.linkFeedback, Literal.FeedbackURL);
 
 			var xml = XElement.Load(Path.Combine(Literal.ApplicationDocumentDirPath, "components.xml"));
 			ComponentInfoList = xml
@@ -118,6 +122,12 @@
 			this.commandDataDir.SetLanguage(CommonData.Language);
 			this.commandChangelog.SetLanguage(CommonData.Language);
 			this.commandUpdate.SetLanguage(CommonData.Language);
+
+			this.linkAbout.SetLanguage(CommonData.Language);
+			this.linkMail.SetLanguage(CommonData.Language);
+			this.linkDevelopment.SetLanguage(CommonData.Language);
+			this.linkDiscussion.SetLanguage(CommonData.Language);
+			this.linkFeedback.SetLanguage(CommonData.Language);
 
 			this.labelUserenv.SetLanguage(CommonData.Language);
 			this.linkCopyShort.SetLanguage(CommonData.Language);
@@ -173,7 +183,7 @@
 		{
 			var linkLabel = (LinkLabel)sender;
 			linkLabel.LinkVisited = true;
-			var link = linkLabel.Text;
+			var link = (string)linkLabel.Links[0].LinkData;
 			if(string.IsNullOrWhiteSpace(link)) {
 				return;
 			}

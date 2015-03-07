@@ -56,6 +56,61 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="2015/03/07" version="0.55.0">
+		<group type="note"><sep dummy="==================================================================" />
+			<note rev="">
+				<message>フィードバック用ページを作りました</message>
+				<comments>
+					<comment>タスクトレイコンテキストメニュー → 情報 → フィードバック から遷移できます</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features"><sep dummy="==================================================================" />
+			<note rev="ac5959d98883d26dad53ca20a942c3e0a3b99839">
+				<message>#168: DBの論理削除後始末</message>
+			</note>
+			<note rev="98e707adb5d3e12c9758e45b6e1c71911c703412">
+				<message>#169: DBのアナライズ</message>
+				<comments>
+					<comment>一定タイミングで REINDEX, ANALYZEを指定なし実行</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes"><sep dummy="==================================================================" />
+			<note rev="91a535b1b963dc92e4ec535f454700aada3988dd">
+				<message>#247: 画面解像度を二回以上切り替えるとツールバー・ノートの位置・サイズがおかしい</message>
+				<comments>
+					<comment>ディスプレイ関係は切り替えやすいラップトップで作業してて分かったけど、tpscrex.exe(ThinkPadの解像度変更用ユーティリティ)を使用した場合にのみ強制的にリサイズされノートのサイズがおかしくなる</comment>
+					<comment>ツールバーも同じようにサイズ・位置が強制的に変更されていたがデスクトップツールバーとしてPe側でさらに強制的にリサイズしていたので表面化しなかった模様</comment>
+					<comment>なので発生し得る環境がかなり限定されるが修正箇所自体は全環境に恩恵があると思うのでマージした</comment>
+				</comments>
+			</note>
+			<note rev="a0108537a5ec63f3a52eb9d1e5da24700ec33920">
+				<message>#246: クリップボード/テンプレートのアイテムリスト上コマンドボタンが消えない</message>
+			</note>
+		</group>
+		<group type="developer"><sep dummy="==================================================================" />
+			<note rev="">
+				<message>#242: 古いブランチいらねーんじゃねーの？</message>
+				<comments>
+					<comment>タグは全履歴あるしrcブランチ全部消してもいいけど過去3世代くらい残しとく</comment>
+				</comments>
+			</note>
+			<note rev="ff1b9793ff8d78bd188f57a58ce44c61d515075f">
+				<message>#240: フォーラムへの書き込み</message>
+				<comments>
+					<comment>フォーラムへの書き込みはメールアドレスが必須になってくるのでGoogle フォームを用いた方式にした</comment>
+				</comments>
+			</note>
+			<note rev="34e3066e6e913d5c42681b81c25191f2da1807cd">
+				<message>SQLite を 1.0.94.0 から 1.0.96.0 にバージョンアップ</message>
+			</note>
+			<note rev="756dc38de309638bac4c04755b4ea14e89981f9e">
+				<message>ショートカット登録処理でツールバーと設定画面の重複部分を統一</message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/02/28" version="0.54.0">
 		<group type="note">
 			<sep dummy="==================================================================" />

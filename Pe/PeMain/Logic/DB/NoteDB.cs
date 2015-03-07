@@ -4,8 +4,10 @@
 	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Linq;
+	using ContentTypeTextNet.Pe.Library.Utility.DB;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.DB;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	/// <summary>
@@ -36,6 +38,7 @@
 						var noteItem = new NoteItem();
 
 						noteItem.NoteId = dto.Id;
+						noteItem.Enabled = dto.CommonEnabled;
 
 						noteItem.Title = dto.Title;
 						noteItem.Body = dto.Body;
@@ -251,6 +254,11 @@
 			ResistTransactionNoteStyle(noteItemList, timestamp);
 		}
 		
+		/// <summary>
+		/// ノートを作成と確定を同時に行う。
+		/// </summary>
+		/// <param name="noteItem">ノートIDが自動採番される。</param>
+		/// <returns></returns>
 		public NoteItem InsertMaster(NoteItem noteItem)
 		{
 			lock(this.db) {
@@ -261,6 +269,31 @@
 					tran.Commit();
 					return noteItem;
 				}
+			}
+		}
+
+		private void DeleteNoteRow<T>(IReadOnlyList<NoteItem> list)
+			where T: Row, INoteId, new()
+		{
+			using(var query = db.CreateQuery()) {
+				var rowList = list
+					.Select(n => new T() {
+						Id = n.NoteId,
+					})
+					.ToList()
+				;
+				query.ExecuteDelete(rowList);
+			}
+		}
+
+		public void DeleteDisableItem()
+		{
+			var deleteNoteItemList = new List<NoteItem>();
+			deleteNoteItemList.AddRange(GetNoteItemList(false).Where(n => !n.Enabled));
+			if(deleteNoteItemList.Any()) {
+				DeleteNoteRow<MNoteRow>(deleteNoteItemList);
+				DeleteNoteRow<TNoteRow>(deleteNoteItemList);
+				DeleteNoteRow<TNoteStyleRow>(deleteNoteItemList);
 			}
 		}
 		

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+
 	/// <summary>
 	/// 作成・更新日時保持。
 	/// </summary>

@@ -73,7 +73,7 @@
 		{
 			var escHead = Regex.Escape(head);
 			var escTail = Regex.Escape(tail);
-			var pattern = escHead + "(.*?)" + escTail;
+			var pattern = escHead + "(.+?)" + escTail;
 			var replacedText = Regex.Replace(src, pattern, (Match m) => dg(m.Groups[1].Value));
 			return replacedText;
 		}
@@ -99,11 +99,12 @@
 		/// <returns></returns>
 		public static string ReplaceFromDictionary(this string src, IDictionary<string, string> map)
 		{
-			var result = src;
-			foreach(var pair in map) {
-				result = result.Replace(pair.Key, pair.Value);
-			}
-			return result;
+			var pattern = string.Format("(?<HIT>{0})", string.Join("|", map.Values.Select(s => Regex.Escape(s)).Select(s => string.Format("({0})", s))));
+			var reg = new Regex(pattern);
+			return reg.Replace(src, (Match m) => {
+				var key = m.Groups["HIT"].Value;
+				return map[key];
+			});
 		}
 
 		/// <summary>

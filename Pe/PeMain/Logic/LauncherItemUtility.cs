@@ -1,11 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Logic
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
+	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	public static class LauncherItemUtility
@@ -117,5 +120,33 @@
 		{
 			return TextUtility.ToUniqueDefault(item.Name, seq.Select(i => i.Name));
 		}
+
+		/// <summary>
+		/// 指定ファイルパスがショートカットファイルである場合に
+		/// ショートカット先のファイルパスを使用するか、
+		/// ショートカットファイルそのものを使用するか問い合わせる。
+		/// </summary>
+		/// <param name="path">対象ファイルパス。</param>
+		/// <param name="language">言語。</param>
+		/// <param name="logger">ロガー。</param>
+		/// <returns>pathと異なればショートカット先を使用、同じであればショートカットファイルそのものを使用する。なお、ファイル自体がショートカットでなければpathが返る。</returns>
+		public static string InquiryUseShocutTarget(string path, Language language, ILogger logger)
+		{
+			if(PathUtility.IsShortcutPath(path)) {
+				var result = MessageBox.Show(language["common/dialog/d-d/shortcut/message"], language["common/dialog/d-d/shortcut/caption"], MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+				if(result == DialogResult.Yes) {
+					try {
+						using(var sf = new ShortcutFile(path)) {
+							return sf.TargetPath;
+						}
+					} catch(ArgumentException ex) {
+						logger.Puts(LogType.Warning, ex.Message, ex);
+					}
+				}
+			}
+
+			return path;
+		}
+
 	}
 }

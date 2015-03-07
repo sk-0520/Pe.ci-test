@@ -53,7 +53,8 @@
 			
 			Size = Literal.noteSize;
 		}
-		
+		public bool Enabled { get; set; }
+
 		public long NoteId { get; set; }
 		
 		public string Title { get; set; }

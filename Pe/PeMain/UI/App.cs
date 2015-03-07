@@ -381,32 +381,37 @@
 		void InitializeRunningInfo(CommandLine commandLine, StartupLogger logger)
 		{
 			var prev = new {
-				VersionMajor = this._commonData.MainSetting.RunningInfo.VersionMajor,
-				VersionMinor = this._commonData.MainSetting.RunningInfo.VersionMinor,
-				VersionRevision = this._commonData.MainSetting.RunningInfo.VersionRevision,
-				VersionBuild = this._commonData.MainSetting.RunningInfo.VersionBuild,
+				VersionMajor = this._commonData.MainSetting.Running.VersionMajor,
+				VersionMinor = this._commonData.MainSetting.Running.VersionMinor,
+				VersionRevision = this._commonData.MainSetting.Running.VersionRevision,
+				VersionBuild = this._commonData.MainSetting.Running.VersionBuild,
 			};
-			this._commonData.MainSetting.RunningInfo.SetDefaultVersion();
+			this._commonData.MainSetting.Running.SetDefaultVersion();
 			var prevVersion = new Tuple<ushort, ushort, ushort>(prev.VersionMajor, prev.VersionMinor, prev.VersionRevision);
 			// バージョンが一定未満なら強制的に使用承諾
 			if(Functions.VersionCheck(prevVersion, Literal.AcceptVersion) < 0) {
-				this._commonData.MainSetting.RunningInfo.Running = false;
+				this._commonData.MainSetting.Running.Running = false;
 			}
 
 			if(commandLine.HasOption("accept") && commandLine.GetValue("accept") == "force") {
 				// 強制的に使用許諾を表示し、次回実行時も使用許諾を表示できるようデータ保存
-				this._commonData.MainSetting.RunningInfo.Running = false;
+				this._commonData.MainSetting.Running.Running = false;
 				Serializer.SaveXmlFile(this._commonData.MainSetting, Literal.UserMainSettingPath);
 			}
 		}
 
-		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
+		public static IReadOnlyDictionary<string, string> GetTableCreatCommand()
 		{
-			var map = new Dictionary<string, string>() {
+			return new Dictionary<string, string>() {
 				{ DataTables.masterTableNote,           global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteMasterTable },
 				{ DataTables.transactionTableNote,      global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteTransactionTable },
 				{ DataTables.transactionTableNoteStyle, global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.SQL_CreateNoteStyleTransactionTable },
 			};
+		}
+
+		void InitializeNoteTableCreate(string tableName, StartupLogger logger)
+		{
+			var map = GetTableCreatCommand();
 			var langMap = new Dictionary<string, string>() {
 				{ ProgramLanguageName.tableName, tableName },
 			};
@@ -507,7 +512,7 @@
 		/// <returns>使用する場合は真</returns>
 		bool CheckAccept(StartupLogger logger)
 		{
-			var accept = this._commonData.MainSetting.RunningInfo.Running;
+			var accept = this._commonData.MainSetting.Running.Running;
 			if(!accept) {
 				var dialog = new AcceptForm();
 				dialog.SetCommonData(this._commonData);
@@ -567,7 +572,10 @@
 				Initialized = false;
 				return existsSettingFilePath;
 			}
-			this._commonData.MainSetting.RunningInfo.Running = true;
+			// 実行許可が下りてるのでプログラム実行回数を増やす
+			this._commonData.MainSetting.Running.IncrementExecuteCount();
+
+			this._commonData.MainSetting.Running.Running = true;
 
 			InitializeDB(commandLine, logger);
 			InitializeNote(commandLine, logger);
@@ -1299,12 +1307,24 @@
 		/// <param name="save"></param>
 		public void CloseApplication(bool save)
 		{
+
 			if(this._commonData.ApplicationSetting != null) {
 				this._commonData.ApplicationSetting.KillAllApplication();
 			}
 
 			if(save) {
 				AppUtility.SaveSetting(this._commonData);
+
+				Func<int, bool> checkCount = n => this._commonData.MainSetting.Running.ExecuteCount > 0 && (this._commonData.MainSetting.Running.ExecuteCount % n) == 0;
+
+				if(checkCount(Literal.dbDisableDeleteMultipleCount)) {
+					this._commonData.Logger.Puts(LogType.Information, "delete: disable item", new { Literal.dbDisableDeleteMultipleCount, this._commonData.MainSetting.Running.ExecuteCount });
+					this._commonData.Database.DeleteDisableItem(this._commonData.Logger);
+				}
+				if(checkCount(Literal.dbAnalyzeMultipleCount)) {
+					this._commonData.Logger.Puts(LogType.Information, "analyze", new { Literal.dbAnalyzeMultipleCount, this._commonData.MainSetting.Running.ExecuteCount });
+					this._commonData.Database.Analyze(this._commonData.Logger);
+				}
 			}
 
 			Application.Exit();
@@ -1328,18 +1348,21 @@
 			InitializeMain(null, null);
 		}
 
+		void CloseToolbar()
+		{
+			foreach(var toolbar in this._toolbarForms.Values) {
+				toolbar.ToDispose();
+			}
+			this._toolbarForms.Clear();
+		}
+
 		/// <summary>
 		/// ツール―バー状態のリセット。
 		/// </summary>
 		void ResetToolbar()
 		{
 			//Debug.WriteLine("ResetToolbar");
-			foreach(var toolbar in this._toolbarForms.Values) {
-				//toolbar.SetCommonData(this._commonData);
-				toolbar.ToDispose();
-			}
-			this._toolbarForms.Clear();
-
+			CloseToolbar();
 			InitializeToolbarForm(null, null);
 
 			// メニュー構築
@@ -1352,16 +1375,19 @@
 			AttachmentToolbarSubMenu(menuItem);
 		}
 
+		void CloseNote()
+		{
+			foreach(var note in this._noteWindowList.ToArray()) {
+				note.Dispose();
+			}
+			this._noteWindowList.Clear();
+		}
 		/// <summary>
 		/// ノート状態をリセット。
 		/// </summary>
 		void ResetNote()
 		{
-			foreach(var note in this._noteWindowList.ToArray()) {
-				//note.Close();
-				note.Dispose();
-			}
-			this._noteWindowList.Clear();
+			CloseNote();
 			InitializeNoteForm(null, null);
 		}
 
@@ -1425,7 +1451,7 @@
 					mainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;
 					mainSetting.Clipboard.TemplateItems = this._commonData.MainSetting.Clipboard.TemplateItems;
 
-					var check = mainSetting.RunningInfo.CheckUpdate != mainSetting.RunningInfo.CheckUpdate || mainSetting.RunningInfo.CheckUpdate;
+					var check = mainSetting.Running.CheckUpdate != mainSetting.Running.CheckUpdate || mainSetting.Running.CheckUpdate;
 					var oldSetting = this._commonData.MainSetting;
 					this._commonData.MainSetting = mainSetting;
 					// 切断しとく
@@ -1565,9 +1591,9 @@
 
 		UpdateData CheckUpdate(bool force)
 		{
-			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.RunningInfo.CheckUpdateRC, this._commonData);
-			this._commonData.Logger.PutsDebug("update: parameter", () => string.Format("force = {0}, setting = {1}", force, this._commonData.MainSetting.RunningInfo.CheckUpdate));
-			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+			var updateData = new UpdateData(Literal.UserDownloadDirPath, this._commonData.MainSetting.Running.CheckUpdateRC, this._commonData);
+			this._commonData.Logger.PutsDebug("update: parameter", () => string.Format("force = {0}, setting = {1}", force, this._commonData.MainSetting.Running.CheckUpdate));
+			if(force || !this._pause && this._commonData.MainSetting.Running.CheckUpdate) {
 				var updateInfo = updateData.Check();
 			}
 			return updateData;
@@ -1580,7 +1606,7 @@
 		/// <param name="updateData">アップデート情報。</param>
 		void ConfirmUpdate(bool force, UpdateData updateData)
 		{
-			if(force || !this._pause && this._commonData.MainSetting.RunningInfo.CheckUpdate) {
+			if(force || !this._pause && this._commonData.MainSetting.Running.CheckUpdate) {
 				if(updateData != null && updateData.Info != null) {
 					if(updateData.Info.IsUpdate) {
 						ShowUpdateDialog(updateData);
@@ -1920,12 +1946,21 @@
 		
 		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)
 		{
+			CloseNote();
+			CloseToolbar();
+
 			var windowItemList = GetWindowListItem(false);
 			windowItemList.Name = this._commonData.Language["save-window/display"];
 			PushWindowListItem(windowItemList);
-			this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
-			// #56
-			ResetToolbar();
+
+			Task.Run(() => {
+				Thread.Sleep(Literal.screenSettingChangedWaitTime);
+			}).ContinueWith(t => {
+				this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["main/event/save-window/display"], windowItemList);
+				// #56
+				ResetUI();
+				//ResetToolbar();
+			}, TaskScheduler.FromCurrentSynchronizationContext());
 		}
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)

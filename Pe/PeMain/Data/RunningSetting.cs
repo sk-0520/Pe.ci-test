@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Reflection;
+	using System.Text;
+	using System.Threading.Tasks;
+
 	/// <summary>
 	/// 実行情報。
 	/// </summary>
 	[Serializable]
-	public class RunningInfo: Item
+	public class RunningSetting: Item
 	{
 		/// <summary>
 		/// 自動アップデートチェック。
@@ -31,6 +31,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		public ushort VersionRevision { get; set; }
 		public ushort VersionBuild { get; set; }
 
+		/// <summary>
+		/// プログラムの実行回数。
+		/// </summary>
+		public int ExecuteCount { get; set; }
+
 		public void SetDefaultVersion()
 		{
 			var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
@@ -38,6 +43,13 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			VersionMinor = (ushort)assemblyVersion.Minor;
 			VersionRevision = (ushort)assemblyVersion.Revision;
 			VersionBuild = (ushort)assemblyVersion.Build;
+		}
+
+		public void IncrementExecuteCount()
+		{
+			if(ExecuteCount < int.MaxValue) {
+				ExecuteCount += 1;
+			}
 		}
 	}
 }

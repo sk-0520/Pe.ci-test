@@ -67,6 +67,7 @@
 		/// 型変換。
 		/// 
 		/// キャストでなく実際の変換処理も担当する
+		/// <para>いろいろあってpublicだけどサブクラスみたいな拡張時に使用して、外部からは原則的に<see cref="To&lt;T&gt;(object)"/>を使用する。</para>
 		/// </summary>
 		/// <param name="value"></param>
 		/// <param name="toType"></param>

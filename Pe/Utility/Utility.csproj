@@ -115,6 +115,11 @@
     <Compile Include="PathUtility.cs" />
     <Compile Include="PointingUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Serializer.cs" />
     <Compile Include="ShortcutFile.cs" />
     <Compile Include="DB\SQLiteDBManager.cs" />
@@ -130,6 +135,10 @@
     <Compile Include="Unmanaged.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\AppbarForm.resx">
       <DependentUpon>AppbarForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\SQL\GetTables.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

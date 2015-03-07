@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		[TestCase(true, "a.exe")]
 		[TestCase(true, "b.com")]
 		[TestCase(true, "v.bat")]
-		public void IsExecutePath(bool test, string s)
+		public void IsExecutePathTest(bool test, string s)
 		{
 			Assert.IsTrue(test == PathUtility.IsExecutePath(s));
 		}
@@ -32,7 +32,8 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		[TestCase("a.txt", "a", "txt")]
 		[TestCase("a.txt.txt", "a.txt", "txt")]
 		[TestCase("a..txt", "a.", "txt")]
-		public void AppendExtension(string test, string path, string ext)
+		[TestCase("a..txt", "a", ".txt")]
+		public void AppendExtensionTest(string test, string path, string ext)
 		{
 			Assert.IsTrue(test == PathUtility.AppendExtension(path, ext));
 		}
@@ -47,7 +48,7 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 		[TestCase("a_b", "a?b")]
 		[TestCase("a_b", "a<b")]
 		[TestCase("a_b", "a>b")]
-		public void ToSafeName(string test, string name)
+		public void ToSafeNameTest(string test, string name)
 		{
 			Assert.IsTrue(test == PathUtility.ToSafeName(name));
 		}

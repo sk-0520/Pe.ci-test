@@ -83,6 +83,8 @@
 		/// バージョン文字列をタプルに変換。
 		/// 
 		/// *.*.* までが対象となる。
+		/// 
+		/// <para>Versionでいいじゃん(いいじゃん)</para>
 		/// </summary>
 		/// <param name="versionText"></param>
 		/// <returns></returns>

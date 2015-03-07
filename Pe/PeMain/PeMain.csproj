@@ -23,6 +23,7 @@
     <SourceAnalysisOverrideSettingsFile>C:\Users\sk\AppData\Roaming\ICSharpCode/SharpDevelop4\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunCodeAnalysis>False</RunCodeAnalysis>
     <ApplicationIcon>Resources\Icon\App.ico</ApplicationIcon>
+    <NuGetPackageImportStamp>ba0649ca</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -102,15 +103,15 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.SQLite">
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net451\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net451\System.Data.SQLite.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.SQLite.EF6">
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.94.0\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.96.0\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.94.1\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.96.0\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing" />
@@ -157,7 +158,7 @@
     <Compile Include="Data\LogSetting.cs" />
     <Compile Include="Data\NoteItem.cs" />
     <Compile Include="Data\ReplaceItem.cs" />
-    <Compile Include="Data\RunningInfo.cs" />
+    <Compile Include="Data\RunningSetting.cs" />
     <Compile Include="Data\SkinSetting.cs" />
     <Compile Include="Data\StreamSetting.cs" />
     <Compile Include="Data\SystemEnvSetting.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />
+    <Compile Include="IF\INote.cs" />
     <Compile Include="IF\IRootSender.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILanguage.cs" />
@@ -521,17 +523,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="IWshRuntimeLibrary">
-      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <Private>False</Private>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\SQL\GetId.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -556,181 +547,10 @@
     <None Include="Resources\SQL\CheckTable.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image\ClipboardText.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\ClipboardFile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\ClipboardImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\ClipboardRichTextFormat.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\WindowSave.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\WindowList.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\WindowLoad.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Up.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Update.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Warning.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Tag.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Toolbar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Unlock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\SideContract.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\SideExpand.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\SystemEnvironment.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Remove.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Image\NotImpl.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Image\OpenDir.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Pin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Note.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\NoteBody.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\NoteTitle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Lock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Log.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Name.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Help.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Information.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Kill.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Font.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\FontStyle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Group.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Find.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Finder.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Flag.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\File.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Filter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Comment.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Config.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\CustomColor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Dir.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Disk.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Down.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Close.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\AddItem.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Changelog.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Windows.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\ClipboardCopy.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Icon\App.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icon\NotFound.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icon\ToolbarMain.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icon\Command.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\ClipboardHtml.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Image\Clipboard.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\readme.md" />
@@ -741,8 +561,6 @@
     <Content Include="doc\license\Applications\Hash.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Image\Debug.png" />
-    <None Include="Resources\Image\Applications.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -756,6 +574,12 @@ copy "$(OutDir)\etc\lang\ja-JP.accept.html" "$(OutDir)\etc\lang\default.accept.h
   <PropertyGroup>
     <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(LOCALAPPDATA)\Microsoft\MSBuild\SlowCheetah\v2.5.11\SlowCheetah.Transforms.targets</SlowCheetahTargets>
   </PropertyGroup>
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューターにはない NuGet パッケージを参照しています。これらをダウンロードするには、NuGet パッケージの復元を有効にしてください。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。不足しているファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.96.0\build\net451\System.Data.SQLite.Core.targets'))" />
+  </Target>
 </Project>

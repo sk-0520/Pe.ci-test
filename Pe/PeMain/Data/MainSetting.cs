@@ -1,13 +1,13 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Serialization;
-using ContentTypeTextNet.Pe.Library.Utility;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Reflection;
+	using System.Windows.Forms;
+	using System.Xml;
+	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+
 	/// <summary>
 	/// 設定統括
 	/// </summary>
@@ -16,7 +16,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 	{
 		public MainSetting()
 		{
-			RunningInfo = new RunningInfo();
+			Running = new RunningSetting();
 			
 			Log = new LogSetting();
 			SystemEnvironment = new SystemEnvironmentSetting();
@@ -49,7 +49,11 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			Clipboard.CorrectionValue();
 		}
 		
-		public RunningInfo RunningInfo { get; set; }
+		/// <summary>
+		/// 実行許可とかそんな感じ。
+		/// </summary>
+		[XmlElement("RunningInfo")]
+		public RunningSetting Running { get; set; }
 		
 		/// <summary>
 		/// 使用言語。

@@ -7,6 +7,9 @@
 	using System.Drawing;
 	using ContentTypeTextNet.Pe.Library.Utility.DB;
 
+	/// <summary>
+	/// DBManager を SQLite で使えるようにする。
+	/// </summary>
 	public class SQLiteDBManager: DBManager
 	{
 		public SQLiteDBManager(DbConnection connection, bool isOpened): base(connection, isOpened)
@@ -55,6 +58,20 @@
 			}
 			
 			return base.DbValueFromValue(value, type);
+		}
+
+		/// <summary>
+		/// テーブル一覧を取得する。
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetTables()
+		{
+			using(var query = CreateQuery()) {
+				var reader = query.ExecuteReader(global::ContentTypeTextNet.Pe.Library.Utility.Properties.Resources.SQL_GetTables);
+				while(reader.Read()) {
+					yield return To<string>(reader["NAME"]);
+				}
+			}
 		}
 	}
 }
