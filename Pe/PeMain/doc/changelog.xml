@@ -83,7 +83,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="275e831cc4243da25eef41f2f1739e02fbfd5f35">
 				<message>#249: 情報ウィンドウでスクロールバーが表示される</message>
 			</note>
 			<note rev="">
