@@ -87,7 +87,7 @@
 				<message>#249: 情報ウィンドウでスクロールバーが表示される</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#252: ノートのタイトル入力時にフォーカスが外れる</message>
 			</note>
 			<note rev="">
 				<message></message>
