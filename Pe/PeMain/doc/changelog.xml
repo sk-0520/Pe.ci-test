@@ -90,6 +90,9 @@
 				<message>#252: ノートのタイトル入力時にフォーカスが外れる</message>
 			</note>
 			<note rev="">
+				<message>#250: イメージアイテム削除時に例外</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
