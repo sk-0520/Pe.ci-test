@@ -99,7 +99,12 @@
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>ツールバー「自動的に隠す」実行でシステム的に成功したか否かに関わらず隠すように変更</message>
+				<comments>
+					<comment>Windows8で隠れないらしいので暫定的に対処</comment>
+					<comment>再現環境がないので何とも言えない</comment>
+					<comment>#182に干渉するけどまぁ、うん</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

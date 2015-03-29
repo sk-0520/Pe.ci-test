@@ -389,6 +389,7 @@
 					// 自動的に隠す
 					var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
 					autoHideResult = result.ToInt32() != 0;
+					autoHideResult = true;
 				}
 			}
 			if(!autoHideResult) {
