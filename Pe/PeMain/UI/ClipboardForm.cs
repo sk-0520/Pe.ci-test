@@ -1216,6 +1216,7 @@
 							templateItem.ToDispose();
 						}
 					}
+					ResetControlInTabPage();
 					ResetFilter();
 					if(this.listItemStack.Items.Count > index) {
 						this.listItemStack.SelectedIndex = index;
