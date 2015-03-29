@@ -9,6 +9,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Applications;
 	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
@@ -28,10 +29,8 @@
 		const int RECURSIVE = 2;
 		static readonly Size menuIconSize = IconScale.Small.ToSize();
 
-		class NoteBindItem: INotifyPropertyChanged
+		class NoteBindItem: AbstractViewModel
 		{
-			public event PropertyChangedEventHandler PropertyChanged;
-
 			public NoteBindItem(NoteItem item)
 			{
 				NoteItem = item;
@@ -47,8 +46,10 @@
 				}
 				set
 				{
-					NoteItem.Title = value;
-					NotifyPropertyChanged("Title");
+					if(NoteItem.Title != value) {
+						NoteItem.Title = value;
+						OnPropertyChanged();
+					}
 				}
 			}
 
@@ -60,15 +61,10 @@
 				}
 				set
 				{
-					NoteItem.Body = value;
-					NotifyPropertyChanged("Body");
-				}
-			}
-
-			protected void NotifyPropertyChanged(String s)
-			{
-				if(PropertyChanged != null) {
-					PropertyChanged(this, new PropertyChangedEventArgs(s));
+					if(NoteItem.Body != value) {
+						NoteItem.Body = value;
+						OnPropertyChanged();
+					}
 				}
 			}
 		}
