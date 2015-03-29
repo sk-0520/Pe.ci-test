@@ -56,31 +56,7 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.55.1" type="rc">
-		<group type="note">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
+	<log date="2015/03/29" version="0.56.0">
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="275e831cc4243da25eef41f2f1739e02fbfd5f35">
@@ -92,9 +68,6 @@
 			<note rev="40f47369124402ec7304bdbcd5b4b4f4aa76af71">
 				<message>#250: イメージアイテム削除時に例外</message>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
@@ -105,12 +78,6 @@
 					<comment>再現環境がないので何とも言えない</comment>
 					<comment>#182に干渉するけどまぁ、うん</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
