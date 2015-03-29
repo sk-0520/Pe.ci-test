@@ -533,8 +533,9 @@
 		{
 			base.ApplySetting();
 
-			this.inputTitle.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.DataBindings.Add("Text", this._bindItem, "Title", false, DataSourceUpdateMode.Never);
+			var bindTitle = new Binding("Text", this._bindItem, "Title", false, DataSourceUpdateMode.OnPropertyChanged);
+			//bindTitle.ControlUpdateMode = ControlUpdateMode.Never;
+			this.inputTitle.DataBindings.Add(bindTitle);
 
 			var bindBody = new Binding("Text", this._bindItem, "Body", false, DataSourceUpdateMode.OnPropertyChanged);
 			bindBody.ControlUpdateMode = ControlUpdateMode.Never;
