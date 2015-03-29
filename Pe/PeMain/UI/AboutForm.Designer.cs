@@ -114,14 +114,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// labelAppVersion
 			// 
-			this.labelAppVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelAppVersion.AutoEllipsis = true;
-			this.labelAppVersion.AutoSize = true;
 			this.tableLayoutPanel1.SetColumnSpan(this.labelAppVersion, 2);
+			this.labelAppVersion.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labelAppVersion.Location = new System.Drawing.Point(3, 62);
 			this.labelAppVersion.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
 			this.labelAppVersion.Name = "labelAppVersion";
-			this.labelAppVersion.Size = new System.Drawing.Size(98, 15);
+			this.labelAppVersion.Size = new System.Drawing.Size(171, 12);
 			this.labelAppVersion.TabIndex = 2;
 			this.labelAppVersion.Text = "labelAppVersion";
 			this.labelAppVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -287,7 +286,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(177, 77);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(177, 74);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// linkDiscussion
