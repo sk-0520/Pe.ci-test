@@ -89,7 +89,7 @@
 			<note rev="c7e85157d5250cbe5dcbd83213e3cab706265aa2">
 				<message>#252: ノートのタイトル入力時にフォーカスが外れる</message>
 			</note>
-			<note rev="">
+			<note rev="40f47369124402ec7304bdbcd5b4b4f4aa76af71">
 				<message>#250: イメージアイテム削除時に例外</message>
 			</note>
 			<note rev="">
