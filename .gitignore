@@ -3,7 +3,7 @@
 $*
 obj/
 bin/
-/output/
+/Output/
 /Changelog/
 *.Settings
 /Pe/packages/
