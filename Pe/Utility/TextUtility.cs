@@ -99,7 +99,7 @@
 		/// <returns></returns>
 		public static string ReplaceFromDictionary(this string src, IDictionary<string, string> map)
 		{
-			var pattern = string.Format("(?<HIT>{0})", string.Join("|", map.Values.Select(s => Regex.Escape(s)).Select(s => string.Format("({0})", s))));
+			var pattern = string.Format("(?<HIT>{0})", string.Join("|", map.Keys.Select(s => Regex.Escape(s)).Select(s => string.Format("({0})", s))));
 			var reg = new Regex(pattern);
 			return reg.Replace(src, (Match m) => {
 				var key = m.Groups["HIT"].Value;
