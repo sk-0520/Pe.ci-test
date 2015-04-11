@@ -1630,7 +1630,7 @@
 		#endregion ////////////////////////////////////
 		#endregion ////////////////////////////////////
 
-		void SelecterLauncher_SelectChnagedItem(object sender, SelectedItemEventArg e)
+		void SelecterLauncher_SelectChangedItem(object sender, SelectedItemEventArg e)
 		{
 			if(this._launcherSelectedItem != null) {
 				// 現在アイテムに入力内容を退避

@@ -81,7 +81,7 @@
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#254: テキストテンプレート置き換えプレビューがRTFじゃない</message>
 			</note>
 			<note rev="">
 				<message></message>
