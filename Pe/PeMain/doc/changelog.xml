@@ -90,6 +90,9 @@
 				<message>#253: ノートの本文が保存されないことがある</message>
 			</note>
 			<note rev="">
+				<message>ツールバーのツールチップ表示時にツールバーを全面に移動する</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
