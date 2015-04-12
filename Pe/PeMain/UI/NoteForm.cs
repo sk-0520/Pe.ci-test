@@ -23,7 +23,7 @@
 	/// <summary>
 	/// ノート。
 	/// </summary>
-	public partial class NoteForm: CommonForm
+	public partial class NoteForm: CommonForm, IChangedFlag
 	{
 		#region define
 		const int RECURSIVE = 2;
@@ -31,12 +31,14 @@
 
 		class NoteBindItem: AbstractViewModel
 		{
-			public NoteBindItem(NoteItem item)
+			public NoteBindItem(NoteItem item, IChangedFlag changedFlag)
 			{
 				NoteItem = item;
+				ChangedFlag = changedFlag;
 			}
 
 			public NoteItem NoteItem { get; private set; }
+			public IChangedFlag ChangedFlag { get; private set; }
 
 			public string Title
 			{
@@ -48,6 +50,7 @@
 				{
 					if(NoteItem.Title != value) {
 						NoteItem.Title = value;
+						ChangedFlag.Changed = true;
 						OnPropertyChanged();
 					}
 				}
@@ -63,6 +66,7 @@
 				{
 					if(NoteItem.Body != value) {
 						NoteItem.Body = value;
+						ChangedFlag.Changed = true;
 						OnPropertyChanged();
 					}
 				}
@@ -81,51 +85,6 @@
 			public Color Color { get; private set; }
 		}
 
-		struct HitState
-		{
-			private const uint leftBit = 0x0001;
-			private const uint rightBit = 0x0002;
-			private const uint topBit = 0x0004;
-			private const uint bottomBit = 0x0008;
-
-			private uint _flag;
-
-			public bool HasTrue { get { return this._flag != 0; } }
-
-			private bool Get(uint bit)
-			{
-				return (this._flag & bit) == bit;
-			}
-			private void Set(uint bit, bool value)
-			{
-				if(value) {
-					this._flag |= bit;
-				} else {
-					this._flag &= ~(this._flag & bit);
-				}
-			}
-
-			public bool Left
-			{
-				get { return Get(leftBit); }
-				set { Set(leftBit, value); }
-			}
-			public bool Right
-			{
-				get { return Get(rightBit); }
-				set { Set(rightBit, value); }
-			}
-			public bool Top
-			{
-				get { return Get(topBit); }
-				set { Set(topBit, value); }
-			}
-			public bool Bottom
-			{
-				get { return Get(bottomBit); }
-				set { Set(bottomBit, value); }
-			}
-		}
 		#endregion ////////////////////////////////////
 
 		#region static
@@ -165,10 +124,11 @@
 			}
 			set
 			{
-				this._bindItem = new NoteBindItem(value);
+				this._bindItem = new NoteBindItem(value, this);
 			}
 		}
-		bool Changed
+
+		public bool Changed
 		{
 			get
 			{
@@ -276,47 +236,29 @@
 							var edgePadding = CommonData.Skin.GetNoteWindowEdgePadding();
 
 							var noteArea = new Rectangle(Point.Empty, Size);
-							Rectangle area;
-							var pos = new HitState();
-							// 上
-							area = noteArea;
-							area.Height = edgePadding.Top;
-							pos.Top = area.Contains(point);
-							// 下
-							area = noteArea;
-							area.Y = noteArea.Height - edgePadding.Bottom;
-							area.Height = edgePadding.Bottom;
-							pos.Bottom = area.Contains(point);
-							// 左
-							area = noteArea;
-							area.Width = edgePadding.Left;
-							pos.Left = area.Contains(point);
-							// 右
-							area = noteArea;
-							area.X = noteArea.Width - edgePadding.Right;
-							area.Width = edgePadding.Right;
-							pos.Right = area.Contains(point);
+							var hitState = new HitState();
+							hitState.CalcAndSetValue(noteArea, edgePadding, point);
 
-							if(pos.HasTrue && !NoteItem.Compact) {
-								if(pos.Left) {
-									if(pos.Top) {
+							if(hitState.Enabled && !NoteItem.Compact) {
+								if(hitState.Left) {
+									if(hitState.Top) {
 										hitTest = HT.HTTOPLEFT;
-									} else if(pos.Bottom) {
+									} else if(hitState.Bottom) {
 										hitTest = HT.HTBOTTOMLEFT;
 									} else {
 										hitTest = HT.HTLEFT;
 									}
-								} else if(pos.Right) {
-									if(pos.Top) {
+								} else if(hitState.Right) {
+									if(hitState.Top) {
 										hitTest = HT.HTTOPRIGHT;
-									} else if(pos.Bottom) {
+									} else if(hitState.Bottom) {
 										hitTest = HT.HTBOTTOMRIGHT;
 									} else {
 										hitTest = HT.HTRIGHT;
 									}
-								} else if(pos.Top) {
+								} else if(hitState.Top) {
 									hitTest = HT.HTTOP;
-								} else if(pos.Bottom) {
+								} else if(hitState.Bottom) {
 									hitTest = HT.HTBOTTOM;
 								}
 							} else {

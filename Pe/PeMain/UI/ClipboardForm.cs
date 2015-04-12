@@ -162,6 +162,8 @@
 		{
 			InitializeCommand();
 
+			this.panelTemplateSource.Panel2Collapsed = true;
+
 			this.tabPreview_pageText.ImageKey = imageText;
 			this.tabPreview_pageRtf.ImageKey = imageRtf;
 			this.tabPreview_pageHtml.ImageKey = imageHtml;

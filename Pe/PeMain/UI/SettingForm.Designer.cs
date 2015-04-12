@@ -909,7 +909,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.selecterLauncher.Size = new System.Drawing.Size(193, 325);
 			this.selecterLauncher.TabIndex = 0;
 			this.selecterLauncher.ItemCreate += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.CreateItemEventArg>(this.SelecterLauncher_CreateItem);
-			this.selecterLauncher.SelectItemChanged += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterLauncher_SelectChnagedItem);
+			this.selecterLauncher.SelectItemChanged += new System.EventHandler<ContentTypeTextNet.Pe.PeMain.UI.CustomControl.SelectedItemEventArg>(this.SelecterLauncher_SelectChangedItem);
 			// 
 			// tabLauncher
 			// 

@@ -1663,6 +1663,8 @@
 				// メニュー表示中はなんもしない
 				return;
 			}
+
+			UIUtility.ShowFront(this);
 			this._tipsLauncher.ShowItem(DockScreen, toolItem, SelectedGroupItem, UsingToolbarItem);
 		}
 

@@ -13,19 +13,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

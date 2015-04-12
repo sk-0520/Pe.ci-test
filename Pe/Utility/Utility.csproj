@@ -26,7 +26,7 @@
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
@@ -35,7 +35,7 @@
     <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>$(SolutionDir)..\output\$(Configuration)\$(Platform)\lib</OutputPath>
+    <OutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)\lib</OutputPath>
     <DebugSymbols>False</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>

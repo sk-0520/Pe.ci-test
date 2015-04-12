@@ -4,7 +4,7 @@ echo off
 set BUILD=Build
 set ERROR=%BUILD%\@error
 
-set OUTPUT=output\Release
+set OUTPUT=Output\Release
 set OUTPUTx86=%OUTPUT%\x86
 set OUTPUTx64=%OUTPUT%\x64
 set VER_TARGET=%OUTPUTx86%\PeMain.exe
