@@ -153,6 +153,7 @@
     <Compile Include="Data\DB\Row\M_VERSION.cs" />
     <Compile Include="Data\DB\Row\T_NOTE.cs" />
     <Compile Include="Data\DB\Row\T_NOTE_STYLE.cs" />
+    <Compile Include="Data\HitState.cs" />
     <Compile Include="Data\HotKeySetting.cs" />
     <Compile Include="Data\IconItem.cs" />
     <Compile Include="Data\LauncherHistory.cs" />
