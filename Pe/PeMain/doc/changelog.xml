@@ -56,29 +56,7 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.56.1" type="rc">
-		<group type="note"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="features"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
+	<log date="2015/04/12" version="0.57.0">
 		<group type="fixes"><sep dummy="==================================================================" />
 			<note rev="77aaf9dc0e54c9198d66651e9af52871dd035b9c">
 				<message>#254: テキストテンプレート置き換えプレビューがRTFじゃない</message>
@@ -91,20 +69,6 @@
 			</note>
 			<note rev="e48147467c97155015f64733953635dd99102cc5">
 				<message>ツールバーのツールチップ表示時にツールバーを全面に移動する</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
