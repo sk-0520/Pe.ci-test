@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Forms;
+
 	public struct HitState
 	{
 		#region define
@@ -51,7 +53,7 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 		#endregion
 
 		#region function
-		
+
 		private bool Get(uint bit)
 		{
 			return (this._flag & bit) == bit;
@@ -64,6 +66,36 @@ namespace ContentTypeTextNet.Pe.PeMain.Data
 			} else {
 				this._flag &= ~(this._flag & bit);
 			}
+		}
+
+		/// <summary>
+		/// 領域とパディング、カーソル位置から各種値の計算と設定。
+		/// </summary>
+		/// <param name="area">全体領域。</param>
+		/// <param name="padding">パディング領域。</param>
+		/// <param name="point">判定座標。</param>
+		public void CalcAndSetValue(Rectangle area, Padding padding, Point point)
+		{
+			Rectangle workArea = new Rectangle();
+
+			// 上
+			workArea = area;
+			workArea.Height = padding.Top;
+			Top = workArea.Contains(point);
+			// 下
+			workArea = area;
+			workArea.Y = area.Height - padding.Bottom;
+			workArea.Height = padding.Bottom;
+			Bottom = workArea.Contains(point);
+			// 左
+			workArea = area;
+			workArea.Width = padding.Left;
+			Left = workArea.Contains(point);
+			// 右
+			workArea = area;
+			workArea.X = area.Width - padding.Right;
+			workArea.Width = padding.Right;
+			Right = workArea.Contains(point);
 		}
 
 		#endregion

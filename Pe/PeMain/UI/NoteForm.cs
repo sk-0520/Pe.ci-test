@@ -236,47 +236,29 @@
 							var edgePadding = CommonData.Skin.GetNoteWindowEdgePadding();
 
 							var noteArea = new Rectangle(Point.Empty, Size);
-							Rectangle area;
-							var pos = new HitState();
-							// 上
-							area = noteArea;
-							area.Height = edgePadding.Top;
-							pos.Top = area.Contains(point);
-							// 下
-							area = noteArea;
-							area.Y = noteArea.Height - edgePadding.Bottom;
-							area.Height = edgePadding.Bottom;
-							pos.Bottom = area.Contains(point);
-							// 左
-							area = noteArea;
-							area.Width = edgePadding.Left;
-							pos.Left = area.Contains(point);
-							// 右
-							area = noteArea;
-							area.X = noteArea.Width - edgePadding.Right;
-							area.Width = edgePadding.Right;
-							pos.Right = area.Contains(point);
+							var hitState = new HitState();
+							hitState.CalcAndSetValue(noteArea, edgePadding, point);
 
-							if(pos.Enabled && !NoteItem.Compact) {
-								if(pos.Left) {
-									if(pos.Top) {
+							if(hitState.Enabled && !NoteItem.Compact) {
+								if(hitState.Left) {
+									if(hitState.Top) {
 										hitTest = HT.HTTOPLEFT;
-									} else if(pos.Bottom) {
+									} else if(hitState.Bottom) {
 										hitTest = HT.HTBOTTOMLEFT;
 									} else {
 										hitTest = HT.HTLEFT;
 									}
-								} else if(pos.Right) {
-									if(pos.Top) {
+								} else if(hitState.Right) {
+									if(hitState.Top) {
 										hitTest = HT.HTTOPRIGHT;
-									} else if(pos.Bottom) {
+									} else if(hitState.Bottom) {
 										hitTest = HT.HTBOTTOMRIGHT;
 									} else {
 										hitTest = HT.HTRIGHT;
 									}
-								} else if(pos.Top) {
+								} else if(hitState.Top) {
 									hitTest = HT.HTTOP;
-								} else if(pos.Bottom) {
+								} else if(hitState.Bottom) {
 									hitTest = HT.HTBOTTOM;
 								}
 							} else {
