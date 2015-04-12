@@ -556,7 +556,6 @@
     <None Include="Resources\Icon\App.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\readme.md" />
     <Content Include="bin\ApplicationSetting.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
