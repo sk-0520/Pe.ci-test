@@ -136,8 +136,8 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="..\Common-Applications\AbstractViewModel.cs">
-      <Link>Data\AbstractViewModel.cs</Link>
+    <Compile Include="..\Common-Applications\ViewModelBase.cs">
+      <Link>Data\ViewModelBase.cs</Link>
     </Compile>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
