@@ -23,7 +23,7 @@
 	/// <summary>
 	/// ノート。
 	/// </summary>
-	public partial class NoteForm: CommonForm
+	public partial class NoteForm: CommonForm, IChangedFlag
 	{
 		#region define
 		const int RECURSIVE = 2;
@@ -31,12 +31,14 @@
 
 		class NoteBindItem: AbstractViewModel
 		{
-			public NoteBindItem(NoteItem item)
+			public NoteBindItem(NoteItem item, IChangedFlag changedFlag)
 			{
 				NoteItem = item;
+				ChangedFlag = changedFlag;
 			}
 
 			public NoteItem NoteItem { get; private set; }
+			public IChangedFlag ChangedFlag { get; private set; }
 
 			public string Title
 			{
@@ -48,6 +50,7 @@
 				{
 					if(NoteItem.Title != value) {
 						NoteItem.Title = value;
+						ChangedFlag.Changed = true;
 						OnPropertyChanged();
 					}
 				}
@@ -63,6 +66,7 @@
 				{
 					if(NoteItem.Body != value) {
 						NoteItem.Body = value;
+						ChangedFlag.Changed = true;
 						OnPropertyChanged();
 					}
 				}
@@ -165,10 +169,11 @@
 			}
 			set
 			{
-				this._bindItem = new NoteBindItem(value);
+				this._bindItem = new NoteBindItem(value, this);
 			}
 		}
-		bool Changed
+
+		public bool Changed
 		{
 			get
 			{

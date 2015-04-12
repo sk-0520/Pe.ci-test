@@ -87,6 +87,9 @@
 				<message>置き換え処理を行わないテンプレートアイテムが選択状態でテンプレートウィンドウ初回表示時に不要なリスト部分が表示されていた</message>
 			</note>
 			<note rev="">
+				<message>#253: ノートの本文が保存されないことがある</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
