@@ -83,7 +83,7 @@
 			<note rev="77aaf9dc0e54c9198d66651e9af52871dd035b9c">
 				<message>#254: テキストテンプレート置き換えプレビューがRTFじゃない</message>
 			</note>
-			<note rev="">
+			<note rev="0c8bb809d3d6c810417278d4c7d3782b197ca7c6">
 				<message>置き換え処理を行わないテンプレートアイテムが選択状態でテンプレートウィンドウ初回表示時に不要なリスト部分が表示されていた</message>
 			</note>
 			<note rev="">
