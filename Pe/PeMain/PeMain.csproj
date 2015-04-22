@@ -136,8 +136,8 @@
     <None Include="bat\accept.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Compile Include="..\Common-Applications\AbstractViewModel.cs">
-      <Link>Data\AbstractViewModel.cs</Link>
+    <Compile Include="..\Common-Applications\ViewModelBase.cs">
+      <Link>Data\ViewModelBase.cs</Link>
     </Compile>
     <Compile Include="Data\Applications.cs" />
     <Compile Include="Data\ChangeDevice.cs" />
@@ -178,6 +178,7 @@
     <Compile Include="IF\IApplicationItem.cs" />
     <Compile Include="IF\IChangedFlag.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
+    <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\ILauncherItem.cs" />
     <Compile Include="IF\IItem.cs" />
     <Compile Include="IF\ILogger.cs" />

@@ -90,8 +90,8 @@
     <Compile Include="..\Common-Applications\AssemblyLoader.cs">
       <Link>AssemblyLoader.cs</Link>
     </Compile>
-    <Compile Include="..\Common-Applications\AbstractViewModel.cs">
-      <Link>AbstractViewModel.cs</Link>
+    <Compile Include="..\Common-Applications\ViewModelBase.cs">
+      <Link>ViewModelBase.cs</Link>
     </Compile>
     <Compile Include="CRC32.cs" />
     <Page Include="HashWindow.xaml">

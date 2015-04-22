@@ -38,8 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hash", "Hash\Hash.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{F9E31AAE-D631-4480-8ECB-47A9AD6DEF53}"
 	ProjectSection(SolutionItems) = preProject
-		Common-Applications\AbstractViewModel.cs = Common-Applications\AbstractViewModel.cs
 		Common-Applications\AssemblyLoader.cs = Common-Applications\AssemblyLoader.cs
+		Common-Applications\ViewModelBase.cs = Common-Applications\ViewModelBase.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dust", "Dust", "{2957E6EA-7E84-43AF-9909-7B3E988E33A9}"
