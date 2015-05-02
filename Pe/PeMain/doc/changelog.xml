@@ -69,7 +69,7 @@
 			</note>
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="10c9f48b0860aa8df504800534065fb8c116e7ad">
 				<message>クリップボード・テンプレートのテキスト転送方法を常時切り替え可能にする</message>
 			</note>
 			<note rev="">
