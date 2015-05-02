@@ -230,6 +230,8 @@
 			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemClear.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemEmpty.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemOutputClipboard.SetLanguage(CommonData.Language);
+			
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
@@ -360,6 +362,8 @@
 
 			ChangeSelectListType(CommonData.MainSetting.Clipboard.ClipboardListType);
 			Visible = CommonData.MainSetting.Clipboard.Visible;
+
+			ChangeOutputClipboard(CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 
 		/// <summary>
@@ -385,6 +389,12 @@
 		{
 			CommonData.MainSetting.Clipboard.Enabled = enabled;
 			this.toolClipboard_itemEnabled.Checked = enabled;
+		}
+
+		void ChangeOutputClipboard(bool usingClipboard)
+		{
+			CommonData.MainSetting.Clipboard.OutputUsingClipboard = usingClipboard;
+			this.toolClipboard_itemOutputClipboard.Checked = usingClipboard;
 		}
 
 		void ChangeSelectTypeControl(ToolStripMenuItem item)
@@ -1823,6 +1833,11 @@
 		private void selectTemplateMacro_CheckedChanged(object sender, EventArgs e)
 		{
 			ChekedReplace();
+		}
+
+		private void toolClipboard_itemOutputClipboard_Click(object sender, EventArgs e)
+		{
+			ChangeOutputClipboard(!CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 		}
 	}
 }
