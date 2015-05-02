@@ -80,8 +80,8 @@
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
+			<note rev="813d9ca878215c9c3c422cd86b6cabf0229150f5">
+				<message>クリップボード/テンプレートの保存・削除ボタンをアイコンのみに変更</message>
 			</note>
 			<note rev="">
 				<message></message>
