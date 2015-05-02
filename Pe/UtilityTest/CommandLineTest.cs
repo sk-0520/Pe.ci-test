@@ -11,6 +11,12 @@ namespace ContentTypeTextNet.Pe.Test.UtilityTest
 	[TestFixture]
 	public class CommandLineTest
 	{
+		[TestCase("a", "a")]
+		public void ToCommandLineArgumentsTest(string arg, params string[] result)
+		{
+			Assert.IsTrue(CommandLine.ToCommandLineArguments(arg).SequenceEqual(result));
+		}
+
 		[TestCase(1,"a")]
 		[TestCase(1,"/a")]
 		[TestCase(1,"/a=1")]

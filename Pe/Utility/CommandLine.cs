@@ -4,7 +4,6 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Runtime.InteropServices;
-	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	/// <summary>
 	/// コマンドライン引数を分解したりなんやしたり。
@@ -13,6 +12,12 @@
 	/// </summary>
 	public class CommandLine
 	{
+		#region Updater
+		[DllImport("shell32.dll", SetLastError = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+		#endregion
+
 		/// <summary>
 		/// <para>http://stackoverflow.com/questions/298830/split-string-containing-command-line-parameters-into-string-in-c-sharp</para>
 		/// </summary>
@@ -21,7 +26,7 @@
 		public static IEnumerable<string> ToCommandLineArguments(string s)
 		{
 			int argc;
-			var argv = NativeMethods.CommandLineToArgvW(s, out argc);
+			var argv = CommandLineToArgvW(s, out argc);
 			if(argv == IntPtr.Zero) {
 				throw new System.ComponentModel.Win32Exception();
 			}

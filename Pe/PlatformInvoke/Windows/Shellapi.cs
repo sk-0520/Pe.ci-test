@@ -164,8 +164,10 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		[DllImport("shell32.dll", CharSet = CharSet.Auto)]
 		public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIc);
 
+		#region ぬぬぬ
 		[DllImport("shell32.dll", SetLastError = true)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+		#endregion
 	}
 }
