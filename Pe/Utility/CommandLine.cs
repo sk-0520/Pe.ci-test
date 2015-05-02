@@ -24,11 +24,11 @@
 		/// スタートアップ関数から呼び出されることを想定
 		/// </summary>
 		/// <param name="args"></param>
-		public CommandLine(string[] args)
+		public CommandLine(IEnumerable<string> args)
 		{
 			Initialize();
-			
-			Options = new List<string>(args);
+
+			Options = args.ToList();
 		}
 
 		private void Initialize()
