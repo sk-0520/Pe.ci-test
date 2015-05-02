@@ -661,7 +661,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 131);
-			this.panelTemplateSource.SplitterDistance = 250;
+			this.panelTemplateSource.SplitterDistance = 251;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			// 
@@ -676,7 +676,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(250, 131);
+			this.inputTemplateSource.Size = new System.Drawing.Size(251, 131);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -689,7 +689,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(113, 131);
+			this.listReplace.Size = new System.Drawing.Size(112, 131);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -773,22 +773,24 @@
 			// 
 			// toolClipboard_itemSave
 			// 
+			this.toolClipboard_itemSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolClipboard_itemSave.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemSave.Name = "toolClipboard_itemSave";
-			this.toolClipboard_itemSave.Size = new System.Drawing.Size(182, 22);
+			this.toolClipboard_itemSave.Size = new System.Drawing.Size(23, 22);
 			this.toolClipboard_itemSave.Text = ":clipboard/command/save";
 			this.toolClipboard_itemSave.Click += new System.EventHandler(this.toolClipboard_itemSave_Click);
 			// 
 			// toolClipboard_itemRemove
 			// 
+			this.toolClipboard_itemRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.toolClipboard_itemRemove.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolClipboard_itemClear,
             this.toolClipboard_itemEmpty});
 			this.toolClipboard_itemRemove.Image = global::ContentTypeTextNet.Pe.PeMain.Properties.Resources.Image_ReplaceSkin;
 			this.toolClipboard_itemRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolClipboard_itemRemove.Name = "toolClipboard_itemRemove";
-			this.toolClipboard_itemRemove.Size = new System.Drawing.Size(212, 22);
+			this.toolClipboard_itemRemove.Size = new System.Drawing.Size(32, 22);
 			this.toolClipboard_itemRemove.Text = ":clipboard/command/remove";
 			this.toolClipboard_itemRemove.ButtonClick += new System.EventHandler(this.toolClipboard_itemClear_ButtonClick);
 			// 
