@@ -12,6 +12,9 @@
 	/// </summary>
 	public class ShortcutFile: IDisposable
 	{
+		const int _argumentLength = 1024;
+		const int _descriptionLength = 1024 * 5;
+
 		private static StringBuilder CreateStringBuffer()
 		{
 			return CreateStringBuffer((int)MAX.MAX_PATH);
@@ -85,8 +88,7 @@
 		{
 			get
 			{
-				var max = 1024;
-				var resultBuffer = CreateStringBuffer(max);
+				var resultBuffer = CreateStringBuffer(_argumentLength);
 
 				this._shellLink.Com.GetArguments(resultBuffer, resultBuffer.Capacity);
 
@@ -105,8 +107,7 @@
 		{
 			get
 			{
-				var max = 1024 * 5;
-				var resultBuffer = CreateStringBuffer(max);
+				var resultBuffer = CreateStringBuffer(_descriptionLength);
 
 				this._shellLink.Com.GetDescription(resultBuffer, resultBuffer.Capacity);
 
