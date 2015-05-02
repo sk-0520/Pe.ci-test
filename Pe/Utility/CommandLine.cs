@@ -3,6 +3,8 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.InteropServices;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	/// <summary>
 	/// コマンドライン引数を分解したりなんやしたり。
@@ -11,6 +13,29 @@
 	/// </summary>
 	public class CommandLine
 	{
+		/// <summary>
+		/// <para>http://stackoverflow.com/questions/298830/split-string-containing-command-line-parameters-into-string-in-c-sharp</para>
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> ToCommandLineArguments(string s)
+		{
+			int argc;
+			var argv = NativeMethods.CommandLineToArgvW(s, out argc);
+			if(argv == IntPtr.Zero) {
+				throw new System.ComponentModel.Win32Exception();
+			}
+
+			try {
+				foreach(var i in Enumerable.Range(0, argc)) {
+					var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+					yield return Marshal.PtrToStringUni(p);
+				}
+			} finally {
+				Marshal.FreeHGlobal(argv);
+			}
+		}
+
 		/// <summary>
 		/// 起動時のオプションから呼び出されることを想定
 		/// </summary>
