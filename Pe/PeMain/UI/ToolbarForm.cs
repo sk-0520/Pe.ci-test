@@ -573,54 +573,54 @@
 		{
 			var itemList = new List<ToolStripItem>();
 
-			var openParentDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var openParentDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var openWorkDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var openWorkDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 			var copyCommandItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyParentDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var copyParentDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyWorkDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var copyWorkDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 			var propertyItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 
-			itemList.Add(openParentDirItem);
-			itemList.Add(openWorkDirItem);
+			itemList.Add(openParentDirectoryItem);
+			itemList.Add(openWorkDirectoryItem);
 			itemList.Add(new DisableCloseToolStripSeparator());
 			itemList.Add(copyCommandItem);
-			itemList.Add(copyParentDirItem);
-			itemList.Add(copyWorkDirItem);
+			itemList.Add(copyParentDirectoryItem);
+			itemList.Add(copyWorkDirectoryItem);
 			itemList.Add(new DisableCloseToolStripSeparator());
 			itemList.Add(propertyItem);
 
 			// 親ディレクトリを開く
-			openParentDirItem.Name = menuNamePath_openParentDir;
-			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
+			openParentDirectoryItem.Name = menuNamePath_openParentDir;
+			openParentDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
+			openParentDirectoryItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
 			// 作業ディレクトリを開く
-			openWorkDirItem.Name = menuNamePath_openWorkDir;
-			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
+			openWorkDirectoryItem.Name = menuNamePath_openWorkDir;
+			openWorkDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
+			openWorkDirectoryItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
 			copyCommandItem.Click += FileLauncherItemPathMenu_CopyCommand;
 			// 親ディレクトリをコピー
-			copyParentDirItem.Name = menuNamePath_copyParentDir;
-			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
-			copyParentDirItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
+			copyParentDirectoryItem.Name = menuNamePath_copyParentDir;
+			copyParentDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
+			copyParentDirectoryItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
 			// 作業ディレクトリをコピー
-			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
-			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
-			copyWorkDirItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
+			copyWorkDirectoryItem.Name = menuNamePath_copyWorkDir;
+			copyWorkDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
+			copyWorkDirectoryItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
