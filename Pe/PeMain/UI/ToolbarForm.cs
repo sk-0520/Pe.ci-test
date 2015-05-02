@@ -408,7 +408,7 @@
 			var firstGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First();
 			var initGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => ToolbarItem.CheckNameEqual(g.Name, UsingToolbarItem.DefaultGroup));
 
-			SelectedGroup(initGroup ?? firstGroup);
+			ChangeSelectGroup(initGroup ?? firstGroup);
 
 			// 表示
 			ApplySettingPosition();
@@ -506,7 +506,11 @@
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
 		}
 
-		void SelectedGroup(ToolbarGroupItem groupItem)
+		/// <summary>
+		/// 選択グループを変更する。
+		/// </summary>
+		/// <param name="groupItem"></param>
+		void ChangeSelectGroup(ToolbarGroupItem groupItem)
 		{
 			Cursor = Cursors.WaitCursor;
 			try {
@@ -1378,7 +1382,7 @@
 					CommonData.MainSetting.Launcher.Items.Add(item);
 				}
 				SelectedGroupItem.ItemNames.Add(item.Name);
-				SelectedGroup(SelectedGroupItem);
+				ChangeSelectGroup(SelectedGroupItem);
 
 				// 他のツールバーにアイテム変更を教える
 				CommonData.RootSender.ChangedLauncherGroupItems(UsingToolbarItem, SelectedGroupItem);
@@ -1443,7 +1447,7 @@
 		{
 			// 他のツールバーから通知を受け取った場合に反映処理を行う
 			Debug.Assert(toolbarItem != UsingToolbarItem);
-			SelectedGroup(SelectedGroupItem);
+			ChangeSelectGroup(SelectedGroupItem);
 		}
 
 
@@ -1533,7 +1537,7 @@
 		{
 			var menuItem = (ToolbarGroupItemMenuItem)sender;
 			var group = menuItem.ToolbarGroupItem;
-			SelectedGroup(group);
+			ChangeSelectGroup(group);
 		}
 
 		void LauncherTypeFile_ButtonClick(object sender, EventArgs e)
@@ -1700,7 +1704,7 @@
 		{
 			var toolItem = (ToolbarGroupItemToolStripMenuItem)sender;
 			var groupItem = toolItem.ToolbarGroupItem;
-			SelectedGroup(groupItem);
+			ChangeSelectGroup(groupItem);
 		}
 
 		#region File Launcher Menu
