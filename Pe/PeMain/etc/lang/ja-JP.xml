@@ -282,6 +282,8 @@
 		<Word Name="clipboard/output/empty"            Text="出力文字列が空のため無効" />
 		<Word Name="clipboard/output/notfound-window"  Text="出力先ウィンドウが発見できないため無効" />
 		<Word Name="clipboard/tool/filtering"          Text="${item-filter}&#x0d;&#x0a;${tips-wildcard}" />
+		<Word Name="clipboard/tool/output-using-clipboard"  Text="クリップボード経由" />
+		
 
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />

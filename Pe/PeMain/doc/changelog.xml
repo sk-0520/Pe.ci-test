@@ -70,7 +70,7 @@
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>クリップボード・テンプレートのテキスト転送方法を常時切り替え可能にする</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -80,8 +80,8 @@
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
+			<note rev="813d9ca878215c9c3c422cd86b6cabf0229150f5">
+				<message>クリップボード/テンプレートの保存・削除ボタンをアイコンのみに変更</message>
 			</note>
 			<note rev="">
 				<message></message>
