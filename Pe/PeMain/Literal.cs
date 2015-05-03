@@ -146,6 +146,9 @@
 		public static readonly TripleRange<int> clipboardLimit = new TripleRange<int>(8, 1024, 1024 * 5);
 		public static readonly TripleRange<int> clipboardRepeated = new TripleRange<int>(-1, 1, 200);
 
+		public static readonly TripleRange<int> stackListWidthLimit = new TripleRange<int>(16, 200, int.MaxValue);
+		public static readonly TripleRange<int> templateEditWidthLimit = new TripleRange<int>(32, 200, int.MaxValue);
+
 		/// <summary>
 		/// 隠しファイルを表示する際に使用する透明度。
 		/// </summary>

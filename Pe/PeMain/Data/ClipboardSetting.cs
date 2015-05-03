@@ -24,6 +24,8 @@
 			);
 			var screenArea = Screen.PrimaryScreen.WorkingArea;
 			Location = new Point(screenArea.X, screenArea.Height - Size.Height);
+			StackListWidth = Literal.stackListWidthLimit.median;
+			TemplateEditWidth = Literal.templateEditWidthLimit.median;
 			TextFont = new FontSetting(SystemFonts.DialogFont);
 
 			Enabled = true;
@@ -85,6 +87,14 @@
 		/// 位置。
 		/// </summary>
 		public Point Location { get; set; }
+		/// <summary>
+		/// クリップボード・テンプレートリストの横幅。
+		/// </summary>
+		public int StackListWidth { get; set; }
+		/// <summary>
+		/// テキストテンプレート編集領域の横幅。
+		/// </summary>
+		public int TemplateEditWidth { get; set; }
 		/// <summary>
 		/// 最前面表示。
 		/// </summary>
@@ -163,6 +173,10 @@
 			//SleepTime = Literal.clipboardSleepTime.ToRounding(SleepTime);
 			WaitTime = Literal.clipboardWaitTime.ToRounding(WaitTime);
 			ClipboardRepeated = Literal.clipboardRepeated.ToRounding(ClipboardRepeated);
+
+			StackListWidth = Literal.stackListWidthLimit.ToRounding(StackListWidth);
+			TemplateEditWidth = Literal.templateEditWidthLimit.ToRounding(TemplateEditWidth);
+
 		}
 
 		#region DisposableItem
