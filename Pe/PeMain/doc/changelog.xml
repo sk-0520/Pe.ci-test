@@ -87,7 +87,7 @@
 				<message>#257: ファイルアイテムに上位ディレクトリが存在しない場合にもファイルメニューを表示させる</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#261: 起動時に出力されるログがUIスレッドに影響する</message>
 			</note>
 			<note rev="">
 				<message></message>
