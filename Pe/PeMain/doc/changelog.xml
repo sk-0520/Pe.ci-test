@@ -89,7 +89,7 @@
 			<note rev="80598bf089add78653fb6489ec0edaa4297a88e3">
 				<message>#261: 起動時に出力されるログがUIスレッドに影響する</message>
 			</note>
-			<note rev="">
+			<note rev="333dab558438827c361fc3ce7e3451667b677416">
 				<message>#260: ノートのタイトル入力後、前回の入力内容が微妙に残って汚い</message>
 				<comments>
 					<comment>あっれぇ再現しないぞぉ</comment>
