@@ -83,10 +83,10 @@
 			<note rev="813d9ca878215c9c3c422cd86b6cabf0229150f5">
 				<message>クリップボード/テンプレートの保存・削除ボタンをアイコンのみに変更</message>
 			</note>
-			<note rev="">
+			<note rev="58f43289bb7c9a96844e317c1c64c97b47ad1679">
 				<message>#257: ファイルアイテムに上位ディレクトリが存在しない場合にもファイルメニューを表示させる</message>
 			</note>
-			<note rev="">
+			<note rev="80598bf089add78653fb6489ec0edaa4297a88e3">
 				<message>#261: 起動時に出力されるログがUIスレッドに影響する</message>
 			</note>
 			<note rev="">
