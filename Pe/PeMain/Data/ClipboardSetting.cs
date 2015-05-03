@@ -25,7 +25,7 @@
 			var screenArea = Screen.PrimaryScreen.WorkingArea;
 			Location = new Point(screenArea.X, screenArea.Height - Size.Height);
 			StackListWidth = Literal.stackListWidthLimit.median;
-			TemplateEditWidth = Literal.templateEditWidthLimit.median;
+			TemplateListWidth = Literal.templateListWidthLimit.median;
 			TextFont = new FontSetting(SystemFonts.DialogFont);
 
 			Enabled = true;
@@ -92,9 +92,9 @@
 		/// </summary>
 		public int StackListWidth { get; set; }
 		/// <summary>
-		/// テキストテンプレート編集領域の横幅。
+		/// テキストテンプレートリストの横幅。
 		/// </summary>
-		public int TemplateEditWidth { get; set; }
+		public int TemplateListWidth { get; set; }
 		/// <summary>
 		/// 最前面表示。
 		/// </summary>
@@ -175,7 +175,7 @@
 			ClipboardRepeated = Literal.clipboardRepeated.ToRounding(ClipboardRepeated);
 
 			StackListWidth = Literal.stackListWidthLimit.ToRounding(StackListWidth);
-			TemplateEditWidth = Literal.templateEditWidthLimit.ToRounding(TemplateEditWidth);
+			TemplateListWidth = Literal.templateListWidthLimit.ToRounding(TemplateListWidth);
 
 		}
 
