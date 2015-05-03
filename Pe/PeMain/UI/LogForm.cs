@@ -179,6 +179,11 @@
 
 		public void PutsList(IEnumerable<LogItem> log, bool show)
 		{
+			if(InvokeRequired) {
+				Invoke((MethodInvoker)delegate() { PutsList(log, show); });
+				return;
+			}
+
 			var putLogs = log;
 			if(!CommonData.MainSetting.Log.Debugging) {
 				putLogs = log.Where(l => l.LogType != LogType.Debug);
