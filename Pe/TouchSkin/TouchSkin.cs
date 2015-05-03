@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.Skin.DotSkin
+﻿namespace ContentTypeTextNet.Pe.Library.Skin.TouchSkin
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,14 +11,14 @@
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
 
-	public class DotSkin: Skin
+	public class TouchSkin: Skin
 	{
 		#region Initialize
 
 		public override void Load() 
 		{
 			this._about = new SkinAbout(
-				"DotSkin",
+				"TouchSkin",
 				"sk",
 				new Uri("http://content-type-text.net"),
 				false
