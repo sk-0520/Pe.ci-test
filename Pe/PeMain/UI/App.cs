@@ -779,7 +779,7 @@
 		/// 本体メニュー初期化
 		/// </summary>
 		/// <returns></returns>
-		private void AttachmentMainMenu()
+		private void AttachmentMainMenu(ToolStripDropDownMenu parentMenu)
 		{
 			// ツールバー
 			var itemToolbar = new ToolStripMenuItem() {
@@ -887,10 +887,10 @@
 				itemExit,
 			};
 
-			this._contextMenu.Items.AddRange(menuList);
+			parentMenu.Items.AddRange(menuList);
 
 			// メインメニュー
-			this._contextMenu.Opening += (object sender, CancelEventArgs e) => {
+			parentMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
 			};
 		}
@@ -927,7 +927,7 @@
 		{
 			this._notifyIcon = new NotifyIcon();
 			this._contextMenu = new AppContextMenuStrip();
-			AttachmentMainMenu();
+			AttachmentMainMenu(this._contextMenu);
 
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
@@ -1741,10 +1741,8 @@
 			CheckUpdateProcessAsync();
 		}
 
-		void OpeningNoteMenu()
+		void OpeningNoteMenu(ToolStripMenuItem　parentItem)
 		{
-			var parentItem = (ToolStripMenuItem)this._contextMenu.Items[menuNameWindowNote];
-
 			if(parentItem.DropDownItems.ContainsKey(menuNameWindowNoteSeparator)) {
 				var separatorItem = parentItem.DropDownItems[menuNameWindowNoteSeparator];
 				var itemMenus = parentItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem);
@@ -1972,7 +1970,7 @@
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			OpeningNoteMenu();
+			OpeningNoteMenu((ToolStripMenuItem)this._contextMenu.Items[menuNameWindowNote]);
 		}
 		
 		/// <summary>
@@ -2129,7 +2127,7 @@
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
 
-			OpeningNoteMenu();
+			OpeningNoteMenu(menuItem);
 		}
 
 		void ApplicationsMenu_Click(object sender, EventArgs e)
