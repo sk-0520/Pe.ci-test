@@ -367,7 +367,7 @@
 			ChangeOutputClipboard(CommonData.MainSetting.Clipboard.OutputUsingClipboard);
 
 			this.panelClipboard.SplitterDistance = CommonData.MainSetting.Clipboard.StackListWidth;
-			this.panelTemplateSource.SplitterDistance = this.panelTemplateSource.ClientSize.Width - CommonData.MainSetting.Clipboard.TemplateListWidth;
+			this.panelTemplateSource.SplitterDistance = Literal.templateListWidthLimit.ToRounding(this.panelTemplateSource.ClientSize.Width - CommonData.MainSetting.Clipboard.TemplateListWidth);
 		}
 
 		/// <summary>
