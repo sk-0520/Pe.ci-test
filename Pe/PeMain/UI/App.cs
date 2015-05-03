@@ -1087,7 +1087,12 @@
 
 			Debug.Assert(Initialized);
 			logger.Puts(LogType.Information, "Initialize End", string.Empty);
-			this._logForm.PutsList(logger.GetList(), false);
+
+			if(this._logForm.InvokeRequired) {
+				this._logForm.Invoke((MethodInvoker)delegate() { this._logForm.PutsList(logger.GetList(), false); });
+			} else {
+				this._logForm.PutsList(logger.GetList(), false);
+			}
 
 			return existsSettingFilePath;
 		}
@@ -1446,6 +1451,8 @@
 					// クリップボード
 					mainSetting.Clipboard.Location = this._commonData.MainSetting.Clipboard.Location;
 					mainSetting.Clipboard.Size = this._commonData.MainSetting.Clipboard.Size;
+					mainSetting.Clipboard.StackListWidth = this._commonData.MainSetting.Clipboard.StackListWidth;
+					mainSetting.Clipboard.TemplateListWidth = this._commonData.MainSetting.Clipboard.TemplateListWidth;
 					//mainSetting.Clipboard.ClipboardListType = this._commonData.MainSetting.Clipboard.ClipboardListType;
 					mainSetting.Clipboard.HistoryItems = this._commonData.MainSetting.Clipboard.HistoryItems;
 					mainSetting.Clipboard.HistoryItems.LimitSize = this._commonData.MainSetting.Clipboard.Limit;

@@ -224,6 +224,7 @@
 			this.panelClipboard.SplitterDistance = 225;
 			this.panelClipboard.SplitterWidth = 3;
 			this.panelClipboard.TabIndex = 0;
+			this.panelClipboard.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.panelClipboard_SplitterMoved);
 			// 
 			// panelItemStack
 			// 
@@ -661,9 +662,10 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 131);
-			this.panelTemplateSource.SplitterDistance = 252;
+			this.panelTemplateSource.SplitterDistance = 254;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
+			this.panelTemplateSource.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.panelTemplateSource_SplitterMoved);
 			// 
 			// inputTemplateSource
 			// 
@@ -676,7 +678,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(252, 131);
+			this.inputTemplateSource.Size = new System.Drawing.Size(254, 131);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -689,7 +691,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(111, 131);
+			this.listReplace.Size = new System.Drawing.Size(109, 131);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
