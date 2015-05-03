@@ -1803,10 +1803,15 @@
 				executeItem.Enabled = false;
 				//executeExItem.Enabled = false;
 			}
+
+			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+			var parentDirPath = Path.GetDirectoryName(expandPath);
+			if(string.IsNullOrEmpty(parentDirPath)) {
+				// #257: 最上位ディレクトリの場合
+				parentDirPath = expandPath;
+			}
 			try {
-				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-				var expandParentPath = Path.GetDirectoryName(expandPath);
-				fileItem.Enabled = Directory.Exists(expandParentPath);
+				fileItem.Enabled = Directory.Exists(parentDirPath);
 			} catch(ArgumentException ex) {
 				// #41の影響により#77考慮不要
 				CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
@@ -1818,7 +1823,7 @@
 				if(!fileItem.HasDropDownItems) {
 					var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 					var showExtension = SystemEnvironment.IsExtensionShow();
-					var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+
 					AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
 				}
 			} catch(Exception ex) {
