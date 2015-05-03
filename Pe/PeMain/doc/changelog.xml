@@ -70,7 +70,7 @@
 		</group>
 		<group type="features"><sep dummy="==================================================================" />
 			<note rev="10c9f48b0860aa8df504800534065fb8c116e7ad">
-				<message>クリップボード・テンプレートのテキスト転送方法を常時切り替え可能にする</message>
+				<message>#256: クリップボード・テンプレートのテキスト転送方法を常時切り替え可能にする</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -82,6 +82,9 @@
 		<group type="fixes"><sep dummy="==================================================================" />
 			<note rev="813d9ca878215c9c3c422cd86b6cabf0229150f5">
 				<message>クリップボード/テンプレートの保存・削除ボタンをアイコンのみに変更</message>
+			</note>
+			<note rev="">
+				<message>#257: ファイルアイテムに上位ディレクトリが存在しない場合にもファイルメニューを表示させる</message>
 			</note>
 			<note rev="">
 				<message></message>
