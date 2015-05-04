@@ -76,6 +76,7 @@
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		private ClipboardForm _clipboardWindow;
+		private NoteToolTipForm _noteToolTipForm;
 		
 		private List<NoteForm> _noteWindowList = new List<NoteForm>();
 		
@@ -135,6 +136,7 @@
 			foreach(var w in this._noteWindowList) {
 				w.ToDispose();
 			}
+			this._noteToolTipForm.ToDispose();
 			foreach(var w in this._toolbarForms.Values) {
 				w.ToDispose();
 			}
@@ -779,7 +781,7 @@
 		/// 本体メニュー初期化
 		/// </summary>
 		/// <returns></returns>
-		private void AttachmentMainMenu()
+		private void AttachmentMainMenu(ToolStripDropDownMenu parentMenu)
 		{
 			// ツールバー
 			var itemToolbar = new ToolStripMenuItem() {
@@ -887,11 +889,14 @@
 				itemExit,
 			};
 
-			this._contextMenu.Items.AddRange(menuList);
+			parentMenu.Items.AddRange(menuList);
 
 			// メインメニュー
-			this._contextMenu.Opening += (object sender, CancelEventArgs e) => {
+			parentMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
+			};
+			parentMenu.Closed += (object sender, ToolStripDropDownClosedEventArgs e) => {
+				this._noteToolTipForm.ToHide();
 			};
 		}
 
@@ -927,7 +932,7 @@
 		{
 			this._notifyIcon = new NotifyIcon();
 			this._contextMenu = new AppContextMenuStrip();
-			AttachmentMainMenu();
+			AttachmentMainMenu(this._contextMenu);
 
 			this._notifyIcon.DoubleClick += IconDoubleClick;
 			this._notifyIcon.Visible = true;
@@ -997,6 +1002,9 @@
 
 		void InitializeNoteForm(CommandLine commandLine, StartupLogger logger)
 		{
+			this._noteToolTipForm = new NoteToolTipForm();
+			this._noteToolTipForm.SetCommonData(this._commonData);
+
 			var noteDB = new NoteDB(this._commonData.Database);
 			foreach(var item in noteDB.GetNoteItemList(true).Where(item => item.Visible)) {
 				CreateNote(item);
@@ -1741,10 +1749,8 @@
 			CheckUpdateProcessAsync();
 		}
 
-		void OpeningNoteMenu()
+		void OpeningNoteMenu(ToolStripMenuItem parentItem)
 		{
-			var parentItem = (ToolStripMenuItem)this._contextMenu.Items[menuNameWindowNote];
-
 			if(parentItem.DropDownItems.ContainsKey(menuNameWindowNoteSeparator)) {
 				var separatorItem = parentItem.DropDownItems[menuNameWindowNoteSeparator];
 				var itemMenus = parentItem.DropDownItems.Cast<ToolStripItem>().SkipWhile(t => t != separatorItem);
@@ -1772,6 +1778,7 @@
 					Text = noteItem.Title,
 					ImageScaling = ToolStripItemImageScaling.None,
 					Checked = noteItem.Visible,
+					AutoToolTip = false,
 				};
 				if(noteItem.Compact) {
 					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteSmallSize);
@@ -1781,12 +1788,15 @@
 				menuItem.Click += NoteMenuItem_Click;
 
 				itemNoteMenuList.Add(menuItem);
+				menuItem.MouseHover += menuItem_MouseHover;
+				menuItem.MouseLeave += menuItem_MouseLeave;
 			}
 
 			if(itemNoteMenuList.Count > 0) {
 				parentItem.DropDownItems.AddRange(itemNoteMenuList.ToArray());
 			}
 		}
+
 
 		/// <summary>
 		/// ウィンドウ位置を取得する。
@@ -1972,7 +1982,7 @@
 		
 		void NoteMenu_DropDownOpening(object sender, EventArgs e)
 		{
-			OpeningNoteMenu();
+			OpeningNoteMenu((ToolStripMenuItem)this._contextMenu.Items[menuNameWindowNote]);
 		}
 		
 		/// <summary>
@@ -2129,7 +2139,7 @@
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteCompact, this._commonData.MainSetting.Note.CompactHotKey, this._commonData.Language, this._commonData.Logger);
 			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemNoteShowFront, this._commonData.MainSetting.Note.ShowFrontHotKey, this._commonData.Language, this._commonData.Logger);
 
-			OpeningNoteMenu();
+			OpeningNoteMenu(menuItem);
 		}
 
 		void ApplicationsMenu_Click(object sender, EventArgs e)
@@ -2177,7 +2187,7 @@
 
 		void noteForm_Closed(object sender, EventArgs e)
 		{
-			var noteForm = (NoteForm)sender; ;
+			var noteForm = (NoteForm)sender;
 			if(noteForm.Visible) {
 				this._noteWindowList.Remove(noteForm);
 			}
@@ -2194,6 +2204,19 @@
 				var noteWindow = CreateNote(noteItem);
 				noteWindow.SaveItem();
 			}
+		}
+
+		void menuItem_MouseHover(object sender, EventArgs e)
+		{
+			var toolItem = (NoteItemToolStripMenuItem)sender;
+
+			this._noteToolTipForm.ShowItem(ScreenUtility.GetCurrentCursor(), toolItem, toolItem.NoteItem);
+			//this._noteToolTipForm.Show
+		}
+
+		void menuItem_MouseLeave(object sender, EventArgs e)
+		{
+			this._noteToolTipForm.ToHide();
 		}
 
 	}

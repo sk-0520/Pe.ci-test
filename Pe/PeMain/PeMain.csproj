@@ -360,6 +360,12 @@
       <DependentUpon>NoteForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\App.cs" />
+    <Compile Include="UI\NoteToolTipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\NoteToolTipForm.Designer.cs">
+      <DependentUpon>NoteToolTipForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -430,6 +436,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\NoteForm.resx">
       <DependentUpon>NoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\NoteToolTipForm.resx">
+      <DependentUpon>NoteToolTipForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\ScreenForm.resx">
       <DependentUpon>ScreenForm.cs</DependentUpon>

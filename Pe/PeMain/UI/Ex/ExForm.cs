@@ -80,6 +80,8 @@
 			BackColor = SystemColors.Info;
 		}
 
+		#region override
+
 		protected override bool ShowWithoutActivation { get { return true; } }
 
 		protected override CreateParams CreateParams
@@ -109,6 +111,20 @@
 			}
 		}
 
+		#endregion
 
+		#region function
+
+		public void ToNoActiveShow()
+		{
+			WindowsUtility.ShowNoActive(this);
+		}
+
+		public void ToHide()
+		{
+			Visible = false;
+		}
+
+		#endregion
 	}
 }
