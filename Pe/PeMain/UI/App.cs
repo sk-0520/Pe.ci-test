@@ -894,6 +894,9 @@
 			parentMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
 			};
+			parentMenu.Closed += (object sender, ToolStripDropDownClosedEventArgs e) => {
+				this._noteToolTipForm.ToHide();
+			};
 		}
 
 		void InitializeSkin(CommandLine commandLine, ILogger logger)
@@ -1745,7 +1748,7 @@
 			CheckUpdateProcessAsync();
 		}
 
-		void OpeningNoteMenu(ToolStripMenuItem　parentItem)
+		void OpeningNoteMenu(ToolStripMenuItem parentItem)
 		{
 			if(parentItem.DropDownItems.ContainsKey(menuNameWindowNoteSeparator)) {
 				var separatorItem = parentItem.DropDownItems[menuNameWindowNoteSeparator];
@@ -1785,6 +1788,7 @@
 
 				itemNoteMenuList.Add(menuItem);
 				menuItem.MouseHover += menuItem_MouseHover;
+				menuItem.MouseLeave += menuItem_MouseLeave;
 			}
 
 			if(itemNoteMenuList.Count > 0) {
@@ -2208,6 +2212,12 @@
 			this._noteToolTipForm.ShowItem(ScreenUtility.GetCurrentCursor(), toolItem, toolItem.NoteItem);
 			//this._noteToolTipForm.Show
 		}
+
+		void menuItem_MouseLeave(object sender, EventArgs e)
+		{
+			this._noteToolTipForm.ToHide();
+		}
+
 	}
 }
 

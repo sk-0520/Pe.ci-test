@@ -160,11 +160,6 @@
 			return sf;
 		}
 
-		public void HideItem()
-		{
-			ToHide();
-		}
-
 		void SetSize(Screen screen)
 		{
 			// 描画サイズ生成
@@ -262,7 +257,7 @@
 			// 表示位置設定
 			SetPosition(screen, toolbarItem, toolStripItem);
 
-			ToShow();
+			ToNoActiveShow();
 		}
 
 		#endregion ////////////////////////////////////

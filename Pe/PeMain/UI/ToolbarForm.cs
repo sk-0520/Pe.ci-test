@@ -1544,7 +1544,7 @@
 		{
 			var toolItem = (ToolStripItem)sender;
 			var launcherItem = ((ILauncherItem)toolItem).LauncherItem;
-			this._tipsLauncher.HideItem();
+			this._tipsLauncher.ToHide();
 			ExecuteItem(launcherItem);
 		}
 
@@ -1674,7 +1674,7 @@
 
 		void toolItem_MouseLeave(object sender, EventArgs e)
 		{
-			this._tipsLauncher.HideItem();
+			this._tipsLauncher.ToHide();
 		}
 
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)

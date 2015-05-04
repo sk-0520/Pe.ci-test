@@ -28,7 +28,7 @@
 		{
 			InitializeComponent();
 			Opacity = 0;
-			ToShow();
+			ToNoActiveShow();
 			ToHide();
 			Opacity = 100;
 		}
@@ -84,7 +84,7 @@
 			}
 			Location = showPoint;
 
-			ToShow();
+			ToNoActiveShow();
 		}
 
 		#endregion ////////////////////////////////////

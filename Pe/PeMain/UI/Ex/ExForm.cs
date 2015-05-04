@@ -115,12 +115,12 @@
 
 		#region function
 
-		protected void ToShow()
+		public void ToNoActiveShow()
 		{
 			WindowsUtility.ShowNoActive(this);
 		}
 
-		protected void ToHide()
+		public void ToHide()
 		{
 			Visible = false;
 		}
