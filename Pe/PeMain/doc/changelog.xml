@@ -76,6 +76,9 @@
 				<message>#236: クリップボード/テンプレートウィンドウの分割領域を保持する</message>
 			</note>
 			<note rev="">
+				<message>#255: ノート一覧から該当ノートアイテムをプレビュー</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>

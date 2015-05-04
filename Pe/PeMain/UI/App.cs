@@ -136,6 +136,7 @@
 			foreach(var w in this._noteWindowList) {
 				w.ToDispose();
 			}
+			this._noteToolTipForm.ToDispose();
 			foreach(var w in this._toolbarForms.Values) {
 				w.ToDispose();
 			}

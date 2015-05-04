@@ -79,9 +79,15 @@
 			Size = NoteItem.Size;
 
 			var showPoint = new Point(location.X + toolStripItem.Width, location.Y);
+			// 横方向補正
 			if(screen.Bounds.Right < showPoint.X + Size.Width) {
 				showPoint.X -= Size.Width + toolStripItem.Width;
 			}
+			// 下方向補正
+			if(screen.Bounds.Bottom < showPoint.Y + Size.Height) {
+				showPoint.Y -= (showPoint.Y + Size.Height) - screen.Bounds.Bottom;
+			}
+
 			Location = showPoint;
 
 			ToNoActiveShow();
