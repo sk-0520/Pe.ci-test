@@ -87,7 +87,7 @@
 					if(process.Error != null) {
 						return process.Error.ToString() + Environment.NewLine + string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => e.ToString()));
 					} else {
-						return string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => e.ToString()));
+						return string.Join(Environment.NewLine, process.GeneratedErrorList.Concat(process.CompileErrorList).Select(e => string.Format("[{0},{1}] {2}: {3}", e.Line - process.FirstLineNumber, e.Column, e.ErrorNumber, e.ErrorText)));
 					}
 				}
 				return process.TransformText();
