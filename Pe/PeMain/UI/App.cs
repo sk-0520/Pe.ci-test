@@ -76,6 +76,7 @@
 		private MessageWindow _messageWindow;
 		private LogForm _logForm;
 		private ClipboardForm _clipboardWindow;
+		private NoteToolTipForm _noteToolTipForm;
 		
 		private List<NoteForm> _noteWindowList = new List<NoteForm>();
 		
@@ -997,6 +998,9 @@
 
 		void InitializeNoteForm(CommandLine commandLine, StartupLogger logger)
 		{
+			this._noteToolTipForm = new NoteToolTipForm();
+			this._noteToolTipForm.SetCommonData(this._commonData);
+
 			var noteDB = new NoteDB(this._commonData.Database);
 			foreach(var item in noteDB.GetNoteItemList(true).Where(item => item.Visible)) {
 				CreateNote(item);
@@ -1770,6 +1774,7 @@
 					Text = noteItem.Title,
 					ImageScaling = ToolStripItemImageScaling.None,
 					Checked = noteItem.Visible,
+					AutoToolTip = false,
 				};
 				if(noteItem.Compact) {
 					menuItem.Image = this._commonData.Skin.CreateColorBoxImage(noteItem.Style.Color.Fore.Color, noteItem.Style.Color.Back.Color, noteSmallSize);
@@ -1779,12 +1784,14 @@
 				menuItem.Click += NoteMenuItem_Click;
 
 				itemNoteMenuList.Add(menuItem);
+				menuItem.MouseHover += menuItem_MouseHover;
 			}
 
 			if(itemNoteMenuList.Count > 0) {
 				parentItem.DropDownItems.AddRange(itemNoteMenuList.ToArray());
 			}
 		}
+
 
 		/// <summary>
 		/// ウィンドウ位置を取得する。
@@ -2175,7 +2182,7 @@
 
 		void noteForm_Closed(object sender, EventArgs e)
 		{
-			var noteForm = (NoteForm)sender; ;
+			var noteForm = (NoteForm)sender;
 			if(noteForm.Visible) {
 				this._noteWindowList.Remove(noteForm);
 			}
@@ -2194,6 +2201,13 @@
 			}
 		}
 
+		void menuItem_MouseHover(object sender, EventArgs e)
+		{
+			var toolItem = (NoteItemToolStripMenuItem)sender;
+
+			this._noteToolTipForm.ShowItem(ScreenUtility.GetCurrentCursor(), toolItem, toolItem.NoteItem);
+			//this._noteToolTipForm.Show
+		}
 	}
 }
 

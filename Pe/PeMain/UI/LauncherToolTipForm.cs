@@ -160,16 +160,6 @@
 			return sf;
 		}
 
-		void ToShow()
-		{
-			WindowsUtility.ShowNoActive(this);
-		}
-
-		void ToHide()
-		{
-			Visible = false;
-		}
-
 		public void HideItem()
 		{
 			ToHide();
