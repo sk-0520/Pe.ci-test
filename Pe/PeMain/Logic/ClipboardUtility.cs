@@ -234,6 +234,14 @@
 		//	return clipboardItem;
 		//}
 
+		class CaseInsensitiveComparer: IComparer<string>
+		{
+			public int Compare(string x, string y)
+			{
+				return string.Compare(x, y, true);
+			}
+		}
+
 		static ClipboardItem CreateClipboardItemFromFramework(ClipboardType enabledTypes, ILogger logger)
 		{
 			var clipboardItem = new ClipboardItem();
@@ -271,9 +279,12 @@
 
 					if(enabledTypes.HasFlag(ClipboardType.File) && clipboardData.GetDataPresent(DataFormats.FileDrop)) {
 						var files = clipboardData.GetData(DataFormats.FileDrop) as string[];
-						clipboardItem.Files = new List<string>(files);
-						clipboardItem.Text = string.Join(Environment.NewLine, files);
-						clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
+						if(files != null) {
+							var sortedFiles = files.OrderBy(s => s, new CaseInsensitiveComparer()).ToList();
+							clipboardItem.Files = sortedFiles;
+							clipboardItem.Text = string.Join(Environment.NewLine, sortedFiles);
+							clipboardItem.ClipboardTypes |= ClipboardType.Text | ClipboardType.File;
+						}
 					}
 				}
 			} catch(COMException ex) {
