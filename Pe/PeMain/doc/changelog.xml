@@ -57,17 +57,6 @@
 	<sep dummy="################################################################################" />
 	-->
 	<log date="2015/05/05" version="0.58.0">
-		<group type="note"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
 		<group type="features"><sep dummy="==================================================================" />
 			<note rev="10c9f48b0860aa8df504800534065fb8c116e7ad">
 				<message>#256: クリップボード・テンプレートのテキスト転送方法を常時切り替え可能にする</message>
@@ -104,20 +93,6 @@
 					<comment>あっれぇ再現しないぞぉ</comment>
 					<comment>でも実装したから完璧っすよ</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer"><sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
