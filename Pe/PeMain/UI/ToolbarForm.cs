@@ -408,7 +408,7 @@
 			var firstGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.First();
 			var initGroup = CommonData.MainSetting.Toolbar.ToolbarGroup.Groups.FirstOrDefault(g => ToolbarItem.CheckNameEqual(g.Name, UsingToolbarItem.DefaultGroup));
 
-			SelectedGroup(initGroup ?? firstGroup);
+			ChangeSelectGroup(initGroup ?? firstGroup);
 
 			// 表示
 			ApplySettingPosition();
@@ -506,7 +506,11 @@
 			this.toolLauncher.Items.AddRange(buttons.ToArray());
 		}
 
-		void SelectedGroup(ToolbarGroupItem groupItem)
+		/// <summary>
+		/// 選択グループを変更する。
+		/// </summary>
+		/// <param name="groupItem"></param>
+		void ChangeSelectGroup(ToolbarGroupItem groupItem)
 		{
 			Cursor = Cursors.WaitCursor;
 			try {
@@ -569,54 +573,54 @@
 		{
 			var itemList = new List<ToolStripItem>();
 
-			var openParentDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var openParentDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var openWorkDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var openWorkDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 			var copyCommandItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyParentDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var copyParentDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
-			var copyWorkDirItem = new LauncherItemToolStripMenuItem(CommonData) {
+			var copyWorkDirectoryItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 			var propertyItem = new LauncherItemToolStripMenuItem(CommonData) {
 				LauncherItem = launcherItem,
 			};
 
-			itemList.Add(openParentDirItem);
-			itemList.Add(openWorkDirItem);
+			itemList.Add(openParentDirectoryItem);
+			itemList.Add(openWorkDirectoryItem);
 			itemList.Add(new DisableCloseToolStripSeparator());
 			itemList.Add(copyCommandItem);
-			itemList.Add(copyParentDirItem);
-			itemList.Add(copyWorkDirItem);
+			itemList.Add(copyParentDirectoryItem);
+			itemList.Add(copyWorkDirectoryItem);
 			itemList.Add(new DisableCloseToolStripSeparator());
 			itemList.Add(propertyItem);
 
 			// 親ディレクトリを開く
-			openParentDirItem.Name = menuNamePath_openParentDir;
-			openParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
-			openParentDirItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
+			openParentDirectoryItem.Name = menuNamePath_openParentDir;
+			openParentDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/open-parent-dir"];
+			openParentDirectoryItem.Click += FileLauncherItemPathMenu_OpenParentDirectory;
 			// 作業ディレクトリを開く
-			openWorkDirItem.Name = menuNamePath_openWorkDir;
-			openWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
-			openWorkDirItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
+			openWorkDirectoryItem.Name = menuNamePath_openWorkDir;
+			openWorkDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/open-work-dir"];
+			openWorkDirectoryItem.Click += FileLauncherItemPathMenu_OpenWorkDirectory;
 			// コマンドコピー
 			copyCommandItem.Name = menuNamePath_copyCommand;
 			copyCommandItem.Text = CommonData.Language["toolbar/menu/file/path/copy-command"];
 			copyCommandItem.Click += FileLauncherItemPathMenu_CopyCommand;
 			// 親ディレクトリをコピー
-			copyParentDirItem.Name = menuNamePath_copyParentDir;
-			copyParentDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
-			copyParentDirItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
+			copyParentDirectoryItem.Name = menuNamePath_copyParentDir;
+			copyParentDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/copy-parent-dir"];
+			copyParentDirectoryItem.Click += FileLauncherItemPathMenu_CopyParentDirectory;
 			// 作業ディレクトリをコピー
-			copyWorkDirItem.Name = menuNamePath_copyWorkDir;
-			copyWorkDirItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
-			copyWorkDirItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
+			copyWorkDirectoryItem.Name = menuNamePath_copyWorkDir;
+			copyWorkDirectoryItem.Text = CommonData.Language["toolbar/menu/file/path/copy-work-dir"];
+			copyWorkDirectoryItem.Click += FileLauncherItemPathMenu_CopyWorkDirectory;
 			// プロパティ
 			propertyItem.Name = menuNamePath_property;
 			propertyItem.Text = CommonData.Language["toolbar/menu/file/path/property"];
@@ -1378,7 +1382,7 @@
 					CommonData.MainSetting.Launcher.Items.Add(item);
 				}
 				SelectedGroupItem.ItemNames.Add(item.Name);
-				SelectedGroup(SelectedGroupItem);
+				ChangeSelectGroup(SelectedGroupItem);
 
 				// 他のツールバーにアイテム変更を教える
 				CommonData.RootSender.ChangedLauncherGroupItems(UsingToolbarItem, SelectedGroupItem);
@@ -1443,7 +1447,7 @@
 		{
 			// 他のツールバーから通知を受け取った場合に反映処理を行う
 			Debug.Assert(toolbarItem != UsingToolbarItem);
-			SelectedGroup(SelectedGroupItem);
+			ChangeSelectGroup(SelectedGroupItem);
 		}
 
 
@@ -1533,14 +1537,14 @@
 		{
 			var menuItem = (ToolbarGroupItemMenuItem)sender;
 			var group = menuItem.ToolbarGroupItem;
-			SelectedGroup(group);
+			ChangeSelectGroup(group);
 		}
 
 		void LauncherTypeFile_ButtonClick(object sender, EventArgs e)
 		{
 			var toolItem = (ToolStripItem)sender;
 			var launcherItem = ((ILauncherItem)toolItem).LauncherItem;
-			this._tipsLauncher.HideItem();
+			this._tipsLauncher.ToHide();
 			ExecuteItem(launcherItem);
 		}
 
@@ -1670,7 +1674,7 @@
 
 		void toolItem_MouseLeave(object sender, EventArgs e)
 		{
-			this._tipsLauncher.HideItem();
+			this._tipsLauncher.ToHide();
 		}
 
 		void ToolbarForm_AppbarFullScreen(object sender, AppbarFullScreenEvent e)
@@ -1700,7 +1704,7 @@
 		{
 			var toolItem = (ToolbarGroupItemToolStripMenuItem)sender;
 			var groupItem = toolItem.ToolbarGroupItem;
-			SelectedGroup(groupItem);
+			ChangeSelectGroup(groupItem);
 		}
 
 		#region File Launcher Menu
@@ -1799,10 +1803,15 @@
 				executeItem.Enabled = false;
 				//executeExItem.Enabled = false;
 			}
+
+			var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+			var parentDirPath = Path.GetDirectoryName(expandPath);
+			if(string.IsNullOrEmpty(parentDirPath)) {
+				// #257: 最上位ディレクトリの場合
+				parentDirPath = expandPath;
+			}
 			try {
-				var expandPath = Environment.ExpandEnvironmentVariables(launcherItem.Command);
-				var expandParentPath = Path.GetDirectoryName(expandPath);
-				fileItem.Enabled = Directory.Exists(expandParentPath);
+				fileItem.Enabled = Directory.Exists(parentDirPath);
 			} catch(ArgumentException ex) {
 				// #41の影響により#77考慮不要
 				CommonData.Logger.Puts(LogType.Information, CommonData.Language["toolbar/loging/unfile"], ex);
@@ -1814,7 +1823,7 @@
 				if(!fileItem.HasDropDownItems) {
 					var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
 					var showExtension = SystemEnvironment.IsExtensionShow();
-					var parentDirPath = Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(launcherItem.Command));
+
 					AttachmentFileList(fileItem, false, parentDirPath, showHiddenFile, showExtension);
 				}
 			} catch(Exception ex) {

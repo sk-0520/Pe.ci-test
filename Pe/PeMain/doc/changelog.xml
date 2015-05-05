@@ -56,6 +56,47 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
+	<log date="2015/05/05" version="0.58.0">
+		<group type="features"><sep dummy="==================================================================" />
+			<note rev="10c9f48b0860aa8df504800534065fb8c116e7ad">
+				<message>#256: クリップボード・テンプレートのテキスト転送方法を常時切り替え可能にする</message>
+			</note>
+			<note rev="71c380a0ea3b5abbec19015af67598858b688c70">
+				<message>#236: クリップボード/テンプレートウィンドウの分割領域を保持する</message>
+			</note>
+			<note rev="ebe3c60521acee7d864fd8345bcc8070bf51ea8c">
+				<message>#255: ノート一覧から該当ノートアイテムをプレビュー</message>
+			</note>
+			<note rev="cab4083d7fd19413655d9f5e8743e77bd8e48286">
+				<message>#238: T4エラー時に行番号も出力する</message>
+			</note>
+			<note rev="8dcab3775ddaf286e7653004c7ef4bacc5161b46">
+				<message>#263: クリップボード重複判定でファイルの場合はソートする</message>
+				<comments>
+					<comment>さすがに過去分までは補正しないので本バージョンから取り込んだものが対象となります</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes"><sep dummy="==================================================================" />
+			<note rev="813d9ca878215c9c3c422cd86b6cabf0229150f5">
+				<message>クリップボード/テンプレートの保存・削除ボタンをアイコンのみに変更</message>
+			</note>
+			<note rev="58f43289bb7c9a96844e317c1c64c97b47ad1679">
+				<message>#257: ファイルアイテムに上位ディレクトリが存在しない場合にもファイルメニューを表示させる</message>
+			</note>
+			<note rev="80598bf089add78653fb6489ec0edaa4297a88e3">
+				<message>#261: 起動時に出力されるログがUIスレッドに影響する</message>
+			</note>
+			<note rev="333dab558438827c361fc3ce7e3451667b677416">
+				<message>#260: ノートのタイトル入力後、前回の入力内容が微妙に残って汚い</message>
+				<comments>
+					<comment>あっれぇ再現しないぞぉ</comment>
+					<comment>でも実装したから完璧っすよ</comment>
+				</comments>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
 	<log date="2015/04/12" version="0.57.0">
 		<group type="fixes"><sep dummy="==================================================================" />
 			<note rev="77aaf9dc0e54c9198d66651e9af52871dd035b9c">

@@ -685,6 +685,15 @@
 
 			this._changed = true;
 			this.inputTitle.Visible = false;
+			/*
+			var captionArea = CommonData.Skin.GetNoteCaptionArea(Size);
+			if(!captionArea.Size.IsEmpty) {
+				using(var g = CreateGraphics()) {
+					DrawCaption(g, captionArea, this == Form.ActiveForm, GetNoteStatus());
+				}
+			}
+			*/
+			Refresh();
 		}
 
 		void ShowContextMenu(Point point)
