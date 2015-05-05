@@ -82,7 +82,10 @@
 				<message>#238: T4エラー時に行番号も出力する</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#263: クリップボード重複判定でファイルの場合はソートする</message>
+				<comments>
+					<comment>さすがに過去分までは補正しないので本バージョンから取り込んだものが対象となります</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="fixes"><sep dummy="==================================================================" />
