@@ -81,7 +81,7 @@
 			<note rev="cab4083d7fd19413655d9f5e8743e77bd8e48286">
 				<message>#238: T4エラー時に行番号も出力する</message>
 			</note>
-			<note rev="">
+			<note rev="8dcab3775ddaf286e7653004c7ef4bacc5161b46">
 				<message>#263: クリップボード重複判定でファイルの場合はソートする</message>
 				<comments>
 					<comment>さすがに過去分までは補正しないので本バージョンから取り込んだものが対象となります</comment>
