@@ -230,6 +230,8 @@
 			this.toolClipboard_itemRemove.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemClear.SetLanguage(CommonData.Language);
 			this.toolClipboard_itemEmpty.SetLanguage(CommonData.Language);
+			this.toolClipboard_itemOutputClipboard.SetLanguage(CommonData.Language);
+			
 
 			this.labelTemplateName.SetLanguage(CommonData.Language);
 			this.selectTemplateReplace.SetLanguage(CommonData.Language);
@@ -347,6 +349,7 @@
 			CommonData.MainSetting.Clipboard.HistoryItems.ListChanged += HistoryItems_ListChanged;
 			Location = CommonData.MainSetting.Clipboard.Location;
 			Size = CommonData.MainSetting.Clipboard.Size;
+
 			ChangeEnabled(CommonData.MainSetting.Clipboard.Enabled);
 			ChangeTopmost(CommonData.MainSetting.Clipboard.TopMost);
 			var buttonSize = GetButtonSize();
@@ -360,6 +363,11 @@
 
 			ChangeSelectListType(CommonData.MainSetting.Clipboard.ClipboardListType);
 			Visible = CommonData.MainSetting.Clipboard.Visible;
+
+			ChangeOutputClipboard(CommonData.MainSetting.Clipboard.OutputUsingClipboard);
+
+			this.panelClipboard.SplitterDistance = CommonData.MainSetting.Clipboard.StackListWidth;
+			this.panelTemplateSource.SplitterDistance = Literal.templateListWidthLimit.ToRounding(this.panelTemplateSource.ClientSize.Width - CommonData.MainSetting.Clipboard.TemplateListWidth);
 		}
 
 		/// <summary>
@@ -385,6 +393,12 @@
 		{
 			CommonData.MainSetting.Clipboard.Enabled = enabled;
 			this.toolClipboard_itemEnabled.Checked = enabled;
+		}
+
+		void ChangeOutputClipboard(bool usingClipboard)
+		{
+			CommonData.MainSetting.Clipboard.OutputUsingClipboard = usingClipboard;
+			this.toolClipboard_itemOutputClipboard.Checked = usingClipboard;
 		}
 
 		void ChangeSelectTypeControl(ToolStripMenuItem item)
@@ -1823,6 +1837,24 @@
 		private void selectTemplateMacro_CheckedChanged(object sender, EventArgs e)
 		{
 			ChekedReplace();
+		}
+
+		private void toolClipboard_itemOutputClipboard_Click(object sender, EventArgs e)
+		{
+			ChangeOutputClipboard(!CommonData.MainSetting.Clipboard.OutputUsingClipboard);
+		}
+
+		private void panelClipboard_SplitterMoved(object sender, SplitterEventArgs e)
+		{
+			CommonData.MainSetting.Clipboard.StackListWidth = this.panelClipboard.SplitterDistance;
+		}
+
+		private void panelTemplateSource_SplitterMoved(object sender, SplitterEventArgs e)
+		{
+			if(!Initialized) {
+				return;
+			}
+			CommonData.MainSetting.Clipboard.TemplateListWidth = this.panelTemplateSource.Panel2.Width;
 		}
 	}
 }
