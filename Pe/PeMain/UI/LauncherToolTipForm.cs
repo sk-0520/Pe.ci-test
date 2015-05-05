@@ -110,13 +110,10 @@
 
 		void Initialize()
 		{
-			Visible = false;
-
 			TipPadding = new Size(4, 4);
 			TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
 			MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
 			IconScale = IconScale.Normal;
-
 		}
 
 		#endregion ////////////////////////////////////

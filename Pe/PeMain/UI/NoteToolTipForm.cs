@@ -27,10 +27,8 @@
 		public NoteToolTipForm()
 		{
 			InitializeComponent();
-			Opacity = 0;
-			ToNoActiveShow();
-			ToHide();
-			Opacity = 100;
+
+			Initialize();
 		}
 
 		#region property
@@ -60,6 +58,10 @@
 		#endregion ////////////////////////////////////
 
 		#region initialize
+
+		void Initialize()
+		{ }
+
 		#endregion ////////////////////////////////////
 
 		#region language

@@ -78,6 +78,11 @@
 			TopMost = true;
 			ForeColor = SystemColors.InfoText;
 			BackColor = SystemColors.Info;
+
+			Opacity = 0;
+			ToNoActiveShow();
+			ToHide();
+			Opacity = 100;
 		}
 
 		#region override
