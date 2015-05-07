@@ -84,7 +84,7 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#266: ノートの選択したフォントが反映されない場合がある</message>
 			</note>
 			<note rev="">
 				<message></message>
