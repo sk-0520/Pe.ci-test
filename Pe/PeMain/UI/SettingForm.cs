@@ -161,45 +161,12 @@
 			ApplyLauncher();
 			ApplyToolbar();
 			ApplyCommand();
+			ApplyNote();
 		}
 		#endregion ////////////////////////////////////
 
 		#region initialize
 
-
-		void InitializeNote(NoteSetting noteSetting, AppDBManager db)
-		{
-			// ホットキー
-			this.inputNoteCreate.HotKeySetting = noteSetting.CreateHotKey;
-			this.inputNoteCompact.HotKeySetting = noteSetting.CompactHotKey;
-			this.inputNoteHidden.HotKeySetting = noteSetting.HiddenHotKey;
-			this.inputNoteShowFront.HotKeySetting = noteSetting.ShowFrontHotKey;
-
-			this.commandNoteCaptionFont.FontSetting.Import(noteSetting.CaptionFontSetting);
-			this.commandNoteCaptionFont.RefreshView();
-
-			// 全リスト
-			this.gridNoteItems.AutoGenerateColumns = false;
-			var noteDB = new NoteDB(db);
-			var noteRawList = noteDB.GetNoteItemList(true);
-			this._noteItemList = new List<NoteWrapItem>(noteRawList.Count());
-			foreach(var item in noteRawList) {
-				var wrap = new NoteWrapItem(item);
-				this._noteItemList.Add(wrap);
-			}
-			this.gridNoteItems_columnRemove.DataPropertyName = "Remove";
-			this.gridNoteItems_columnId.DataPropertyName = "Id";
-			this.gridNoteItems_columnVisible.DataPropertyName = "Visible";
-			this.gridNoteItems_columnLocked.DataPropertyName = "Locked";
-			this.gridNoteItems_columnTitle.DataPropertyName = "Title";
-			this.gridNoteItems_columnBody.DataPropertyName = "Body";
-			this.gridNoteItems_columnFont.DataPropertyName = "Font";
-			this.gridNoteItems_columnFore.DataPropertyName = "Fore";
-			this.gridNoteItems_columnBack.DataPropertyName = "Back";
-			this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty);
-
-			//			this.gridNoteItems.GetRowDisplayRectangle = noteList;
-		}
 
 		void InitializeToolbar()
 		{
@@ -253,7 +220,6 @@
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			InitializeToolbar();
-			InitializeNote(mainSetting.Note, db);
 			InitializeClipboard(mainSetting.Clipboard);
 
 #if !DEBUG
@@ -499,6 +465,39 @@
 			// ホットキー
 			this.inputCommandHotkey.HotKeySetting = CommonData.MainSetting.Command.HotKey;
 		}
+
+		void ApplyNote()
+		{
+			// ホットキー
+			this.inputNoteCreate.HotKeySetting = CommonData.MainSetting.Note.CreateHotKey;
+			this.inputNoteCompact.HotKeySetting = CommonData.MainSetting.Note.CompactHotKey;
+			this.inputNoteHidden.HotKeySetting = CommonData.MainSetting.Note.HiddenHotKey;
+			this.inputNoteShowFront.HotKeySetting = CommonData.MainSetting.Note.ShowFrontHotKey;
+
+			this.commandNoteCaptionFont.FontSetting.Import(CommonData.MainSetting.Note.CaptionFontSetting);
+			this.commandNoteCaptionFont.RefreshView();
+
+			// 全リスト
+			this.gridNoteItems.AutoGenerateColumns = false;
+			var noteDB = new NoteDB(CommonData.Database);
+			var noteRawList = noteDB.GetNoteItemList(true);
+			this._noteItemList = new List<NoteWrapItem>(noteRawList.Count());
+			foreach(var item in noteRawList) {
+				var wrap = new NoteWrapItem(item);
+				this._noteItemList.Add(wrap);
+			}
+			this.gridNoteItems_columnRemove.DataPropertyName = "Remove";
+			this.gridNoteItems_columnId.DataPropertyName = "Id";
+			this.gridNoteItems_columnVisible.DataPropertyName = "Visible";
+			this.gridNoteItems_columnLocked.DataPropertyName = "Locked";
+			this.gridNoteItems_columnTitle.DataPropertyName = "Title";
+			this.gridNoteItems_columnBody.DataPropertyName = "Body";
+			this.gridNoteItems_columnFont.DataPropertyName = "Font";
+			this.gridNoteItems_columnFore.DataPropertyName = "Fore";
+			this.gridNoteItems_columnBack.DataPropertyName = "Back";
+			this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty);
+		}
+
 
 		#endregion
 
