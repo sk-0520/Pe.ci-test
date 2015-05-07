@@ -120,7 +120,7 @@
 		*/
 		ToolbarItem _toolbarSelectedToolbarItem = null;
 
-		ApplicationSetting _applicationSetting;
+		//ApplicationSetting _applicationSetting;
 
 		string[] _commandList;
 		#endregion ////////////////////////////////////
@@ -222,7 +222,7 @@
 			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 
-			this.selecterToolbar.SetItems(CommonData.MainSetting.Launcher.Items, this._applicationSetting);
+			this.selecterToolbar.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
 
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
@@ -373,7 +373,7 @@
 
 			//Language = language;
 			//Skin = skin;
-			this._applicationSetting = applicationSetting;
+			//this._applicationSetting = applicationSetting;
 
 			InitializeCommand();
 
@@ -499,7 +499,7 @@
 
 		void ApplyLauncher()
 		{
-			this.selecterLauncher.SetItems(CommonData.MainSetting.Launcher.Items, this._applicationSetting);
+			this.selecterLauncher.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
 		}
 
 		#endregion
@@ -1202,7 +1202,7 @@
 			this.inputLauncherCommand.DataSource = null;
 			if(item.LauncherType == LauncherType.Embedded) {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
-				var displayValueList = _applicationSetting.Items
+				var displayValueList = CommonData.ApplicationSetting.Items
 					.OrderBy(i => i.Name)
 					.Select(i => new ApplicationDisplayValue(i))
 					.ToArray()
@@ -1210,7 +1210,7 @@
 				foreach(var dv in displayValueList) {
 					dv.SetLanguage(CommonData.Language);
 				}
-				var applicationItem = this._applicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
+				var applicationItem = CommonData.ApplicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
 				if(applicationItem != null){
 					this.inputLauncherCommand.Attachment(displayValueList, applicationItem);
 				} else {
@@ -1294,7 +1294,7 @@
 				if(applicationItem != null) {
 					item.Command = applicationItem.Name;
 				} else {
-					item.Command = this._applicationSetting.Items.Single().Name;
+					item.Command = CommonData.ApplicationSetting.Items.Single().Name;
 				}
 			} else {
 				item.Command = this.inputLauncherCommand.Text.Trim();
@@ -1468,7 +1468,7 @@
 		#region page/toolbar
 		void ToolbarSelectingPage()
 		{
-			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
+			this.selecterToolbar.SetItems(this.selecterLauncher.Items, CommonData.ApplicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Image>() {
 				{ TREE_TYPE_NONE, CommonData.Skin.GetImage(SkinImage.NotImpl) },
@@ -1476,7 +1476,7 @@
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
-			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, this._applicationSetting, new NullLogger()) }).Where(item => item.Icon != null);
+			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, CommonData.ApplicationSetting, new NullLogger()) }).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
 			}
