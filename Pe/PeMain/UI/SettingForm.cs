@@ -159,28 +159,13 @@
 
 			ApplyMainSetting();
 			ApplyLauncher();
+			ApplyToolbar();
+			ApplyCommand();
 		}
 		#endregion ////////////////////////////////////
 
 		#region initialize
 
-		void InitializeCommand(CommandSetting commandSetting)
-		{
-			//this._commandFont = commandSetting.FontSetting;
-			this.commandCommandFont.FontSetting.Import(commandSetting.FontSetting);
-			this.commandCommandFont.RefreshView();
-
-			// アイコンサイズ文言の項目構築
-			AttachmentIconScale(this.selectCommandIcon, commandSetting.IconScale);
-
-			// ホットキー
-			/*
-			this.inputCommandHotkey.Hotkey = commandSetting.HotKey.Key;
-			this.inputCommandHotkey.Modifiers = commandSetting.HotKey.Modifiers;
-			this.inputCommandHotkey.Registered = commandSetting.HotKey.Registered;
-			 */
-			this.inputCommandHotkey.HotKeySetting = commandSetting.HotKey;
-		}
 
 		void InitializeNote(NoteSetting noteSetting, AppDBManager db)
 		{
@@ -216,68 +201,9 @@
 			//			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}
 
-		void InitializeToolbar(ToolbarSetting toolbarSetting)
+		void InitializeToolbar()
 		{
-			//this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
-			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
-
-			this.selecterToolbar.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
-
-			// ツールーバー位置の項目構築
-			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
-			foreach(var value in new[] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
-				var data = new ToolbarPositionDisplayValue(value);
-				data.SetLanguage(CommonData.Language);
-				toolbarPosList.Add(data);
-			}
-			this.selectToolbarPosition.Attachment(toolbarPosList);
-
-			// アイコンサイズ文言の項目構築
-			AttachmentIconScale(this.selectToolbarIcon, IconScale.Small);
-
-			ToolbarItem initToolbarItem = null;
-			var toolbarItemDataList = new List<ToolbarDisplayValue>();
-			foreach(var toolbarItem in toolbarSetting.Items) {
-				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
-					initToolbarItem = toolbarItem;
-				}
-				var toolbarItemData = new ToolbarDisplayValue(toolbarItem);
-				//toolbarItemData.SetLanguage(Language);
-				toolbarItemDataList.Add(toolbarItemData);
-			}
-			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
-			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
-			this.selectToolbarItem.SelectedIndex = 0;
-
-			// グループ情報設定
-			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
-			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
-			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
-			foreach(var groupItem in toolbarSetting.ToolbarGroup.Groups) {
-				var displayValue = new ToolbarGroupNameDisplayValue(groupItem.Name);
-				toolbarGroupList.Add(displayValue);
-			}
-			this.selectToolbarGroup.Attachment(toolbarGroupList);
-
-			ToolbarSelectedChangeToolbarItem(initToolbarItem);
-
-			// グループ用項目
-			this._imageToolbarItemGroup = new ImageList();
-			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
-
-			// 各グループ構築
-			foreach(var groupItem in toolbarSetting.ToolbarGroup.Groups) {
-				// メイングループ
-				var parentNode = ToolbarAddGroup(groupItem.Name);
-				// メイングループに紐付くアイテム
-				foreach(var itemName in groupItem.ItemNames) {
-					var relItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
-					if(relItem != null) {
-						ToolbarAddItem(parentNode, relItem);
-					}
-				}
-			}
 		}
 
 		void InitializeClipboard(ClipboardSetting setting)
@@ -326,8 +252,7 @@
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
-			InitializeToolbar(mainSetting.Toolbar);
-			InitializeCommand(mainSetting.Command);
+			InitializeToolbar();
 			InitializeNote(mainSetting.Note, db);
 			InitializeClipboard(mainSetting.Clipboard);
 
@@ -500,6 +425,79 @@
 		void ApplyLauncher()
 		{
 			this.selecterLauncher.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
+		}
+
+		void ApplyToolbar()
+		{
+			this.selecterToolbar.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
+
+			// ツールーバー位置の項目構築
+			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
+			foreach(var value in new[] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
+				var data = new ToolbarPositionDisplayValue(value);
+				data.SetLanguage(CommonData.Language);
+				toolbarPosList.Add(data);
+			}
+			this.selectToolbarPosition.Attachment(toolbarPosList);
+
+			// アイコンサイズ文言の項目構築
+			AttachmentIconScale(this.selectToolbarIcon, IconScale.Small);
+
+			ToolbarItem initToolbarItem = null;
+			var toolbarItemDataList = new List<ToolbarDisplayValue>();
+			foreach(var toolbarItem in CommonData.MainSetting.Toolbar.Items) {
+				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
+					initToolbarItem = toolbarItem;
+				}
+				var toolbarItemData = new ToolbarDisplayValue(toolbarItem);
+				//toolbarItemData.SetLanguage(Language);
+				toolbarItemDataList.Add(toolbarItemData);
+			}
+			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
+			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
+			this.selectToolbarItem.SelectedIndex = 0;
+
+			// グループ情報設定
+			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var displayValue = new ToolbarGroupNameDisplayValue(groupItem.Name);
+				toolbarGroupList.Add(displayValue);
+			}
+			this.selectToolbarGroup.Attachment(toolbarGroupList);
+
+			ToolbarSelectedChangeToolbarItem(initToolbarItem);
+
+			// グループ用項目
+			this._imageToolbarItemGroup = new ImageList();
+			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
+
+			// 各グループ構築
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				// メイングループ
+				var parentNode = ToolbarAddGroup(groupItem.Name);
+				// メイングループに紐付くアイテム
+				foreach(var itemName in groupItem.ItemNames) {
+					var relItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+					if(relItem != null) {
+						ToolbarAddItem(parentNode, relItem);
+					}
+				}
+			}
+		}
+
+		void ApplyCommand()
+		{
+			//this._commandFont = commandSetting.FontSetting;
+			this.commandCommandFont.FontSetting.Import(CommonData.MainSetting.Command.FontSetting);
+			this.commandCommandFont.RefreshView();
+
+			// アイコンサイズ文言の項目構築
+			AttachmentIconScale(this.selectCommandIcon, CommonData.MainSetting.Command.IconScale);
+
+			// ホットキー
+			this.inputCommandHotkey.HotKeySetting = CommonData.MainSetting.Command.HotKey;
 		}
 
 		#endregion
