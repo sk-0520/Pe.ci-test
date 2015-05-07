@@ -143,7 +143,7 @@
 		/// 使用言語データ
 		/// </summary>
 		//public Language Language { get; private set; }
-		public ISkin Skin { get; private set; }
+		//public ISkin CommonData.Skin { get; private set; }
 
 		public MainSetting MainSetting { get; private set; }
 		#endregion ////////////////////////////////////
@@ -491,7 +491,7 @@
 			this._launcherItems = new HashSet<LauncherItem>();
 
 			//Language = language;
-			Skin = skin;
+			//Skin = skin;
 			this._applicationSetting = applicationSetting;
 
 			InitializeCommand();
@@ -738,30 +738,30 @@
 
 		void ApplySkinLauncher()
 		{
-			this.selecterLauncher.SetSkin(Skin);
-			this.envLauncherUpdate.SetSkin(Skin);
-			this.envLauncherRemove.SetSkin(Skin);
+			this.selecterLauncher.SetSkin(CommonData.Skin);
+			this.envLauncherUpdate.SetSkin(CommonData.Skin);
+			this.envLauncherRemove.SetSkin(CommonData.Skin);
 
-			this.toolToolbarGroup_addGroup.Image = Skin.GetImage(SkinImage.Group);
-			this.toolToolbarGroup_addItem.Image = Skin.GetImage(SkinImage.AddItem);
-			this.toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
-			this.toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
-			this.toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
+			this.toolToolbarGroup_addGroup.Image = CommonData.Skin.GetImage(SkinImage.Group);
+			this.toolToolbarGroup_addItem.Image = CommonData.Skin.GetImage(SkinImage.AddItem);
+			this.toolToolbarGroup_up.Image = CommonData.Skin.GetImage(SkinImage.Up);
+			this.toolToolbarGroup_down.Image = CommonData.Skin.GetImage(SkinImage.Down);
+			this.toolToolbarGroup_remove.Image = CommonData.Skin.GetImage(SkinImage.Remove);
 
-			this.commandLauncherFilePath.Image = Skin.GetImage(SkinImage.File);
-			this.commandLauncherDirPath.Image = Skin.GetImage(SkinImage.Dir);
-			this.commandLauncherOptionFilePath.Image = Skin.GetImage(SkinImage.File);
-			this.commandLauncherOptionDirPath.Image = Skin.GetImage(SkinImage.Dir);
-			this.commandLauncherWorkDirPath.Image = Skin.GetImage(SkinImage.Dir);
-			this.commandLauncherIconPath.Image = Skin.GetImage(SkinImage.File);
+			this.commandLauncherFilePath.Image = CommonData.Skin.GetImage(SkinImage.File);
+			this.commandLauncherDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherOptionFilePath.Image = CommonData.Skin.GetImage(SkinImage.File);
+			this.commandLauncherOptionDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherWorkDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherIconPath.Image = CommonData.Skin.GetImage(SkinImage.File);
 		}
 
 		void ApplySkinToolbar()
 		{
-			this.selecterToolbar.SetSkin(Skin);
+			this.selecterToolbar.SetSkin(CommonData.Skin);
 		}
 
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
 			ApplySkinLauncher();
 			ApplySkinToolbar();
@@ -881,7 +881,7 @@
 			foreach(var pair in pairs) {
 				//pair.Window.SetCommonData(CommonData);
 				pair.Window.SetLanguage(CommonData.Language);
-				pair.Window.SetSkin(Skin);
+				pair.Window.SetSkin(CommonData.Skin);
 				pair.Window.Screen = pair.Screen;
 				pair.Window.Click += CloseScreenWindow;
 				// KeyDownでESCだと勢い余って設定画面が閉じるのであげたときのみ取得する
@@ -1468,8 +1468,8 @@
 			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Image>() {
-				{ TREE_TYPE_NONE, Skin.GetImage(SkinImage.NotImpl) },
-				{ TREE_TYPE_GROUP, Skin.GetImage(SkinImage.Group) },
+				{ TREE_TYPE_NONE, CommonData.Skin.GetImage(SkinImage.NotImpl) },
+				{ TREE_TYPE_GROUP, CommonData.Skin.GetImage(SkinImage.Group) },
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
