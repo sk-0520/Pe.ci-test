@@ -24,7 +24,7 @@
 	/// 一気にUIへ設定して一気にUIから取得する気分だったけど完全に設計ミスだわ。
 	/// バインドするなりしておけばよかった。
 	/// </summary>
-	public partial class SettingForm: AppForm
+	public partial class SettingForm: CommonForm
 	{
 		#region define
 		//const int TREE_LEVEL_GROUP = 0;
@@ -142,7 +142,7 @@
 		/// <summary>
 		/// 使用言語データ
 		/// </summary>
-		public Language Language { get; private set; }
+		//public Language Language { get; private set; }
 		public ISkin Skin { get; private set; }
 
 		public MainSetting MainSetting { get; private set; }
@@ -206,7 +206,7 @@
 			
 		}
 
-		void InitializeLanguage(string languageName, Language language)
+		void InitializeLanguage(string languageName)
 		{
 			var langFileName = string.Format("{0}.xml", languageName);
 			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
@@ -264,7 +264,7 @@
 			InitializeLog(mainSetting.Log);
 			InitializeSystemEnv(mainSetting.SystemEnvironment);
 			InitializeRunningInfo(mainSetting.Running);
-			InitializeLanguage(mainSetting.LanguageName, Language);
+			InitializeLanguage(mainSetting.LanguageName);
 			InitializeSkin(mainSetting.Skin);
 			InitializeStream(mainSetting.Stream);
 		}
@@ -342,7 +342,7 @@
 			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
 			foreach(var value in new[] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
 				var data = new ToolbarPositionDisplayValue(value);
-				data.SetLanguage(Language);
+				data.SetLanguage(CommonData.Language);
 				toolbarPosList.Add(data);
 			}
 			this.selectToolbarPosition.Attachment(toolbarPosList);
@@ -431,7 +431,7 @@
 			var clipboardListTypeValues = new List<ClipboardListTypeDisplayValue>();
 			foreach(var type in new [] { ClipboardListType.History, ClipboardListType.Template }) {
 				var dv = new ClipboardListTypeDisplayValue(type);
-				dv.SetLanguage(Language);
+				dv.SetLanguage(CommonData.Language);
 				clipboardListTypeValues.Add(dv);
 			}
 			this.selectClipboardListType.Attachment(clipboardListTypeValues, setting.ClipboardListType);
@@ -490,7 +490,7 @@
 		{
 			this._launcherItems = new HashSet<LauncherItem>();
 
-			Language = language;
+			//Language = language;
 			Skin = skin;
 			this._applicationSetting = applicationSetting;
 
@@ -505,69 +505,69 @@
 
 		void ApplyLanguageTab()
 		{
-			this.tabSetting_pageMain.SetLanguage(Language);
-			this.tabSetting_pageLauncher.SetLanguage(Language);
-			this.tabSetting_pageToolbar.SetLanguage(Language);
-			this.tabSetting_pageCommand.SetLanguage(Language);
-			this.tabSetting_pageNote.SetLanguage(Language);
-			this.tabSetting_pageDisplay.SetLanguage(Language);
-			this.tabSetting_pageClipboard.SetLanguage(Language);
+			this.tabSetting_pageMain.SetLanguage(CommonData.Language);
+			this.tabSetting_pageLauncher.SetLanguage(CommonData.Language);
+			this.tabSetting_pageToolbar.SetLanguage(CommonData.Language);
+			this.tabSetting_pageCommand.SetLanguage(CommonData.Language);
+			this.tabSetting_pageNote.SetLanguage(CommonData.Language);
+			this.tabSetting_pageDisplay.SetLanguage(CommonData.Language);
+			this.tabSetting_pageClipboard.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageLog()
 		{
-			this.selectLogVisible.SetLanguage(Language);
-			this.selectLogAddShow.SetLanguage(Language);
-			this.selectLogFullDetail.SetLanguage(Language);
-			this.selectLogDebugging.SetLanguage(Language);
-			this.selectLogTrigger_information.Text = LogType.Information.ToText(Language);
-			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(Language);
-			this.selectLogTrigger_error.Text = LogType.Error.ToText(Language);
+			this.selectLogVisible.SetLanguage(CommonData.Language);
+			this.selectLogAddShow.SetLanguage(CommonData.Language);
+			this.selectLogFullDetail.SetLanguage(CommonData.Language);
+			this.selectLogDebugging.SetLanguage(CommonData.Language);
+			this.selectLogTrigger_information.Text = LogType.Information.ToText(CommonData.Language);
+			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(CommonData.Language);
+			this.selectLogTrigger_error.Text = LogType.Error.ToText(CommonData.Language);
 		}
 		
 		void ApplyLanguageSystemEnv()
 		{
-			this.inputSystemEnvExt.SetLanguage(Language);
-			this.inputSystemEnvHiddenFile.SetLanguage(Language);
-			
-			this.labelSystemEnvExt.SetLanguage(Language);
-			this.labelSystemEnvHiddenFile.SetLanguage(Language);
+			this.inputSystemEnvExt.SetLanguage(CommonData.Language);
+			this.inputSystemEnvHiddenFile.SetLanguage(CommonData.Language);
+
+			this.labelSystemEnvExt.SetLanguage(CommonData.Language);
+			this.labelSystemEnvHiddenFile.SetLanguage(CommonData.Language);
 		}
 
 		void ApplyLanguageSkin()
 		{
-			this.groupMainSkin.SetLanguage(Language);
-			this.commandSkinAbout.SetLanguage(Language);
+			this.groupMainSkin.SetLanguage(CommonData.Language);
+			this.commandSkinAbout.SetLanguage(CommonData.Language);
 		}
 
 		void ApplyLanguageStream()
 		{
-			this.groupStream.SetLanguage(Language);
-			this.commandStreamFont.SetLanguage(Language);
+			this.groupStream.SetLanguage(CommonData.Language);
+			this.commandStreamFont.SetLanguage(CommonData.Language);
 
-			this.labelStreamFont.SetLanguage(Language);
-			this.labelStreamFore.SetLanguage(Language);
-			this.labelStreamBack.SetLanguage(Language);
-			this.labelStreamGeneral.SetLanguage(Language);
-			this.labelStreamInput.SetLanguage(Language);
-			this.labelStreamError.SetLanguage(Language);
+			this.labelStreamFont.SetLanguage(CommonData.Language);
+			this.labelStreamFore.SetLanguage(CommonData.Language);
+			this.labelStreamBack.SetLanguage(CommonData.Language);
+			this.labelStreamGeneral.SetLanguage(CommonData.Language);
+			this.labelStreamInput.SetLanguage(CommonData.Language);
+			this.labelStreamError.SetLanguage(CommonData.Language);
 
 			UIUtility.ResizeAutoSize(this.groupStream, true);
 		}
 
 		void ApplyLanguageRunningInfo()
 		{
-			this.groupUpdateCheck.SetLanguage(Language);
-			this.selectUpdateCheck.SetLanguage(Language);
-			this.selectUpdateCheckRC.SetLanguage(Language);
+			this.groupUpdateCheck.SetLanguage(CommonData.Language);
+			this.selectUpdateCheck.SetLanguage(CommonData.Language);
+			this.selectUpdateCheckRC.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageMain()
 		{
-			this.groupMainLog.SetLanguage(Language);
-			this.groupMainSystemEnv.SetLanguage(Language);
-			this.labelMainLanguage.SetLanguage(Language);
-			this.selectMainStartup.SetLanguage(Language);
+			this.groupMainLog.SetLanguage(CommonData.Language);
+			this.groupMainSystemEnv.SetLanguage(CommonData.Language);
+			this.labelMainLanguage.SetLanguage(CommonData.Language);
+			this.selectMainStartup.SetLanguage(CommonData.Language);
 			
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
@@ -578,97 +578,97 @@
 		
 		void ApplyLanguageLauncher()
 		{
-			this.selecterLauncher.SetLanguage(Language);
-			this.envLauncherUpdate.SetLanguage(Language);
-			this.envLauncherRemove.SetLanguage(Language);
-			
-			this.tabLauncher_pageCommon.SetLanguage(Language);
-			this.tabLauncher_pageEnv.SetLanguage(Language);
-			this.tabLauncher_pageOthers.SetLanguage(Language);
-			
-			this.groupLauncherType.SetLanguage(Language);
-			this.selectLauncherType_file.Text = LauncherType.File.ToText(Language);
-			this.selectLauncherType_directory.Text = LauncherType.Directory.ToText(Language);
-			this.selectLauncherType_command.Text = LauncherType.Command.ToText(Language);
-			this.selectLauncherType_embedded.Text = LauncherType.Embedded.ToText(Language);
-			
-			this.labelLauncherName.SetLanguage(Language);
-			this.labelLauncherCommand.SetLanguage(Language);
-			this.labelLauncherOption.SetLanguage(Language);
-			this.labelLauncherWorkDirPath.SetLanguage(Language);
-			this.labelLauncherIconPath.SetLanguage(Language);
-			
-			this.selectLauncherEnv.SetLanguage(Language);
-			
-			this.labelLauncherTag.SetLanguage(Language);
-			this.labelLauncherNote.SetLanguage(Language);
-			
-			this.selectLauncherStdStream.SetLanguage(Language);
-			this.selectLauncherAdmin.SetLanguage(Language);
+			this.selecterLauncher.SetLanguage(CommonData.Language);
+			this.envLauncherUpdate.SetLanguage(CommonData.Language);
+			this.envLauncherRemove.SetLanguage(CommonData.Language);
+
+			this.tabLauncher_pageCommon.SetLanguage(CommonData.Language);
+			this.tabLauncher_pageEnv.SetLanguage(CommonData.Language);
+			this.tabLauncher_pageOthers.SetLanguage(CommonData.Language);
+
+			this.groupLauncherType.SetLanguage(CommonData.Language);
+			this.selectLauncherType_file.Text = LauncherType.File.ToText(CommonData.Language);
+			this.selectLauncherType_directory.Text = LauncherType.Directory.ToText(CommonData.Language);
+			this.selectLauncherType_command.Text = LauncherType.Command.ToText(CommonData.Language);
+			this.selectLauncherType_embedded.Text = LauncherType.Embedded.ToText(CommonData.Language);
+
+			this.labelLauncherName.SetLanguage(CommonData.Language);
+			this.labelLauncherCommand.SetLanguage(CommonData.Language);
+			this.labelLauncherOption.SetLanguage(CommonData.Language);
+			this.labelLauncherWorkDirPath.SetLanguage(CommonData.Language);
+			this.labelLauncherIconPath.SetLanguage(CommonData.Language);
+
+			this.selectLauncherEnv.SetLanguage(CommonData.Language);
+
+			this.labelLauncherTag.SetLanguage(CommonData.Language);
+			this.labelLauncherNote.SetLanguage(CommonData.Language);
+
+			this.selectLauncherStdStream.SetLanguage(CommonData.Language);
+			this.selectLauncherAdmin.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageToolbar()
 		{
-			this.selecterToolbar.SetLanguage(Language);
-			this.commandToolbarFont.SetLanguage(Language);
-			this.commandToolbarScreens.SetLanguage(Language);
+			this.selecterToolbar.SetLanguage(CommonData.Language);
+			this.commandToolbarFont.SetLanguage(CommonData.Language);
+			this.commandToolbarScreens.SetLanguage(CommonData.Language);
 
-			this.selectToolbarTopmost.SetLanguage(Language);
-			this.selectToolbarVisible.SetLanguage(Language);
-			this.selectToolbarAutoHide.SetLanguage(Language);
-			this.selectToolbarShowText.SetLanguage(Language);
-			this.labelToolbarGroup.SetLanguage(Language);
-			this.labelToolbarTextWidth.SetLanguage(Language);
-			this.labelToolbarPosition.SetLanguage(Language);
-			this.labelToolbarIcon.SetLanguage(Language);
-			this.labelToolbarFont.SetLanguage(Language);
-			
-			this.toolToolbarGroup_addGroup.SetLanguage(Language);
-			this.toolToolbarGroup_addItem.SetLanguage(Language);
-			this.toolToolbarGroup_up.SetLanguage(Language);
-			this.toolToolbarGroup_down.SetLanguage(Language);
-			this.toolToolbarGroup_remove.SetLanguage(Language);
+			this.selectToolbarTopmost.SetLanguage(CommonData.Language);
+			this.selectToolbarVisible.SetLanguage(CommonData.Language);
+			this.selectToolbarAutoHide.SetLanguage(CommonData.Language);
+			this.selectToolbarShowText.SetLanguage(CommonData.Language);
+			this.labelToolbarGroup.SetLanguage(CommonData.Language);
+			this.labelToolbarTextWidth.SetLanguage(CommonData.Language);
+			this.labelToolbarPosition.SetLanguage(CommonData.Language);
+			this.labelToolbarIcon.SetLanguage(CommonData.Language);
+			this.labelToolbarFont.SetLanguage(CommonData.Language);
 
-			this.inputToolbarTextWidth.SetLanguage(Language);
+			this.toolToolbarGroup_addGroup.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_addItem.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_up.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_down.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_remove.SetLanguage(CommonData.Language);
+
+			this.inputToolbarTextWidth.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageCommand()
 		{
-			this.commandCommandFont.SetLanguage(Language);
-			this.inputCommandHotkey.SetLanguage(Language);
-			
-			this.selectCommandTopmost.SetLanguage(Language);
-			this.labelCommandFont.SetLanguage(Language);
-			this.labelCommandIcon.SetLanguage(Language);
+			this.commandCommandFont.SetLanguage(CommonData.Language);
+			this.inputCommandHotkey.SetLanguage(CommonData.Language);
+
+			this.selectCommandTopmost.SetLanguage(CommonData.Language);
+			this.labelCommandFont.SetLanguage(CommonData.Language);
+			this.labelCommandIcon.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageNote()
 		{
-			this.groupNoteKey.SetLanguage(Language);
-			
-			this.inputNoteCreate.SetLanguage(Language);
-			this.inputNoteHidden.SetLanguage(Language);
-			this.inputNoteCompact.SetLanguage(Language);
-			this.inputNoteShowFront.SetLanguage(Language);
-			
-			this.commandNoteCaptionFont.SetLanguage(Language);
+			this.groupNoteKey.SetLanguage(CommonData.Language);
 
-			this.groupNoteItem.SetLanguage(Language);
-			this.gridNoteItems_columnRemove.SetLanguage(Language);
-			this.gridNoteItems_columnId.SetLanguage(Language);
-			this.gridNoteItems_columnVisible.SetLanguage(Language);
-			this.gridNoteItems_columnLocked.SetLanguage(Language);
-			this.gridNoteItems_columnBody.SetLanguage(Language);
-			this.gridNoteItems_columnTitle.SetLanguage(Language);
-			this.gridNoteItems_columnFont.SetLanguage(Language);
-			this.gridNoteItems_columnFore.SetLanguage(Language);
-			this.gridNoteItems_columnBack.SetLanguage(Language);
-			
-			this.labelNoteCreate.SetLanguage(Language);
-			this.labelNoteHiddent.SetLanguage(Language);
-			this.labelNoteCompact.SetLanguage(Language);
-			this.labelNoteShowFront.SetLanguage(Language);
-			this.labelNoteCaptionFont.SetLanguage(Language);
+			this.inputNoteCreate.SetLanguage(CommonData.Language);
+			this.inputNoteHidden.SetLanguage(CommonData.Language);
+			this.inputNoteCompact.SetLanguage(CommonData.Language);
+			this.inputNoteShowFront.SetLanguage(CommonData.Language);
+
+			this.commandNoteCaptionFont.SetLanguage(CommonData.Language);
+
+			this.groupNoteItem.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnRemove.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnId.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnVisible.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnLocked.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnBody.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnTitle.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnFont.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnFore.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnBack.SetLanguage(CommonData.Language);
+
+			this.labelNoteCreate.SetLanguage(CommonData.Language);
+			this.labelNoteHiddent.SetLanguage(CommonData.Language);
+			this.labelNoteCompact.SetLanguage(CommonData.Language);
+			this.labelNoteShowFront.SetLanguage(CommonData.Language);
+			this.labelNoteCaptionFont.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageDisplay()
@@ -678,52 +678,50 @@
 
 		void ApplyLanguageClipboard()
 		{
-			this.inputClipboardHotkey.SetLanguage(Language);
+			this.inputClipboardHotkey.SetLanguage(CommonData.Language);
 
-			this.commandClipboardTextFont.SetLanguage(Language);
-			this.labelClipboardFont.SetLanguage(Language);
+			this.commandClipboardTextFont.SetLanguage(CommonData.Language);
+			this.labelClipboardFont.SetLanguage(CommonData.Language);
 
-			this.labelClipboardLimit.SetLanguage(Language);
-			this.labelClipboardWaitTaime.SetLanguage(Language);
+			this.labelClipboardLimit.SetLanguage(CommonData.Language);
+			this.labelClipboardWaitTaime.SetLanguage(CommonData.Language);
 			//this.labelClipboardSleepTime.SetLanguage(Language);
-			this.labelClipboardHotkey.SetLanguage(Language);
-			this.selectClipboardEnabled.SetLanguage(Language);
-			this.selectClipboardAppEnabled.SetLanguage(Language);
-			this.selectClipboardTopMost.SetLanguage(Language);
-			this.selectClipboardVisible.SetLanguage(Language);
-			this.selectClipboardItemWClickToOutput.SetLanguage(Language);
-			this.selectClipboardOutputUsingClipboard.SetLanguage(Language);
-			this.selectClipboardSave.SetLanguage(Language);
-			this.groupClipboardType.SetLanguage(Language);
-			this.groupClipboardSaveType.SetLanguage(Language);
-			this.groupClipboardOutput.SetLanguage(Language);
-			this.labelClipboardListType.SetLanguage(Language);
-			this.labelClipboardRepeated.SetLanguage(Language, new Dictionary<string, string>() {
+			this.labelClipboardHotkey.SetLanguage(CommonData.Language);
+			this.selectClipboardEnabled.SetLanguage(CommonData.Language);
+			this.selectClipboardAppEnabled.SetLanguage(CommonData.Language);
+			this.selectClipboardTopMost.SetLanguage(CommonData.Language);
+			this.selectClipboardVisible.SetLanguage(CommonData.Language);
+			this.selectClipboardItemWClickToOutput.SetLanguage(CommonData.Language);
+			this.selectClipboardOutputUsingClipboard.SetLanguage(CommonData.Language);
+			this.selectClipboardSave.SetLanguage(CommonData.Language);
+			this.groupClipboardType.SetLanguage(CommonData.Language);
+			this.groupClipboardSaveType.SetLanguage(CommonData.Language);
+			this.groupClipboardOutput.SetLanguage(CommonData.Language);
+			this.labelClipboardListType.SetLanguage(CommonData.Language);
+			this.labelClipboardRepeated.SetLanguage(CommonData.Language, new Dictionary<string, string>() {
 				{ ProgramLanguageName.clipboardRepeatedAll, Literal.clipboardRepeated.minimum.ToString("D") },
 			});
 
-			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
-			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
-			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
-			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
-			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(CommonData.Language);
+			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
+			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(CommonData.Language);
+			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(CommonData.Language);
+			this.selectClipboardType_file.Text = ClipboardType.File.ToText(CommonData.Language);
 
-			this.selectClipboardSaveType_text.Text = ClipboardType.Text.ToText(Language);
-			this.selectClipboardSaveType_rtf.Text = ClipboardType.Rtf.ToText(Language);
-			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(Language);
-			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(Language);
-			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(Language);
+			this.selectClipboardSaveType_text.Text = ClipboardType.Text.ToText(CommonData.Language);
+			this.selectClipboardSaveType_rtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
+			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(CommonData.Language);
+			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(CommonData.Language);
+			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(CommonData.Language);
 
-			this.inputClipboardLimit.SetLanguage(Language);
-			this.inputClipboardWaitTime.SetLanguage(Language);
-			this.inputClipboardRepeated.SetLanguage(Language);
+			this.inputClipboardLimit.SetLanguage(CommonData.Language);
+			this.inputClipboardWaitTime.SetLanguage(CommonData.Language);
+			this.inputClipboardRepeated.SetLanguage(CommonData.Language);
 		}
 
-		void ApplyLanguage()
+		override protected void ApplyLanguage()
 		{
-			Debug.Assert(Language != null);
-			
-			UIUtility.SetDefaultText(this, Language);
+			UIUtility.SetDefaultText(this, CommonData.Language);
 			
 			ApplyLanguageTab();
 			ApplyLanguageMain();
@@ -778,7 +776,7 @@
 			//foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big, IconScale.Large }) {
 			foreach(var value in new[] { IconScale.Small, IconScale.Normal, IconScale.Big }) {
 				var data = new IconScaleDisplayValue(value);
-				data.SetLanguage(Language);
+				data.SetLanguage(CommonData.Language);
 				iconSizeDataList.Add(data);
 			}
 			control.Attachment(iconSizeDataList, defaultData);
@@ -882,7 +880,7 @@
 			var pairs = Screen.AllScreens.Select(s => new { Screen = s, Window = new ScreenForm() }).ToList();
 			foreach(var pair in pairs) {
 				//pair.Window.SetCommonData(CommonData);
-				pair.Window.SetLanguage(Language);
+				pair.Window.SetLanguage(CommonData.Language);
 				pair.Window.SetSkin(Skin);
 				pair.Window.Screen = pair.Screen;
 				pair.Window.Click += CloseScreenWindow;
@@ -1207,7 +1205,7 @@
 					.ToArray()
 				;
 				foreach(var dv in displayValueList) {
-					dv.SetLanguage(Language);
+					dv.SetLanguage(CommonData.Language);
 				}
 				var applicationItem = this._applicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
 				if(applicationItem != null){
@@ -1419,7 +1417,7 @@
 			if(!this.selecterLauncher.Items.Any(item => item.HasError)) {
 				return true;
 			} else {
-				this.errorProvider.SetError(this.selecterLauncher, Language["setting/check/item-name-dup"]);
+				this.errorProvider.SetError(this.selecterLauncher, CommonData.Language["setting/check/item-name-dup"]);
 				return false;
 			}
 		}
@@ -1443,7 +1441,7 @@
 		
 		void LauncherAddFile(string filePath)
 		{
-			var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, Language, new NullLogger());
+			var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, CommonData.Language, new NullLogger());
 			var useShortcut = checkPath == filePath;
 			var path = checkPath;
 
@@ -1704,7 +1702,7 @@
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
-			ToolbarAddGroup(Language["new/group-item"]);
+			ToolbarAddGroup(CommonData.Language["new/group-item"]);
 			ToolbarChangedGroupCount();
 		}
 		
@@ -1934,7 +1932,7 @@
 			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
 				// フォント
 				var row = this._noteItemList[e.RowIndex];
-				e.Value = LanguageUtility.FontSettingToDisplayText(Language, row.Font);
+				e.Value = LanguageUtility.FontSettingToDisplayText(CommonData.Language, row.Font);
 				e.FormattingApplied = true;
 			}
 		}
