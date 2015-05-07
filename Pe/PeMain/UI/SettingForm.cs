@@ -128,14 +128,14 @@
 		#region event
 		#endregion ////////////////////////////////////
 
-		public SettingForm(Language language, ISkin skin, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
+		public SettingForm()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 
-			Initialize(language, skin, setting, db, applicationSetting);
+			Initialize();
 		}
 
 		#region property
@@ -174,7 +174,7 @@
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 		}
 
-		void InitializeUI(MainSetting mainSetting, AppDBManager db)
+		void InitializeUI()
 		{
 			InitializeToolbar();
 
@@ -214,7 +214,7 @@
 			;
 		}
 
-		void Initialize(Language language, ISkin skin, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
+		void Initialize()
 		{
 			//this._launcherItems = new HashSet<LauncherItem>();
 
@@ -224,7 +224,7 @@
 
 			InitializeCommand();
 
-			InitializeUI(mainSetting, db);
+			InitializeUI();
 		}
 
 		#endregion ////////////////////////////////////
