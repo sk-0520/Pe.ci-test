@@ -99,7 +99,7 @@
 		#endregion ////////////////////////////////////
 
 		#region variable
-		HashSet<LauncherItem> _launcherItems = null;
+		//HashSet<LauncherItem> _launcherItems = null;
 		//FontSetting _commandFont = null;
 		//FontSetting _toolbarFont = null;
 		LauncherItem _launcherSelectedItem = null;
@@ -152,131 +152,17 @@
 		#endregion ////////////////////////////////////
 
 		#region override
+
+		protected override void ApplySetting()
+		{
+			base.ApplySetting();
+
+			ApplyMainSetting();
+			ApplyLauncher();
+		}
 		#endregion ////////////////////////////////////
 
 		#region initialize
-		void InitializeLog(LogSetting logSetting)
-		{
-			this.selectLogVisible.Checked = logSetting.Visible;
-			this.selectLogAddShow.Checked = logSetting.AddShow;
-			this.selectLogFullDetail.Checked = logSetting.FullDetail;
-			this.selectLogDebugging.Checked = logSetting.Debugging;
-
-			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
-			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
-			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
-		}
-
-		void InitializeSystemEnv(SystemEnvironmentSetting systemEnvSetting)
-		{
-			/*
-			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
-			this.inputSystemEnvHiddenFile.Modifiers = systemEnvSetting.HiddenFileShowHotKey.Modifiers;
-			this.inputSystemEnvHiddenFile.Registered = systemEnvSetting.HiddenFileShowHotKey.Registered;
-			
-			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotKey.Key;
-			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
-			this.inputSystemEnvExt.Registered = systemEnvSetting.ExtensionShowHotKey.Registered;
-			 */
-			this.inputSystemEnvHiddenFile.HotKeySetting = systemEnvSetting.HiddenFileShowHotKey;
-			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
-		}
-
-		void InitializeRunningInfo(RunningSetting setting)
-		{
-			this.selectUpdateCheck.Checked = setting.CheckUpdate;
-			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
-		}
-
-		void InitializeSkin(SkinSetting setting)
-		{
-			var skins = AppUtility.GetSkins(new NullLogger());
-
-			var skinDisplayValues = skins.Select(s => new SkinDisplayValue(s));
-			var selectSkin = skinDisplayValues.SingleOrDefault(s => s.Value.About.Name == setting.Name);
-			if(selectSkin != null) {
-				this.selectSkinName.Attachment(skinDisplayValues, selectSkin.Value);
-			} else {
-				var defSkin = new SystemSkin();
-				defSkin.Load();
-				var skin = skinDisplayValues.Single(s => s.Value.About.Name == defSkin.About.Name);
-				this.selectSkinName.Attachment(skinDisplayValues, skin.Value);
-				defSkin.Unload();
-			}
-			
-		}
-
-		void InitializeLanguage(string languageName)
-		{
-			var langFileName = string.Format("{0}.xml", languageName);
-			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
-
-			// TODO: 泥臭い
-			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
-				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
-				.Select(f => new {
-					Language = Serializer.LoadXmlFile<Language>(f, false),
-					BaseName = Path.GetFileNameWithoutExtension(f),
-				})
-				.ToArray()
-				;
-			var languagePairList = new List<Language>(languageTempList.Length);
-			foreach(var lang in languageTempList) {
-				lang.Language.BaseName = lang.BaseName;
-				languagePairList.Add(lang.Language);
-			}
-			var langList = languagePairList
-				.Select(l => new {
-					DisplayValue = new LanguageDisplayValue(l),
-					Language = l,
-				})
-				;
-			var selectedItem = langList.SingleOrDefault(l => l.Language.BaseName == languageName);
-			Language selectedLang = null;
-			if(selectedItem != null) {
-				selectedLang = selectedItem.Language;
-			}
-			if(selectedLang != null) {
-				this.selectMainLanguage.Attachment(langList.Select(l => l.DisplayValue), selectedLang);
-			} else {
-				this.selectMainLanguage.Attachment(langList.Select(l => l.DisplayValue));
-			}
-		}
-
-		void InitializeStream(StreamSetting setting)
-		{
-			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
-			this.commandStreamFont.RefreshView();
-
-			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Fore.Color;
-			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Back.Color;
-			this.commnadStreamInputForeColor.Color = setting.InputColor.Fore.Color;
-			this.commnadStreamInputBackColor.Color = setting.InputColor.Back.Color;
-			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Fore.Color;
-			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Back.Color;
-		}
-
-		void InitializeMainSetting(MainSetting mainSetting)
-		{
-			var linkPath = Literal.StartupShortcutPath;
-			this.selectMainStartup.Checked = File.Exists(linkPath);
-
-			InitializeLog(mainSetting.Log);
-			InitializeSystemEnv(mainSetting.SystemEnvironment);
-			InitializeRunningInfo(mainSetting.Running);
-			InitializeLanguage(mainSetting.LanguageName);
-			InitializeSkin(mainSetting.Skin);
-			InitializeStream(mainSetting.Stream);
-		}
-
-		void InitializeLauncher(LauncherSetting launcherSetting)
-		{
-			this._launcherItems.Clear();
-			foreach(var item in launcherSetting.Items) {
-				this._launcherItems.Add((LauncherItem)item.Clone());
-			}
-			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
-		}
 
 		void InitializeCommand(CommandSetting commandSetting)
 		{
@@ -336,7 +222,7 @@
 			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 
-			this.selecterToolbar.SetItems(this._launcherItems, this._applicationSetting);
+			this.selecterToolbar.SetItems(CommonData.MainSetting.Launcher.Items, this._applicationSetting);
 
 			// ツールーバー位置の項目構築
 			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
@@ -386,7 +272,7 @@
 				var parentNode = ToolbarAddGroup(groupItem.Name);
 				// メイングループに紐付くアイテム
 				foreach(var itemName in groupItem.ItemNames) {
-					var relItem = this._launcherItems.SingleOrDefault(item => item.IsNameEqual(itemName));
+					var relItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
 					if(relItem != null) {
 						ToolbarAddItem(parentNode, relItem);
 					}
@@ -440,11 +326,6 @@
 
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
-			ApplyLanguage();
-			ApplySkin();
-
-			InitializeMainSetting(mainSetting);
-			InitializeLauncher(mainSetting.Launcher);
 			InitializeToolbar(mainSetting.Toolbar);
 			InitializeCommand(mainSetting.Command);
 			InitializeNote(mainSetting.Note, db);
@@ -488,7 +369,7 @@
 
 		void Initialize(Language language, ISkin skin, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
 		{
-			this._launcherItems = new HashSet<LauncherItem>();
+			//this._launcherItems = new HashSet<LauncherItem>();
 
 			//Language = language;
 			//Skin = skin;
@@ -500,6 +381,128 @@
 		}
 
 		#endregion ////////////////////////////////////
+
+		#region apply
+		void ApplyLog(LogSetting logSetting)
+		{
+			this.selectLogVisible.Checked = logSetting.Visible;
+			this.selectLogAddShow.Checked = logSetting.AddShow;
+			this.selectLogFullDetail.Checked = logSetting.FullDetail;
+			this.selectLogDebugging.Checked = logSetting.Debugging;
+
+			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
+			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
+			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
+		}
+
+		void ApplySystemEnv(SystemEnvironmentSetting systemEnvSetting)
+		{
+			/*
+			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
+			this.inputSystemEnvHiddenFile.Modifiers = systemEnvSetting.HiddenFileShowHotKey.Modifiers;
+			this.inputSystemEnvHiddenFile.Registered = systemEnvSetting.HiddenFileShowHotKey.Registered;
+			
+			this.inputSystemEnvExt.Hotkey = systemEnvSetting.ExtensionShowHotKey.Key;
+			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
+			this.inputSystemEnvExt.Registered = systemEnvSetting.ExtensionShowHotKey.Registered;
+			 */
+			this.inputSystemEnvHiddenFile.HotKeySetting = systemEnvSetting.HiddenFileShowHotKey;
+			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
+		}
+
+		void ApplyRunningInfo(RunningSetting setting)
+		{
+			this.selectUpdateCheck.Checked = setting.CheckUpdate;
+			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
+		}
+
+		void ApplySkin(SkinSetting setting)
+		{
+			var skins = AppUtility.GetSkins(new NullLogger());
+
+			var skinDisplayValues = skins.Select(s => new SkinDisplayValue(s));
+			var selectSkin = skinDisplayValues.SingleOrDefault(s => s.Value.About.Name == setting.Name);
+			if(selectSkin != null) {
+				this.selectSkinName.Attachment(skinDisplayValues, selectSkin.Value);
+			} else {
+				var defSkin = new SystemSkin();
+				defSkin.Load();
+				var skin = skinDisplayValues.Single(s => s.Value.About.Name == defSkin.About.Name);
+				this.selectSkinName.Attachment(skinDisplayValues, skin.Value);
+				defSkin.Unload();
+			}
+
+		}
+
+		void ApplyLanguageSetting(string languageName)
+		{
+			var langFileName = string.Format("{0}.xml", languageName);
+			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
+
+			// TODO: 泥臭い
+			var languageTempList = Directory.GetFiles(Literal.ApplicationLanguageDirPath, "*.xml")
+				.Where(s => string.Compare(Path.GetFileName(s), string.Format("{0}.xml", Literal.defaultLanguage), true) != 0)
+				.Select(f => new {
+					Language = Serializer.LoadXmlFile<Language>(f, false),
+					BaseName = Path.GetFileNameWithoutExtension(f),
+				})
+				.ToArray()
+				;
+			var languagePairList = new List<Language>(languageTempList.Length);
+			foreach(var lang in languageTempList) {
+				lang.Language.BaseName = lang.BaseName;
+				languagePairList.Add(lang.Language);
+			}
+			var langList = languagePairList
+				.Select(l => new {
+					DisplayValue = new LanguageDisplayValue(l),
+					Language = l,
+				})
+				;
+			var selectedItem = langList.SingleOrDefault(l => l.Language.BaseName == languageName);
+			Language selectedLang = null;
+			if(selectedItem != null) {
+				selectedLang = selectedItem.Language;
+			}
+			if(selectedLang != null) {
+				this.selectMainLanguage.Attachment(langList.Select(l => l.DisplayValue), selectedLang);
+			} else {
+				this.selectMainLanguage.Attachment(langList.Select(l => l.DisplayValue));
+			}
+		}
+
+		void ApplyStream(StreamSetting setting)
+		{
+			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
+			this.commandStreamFont.RefreshView();
+
+			this.commnadStreamGeneralForeColor.Color = setting.GeneralColor.Fore.Color;
+			this.commnadStreamGeneralBackColor.Color = setting.GeneralColor.Back.Color;
+			this.commnadStreamInputForeColor.Color = setting.InputColor.Fore.Color;
+			this.commnadStreamInputBackColor.Color = setting.InputColor.Back.Color;
+			this.commnadStreamErrorForeColor.Color = setting.ErrorColor.Fore.Color;
+			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Back.Color;
+		}
+
+		void ApplyMainSetting()
+		{
+			var linkPath = Literal.StartupShortcutPath;
+			this.selectMainStartup.Checked = File.Exists(linkPath);
+
+			ApplyLog(CommonData.MainSetting.Log);
+			ApplySystemEnv(CommonData.MainSetting.SystemEnvironment);
+			ApplyRunningInfo(CommonData.MainSetting.Running);
+			ApplyLanguageSetting(CommonData.MainSetting.LanguageName);
+			ApplySkin(CommonData.MainSetting.Skin);
+			ApplyStream(CommonData.MainSetting.Stream);
+		}
+
+		void ApplyLauncher()
+		{
+			this.selecterLauncher.SetItems(CommonData.MainSetting.Launcher.Items, this._applicationSetting);
+		}
+
+		#endregion
 
 		#region language
 
@@ -1274,9 +1277,9 @@
 			item.LauncherType = LauncherGetSelectedType();
 			//item.Name = this.inputLauncherName.Text.Trim();
 			var name = this.inputLauncherName.Text.Trim();
-			if(this._launcherItems.Count > 1) {
+			if(CommonData.MainSetting.Launcher.Items.Count > 1) {
 				// 重複している場合はちょっと細工
-				var uniqName = TextUtility.ToUniqueDefault(name, this._launcherItems.Where(i => i != item).Select(i => i.Name));
+				var uniqName = TextUtility.ToUniqueDefault(name, CommonData.MainSetting.Launcher.Items.Where(i => i != item).Select(i => i.Name));
 				if(!item.IsNameEqual(uniqName)) {
 					var prevEvent = this._launcherItemEvent;
 					this._launcherItemEvent = false;
