@@ -162,6 +162,7 @@
 			ApplyToolbar();
 			ApplyCommand();
 			ApplyNote();
+			ApplyClipboard();
 		}
 		#endregion ////////////////////////////////////
 
@@ -173,54 +174,9 @@
 			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 		}
 
-		void InitializeClipboard(ClipboardSetting setting)
-		{
-			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, setting.Limit);
-			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, setting.WaitTime);
-			//this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
-			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, setting.ClipboardRepeated);
-
-			this.selectClipboardEnabled.Checked = setting.Enabled;
-			this.selectClipboardAppEnabled.Checked = setting.EnabledApplicationCopy;
-
-			this.selectClipboardVisible.Checked = setting.Visible;
-			this.selectClipboardTopMost.Checked = setting.TopMost;
-			this.selectClipboardItemWClickToOutput.Checked = setting.DoubleClickToOutput;
-			this.selectClipboardOutputUsingClipboard.Checked = setting.OutputUsingClipboard;
-
-			this.selectClipboardSave.Checked = setting.SaveHistory;
-
-			this.selectClipboardType_text.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Text);
-			this.selectClipboardType_rtf.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Rtf);
-			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
-			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
-			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
-
-			this.selectClipboardSaveType_text.Checked = setting.SaveTypes.HasFlag(ClipboardType.Text);
-			this.selectClipboardSaveType_rtf.Checked = setting.SaveTypes.HasFlag(ClipboardType.Rtf);
-			this.selectClipboardSaveType_html.Checked = setting.SaveTypes.HasFlag(ClipboardType.Html);
-			this.selectClipboardSaveType_image.Checked = setting.SaveTypes.HasFlag(ClipboardType.Image);
-			this.selectClipboardSaveType_file.Checked = setting.SaveTypes.HasFlag(ClipboardType.File);
-
-			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
-
-			this.commandClipboardTextFont.FontSetting.Import(setting.TextFont);
-			this.commandClipboardTextFont.RefreshView();
-
-			var clipboardListTypeValues = new List<ClipboardListTypeDisplayValue>();
-			foreach(var type in new [] { ClipboardListType.History, ClipboardListType.Template }) {
-				var dv = new ClipboardListTypeDisplayValue(type);
-				dv.SetLanguage(CommonData.Language);
-				clipboardListTypeValues.Add(dv);
-			}
-			this.selectClipboardListType.Attachment(clipboardListTypeValues, setting.ClipboardListType);
-
-		}
-
 		void InitializeUI(MainSetting mainSetting, AppDBManager db)
 		{
 			InitializeToolbar();
-			InitializeClipboard(mainSetting.Clipboard);
 
 #if !DEBUG
 			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
@@ -498,6 +454,48 @@
 			this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty);
 		}
 
+		void ApplyClipboard()
+		{
+			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, CommonData.MainSetting.Clipboard.Limit);
+			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, CommonData.MainSetting.Clipboard.WaitTime);
+			//this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, CommonData.MainSetting.Clipboard.SleepTime);
+			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, CommonData.MainSetting.Clipboard.ClipboardRepeated);
+
+			this.selectClipboardEnabled.Checked = CommonData.MainSetting.Clipboard.Enabled;
+			this.selectClipboardAppEnabled.Checked = CommonData.MainSetting.Clipboard.EnabledApplicationCopy;
+
+			this.selectClipboardVisible.Checked = CommonData.MainSetting.Clipboard.Visible;
+			this.selectClipboardTopMost.Checked = CommonData.MainSetting.Clipboard.TopMost;
+			this.selectClipboardItemWClickToOutput.Checked = CommonData.MainSetting.Clipboard.DoubleClickToOutput;
+			this.selectClipboardOutputUsingClipboard.Checked = CommonData.MainSetting.Clipboard.OutputUsingClipboard;
+
+			this.selectClipboardSave.Checked = CommonData.MainSetting.Clipboard.SaveHistory;
+
+			this.selectClipboardType_text.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardType_rtf.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardType_html.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardType_image.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardType_file.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.File);
+
+			this.selectClipboardSaveType_text.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardSaveType_rtf.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardSaveType_html.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardSaveType_image.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardSaveType_file.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.File);
+
+			this.inputClipboardHotkey.HotKeySetting = CommonData.MainSetting.Clipboard.ToggleHotKeySetting;
+
+			this.commandClipboardTextFont.FontSetting.Import(CommonData.MainSetting.Clipboard.TextFont);
+			this.commandClipboardTextFont.RefreshView();
+
+			var clipboardListTypeValues = new List<ClipboardListTypeDisplayValue>();
+			foreach(var type in new[] { ClipboardListType.History, ClipboardListType.Template }) {
+				var dv = new ClipboardListTypeDisplayValue(type);
+				dv.SetLanguage(CommonData.Language);
+				clipboardListTypeValues.Add(dv);
+			}
+			this.selectClipboardListType.Attachment(clipboardListTypeValues, CommonData.MainSetting.Clipboard.ClipboardListType);
+		}
 
 		#endregion
 
