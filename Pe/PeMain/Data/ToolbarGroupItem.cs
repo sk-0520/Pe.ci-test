@@ -21,7 +21,7 @@
 		public object Clone()
 		{
 			var result = new ToolbarGroupItem() {
-				ItemNames = this.ItemNames,
+				Name = this.Name,
 			};
 			result.ItemNames.AddRange(ItemNames);
 

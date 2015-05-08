@@ -826,14 +826,14 @@
 				Name = menuNameSetting,
 				Image = this._commonData.Skin.GetImage(SkinImage.Config),
 			};
-			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
+			itemSetting.Click += (object sender, EventArgs e) => PauseOthersPreProcess(OpenSettingDialog, () => this._commonData.MainSetting.DeepClone());
 
 			// 情報
 			var itemAbout = new ToolStripMenuItem() {
 				Name = menuNameAbout,
 				Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small),
 			};
-			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
+			itemAbout.Click += (object sender, EventArgs e) => PauseOthersPlain(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
 					dialog.SetCommonData(this._commonData);
@@ -1275,14 +1275,19 @@
 			return result;
 		}
 
+		void PauseOthersPlain(Func<Func<bool>> func)
+		{
+			PauseOthersPreProcess(o => func(),  null);
+		}
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="func">ウィンドウ再構築を独自に行う場合は真を返す処理を返す。</param>
-		void PauseOthers(Func<Func<bool>> func)
+		void PauseOthersPreProcess(Func<object, Func<bool>> func, Func<object> preProcess)
 		{
 			var recursion = this._pause;
 			var windowVisible = new Dictionary<Form, bool>();
+			var preValue = preProcess == null ? null : preProcess();
 			if(!recursion) {
 				foreach(var window in GetWindows()) {
 					windowVisible[window] = window.Visible;
@@ -1293,7 +1298,7 @@
 				this._notifyIcon.ContextMenuStrip = null;
 				this._pause = true;
 			}
-			var action = func();
+			var action = func(preValue);
 			var customWindow = false;
 			if(action != null) {
 				customWindow = action();
@@ -1439,9 +1444,12 @@
 		/// 設定ダイアログを開く。
 		/// </summary>
 		/// <returns></returns>
-		Func<bool> OpenSettingDialog()
+		Func<bool> OpenSettingDialog(object preValue)
 		{
 			using(var settingForm = new SettingForm()) {
+				var workMainSetting = (MainSetting)preValue;
+				var oldMainSetting = this._commonData.MainSetting;
+				this._commonData.MainSetting = workMainSetting;
 				settingForm.SetCommonData(this._commonData);
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
@@ -1475,9 +1483,9 @@
 					oldSetting.Clipboard.TemplateItems = new EventList<TemplateItem>(0);
 					oldSetting.ToDispose();
 					 * */
+					oldMainSetting.ToDispose();
 					settingForm.SaveFiles();
 					settingForm.SaveDB();
-					this._commonData.MainSetting = settingForm.GetMainSetting();
 					AppUtility.SaveSetting(this._commonData);
 					var check = this._commonData.MainSetting.Running.CheckUpdate != this._commonData.MainSetting.Running.CheckUpdate || this._commonData.MainSetting.Running.CheckUpdate;
 					InitializeLanguage(null, null);
@@ -1688,7 +1696,7 @@
 		/// <param name="updateData"></param>
 		void ShowUpdateDialog(UpdateData updateData)
 		{
-			PauseOthers(() => {
+			PauseOthersPlain(() => {
 				try {
 					using(var dialog = new UpdateForm()) {
 						dialog.UpdateData = updateData;
@@ -1731,7 +1739,7 @@
 		/// </summary>
 		public void ShowHomeDialog()
 		{
-			PauseOthers(() => {
+			PauseOthersPlain(() => {
 				using(var dialog = new HomeForm()) {
 					dialog.SetCommonData(this._commonData);
 					dialog.ShowDialog();

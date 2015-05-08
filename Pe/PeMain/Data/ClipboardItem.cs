@@ -84,7 +84,7 @@
 				Image = this.Image == null ? null: (Image)this.Image.Clone()
 			};
 			if(Files != null && Files.Any()) {
-				result.Files.AddRange(Files);
+				result.Files = new List<string>(Files);
 			}
 
 			return result;

@@ -155,13 +155,6 @@
 
 		#region override
 
-		public override void SetCommonData(CommonData commonData)
-		{
-			commonData.MainSetting = (MainSetting)commonData.MainSetting.DeepClone();
-
-			base.SetCommonData(commonData);
-		}
-
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
@@ -242,10 +235,10 @@
 
 		void ApplyLog(LogSetting logSetting)
 		{
-			this.selectLogVisible.Checked = logSetting.Visible;
-			this.selectLogAddShow.Checked = logSetting.AddShow;
-			this.selectLogFullDetail.Checked = logSetting.FullDetail;
-			this.selectLogDebugging.Checked = logSetting.Debugging;
+			this.selectLogVisible.DataBindings.Add("Checked", logSetting, "Visible", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogAddShow.DataBindings.Add("Checked", logSetting, "AddShow", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogFullDetail.DataBindings.Add("Checked", logSetting, "FullDetail", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogDebugging.DataBindings.Add("Checked", logSetting, "Debugging", false, DataSourceUpdateMode.OnPropertyChanged);
 
 			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
 			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
@@ -1018,31 +1011,37 @@
 		//	noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
 		//}
 
-		//void ExportToolbarSetting(ToolbarSetting toolbarSetting)
-		//{
-		//	ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-		//	foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
-		//		var item = itemData.Value;
-		//		if(toolbarSetting.Items.Contains(item)) {
-		//			toolbarSetting.Items.Remove(item);
-		//		}
-		//		toolbarSetting.Items.Add(item);
-		//	}
+		void ExportToolbarSetting(ToolbarSetting setting)
+		{
+			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
+			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
+				var item = itemData.Value;
+				if(setting.Items.Contains(item)) {
+					setting.Items.Remove(item);
+				}
+				setting.Items.Add(item);
+			}
+		}
 
-		//	// ツリーからグループ項目構築
-		//	foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
-		//		var toolbarGroupItem = new ToolbarGroupItem();
+		ToolbarGroup CreateToolbarGroup()
+		{
+			var result = new ToolbarGroup();
+			// ツリーからグループ項目構築
+			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
+				var toolbarGroupItem = new ToolbarGroupItem();
 
-		//		// グループ項目
-		//		var groupName = groupNode.Text;
-		//		toolbarGroupItem.Name = groupName;
+				// グループ項目
+				var groupName = groupNode.Text;
+				toolbarGroupItem.Name = groupName;
 
-		//		// グループに紐付くアイテム名
-		//		toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
+				// グループに紐付くアイテム名
+				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
 
-		//		toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
-		//	}
-		//}
+				result.Groups.Add(toolbarGroupItem);
+			}
+
+			return result;
+		}
 
 
 		//void ExportClipboardSetting(ClipboardSetting setting)
@@ -1095,10 +1094,6 @@
 
 		//}
 
-		public MainSetting GetMainSetting()
-		{
-			return CommonData.MainSetting;
-		}
 		#endregion ////////////////////////////////////
 
 		#region save
@@ -1847,6 +1842,8 @@
 			if(CheckValidate()) {
 				//// 設定データ生成
 				//CreateSettingData();
+				CommonData.MainSetting.Toolbar.ToolbarGroup = CreateToolbarGroup();
+
 				DialogResult = DialogResult.OK;
 			}
 		}

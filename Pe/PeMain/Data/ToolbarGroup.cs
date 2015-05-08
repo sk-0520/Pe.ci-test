@@ -1,6 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
+	using System.Linq;
 	using System.Collections.Generic;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -23,8 +24,8 @@
 		{
 			var result = new ToolbarGroup();
 
-			foreach(var item in Groups) {
-				result.Groups.Add((ToolbarGroupItem)item.Clone());
+			if(Groups.Any()) {
+				result.Groups.AddRange(Groups.Select(tgi => tgi.Clone()).Cast<ToolbarGroupItem>());
 			}
 
 			return result;
