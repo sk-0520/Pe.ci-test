@@ -7,10 +7,11 @@
 	using System.Xml;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]
-	public class ClipboardSetting: DisposableItem
+	public class ClipboardSetting: DisposableItem, IDeepClone
 	{
 		public ClipboardSetting()
 		{
@@ -189,6 +190,44 @@
 			}
 
 			base.Dispose(disposing);
+		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new ClipboardSetting() {
+				Visible = this.Visible,
+				Limit = this.Limit,
+				EnabledApplicationCopy = this.EnabledApplicationCopy,
+				Size = this.Size,
+				Location = this.Location,
+				StackListWidth = this.StackListWidth,
+				TemplateListWidth = this.TemplateListWidth,
+				TextFont = (FontSetting)this.TextFont.Clone(),
+				Enabled = this.Enabled,
+				EnabledTypes = this.EnabledTypes,
+				SaveHistory = this.SaveHistory,
+				SaveTypes = this.SaveTypes,
+				WaitTime = this.WaitTime,
+				ToggleHotKeySetting = (HotKeySetting)this.ToggleHotKeySetting.Clone(),
+				ClipboardListType = this.ClipboardListType,
+				ClipboardRepeated = this.ClipboardRepeated,
+			};
+
+
+			if(0 < TemplateItems.Count) {
+				result.TemplateItems.AddRange(TemplateItems.Select(i => i.Clone()).Cast<TemplateItem>());
+			}
+
+			result.HistoryItems = new FixedSizedList<ClipboardItem>(HistoryItems.Count, Limit);
+			if(0 < HistoryItems.Count) {
+				result.HistoryItems.AddRange(HistoryItems.Select(i => i.DeepClone()).Cast<ClipboardItem>());
+			}
+
+			return result;
 		}
 
 		#endregion

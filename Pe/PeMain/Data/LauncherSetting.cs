@@ -9,13 +9,14 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	/// <summary>
 	/// ランチャーアイテム統括。
 	/// </summary>
 	[Serializable]
-	public class LauncherSetting: DisposableItem, IDisposable
+	public class LauncherSetting: DisposableItem, IDisposable, IDeepClone
 	{
 		public LauncherSetting()
 		{
@@ -27,7 +28,9 @@
 		/// </summary>
 		[XmlIgnoreAttribute()]
 		public HashSet<LauncherItem> Items { get; set; }
-		
+
+		#region DisposableItem
+
 		protected override void Dispose(bool disposing)
 		{
 			foreach(var item in Items) {
@@ -37,9 +40,30 @@
 			base.Dispose(disposing);
 		}
 
+		#endregion
+
+		#region override
+
 		public override void CorrectionValue()
 		{
 			base.CorrectionValue();
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new LauncherSetting();
+
+			foreach(var item in Items) {
+				result.Items.Add((LauncherItem)item.Clone());
+			}
+
+			return result;
+		}
+
+		#endregion
 	}
 }

@@ -1442,8 +1442,7 @@
 		Func<bool> OpenSettingDialog()
 		{
 			using(var settingForm = new SettingForm()) {
-				var commonData = this._commonData;
-				settingForm.SetCommonData(commonData);
+				settingForm.SetCommonData(this._commonData);
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
 					foreach(var note in this._noteWindowList) {

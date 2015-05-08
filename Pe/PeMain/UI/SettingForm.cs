@@ -155,6 +155,13 @@
 
 		#region override
 
+		public override void SetCommonData(CommonData commonData)
+		{
+			commonData.MainSetting = (MainSetting)commonData.MainSetting.DeepClone();
+
+			base.SetCommonData(commonData);
+		}
+
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
@@ -1090,8 +1097,7 @@
 
 		public MainSetting GetMainSetting()
 		{
-			var mainSetting = new MainSetting();
-			return mainSetting;
+			return CommonData.MainSetting;
 		}
 		#endregion ////////////////////////////////////
 

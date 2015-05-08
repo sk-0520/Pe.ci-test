@@ -10,7 +10,7 @@
 	/// フォント設定。
 	/// </summary>
 	[Serializable]
-	public class FontSetting: DisposableItem
+	public class FontSetting: DisposableItem, ICloneable
 	{
 		/// <summary>
 		/// 保持用フォント。
@@ -93,6 +93,20 @@
 			ClearFont();
 
 			base.Dispose(disposing);
+		}
+
+		#endregion
+
+		#region ICloneable
+
+		public object Clone()
+		{
+			return new FontSetting() {
+				Height = this.Height,
+				Family = this.Family,
+				Italic = this.Italic,
+				Bold = this.Bold,
+			};
 		}
 
 		#endregion

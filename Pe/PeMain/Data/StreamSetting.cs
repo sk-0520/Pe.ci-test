@@ -3,9 +3,10 @@
 	using System;
 	using System.Drawing;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	[Serializable]
-	public class StreamSetting: DisposableItem
+	public class StreamSetting: DisposableItem, IDeepClone
 	{
 		public StreamSetting()
 		{
@@ -38,10 +39,28 @@
 		/// </summary>
 		public ColorPairItem ErrorColor { get; set; }
 
+		#region DisposableItem
+
 		protected override void Dispose(bool disposing)
 		{
 			FontSetting.ToDispose();
 			base.Dispose(disposing);
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			return new StreamSetting() {
+				FontSetting = (FontSetting)this.FontSetting.Clone(),
+				GeneralColor = (ColorPairItem)this.GeneralColor.DeepClone(),
+				InputColor = (ColorPairItem)this.InputColor.DeepClone(),
+				ErrorColor = (ColorPairItem)this.ErrorColor.DeepClone(),
+			};
+
+		}
+		#endregion
 	}
 }
