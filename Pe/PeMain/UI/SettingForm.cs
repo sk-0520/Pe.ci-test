@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
@@ -145,7 +146,8 @@
 		//public Language Language { get; private set; }
 		//public ISkin CommonData.Skin { get; private set; }
 
-		public MainSetting MainSetting { get; private set; }
+		//public MainSetting MainSetting { get; private set; }
+
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
@@ -802,11 +804,11 @@
 			SaveFileMainStartup();
 		}
 
-		public void SaveDB(AppDBManager db)
+		public void SaveDB()
 		{
-			using(var tran = db.BeginTransaction()) {
+			using(var tran = CommonData.Database.BeginTransaction()) {
 				try {
-					SaveDBNoteItems(db);
+					SaveDBNoteItems(CommonData.Database);
 					tran.Commit();
 				} catch(Exception) {
 					tran.Rollback();
@@ -1085,6 +1087,12 @@
 		//	setting.TextFont = this.commandClipboardTextFont.FontSetting;
 
 		//}
+
+		public MainSetting GetMainSetting()
+		{
+			var mainSetting = new MainSetting();
+			return mainSetting;
+		}
 		#endregion ////////////////////////////////////
 
 		#region save

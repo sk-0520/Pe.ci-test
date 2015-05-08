@@ -1453,7 +1453,7 @@
 					this._noteWindowList.Clear();
 					InitializeNoteForm(null, null);
 					 */
-
+					/*
 					var mainSetting = settingForm.MainSetting;
 					// ログ
 					mainSetting.Log.Point = this._commonData.MainSetting.Log.Point;
@@ -1475,9 +1475,12 @@
 					oldSetting.Clipboard.HistoryItems = new FixedSizedList<ClipboardItem>(0,0);
 					oldSetting.Clipboard.TemplateItems = new EventList<TemplateItem>(0);
 					oldSetting.ToDispose();
+					 * */
 					settingForm.SaveFiles();
-					settingForm.SaveDB(this._commonData.Database);
+					settingForm.SaveDB();
+					this._commonData.MainSetting = settingForm.GetMainSetting();
 					AppUtility.SaveSetting(this._commonData);
+					var check = this._commonData.MainSetting.Running.CheckUpdate != this._commonData.MainSetting.Running.CheckUpdate || this._commonData.MainSetting.Running.CheckUpdate;
 					InitializeLanguage(null, null);
 					InitializeSkin(null, this._commonData.Logger);
 
