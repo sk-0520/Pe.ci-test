@@ -230,6 +230,7 @@
 		#endregion ////////////////////////////////////
 
 		#region apply
+
 		void ApplyLog(LogSetting logSetting)
 		{
 			this.selectLogVisible.Checked = logSetting.Visible;
@@ -813,37 +814,37 @@
 				}
 			}
 		}
-		void CreateSettingData()
-		{
-			var mainSetting = new MainSetting();
+		//void CreateSettingData()
+		//{
+		//	var mainSetting = new MainSetting();
 
-			// 現在状況
-			mainSetting.Running.Running = true;
-			mainSetting.Running.SetDefaultVersion();
+		//	// 現在状況
+		//	mainSetting.Running.Running = true;
+		//	mainSetting.Running.SetDefaultVersion();
 
-			// 本体
-			ExportMainSetting(mainSetting);
+		//	// 本体
+		//	ExportMainSetting(mainSetting);
 
-			// ランチャ
-			ExportLauncherSetting(mainSetting.Launcher);
+		//	// ランチャ
+		//	ExportLauncherSetting(mainSetting.Launcher);
 
-			// コマンド
-			ExportCommandSetting(mainSetting.Command);
+		//	// コマンド
+		//	ExportCommandSetting(mainSetting.Command);
 
-			// ツールバー
-			ExportToolbarSetting(mainSetting.Toolbar);
+		//	// ツールバー
+		//	ExportToolbarSetting(mainSetting.Toolbar);
 
-			// ノート
-			ExportNoteSetting(mainSetting.Note);
+		//	// ノート
+		//	ExportNoteSetting(mainSetting.Note);
 
-			// ディスプレイ
+		//	// ディスプレイ
 
-			// クリップボード
-			ExportClipboardSetting(mainSetting.Clipboard);
+		//	// クリップボード
+		//	ExportClipboardSetting(mainSetting.Clipboard);
 
-			// プロパティ設定
-			MainSetting = mainSetting;
-		}
+		//	// プロパティ設定
+		//	MainSetting = mainSetting;
+		//}
 
 		/*
 		string GetStartupAppLinkPath()
@@ -897,193 +898,193 @@
 		#endregion ////////////////////////////////////
 
 		#region export
-		void ExportCommandSetting(CommandSetting commandSetting)
-		{
-			/*
-			commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
-			commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
-			commandSetting.HotKey.Registered = this.inputCommandHotkey.Registered;
-			 */
-			commandSetting.HotKey = this.inputCommandHotkey.HotKeySetting;
+		//void ExportCommandSetting(CommandSetting commandSetting)
+		//{
+		//	/*
+		//	commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
+		//	commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
+		//	commandSetting.HotKey.Registered = this.inputCommandHotkey.Registered;
+		//	 */
+		//	commandSetting.HotKey = this.inputCommandHotkey.HotKeySetting;
 
-			commandSetting.FontSetting = this.commandCommandFont.FontSetting;
-		}
+		//	commandSetting.FontSetting = this.commandCommandFont.FontSetting;
+		//}
 
-		void ExportLauncherSetting(LauncherSetting setting)
-		{
-			setting.Items.Clear();
-			foreach(var item in this.selecterLauncher.Items) {
-				setting.Items.Add(item);
-			}
-		}
+		//void ExportLauncherSetting(LauncherSetting setting)
+		//{
+		//	setting.Items.Clear();
+		//	foreach(var item in this.selecterLauncher.Items) {
+		//		setting.Items.Add(item);
+		//	}
+		//}
 
-		void ExportLogSetting(LogSetting logSetting)
-		{
-			logSetting.Visible = this.selectLogVisible.Checked;
-			logSetting.AddShow = this.selectLogAddShow.Checked;
-			logSetting.FullDetail = this.selectLogFullDetail.Checked;
-			logSetting.Debugging = this.selectLogDebugging.Checked;
+		//void ExportLogSetting(LogSetting logSetting)
+		//{
+		//	logSetting.Visible = this.selectLogVisible.Checked;
+		//	logSetting.AddShow = this.selectLogAddShow.Checked;
+		//	logSetting.FullDetail = this.selectLogFullDetail.Checked;
+		//	logSetting.Debugging = this.selectLogDebugging.Checked;
 
-			var trigger = new Dictionary<CheckBox, LogType>() {
-				{ this.selectLogTrigger_information, LogType.Information },
-				{ this.selectLogTrigger_warning,     LogType.Warning },
-				{ this.selectLogTrigger_error,       LogType.Error },
-			};
-			var logType = LogType.None;
-			foreach(var t in trigger) {
-				if(t.Key.Checked) {
-					logType |= t.Value;
-				}
-			}
-			logSetting.AddShowTrigger = logType;
-		}
+		//	var trigger = new Dictionary<CheckBox, LogType>() {
+		//		{ this.selectLogTrigger_information, LogType.Information },
+		//		{ this.selectLogTrigger_warning,     LogType.Warning },
+		//		{ this.selectLogTrigger_error,       LogType.Error },
+		//	};
+		//	var logType = LogType.None;
+		//	foreach(var t in trigger) {
+		//		if(t.Key.Checked) {
+		//			logType |= t.Value;
+		//		}
+		//	}
+		//	logSetting.AddShowTrigger = logType;
+		//}
 
-		void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
-		{
-			/*
-			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
-			systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
-			systemEnvSetting.HiddenFileShowHotKey.Registered = this.inputSystemEnvHiddenFile.Registered;
+		//void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
+		//{
+		//	/*
+		//	systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
+		//	systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
+		//	systemEnvSetting.HiddenFileShowHotKey.Registered = this.inputSystemEnvHiddenFile.Registered;
 			
-			systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
-			systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
-			systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
-			 */
-			systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
-			systemEnvSetting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
-		}
+		//	systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
+		//	systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
+		//	systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
+		//	 */
+		//	systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
+		//	systemEnvSetting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
+		//}
 
-		void ExportRunningInfoSetting(RunningSetting setting)
-		{
-			setting.CheckUpdate = this.selectUpdateCheck.Checked;
-			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
-		}
+		//void ExportRunningInfoSetting(RunningSetting setting)
+		//{
+		//	setting.CheckUpdate = this.selectUpdateCheck.Checked;
+		//	setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
+		//}
 
-		void ExportLanguageSetting(MainSetting setting)
-		{
-			var lang = this.selectMainLanguage.SelectedValue as Language;
-			if(lang != null) {
-				setting.LanguageName = lang.BaseName;
-			}
-		}
+		//void ExportLanguageSetting(MainSetting setting)
+		//{
+		//	var lang = this.selectMainLanguage.SelectedValue as Language;
+		//	if(lang != null) {
+		//		setting.LanguageName = lang.BaseName;
+		//	}
+		//}
 
-		void ExportSkinSetting(SkinSetting setting)
-		{
-			var skin = (ISkin)this.selectSkinName.SelectedValue;
-			setting.Name = skin.About.Name;
-		}
+		//void ExportSkinSetting(SkinSetting setting)
+		//{
+		//	var skin = (ISkin)this.selectSkinName.SelectedValue;
+		//	setting.Name = skin.About.Name;
+		//}
 
-		void ExportStreamSetting(StreamSetting setting)
-		{
-			setting.FontSetting = this.commandStreamFont.FontSetting;
+		//void ExportStreamSetting(StreamSetting setting)
+		//{
+		//	setting.FontSetting = this.commandStreamFont.FontSetting;
 
-			setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
-			setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
-			setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
-			setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
-			setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
-			setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
-		}
+		//	setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
+		//	setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
+		//	setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
+		//	setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
+		//	setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
+		//	setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
+		//}
 
-		void ExportMainSetting(MainSetting mainSetting)
-		{
-			ExportLogSetting(mainSetting.Log);
-			ExportSystemEnvSetting(mainSetting.SystemEnvironment);
-			ExportRunningInfoSetting(mainSetting.Running);
+		//void ExportMainSetting(MainSetting mainSetting)
+		//{
+		//	ExportLogSetting(mainSetting.Log);
+		//	ExportSystemEnvSetting(mainSetting.SystemEnvironment);
+		//	ExportRunningInfoSetting(mainSetting.Running);
 
-			ExportLanguageSetting(mainSetting);
-			ExportSkinSetting(mainSetting.Skin);
-			ExportStreamSetting(mainSetting.Stream);
-		}
+		//	ExportLanguageSetting(mainSetting);
+		//	ExportSkinSetting(mainSetting.Skin);
+		//	ExportStreamSetting(mainSetting.Stream);
+		//}
 
-		void ExportNoteSetting(NoteSetting noteSetting)
-		{
-			// ホットキー
-			noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
-			noteSetting.HiddenHotKey = this.inputNoteHidden.HotKeySetting;
-			noteSetting.CompactHotKey = this.inputNoteCompact.HotKeySetting;
-			noteSetting.ShowFrontHotKey = this.inputNoteShowFront.HotKeySetting;
+		//void ExportNoteSetting(NoteSetting noteSetting)
+		//{
+		//	// ホットキー
+		//	noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
+		//	noteSetting.HiddenHotKey = this.inputNoteHidden.HotKeySetting;
+		//	noteSetting.CompactHotKey = this.inputNoteCompact.HotKeySetting;
+		//	noteSetting.ShowFrontHotKey = this.inputNoteShowFront.HotKeySetting;
 
-			// フォント
-			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
-		}
+		//	// フォント
+		//	noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
+		//}
 
-		void ExportToolbarSetting(ToolbarSetting toolbarSetting)
-		{
-			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
-				var item = itemData.Value;
-				if(toolbarSetting.Items.Contains(item)) {
-					toolbarSetting.Items.Remove(item);
-				}
-				toolbarSetting.Items.Add(item);
-			}
+		//void ExportToolbarSetting(ToolbarSetting toolbarSetting)
+		//{
+		//	ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
+		//	foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
+		//		var item = itemData.Value;
+		//		if(toolbarSetting.Items.Contains(item)) {
+		//			toolbarSetting.Items.Remove(item);
+		//		}
+		//		toolbarSetting.Items.Add(item);
+		//	}
 
-			// ツリーからグループ項目構築
-			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
-				var toolbarGroupItem = new ToolbarGroupItem();
+		//	// ツリーからグループ項目構築
+		//	foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
+		//		var toolbarGroupItem = new ToolbarGroupItem();
 
-				// グループ項目
-				var groupName = groupNode.Text;
-				toolbarGroupItem.Name = groupName;
+		//		// グループ項目
+		//		var groupName = groupNode.Text;
+		//		toolbarGroupItem.Name = groupName;
 
-				// グループに紐付くアイテム名
-				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
+		//		// グループに紐付くアイテム名
+		//		toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
 
-				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
-			}
-		}
+		//		toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
+		//	}
+		//}
 
 
-		void ExportClipboardSetting(ClipboardSetting setting)
-		{
-			setting.Limit = (int)this.inputClipboardLimit.Value;
-			setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
-			//setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
-			setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
+		//void ExportClipboardSetting(ClipboardSetting setting)
+		//{
+		//	setting.Limit = (int)this.inputClipboardLimit.Value;
+		//	setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
+		//	//setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
+		//	setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
 
-			setting.Enabled = this.selectClipboardEnabled.Checked;
-			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
-			setting.Visible = this.selectClipboardVisible.Checked;
-			setting.TopMost = this.selectClipboardTopMost.Checked;
-			setting.DoubleClickToOutput = this.selectClipboardItemWClickToOutput.Checked;
-			setting.OutputUsingClipboard = this.selectClipboardOutputUsingClipboard.Checked;
+		//	setting.Enabled = this.selectClipboardEnabled.Checked;
+		//	setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
+		//	setting.Visible = this.selectClipboardVisible.Checked;
+		//	setting.TopMost = this.selectClipboardTopMost.Checked;
+		//	setting.DoubleClickToOutput = this.selectClipboardItemWClickToOutput.Checked;
+		//	setting.OutputUsingClipboard = this.selectClipboardOutputUsingClipboard.Checked;
 
-			setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
+		//	setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
 
-			var enabledTypeMap = new Dictionary<ClipboardType, bool>() {
-				{ ClipboardType.Text, this.selectClipboardType_text.Checked },
-				{ ClipboardType.Rtf,  this.selectClipboardType_rtf.Checked },
-				{ ClipboardType.Html, this.selectClipboardType_html.Checked },
-				{ ClipboardType.Image,this.selectClipboardType_image.Checked },
-				{ ClipboardType.File, this.selectClipboardType_file.Checked },
-			};
-			var enabledClipboardTypes = ClipboardType.None;
-			foreach(var type in enabledTypeMap.Where(p => p.Value).Select(p => p.Key)) {
-				enabledClipboardTypes |= type;
-			}
-			setting.EnabledTypes = enabledClipboardTypes;
+		//	var enabledTypeMap = new Dictionary<ClipboardType, bool>() {
+		//		{ ClipboardType.Text, this.selectClipboardType_text.Checked },
+		//		{ ClipboardType.Rtf,  this.selectClipboardType_rtf.Checked },
+		//		{ ClipboardType.Html, this.selectClipboardType_html.Checked },
+		//		{ ClipboardType.Image,this.selectClipboardType_image.Checked },
+		//		{ ClipboardType.File, this.selectClipboardType_file.Checked },
+		//	};
+		//	var enabledClipboardTypes = ClipboardType.None;
+		//	foreach(var type in enabledTypeMap.Where(p => p.Value).Select(p => p.Key)) {
+		//		enabledClipboardTypes |= type;
+		//	}
+		//	setting.EnabledTypes = enabledClipboardTypes;
 
-			var saveTypeMap = new Dictionary<ClipboardType, bool>() {
-				{ ClipboardType.Text, this.selectClipboardSaveType_text.Checked },
-				{ ClipboardType.Rtf,  this.selectClipboardSaveType_rtf.Checked },
-				{ ClipboardType.Html, this.selectClipboardSaveType_html.Checked },
-				{ ClipboardType.Image,this.selectClipboardSaveType_image.Checked },
-				{ ClipboardType.File, this.selectClipboardSaveType_file.Checked },
-			};
-			var saveClipboardTypes = ClipboardType.None;
-			foreach(var type in saveTypeMap.Where(p => p.Value).Select(p => p.Key)) {
-				saveClipboardTypes |= type;
-			}
-			setting.SaveTypes = saveClipboardTypes;
-			setting.SaveHistory = this.selectClipboardSave.Checked;
+		//	var saveTypeMap = new Dictionary<ClipboardType, bool>() {
+		//		{ ClipboardType.Text, this.selectClipboardSaveType_text.Checked },
+		//		{ ClipboardType.Rtf,  this.selectClipboardSaveType_rtf.Checked },
+		//		{ ClipboardType.Html, this.selectClipboardSaveType_html.Checked },
+		//		{ ClipboardType.Image,this.selectClipboardSaveType_image.Checked },
+		//		{ ClipboardType.File, this.selectClipboardSaveType_file.Checked },
+		//	};
+		//	var saveClipboardTypes = ClipboardType.None;
+		//	foreach(var type in saveTypeMap.Where(p => p.Value).Select(p => p.Key)) {
+		//		saveClipboardTypes |= type;
+		//	}
+		//	setting.SaveTypes = saveClipboardTypes;
+		//	setting.SaveHistory = this.selectClipboardSave.Checked;
 
-			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
+		//	setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
 
-			// フォント
-			setting.TextFont = this.commandClipboardTextFont.FontSetting;
+		//	// フォント
+		//	setting.TextFont = this.commandClipboardTextFont.FontSetting;
 
-		}
+		//}
 		#endregion ////////////////////////////////////
 
 		#region save
@@ -1830,8 +1831,8 @@
 		void CommandSubmit_Click(object sender, System.EventArgs e)
 		{
 			if(CheckValidate()) {
-				// 設定データ生成
-				CreateSettingData();
+				//// 設定データ生成
+				//CreateSettingData();
 				DialogResult = DialogResult.OK;
 			}
 		}
