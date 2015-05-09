@@ -854,6 +854,7 @@
 			ExportSystemEnvSetting(CommonData.MainSetting.SystemEnvironment);
 			ExportSkinSetting(CommonData.MainSetting.Skin);
 			ExportLanguageSetting(CommonData.MainSetting);
+			ExportStreamSetting(CommonData.MainSetting.Stream);
 
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
@@ -1001,17 +1002,17 @@
 			setting.Name = skin.About.Name;
 		}
 
-		//void ExportStreamSetting(StreamSetting setting)
-		//{
-		//	setting.FontSetting = this.commandStreamFont.FontSetting;
+		void ExportStreamSetting(StreamSetting setting)
+		{
+			setting.FontSetting = this.commandStreamFont.FontSetting;
 
-		//	setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
-		//	setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
-		//	setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
-		//	setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
-		//	setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
-		//	setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
-		//}
+			setting.GeneralColor.Fore.Color = this.commnadStreamGeneralForeColor.Color;
+			setting.GeneralColor.Back.Color = this.commnadStreamGeneralBackColor.Color;
+			setting.InputColor.Fore.Color = this.commnadStreamInputForeColor.Color;
+			setting.InputColor.Back.Color = this.commnadStreamInputBackColor.Color;
+			setting.ErrorColor.Fore.Color = this.commnadStreamErrorForeColor.Color;
+			setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
+		}
 
 		//void ExportMainSetting(MainSetting mainSetting)
 		//{
