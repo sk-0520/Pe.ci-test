@@ -848,6 +848,14 @@
 		//	MainSetting = mainSetting;
 		//}
 
+		void ExportUnbindData()
+		{
+			ExportLogShowTrigger(CommonData.MainSetting.Log);
+			ExportSystemEnvSetting(CommonData.MainSetting.SystemEnvironment);
+			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
+		}
+
+
 		/*
 		string GetStartupAppLinkPath()
 		{
@@ -940,9 +948,23 @@
 		//	}
 		//	logSetting.AddShowTrigger = logType;
 		//}
+		void ExportLogShowTrigger(LogSetting setting)
+		{
+			var trigger = new Dictionary<CheckBox, LogType>() {
+				{ this.selectLogTrigger_information, LogType.Information },
+				{ this.selectLogTrigger_warning,     LogType.Warning },
+				{ this.selectLogTrigger_error,       LogType.Error },
+			};
+			var logType = LogType.None;
+			foreach(var t in trigger.Where(t => t.Key.Checked)) {
+				logType |= t.Value;
+			}
 
-		//void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
-		//{
+			setting.AddShowTrigger = logType;
+		}
+
+		void ExportSystemEnvSetting(SystemEnvironmentSetting setting)
+		{
 		//	/*
 		//	systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
 		//	systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
@@ -952,9 +974,9 @@
 		//	systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
 		//	systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
 		//	 */
-		//	systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
-		//	systemEnvSetting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
-		//}
+			setting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
+			setting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
+		}
 
 		//void ExportRunningInfoSetting(RunningSetting setting)
 		//{
@@ -1011,21 +1033,21 @@
 		//	noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
 		//}
 
-		void ExportToolbarSetting(ToolbarSetting setting)
-		{
-			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
-				var item = itemData.Value;
-				if(setting.Items.Contains(item)) {
-					setting.Items.Remove(item);
-				}
-				setting.Items.Add(item);
-			}
-		}
+		//void ExportToolbarSetting(ToolbarSetting setting)
+		//{
+		//	ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
+		//	foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
+		//		var item = itemData.Value;
+		//		if(setting.Items.Contains(item)) {
+		//			setting.Items.Remove(item);
+		//		}
+		//		setting.Items.Add(item);
+		//	}
+		//}
 
-		ToolbarGroup CreateToolbarGroup()
+		void ExportToolbarGroup(ToolbarSetting setting)
 		{
-			var result = new ToolbarGroup();
+			setting.ToolbarGroup = new ToolbarGroup();
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
 				var toolbarGroupItem = new ToolbarGroupItem();
@@ -1037,10 +1059,8 @@
 				// グループに紐付くアイテム名
 				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
 
-				result.Groups.Add(toolbarGroupItem);
+				setting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
-
-			return result;
 		}
 
 
@@ -1842,7 +1862,7 @@
 			if(CheckValidate()) {
 				//// 設定データ生成
 				//CreateSettingData();
-				CommonData.MainSetting.Toolbar.ToolbarGroup = CreateToolbarGroup();
+				ExportUnbindData();
 
 				DialogResult = DialogResult.OK;
 			}
