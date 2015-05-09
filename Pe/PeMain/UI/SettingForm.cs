@@ -853,6 +853,7 @@
 			ExportLogShowTrigger(CommonData.MainSetting.Log);
 			ExportSystemEnvSetting(CommonData.MainSetting.SystemEnvironment);
 			ExportSkinSetting(CommonData.MainSetting.Skin);
+			ExportLanguageSetting(CommonData.MainSetting);
 
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
@@ -986,13 +987,13 @@
 		//	setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
 		//}
 
-		//void ExportLanguageSetting(MainSetting setting)
-		//{
-		//	var lang = this.selectMainLanguage.SelectedValue as Language;
-		//	if(lang != null) {
-		//		setting.LanguageName = lang.BaseName;
-		//	}
-		//}
+		void ExportLanguageSetting(MainSetting setting)
+		{
+			var lang = this.selectMainLanguage.SelectedValue as Language;
+			if(lang != null) {
+				setting.LanguageName = lang.BaseName;
+			}
+		}
 
 		void ExportSkinSetting(SkinSetting setting)
 		{
