@@ -71,6 +71,7 @@
 		<Word Name="common/command/default-font-reset"  Text="${font}をリセットする" />
 		<Word Name="common/check/admin"                 Text="${admin} (ユーザーの責任下で実行してください)" />
 		<Word Name="common/page/env"                    Text="${env}" />
+		<Word Name="common/message/notfound-path"       Text="パスが見つかりません" />
 		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
 		<Word Name="common/dialog/d-d/shortcut/caption"  Text="ショートカット登録方法" />
@@ -283,7 +284,11 @@
 		<Word Name="clipboard/output/notfound-window"  Text="出力先ウィンドウが発見できないため無効" />
 		<Word Name="clipboard/tool/filtering"          Text="${item-filter}&#x0d;&#x0a;${tips-wildcard}" />
 		<Word Name="clipboard/tool/output-using-clipboard"  Text="クリップボード経由" />
+		<Word Name="clipboard/menu/file/open-file"       Text="開く(&amp;O)" />
+		<Word Name="clipboard/menu/file/open-parent-dir" Text="親ディレクトリを開く(&amp;O)" />
 		
+		
+
 
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />
