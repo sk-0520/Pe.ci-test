@@ -71,6 +71,7 @@
 		<Word Name="common/command/default-font-reset"  Text="${font}をリセットする" />
 		<Word Name="common/check/admin"                 Text="${admin} (ユーザーの責任下で実行してください)" />
 		<Word Name="common/page/env"                    Text="${env}" />
+		<Word Name="common/message/notfound-path"       Text="パスが見つかりません" />
 		<Word Name="common/message/notfound-file"       Text="${file}が見つかりません" />
 		<Word Name="common/message/notfound-dir"        Text="${dir}が見つかりません" />
 		<Word Name="common/dialog/d-d/shortcut/caption"  Text="ショートカット登録方法" />

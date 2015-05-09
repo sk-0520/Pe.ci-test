@@ -72,7 +72,7 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#264: クリップボードのファイル一覧で選択ファイルにコンテキストメニューをつける</message>
 			</note>
 			<note rev="">
 				<message></message>

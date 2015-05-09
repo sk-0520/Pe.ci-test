@@ -1311,7 +1311,15 @@
 
 		void OpenFile(string path)
 		{
-			Executor.RunCommand(path, CommonData);
+			if(FileUtility.Exists(path)) {
+				try {
+					Executor.RunCommand(path, CommonData);
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+			} else {
+				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-path"], path);
+			}
 		}
 
 		#endregion ////////////////////////////////////////
@@ -1901,6 +1909,23 @@
 				var parentDirPath = Path.GetDirectoryName(listItem.Path);
 				if(!string.IsNullOrEmpty(parentDirPath)) {
 					OpenFile(parentDirPath);
+				}
+			}
+		}
+
+		private void viewFile_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode == Keys.Enter) {
+				if(this.viewFile.SelectedItems.Count == 1) {
+					var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+					if(e.Shift) {
+						var parentDirPath = Path.GetDirectoryName(listItem.Path);
+						if(!string.IsNullOrEmpty(parentDirPath)) {
+							OpenFile(parentDirPath);
+						}
+					} else {
+						OpenFile(listItem.Path);
+					}
 				}
 			}
 		}
