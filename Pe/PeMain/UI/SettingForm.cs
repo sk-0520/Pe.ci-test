@@ -123,7 +123,7 @@
 
 		//ApplicationSetting _applicationSetting;
 
-		string[] _commandList;
+		string[] _launcherCommandList;
 		#endregion ////////////////////////////////////
 
 		#region event
@@ -205,7 +205,7 @@
 			var dirList = new List<string>(new[] { osDirPath, systemDirPath });
 			dirList.AddRange(pathDirList);
 
-			this._commandList = dirList
+			this._launcherCommandList = dirList
 				.Where(Directory.Exists)
 				.Select(s => Directory.EnumerateFiles(s, "*.exe"))
 				.SelectMany(list => list)
@@ -1235,7 +1235,7 @@
 					;
 					this.inputLauncherCommand.DataSource = commandList;
 					*/
-					this.inputLauncherCommand.Items.AddRange(this._commandList);
+					this.inputLauncherCommand.Items.AddRange(this._launcherCommandList);
 				} else {
 					this.inputLauncherCommand.Items.Clear();
 				}
