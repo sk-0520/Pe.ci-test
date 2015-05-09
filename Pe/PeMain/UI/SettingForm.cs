@@ -233,19 +233,19 @@
 
 		#region apply
 
-		void ApplyLog(LogSetting logSetting)
+		void ApplyLog(LogSetting setting)
 		{
-			this.selectLogVisible.DataBindings.Add("Checked", logSetting, "Visible", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.selectLogAddShow.DataBindings.Add("Checked", logSetting, "AddShow", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.selectLogFullDetail.DataBindings.Add("Checked", logSetting, "FullDetail", false, DataSourceUpdateMode.OnPropertyChanged);
-			this.selectLogDebugging.DataBindings.Add("Checked", logSetting, "Debugging", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogVisible.DataBindings.Add("Checked", setting, "Visible", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogAddShow.DataBindings.Add("Checked", setting, "AddShow", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogFullDetail.DataBindings.Add("Checked", setting, "FullDetail", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogDebugging.DataBindings.Add("Checked", setting, "Debugging", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
-			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
-			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
+			this.selectLogTrigger_information.Checked = (setting.AddShowTrigger & LogType.Information) == LogType.Information;
+			this.selectLogTrigger_warning.Checked = (setting.AddShowTrigger & LogType.Warning) == LogType.Warning;
+			this.selectLogTrigger_error.Checked = (setting.AddShowTrigger & LogType.Error) == LogType.Error;
 		}
 
-		void ApplySystemEnv(SystemEnvironmentSetting systemEnvSetting)
+		void ApplySystemEnv(SystemEnvironmentSetting setting)
 		{
 			/*
 			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
@@ -256,14 +256,14 @@
 			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
 			this.inputSystemEnvExt.Registered = systemEnvSetting.ExtensionShowHotKey.Registered;
 			 */
-			this.inputSystemEnvHiddenFile.HotKeySetting = systemEnvSetting.HiddenFileShowHotKey;
-			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
+			this.inputSystemEnvHiddenFile.HotKeySetting = setting.HiddenFileShowHotKey;
+			this.inputSystemEnvExt.HotKeySetting = setting.ExtensionShowHotKey;
 		}
 
 		void ApplyRunningInfo(RunningSetting setting)
 		{
-			this.selectUpdateCheck.Checked = setting.CheckUpdate;
-			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
+			this.selectUpdateCheck.DataBindings.Add("Checked", setting, "CheckUpdate", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectUpdateCheckRC.DataBindings.Add("Checked", setting, "CheckUpdateRC", false, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
 		void ApplySkin(SkinSetting setting)
