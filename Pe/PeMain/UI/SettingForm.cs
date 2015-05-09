@@ -1045,13 +1045,6 @@
 		void ExportToolbarSetting(ToolbarSetting setting)
 		{
 			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
-				var item = itemData.Value;
-				if(setting.Items.Contains(item)) {
-					setting.Items.Remove(item);
-				}
-				setting.Items.Add(item);
-			}
 		}
 
 		void ExportToolbarGroup(ToolbarSetting setting)
