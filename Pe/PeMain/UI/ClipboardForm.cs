@@ -248,10 +248,13 @@
 			this.toolImage_itemRaw.SetLanguage(CommonData.Language);
 			this.toolImage_itemFill.SetLanguage(CommonData.Language);
 
+			this.toolItemStack_itemFiltering.SetLanguage(CommonData.Language);
+
+			this.contextFileMenu_itemExecute.SetLanguage(CommonData.Language);
+			this.contextFileMenu_itemOpenParentDirectory.SetLanguage(CommonData.Language);
+
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
-
-			this.toolItemStack_itemFiltering.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
