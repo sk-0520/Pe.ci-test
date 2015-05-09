@@ -628,9 +628,11 @@
 
 								imageList.Images.Add(key, icon);
 
-								var listItem = new ListViewItem();
-								listItem.Text = name;
-								listItem.ImageKey = key;
+								var listItem = new PathListViewItem() {
+									Text = name,
+									ImageKey = key,
+									Path = path,
+								};
 
 								listItem.SubItems.Add(path);
 
@@ -1307,6 +1309,11 @@
 			ClearFilter();
 		}
 
+		void OpenFile(string path)
+		{
+			Executor.RunCommand(path, CommonData);
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1858,6 +1865,44 @@
 				return;
 			}
 			CommonData.MainSetting.Clipboard.TemplateListWidth = this.panelTemplateSource.Panel2.Width;
+		}
+
+		private void contextFileMenu_Opening(object sender, CancelEventArgs e)
+		{
+			e.Cancel = this.viewFile.SelectedItems.Count != 1;
+			if(!e.Cancel) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				var parentDirPath = Path.GetDirectoryName(listItem.Path);
+				this.contextFileMenu_itemExecute.Enabled = FileUtility.Exists(listItem.Path);
+				this.contextFileMenu_itemOpenParentDirectory.Enabled = Directory.Exists(parentDirPath);
+			}
+		}
+
+		private void viewFile_DoubleClick(object sender, EventArgs e)
+		{
+			if(this.viewFile.SelectedItems.Count == 1) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				OpenFile(listItem.Path);
+			}
+		}
+
+		private void contextFileMenu_itemExecute_Click(object sender, EventArgs e)
+		{
+			if(this.viewFile.SelectedItems.Count == 1) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				OpenFile(listItem.Path);
+			}
+		}
+
+		private void contextFileMenu_itemOpenParentDirectory_Click(object sender, EventArgs e)
+		{
+			if(this.viewFile.SelectedItems.Count == 1) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				var parentDirPath = Path.GetDirectoryName(listItem.Path);
+				if(!string.IsNullOrEmpty(parentDirPath)) {
+					OpenFile(parentDirPath);
+				}
+			}
 		}
 	}
 }
