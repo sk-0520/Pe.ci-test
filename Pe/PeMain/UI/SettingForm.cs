@@ -855,6 +855,7 @@
 			ExportSkinSetting(CommonData.MainSetting.Skin);
 			ExportLanguageSetting(CommonData.MainSetting);
 			ExportStreamSetting(CommonData.MainSetting.Stream);
+			ExportNoteSetting(CommonData.MainSetting.Note);
 
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
@@ -1025,17 +1026,17 @@
 		//	ExportStreamSetting(mainSetting.Stream);
 		//}
 
-		//void ExportNoteSetting(NoteSetting noteSetting)
-		//{
-		//	// ホットキー
-		//	noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
-		//	noteSetting.HiddenHotKey = this.inputNoteHidden.HotKeySetting;
-		//	noteSetting.CompactHotKey = this.inputNoteCompact.HotKeySetting;
-		//	noteSetting.ShowFrontHotKey = this.inputNoteShowFront.HotKeySetting;
+		void ExportNoteSetting(NoteSetting noteSetting)
+		{
+			// ホットキー
+			noteSetting.CreateHotKey = this.inputNoteCreate.HotKeySetting;
+			noteSetting.HiddenHotKey = this.inputNoteHidden.HotKeySetting;
+			noteSetting.CompactHotKey = this.inputNoteCompact.HotKeySetting;
+			noteSetting.ShowFrontHotKey = this.inputNoteShowFront.HotKeySetting;
 
-		//	// フォント
-		//	noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
-		//}
+			// フォント
+			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
+		}
 
 		//void ExportToolbarSetting(ToolbarSetting setting)
 		//{
