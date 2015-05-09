@@ -1,15 +1,16 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
-	using System.Drawing;
-	using System.Xml.Serialization;
-	using ContentTypeTextNet.Pe.PeMain.Logic;
+using System.Drawing;
+using System.Xml.Serialization;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// 色保存用。
 	/// </summary>
 	[Serializable]
-	public class ColorItem: Item
+	public class ColorItem: Item, ICloneable
 	{
 		[XmlIgnore]
 		public Color Color { get; set; }
@@ -17,19 +18,23 @@
 		[XmlAttribute("Color")]
 		public string _Color
 		{
-			get 
-			{
-				return PropertyUtility.MixinColorGetter(Color);
-			}
-			set 
-			{
-				Color = PropertyUtility.MixinColorSetter(value);
-			}
+			get { return PropertyUtility.MixinColorGetter(Color); }
+			set { Color = PropertyUtility.MixinColorSetter(value); }
 		}
+
+		#region ICloneable
+
+		public object Clone()
+		{
+			return new ColorItem() {
+				Color = this.Color,
+			};
+		}
+		#endregion
 	}
 
 	[Serializable]
-	public class ColorPairItem: Item
+	public class ColorPairItem: Item, IDeepClone
 	{
 		public ColorPairItem()
 		{
@@ -46,6 +51,8 @@
 		/// </summary>
 		public ColorItem Back { get; set; }
 
+		#region Item
+
 		public void CorrectionColor(Color fore, Color back)
 		{
 			if(Fore.Color.IsEmpty) {
@@ -56,5 +63,19 @@
 				Back.Color = back;
 			}
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			return new ColorPairItem() {
+				Fore = (ColorItem)this.Fore.Clone(),
+				Back = (ColorItem)this.Back.Clone(),
+			};
+		}
+
+		#endregion
 	}
 }

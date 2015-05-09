@@ -9,7 +9,7 @@
 	/// ホットキー設定。
 	/// </summary>
 	[Serializable]
-	public class HotKeySetting: Item
+	public class HotKeySetting: Item, ICloneable
 	{
 		public HotKeySetting()
 		{
@@ -67,5 +67,16 @@
 				return Keys.None;
 			}
 		}
+
+		#region ICloneable
+
+		public object Clone()
+		{
+			return new HotKeySetting() {
+				Key = this.Key,
+				Modifiers = this.Modifiers,
+			};
+		}
+		#endregion
 	}
 }

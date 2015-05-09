@@ -5,13 +5,14 @@
 	using System.Xml;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// ツールバーの設定。
 	/// </summary>
 	[Serializable]
-	public class ToolbarItem: DisposableNameItem, IDisposable
+	public class ToolbarItem: DisposableNameItem, IDisposable, IDeepClone
 	{
 		public static bool CheckNameEqual(string a, string b)
 		{
@@ -135,10 +136,7 @@
 		/// </summary>
 		public string DefaultGroup { get; set; }
 
-		public bool IsNameEqual(string name)
-		{
-			return CheckNameEqual(Name, name);
-		}
+		#region DisposableNameItem
 
 		protected override void Dispose(bool disposing)
 		{
@@ -146,5 +144,41 @@
 
 			base.Dispose(disposing);
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			return new ToolbarItem() {
+				Name = this.Name,
+
+				FontSetting = (FontSetting)this.FontSetting.Clone(),
+				ToolbarPosition = this.ToolbarPosition,
+				IconScale = this.IconScale,
+				ShowText = this.ShowText,
+				Visible = this.Visible,
+				Topmost = this.Topmost,
+				AutoHide = this.AutoHide,
+				FloatSize = this.FloatSize,
+				FloatLocation = this.FloatLocation,
+				DesktopSize = this.DesktopSize,
+				TextWidth = this.TextWidth,
+				HiddenWaitTime = this.HiddenWaitTime,
+				HiddenAnimateTime = this.HiddenAnimateTime,
+				DefaultGroup = this.DefaultGroup,
+			};
+		}
+
+		#endregion
+
+		public bool IsNameEqual(string name)
+		{
+			return CheckNameEqual(Name, name);
+		}
+
+
+
 	}
 }

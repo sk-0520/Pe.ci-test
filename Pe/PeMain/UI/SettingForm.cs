@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.DB;
@@ -24,7 +25,7 @@
 	/// 一気にUIへ設定して一気にUIから取得する気分だったけど完全に設計ミスだわ。
 	/// バインドするなりしておけばよかった。
 	/// </summary>
-	public partial class SettingForm: AppForm
+	public partial class SettingForm: CommonForm
 	{
 		#region define
 		//const int TREE_LEVEL_GROUP = 0;
@@ -99,7 +100,7 @@
 		#endregion ////////////////////////////////////
 
 		#region variable
-		HashSet<LauncherItem> _launcherItems = null;
+		//HashSet<LauncherItem> _launcherItems = null;
 		//FontSetting _commandFont = null;
 		//FontSetting _toolbarFont = null;
 		LauncherItem _launcherSelectedItem = null;
@@ -120,54 +121,131 @@
 		*/
 		ToolbarItem _toolbarSelectedToolbarItem = null;
 
-		ApplicationSetting _applicationSetting;
+		//ApplicationSetting _applicationSetting;
 
-		string[] _commandList;
+		string[] _launcherCommandList;
 		#endregion ////////////////////////////////////
 
 		#region event
 		#endregion ////////////////////////////////////
 
-		public SettingForm(Language language, ISkin skin, MainSetting setting, AppDBManager db, ApplicationSetting applicationSetting)
+		public SettingForm()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 
-			Initialize(language, skin, setting, db, applicationSetting);
+			Initialize();
 		}
 
 		#region property
 		/// <summary>
 		/// 使用言語データ
 		/// </summary>
-		public Language Language { get; private set; }
-		public ISkin Skin { get; private set; }
+		//public Language Language { get; private set; }
+		//public ISkin CommonData.Skin { get; private set; }
 
-		public MainSetting MainSetting { get; private set; }
+		//public MainSetting MainSetting { get; private set; }
+
 		#endregion ////////////////////////////////////
 
 		#region ISetCommonData
 		#endregion ////////////////////////////////////
 
 		#region override
+
+		protected override void ApplySetting()
+		{
+			base.ApplySetting();
+
+			ApplyMainSetting();
+			ApplyLauncher();
+			ApplyToolbar();
+			ApplyCommand();
+			ApplyNote();
+			ApplyClipboard();
+		}
 		#endregion ////////////////////////////////////
 
 		#region initialize
-		void InitializeLog(LogSetting logSetting)
-		{
-			this.selectLogVisible.Checked = logSetting.Visible;
-			this.selectLogAddShow.Checked = logSetting.AddShow;
-			this.selectLogFullDetail.Checked = logSetting.FullDetail;
-			this.selectLogDebugging.Checked = logSetting.Debugging;
 
-			this.selectLogTrigger_information.Checked = (logSetting.AddShowTrigger & LogType.Information) == LogType.Information;
-			this.selectLogTrigger_warning.Checked = (logSetting.AddShowTrigger & LogType.Warning) == LogType.Warning;
-			this.selectLogTrigger_error.Checked = (logSetting.AddShowTrigger & LogType.Error) == LogType.Error;
+
+		void InitializeToolbar()
+		{
+			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
 		}
 
-		void InitializeSystemEnv(SystemEnvironmentSetting systemEnvSetting)
+		void InitializeUI()
+		{
+			InitializeToolbar();
+
+#if !DEBUG
+			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
+			foreach(var page in debugPage) {
+				this.tabSetting.TabPages.Remove(page);
+			}
+#endif
+			UIUtility.ShowCenterInPrimaryScreen(this);
+		}
+
+		void InitializeCommand()
+		{
+			//_commandList
+			var osDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+			var systemDirPath = Environment.SystemDirectory;
+
+			var pathDirList = Environment.GetEnvironmentVariable("PATH")
+				.Split(';')
+				.Select(Environment.ExpandEnvironmentVariables)
+				.Where(s => string.Compare(s, osDirPath, true) == 0 || string.Compare(s, systemDirPath, true) == 0)
+				.Distinct()
+			;
+
+			var dirList = new List<string>(new[] { osDirPath, systemDirPath });
+			dirList.AddRange(pathDirList);
+
+			this._launcherCommandList = dirList
+				.Where(Directory.Exists)
+				.Select(s => Directory.EnumerateFiles(s, "*.exe"))
+				.SelectMany(list => list)
+				.Select(Path.GetFileNameWithoutExtension)
+				.OrderBy(s => s)
+				.Distinct()
+				.ToArray()
+			;
+		}
+
+		void Initialize()
+		{
+			//this._launcherItems = new HashSet<LauncherItem>();
+
+			//Language = language;
+			//Skin = skin;
+			//this._applicationSetting = applicationSetting;
+
+			InitializeCommand();
+
+			InitializeUI();
+		}
+
+		#endregion ////////////////////////////////////
+
+		#region apply
+
+		void ApplyLog(LogSetting setting)
+		{
+			this.selectLogVisible.DataBindings.Add("Checked", setting, "Visible", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogAddShow.DataBindings.Add("Checked", setting, "AddShow", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogFullDetail.DataBindings.Add("Checked", setting, "FullDetail", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectLogDebugging.DataBindings.Add("Checked", setting, "Debugging", false, DataSourceUpdateMode.OnPropertyChanged);
+
+			this.selectLogTrigger_information.Checked = (setting.AddShowTrigger & LogType.Information) == LogType.Information;
+			this.selectLogTrigger_warning.Checked = (setting.AddShowTrigger & LogType.Warning) == LogType.Warning;
+			this.selectLogTrigger_error.Checked = (setting.AddShowTrigger & LogType.Error) == LogType.Error;
+		}
+
+		void ApplySystemEnv(SystemEnvironmentSetting setting)
 		{
 			/*
 			this.inputSystemEnvHiddenFile.Hotkey = systemEnvSetting.HiddenFileShowHotKey.Key;
@@ -178,17 +256,17 @@
 			this.inputSystemEnvExt.Modifiers = systemEnvSetting.ExtensionShowHotKey.Modifiers;
 			this.inputSystemEnvExt.Registered = systemEnvSetting.ExtensionShowHotKey.Registered;
 			 */
-			this.inputSystemEnvHiddenFile.HotKeySetting = systemEnvSetting.HiddenFileShowHotKey;
-			this.inputSystemEnvExt.HotKeySetting = systemEnvSetting.ExtensionShowHotKey;
+			this.inputSystemEnvHiddenFile.HotKeySetting = setting.HiddenFileShowHotKey;
+			this.inputSystemEnvExt.HotKeySetting = setting.ExtensionShowHotKey;
 		}
 
-		void InitializeRunningInfo(RunningSetting setting)
+		void ApplyRunningInfo(RunningSetting setting)
 		{
-			this.selectUpdateCheck.Checked = setting.CheckUpdate;
-			this.selectUpdateCheckRC.Checked = setting.CheckUpdateRC;
+			this.selectUpdateCheck.DataBindings.Add("Checked", setting, "CheckUpdate", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectUpdateCheckRC.DataBindings.Add("Checked", setting, "CheckUpdateRC", false, DataSourceUpdateMode.OnPropertyChanged);
 		}
 
-		void InitializeSkin(SkinSetting setting)
+		void ApplySkin(SkinSetting setting)
 		{
 			var skins = AppUtility.GetSkins(new NullLogger());
 
@@ -203,10 +281,10 @@
 				this.selectSkinName.Attachment(skinDisplayValues, skin.Value);
 				defSkin.Unload();
 			}
-			
+
 		}
 
-		void InitializeLanguage(string languageName, Language language)
+		void ApplyLanguageSetting(string languageName)
 		{
 			var langFileName = string.Format("{0}.xml", languageName);
 			var languageFilePath = Path.Combine(Literal.ApplicationLanguageDirPath, langFileName);
@@ -243,7 +321,7 @@
 			}
 		}
 
-		void InitializeStream(StreamSetting setting)
+		void ApplyStream(StreamSetting setting)
 		{
 			this.commandStreamFont.FontSetting.Import(setting.FontSetting);
 			this.commandStreamFont.RefreshView();
@@ -256,60 +334,111 @@
 			this.commnadStreamErrorBackColor.Color = setting.ErrorColor.Back.Color;
 		}
 
-		void InitializeMainSetting(MainSetting mainSetting)
+		void ApplyMainSetting()
 		{
 			var linkPath = Literal.StartupShortcutPath;
 			this.selectMainStartup.Checked = File.Exists(linkPath);
 
-			InitializeLog(mainSetting.Log);
-			InitializeSystemEnv(mainSetting.SystemEnvironment);
-			InitializeRunningInfo(mainSetting.Running);
-			InitializeLanguage(mainSetting.LanguageName, Language);
-			InitializeSkin(mainSetting.Skin);
-			InitializeStream(mainSetting.Stream);
+			ApplyLog(CommonData.MainSetting.Log);
+			ApplySystemEnv(CommonData.MainSetting.SystemEnvironment);
+			ApplyRunningInfo(CommonData.MainSetting.Running);
+			ApplyLanguageSetting(CommonData.MainSetting.LanguageName);
+			ApplySkin(CommonData.MainSetting.Skin);
+			ApplyStream(CommonData.MainSetting.Stream);
 		}
 
-		void InitializeLauncher(LauncherSetting launcherSetting)
+		void ApplyLauncher()
 		{
-			this._launcherItems.Clear();
-			foreach(var item in launcherSetting.Items) {
-				this._launcherItems.Add((LauncherItem)item.Clone());
-			}
-			this.selecterLauncher.SetItems(this._launcherItems, this._applicationSetting);
+			this.selecterLauncher.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
 		}
 
-		void InitializeCommand(CommandSetting commandSetting)
+		void ApplyToolbar()
+		{
+			this.selecterToolbar.SetItems(CommonData.MainSetting.Launcher.Items, CommonData.ApplicationSetting);
+
+			// ツールーバー位置の項目構築
+			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
+			foreach(var value in new[] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
+				var data = new ToolbarPositionDisplayValue(value);
+				data.SetLanguage(CommonData.Language);
+				toolbarPosList.Add(data);
+			}
+			this.selectToolbarPosition.Attachment(toolbarPosList);
+
+			// アイコンサイズ文言の項目構築
+			AttachmentIconScale(this.selectToolbarIcon, IconScale.Small);
+
+			ToolbarItem initToolbarItem = null;
+			var toolbarItemDataList = new List<ToolbarDisplayValue>();
+			foreach(var toolbarItem in CommonData.MainSetting.Toolbar.Items) {
+				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
+					initToolbarItem = toolbarItem;
+				}
+				var toolbarItemData = new ToolbarDisplayValue(toolbarItem);
+				//toolbarItemData.SetLanguage(Language);
+				toolbarItemDataList.Add(toolbarItemData);
+			}
+			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
+			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
+			this.selectToolbarItem.SelectedIndex = 0;
+			
+			// グループ情報設定
+			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
+			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
+			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				var displayValue = new ToolbarGroupNameDisplayValue(groupItem.Name);
+				toolbarGroupList.Add(displayValue);
+			}
+			this.selectToolbarGroup.Attachment(toolbarGroupList);
+
+			ToolbarSelectedChangeToolbarItem(initToolbarItem);
+
+			// グループ用項目
+			this._imageToolbarItemGroup = new ImageList();
+			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
+
+			// 各グループ構築
+			foreach(var groupItem in CommonData.MainSetting.Toolbar.ToolbarGroup.Groups) {
+				// メイングループ
+				var parentNode = ToolbarAddGroup(groupItem.Name);
+				// メイングループに紐付くアイテム
+				foreach(var itemName in groupItem.ItemNames) {
+					var relItem = CommonData.MainSetting.Launcher.Items.SingleOrDefault(item => item.IsNameEqual(itemName));
+					if(relItem != null) {
+						ToolbarAddItem(parentNode, relItem);
+					}
+				}
+			}
+		}
+
+		void ApplyCommand()
 		{
 			//this._commandFont = commandSetting.FontSetting;
-			this.commandCommandFont.FontSetting.Import(commandSetting.FontSetting);
+			this.commandCommandFont.FontSetting.Import(CommonData.MainSetting.Command.FontSetting);
 			this.commandCommandFont.RefreshView();
 
 			// アイコンサイズ文言の項目構築
-			AttachmentIconScale(this.selectCommandIcon, commandSetting.IconScale);
+			AttachmentIconScale(this.selectCommandIcon, CommonData.MainSetting.Command.IconScale);
 
 			// ホットキー
-			/*
-			this.inputCommandHotkey.Hotkey = commandSetting.HotKey.Key;
-			this.inputCommandHotkey.Modifiers = commandSetting.HotKey.Modifiers;
-			this.inputCommandHotkey.Registered = commandSetting.HotKey.Registered;
-			 */
-			this.inputCommandHotkey.HotKeySetting = commandSetting.HotKey;
+			this.inputCommandHotkey.HotKeySetting = CommonData.MainSetting.Command.HotKey;
 		}
 
-		void InitializeNote(NoteSetting noteSetting, AppDBManager db)
+		void ApplyNote()
 		{
 			// ホットキー
-			this.inputNoteCreate.HotKeySetting = noteSetting.CreateHotKey;
-			this.inputNoteCompact.HotKeySetting = noteSetting.CompactHotKey;
-			this.inputNoteHidden.HotKeySetting = noteSetting.HiddenHotKey;
-			this.inputNoteShowFront.HotKeySetting = noteSetting.ShowFrontHotKey;
+			this.inputNoteCreate.HotKeySetting = CommonData.MainSetting.Note.CreateHotKey;
+			this.inputNoteCompact.HotKeySetting = CommonData.MainSetting.Note.CompactHotKey;
+			this.inputNoteHidden.HotKeySetting = CommonData.MainSetting.Note.HiddenHotKey;
+			this.inputNoteShowFront.HotKeySetting = CommonData.MainSetting.Note.ShowFrontHotKey;
 
-			this.commandNoteCaptionFont.FontSetting.Import(noteSetting.CaptionFontSetting);
+			this.commandNoteCaptionFont.FontSetting.Import(CommonData.MainSetting.Note.CaptionFontSetting);
 			this.commandNoteCaptionFont.RefreshView();
 
 			// 全リスト
 			this.gridNoteItems.AutoGenerateColumns = false;
-			var noteDB = new NoteDB(db);
+			var noteDB = new NoteDB(CommonData.Database);
 			var noteRawList = noteDB.GetNoteItemList(true);
 			this._noteItemList = new List<NoteWrapItem>(noteRawList.Count());
 			foreach(var item in noteRawList) {
@@ -326,248 +455,122 @@
 			this.gridNoteItems_columnFore.DataPropertyName = "Fore";
 			this.gridNoteItems_columnBack.DataPropertyName = "Back";
 			this.gridNoteItems.DataSource = new BindingSource(this._noteItemList, string.Empty);
-
-			//			this.gridNoteItems.GetRowDisplayRectangle = noteList;
 		}
 
-		void InitializeToolbar(ToolbarSetting toolbarSetting)
+		void ApplyClipboard()
 		{
-			//this.inputToolbarTextWidth.Minimum = Literal.toolbarTextWidth.minimum;
-			//this.inputToolbarTextWidth.Maximum = Literal.toolbarTextWidth.maximum;
-			this.inputToolbarTextWidth.SetRange(Literal.toolbarTextWidth);
+			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, CommonData.MainSetting.Clipboard.Limit);
+			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, CommonData.MainSetting.Clipboard.WaitTime);
+			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, CommonData.MainSetting.Clipboard.ClipboardRepeated);
 
-			this.selecterToolbar.SetItems(this._launcherItems, this._applicationSetting);
+			this.inputClipboardLimit.DataBindings.Add("Value", CommonData.MainSetting.Clipboard, "Limit", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.inputClipboardRepeated.DataBindings.Add("Value", CommonData.MainSetting.Clipboard, "ClipboardRepeated", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			// ツールーバー位置の項目構築
-			var toolbarPosList = new List<ToolbarPositionDisplayValue>();
-			foreach(var value in new[] { ToolbarPosition.DesktopFloat, ToolbarPosition.DesktopTop, ToolbarPosition.DesktopBottom, ToolbarPosition.DesktopLeft, ToolbarPosition.DesktopRight, }) {
-				var data = new ToolbarPositionDisplayValue(value);
-				data.SetLanguage(Language);
-				toolbarPosList.Add(data);
-			}
-			this.selectToolbarPosition.Attachment(toolbarPosList);
+			this.selectClipboardEnabled.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "Enabled", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectClipboardAppEnabled.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "EnabledApplicationCopy", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			// アイコンサイズ文言の項目構築
-			AttachmentIconScale(this.selectToolbarIcon, IconScale.Small);
+			this.selectClipboardVisible.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "Visible", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectClipboardTopMost.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "TopMost", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectClipboardItemWClickToOutput.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "DoubleClickToOutput", false, DataSourceUpdateMode.OnPropertyChanged);
+			this.selectClipboardOutputUsingClipboard.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "OutputUsingClipboard", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			ToolbarItem initToolbarItem = null;
-			var toolbarItemDataList = new List<ToolbarDisplayValue>();
-			foreach(var toolbarItem in toolbarSetting.Items) {
-				if(initToolbarItem == null && toolbarItem.IsNameEqual(Screen.PrimaryScreen.DeviceName)) {
-					initToolbarItem = toolbarItem;
-				}
-				var toolbarItemData = new ToolbarDisplayValue(toolbarItem);
-				//toolbarItemData.SetLanguage(Language);
-				toolbarItemDataList.Add(toolbarItemData);
-			}
-			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
-			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
-			this.selectToolbarItem.SelectedIndex = 0;
+			this.selectClipboardSave.DataBindings.Add("Checked", CommonData.MainSetting.Clipboard, "SaveHistory", false, DataSourceUpdateMode.OnPropertyChanged);
 
-			// グループ情報設定
-			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
-			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
-			toolbarGroupList.Add(new ToolbarGroupNameDisplayValue(string.Empty));
-			foreach(var groupItem in toolbarSetting.ToolbarGroup.Groups) {
-				var displayValue = new ToolbarGroupNameDisplayValue(groupItem.Name);
-				toolbarGroupList.Add(displayValue);
-			}
-			this.selectToolbarGroup.Attachment(toolbarGroupList);
+			this.selectClipboardType_text.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardType_rtf.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardType_html.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardType_image.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardType_file.Checked = CommonData.MainSetting.Clipboard.EnabledTypes.HasFlag(ClipboardType.File);
 
-			ToolbarSelectedChangeToolbarItem(initToolbarItem);
+			this.selectClipboardSaveType_text.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Text);
+			this.selectClipboardSaveType_rtf.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Rtf);
+			this.selectClipboardSaveType_html.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Html);
+			this.selectClipboardSaveType_image.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.Image);
+			this.selectClipboardSaveType_file.Checked = CommonData.MainSetting.Clipboard.SaveTypes.HasFlag(ClipboardType.File);
 
-			// グループ用項目
-			this._imageToolbarItemGroup = new ImageList();
-			this._imageToolbarItemGroup.ColorDepth = ColorDepth.Depth32Bit;
+			this.inputClipboardHotkey.HotKeySetting = CommonData.MainSetting.Clipboard.ToggleHotKeySetting;
 
-			// 各グループ構築
-			foreach(var groupItem in toolbarSetting.ToolbarGroup.Groups) {
-				// メイングループ
-				var parentNode = ToolbarAddGroup(groupItem.Name);
-				// メイングループに紐付くアイテム
-				foreach(var itemName in groupItem.ItemNames) {
-					var relItem = this._launcherItems.SingleOrDefault(item => item.IsNameEqual(itemName));
-					if(relItem != null) {
-						ToolbarAddItem(parentNode, relItem);
-					}
-				}
-			}
-		}
-
-		void InitializeClipboard(ClipboardSetting setting)
-		{
-			this.inputClipboardLimit.SetValue(Literal.clipboardLimit, setting.Limit);
-			this.inputClipboardWaitTime.SetValue(Literal.clipboardWaitTime, setting.WaitTime);
-			//this.inputClipboardSleepTime.SetValue(Literal.clipboardSleepTime, setting.SleepTime);
-			this.inputClipboardRepeated.SetValue(Literal.clipboardRepeated, setting.ClipboardRepeated);
-
-			this.selectClipboardEnabled.Checked = setting.Enabled;
-			this.selectClipboardAppEnabled.Checked = setting.EnabledApplicationCopy;
-
-			this.selectClipboardVisible.Checked = setting.Visible;
-			this.selectClipboardTopMost.Checked = setting.TopMost;
-			this.selectClipboardItemWClickToOutput.Checked = setting.DoubleClickToOutput;
-			this.selectClipboardOutputUsingClipboard.Checked = setting.OutputUsingClipboard;
-
-			this.selectClipboardSave.Checked = setting.SaveHistory;
-
-			this.selectClipboardType_text.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Text);
-			this.selectClipboardType_rtf.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Rtf);
-			this.selectClipboardType_html.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Html);
-			this.selectClipboardType_image.Checked = setting.EnabledTypes.HasFlag(ClipboardType.Image);
-			this.selectClipboardType_file.Checked = setting.EnabledTypes.HasFlag(ClipboardType.File);
-
-			this.selectClipboardSaveType_text.Checked = setting.SaveTypes.HasFlag(ClipboardType.Text);
-			this.selectClipboardSaveType_rtf.Checked = setting.SaveTypes.HasFlag(ClipboardType.Rtf);
-			this.selectClipboardSaveType_html.Checked = setting.SaveTypes.HasFlag(ClipboardType.Html);
-			this.selectClipboardSaveType_image.Checked = setting.SaveTypes.HasFlag(ClipboardType.Image);
-			this.selectClipboardSaveType_file.Checked = setting.SaveTypes.HasFlag(ClipboardType.File);
-
-			this.inputClipboardHotkey.HotKeySetting = setting.ToggleHotKeySetting;
-
-			this.commandClipboardTextFont.FontSetting.Import(setting.TextFont);
+			this.commandClipboardTextFont.FontSetting.Import(CommonData.MainSetting.Clipboard.TextFont);
 			this.commandClipboardTextFont.RefreshView();
 
 			var clipboardListTypeValues = new List<ClipboardListTypeDisplayValue>();
-			foreach(var type in new [] { ClipboardListType.History, ClipboardListType.Template }) {
+			foreach(var type in new[] { ClipboardListType.History, ClipboardListType.Template }) {
 				var dv = new ClipboardListTypeDisplayValue(type);
-				dv.SetLanguage(Language);
+				dv.SetLanguage(CommonData.Language);
 				clipboardListTypeValues.Add(dv);
 			}
-			this.selectClipboardListType.Attachment(clipboardListTypeValues, setting.ClipboardListType);
-
+			this.selectClipboardListType.Attachment(clipboardListTypeValues, CommonData.MainSetting.Clipboard.ClipboardListType);
 		}
 
-		void InitializeUI(MainSetting mainSetting, AppDBManager db)
-		{
-			ApplyLanguage();
-			ApplySkin();
-
-			InitializeMainSetting(mainSetting);
-			InitializeLauncher(mainSetting.Launcher);
-			InitializeToolbar(mainSetting.Toolbar);
-			InitializeCommand(mainSetting.Command);
-			InitializeNote(mainSetting.Note, db);
-			InitializeClipboard(mainSetting.Clipboard);
-
-#if !DEBUG
-			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
-			foreach(var page in debugPage) {
-				this.tabSetting.TabPages.Remove(page);
-			}
-#endif
-			UIUtility.ShowCenterInPrimaryScreen(this);
-		}
-
-		void InitializeCommand()
-		{
-			//_commandList
-			var osDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
-			var systemDirPath = Environment.SystemDirectory;
-
-			var pathDirList = Environment.GetEnvironmentVariable("PATH")
-				.Split(';')
-				.Select(Environment.ExpandEnvironmentVariables)
-				.Where(s => string.Compare(s, osDirPath, true) == 0 || string.Compare(s, systemDirPath, true) == 0)
-				.Distinct()
-			;
-
-			var dirList = new List<string>(new[] { osDirPath, systemDirPath });
-			dirList.AddRange(pathDirList);
-
-			this._commandList = dirList
-				.Where(Directory.Exists)
-				.Select(s => Directory.EnumerateFiles(s, "*.exe"))
-				.SelectMany(list => list)
-				.Select(Path.GetFileNameWithoutExtension)
-				.OrderBy(s => s)
-				.Distinct()
-				.ToArray()
-			;
-		}
-
-		void Initialize(Language language, ISkin skin, MainSetting mainSetting, AppDBManager db, ApplicationSetting applicationSetting)
-		{
-			this._launcherItems = new HashSet<LauncherItem>();
-
-			Language = language;
-			Skin = skin;
-			this._applicationSetting = applicationSetting;
-
-			InitializeCommand();
-
-			InitializeUI(mainSetting, db);
-		}
-
-		#endregion ////////////////////////////////////
+		#endregion
 
 		#region language
 
 		void ApplyLanguageTab()
 		{
-			this.tabSetting_pageMain.SetLanguage(Language);
-			this.tabSetting_pageLauncher.SetLanguage(Language);
-			this.tabSetting_pageToolbar.SetLanguage(Language);
-			this.tabSetting_pageCommand.SetLanguage(Language);
-			this.tabSetting_pageNote.SetLanguage(Language);
-			this.tabSetting_pageDisplay.SetLanguage(Language);
-			this.tabSetting_pageClipboard.SetLanguage(Language);
+			this.tabSetting_pageMain.SetLanguage(CommonData.Language);
+			this.tabSetting_pageLauncher.SetLanguage(CommonData.Language);
+			this.tabSetting_pageToolbar.SetLanguage(CommonData.Language);
+			this.tabSetting_pageCommand.SetLanguage(CommonData.Language);
+			this.tabSetting_pageNote.SetLanguage(CommonData.Language);
+			this.tabSetting_pageDisplay.SetLanguage(CommonData.Language);
+			this.tabSetting_pageClipboard.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageLog()
 		{
-			this.selectLogVisible.SetLanguage(Language);
-			this.selectLogAddShow.SetLanguage(Language);
-			this.selectLogFullDetail.SetLanguage(Language);
-			this.selectLogDebugging.SetLanguage(Language);
-			this.selectLogTrigger_information.Text = LogType.Information.ToText(Language);
-			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(Language);
-			this.selectLogTrigger_error.Text = LogType.Error.ToText(Language);
+			this.selectLogVisible.SetLanguage(CommonData.Language);
+			this.selectLogAddShow.SetLanguage(CommonData.Language);
+			this.selectLogFullDetail.SetLanguage(CommonData.Language);
+			this.selectLogDebugging.SetLanguage(CommonData.Language);
+			this.selectLogTrigger_information.Text = LogType.Information.ToText(CommonData.Language);
+			this.selectLogTrigger_warning.Text = LogType.Warning.ToText(CommonData.Language);
+			this.selectLogTrigger_error.Text = LogType.Error.ToText(CommonData.Language);
 		}
 		
 		void ApplyLanguageSystemEnv()
 		{
-			this.inputSystemEnvExt.SetLanguage(Language);
-			this.inputSystemEnvHiddenFile.SetLanguage(Language);
-			
-			this.labelSystemEnvExt.SetLanguage(Language);
-			this.labelSystemEnvHiddenFile.SetLanguage(Language);
+			this.inputSystemEnvExt.SetLanguage(CommonData.Language);
+			this.inputSystemEnvHiddenFile.SetLanguage(CommonData.Language);
+
+			this.labelSystemEnvExt.SetLanguage(CommonData.Language);
+			this.labelSystemEnvHiddenFile.SetLanguage(CommonData.Language);
 		}
 
 		void ApplyLanguageSkin()
 		{
-			this.groupMainSkin.SetLanguage(Language);
-			this.commandSkinAbout.SetLanguage(Language);
+			this.groupMainSkin.SetLanguage(CommonData.Language);
+			this.commandSkinAbout.SetLanguage(CommonData.Language);
 		}
 
 		void ApplyLanguageStream()
 		{
-			this.groupStream.SetLanguage(Language);
-			this.commandStreamFont.SetLanguage(Language);
+			this.groupStream.SetLanguage(CommonData.Language);
+			this.commandStreamFont.SetLanguage(CommonData.Language);
 
-			this.labelStreamFont.SetLanguage(Language);
-			this.labelStreamFore.SetLanguage(Language);
-			this.labelStreamBack.SetLanguage(Language);
-			this.labelStreamGeneral.SetLanguage(Language);
-			this.labelStreamInput.SetLanguage(Language);
-			this.labelStreamError.SetLanguage(Language);
+			this.labelStreamFont.SetLanguage(CommonData.Language);
+			this.labelStreamFore.SetLanguage(CommonData.Language);
+			this.labelStreamBack.SetLanguage(CommonData.Language);
+			this.labelStreamGeneral.SetLanguage(CommonData.Language);
+			this.labelStreamInput.SetLanguage(CommonData.Language);
+			this.labelStreamError.SetLanguage(CommonData.Language);
 
 			UIUtility.ResizeAutoSize(this.groupStream, true);
 		}
 
 		void ApplyLanguageRunningInfo()
 		{
-			this.groupUpdateCheck.SetLanguage(Language);
-			this.selectUpdateCheck.SetLanguage(Language);
-			this.selectUpdateCheckRC.SetLanguage(Language);
+			this.groupUpdateCheck.SetLanguage(CommonData.Language);
+			this.selectUpdateCheck.SetLanguage(CommonData.Language);
+			this.selectUpdateCheckRC.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageMain()
 		{
-			this.groupMainLog.SetLanguage(Language);
-			this.groupMainSystemEnv.SetLanguage(Language);
-			this.labelMainLanguage.SetLanguage(Language);
-			this.selectMainStartup.SetLanguage(Language);
+			this.groupMainLog.SetLanguage(CommonData.Language);
+			this.groupMainSystemEnv.SetLanguage(CommonData.Language);
+			this.labelMainLanguage.SetLanguage(CommonData.Language);
+			this.selectMainStartup.SetLanguage(CommonData.Language);
 			
 			ApplyLanguageLog();
 			ApplyLanguageSystemEnv();
@@ -578,97 +581,97 @@
 		
 		void ApplyLanguageLauncher()
 		{
-			this.selecterLauncher.SetLanguage(Language);
-			this.envLauncherUpdate.SetLanguage(Language);
-			this.envLauncherRemove.SetLanguage(Language);
-			
-			this.tabLauncher_pageCommon.SetLanguage(Language);
-			this.tabLauncher_pageEnv.SetLanguage(Language);
-			this.tabLauncher_pageOthers.SetLanguage(Language);
-			
-			this.groupLauncherType.SetLanguage(Language);
-			this.selectLauncherType_file.Text = LauncherType.File.ToText(Language);
-			this.selectLauncherType_directory.Text = LauncherType.Directory.ToText(Language);
-			this.selectLauncherType_command.Text = LauncherType.Command.ToText(Language);
-			this.selectLauncherType_embedded.Text = LauncherType.Embedded.ToText(Language);
-			
-			this.labelLauncherName.SetLanguage(Language);
-			this.labelLauncherCommand.SetLanguage(Language);
-			this.labelLauncherOption.SetLanguage(Language);
-			this.labelLauncherWorkDirPath.SetLanguage(Language);
-			this.labelLauncherIconPath.SetLanguage(Language);
-			
-			this.selectLauncherEnv.SetLanguage(Language);
-			
-			this.labelLauncherTag.SetLanguage(Language);
-			this.labelLauncherNote.SetLanguage(Language);
-			
-			this.selectLauncherStdStream.SetLanguage(Language);
-			this.selectLauncherAdmin.SetLanguage(Language);
+			this.selecterLauncher.SetLanguage(CommonData.Language);
+			this.envLauncherUpdate.SetLanguage(CommonData.Language);
+			this.envLauncherRemove.SetLanguage(CommonData.Language);
+
+			this.tabLauncher_pageCommon.SetLanguage(CommonData.Language);
+			this.tabLauncher_pageEnv.SetLanguage(CommonData.Language);
+			this.tabLauncher_pageOthers.SetLanguage(CommonData.Language);
+
+			this.groupLauncherType.SetLanguage(CommonData.Language);
+			this.selectLauncherType_file.Text = LauncherType.File.ToText(CommonData.Language);
+			this.selectLauncherType_directory.Text = LauncherType.Directory.ToText(CommonData.Language);
+			this.selectLauncherType_command.Text = LauncherType.Command.ToText(CommonData.Language);
+			this.selectLauncherType_embedded.Text = LauncherType.Embedded.ToText(CommonData.Language);
+
+			this.labelLauncherName.SetLanguage(CommonData.Language);
+			this.labelLauncherCommand.SetLanguage(CommonData.Language);
+			this.labelLauncherOption.SetLanguage(CommonData.Language);
+			this.labelLauncherWorkDirPath.SetLanguage(CommonData.Language);
+			this.labelLauncherIconPath.SetLanguage(CommonData.Language);
+
+			this.selectLauncherEnv.SetLanguage(CommonData.Language);
+
+			this.labelLauncherTag.SetLanguage(CommonData.Language);
+			this.labelLauncherNote.SetLanguage(CommonData.Language);
+
+			this.selectLauncherStdStream.SetLanguage(CommonData.Language);
+			this.selectLauncherAdmin.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageToolbar()
 		{
-			this.selecterToolbar.SetLanguage(Language);
-			this.commandToolbarFont.SetLanguage(Language);
-			this.commandToolbarScreens.SetLanguage(Language);
+			this.selecterToolbar.SetLanguage(CommonData.Language);
+			this.commandToolbarFont.SetLanguage(CommonData.Language);
+			this.commandToolbarScreens.SetLanguage(CommonData.Language);
 
-			this.selectToolbarTopmost.SetLanguage(Language);
-			this.selectToolbarVisible.SetLanguage(Language);
-			this.selectToolbarAutoHide.SetLanguage(Language);
-			this.selectToolbarShowText.SetLanguage(Language);
-			this.labelToolbarGroup.SetLanguage(Language);
-			this.labelToolbarTextWidth.SetLanguage(Language);
-			this.labelToolbarPosition.SetLanguage(Language);
-			this.labelToolbarIcon.SetLanguage(Language);
-			this.labelToolbarFont.SetLanguage(Language);
-			
-			this.toolToolbarGroup_addGroup.SetLanguage(Language);
-			this.toolToolbarGroup_addItem.SetLanguage(Language);
-			this.toolToolbarGroup_up.SetLanguage(Language);
-			this.toolToolbarGroup_down.SetLanguage(Language);
-			this.toolToolbarGroup_remove.SetLanguage(Language);
+			this.selectToolbarTopmost.SetLanguage(CommonData.Language);
+			this.selectToolbarVisible.SetLanguage(CommonData.Language);
+			this.selectToolbarAutoHide.SetLanguage(CommonData.Language);
+			this.selectToolbarShowText.SetLanguage(CommonData.Language);
+			this.labelToolbarGroup.SetLanguage(CommonData.Language);
+			this.labelToolbarTextWidth.SetLanguage(CommonData.Language);
+			this.labelToolbarPosition.SetLanguage(CommonData.Language);
+			this.labelToolbarIcon.SetLanguage(CommonData.Language);
+			this.labelToolbarFont.SetLanguage(CommonData.Language);
 
-			this.inputToolbarTextWidth.SetLanguage(Language);
+			this.toolToolbarGroup_addGroup.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_addItem.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_up.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_down.SetLanguage(CommonData.Language);
+			this.toolToolbarGroup_remove.SetLanguage(CommonData.Language);
+
+			this.inputToolbarTextWidth.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageCommand()
 		{
-			this.commandCommandFont.SetLanguage(Language);
-			this.inputCommandHotkey.SetLanguage(Language);
-			
-			this.selectCommandTopmost.SetLanguage(Language);
-			this.labelCommandFont.SetLanguage(Language);
-			this.labelCommandIcon.SetLanguage(Language);
+			this.commandCommandFont.SetLanguage(CommonData.Language);
+			this.inputCommandHotkey.SetLanguage(CommonData.Language);
+
+			this.selectCommandTopmost.SetLanguage(CommonData.Language);
+			this.labelCommandFont.SetLanguage(CommonData.Language);
+			this.labelCommandIcon.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageNote()
 		{
-			this.groupNoteKey.SetLanguage(Language);
-			
-			this.inputNoteCreate.SetLanguage(Language);
-			this.inputNoteHidden.SetLanguage(Language);
-			this.inputNoteCompact.SetLanguage(Language);
-			this.inputNoteShowFront.SetLanguage(Language);
-			
-			this.commandNoteCaptionFont.SetLanguage(Language);
+			this.groupNoteKey.SetLanguage(CommonData.Language);
 
-			this.groupNoteItem.SetLanguage(Language);
-			this.gridNoteItems_columnRemove.SetLanguage(Language);
-			this.gridNoteItems_columnId.SetLanguage(Language);
-			this.gridNoteItems_columnVisible.SetLanguage(Language);
-			this.gridNoteItems_columnLocked.SetLanguage(Language);
-			this.gridNoteItems_columnBody.SetLanguage(Language);
-			this.gridNoteItems_columnTitle.SetLanguage(Language);
-			this.gridNoteItems_columnFont.SetLanguage(Language);
-			this.gridNoteItems_columnFore.SetLanguage(Language);
-			this.gridNoteItems_columnBack.SetLanguage(Language);
-			
-			this.labelNoteCreate.SetLanguage(Language);
-			this.labelNoteHiddent.SetLanguage(Language);
-			this.labelNoteCompact.SetLanguage(Language);
-			this.labelNoteShowFront.SetLanguage(Language);
-			this.labelNoteCaptionFont.SetLanguage(Language);
+			this.inputNoteCreate.SetLanguage(CommonData.Language);
+			this.inputNoteHidden.SetLanguage(CommonData.Language);
+			this.inputNoteCompact.SetLanguage(CommonData.Language);
+			this.inputNoteShowFront.SetLanguage(CommonData.Language);
+
+			this.commandNoteCaptionFont.SetLanguage(CommonData.Language);
+
+			this.groupNoteItem.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnRemove.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnId.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnVisible.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnLocked.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnBody.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnTitle.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnFont.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnFore.SetLanguage(CommonData.Language);
+			this.gridNoteItems_columnBack.SetLanguage(CommonData.Language);
+
+			this.labelNoteCreate.SetLanguage(CommonData.Language);
+			this.labelNoteHiddent.SetLanguage(CommonData.Language);
+			this.labelNoteCompact.SetLanguage(CommonData.Language);
+			this.labelNoteShowFront.SetLanguage(CommonData.Language);
+			this.labelNoteCaptionFont.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageDisplay()
@@ -678,52 +681,50 @@
 
 		void ApplyLanguageClipboard()
 		{
-			this.inputClipboardHotkey.SetLanguage(Language);
+			this.inputClipboardHotkey.SetLanguage(CommonData.Language);
 
-			this.commandClipboardTextFont.SetLanguage(Language);
-			this.labelClipboardFont.SetLanguage(Language);
+			this.commandClipboardTextFont.SetLanguage(CommonData.Language);
+			this.labelClipboardFont.SetLanguage(CommonData.Language);
 
-			this.labelClipboardLimit.SetLanguage(Language);
-			this.labelClipboardWaitTaime.SetLanguage(Language);
+			this.labelClipboardLimit.SetLanguage(CommonData.Language);
+			this.labelClipboardWaitTaime.SetLanguage(CommonData.Language);
 			//this.labelClipboardSleepTime.SetLanguage(Language);
-			this.labelClipboardHotkey.SetLanguage(Language);
-			this.selectClipboardEnabled.SetLanguage(Language);
-			this.selectClipboardAppEnabled.SetLanguage(Language);
-			this.selectClipboardTopMost.SetLanguage(Language);
-			this.selectClipboardVisible.SetLanguage(Language);
-			this.selectClipboardItemWClickToOutput.SetLanguage(Language);
-			this.selectClipboardOutputUsingClipboard.SetLanguage(Language);
-			this.selectClipboardSave.SetLanguage(Language);
-			this.groupClipboardType.SetLanguage(Language);
-			this.groupClipboardSaveType.SetLanguage(Language);
-			this.groupClipboardOutput.SetLanguage(Language);
-			this.labelClipboardListType.SetLanguage(Language);
-			this.labelClipboardRepeated.SetLanguage(Language, new Dictionary<string, string>() {
+			this.labelClipboardHotkey.SetLanguage(CommonData.Language);
+			this.selectClipboardEnabled.SetLanguage(CommonData.Language);
+			this.selectClipboardAppEnabled.SetLanguage(CommonData.Language);
+			this.selectClipboardTopMost.SetLanguage(CommonData.Language);
+			this.selectClipboardVisible.SetLanguage(CommonData.Language);
+			this.selectClipboardItemWClickToOutput.SetLanguage(CommonData.Language);
+			this.selectClipboardOutputUsingClipboard.SetLanguage(CommonData.Language);
+			this.selectClipboardSave.SetLanguage(CommonData.Language);
+			this.groupClipboardType.SetLanguage(CommonData.Language);
+			this.groupClipboardSaveType.SetLanguage(CommonData.Language);
+			this.groupClipboardOutput.SetLanguage(CommonData.Language);
+			this.labelClipboardListType.SetLanguage(CommonData.Language);
+			this.labelClipboardRepeated.SetLanguage(CommonData.Language, new Dictionary<string, string>() {
 				{ ProgramLanguageName.clipboardRepeatedAll, Literal.clipboardRepeated.minimum.ToString("D") },
 			});
 
-			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(Language);
-			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(Language);
-			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(Language);
-			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(Language);
-			this.selectClipboardType_file.Text = ClipboardType.File.ToText(Language);
+			this.selectClipboardType_text.Text = ClipboardType.Text.ToText(CommonData.Language);
+			this.selectClipboardType_rtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
+			this.selectClipboardType_html.Text = ClipboardType.Html.ToText(CommonData.Language);
+			this.selectClipboardType_image.Text = ClipboardType.Image.ToText(CommonData.Language);
+			this.selectClipboardType_file.Text = ClipboardType.File.ToText(CommonData.Language);
 
-			this.selectClipboardSaveType_text.Text = ClipboardType.Text.ToText(Language);
-			this.selectClipboardSaveType_rtf.Text = ClipboardType.Rtf.ToText(Language);
-			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(Language);
-			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(Language);
-			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(Language);
+			this.selectClipboardSaveType_text.Text = ClipboardType.Text.ToText(CommonData.Language);
+			this.selectClipboardSaveType_rtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
+			this.selectClipboardSaveType_html.Text = ClipboardType.Html.ToText(CommonData.Language);
+			this.selectClipboardSaveType_image.Text = ClipboardType.Image.ToText(CommonData.Language);
+			this.selectClipboardSaveType_file.Text = ClipboardType.File.ToText(CommonData.Language);
 
-			this.inputClipboardLimit.SetLanguage(Language);
-			this.inputClipboardWaitTime.SetLanguage(Language);
-			this.inputClipboardRepeated.SetLanguage(Language);
+			this.inputClipboardLimit.SetLanguage(CommonData.Language);
+			this.inputClipboardWaitTime.SetLanguage(CommonData.Language);
+			this.inputClipboardRepeated.SetLanguage(CommonData.Language);
 		}
 
-		void ApplyLanguage()
+		override protected void ApplyLanguage()
 		{
-			Debug.Assert(Language != null);
-			
-			UIUtility.SetDefaultText(this, Language);
+			UIUtility.SetDefaultText(this, CommonData.Language);
 			
 			ApplyLanguageTab();
 			ApplyLanguageMain();
@@ -740,30 +741,30 @@
 
 		void ApplySkinLauncher()
 		{
-			this.selecterLauncher.SetSkin(Skin);
-			this.envLauncherUpdate.SetSkin(Skin);
-			this.envLauncherRemove.SetSkin(Skin);
+			this.selecterLauncher.SetSkin(CommonData.Skin);
+			this.envLauncherUpdate.SetSkin(CommonData.Skin);
+			this.envLauncherRemove.SetSkin(CommonData.Skin);
 
-			this.toolToolbarGroup_addGroup.Image = Skin.GetImage(SkinImage.Group);
-			this.toolToolbarGroup_addItem.Image = Skin.GetImage(SkinImage.AddItem);
-			this.toolToolbarGroup_up.Image = Skin.GetImage(SkinImage.Up);
-			this.toolToolbarGroup_down.Image = Skin.GetImage(SkinImage.Down);
-			this.toolToolbarGroup_remove.Image = Skin.GetImage(SkinImage.Remove);
+			this.toolToolbarGroup_addGroup.Image = CommonData.Skin.GetImage(SkinImage.Group);
+			this.toolToolbarGroup_addItem.Image = CommonData.Skin.GetImage(SkinImage.AddItem);
+			this.toolToolbarGroup_up.Image = CommonData.Skin.GetImage(SkinImage.Up);
+			this.toolToolbarGroup_down.Image = CommonData.Skin.GetImage(SkinImage.Down);
+			this.toolToolbarGroup_remove.Image = CommonData.Skin.GetImage(SkinImage.Remove);
 
-			this.commandLauncherFilePath.Image = Skin.GetImage(SkinImage.File);
-			this.commandLauncherDirPath.Image = Skin.GetImage(SkinImage.Dir);
-			this.commandLauncherOptionFilePath.Image = Skin.GetImage(SkinImage.File);
-			this.commandLauncherOptionDirPath.Image = Skin.GetImage(SkinImage.Dir);
-			this.commandLauncherWorkDirPath.Image = Skin.GetImage(SkinImage.Dir);
-			this.commandLauncherIconPath.Image = Skin.GetImage(SkinImage.File);
+			this.commandLauncherFilePath.Image = CommonData.Skin.GetImage(SkinImage.File);
+			this.commandLauncherDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherOptionFilePath.Image = CommonData.Skin.GetImage(SkinImage.File);
+			this.commandLauncherOptionDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherWorkDirPath.Image = CommonData.Skin.GetImage(SkinImage.Dir);
+			this.commandLauncherIconPath.Image = CommonData.Skin.GetImage(SkinImage.File);
 		}
 
 		void ApplySkinToolbar()
 		{
-			this.selecterToolbar.SetSkin(Skin);
+			this.selecterToolbar.SetSkin(CommonData.Skin);
 		}
 
-		void ApplySkin()
+		protected override void ApplySkin()
 		{
 			ApplySkinLauncher();
 			ApplySkinToolbar();
@@ -778,7 +779,7 @@
 			//foreach(var value in new [] { IconScale.Small, IconScale.Normal, IconScale.Big, IconScale.Large }) {
 			foreach(var value in new[] { IconScale.Small, IconScale.Normal, IconScale.Big }) {
 				var data = new IconScaleDisplayValue(value);
-				data.SetLanguage(Language);
+				data.SetLanguage(CommonData.Language);
 				iconSizeDataList.Add(data);
 			}
 			control.Attachment(iconSizeDataList, defaultData);
@@ -805,11 +806,11 @@
 			SaveFileMainStartup();
 		}
 
-		public void SaveDB(AppDBManager db)
+		public void SaveDB()
 		{
-			using(var tran = db.BeginTransaction()) {
+			using(var tran = CommonData.Database.BeginTransaction()) {
 				try {
-					SaveDBNoteItems(db);
+					SaveDBNoteItems(CommonData.Database);
 					tran.Commit();
 				} catch(Exception) {
 					tran.Rollback();
@@ -817,37 +818,52 @@
 				}
 			}
 		}
-		void CreateSettingData()
+		//void CreateSettingData()
+		//{
+		//	var mainSetting = new MainSetting();
+
+		//	// 現在状況
+		//	mainSetting.Running.Running = true;
+		//	mainSetting.Running.SetDefaultVersion();
+
+		//	// 本体
+		//	ExportMainSetting(mainSetting);
+
+		//	// ランチャ
+		//	ExportLauncherSetting(mainSetting.Launcher);
+
+		//	// コマンド
+		//	ExportCommandSetting(mainSetting.Command);
+
+		//	// ツールバー
+		//	ExportToolbarSetting(mainSetting.Toolbar);
+
+		//	// ノート
+		//	ExportNoteSetting(mainSetting.Note);
+
+		//	// ディスプレイ
+
+		//	// クリップボード
+		//	ExportClipboardSetting(mainSetting.Clipboard);
+
+		//	// プロパティ設定
+		//	MainSetting = mainSetting;
+		//}
+
+		void ExportUnbindData()
 		{
-			var mainSetting = new MainSetting();
+			ExportLogShowTrigger(CommonData.MainSetting.Log);
+			ExportSystemEnvSetting(CommonData.MainSetting.SystemEnvironment);
+			ExportSkinSetting(CommonData.MainSetting.Skin);
+			ExportLanguageSetting(CommonData.MainSetting);
+			ExportStreamSetting(CommonData.MainSetting.Stream);
+			ExportNoteSetting(CommonData.MainSetting.Note);
+			ExportToolbarSetting(CommonData.MainSetting.Toolbar);
+			ExportClipboardSetting(CommonData.MainSetting.Clipboard);
 
-			// 現在状況
-			mainSetting.Running.Running = true;
-			mainSetting.Running.SetDefaultVersion();
-
-			// 本体
-			ExportMainSetting(mainSetting);
-
-			// ランチャ
-			ExportLauncherSetting(mainSetting.Launcher);
-
-			// コマンド
-			ExportCommandSetting(mainSetting.Command);
-
-			// ツールバー
-			ExportToolbarSetting(mainSetting.Toolbar);
-
-			// ノート
-			ExportNoteSetting(mainSetting.Note);
-
-			// ディスプレイ
-
-			// クリップボード
-			ExportClipboardSetting(mainSetting.Clipboard);
-
-			// プロパティ設定
-			MainSetting = mainSetting;
+			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
+
 
 		/*
 		string GetStartupAppLinkPath()
@@ -882,8 +898,8 @@
 			var pairs = Screen.AllScreens.Select(s => new { Screen = s, Window = new ScreenForm() }).ToList();
 			foreach(var pair in pairs) {
 				//pair.Window.SetCommonData(CommonData);
-				pair.Window.SetLanguage(Language);
-				pair.Window.SetSkin(Skin);
+				pair.Window.SetLanguage(CommonData.Language);
+				pair.Window.SetSkin(CommonData.Skin);
 				pair.Window.Screen = pair.Screen;
 				pair.Window.Click += CloseScreenWindow;
 				// KeyDownでESCだと勢い余って設定画面が閉じるのであげたときのみ取得する
@@ -901,67 +917,81 @@
 		#endregion ////////////////////////////////////
 
 		#region export
-		void ExportCommandSetting(CommandSetting commandSetting)
+		//void ExportCommandSetting(CommandSetting commandSetting)
+		//{
+		//	/*
+		//	commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
+		//	commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
+		//	commandSetting.HotKey.Registered = this.inputCommandHotkey.Registered;
+		//	 */
+		//	commandSetting.HotKey = this.inputCommandHotkey.HotKeySetting;
+
+		//	commandSetting.FontSetting = this.commandCommandFont.FontSetting;
+		//}
+
+		//void ExportLauncherSetting(LauncherSetting setting)
+		//{
+		//	setting.Items.Clear();
+		//	foreach(var item in this.selecterLauncher.Items) {
+		//		setting.Items.Add(item);
+		//	}
+		//}
+
+		//void ExportLogSetting(LogSetting logSetting)
+		//{
+		//	logSetting.Visible = this.selectLogVisible.Checked;
+		//	logSetting.AddShow = this.selectLogAddShow.Checked;
+		//	logSetting.FullDetail = this.selectLogFullDetail.Checked;
+		//	logSetting.Debugging = this.selectLogDebugging.Checked;
+
+		//	var trigger = new Dictionary<CheckBox, LogType>() {
+		//		{ this.selectLogTrigger_information, LogType.Information },
+		//		{ this.selectLogTrigger_warning,     LogType.Warning },
+		//		{ this.selectLogTrigger_error,       LogType.Error },
+		//	};
+		//	var logType = LogType.None;
+		//	foreach(var t in trigger) {
+		//		if(t.Key.Checked) {
+		//			logType |= t.Value;
+		//		}
+		//	}
+		//	logSetting.AddShowTrigger = logType;
+		//}
+		void ExportLogShowTrigger(LogSetting setting)
 		{
-			/*
-			commandSetting.HotKey.Key = this.inputCommandHotkey.Hotkey;
-			commandSetting.HotKey.Modifiers = this.inputCommandHotkey.Modifiers;
-			commandSetting.HotKey.Registered = this.inputCommandHotkey.Registered;
-			 */
-			commandSetting.HotKey = this.inputCommandHotkey.HotKeySetting;
-
-			commandSetting.FontSetting = this.commandCommandFont.FontSetting;
-		}
-
-		void ExportLauncherSetting(LauncherSetting setting)
-		{
-			setting.Items.Clear();
-			foreach(var item in this.selecterLauncher.Items) {
-				setting.Items.Add(item);
-			}
-		}
-
-		void ExportLogSetting(LogSetting logSetting)
-		{
-			logSetting.Visible = this.selectLogVisible.Checked;
-			logSetting.AddShow = this.selectLogAddShow.Checked;
-			logSetting.FullDetail = this.selectLogFullDetail.Checked;
-			logSetting.Debugging = this.selectLogDebugging.Checked;
-
 			var trigger = new Dictionary<CheckBox, LogType>() {
 				{ this.selectLogTrigger_information, LogType.Information },
 				{ this.selectLogTrigger_warning,     LogType.Warning },
 				{ this.selectLogTrigger_error,       LogType.Error },
 			};
 			var logType = LogType.None;
-			foreach(var t in trigger) {
-				if(t.Key.Checked) {
-					logType |= t.Value;
-				}
+			foreach(var t in trigger.Where(t => t.Key.Checked)) {
+				logType |= t.Value;
 			}
-			logSetting.AddShowTrigger = logType;
+
+			setting.AddShowTrigger = logType;
 		}
 
-		void ExportSystemEnvSetting(SystemEnvironmentSetting systemEnvSetting)
+		void ExportSystemEnvSetting(SystemEnvironmentSetting setting)
 		{
-			/*
-			systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
-			systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
-			systemEnvSetting.HiddenFileShowHotKey.Registered = this.inputSystemEnvHiddenFile.Registered;
+		//	/*
+		//	systemEnvSetting.HiddenFileShowHotKey.Key = this.inputSystemEnvHiddenFile.Hotkey;
+		//	systemEnvSetting.HiddenFileShowHotKey.Modifiers = this.inputSystemEnvHiddenFile.Modifiers;
+		//	systemEnvSetting.HiddenFileShowHotKey.Registered = this.inputSystemEnvHiddenFile.Registered;
 			
-			systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
-			systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
-			systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
-			 */
-			systemEnvSetting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
-			systemEnvSetting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
+		//	systemEnvSetting.ExtensionShowHotKey.Key = this.inputSystemEnvExt.Hotkey;
+		//	systemEnvSetting.ExtensionShowHotKey.Modifiers = this.inputSystemEnvExt.Modifiers;
+		//	systemEnvSetting.ExtensionShowHotKey.Registered = this.inputSystemEnvExt.Registered;
+		//	 */
+			setting.HiddenFileShowHotKey = this.inputSystemEnvHiddenFile.HotKeySetting;
+			setting.ExtensionShowHotKey = this.inputSystemEnvExt.HotKeySetting;
 		}
 
-		void ExportRunningInfoSetting(RunningSetting setting)
-		{
-			setting.CheckUpdate = this.selectUpdateCheck.Checked;
-			setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
-		}
+		//void ExportRunningInfoSetting(RunningSetting setting)
+		//{
+		//	setting.CheckUpdate = this.selectUpdateCheck.Checked;
+		//	setting.CheckUpdateRC = this.selectUpdateCheckRC.Checked;
+		//}
 
 		void ExportLanguageSetting(MainSetting setting)
 		{
@@ -989,16 +1019,16 @@
 			setting.ErrorColor.Back.Color = this.commnadStreamErrorBackColor.Color;
 		}
 
-		void ExportMainSetting(MainSetting mainSetting)
-		{
-			ExportLogSetting(mainSetting.Log);
-			ExportSystemEnvSetting(mainSetting.SystemEnvironment);
-			ExportRunningInfoSetting(mainSetting.Running);
+		//void ExportMainSetting(MainSetting mainSetting)
+		//{
+		//	ExportLogSetting(mainSetting.Log);
+		//	ExportSystemEnvSetting(mainSetting.SystemEnvironment);
+		//	ExportRunningInfoSetting(mainSetting.Running);
 
-			ExportLanguageSetting(mainSetting);
-			ExportSkinSetting(mainSetting.Skin);
-			ExportStreamSetting(mainSetting.Stream);
-		}
+		//	ExportLanguageSetting(mainSetting);
+		//	ExportSkinSetting(mainSetting.Skin);
+		//	ExportStreamSetting(mainSetting.Stream);
+		//}
 
 		void ExportNoteSetting(NoteSetting noteSetting)
 		{
@@ -1012,17 +1042,21 @@
 			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
 		}
 
-		void ExportToolbarSetting(ToolbarSetting toolbarSetting)
+		void ExportToolbarSetting(ToolbarSetting setting)
 		{
 			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
 			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
 				var item = itemData.Value;
-				if(toolbarSetting.Items.Contains(item)) {
-					toolbarSetting.Items.Remove(item);
+				if(setting.Items.Contains(item)) {
+					setting.Items.Remove(item);
 				}
-				toolbarSetting.Items.Add(item);
+				setting.Items.Add(item);
 			}
+		}
 
+		void ExportToolbarGroup(ToolbarSetting setting)
+		{
+			setting.ToolbarGroup = new ToolbarGroup();
 			// ツリーからグループ項目構築
 			foreach(TreeNode groupNode in this.treeToolbarItemGroup.Nodes) {
 				var toolbarGroupItem = new ToolbarGroupItem();
@@ -1034,24 +1068,24 @@
 				// グループに紐付くアイテム名
 				toolbarGroupItem.ItemNames.AddRange(groupNode.Nodes.OfType<LauncherItemTreeNode>().Select(node => node.LauncherItem.Name));
 
-				toolbarSetting.ToolbarGroup.Groups.Add(toolbarGroupItem);
+				setting.ToolbarGroup.Groups.Add(toolbarGroupItem);
 			}
 		}
 
 
 		void ExportClipboardSetting(ClipboardSetting setting)
 		{
-			setting.Limit = (int)this.inputClipboardLimit.Value;
+			//setting.Limit = (int)this.inputClipboardLimit.Value;
 			setting.WaitTime = TimeSpan.FromMilliseconds((int)this.inputClipboardWaitTime.Value);
 			//setting.SleepTime = TimeSpan.FromMilliseconds((int)this.inputClipboardSleepTime.Value);
-			setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
+			//setting.ClipboardRepeated = (int)this.inputClipboardRepeated.Value;
 
-			setting.Enabled = this.selectClipboardEnabled.Checked;
-			setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
-			setting.Visible = this.selectClipboardVisible.Checked;
-			setting.TopMost = this.selectClipboardTopMost.Checked;
-			setting.DoubleClickToOutput = this.selectClipboardItemWClickToOutput.Checked;
-			setting.OutputUsingClipboard = this.selectClipboardOutputUsingClipboard.Checked;
+			//setting.Enabled = this.selectClipboardEnabled.Checked;
+			//setting.EnabledApplicationCopy = this.selectClipboardAppEnabled.Checked;
+			//setting.Visible = this.selectClipboardVisible.Checked;
+			//setting.TopMost = this.selectClipboardTopMost.Checked;
+			//setting.DoubleClickToOutput = this.selectClipboardItemWClickToOutput.Checked;
+			//setting.OutputUsingClipboard = this.selectClipboardOutputUsingClipboard.Checked;
 
 			setting.ClipboardListType = (ClipboardListType)this.selectClipboardListType.SelectedValue;
 
@@ -1080,7 +1114,7 @@
 				saveClipboardTypes |= type;
 			}
 			setting.SaveTypes = saveClipboardTypes;
-			setting.SaveHistory = this.selectClipboardSave.Checked;
+			//setting.SaveHistory = this.selectClipboardSave.Checked;
 
 			setting.ToggleHotKeySetting = this.inputClipboardHotkey.HotKeySetting;
 
@@ -1088,6 +1122,7 @@
 			setting.TextFont = this.commandClipboardTextFont.FontSetting;
 
 		}
+
 		#endregion ////////////////////////////////////
 
 		#region save
@@ -1201,15 +1236,15 @@
 			this.inputLauncherCommand.DataSource = null;
 			if(item.LauncherType == LauncherType.Embedded) {
 				this.inputLauncherCommand.DropDownStyle = ComboBoxStyle.DropDownList;
-				var displayValueList = _applicationSetting.Items
+				var displayValueList = CommonData.ApplicationSetting.Items
 					.OrderBy(i => i.Name)
 					.Select(i => new ApplicationDisplayValue(i))
 					.ToArray()
 				;
 				foreach(var dv in displayValueList) {
-					dv.SetLanguage(Language);
+					dv.SetLanguage(CommonData.Language);
 				}
-				var applicationItem = this._applicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
+				var applicationItem = CommonData.ApplicationSetting.Items.SingleOrDefault(i => i.Name == item.Command);
 				if(applicationItem != null){
 					this.inputLauncherCommand.Attachment(displayValueList, applicationItem);
 				} else {
@@ -1229,7 +1264,7 @@
 					;
 					this.inputLauncherCommand.DataSource = commandList;
 					*/
-					this.inputLauncherCommand.Items.AddRange(this._commandList);
+					this.inputLauncherCommand.Items.AddRange(this._launcherCommandList);
 				} else {
 					this.inputLauncherCommand.Items.Clear();
 				}
@@ -1276,9 +1311,9 @@
 			item.LauncherType = LauncherGetSelectedType();
 			//item.Name = this.inputLauncherName.Text.Trim();
 			var name = this.inputLauncherName.Text.Trim();
-			if(this._launcherItems.Count > 1) {
+			if(CommonData.MainSetting.Launcher.Items.Count > 1) {
 				// 重複している場合はちょっと細工
-				var uniqName = TextUtility.ToUniqueDefault(name, this._launcherItems.Where(i => i != item).Select(i => i.Name));
+				var uniqName = TextUtility.ToUniqueDefault(name, CommonData.MainSetting.Launcher.Items.Where(i => i != item).Select(i => i.Name));
 				if(!item.IsNameEqual(uniqName)) {
 					var prevEvent = this._launcherItemEvent;
 					this._launcherItemEvent = false;
@@ -1293,7 +1328,7 @@
 				if(applicationItem != null) {
 					item.Command = applicationItem.Name;
 				} else {
-					item.Command = this._applicationSetting.Items.Single().Name;
+					item.Command = CommonData.ApplicationSetting.Items.Single().Name;
 				}
 			} else {
 				item.Command = this.inputLauncherCommand.Text.Trim();
@@ -1419,7 +1454,7 @@
 			if(!this.selecterLauncher.Items.Any(item => item.HasError)) {
 				return true;
 			} else {
-				this.errorProvider.SetError(this.selecterLauncher, Language["setting/check/item-name-dup"]);
+				this.errorProvider.SetError(this.selecterLauncher, CommonData.Language["setting/check/item-name-dup"]);
 				return false;
 			}
 		}
@@ -1443,7 +1478,7 @@
 		
 		void LauncherAddFile(string filePath)
 		{
-			var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, Language, new NullLogger());
+			var checkPath = LauncherItemUtility.InquiryUseShocutTarget(filePath, CommonData.Language, new NullLogger());
 			var useShortcut = checkPath == filePath;
 			var path = checkPath;
 
@@ -1467,15 +1502,15 @@
 		#region page/toolbar
 		void ToolbarSelectingPage()
 		{
-			this.selecterToolbar.SetItems(this.selecterLauncher.Items, this._applicationSetting);
+			this.selecterToolbar.SetItems(this.selecterLauncher.Items, CommonData.ApplicationSetting);
 			this._imageToolbarItemGroup.Images.Clear();
 			var treeImage = new Dictionary<int, Image>() {
-				{ TREE_TYPE_NONE, Skin.GetImage(SkinImage.NotImpl) },
-				{ TREE_TYPE_GROUP, Skin.GetImage(SkinImage.Group) },
+				{ TREE_TYPE_NONE, CommonData.Skin.GetImage(SkinImage.NotImpl) },
+				{ TREE_TYPE_GROUP, CommonData.Skin.GetImage(SkinImage.Group) },
 			};
 			this._imageToolbarItemGroup.Images.AddRange(treeImage.OrderBy(pair => pair.Key).Select(pair => pair.Value).ToArray());
 
-			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, this._applicationSetting, new NullLogger()) }).Where(item => item.Icon != null);
+			var seq = this.selecterLauncher.Items.Select(item => new { Name = item.Name, Icon = item.GetIcon(IconScale.Small, item.IconItem.Index, CommonData.ApplicationSetting, new NullLogger()) }).Where(item => item.Icon != null);
 			foreach(var elemet in seq) {
 				this._imageToolbarItemGroup.Images.Add(elemet.Name, elemet.Icon);
 			}
@@ -1704,7 +1739,7 @@
 		
 		void ToolToolbarGroup_addGroup_Click(object sender, EventArgs e)
 		{
-			ToolbarAddGroup(Language["new/group-item"]);
+			ToolbarAddGroup(CommonData.Language["new/group-item"]);
 			ToolbarChangedGroupCount();
 		}
 		
@@ -1834,8 +1869,10 @@
 		void CommandSubmit_Click(object sender, System.EventArgs e)
 		{
 			if(CheckValidate()) {
-				// 設定データ生成
-				CreateSettingData();
+				//// 設定データ生成
+				//CreateSettingData();
+				ExportUnbindData();
+
 				DialogResult = DialogResult.OK;
 			}
 		}
@@ -1934,7 +1971,7 @@
 			if(e.ColumnIndex == this.gridNoteItems_columnFont.Index) {
 				// フォント
 				var row = this._noteItemList[e.RowIndex];
-				e.Value = LanguageUtility.FontSettingToDisplayText(Language, row.Font);
+				e.Value = LanguageUtility.FontSettingToDisplayText(CommonData.Language, row.Font);
 				e.FormattingApplied = true;
 			}
 		}

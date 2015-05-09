@@ -6,13 +6,14 @@
 	using System.Xml;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// 設定統括
 	/// </summary>
 	[Serializable]
-	public class MainSetting: DisposableItem
+	public class MainSetting: DisposableItem, IDeepClone
 	{
 		public MainSetting()
 		{
@@ -33,22 +34,7 @@
 			WindowSaveTime = Literal.windowSaveTime.median;
 			WindowSaveCount = Literal.windowSaveCount.median;
 		}
-		
-		public override void CorrectionValue()
-		{
-			WindowSaveTime = Literal.windowSaveTime.ToRounding(WindowSaveTime);
-			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
 
-			Launcher.CorrectionValue();
-			Stream.CorrectionValue();
-			Log.CorrectionValue();
-			SystemEnvironment.CorrectionValue();
-			Command.CorrectionValue();
-			Toolbar.CorrectionValue();
-			Note.CorrectionValue();
-			Clipboard.CorrectionValue();
-		}
-		
 		/// <summary>
 		/// 実行許可とかそんな感じ。
 		/// </summary>
@@ -109,6 +95,25 @@
 		/// </summary>
 		public SkinSetting Skin { get; set; }
 
+		#region override
+
+		public override void CorrectionValue()
+		{
+			WindowSaveTime = Literal.windowSaveTime.ToRounding(WindowSaveTime);
+			WindowSaveCount = Literal.windowSaveCount.ToRounding(WindowSaveCount);
+
+			Launcher.CorrectionValue();
+			Stream.CorrectionValue();
+			Log.CorrectionValue();
+			SystemEnvironment.CorrectionValue();
+			Command.CorrectionValue();
+			Toolbar.CorrectionValue();
+			Note.CorrectionValue();
+			Clipboard.CorrectionValue();
+		}
+
+		#endregion
+
 		#region DisposableItem
 
 		protected override void Dispose(bool disposing)
@@ -117,6 +122,31 @@
 			Clipboard.ToDispose();
 
 			base.Dispose(disposing);
+		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new MainSetting() {
+				WindowSaveTime = this.WindowSaveTime,
+				WindowSaveCount = this.WindowSaveCount,
+			};
+
+			result.Running = (RunningSetting)Running.Clone();
+			result.Log = (LogSetting)Log.Clone();
+			result.SystemEnvironment = (SystemEnvironmentSetting)SystemEnvironment.DeepClone();
+			result.Launcher = (LauncherSetting)Launcher.DeepClone();
+			result.Stream = (StreamSetting)Stream.DeepClone();
+			//result.Command = Command;
+			result.Toolbar = (ToolbarSetting)Toolbar.DeepClone();
+			result.Note = (NoteSetting)Note.DeepClone();
+			result.Clipboard = (ClipboardSetting)Clipboard.DeepClone();
+			result.Skin = (SkinSetting)Skin.DeepClone();
+
+			return result;
 		}
 
 		#endregion

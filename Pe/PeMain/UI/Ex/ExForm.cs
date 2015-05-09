@@ -35,7 +35,7 @@
 		/// </summary>
 		protected bool Initialized { get; set; }
 
-		public void SetCommonData(CommonData commonData)
+		public virtual void SetCommonData(CommonData commonData)
 		{
 			Initialized = false;
 
