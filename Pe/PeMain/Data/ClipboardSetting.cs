@@ -215,6 +215,8 @@
 				ToggleHotKeySetting = (HotKeySetting)this.ToggleHotKeySetting.Clone(),
 				ClipboardListType = this.ClipboardListType,
 				ClipboardRepeated = this.ClipboardRepeated,
+				DoubleClickToOutput = this.DoubleClickToOutput,
+				OutputUsingClipboard = this.OutputUsingClipboard,
 			};
 
 

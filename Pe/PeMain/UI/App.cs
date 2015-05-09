@@ -1507,6 +1507,9 @@
 
 						return true;
 					};
+				} else {
+					this._commonData.MainSetting = oldMainSetting;
+					workMainSetting.ToDispose();
 				}
 			}
 			return null;

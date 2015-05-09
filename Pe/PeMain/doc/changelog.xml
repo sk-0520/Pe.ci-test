@@ -85,6 +85,9 @@
 			<sep dummy="==================================================================" />
 			<note rev="">
 				<message>#266: ノートの選択したフォントが反映されない場合がある</message>
+				<comments>
+					<comment>ちゃんとできてるのかちと不安</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
@@ -96,7 +99,7 @@
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#239: 設定ウィンドウ構築処理が初期実装継ぎ接ぎで開発側泣きそう</message>
 			</note>
 			<note rev="">
 				<message></message>

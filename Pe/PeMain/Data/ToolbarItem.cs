@@ -162,6 +162,7 @@
 				Topmost = this.Topmost,
 				AutoHide = this.AutoHide,
 				FloatSize = this.FloatSize,
+				FloatLocation = this.FloatLocation,
 				DesktopSize = this.DesktopSize,
 				TextWidth = this.TextWidth,
 				HiddenWaitTime = this.HiddenWaitTime,

@@ -381,7 +381,7 @@
 			//this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
 			this.selectToolbarItem.Attachment(toolbarItemDataList, initToolbarItem);
 			this.selectToolbarItem.SelectedIndex = 0;
-
+			
 			// グループ情報設定
 			var toolbarGroupList = new List<ToolbarGroupNameDisplayValue>();
 			var rootNode = treeToolbarItemGroup.Nodes.Cast<TreeNode>();
@@ -858,6 +858,7 @@
 			ExportLanguageSetting(CommonData.MainSetting);
 			ExportStreamSetting(CommonData.MainSetting.Stream);
 			ExportNoteSetting(CommonData.MainSetting.Note);
+			ExportToolbarSetting(CommonData.MainSetting.Toolbar);
 			ExportClipboardSetting(CommonData.MainSetting.Clipboard);
 
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
@@ -1041,17 +1042,17 @@
 			noteSetting.CaptionFontSetting = this.commandNoteCaptionFont.FontSetting;
 		}
 
-		//void ExportToolbarSetting(ToolbarSetting setting)
-		//{
-		//	ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
-		//	foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
-		//		var item = itemData.Value;
-		//		if(setting.Items.Contains(item)) {
-		//			setting.Items.Remove(item);
-		//		}
-		//		setting.Items.Add(item);
-		//	}
-		//}
+		void ExportToolbarSetting(ToolbarSetting setting)
+		{
+			ToolbarSetSelectedItem(this._toolbarSelectedToolbarItem);
+			foreach(var itemData in this.selectToolbarItem.Items.Cast<ToolbarDisplayValue>()) {
+				var item = itemData.Value;
+				if(setting.Items.Contains(item)) {
+					setting.Items.Remove(item);
+				}
+				setting.Items.Add(item);
+			}
+		}
 
 		void ExportToolbarGroup(ToolbarSetting setting)
 		{
