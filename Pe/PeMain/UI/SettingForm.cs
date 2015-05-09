@@ -852,6 +852,8 @@
 		{
 			ExportLogShowTrigger(CommonData.MainSetting.Log);
 			ExportSystemEnvSetting(CommonData.MainSetting.SystemEnvironment);
+			ExportSkinSetting(CommonData.MainSetting.Skin);
+
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
 
@@ -992,11 +994,11 @@
 		//	}
 		//}
 
-		//void ExportSkinSetting(SkinSetting setting)
-		//{
-		//	var skin = (ISkin)this.selectSkinName.SelectedValue;
-		//	setting.Name = skin.About.Name;
-		//}
+		void ExportSkinSetting(SkinSetting setting)
+		{
+			var skin = (ISkin)this.selectSkinName.SelectedValue;
+			setting.Name = skin.About.Name;
+		}
 
 		//void ExportStreamSetting(StreamSetting setting)
 		//{
