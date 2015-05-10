@@ -110,8 +110,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			foreach(var command in GetCommands()) {
 				command.TabStop = false;
 				command.Appearance = Appearance.Button;
-				//command.FlatStyle = FlatStyle.Popup;
 				command.Size = AppUtility.GetButtonSize(imageSize);
+				command.Margin = new Padding(1);
 				command.Click += command_Click;
 			}
 
@@ -120,6 +120,9 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			Controls.Add(this.CommandDesktopFloat, 1, 1);
 			Controls.Add(this.CommandDesktopRight, 2, 1);
 			Controls.Add(this.CommandDesktopBottom, 1, 2);
+
+			AutoSize = true;
+			Size = Size.Empty;
 		}
 
 		#endregion
@@ -140,14 +143,14 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		void ApplySkin()
 		{
 			foreach(var command in GetCommands()) {
-				command.Image = CreateTollbarImage(command.ToolbarPosition);
+				command.Image = CreateToolbarImage(command.ToolbarPosition);
 			}
 		}
 
 		void ApplyLanguage()
 		{ }
 
-		Image CreateTollbarImage(ToolbarPosition toolbarPosition)
+		Image CreateToolbarImage(ToolbarPosition toolbarPosition)
 		{
 			using(var targetGraphics = CreateGraphics()) {
 				var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
