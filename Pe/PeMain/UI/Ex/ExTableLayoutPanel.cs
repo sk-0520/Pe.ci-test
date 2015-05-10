@@ -35,6 +35,12 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		ToolbarPosition _toolbarPosition;
 
+		ToolbarPositionRadioButton _selectDesktopFloat;
+		ToolbarPositionRadioButton _selectDesktopLeft;
+		ToolbarPositionRadioButton _selectDesktopRight;
+		ToolbarPositionRadioButton _selectDesktopTop;
+		ToolbarPositionRadioButton _selectDesktopBottom;
+
 		#endregion
 
 		#region event
@@ -50,12 +56,6 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		#region property
 
-		public ToolbarPositionRadioButton CommandDesktopFloat { get; private set; }
-		public ToolbarPositionRadioButton CommandDesktopLeft { get; private set; }
-		public ToolbarPositionRadioButton CommandDesktopRight { get; private set; }
-		public ToolbarPositionRadioButton CommandDesktopTop { get; private set; }
-		public ToolbarPositionRadioButton CommandDesktopBottom { get; private set; }
-
 		public CommonData CommonData { get; private set; }
 
 		public ToolbarPosition ToolbarPosition
@@ -64,7 +64,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			set
 			{
 				this._toolbarPosition = value;
-				var commands = GetCommands()
+				GetToolbarPositionControl()
 					.Single(c => c.ToolbarPosition == value)
 					.Checked = true
 				;
@@ -89,37 +89,37 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		void Initialize()
 		{
-			CommandDesktopFloat = new ToolbarPositionRadioButton() {
+			this._selectDesktopFloat = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopFloat,
 			};
-			CommandDesktopLeft = new ToolbarPositionRadioButton() {
+			this._selectDesktopLeft = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopLeft,
 			};
-			CommandDesktopRight = new ToolbarPositionRadioButton() {
+			this._selectDesktopRight = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopRight,
 			};
-			CommandDesktopTop = new ToolbarPositionRadioButton() {
+			this._selectDesktopTop = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopTop,
 			};
-			CommandDesktopBottom = new ToolbarPositionRadioButton() {
+			this._selectDesktopBottom = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopBottom,
 			};
 
 			ToolbarPosition = ToolbarPosition.DesktopFloat;
 
-			foreach(var command in GetCommands()) {
-				command.TabStop = false;
-				command.Appearance = Appearance.Button;
-				command.Size = AppUtility.GetButtonSize(imageSize);
-				command.Margin = new Padding(1);
-				command.Click += command_Click;
+			foreach(var control in GetToolbarPositionControl()) {
+				control.TabStop = false;
+				control.Appearance = Appearance.Button;
+				control.Size = AppUtility.GetButtonSize(imageSize);
+				control.Margin = new Padding(1);
+				control.Click += command_Click;
 			}
 
-			Controls.Add(this.CommandDesktopTop, 1, 0);
-			Controls.Add(this.CommandDesktopLeft, 0, 1);
-			Controls.Add(this.CommandDesktopFloat, 1, 1);
-			Controls.Add(this.CommandDesktopRight, 2, 1);
-			Controls.Add(this.CommandDesktopBottom, 1, 2);
+			Controls.Add(this._selectDesktopTop, 1, 0);
+			Controls.Add(this._selectDesktopLeft, 0, 1);
+			Controls.Add(this._selectDesktopFloat, 1, 1);
+			Controls.Add(this._selectDesktopRight, 2, 1);
+			Controls.Add(this._selectDesktopBottom, 1, 2);
 
 			AutoSize = true;
 			Size = Size.Empty;
@@ -129,20 +129,20 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		#region function
 
-		IEnumerable<ToolbarPositionRadioButton> GetCommands()
+		IEnumerable<ToolbarPositionRadioButton> GetToolbarPositionControl()
 		{
 			return new[] {
-				CommandDesktopFloat,
-				CommandDesktopLeft,
-				CommandDesktopRight,
-				CommandDesktopTop,
-				CommandDesktopBottom,
+				this._selectDesktopFloat,
+				this._selectDesktopLeft,
+				this._selectDesktopRight,
+				this._selectDesktopTop,
+				this._selectDesktopBottom,
 			};
 		}
 
 		void ApplySkin()
 		{
-			foreach(var command in GetCommands()) {
+			foreach(var command in GetToolbarPositionControl()) {
 				command.Image = CreateToolbarImage(command.ToolbarPosition);
 			}
 		}
@@ -206,8 +206,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		void command_Click(object sender, EventArgs e)
 		{
-			var command = (ToolbarPositionRadioButton)sender;
-			ToolbarPositionClick(this, new ToolbarPositionClickEventArgs(command.ToolbarPosition));
+			var control = (ToolbarPositionRadioButton)sender;
+			ToolbarPositionClick(this, new ToolbarPositionClickEventArgs(control.ToolbarPosition));
 		}
 
 	}
