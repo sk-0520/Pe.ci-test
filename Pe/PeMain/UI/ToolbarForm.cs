@@ -970,7 +970,11 @@
 				Name = menuNameMainGroupSeparator,
 			};
 
+			// button
+			var itemPositionPanel = new ToolbarPositionToolStripControl();
+
 			var menuList = new List<ToolStripItem>() {
+				itemPositionPanel,
 				posFloatItem,
 				posTopItem,
 				posBottomItem,
