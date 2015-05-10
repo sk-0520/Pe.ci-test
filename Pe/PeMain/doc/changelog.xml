@@ -56,17 +56,11 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.58.1" type="rc">
+	<log date="2015/05/10" version="0.59.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>#266が超心配！</message>
 			</note>
 		</group>
 		<group type="features">
@@ -76,9 +70,6 @@
 			</note>
 			<note rev="184425d4782c094f88123867a72e2b7acd023db9">
 				<message>ツールバーのメインボタンに表示するツールバー位置選択項目を視覚的にした</message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 		<group type="fixes">
@@ -97,20 +88,11 @@
 					<comment>Exception 捕まえずに try { ... } catch(AccessViolationException) { ... } で自重した私をほめてください</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
 			<note rev="a4233e81ee1e413f596ec24b6016678129a0f779">
 				<message>#239: 設定ウィンドウ構築処理が初期実装継ぎ接ぎで開発側泣きそう</message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
