@@ -195,40 +195,45 @@
 
 			this._clipboardPrevTime = now;
 
-			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
-			if(clipboardItem.ClipboardTypes != ClipboardType.None) {
-				Task.Run(() => {
-					var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-					clipboardItem.Name = displayText;
-					if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
-						if(this._commonData.MainSetting.Clipboard.ClipboardRepeated == 0) {
-							// 範囲チェックを行わないのであれば無条件で追加
-							return true;
+			try {
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
+				if(clipboardItem.ClipboardTypes != ClipboardType.None) {
+					Task.Run(() => {
+						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+						clipboardItem.Name = displayText;
+						if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated == 0) {
+								// 範囲チェックを行わないのであれば無条件で追加
+								return true;
+							}
+
+							// 指定範囲内に同じデータがあれば追加しない
+							IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated != Literal.clipboardRepeated.minimum) {
+								clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
+							}
+							var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
+							return hitItem == null;
+						}
+						return true;
+					}).ContinueWith(t => {
+						Debug.WriteLine("Clipboard: " + t.Result);
+						if(t.Result) {
+							try {
+								this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+							} catch(Exception ex) {
+								this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+							}
+						} else {
+							this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
 						}
 
-						// 指定範囲内に同じデータがあれば追加しない
-						IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
-						if(this._commonData.MainSetting.Clipboard.ClipboardRepeated != Literal.clipboardRepeated.minimum) {
-							clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
-						}
-						var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
-						return hitItem == null;
-					}
-					return true;
-				}).ContinueWith(t => {
-					Debug.WriteLine("Clipboard: " + t.Result);
-					if(t.Result) {
-						try {
-							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
-						} catch(Exception ex) {
-							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-						}
-					} else {
-						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
-					}
-
-					t.ToDispose();
-				}, TaskScheduler.FromCurrentSynchronizationContext());
+						t.ToDispose();
+					}, TaskScheduler.FromCurrentSynchronizationContext());
+				}
+			} catch(AccessViolationException ex) {
+				// #251
+				this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 			}
 		}
 
