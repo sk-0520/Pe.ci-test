@@ -27,6 +27,9 @@
 		{
 			get
 			{
+				if(this._value == null) {
+					return string.Empty;
+				}
 				return this._value.ToString();
 			}
 		}

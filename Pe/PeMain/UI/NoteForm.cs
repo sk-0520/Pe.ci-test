@@ -1038,6 +1038,7 @@
 				
 				if(dialog.ShowDialog() == DialogResult.OK) {
 					NoteItem.Style.FontSetting.Import(dialog.Font);
+					Changed = true;
 				}
 			}
 			ApplyBodyStyle();

@@ -35,7 +35,7 @@
 		/// </summary>
 		protected bool Initialized { get; set; }
 
-		public void SetCommonData(CommonData commonData)
+		public virtual void SetCommonData(CommonData commonData)
 		{
 			Initialized = false;
 
@@ -78,7 +78,20 @@
 			TopMost = true;
 			ForeColor = SystemColors.InfoText;
 			BackColor = SystemColors.Info;
+
+			ToolTipPadding = new Size(4, 4);
+
+			Opacity = 0;
+			ToNoActiveShow();
+			ToHide();
+			Opacity = 100;
 		}
+
+		#region property
+
+		public Size ToolTipPadding { get; set; }
+
+		#endregion
 
 		#region override
 

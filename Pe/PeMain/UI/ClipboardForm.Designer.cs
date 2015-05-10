@@ -65,6 +65,9 @@
 			this.viewFile = new System.Windows.Forms.ListView();
 			this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.contextFileMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.contextFileMenu_itemExecute = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextFileMenu_itemOpenParentDirectory = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabPreview_pageRawTemplate = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -117,6 +120,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.viewImage)).BeginInit();
 			this.toolImage.SuspendLayout();
 			this.tabPreview_pageFile.SuspendLayout();
+			this.contextFileMenu.SuspendLayout();
 			this.tabPreview_pageRawTemplate.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
@@ -541,16 +545,21 @@
 			this.viewFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnName,
             this.columnPath});
+			this.viewFile.ContextMenuStrip = this.contextFileMenu;
 			this.viewFile.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.viewFile.FullRowSelect = true;
 			this.viewFile.GridLines = true;
 			this.viewFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.viewFile.Location = new System.Drawing.Point(3, 2);
 			this.viewFile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.viewFile.MultiSelect = false;
 			this.viewFile.Name = "viewFile";
 			this.viewFile.Size = new System.Drawing.Size(366, 208);
 			this.viewFile.TabIndex = 0;
 			this.viewFile.UseCompatibleStateImageBehavior = false;
 			this.viewFile.View = System.Windows.Forms.View.Details;
+			this.viewFile.DoubleClick += new System.EventHandler(this.viewFile_DoubleClick);
+			this.viewFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.viewFile_KeyDown);
 			// 
 			// columnName
 			// 
@@ -559,6 +568,29 @@
 			// columnPath
 			// 
 			this.columnPath.Text = ":clipboard/header/path";
+			// 
+			// contextFileMenu
+			// 
+			this.contextFileMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextFileMenu_itemExecute,
+            this.contextFileMenu_itemOpenParentDirectory});
+			this.contextFileMenu.Name = "contextFileMenu";
+			this.contextFileMenu.Size = new System.Drawing.Size(293, 48);
+			this.contextFileMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextFileMenu_Opening);
+			// 
+			// contextFileMenu_itemExecute
+			// 
+			this.contextFileMenu_itemExecute.Name = "contextFileMenu_itemExecute";
+			this.contextFileMenu_itemExecute.Size = new System.Drawing.Size(292, 22);
+			this.contextFileMenu_itemExecute.Text = ":clipboard/menu/file/open-file";
+			this.contextFileMenu_itemExecute.Click += new System.EventHandler(this.contextFileMenu_itemExecute_Click);
+			// 
+			// contextFileMenu_itemOpenParentDirectory
+			// 
+			this.contextFileMenu_itemOpenParentDirectory.Name = "contextFileMenu_itemOpenParentDirectory";
+			this.contextFileMenu_itemOpenParentDirectory.Size = new System.Drawing.Size(292, 22);
+			this.contextFileMenu_itemOpenParentDirectory.Text = ":clipboard/menu/file/open-parent-dir";
+			this.contextFileMenu_itemOpenParentDirectory.Click += new System.EventHandler(this.contextFileMenu_itemOpenParentDirectory_Click);
 			// 
 			// tabPreview_pageRawTemplate
 			// 
@@ -662,7 +694,7 @@
 			// 
 			this.panelTemplateSource.Panel2.Controls.Add(this.listReplace);
 			this.panelTemplateSource.Size = new System.Drawing.Size(366, 131);
-			this.panelTemplateSource.SplitterDistance = 254;
+			this.panelTemplateSource.SplitterDistance = 260;
 			this.panelTemplateSource.SplitterWidth = 3;
 			this.panelTemplateSource.TabIndex = 7;
 			this.panelTemplateSource.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.panelTemplateSource_SplitterMoved);
@@ -678,7 +710,7 @@
 			this.inputTemplateSource.Multiline = true;
 			this.inputTemplateSource.Name = "inputTemplateSource";
 			this.inputTemplateSource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.inputTemplateSource.Size = new System.Drawing.Size(254, 131);
+			this.inputTemplateSource.Size = new System.Drawing.Size(260, 131);
 			this.inputTemplateSource.TabIndex = 0;
 			this.inputTemplateSource.WordWrap = false;
 			// 
@@ -691,7 +723,7 @@
 			this.listReplace.Location = new System.Drawing.Point(0, 0);
 			this.listReplace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.listReplace.Name = "listReplace";
-			this.listReplace.Size = new System.Drawing.Size(109, 131);
+			this.listReplace.Size = new System.Drawing.Size(103, 131);
 			this.listReplace.TabIndex = 0;
 			this.listReplace.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listReplace_DrawItem);
 			this.listReplace.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.listReplace_MeasureItem);
@@ -910,6 +942,7 @@
 			this.toolImage.ResumeLayout(false);
 			this.toolImage.PerformLayout();
 			this.tabPreview_pageFile.ResumeLayout(false);
+			this.contextFileMenu.ResumeLayout(false);
 			this.tabPreview_pageRawTemplate.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
@@ -991,5 +1024,8 @@
 		private System.Windows.Forms.ToolStripButton toolItemStack_itemFiltering;
 		private System.Windows.Forms.CheckBox selectTemplateProgram;
 		private System.Windows.Forms.ToolStripButton toolClipboard_itemOutputClipboard;
+		private System.Windows.Forms.ContextMenuStrip contextFileMenu;
+		private System.Windows.Forms.ToolStripMenuItem contextFileMenu_itemExecute;
+		private System.Windows.Forms.ToolStripMenuItem contextFileMenu_itemOpenParentDirectory;
 	}
 }

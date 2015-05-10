@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// 
@@ -34,7 +35,7 @@
 	/// 
 	/// </summary>
 	[Serializable]
-	public class ToolbarSetting: Item
+	public class ToolbarSetting: Item, IDeepClone
 	{
 		public ToolbarSetting()
 		{
@@ -45,5 +46,22 @@
 		
 		public ToolbarGroup ToolbarGroup { get; set; }
 		public HashSet<ToolbarItem> Items { get; set; }
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new ToolbarSetting() {
+				ToolbarGroup = (ToolbarGroup)this.ToolbarGroup.DeepClone(),
+			};
+
+			foreach(var item in Items) {
+				result.Items.Add((ToolbarItem)item.DeepClone());
+			}
+
+			return result;
+		}
+
+		#endregion
 	}
 }

@@ -277,10 +277,17 @@
     <Compile Include="UI\Ex\ExButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Ex\ExListViewItem.cs" />
     <Compile Include="UI\Ex\ExMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExNumericUpDown.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExRadioButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExTableLayoutPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExTreeNode.cs" />

@@ -7,13 +7,14 @@
 	using System.Linq;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// クリップボードのデータ。
 	/// </summary>
 	[Serializable]
-	public class ClipboardItem: DisposableNameItem
+	public class ClipboardItem: DisposableNameItem, IDeepClone
 	{
 		public ClipboardItem()
 		{
@@ -50,14 +51,8 @@
 		[XmlElement("Image")]
 		public byte[] _Image
 		{
-			get
-			{
-				return PropertyUtility.MixinImageGetter(Image);
-			}
-			set
-			{
-				Image = PropertyUtility.MixinImageSetter(value); 
-			}
+			get { return PropertyUtility.MixinImageGetter(Image); }
+			set { Image = PropertyUtility.MixinImageSetter(value); }
 		}
 
 		/// <summary>
@@ -72,6 +67,27 @@
 			Image.ToDispose();
 			Image = null;
 			base.Dispose(disposing);
+		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new ClipboardItem() {
+				Timestamp = this.Timestamp,
+				ClipboardTypes = this.ClipboardTypes,
+				Text = this.Text,
+				Rtf = this.Rtf,
+				Html = this.Html,
+				Image = this.Image == null ? null: (Image)this.Image.Clone()
+			};
+			if(Files != null && Files.Any()) {
+				result.Files = new List<string>(Files);
+			}
+
+			return result;
 		}
 
 		#endregion

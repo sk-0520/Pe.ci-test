@@ -6,12 +6,13 @@
 	using System.Reflection;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// 実行情報。
 	/// </summary>
 	[Serializable]
-	public class RunningSetting: Item
+	public class RunningSetting: Item, ICloneable
 	{
 		/// <summary>
 		/// 自動アップデートチェック。
@@ -36,6 +37,26 @@
 		/// </summary>
 		public int ExecuteCount { get; set; }
 
+		#region ICloneable
+
+		public object Clone()
+		{
+			return new RunningSetting() {
+				CheckUpdate = this.CheckUpdate,
+				CheckUpdateRC = this.CheckUpdateRC,
+				Running = this.Running,
+				VersionMajor = this.VersionMajor,
+				VersionMinor = this.VersionMinor,
+				VersionRevision = this.VersionRevision,
+				VersionBuild = this.VersionBuild,
+				ExecuteCount = this.ExecuteCount,
+			};
+		}
+
+		#endregion
+
+		#region function
+
 		public void SetDefaultVersion()
 		{
 			var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
@@ -51,5 +72,7 @@
 				ExecuteCount += 1;
 			}
 		}
+
+		#endregion
 	}
 }

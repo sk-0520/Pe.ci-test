@@ -7,7 +7,7 @@
 	/// ツールバーグループとして名前を管理。
 	/// </summary>
 	[Serializable]
-	public class ToolbarGroupItem: NameItem
+	public class ToolbarGroupItem: NameItem, ICloneable
 	{
 		public ToolbarGroupItem()
 		{
@@ -15,5 +15,19 @@
 		}
 
 		public List<string> ItemNames { get; set; }
+
+		#region ICloneable
+
+		public object Clone()
+		{
+			var result = new ToolbarGroupItem() {
+				Name = this.Name,
+			};
+			result.ItemNames.AddRange(ItemNames);
+
+			return result;
+		}
+
+		#endregion
 	}
 }

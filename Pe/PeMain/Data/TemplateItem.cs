@@ -6,7 +6,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	[Serializable]
-	public class TemplateItem: DisposableNameItem
+	public class TemplateItem: DisposableNameItem, ICloneable
 	{
 		/// <summary>
 		/// 置き換えモードを使用するか。
@@ -24,11 +24,28 @@
 		[XmlIgnore]
 		public ProgramTemplateProcessor Processor { get; set; }
 
+		#region DisposableNameItem
+
 		protected override void Dispose(bool disposing)
 		{
 			Processor.ToDispose();
 
 			base.Dispose(disposing);
 		}
+
+		#endregion
+
+		#region ICloneable
+
+		public object Clone()
+		{
+			return new TemplateItem() {
+				ReplaceMode = this.ReplaceMode,
+				Program = this.Program,
+				Source = this.Source
+			};
+		}
+
+		#endregion
 	}
 }

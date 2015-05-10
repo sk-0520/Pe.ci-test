@@ -248,10 +248,13 @@
 			this.toolImage_itemRaw.SetLanguage(CommonData.Language);
 			this.toolImage_itemFill.SetLanguage(CommonData.Language);
 
+			this.toolItemStack_itemFiltering.SetLanguage(CommonData.Language);
+
+			this.contextFileMenu_itemExecute.SetLanguage(CommonData.Language);
+			this.contextFileMenu_itemOpenParentDirectory.SetLanguage(CommonData.Language);
+
 			this.toolClipboard_itemType_itemClipboard.Text = ClipboardListType.History.ToText(CommonData.Language);
 			this.toolClipboard_itemType_itemTemplate.Text = ClipboardListType.Template.ToText(CommonData.Language);
-
-			this.toolItemStack_itemFiltering.SetLanguage(CommonData.Language);
 
 			this.tabPreview_pageText.Text = ClipboardType.Text.ToText(CommonData.Language);
 			this.tabPreview_pageRtf.Text = ClipboardType.Rtf.ToText(CommonData.Language);
@@ -324,10 +327,11 @@
 
 		Size GetButtonSize()
 		{
-			return new Size(
-				IconScale.Small.ToWidth() + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
-				IconScale.Small.ToHeight() + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
-			);
+			//return new Size(
+			//	IconScale.Small.ToWidth() + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
+			//	IconScale.Small.ToHeight() + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
+			//);
+			return AppUtility.GetButtonSize(IconScale.Small.ToSize());
 		}
 		
 		//public void SetCommonData(CommonData commonData)
@@ -625,9 +629,11 @@
 
 								imageList.Images.Add(key, icon);
 
-								var listItem = new ListViewItem();
-								listItem.Text = name;
-								listItem.ImageKey = key;
+								var listItem = new PathListViewItem() {
+									Text = name,
+									ImageKey = key,
+									Path = path,
+								};
 
 								listItem.SubItems.Add(path);
 
@@ -1304,6 +1310,19 @@
 			ClearFilter();
 		}
 
+		void OpenFile(string path)
+		{
+			if(FileUtility.Exists(path)) {
+				try {
+					Executor.RunCommand(path, CommonData);
+				} catch(Exception ex) {
+					CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+				}
+			} else {
+				CommonData.Logger.Puts(LogType.Warning, CommonData.Language["common/message/notfound-path"], path);
+			}
+		}
+
 		#endregion ////////////////////////////////////////
 
 		#region Draw
@@ -1855,6 +1874,61 @@
 				return;
 			}
 			CommonData.MainSetting.Clipboard.TemplateListWidth = this.panelTemplateSource.Panel2.Width;
+		}
+
+		private void contextFileMenu_Opening(object sender, CancelEventArgs e)
+		{
+			e.Cancel = this.viewFile.SelectedItems.Count != 1;
+			if(!e.Cancel) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				var parentDirPath = Path.GetDirectoryName(listItem.Path);
+				this.contextFileMenu_itemExecute.Enabled = FileUtility.Exists(listItem.Path);
+				this.contextFileMenu_itemOpenParentDirectory.Enabled = Directory.Exists(parentDirPath);
+			}
+		}
+
+		private void viewFile_DoubleClick(object sender, EventArgs e)
+		{
+			if(this.viewFile.SelectedItems.Count == 1) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				OpenFile(listItem.Path);
+			}
+		}
+
+		private void contextFileMenu_itemExecute_Click(object sender, EventArgs e)
+		{
+			if(this.viewFile.SelectedItems.Count == 1) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				OpenFile(listItem.Path);
+			}
+		}
+
+		private void contextFileMenu_itemOpenParentDirectory_Click(object sender, EventArgs e)
+		{
+			if(this.viewFile.SelectedItems.Count == 1) {
+				var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+				var parentDirPath = Path.GetDirectoryName(listItem.Path);
+				if(!string.IsNullOrEmpty(parentDirPath)) {
+					OpenFile(parentDirPath);
+				}
+			}
+		}
+
+		private void viewFile_KeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.KeyCode == Keys.Enter) {
+				if(this.viewFile.SelectedItems.Count == 1) {
+					var listItem = (PathListViewItem)this.viewFile.SelectedItems[0];
+					if(e.Shift) {
+						var parentDirPath = Path.GetDirectoryName(listItem.Path);
+						if(!string.IsNullOrEmpty(parentDirPath)) {
+							OpenFile(parentDirPath);
+						}
+					} else {
+						OpenFile(listItem.Path);
+					}
+				}
+			}
 		}
 	}
 }

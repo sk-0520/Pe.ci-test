@@ -195,40 +195,45 @@
 
 			this._clipboardPrevTime = now;
 
-			var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
-			if(clipboardItem.ClipboardTypes != ClipboardType.None) {
-				Task.Run(() => {
-					var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
-					clipboardItem.Name = displayText;
-					if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
-						if(this._commonData.MainSetting.Clipboard.ClipboardRepeated == 0) {
-							// 範囲チェックを行わないのであれば無条件で追加
-							return true;
+			try {
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(this._commonData.MainSetting.Clipboard.EnabledTypes, this._messageWindow != null ? this._messageWindow.Handle : IntPtr.Zero, this._commonData.Logger);
+				if(clipboardItem.ClipboardTypes != ClipboardType.None) {
+					Task.Run(() => {
+						var displayText = LanguageUtility.ClipboardItemToDisplayText(this._commonData.Language, clipboardItem, this._commonData.Logger);
+						clipboardItem.Name = displayText;
+						if(this._commonData.MainSetting.Clipboard.HistoryItems.Any()) {
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated == 0) {
+								// 範囲チェックを行わないのであれば無条件で追加
+								return true;
+							}
+
+							// 指定範囲内に同じデータがあれば追加しない
+							IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+							if(this._commonData.MainSetting.Clipboard.ClipboardRepeated != Literal.clipboardRepeated.minimum) {
+								clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
+							}
+							var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
+							return hitItem == null;
+						}
+						return true;
+					}).ContinueWith(t => {
+						Debug.WriteLine("Clipboard: " + t.Result);
+						if(t.Result) {
+							try {
+								this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+							} catch(Exception ex) {
+								this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+							}
+						} else {
+							this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
 						}
 
-						// 指定範囲内に同じデータがあれば追加しない
-						IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
-						if(this._commonData.MainSetting.Clipboard.ClipboardRepeated != Literal.clipboardRepeated.minimum) {
-							clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
-						}
-						var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
-						return hitItem == null;
-					}
-					return true;
-				}).ContinueWith(t => {
-					Debug.WriteLine("Clipboard: " + t.Result);
-					if(t.Result) {
-						try {
-							this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
-						} catch(Exception ex) {
-							this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
-						}
-					} else {
-						this._commonData.Logger.Puts(LogType.Information, this._commonData.Language["clipboard/dup/title"], clipboardItem);
-					}
-
-					t.ToDispose();
-				}, TaskScheduler.FromCurrentSynchronizationContext());
+						t.ToDispose();
+					}, TaskScheduler.FromCurrentSynchronizationContext());
+				}
+			} catch(AccessViolationException ex) {
+				// #251
+				this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
 			}
 		}
 
@@ -826,14 +831,14 @@
 				Name = menuNameSetting,
 				Image = this._commonData.Skin.GetImage(SkinImage.Config),
 			};
-			itemSetting.Click += (object sender, EventArgs e) => PauseOthers(OpenSettingDialog);
+			itemSetting.Click += (object sender, EventArgs e) => PauseOthersPreProcess(OpenSettingDialog, () => this._commonData.MainSetting.DeepClone());
 
 			// 情報
 			var itemAbout = new ToolStripMenuItem() {
 				Name = menuNameAbout,
 				Image = IconUtility.ImageFromIcon(this._commonData.Skin.GetIcon(SkinIcon.App), IconScale.Small),
 			};
-			itemAbout.Click += (object sender, EventArgs e) => PauseOthers(() => {
+			itemAbout.Click += (object sender, EventArgs e) => PauseOthersPlain(() => {
 				var checkUpdate = false;
 				using(var dialog = new AboutForm()) {
 					dialog.SetCommonData(this._commonData);
@@ -1275,14 +1280,19 @@
 			return result;
 		}
 
+		void PauseOthersPlain(Func<Func<bool>> func)
+		{
+			PauseOthersPreProcess(o => func(),  null);
+		}
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="func">ウィンドウ再構築を独自に行う場合は真を返す処理を返す。</param>
-		void PauseOthers(Func<Func<bool>> func)
+		void PauseOthersPreProcess(Func<object, Func<bool>> func, Func<object> preProcess)
 		{
 			var recursion = this._pause;
 			var windowVisible = new Dictionary<Form, bool>();
+			var preValue = preProcess == null ? null : preProcess();
 			if(!recursion) {
 				foreach(var window in GetWindows()) {
 					windowVisible[window] = window.Visible;
@@ -1293,7 +1303,7 @@
 				this._notifyIcon.ContextMenuStrip = null;
 				this._pause = true;
 			}
-			var action = func();
+			var action = func(preValue);
 			var customWindow = false;
 			if(action != null) {
 				customWindow = action();
@@ -1439,9 +1449,13 @@
 		/// 設定ダイアログを開く。
 		/// </summary>
 		/// <returns></returns>
-		Func<bool> OpenSettingDialog()
+		Func<bool> OpenSettingDialog(object preValue)
 		{
-			using(var settingForm = new SettingForm(this._commonData.Language, this._commonData.Skin, this._commonData.MainSetting, this._commonData.Database, this._commonData.ApplicationSetting)) {
+			using(var settingForm = new SettingForm()) {
+				var workMainSetting = (MainSetting)preValue;
+				var oldMainSetting = this._commonData.MainSetting;
+				this._commonData.MainSetting = workMainSetting;
+				settingForm.SetCommonData(this._commonData);
 				if(settingForm.ShowDialog() == DialogResult.OK) {
 					/*
 					foreach(var note in this._noteWindowList) {
@@ -1451,7 +1465,7 @@
 					this._noteWindowList.Clear();
 					InitializeNoteForm(null, null);
 					 */
-
+					/*
 					var mainSetting = settingForm.MainSetting;
 					// ログ
 					mainSetting.Log.Point = this._commonData.MainSetting.Log.Point;
@@ -1473,9 +1487,12 @@
 					oldSetting.Clipboard.HistoryItems = new FixedSizedList<ClipboardItem>(0,0);
 					oldSetting.Clipboard.TemplateItems = new EventList<TemplateItem>(0);
 					oldSetting.ToDispose();
+					 * */
+					oldMainSetting.ToDispose();
 					settingForm.SaveFiles();
-					settingForm.SaveDB(this._commonData.Database);
+					settingForm.SaveDB();
 					AppUtility.SaveSetting(this._commonData);
+					var check = this._commonData.MainSetting.Running.CheckUpdate != this._commonData.MainSetting.Running.CheckUpdate || this._commonData.MainSetting.Running.CheckUpdate;
 					InitializeLanguage(null, null);
 					InitializeSkin(null, this._commonData.Logger);
 
@@ -1495,6 +1512,9 @@
 
 						return true;
 					};
+				} else {
+					this._commonData.MainSetting = oldMainSetting;
+					workMainSetting.ToDispose();
 				}
 			}
 			return null;
@@ -1684,7 +1704,7 @@
 		/// <param name="updateData"></param>
 		void ShowUpdateDialog(UpdateData updateData)
 		{
-			PauseOthers(() => {
+			PauseOthersPlain(() => {
 				try {
 					using(var dialog = new UpdateForm()) {
 						dialog.UpdateData = updateData;
@@ -1727,7 +1747,7 @@
 		/// </summary>
 		public void ShowHomeDialog()
 		{
-			PauseOthers(() => {
+			PauseOthersPlain(() => {
 				using(var dialog = new HomeForm()) {
 					dialog.SetCommonData(this._commonData);
 					dialog.ShowDialog();
@@ -2079,13 +2099,13 @@
 				if(menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
 					var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
 					// 各エリアの描画
-					var alpha = 80;
+					//var alpha = 80;
 					var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
 					using(var g = Graphics.FromImage(baseImage)) {
 						foreach(var inScreen in screens) {
 							var useScreen = inScreen == screen;
-							var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
-							var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+							var backColor = AppUtility.GetToolbarPositionColor(false, useScreen);
+							var foreColor = AppUtility.GetToolbarPositionColor(true, useScreen);
 
 							var baseArea = inScreen.Bounds;
 							baseArea.Offset(basePos);

@@ -46,7 +46,6 @@
 		FontSetting TitleFontSetting { get; set; }
 		FontSetting MessageFontSetting { get; set; }
 		IconScale IconScale { get; set; }
-		Size TipPadding { get; set; }
 
 		#endregion ////////////////////////////////////
 
@@ -110,13 +109,9 @@
 
 		void Initialize()
 		{
-			Visible = false;
-
-			TipPadding = new Size(4, 4);
 			TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
 			MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
 			IconScale = IconScale.Normal;
-
 		}
 
 		#endregion ////////////////////////////////////
@@ -199,7 +194,7 @@
 				case ToolbarPosition.DesktopFloat:
 				case ToolbarPosition.DesktopTop:
 					// 下に表示
-					Location = new Point(screenPoint.X, screenPoint.Y + itemArea.Height + TipPadding.Height);
+					Location = new Point(screenPoint.X, screenPoint.Y + itemArea.Height + ToolTipPadding.Height);
 					if(toolbarItem.ToolbarPosition == ToolbarPosition.DesktopFloat) {
 						if(Location.Y + Size.Height > screen.WorkingArea.Height) {
 							goto LABEL_TOP;
@@ -210,17 +205,17 @@
 				case ToolbarPosition.DesktopBottom:
 				LABEL_TOP:
 					// 上に表示
-					Location = new Point(screenPoint.X, screenPoint.Y - Height - TipPadding.Height);
+					Location = new Point(screenPoint.X, screenPoint.Y - Height - ToolTipPadding.Height);
 					break;
 
 				case ToolbarPosition.DesktopLeft:
 					// 右に表示
-					Location = new Point(screenPoint.X + itemArea.Width + TipPadding.Width, screenPoint.Y);
+					Location = new Point(screenPoint.X + itemArea.Width + ToolTipPadding.Width, screenPoint.Y);
 					break;
 
 				case ToolbarPosition.DesktopRight:
 					// 左に表示
-					Location = new Point(screenPoint.X - Width - TipPadding.Width, screenPoint.Y);
+					Location = new Point(screenPoint.X - Width - ToolTipPadding.Width, screenPoint.Y);
 					break;
 
 				default:

@@ -3,13 +3,14 @@
 	using System;
 	using System.Drawing;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
 
 	/// <summary>
 	/// ログ設定。
 	/// </summary>
 	[Serializable]
-	public class LogSetting: Item
+	public class LogSetting: Item, ICloneable
 	{
 		public LogSetting()
 		{
@@ -58,5 +59,22 @@
 		/// 詳細部を全面表示。
 		/// </summary>
 		public bool FullDetail { get; set; }
+
+		#region ICloneable
+
+		public object Clone()
+		{
+			return new LogSetting() {
+				Visible = this.Visible,
+				Point = this.Point,
+				Size = this.Size,
+				AddShow = this.AddShow,
+				AddShowTrigger = this.AddShowTrigger,
+				Debugging = this.Debugging,
+				FullDetail = this.FullDetail,
+			};
+		}
+
+		#endregion
 	}
 }
