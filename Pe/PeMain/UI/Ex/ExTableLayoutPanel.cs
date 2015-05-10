@@ -1,15 +1,17 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI.Ex
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Forms;
-	using ContentTypeTextNet.Pe.Library.Skin;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public abstract class ExTableLayoutPanel: TableLayoutPanel
 	{ }
@@ -26,6 +28,9 @@
 
 	public class ToolbarPositionTableLayoutPanel: ExTableLayoutPanel, ISetCommonData, ICommonData
 	{
+		readonly Size imageSize = new Size(IconScale.Small.ToWidth() * 2, IconScale.Small.ToHeight());
+		readonly SizeF drawSize = new SizeF(0.2f, 0.3f);
+
 		#region variable
 
 		ToolbarPosition _toolbarPosition;
@@ -73,6 +78,9 @@
 		public void SetCommonData(CommonData commonData)
 		{
 			CommonData = commonData;
+
+			ApplyLanguage();
+			ApplySkin();
 		}
 
 		#endregion
@@ -103,6 +111,7 @@
 				command.TabStop = false;
 				command.Appearance = Appearance.Button;
 				//command.FlatStyle = FlatStyle.Popup;
+				command.Size = AppUtility.GetButtonSize(imageSize);
 				command.Click += command_Click;
 			}
 
@@ -129,10 +138,66 @@
 		}
 
 		void ApplySkin()
-		{ }
+		{
+			foreach(var command in GetCommands()) {
+				command.Image = CreateTollbarImage(command.ToolbarPosition);
+			}
+		}
 
 		void ApplyLanguage()
 		{ }
+
+		Image CreateTollbarImage(ToolbarPosition toolbarPosition)
+		{
+			using(var targetGraphics = CreateGraphics()) {
+				var image = new Bitmap(imageSize.Width, imageSize.Height, targetGraphics);
+				var drawArea = new Rectangle();
+				switch(toolbarPosition) {
+					case ToolbarPosition.DesktopFloat:
+						drawArea.Width = (int)(imageSize.Width * 0.8);
+						drawArea.Height = (int)(imageSize.Height * 0.4);
+						drawArea.X = imageSize.Width / 2 - drawArea.Width / 2;
+						drawArea.Y = imageSize.Height / 2 - drawArea.Height / 2;
+						break;
+					case ToolbarPosition.DesktopLeft:
+						drawArea.Width = (int)(imageSize.Width * drawSize.Width);
+						drawArea.Height = imageSize.Height;
+						drawArea.X = 0;
+						drawArea.Y = imageSize.Height / 2 - drawArea.Height / 2;
+						break;
+					case ToolbarPosition.DesktopRight:
+						drawArea.Width = (int)(imageSize.Width * drawSize.Width);
+						drawArea.Height = imageSize.Height;
+						drawArea.X = imageSize.Width - drawArea.Width;
+						drawArea.Y = imageSize.Height / 2 - drawArea.Height / 2;
+						break;
+					case ToolbarPosition.DesktopTop:
+						drawArea.Width = imageSize.Width;
+						drawArea.Height = (int)(imageSize.Height * drawSize.Height);
+						drawArea.X = imageSize.Width / 2 - drawArea.Width / 2;
+						drawArea.Y = 0;
+						break;
+					case ToolbarPosition.DesktopBottom:
+						drawArea.Width = imageSize.Width;
+						drawArea.Height = (int)(imageSize.Height * drawSize.Height);
+						drawArea.X = imageSize.Width / 2 - drawArea.Width / 2;
+						drawArea.Y = imageSize.Height - drawArea.Height;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+				using(var g = Graphics.FromImage(image)) {
+					using(var box = CommonData.Skin.CreateColorBoxImage(AppUtility.GetToolbarPositionColor(true, false), AppUtility.GetToolbarPositionColor(false, false), imageSize)) {
+						g.DrawImage(box, Point.Empty);
+					}
+					using(var box = CommonData.Skin.CreateColorBoxImage(AppUtility.GetToolbarPositionColor(true, true), AppUtility.GetToolbarPositionColor(false, true), drawArea.Size)) {
+						g.DrawImage(box, drawArea.Location);
+					}
+				}
+
+				return image;
+			}
+		}
 
 		#endregion
 

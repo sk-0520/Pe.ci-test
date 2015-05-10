@@ -972,6 +972,7 @@
 
 			// button
 			var itemPositionPanel = new ToolbarPositionToolStripControl();
+			itemPositionPanel.SetCommonData(CommonData);
 
 			var menuList = new List<ToolStripItem>() {
 				itemPositionPanel,
