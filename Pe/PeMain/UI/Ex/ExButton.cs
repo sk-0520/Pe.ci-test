@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
@@ -110,5 +111,14 @@
 			Image = CreateColorImage();
 			oldImage.ToDispose();
 		}
+	}
+
+	public class ToolbarPositionButton: ExButton
+	{
+		#region property
+
+		public ToolbarPosition ToolbarPosition { get; set; }
+
+		#endregion
 	}
 }

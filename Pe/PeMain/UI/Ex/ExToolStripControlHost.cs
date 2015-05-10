@@ -2,6 +2,7 @@
 {
 	using System;
 using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
 using ContentTypeTextNet.Pe.PeMain.Data;
 using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -22,9 +23,28 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		{ }
 	}
 
+	public class ToolbarPositionChangedEventArgs: EventArgs
+	{
+		public ToolbarPositionChangedEventArgs(ToolbarPosition toolbarPosition)
+		{
+			ToolbarPosition = toolbarPosition;
+			Cancel = false;
+		}
+
+		public ToolbarPosition ToolbarPosition { get; private set; }
+		public bool Cancel { get; set; }
+	}
+
 	public class ToolbarPositionToolStripControl: ExToolStripControlHost, ISetCommonData, ICommonData
 	{
-		public ToolbarPositionToolStripControl(): base(new ToolbarPositionTableLayoutPanel())
+		#region event
+
+		public event EventHandler<ToolbarPositionChangedEventArgs> ToolbarPositionChanged = delegate { };
+
+		#endregion
+
+		public ToolbarPositionToolStripControl()
+			: base(new ToolbarPositionTableLayoutPanel())
 		{
 			Initialize();
 		}
@@ -45,6 +65,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		void Initialize()
 		{
 			ToolbarPositionTableLayoutPanel = (ToolbarPositionTableLayoutPanel)Control;
+			ToolbarPositionTableLayoutPanel.ToolbarPositionClick += ToolbarPositionTableLayoutPanel_ToolbarPositionChanged;
 		}
 
 		#endregion
@@ -61,6 +82,18 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		#region function
 		#endregion
+
+		void ToolbarPositionTableLayoutPanel_ToolbarPositionChanged(object sender, ToolbarPositionClickEventArgs e)
+		{
+			var mainEvent = new ToolbarPositionChangedEventArgs(e.ToolbarPosition);
+			ToolbarPositionChanged(this, mainEvent);
+
+			var menu = Owner as ToolStripDropDown;
+			if(menu != null && !mainEvent.Cancel) {
+				menu.Close();
+			}
+
+		}
 
 	}
 }
