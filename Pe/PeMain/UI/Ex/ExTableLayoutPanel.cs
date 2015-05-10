@@ -35,6 +35,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		ToolbarPosition _toolbarPosition;
 
+		Label _labelToolbar;
 		ToolbarPositionRadioButton _selectDesktopFloat;
 		ToolbarPositionRadioButton _selectDesktopLeft;
 		ToolbarPositionRadioButton _selectDesktopRight;
@@ -89,6 +90,11 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 
 		void Initialize()
 		{
+			this._labelToolbar = new Label() {
+				Text = ":enum/toolbar-position",
+				AutoSize = true,
+				Margin = Padding.Empty,
+			};
 			this._selectDesktopFloat = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopFloat,
 			};
@@ -115,11 +121,15 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 				control.Click += command_Click;
 			}
 
-			Controls.Add(this._selectDesktopTop, 1, 0);
-			Controls.Add(this._selectDesktopLeft, 0, 1);
-			Controls.Add(this._selectDesktopFloat, 1, 1);
-			Controls.Add(this._selectDesktopRight, 2, 1);
-			Controls.Add(this._selectDesktopBottom, 1, 2);
+			
+			Controls.Add(this._labelToolbar, 0, 0);
+			Controls.Add(this._selectDesktopTop, 1, 1);
+			Controls.Add(this._selectDesktopLeft, 0, 2);
+			Controls.Add(this._selectDesktopFloat, 1, 2);
+			Controls.Add(this._selectDesktopRight, 2, 2);
+			Controls.Add(this._selectDesktopBottom, 1, 3);
+
+			SetColumnSpan(this._labelToolbar, 3);
 
 			AutoSize = true;
 			Size = Size.Empty;
@@ -148,7 +158,9 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		}
 
 		void ApplyLanguage()
-		{ }
+		{
+			this._labelToolbar.SetLanguage(CommonData.Language);
+		}
 
 		Image CreateToolbarImage(ToolbarPosition toolbarPosition)
 		{
