@@ -71,10 +71,10 @@
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="5fc6d90edeaf354cdbf1df0cf5f2148b6090294a">
 				<message>#264: クリップボードのファイル一覧で選択ファイルにコンテキストメニューをつける</message>
 			</note>
-			<note rev="">
+			<note rev="184425d4782c094f88123867a72e2b7acd023db9">
 				<message>ツールバーのメインボタンに表示するツールバー位置選択項目を視覚的にした</message>
 			</note>
 			<note rev="">
@@ -83,13 +83,13 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="d39fcc84fc87d9607737668520476b34a907e860">
 				<message>#266: ノートの選択したフォントが反映されない場合がある</message>
 				<comments>
 					<comment>ちゃんとできてるのかちと不安</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="7e0e3e51da5d34c4875ac304ca69723f770e7ee3">
 				<message>#251: イメージアイテムチェック時にAccessViolationException</message>
 				<comments>
 					<comment>あっかん、再現できん</comment>
@@ -103,7 +103,7 @@
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="a4233e81ee1e413f596ec24b6016678129a0f779">
 				<message>#239: 設定ウィンドウ構築処理が初期実装継ぎ接ぎで開発側泣きそう</message>
 			</note>
 			<note rev="">
