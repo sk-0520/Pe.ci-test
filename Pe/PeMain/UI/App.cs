@@ -2094,13 +2094,13 @@
 				if(menuItem.DropDownItems.ContainsKey(screen.DeviceName)) {
 					var screenMenuItem = (ToolStripMenuItem)menuItem.DropDownItems[screen.DeviceName];
 					// 各エリアの描画
-					var alpha = 80;
+					//var alpha = 80;
 					var baseImage = new Bitmap(iconSize.Width, iconSize.Height);
 					using(var g = Graphics.FromImage(baseImage)) {
 						foreach(var inScreen in screens) {
 							var useScreen = inScreen == screen;
-							var backColor = useScreen ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
-							var foreColor = useScreen ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+							var backColor = AppUtility.GetToolbarPositionColor(false, useScreen);
+							var foreColor = AppUtility.GetToolbarPositionColor(true, useScreen);
 
 							var baseArea = inScreen.Bounds;
 							baseArea.Offset(basePos);

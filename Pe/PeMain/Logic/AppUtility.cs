@@ -11,6 +11,7 @@
 	using System.Runtime.CompilerServices;
 	using System.Threading;
 	using System.Windows.Forms;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Skin.SystemSkin;
 	using ContentTypeTextNet.Pe.Library.Utility;
@@ -280,6 +281,24 @@
 					return hIcon.ToManagedIcon();
 				}
 			}
+		}
+
+		public static Color GetToolbarPositionColor(bool isFore, bool isMain)
+		{
+			var alpha = 80;
+			if(isFore) {
+				return isMain ? SystemColors.ActiveCaptionText : Color.FromArgb(alpha, SystemColors.InactiveCaptionText);
+			} else {
+				return isMain ? SystemColors.ActiveCaption : Color.FromArgb(alpha, SystemColors.InactiveCaption);
+			}
+		}
+
+		public static Size GetButtonSize(Size size)
+		{
+			return new Size(
+				size.Width + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
+				size.Height + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
+			);
 		}
 	}
 }

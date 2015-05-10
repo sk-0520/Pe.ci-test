@@ -327,10 +327,11 @@
 
 		Size GetButtonSize()
 		{
-			return new Size(
-				IconScale.Small.ToWidth() + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
-				IconScale.Small.ToHeight() + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
-			);
+			//return new Size(
+			//	IconScale.Small.ToWidth() + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
+			//	IconScale.Small.ToHeight() + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
+			//);
+			return AppUtility.GetButtonSize(IconScale.Small.ToSize());
 		}
 		
 		//public void SetCommonData(CommonData commonData)
