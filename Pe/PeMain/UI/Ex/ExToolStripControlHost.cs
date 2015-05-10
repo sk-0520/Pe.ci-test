@@ -58,6 +58,12 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		public CommonData CommonData { get; private set; }
 		protected ToolbarPositionTableLayoutPanel ToolbarPositionTableLayoutPanel { get; private set; }
 
+		public ToolbarPosition ToolbarPosition
+		{
+			get { return ToolbarPositionTableLayoutPanel.ToolbarPosition; }
+			set { ToolbarPositionTableLayoutPanel.ToolbarPosition = value; }
+		}
+
 		#endregion
 
 		#region initialize

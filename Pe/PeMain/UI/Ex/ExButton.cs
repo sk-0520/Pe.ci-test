@@ -112,13 +112,4 @@
 			oldImage.ToDispose();
 		}
 	}
-
-	public class ToolbarPositionButton: ExButton
-	{
-		#region property
-
-		public ToolbarPosition ToolbarPosition { get; set; }
-
-		#endregion
-	}
 }

@@ -26,6 +26,12 @@
 
 	public class ToolbarPositionTableLayoutPanel: ExTableLayoutPanel, ISetCommonData, ICommonData
 	{
+		#region variable
+
+		ToolbarPosition _toolbarPosition;
+
+		#endregion
+
 		#region event
 
 		public event EventHandler<ToolbarPositionClickEventArgs> ToolbarPositionClick = delegate { };
@@ -39,13 +45,26 @@
 
 		#region property
 
-		public ToolbarPositionButton CommandDesktopFloat { get; private set; }
-		public ToolbarPositionButton CommandDesktopLeft { get; private set; }
-		public ToolbarPositionButton CommandDesktopRight { get; private set; }
-		public ToolbarPositionButton CommandDesktopTop { get; private set; }
-		public ToolbarPositionButton CommandDesktopBottom { get; private set; }
+		public ToolbarPositionRadioButton CommandDesktopFloat { get; private set; }
+		public ToolbarPositionRadioButton CommandDesktopLeft { get; private set; }
+		public ToolbarPositionRadioButton CommandDesktopRight { get; private set; }
+		public ToolbarPositionRadioButton CommandDesktopTop { get; private set; }
+		public ToolbarPositionRadioButton CommandDesktopBottom { get; private set; }
 
 		public CommonData CommonData { get; private set; }
+
+		public ToolbarPosition ToolbarPosition
+		{
+			get { return this._toolbarPosition; }
+			set
+			{
+				this._toolbarPosition = value;
+				var commands = GetCommands()
+					.Single(c => c.ToolbarPosition == value)
+					.Checked = true
+				;
+			}
+		}
 
 		#endregion
 
@@ -53,7 +72,7 @@
 
 		public void SetCommonData(CommonData commonData)
 		{
-
+			CommonData = commonData;
 		}
 
 		#endregion
@@ -62,24 +81,28 @@
 
 		void Initialize()
 		{
-			CommandDesktopFloat = new ToolbarPositionButton() {
+			CommandDesktopFloat = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopFloat,
 			};
-			CommandDesktopLeft = new ToolbarPositionButton() {
+			CommandDesktopLeft = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopLeft,
 			};
-			CommandDesktopRight = new ToolbarPositionButton() {
+			CommandDesktopRight = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopRight,
 			};
-			CommandDesktopTop = new ToolbarPositionButton() {
+			CommandDesktopTop = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopTop,
 			};
-			CommandDesktopBottom = new ToolbarPositionButton() {
+			CommandDesktopBottom = new ToolbarPositionRadioButton() {
 				ToolbarPosition = ToolbarPosition.DesktopBottom,
 			};
 
+			ToolbarPosition = ToolbarPosition.DesktopFloat;
+
 			foreach(var command in GetCommands()) {
 				command.TabStop = false;
+				command.Appearance = Appearance.Button;
+				//command.FlatStyle = FlatStyle.Popup;
 				command.Click += command_Click;
 			}
 
@@ -94,7 +117,7 @@
 
 		#region function
 
-		IEnumerable<ToolbarPositionButton> GetCommands()
+		IEnumerable<ToolbarPositionRadioButton> GetCommands()
 		{
 			return new[] {
 				CommandDesktopFloat,
@@ -105,11 +128,17 @@
 			};
 		}
 
+		void ApplySkin()
+		{ }
+
+		void ApplyLanguage()
+		{ }
+
 		#endregion
 
 		void command_Click(object sender, EventArgs e)
 		{
-			var command = (ToolbarPositionButton)sender;
+			var command = (ToolbarPositionRadioButton)sender;
 			ToolbarPositionClick(this, new ToolbarPositionClickEventArgs(command.ToolbarPosition));
 		}
 
