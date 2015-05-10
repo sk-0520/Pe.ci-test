@@ -28,11 +28,12 @@
 	public partial class ToolbarForm: CommonAppbarForm
 	{
 		#region define
-		const string menuNameMainPosDesktopFloat = "desktop_float";
-		const string menuNameMainPosDesktopTop = "desktop_top";
-		const string menuNameMainPosDesktopBottom = "desktop_bottom";
-		const string menuNameMainPosDesktopLeft = "desktop_left";
-		const string menuNameMainPosDesktopRight = "desktop_right";
+		//const string menuNameMainPosDesktopFloat = "desktop_float";
+		//const string menuNameMainPosDesktopTop = "desktop_top";
+		//const string menuNameMainPosDesktopBottom = "desktop_bottom";
+		//const string menuNameMainPosDesktopLeft = "desktop_left";
+		//const string menuNameMainPosDesktopRight = "desktop_right";
+		const string menuNameMainPosition = "toolbar_position";
 		const string menuNameMainTopmost = "topmost";
 		const string menuNameMainAutoHide = "autohide";
 		const string menuNameMainHidden = "hidden";
@@ -888,53 +889,63 @@
 		/// <param name="parentItem"></param>
 		void AttachmentToolbarMenu(ToolStripDropDownItem parentItem)
 		{
-			// フロート
-			var posFloatItem = new ToolStripMenuItem() {
-				Name = menuNameMainPosDesktopFloat,
-				Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language),
-			};
-			posFloatItem.Click += (object sender, EventArgs e) => {
-				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
-				ApplySettingPosition();
-			};
+			//// フロート
+			//var posFloatItem = new ToolStripMenuItem() {
+			//	Name = menuNameMainPosDesktopFloat,
+			//	Text = ToolbarPosition.DesktopFloat.ToText(CommonData.Language),
+			//};
+			//posFloatItem.Click += (object sender, EventArgs e) => {
+			//	UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopFloat;
+			//	ApplySettingPosition();
+			//};
 
-			// デスクトップ：上
-			var posTopItem = new ToolStripMenuItem() {
-				Name = menuNameMainPosDesktopTop,
-				Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language),
-			};
-			posTopItem.Click += (object sender, EventArgs e) => {
-				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
-				ApplySettingPosition();
-			};
+			//// デスクトップ：上
+			//var posTopItem = new ToolStripMenuItem() {
+			//	Name = menuNameMainPosDesktopTop,
+			//	Text = ToolbarPosition.DesktopTop.ToText(CommonData.Language),
+			//};
+			//posTopItem.Click += (object sender, EventArgs e) => {
+			//	UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopTop;
+			//	ApplySettingPosition();
+			//};
 
-			// デスクトップ：下
-			var posBottomItem = new ToolStripMenuItem() {
-				Name = menuNameMainPosDesktopBottom,
-				Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language),
-			};
-			posBottomItem.Click += (object sender, EventArgs e) => {
-				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
-				ApplySettingPosition();
-			};
+			//// デスクトップ：下
+			//var posBottomItem = new ToolStripMenuItem() {
+			//	Name = menuNameMainPosDesktopBottom,
+			//	Text = ToolbarPosition.DesktopBottom.ToText(CommonData.Language),
+			//};
+			//posBottomItem.Click += (object sender, EventArgs e) => {
+			//	UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopBottom;
+			//	ApplySettingPosition();
+			//};
 
-			// デスクトップ：左
-			var posLeftItem = new ToolStripMenuItem() {
-				Name = menuNameMainPosDesktopLeft,
-				Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language),
-			};
-			posLeftItem.Click += (object sender, EventArgs e) => {
-				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
-				ApplySettingPosition();
-			};
+			//// デスクトップ：左
+			//var posLeftItem = new ToolStripMenuItem() {
+			//	Name = menuNameMainPosDesktopLeft,
+			//	Text = ToolbarPosition.DesktopLeft.ToText(CommonData.Language),
+			//};
+			//posLeftItem.Click += (object sender, EventArgs e) => {
+			//	UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopLeft;
+			//	ApplySettingPosition();
+			//};
 
-			// デスクトップ：右
-			var posRightItem = new ToolStripMenuItem() {
-				Name = menuNameMainPosDesktopRight,
-				Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language),
+			//// デスクトップ：右
+			//var posRightItem = new ToolStripMenuItem() {
+			//	Name = menuNameMainPosDesktopRight,
+			//	Text = ToolbarPosition.DesktopRight.ToText(CommonData.Language),
+			//};
+			//posRightItem.Click += (object sender, EventArgs e) => {
+			//	UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
+			//	ApplySettingPosition();
+			//};
+
+			// 表示位置
+			var itemPositionPanel = new ToolbarPositionToolStripControl() {
+				Name = menuNameMainPosition,
 			};
-			posRightItem.Click += (object sender, EventArgs e) => {
-				UsingToolbarItem.ToolbarPosition = ToolbarPosition.DesktopRight;
+			itemPositionPanel.SetCommonData(CommonData);
+			itemPositionPanel.ToolbarPositionChanged += (object sender, ToolbarPositionChangedEventArgs e) => {
+				UsingToolbarItem.ToolbarPosition = e.ToolbarPosition;
 				ApplySettingPosition();
 			};
 
@@ -970,17 +981,13 @@
 				Name = menuNameMainGroupSeparator,
 			};
 
-			// button
-			var itemPositionPanel = new ToolbarPositionToolStripControl();
-			itemPositionPanel.SetCommonData(CommonData);
-
 			var menuList = new List<ToolStripItem>() {
 				itemPositionPanel,
-				posFloatItem,
-				posTopItem,
-				posBottomItem,
-				posLeftItem,
-				posRightItem,
+				//posFloatItem,
+				//posTopItem,
+				//posBottomItem,
+				//posLeftItem,
+				//posRightItem,
 				new DisableCloseToolStripSeparator(),
 				topmostItem,
 				autoHideItem,
@@ -1968,28 +1975,30 @@
 		{
 			var parentItem = (ToolStripDropDownItem)sender;
 
-			var posFloatItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopFloat];
-			var posTopItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopTop];
-			var posBottomItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopBottom];
-			var posLeftItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopLeft];
-			var posRightItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopRight];
+			//var posFloatItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopFloat];
+			//var posTopItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopTop];
+			//var posBottomItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopBottom];
+			//var posLeftItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopLeft];
+			//var posRightItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainPosDesktopRight];
+			var positionItem = (ToolbarPositionToolStripControl)parentItem.DropDownItems[menuNameMainPosition];
 			var topmostItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainTopmost];
 			var autoHideItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainAutoHide];
 			var hiddenItem = (ToolStripMenuItem)parentItem.DropDownItems[menuNameMainHidden];
 
 			// ウィンドウ位置
-			var windowPosNameKey = new Dictionary<ToolStripMenuItem, ToolbarPosition>() {
-					{posFloatItem,  ToolbarPosition.DesktopFloat},
-					{posTopItem,    ToolbarPosition.DesktopTop},
-					{posBottomItem, ToolbarPosition.DesktopBottom},
-					{posLeftItem,   ToolbarPosition.DesktopLeft},
-					{posRightItem,  ToolbarPosition.DesktopRight},
-				};
-			foreach(var pair in windowPosNameKey) {
-				pair.Key.CheckState = CheckState.Indeterminate;
+			//var windowPosNameKey = new Dictionary<ToolStripMenuItem, ToolbarPosition>() {
+			//		{posFloatItem,  ToolbarPosition.DesktopFloat},
+			//		{posTopItem,    ToolbarPosition.DesktopTop},
+			//		{posBottomItem, ToolbarPosition.DesktopBottom},
+			//		{posLeftItem,   ToolbarPosition.DesktopLeft},
+			//		{posRightItem,  ToolbarPosition.DesktopRight},
+			//	};
+			//foreach(var pair in windowPosNameKey) {
+			//	pair.Key.CheckState = CheckState.Indeterminate;
 
-				pair.Key.Checked = UsingToolbarItem.ToolbarPosition == pair.Value;
-			}
+			//	pair.Key.Checked = UsingToolbarItem.ToolbarPosition == pair.Value;
+			//}
+			positionItem.ToolbarPosition = UsingToolbarItem.ToolbarPosition;
 
 			// 最前面表示
 			topmostItem.Checked = UsingToolbarItem.Topmost;

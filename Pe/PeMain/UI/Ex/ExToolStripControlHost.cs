@@ -28,7 +28,6 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		public ToolbarPositionChangedEventArgs(ToolbarPosition toolbarPosition)
 		{
 			ToolbarPosition = toolbarPosition;
-			Cancel = false;
 		}
 
 		public ToolbarPosition ToolbarPosition { get; private set; }
@@ -92,13 +91,13 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		void ToolbarPositionTableLayoutPanel_ToolbarPositionChanged(object sender, ToolbarPositionClickEventArgs e)
 		{
 			var mainEvent = new ToolbarPositionChangedEventArgs(e.ToolbarPosition);
-			ToolbarPositionChanged(this, mainEvent);
 
 			var menu = Owner as ToolStripDropDown;
-			if(menu != null && !mainEvent.Cancel) {
+			if(menu != null) {
 				menu.Close();
 			}
 
+			ToolbarPositionChanged(this, mainEvent);
 		}
 
 	}
