@@ -90,7 +90,12 @@
 				</comments>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#251: イメージアイテムチェック時にAccessViolationException</message>
+				<comments>
+					<comment>あっかん、再現できん</comment>
+					<comment>例外ガン無視する</comment>
+					<comment>Exception 捕まえずに try { ... } catch(AccessViolationException) { ... } で自重した私をほめてください</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
