@@ -856,6 +856,7 @@
 			ExportSystemEnvSetting(CommonData.MainSetting.SystemEnvironment);
 			ExportSkinSetting(CommonData.MainSetting.Skin);
 			ExportLanguageSetting(CommonData.MainSetting);
+			ExportLauncherSetting(CommonData.MainSetting.Launcher);
 			ExportStreamSetting(CommonData.MainSetting.Stream);
 			ExportNoteSetting(CommonData.MainSetting.Note);
 			ExportToolbarSetting(CommonData.MainSetting.Toolbar);
@@ -929,13 +930,13 @@
 		//	commandSetting.FontSetting = this.commandCommandFont.FontSetting;
 		//}
 
-		//void ExportLauncherSetting(LauncherSetting setting)
-		//{
-		//	setting.Items.Clear();
-		//	foreach(var item in this.selecterLauncher.Items) {
-		//		setting.Items.Add(item);
-		//	}
-		//}
+		void ExportLauncherSetting(LauncherSetting setting)
+		{
+			setting.Items.Clear();
+			foreach(var item in this.selecterLauncher.Items) {
+				setting.Items.Add(item);
+			}
+		}
 
 		//void ExportLogSetting(LogSetting logSetting)
 		//{
