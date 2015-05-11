@@ -59,7 +59,7 @@
 	<log date="2015/05/11" version="0.59.1">
 		<group type="note">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="666ba18350db2b4f3cba71c96e24e1dbb6fe0e47">
 				<message>ごっめん！ 0.59.0 で #239 死んでた！！</message>
 			</note>
 		</group>
