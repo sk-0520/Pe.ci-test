@@ -1,20 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.UI
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Drawing;
-	using System.IO;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using System.Windows.Forms;
-	using ContentTypeTextNet.Pe.Library.Skin;
-	using ContentTypeTextNet.Pe.Library.Utility;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Kind;
-	using ContentTypeTextNet.Pe.PeMain.Logic;
-	using ContentTypeTextNet.Pe.PeMain.UI.Ex;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ContentTypeTextNet.Pe.Library.Skin;
+using ContentTypeTextNet.Pe.Library.Utility;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Kind;
+using ContentTypeTextNet.Pe.PeMain.Logic;
+using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 	/// <summary>
 	/// 標準出力取得。
@@ -53,6 +55,8 @@
 
 		Task OutputDataTask { get; set; }
 		Task ErrorDataTask { get; set; }
+		CancellationTokenSource OutputDataCancel { get; set; }
+		CancellationTokenSource ErrorDataCancel { get; set; }
 
 		#endregion ////////////////////////////////////
 
@@ -145,20 +149,56 @@
 			*/
 		}
 
-		public  void StartStream()
+		public void StartStream()
 		{
-			Process.BeginOutputReadLine();
-			Process.BeginErrorReadLine();
+			//Process.BeginOutputReadLine();
+			//Process.BeginErrorReadLine();
+			OutputDataCancel = new CancellationTokenSource();
+			ErrorDataCancel = new CancellationTokenSource();
 
-			OutputDataTask = Task.Run(() => ReceiveOutput(true));
-			ErrorDataTask = Task.Run(() => ReceiveOutput(false));
+			OutputDataTask = Task.Run(() => ReceiveOutput(Process.StandardOutput, OutputDataCancel, true), OutputDataCancel.Token);
+			ErrorDataTask = Task.Run(() => ReceiveOutput(Process.StandardError, ErrorDataCancel, false), ErrorDataCancel.Token);
 		}
 
-		void ReceiveOutput(bool stdOutput)
+		void ReceiveOutput(StreamReader reader, CancellationTokenSource cancel, bool stdOutput)
 		{
-			while(true) {
-				Debug.WriteLine("{0} - {1}", stdOutput, DateTime.Now);
+			const int maxBuffer = 1024;
+			char[] buffer = new char[maxBuffer];
+
+
+			while((!reader.EndOfStream || !IsDisposed) && !cancel.IsCancellationRequested) {
+				//var readContinue = true;
+				var sb = new StringBuilder();
+				while(reader.Peek() >= 0) {
+					sb.Append((char)reader.Read());
+				}
+				if(sb.Length==0) {
+					continue;
+				}
+
+				//var readLength = reader.Read(buffer, 0, buffer.Length);
+				//if(readLength == 0) {
+				//	break;
+				//}
+				//var line = string.Concat(buffer.Take(readLength).ToArray());
+				var line = sb.ToString();
+
+				this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
+					var startPosition = this.inputOutput.TextLength;
+					this.inputOutput.AppendText(line);
+					if(!stdOutput) {
+						// 標準エラー
+						this.inputOutput.Select(startPosition, line.Length);
+						this.inputOutput.SelectionColor = CommonData.MainSetting.Stream.ErrorColor.Fore.Color;
+						this.inputOutput.SelectionBackColor = CommonData.MainSetting.Stream.ErrorColor.Back.Color;
+					}
+					this.inputOutput.SelectionStart = this.inputOutput.TextLength;
+					OutputLastPosition = this.inputOutput.TextLength;
+					InputStartPosition = -1;
+					this.inputOutput.ScrollToCaret();
+				});
 			}
+
 		}
 
 
@@ -176,34 +216,34 @@
 			this.inputOutput.BackColor = CommonData.MainSetting.Stream.GeneralColor.Back.Color;
 		}
 
-		void OutputStreamReceived(string line, bool stdOutput)
-		{
-			/* //#20 retry
-			if(IsDisposed) {
-				// #20
-				return;
-			}
-			 */
-			if(line == null) {
-				// 最終受信
-				return;
-			}
+		//void OutputStreamReceived(string line, bool stdOutput)
+		//{
+		//	/* //#20 retry
+		//	if(IsDisposed) {
+		//		// #20
+		//		return;
+		//	}
+		//	 */
+		//	if(line == null) {
+		//		// 最終受信
+		//		return;
+		//	}
 
-			this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
-				var startPosition = this.inputOutput.TextLength;
-				this.inputOutput.AppendText(line + Environment.NewLine);
-				if(!stdOutput) {
-					// 標準エラー
-					this.inputOutput.Select(startPosition, line.Length);
-					this.inputOutput.SelectionColor = CommonData.MainSetting.Stream.ErrorColor.Fore.Color;
-					this.inputOutput.SelectionBackColor = CommonData.MainSetting.Stream.ErrorColor.Back.Color;
-				}
-				this.inputOutput.SelectionStart = this.inputOutput.TextLength;
-				OutputLastPosition = this.inputOutput.TextLength;
-				InputStartPosition = -1;
-				this.inputOutput.ScrollToCaret();
-			});
-		}
+		//	this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
+		//		var startPosition = this.inputOutput.TextLength;
+		//		this.inputOutput.AppendText(line + Environment.NewLine);
+		//		if(!stdOutput) {
+		//			// 標準エラー
+		//			this.inputOutput.Select(startPosition, line.Length);
+		//			this.inputOutput.SelectionColor = CommonData.MainSetting.Stream.ErrorColor.Fore.Color;
+		//			this.inputOutput.SelectionBackColor = CommonData.MainSetting.Stream.ErrorColor.Back.Color;
+		//		}
+		//		this.inputOutput.SelectionStart = this.inputOutput.TextLength;
+		//		OutputLastPosition = this.inputOutput.TextLength;
+		//		InputStartPosition = -1;
+		//		this.inputOutput.ScrollToCaret();
+		//	});
+		//}
 
 		void RefreshProperty()
 		{
@@ -222,6 +262,12 @@
 
 			//Process.OutputDataReceived -= Process_OutputDataReceived;
 			//Process.ErrorDataReceived -= Process_ErrorDataReceived;
+
+			OutputDataCancel.Cancel();
+			ErrorDataCancel.Cancel();
+
+			OutputDataTask.ToDispose();
+			ErrorDataTask.ToDispose();
 
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
@@ -266,15 +312,15 @@
 		}
 		#endregion ////////////////////////////////////
 
-		void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
-		{
-			OutputStreamReceived(e.Data, true);
-		}
+		//void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+		//{
+		//	OutputStreamReceived(e.Data, true);
+		//}
 
-		void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-		{
-			OutputStreamReceived(e.Data, false);
-		}
+		//void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+		//{
+		//	OutputStreamReceived(e.Data, false);
+		//}
 		
 		
 		void ToolStream_refresh_Click(object sender, EventArgs e)
