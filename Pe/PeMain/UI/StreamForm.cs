@@ -6,6 +6,7 @@
 	using System.Drawing;
 	using System.IO;
 	using System.Linq;
+	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
@@ -49,6 +50,9 @@
 
 		int InputStartPosition { get; set; }
 		int OutputLastPosition { get; set; }
+
+		Task OutputDataTask { get; set; }
+		Task ErrorDataTask { get; set; }
 
 		#endregion ////////////////////////////////////
 
@@ -122,8 +126,8 @@
 			Process.EnableRaisingEvents = true;
 			Process.Exited += Process_Exited;
 
-			Process.OutputDataReceived += Process_OutputDataReceived;
-			Process.ErrorDataReceived += Process_ErrorDataReceived;
+			//Process.OutputDataReceived += Process_OutputDataReceived;
+			//Process.ErrorDataReceived += Process_ErrorDataReceived;
 
 			/*
 			// アイコン設定、アイテムに設定されているアイコンとは別に実行プロセスのアイコンを指定する
@@ -141,11 +145,23 @@
 			*/
 		}
 
-		public void StartStream()
+		public  void StartStream()
 		{
 			Process.BeginOutputReadLine();
 			Process.BeginErrorReadLine();
+
+			OutputDataTask = Task.Run(() => ReceiveOutput(true));
+			ErrorDataTask = Task.Run(() => ReceiveOutput(false));
 		}
+
+		void ReceiveOutput(bool stdOutput)
+		{
+			while(true) {
+				Debug.WriteLine("{0} - {1}", stdOutput, DateTime.Now);
+			}
+		}
+
+
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
@@ -204,8 +220,8 @@
 			}
 			 */
 
-			Process.OutputDataReceived -= Process_OutputDataReceived;
-			Process.ErrorDataReceived -= Process_ErrorDataReceived;
+			//Process.OutputDataReceived -= Process_OutputDataReceived;
+			//Process.ErrorDataReceived -= Process_ErrorDataReceived;
 
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
