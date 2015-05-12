@@ -68,7 +68,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="5c609c1ebf0473cf194349f7c70b5f971889a050">
 				<message>#269: テキストテンプレート名が保存されない</message>
 			</note>
 		</group>
