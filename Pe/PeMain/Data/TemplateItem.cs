@@ -40,6 +40,7 @@
 		public object Clone()
 		{
 			return new TemplateItem() {
+				Name = this.Name,
 				ReplaceMode = this.ReplaceMode,
 				Program = this.Program,
 				Source = this.Source
