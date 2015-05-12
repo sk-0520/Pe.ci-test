@@ -56,7 +56,7 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.59.2" type="rc">
+	<log date="YYYY/MM/DD" version="0.59.3" type="rc">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
@@ -103,6 +103,24 @@
 			</note>
 			<note rev="">
 				<message></message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
+	<log date="2015/05/12" version="0.59.2">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>0.59.0, 0.59.1 を経てなお #239 が死んでた</message>
+				<comments>
+					<comment>ごめりんこ☆（ゝω・）vｷｬﾋﾟ</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="5c609c1ebf0473cf194349f7c70b5f971889a050">
+				<message>#269: テキストテンプレート名が保存されない</message>
 			</note>
 		</group>
 	</log>
