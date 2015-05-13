@@ -24,6 +24,27 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 	public partial class StreamForm : CommonForm
 	{
 		#region define
+
+		class TaskShaerd: IDisposable
+		{
+			public TaskShaerd()
+			{
+				Cancel = new CancellationTokenSource();
+			}
+			public Task Task {get;set;}
+			public CancellationTokenSource Cancel {get;set;}
+			public bool Stop {get;set;}
+
+			public void Dispose()
+			{
+				Stop = true;
+
+				if(!Cancel.IsCancellationRequested) {
+					Cancel.Dispose();
+				}
+				Task.ToDispose();
+			}
+		}
 		#endregion ////////////////////////////////////
 
 		#region static
@@ -53,10 +74,13 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 		int InputStartPosition { get; set; }
 		int OutputLastPosition { get; set; }
 
-		Task OutputDataTask { get; set; }
-		Task ErrorDataTask { get; set; }
-		CancellationTokenSource OutputDataCancel { get; set; }
-		CancellationTokenSource ErrorDataCancel { get; set; }
+		//Task OutputDataTask { get; set; }
+		//Task ErrorDataTask { get; set; }
+		//CancellationTokenSource OutputDataCancel { get; set; }
+		//CancellationTokenSource ErrorDataCancel { get; set; }
+
+		TaskShaerd OutputShaerd {get;set;}
+		TaskShaerd ErrorShaerd {get;set;}
 
 		#endregion ////////////////////////////////////
 
@@ -153,35 +177,70 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 		{
 			//Process.BeginOutputReadLine();
 			//Process.BeginErrorReadLine();
-			OutputDataCancel = new CancellationTokenSource();
-			ErrorDataCancel = new CancellationTokenSource();
+			//OutputDataCancel = new CancellationTokenSource();
+			//ErrorDataCancel = new CancellationTokenSource();
 
-			OutputDataTask = Task.Run(() => ReceiveOutput(Process.StandardOutput, OutputDataCancel, true), OutputDataCancel.Token);
-			ErrorDataTask = Task.Run(() => ReceiveOutput(Process.StandardError, ErrorDataCancel, false), ErrorDataCancel.Token);
+
+			//OutputDataTask = Task.Run(() => ReceiveOutput(Process.StandardOutput, OutputDataCancel, true), OutputDataCancel.Token);
+			//ErrorDataTask = Task.Run(() => ReceiveOutput(Process.StandardError, ErrorDataCancel, false), ErrorDataCancel.Token);
+
+			OutputShaerd = new TaskShaerd();
+			ErrorShaerd = new TaskShaerd();
+
+			OutputShaerd.Task = Task.Run(() => ReceiveOutput(Process.StandardOutput, OutputShaerd, true), OutputShaerd.Cancel.Token);
+			ErrorShaerd.Task = Task.Run(() => ReceiveOutput(Process.StandardError, ErrorShaerd, false), ErrorShaerd.Cancel.Token);
 		}
 
-		void ReceiveOutput(StreamReader reader, CancellationTokenSource cancel, bool stdOutput)
+		void ReceiveOutput(StreamReader reader, TaskShaerd taskShared, bool stdOutput)
 		{
 			const int maxBuffer = 1024;
 			char[] buffer = new char[maxBuffer];
 
 
-			while((!reader.EndOfStream || !IsDisposed) && !cancel.IsCancellationRequested) {
-				//var readContinue = true;
-				var sb = new StringBuilder();
-				while(reader.Peek() >= 0) {
-					sb.Append((char)reader.Read());
+			while(true) {
+				//Thread.Sleep(TimeSpan.FromMilliseconds(25));
+
+				if(OutputShaerd.Stop) {
+					break;
 				}
-				if(sb.Length==0) {
-					continue;
+				if(IsDisposed) {
+					break;
+				}
+				/*
+				if(reader.EndOfStream) {
+					break;
+				}
+				*/
+				if(taskShared.Cancel.IsCancellationRequested) {
+					break;
+				}
+				
+				////var readContinue = true;
+				//var sb = new StringBuilder();
+				//while(reader.Peek() >= 0) {
+				//	sb.Append((char)reader.Read());
+				//	Thread.Sleep(TimeSpan.FromMilliseconds(10));
+				//}
+				//if(sb.Length==0) {
+				//	continue;
+				//}
+
+				////var readLength = reader.Read(buffer, 0, buffer.Length);
+				////if(readLength == 0) {
+				////	break;
+				////}
+				////var line = string.Concat(buffer.Take(readLength).ToArray());
+				//var line = sb.ToString();
+
+				//Debug.WriteLine(line);
+				var readLength = reader.ReadAsync(buffer, 0, buffer.Length);
+				readLength.Wait(TimeSpan.FromMilliseconds(1000));
+
+				if(readLength.Result == 0) {
+					break;
 				}
 
-				//var readLength = reader.Read(buffer, 0, buffer.Length);
-				//if(readLength == 0) {
-				//	break;
-				//}
-				//var line = string.Concat(buffer.Take(readLength).ToArray());
-				var line = sb.ToString();
+				var line = string.Concat(buffer.Take(readLength.Result).ToArray());
 
 				this.inputOutput.BeginInvoke((MethodInvoker)delegate() {
 					var startPosition = this.inputOutput.TextLength;
@@ -263,11 +322,14 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 			//Process.OutputDataReceived -= Process_OutputDataReceived;
 			//Process.ErrorDataReceived -= Process_ErrorDataReceived;
 
-			OutputDataCancel.Cancel();
-			ErrorDataCancel.Cancel();
+			//OutputDataCancel.Cancel();
+			//ErrorDataCancel.Cancel();
 
-			OutputDataTask.ToDispose();
-			ErrorDataTask.ToDispose();
+			//OutputDataTask.ToDispose();
+			//ErrorDataTask.ToDispose();
+
+			OutputShaerd.Stop = true;
+			OutputShaerd.ToDispose();
 
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
