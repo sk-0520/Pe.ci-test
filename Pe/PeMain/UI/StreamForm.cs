@@ -234,7 +234,7 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 
 				//Debug.WriteLine(line);
 				var readLength = reader.ReadAsync(buffer, 0, buffer.Length);
-				readLength.Wait(TimeSpan.FromMilliseconds(1000));
+				readLength.Wait((int)TimeSpan.FromMilliseconds(1000).TotalMilliseconds, taskShared.Cancel.Token);
 
 				if(readLength.Result == 0) {
 					break;
@@ -329,7 +329,9 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 			//ErrorDataTask.ToDispose();
 
 			OutputShaerd.Stop = true;
-			OutputShaerd.ToDispose();
+			ErrorShaerd.Stop = true;
+
+			//OutputShaerd.ToDispose();
 
 			this.toolStream_itemKill.Enabled = false;
 			this.toolStream_itemClear.Enabled = false;
