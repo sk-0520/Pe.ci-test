@@ -84,7 +84,11 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#232: 標準入出力で出力系の改行を待たない</message>
+				<comments>
+					<comment>それっぽくは動くけど勇んで走り出したTaskの行方は誰も知らない</comment>
+					<comment>正直なところ白旗</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
