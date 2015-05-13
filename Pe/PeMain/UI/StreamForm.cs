@@ -503,6 +503,13 @@ using ContentTypeTextNet.Pe.PeMain.UI.Ex;
 							return;
 						}
 
+						// 出力済み文字列は消さない
+						if(this.inputOutput.SelectionStart == this.inputOutput.TextLength && e.KeyCode == Keys.Back) {
+							e.SuppressKeyPress = true;
+							return;
+						}
+
+
 						// このデータから取得を開始する
 						InputStartPosition = this.inputOutput.SelectionStart;
 						this.inputOutput.SelectionColor = CommonData.MainSetting.Stream.InputColor.Fore.Color;
