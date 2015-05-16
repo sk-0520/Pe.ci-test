@@ -3,8 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "lib\Package\Package.csproj", "{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{C58A36EF-C8AE-4121-A528-E09D6A1F93CD}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Debug|x64.ActiveCfg = Debug|x64
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Debug|x64.Build.0 = Debug|x64
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Debug|x86.ActiveCfg = Debug|x86
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Debug|x86.Build.0 = Debug|x86
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x64.ActiveCfg = Release|x64
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x64.Build.0 = Release|x64
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x86.ActiveCfg = Release|x86
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4} = {C58A36EF-C8AE-4121-A528-E09D6A1F93CD}
 	EndGlobalSection
 EndGlobal
