@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Package", "lib\Package\Pack
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{C58A36EF-C8AE-4121-A528-E09D6A1F93CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "sbin\Updater\Updater.csproj", "{7CC3600F-2EC1-4905-AF5C-6191D37A3824}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sbin", "sbin", "{F82F2E9C-4CD0-4AB9-97C3-A117B879FDD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,11 +27,20 @@ Global
 		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x64.Build.0 = Release|x64
 		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x86.ActiveCfg = Release|x86
 		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4}.Release|x86.Build.0 = Release|x86
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Debug|x64.ActiveCfg = Debug|x64
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Debug|x64.Build.0 = Debug|x64
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Debug|x86.ActiveCfg = Debug|x86
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Debug|x86.Build.0 = Debug|x86
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Release|x64.ActiveCfg = Release|x64
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Release|x64.Build.0 = Release|x64
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Release|x86.ActiveCfg = Release|x86
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FBF5E5E8-2D88-45A7-B1EA-9E3FB68E97E4} = {C58A36EF-C8AE-4121-A528-E09D6A1F93CD}
+		{7CC3600F-2EC1-4905-AF5C-6191D37A3824} = {F82F2E9C-4CD0-4AB9-97C3-A117B879FDD1}
 	EndGlobalSection
 EndGlobal
