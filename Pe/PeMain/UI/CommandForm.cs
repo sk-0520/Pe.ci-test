@@ -17,6 +17,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			InitializeComponent();
 		}
 
+		#region override
+
+		#endregion
+
 		#region functino
 
 		public void SetCurrentLocation()
@@ -25,5 +29,13 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		}
 
 		#endregion
+
+		private void CommandForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(e.CloseReason == CloseReason.UserClosing) {
+				e.Cancel = true;
+				Visible = false;
+			}
+		}
 	}
 }

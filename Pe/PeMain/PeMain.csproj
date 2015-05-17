@@ -426,6 +426,9 @@
     <EmbeddedResource Include="UI\ClipboardForm.resx">
       <DependentUpon>ClipboardForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\CommandForm.resx">
+      <DependentUpon>CommandForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\CustomControl\EnvRemoveControl.resx">
       <DependentUpon>EnvRemoveControl.cs</DependentUpon>
     </EmbeddedResource>

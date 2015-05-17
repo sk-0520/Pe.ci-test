@@ -27,7 +27,16 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
+			this.SuspendLayout();
+			// 
+			// CommandForm
+			// 
+			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.Name = "CommandForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandForm_FormClosing);
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion

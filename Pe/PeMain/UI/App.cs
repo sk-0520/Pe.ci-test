@@ -991,7 +991,7 @@
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{
-
+			ResetCommand();
 		}
 
 		void InitializeToolbarForm(CommandLine commandLine, StartupLogger logger)
@@ -1432,6 +1432,13 @@
 			this._clipboardWindow.SetCommonData(this._commonData);
 		}
 
+		void ResetCommand()
+		{
+			this._commandForm.ToDispose();
+			this._commandForm = new CommandForm();
+			this._commandForm.SetCommonData(this._commonData);
+		}
+
 		/// <summary>
 		/// 表示コンポーネントをリセット。
 		/// </summary>
@@ -1451,6 +1458,7 @@
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
+			ResetCommand();
 
 			ApplyLanguage();
 		}
@@ -1958,16 +1966,9 @@
 		void ShowCommand()
 		{
 			_commonData.Logger.PutsDebug("ShowCommand", () => "DEBUG");
-			if(this._commandForm == null) {
-				this._commandForm = new CommandForm();
-			}
-			this._commandForm.SetCommonData(this._commonData);
-			if(!this._commandForm.Visible) {
-				this._commandForm.Show();
-			} else {
-				UIUtility.ShowFrontActive(this._commandForm);
-			}
 			this._commandForm.SetCurrentLocation();
+			this._commandForm.Visible = true;
+			UIUtility.ShowFrontActive(this._commandForm);
 		}
 
 		#endregion //////////////////////////////////////////
