@@ -343,6 +343,13 @@
 					}
 					break;
 
+				case HotKeyId.ShowCommand:
+					{
+						// バルーン表示はしない
+						ShowCommand();
+					}
+					break;
+
 				default:
 					break;
 			}
@@ -1943,6 +1950,11 @@
 			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.Visible && t.AutoHide).ToArray()) {
 				toolbar.Hidden();
 			}
+		}
+
+		void ShowCommand()
+		{
+			_commonData.Logger.PutsDebug("ShowCommand", () => "DEBUG");
 		}
 
 		#endregion //////////////////////////////////////////

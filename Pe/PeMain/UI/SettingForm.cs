@@ -861,6 +861,7 @@
 			ExportNoteSetting(CommonData.MainSetting.Note);
 			ExportToolbarSetting(CommonData.MainSetting.Toolbar);
 			ExportClipboardSetting(CommonData.MainSetting.Clipboard);
+			ExportCommandSetting(CommonData.MainSetting.Command);
 
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
@@ -1115,6 +1116,13 @@
 			// フォント
 			setting.TextFont = this.commandClipboardTextFont.FontSetting;
 
+		}
+
+		void ExportCommandSetting(CommandSetting setting)
+		{
+			setting.FontSetting = this.commandCommandFont.FontSetting;
+			setting.HotKey = this.inputCommandHotkey.HotKeySetting;
+			setting.IconScale = (IconScale)this.selectCommandIcon.SelectedValue;
 		}
 
 		#endregion ////////////////////////////////////
