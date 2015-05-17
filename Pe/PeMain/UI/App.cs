@@ -77,6 +77,7 @@
 		private LogForm _logForm;
 		private ClipboardForm _clipboardWindow;
 		private NoteToolTipForm _noteToolTipForm;
+		CommandForm _commandForm;
 		
 		private List<NoteForm> _noteWindowList = new List<NoteForm>();
 		
@@ -137,6 +138,7 @@
 				w.ToDispose();
 			}
 			this._noteToolTipForm.ToDispose();
+			this._commandForm.ToDispose();
 			foreach(var w in this._toolbarForms.Values) {
 				w.ToDispose();
 			}
@@ -1274,7 +1276,8 @@
 			result.AddRange(this._toolbarForms.Values);
 			result.Add(this._logForm);
 			result.Add(this._clipboardWindow);
-
+			result.Add(this._noteToolTipForm);
+			result.Add(this._commandForm);
 			/*
 			foreach(var f in this._toolbarForms.Values.Where(f => f.OwnedForms.Length > 0)) {
 				result.AddRange(f.OwnedForms);
@@ -1955,6 +1958,16 @@
 		void ShowCommand()
 		{
 			_commonData.Logger.PutsDebug("ShowCommand", () => "DEBUG");
+			if(this._commandForm == null) {
+				this._commandForm = new CommandForm();
+			}
+			this._commandForm.SetCommonData(this._commonData);
+			if(!this._commandForm.Visible) {
+				this._commandForm.Show();
+			} else {
+				UIUtility.ShowFrontActive(this._commandForm);
+			}
+			this._commandForm.SetCurrentLocation();
 		}
 
 		#endregion //////////////////////////////////////////
