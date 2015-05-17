@@ -72,10 +72,10 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#265: ノート一覧のプレビューをもうちっとうまいこと表示する</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>ツールバーのツールチップ描画処理をちょっと改善</message>
 			</note>
 			<note rev="">
 				<message></message>
