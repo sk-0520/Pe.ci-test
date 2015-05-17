@@ -5,13 +5,14 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// コマンドランチャー設定
 	/// </summary>
 	[Serializable]
-	public class CommandSetting: DisposableItem, IDisposable
+	public class CommandSetting: DisposableItem, IDeepClone
 	{
 		//private Font _font = null;
 		
@@ -65,11 +66,32 @@
 		
 		public HotKeySetting HotKey { get; set; }
 
+		#region DisposableItem
+
 		protected override void Dispose(bool disposing)
 		{
 			FontSetting.ToDispose();
 
 			base.Dispose(disposing);
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			return new CommandSetting() {
+				Width = this.Width,
+				Height = this.Height,
+				IconScale = this.IconScale,
+				HiddenTime = this.HiddenTime,
+				FontSetting = (FontSetting)this.FontSetting.Clone(),
+				HotKey = (HotKeySetting)this.HotKey.Clone(),
+			};
+		}
+
+		#endregion
+
 	}
 }
