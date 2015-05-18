@@ -79,6 +79,7 @@
 			this.commandExecute.TabIndex = 2;
 			this.commandExecute.Text = "button1";
 			this.commandExecute.UseVisualStyleBackColor = true;
+			this.commandExecute.Click += new System.EventHandler(this.commandExecute_Click);
 			// 
 			// CommandForm
 			// 

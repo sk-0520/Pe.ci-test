@@ -28,6 +28,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			Location = Cursor.Position;
 		}
 
+		void ExecuteCommand()
+		{}
+
 		#endregion
 
 		private void CommandForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -36,6 +39,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 				e.Cancel = true;
 				Visible = false;
 			}
+		}
+
+		private void commandExecute_Click(object sender, EventArgs e)
+		{
+			ExecuteCommand();
 		}
 	}
 }
