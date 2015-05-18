@@ -68,7 +68,7 @@
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="fb37c851c9a83b053f71391027b9888abc8f6048">
 				<message>#270: クリップボード履歴のアイテム名が保存されない</message>
 			</note>
 		</group>
