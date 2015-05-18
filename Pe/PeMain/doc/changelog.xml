@@ -56,7 +56,65 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="2015/05/19" version="0.59.3">
+	<log date="YYYY/MM/DD" version="0.59.3" type="rc">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message>#232: 標準入出力で出力系の改行を待たない</message>
+				<comments>
+					<comment>それっぽくは動くけど勇んで走り出したTaskの行方は誰も知らない</comment>
+					<comment>正直なところ白旗</comment>
+				</comments>
+			</note>
+			<note rev="">
+				<message>#265: ノート一覧のプレビューをもうちっとうまいこと表示する</message>
+			</note>
+			<note rev="4ad88a0b04ad08f9f468a3515c577c4230b1c064">
+				<message>ツールバーのツールチップ描画処理をちょっと改善</message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="developer">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
+	<log date="2015/05/12" version="0.59.3">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
@@ -80,6 +138,7 @@
 		</group>
 	</log>
 	<sep dummy="################################################################################" />	<log date="2015/05/12" version="0.59.2">
+	<log date="2015/05/12" version="0.59.2">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
