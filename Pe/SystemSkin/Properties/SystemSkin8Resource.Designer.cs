@@ -693,6 +693,16 @@ namespace ContentTypeTextNet.Pe.Library.Skin.SystemSkin.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_Web {
+            get {
+                object obj = ResourceManager.GetObject("Image_Web", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_WindowList {
             get {
                 object obj = ResourceManager.GetObject("Image_WindowList", resourceCulture);

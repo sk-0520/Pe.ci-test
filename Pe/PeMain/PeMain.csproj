@@ -191,8 +191,10 @@
     <Compile Include="IF\IToolbarGroupItem.cs" />
     <Compile Include="Kind\Applications.cs" />
     <Compile Include="Kind\Clipboard.cs" />
+    <Compile Include="Kind\CommandKind.cs" />
     <Compile Include="Kind\HotKeyId.cs" />
     <Compile Include="Kind\Launcher.cs" />
+    <Compile Include="Kind\LauncherCommandType.cs" />
     <Compile Include="Kind\Log.cs" />
     <Compile Include="Kind\Note.cs" />
     <Compile Include="Kind\Toolbar.cs" />
@@ -281,6 +283,9 @@
       <DependentUpon>LauncherItemSelectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Ex\ExButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Ex\ExComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Ex\ExListViewItem.cs" />

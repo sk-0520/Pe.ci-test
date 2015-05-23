@@ -215,6 +215,24 @@
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 
-	
+	public class CommandDisplayValue: DisplayValue<LauncherItem>
+	{
+		public CommandDisplayValue(LauncherItem value, string displayText, LauncherCommandType launcherCommandType)
+			: base(value)
+		{
+			DisplayText = displayText;
+			LauncherCommandType = launcherCommandType;
+		}
 
+		string DisplayText { get; set; }
+		public LauncherCommandType LauncherCommandType { get; private set; }
+
+		public override string Display
+		{
+			get
+			{
+				return DisplayText;
+			}
+		}
+	}
 }

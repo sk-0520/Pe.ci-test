@@ -39,6 +39,8 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		WM_CLOSE = 0x0010,
 		WM_SETTEXT = 0x000c,
 		WM_PASTE = 0x0302,
+		WM_CUT = 0x0300,
+		WM_COPY = 0x0301,
 	}
 	
 	public enum WS_EX

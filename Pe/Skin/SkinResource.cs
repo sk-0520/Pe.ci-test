@@ -68,6 +68,7 @@ namespace ContentTypeTextNet.Pe.Library.Skin
 		ImageFill,
 		ImageRaw,
 		OutputTarget,
+		Web,
 	}
 
 	public enum SkinIcon
