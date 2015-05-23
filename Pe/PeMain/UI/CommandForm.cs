@@ -16,6 +16,7 @@
 	using System.Diagnostics;
 	using System.IO;
 	using ContentTypeTextNet.Pe.Library.Skin;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public partial class CommandForm: CommonForm
 	{
@@ -58,6 +59,11 @@
 		{
 			base.ApplySetting();
 			SetLauncherItems();
+		}
+
+		protected override void ApplyLanguage()
+		{
+			base.ApplyLanguage();
 		}
 
 		#endregion
@@ -268,5 +274,11 @@
 			}
 		}
 
+		private void inputCommand_DropDownClosed(object sender, EventArgs e)
+		{
+			if(CallUpdateEvent) {
+				ChangeIcon();
+			}
+		}
 	}
 }
