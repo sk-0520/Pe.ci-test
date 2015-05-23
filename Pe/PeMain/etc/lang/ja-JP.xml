@@ -88,6 +88,7 @@
 		<Word Name="window/clipboard" Text="${clipboard-template}" />
 		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
+		<Word Name="window/command"   Text="コマンド" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />

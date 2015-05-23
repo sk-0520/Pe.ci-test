@@ -63,6 +63,7 @@
 
 		protected override void ApplyLanguage()
 		{
+			UIUtility.SetDefaultText(this, CommonData.Language);
 			base.ApplyLanguage();
 		}
 

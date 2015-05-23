@@ -69,7 +69,7 @@
 			this.commandExecute.Name = "commandExecute";
 			this.commandExecute.Size = new System.Drawing.Size(64, 23);
 			this.commandExecute.TabIndex = 2;
-			this.commandExecute.Text = "button1";
+			this.commandExecute.Text = "{OK}";
 			this.commandExecute.UseVisualStyleBackColor = true;
 			this.commandExecute.Click += new System.EventHandler(this.commandExecute_Click);
 			// 
@@ -98,6 +98,7 @@
 			this.Name = "CommandForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+			this.Text = ":window/command";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandForm_FormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).EndInit();
 			this.panelMain.ResumeLayout(false);
