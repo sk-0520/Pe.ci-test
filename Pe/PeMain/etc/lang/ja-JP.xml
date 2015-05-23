@@ -287,9 +287,9 @@
 		<Word Name="clipboard/tool/output-using-clipboard"  Text="クリップボード経由" />
 		<Word Name="clipboard/menu/file/open-file"       Text="開く(&amp;O)" />
 		<Word Name="clipboard/menu/file/open-parent-dir" Text="親ディレクトリを開く(&amp;O)" />
-		
-		
 
+		<Word Name="command/error/execute/launcher-item"  Text="ランチャーアイテム起動失敗" />
+		<Word Name="command/error/execute/none"  Text="指定コマンドは無効です" />
 
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />

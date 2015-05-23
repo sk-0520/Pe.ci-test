@@ -18,6 +18,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Kind;
+	using ContentTypeTextNet.Pe.PeMain.UI;
 
 	/// <summary>
 	/// アプリケーションの共通処理。
@@ -299,6 +300,43 @@
 				size.Width + NativeMethods.GetSystemMetrics(SM.SM_CXEDGE) * 4,
 				size.Height + NativeMethods.GetSystemMetrics(SM.SM_CYEDGE) * 4
 			);
+		}
+
+		public static bool ExecuteItem(CommonData commonData, LauncherItem launcherItem)
+		{
+			try {
+				Executor.RunItem(launcherItem, commonData);
+				launcherItem.Increment(null, null);
+				return true;
+			} catch(Exception ex) {
+				commonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+			}
+
+			return false;
+		}
+
+		public static ExecuteForm ShowExecuteEx(CommonData commonData, LauncherItem launcherItem, IEnumerable<string> exOptions)
+		{
+			var form = new ExecuteForm() {
+				LauncherItem = launcherItem,
+				ExOptions = exOptions,
+			};
+			form.SetCommonData(commonData);
+			commonData.RootSender.AppendWindow(form);
+			form.Show();
+			form.FormClosed += ExecuteFormClosed;
+			return form;
+		}
+
+		static void ExecuteFormClosed(object sender, FormClosedEventArgs e)
+		{
+			var form = (ExecuteForm)sender;
+			if(form.DialogResult == DialogResult.OK) {
+				var editedItem = form.EditedLauncherItem;
+				if(ExecuteItem(form.CommonData, editedItem)) {
+					form.LauncherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
+				}
+			}
 		}
 	}
 }

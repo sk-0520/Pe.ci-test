@@ -47,6 +47,17 @@
 			}
 		}
 
+		IEnumerable<string> UriPattern
+		{
+			get
+			{
+				return new[] {
+					"http://",
+					"https://",
+				};
+			}
+		}
+
 		#endregion
 
 		#region override
@@ -145,20 +156,22 @@
 			if(string.IsNullOrWhiteSpace(s)) {
 				return CommandKind.None;
 			}
-			var uri = new[] {
-				"http://",
-				"https://",
-			};
-			if(uri.Any(t => s.StartsWith(t))) {
+
+			if(UriPattern.Any(u => s.StartsWith(u, StringComparison.OrdinalIgnoreCase))) {
 				return CommandKind.Uri;
 			}
 
 			return CommandKind.FilePath;
 		}
 
+		CommandDisplayValue GetCommandDisplayValue()
+		{
+			return this.inputCommand.SelectedItem as CommandDisplayValue ?? this.inputCommand.Items.Cast<CommandDisplayValue>().SingleOrDefault(i => i.Display == this.inputCommand.Text);
+		}
+
 		CommandKind GetCommandKind()
 		{
-			var dv = this.inputCommand.SelectedItem as CommandDisplayValue;
+			var dv = GetCommandDisplayValue();
 			if(dv != null && dv.LauncherCommandType != LauncherCommandType.None) {
 				return CommandKind.LauncherItem;
 			} else {
@@ -166,11 +179,16 @@
 			}
 		}
 
-		void ChangeIcon()
+		void ClearIcon()
 		{
 			var oldImage = this.imageIcon.Image;
 			this.imageIcon.Image = null;
 			oldImage.ToDispose();
+		}
+
+		void ChangeIcon()
+		{
+			ClearIcon();
 
 			var kind = GetCommandKind();
 			switch(kind) {
@@ -216,8 +234,65 @@
 			Location = Cursor.Position;
 		}
 
-		void ExecuteCommand()
-		{}
+		void ExecuteCommand(bool executeEx)
+		{
+			var kind = GetCommandKind();
+			switch(kind) {
+				case CommandKind.LauncherItem: 
+					{
+						var dv = GetCommandDisplayValue();
+						if(dv != null) {
+							var item = dv.Value;
+							if(executeEx) {
+								AppUtility.ShowExecuteEx(CommonData, item, null);
+							} else {
+								AppUtility.ExecuteItem(CommonData, item);
+							}
+							Visible = false;
+						} else {
+							CommonData.Logger.Puts(LogType.Warning, CommonData.Language["command/error/execute/launcher-item"], this.inputCommand.SelectedValue);
+						}
+					}
+					break;
+
+				case CommandKind.Uri:
+					{
+						var inputUri = this.inputCommand.Text;
+						var headHead = UriPattern.Single(u => inputUri.StartsWith(u, StringComparison.OrdinalIgnoreCase));
+						var uriValue = inputUri.Substring(headHead.Length);
+						var uri = headHead + uriValue;
+						Executor.RunCommand(uri, CommonData);
+						Visible = false;
+					}
+					break;
+
+				case CommandKind.FilePath: 
+					{
+						var inputPath = this.inputCommand.Text;
+						var expandPath = Environment.ExpandEnvironmentVariables(inputPath);
+						if(FileUtility.Exists(expandPath)) {
+							if(executeEx) {
+								Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
+							} else {
+								if(Directory.Exists(expandPath)) {
+									Executor.OpenDirectory(expandPath, CommonData, null);
+								} else {
+									Executor.OpenFile(expandPath, CommonData);
+								}
+							}
+							Visible = false;
+						}
+					}
+					break;
+
+				case CommandKind.None: 
+					CommonData.Logger.Puts(LogType.Warning, CommonData.Language["command/error/execute/none"], this.inputCommand.Text);
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
 
 		#endregion
 
@@ -231,7 +306,7 @@
 
 		private void commandExecute_Click(object sender, EventArgs e)
 		{
-			ExecuteCommand();
+			ExecuteCommand(AppUtility.IsExtension());
 		}
 
 		private void inputCommand_TextUpdate(object sender, EventArgs e)
@@ -305,6 +380,7 @@
 		{
 			if(!Visible) {
 				this.inputCommand.Text = string.Empty;
+				ClearIcon();
 			}
 		}
 	}

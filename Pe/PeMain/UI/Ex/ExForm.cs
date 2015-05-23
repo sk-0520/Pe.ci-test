@@ -22,12 +22,12 @@
 	/// <summary>
 	/// アプリケーションで使用する基本Form。
 	/// </summary>
-	public class CommonForm: AppForm, ISetCommonData
+	public class CommonForm: AppForm, ISetCommonData, ICommonData
 	{
 		/// <summary>
 		/// 共通データ。
 		/// </summary>
-		protected CommonData CommonData { get; set; }
+		public CommonData CommonData { get; protected set; }
 		/// <summary>
 		/// 初期化済みであるか。
 		/// 
