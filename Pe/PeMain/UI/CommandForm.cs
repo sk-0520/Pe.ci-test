@@ -108,11 +108,11 @@
 			Debug.WriteLine(s);
 			IEnumerable<CommandDisplayValue> list = null;
 			if(!string.IsNullOrWhiteSpace(s)) {
-				var reg = new Regex(TextUtility.RegexPatternToWildcard(s), RegexOptions.IgnoreCase);
+				//var reg = new Regex(TextUtility.RegexPatternToWildcard(s), RegexOptions.IgnoreCase);
 				
 				// アイテム名
 				var nameList = LauncherList
-					.Where(i => reg.IsMatch(i.Name))
+					.Where(i => i.Name.StartsWith(s))
 					.Select(i => new CommandDisplayValue(i, i.Name, LauncherCommandType.Name))
 				;
 
@@ -125,7 +125,7 @@
 							Tag = tag
 						}
 					)
-					.Where(pair => reg.IsMatch(pair.Tag))
+					.Where(pair => pair.Tag.StartsWith(s))
 					.Select(pair => new CommandDisplayValue(pair.Item, pair.Tag, LauncherCommandType.Tag))
 				;
 
