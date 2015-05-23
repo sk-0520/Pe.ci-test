@@ -97,6 +97,9 @@
 				<message>ツールバーのツールチップ描画処理をちょっと改善</message>
 			</note>
 			<note rev="">
+				<message>アイコンパスがファイルとして存在するが無効パスと判定された場合に動作が不安定になる不具合の修正</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
