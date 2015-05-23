@@ -27,10 +27,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.imageIcon = new System.Windows.Forms.PictureBox();
 			this.panelMain = new System.Windows.Forms.TableLayoutPanel();
 			this.commandExecute = new System.Windows.Forms.Button();
 			this.inputCommand = new ContentTypeTextNet.Pe.PeMain.UI.Ex.CommandComboBox();
+			this.timerHidden = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).BeginInit();
 			this.panelMain.SuspendLayout();
 			this.SuspendLayout();
@@ -86,6 +88,10 @@
 			this.inputCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputCommand_KeyDown);
 			this.inputCommand.KeyUp += new System.Windows.Forms.KeyEventHandler(this.inputCommand_KeyUp);
 			// 
+			// timerHidden
+			// 
+			this.timerHidden.Tick += new System.EventHandler(this.timerHidden_Tick);
+			// 
 			// CommandForm
 			// 
 			this.AcceptButton = this.commandExecute;
@@ -99,7 +105,10 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = ":window/command";
+			this.Activated += new System.EventHandler(this.CommandForm_Activated);
+			this.Deactivate += new System.EventHandler(this.CommandForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandForm_FormClosing);
+			this.VisibleChanged += new System.EventHandler(this.CommandForm_VisibleChanged);
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).EndInit();
 			this.panelMain.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -113,6 +122,7 @@
 		private System.Windows.Forms.TableLayoutPanel panelMain;
 		private System.Windows.Forms.Button commandExecute;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.CommandComboBox inputCommand;
+		private System.Windows.Forms.Timer timerHidden;
 
 	}
 }

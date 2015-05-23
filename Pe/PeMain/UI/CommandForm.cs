@@ -58,6 +58,9 @@
 		protected override void ApplySetting()
 		{
 			base.ApplySetting();
+
+			this.timerHidden.Interval = (int)CommonData.MainSetting.Command.HiddenTime.TotalMilliseconds;
+
 			SetLauncherItems();
 		}
 
@@ -279,6 +282,29 @@
 		{
 			if(CallUpdateEvent) {
 				ChangeIcon();
+			}
+		}
+
+		private void CommandForm_Deactivate(object sender, EventArgs e)
+		{
+			this.timerHidden.Start();
+		}
+
+		private void CommandForm_Activated(object sender, EventArgs e)
+		{
+			this.timerHidden.Stop();
+		}
+
+		private void timerHidden_Tick(object sender, EventArgs e)
+		{
+			this.timerHidden.Stop();
+			Visible = false;
+		}
+
+		private void CommandForm_VisibleChanged(object sender, EventArgs e)
+		{
+			if(!Visible) {
+				this.inputCommand.Text = string.Empty;
 			}
 		}
 	}
