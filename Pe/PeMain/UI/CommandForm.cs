@@ -98,11 +98,13 @@
 			if(!string.IsNullOrWhiteSpace(s)) {
 				nowCommandValue = list.FirstOrDefault(i => i.Display.StartsWith(s, StringComparison.OrdinalIgnoreCase)) ?? nowCommandValue;
 			}
-			list = new[] { nowCommandValue }.Concat(list);
+			if(nowCommandValue.LauncherCommandType == LauncherCommandType.None) {
+				list = new[] { nowCommandValue }.Concat(list);
+			}
 			try {
 				this.inputCommand.TextUpdate -= inputCommand_TextUpdate;
 
-				this.inputCommand.Attachment(list);
+				this.inputCommand.Attachment(list, nowCommandValue.Value);
 
 				//this.inputCommand.SelectionStart = ;
 				this.inputCommand.Select(s.Length, nowCommandValue.Display.Length);
@@ -117,9 +119,6 @@
 			if(string.IsNullOrWhiteSpace(s)) {
 				return CommandKind.None;
 			}
-			if(Path.IsPathRooted(s)) {
-				return CommandKind.FilePath;
-			}
 			var uri = new[] {
 				"http://",
 				"https://",
@@ -128,7 +127,7 @@
 				return CommandKind.Uri;
 			}
 
-			return CommandKind.None;
+			return CommandKind.FilePath;
 		}
 
 		CommandKind GetCommandKind()
@@ -159,6 +158,10 @@
 
 				case CommandKind.FilePath: 
 					{
+						var path = Environment.ExpandEnvironmentVariables(this.inputCommand.Text);
+						if(FileUtility.Exists(path)) {
+							this.imageIcon.Image = IconUtility.GetThumbnailImage(path, IconScale.Normal);
+						}
 					}
 					break;
 
@@ -221,7 +224,14 @@
 
 		private void inputCommand_KeyUp(object sender, KeyEventArgs e)
 		{
-			CallUpdateEvent = true;
+			if(!CallUpdateEvent) {
+				CallUpdateEvent = true;
+				if(this.inputCommand.Text.Length == 0) {
+					ChangeLauncherItems(string.Empty);
+				} else {
+					ChangeIcon();
+				}
+			}
 		}
 
 	}
