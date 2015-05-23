@@ -105,7 +105,6 @@
 
 		void ChangeLauncherItems(string s)
 		{
-			Debug.WriteLine(s);
 			IEnumerable<CommandDisplayValue> list = null;
 			if(!string.IsNullOrWhiteSpace(s)) {
 				//var reg = new Regex(TextUtility.RegexPatternToWildcard(s), RegexOptions.IgnoreCase);
@@ -133,12 +132,18 @@
 				IEnumerable<CommandDisplayValue> fileList = null;
 				var inputPath = Environment.ExpandEnvironmentVariables(s);
 				var isDir = Directory.Exists(inputPath);
-				var baseDir = isDir 
-					? inputPath.Last() == Path.VolumeSeparatorChar 
-						? inputPath + Path.DirectorySeparatorChar
-						: inputPath
-					: Path.GetDirectoryName(inputPath)
-				;
+				string baseDir;
+				try {
+					baseDir = isDir
+						? inputPath.Last() == Path.VolumeSeparatorChar
+							? inputPath + Path.DirectorySeparatorChar
+							: inputPath
+						: Path.GetDirectoryName(inputPath)
+					;
+				} catch(ArgumentException) {
+					baseDir = inputPath;
+				}
+
 				if(FileUtility.Exists(baseDir)) {
 					Debug.WriteLine(inputPath);
 					//var isDir = Directory.Exists(inputPath);
@@ -239,10 +244,13 @@
 			switch(kind) {
 				case CommandKind.LauncherItem:
 					{
-						var item = this.inputCommand.SelectedValue as LauncherItem;
-						var icon = item.GetIcon(IconScale.Normal, item.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
-						this.imageIcon.Image = IconUtility.ImageFromIcon(icon, IconScale.Normal);
-						CanExecute = true;
+						var dv = GetCommandDisplayValue();
+						if(dv != null) {
+							var item = dv.Value;
+							var icon = item.GetIcon(IconScale.Normal, item.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
+							this.imageIcon.Image = IconUtility.ImageFromIcon(icon, IconScale.Normal);
+							CanExecute = true;
+						}
 					}
 					break;
 
@@ -360,8 +368,6 @@
 				CallUpdateEvent = false;
 				try {
 					ChangeLauncherItems(this.inputCommand.Text);
-					if(!this.inputCommand.DroppedDown) {
-					}
 				} finally {
 					CallUpdateEvent = true;
 				}
