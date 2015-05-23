@@ -105,15 +105,18 @@
 
 		void ChangeLauncherItems(string s)
 		{
+			Debug.WriteLine(s);
 			IEnumerable<CommandDisplayValue> list = null;
 			if(!string.IsNullOrWhiteSpace(s)) {
 				var reg = new Regex(TextUtility.RegexPatternToWildcard(s), RegexOptions.IgnoreCase);
 				
-//				var tempList = LauncherList.Where(i => reg.IsMatch(i.Name) || i.Tag.Any(t => reg.IsMatch(t)));
+				// アイテム名
 				var nameList = LauncherList
 					.Where(i => reg.IsMatch(i.Name))
 					.Select(i => new CommandDisplayValue(i, i.Name, LauncherCommandType.Name))
 				;
+
+				// タグ名
 				var tagList = LauncherList
 					.SelectMany(
 						(i, index) => i.Tag,
@@ -125,7 +128,42 @@
 					.Where(pair => reg.IsMatch(pair.Tag))
 					.Select(pair => new CommandDisplayValue(pair.Item, pair.Tag, LauncherCommandType.Tag))
 				;
-				list = nameList.Concat(tagList);
+
+				// ファイルパス
+				IEnumerable<CommandDisplayValue> fileList;
+				var inputPath = Environment.ExpandEnvironmentVariables(s);
+				var isDir = Directory.Exists(inputPath);
+				var baseDir = isDir 
+					? inputPath.Last() == Path.VolumeSeparatorChar 
+						? inputPath + Path.DirectorySeparatorChar
+						: inputPath
+					: Path.GetDirectoryName(inputPath)
+				;
+				if(FileUtility.Exists(baseDir)) {
+					Debug.WriteLine(inputPath);
+					//var isDir = Directory.Exists(inputPath);
+					//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
+					var searchPattern = isDir ? "*": Path.GetFileName(inputPath) + "*";
+					var directoryInfo = new DirectoryInfo(baseDir);
+					var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+					fileList = directoryInfo
+						.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
+						.Where(fs => fs.Exists)
+						.Where(fs => showHiddenFile ? true : !fs.Attributes.HasFlag(FileAttributes.Hidden))
+						.Select(fs => new CommandDisplayValue(
+								new LauncherItem() {
+									Name = fs.Name,
+									Command = fs.FullName,
+									LauncherType = LauncherType.File,
+								},
+								fs.FullName,
+								LauncherCommandType.File
+							)
+						);
+				} else {
+					fileList = new List<CommandDisplayValue>();
+				}
+				list = nameList.Concat(tagList).Concat(fileList);
 			}
 			if(list == null || !list.Any()) {
 				list = LauncherList.Select(i => new CommandDisplayValue(i, i.Name, LauncherCommandType.Name));

@@ -11,5 +11,6 @@ namespace ContentTypeTextNet.Pe.PeMain.Kind
 		None,
 		Name,
 		Tag,
+		File,
 	}
 }
