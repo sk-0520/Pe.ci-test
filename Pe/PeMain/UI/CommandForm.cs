@@ -19,6 +19,12 @@
 
 	public partial class CommandForm: CommonForm
 	{
+		#region variable
+
+		bool _canExecute;
+
+		#endregion
+
 		public CommandForm()
 		{
 			InitializeComponent();
@@ -30,6 +36,15 @@
 
 		IReadOnlyList<LauncherItem> LauncherList { get; set; }
 		bool CallUpdateEvent { get; set; }
+		bool CanExecute
+		{
+			get { return this._canExecute; }
+			set
+			{
+				this._canExecute = value;
+				this.commandExecute.Enabled = this._canExecute;
+			}
+		}
 
 		#endregion
 
@@ -51,6 +66,7 @@
 		void Initialize()
 		{
 			CallUpdateEvent = true;
+			CanExecute = false;
 		}
 		#endregion
 
@@ -153,6 +169,7 @@
 						var item = this.inputCommand.SelectedValue as LauncherItem;
 						var icon = item.GetIcon(IconScale.Normal, item.IconItem.Index, CommonData.ApplicationSetting, CommonData.Logger);
 						this.imageIcon.Image = IconUtility.ImageFromIcon(icon, IconScale.Normal);
+						CanExecute = true;
 					}
 					break;
 
@@ -161,6 +178,9 @@
 						var path = Environment.ExpandEnvironmentVariables(this.inputCommand.Text);
 						if(FileUtility.Exists(path)) {
 							this.imageIcon.Image = IconUtility.GetThumbnailImage(path, IconScale.Normal);
+							CanExecute = true;
+						} else {
+							CanExecute = false;
 						}
 					}
 					break;
@@ -168,10 +188,12 @@
 				case CommandKind.Uri:
 					{
 						this.imageIcon.Image = (Image)CommonData.Skin.GetImage(SkinImage.Web).Clone();
+						CanExecute = true;
 					}
 					break;
 
 				case CommandKind.None:
+					CanExecute = false;
 					break;
 
 				default:
@@ -205,8 +227,13 @@
 		private void inputCommand_TextUpdate(object sender, EventArgs e)
 		{
 			if(CallUpdateEvent) {
-				ChangeLauncherItems(this.inputCommand.Text);
-				if(!this.inputCommand.DroppedDown) {
+				CallUpdateEvent = false;
+				try {
+					ChangeLauncherItems(this.inputCommand.Text);
+					if(!this.inputCommand.DroppedDown) {
+					}
+				} finally {
+					CallUpdateEvent = true;
 				}
 			}
 		}
@@ -231,6 +258,13 @@
 				} else {
 					ChangeIcon();
 				}
+			}
+		}
+
+		private void inputCommand_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if(CallUpdateEvent) {
+				ChangeIcon();
 			}
 		}
 

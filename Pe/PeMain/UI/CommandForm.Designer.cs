@@ -81,6 +81,7 @@
 			this.inputCommand.Name = "inputCommand";
 			this.inputCommand.Size = new System.Drawing.Size(189, 23);
 			this.inputCommand.TabIndex = 3;
+			this.inputCommand.SelectedIndexChanged += new System.EventHandler(this.inputCommand_SelectedIndexChanged);
 			this.inputCommand.TextUpdate += new System.EventHandler(this.inputCommand_TextUpdate);
 			this.inputCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputCommand_KeyDown);
 			this.inputCommand.KeyUp += new System.Windows.Forms.KeyEventHandler(this.inputCommand_KeyUp);
