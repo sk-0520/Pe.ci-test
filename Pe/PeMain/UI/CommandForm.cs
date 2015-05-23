@@ -130,7 +130,7 @@
 				;
 
 				// ファイルパス
-				IEnumerable<CommandDisplayValue> fileList;
+				IEnumerable<CommandDisplayValue> fileList = null;
 				var inputPath = Environment.ExpandEnvironmentVariables(s);
 				var isDir = Directory.Exists(inputPath);
 				var baseDir = isDir 
@@ -144,23 +144,30 @@
 					//var isDir = Directory.Exists(inputPath);
 					//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
 					var searchPattern = isDir ? "*": Path.GetFileName(inputPath) + "*";
-					var directoryInfo = new DirectoryInfo(baseDir);
 					var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
-					fileList = directoryInfo
-						.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
-						.Where(fs => fs.Exists)
-						.Where(fs => showHiddenFile ? true : !fs.Attributes.HasFlag(FileAttributes.Hidden))
-						.Select(fs => new CommandDisplayValue(
-								new LauncherItem() {
-									Name = fs.Name,
-									Command = fs.FullName,
-									LauncherType = LauncherType.File,
-								},
-								fs.FullName,
-								LauncherCommandType.File
-							)
-						);
-				} else {
+					var directoryInfo = new DirectoryInfo(baseDir);
+					try {
+						fileList = directoryInfo
+							.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
+							.Where(fs => fs.Exists)
+							.Where(fs => showHiddenFile ? true : !fs.IsHidden())
+							.Select(fs => new CommandDisplayValue(
+									new LauncherItem() {
+										Name = fs.Name,
+										Command = fs.FullName,
+										LauncherType = LauncherType.File,
+									},
+									fs.FullName,
+									LauncherCommandType.File
+								)
+							);
+					} catch(IOException ex) {
+						CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					} catch(UnauthorizedAccessException ex) {
+						CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+					}
+				}
+				if(fileList == null) {
 					fileList = new List<CommandDisplayValue>();
 				}
 				list = nameList.Concat(tagList).Concat(fileList);

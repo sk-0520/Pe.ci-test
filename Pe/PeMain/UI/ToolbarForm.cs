@@ -784,19 +784,13 @@
 					// ディレクトリ以下のファイルを列挙
 					var pathItemList = new DirectoryInfo(dirPath).EnumerateFileSystemInfos()
 						.Where(fs => fs.Exists)
-						.Select(fs => new {
-							Path = fs.FullName,
-							Name = fs.Name,
-							IsDirectory = fs.Attributes.HasFlag(FileAttributes.Directory),
-							IsHiddenFile = fs.Attributes.HasFlag(FileAttributes.Hidden)
-						})
-						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
-						.OrderByDescending(f => f.IsDirectory)
+						.Where(fs => showHiddenFile ? true : !fs.IsHidden())
+						.OrderByDescending(fs => fs.IsDirectory())
 						.ThenBy(fs => fs.Name)
 					;
 
 					foreach(var pathItem in pathItemList) {
-						var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, pathItem.IsHiddenFile);
+						var menuItem = CreateFileListMenuItem(CommonData, pathItem.FullName, pathItem.IsDirectory(), showExtension, pathItem.IsHidden());
 						menuList.Add(menuItem);
 					}
 					if(menuList.Count == 0) {
