@@ -493,7 +493,10 @@
 		/// </summary>
 		public void Hidden()
 		{
-			Debug.Assert(DesktopDockType != DesktopDockType.None);
+			if(DesktopDockType == DesktopDockType.None) {
+				return;
+			}
+			//Debug.Assert(DesktopDockType != DesktopDockType.None);
 			Debug.Assert(AutoHide);
 
 			ToHidden(true);

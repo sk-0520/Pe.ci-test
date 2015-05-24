@@ -109,7 +109,10 @@
 				<message>アイコンパスがファイルとして存在するが無効パスと判定された場合に動作が不安定になる不具合の修正</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#271: 設定ダイアログ保存時に例外発生</message>
+				<comments>
+					<comment>設定ダイアログ保存時にタスクトレイ右クリック連打したら再現できた</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="developer">
