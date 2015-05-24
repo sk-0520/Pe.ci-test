@@ -56,6 +56,25 @@
 
 		#region override
 
+		protected override void WndProc(ref Message m)
+		{
+			base.WndProc(ref m);
+			if(m.Msg == (int)WM.WM_NCHITTEST) {
+				var hittest = (HT)m.Result.ToInt32();
+				var map = new Dictionary<HT, HT>() {
+						{ HT.HTTOPLEFT, HT.HTLEFT },
+						{ HT.HTBOTTOMLEFT, HT.HTLEFT },
+						{ HT.HTTOPRIGHT, HT.HTRIGHT },
+						{ HT.HTBOTTOMRIGHT, HT.HTRIGHT },
+						{ HT.HTTOP, HT.HTNOWHERE },
+						{ HT.HTBOTTOM, HT.HTNOWHERE },
+					};
+				HT result;
+				if(map.TryGetValue(hittest, out result)) {
+					m.Result = new IntPtr((int)result);
+				}
+			}
+		}
 
 		[System.Security.Permissions.UIPermission(
 			System.Security.Permissions.SecurityAction.Demand,
@@ -92,12 +111,12 @@
 			base.ApplySetting();
 
 			this.inputCommand.Font = CommonData.MainSetting.Command.FontSetting.Font;
-			this.inputCommand.ItemHeight = AppUtility.GetTuneItemHeight(this.inputCommand.Margin, CommonData.MainSetting.Command.IconScale, CommonData.MainSetting.Command.FontSetting.Font);
-			//this.inputCommand.Height = CommonData.MainSetting.Command.FontSetting.Font.Height;// +this.inputCommand.Margin.Vertical + 1 * 2;
+			//this.inputCommand.ItemHeight = 32;// AppUtility.GetTuneItemHeight(this.inputCommand.Margin, CommonData.MainSetting.Command.IconScale, CommonData.MainSetting.Command.FontSetting.Font);
+			//this.inputCommand.Height = 16; //CommonData.MainSetting.Command.FontSetting.Font.Height;// +this.inputCommand.Margin.Vertical + 1 * 2;
 			//NativeMethods.SendMessage(this.inputCommand.Handle, WM.CB_SETITEMHEIGHT, new IntPtr(0), new IntPtr(30));
 			this.timerHidden.Interval = (int)CommonData.MainSetting.Command.HiddenTime.TotalMilliseconds;
 			Width = CommonData.MainSetting.Command.Width;
-
+			this.inputCommand.Location = Point.Empty;
 			SetLauncherItems();
 		}
 

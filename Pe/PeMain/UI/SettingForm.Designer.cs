@@ -154,6 +154,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl();
 			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
+			this.groupCommandFind = new System.Windows.Forms.GroupBox();
+			this.panelCommandFindGroup = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectCommandFindTag = new System.Windows.Forms.CheckBox();
+			this.selectCommandFindFile = new System.Windows.Forms.CheckBox();
 			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			this.labelCommandFont = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
@@ -240,10 +244,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.groupCommandFind = new System.Windows.Forms.GroupBox();
-			this.panelCommandFindGroup = new System.Windows.Forms.FlowLayoutPanel();
-			this.selectCommandFindTag = new System.Windows.Forms.CheckBox();
-			this.selectCommandFindFile = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupStream.SuspendLayout();
@@ -290,6 +290,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStripContainer1.SuspendLayout();
 			this.toolToolbarGroup.SuspendLayout();
 			this.tabSetting_pageCommand.SuspendLayout();
+			this.groupCommandFind.SuspendLayout();
+			this.panelCommandFindGroup.SuspendLayout();
 			this.tableLayoutPanel5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tabSetting_pageNote.SuspendLayout();
@@ -321,8 +323,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			this.groupCommandFind.SuspendLayout();
-			this.panelCommandFindGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -1798,6 +1798,49 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageCommand.Text = ":setting/page/command";
 			this.tabSetting_pageCommand.UseVisualStyleBackColor = true;
 			// 
+			// groupCommandFind
+			// 
+			this.groupCommandFind.AutoSize = true;
+			this.groupCommandFind.Controls.Add(this.panelCommandFindGroup);
+			this.groupCommandFind.Location = new System.Drawing.Point(6, 130);
+			this.groupCommandFind.Name = "groupCommandFind";
+			this.groupCommandFind.Size = new System.Drawing.Size(260, 72);
+			this.groupCommandFind.TabIndex = 18;
+			this.groupCommandFind.TabStop = false;
+			this.groupCommandFind.Text = ":setting/group/command-find";
+			// 
+			// panelCommandFindGroup
+			// 
+			this.panelCommandFindGroup.AutoSize = true;
+			this.panelCommandFindGroup.Controls.Add(this.selectCommandFindTag);
+			this.panelCommandFindGroup.Controls.Add(this.selectCommandFindFile);
+			this.panelCommandFindGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelCommandFindGroup.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.panelCommandFindGroup.Location = new System.Drawing.Point(3, 19);
+			this.panelCommandFindGroup.Name = "panelCommandFindGroup";
+			this.panelCommandFindGroup.Size = new System.Drawing.Size(254, 50);
+			this.panelCommandFindGroup.TabIndex = 0;
+			// 
+			// selectCommandFindTag
+			// 
+			this.selectCommandFindTag.AutoSize = true;
+			this.selectCommandFindTag.Location = new System.Drawing.Point(3, 3);
+			this.selectCommandFindTag.Name = "selectCommandFindTag";
+			this.selectCommandFindTag.Size = new System.Drawing.Size(248, 19);
+			this.selectCommandFindTag.TabIndex = 19;
+			this.selectCommandFindTag.Text = ":setting/check/command-enabled-tag";
+			this.selectCommandFindTag.UseVisualStyleBackColor = true;
+			// 
+			// selectCommandFindFile
+			// 
+			this.selectCommandFindFile.AutoSize = true;
+			this.selectCommandFindFile.Location = new System.Drawing.Point(3, 28);
+			this.selectCommandFindFile.Name = "selectCommandFindFile";
+			this.selectCommandFindFile.Size = new System.Drawing.Size(246, 19);
+			this.selectCommandFindFile.TabIndex = 19;
+			this.selectCommandFindFile.Text = ":setting/check/command-enabled-file";
+			this.selectCommandFindFile.UseVisualStyleBackColor = true;
+			// 
 			// tableLayoutPanel5
 			// 
 			this.tableLayoutPanel5.AutoScroll = true;
@@ -1835,6 +1878,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// selectCommandIcon
 			// 
 			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectCommandIcon.Enabled = false;
 			this.selectCommandIcon.FormattingEnabled = true;
 			this.selectCommandIcon.Location = new System.Drawing.Point(203, 92);
 			this.selectCommandIcon.Name = "selectCommandIcon";
@@ -2790,49 +2834,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// groupCommandFind
-			// 
-			this.groupCommandFind.AutoSize = true;
-			this.groupCommandFind.Controls.Add(this.panelCommandFindGroup);
-			this.groupCommandFind.Location = new System.Drawing.Point(6, 130);
-			this.groupCommandFind.Name = "groupCommandFind";
-			this.groupCommandFind.Size = new System.Drawing.Size(260, 72);
-			this.groupCommandFind.TabIndex = 18;
-			this.groupCommandFind.TabStop = false;
-			this.groupCommandFind.Text = ":setting/group/command-find";
-			// 
-			// panelCommandFindGroup
-			// 
-			this.panelCommandFindGroup.AutoSize = true;
-			this.panelCommandFindGroup.Controls.Add(this.selectCommandFindTag);
-			this.panelCommandFindGroup.Controls.Add(this.selectCommandFindFile);
-			this.panelCommandFindGroup.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelCommandFindGroup.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.panelCommandFindGroup.Location = new System.Drawing.Point(3, 19);
-			this.panelCommandFindGroup.Name = "panelCommandFindGroup";
-			this.panelCommandFindGroup.Size = new System.Drawing.Size(254, 50);
-			this.panelCommandFindGroup.TabIndex = 0;
-			// 
-			// selectCommandFindTag
-			// 
-			this.selectCommandFindTag.AutoSize = true;
-			this.selectCommandFindTag.Location = new System.Drawing.Point(3, 3);
-			this.selectCommandFindTag.Name = "selectCommandFindTag";
-			this.selectCommandFindTag.Size = new System.Drawing.Size(248, 19);
-			this.selectCommandFindTag.TabIndex = 19;
-			this.selectCommandFindTag.Text = ":setting/check/command-enabled-tag";
-			this.selectCommandFindTag.UseVisualStyleBackColor = true;
-			// 
-			// selectCommandFindFile
-			// 
-			this.selectCommandFindFile.AutoSize = true;
-			this.selectCommandFindFile.Location = new System.Drawing.Point(3, 28);
-			this.selectCommandFindFile.Name = "selectCommandFindFile";
-			this.selectCommandFindFile.Size = new System.Drawing.Size(246, 19);
-			this.selectCommandFindFile.TabIndex = 19;
-			this.selectCommandFindFile.Text = ":setting/check/command-enabled-file";
-			this.selectCommandFindFile.UseVisualStyleBackColor = true;
-			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.commandSubmit;
@@ -2914,6 +2915,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup.PerformLayout();
 			this.tabSetting_pageCommand.ResumeLayout(false);
 			this.tabSetting_pageCommand.PerformLayout();
+			this.groupCommandFind.ResumeLayout(false);
+			this.groupCommandFind.PerformLayout();
+			this.panelCommandFindGroup.ResumeLayout(false);
+			this.panelCommandFindGroup.PerformLayout();
 			this.tableLayoutPanel5.ResumeLayout(false);
 			this.tableLayoutPanel5.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
@@ -2964,10 +2969,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.groupCommandFind.ResumeLayout(false);
-			this.groupCommandFind.PerformLayout();
-			this.panelCommandFindGroup.ResumeLayout(false);
-			this.panelCommandFindGroup.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
