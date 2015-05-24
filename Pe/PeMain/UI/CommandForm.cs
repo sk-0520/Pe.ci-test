@@ -134,7 +134,7 @@
 				// アイテム名
 				var nameList = LauncherList
 					.Where(i => i.Name.StartsWith(s))
-					.Select(i => new CommandDisplayValue(i, i.Name, LauncherCommandType.Name))
+					.Select(i => new CommandDisplayValue(i, i.Name, CommandKind.LauncherItem_Name))
 				;
 
 				// タグ名
@@ -147,7 +147,7 @@
 						}
 					)
 					.Where(pair => pair.Tag.StartsWith(s))
-					.Select(pair => new CommandDisplayValue(pair.Item, pair.Tag, LauncherCommandType.Tag))
+					.Select(pair => new CommandDisplayValue(pair.Item, pair.Tag, CommandKind.LauncherItem_Tag))
 				;
 
 				// ファイルパス
@@ -185,7 +185,7 @@
 										LauncherType = LauncherType.File,
 									},
 									fs.FullName,
-									LauncherCommandType.File
+									CommandKind.FilePath
 								)
 							);
 					} catch(IOException ex) {
@@ -200,14 +200,14 @@
 				list = nameList.Concat(tagList).Concat(fileList);
 			}
 			if(list == null || !list.Any()) {
-				list = LauncherList.Select(i => new CommandDisplayValue(i, i.Name, LauncherCommandType.Name));
+				list = LauncherList.Select(i => new CommandDisplayValue(i, i.Name, CommandKind.LauncherItem_Name));
 			}
 
-			var nowCommandValue = new CommandDisplayValue(new LauncherItem(), s, LauncherCommandType.None);
+			var nowCommandValue = new CommandDisplayValue(new LauncherItem(), s, CommandKind.None);
 			if(!string.IsNullOrWhiteSpace(s)) {
 				nowCommandValue = list.FirstOrDefault(i => i.Display.StartsWith(s, StringComparison.OrdinalIgnoreCase)) ?? nowCommandValue;
 			}
-			if(nowCommandValue.LauncherCommandType == LauncherCommandType.None) {
+			if(nowCommandValue.CommandKind == CommandKind.None) {
 				list = new[] { nowCommandValue }.Concat(list);
 			}
 			try {
@@ -215,7 +215,6 @@
 
 				this.inputCommand.Attachment(list, nowCommandValue.Value);
 
-				//this.inputCommand.SelectionStart = ;
 				this.inputCommand.Select(s.Length, nowCommandValue.Display.Length);
 				ChangeIcon();
 			} finally {
@@ -244,8 +243,11 @@
 		CommandKind GetCommandKind()
 		{
 			var dv = GetCommandDisplayValue();
-			if(dv != null && dv.LauncherCommandType != LauncherCommandType.None) {
-				return CommandKind.LauncherItem;
+			if(dv != null && dv.CommandKind != CommandKind.None) {
+				if(dv.CommandKind == CommandKind.FilePath) {
+					return CommandKind.FilePath;
+				}
+				return CommandKind.LauncherItem_Name;
 			} else {
 				return GetCommandKindFromText(this.inputCommand.Text);
 			}
@@ -264,7 +266,7 @@
 
 			var kind = GetCommandKind();
 			switch(kind) {
-				case CommandKind.LauncherItem:
+				case CommandKind.LauncherItem_Name:
 					{
 						var dv = GetCommandDisplayValue();
 						if(dv != null) {
@@ -313,7 +315,7 @@
 		{
 			var kind = GetCommandKind();
 			switch(kind) {
-				case CommandKind.LauncherItem: 
+				case CommandKind.LauncherItem_Name: 
 					{
 						var dv = GetCommandDisplayValue();
 						if(dv != null) {
@@ -402,8 +404,19 @@
 				Keys.Delete,
 				Keys.Back,
 			};
+			var directorySeparator = new[] {
+				Keys.Oem5,
+				Keys.OemBackslash,
+			};
 			if(noUpdateKeys.Any(k => k == e.KeyCode)) {
 				CallUpdateEvent = false;
+			} else if(directorySeparator.Any(k => k == e.KeyCode)) {
+				var kind = GetCommandKind();
+				if(kind == CommandKind.FilePath) {
+					if(this.inputCommand.SelectionLength > 0) {
+						this.inputCommand.SelectionStart = this.inputCommand.Text.Length;
+					}
+				}
 			}
 		}
 

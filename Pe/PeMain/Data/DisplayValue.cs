@@ -217,15 +217,15 @@
 
 	public class CommandDisplayValue: DisplayValue<LauncherItem>
 	{
-		public CommandDisplayValue(LauncherItem value, string displayText, LauncherCommandType launcherCommandType)
+		public CommandDisplayValue(LauncherItem value, string displayText, CommandKind commandKind)
 			: base(value)
 		{
 			DisplayText = displayText;
-			LauncherCommandType = launcherCommandType;
+			CommandKind = commandKind;
 		}
 
 		string DisplayText { get; set; }
-		public LauncherCommandType LauncherCommandType { get; private set; }
+		public CommandKind CommandKind { get; private set; }
 
 		public override string Display
 		{

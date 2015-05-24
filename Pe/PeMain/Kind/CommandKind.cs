@@ -9,7 +9,8 @@ namespace ContentTypeTextNet.Pe.PeMain.Kind
 	public enum CommandKind
 	{
 		None,
-		LauncherItem,
+		LauncherItem_Name,
+		LauncherItem_Tag,
 		FilePath,
 		Uri,
 	}
