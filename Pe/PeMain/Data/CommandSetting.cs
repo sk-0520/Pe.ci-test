@@ -54,12 +54,10 @@
 			set { HiddenTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 
-		/// <summary>
-		/// 最前面表示。
-		/// </summary>
-		public bool TopMost { get; set; }
-		
 		public HotKeySetting HotKey { get; set; }
+
+		public bool EnabledFindTag { get; set; }
+		public bool EnabledFindFile { get; set; }
 
 		#region DisposableItem
 
@@ -82,6 +80,8 @@
 				HiddenTime = this.HiddenTime,
 				FontSetting = (FontSetting)this.FontSetting.Clone(),
 				HotKey = (HotKeySetting)this.HotKey.Clone(),
+				EnabledFindTag = this.EnabledFindTag,
+				EnabledFindFile = this.EnabledFindFile,
 			};
 		}
 

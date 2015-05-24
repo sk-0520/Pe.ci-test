@@ -23,6 +23,7 @@
 		#region variable
 
 		bool _canExecute;
+		readonly IReadOnlyList<CommandDisplayValue> _emptyCommandList = new List<CommandDisplayValue>();
 
 		#endregion
 
@@ -98,6 +99,7 @@
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
 			this.commandExecute.SetLanguage(CommonData.Language);
+			this.commandExecute.SetLanguage(CommonData.Language);
 			base.ApplyLanguage();
 		}
 
@@ -136,64 +138,72 @@
 				;
 
 				// タグ名
-				var tagList = LauncherList
-					.SelectMany(
-						(i, index) => i.Tag,
-						(i, tag) => new {
-							Item = i,
-							Tag = tag
-						}
-					)
-					.Where(pair => pair.Tag.StartsWith(s))
-					.Select(pair => new CommandDisplayValue(pair.Item, pair.Tag, CommandKind.LauncherItem_Tag))
-				;
+				IEnumerable<CommandDisplayValue> tagList = null;
+				if(CommonData.MainSetting.Command.EnabledFindTag) {
+					tagList = LauncherList
+						.SelectMany(
+							(i, index) => i.Tag,
+							(i, tag) => new {
+								Item = i,
+								Tag = tag
+							}
+						)
+						.Where(pair => pair.Tag.StartsWith(s))
+						.Select(pair => new CommandDisplayValue(pair.Item, pair.Tag, CommandKind.LauncherItem_Tag))
+					;
+				}
+				if(tagList == null) {
+					tagList = _emptyCommandList;
+				}
 
 				// ファイルパス
 				IEnumerable<CommandDisplayValue> fileList = null;
-				var inputPath = Environment.ExpandEnvironmentVariables(s);
-				var isDir = Directory.Exists(inputPath);
-				string baseDir;
-				try {
-					baseDir = isDir
-						? inputPath.Last() == Path.VolumeSeparatorChar
-							? inputPath + Path.DirectorySeparatorChar
-							: inputPath
-						: Path.GetDirectoryName(inputPath)
-					;
-				} catch(ArgumentException) {
-					baseDir = inputPath;
-				}
-
-				if(FileUtility.Exists(baseDir)) {
-					Debug.WriteLine(inputPath);
-					//var isDir = Directory.Exists(inputPath);
-					//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
-					var searchPattern = isDir ? "*": Path.GetFileName(inputPath) + "*";
-					var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
-					var directoryInfo = new DirectoryInfo(baseDir);
+				if(CommonData.MainSetting.Command.EnabledFindFile) {
+					var inputPath = Environment.ExpandEnvironmentVariables(s);
+					var isDir = Directory.Exists(inputPath);
+					string baseDir;
 					try {
-						fileList = directoryInfo
-							.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
-							.Where(fs => fs.Exists)
-							.Where(fs => showHiddenFile ? true : !fs.IsHidden())
-							.Select(fs => new CommandDisplayValue(
-									new LauncherItem() {
-										Name = fs.Name,
-										Command = fs.FullName,
-										LauncherType = LauncherType.File,
-									},
-									fs.FullName,
-									CommandKind.FilePath
-								)
-							);
-					} catch(IOException ex) {
-						CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-					} catch(UnauthorizedAccessException ex) {
-						CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+						baseDir = isDir
+							? inputPath.Last() == Path.VolumeSeparatorChar
+								? inputPath + Path.DirectorySeparatorChar
+								: inputPath
+							: Path.GetDirectoryName(inputPath)
+						;
+					} catch(ArgumentException) {
+						baseDir = inputPath;
+					}
+
+					if(FileUtility.Exists(baseDir)) {
+						Debug.WriteLine(inputPath);
+						//var isDir = Directory.Exists(inputPath);
+						//var baseDir = isDir ? inputPath : Path.GetDirectoryName(inputPath);
+						var searchPattern = isDir ? "*" : Path.GetFileName(inputPath) + "*";
+						var showHiddenFile = SystemEnvironment.IsHiddenFileShow();
+						var directoryInfo = new DirectoryInfo(baseDir);
+						try {
+							fileList = directoryInfo
+								.EnumerateFileSystemInfos(searchPattern, SearchOption.TopDirectoryOnly)
+								.Where(fs => fs.Exists)
+								.Where(fs => showHiddenFile ? true : !fs.IsHidden())
+								.Select(fs => new CommandDisplayValue(
+										new LauncherItem() {
+											Name = fs.Name,
+											Command = fs.FullName,
+											LauncherType = LauncherType.File,
+										},
+										fs.FullName,
+										CommandKind.FilePath
+									)
+								);
+						} catch(IOException ex) {
+							CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+						} catch(UnauthorizedAccessException ex) {
+							CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+						}
 					}
 				}
 				if(fileList == null) {
-					fileList = new List<CommandDisplayValue>();
+					fileList = _emptyCommandList;
 				}
 				list = nameList.Concat(tagList).Concat(fileList);
 			}

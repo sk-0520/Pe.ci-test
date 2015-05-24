@@ -375,6 +375,9 @@
 		<Word Name="setting/label/stream-back" Text="背景色" />
 		<Word Name="setting/label/hide-time"       Text="非表示までの時間(ミリ秒)" />
 		<Word Name="setting/label/command-hotkey"  Text="表示" />
+		<Word Name="setting/group/command-find"   Text="タグ検索を使用" />
+		<Word Name="setting/check/command-enabled-tag"   Text="タグ検索を使用" />
+		<Word Name="setting/check/command-enabled-file"  Text="ファイル検索を使用" />
 
 		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
 		<Word Name="screen/primary/false"  Text="" />

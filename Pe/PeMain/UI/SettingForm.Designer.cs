@@ -154,14 +154,15 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup_remove = new System.Windows.Forms.ToolStripButton();
 			this.selecterToolbar = new ContentTypeTextNet.Pe.PeMain.UI.CustomControl.LauncherItemSelectControl();
 			this.tabSetting_pageCommand = new System.Windows.Forms.TabPage();
-			this.labelCommandHotkey = new System.Windows.Forms.Label();
-			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
-			this.labelCommandIcon = new System.Windows.Forms.Label();
-			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
-			this.inputCommandHideTime = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
-			this.labelCommandHideTime = new System.Windows.Forms.Label();
-			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
+			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			this.labelCommandFont = new System.Windows.Forms.Label();
+			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
+			this.labelCommandIcon = new System.Windows.Forms.Label();
+			this.inputCommandHotkey = new ContentTypeTextNet.Pe.PeMain.UI.Ex.PeHotkeyControl();
+			this.labelCommandHotkey = new System.Windows.Forms.Label();
+			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
+			this.labelCommandHideTime = new System.Windows.Forms.Label();
+			this.inputCommandHideTime = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
 			this.tabSetting_pageNote = new System.Windows.Forms.TabPage();
 			this.panelNote = new System.Windows.Forms.TableLayoutPanel();
 			this.panelNoteOthers = new System.Windows.Forms.TableLayoutPanel();
@@ -239,7 +240,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting = new System.Windows.Forms.TableLayoutPanel();
 			this.panelCommand = new System.Windows.Forms.FlowLayoutPanel();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+			this.groupCommandFind = new System.Windows.Forms.GroupBox();
+			this.panelCommandFindGroup = new System.Windows.Forms.FlowLayoutPanel();
+			this.selectCommandFindTag = new System.Windows.Forms.CheckBox();
+			this.selectCommandFindFile = new System.Windows.Forms.CheckBox();
 			this.tabSetting.SuspendLayout();
 			this.tabSetting_pageMain.SuspendLayout();
 			this.groupStream.SuspendLayout();
@@ -286,6 +290,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolStripContainer1.SuspendLayout();
 			this.toolToolbarGroup.SuspendLayout();
 			this.tabSetting_pageCommand.SuspendLayout();
+			this.tableLayoutPanel5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).BeginInit();
 			this.tabSetting_pageNote.SuspendLayout();
 			this.panelNote.SuspendLayout();
@@ -316,7 +321,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.SuspendLayout();
 			this.panelCommand.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-			this.tableLayoutPanel5.SuspendLayout();
+			this.groupCommandFind.SuspendLayout();
+			this.panelCommandFindGroup.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabSetting
@@ -1782,6 +1788,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// tabSetting_pageCommand
 			// 
+			this.tabSetting_pageCommand.Controls.Add(this.groupCommandFind);
 			this.tabSetting_pageCommand.Controls.Add(this.tableLayoutPanel5);
 			this.tabSetting_pageCommand.Location = new System.Drawing.Point(4, 24);
 			this.tabSetting_pageCommand.Name = "tabSetting_pageCommand";
@@ -1791,15 +1798,58 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageCommand.Text = ":setting/page/command";
 			this.tabSetting_pageCommand.UseVisualStyleBackColor = true;
 			// 
-			// labelCommandHotkey
+			// tableLayoutPanel5
 			// 
-			this.labelCommandHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelCommandHotkey.AutoSize = true;
-			this.labelCommandHotkey.Location = new System.Drawing.Point(3, 67);
-			this.labelCommandHotkey.Name = "labelCommandHotkey";
-			this.labelCommandHotkey.Size = new System.Drawing.Size(194, 15);
-			this.labelCommandHotkey.TabIndex = 16;
-			this.labelCommandHotkey.Text = ":setting/label/command-hotkey";
+			this.tableLayoutPanel5.AutoScroll = true;
+			this.tableLayoutPanel5.AutoSize = true;
+			this.tableLayoutPanel5.ColumnCount = 2;
+			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel5.Controls.Add(this.labelCommandFont, 0, 0);
+			this.tableLayoutPanel5.Controls.Add(this.selectCommandIcon, 1, 3);
+			this.tableLayoutPanel5.Controls.Add(this.labelCommandIcon, 0, 3);
+			this.tableLayoutPanel5.Controls.Add(this.inputCommandHotkey, 1, 2);
+			this.tableLayoutPanel5.Controls.Add(this.labelCommandHotkey, 0, 2);
+			this.tableLayoutPanel5.Controls.Add(this.commandCommandFont, 1, 0);
+			this.tableLayoutPanel5.Controls.Add(this.labelCommandHideTime, 0, 1);
+			this.tableLayoutPanel5.Controls.Add(this.inputCommandHideTime, 1, 1);
+			this.tableLayoutPanel5.Location = new System.Drawing.Point(6, 6);
+			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+			this.tableLayoutPanel5.RowCount = 4;
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel5.Size = new System.Drawing.Size(436, 118);
+			this.tableLayoutPanel5.TabIndex = 17;
+			// 
+			// labelCommandFont
+			// 
+			this.labelCommandFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelCommandFont.Location = new System.Drawing.Point(3, 4);
+			this.labelCommandFont.Name = "labelCommandFont";
+			this.labelCommandFont.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandFont.TabIndex = 0;
+			this.labelCommandFont.Text = ":common/label/font";
+			// 
+			// selectCommandIcon
+			// 
+			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.selectCommandIcon.FormattingEnabled = true;
+			this.selectCommandIcon.Location = new System.Drawing.Point(203, 92);
+			this.selectCommandIcon.Name = "selectCommandIcon";
+			this.selectCommandIcon.Size = new System.Drawing.Size(121, 23);
+			this.selectCommandIcon.TabIndex = 13;
+			// 
+			// labelCommandIcon
+			// 
+			this.labelCommandIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelCommandIcon.AutoSize = true;
+			this.labelCommandIcon.Location = new System.Drawing.Point(3, 96);
+			this.labelCommandIcon.Name = "labelCommandIcon";
+			this.labelCommandIcon.Size = new System.Drawing.Size(101, 15);
+			this.labelCommandIcon.TabIndex = 14;
+			this.labelCommandIcon.Text = ":enum/icon-size";
 			// 
 			// inputCommandHotkey
 			// 
@@ -1816,24 +1866,35 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputCommandHotkey.TabIndex = 15;
 			this.inputCommandHotkey.Text = "None";
 			// 
-			// labelCommandIcon
+			// labelCommandHotkey
 			// 
-			this.labelCommandIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelCommandIcon.AutoSize = true;
-			this.labelCommandIcon.Location = new System.Drawing.Point(3, 96);
-			this.labelCommandIcon.Name = "labelCommandIcon";
-			this.labelCommandIcon.Size = new System.Drawing.Size(101, 15);
-			this.labelCommandIcon.TabIndex = 14;
-			this.labelCommandIcon.Text = ":enum/icon-size";
+			this.labelCommandHotkey.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelCommandHotkey.AutoSize = true;
+			this.labelCommandHotkey.Location = new System.Drawing.Point(3, 67);
+			this.labelCommandHotkey.Name = "labelCommandHotkey";
+			this.labelCommandHotkey.Size = new System.Drawing.Size(194, 15);
+			this.labelCommandHotkey.TabIndex = 16;
+			this.labelCommandHotkey.Text = ":setting/label/command-hotkey";
 			// 
-			// selectCommandIcon
+			// commandCommandFont
 			// 
-			this.selectCommandIcon.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.selectCommandIcon.FormattingEnabled = true;
-			this.selectCommandIcon.Location = new System.Drawing.Point(203, 92);
-			this.selectCommandIcon.Name = "selectCommandIcon";
-			this.selectCommandIcon.Size = new System.Drawing.Size(121, 23);
-			this.selectCommandIcon.TabIndex = 13;
+			this.commandCommandFont.AutoSize = true;
+			this.commandCommandFont.Location = new System.Drawing.Point(203, 3);
+			this.commandCommandFont.Name = "commandCommandFont";
+			this.commandCommandFont.Size = new System.Drawing.Size(141, 25);
+			this.commandCommandFont.TabIndex = 1;
+			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
+			this.commandCommandFont.UseVisualStyleBackColor = true;
+			// 
+			// labelCommandHideTime
+			// 
+			this.labelCommandHideTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelCommandHideTime.AutoSize = true;
+			this.labelCommandHideTime.Location = new System.Drawing.Point(3, 38);
+			this.labelCommandHideTime.Name = "labelCommandHideTime";
+			this.labelCommandHideTime.Size = new System.Drawing.Size(147, 15);
+			this.labelCommandHideTime.TabIndex = 2;
+			this.labelCommandHideTime.Text = ":setting/label/hide-time";
 			// 
 			// inputCommandHideTime
 			// 
@@ -1846,35 +1907,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.inputCommandHideTime.Name = "inputCommandHideTime";
 			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
 			this.inputCommandHideTime.TabIndex = 5;
-			// 
-			// labelCommandHideTime
-			// 
-			this.labelCommandHideTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelCommandHideTime.AutoSize = true;
-			this.labelCommandHideTime.Location = new System.Drawing.Point(3, 38);
-			this.labelCommandHideTime.Name = "labelCommandHideTime";
-			this.labelCommandHideTime.Size = new System.Drawing.Size(147, 15);
-			this.labelCommandHideTime.TabIndex = 2;
-			this.labelCommandHideTime.Text = ":setting/label/hide-time";
-			// 
-			// commandCommandFont
-			// 
-			this.commandCommandFont.AutoSize = true;
-			this.commandCommandFont.Location = new System.Drawing.Point(203, 3);
-			this.commandCommandFont.Name = "commandCommandFont";
-			this.commandCommandFont.Size = new System.Drawing.Size(141, 25);
-			this.commandCommandFont.TabIndex = 1;
-			this.commandCommandFont.Text = "{FAMILY} {PT} ...";
-			this.commandCommandFont.UseVisualStyleBackColor = true;
-			// 
-			// labelCommandFont
-			// 
-			this.labelCommandFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelCommandFont.Location = new System.Drawing.Point(3, 4);
-			this.labelCommandFont.Name = "labelCommandFont";
-			this.labelCommandFont.Size = new System.Drawing.Size(100, 23);
-			this.labelCommandFont.TabIndex = 0;
-			this.labelCommandFont.Text = ":common/label/font";
 			// 
 			// tabSetting_pageNote
 			// 
@@ -2758,30 +2790,48 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
-			// tableLayoutPanel5
+			// groupCommandFind
 			// 
-			this.tableLayoutPanel5.AutoScroll = true;
-			this.tableLayoutPanel5.AutoSize = true;
-			this.tableLayoutPanel5.ColumnCount = 2;
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel5.Controls.Add(this.labelCommandFont, 0, 0);
-			this.tableLayoutPanel5.Controls.Add(this.selectCommandIcon, 1, 3);
-			this.tableLayoutPanel5.Controls.Add(this.labelCommandIcon, 0, 3);
-			this.tableLayoutPanel5.Controls.Add(this.inputCommandHotkey, 1, 2);
-			this.tableLayoutPanel5.Controls.Add(this.labelCommandHotkey, 0, 2);
-			this.tableLayoutPanel5.Controls.Add(this.commandCommandFont, 1, 0);
-			this.tableLayoutPanel5.Controls.Add(this.labelCommandHideTime, 0, 1);
-			this.tableLayoutPanel5.Controls.Add(this.inputCommandHideTime, 1, 1);
-			this.tableLayoutPanel5.Location = new System.Drawing.Point(6, 6);
-			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-			this.tableLayoutPanel5.RowCount = 4;
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.Size = new System.Drawing.Size(436, 118);
-			this.tableLayoutPanel5.TabIndex = 17;
+			this.groupCommandFind.AutoSize = true;
+			this.groupCommandFind.Controls.Add(this.panelCommandFindGroup);
+			this.groupCommandFind.Location = new System.Drawing.Point(6, 130);
+			this.groupCommandFind.Name = "groupCommandFind";
+			this.groupCommandFind.Size = new System.Drawing.Size(260, 72);
+			this.groupCommandFind.TabIndex = 18;
+			this.groupCommandFind.TabStop = false;
+			this.groupCommandFind.Text = ":setting/group/command-find";
+			// 
+			// panelCommandFindGroup
+			// 
+			this.panelCommandFindGroup.AutoSize = true;
+			this.panelCommandFindGroup.Controls.Add(this.selectCommandFindTag);
+			this.panelCommandFindGroup.Controls.Add(this.selectCommandFindFile);
+			this.panelCommandFindGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panelCommandFindGroup.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.panelCommandFindGroup.Location = new System.Drawing.Point(3, 19);
+			this.panelCommandFindGroup.Name = "panelCommandFindGroup";
+			this.panelCommandFindGroup.Size = new System.Drawing.Size(254, 50);
+			this.panelCommandFindGroup.TabIndex = 0;
+			// 
+			// selectCommandFindTag
+			// 
+			this.selectCommandFindTag.AutoSize = true;
+			this.selectCommandFindTag.Location = new System.Drawing.Point(3, 3);
+			this.selectCommandFindTag.Name = "selectCommandFindTag";
+			this.selectCommandFindTag.Size = new System.Drawing.Size(248, 19);
+			this.selectCommandFindTag.TabIndex = 19;
+			this.selectCommandFindTag.Text = ":setting/check/command-enabled-tag";
+			this.selectCommandFindTag.UseVisualStyleBackColor = true;
+			// 
+			// selectCommandFindFile
+			// 
+			this.selectCommandFindFile.AutoSize = true;
+			this.selectCommandFindFile.Location = new System.Drawing.Point(3, 28);
+			this.selectCommandFindFile.Name = "selectCommandFindFile";
+			this.selectCommandFindFile.Size = new System.Drawing.Size(246, 19);
+			this.selectCommandFindFile.TabIndex = 19;
+			this.selectCommandFindFile.Text = ":setting/check/command-enabled-file";
+			this.selectCommandFindFile.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -2864,6 +2914,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.toolToolbarGroup.PerformLayout();
 			this.tabSetting_pageCommand.ResumeLayout(false);
 			this.tabSetting_pageCommand.PerformLayout();
+			this.tableLayoutPanel5.ResumeLayout(false);
+			this.tableLayoutPanel5.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.inputCommandHideTime)).EndInit();
 			this.tabSetting_pageNote.ResumeLayout(false);
 			this.panelNote.ResumeLayout(false);
@@ -2912,8 +2964,10 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.panelSetting.PerformLayout();
 			this.panelCommand.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-			this.tableLayoutPanel5.ResumeLayout(false);
-			this.tableLayoutPanel5.PerformLayout();
+			this.groupCommandFind.ResumeLayout(false);
+			this.groupCommandFind.PerformLayout();
+			this.panelCommandFindGroup.ResumeLayout(false);
+			this.panelCommandFindGroup.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -3123,5 +3177,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel11;
 		private System.Windows.Forms.Label labelStreamFont;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+		private System.Windows.Forms.GroupBox groupCommandFind;
+		private System.Windows.Forms.CheckBox selectCommandFindFile;
+		private System.Windows.Forms.CheckBox selectCommandFindTag;
+		private System.Windows.Forms.FlowLayoutPanel panelCommandFindGroup;
 	}
 }

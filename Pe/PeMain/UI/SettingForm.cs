@@ -414,6 +414,10 @@
 
 		void ApplyCommand()
 		{
+			//selectCommandFindTag
+			this.selectCommandFindTag.DataBindings.Add("Checked", CommonData.MainSetting.Command, "EnabledFindTag");
+			this.selectCommandFindFile.DataBindings.Add("Checked", CommonData.MainSetting.Command, "EnabledFindFile");
+
 			//this._commandFont = commandSetting.FontSetting;
 			this.commandCommandFont.FontSetting.Import(CommonData.MainSetting.Command.FontSetting);
 			this.commandCommandFont.RefreshView();
@@ -642,6 +646,10 @@
 		{
 			this.commandCommandFont.SetLanguage(CommonData.Language);
 			this.inputCommandHotkey.SetLanguage(CommonData.Language);
+			this.selectCommandFindTag.SetLanguage(CommonData.Language);
+			this.selectCommandFindFile.SetLanguage(CommonData.Language);
+			this.groupCommandFind.SetLanguage(CommonData.Language);
+			this.groupCommandFind.Size = Size.Empty;
 
 			this.labelCommandFont.SetLanguage(CommonData.Language);
 			this.labelCommandIcon.SetLanguage(CommonData.Language);
