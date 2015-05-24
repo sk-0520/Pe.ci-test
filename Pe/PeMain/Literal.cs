@@ -232,6 +232,16 @@
 #endif
 		public const int updateArchiveCount = 15;
 
+		public static IEnumerable<string> UriPattern
+		{
+			get
+			{
+				return new[] {
+					"http://",
+					"https://",
+				};
+			}
+		}
 
 		/// <summary>
 		/// 実行パス

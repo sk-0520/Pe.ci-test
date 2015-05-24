@@ -180,12 +180,6 @@
 		{
 			InitializeToolbar();
 
-#if !DEBUG
-			var debugPage = new [] { this.tabSetting_pageCommand, this.tabSetting_pageDisplay };
-			foreach(var page in debugPage) {
-				this.tabSetting.TabPages.Remove(page);
-			}
-#endif
 			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 
@@ -414,6 +408,10 @@
 
 		void ApplyCommand()
 		{
+			//selectCommandFindTag
+			this.selectCommandFindTag.DataBindings.Add("Checked", CommonData.MainSetting.Command, "EnabledFindTag");
+			this.selectCommandFindFile.DataBindings.Add("Checked", CommonData.MainSetting.Command, "EnabledFindFile");
+
 			//this._commandFont = commandSetting.FontSetting;
 			this.commandCommandFont.FontSetting.Import(CommonData.MainSetting.Command.FontSetting);
 			this.commandCommandFont.RefreshView();
@@ -423,6 +421,9 @@
 
 			// ホットキー
 			this.inputCommandHotkey.HotKeySetting = CommonData.MainSetting.Command.HotKey;
+
+			// 消える時間
+			this.inputCommandHideTime.SetValue(Literal.commandHiddenTime, CommonData.MainSetting.Command.HiddenTime);
 		}
 
 		void ApplyNote()
@@ -639,10 +640,15 @@
 		{
 			this.commandCommandFont.SetLanguage(CommonData.Language);
 			this.inputCommandHotkey.SetLanguage(CommonData.Language);
+			this.selectCommandFindTag.SetLanguage(CommonData.Language);
+			this.selectCommandFindFile.SetLanguage(CommonData.Language);
+			this.groupCommandFind.SetLanguage(CommonData.Language);
+			this.groupCommandFind.Size = Size.Empty;
 
-			this.selectCommandTopmost.SetLanguage(CommonData.Language);
 			this.labelCommandFont.SetLanguage(CommonData.Language);
 			this.labelCommandIcon.SetLanguage(CommonData.Language);
+			this.labelCommandHideTime.SetLanguage(CommonData.Language);
+			this.labelCommandHotkey.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageNote()
@@ -861,6 +867,7 @@
 			ExportNoteSetting(CommonData.MainSetting.Note);
 			ExportToolbarSetting(CommonData.MainSetting.Toolbar);
 			ExportClipboardSetting(CommonData.MainSetting.Clipboard);
+			ExportCommandSetting(CommonData.MainSetting.Command);
 
 			ExportToolbarGroup(CommonData.MainSetting.Toolbar);
 		}
@@ -1115,6 +1122,14 @@
 			// フォント
 			setting.TextFont = this.commandClipboardTextFont.FontSetting;
 
+		}
+
+		void ExportCommandSetting(CommandSetting setting)
+		{
+			setting.FontSetting = this.commandCommandFont.FontSetting;
+			setting.HotKey = this.inputCommandHotkey.HotKeySetting;
+			setting.IconScale = (IconScale)this.selectCommandIcon.SelectedValue;
+			setting.HiddenTime = TimeSpan.FromMilliseconds((int)this.inputCommandHideTime.Value);
 		}
 
 		#endregion ////////////////////////////////////
