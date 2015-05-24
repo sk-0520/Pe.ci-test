@@ -23,6 +23,8 @@
 			HiddenTime = Literal.commandHiddenTime.median;
 			FontSetting = new FontSetting();
 			HotKey = new HotKeySetting();
+			EnabledFindTag = true;
+			EnabledFindFile = true;
 		}
 		
 		public override void CorrectionValue()

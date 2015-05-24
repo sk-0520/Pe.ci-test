@@ -89,6 +89,8 @@
 		{
 			base.ApplySetting();
 
+			this.inputCommand.Font = CommonData.MainSetting.Command.FontSetting.Font;
+
 			this.timerHidden.Interval = (int)CommonData.MainSetting.Command.HiddenTime.TotalMilliseconds;
 			Width = CommonData.MainSetting.Command.Width;
 
@@ -98,7 +100,6 @@
 		protected override void ApplyLanguage()
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
-			this.commandExecute.SetLanguage(CommonData.Language);
 			this.commandExecute.SetLanguage(CommonData.Language);
 			base.ApplyLanguage();
 		}
