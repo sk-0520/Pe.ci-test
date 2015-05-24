@@ -17,6 +17,8 @@
 	using System.IO;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using System.Drawing.Text;
+	using ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows;
 
 	public partial class CommandForm: CommonForm
 	{
@@ -90,7 +92,9 @@
 			base.ApplySetting();
 
 			this.inputCommand.Font = CommonData.MainSetting.Command.FontSetting.Font;
-
+			this.inputCommand.ItemHeight = AppUtility.GetTuneItemHeight(this.inputCommand.Margin, CommonData.MainSetting.Command.IconScale, CommonData.MainSetting.Command.FontSetting.Font);
+			//this.inputCommand.Height = CommonData.MainSetting.Command.FontSetting.Font.Height;// +this.inputCommand.Margin.Vertical + 1 * 2;
+			//NativeMethods.SendMessage(this.inputCommand.Handle, WM.CB_SETITEMHEIGHT, new IntPtr(0), new IntPtr(30));
 			this.timerHidden.Interval = (int)CommonData.MainSetting.Command.HiddenTime.TotalMilliseconds;
 			Width = CommonData.MainSetting.Command.Width;
 
@@ -487,6 +491,43 @@
 		private void CommandForm_SizeChanged(object sender, EventArgs e)
 		{
 			CommonData.MainSetting.Command.Width = Width;
+		}
+
+		private void inputCommand_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			e.DrawBackground();
+
+			var g = e.Graphics;
+			if(e.Index != -1) {
+				// TODO: アイコン位置と文字列位置の補正が必要
+				var item = (CommandDisplayValue)this.inputCommand.Items[e.Index];
+				var icon = item.Value.GetIcon(CommonData.MainSetting.Command.IconScale, item.Value.IconItem.Index, CommonData.ApplicationSetting, new NullLogger());
+				if(icon != null) {
+					var padding = e.Bounds.Height / 2 - CommonData.MainSetting.Command.IconScale.ToHeight() / 2;
+					g.DrawIcon(icon, e.Bounds.X + padding, e.Bounds.Y + padding);
+				}
+				var textArea = new RectangleF(e.Bounds.X, e.Bounds.Y, e.Bounds.Width, e.Bounds.Height);
+				textArea.X += this.inputCommand.ItemHeight;
+				textArea.Width -= this.inputCommand.ItemHeight;
+				using(var brush = new SolidBrush(e.ForeColor)) {
+					using(var format = new StringFormat()) {
+						format.Alignment = StringAlignment.Near;
+						format.LineAlignment = StringAlignment.Center;
+						g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+						g.DrawString(item.Value.Name, CommonData.MainSetting.Command.FontSetting.Font, brush, textArea, format);
+					}
+				}
+			}
+
+			e.DrawFocusRectangle();
+		}
+
+		private void inputCommand_MeasureItem(object sender, MeasureItemEventArgs e)
+		{
+			if(e.Index == -1)
+				e.ItemHeight = 10;
+			else
+			e.ItemHeight = this.inputCommand.ItemHeight;
 		}
 	}
 }

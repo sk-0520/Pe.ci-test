@@ -39,7 +39,8 @@
 			// 
 			// imageIcon
 			// 
-			this.imageIcon.Location = new System.Drawing.Point(3, 3);
+			this.imageIcon.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.imageIcon.Location = new System.Drawing.Point(3, 5);
 			this.imageIcon.Name = "imageIcon";
 			this.imageIcon.Size = new System.Drawing.Size(32, 32);
 			this.imageIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -61,13 +62,13 @@
 			this.panelMain.Name = "panelMain";
 			this.panelMain.RowCount = 1;
 			this.panelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.panelMain.Size = new System.Drawing.Size(303, 39);
+			this.panelMain.Size = new System.Drawing.Size(303, 42);
 			this.panelMain.TabIndex = 2;
 			// 
 			// commandExecute
 			// 
 			this.commandExecute.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.commandExecute.Location = new System.Drawing.Point(236, 8);
+			this.commandExecute.Location = new System.Drawing.Point(236, 9);
 			this.commandExecute.Name = "commandExecute";
 			this.commandExecute.Size = new System.Drawing.Size(64, 23);
 			this.commandExecute.TabIndex = 2;
@@ -79,10 +80,12 @@
 			// 
 			this.inputCommand.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.inputCommand.FormattingEnabled = true;
-			this.inputCommand.Location = new System.Drawing.Point(41, 8);
+			this.inputCommand.Location = new System.Drawing.Point(41, 9);
 			this.inputCommand.Name = "inputCommand";
 			this.inputCommand.Size = new System.Drawing.Size(189, 23);
 			this.inputCommand.TabIndex = 3;
+			this.inputCommand.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.inputCommand_DrawItem);
+			this.inputCommand.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.inputCommand_MeasureItem);
 			this.inputCommand.SelectedIndexChanged += new System.EventHandler(this.inputCommand_SelectedIndexChanged);
 			this.inputCommand.DropDownClosed += new System.EventHandler(this.inputCommand_DropDownClosed);
 			this.inputCommand.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputCommand_KeyDown);
@@ -95,7 +98,7 @@
 			// CommandForm
 			// 
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(303, 39);
+			this.ClientSize = new System.Drawing.Size(303, 42);
 			this.Controls.Add(this.panelMain);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MaximizeBox = false;

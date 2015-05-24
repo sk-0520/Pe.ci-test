@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Drawing;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -21,6 +22,10 @@
 		#region event
 
 		public event EventHandler<TextCutEventArgs> TextCutting = delegate { };
+
+		#endregion
+
+		#region property
 
 		#endregion
 

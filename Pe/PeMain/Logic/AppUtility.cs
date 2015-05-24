@@ -338,5 +338,14 @@
 				}
 			}
 		}
+
+		public static int GetTuneItemHeight(Padding padding, IconScale iconScale, Font font)
+		{
+			var iconHeight = iconScale.ToHeight();
+			var fontHeight = font.Height;
+			var itemHeight = Math.Max(iconHeight, fontHeight) + padding.Vertical + 1 * 2;
+			return itemHeight;
+		}
+
 	}
 }
