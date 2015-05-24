@@ -56,22 +56,19 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.59.4" type="rc">
+	<log date="2015/05/24" version="0.60.0">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
+				<message>コマンド型ランチャー機能を実装しました</message>
+				<comments>
+					<comment>一応メニューから表示できますが実装としてはホットキーから表示する思想です</comment>
+				</comments>
 			</note>
 		</group>
 		<group type="features">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="bbe615b060f72f00de83788fc2282bca98b726cc">
 				<message>#244: 長らくほったらかしのコマンド型ランチャー作ろうべさ</message>
 				<comments>
 					<comment>過去バージョンから設定を引き継ぐ場合、タグ・ファイル検索機能は無効になってます</comment>
@@ -83,48 +80,30 @@
 					<comment>はよWPFに移りたい、しんどい</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 		<group type="fixes">
 			<sep dummy="==================================================================" />
-			<note rev="">
+			<note rev="6715bc48465c7df23851ac911275391b8678e761">
 				<message>#232: 標準入出力で出力系の改行を待たない</message>
 				<comments>
 					<comment>それっぽくは動くけど勇んで走り出したTaskの行方は誰も知らない</comment>
 					<comment>正直なところ白旗</comment>
 				</comments>
 			</note>
-			<note rev="">
+			<note rev="ff9fd7f27ddaefd8e3f8b98bb9c8777739d3a334">
 				<message>#265: ノート一覧のプレビューをもうちっとうまいこと表示する</message>
 			</note>
 			<note rev="4ad88a0b04ad08f9f468a3515c577c4230b1c064">
 				<message>ツールバーのツールチップ描画処理をちょっと改善</message>
 			</note>
-			<note rev="">
+			<note rev="953c589f3348053f37c819c28d42a10623c0ae9f">
 				<message>アイコンパスがファイルとして存在するが無効パスと判定された場合に動作が不安定になる不具合の修正</message>
 			</note>
-			<note rev="">
+			<note rev="096c4d0d2d399d2e384b3febef41664320e0d86d">
 				<message>#271: 設定ダイアログ保存時に例外発生</message>
 				<comments>
 					<comment>設定ダイアログ保存時にタスクトレイ右クリック連打したら再現できた</comment>
 				</comments>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>
