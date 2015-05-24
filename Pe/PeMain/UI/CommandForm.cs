@@ -62,6 +62,28 @@
 
 		#region override
 
+
+		[System.Security.Permissions.UIPermission(
+			System.Security.Permissions.SecurityAction.Demand,
+			Window = System.Security.Permissions.UIPermissionWindow.AllWindows
+		)]
+		protected override bool ProcessDialogKey(Keys keyData)
+		{
+			if(this.inputCommand.Focused) {
+				var key = keyData & Keys.KeyCode;
+				if(key == Keys.Escape) {
+					if(this.inputCommand.DroppedDown) {
+						this.inputCommand.DroppedDown = false;
+					} else {
+						Visible = false;
+					}
+					return true;
+				}
+			}
+
+			return base.ProcessDialogKey(keyData);
+		}
+
 		#endregion
 
 		#region CommonForm
