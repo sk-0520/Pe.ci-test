@@ -372,6 +372,8 @@
 		<Word Name="setting/label/stream-error" Text="エラー" />
 		<Word Name="setting/label/stream-fore" Text="前景色" />
 		<Word Name="setting/label/stream-back" Text="背景色" />
+		<Word Name="setting/label/hide-time"       Text="非表示までの時間(ミリ秒)" />
+		<Word Name="setting/label/command-hotkey"  Text="表示" />
 
 		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
 		<Word Name="screen/primary/false"  Text="" />

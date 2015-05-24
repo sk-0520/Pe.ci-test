@@ -32,8 +32,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		{
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.tabSetting = new System.Windows.Forms.TabControl();
 			this.tabSetting_pageMain = new System.Windows.Forms.TabPage();
 			this.groupStream = new System.Windows.Forms.GroupBox();
@@ -159,7 +159,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.labelCommandIcon = new System.Windows.Forms.Label();
 			this.selectCommandIcon = new System.Windows.Forms.ComboBox();
 			this.inputCommandHideTime = new ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown();
-			this.selectCommandTopmost = new System.Windows.Forms.CheckBox();
 			this.labelCommandHideTime = new System.Windows.Forms.Label();
 			this.commandCommandFont = new ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton();
 			this.labelCommandFont = new System.Windows.Forms.Label();
@@ -1499,6 +1498,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputToolbarTextWidth
 			// 
+			this.inputToolbarTextWidth.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.inputToolbarTextWidth.Location = new System.Drawing.Point(161, 121);
 			this.inputToolbarTextWidth.Name = "inputToolbarTextWidth";
 			this.inputToolbarTextWidth.Size = new System.Drawing.Size(142, 23);
@@ -1781,7 +1785,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabSetting_pageCommand.Controls.Add(this.labelCommandIcon);
 			this.tabSetting_pageCommand.Controls.Add(this.selectCommandIcon);
 			this.tabSetting_pageCommand.Controls.Add(this.inputCommandHideTime);
-			this.tabSetting_pageCommand.Controls.Add(this.selectCommandTopmost);
 			this.tabSetting_pageCommand.Controls.Add(this.labelCommandHideTime);
 			this.tabSetting_pageCommand.Controls.Add(this.commandCommandFont);
 			this.tabSetting_pageCommand.Controls.Add(this.labelCommandFont);
@@ -1795,11 +1798,12 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// labelCommandHotkey
 			// 
+			this.labelCommandHotkey.AutoSize = true;
 			this.labelCommandHotkey.Location = new System.Drawing.Point(35, 109);
 			this.labelCommandHotkey.Name = "labelCommandHotkey";
-			this.labelCommandHotkey.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandHotkey.Size = new System.Drawing.Size(194, 15);
 			this.labelCommandHotkey.TabIndex = 16;
-			this.labelCommandHotkey.Text = "{HOT KEY}";
+			this.labelCommandHotkey.Text = ":setting/label/command-hotkey";
 			// 
 			// inputCommandHotkey
 			// 
@@ -1835,28 +1839,24 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputCommandHideTime
 			// 
+			this.inputCommandHideTime.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.inputCommandHideTime.Location = new System.Drawing.Point(156, 76);
 			this.inputCommandHideTime.Name = "inputCommandHideTime";
 			this.inputCommandHideTime.Size = new System.Drawing.Size(120, 23);
 			this.inputCommandHideTime.TabIndex = 5;
 			// 
-			// selectCommandTopmost
-			// 
-			this.selectCommandTopmost.AutoSize = true;
-			this.selectCommandTopmost.Location = new System.Drawing.Point(36, 160);
-			this.selectCommandTopmost.Name = "selectCommandTopmost";
-			this.selectCommandTopmost.Size = new System.Drawing.Size(175, 19);
-			this.selectCommandTopmost.TabIndex = 4;
-			this.selectCommandTopmost.Text = "::common/label/topmost";
-			this.selectCommandTopmost.UseVisualStyleBackColor = true;
-			// 
 			// labelCommandHideTime
 			// 
+			this.labelCommandHideTime.AutoSize = true;
 			this.labelCommandHideTime.Location = new System.Drawing.Point(35, 78);
 			this.labelCommandHideTime.Name = "labelCommandHideTime";
-			this.labelCommandHideTime.Size = new System.Drawing.Size(100, 23);
+			this.labelCommandHideTime.Size = new System.Drawing.Size(147, 15);
 			this.labelCommandHideTime.TabIndex = 2;
-			this.labelCommandHideTime.Text = "{HIDE TIME}";
+			this.labelCommandHideTime.Text = ":setting/label/hide-time";
 			// 
 			// commandCommandFont
 			// 
@@ -2111,8 +2111,8 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// gridNoteItems_columnId
 			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			this.gridNoteItems_columnId.DefaultCellStyle = dataGridViewCellStyle7;
 			this.gridNoteItems_columnId.FillWeight = 40F;
 			this.gridNoteItems_columnId.HeaderText = ":setting/column/note/id";
 			this.gridNoteItems_columnId.Name = "gridNoteItems_columnId";
@@ -2142,9 +2142,9 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// gridNoteItems_columnBody
 			// 
 			this.gridNoteItems_columnBody.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft;
+			dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.gridNoteItems_columnBody.DefaultCellStyle = dataGridViewCellStyle8;
 			this.gridNoteItems_columnBody.HeaderText = ":setting/column/note/body";
 			this.gridNoteItems_columnBody.MinimumWidth = 100;
 			this.gridNoteItems_columnBody.Name = "gridNoteItems_columnBody";
@@ -2658,6 +2658,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardLimit
 			// 
+			this.inputClipboardLimit.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.inputClipboardLimit.Location = new System.Drawing.Point(209, 3);
 			this.inputClipboardLimit.Name = "inputClipboardLimit";
 			this.inputClipboardLimit.Size = new System.Drawing.Size(120, 23);
@@ -2666,6 +2671,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardWaitTime
 			// 
+			this.inputClipboardWaitTime.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.inputClipboardWaitTime.Location = new System.Drawing.Point(209, 32);
 			this.inputClipboardWaitTime.Name = "inputClipboardWaitTime";
 			this.inputClipboardWaitTime.Size = new System.Drawing.Size(120, 23);
@@ -2684,6 +2694,11 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			// 
 			// inputClipboardRepeated
 			// 
+			this.inputClipboardRepeated.DefaultValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
 			this.inputClipboardRepeated.Location = new System.Drawing.Point(209, 61);
 			this.inputClipboardRepeated.Name = "inputClipboardRepeated";
 			this.inputClipboardRepeated.Size = new System.Drawing.Size(120, 23);
@@ -2991,7 +3006,6 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 		private System.Windows.Forms.TabPage tabSetting_pageToolbar;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.RevertDefaultValueNumericUpDown inputCommandHideTime;
 		private System.Windows.Forms.Label labelCommandHideTime;
-		private System.Windows.Forms.CheckBox selectCommandTopmost;
 		private ContentTypeTextNet.Pe.PeMain.UI.Ex.FontSplitButton commandCommandFont;
 		private System.Windows.Forms.Label labelCommandFont;
 		private System.Windows.Forms.ErrorProvider errorProvider;

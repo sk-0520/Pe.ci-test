@@ -423,6 +423,9 @@
 
 			// ホットキー
 			this.inputCommandHotkey.HotKeySetting = CommonData.MainSetting.Command.HotKey;
+
+			// 消える時間
+			this.inputCommandHideTime.SetValue(Literal.commandHiddenTime, CommonData.MainSetting.Command.HiddenTime);
 		}
 
 		void ApplyNote()
@@ -640,9 +643,10 @@
 			this.commandCommandFont.SetLanguage(CommonData.Language);
 			this.inputCommandHotkey.SetLanguage(CommonData.Language);
 
-			this.selectCommandTopmost.SetLanguage(CommonData.Language);
 			this.labelCommandFont.SetLanguage(CommonData.Language);
 			this.labelCommandIcon.SetLanguage(CommonData.Language);
+			this.labelCommandHideTime.SetLanguage(CommonData.Language);
+			this.labelCommandHotkey.SetLanguage(CommonData.Language);
 		}
 		
 		void ApplyLanguageNote()
@@ -1123,6 +1127,7 @@
 			setting.FontSetting = this.commandCommandFont.FontSetting;
 			setting.HotKey = this.inputCommandHotkey.HotKeySetting;
 			setting.IconScale = (IconScale)this.selectCommandIcon.SelectedValue;
+			setting.HiddenTime = TimeSpan.FromMilliseconds((int)this.inputCommandHideTime.Value);
 		}
 
 		#endregion ////////////////////////////////////
