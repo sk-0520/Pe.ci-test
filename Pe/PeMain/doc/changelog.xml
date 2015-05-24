@@ -72,7 +72,16 @@
 		<group type="features">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>#244: 長らくほったらかしのコマンド型ランチャー作ろうべさ</message>
+				<comments>
+					<comment>過去バージョンから設定を引き継ぐ場合、タグ・ファイル検索機能は無効になってます</comment>
+					<comment>&gt;設定補正だるかったし否定形の設定項目作るのに気が引けたのよ</comment>
+					<comment>アイコン設定は実装してるけど下記事情によりリスト上のアイコン描画処理は将来実装</comment>
+					<comment>&gt;&gt;描画そのものは出来るんすよ</comment>
+					<comment>&gt;&gt;&gt;出来るけど ComboBox の TextBox 部分のサイズ(高さ)がかなり残念なことになる</comment>
+					<comment>&gt;&gt;&gt;&gt;色々やってはみたけどこれだけのためにリリース伸ばすのもかったるかった</comment>
+					<comment>はよWPFに移りたい、しんどい</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
