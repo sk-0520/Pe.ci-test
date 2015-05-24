@@ -76,6 +76,7 @@
 		public IDeepClone DeepClone()
 		{
 			var result = new ClipboardItem() {
+				Name = this.Name,
 				Timestamp = this.Timestamp,
 				ClipboardTypes = this.ClipboardTypes,
 				Text = this.Text,

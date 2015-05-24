@@ -80,9 +80,10 @@
 		/// <returns></returns>
 		public static Bitmap GetThumbnailImage(string iconPath, IconScale iconScale)
 		{
-			IShellItem iShellItem = null;
-			NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
 			try {
+				IShellItem iShellItem = null;
+				NativeMethods.SHCreateItemFromParsingName(iconPath, IntPtr.Zero, NativeMethods.IID_IShellItem, out iShellItem);
+
 				var size = iconScale.ToSize();
 				var siigbf = SIIGBF.SIIGBF_RESIZETOFIT;
 				var hResultBitmap = IntPtr.Zero;
@@ -94,6 +95,9 @@
 					return result;
 				}
 			} catch(COMException ex) {
+				Debug.WriteLine("{0}, {1}", ex, iconPath);
+				return null;
+			} catch(ArgumentException ex) {
 				Debug.WriteLine("{0}, {1}", ex, iconPath);
 				return null;
 			}

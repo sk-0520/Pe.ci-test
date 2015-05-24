@@ -140,7 +140,7 @@
 			result.SystemEnvironment = (SystemEnvironmentSetting)SystemEnvironment.DeepClone();
 			result.Launcher = (LauncherSetting)Launcher.DeepClone();
 			result.Stream = (StreamSetting)Stream.DeepClone();
-			//result.Command = Command;
+			result.Command = (CommandSetting)Command.DeepClone();
 			result.Toolbar = (ToolbarSetting)Toolbar.DeepClone();
 			result.Note = (NoteSetting)Note.DeepClone();
 			result.Clipboard = (ClipboardSetting)Clipboard.DeepClone();

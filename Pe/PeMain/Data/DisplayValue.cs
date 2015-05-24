@@ -215,6 +215,24 @@
 		public override string Display { get { return Value.ToText(Language); } }
 	}
 
-	
+	public class CommandDisplayValue: DisplayValue<LauncherItem>
+	{
+		public CommandDisplayValue(LauncherItem value, string displayText, CommandKind commandKind)
+			: base(value)
+		{
+			DisplayText = displayText;
+			CommandKind = commandKind;
+		}
 
+		string DisplayText { get; set; }
+		public CommandKind CommandKind { get; private set; }
+
+		public override string Display
+		{
+			get
+			{
+				return DisplayText;
+			}
+		}
+	}
 }

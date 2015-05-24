@@ -226,10 +226,11 @@
 		
 		void TuneItemHeight()
 		{
-			var iconHeight = IconScale.ToHeight();
-			var fontHeight = Font.Height;
-			var itemHeight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical + 1 * 2;
-			this.listLauncherItems.ItemHeight = itemHeight;
+			//var iconHeight = IconScale.ToHeight();
+			//var fontHeight = Font.Height;
+			//var itemHeight = Math.Max(iconHeight, fontHeight) + this.listLauncherItems.Padding.Vertical + 1 * 2;
+			//this.listLauncherItems.ItemHeight = itemHeight;
+			this.listLauncherItems.ItemHeight = AppUtility.GetTuneItemHeight(this.listLauncherItems.Padding, IconScale, Font);
 		}
 		
 		void SetFilterType(LauncherItemSelecterType type)

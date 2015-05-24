@@ -784,19 +784,13 @@
 					// ディレクトリ以下のファイルを列挙
 					var pathItemList = new DirectoryInfo(dirPath).EnumerateFileSystemInfos()
 						.Where(fs => fs.Exists)
-						.Select(fs => new {
-							Path = fs.FullName,
-							Name = fs.Name,
-							IsDirectory = fs.Attributes.HasFlag(FileAttributes.Directory),
-							IsHiddenFile = fs.Attributes.HasFlag(FileAttributes.Hidden)
-						})
-						.Where(f => showHiddenFile ? true : !f.IsHiddenFile)
-						.OrderByDescending(f => f.IsDirectory)
+						.Where(fs => showHiddenFile ? true : !fs.IsHidden())
+						.OrderByDescending(fs => fs.IsDirectory())
 						.ThenBy(fs => fs.Name)
 					;
 
 					foreach(var pathItem in pathItemList) {
-						var menuItem = CreateFileListMenuItem(CommonData, pathItem.Path, pathItem.IsDirectory, showExtension, pathItem.IsHiddenFile);
+						var menuItem = CreateFileListMenuItem(CommonData, pathItem.FullName, pathItem.IsDirectory(), showExtension, pathItem.IsHidden());
 						menuList.Add(menuItem);
 					}
 					if(menuList.Count == 0) {
@@ -1228,40 +1222,42 @@
 
 		bool ExecuteItem(LauncherItem launcherItem)
 		{
-			try {
-				Executor.RunItem(launcherItem, CommonData);
-				launcherItem.Increment(null, null);
-				return true;
-			} catch(Exception ex) {
-				CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
-			}
+			//try {
+			//	Executor.RunItem(launcherItem, CommonData);
+			//	launcherItem.Increment(null, null);
+			//	return true;
+			//} catch(Exception ex) {
+			//	CommonData.Logger.Puts(LogType.Warning, ex.Message, ex);
+			//}
 
-			return false;
+			//return false;
+			return AppUtility.ExecuteItem(CommonData, launcherItem);
 		}
 
 		void ExecuteExItem(LauncherItem launcherItem, IEnumerable<string> exOptions)
 		{
-			var form = new ExecuteForm() {
-				LauncherItem = launcherItem,
-				ExOptions = exOptions,
-			};
-			form.SetCommonData(CommonData);
-			//form.TopMost = TopMost;
-			CommonData.RootSender.AppendWindow(form);
-			form.Show();
-			form.FormClosed += ExecuteFormClosed;
+			//var form = new ExecuteForm() {
+			//	LauncherItem = launcherItem,
+			//	ExOptions = exOptions,
+			//};
+			//form.SetCommonData(CommonData);
+			////form.TopMost = TopMost;
+			//CommonData.RootSender.AppendWindow(form);
+			//form.Show();
+			//form.FormClosed += ExecuteFormClosed;
+			AppUtility.ShowExecuteEx(CommonData, launcherItem, exOptions);
 		}
 
-		void ExecuteFormClosed(object sender, FormClosedEventArgs e)
-		{
-			var form = (ExecuteForm)sender;
-			if(form.DialogResult == DialogResult.OK) {
-				var editedItem = form.EditedLauncherItem;
-				if(ExecuteItem(editedItem)) {
-					form.LauncherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
-				}
-			}
-		}
+		//void ExecuteFormClosed(object sender, FormClosedEventArgs e)
+		//{
+		//	var form = (ExecuteForm)sender;
+		//	if(form.DialogResult == DialogResult.OK) {
+		//		var editedItem = form.EditedLauncherItem;
+		//		if(ExecuteItem(editedItem)) {
+		//			form.LauncherItem.Increment(editedItem.Option, editedItem.WorkDirPath);
+		//		}
+		//	}
+		//}
 
 		ToolStripItem GetOverButton(Point localPoint)
 		{

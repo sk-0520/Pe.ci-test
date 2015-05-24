@@ -30,6 +30,7 @@
 		<Word Name="version-release"     Text="リリース版" />
 		<Word Name="version-rc"          Text="RC版" />
 		<Word Name="note"                Text="ノート" />
+		<Word Name="command"             Text="コマンド" />
 		<Word Name="hotkey"              Text="ホットキー" />
 		<Word Name="regist"              Text="登録" />
 		<Word Name="unregist"            Text="解除" />
@@ -88,6 +89,7 @@
 		<Word Name="window/clipboard" Text="${clipboard-template}" />
 		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
+		<Word Name="window/command"   Text="${command}" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
@@ -96,6 +98,7 @@
 		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
+		<Word Name="main/menu/window/command"               Text="${command}(&amp;C)" />
 		<Word Name="main/menu/applications"                 Text="組み込みアイテム(&amp;E)" />
 		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
@@ -286,9 +289,10 @@
 		<Word Name="clipboard/tool/output-using-clipboard"  Text="クリップボード経由" />
 		<Word Name="clipboard/menu/file/open-file"       Text="開く(&amp;O)" />
 		<Word Name="clipboard/menu/file/open-parent-dir" Text="親ディレクトリを開く(&amp;O)" />
-		
-		
 
+		<Word Name="command/execute"  Text="実行" />
+		<Word Name="command/error/execute/launcher-item"  Text="ランチャーアイテム起動失敗" />
+		<Word Name="command/error/execute/none"  Text="指定コマンドは無効です" />
 
 		<Word Name="setting/page/main"              Text="本体" />
 		<Word Name="setting/page/launcher"          Text="ランチャー" />
@@ -369,6 +373,11 @@
 		<Word Name="setting/label/stream-error" Text="エラー" />
 		<Word Name="setting/label/stream-fore" Text="前景色" />
 		<Word Name="setting/label/stream-back" Text="背景色" />
+		<Word Name="setting/label/hide-time"       Text="非表示までの時間(ミリ秒)" />
+		<Word Name="setting/label/command-hotkey"  Text="表示" />
+		<Word Name="setting/group/command-find"   Text="検索条件設定" />
+		<Word Name="setting/check/command-enabled-tag"   Text="タグ検索を使用" />
+		<Word Name="setting/check/command-enabled-file"  Text="ファイル検索を使用" />
 
 		<Word Name="screen/primary/true"   Text="メインディスプレイ" />
 		<Word Name="screen/primary/false"  Text="" />

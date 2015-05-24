@@ -95,7 +95,7 @@
 				e.Graphics.DrawString(this._title, TitleFontSetting.Font, brush, titleArea, sf);
 			}
 			if(HasMessage()) {
-				using(var sf = CreateTitleFormat())
+				using(var sf = CreateMessageFormat())
 				using(var brush = new SolidBrush(Color.Black)) {
 					e.Graphics.DrawString(this._message, MessageFontSetting.Font, brush, messageArea, sf);
 				}
@@ -109,7 +109,7 @@
 
 		void Initialize()
 		{
-			TitleFontSetting = new FontSetting(SystemFonts.MessageBoxFont);
+			TitleFontSetting = new FontSetting(SystemFonts.CaptionFont);
 			MessageFontSetting = new FontSetting(SystemFonts.SmallCaptionFont);
 			IconScale = IconScale.Normal;
 		}
@@ -160,7 +160,7 @@
 			// 描画サイズ生成
 			using(var g = CreateGraphics())
 			using(var titleFormat = CreateTitleFormat())
-			using(var messageFormat = CreateTitleFormat()) {
+			using(var messageFormat = CreateMessageFormat()) {
 				var maxShowSize = new Size(screen.WorkingArea.Size.Width / 2, screen.WorkingArea.Size.Height / 2);
 				var titleSize = g.MeasureString(this._title, TitleFontSetting.Font, maxShowSize, titleFormat);
 				var messageSize = HasMessage() ? g.MeasureString(this._message, MessageFontSetting.Font, maxShowSize, messageFormat) : SizeF.Empty;

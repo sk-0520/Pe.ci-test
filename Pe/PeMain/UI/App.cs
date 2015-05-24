@@ -45,6 +45,7 @@
 
 		const string menuNameWindowToolbar = "menu_window_toolbar";
 		const string menuNameWindowNote = "menu_window_note";
+		const string menuNameWindowCommand = "menu_window_command";
 		const string menuNameWindowLogger = "menu_window_logger";
 		const string menuNameApplications = "menu_applications";
 
@@ -77,6 +78,7 @@
 		private LogForm _logForm;
 		private ClipboardForm _clipboardWindow;
 		private NoteToolTipForm _noteToolTipForm;
+		CommandForm _commandForm;
 		
 		private List<NoteForm> _noteWindowList = new List<NoteForm>();
 		
@@ -137,6 +139,7 @@
 				w.ToDispose();
 			}
 			this._noteToolTipForm.ToDispose();
+			this._commandForm.ToDispose();
 			foreach(var w in this._toolbarForms.Values) {
 				w.ToDispose();
 			}
@@ -340,6 +343,13 @@
 						);
 						ShowBalloon(ToolTipIcon.Info, this._commonData.Language["balloon/clipboard/title"], this._commonData.Language[messageKey]);
 						SwitchShowClipboard();
+					}
+					break;
+
+				case HotKeyId.ShowCommand:
+					{
+						// バルーン表示はしない
+						ShowCommand();
 					}
 					break;
 
@@ -802,6 +812,14 @@
 			};
 			AttachmentNoteSubMenu(itemNote);
 
+			// コマンド
+			var itemCommand = new ToolStripMenuItem() {
+				Name = menuNameWindowCommand,
+				Image = this._commonData.Skin.GetImage(SkinImage.Command),
+			};
+			itemCommand.Click += (object sender, EventArgs e) => {
+				ShowCommand();
+			};
 			// 組み込みアイテム
 			var itemApplications = new ToolStripMenuItem() {
 				Name = menuNameApplications,
@@ -879,6 +897,7 @@
 				new DisableCloseToolStripSeparator(),
 				itemToolbar,
 				itemNote,
+				itemCommand,
 				itemApplications,
 				itemLogger,
 				new DisableCloseToolStripSeparator(),
@@ -899,6 +918,7 @@
 			// メインメニュー
 			parentMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemCommand, this._commonData.MainSetting.Command.HotKey, this._commonData.Language, this._commonData.Logger);
 			};
 			parentMenu.Closed += (object sender, ToolStripDropDownClosedEventArgs e) => {
 				this._noteToolTipForm.ToHide();
@@ -982,7 +1002,7 @@
 
 		void InitializeCommandForm(CommandLine commandLine, StartupLogger logger)
 		{
-
+			ResetCommand();
 		}
 
 		void InitializeToolbarForm(CommandLine commandLine, StartupLogger logger)
@@ -1205,6 +1225,7 @@
 
 			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
 			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			rootMenu[menuNameWindowCommand].Text = this._commonData.Language["main/menu/window/command"];
 			rootMenu[menuNameApplications].Text = this._commonData.Language["main/menu/applications"];
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];
@@ -1267,7 +1288,8 @@
 			result.AddRange(this._toolbarForms.Values);
 			result.Add(this._logForm);
 			result.Add(this._clipboardWindow);
-
+			result.Add(this._noteToolTipForm);
+			result.Add(this._commandForm);
 			/*
 			foreach(var f in this._toolbarForms.Values.Where(f => f.OwnedForms.Length > 0)) {
 				result.AddRange(f.OwnedForms);
@@ -1422,6 +1444,13 @@
 			this._clipboardWindow.SetCommonData(this._commonData);
 		}
 
+		void ResetCommand()
+		{
+			this._commandForm.ToDispose();
+			this._commandForm = new CommandForm();
+			this._commandForm.SetCommonData(this._commonData);
+		}
+
 		/// <summary>
 		/// 表示コンポーネントをリセット。
 		/// </summary>
@@ -1441,6 +1470,7 @@
 			ResetToolbar();
 			ResetNote();
 			ResetClipboard();
+			ResetCommand();
 
 			ApplyLanguage();
 		}
@@ -1943,6 +1973,14 @@
 			foreach(var toolbar in this._toolbarForms.Values.Where(t => t.Visible && t.AutoHide).ToArray()) {
 				toolbar.Hidden();
 			}
+		}
+
+		void ShowCommand()
+		{
+			_commonData.Logger.PutsDebug("ShowCommand", () => "DEBUG");
+			this._commandForm.SetCurrentLocation();
+			this._commandForm.Visible = true;
+			UIUtility.ShowFrontActive(this._commandForm);
 		}
 
 		#endregion //////////////////////////////////////////

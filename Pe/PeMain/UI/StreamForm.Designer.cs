@@ -149,6 +149,7 @@ namespace ContentTypeTextNet.Pe.PeMain.UI
 			this.tabStream.Name = "tabStream";
 			this.tabStream.SelectedIndex = 0;
 			this.tabStream.Size = new System.Drawing.Size(471, 255);
+			this.tabStream.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabStream.TabIndex = 2;
 			// 
 			// tabStream_pageStream

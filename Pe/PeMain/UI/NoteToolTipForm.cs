@@ -37,7 +37,6 @@
 
 		#endregion ////////////////////////////////////
 
-
 		#region override
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -47,11 +46,15 @@
 				return;
 			}
 			var font = NoteItem.Style.FontSetting.Font;
-			using(var format = new StringFormat()) {
-				format.Alignment = StringAlignment.Near;
-				format.LineAlignment = StringAlignment.Near;
+			using(var format = CreateTooltipFormat()) {
 				using(var brush = new SolidBrush(ForeColor)) {
-					e.Graphics.DrawString(NoteItem.Body, font, brush, ClientRectangle, format);
+					var drawArea = new Rectangle(
+						ToolTipPadding.Width,
+						ToolTipPadding.Height,
+						ClientSize.Width + ToolTipPadding.Width,
+						ClientSize.Height + ToolTipPadding.Height
+					);
+					e.Graphics.DrawString(NoteItem.Body, font, brush, drawArea, format);
 				}
 			}
 		}
@@ -69,6 +72,17 @@
 
 		#region function
 
+		StringFormat CreateTooltipFormat()
+		{
+			var sf = new StringFormat();
+
+			sf.Alignment = StringAlignment.Near;
+			sf.LineAlignment = StringAlignment.Near;
+			sf.Trimming = StringTrimming.None;
+
+			return sf;
+		}
+
 		public void ShowItem(Screen screen, ToolStripItem toolStripItem, NoteItem noteItem)
 		{
 			var parent = toolStripItem.Owner;
@@ -78,7 +92,14 @@
 			
 			NoteItem = noteItem;
 
-			Size = NoteItem.Size;
+			using(var g = CreateGraphics())
+			using(var format = CreateTooltipFormat()) {
+				var messageSize = g.MeasureString(NoteItem.Body, NoteItem.Style.FontSetting.Font, NoteItem.Size, format);
+				Size = new Size(
+					(int)Math.Min(NoteItem.Size.Width, messageSize.Width) + ToolTipPadding.Width * 2,
+					(int)Math.Min(NoteItem.Size.Height, messageSize.Height) + ToolTipPadding.Height * 2
+				);
+			}
 
 			var showPoint = new Point(location.X + toolStripItem.Width, location.Y);
 			// 横方向補正
