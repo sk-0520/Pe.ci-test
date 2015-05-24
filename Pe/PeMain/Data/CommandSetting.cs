@@ -5,24 +5,26 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.Skin;
 	using ContentTypeTextNet.Pe.Library.Utility;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// コマンドランチャー設定
 	/// </summary>
 	[Serializable]
-	public class CommandSetting: DisposableItem, IDisposable
+	public class CommandSetting: DisposableItem, IDeepClone
 	{
 		//private Font _font = null;
 		
 		public CommandSetting()
 		{
 			Width = 200;
-			Height = 200;
 			IconScale = IconScale.Small;
 			HiddenTime = Literal.commandHiddenTime.median;
 			FontSetting = new FontSetting();
 			HotKey = new HotKeySetting();
+			EnabledFindTag = true;
+			EnabledFindFile = true;
 		}
 		
 		public override void CorrectionValue()
@@ -43,10 +45,6 @@
 		/// </summary>
 		public int Width { get; set; }
 		/// <summary>
-		/// 補助リストの高さ。
-		/// </summary>
-		public int Height { get; set; }
-		/// <summary>
 		/// 非アクティブからの非表示猶予。
 		/// </summary>
 		[XmlIgnore]
@@ -58,12 +56,12 @@
 			set { HiddenTime = PropertyUtility.MixinTimeSpanSetter(value); }
 		}
 
-		/// <summary>
-		/// 最前面表示。
-		/// </summary>
-		public bool TopMost { get; set; }
-		
 		public HotKeySetting HotKey { get; set; }
+
+		public bool EnabledFindTag { get; set; }
+		public bool EnabledFindFile { get; set; }
+
+		#region DisposableItem
 
 		protected override void Dispose(bool disposing)
 		{
@@ -71,5 +69,25 @@
 
 			base.Dispose(disposing);
 		}
+
+		#endregion
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			return new CommandSetting() {
+				Width = this.Width,
+				IconScale = this.IconScale,
+				HiddenTime = this.HiddenTime,
+				FontSetting = (FontSetting)this.FontSetting.Clone(),
+				HotKey = (HotKeySetting)this.HotKey.Clone(),
+				EnabledFindTag = this.EnabledFindTag,
+				EnabledFindFile = this.EnabledFindFile,
+			};
+		}
+
+		#endregion
+
 	}
 }
