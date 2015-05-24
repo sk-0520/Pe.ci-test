@@ -405,7 +405,9 @@
 				var kind = GetCommandKind();
 				if(kind == CommandKind.FilePath) {
 					if(this.inputCommand.SelectionLength > 0) {
-						this.inputCommand.SelectionStart = this.inputCommand.Text.Length;
+						if(this.inputCommand.Text[this.inputCommand.SelectionStart] != Path.DirectorySeparatorChar) {
+							this.inputCommand.SelectionStart = this.inputCommand.Text.Length;
+						}
 					}
 				}
 			}
