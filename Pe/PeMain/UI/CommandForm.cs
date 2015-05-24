@@ -47,16 +47,7 @@
 			}
 		}
 
-		IEnumerable<string> UriPattern
-		{
-			get
-			{
-				return new[] {
-					"http://",
-					"https://",
-				};
-			}
-		}
+		IEnumerable<string> UriPattern { get { return Literal.UriPattern; } }
 
 		#endregion
 

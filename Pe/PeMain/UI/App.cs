@@ -45,6 +45,7 @@
 
 		const string menuNameWindowToolbar = "menu_window_toolbar";
 		const string menuNameWindowNote = "menu_window_note";
+		const string menuNameWindowCommand = "menu_window_command";
 		const string menuNameWindowLogger = "menu_window_logger";
 		const string menuNameApplications = "menu_applications";
 
@@ -811,6 +812,14 @@
 			};
 			AttachmentNoteSubMenu(itemNote);
 
+			// コマンド
+			var itemCommand = new ToolStripMenuItem() {
+				Name = menuNameWindowCommand,
+				Image = this._commonData.Skin.GetImage(SkinImage.Command),
+			};
+			itemCommand.Click += (object sender, EventArgs e) => {
+				ShowCommand();
+			};
 			// 組み込みアイテム
 			var itemApplications = new ToolStripMenuItem() {
 				Name = menuNameApplications,
@@ -888,6 +897,7 @@
 				new DisableCloseToolStripSeparator(),
 				itemToolbar,
 				itemNote,
+				itemCommand,
 				itemApplications,
 				itemLogger,
 				new DisableCloseToolStripSeparator(),
@@ -908,6 +918,7 @@
 			// メインメニュー
 			parentMenu.Opening += (object sender, CancelEventArgs e) => {
 				itemLogger.Checked = this._logForm.Visible;
+				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemCommand, this._commonData.MainSetting.Command.HotKey, this._commonData.Language, this._commonData.Logger);
 			};
 			parentMenu.Closed += (object sender, ToolStripDropDownClosedEventArgs e) => {
 				this._noteToolTipForm.ToHide();
@@ -1214,6 +1225,7 @@
 
 			rootMenu[menuNameWindowToolbar].Text = this._commonData.Language["main/menu/window/toolbar"];
 			rootMenu[menuNameWindowNote].Text = this._commonData.Language["main/menu/window/note"];
+			rootMenu[menuNameWindowCommand].Text = this._commonData.Language["main/menu/window/command"];
 			rootMenu[menuNameApplications].Text = this._commonData.Language["main/menu/applications"];
 			rootMenu[menuNameWindowLogger].Text = this._commonData.Language["main/menu/window/logger"];
 			rootMenu[menuNameSystemEnv].Text = this._commonData.Language["main/menu/system-env"];

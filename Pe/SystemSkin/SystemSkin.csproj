@@ -119,6 +119,7 @@
     <Content Include="Resources\7\Image\ClipboardRichTextFormat.png" />
     <Content Include="Resources\7\Image\ClipboardText.png" />
     <Content Include="Resources\7\Image\Close.png" />
+    <Content Include="Resources\7\Image\Command.png" />
     <Content Include="Resources\7\Image\Comment.png" />
     <Content Include="Resources\7\Image\Config.png" />
     <Content Include="Resources\7\Image\CustomColor.png" />
@@ -184,6 +185,7 @@
     <Content Include="Resources\8\Image\ClipboardRichTextFormat.png" />
     <Content Include="Resources\8\Image\ClipboardText.png" />
     <Content Include="Resources\8\Image\Close.png" />
+    <Content Include="Resources\8\Image\Command.png" />
     <Content Include="Resources\8\Image\Comment.png" />
     <Content Include="Resources\8\Image\Config.png" />
     <Content Include="Resources\8\Image\CustomColor.png" />

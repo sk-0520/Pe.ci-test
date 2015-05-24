@@ -30,6 +30,7 @@
 		<Word Name="version-release"     Text="リリース版" />
 		<Word Name="version-rc"          Text="RC版" />
 		<Word Name="note"                Text="ノート" />
+		<Word Name="command"             Text="コマンド" />
 		<Word Name="hotkey"              Text="ホットキー" />
 		<Word Name="regist"              Text="登録" />
 		<Word Name="unregist"            Text="解除" />
@@ -88,7 +89,7 @@
 		<Word Name="window/clipboard" Text="${clipboard-template}" />
 		<Word Name="window/screen"    Text="ディスプレイ識別: @[SCREEN] - @[APPLICATION]" />
 		<Word Name="window/setting"   Text="@[APPLICATION] 設定" />
-		<Word Name="window/command"   Text="コマンド" />
+		<Word Name="window/command"   Text="${command}" />
 		
 		<!-- <Word Name="main/menu/window"                       Text="ウィンドウ(&amp;W)" /> -->
 		<Word Name="main/menu/window/toolbar"               Text="ツールバー(&amp;T)" />
@@ -97,6 +98,7 @@
 		<Word Name="main/menu/window/note/hidden"           Text="${hidden}(&amp;H)" />
 		<Word Name="main/menu/window/note/compact"          Text="最小化(&amp;S)" />
 		<Word Name="main/menu/window/note/show-front"       Text="前面表示(&amp;V)" />
+		<Word Name="main/menu/window/command"               Text="${command}(&amp;C)" />
 		<Word Name="main/menu/applications"                 Text="組み込みアイテム(&amp;E)" />
 		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />

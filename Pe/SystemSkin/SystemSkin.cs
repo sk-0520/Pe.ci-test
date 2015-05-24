@@ -93,6 +93,7 @@
 				{ SkinImage.ImageRaw, SystemSkin7Resource.Image_ImageRaw},
 				{ SkinImage.OutputTarget, SystemSkin7Resource.Image_OutputTarget},
 				{ SkinImage.Web, SystemSkin7Resource.Image_Web},
+				{ SkinImage.Command, SystemSkin7Resource.Image_Command},
 			};
 
 			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {
@@ -171,6 +172,7 @@
 				{ SkinImage.ImageRaw, SystemSkin8Resource.Image_ImageRaw},
 				{ SkinImage.OutputTarget, SystemSkin8Resource.Image_OutputTarget},
 				{ SkinImage.Web, SystemSkin8Resource.Image_Web},
+				{ SkinImage.Command, SystemSkin8Resource.Image_Command},
 			};
 
 			this._skinIconMap = new Dictionary<SkinIcon, Icon>() {

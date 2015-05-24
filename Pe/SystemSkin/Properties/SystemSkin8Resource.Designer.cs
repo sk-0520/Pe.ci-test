@@ -273,6 +273,16 @@ namespace ContentTypeTextNet.Pe.Library.Skin.SystemSkin.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Image_Command {
+            get {
+                object obj = ResourceManager.GetObject("Image_Command", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap Image_Comment {
             get {
                 object obj = ResourceManager.GetObject("Image_Comment", resourceCulture);
