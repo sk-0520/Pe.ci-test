@@ -290,6 +290,7 @@
 		<Word Name="clipboard/menu/file/open-file"       Text="開く(&amp;O)" />
 		<Word Name="clipboard/menu/file/open-parent-dir" Text="親ディレクトリを開く(&amp;O)" />
 
+		<Word Name="command/execute"  Text="実行" />
 		<Word Name="command/error/execute/launcher-item"  Text="ランチャーアイテム起動失敗" />
 		<Word Name="command/error/execute/none"  Text="指定コマンドは無効です" />
 

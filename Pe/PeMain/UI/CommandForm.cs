@@ -69,6 +69,11 @@
 						Visible = false;
 					}
 					return true;
+				} else if(key == Keys.Enter) {
+					if(CanExecute) {
+						ExecuteCommand(AppUtility.IsExtension());
+					}
+					return true;
 				}
 			}
 
@@ -84,6 +89,7 @@
 			base.ApplySetting();
 
 			this.timerHidden.Interval = (int)CommonData.MainSetting.Command.HiddenTime.TotalMilliseconds;
+			Width = CommonData.MainSetting.Command.Width;
 
 			SetLauncherItems();
 		}
@@ -91,6 +97,7 @@
 		protected override void ApplyLanguage()
 		{
 			UIUtility.SetDefaultText(this, CommonData.Language);
+			this.commandExecute.SetLanguage(CommonData.Language);
 			base.ApplyLanguage();
 		}
 
@@ -447,6 +454,7 @@
 		private void CommandForm_Activated(object sender, EventArgs e)
 		{
 			this.timerHidden.Stop();
+			this.inputCommand.Focus();
 		}
 
 		private void timerHidden_Tick(object sender, EventArgs e)
@@ -460,7 +468,14 @@
 			if(!Visible) {
 				this.inputCommand.Text = string.Empty;
 				ClearIcon();
+			} else {
+				this.inputCommand.Focus();
 			}
+		}
+
+		private void CommandForm_SizeChanged(object sender, EventArgs e)
+		{
+			CommonData.MainSetting.Command.Width = Width;
 		}
 	}
 }

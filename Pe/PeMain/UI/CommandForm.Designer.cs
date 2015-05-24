@@ -71,7 +71,7 @@
 			this.commandExecute.Name = "commandExecute";
 			this.commandExecute.Size = new System.Drawing.Size(64, 23);
 			this.commandExecute.TabIndex = 2;
-			this.commandExecute.Text = "{OK}";
+			this.commandExecute.Text = ":command/execute";
 			this.commandExecute.UseVisualStyleBackColor = true;
 			this.commandExecute.Click += new System.EventHandler(this.commandExecute_Click);
 			// 
@@ -94,7 +94,6 @@
 			// 
 			// CommandForm
 			// 
-			this.AcceptButton = this.commandExecute;
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(303, 39);
 			this.Controls.Add(this.panelMain);
@@ -108,6 +107,7 @@
 			this.Activated += new System.EventHandler(this.CommandForm_Activated);
 			this.Deactivate += new System.EventHandler(this.CommandForm_Deactivate);
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandForm_FormClosing);
+			this.SizeChanged += new System.EventHandler(this.CommandForm_SizeChanged);
 			this.VisibleChanged += new System.EventHandler(this.CommandForm_VisibleChanged);
 			((System.ComponentModel.ISupportInitialize)(this.imageIcon)).EndInit();
 			this.panelMain.ResumeLayout(false);

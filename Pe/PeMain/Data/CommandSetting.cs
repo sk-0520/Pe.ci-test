@@ -19,7 +19,6 @@
 		public CommandSetting()
 		{
 			Width = 200;
-			Height = 200;
 			IconScale = IconScale.Small;
 			HiddenTime = Literal.commandHiddenTime.median;
 			FontSetting = new FontSetting();
@@ -43,10 +42,6 @@
 		/// 入力欄の横幅。
 		/// </summary>
 		public int Width { get; set; }
-		/// <summary>
-		/// 補助リストの高さ。
-		/// </summary>
-		public int Height { get; set; }
 		/// <summary>
 		/// 非アクティブからの非表示猶予。
 		/// </summary>
@@ -83,7 +78,6 @@
 		{
 			return new CommandSetting() {
 				Width = this.Width,
-				Height = this.Height,
 				IconScale = this.IconScale,
 				HiddenTime = this.HiddenTime,
 				FontSetting = (FontSetting)this.FontSetting.Clone(),
