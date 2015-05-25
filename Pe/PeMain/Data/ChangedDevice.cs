@@ -6,7 +6,7 @@
 	/// <summary>
 	/// デバイス情報変更。
 	/// </summary>
-	public class ChangeDevice
+	public class ChangedDevice
 	{
 		/// <summary>
 		/// メッセージデータ。
@@ -17,7 +17,7 @@
 		/// 
 		/// </summary>
 		/// <param name="message"></param>
-		public ChangeDevice(Message message)
+		public ChangedDevice(Message message)
 		{
 			this._message = message;
 			

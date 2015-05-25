@@ -64,9 +64,10 @@
 					}
 					break;
 
-				case (int)WM.WM_DEVICECHANGE: {
-						var changeDevice = new ChangeDevice(m);
-						CommonData.RootSender.SendDeviceChanged(changeDevice);
+				case (int)WM.WM_DEVICECHANGE: 
+					{
+						var changedDevice = new ChangedDevice(m);
+						CommonData.RootSender.SendDeviceChanged(changedDevice);
 					}
 					break;
 				/*
