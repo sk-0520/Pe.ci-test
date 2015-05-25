@@ -12,6 +12,9 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 	[Serializable]
 	public class ColorItem: Item, ICloneable
 	{
+		/// <summary>
+		/// 色情報。
+		/// </summary>
 		[XmlIgnore]
 		public Color Color { get; set; }
 
@@ -33,9 +36,15 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 		#endregion
 	}
 
+	/// <summary>
+	/// 前景色・背景色を保持する色情報。
+	/// </summary>
 	[Serializable]
 	public class ColorPairItem: Item, IDeepClone
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public ColorPairItem()
 		{
 			Fore = new ColorItem();
