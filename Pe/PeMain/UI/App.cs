@@ -245,9 +245,9 @@
 			ReceiveHotKey(hotKeyId, mod, key);
 		}
 
-		public void SendDeviceChanged(ChangeDevice changeDevice)
+		public void SendDeviceChanged(ChangedDevice changedDevice)
 		{
-			ReceiveDeviceChanged(changeDevice);
+			ReceiveDeviceChanged(changedDevice);
 		}
 
 		public void WatchClipboard(bool watch)
@@ -265,11 +265,11 @@
 
 		#region IRootSender-Receive
 
-		public void ReceiveDeviceChanged(ChangeDevice changeDevice)
+		public void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{
 			//this._commonData.Logger.Puts(LogType.Warning, "ReceiveDeviceChanged", changeDevice);
 			// デバイス状態が変更されたか
-			if(changeDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !this._pause) {
+			if(changedDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !this._pause) {
 				// デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
 				// 現在生成されているツールバーの数が前回ディスプレイ数となる
 
