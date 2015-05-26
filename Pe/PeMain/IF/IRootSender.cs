@@ -47,7 +47,7 @@
 		/// <summary>
 		/// デバイス情報が変更された。
 		/// </summary>
-		/// <param name="changeDevice"></param>
-		void SendDeviceChanged(ChangeDevice changeDevice);
+		/// <param name="changedDevice"></param>
+		void SendDeviceChanged(ChangedDevice changedDevice);
 	}
 }

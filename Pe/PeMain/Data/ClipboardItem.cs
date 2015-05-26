@@ -16,6 +16,9 @@
 	[Serializable]
 	public class ClipboardItem: DisposableNameItem, IDeepClone
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public ClipboardItem()
 		{
 			Timestamp = DateTime.Now;

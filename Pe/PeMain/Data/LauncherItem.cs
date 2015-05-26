@@ -253,7 +253,7 @@
 			result.IconIndex = IconIndex;
 			 */
 			result.IconItem = (IconItem)IconItem.Clone();
-			result.LauncherHistory = (LauncherHistory)LauncherHistory.Clone();
+			result.LauncherHistory = (LauncherHistory)LauncherHistory.DeepClone();
 			result.EnvironmentSetting = (EnvironmentSetting)EnvironmentSetting.Clone();
 			result.Note = Note;
 			result.Tag.AddRange(Tag);

@@ -105,6 +105,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\ClipboardItemTest.cs" />
     <Compile Include="Data\RunningSettingTest.cs" />
     <Compile Include="LiteralTest.cs" />
     <Compile Include="Logic\AppDBManagerTest.cs" />

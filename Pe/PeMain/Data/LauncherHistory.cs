@@ -2,12 +2,13 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// 実行履歴
 	/// </summary>
 	[Serializable]
-	public class LauncherHistory: Item, ICloneable
+	public class LauncherHistory: Item, IDeepClone
 	{
 		public LauncherHistory()
 		{
@@ -32,13 +33,16 @@
 		/// </summary>
 		public DateHistory DateHistory { get; set; }
 
+		#region IDeepClone
+
 		/// <summary>
 		/// 複製
 		/// </summary>
 		/// <returns></returns>
-		public object Clone()
+		public IDeepClone DeepClone()
 		{
 			var result = new LauncherHistory();
+
 			result.ExecuteCount = ExecuteCount;
 			result.WorkDirs.AddRange(WorkDirs);
 			result.Options.AddRange(Options);
@@ -46,6 +50,8 @@
 
 			return result;
 		}
+
+		#endregion
 	}
 
 }
