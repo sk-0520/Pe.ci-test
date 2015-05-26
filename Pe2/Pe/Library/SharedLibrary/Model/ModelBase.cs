@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.SharedLibrary.Utility;
 
+	/// <summary>
+	/// モデルの基盤。
+	/// <para>データ保持を生きがいにする。</para>
+	/// </summary>
 	public abstract class ModelBase: IGetMembers
 	{
 		#region variable
@@ -21,11 +25,7 @@ using System.Threading.Tasks;
 
 		public override string ToString()
 		{
-			var name = GetType().Name;
-			var nameValueStrings = GetNameValueList();
-			var joinString = ReflectionUtility.JoinNameValueStrings(nameValueStrings);
-
-			return string.Format("{0} => {1}", name, joinString);
+			return ReflectionUtility.GetObjectString(this);
 		}
 
 		#endregion

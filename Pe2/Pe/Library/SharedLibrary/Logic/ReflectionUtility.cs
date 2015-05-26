@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Utility
+﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Logic
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,6 +6,7 @@
 	using System.Reflection;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
 
 	public static class ReflectionUtility
 	{
@@ -27,6 +28,11 @@
 			return result;
 		}
 
+		/// <summary>
+		/// メンバ名と値を結合してそのリストを取得する。
+		/// </summary>
+		/// <param name="nameValues"></param>
+		/// <returns></returns>
 		public static IEnumerable<string> GetNameValueStrings(IDictionary<string, object> nameValues)
 		{
 			foreach(var pair in nameValues.OrderBy(p => p.Key)) {
@@ -34,9 +40,28 @@
 			}
 		}
 
+		/// <summary>
+		/// メンバ名と値を結合したリストを一つの文字列にする。
+		/// </summary>
+		/// <param name="nameValues"></param>
+		/// <returns></returns>
 		public static string JoinNameValueStrings(IEnumerable<string> nameValues)
 		{
 			return string.Join(",", nameValues);
+		}
+
+		/// <summary>
+		/// メンバ名と値を保持するオブジェクトを文字列にする。
+		/// </summary>
+		/// <param name="getMembers"></param>
+		/// <returns></returns>
+		public static string GetObjectString(IGetMembers getMembers)
+		{
+			var name = getMembers.GetType().Name;
+			var nameValueStrings = getMembers.GetNameValueList();
+			var joinString = ReflectionUtility.JoinNameValueStrings(nameValueStrings);
+
+			return string.Format("{0} => {1}", name, joinString);
 		}
 	}
 }
