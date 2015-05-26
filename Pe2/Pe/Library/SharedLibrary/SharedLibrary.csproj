@@ -62,7 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="Utility\FileUtility.cs" />
+    <Compile Include="Utility\ReflectionUtility.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
