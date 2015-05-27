@@ -1,23 +1,25 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Logic
+﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model
 {
 	using System;
+	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
 
-	public abstract class DisposeFinalizeObject
+	public abstract class DisposeFinalizeModel: ModelBase, IUnmanagedModel
 	{
-		protected DisposeFinalizeObject()
+		protected DisposeFinalizeModel()
 		{
 			IsDisposed = false;
 		}
 
-		~DisposeFinalizeObject()
+		~DisposeFinalizeModel()
 		{
 			Dispose(false);
 		}
 
-		/// <summary>
-		/// 破棄されたか。
-		/// </summary>
+		#region IUnmanagedModel
+
 		public bool IsDisposed { get; protected set; }
+
+		#endregion
 
 		#region IDisposable
 

@@ -68,6 +68,7 @@
     <Compile Include="Windows\IID.cs" />
     <Compile Include="Windows\Mshtmhst.cs" />
     <Compile Include="Windows\msvcrt.cs" />
+    <Compile Include="Windows\NativeMethods.cs" />
     <Compile Include="Windows\ObjIdl.cs" />
     <Compile Include="Windows\Shellapi.cs" />
     <Compile Include="Windows\Shldisp.cs" />

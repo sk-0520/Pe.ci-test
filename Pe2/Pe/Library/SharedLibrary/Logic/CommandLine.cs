@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.SharedLibrary.Logic
+﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Logic
 {
 	using System;
 	using System.Collections.Generic;
