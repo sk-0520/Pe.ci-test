@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Pe.Library.SharedLibrary.Utility;
+	using ContentTypeTextNet.Pe.Library.SharedLibrary.Logic;
 
 	/// <summary>
 	/// モデルの基盤。

@@ -89,10 +89,17 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Logic\CommandLineTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
+      <Name>SharedLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
