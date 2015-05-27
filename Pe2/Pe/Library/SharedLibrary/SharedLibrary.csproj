@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="Logic\CommandLine.cs" />
+    <Compile Include="Logic\DisposeFinalizeObject.cs" />
     <Compile Include="Logic\FileUtility.cs" />
     <Compile Include="Logic\ReflectionUtility.cs" />
     <Compile Include="Logic\Serializer.cs" />
