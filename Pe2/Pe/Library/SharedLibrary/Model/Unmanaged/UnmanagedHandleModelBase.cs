@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Logic
+﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model.Unmanaged
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,9 +11,9 @@
 	/// <summary>
 	/// アンマネージドオブジェクトハンドルを管理。
 	/// </summary>
-	public abstract class UnmanagedHandleModel: UnmanagedModelBase
+	public abstract class UnmanagedHandleModelBase: UnmanagedModelBase
 	{
-		public UnmanagedHandleModel(IntPtr hHandle)
+		public UnmanagedHandleModelBase(IntPtr hHandle)
 			: base()
 		{
 			if(hHandle == IntPtr.Zero) {

@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Logic
+﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model.Unmanaged.Com
 {
 	using System;
 	using System.Collections.Generic;
