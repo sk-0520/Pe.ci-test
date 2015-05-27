@@ -1,11 +1,7 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model
 {
-	using System;
 	using System.Collections.Generic;
-	using System.Linq;
 	using System.Reflection;
-	using System.Text;
-	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.SharedLibrary.Logic;
 
