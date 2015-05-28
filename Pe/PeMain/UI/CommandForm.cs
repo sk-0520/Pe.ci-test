@@ -447,7 +447,12 @@
 				if(kind == CommandKind.FilePath) {
 					if(this.inputCommand.SelectionLength > 0) {
 						if(this.inputCommand.Text[this.inputCommand.SelectionStart] != Path.DirectorySeparatorChar) {
-							this.inputCommand.SelectionStart = this.inputCommand.Text.Length;
+							var path = this.inputCommand.Text;
+							if(File.Exists(path)) {
+								e.Handled = true;
+							} else {
+								this.inputCommand.SelectionStart = this.inputCommand.Text.Length;
+							}
 						}
 					}
 				}

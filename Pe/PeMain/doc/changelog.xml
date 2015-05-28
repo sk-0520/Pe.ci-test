@@ -90,7 +90,7 @@
 				<message>#279: 起動時に例外</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#277: コマンド入力でファイルパスの場合に"\"を入力した場合、それが最終ファイルだと警告が出力される</message>
 			</note>
 			<note rev="">
 				<message></message>
