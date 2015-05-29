@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Drawing;
 	using System.Linq;
 	using System.Text;
@@ -38,6 +39,11 @@
 				OnTextCutting(e);
 				if(e.Cancel) {
 					return;
+				}
+			}
+			if(m.Msg == (int)WM.WM_CHAR) {
+				if(m.WParam.ToInt32() == '\t') {
+					Debug.WriteLine("TAB");
 				}
 			}
 			base.WndProc(ref m);

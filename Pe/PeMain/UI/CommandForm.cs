@@ -96,6 +96,26 @@
 						ExecuteCommand(AppUtility.IsExtension());
 					}
 					return true;
+				} else if(key == Keys.Tab) {
+					//NextCommand();
+					var dv = GetCommandDisplayValue();
+					if(dv != null) {
+						var items = this.inputCommand.Items.Cast<CommandDisplayValue>().ToArray();
+						var nextItems = items
+							.Cast<CommandDisplayValue>()
+							.SkipWhile(i => i != dv)
+							.Skip(1)
+						;
+						if(!nextItems.Any()) {
+							nextItems = items.SkipWhile(i => i.CommandKind == CommandKind.None || i.CommandKind == CommandKind.Uri);
+						} 
+						if(nextItems.Any()) {
+							var nextItem = nextItems.First();
+							Debug.Assert(new[] { CommandKind.FilePath, CommandKind.LauncherItem_Name, CommandKind.LauncherItem_Tag }.Any(c => c == nextItem.CommandKind));
+							this.inputCommand.SelectedItem = nextItem;
+							return true;
+						}
+					}
 				}
 			}
 
