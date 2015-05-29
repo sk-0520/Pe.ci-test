@@ -357,20 +357,24 @@
 							} else {
 								AppUtility.ExecuteItem(CommonData, item);
 							}
-							Visible = false;
 						} else {
 							CommonData.Logger.Puts(LogType.Warning, CommonData.Language["command/error/execute/launcher-item"], this.inputCommand.SelectedValue);
 						}
+						Visible = false;
 					}
 					break;
 
 				case CommandKind.Uri:
 					{
-						var inputUri = this.inputCommand.Text;
-						var headHead = UriPattern.Single(u => inputUri.StartsWith(u, StringComparison.OrdinalIgnoreCase));
-						var uriValue = inputUri.Substring(headHead.Length);
-						var uri = headHead + uriValue;
-						Executor.RunCommand(uri, CommonData);
+						try {
+							var inputUri = this.inputCommand.Text;
+							var headHead = UriPattern.Single(u => inputUri.StartsWith(u, StringComparison.OrdinalIgnoreCase));
+							var uriValue = inputUri.Substring(headHead.Length);
+							var uri = headHead + uriValue;
+							Executor.RunCommand(uri, CommonData);
+						} catch(Exception ex) {
+							CommonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(this.inputCommand.Text, ex));
+						}
 						Visible = false;
 					}
 					break;
@@ -379,18 +383,22 @@
 					{
 						var inputPath = this.inputCommand.Text;
 						var expandPath = Environment.ExpandEnvironmentVariables(inputPath);
-						if(FileUtility.Exists(expandPath)) {
-							if(executeEx) {
-								Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
-							} else {
-								if(Directory.Exists(expandPath)) {
-									Executor.OpenDirectory(expandPath, CommonData, null);
+						try {
+							if(FileUtility.Exists(expandPath)) {
+								if(executeEx) {
+									Executor.OpenDirectoryWithFileSelect(expandPath, CommonData, null);
 								} else {
-									Executor.OpenFile(expandPath, CommonData);
+									if(Directory.Exists(expandPath)) {
+										Executor.OpenDirectory(expandPath, CommonData, null);
+									} else {
+										Executor.OpenFile(expandPath, CommonData);
+									}
 								}
 							}
-							Visible = false;
+						} catch(Exception ex) {
+							CommonData.Logger.Puts(LogType.Warning, ex.Message, new ExceptionMessage(this.inputCommand.Text, ex));
 						}
+						Visible = false;
 					}
 					break;
 
