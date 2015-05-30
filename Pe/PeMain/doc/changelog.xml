@@ -75,7 +75,10 @@
 				<message>#276: コマンド入力の補完を行う</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>#281: データ保存を任意タイミングで行う</message>
+				<cooments>
+					<comment>タスクトレイコンテキストメニューの拡張メニュー表示(Shift + 右クリック)で項目が表示されます</comment>
+				</cooments>
 			</note>
 			<note rev="">
 				<message></message>
