@@ -98,6 +98,9 @@
 			<note rev="">
 				<message></message>
 			</note>
+			<note rev="">
+				<message>#276: コマンド入力の補完を行う</message>
+			</note>
 		</group>
 		<group type="developer">
 			<sep dummy="==================================================================" />
