@@ -84,7 +84,7 @@
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if(this._imageIcon != null) {
+			if(this._imageIcon == null) {
 				base.OnPaint(e);
 				return;
 			}
