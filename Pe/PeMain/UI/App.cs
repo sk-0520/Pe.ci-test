@@ -1245,6 +1245,7 @@
 
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
+			rootMenu[menuNameSave].Text = this._commonData.Language["main/menu/save"];
 			rootMenu[menuNameHelp].Text = this._commonData.Language["main/menu/help"];
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];
 		}
