@@ -43,6 +43,8 @@
 			// 作業ディレクトリ
 			if(!string.IsNullOrWhiteSpace(launcherItem.WorkDirPath)) {
 				startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirPath);
+			} else if(Path.IsPathRooted(startInfo.FileName) && FileUtility.Exists(startInfo.FileName)) {
+				startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
 			}
 			
 			// 環境変数
