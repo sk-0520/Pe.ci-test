@@ -60,7 +60,11 @@
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message class="compatibility">#282実装によりランチャーアイテム起動時の作業ディレクトリが変更されました</message>
+				<comments>
+					<comment>作業ディレクトリが設定されている場合の挙動は0.60.0以前と変わりありません</comment>
+					<comment>作業ディレクトリが設定されていない場合、実行パスの親ディレクトリが作業ディレクトリとして使用されます</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>
