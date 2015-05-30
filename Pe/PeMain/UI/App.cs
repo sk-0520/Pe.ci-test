@@ -883,6 +883,9 @@
 				Name = menuNameSave,
 				Image = this._commonData.Skin.GetImage(SkinImage.Save),
 			};
+			itemSave.Click += (object sender, EventArgs e) => {
+				AppUtility.SaveSetting(this._commonData);
+			};
 
 			// 終了
 			var itemExit = new ToolStripMenuItem() {
