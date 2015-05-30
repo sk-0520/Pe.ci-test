@@ -120,7 +120,7 @@
 			Debug.Assert(launcherItem.LauncherType == LauncherType.URI || launcherItem.LauncherType == LauncherType.Command);
 
 			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
-			var fileLauncherItem = (LauncherItem)launcherItem.Clone();
+			var fileLauncherItem = (LauncherItem)launcherItem.DeepClone();
 			// ファイルアイテムに変換
 			fileLauncherItem.LauncherType = LauncherType.File;
 			// 管理者権限はどうにも効かなさそう
