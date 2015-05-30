@@ -96,6 +96,44 @@
 						ExecuteCommand(AppUtility.IsExtension());
 					}
 					return true;
+				} else if(key == Keys.Tab) {
+					//NextCommand();
+					var dv = GetCommandDisplayValue();
+					if(dv != null) {
+						var items = this.inputCommand.Items
+							.Cast<CommandDisplayValue>()
+							.IfRevese(keyData.HasFlag(Keys.Shift))
+							//(keyData.HasFlag(Keys.Shift) 
+							//? .Reverse()
+							//: items
+							//)
+							.ToArray();
+						var nextItems = items
+							.Cast<CommandDisplayValue>()
+							.SkipWhile(i => i != dv)
+							.Skip(1)
+						;
+						if(!nextItems.Any()) {
+							nextItems = items.SkipWhile(i => i.CommandKind == CommandKind.None || i.CommandKind == CommandKind.Uri);
+						} 
+						if(nextItems.Any()) {
+							var nextItem = nextItems.First();
+							Debug.Assert(new[] { CommandKind.FilePath, CommandKind.LauncherItem_Name, CommandKind.LauncherItem_Tag }.Any(c => c == nextItem.CommandKind));
+							WindowsUtility.SetRedraw(this.inputCommand, false);
+							this.inputCommand.SelectedItem = nextItem;
+							if(nextItem.CommandKind == CommandKind.FilePath) {
+								var baseDirPath = Path.GetDirectoryName(nextItem.Value.Command);
+								var startIndex = baseDirPath.Length;
+								if(nextItem.Value.Command.Substring(baseDirPath.Length).StartsWith(new string(Path.DirectorySeparatorChar, 1))) {
+									startIndex += 1;
+								}
+								this.inputCommand.Select(startIndex, nextItem.Value.Command.Length - startIndex);
+							}
+							WindowsUtility.SetRedraw(this.inputCommand, true);
+							this.inputCommand.Refresh();
+							return true;
+						}
+					}
 				}
 			}
 
