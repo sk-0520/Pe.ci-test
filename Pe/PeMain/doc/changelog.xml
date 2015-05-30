@@ -99,6 +99,9 @@
 				<message>#280: コマンド入力で開けないファイルを実行した際に例外が発生する</message>
 			</note>
 			<note rev="">
+				<message>#282: ランチャーアイテム起動時に作業ディレクトリが指定されていない場合、起動パスの親ディレクトリとする</message>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
