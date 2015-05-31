@@ -37,7 +37,7 @@
 		{
 			if(AppbarFullScreen != null) {
 				var e = new AppbarFullScreenEvent();
-				e.FullScreen = fullScreen;
+				NowFullScreen = e.FullScreen = fullScreen;
 				AppbarFullScreen(this, e);
 			}
 		}
@@ -144,6 +144,9 @@
 		/// 
 		/// </summary>
 		public string MessageString { get; set; }
+
+		public bool NowFullScreen { get; protected set; }
+
 		#endregion ////////////////////////////////////
 
 		#region override
