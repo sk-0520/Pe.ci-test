@@ -180,6 +180,12 @@
 		{
 			InitializeToolbar();
 
+#if !DEBUG
+			var debugPage = new [] { this.tabSetting_pageDisplay };
+			foreach(var page in debugPage) {
+				this.tabSetting.TabPages.Remove(page);
+			}
+#endif
 			UIUtility.ShowCenterInPrimaryScreen(this);
 		}
 

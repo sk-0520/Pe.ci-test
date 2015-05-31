@@ -41,6 +41,7 @@
 		const string menuNameSetting = "menu_setting";
 		const string menuNameAbout = "menu_about";
 		const string menuNameHelp = "menu_help";
+		const string menuNameSave = "menu_save";
 		const string menuNameExit = "menu_exit";
 
 		const string menuNameWindowToolbar = "menu_window_toolbar";
@@ -245,9 +246,9 @@
 			ReceiveHotKey(hotKeyId, mod, key);
 		}
 
-		public void SendDeviceChanged(ChangeDevice changeDevice)
+		public void SendDeviceChanged(ChangedDevice changedDevice)
 		{
-			ReceiveDeviceChanged(changeDevice);
+			ReceiveDeviceChanged(changedDevice);
 		}
 
 		public void WatchClipboard(bool watch)
@@ -265,11 +266,11 @@
 
 		#region IRootSender-Receive
 
-		public void ReceiveDeviceChanged(ChangeDevice changeDevice)
+		public void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{
 			//this._commonData.Logger.Puts(LogType.Warning, "ReceiveDeviceChanged", changeDevice);
 			// デバイス状態が変更されたか
-			if(changeDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !this._pause) {
+			if(changedDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !this._pause) {
 				// デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
 				// 現在生成されているツールバーの数が前回ディスプレイ数となる
 
@@ -877,6 +878,15 @@
 			};
 			itemHelp.Click += (object sender, EventArgs e) => Executor.RunCommand(Literal.HelpDocumentURI, this._commonData);
 
+			// 保存
+			var itemSave = new ToolStripMenuItem() {
+				Name = menuNameSave,
+				Image = this._commonData.Skin.GetImage(SkinImage.Save),
+			};
+			itemSave.Click += (object sender, EventArgs e) => {
+				AppUtility.SaveSetting(this._commonData);
+			};
+
 			// 終了
 			var itemExit = new ToolStripMenuItem() {
 				Name = menuNameExit,
@@ -905,6 +915,7 @@
 				new DisableCloseToolStripSeparator(),
 				itemAbout,
 				itemHelp,
+				itemSave,
 #if DEBUG
 				new DisableCloseToolStripSeparator(),
 				itemDebug,
@@ -915,11 +926,6 @@
 
 			parentMenu.Items.AddRange(menuList);
 
-			// メインメニュー
-			parentMenu.Opening += (object sender, CancelEventArgs e) => {
-				itemLogger.Checked = this._logForm.Visible;
-				ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemCommand, this._commonData.MainSetting.Command.HotKey, this._commonData.Language, this._commonData.Logger);
-			};
 			parentMenu.Closed += (object sender, ToolStripDropDownClosedEventArgs e) => {
 				this._noteToolTipForm.ToHide();
 			};
@@ -975,7 +981,8 @@
 			foreach(var toolItem in this._contextMenu.Items.OfType<ToolStripMenuItem>()) {
 				ToolStripUtility.AttachmentOpeningMenuInScreen(toolItem);
 			}
-			this._contextMenu.Opening += (object sender, CancelEventArgs e) => HideAutoHiddenToolbar();
+			this._contextMenu.Opening -= contextMenu_Opening;
+			this._contextMenu.Opening += contextMenu_Opening;
 			this._notifyIcon.ContextMenuStrip = this._contextMenu;
 
 		}
@@ -1241,6 +1248,7 @@
 
 			rootMenu[menuNameSetting].Text = this._commonData.Language["main/menu/setting"];
 			rootMenu[menuNameAbout].Text = this._commonData.Language["main/menu/about"];
+			rootMenu[menuNameSave].Text = this._commonData.Language["main/menu/save"];
 			rootMenu[menuNameHelp].Text = this._commonData.Language["main/menu/help"];
 			rootMenu[menuNameExit].Text = this._commonData.Language["common/menu/exit"];
 		}
@@ -2276,6 +2284,25 @@
 		{
 			this._noteToolTipForm.ToHide();
 		}
+
+		void contextMenu_Opening(object sender, CancelEventArgs e)
+		{
+			var isExtension = AppUtility.IsExtension();
+
+			var parentItem = (ToolStrip)sender;
+
+			var itemLogger = (ToolStripMenuItem)parentItem.Items[menuNameWindowLogger];
+			var itemCommand = (ToolStripMenuItem)parentItem.Items[menuNameWindowCommand];
+			var itemSave = (ToolStripMenuItem)parentItem.Items[menuNameSave];
+
+			itemLogger.Checked = this._logForm.Visible;
+			ToolStripUtility.SetSafeShortcutKeysAndDisplayKey(itemCommand, this._commonData.MainSetting.Command.HotKey, this._commonData.Language, this._commonData.Logger);
+			itemSave.Visible = isExtension;
+
+			HideAutoHiddenToolbar();
+
+		}
+
 
 	}
 }

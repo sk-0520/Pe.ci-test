@@ -61,6 +61,11 @@ namespace ContentTypeTextNet.Pe.Library.PlatformInvoke.Windows
 		static readonly IntPtr noDraw = new IntPtr(0);
 		static readonly IntPtr onDraw = new IntPtr(1);
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="isDraw">trueならtargetを更新すべき。</param>
 		public static void SetRedraw(Control target, bool isDraw)
 		{
 			var draw = isDraw ? onDraw : noDraw;
