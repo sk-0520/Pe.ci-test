@@ -139,7 +139,7 @@
 
 		void SubmitInput()
 		{
-			var item = (LauncherItem)LauncherItem.Clone();
+			var item = (LauncherItem)LauncherItem.DeepClone();
 			item.Option = this.inputOption.Text;
 			item.WorkDirPath = this.inputWorkDirPath.Text;
 			item.StdOutputWatch = this.selectStdStream.Checked;

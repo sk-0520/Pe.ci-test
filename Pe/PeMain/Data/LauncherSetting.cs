@@ -58,7 +58,7 @@
 			var result = new LauncherSetting();
 
 			foreach(var item in Items) {
-				result.Items.Add((LauncherItem)item.Clone());
+				result.Items.Add((LauncherItem)item.DeepClone());
 			}
 
 			return result;

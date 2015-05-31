@@ -301,7 +301,7 @@
 
 		void ApplySettingPosition()
 		{
-			if(UsingToolbarItem.Visible) {
+			if(!NowFullScreen && UsingToolbarItem.Visible) {
 				var prevOpacity = Opacity;
 				Opacity = 0;
 
@@ -1690,7 +1690,9 @@
 			if(e.FullScreen) {
 				TopMost = false;
 				NativeMethods.SetWindowPos(Handle, (IntPtr)HWND.HWND_BOTTOM, 0, 0, 0, 0, SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_NOACTIVATE);
+				//Visible = false;
 			} else {
+				ApplySettingVisible();
 				ApplySettingTopmost();
 			}
 		}

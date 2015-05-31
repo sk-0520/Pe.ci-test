@@ -84,6 +84,10 @@
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			if(this._imageIcon == null) {
+				base.OnPaint(e);
+				return;
+			}
 			var iconSize = IconScale.ToSize();
 			var iconTop = this._titleHeight / 2 - iconSize.Height / 2;
 			e.Graphics.DrawImage(this._imageIcon, Padding.Left, Padding.Top + (int)iconTop, iconSize.Width, iconSize.Height);

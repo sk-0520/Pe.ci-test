@@ -109,6 +109,7 @@
     <Compile Include="IF\ILimitSize.cs" />
     <Compile Include="InformationCollection.cs" />
     <Compile Include="InformationGroup.cs" />
+    <Compile Include="LinqExtension.cs" />
     <Compile Include="OpenIconDialog.cs">
       <SubType>Component</SubType>
     </Compile>

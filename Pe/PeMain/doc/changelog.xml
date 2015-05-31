@@ -56,7 +56,7 @@
 	</log>
 	<sep dummy="################################################################################" />
 	-->
-	<log date="YYYY/MM/DD" version="0.60.1" type="rc">
+	<log date="YYYY/MM/DD" version="0.61.1" type="rc">
 		<group type="note">
 			<sep dummy="==================================================================" />
 			<note rev="">
@@ -84,10 +84,79 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message>#272: 設定項目にある「ディスプレイ」</message>
+				<message></message>
 			</note>
 			<note rev="">
 				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+		<group type="developer">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+			<note rev="">
+				<message></message>
+			</note>
+		</group>
+	</log>
+	<sep dummy="################################################################################" />
+	<log date="2015/05/31" version="0.61.0">
+		<group type="note">
+			<sep dummy="==================================================================" />
+			<note rev="">
+				<message class="compatibility">#282実装によりランチャーアイテム起動時の作業ディレクトリが変更されました</message>
+				<comments>
+					<comment>作業ディレクトリが設定されている場合の挙動は0.60.0以前と変わりありません</comment>
+					<comment>作業ディレクトリが設定されていない場合、実行パスの親ディレクトリが作業ディレクトリとして使用されます</comment>
+				</comments>
+			</note>
+		</group>
+		<group type="features">
+			<sep dummy="==================================================================" />
+			<note rev="2b8f3d0a2fd249f00ddcf38e193025d3bcf10be9">
+				<message>#276: コマンド入力の補完を行う</message>
+				<comments>
+					<comment>入力中に[TAB]キーを押下することにより補完を行います</comment>
+					<comment>ノリと勢いだけで実装したので細かい挙動は気にしないでいただきたいなぁと思ってる、と書いとけばいいって予防線の張り方</comment>
+				</comments>
+			</note>
+			<note rev="08d4b77a59e81f3fe2687351e05418f334033c65">
+				<message>#281: データ保存を任意タイミングで行う</message>
+				<cooments>
+					<comment>タスクトレイコンテキストメニューの拡張メニュー表示(Shift + 右クリック)で項目が表示されます</comment>
+				</cooments>
+			</note>
+		</group>
+		<group type="fixes">
+			<sep dummy="==================================================================" />
+			<note rev="bceb10e9d6ba6462082a245989a9b2f515bdc427">
+				<message>#272: 設定項目にある「ディスプレイ」</message>
+			</note>
+			<note rev="1324613256ac33438437366fdf3ad81ad3018c53">
+				<message>#279: 起動時に例外</message>
+			</note>
+			<note rev="859c4366ebcec32053c4cbb704d7bafa726d6224">
+				<message>#277: コマンド入力でファイルパスの場合に"\"を入力した場合、それが最終ファイルだと警告が出力される</message>
+			</note>
+			<note rev="37acab0a0780d719087b21d8ac62b2edef9c49b0">
+				<message>#280: コマンド入力で開けないファイルを実行した際に例外が発生する</message>
+			</note>
+			<note rev="8e251f966f002d38d3436adcdcbca42c18474b02">
+				<message>#282: ランチャーアイテム起動時に作業ディレクトリが指定されていない場合、起動パスの親ディレクトリとする</message>
+			</note>
+			<note rev="a2b672e40ae768d7890d6f52715d964377a6f85e">
+				<message>#283: Peがフルスクリーンになるのを邪魔する</message>
+				<comments>
+					<comment>ゲームしようとフルスクリーンにするとツールバー状態のPeがそれを解除しようとしてゲーム進行が止まるのですよ</comment>
+					<comment>Crysis2の時は大丈夫だったんだけど昨日買ったCrysis3だと止まるんだよ！ だれだよこんなソース書いたやつは！</comment>
+				</comments>
 			</note>
 			<note rev="">
 				<message></message>

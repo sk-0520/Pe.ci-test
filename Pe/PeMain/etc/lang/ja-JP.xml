@@ -103,6 +103,7 @@
 		<Word Name="main/menu/window/logger"                Text="${log}(&amp;L)" />
 		<Word Name="main/menu/setting"                      Text="@[APPLICATION] 設定(&amp;S) ${open-ui}" />
 		<Word Name="main/menu/about"                        Text="@[APPLICATION] 情報(&amp;A) ${open-ui}" />
+		<Word Name="main/menu/save"                         Text="現在設定を保存(&amp;S)" />
 		<Word Name="main/menu/help"                         Text="ヘルプ(&amp;H) ${open-ui}" />
 		<Word Name="main/menu/system-env"                   Text="システム環境(&amp;E)" />
 		<Word Name="main/menu/system-env/show-hiddne-file"  Text="隠しファイルを表示する(&amp;F)" />
