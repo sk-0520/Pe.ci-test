@@ -106,6 +106,12 @@
 				<message>#282: ランチャーアイテム起動時に作業ディレクトリが指定されていない場合、起動パスの親ディレクトリとする</message>
 			</note>
 			<note rev="">
+				<message>#283: Peがフルスクリーンになるのを邪魔する</message>
+				<comments>
+					<comment>ゲームしようとフルスクリーンにするとPe側のお節介が酷かった</comment>
+				</comments>
+			</note>
+			<note rev="">
 				<message></message>
 			</note>
 		</group>
