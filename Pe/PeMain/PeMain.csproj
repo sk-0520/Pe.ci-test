@@ -140,7 +140,7 @@
       <Link>Data\ViewModelBase.cs</Link>
     </Compile>
     <Compile Include="Data\Applications.cs" />
-    <Compile Include="Data\ChangeDevice.cs" />
+    <Compile Include="Data\ChangedDevice.cs" />
     <Compile Include="Data\ClipboardHtmlDataItem.cs" />
     <Compile Include="Data\ClipboardItem.cs" />
     <Compile Include="Data\ClipboardSetting.cs" />

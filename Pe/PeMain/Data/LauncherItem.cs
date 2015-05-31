@@ -19,7 +19,7 @@
 	/// 名前をキーとする。
 	/// </summary>
 	[Serializable]
-	public class LauncherItem: DisposableNameItem, IDisposable, ICloneable
+	public class LauncherItem: DisposableNameItem, IDisposable, IDeepClone
 	{
 		/// <summary>
 		/// 見つからなかった時用アイコン。
@@ -240,7 +240,9 @@
 			return Name == name;
 		}
 
-		public object Clone()
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
 		{
 			var result = new LauncherItem();
 			result.Name = Name;
@@ -253,7 +255,7 @@
 			result.IconIndex = IconIndex;
 			 */
 			result.IconItem = (IconItem)IconItem.Clone();
-			result.LauncherHistory = (LauncherHistory)LauncherHistory.Clone();
+			result.LauncherHistory = (LauncherHistory)LauncherHistory.DeepClone();
 			result.EnvironmentSetting = (EnvironmentSetting)EnvironmentSetting.Clone();
 			result.Note = Note;
 			result.Tag.AddRange(Tag);
@@ -266,6 +268,8 @@
 
 			return result;
 		}
+
+		#endregion
 
 		/// <summary>
 		/// アイコン取得。
