@@ -158,21 +158,6 @@
 					<comment>Crysis2の時は大丈夫だったんだけど昨日買ったCrysis3だと止まるんだよ！ だれだよこんなソース書いたやつは！</comment>
 				</comments>
 			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
 		</group>
 	</log>
 	<log date="2015/05/24" version="0.60.0">
