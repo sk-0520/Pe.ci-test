@@ -9,6 +9,11 @@
 
     public class DelegateCommand : ICommand
     {
+		static bool DefaultExecute(object o)
+		{
+			return true;
+		}
+
 		/// <summary>
 		/// コマンド。
 		/// </summary>
@@ -16,18 +21,33 @@
 		/// <summary>
 		/// 実行可否。
 		/// </summary>
-		private Func<object, bool> CanExecute;
+		public Func<object, bool> CanExecute;
 
-        // コンストラクタ
-        public DelegateCommand(Action<object> command, Func<object,bool> canExecute)
-        {
+		public DelegateCommand()
+		{
+			CanExecute = DefaultExecute;
+		}
+
+		public DelegateCommand(Action<object> command)
+			: this()
+		{
 			if(command == null) {
 				throw new ArgumentNullException("command");
 			}
 
 			Command = command;
+		}
+
+		public DelegateCommand(Action<object> command, Func<object, bool> canExecute)
+			: this(command)
+		{
+			if(canExecute == null) {
+				throw new ArgumentNullException("canExecute");
+			}
+
 			CanExecute = canExecute;
-        }
+		}
+
 
 		#region ICommand
 

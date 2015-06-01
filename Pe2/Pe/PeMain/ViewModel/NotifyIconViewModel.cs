@@ -3,6 +3,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
 	/// <summary>
 	/// Provides bindable properties and commands for the NotifyIcon. In this sample, the
@@ -19,8 +20,8 @@ using System.Windows.Input;
 			get
 			{
 				return new DelegateCommand {
-					CommandAction = () => Application.Current.MainWindow.Close(),
-					CanExecuteFunc = () => Application.Current.MainWindow != null
+					Command = o => Application.Current.MainWindow.Close(),
+					CanExecute = o => Application.Current.MainWindow != null
 				};
 			}
 		}
@@ -33,34 +34,8 @@ using System.Windows.Input;
 		{
 			get
 			{
-				return new DelegateCommand { CommandAction = () => Application.Current.Shutdown() };
+				return new DelegateCommand { Command = o => Application.Current.Shutdown() };
 			}
-		}
-	}
-
-
-	/// <summary>
-	/// Simplistic delegate command for the demo.
-	/// </summary>
-	public class DelegateCommand: ICommand
-	{
-		public Action CommandAction { get; set; }
-		public Func<bool> CanExecuteFunc { get; set; }
-
-		public void Execute(object parameter)
-		{
-			CommandAction();
-		}
-
-		public bool CanExecute(object parameter)
-		{
-			return CanExecuteFunc == null || CanExecuteFunc();
-		}
-
-		public event EventHandler CanExecuteChanged
-		{
-			add { CommandManager.RequerySuggested += value; }
-			remove { CommandManager.RequerySuggested -= value; }
 		}
 	}
 }
