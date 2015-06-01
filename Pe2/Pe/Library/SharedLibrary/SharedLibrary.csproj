@@ -53,6 +53,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,11 +62,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IUnmanagedModel.cs" />
     <Compile Include="Logic\CommandLine.cs" />
+    <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
     <Compile Include="Model\DisposeFinalizeModelBase.cs" />
     <Compile Include="Logic\FileUtility.cs" />
