@@ -57,7 +57,7 @@
 		/// <returns></returns>
 		public static bool Exists(string path)
 		{
-			return System.IO.File.Exists(path) || Directory.Exists(path);
+			return File.Exists(path) || Directory.Exists(path);
 		}
 	}
 }
