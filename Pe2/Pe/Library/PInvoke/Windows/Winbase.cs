@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Library.PInvoke.Windows
 {
 	public enum FILE_ATTRIBUTE
 	{

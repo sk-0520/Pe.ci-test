@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Library.PInvoke.Windows
 {
 	/// <summary>
 	/// Description of MyClass.

@@ -1,7 +1,7 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model.Unmanaged
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged
 {
 	using System;
-	using ContentTypeTextNet.Pe.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
 
 	/// <summary>
 	/// アンマネージドオブジェクトハンドルを管理。

@@ -1,11 +1,11 @@
-﻿namespace ContentTypeTextNet.Pe.Test.Library.SharedLibraryTest.Logic
+﻿namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
-	using ContentTypeTextNet.Pe.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using NUnit.Framework;
 
 	[TestFixture]

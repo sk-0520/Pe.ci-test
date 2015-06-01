@@ -1,9 +1,9 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System.Collections.Generic;
 	using System.Reflection;
-	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Pe.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
 	/// <summary>
 	/// モデルの基盤。

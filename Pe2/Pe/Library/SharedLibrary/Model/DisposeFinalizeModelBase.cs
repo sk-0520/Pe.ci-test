@@ -1,16 +1,16 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
-	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public abstract class DisposeFinalizeModel: ModelBase, IUnmanagedModel
+	public abstract class DisposeFinalizeModelBase: ModelBase, IUnmanagedModel
 	{
-		protected DisposeFinalizeModel()
+		protected DisposeFinalizeModelBase()
 		{
 			IsDisposed = false;
 		}
 
-		~DisposeFinalizeModel()
+		~DisposeFinalizeModelBase()
 		{
 			Dispose(false);
 		}

@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Logic
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,7 +6,7 @@
 	using System.Reflection;
 	using System.Text;
 	using System.Threading.Tasks;
-	using ContentTypeTextNet.Pe.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	public static class ReflectionUtility
 	{

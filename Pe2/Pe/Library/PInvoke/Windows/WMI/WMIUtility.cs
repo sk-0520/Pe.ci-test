@@ -1,6 +1,6 @@
 ﻿using System.Management;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows.root.CIMV2
+namespace ContentTypeTextNet.Library.PInvoke.Windows.root.CIMV2
 {
 	public interface IImportWMI
 	{

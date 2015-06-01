@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model.Unmanaged.Com
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged.Com
 {
 	using System;
 	using System.Runtime.InteropServices;

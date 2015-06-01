@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.Model.Unmanaged.Com
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model.Unmanaged.Com
 {
 	/// <summary>
 	/// 何かしらのCOMを管理。

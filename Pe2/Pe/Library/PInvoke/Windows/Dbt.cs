@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Library.PInvoke.Windows
 {
 	public enum DBT
 	{

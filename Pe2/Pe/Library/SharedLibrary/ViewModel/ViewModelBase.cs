@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.SharedLibrary.ViewModel
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
 {
 	using System;
 	using System.Collections.Generic;

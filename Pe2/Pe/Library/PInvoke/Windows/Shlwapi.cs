@@ -1,5 +1,5 @@
 ﻿
-namespace ContentTypeTextNet.Pe.Library.PInvoke.Windows
+namespace ContentTypeTextNet.Library.PInvoke.Windows
 {
 	using System;
 	using System.Runtime.InteropServices;

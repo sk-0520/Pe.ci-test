@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.Logic
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System.IO;
 
