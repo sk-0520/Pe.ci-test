@@ -1,8 +1,10 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
+	using System.Runtime.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
+	[DataContract]
 	public abstract class DisposeFinalizeModelBase: ModelBase, IDisposeModel
 	{
 		protected DisposeFinalizeModelBase()

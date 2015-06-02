@@ -2,6 +2,7 @@
 {
 	using System.Collections.Generic;
 	using System.Reflection;
+	using System.Runtime.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 
@@ -9,6 +10,7 @@
 	/// モデルの基盤。
 	/// <para>データ保持を生きがいにする。</para>
 	/// </summary>
+	[DataContract]
 	public abstract class ModelBase: IGetMembers
 	{
 		#region variable
