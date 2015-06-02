@@ -4,7 +4,7 @@
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 
 	/// <summary>
-	/// アンマネージドオブジェクトハンドルを管理。
+	/// アンマネージドなOS提供ハンドルを管理。
 	/// </summary>
 	public abstract class UnmanagedHandleModelBase: UnmanagedModelBase
 	{
@@ -30,15 +30,17 @@
 		/// </summary>
 		protected virtual void ReleaseHandle()
 		{
-			NativeMethods.DeleteObject(Handle);
+			throw new NotImplementedException();
 		}
 
 		#region UnmanagedBase
 
 		protected override void Dispose(bool disposing)
 		{
-			ReleaseHandle();
-			Handle = IntPtr.Zero;
+			if(!IsDisposed) {
+				ReleaseHandle();
+				Handle = IntPtr.Zero;
+			}
 
 			base.Dispose(disposing);
 		}

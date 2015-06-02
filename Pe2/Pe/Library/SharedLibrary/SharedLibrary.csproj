@@ -57,6 +57,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IF\IGetMembers.cs" />
-    <Compile Include="IF\IUnmanagedModel.cs" />
+    <Compile Include="IF\IDisposeModel.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Logic\ReflectionUtility.cs" />
     <Compile Include="Logic\Serializer.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModelBase.cs" />
+    <Compile Include="Model\Unmanaged\GdiObjectModelBase.cs" />
     <Compile Include="Model\Unmanaged\UnmanagedHandleModelBase.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />

@@ -3,7 +3,7 @@
 	using System;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public abstract class DisposeFinalizeModelBase: ModelBase, IUnmanagedModel
+	public abstract class DisposeFinalizeModelBase: ModelBase, IDisposeModel
 	{
 		protected DisposeFinalizeModelBase()
 		{

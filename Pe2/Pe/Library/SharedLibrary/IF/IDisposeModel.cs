@@ -2,7 +2,7 @@
 {
 	using System;
 
-	public interface IUnmanagedModel: IDisposable
+	public interface IDisposeModel: IDisposable
 	{
 		/// <summary>
 		/// 破棄されたか。
