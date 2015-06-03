@@ -79,6 +79,7 @@
     <Compile Include="Logic\Extension\TextExtension.cs" />
     <Compile Include="Logic\PathUtility.cs" />
     <Compile Include="Logic\TextUtility.cs" />
+    <Compile Include="Model\LanguageItemModel.cs" />
     <Compile Include="Model\ScreenModel.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
     <Compile Include="Model\DisposeFinalizeModelBase.cs" />
