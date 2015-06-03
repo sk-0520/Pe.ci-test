@@ -84,7 +84,7 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>ショートカット処理でリソースリーク</message>
 			</note>
 			<note rev="">
 				<message></message>
