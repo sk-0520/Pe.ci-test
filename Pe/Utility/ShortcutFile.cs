@@ -10,7 +10,7 @@
 	/// <summary>
 	/// ショートカット。
 	/// </summary>
-	public class ShortcutFile: IDisposable
+	public class ShortcutFile: DisposeFinalizer
 	{
 		const int _argumentLength = 1024;
 		const int _descriptionLength = 1024 * 5;
@@ -30,7 +30,8 @@
 			return new UnmanagedComWrapper<IShellLink>((IShellLink)new ShellLinkObject());
 		}
 
-		protected UnmanagedComWrapper<IShellLink> _shellLink;
+		protected UnmanagedComWrapper<IShellLink> _shellLink = null;
+		protected UnmanagedComWrapper<IPersistFile> _persistFile = null;
 
 		/// <summary>
 		/// ショートカットを作成するためにオブジェクト生成。
@@ -49,15 +50,17 @@
 			Load(path);
 		}
 
-		private IPersistFile PersistFile {
+		protected UnmanagedComWrapper<IPersistFile> PersistFile
+		{
 			get
 			{
-				var result = this._shellLink.Com as IPersistFile;
-				if (result == null) {
-					throw new COMException("cannot create IPersistFile");
+				if(this._persistFile == null) {
+					var result = (IPersistFile)this._shellLink.Com;
+
+					this._persistFile = new UnmanagedComWrapper<IPersistFile>(result);
 				}
 
-				return result;
+				return this._persistFile;
 			}
 		}
 
@@ -180,17 +183,19 @@
 			this._shellLink.Com.SetIconLocation(iconPath.Path, iconPath.Index);
 		}
 
-		#region IDisposable
+		#region DisposeFinalizer
 
-		protected void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
-			this._shellLink.ToDispose();
-			this._shellLink = null;
-		}
+			if(!IsDisposed) {
+				this._persistFile.ToDispose();
+				this._persistFile = null;
 
-		public void Dispose()
-		{
-			Dispose(true);
+				this._shellLink.ToDispose();
+				this._shellLink = null;
+			}
+
+			base.Dispose(disposing);
 		}
 
 		#endregion /////////////////////////////////
@@ -209,7 +214,7 @@
 			}
 
 			this._shellLink = CreateShellLink();
-			PersistFile.Load(path, 0);
+			PersistFile.Com.Load(path, 0);
 		}
 
 		/// <summary>
@@ -218,7 +223,7 @@
 		/// <param name="path">保存先ショートカットパス。</param>
 		public void Save(string path)
 		{
-			PersistFile.Save(path, true);
+			PersistFile.Com.Save(path, true);
 		}
 	}
 
