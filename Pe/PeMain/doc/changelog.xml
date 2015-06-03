@@ -84,7 +84,7 @@
 		<group type="fixes">
 			<sep dummy="==================================================================" />
 			<note rev="">
-				<message></message>
+				<message>ショートカット処理でリソースリーク</message>
 			</note>
 			<note rev="">
 				<message></message>
@@ -157,21 +157,6 @@
 					<comment>ゲームしようとフルスクリーンにするとツールバー状態のPeがそれを解除しようとしてゲーム進行が止まるのですよ</comment>
 					<comment>Crysis2の時は大丈夫だったんだけど昨日買ったCrysis3だと止まるんだよ！ だれだよこんなソース書いたやつは！</comment>
 				</comments>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-		</group>
-		<group type="developer">
-			<sep dummy="==================================================================" />
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
-			</note>
-			<note rev="">
-				<message></message>
 			</note>
 		</group>
 	</log>

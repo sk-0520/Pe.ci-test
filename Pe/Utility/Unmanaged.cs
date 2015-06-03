@@ -9,42 +9,8 @@
 	/// <summary>
 	/// アンマネージドオブジェクトを管理してくれそうな人。
 	/// </summary>
-	public abstract class UnmanagedBase: IDisposable
-	{
-		protected UnmanagedBase()
-		{
-			IsDisposed = false;
-		}
-
-		~UnmanagedBase()
-		{
-			Dispose(false);
-		}
-
-		/// <summary>
-		/// 破棄されたか。
-		/// </summary>
-		public bool IsDisposed { get; protected set; }
-
-		#region IDisposable
-
-		protected virtual void Dispose(bool disposing)
-		{
-			IsDisposed = true;
-		}
-
-		/// <summary>
-		/// 解放。
-		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		#endregion
-
-	}
+	public abstract class UnmanagedBase: DisposeFinalizer
+	{ }
 
 	/// <summary>
 	/// アンマネージドオブジェクトハンドルを管理。
