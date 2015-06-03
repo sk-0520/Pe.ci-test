@@ -1,5 +1,4 @@
-﻿using ContentTypeTextNet.Library.SharedLibrary.View.ApplicationDesktopToolbar;
-namespace ContentTypeTextNet.Library.SharedLibrary.View
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.View
 {
 	using System;
 	using System.Collections.Generic;
