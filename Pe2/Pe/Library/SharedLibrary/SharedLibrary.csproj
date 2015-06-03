@@ -87,10 +87,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ApplicationDesktopToolbar\ApplicationDesktopToolbar.cs" />
-    <Compile Include="Define\DesktopDockType.cs" />
     <Compile Include="View\ApplicationDesktopToolbar\ApplicationDesktopToolbarEvent.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Define\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>
