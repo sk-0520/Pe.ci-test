@@ -72,6 +72,7 @@
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\Extension\TextExtension.cs" />
+    <Compile Include="Logic\PathUtility.cs" />
     <Compile Include="Logic\TextUtility.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
     <Compile Include="Model\DisposeFinalizeModelBase.cs" />
