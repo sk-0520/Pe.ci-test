@@ -29,10 +29,37 @@
 			return results != null && results.Any();
 		}
 
+		/// <summary>
+		/// Serializable属性を保持しているか。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		static bool HasSerializable<T>()
 		{
 			var results = typeof(T).GetCustomAttributes(typeof(SerializableAttribute), false);
 			return results != null && results.Any();
+		}
+
+		/// <summary>
+		/// ファイル入力用ストリームを作成。
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		static FileStream CreateReadFileStream(string path)
+		{
+			return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+		}
+
+		/// <summary>
+		/// ファイル出力用ストリームを作成。
+		/// <para>親ディレクトリが必要なら勝手に作る。</para>
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		static FileStream CreateWriteFileStream(string path)
+		{
+			FileUtility.MakeFileParentDirectory(path);
+			return new FileStream(path, FileMode.Create, FileAccess.Write);
 		}
 
 		/// <summary>
@@ -65,7 +92,7 @@
 		public static T LoadXmlDataFromFile<T>(string filePath)
 			where T: ModelBase, new()
 		{
-			using(var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+			using(var stream = CreateReadFileStream(filePath)) {
 				return LoadXmlDataFromStream<T>(stream);
 			}
 		}
@@ -100,7 +127,7 @@
 		public static T LoadXmlSerializeFromFile<T>(string filePath)
 			where T: ModelBase, new()
 		{
-			using(var stream = new FileStream(filePath, FileMode.Open)) {
+			using(var stream = CreateReadFileStream(filePath)) {
 				return LoadXmlSerializeFromStream<T>(stream);
 			}
 		}
@@ -140,7 +167,7 @@
 		public static void SaveXmlDataToFile<T>(string filePath, T model)
 			where T: ModelBase
 		{
-			using(var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+			using(var stream = CreateWriteFileStream(filePath)) {
 				SaveXmlDataToStream(stream, model);
 			}
 		}
@@ -175,7 +202,7 @@
 		public static void SaveXmlSerializeToFile<T>(string filePath, T model)
 			where T: ModelBase
 		{
-			using(var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+			using(var stream = CreateWriteFileStream(filePath)) {
 				SaveXmlSerializeToStream(stream, model);
 			}
 		}
