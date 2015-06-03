@@ -7,8 +7,11 @@
 	using System.Threading.Tasks;
 	using System.Windows.Input;
 
-    public class DelegateCommand : ICommand
-    {
+	/// <summary>
+	/// コマンド。
+	/// </summary>
+	public class DelegateCommand : ICommand
+	{
 		static bool DefaultExecute(object o)
 		{
 			return true;

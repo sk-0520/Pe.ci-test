@@ -20,15 +20,27 @@
 			Assert.AreEqual(test, PathUtility.AppendExtension(path, ext));
 		}
 
-		[TestCase("", "", '!')]
-		[TestCase("", " ", '!')]
-		[TestCase("a", "a", '!')]
-		[TestCase("a!", "a?", '!')]
-		[TestCase("a?", "a?", '?')]
-		[TestCase("a@b@c@d", "a?b\\c*d", '@')]
-		public void ToSafeNameTest(string test, string s, char c)
+		[TestCase("", "", "!")]
+		[TestCase("", " ", "!")]
+		[TestCase("a", "a", "!")]
+		[TestCase("a!", "a?", "!")]
+		[TestCase("a?", "a?", "!")]
+		[TestCase("a@b@c@d", "a?b\\c*d", "@")]
+		[TestCase("a<>b<>c<>d", "a?b\\c*d", "<>")]
+		public void ToSafeNameTest(string test, string s, string c)
 		{
 			Assert.AreEqual(test, PathUtility.ToSafeName(s, v => c));
+		}
+
+		[TestCase("", "")]
+		[TestCase("", " ")]
+		[TestCase("a", "a")]
+		[TestCase("a_", "a?")]
+		[TestCase("a_", "a?")]
+		[TestCase("a_b_c_d", "a?b\\c*d")]
+		public void ToSafeNameDefaultTest(string test, string s)
+		{
+			Assert.AreEqual(test, PathUtility.ToSafeNameDefault(s));
 		}
 	}
 }
