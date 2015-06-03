@@ -92,11 +92,10 @@
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\ApplicationDesktopToolbar\ApplicationDesktopToolbar.cs" />
-    <Compile Include="View\ApplicationDesktopToolbar\ApplicationDesktopToolbarEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Define\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">

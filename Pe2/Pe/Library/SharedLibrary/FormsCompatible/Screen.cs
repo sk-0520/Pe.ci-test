@@ -15,6 +15,11 @@
 	/// </summary>
 	public static class Screen
 	{
+		/// <summary>
+		/// System.Windows.Forms.Screen を ScreenModel に変換。
+		/// </summary>
+		/// <param name="screen"></param>
+		/// <returns></returns>
 		static ScreenModel ConvertScreenModel(Forms.Screen screen)
 		{
 			return new ScreenModel() {
