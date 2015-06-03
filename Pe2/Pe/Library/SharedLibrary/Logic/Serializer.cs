@@ -2,12 +2,14 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Xml;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
@@ -16,14 +18,37 @@
 	public static class Serializer
 	{
 		/// <summary>
+		/// DataContract属性を保持しているか。
+		/// <para>http://stackoverflow.com/questions/221687/can-you-use-where-to-require-an-attribute-in-c</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		static bool HasDataContract<T>()
+		{
+			var results = typeof(T).GetCustomAttributes(typeof(DataContractAttribute), true);
+			return results != null && results.Any();
+		}
+
+		static bool HasSerializable<T>()
+		{
+			var results = typeof(T).GetCustomAttributes(typeof(SerializableAttribute), false);
+			return results != null && results.Any();
+		}
+
+		/// <summary>
 		/// XMLストリーム読み込み。
+		/// <para>DataContractを使用。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="stream"></param>
 		/// <returns></returns>
-		public static T LoadXml<T>(Stream stream)
+		public static T LoadXmlDataFromStream<T>(Stream stream)
 			where T: ModelBase, new()
 		{
+			if(!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
 			using(var xmlReader = XmlReader.Create(stream)) {
 				var serializer = new DataContractSerializer(typeof(T));
 				return (T)serializer.ReadObject(xmlReader);
@@ -32,27 +57,71 @@
 
 		/// <summary>
 		/// XMLファイル読み込み。
+		/// <para>DataContractを使用。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="filePath"></param>
 		/// <returns></returns>
-		public static T LoadXml<T>(string filePath)
+		public static T LoadXmlDataFromFile<T>(string filePath)
 			where T: ModelBase, new()
 		{
 			using(var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-				return LoadXml<T>(stream);
+				return LoadXmlDataFromStream<T>(stream);
 			}
 		}
 
 		/// <summary>
+		/// XMLストリーム読み込み。
+		/// <para>Serializableを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public static T LoadXmlSerializeFromStream<T>(Stream stream)
+			where T: ModelBase, new()
+		{
+			if(!HasSerializable<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
+			using(var reader = new XmlTextReader(stream)) {
+				var serializer = new XmlSerializer(typeof(T));
+				return (T)serializer.Deserialize(reader);
+			}
+		}
+
+		/// <summary>
+		/// XMLファイル読み込み。
+		/// <para>Serializableを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public static T LoadXmlSerializeFromFile<T>(string filePath)
+			where T: ModelBase, new()
+		{
+			using(var stream = new FileStream(filePath, FileMode.Open)) {
+				return LoadXmlSerializeFromStream<T>(stream);
+			}
+		}
+
+
+		/// <summary>
 		/// XMLストリーム書き出し。
+		/// <para>DataContractを使用。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="stream"></param>
 		/// <param name="model"></param>
-		public static void SaveXml<T>(Stream stream, T model)
+		public static void SaveXmlDataToStream<T>(Stream stream, T model)
 			 where T: ModelBase
 		{
+			Debug.Assert(model != null);
+
+			if(!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
 			var xmlSetting = new XmlWriterSettings() {
 				Encoding = new System.Text.UTF8Encoding(),
 			};
@@ -63,17 +132,52 @@
 		}
 		/// <summary>
 		/// XMLファイル書き出し。
+		/// <para>DataContractを使用。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="filePath"></param>
 		/// <param name="model"></param>
-		public static void SaveXml<T>(string filePath, T model)
+		public static void SaveXmlDataToFile<T>(string filePath, T model)
 			where T: ModelBase
 		{
 			using(var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
-				SaveXml(stream, model);
+				SaveXmlDataToStream(stream, model);
+			}
+		}
+
+		/// <summary>
+		/// XMLストリーム書き出し。
+		/// <para>Serializableを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream"></param>
+		/// <param name="model"></param>
+		public static void SaveXmlSerializeToStream<T>(Stream stream, T model)
+			where T: ModelBase
+		{
+			Debug.Assert(model != null);
+
+			if(!HasSerializable<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
 			}
 
+			var serializer = new XmlSerializer(typeof(T));
+			serializer.Serialize(stream, model);
+		}
+
+		/// <summary>
+		/// XMLファイル書き出し。
+		/// <para>Serializableを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <param name="model"></param>
+		public static void SaveXmlSerializeToFile<T>(string filePath, T model)
+			where T: ModelBase
+		{
+			using(var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write)) {
+				SaveXmlSerializeToStream(stream, model);
+			}
 		}
 	}
 }
