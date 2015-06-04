@@ -11,6 +11,68 @@
 	[TestFixture]
 	class TextExtensionTest
 	{
+		[TestCase("", "", "<", ">")]
+		[TestCase("a", "a", "<", ">")]
+		[TestCase("<a", "<a", "<", ">")]
+		[TestCase("a>", "a>", "<", ">")]
+		[TestCase("<a>", "[a]", "<", ">")]
+		[TestCase("<a><b>", "[a][b]", "<", ">")]
+		public void ReplaceRangeTest(string src, string result, string head, string tail)
+		{
+			var conv = src.ReplaceRange(head, tail, s => "[" + s + "]");
+			Assert.AreEqual(conv, result);
+		}
+
+		[TestCase("a", "<", ">", "a")]
+		[TestCase("<a>", "<", ">", "A")]
+		[TestCase("<aa>", "<", ">", "<aa>")]
+		[TestCase("<a><b>", "<", ">", "AB")]
+		[TestCase("<a<a>><b>", "<", ">", "<a<a>>B")]
+		[TestCase("a", "@[", "]", "a")]
+		[TestCase("@[a]", "@[", "]", "A")]
+		[TestCase("@[aa]", "@[", "]", "@[aa]")]
+		[TestCase("@[a]@[b]", "@[", "]", "AB")]
+		[TestCase("@[a@[a]]@[b]", "@[", "]", "@[a@[a]]B")]
+		public void ReplaceRangeFromDictionaryTest(string src, string head, string tail, string result)
+		{
+			var map = new Dictionary<string, string>() {
+				{ "A", "a" },
+				{ "B", "b" },
+				{ "C", "c" },
+				{ "D", "d" },
+				{ "E", "e" },
+				{ "a", "A" },
+				{ "b", "B" },
+				{ "c", "C" },
+				{ "d", "D" },
+				{ "e", "E" },
+			};
+			Assert.IsTrue(src.ReplaceRangeFromDictionary(head, tail, map) == result);
+		}
+
+		[TestCase("a", "A")]
+		[TestCase("aa", "AA")]
+		[TestCase("az", "Az")]
+		[TestCase("Aa", "aA")]
+		[TestCase("aAa", "AaA")]
+		public void ReplaceFromDictionaryTest(string src, string result)
+		{
+			var map = new Dictionary<string, string>() {
+				{ "A", "a" },
+				{ "B", "b" },
+				{ "C", "c" },
+				{ "D", "d" },
+				{ "E", "e" },
+				{ "a", "A" },
+				{ "b", "B" },
+				{ "c", "C" },
+				{ "d", "D" },
+				{ "e", "E" },
+			};
+			var conv = src.ReplaceFromDictionary(map);
+			Assert.AreEqual(conv, result);
+		}
+		
 		[TestCase(0, null)]
 		[TestCase(0, "")]
 		[TestCase(1, "a")]

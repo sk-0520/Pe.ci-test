@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
@@ -38,10 +39,58 @@
 			return item.Word;
 		}
 
+		/// <summary>
+		/// システム用
+		/// </summary>
+		/// <param name="dateTime"></param>
+		/// <returns></returns>
+		protected virtual IDictionary<string, string> GetSystemMap(DateTime dateTime)
+		{
+			return new Dictionary<string, string>() {
+				{ "TIMESTAMP",  dateTime.ToString() },
+				{ "Y",          dateTime.Year.ToString() },
+				{ "YYYY",       dateTime.Year.ToString("D4") },
+				{ "M",          dateTime.Month.ToString() },
+				{ "MM",         dateTime.Month.ToString("D2") },
+				{ "MMM",        dateTime.ToString("MMM") },
+				{ "MMMM",       dateTime.ToString("MMMM") },
+				{ "D",          dateTime.Day.ToString() },
+				{ "DD",         dateTime.Day.ToString("D2") },
+				{ "h",          dateTime.Hour.ToString() },
+				{ "hh",         dateTime.Hour.ToString("D2") },
+				{ "m",          dateTime.Minute.ToString() },
+				{ "mm",         dateTime.Minute.ToString("D2") },
+				{ "s",          dateTime.Second.ToString() },
+				{ "ss",         dateTime.Second.ToString("D2") },
+			};
+		}
+
+		public string GetWordText(string key, DateTime dateTime, IReadOnlyDictionary<string, string> map)
+		{
+			var plainText = GetPlainText(key);
+
+			var usingMap = GetSystemMap(dateTime);
+			if(map != null) {
+				foreach(var pair in map) {
+					usingMap[pair.Key] = pair.Value;
+				}
+			}
+
+			var replacedSystemMapText = plainText.ReplaceRangeFromDictionary("@[", "]", usingMap);
+			var replacedDefineText = replacedSystemMapText.ReplaceRange("${", "}", s => GetItem(Model.Define, s).Word);
+
+			return replacedDefineText;
+		}
 
 		#endregion
 
 		#region indexer
+
+		public string this[string key, IReadOnlyDictionary<string, string> map = null]
+		{
+			get { return GetWordText(key, DateTime.Now, map); }
+		}
+
 		#endregion
 	}
 }
