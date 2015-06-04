@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IdItemModelBase.cs" />
+    <Compile Include="Item\TagsItemModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
     <Compile Include="PeModelBase.cs" />
