@@ -21,7 +21,7 @@
 		/// 表示用文字列。
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public string Text { get; set; }
+		public string Word { get; set; }
 
 		#endregion
 
