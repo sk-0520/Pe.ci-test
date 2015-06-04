@@ -64,6 +64,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IdItemModelBase.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
