@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel
+﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Item
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,7 +10,7 @@
 	/// 各設定の統括。
 	/// <para>その他の大きいやつは別クラスで管理しとく。</para>
 	/// </summary>
-	public sealed class MainSetting: SettingModelBase
+	public sealed class MainSettingModel: SettingModelBase
 	{
 	}
 }

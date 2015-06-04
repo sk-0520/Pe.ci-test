@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel
+﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Item
 {
 	using System;
 	using System.Collections.Generic;
@@ -8,11 +8,11 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
-	/// 設定データとして使用する基底モデル。
+	/// 設定項目データとして使用する基底モデル。
 	/// </summary>
-	public abstract class SettingModelBase : DisposeFinalizeModelBase
+	public abstract class ItemModelBase: DisposeFinalizeModelBase
 	{
-		public SettingModelBase():base()
+		public ItemModelBase():base()
 		{ }
 	}
 }

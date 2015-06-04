@@ -62,9 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainSetting.cs" />
+    <Compile Include="Item\MainSettingModel.cs" />
+    <Compile Include="Item\SettingModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingModelBase.cs" />
+    <Compile Include="Item\ItemModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj">
