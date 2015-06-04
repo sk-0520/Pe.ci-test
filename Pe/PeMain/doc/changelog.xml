@@ -87,7 +87,7 @@
 				<message>ショートカット処理でリソースリーク</message>
 			</note>
 			<note rev="">
-				<message></message>
+				<message>コマンド入力時のTAB, Shift + TABでの次候補選択順序が逆</message>
 			</note>
 			<note rev="">
 				<message></message>
