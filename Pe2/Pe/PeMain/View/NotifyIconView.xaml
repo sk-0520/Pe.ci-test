@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary 
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:tb="http://www.hardcodet.net/taskbar"
+	xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 	xmlns:local="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 >
 
@@ -16,15 +16,16 @@
 
 
 	<!-- the application's NotifyIcon - started from App.xaml.cs. Declares its own view model. -->
-	<tb:TaskbarIcon x:Key="NotifyIcon"
+    <Taskbar:TaskbarIcon 
+        x:Key="NotifyIcon"
                     IconSource="/Resources/Icon/App.ico"
                     ToolTipText="Double-click for window, right-click for menu"
                     ContextMenu="{StaticResource SysTrayMenu}">
 
 		<!-- self-assign a data context (could also be done programmatically) -->
-		<tb:TaskbarIcon.DataContext>
+        <Taskbar:TaskbarIcon.DataContext>
 			<local:NotifyIconViewModel />
-		</tb:TaskbarIcon.DataContext>
-	</tb:TaskbarIcon>
+		</Taskbar:TaskbarIcon.DataContext>
+	</Taskbar:TaskbarIcon>
 
 </ResourceDictionary>
