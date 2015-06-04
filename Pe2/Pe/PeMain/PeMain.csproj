@@ -112,18 +112,24 @@
     <Resource Include="Resources\Icon\App.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dictionary\NotifyIconResources.xaml">
+    <Page Include="View\NotifyIconView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="View\" />
+    <Folder Include="Logic\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{fbf5e5e8-2d88-45a7-b1ea-9e3fb68e97e4}</Project>
       <Name>Package</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\PeModel\PeModel.csproj">
+      <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
+      <Name>PeModel</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Library\PInvoke\PInvoke.csproj">
       <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>
