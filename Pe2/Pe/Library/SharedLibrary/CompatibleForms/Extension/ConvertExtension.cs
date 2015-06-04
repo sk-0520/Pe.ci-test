@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.FormsCompatible.Extension
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Extension
 {
 	using System;
 	using System.Collections.Generic;
