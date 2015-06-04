@@ -90,6 +90,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Logic\CommandLineTest.cs" />
+    <Compile Include="Logic\Extension\LinkExtensionTest.cs" />
     <Compile Include="Logic\Extension\TextExtensionTest.cs" />
     <Compile Include="Logic\PathUtilityTest.cs" />
     <Compile Include="Logic\TextUtilityTest.cs" />

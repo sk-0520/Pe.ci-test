@@ -24,7 +24,7 @@
 		[TestCase("", " ", "!")]
 		[TestCase("a", "a", "!")]
 		[TestCase("a!", "a?", "!")]
-		[TestCase("a?", "a?", "!")]
+		[TestCase("a?", "a?", "?")]
 		[TestCase("a@b@c@d", "a?b\\c*d", "@")]
 		[TestCase("a<>b<>c<>d", "a?b\\c*d", "<>")]
 		public void ToSafeNameTest(string test, string s, string c)
