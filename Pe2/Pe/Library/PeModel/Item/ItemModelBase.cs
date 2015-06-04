@@ -12,7 +12,8 @@
 	/// </summary>
 	public abstract class ItemModelBase: PeModelBase
 	{
-		public ItemModelBase():base()
+		public ItemModelBase()
+			: base()
 		{ }
 	}
 }

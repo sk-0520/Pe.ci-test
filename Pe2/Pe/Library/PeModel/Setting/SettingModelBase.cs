@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Item
+﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Setting
 {
 	using System;
 	using System.Collections.Generic;
@@ -9,7 +9,10 @@
 	/// <summary>
 	/// 設定統括データとして使用する基底モデル。
 	/// </summary>
-	public abstract class SettingModelBase: ItemModelBase
+	public abstract class SettingModelBase: PeModelBase
 	{
+ 		public SettingModelBase()
+			:base()
+		{ }
 	}
 }
