@@ -12,7 +12,7 @@
 	/// <summary>
 	/// 言語設定。
 	/// </summary>
-	public class LanguageModel : ModelBase, IName
+	public class LanguageCollectionModel : ModelBase, IName
 	{
 		#region property
 

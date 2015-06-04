@@ -11,9 +11,9 @@
 	/// <summary>
 	/// これといってViewは関係ないと思う。
 	/// </summary>
-	public class LanguageViewModel: ModelWrapperViewModelBase<LanguageModel>
+	public class LanguageCollectionViewModel: ModelWrapperViewModelBase<LanguageCollectionModel>
 	{
-		public LanguageViewModel(LanguageModel model)
+		public LanguageCollectionViewModel(LanguageCollectionModel model)
 			: base(model)
 		{ }
 
