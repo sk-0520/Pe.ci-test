@@ -72,6 +72,7 @@
     <Compile Include="CompatibleForms\Extension\ConvertExtension.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
     <Compile Include="Define\IconScale.cs" />
+    <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IDisposeModel.cs" />
     <Compile Include="IF\IName.cs" />
