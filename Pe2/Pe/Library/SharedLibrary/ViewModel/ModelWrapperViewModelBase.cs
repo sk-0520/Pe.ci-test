@@ -7,9 +7,17 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public class ModelWrapperViewModelBase<TModel> : ViewModelBase
+	/// <summary>
+	/// モデルを取り込むVM。
+	/// </summary>
+	/// <typeparam name="TModel">モデル。</typeparam>
+	public abstract class ModelWrapperViewModelBase<TModel> : ViewModelBase
 		where TModel: ModelBase
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="model">取り込むモデル</param>
 		public ModelWrapperViewModelBase(TModel model)
 		{
 			Model = model;
