@@ -1,8 +1,10 @@
 @*
 ~*
 $*
-obj/
-bin/
+[Oo]bj/
+[Bb]in/
+[Dd]ebug/
+[Re]elease/
 /Output/
 /Changelog/
 *.Settings
@@ -14,5 +16,5 @@ ProfilingSessions/
 *.user
 *.psess
 *.vsp
-
-/Pe2
+*.cache
+TemporaryGeneratedFile_*
