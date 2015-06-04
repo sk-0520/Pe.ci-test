@@ -65,7 +65,7 @@
 			};
 		}
 
-		public string GetWordText(string key, DateTime dateTime, IReadOnlyDictionary<string, string> map)
+		public string GetReplacedWordText(string key, DateTime dateTime, IReadOnlyDictionary<string, string> map)
 		{
 			var plainText = GetPlainText(key);
 
@@ -88,7 +88,7 @@
 
 		public string this[string key, IReadOnlyDictionary<string, string> map = null]
 		{
-			get { return GetWordText(key, DateTime.Now, map); }
+			get { return GetReplacedWordText(key, DateTime.Now, map); }
 		}
 
 		#endregion
