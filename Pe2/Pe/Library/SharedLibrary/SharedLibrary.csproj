@@ -84,6 +84,7 @@
     <Compile Include="Logic\Utility\TextUtility.cs" />
     <Compile Include="Model\IconPathModel.cs" />
     <Compile Include="Model\LanguageItemModel.cs" />
+    <Compile Include="Model\LanguageModel.cs" />
     <Compile Include="Model\ScreenModel.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
     <Compile Include="Model\DisposeFinalizeModelBase.cs" />
@@ -97,10 +98,9 @@
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\ModelWrapperViewModelBase.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PInvoke\PInvoke.csproj">
       <Project>{13a7d6df-6702-49cb-86f1-0980a3c1d6c6}</Project>

@@ -10,29 +10,40 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	/// <summary>
-	/// 言語データの最小データ。
+	/// 言語設定。
 	/// </summary>
-	[DataContract, Serializable]
-	public class LanguageItemModel: ModelBase, IName
+	public class LanguageModel : ModelBase, IName
 	{
 		#region property
 
 		/// <summary>
-		/// 表示用文字列。
+		/// 言語コード。
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public string Text { get; set; }
-
-		#endregion
+		public string Code { get; set; }
 
 		#region IName
 
 		/// <summary>
-		/// キーとして使用される、
+		/// 言語名。
 		/// </summary>
 		[DataMember, XmlAttribute]
 		public string Name { get; set; }
 
 		#endregion
+
+		/// <summary>
+		/// 共通定義部。
+		/// </summary>
+		[DataMember, XmlArray, XmlArrayItem("Item")]
+		public IEnumerable<LanguageItemModel> Define { get; set; }
+		/// <summary>
+		/// 言語データ。
+		/// </summary>
+		[DataMember, XmlArray, XmlArrayItem("Item")]
+		public IEnumerable<LanguageItemModel> Words { get; set; }
+
+		#endregion
+
 	}
 }
