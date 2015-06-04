@@ -10,7 +10,7 @@
 	/// <summary>
 	/// 設定項目データとして使用する基底モデル。
 	/// </summary>
-	public abstract class ItemModelBase: DisposeFinalizeModelBase
+	public abstract class ItemModelBase: PeModelBase
 	{
 		public ItemModelBase():base()
 		{ }
