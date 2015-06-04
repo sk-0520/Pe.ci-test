@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic
+﻿namespace ContentTypeTextNet.Test.Library.SharedLibraryTest.Logic.Utility
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using NUnit.Framework;
 
 	[TestFixture]

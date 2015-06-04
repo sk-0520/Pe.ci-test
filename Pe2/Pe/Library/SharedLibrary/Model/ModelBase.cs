@@ -5,6 +5,7 @@
 	using System.Runtime.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	/// <summary>
 	/// モデルの基盤。
