@@ -1,5 +1,6 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
+	using System;
 	using System.Collections.Generic;
 	using System.Reflection;
 	using System.Runtime.Serialization;
@@ -11,7 +12,7 @@
 	/// モデルの基盤。
 	/// <para>データ保持を生きがいにする。</para>
 	/// </summary>
-	[DataContract]
+	[DataContract, Serializable]
 	public abstract class ModelBase: IGetMembers
 	{
 		#region variable

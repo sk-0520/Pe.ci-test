@@ -13,19 +13,27 @@
 	/// </summary>
 	public interface ILogger
 	{
-		/// <summary>
-		/// 出力担当。
-		/// <para>Debug, Trace, Information, Warning, Error, Fatalと同じ挙動を行う。</para>
-		/// <para>というか内部的にこれを呼び出すべき。</para>
-		/// </summary>
-		/// <param name="item"></param>
-		void Puts(LogItemModel item);
+		#region property
 
-		void Debug(string message, object detail = null, int frame = 1, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Trace(string message, object detail = null, int frame = 1, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Information(string message, object detail = null, int frame = 1, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Warning(string message, object detail = null, int frame = 1, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Error(string message, object detail = null, int frame = 1, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Fatal(string message, object detail = null, int frame = 1, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		LoggerConfigModel LoggerConfig { get; set; }
+
+		#endregion
+
+		#region function
+
+		void Debug(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Debug(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Trace(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Trace(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Information(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Information(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Warning(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Warning(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Error(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Error(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Fatal(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Fatal(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+
+		#endregion
 	}
 }

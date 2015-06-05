@@ -82,12 +82,14 @@
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\Extension\LinkExtension.cs" />
     <Compile Include="Logic\Extension\TextExtension.cs" />
+    <Compile Include="Logic\LoggerBase.cs" />
     <Compile Include="Logic\ShortcutFile.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
     <Compile Include="Logic\Utility\TextUtility.cs" />
     <Compile Include="Model\IconPathModel.cs" />
     <Compile Include="Model\LanguageItemModel.cs" />
     <Compile Include="Model\LanguageCollectionModel.cs" />
+    <Compile Include="Model\LoggerConfigModel.cs" />
     <Compile Include="Model\LogItemModel.cs" />
     <Compile Include="Model\ScreenModel.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />

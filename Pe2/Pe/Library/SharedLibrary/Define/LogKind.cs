@@ -28,11 +28,11 @@
 		/// </summary>
 		Warning,
 		/// <summary>
-		/// だめ。
+		/// エラー。
 		/// </summary>
 		Error,
 		/// <summary>
-		/// しぬ。
+		/// 異常。
 		/// </summary>
 		Fatal
 	}

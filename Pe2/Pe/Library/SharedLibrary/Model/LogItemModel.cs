@@ -38,7 +38,7 @@
 		/// <summary>
 		/// スタックトレース情報。
 		/// </summary>
-		public StackTrace StackTrace { get; private set; }
+		public StackTrace StackTrace { get; set; }
 		/// <summary>
 		/// ソース: ファイルパス。
 		/// </summary>
