@@ -39,6 +39,17 @@
 		/// スタックトレース情報。
 		/// </summary>
 		public StackTrace StackTrace { get; private set; }
-
+		/// <summary>
+		/// ソース: ファイルパス。
+		/// </summary>
+		public string FilePath { get; set; }
+		/// <summary>
+		/// ソース: 行番号。
+		/// </summary>
+		public int LineNumber { get; set; }
+		/// <summary>
+		/// ソース: メンバ。
+		/// </summary>
+		public string Member { get; set; }
 	}
 }

@@ -15,6 +15,8 @@
 	{
 		/// <summary>
 		/// 出力担当。
+		/// <para>Debug, Trace, Information, Warning, Error, Fatalと同じ挙動を行う。</para>
+		/// <para>というか内部的にこれを呼び出すべき。</para>
 		/// </summary>
 		/// <param name="item"></param>
 		void Puts(LogItemModel item);
