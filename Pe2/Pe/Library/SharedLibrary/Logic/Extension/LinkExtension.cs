@@ -5,7 +5,6 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public static class LinkExtension
 	{
@@ -40,9 +39,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 			return IfElse(seq, cond, s => s.Reverse(), s => s);
 		}
 
-		public static IEnumerable<T> IfOrderBy<T, TKey>(this IEnumerable<T> seq, Func<T, TKey> keySelector, OrderBy orderBy)
+		public static IEnumerable<T> IfOrderByAsc<T, TKey>(this IEnumerable<T> seq, Func<T, TKey> keySelector, bool orderByAsc)
 		{
-			return IfElse(seq, orderBy == OrderBy.Asc, s => s.OrderBy(keySelector), s => s.OrderByDescending(keySelector));
+			return IfElse(seq, orderByAsc, s => s.OrderBy(keySelector), s => s.OrderByDescending(keySelector));
 		}
 
 	}

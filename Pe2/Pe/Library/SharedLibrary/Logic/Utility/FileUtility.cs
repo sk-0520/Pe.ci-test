@@ -72,16 +72,16 @@
 		/// </summary>
 		/// <param name="baseDirPath">対象ファイル群のディレクトリ。</param>
 		/// <param name="targetWildcard">対象ファイル群をワイルドカードで指定。</param>
-		/// <param name="orderBy">リストアップしたファイル群のソート順。</param>
+		/// <param name="orderBy">リストアップしたファイル群のソート順。真で昇順。</param>
 		/// <param name="enableCount">リストアップしたファイル群の上位から残すファイル数。</param>
 		/// <param name="catchException">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
 		/// <returns>削除ファイル数。baseDirPathが存在しない場合は -1。</returns>
-		public static int RotateFiles(string baseDirPath, string targetWildcard, OrderBy orderBy, int enableCount, Func<Exception, bool> catchException)
+		public static int RotateFiles(string baseDirPath, string targetWildcard, bool orderByAsc, int enableCount, Func<Exception, bool> catchException)
 		{
 			if (Directory.Exists(baseDirPath)) {
 				var archiveList = Directory.EnumerateFiles(baseDirPath, targetWildcard)
 					.Where(File.Exists)
-					.IfOrderBy(p => Path.GetFileName(p), orderBy)
+					.IfOrderByAsc(p => Path.GetFileName(p), orderByAsc)
 					.Skip(enableCount - 1)
 				;
 

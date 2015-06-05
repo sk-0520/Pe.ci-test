@@ -20,5 +20,18 @@
 			Assert.True(test == rt);
 			Assert.True(Enumerable.SequenceEqual(array, r.IfRevese(revese)));
 		}
+
+
+		[TestCase(new[] { 1, 2, 3 }, new[] { 1, 2, 3 }, true)]
+		[TestCase(new[] { 1, 2, 3 }, new[] { 3, 2, 1 }, true)]
+		[TestCase(new[] { 1, 2, 3 }, new[] { 2, 3, 1 }, true)]
+		[TestCase(new[] { 3, 2, 1 }, new[] { 3, 2, 1 }, false)]
+		[TestCase(new[] { 3, 2, 1 }, new[] { 1, 2, 3 }, false)]
+		[TestCase(new[] { 3, 2, 1 }, new[] { 2, 3, 1 }, false)]
+		public void IfOrderByAscTest(int[] result, int[] array, bool orderByAsc)
+		{
+			var r = array.IfOrderByAsc(k => k, orderByAsc);
+			Assert.True(Enumerable.SequenceEqual(result, r));
+		}
 	}
 }
