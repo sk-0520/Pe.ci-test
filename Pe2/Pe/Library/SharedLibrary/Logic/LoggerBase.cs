@@ -31,84 +31,84 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 		public LoggerConfigModel LoggerConfig { get; set; }
 
-		public void Debug(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Debug(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledDebug) {
 				CallPuts(LogKind.Debug, message, detail, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Debug(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Debug(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledDebug) {
 				CallPuts(LogKind.Debug, default(string), ex, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Trace(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Trace(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledTrace) {
 			CallPuts(LogKind.Trace, message, detail, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Trace(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Trace(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledTrace) {
 				CallPuts(LogKind.Trace, default(string), ex, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Information(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Information(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledInformation) {
 				CallPuts(LogKind.Information, message, detail, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Information(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Information(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledInformation) {
 				CallPuts(LogKind.Information, default(string), ex, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Warning(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Warning(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledWarning) {
 				CallPuts(LogKind.Warning, message, detail, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Warning(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Warning(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledWarning) {
 				CallPuts(LogKind.Warning, default(string), ex, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Error(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Error(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledError) {
 				CallPuts(LogKind.Error, message, detail, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Error(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Error(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledError) {
 				CallPuts(LogKind.Error, default(string), ex, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Fatal(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Fatal(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledFatal) {
 				CallPuts(LogKind.Fatal, message, detail, BaseFrame, file, line, member);
 			}
 		}
 
-		public void Fatal(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
+		public virtual void Fatal(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "")
 		{
 			if (LoggerConfig.EnabledFatal) {
 				CallPuts(LogKind.Fatal, default(string), ex, BaseFrame, file, line, member);
