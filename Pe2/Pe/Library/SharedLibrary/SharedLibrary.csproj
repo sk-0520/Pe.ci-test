@@ -72,6 +72,7 @@
     <Compile Include="CompatibleForms\Extension\ConvertExtension.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
     <Compile Include="Define\IconScale.cs" />
+    <Compile Include="Define\LogKind.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IDisposeModel.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Model\IconPathModel.cs" />
     <Compile Include="Model\LanguageItemModel.cs" />
     <Compile Include="Model\LanguageCollectionModel.cs" />
+    <Compile Include="Model\LogItemModel.cs" />
     <Compile Include="Model\ScreenModel.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
     <Compile Include="Model\DisposeFinalizeModelBase.cs" />
