@@ -77,13 +77,14 @@
     <Compile Include="Define\LogKind.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
-    <Compile Include="IF\IDisposeModel.cs" />
+    <Compile Include="IF\IIsDisposed.cs" />
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IName.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\Extension\LinkExtension.cs" />
     <Compile Include="Logic\Extension\TextExtension.cs" />
+    <Compile Include="Logic\Logger.cs" />
     <Compile Include="Logic\LoggerBase.cs" />
     <Compile Include="Logic\ShortcutFile.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />

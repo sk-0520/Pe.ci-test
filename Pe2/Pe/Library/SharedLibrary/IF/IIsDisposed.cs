@@ -2,7 +2,7 @@
 {
 	using System;
 
-	public interface IDisposeModel: IDisposable
+	public interface IIsDisposed: IDisposable
 	{
 		/// <summary>
 		/// 破棄されたか。

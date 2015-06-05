@@ -1,15 +1,15 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Runtime.CompilerServices;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	public abstract class LoggerBase: ILogger
 	{
@@ -120,12 +120,46 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		#region function
 
 		/// <summary>
+		/// ファイル出力。
+		/// </summary>
+		/// <param name="item"></param>
+		protected abstract void PutsFile(LogItemModel item);
+
+		/// <summary>
+		/// コンソール出力。
+		/// </summary>
+		/// <param name="item"></param>
+		protected abstract void PutsConsole(LogItemModel item);
+
+		/// <summary>
+		/// デバッグ出力。
+		/// </summary>
+		/// <param name="item"></param>
+		protected abstract void PutsDebug(LogItemModel item);
+
+		/// <summary>
+		/// カスタム出力。
+		/// </summary>
+		/// <param name="item"></param>
+		protected abstract void PutsCustom(LogItemModel item);
+
+		/// <summary>
 		/// 出力担当。
 		/// </summary>
 		/// <param name="item"></param>
-		protected virtual void Puts(LogItemModel item)
+		protected void Puts(LogItemModel item)
 		{
-			throw new NotImplementedException();
+			var putsList = new[] {
+				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsFile, PutsFile),
+				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsConsole, PutsConsole),
+#if DEBUG
+				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsDebug, PutsDebug),
+#endif
+				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsCustom, PutsCustom),
+			};
+			foreach(var puts in putsList.Where(p => p.Item1)) {
+				puts.Item2(item);
+			}
 		}
 
 		protected virtual LogItemModel CreateItem(LogKind logKind, string message, object detail, int frame, string file, int line, string member)

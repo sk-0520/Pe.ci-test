@@ -37,10 +37,12 @@
 
 		protected override void Dispose(bool disposing)
 		{
-			if(!IsDisposed) {
-				ReleaseHandle();
-				Handle = IntPtr.Zero;
+			if(IsDisposed) {
+				return;
 			}
+
+			ReleaseHandle();
+			Handle = IntPtr.Zero;
 
 			base.Dispose(disposing);
 		}

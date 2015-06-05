@@ -5,7 +5,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[DataContract]
-	public abstract class DisposeFinalizeModelBase: ModelBase, IDisposeModel
+	public abstract class DisposeFinalizeModelBase: ModelBase, IIsDisposed
 	{
 		protected DisposeFinalizeModelBase()
 		{
@@ -27,7 +27,12 @@
 
 		protected virtual void Dispose(bool disposing)
 		{
+			if(IsDisposed) {
+				return;
+			}
+
 			IsDisposed = true;
+			GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
@@ -36,9 +41,6 @@
 		public void Dispose()
 		{
 			Dispose(true);
-			if(!IsDisposed) {
-				GC.SuppressFinalize(this);
-			}
 		}
 
 		#endregion

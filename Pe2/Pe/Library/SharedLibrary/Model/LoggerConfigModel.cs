@@ -71,5 +71,25 @@
 				;
 			}
 		}
+		/// <summary>
+		/// ファイル出力を行うか。
+		/// </summary>
+		[DataMember]
+		public bool PutsFile { get; set; }
+		/// <summary>
+		/// コンソール出力を行うか。
+		/// </summary>
+		[DataMember]
+		public bool PutsConsole { get; set; }
+		/// <summary>
+		/// デバッグ出力を行うか。
+		/// </summary>
+		[DataMember]
+		public bool PutsDebug { get; set; }
+		/// <summary>
+		/// カスタム出力を行うか。
+		/// </summary>
+		[DataMember]
+		public bool PutsCustom { get; set; }
 	}
 }
