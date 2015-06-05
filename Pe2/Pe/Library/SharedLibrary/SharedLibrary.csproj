@@ -58,6 +58,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
@@ -73,6 +75,7 @@
     <Compile Include="CompatibleForms\Screen.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
+    <Compile Include="Define\OrderBy.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IDisposeModel.cs" />

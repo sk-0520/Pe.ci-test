@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public static class LinkExtension
 	{
@@ -37,6 +38,11 @@
 		public static IEnumerable<T> IfRevese<T>(this IEnumerable<T> seq, bool cond)
 		{
 			return IfElse(seq, cond, s => s.Reverse(), s => s);
+		}
+
+		public static IEnumerable<T> IfOrderBy<T, TKey>(this IEnumerable<T> seq, Func<T, TKey> keySelector, OrderBy orderBy)
+		{
+			return IfElse(seq, orderBy == OrderBy.Asc, s => s.OrderBy(keySelector), s => s.OrderByDescending(keySelector));
 		}
 
 	}

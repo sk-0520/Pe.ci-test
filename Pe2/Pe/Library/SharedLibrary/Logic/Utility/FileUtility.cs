@@ -1,6 +1,13 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
 {
+	using System;
+	using System.Collections.Generic;
 	using System.IO;
+	using System.IO.Compression;
+	using System.Linq;
+	using System.Text.RegularExpressions;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
 	/// <summary>
 	/// ファイル関連の共通処理。
@@ -59,5 +66,81 @@
 		{
 			return File.Exists(path) || Directory.Exists(path);
 		}
+
+		/// <summary>
+		/// 指定条件で不要ファイルを削除。
+		/// </summary>
+		/// <param name="baseDirPath">対象ファイル群のディレクトリ。</param>
+		/// <param name="targetWildcard">対象ファイル群をワイルドカードで指定。</param>
+		/// <param name="orderBy">リストアップしたファイル群のソート順。</param>
+		/// <param name="enableCount">リストアップしたファイル群の上位から残すファイル数。</param>
+		/// <param name="catchException">ファイル削除中に例外を受け取った場合の処理。trueを返すと継続、falseで処理終了。</param>
+		/// <returns>削除ファイル数。baseDirPathが存在しない場合は -1。</returns>
+		public static int RotateFiles(string baseDirPath, string targetWildcard, OrderBy orderBy, int enableCount, Func<Exception, bool> catchException)
+		{
+			if (Directory.Exists(baseDirPath)) {
+				var archiveList = Directory.EnumerateFiles(baseDirPath, targetWildcard)
+					.Where(File.Exists)
+					.IfOrderBy(p => Path.GetFileName(p), orderBy)
+					.Skip(enableCount - 1)
+				;
+
+				var removeCount = 0;
+				foreach (var path in archiveList) {
+					try {
+						File.Delete(path);
+						removeCount += 1;
+					} catch (Exception ex) {
+						if (!catchException(ex)) {
+							break;
+						}
+					}
+				}
+				return removeCount;
+			} else {
+				return -1;
+			}
+		}
+
+		static ZipArchiveEntry WriteArchive(ZipArchive archive, string path, string baseDirPath)
+		{
+			var entryPath = path.Substring(baseDirPath.Length);
+			while (entryPath.First() == Path.DirectorySeparatorChar) {
+				entryPath = entryPath.Substring(1);
+			}
+
+			var entry = archive.CreateEntry(entryPath);
+
+			using (var entryStream = new BinaryWriter(entry.Open())) {
+				var buffer = ToBinary(path);
+				entryStream.Write(buffer);
+			}
+
+			return entry;
+		}
+
+		/// <summary>
+		/// 指定パスにZIP形式でアーカイブを作成。
+		/// </summary>
+		/// <param name="saveFilePath">保存先パス。</param>
+		/// <param name="basePath">基準とするディレクトリパス。</param>
+		/// <param name="targetFiles">取り込み対象パス。ディレクトリを指定した場合は、以下のファイル・ディレクトリをすべてその対象とする</param>
+		public static void CreateZipFile(string saveFilePath, string basePath, IEnumerable<string> targetFiles)
+		{
+			using (var zip = new ZipArchive(new FileStream(saveFilePath, FileMode.Create), ZipArchiveMode.Create)) {
+				foreach (var filePath in targetFiles) {
+					if (File.Exists(filePath)) {
+						WriteArchive(zip, filePath, basePath);
+					} else if (Directory.Exists(filePath)) {
+						var list = Directory.EnumerateFiles(filePath, "*", SearchOption.AllDirectories);
+						foreach (var f in list) {
+							WriteArchive(zip, f, basePath);
+						}
+					}
+				}
+			}
+		}
+
+
 	}
 }
