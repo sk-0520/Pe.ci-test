@@ -17,14 +17,13 @@
 		#region varable
 
 		string _filePath = null;
+		TextWriter _fileWriter = null;
 
 		#endregion
 
 		public Logger()
 			:base()
-		{
-			FileWriter = null;
-		}
+		{ }
 
 		~Logger()
 		{
@@ -43,25 +42,34 @@
 			set 
 			{
 				if(this._filePath != value) {
-					if(FileWriter != null) {
-						FileWriter.Dispose();
-						FileWriter = null;
-					}
+					ClearFileWriter();
 				}
 
 				this._filePath = value;
-
-				if(!string.IsNullOrWhiteSpace(this._filePath)) {
-					FileWriter = new StreamWriter(new FileStream(this._filePath, FileMode.Append, FileAccess.ReadWrite, FileShare.Read), Encoding.UTF8);
-				}
 			}
 		}
 
 		/// <summary>
 		/// FilePathで設定されたパスのファイルストリーム。
 		/// </summary>
-		protected TextWriter FileWriter { get; private set; }
+		protected TextWriter FileWriter 
+		{
+			get
+			{
+				if(this._fileWriter == null && CanFilePuts) {
+					this._fileWriter = new StreamWriter(new FileStream(this._filePath, FileMode.Append, FileAccess.ReadWrite, FileShare.Read), Encoding.UTF8);
+				}
 
+				return this._fileWriter;
+			}
+		}
+		public bool CanFilePuts
+		{
+			get
+			{
+				return !string.IsNullOrWhiteSpace(this._filePath) && LoggerConfig.PutsFile;
+			}
+		}
 
 		#endregion
 
@@ -75,10 +83,7 @@
 				return;
 			}
 
-			if(FileWriter != null) {
-				FileWriter.Dispose();
-				FileWriter = null;
-			}
+			ClearFileWriter();
 
 			IsDisposed = true;
 			GC.SuppressFinalize(this);
@@ -121,6 +126,14 @@
 		#endregion
 
 		#region function
+
+		void ClearFileWriter()
+		{
+			if(this._fileWriter != null) {
+				this._fileWriter.Dispose();
+				this._fileWriter = null;
+			}
+		}
 
 		string PutsOutput(LogItemModel item, char c)
 		{
