@@ -95,32 +95,44 @@
 
 		protected override void PutsFile(LogItemModel item)
 		{
-			FileWriter.WriteLine(item);
+			if(FileWriter != null) {
+				FileWriter.WriteLine(item);
+			}
 		}
 
 		protected override void PutsConsole(LogItemModel item)
 		{
-			Console.WriteLine(PutsOutput(item));
+			Console.WriteLine(PutsOutput(item, 'C'));
 		}
 
 		protected override void PutsDebug(LogItemModel item)
 		{
-			System.Diagnostics.Debug.WriteLine(PutsOutput(item));
+			System.Diagnostics.Debug.WriteLine(PutsOutput(item, 'D'));
 		}
 
+		/// <summary>
+		/// このクラスでは何もしない。
+		/// <para>サブクラスで適当にどうぞ。</para>
+		/// </summary>
+		/// <param name="item"></param>
 		protected override void PutsCustom(LogItemModel item)
-		{
-			// このクラスでは何もしない。
-			// サブクラスで適当にどうぞ。
-		}
+		{ }
 
 		#endregion
 
 		#region function
 
-		string PutsOutput(LogItemModel item)
+		string PutsOutput(LogItemModel item, char c)
 		{
-			return item.ToString();
+			return string.Format(
+				"{0}{1}[{2}] {3}(4): {5}",
+				item.DateTime,
+				c,
+				item.LogKind.ToString().ToUpper()[0],
+				item.CallerMember,
+				item.CallerLine,
+				item.Message
+			);
 		}
 
 		#endregion

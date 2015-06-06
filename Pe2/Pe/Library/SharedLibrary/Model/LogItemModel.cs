@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 
@@ -56,5 +57,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 		/// 呼び出しアセンブリ。
 		/// </summary>
 		public Assembly CallerAssembly { get; set; }
+		/// <summary>
+		/// 呼び出しスレッド。
+		/// </summary>
+		public Thread CallerThread { get; set; }
 	}
 }
