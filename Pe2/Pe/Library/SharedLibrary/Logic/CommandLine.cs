@@ -18,6 +18,8 @@
 		public static extern IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
 		#endregion
 
+		#region static
+
 		/// <summary>
 		/// <para>http://stackoverflow.com/questions/298830/split-string-containing-command-line-parameters-into-string-in-c-sharp</para>
 		/// </summary>
@@ -40,6 +42,13 @@
 				Marshal.FreeHGlobal(argv);
 			}
 		}
+
+		public static CommandLine Create(string s)
+		{
+			return new CommandLine(ToCommandLineArguments(s));
+		}
+
+		#endregion
 
 		/// <summary>
 		/// 起動時のオプションから呼び出されることを想定
