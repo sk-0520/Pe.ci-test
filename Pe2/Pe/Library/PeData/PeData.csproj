@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IdItemModelBase.cs" />
+    <Compile Include="Item\LauncherHistoryItemModel.cs" />
     <Compile Include="Item\TagsItemModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
@@ -82,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Define\" />
+    <Folder Include="IF\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
