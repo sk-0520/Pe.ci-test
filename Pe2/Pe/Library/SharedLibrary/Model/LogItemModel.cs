@@ -1,12 +1,13 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	/// <summary>
 	/// ログとして出力するデータ。
@@ -40,16 +41,20 @@
 		/// </summary>
 		public StackTrace StackTrace { get; set; }
 		/// <summary>
-		/// ソース: ファイルパス。
+		/// 呼び出しファイルパス。
 		/// </summary>
-		public string FilePath { get; set; }
+		public string CallerFile { get; set; }
 		/// <summary>
-		/// ソース: 行番号。
+		/// 呼び出し行番号。
 		/// </summary>
-		public int LineNumber { get; set; }
+		public int CallerLine { get; set; }
 		/// <summary>
-		/// ソース: メンバ。
+		/// 呼び出しメンバ。
 		/// </summary>
-		public string Member { get; set; }
+		public string CallerMember { get; set; }
+		/// <summary>
+		/// 呼び出しアセンブリ。
+		/// </summary>
+		public Assembly CallerAssembly { get; set; }
 	}
 }

@@ -21,18 +21,18 @@
 
 		#region function
 
-		void Debug(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Debug(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Trace(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Trace(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Information(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Information(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Warning(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Warning(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Error(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Error(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Fatal(string message, object detail = null, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
-		void Fatal(Exception ex, [CallerFilePath] string file = "", [CallerLineNumber] int line = -1, [CallerMemberName] string member = "");
+		void Debug(string message, object detail = null, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Debug(Exception ex, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Trace(string message, object detail = null, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Trace(Exception ex, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Information(string message, object detail = null, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Information(Exception ex, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Warning(string message, object detail = null, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Warning(Exception ex, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Error(string message, object detail = null, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Error(Exception ex, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Fatal(string message, object detail = null, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
+		void Fatal(Exception ex, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "");
 
 		#endregion
 	}

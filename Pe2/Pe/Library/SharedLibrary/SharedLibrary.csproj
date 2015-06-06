@@ -87,6 +87,7 @@
     <Compile Include="Logic\Logger.cs" />
     <Compile Include="Logic\LoggerBase.cs" />
     <Compile Include="Logic\ShortcutFile.cs" />
+    <Compile Include="Logic\Utility\DisposeUtility.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
     <Compile Include="Logic\Utility\TextUtility.cs" />
     <Compile Include="Model\IconPathModel.cs" />
