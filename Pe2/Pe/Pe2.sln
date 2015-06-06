@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMain", "PeMain\PeMain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeMainTest", "Test\PeMainTest\PeMainTest.csproj", "{AA54AB23-EE8A-4F86-B349-FC031067B923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeModel", "Library\PeModel\PeModel.csproj", "{B3C0D8C0-2382-4058-8CEC-3C62DE401C3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeData", "Library\PeData\PeData.csproj", "{B3C0D8C0-2382-4058-8CEC-3C62DE401C3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

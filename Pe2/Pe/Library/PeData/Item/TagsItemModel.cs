@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Item
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
 	using System;
 	using System.Collections.Generic;
@@ -12,7 +12,7 @@
 	/// タグを管理。
 	/// </summary>
 	[DataContract, Serializable]
-	public class TagsItemModel: PeModelBase
+	public class TagsItemModel: PeDataBase
 	{
 		public TagsItemModel() 
 			: base() 

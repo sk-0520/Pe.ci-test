@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Item
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
 	using System;
 	using System.Collections.Generic;
@@ -12,7 +12,7 @@
 	/// 設定項目データとして使用する基底モデル。
 	/// </summary>
 	[DataContract, Serializable]
-	public abstract class ItemModelBase: PeModelBase
+	public abstract class ItemModelBase: PeDataBase
 	{
 		public ItemModelBase()
 			: base()

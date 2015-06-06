@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel
+﻿namespace ContentTypeTextNet.Pe.Library.PeData
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,6 +10,6 @@
 	/// <summary>
 	/// Peで使用するデータ。
 	/// </summary>
-	public abstract class PeModelBase: DisposeFinalizeModelBase
+	public abstract class PeDataBase: DisposeFinalizeModelBase
 	{ }
 }

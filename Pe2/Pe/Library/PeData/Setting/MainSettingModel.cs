@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Setting
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 {
 	using System;
 	using System.Collections.Generic;

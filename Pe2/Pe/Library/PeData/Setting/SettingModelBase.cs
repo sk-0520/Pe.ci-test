@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeModel.Setting
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting
 {
 	using System;
 	using System.Collections.Generic;
@@ -9,7 +9,7 @@
 	/// <summary>
 	/// 設定統括データとして使用する基底モデル。
 	/// </summary>
-	public abstract class SettingModelBase: PeModelBase
+	public abstract class SettingModelBase: PeDataBase
 	{
  		public SettingModelBase()
 			:base()

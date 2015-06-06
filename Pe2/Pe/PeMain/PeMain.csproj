@@ -126,9 +126,9 @@
       <Name>Package</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Library\PeModel\PeModel.csproj">
+    <ProjectReference Include="..\Library\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
-      <Name>PeModel</Name>
+      <Name>PeData</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Library\PInvoke\PInvoke.csproj">
