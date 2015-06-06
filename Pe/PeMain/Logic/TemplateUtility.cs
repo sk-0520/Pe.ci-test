@@ -6,9 +6,6 @@
 	using System.Drawing;
 	using System.Linq;
 	using System.Runtime.Remoting;
-	using System.Text;
-	using System.Text.RegularExpressions;
-	using System.Threading.Tasks;
 	using System.Windows.Forms;
 	using ContentTypeTextNet.Pe.Library.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
