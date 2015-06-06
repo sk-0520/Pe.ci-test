@@ -17,7 +17,7 @@
 
 		public static IEnumerable<T> IfRevese<T>(this IEnumerable<T> seq, bool cond)
 		{
-			return IfElse(seq, cond, s => s, s => s.Reverse());
+			return IfElse(seq, cond, s => s.Reverse(), s => s);
 		}
 
 	}
