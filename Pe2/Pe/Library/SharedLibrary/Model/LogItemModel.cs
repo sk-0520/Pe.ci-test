@@ -1,18 +1,20 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	/// <summary>
 	/// ログとして出力するデータ。
 	/// </summary>
+	[DataContract, Serializable]
 	public class LogItemModel: ModelBase
 	{
 		/// <summary>

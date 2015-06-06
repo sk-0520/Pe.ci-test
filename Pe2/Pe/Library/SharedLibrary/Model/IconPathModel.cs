@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContentTypeTextNet.Library.SharedLibrary.Model
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using System.Threading.Tasks;
+
 	/// <summary>
 	/// アイコンのパスを保持。
 	/// </summary>
+	[DataContract, Serializable]
 	public class IconPathModel: ModelBase
 	{
 		/// <summary>

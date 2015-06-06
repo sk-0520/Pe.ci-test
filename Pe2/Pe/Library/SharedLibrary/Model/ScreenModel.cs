@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
@@ -10,6 +11,7 @@
 	/// <summary>
 	/// 使用データは全て物理ピクセル。
 	/// </summary>
+	[DataContract, Serializable]
 	public class ScreenModel: ModelBase
 	{
 		#region property
