@@ -7,9 +7,10 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[DataContract, Serializable]
-	public class LauncherHistoryItemModel: HistoryItemModel
+	public class LauncherHistoryItemModel: HistoryItemModel, IDeepClone
 	{
 		public LauncherHistoryItemModel()
 			: base()
@@ -35,5 +36,24 @@
 		/// </summary>
 		[DataMember, XmlArray("Option"), XmlArrayItem("Item")]
 		IList<string> Options { get; set; }
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new LauncherHistoryItemModel() {
+				ExecuteCount = this.ExecuteCount,
+				CreateDateTime = this.CreateDateTime,
+				UpdateDateTime = this.UpdateDateTime,
+				UpdateCount = this.UpdateCount,
+			};
+
+			((List<string>)result.WorkDirectory).AddRange(WorkDirectory);
+			((List<string>)result.Options).AddRange(Options);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
