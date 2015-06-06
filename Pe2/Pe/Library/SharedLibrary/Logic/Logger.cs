@@ -73,11 +73,9 @@
 
 		#endregion
 
-		#region IIsDisposed
+		#region LoggerBase
 
-		public bool IsDisposed { get; protected set; }
-
-		protected virtual void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
 			if(IsDisposed) {
 				return;
@@ -85,18 +83,8 @@
 
 			ClearFileWriter();
 
-			IsDisposed = true;
-			GC.SuppressFinalize(this);
+			base.Dispose(disposing);
 		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-		}
-
-		#endregion
-
-		#region LoggerBase
 
 		protected override void PutsFile(LogItemModel item)
 		{

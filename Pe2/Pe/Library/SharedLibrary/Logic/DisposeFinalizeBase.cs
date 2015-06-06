@@ -1,18 +1,20 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System;
-	using System.Runtime.Serialization;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	[DataContract, Serializable]
-	public abstract class DisposeFinalizeModelBase: ModelBase, IIsDisposed
+	public abstract class DisposeFinalizeBase: IIsDisposed
 	{
-		protected DisposeFinalizeModelBase()
+		protected DisposeFinalizeBase()
 		{
 			IsDisposed = false;
 		}
 
-		~DisposeFinalizeModelBase()
+		~DisposeFinalizeBase()
 		{
 			Dispose(false);
 		}
@@ -20,10 +22,6 @@
 		#region IIsDisposed
 
 		public bool IsDisposed { get; protected set; }
-
-		#endregion
-
-		#region IDisposable
 
 		protected virtual void Dispose(bool disposing)
 		{
@@ -35,6 +33,8 @@
 			GC.SuppressFinalize(this);
 		}
 
+		#region IDisposable
+
 		/// <summary>
 		/// 解放。
 		/// </summary>
@@ -42,6 +42,8 @@
 		{
 			Dispose(true);
 		}
+
+		#endregion
 
 		#endregion
 	}

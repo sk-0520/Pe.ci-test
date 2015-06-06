@@ -1,19 +1,19 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.CompilerServices;
+	using System.Text;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public abstract class LoggerBase: ILogger
+	public abstract class LoggerBase: DisposeFinalizeBase, ILogger
 	{
 		public LoggerBase()
 		{

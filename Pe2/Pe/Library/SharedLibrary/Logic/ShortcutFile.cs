@@ -12,7 +12,7 @@
 	/// <summary>
 	/// ショートカットファイル処理。
 	/// </summary>
-	public class ShortcutFile : DisposeFinalizeModelBase
+	public class ShortcutFile: DisposeFinalizeBase
 	{
 		const int _argumentLength = 1024;
 		const int _descriptionLength = 1024 * 5;
@@ -166,7 +166,7 @@
 
 		#endregion
 
-		#region DisposeFinalizeModelBase
+		#region DisposeFinalizeBase
 
 		protected override void Dispose(bool disposing)
 		{
