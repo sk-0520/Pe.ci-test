@@ -29,13 +29,13 @@
 		/// 作業ディレクトリ。
 		/// </summary>
 		[DataMember, XmlArray("WorkDirectory"), XmlArrayItem("Item")]
-		IList<string> WorkDirectory { get; set; }
+		List<string> WorkDirectory { get; set; }
 
 		/// <summary>
 		/// オプション。
 		/// </summary>
 		[DataMember, XmlArray("Option"), XmlArrayItem("Item")]
-		IList<string> Options { get; set; }
+		List<string> Options { get; set; }
 
 		#region IDeepClone
 
@@ -48,8 +48,8 @@
 				UpdateCount = this.UpdateCount,
 			};
 
-			((List<string>)result.WorkDirectory).AddRange(WorkDirectory);
-			((List<string>)result.Options).AddRange(Options);
+			result.WorkDirectory.AddRange(WorkDirectory);
+			result.Options.AddRange(Options);
 
 			return result;
 		}

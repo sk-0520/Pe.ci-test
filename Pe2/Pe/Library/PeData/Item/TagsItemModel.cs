@@ -7,12 +7,13 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	/// <summary>
 	/// タグを管理。
 	/// </summary>
 	[DataContract, Serializable]
-	public class TagsItemModel: PeDataBase
+	public class TagsItemModel: PeDataBase, IDeepClone
 	{
 		public TagsItemModel() 
 			: base() 
@@ -24,6 +25,19 @@
 		/// タグ。
 		/// </summary>
 		[DataMember, XmlArray("Items"), XmlArrayItem("Item")]
-		IList<string> Items { get; set; }
+		public List<string> Items { get; set; }
+
+		#region IDeepClone
+		
+		public IDeepClone DeepClone()
+		{
+			var result = new TagsItemModel();
+
+			result.Items.AddRange(Items);
+
+			return result;
+		}
+
+		#endregion
 	}
 }
