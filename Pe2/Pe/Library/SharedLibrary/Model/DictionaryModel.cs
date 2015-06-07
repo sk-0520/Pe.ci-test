@@ -14,7 +14,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	[DataContract, Serializable]
-	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IXmlSerializable
+	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IXmlSerializable, IIsDisposed
 	{
 		#region define
 
@@ -66,6 +66,38 @@
 		public DictionaryModel(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{ }
+
+		void Initialize()
+		{
+			IsDisposed = false;
+		}
+
+		#region IIsDisposed
+
+		public bool IsDisposed { get; private set; }
+
+		~DictionaryModel()
+		{
+			Dispose(false);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if(IsDisposed) {
+				return;
+			}
+
+			IsDisposed = true;
+			GC.SuppressFinalize(this);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion
+
 
 		#region IModel
 

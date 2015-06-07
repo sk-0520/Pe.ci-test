@@ -99,7 +99,7 @@
     <Compile Include="Model\LoggerConfigModel.cs" />
     <Compile Include="Model\LogItemModel.cs" />
     <Compile Include="Model\ScreenModel.cs" />
-    <Compile Include="Model\TIdCollection.cs" />
+    <Compile Include="Model\TIdCollectionModel.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModel.cs" />
     <Compile Include="Model\DisposeFinalizeModelBase.cs" />
     <Compile Include="Logic\Utility\FileUtility.cs" />

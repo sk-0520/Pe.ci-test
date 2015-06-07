@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[DataContract, Serializable]
-	public class TIdCollection<TKey, TId>: DictionaryModel<TKey, TId>
+	public class TIdCollection<TKey, TId>: DictionaryModel<TKey, TId>, IIsDisposed
 		where TId: ITId<TKey>
 	{
 		public TIdCollection()

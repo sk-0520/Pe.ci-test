@@ -65,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Define\LauncherKind.cs" />
+    <Compile Include="IF\IItemModel.cs" />
+    <Compile Include="IF\IPeData.cs" />
+    <Compile Include="IF\ISettingModel.cs" />
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IconItemModel.cs" />
     <Compile Include="Item\LauncherEnvironmentVariableItemModel.cs" />
@@ -72,7 +75,7 @@
     <Compile Include="Item\LauncherItemModel.cs" />
     <Compile Include="Item\LauncherStdStreamItemModel.cs" />
     <Compile Include="Item\TagItemModel.cs" />
-    <Compile Include="Item\LauncherItemCollectionItemModel.cs" />
+    <Compile Include="Item\LauncherItemCollectionModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
     <Compile Include="PeModelBase.cs" />
@@ -86,9 +89,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="IF\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
