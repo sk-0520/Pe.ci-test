@@ -72,6 +72,7 @@
     <Compile Include="Item\LauncherItemModel.cs" />
     <Compile Include="Item\LauncherStdStreamItemModel.cs" />
     <Compile Include="Item\TagItemModel.cs" />
+    <Compile Include="Item\LauncherItemCollectionItemModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
     <Compile Include="PeModelBase.cs" />

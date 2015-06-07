@@ -9,17 +9,17 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[DataContract]
-	public class TIdCollection<TKey>: DictionaryModel<TKey, ITId<TKey>>
+	public class TIdCollection<TId>: DictionaryModel<TId, ITId<TId>>
 	{
 		public TIdCollection()
 			: base()
 		{ }
 
-		public TIdCollection(IDictionary<TKey, ITId<TKey>> dictionary)
+		public TIdCollection(IDictionary<TId, ITId<TId>> dictionary)
 			: base(dictionary)
 		{ }
 
-		public TIdCollection(IEqualityComparer<TKey> comparer)
+		public TIdCollection(IEqualityComparer<TId> comparer)
 			: base(comparer)
 		{ }
 
@@ -27,11 +27,11 @@
 			: base(capacity)
 		{ }
 
-		public TIdCollection(IDictionary<TKey, ITId<TKey>> dictionary, IEqualityComparer<TKey> comparer)
+		public TIdCollection(IDictionary<TId, ITId<TId>> dictionary, IEqualityComparer<TId> comparer)
 			: base(dictionary, comparer)
 		{ }
 
-		public TIdCollection(int capacity, IEqualityComparer<TKey> comparer)
+		public TIdCollection(int capacity, IEqualityComparer<TId> comparer)
 			: base(capacity, comparer)
 		{ }
 
