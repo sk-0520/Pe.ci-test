@@ -92,6 +92,7 @@
     <Compile Include="Logic\ShortcutFile.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
     <Compile Include="Logic\Utility\TextUtility.cs" />
+    <Compile Include="Model\DictionaryModel.cs" />
     <Compile Include="Model\IconPathModel.cs" />
     <Compile Include="Model\LanguageItemModel.cs" />
     <Compile Include="Model\LanguageCollectionModel.cs" />

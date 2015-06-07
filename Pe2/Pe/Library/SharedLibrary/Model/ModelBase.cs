@@ -30,8 +30,8 @@
 
 		#endregion
 
-		#region IGetMembers
-		
+		#region IModel
+
 		public IEnumerable<PropertyInfo> PropertyInfos
 		{
 			get
@@ -50,9 +50,6 @@
 			return ReflectionUtility.GetNameValueStrings(nameValueMap);
 		}
 
-		#endregion
-
-		#region function
 		#endregion
 	}
 }
