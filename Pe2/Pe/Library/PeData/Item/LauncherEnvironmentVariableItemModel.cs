@@ -7,8 +7,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	[DataContract]
+	[DataContract, Serializable]
 	public class LauncherEnvironmentVariableItemModel: ItemModelBase, IDeepClone
 	{
 		public LauncherEnvironmentVariableItemModel()
@@ -25,7 +26,7 @@
 		/// 追加・変更対象
 		/// </summary>
 		[DataMember]
-		public Dictionary<string, string> Update { get; set; }
+		public DictionaryModel<string, string> Update { get; set; }
 
 		/// <summary>
 		/// 削除変数
@@ -42,7 +43,7 @@
 			};
 
 			// 二回も生成するのかー。。。
-			result.Update = new Dictionary<string, string>(Update);
+			result.Update = new DictionaryModel<string, string>(Update);
 			result.Remove.AddRange(Remove);
 
 			return result;

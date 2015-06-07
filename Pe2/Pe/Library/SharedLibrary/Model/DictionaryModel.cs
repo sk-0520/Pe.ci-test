@@ -18,6 +18,7 @@
 	{
 		#region define
 
+		[DataContract, Serializable, XmlRoot("Item")]
 		public class TPiar
 		{
 			public TPiar(TKey key, TValue value)
@@ -31,11 +32,40 @@
 		}
 
 		#endregion
+
 		#region variable
 
 		IEnumerable<PropertyInfo> _propertyInfos = null;
 
 		#endregion
+
+		public DictionaryModel()
+			: base()
+		{ }
+
+		public DictionaryModel(IDictionary<TKey, TValue> dictionary)
+			: base(dictionary)
+		{ }
+
+		public DictionaryModel(IEqualityComparer<TKey> comparer)
+			: base(comparer)
+		{ }
+
+		public DictionaryModel(int capacity)
+			: base(capacity)
+		{ }
+
+		public DictionaryModel(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
+			: base(dictionary, comparer)
+		{ }
+
+		public DictionaryModel(int capacity, IEqualityComparer<TKey> comparer)
+			: base(capacity, comparer)
+		{ }
+
+		public DictionaryModel(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{ }
 
 		#region IModel
 
@@ -59,6 +89,10 @@
 
 		#endregion
 
+		/// <summary>
+		/// http://qiita.com/rohinomiya/items/b88a5da3965a1c5bed0d
+		/// </summary>
+		/// <returns></returns>
 		#region IXmlSerializable
 
 		public virtual XmlSchema GetSchema()
