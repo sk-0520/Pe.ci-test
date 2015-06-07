@@ -9,13 +9,36 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[DataContract]
-	public class TIdCollection<T>: ModelBase
-		where T: ITId<T>
+	public class TIdCollection<TKey, TValue>: DictionaryModel<TKey, TValue>
+		where TValue: ITId<TValue>
 	{
 		public TIdCollection()
 			: base()
 		{ }
 
+		public TIdCollection(IDictionary<TKey, TValue> dictionary)
+			: base(dictionary)
+		{ }
+
+		public TIdCollection(IEqualityComparer<TKey> comparer)
+			: base(comparer)
+		{ }
+
+		public TIdCollection(int capacity)
+			: base(capacity)
+		{ }
+
+		public TIdCollection(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
+			: base(dictionary, comparer)
+		{ }
+
+		public TIdCollection(int capacity, IEqualityComparer<TKey> comparer)
+			: base(capacity, comparer)
+		{ }
+
+		public TIdCollection(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{ }
 
 	}
 }
