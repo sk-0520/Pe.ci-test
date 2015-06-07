@@ -27,12 +27,10 @@
 
 		protected override void Dispose(bool disposing)
 		{
-			if(IsDisposed) {
-				return;
+			if(!IsDisposed) {
+				Marshal.ReleaseComObject(RawCom);
+				RawCom = null;
 			}
-
-			Marshal.ReleaseComObject(RawCom);
-			RawCom = null;
 
 			base.Dispose(disposing);
 		}

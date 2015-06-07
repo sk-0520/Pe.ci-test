@@ -170,19 +170,17 @@
 
 		protected override void Dispose(bool disposing)
 		{
-			if(IsDisposed) {
-				return;
-			}
+			if(!IsDisposed) {
+				if(this._persistFile != null) {
+					this._persistFile.Dispose();
+				}
+				this._persistFile = null;
 
-			if(this._persistFile != null) {
-				this._persistFile.Dispose();
+				if(this._shellLink != null) {
+					this._shellLink.Dispose();
+				}
+				this._shellLink = null;
 			}
-			this._persistFile = null;
-
-			if(this._shellLink != null) {
-				this._shellLink.Dispose();
-			}
-			this._shellLink = null;
 
 			base.Dispose(disposing);
 		}

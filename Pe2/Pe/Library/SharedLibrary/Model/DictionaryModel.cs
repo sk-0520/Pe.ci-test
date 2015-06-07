@@ -27,7 +27,9 @@
 				Value = value;
 			}
 
+			[DataMember, XmlAttribute]
 			public TKey Key { get; set; }
+			[DataMember, XmlAttribute]
 			public TValue Value { get; set; }
 		}
 
@@ -85,6 +87,12 @@
 		{
 			if(IsDisposed) {
 				return;
+			}
+
+			if(typeof(TValue) is IDisposable) {
+				foreach(var value in Values.Cast<IDisposable>().ToArray()) {
+					value.Dispose();
+				}
 			}
 
 			IsDisposed = true;
