@@ -7,13 +7,14 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	/// <summary>
 	/// IDを保持する基底アイテム。
 	/// <para>IDをどう扱うかは統括側に委任するが一意であることが前提。</para>
 	/// </summary>
 	[DataContract, Serializable]
-	public abstract class TIdItemModelBase<T>: ItemModelBase
+	public abstract class TIdItemModelBase<T>: ItemModelBase, ITId<T>
 	{
 		/// <summary>
 		/// ID。
@@ -27,7 +28,7 @@
 	/// <para>IDをどう扱うかは統括側に委任するが一意であることが前提。</para>
 	/// </summary>
 	[DataContract, Serializable]
-	public abstract class NumberIdItemModelBase: TIdItemModelBase<int>
+	public abstract class NumberIdItemModelBase: TIdItemModelBase<int>, ITId<int>
 	{
 		public NumberIdItemModelBase()
 			: base()
@@ -39,7 +40,7 @@
 	/// <para>IDをどう扱うかは統括側に委任するが一意であることが前提。</para>
 	/// </summary>
 	[DataContract, Serializable]
-	public abstract class StringIdItemModelBase: TIdItemModelBase<string>
+	public abstract class StringIdItemModelBase: TIdItemModelBase<string>, ITId<string>
 	{
 		public StringIdItemModelBase()
 			: base()

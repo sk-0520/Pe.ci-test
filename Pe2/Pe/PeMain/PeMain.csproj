@@ -118,6 +118,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Logic\" />
   </ItemGroup>
   <ItemGroup>
