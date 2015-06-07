@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.IF
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.IF
 {
 	using System;
 	using System.Collections.Generic;

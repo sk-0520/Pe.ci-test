@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	[DataContract, Serializable]
-	public class LauncherItemModel: StringIdItemModelBase, IName, IDeepClone
+	public class LauncherItemModel: ItemModelBase, ITId<string>, IName, IDeepClone
 	{
 		public LauncherItemModel()
 			: base()
@@ -22,6 +22,15 @@
 			StdStream = new LauncherStdStreamItemModel();
 			EnvironmentVariable = new LauncherEnvironmentVariableItemModel();
 		}
+
+		#region ITId
+
+		/// <summary>
+		/// ID。
+		/// </summary>
+		public string Id { get; set; }
+
+		#endregion
 
 		/// <summary>
 		/// アイテム名称。

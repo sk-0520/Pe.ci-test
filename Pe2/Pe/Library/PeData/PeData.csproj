@@ -65,10 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Define\LauncherKind.cs" />
-    <Compile Include="IF\ITId.cs" />
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IconItemModel.cs" />
-    <Compile Include="Item\IdItemModelBase.cs" />
     <Compile Include="Item\LauncherEnvironmentVariableItemModel.cs" />
     <Compile Include="Item\LauncherHistoryItemModel.cs" />
     <Compile Include="Item\LauncherItemModel.cs" />
@@ -87,7 +85,9 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="IF\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

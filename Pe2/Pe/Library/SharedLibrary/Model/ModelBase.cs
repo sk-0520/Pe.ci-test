@@ -13,7 +13,7 @@
 	/// <para>データ保持を生きがいにする。</para>
 	/// </summary>
 	[DataContract, Serializable]
-	public abstract class ModelBase: IGetMembers
+	public abstract class ModelBase: IModel
 	{
 		#region variable
 
