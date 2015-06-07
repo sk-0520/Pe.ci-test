@@ -36,13 +36,13 @@
 		/// <summary>
 		/// 共通定義部。
 		/// </summary>
-		[DataMember, XmlArray, XmlArrayItem("Item")]
-		public IEnumerable<LanguageItemModel> Define { get; set; }
+		[DataMember]
+		public TIdCollection<string, LanguageItemModel> Define { get; set; }
 		/// <summary>
 		/// 言語データ。
 		/// </summary>
-		[DataMember, XmlArray, XmlArrayItem("Item")]
-		public IEnumerable<LanguageItemModel> Words { get; set; }
+		[DataMember]
+		public TIdCollection<string, LanguageItemModel> Words { get; set; }
 
 		#endregion
 

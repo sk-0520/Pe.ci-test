@@ -19,13 +19,18 @@
 
 		#region function
 
-		static LanguageItemModel GetItem(IEnumerable<LanguageItemModel> list, string key)
+		static LanguageItemModel GetItem(IDictionary<string, LanguageItemModel> map, string key)
 		{
-			var result = list.SingleOrDefault(item => item.Name == key);
-			return result ?? new LanguageItemModel() {
-				Name = key,
-				Word = key,
-			};
+			LanguageItemModel result;
+
+			if(!map.TryGetValue(key, out result)) {
+				result = new LanguageItemModel() {
+					Id = key,
+					Word = key,
+				};
+			}
+
+			return result;
 		}
 
 		/// <summary>

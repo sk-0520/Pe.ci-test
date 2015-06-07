@@ -13,7 +13,7 @@
 	/// 言語データの最小データ。
 	/// </summary>
 	[DataContract, Serializable]
-	public class LanguageItemModel: ModelBase, IName
+	public class LanguageItemModel: ModelBase, ITId<string>
 	{
 		#region property
 
@@ -31,7 +31,7 @@
 		/// キーとして使用される、
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public string Name { get; set; }
+		public string Id { get; set; }
 
 		#endregion
 	}
