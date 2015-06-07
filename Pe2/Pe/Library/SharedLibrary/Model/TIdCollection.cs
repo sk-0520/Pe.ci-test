@@ -8,18 +8,19 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	[DataContract]
-	public class TIdCollection<TId>: DictionaryModel<TId, ITId<TId>>
+	[DataContract, Serializable]
+	public class TIdCollection<TKey, TId>: DictionaryModel<TKey, TId>
+		where TId: ITId<TKey>
 	{
 		public TIdCollection()
 			: base()
 		{ }
 
-		public TIdCollection(IDictionary<TId, ITId<TId>> dictionary)
+		public TIdCollection(IDictionary<TKey, TId> dictionary)
 			: base(dictionary)
 		{ }
 
-		public TIdCollection(IEqualityComparer<TId> comparer)
+		public TIdCollection(IEqualityComparer<TKey> comparer)
 			: base(comparer)
 		{ }
 
@@ -27,11 +28,11 @@
 			: base(capacity)
 		{ }
 
-		public TIdCollection(IDictionary<TId, ITId<TId>> dictionary, IEqualityComparer<TId> comparer)
+		public TIdCollection(IDictionary<TKey, TId> dictionary, IEqualityComparer<TKey> comparer)
 			: base(dictionary, comparer)
 		{ }
 
-		public TIdCollection(int capacity, IEqualityComparer<TId> comparer)
+		public TIdCollection(int capacity, IEqualityComparer<TKey> comparer)
 			: base(capacity, comparer)
 		{ }
 
