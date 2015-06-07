@@ -9,14 +9,13 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[DataContract]
-	public class TIdCollection<TKey, TValue>: DictionaryModel<TKey, TValue>
-		where TValue: ITId<TValue>
+	public class TIdCollection<TKey>: DictionaryModel<TKey, ITId<TKey>>
 	{
 		public TIdCollection()
 			: base()
 		{ }
 
-		public TIdCollection(IDictionary<TKey, TValue> dictionary)
+		public TIdCollection(IDictionary<TKey, ITId<TKey>> dictionary)
 			: base(dictionary)
 		{ }
 
@@ -28,7 +27,7 @@
 			: base(capacity)
 		{ }
 
-		public TIdCollection(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
+		public TIdCollection(IDictionary<TKey, ITId<TKey>> dictionary, IEqualityComparer<TKey> comparer)
 			: base(dictionary, comparer)
 		{ }
 
