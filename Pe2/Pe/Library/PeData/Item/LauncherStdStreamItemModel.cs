@@ -1,0 +1,42 @@
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+
+	/// <summary>
+	/// 標準入出力関連。
+	/// </summary>
+	public class LauncherStdStreamItemModel: ItemModelBase, IDeepClone
+	{
+		public LauncherStdStreamItemModel()
+			: base()
+		{ }
+
+		/// <summary>
+		/// 標準出力(とエラー)を取得するか。
+		/// </summary>
+		public bool OutputWatch { get; set; }
+		/// <summary>
+		/// 標準入力へ入力するか。
+		/// </summary>
+		public bool InputWatch { get; set; }
+
+		#region IDeepClone
+
+		public IDeepClone DeepClone()
+		{
+			var result = new LauncherStdStreamItemModel() {
+				OutputWatch = this.OutputWatch,
+				InputWatch = this.InputWatch,
+			};
+
+			return result;
+		}
+
+		#endregion
+	}
+}

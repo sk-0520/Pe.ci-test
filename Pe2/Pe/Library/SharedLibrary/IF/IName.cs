@@ -9,7 +9,7 @@
 	/// <summary>
 	/// 名前を持つ。
 	/// </summary>
-	interface IName
+	public interface IName
 	{
 		/// <summary>
 		/// 名前。

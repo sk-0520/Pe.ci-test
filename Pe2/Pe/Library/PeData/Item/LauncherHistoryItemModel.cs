@@ -15,7 +15,7 @@
 		public LauncherHistoryItemModel()
 			: base()
 		{
-			WorkDirectory = new List<string>();
+			WorkDirectoryPaths = new List<string>();
 			Options = new List<string>();
 		}
 
@@ -28,13 +28,13 @@
 		/// <summary>
 		/// 作業ディレクトリ。
 		/// </summary>
-		[DataMember, XmlArray("WorkDirectory"), XmlArrayItem("Item")]
-		List<string> WorkDirectory { get; set; }
+		[DataMember, XmlArray("WorkDirectoryPaths"), XmlArrayItem("Item")]
+		List<string> WorkDirectoryPaths { get; set; }
 
 		/// <summary>
 		/// オプション。
 		/// </summary>
-		[DataMember, XmlArray("Option"), XmlArrayItem("Item")]
+		[DataMember, XmlArray("Options"), XmlArrayItem("Item")]
 		List<string> Options { get; set; }
 
 		#region IDeepClone
@@ -48,7 +48,7 @@
 				UpdateCount = this.UpdateCount,
 			};
 
-			result.WorkDirectory.AddRange(WorkDirectory);
+			result.WorkDirectoryPaths.AddRange(WorkDirectoryPaths);
 			result.Options.AddRange(Options);
 
 			return result;

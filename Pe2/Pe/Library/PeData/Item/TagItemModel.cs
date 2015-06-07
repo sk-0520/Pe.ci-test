@@ -13,9 +13,9 @@
 	/// タグを管理。
 	/// </summary>
 	[DataContract, Serializable]
-	public class TagsItemModel: PeDataBase, IDeepClone
+	public class TagItemModel: PeDataBase, IDeepClone
 	{
-		public TagsItemModel() 
+		public TagItemModel() 
 			: base() 
 		{
 			Items = new List<string>();
@@ -31,7 +31,7 @@
 		
 		public IDeepClone DeepClone()
 		{
-			var result = new TagsItemModel();
+			var result = new TagItemModel();
 
 			result.Items.AddRange(Items);
 
