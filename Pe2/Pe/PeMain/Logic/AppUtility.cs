@@ -13,9 +13,8 @@
 
 	public static class AppUtility
 	{
-		public static MainWorkerViewModel CreateMainWorkerViewModel(CommandLine commandLine)
+		public static MainWorkerViewModel CreateMainWorkerViewModel(Constants constants)
 		{
-			var constants = new Constants(commandLine);
 			return new MainWorkerViewModel(constants);
 		}
 
