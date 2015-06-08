@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -19,9 +20,19 @@
 		}
 
 		public static T LoadSetting<T>(string path)
-			where T : SettingModelBase, new()
+			where T: SettingModelBase, new()
 		{
-			return SerializeUtility.LoadXmlDataFromFile<T>(path);
+			if(File.Exists(path)) {
+				return SerializeUtility.LoadXmlDataFromFile<T>(path);
+			}
+
+			return new T();
+		}
+
+		public static void SaveSetting<T>(string path, T model)
+			where T: SettingModelBase
+		{
+			SerializeUtility.SaveXmlDataToFile(path, model);
 		}
 	}
 }

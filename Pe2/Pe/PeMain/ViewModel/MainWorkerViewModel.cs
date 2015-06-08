@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
@@ -9,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public sealed class MainWorkerViewModel: ViewModelBase
@@ -16,15 +18,10 @@
 		public MainWorkerViewModel(Constants constants)
 		{
 			Constants = constants;
+			LoadSetting();
 		}
 
 		#region property
-
-		Constants Constants { get; set; }
-
-		public bool Pause { get; set; }
-
-		List<Window> WindowList { get; set; }
 
 		#region setting
 
@@ -33,6 +30,13 @@
 		LauncherGroupItemSettingModel LauncherGroupItemSetting { get; set; }
 
 		#endregion
+
+		Constants Constants { get; set; }
+
+		public bool Pause { get; set; }
+
+		List<Window> WindowList { get; set; }
+
 
 		#endregion
 
@@ -73,11 +77,35 @@
 		{
 			get
 			{
-				return new DelegateCommand { Command = o => Application.Current.Shutdown() };
+				var result = new DelegateCommand();
+				
+				result.Command = o => {
+					SaveSetting();
+					Application.Current.Shutdown();
+				};
+
+				return result;
 			}
 		}
 
 		#endregion
 
+		#region function
+
+		void LoadSetting()
+		{
+			MainSetting = AppUtility.LoadSetting<MainSettingModel>(Constants.UserSettingFileMainSettingPath);
+			LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Constants.UserSettingFileLauncherItemSettingPath);
+			LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(Constants.UserSettingFileLauncherGroupItemSetting);
+		}
+
+		void SaveSetting()
+		{
+			AppUtility.SaveSetting(Constants.UserSettingFileMainSettingPath, MainSetting);
+			AppUtility.SaveSetting(Constants.UserSettingFileLauncherItemSettingPath, LauncherItemSetting);
+			AppUtility.SaveSetting(Constants.UserSettingFileLauncherGroupItemSetting, LauncherGroupItemSetting);
+		}
+
+		#endregion
 	}
 }

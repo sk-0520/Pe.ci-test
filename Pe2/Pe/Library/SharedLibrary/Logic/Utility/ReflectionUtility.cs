@@ -22,7 +22,7 @@
 
 			foreach(var propertyInfo in propertyInfos) {
 				var value = propertyInfo.GetValue(obj, null);
-				result.Add(propertyInfo.Name, obj);
+				result.Add(propertyInfo.Name, value);
 			}
 
 			return result;
@@ -35,9 +35,10 @@
 		/// <returns></returns>
 		public static IEnumerable<string> GetNameValueStrings(IDictionary<string, object> nameValues)
 		{
-			foreach(var pair in nameValues.OrderBy(p => p.Key)) {
-				yield return string.Format("{0}=[{1}]", pair.Key, pair.Value ?? "null");
-			}
+			return nameValues
+				.OrderBy(p => p.Key)
+				.Select(pair => string.Format("{0}=[{1}]", pair.Key, pair.Value ?? "null"))
+			;
 		}
 
 		/// <summary>

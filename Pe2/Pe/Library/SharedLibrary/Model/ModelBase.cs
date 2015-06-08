@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -37,7 +38,7 @@
 			get
 			{
 				if(this._propertyInfos == null) {
-					this._propertyInfos = GetType().GetProperties();
+					this._propertyInfos = GetType().GetProperties().Where(p => p.Name != "PropertyInfos").ToArray();
 				}
 
 				return this._propertyInfos;
