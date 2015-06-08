@@ -64,7 +64,7 @@
 			if(CanExecute != null) {
 				return CanExecute(parameter);
 			} else {
-				return false;
+				return true;
 			}
 		}
 

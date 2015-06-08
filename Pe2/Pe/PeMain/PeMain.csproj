@@ -66,6 +66,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,8 +90,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\CommonData.cs" />
+    <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
-    <Compile Include="ViewModel\NotifyIconViewModel.cs" />
+    <Compile Include="ViewModel\MainWorkerViewModel.cs" />
     <Compile Include="View\LauncherToolbarWindow.xaml.cs">
       <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
     </Compile>
@@ -124,7 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\NotifyIcon.xaml">
+    <Page Include="View\MainWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,9 +136,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{fbf5e5e8-2d88-45a7-b1ea-9e3fb68e97e4}</Project>

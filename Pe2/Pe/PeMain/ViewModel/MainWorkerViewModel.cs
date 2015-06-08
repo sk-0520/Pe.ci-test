@@ -1,21 +1,21 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using System;
+	using System.Collections.Generic;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	/// <summary>
-	/// Provides bindable properties and commands for the NotifyIcon. In this sample, the
-	/// view model is assigned to the NotifyIcon in XAML. Alternatively, the startup routing
-	/// in App.xaml.cs could have created this view model, and assigned it to the NotifyIcon.
-	/// </summary>
-	public class NotifyIconViewModel: ViewModelBase
+	public sealed class MainWorkerViewModel: ViewModelBase
 	{
 		#region property
+
+		public bool Pause { get; set; }
+
+		List<Window> WindowList { get; set; }
 
 		#endregion
 
@@ -61,5 +61,6 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 		}
 
 		#endregion
+
 	}
 }
