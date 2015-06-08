@@ -12,15 +12,15 @@
 	/// ランチャアイテム。
 	/// </summary>
 	[DataContract, Serializable]
-	public class LauncherItemSetting : SettingModelBase
+	public class LauncherGroupItemSettingModel : SettingModelBase
 	{
-		public LauncherItemSetting()
+		public LauncherGroupItemSettingModel()
 			: base()
 		{
-			Items = new LauncherItemCollectionModel();
+			Items = new LauncherGroupItemCollectionModel();
 		}
 
 		[DataMember]
-		public LauncherItemCollectionModel Items { get; set; }
+		public LauncherGroupItemCollectionModel Items { get; set; }
 	}
 }

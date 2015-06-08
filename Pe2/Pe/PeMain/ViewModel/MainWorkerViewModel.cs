@@ -7,15 +7,32 @@
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public sealed class MainWorkerViewModel: ViewModelBase
 	{
+		public MainWorkerViewModel(Constants constants)
+		{
+			Constants = constants;
+		}
+
 		#region property
+
+		Constants Constants { get; set; }
 
 		public bool Pause { get; set; }
 
 		List<Window> WindowList { get; set; }
+
+		#region setting
+
+		MainSettingModel MainSetting { get; set; }
+		LauncherItemSettingModel LauncherItemSetting { get; set; }
+		LauncherGroupItemSettingModel LauncherGroupItemSetting { get; set; }
+
+		#endregion
 
 		#endregion
 
