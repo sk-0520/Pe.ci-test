@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
 	[TestFixture]
-	class LinkExtensionTest
+	class LinqExtensionTest
 	{
 		[TestCase(false, true, 1, 2, 3)]
 		[TestCase(true, false, 1, 2, 3)]
