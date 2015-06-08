@@ -75,6 +75,7 @@
     <Compile Include="Item\FloatToolbarAreaItemModel.cs" />
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IconItemModel.cs" />
+    <Compile Include="Item\LanguageItemModel.cs" />
     <Compile Include="Item\LauncherEnvironmentVariableItemModel.cs" />
     <Compile Include="Item\LauncherGroupItemCollectionModel.cs" />
     <Compile Include="Item\LauncherGroupItemModel.cs" />
@@ -82,8 +83,11 @@
     <Compile Include="Item\LauncherItemModel.cs" />
     <Compile Include="Item\LauncherStdStreamItemModel.cs" />
     <Compile Include="Item\LauncherToolbarItemModel.cs" />
+    <Compile Include="Item\RunningInformation.cs" />
+    <Compile Include="Item\SystemEnvironmentItemModel.cs" />
     <Compile Include="Item\TagItemModel.cs" />
     <Compile Include="Item\LauncherItemCollectionModel.cs" />
+    <Compile Include="Item\WindowSaveItemModel.cs" />
     <Compile Include="Setting\LauncherGroupItemSetting.cs" />
     <Compile Include="Setting\LauncherItemSetting.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
