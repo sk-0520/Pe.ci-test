@@ -7,6 +7,7 @@
 	using System.Threading.Tasks;
 
 	public interface ITId<T>
+		where T: IComparable
 	{
 		/// <summary>
 		/// ID。
