@@ -56,18 +56,22 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Define\LauncherKind.cs" />
+    <Compile Include="Define\ToobarPosition.cs" />
     <Compile Include="IF\IItemModel.cs" />
     <Compile Include="IF\IPeData.cs" />
     <Compile Include="IF\ISettingModel.cs" />
+    <Compile Include="Item\FloatToolbarAreaItemModel.cs" />
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IconItemModel.cs" />
     <Compile Include="Item\LauncherEnvironmentVariableItemModel.cs" />

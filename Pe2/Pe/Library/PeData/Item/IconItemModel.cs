@@ -8,9 +8,10 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[DataContract, Serializable]
-	public class IconItemModel: IconPathModel, IDeepClone
+	public class IconItemModel : IconPathModel, IItemModel, IDeepClone
 	{
 		public IconItemModel()
 			: base()
