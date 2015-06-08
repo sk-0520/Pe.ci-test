@@ -41,15 +41,7 @@
 			: base(info, context)
 		{ }
 
-		/*
-		public new void Add(T item)
-		{
-			if (item.Key.CompareTo(item.Value.Id) != 0) {
-				throw new ArgumentException("item.Key != item.Value.Id", "item");
-			}
-			base.Add(item);
-		}
-		 * */
+		#region function
 
 		public new void Add(TKey key, TValue value)
 		{
@@ -68,5 +60,30 @@
 
 			Add(value.Id, value);
 		}
+
+		void Swap(TKey a, TKey b)
+		{
+			var valueA = this[a];
+			var valueB = this[b];
+			valueA.Id = b;
+			valueB.Id = a;
+			this[a] = valueB;
+			this[b] = valueA;
+		}
+
+		void ChangeId(TKey src, TKey dst)
+		{
+			TValue temp;
+			if (TryGetValue(dst, out temp)) {
+				throw new ArgumentException(string.Format("exists key({0})", dst));
+			}
+
+			var valueSrc = this[src];
+			valueSrc.Id = dst;
+			Remove(src);
+			Add(valueSrc);
+		}
+
+		#endregion
 	}
 }
