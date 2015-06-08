@@ -151,6 +151,9 @@
 
 			var xmlSetting = new XmlWriterSettings() {
 				Encoding = new System.Text.UTF8Encoding(),
+				OmitXmlDeclaration = false,
+				Indent = true,
+				IndentChars = "\t",
 			};
 			using(var xmlWriter = XmlWriter.Create(stream, xmlSetting)) {
 				var serializer = new DataContractSerializer(typeof(T));
