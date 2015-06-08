@@ -7,6 +7,7 @@
 	using System.Linq;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using Hardcodet.Wpf.TaskbarNotification;
 
@@ -23,7 +24,7 @@
 
 			//create the notifyicon (it's a resource declared in NotifyIconResources.xaml
 			this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-			this._notifyIcon.DataContext = AppUtility.CreateMainWorkerViewModel();
+			this._notifyIcon.DataContext = AppUtility.CreateMainWorkerViewModel(new CommandLine());
 		}
 
 		protected override void OnExit(ExitEventArgs e)
