@@ -84,6 +84,8 @@
     <Compile Include="Item\LauncherToolbarItemModel.cs" />
     <Compile Include="Item\TagItemModel.cs" />
     <Compile Include="Item\LauncherItemCollectionModel.cs" />
+    <Compile Include="Setting\LauncherGroupItemSetting.cs" />
+    <Compile Include="Setting\LauncherItemSetting.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
     <Compile Include="PeModelBase.cs" />
