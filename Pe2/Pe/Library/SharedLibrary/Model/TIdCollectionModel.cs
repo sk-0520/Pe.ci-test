@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[Serializable]
-	public class TIdCollection<TKey, TValue>: DictionaryModel<TKey, TValue>, IIsDisposed
+	public class TIdCollection<TKey, TValue>: DictionaryModel<TKey, TValue>
 		where TValue: ITId<TKey>
 		where TKey: IComparable
 	{

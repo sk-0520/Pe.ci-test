@@ -11,7 +11,7 @@
 	/// <summary>
 	/// 設定統括データとして使用する基底モデル。
 	/// </summary>
-	[DataContract, Serializable]
+	[DataContract(Namespace = ""), Serializable]
 	public abstract class SettingModelBase: PeDataBase, ISettingModel
 	{
  		public SettingModelBase()

@@ -11,7 +11,7 @@
 	/// <summary>
 	/// ランチャアイテム。
 	/// </summary>
-	[DataContract, Serializable]
+	[DataContract(Namespace=""), Serializable]
 	public class LauncherGroupItemSettingModel: SettingModelBase
 	{
 		public LauncherGroupItemSettingModel()

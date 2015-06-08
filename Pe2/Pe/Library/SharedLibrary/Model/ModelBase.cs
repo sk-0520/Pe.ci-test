@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.Serialization;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -18,6 +19,7 @@
 	{
 		#region variable
 
+		[IgnoreDataMember, XmlIgnore]
 		IEnumerable<PropertyInfo> _propertyInfos = null;
 
 		#endregion
@@ -33,6 +35,7 @@
 
 		#region IModel
 
+		[IgnoreDataMember, XmlIgnore]
 		public IEnumerable<PropertyInfo> PropertyInfos
 		{
 			get

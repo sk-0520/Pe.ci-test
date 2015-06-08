@@ -12,7 +12,7 @@
 	/// 各設定の統括。
 	/// <para>その他の大きいやつは別クラスで管理しとく。</para>
 	/// </summary>
-	[DataContract, Serializable]
+	[DataContract(Namespace = ""), Serializable]
 	public sealed class MainSettingModel: SettingModelBase
 	{
 		public MainSettingModel()

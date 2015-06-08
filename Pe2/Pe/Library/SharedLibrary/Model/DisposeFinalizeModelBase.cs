@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Runtime.Serialization;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	[Serializable]
@@ -19,6 +20,7 @@
 
 		#region IIsDisposed
 
+		[IgnoreDataMember, XmlIgnore]
 		public bool IsDisposed { get; protected set; }
 
 		#endregion

@@ -37,6 +37,7 @@
 
 		#region variable
 
+		[IgnoreDataMember, XmlIgnore]
 		IEnumerable<PropertyInfo> _propertyInfos = null;
 
 		#endregion
@@ -76,6 +77,7 @@
 
 		#region IIsDisposed
 
+		[IgnoreDataMember, XmlIgnore]
 		public bool IsDisposed { get; private set; }
 
 		~DictionaryModel()
@@ -109,6 +111,7 @@
 
 		#region IModel
 
+		[IgnoreDataMember, XmlIgnore]
 		public IEnumerable<PropertyInfo> PropertyInfos
 		{
 			get
