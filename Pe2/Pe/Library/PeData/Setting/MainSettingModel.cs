@@ -6,6 +6,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	/// <summary>
 	/// 各設定の統括。
@@ -14,5 +15,27 @@
 	[DataContract, Serializable]
 	public sealed class MainSettingModel: SettingModelBase
 	{
+		public MainSettingModel()
+		{
+			RunningInformation = new RunningInformationItemModel();
+			Language = new LanguageItemModel();
+			Logging = new LoggingItemModel();
+			Toolbar = new ToolbarItemModel();
+			WindowSave = new WindowSaveItemModel();
+			SystemEnvironment = new SystemEnvironmentItemModel();
+		}
+
+		[DataMember]
+		public RunningInformationItemModel RunningInformation { get; set; }
+		[DataMember]
+		public LanguageItemModel Language { get; set; }
+		[DataMember]
+		public LoggingItemModel Logging { get; set; }
+		[DataMember]
+		public ToolbarItemModel Toolbar { get; set; }
+		[DataMember]
+		public WindowSaveItemModel WindowSave { get; set; }
+		[DataMember]
+		public SystemEnvironmentItemModel SystemEnvironment { get; set; }
 	}
 }

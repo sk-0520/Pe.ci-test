@@ -8,9 +8,9 @@
 	using System.Threading.Tasks;
 
 	[DataContract, Serializable]
-	public class RunningInformation : ItemModelBase
+	public class RunningInformationItemModel : ItemModelBase
 	{
-		public RunningInformation()
+		public RunningInformationItemModel()
 			: base()
 		{ }
 

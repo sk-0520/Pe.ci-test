@@ -11,9 +11,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	[DataContract, Serializable]
-	public class LauncherToolbarItemModel : ItemModelBase, ITId<string>
+	public class ToolbarItemModel : ItemModelBase, ITId<string>
 	{
-		public LauncherToolbarItemModel()
+		public ToolbarItemModel()
 			: base()
 		{
 			FloatToolbarArea = new FloatToolbarAreaItemModel();
