@@ -10,8 +10,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	[DataContract, Serializable]
-	public sealed class IconItemModel : IconPathModel, IItemModel, IDeepClone
+	[Serializable]
+	public sealed class IconItemModel: IconPathModel, IItemModel, IDeepClone
 	{
 		public IconItemModel()
 			: base()

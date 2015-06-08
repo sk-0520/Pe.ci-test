@@ -10,8 +10,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
-	[DataContract, Serializable]
-	public class ToolbarItemModel : ItemModelBase, ITId<string>
+	[Serializable]
+	public class ToolbarItemModel: ItemModelBase, ITId<string>
 	{
 		public ToolbarItemModel()
 			: base()

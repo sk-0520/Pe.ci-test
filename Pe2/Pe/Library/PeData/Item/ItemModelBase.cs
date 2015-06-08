@@ -12,7 +12,7 @@
 	/// <summary>
 	/// 設定項目データとして使用する基底モデル。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public abstract class ItemModelBase: PeDataBase, IItemModel
 	{
 		public ItemModelBase()

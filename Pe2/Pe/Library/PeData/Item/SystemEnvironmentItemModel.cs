@@ -7,8 +7,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	[DataContract, Serializable]
-	public class SystemEnvironmentItemModel : ItemModelBase
+	[Serializable]
+	public class SystemEnvironmentItemModel: ItemModelBase
 	{
 		public SystemEnvironmentItemModel()
 			: base()

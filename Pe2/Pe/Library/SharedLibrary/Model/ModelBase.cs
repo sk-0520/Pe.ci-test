@@ -13,7 +13,7 @@
 	/// モデルの基盤。
 	/// <para>データ保持を生きがいにする。</para>
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public abstract class ModelBase: IModel
 	{
 		#region variable

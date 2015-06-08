@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public class LauncherEnvironmentVariableItemModel: ItemModelBase, IDeepClone
 	{
 		public LauncherEnvironmentVariableItemModel()

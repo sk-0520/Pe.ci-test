@@ -9,8 +9,8 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
-	[DataContract, Serializable]
-	public class LoggingItemModel : ItemModelBase
+	[Serializable]
+	public class LoggingItemModel: ItemModelBase
 	{
 		public LoggingItemModel()
 			: base()

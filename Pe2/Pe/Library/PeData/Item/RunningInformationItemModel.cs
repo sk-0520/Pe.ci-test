@@ -7,8 +7,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	[DataContract, Serializable]
-	public class RunningInformationItemModel : ItemModelBase
+	[Serializable]
+	public class RunningInformationItemModel: ItemModelBase
 	{
 		public RunningInformationItemModel()
 			: base()

@@ -10,7 +10,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
-	public class LauncherGroupItemModel : ItemModelBase, ITId<string>, IName
+	[Serializable]
+	public class LauncherGroupItemModel: ItemModelBase, ITId<string>, IName
 	{
 		public LauncherGroupItemModel()
 			: base()

@@ -14,7 +14,7 @@
 	/// <summary>
 	/// ログとして出力するデータ。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class LogItemModel: ModelBase
 	{
 		/// <summary>

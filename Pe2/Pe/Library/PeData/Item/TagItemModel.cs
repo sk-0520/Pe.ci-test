@@ -12,7 +12,7 @@
 	/// <summary>
 	/// タグを管理。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class TagItemModel: PeDataBase, IDeepClone
 	{
 		public TagItemModel() 

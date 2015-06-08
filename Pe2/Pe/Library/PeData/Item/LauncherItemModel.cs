@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public class LauncherItemModel: ItemModelBase, ITId<string>, IName, IDeepClone
 	{
 		public LauncherItemModel()

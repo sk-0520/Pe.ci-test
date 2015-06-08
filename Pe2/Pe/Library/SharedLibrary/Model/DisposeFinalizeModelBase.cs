@@ -4,7 +4,7 @@
 	using System.Runtime.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public abstract class DisposeFinalizeModelBase: ModelBase, IIsDisposed
 	{
 		protected DisposeFinalizeModelBase()

@@ -10,7 +10,7 @@
 	/// <summary>
 	/// アイコンのパスを保持。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class IconPathModel: ModelBase
 	{
 		/// <summary>

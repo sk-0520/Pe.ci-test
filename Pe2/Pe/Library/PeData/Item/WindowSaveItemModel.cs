@@ -3,13 +3,15 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 
 	/// <summary>
 	/// ウィンドウ状態復元設定。
 	/// </summary>
-	public class WindowSaveItemModel : ItemModelBase
+	[Serializable]
+	public class WindowSaveItemModel: ItemModelBase
 	{
 		/// <summary>
 		/// 有効。

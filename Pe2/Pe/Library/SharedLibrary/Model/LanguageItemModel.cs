@@ -12,7 +12,7 @@
 	/// <summary>
 	/// 言語データの最小データ。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class LanguageItemModel: ModelBase, ITId<string>
 	{
 		#region property

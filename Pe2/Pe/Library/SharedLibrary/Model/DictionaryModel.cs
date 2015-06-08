@@ -13,12 +13,12 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-	[DataContract, Serializable]
-	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IXmlSerializable, IIsDisposed
+	[Serializable]
+	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IIsDisposed
 	{
 		#region define
 
-		[DataContract, Serializable, XmlRoot("Item")]
+		[Serializable, XmlRoot("Item")]
 		public class TPiar
 		{
 			public TPiar(TKey key, TValue value)

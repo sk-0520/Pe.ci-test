@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public class LauncherItemCollectionModel: TIdCollection<string, LauncherItemModel>, IItemModel
 	{
 		public LauncherItemCollectionModel()

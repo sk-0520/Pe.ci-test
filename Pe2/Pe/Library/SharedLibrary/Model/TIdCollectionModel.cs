@@ -8,7 +8,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public class TIdCollection<TKey, TValue>: DictionaryModel<TKey, TValue>, IIsDisposed
 		where TValue: ITId<TKey>
 		where TKey: IComparable

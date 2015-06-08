@@ -12,7 +12,7 @@
 	/// <summary>
 	/// 言語設定。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class LanguageCollectionModel: ModelBase, IName
 	{
 		#region property

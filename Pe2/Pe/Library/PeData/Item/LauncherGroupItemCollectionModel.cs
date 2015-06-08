@@ -9,13 +9,13 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public class LauncherGroupItemCollectionModel: TIdCollection<string, LauncherGroupItemModel>, IItemModel
 	{
 		public LauncherGroupItemCollectionModel()
 			: base()
 		{ }
-
+		/*
 		public LauncherGroupItemCollectionModel(IDictionary<string, LauncherGroupItemModel> dictionary)
 			: base(dictionary)
 		{ }
@@ -39,6 +39,7 @@
 		public LauncherGroupItemCollectionModel(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{ }
+		*/
 
 	}
 }

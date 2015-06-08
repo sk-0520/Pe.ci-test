@@ -11,7 +11,7 @@
 	/// <summary>
 	/// 使用データは全て物理ピクセル。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class ScreenModel: ModelBase
 	{
 		#region property

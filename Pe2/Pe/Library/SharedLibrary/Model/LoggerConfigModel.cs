@@ -10,7 +10,7 @@
 	/// <summary>
 	/// ILoggerで使用する設定。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class LoggerConfigModel : ModelBase
 	{
 		/// <summary>

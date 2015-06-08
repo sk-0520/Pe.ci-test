@@ -8,8 +8,8 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 
-	[DataContract, Serializable]
-	public class FloatToolbarAreaItemModel : ItemModelBase
+	[Serializable]
+	public class FloatToolbarAreaItemModel: ItemModelBase
 	{
 		/// <summary>
 		/// 横に表示するアイテム数。

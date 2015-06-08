@@ -12,7 +12,7 @@
 	/// ランチャアイテム。
 	/// </summary>
 	[DataContract, Serializable]
-	public class LauncherGroupItemSettingModel : SettingModelBase
+	public class LauncherGroupItemSettingModel: SettingModelBase
 	{
 		public LauncherGroupItemSettingModel()
 			: base()

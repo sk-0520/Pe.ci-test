@@ -11,7 +11,7 @@
 	/// <summary>
 	/// 履歴保持アイテム。
 	/// </summary>
-	[DataContract, Serializable]
+	[Serializable]
 	public class HistoryItemModel: ItemModelBase
 	{
 		public HistoryItemModel() 

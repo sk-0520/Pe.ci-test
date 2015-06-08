@@ -9,7 +9,7 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	[DataContract, Serializable]
+	[Serializable]
 	public class LauncherHistoryItemModel: HistoryItemModel, IDeepClone
 	{
 		public LauncherHistoryItemModel()
