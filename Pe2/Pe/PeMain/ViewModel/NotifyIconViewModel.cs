@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	/// <summary>
 	/// Provides bindable properties and commands for the NotifyIcon. In this sample, the
@@ -34,6 +35,19 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic;
 			}
 		}
 
+		public ICommand ShowSettingWindowCommand
+		{
+			get
+			{
+				var result = new DelegateCommand();
+				result.Command = o => {
+					var window = new SettingWindow();
+					window.ShowDialog();
+				};
+
+				return result;
+			}
+		}
 
 		/// <summary>
 		/// Shuts down the application.

@@ -11,11 +11,33 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[DataContract, Serializable]
-	public class IconItemModel : IconPathModel, IItemModel, IDeepClone
+	public sealed class IconItemModel : IconPathModel, IItemModel, IDeepClone
 	{
 		public IconItemModel()
 			: base()
-		{ }
+		{
+			IsDisposed = false;
+		}
+
+		~IconItemModel()
+		{
+			Dispose();
+		}
+
+		#region IItemModel
+
+		public bool IsDisposed { get; set; }
+
+		public void Dispose()
+		{
+			if (IsDisposed) {
+				return;
+			}
+			IsDisposed = true;
+			GC.SuppressFinalize(this);
+		}
+
+		#endregion
 
 		#region IDeepClone
 

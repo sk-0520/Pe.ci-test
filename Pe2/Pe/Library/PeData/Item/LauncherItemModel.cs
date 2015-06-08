@@ -32,11 +32,15 @@
 
 		#endregion
 
+		#region IName
+
 		/// <summary>
 		/// アイテム名称。
 		/// </summary>
 		[DataMember, XmlAttribute]
 		public string Name { get; set; }
+
+		#endregion
 
 		/// <summary>
 		/// ランチャー種別。
