@@ -1,0 +1,9 @@
+﻿<Window x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LauncherToolbarWindow" Height="91.045" Width="394.03">
+    <Grid>
+        <ToolBar HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="213"/>
+
+    </Grid>
+</Window>

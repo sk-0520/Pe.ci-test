@@ -87,7 +87,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\NotifyIconViewModel.cs" />
+    <Compile Include="View\LauncherToolbarWindow.xaml.cs">
+      <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -112,7 +116,11 @@
     <Resource Include="Resources\Icon\App.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\NotifyIconView.xaml">
+    <Page Include="View\LauncherToolbarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NotifyIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

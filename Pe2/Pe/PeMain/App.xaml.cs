@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Hardcodet.Wpf.TaskbarNotification;
-
-namespace ContentTypeTextNet.Pe.PeMain
+﻿namespace ContentTypeTextNet.Pe.PeMain
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Configuration;
+	using System.Data;
+	using System.Linq;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using Hardcodet.Wpf.TaskbarNotification;
+
 	/// <summary>
 	/// Simple application. Check the XAML for comments.
 	/// </summary>
