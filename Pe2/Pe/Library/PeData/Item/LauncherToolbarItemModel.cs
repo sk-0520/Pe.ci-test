@@ -1,14 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	[DataContract, Serializable]
 	public class LauncherToolbarItemModel : ItemModelBase, ITId<string>
@@ -58,5 +58,9 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 		/// 自動的に隠す際のアニメーション時間。
 		/// </summary>
 		public TimeSpan HiddenAnimateTime { get; set; }
+		/// <summary>
+		/// 初期値として使用するグループID。
+		/// </summary>
+		public string DefaultGroupId { get; set; }
 	}
 }
