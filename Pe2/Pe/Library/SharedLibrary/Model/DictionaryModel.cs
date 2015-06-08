@@ -14,11 +14,11 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	[Serializable]
-	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IIsDisposed
+	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IIsDisposed, ISerializable
 	{
 		#region define
 
-		[Serializable, XmlRoot("Item")]
+		[Serializable, XmlRoot("Items")]
 		public class TPiar
 		{
 			public TPiar(TKey key, TValue value)
