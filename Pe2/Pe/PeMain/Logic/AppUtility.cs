@@ -16,20 +16,25 @@
 
 	public static class AppUtility
 	{
-		public static T LoadSetting<T>(string path)
+		public static T LoadSetting<T>(string path, ILogger logger)
 			where T: SettingModelBase, new()
 		{
+			logger.Information("load setting", path);
 			T result = null;
 			if(File.Exists(path)) {
 				result = SerializeUtility.LoadJsonDataFromFile<T>(path);
+				logger.Debug("load data", result != null ? typeof(T).Name: "null");
+			} else {
+				logger.Debug("file not found", path);
 			}
 
 			return result ?? new T();
 		}
 
-		public static void SaveSetting<T>(string path, T model)
+		public static void SaveSetting<T>(string path, T model, ILogger logger)
 			where T: SettingModelBase
 		{
+			logger.Information("load setting", path);
 			SerializeUtility.SaveJsonDataToFile(path, model);
 		}
 

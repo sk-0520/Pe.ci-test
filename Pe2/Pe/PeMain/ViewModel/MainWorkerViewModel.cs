@@ -16,10 +16,12 @@
 
 	public sealed class MainWorkerViewModel: ViewModelBase
 	{
-		public MainWorkerViewModel(VariableConstants variableConstants, SystemLogger systemLogger)
+		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
 		{
 			VariableConstants = variableConstants;
-			LoadSetting(systemLogger);
+			CommonData = new CommonData() {
+				Logger = logger,
+			};
 		}
 
 
@@ -88,17 +90,16 @@
 
 		#region function
 
-		void LoadSetting(ILogger logger)
+		void LoadSetting()
 		{
 			// 各種設定の読込
-			var mainSetting = AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath);
-			var launcherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath);
-			var launcherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting);
+			CommonData.MainSetting= AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath, CommonData.Logger);
+			CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.Logger);
+			CommonData.LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
 			// 言語ファイル
 			string loadLanguagePath;
-			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, mainSetting.Language.Name, VariableConstants.LanguageCode, out loadLanguagePath);
-
-			CommonData = new CommonData(mainSetting, launcherItemSetting, launcherGroupItemSetting, language, loadLanguagePath, logger);
+			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, VariableConstants.LanguageCode, out loadLanguagePath);
+			CommonData.Language = new LanguageCollectionViewModel(language, loadLanguagePath);
 		}
 
 		void SaveSetting()
@@ -106,6 +107,16 @@
 			AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting);
 			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting);
 			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupItemSetting);
+		}
+
+		/// <summary>
+		///プログラム実行を準備。
+		/// </summary>
+		public void Initialize()
+		{
+			CommonData.Logger.Information("MainWorkerViewModel initialize");
+
+			LoadSetting();
 		}
 
 		#endregion
