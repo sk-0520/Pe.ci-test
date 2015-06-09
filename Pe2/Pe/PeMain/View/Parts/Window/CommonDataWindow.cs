@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.WindowBase
+﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Window
 {
 	using System;
 	using System.Collections.Generic;
@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
@@ -15,9 +16,7 @@
 	public class CommonDataWindow : Window, ICommonData
 	{
 		public CommonDataWindow()
-		{
-			//Startup = CreateStartupWindowStatus();
-		}
+		{ }
 
 		#region property
 

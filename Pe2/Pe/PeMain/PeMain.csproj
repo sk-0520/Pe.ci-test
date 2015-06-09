@@ -96,14 +96,14 @@
     <Compile Include="Logic\AppUtility.cs" />
     <Compile Include="Logic\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
-    <Compile Include="Logic\UIUtility.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
+    <Compile Include="View\Parts\Control\CommonDataControl.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\WindowBase\CommonDataWindow.cs" />
+    <Compile Include="View\Parts\Window\CommonDataWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -142,6 +142,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logic\Utility\" />
     <Folder Include="View\Parts\SettingWindow\" />
   </ItemGroup>
   <ItemGroup>
