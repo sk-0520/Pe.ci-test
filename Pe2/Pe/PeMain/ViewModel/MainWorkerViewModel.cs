@@ -60,8 +60,8 @@
 			{
 				var result = new DelegateCommand();
 				result.Command = o => {
-					var window = new SettingWindow();
-					window.ShowDialog();
+					//var window = new SettingWindow();
+					//window.ShowDialog();
 				};
 
 				return result;
@@ -104,9 +104,9 @@
 
 		void SaveSetting()
 		{
-			AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting);
-			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting);
-			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupItemSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, CommonData.Logger);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, CommonData.Logger);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupItemSetting, CommonData.Logger);
 		}
 
 		/// <summary>
@@ -117,6 +117,8 @@
 			CommonData.Logger.Information("MainWorkerViewModel initialize");
 
 			LoadSetting();
+
+
 		}
 
 		#endregion
