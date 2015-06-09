@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System;
 	using System.Collections.Generic;
@@ -7,13 +7,14 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
 	/// <summary>
-	/// これといってViewは関係ないと思う。
+	/// 
 	/// </summary>
-	public class LanguageCollectionViewModel: ModelWrapperViewModelBase<LanguageCollectionModel>
+	public class LanguageManager: ModelWrapperViewModelBase<LanguageCollectionModel>
 	{
-		public LanguageCollectionViewModel(LanguageCollectionModel model, string languageFilePath)
+		public LanguageManager(LanguageCollectionModel model, string languageFilePath)
 			: base(model)
 		{
 			LanguageFilePath = languageFilePath;

@@ -7,12 +7,13 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts;
 
 	public static class LanguageExtension
 	{
-		static void SetUI_Impl(UIElement ui, LanguageCollectionViewModel language, IReadOnlyDictionary<string, string> map, Action<string> action)
+		static void SetUI_Impl(UIElement ui, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string> action)
 		{
 			var key = ui.LanguageKey();
 			if(!string.IsNullOrWhiteSpace(key)) {
@@ -20,12 +21,12 @@
 			}
 		}
 
-		public static void SetUI(this Window ui, LanguageCollectionViewModel language, IReadOnlyDictionary<string, string> map = null)
+		public static void SetUI(this Window ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
 			SetUI_Impl(ui, language, map, key => ui.Title = language[key, map]);
 		}
 
-		public static void SetUI(this Button ui, LanguageCollectionViewModel language, IReadOnlyDictionary<string, string> map = null)
+		public static void SetUI(this Button ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
 		{
 			SetUI_Impl(ui, language, map, key => {
 				if(!ui.HasContent || ui.Content is string) {
