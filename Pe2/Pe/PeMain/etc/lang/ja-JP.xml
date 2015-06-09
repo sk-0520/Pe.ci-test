@@ -9,5 +9,7 @@
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
+		<Item Id="accept/ok" Word="使用する" />
+		<Item Id="accept/ng" Word="使用しない" />
 	</Words>
 </Language>

@@ -52,7 +52,8 @@
 			Debug.Assert(CommonData != null);
 
 			var map = new Dictionary<Type, Action<UIElement>>() {
-				{ typeof(Button), ui => ((Button)ui).SetUI(CommonData.Language) }
+				{ typeof(Button), ui => ((Button)ui).SetUI(CommonData.Language) },
+				{ typeof(CheckBox), ui => ((CheckBox)ui).SetUI(CommonData.Language) },
 			};
 
 			this.SetUI(CommonData.Language);

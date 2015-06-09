@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public sealed class CommonData: DisposeFinalizeModelBase
 	{
@@ -19,10 +20,12 @@
 
 		#region property
 
+		public VariableConstants VariableConstants { get; set; }
+
 		public MainSettingModel MainSetting { get; set; }
 		public LauncherItemSettingModel LauncherItemSetting { get; set; }
 		public LauncherGroupItemSettingModel LauncherGroupItemSetting { get; set; }
-		public LanguageManager Language { get; set; }
+		public AppLanguageManager Language { get; set; }
 		public ILogger Logger { get; set; }
 
 		#endregion

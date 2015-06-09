@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain
 {
 	using System;
 	using System.Collections.Generic;
@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.IO;
 	using System.Diagnostics;
+	using System.Configuration;
 
 	/// <summary>
 	/// 定数。
@@ -56,10 +57,14 @@
 		public const string launcherItemSettingFileName = "item-setting.json";
 		public const string launcherGroupItemSettingFileName = "group-item.json";
 
+		public const string styleCommonFileName = "common.css";
+
 		public const string languageDefaultFileName = "default.xml";
 		public const string languageSearchPattern = "*.xml";
 
 		public const string timestampFileName = "yyyy-MM-dd_HH-mm-ss";
+
+		public const string languageAcceptDocumentFileName = ".accept.html";
 
 		/// <summary>
 		/// 実行パス
@@ -86,5 +91,18 @@
 		/// </summary>
 		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), shortcutName);
 
+		#region app.config
+
+		public static string UriAbout { get { return ConfigurationManager.AppSettings["uri-about"]; } }
+		public static string MailAbout { get { return ConfigurationManager.AppSettings["mail-about"]; } }
+		public static string UriDevelopment { get { return ConfigurationManager.AppSettings["uri-development"]; } }
+		public static string UriUpdate { get { return ConfigurationManager.AppSettings["uri-update"]; } }
+		public static string UriChangelogRelease { get { return ConfigurationManager.AppSettings["uri-changelog-release"]; } }
+		public static string UriChangelogRc { get { return ConfigurationManager.AppSettings["uri-changelog-rc"]; } }
+		public static string UriForum { get { return ConfigurationManager.AppSettings["uri-forum"]; } }
+		public static string UriHelp { get { return ConfigurationManager.AppSettings["uri-help"]; } }
+		public static string UriFeedback { get { return ConfigurationManager.AppSettings["uri-feedback"]; } }
+
+		#endregion
 	}
 }

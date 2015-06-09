@@ -65,6 +65,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -90,9 +91,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\CommonData.cs" />
-    <Compile Include="Data\Constants.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\ICommonData.cs" />
+    <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageUtility.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
@@ -123,11 +125,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
+    <None Include="Properties\SlowCheetah\SlowCheetah.Transforms.targets" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <TransformOnBuild>true</TransformOnBuild>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon\App.ico" />
@@ -151,7 +160,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="etc\style\" />
     <Folder Include="View\Parts\SettingWindow\" />
   </ItemGroup>
   <ItemGroup>
@@ -177,16 +185,29 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="etc\lang\ja-JP.accept.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="etc\lang\ja-JP.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(OutDir)etc\lang\ja-JP.xml" "$(OutDir)etc\lang\default.xml"
-rem copy "$(OutDir)etc\lang\ja-JP.accept.html" "$(OutDir)etc\lang\default.accept.html"
+copy "$(OutDir)etc\lang\ja-JP.accept.html" "$(OutDir)etc\lang\default.accept.html"
 </PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Label="SlowCheetah">
+    <SlowCheetahToolsPath>$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\..\packages\SlowCheetah.2.5.14\tools\))</SlowCheetahToolsPath>
+    <SlowCheetah_EnableImportFromNuGet Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='' ">true</SlowCheetah_EnableImportFromNuGet>
+    <SlowCheetah_NuGetImportPath Condition=" '$(SlowCheetah_NuGetImportPath)'=='' ">$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\Properties\SlowCheetah\SlowCheetah.Transforms.targets ))</SlowCheetah_NuGetImportPath>
+    <SlowCheetahTargets Condition=" '$(SlowCheetah_EnableImportFromNuGet)'=='true' and Exists('$(SlowCheetah_NuGetImportPath)') ">$(SlowCheetah_NuGetImportPath)</SlowCheetahTargets>
+  </PropertyGroup>
+  <Import Project="$(SlowCheetahTargets)" Condition="Exists('$(SlowCheetahTargets)')" Label="SlowCheetah" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -34,5 +34,14 @@
 				}
 			});
 		}
+
+		public static void SetUI(this CheckBox ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		{
+			SetUI_Impl(ui, language, map, key => {
+				if(!ui.HasContent || ui.Content is string) {
+					ui.Content = language[key, map];
+				}
+			});
+		}
 	}
 }

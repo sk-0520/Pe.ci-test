@@ -46,7 +46,7 @@
 		/// <param name="name">検索名</param>
 		/// <param name="code">検索コード</param>
 		/// <returns></returns>
-		public static LanguageManager LoadLanguageFile(string baseDir, string name, string code, ILogger logger)
+		public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string code, ILogger logger)
 		{
 			logger.Information("load language file", baseDir);
 			var langPairList = new List<KeyValuePair<string, LanguageCollectionModel>?>();
@@ -65,7 +65,7 @@
 				?? langPairList.FirstOrDefault(l => l.Value.Value.Code == code)
 				?? new KeyValuePair<string, LanguageCollectionModel>(defaultPath, SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath))
 			;
-			return new LanguageManager(lang.Value, lang.Key);
+			return new AppLanguageManager(lang.Value, lang.Key);
 		}
 
 		/// <summary>

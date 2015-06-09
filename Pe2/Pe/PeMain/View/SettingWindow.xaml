@@ -17,11 +17,9 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
-		<Grid Style="{StaticResource ResourceKey=DialogResultParent}" Grid.Row="1">
-			<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}" >
-				<Button Style="{StaticResource ResourceKey=DialogResultButtonAccept}" />
-				<Button Style="{StaticResource ResourceKey=DialogResultButtonCancel}" />
-			</StackPanel>
-		</Grid>
+		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" />
+		</StackPanel>
 	</Grid>
 </CD:CommonDataWindow>
