@@ -98,6 +98,9 @@
     <Compile Include="View\LauncherToolbarWindow.xaml.cs">
       <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\SettingMain.xaml.cs">
+      <DependentUpon>SettingMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\SettingMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

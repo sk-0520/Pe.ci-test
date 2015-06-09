@@ -1,8 +1,27 @@
-﻿<Window x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SettingWindow" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        xmlns:Parts="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts" x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
+        Title="SettingWindow" Height="252.239" Width="437.313"
+		Tag="[lang:setting]"
+		>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="Auto" MinHeight="39"/>
+		</Grid.RowDefinitions>
+		<TabControl Grid.Row="0" >
+			<TabItem Header="main" Tag="[lang:setting/main]">
+				<Grid>
+					<Parts:SettingMain />
+				</Grid>
+			</TabItem>
+			<TabItem Header="TabItem">
+				<Grid />
+			</TabItem>
+		</TabControl>
+
+		<Button Content="ok"     Tag="[lang:ok]" HorizontalAlignment="Right" Margin="0,10,95,0" Grid.Row="1" VerticalAlignment="Top" Width="80" Height="24"/>
+		<Button Content="cancel" Tag="[lang:cancel]" Margin="0,10,10,0" Grid.Row="1" VerticalAlignment="Top" Height="24" HorizontalAlignment="Right" Width="80"/>
+	</Grid>
 </Window>
