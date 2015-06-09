@@ -17,29 +17,5 @@
 		public LauncherItemCollectionModel()
 			: base()
 		{ }
-
-		public LauncherItemCollectionModel(IDictionary<string, LauncherItemModel> dictionary)
-			: base(dictionary)
-		{ }
-
-		public LauncherItemCollectionModel(IEqualityComparer<string> comparer)
-			: base(comparer)
-		{ }
-
-		public LauncherItemCollectionModel(int capacity)
-			: base(capacity)
-		{ }
-
-		public LauncherItemCollectionModel(IDictionary<string, LauncherItemModel> dictionary, IEqualityComparer<string> comparer)
-			: base(dictionary, comparer)
-		{ }
-
-		public LauncherItemCollectionModel(int capacity, IEqualityComparer<string> comparer)
-			: base(capacity, comparer)
-		{ }
-
-		public LauncherItemCollectionModel(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{ }
 	}
 }

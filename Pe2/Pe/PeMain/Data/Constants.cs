@@ -15,10 +15,10 @@
 
 		public const string binDirectoryName = "bin";
 		public const string sbinDirectoryName = "sbin";
-		public const string libDirectoryName = "lib";
+		public const string libraryDirectoryName = "lib";
 		public const string etcDirectoryName = "etc";
-		public const string langDirectoryName = "lang";
-		public const string docDirectoryName = "doc";
+		public const string languageDirectoryName = "lang";
+		public const string documentDirectoryName = "doc";
 
 		public const string logDirectoryName = "logs";
 		public const string settingDirectoryName = "setting";
@@ -29,5 +29,7 @@
 		public const string launcherItemSettingFileName = "item-setting.json";
 		public const string launcherGroupItemSettingFileName = "group-item.json";
 
+		public const string languageDefaultFileName = "default.xml";
+		public const string languageSearchPattern = "*.xml";
 	}
 }

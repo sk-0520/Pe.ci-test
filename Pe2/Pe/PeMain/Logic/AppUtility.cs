@@ -40,22 +40,19 @@
 		/// <summary>
 		/// 指定ディレクトリ内から指定した言語名の言語ファイルを取得する。
 		/// </summary>
-		/// <param name="baseDir"></param>
-		/// <param name="name"></param>
+		/// <param name="baseDir">検索ディレクトリ</param>
+		/// <param name="name">検索名</param>
+		/// <param name="code">検索コード</param>
 		/// <returns></returns>
-		public static LanguageCollectionModel LoadLanguageFile(string baseDir, string name)
+		public static LanguageCollectionModel LoadLanguageFile(string baseDir, string name, string code)
 		{
-			var la = new LanguageCollectionModel();
-			la.Name = "日本語";
-			la.Code = "ja-JP";
-			la.Define.Add(new LanguageItemModel() { Id = "common/ok", Word = "OK" });
-			la.Define.Add(new LanguageItemModel() { Id = "common/cancel", Word = "Cancel" });
-			la.Words.Add(new LanguageItemModel() { Id = "window/setting", Word = "setting" });
-			la.Words.Add(new LanguageItemModel() { Id = "tasktray/tooltip", Word = "ぴーいー" });
-			SerializeUtility.SaveXmlSerializeToFile(@"Z:\a.xml", la);
-			return Directory.EnumerateFiles(baseDir, "*.xml")
+			var langItems = Directory.EnumerateFiles(baseDir, Constants.languageSearchPattern)
 				.Select(f => SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(f))
-				.FirstOrDefault(l => l.Name == name)
+				.ToArray();
+			;
+			return langItems.FirstOrDefault(l => l.Name == name)
+				?? langItems.FirstOrDefault(l => l.Code == code)
+				?? SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(Path.Combine(baseDir, Constants.languageDefaultFileName))
 			;
 		}
 	}

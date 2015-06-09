@@ -91,7 +91,8 @@
 			var mainSetting = AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath);
 			var launcherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath);
 			var launcherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting);
-			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, mainSetting.Language.Name);
+			
+			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, mainSetting.Language.Name, VariableConstants.LanguageCode);
 
 			CommonData = new CommonData(mainSetting, launcherItemSetting, launcherGroupItemSetting, language);
 		}

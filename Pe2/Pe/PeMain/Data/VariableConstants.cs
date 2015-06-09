@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Globalization;
 	using System.IO;
 	using System.Linq;
 	using System.Reflection;
@@ -31,6 +32,8 @@
 		string _mainSettingFileName = Constants.mainSettingFileName;
 		string _launcherItemSettingFileName = Constants.launcherItemSettingFileName;
 		string _launcherGroupItemSettingFileName = Constants.launcherGroupItemSettingFileName;
+
+		string _languageCode = CultureInfo.CurrentCulture.Name;
 
 		#endregion
 
@@ -71,7 +74,7 @@
 		/// <summary>
 		/// lib/
 		/// </summary>
-		public string ApplicationLibraryDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.libDirectoryName); } }
+		public string ApplicationLibraryDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.libraryDirectoryName); } }
 		/// <summary>
 		/// etc/
 		/// </summary>
@@ -79,11 +82,11 @@
 		/// <summary>
 		/// etc/lang
 		/// </summary>
-		public string ApplicationLanguageDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, Constants.langDirectoryName); } }
+		public string ApplicationLanguageDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, Constants.languageDirectoryName); } }
 		/// <summary>
 		/// doc/
 		/// </summary>
-		public string ApplicationDocumentDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.docDirectoryName); } }
+		public string ApplicationDocumentDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.documentDirectoryName); } }
 
 		/// <summary>
 		/// ユーザールートディレクトリ。
@@ -106,6 +109,7 @@
 		public string UserSettingFileLauncherItemSettingPath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherItemSettingFileName); } }
 		public string UserSettingFileLauncherGroupItemSetting { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
 
+		public string LanguageCode { get { return this._languageCode; } }
 		#endregion
 	}
 }
