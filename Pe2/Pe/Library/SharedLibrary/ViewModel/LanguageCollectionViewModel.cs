@@ -19,16 +19,15 @@
 
 		#region function
 
-		static LanguageItemModel GetItem(IDictionary<string, LanguageItemModel> map, string key)
+		static LanguageItemModel GetItem(IList<LanguageItemModel> list, string key)
 		{
-			LanguageItemModel result;
-
-			if(!map.TryGetValue(key, out result)) {
-				result = new LanguageItemModel() {
+			var result = list
+				.FirstOrDefault(l => l.Id == key)
+				?? new LanguageItemModel() {
 					Id = key,
 					Word = key,
-				};
-			}
+				}
+			; 
 
 			return result;
 		}

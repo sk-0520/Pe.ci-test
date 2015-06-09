@@ -15,6 +15,10 @@
 	[Serializable]
 	public class LanguageItemModel: ModelBase, ITId<string>
 	{
+		public LanguageItemModel()
+			: base()
+		{ }
+
 		#region property
 
 		/// <summary>

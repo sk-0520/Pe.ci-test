@@ -23,13 +23,7 @@
 
 		#region property
 
-		#region setting
-
-		MainSettingModel MainSetting { get; set; }
-		LauncherItemSettingModel LauncherItemSetting { get; set; }
-		LauncherGroupItemSettingModel LauncherGroupItemSetting { get; set; }
-
-		#endregion
+		CommonData CommonData { get; set; }
 
 		VariableConstants VariableConstants { get; set; }
 
@@ -94,16 +88,19 @@
 
 		void LoadSetting()
 		{
-			MainSetting = AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath);
-			LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath);
-			LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting);
+			var mainSetting = AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath);
+			var launcherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath);
+			var launcherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting);
+			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, mainSetting.Language.Name);
+
+			CommonData = new CommonData(mainSetting, launcherItemSetting, launcherGroupItemSetting, language);
 		}
 
 		void SaveSetting()
 		{
-			AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, MainSetting);
-			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, LauncherItemSetting);
-			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, LauncherGroupItemSetting);
+			//AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, MainSetting);
+			//AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, LauncherItemSetting);
+			//AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, LauncherGroupItemSetting);
 		}
 
 		#endregion

@@ -14,13 +14,16 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	[Serializable]
-	public class DictionaryModel<TKey, TValue>: Dictionary<TKey, TValue>, IModel, IIsDisposed, ISerializable
+	public class DictionaryModel<TKey, TValue> : Dictionary<TKey, TValue>, IModel, IIsDisposed, IXmlSerializable
 	{
 		#region define
 
-		[Serializable, XmlRoot("Items")]
+		[Serializable, XmlRoot("Item")]
 		public class TPiar
 		{
+			public TPiar()
+				: this(default(TKey), default(TValue))
+			{ }
 			public TPiar(TKey key, TValue value)
 			{
 				Key = key;
@@ -44,31 +47,45 @@
 
 		public DictionaryModel()
 			: base()
-		{ }
+		{
+			Initialize();
+		}
 
 		public DictionaryModel(IDictionary<TKey, TValue> dictionary)
 			: base(dictionary)
-		{ }
+		{
+			Initialize();
+		}
 
 		public DictionaryModel(IEqualityComparer<TKey> comparer)
 			: base(comparer)
-		{ }
+		{
+			Initialize();
+		}
 
 		public DictionaryModel(int capacity)
 			: base(capacity)
-		{ }
+		{
+			Initialize();
+		}
 
 		public DictionaryModel(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
 			: base(dictionary, comparer)
-		{ }
+		{
+			Initialize();
+		}
 
 		public DictionaryModel(int capacity, IEqualityComparer<TKey> comparer)
 			: base(capacity, comparer)
-		{ }
+		{
+			Initialize();
+		}
 
 		public DictionaryModel(SerializationInfo info, StreamingContext context)
 			: base(info, context)
-		{ }
+		{
+			Initialize();
+		}
 
 		void Initialize()
 		{
@@ -107,7 +124,6 @@
 		}
 
 		#endregion
-
 
 		#region IModel
 

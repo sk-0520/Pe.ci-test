@@ -12,9 +12,16 @@
 	/// <summary>
 	/// 言語設定。
 	/// </summary>
-	[Serializable]
+	[Serializable, XmlRoot("Language")]
 	public class LanguageCollectionModel: ModelBase, IName
 	{
+		public LanguageCollectionModel()
+			:base()
+		{
+			Define = new List<LanguageItemModel>();
+			Words = new List<LanguageItemModel>();
+		}
+
 		#region property
 
 		/// <summary>
@@ -36,13 +43,13 @@
 		/// <summary>
 		/// 共通定義部。
 		/// </summary>
-		[DataMember]
-		public TIdCollection<string, LanguageItemModel> Define { get; set; }
+		[DataMember, XmlArrayItem("Item")]
+		public List<LanguageItemModel> Define { get; set; }
 		/// <summary>
 		/// 言語データ。
 		/// </summary>
-		[DataMember]
-		public TIdCollection<string, LanguageItemModel> Words { get; set; }
+		[DataMember, XmlArrayItem("Item")]
+		public List<LanguageItemModel> Words { get; set; }
 
 		#endregion
 	}
