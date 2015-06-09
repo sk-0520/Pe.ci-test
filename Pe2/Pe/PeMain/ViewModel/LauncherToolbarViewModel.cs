@@ -8,7 +8,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class LauncherToolbarViewModel : ModelWrapperViewModelBase<ToolbarItemModel>
+	public class LauncherToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>
 	{
 		public LauncherToolbarViewModel(ToolbarItemModel model)
 			:base(model)

@@ -12,7 +12,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	public class LanguageManager: ModelWrapperViewModelBase<LanguageCollectionModel>
+	public class LanguageManager: SingleModelWrapperViewModelBase<LanguageCollectionModel>
 	{
 		public LanguageManager(LanguageCollectionModel model, string languageFilePath)
 			: base(model)

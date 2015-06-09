@@ -1,0 +1,32 @@
+﻿<CD:CommonDataWindow 
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.AcceptWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	UI:XamlTag.LanguageKey="window/accept"
+	Title="AcceptWindow" 
+	Height="308.955" 
+	Width="414.925"
+>
+	<Window.Resources>
+		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="211*"/>
+			<RowDefinition Height="32*"/>
+			<RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+		<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="1" Margin="8,0,0,0">
+			<CheckBox IsChecked="{Binding CheckUpdateRelease}" UI:XamlTag.LanguageKey="update-check/release" />
+			<CheckBox IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" />
+		</StackPanel>
+		<Grid Style="{StaticResource ResourceKey=DialogResultParent}" Grid.Row="2">
+			<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}" >
+				<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" />
+				<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" />
+			</StackPanel>
+		</Grid>
+	</Grid>
+</CD:CommonDataWindow>

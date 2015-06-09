@@ -97,8 +97,12 @@
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
+    <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
+    <Compile Include="View\AcceptWindow.xaml.cs">
+      <DependentUpon>AcceptWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\CommonDataControl.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />
     <Compile Include="View\SettingWindow.xaml.cs">
@@ -129,6 +133,10 @@
     <Resource Include="Resources\Icon\App.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWorker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +151,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="etc\style\" />
     <Folder Include="View\Parts\SettingWindow\" />
   </ItemGroup>
   <ItemGroup>

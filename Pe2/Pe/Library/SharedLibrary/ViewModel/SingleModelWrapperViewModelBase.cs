@@ -8,17 +8,17 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
-	/// モデルを取り込むVM。
+	/// 単一モデルを取り込むVM。
 	/// </summary>
 	/// <typeparam name="TModel">モデル。</typeparam>
-	public abstract class ModelWrapperViewModelBase<TModel> : ViewModelBase
+	public abstract class SingleModelWrapperViewModelBase<TModel> : ViewModelBase
 		where TModel: ModelBase
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="model">取り込むモデル</param>
-		public ModelWrapperViewModelBase(TModel model)
+		public SingleModelWrapperViewModelBase(TModel model)
 		{
 			Model = model;
 		}

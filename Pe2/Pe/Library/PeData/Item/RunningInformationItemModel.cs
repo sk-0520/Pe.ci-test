@@ -28,7 +28,7 @@
 		/// アップデートチェックを行うか。
 		/// </summary>
 		[DataMember]
-		public bool CheckUpdate { get; set; }
+		public bool CheckUpdateRelease { get; set; }
 		/// <summary>
 		/// RCアップデートチェックを行うか。
 		/// </summary>

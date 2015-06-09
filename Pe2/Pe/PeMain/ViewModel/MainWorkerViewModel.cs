@@ -117,9 +117,42 @@
 			CommonData.Logger.Information("MainWorkerViewModel initialize");
 
 			LoadSetting();
-
+			if(CheckAccept()) {
+				IncrementRunningInformation();
+			} else {
+				// 使用許諾
+				var window = new AcceptWindow();
+				window.SetCommonData(CommonData);
+				window.ShowDialog();
+			}
 
 			return true;
+		}
+
+		bool CheckAccept()
+		{
+			if(!CommonData.MainSetting.RunningInformation.Accept) {
+				// 完全に初回
+				return false;
+			}
+
+			if(CommonData.MainSetting.RunningInformation.LastExecuteVersion == null) {
+				// 何らかの理由で前回実行時のバージョン格納されていない
+				return false;
+			}
+
+			if(CommonData.MainSetting.RunningInformation.LastExecuteVersion < Constants.acceptVersion) {
+				// 前回バージョンから強制定期に使用許諾が必要
+				return false;
+			}
+
+			return true;
+		}
+
+		void IncrementRunningInformation()
+		{
+			CommonData.MainSetting.RunningInformation.LastExecuteVersion = Constants.assemblyVersion;
+			CommonData.MainSetting.RunningInformation.ExecuteCount += 1;
 		}
 
 		#endregion

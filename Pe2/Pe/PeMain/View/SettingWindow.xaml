@@ -1,8 +1,8 @@
-﻿<BaseWindow:CommonDataWindow 
+﻿<CD:CommonDataWindow 
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:BaseWindow="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	UI:XamlTag.LanguageKey="window/setting"
 	Title="SettingWindow" 
@@ -23,6 +23,5 @@
 				<Button Style="{StaticResource ResourceKey=DialogResultButtonCancel}" />
 			</StackPanel>
 		</Grid>
-
 	</Grid>
-</BaseWindow:CommonDataWindow>
+</CD:CommonDataWindow>
