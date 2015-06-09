@@ -212,6 +212,38 @@
 		}
 
 		/// <summary>
+		/// XMLストリーム読み込み。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public static T LoadJsonDataFromStream<T>(Stream stream)
+			where T : ModelBase, new()
+		{
+			if (!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
+			var serializer = new DataContractJsonSerializer(typeof(T));
+			return (T)serializer.ReadObject(stream);
+		}
+
+		/// <summary>
+		/// XMLファイル読み込み。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public static T LoadJsonDataFromFile<T>(string filePath)
+			where T : ModelBase, new()
+		{
+			using (var stream = CreateReadFileStream(filePath)) {
+				return LoadJsonDataFromStream<T>(stream);
+			}
+		}
+		/// <summary>
 		/// Jsonストリーム書き出し。
 		/// <para>DataContractを使用。</para>
 		/// </summary>
