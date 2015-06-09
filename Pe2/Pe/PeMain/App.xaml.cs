@@ -23,7 +23,7 @@
 		{
 			base.OnStartup(e);
 
-			var constants = new Constants(new CommandLine());
+			var constants = new VariableConstants(new CommandLine());
 			this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
 			this._notifyIcon.DataContext = AppUtility.CreateMainWorkerViewModel(constants);
 		}
