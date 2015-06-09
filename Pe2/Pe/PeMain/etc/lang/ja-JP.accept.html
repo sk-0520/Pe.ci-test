@@ -2,13 +2,13 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>${APP} 使用許諾</title>
+	<title>ソフトウェア使用許諾</title>
 	<style>
 		${STYLE}
 	</style>
 </head>
 <body>
-	<h1>${APP} 使用許諾</h1>
+	<h1>ソフトウェア使用許諾</h1>
 
 	<p>
 		本文書を確認したうえで本ソフトウェア(以降 ${APP})を使用するには「${OK}」、使用を取りやめるには「${NG}」を押下してください。
@@ -25,19 +25,20 @@
 	</p>
 	<ul>
 		<li>
-			<strong>アップデートを確認する</strong><br />
+			<strong>${CHECK-RELEASE}</strong><br />
 			安定バージョンのアップデートを自動的に確認します。
 		</li>
 		<li>
-			<strong>RC版も確認対象とする</strong><br />
+			<strong>${CHECK-RC}</strong><br />
 			非安定板もアップデート確認の対象とします。
-			「アップデートを確認する」にチェックされている場合にのみ有効となります。
+			「${CHECK-RELEASE}」にチェックされている場合にのみ有効となります。
 		</li>
 	</ul>
 
 	<p>
 		手動でのバージョンアップやバグ報告、オンラインヘルプなどに関しては下記サイトやメールアドレスにアクセスしてください。
 	</p>
+
 	<ul>
 		<li>
 			<a href="${WEB}" target="PE_BROWSER">WEBサイト</a>

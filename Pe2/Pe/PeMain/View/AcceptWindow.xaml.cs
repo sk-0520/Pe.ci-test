@@ -46,6 +46,8 @@
 				{"APP", Constants.programName },
 				{"OK", CommonData.Language["accept/ok"] },
 				{"NG", CommonData.Language["accept/ng"] },
+				{"CHECK-RELEASE", CommonData.Language["update-check/release"] },
+				{"CHECK-RC", CommonData.Language["update-check/rc"] },
 			};
 			var replacedAcceptSource = acceptSource.ReplaceRangeFromDictionary("${", "}", acceptMap);
 
