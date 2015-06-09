@@ -12,6 +12,7 @@
 	using System.Xml;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using Newtonsoft.Json;
 
 	/// <summary>
 	/// 設定の入出力。
@@ -225,8 +226,11 @@
 				throw new InvalidOperationException(typeof(T).ToString());
 			}
 
-			var serializer = new DataContractJsonSerializer(typeof(T));
-			return (T)serializer.ReadObject(stream);
+			//var serializer = new DataContractJsonSerializer(typeof(T));
+			//return (T)serializer.ReadObject(stream);
+			using(var reader = new StreamReader(stream)) {
+				return JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
+			}
 		}
 
 		/// <summary>
@@ -257,12 +261,19 @@
 				throw new InvalidOperationException(typeof(T).ToString());
 			}
 
-			var serializer = new DataContractJsonSerializer(typeof(T));
-			serializer.WriteObject(stream, model);
+			var setting = new JsonSerializerSettings() {
+				Formatting = Newtonsoft.Json.Formatting.Indented,
+				TypeNameHandling = TypeNameHandling.All,
+			};
+
+			var jsonString = JsonConvert.SerializeObject(model, setting);
+			using(var writer = new StreamWriter(stream)) {
+				writer.Write(jsonString);
+			}
 		}
 
 		/// <summary>
-		/// XMLファイル書き出し。
+		/// Jsonファイル書き出し。
 		/// <para>DataContractを使用。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>

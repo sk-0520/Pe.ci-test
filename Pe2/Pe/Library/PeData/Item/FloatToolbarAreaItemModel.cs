@@ -14,14 +14,17 @@
 		/// <summary>
 		/// 横に表示するアイテム数。
 		/// </summary>
+		[DataMember]
 		public int Width { get; set; }
 		/// <summary>
 		/// 縦に表示するアイテム数。
 		/// </summary>
+		[DataMember]
 		public int Height { get; set; }
 		/// <summary>
 		/// 論理XY座標。
 		/// </summary>
+		[DataMember]
 		public Point Location { get; set; }
 	}
 }

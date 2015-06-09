@@ -83,6 +83,7 @@
     <Compile Include="Item\LauncherItemModel.cs" />
     <Compile Include="Item\LauncherStdStreamItemModel.cs" />
     <Compile Include="Item\LoggingItemModel.cs" />
+    <Compile Include="Item\ToolbarItemCollectionModel.cs" />
     <Compile Include="Item\ToolbarItemModel.cs" />
     <Compile Include="Item\RunningInformationItemModel.cs" />
     <Compile Include="Item\SystemEnvironmentItemModel.cs" />

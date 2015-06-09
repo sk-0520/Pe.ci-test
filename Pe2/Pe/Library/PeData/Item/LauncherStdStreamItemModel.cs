@@ -21,10 +21,12 @@
 		/// <summary>
 		/// 標準出力(とエラー)を取得するか。
 		/// </summary>
+		[DataMember]
 		public bool OutputWatch { get; set; }
 		/// <summary>
 		/// 標準入力へ入力するか。
 		/// </summary>
+		[DataMember]
 		public bool InputWatch { get; set; }
 
 		#region IDeepClone

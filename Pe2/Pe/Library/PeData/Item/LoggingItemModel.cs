@@ -16,15 +16,25 @@
 			: base()
 		{ }
 
+		[DataMember]
 		public bool Visible { get; set; }
+		[DataMember]
 		public Point Location { get; set; }
+		[DataMember]
 		public Size Size { get; set; }
+		[DataMember]
 		public bool AddShow { get; set; }
+		[DataMember]
 		public bool ShowTriggerDebug { get; set; }
+		[DataMember]
 		public bool ShowTriggerTrace { get; set; }
+		[DataMember]
 		public bool ShowTriggerInformation { get; set; }
+		[DataMember]
 		public bool ShowTriggerWarning { get; set; }
+		[DataMember]
 		public bool ShowTriggerError { get; set; }
+		[DataMember]
 		public bool ShowTriggerFatal { get; set; }
 	}
 }

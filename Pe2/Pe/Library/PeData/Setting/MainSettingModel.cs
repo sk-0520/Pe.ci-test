@@ -20,7 +20,7 @@
 			RunningInformation = new RunningInformationItemModel();
 			Language = new LanguageItemModel();
 			Logging = new LoggingItemModel();
-			Toolbar = new ToolbarItemModel();
+			ToolbarItems = new ToolbarItemCollectionModel();
 			WindowSave = new WindowSaveItemModel();
 			SystemEnvironment = new SystemEnvironmentItemModel();
 		}
@@ -32,7 +32,7 @@
 		[DataMember]
 		public LoggingItemModel Logging { get; set; }
 		[DataMember]
-		public ToolbarItemModel Toolbar { get; set; }
+		public ToolbarItemCollectionModel ToolbarItems { get; set; }
 		[DataMember]
 		public WindowSaveItemModel WindowSave { get; set; }
 		[DataMember]

@@ -14,7 +14,7 @@
 
 	public static class AppUtility
 	{
-		public static MainWorkerViewModel CreateMainWorkerViewModel(Constants constants)
+		public static MainWorkerViewModel CreateMainWorkerViewModel(VariableConstants constants)
 		{
 			return new MainWorkerViewModel(constants);
 		}

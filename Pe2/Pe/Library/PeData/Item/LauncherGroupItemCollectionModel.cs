@@ -15,7 +15,7 @@
 		public LauncherGroupItemCollectionModel()
 			: base()
 		{ }
-		/*
+		
 		public LauncherGroupItemCollectionModel(IDictionary<string, LauncherGroupItemModel> dictionary)
 			: base(dictionary)
 		{ }
@@ -39,7 +39,5 @@
 		public LauncherGroupItemCollectionModel(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{ }
-		*/
-
 	}
 }

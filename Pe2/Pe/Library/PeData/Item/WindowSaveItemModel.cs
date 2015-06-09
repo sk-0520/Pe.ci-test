@@ -16,14 +16,17 @@
 		/// <summary>
 		/// 有効。
 		/// </summary>
+		[DataMember]
 		public bool Enabled { get; set; }
 		/// <summary>
 		/// 保存数。
 		/// </summary>
+		[DataMember]
 		public int SaveCount { get; set; }
 		/// <summary>
 		/// 保存間隔。
 		/// </summary>
+		[DataMember]
 		public TimeSpan SaveSpan { get; set; }
 	}
 }

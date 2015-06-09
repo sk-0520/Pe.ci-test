@@ -15,9 +15,9 @@
 
 	public sealed class MainWorkerViewModel: ViewModelBase
 	{
-		public MainWorkerViewModel(Constants constants)
+		public MainWorkerViewModel(VariableConstants variableConstants)
 		{
-			Constants = constants;
+			VariableConstants = variableConstants;
 			LoadSetting();
 		}
 
@@ -31,7 +31,7 @@
 
 		#endregion
 
-		Constants Constants { get; set; }
+		VariableConstants VariableConstants { get; set; }
 
 		public bool Pause { get; set; }
 
@@ -94,16 +94,16 @@
 
 		void LoadSetting()
 		{
-			MainSetting = AppUtility.LoadSetting<MainSettingModel>(Constants.UserSettingFileMainSettingPath);
-			LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(Constants.UserSettingFileLauncherItemSettingPath);
-			LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(Constants.UserSettingFileLauncherGroupItemSetting);
+			MainSetting = AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath);
+			LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath);
+			LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting);
 		}
 
 		void SaveSetting()
 		{
-			AppUtility.SaveSetting(Constants.UserSettingFileMainSettingPath, MainSetting);
-			AppUtility.SaveSetting(Constants.UserSettingFileLauncherItemSettingPath, LauncherItemSetting);
-			AppUtility.SaveSetting(Constants.UserSettingFileLauncherGroupItemSetting, LauncherGroupItemSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, MainSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, LauncherItemSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, LauncherGroupItemSetting);
 		}
 
 		#endregion

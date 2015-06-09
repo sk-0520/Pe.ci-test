@@ -25,7 +25,7 @@
 
 		#endregion
 
-		#region IName
+		#region ITId
 
 		/// <summary>
 		/// キーとして使用される、
