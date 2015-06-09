@@ -93,8 +93,9 @@
     <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="Logic\AppUtility.cs" />
-    <Compile Include="Logic\LanguageUtility.cs" />
+    <Compile Include="Logic\Extension\LanguageUtility.cs" />
+    <Compile Include="Logic\Utility\AppUtility.cs" />
+    <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
@@ -142,7 +143,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logic\Utility\" />
     <Folder Include="View\Parts\SettingWindow\" />
   </ItemGroup>
   <ItemGroup>

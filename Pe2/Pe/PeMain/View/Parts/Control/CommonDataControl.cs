@@ -10,7 +10,7 @@
 	using System.Windows.Controls;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	
 	public abstract class CommonDataControl: UserControl
 	{
