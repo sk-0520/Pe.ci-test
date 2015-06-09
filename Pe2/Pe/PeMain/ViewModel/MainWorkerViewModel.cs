@@ -60,8 +60,9 @@
 			{
 				var result = new DelegateCommand();
 				result.Command = o => {
-					//var window = new SettingWindow();
-					//window.ShowDialog();
+					var window = new SettingWindow();
+					window.SetCommonData(CommonData);
+					window.ShowDialog();
 				};
 
 				return result;

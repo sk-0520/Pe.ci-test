@@ -91,12 +91,19 @@
     </Compile>
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\Constants.cs" />
+    <Compile Include="Data\StartupWindowStatus.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="Logic\AppUtility.cs" />
+    <Compile Include="Logic\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
+    <Compile Include="Logic\UIUtility.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
+    <Compile Include="View\Parts\XamlTag.cs" />
+    <Compile Include="View\SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\WindowBase\CommonDataWindow.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +130,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\MainWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Resource\DialogDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
