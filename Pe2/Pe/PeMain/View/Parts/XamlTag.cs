@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 
-	public class XamlTag
+	public static class XamlTag
 	{
 		#region LanguageKey
 
@@ -30,6 +30,20 @@
 
 			element.SetValue(LanguageKeyProperty, value);
 		}
+
+		#region extension
+
+		public static string LanguageKey(this UIElement element)
+		{
+			return GetLanguageKey(element);
+		}
+
+		public static void LanguageKey(this UIElement element, string value)
+		{
+			SetLanguageKey(element, value);
+		}
+
+		#endregion
 
 		#endregion
 

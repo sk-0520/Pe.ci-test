@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0"?>
 <Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Code="ja-JP" Name="日本語">
 	<Define>
-		<Item Word="OK" Id="common/ok" />
-		<Item Word="Cancel" Id="common/cancel" />
+		<Item Id="ok"  Word="OK" />
+		<Item Id="cancel" Word="Cancel"  />
 	</Define>
 	<Words>
-		<Item Word="setting" Id="window/setting" />
-		<Item Word="ぴーいー" Id="tasktray/tooltip" />
+		<Item Id="window/setting" Word="setting"  />
+		<Item Id="common/ok" Word="${ok}"  />
+		<Item Id="common/cancel" Word="${cancel}"  />
+		<Item Id="tasktray/tooltip" Word="ぴーいー" />
 	</Words>
 </Language>

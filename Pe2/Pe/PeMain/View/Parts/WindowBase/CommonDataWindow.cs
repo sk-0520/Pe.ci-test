@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Controls;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
@@ -59,8 +60,19 @@
 		{
 			Debug.Assert(CommonData != null);
 
+			var map = new Dictionary<Type, Action<UIElement>>() {
+				{ typeof(Button), ui => ((Button)ui).SetUI(CommonData.Language) }
+			};
+
+			this.SetUI(CommonData.Language);
+
 			foreach(var element in UIUtility.FindVisualChildren<UIElement>(this)) {
-				CommonData.Logger.Information(element.ToString());
+				var type = element.GetType();
+
+				Action<UIElement> action;
+				if(map.TryGetValue(type, out action)) {
+					action(element);
+				}
 			}
 		}
 
@@ -73,8 +85,8 @@
 
 		void CommonDataWindow_Loaded(object sender, RoutedEventArgs e)
 		{
-			ApplyLanguage();
 			Loaded -= CommonDataWindow_Loaded;
+			ApplyLanguage();
 		}
 
 	}
