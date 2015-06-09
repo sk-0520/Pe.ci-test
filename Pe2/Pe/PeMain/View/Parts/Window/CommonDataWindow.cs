@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
-	public class CommonDataWindow : Window, ICommonData
+	public abstract class CommonDataWindow : Window, ICommonData
 	{
 		public CommonDataWindow()
 		{ }

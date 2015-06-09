@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	
-	public class CommonDataControl: UserControl
+	public abstract class CommonDataControl: UserControl
 	{
 		#region property
 
