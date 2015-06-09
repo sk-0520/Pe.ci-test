@@ -23,7 +23,7 @@
 			where T: SettingModelBase, new()
 		{
 			if(File.Exists(path)) {
-				return SerializeUtility.LoadXmlDataFromFile<T>(path);
+				return SerializeUtility.LoadJsonDataFromFile<T>(path);
 			}
 
 			return new T();
@@ -32,7 +32,7 @@
 		public static void SaveSetting<T>(string path, T model)
 			where T: SettingModelBase
 		{
-			SerializeUtility.SaveXmlDataToFile(path, model);
+			SerializeUtility.SaveJsonDataToFile(path, model);
 		}
 	}
 }

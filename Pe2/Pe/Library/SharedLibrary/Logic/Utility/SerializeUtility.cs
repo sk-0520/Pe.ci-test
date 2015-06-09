@@ -6,6 +6,7 @@
 	using System.IO;
 	using System.Linq;
 	using System.Runtime.Serialization;
+	using System.Runtime.Serialization.Json;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Xml;
@@ -207,6 +208,71 @@
 		{
 			using(var stream = CreateWriteFileStream(filePath)) {
 				SaveXmlSerializeToStream(stream, model);
+			}
+		}
+
+		/// <summary>
+		/// XMLストリーム読み込み。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public static T LoadJsonDataFromStream<T>(Stream stream)
+			where T : ModelBase, new()
+		{
+			if (!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
+			var serializer = new DataContractJsonSerializer(typeof(T));
+			return (T)serializer.ReadObject(stream);
+		}
+
+		/// <summary>
+		/// XMLファイル読み込み。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public static T LoadJsonDataFromFile<T>(string filePath)
+			where T : ModelBase, new()
+		{
+			using (var stream = CreateReadFileStream(filePath)) {
+				return LoadJsonDataFromStream<T>(stream);
+			}
+		}
+		/// <summary>
+		/// Jsonストリーム書き出し。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <param name="model"></param>
+		public static void SaveJsonDataToStream<T>(Stream stream, T model)
+			where T : ModelBase
+		{
+			if(!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
+			var serializer = new DataContractJsonSerializer(typeof(T));
+			serializer.WriteObject(stream, model);
+		}
+
+		/// <summary>
+		/// XMLファイル書き出し。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <param name="model"></param>
+		public static void SaveJsonDataToFile<T>(string filePath, T model)
+			where T : ModelBase
+		{
+			using (var stream = CreateWriteFileStream(filePath)) {
+				SaveJsonDataToStream(stream, model);
 			}
 		}
 	}
