@@ -67,7 +67,7 @@
 		/// <summary>
 		/// sbin/
 		/// </summary>
-		public string ApplicationSBinDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.sbinDirectoryName); } }
+		public string ApplicationSBinDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.sbinDirectoryName); } }
 		/// <summary>
 		/// lib/
 		/// </summary>
@@ -75,11 +75,15 @@
 		/// <summary>
 		/// etc/
 		/// </summary>
-		public string ApplicationEtcDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.etcDirectoryName); } }
+		public string ApplicationEtcDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.etcDirectoryName); } }
+		/// <summary>
+		/// etc/lang
+		/// </summary>
+		public string ApplicationLanguageDirectoryPath { get { return Path.Combine(ApplicationEtcDirectoryPath, Constants.langDirectoryName); } }
 		/// <summary>
 		/// doc/
 		/// </summary>
-		public string ApplicationDocumentDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.docDirectoryName); } }
+		public string ApplicationDocumentDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.docDirectoryName); } }
 
 		/// <summary>
 		/// ユーザールートディレクトリ。

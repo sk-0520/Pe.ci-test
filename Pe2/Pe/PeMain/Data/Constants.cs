@@ -17,6 +17,7 @@
 		public const string sbinDirectoryName = "sbin";
 		public const string libDirectoryName = "lib";
 		public const string etcDirectoryName = "etc";
+		public const string langDirectoryName = "lang";
 		public const string docDirectoryName = "doc";
 
 		public const string logDirectoryName = "logs";
