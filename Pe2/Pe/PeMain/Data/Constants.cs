@@ -16,19 +16,19 @@
 
 		public const string programName = "Pe2";
 		const string _rootDirectoryName = programName;
+		static readonly string _baseDirPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
 		#endregion
 
 		#region variable
 
-		static string _settingRootDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		static string _logRootDirPath = Path.Combine(UserSettingDirectoryPath, "log");
+		string _settingRootDirectoryPath = _baseDirPath;
+		string _logRootDirPath = Path.Combine(_baseDirPath, "log");
 
 		#endregion
 
 		public Constants()
-		{
-		}
+		{ }
 
 		public Constants(CommandLine commandLine)
 		{
@@ -47,49 +47,49 @@
 		/// <summary>
 		/// 実行パス
 		/// </summary>
-		public static string ApplicationExecutablePath { get { return Assembly.GetExecutingAssembly().Location; } }
+		public string ApplicationExecutablePath { get { return Assembly.GetExecutingAssembly().Location; } }
 		/// <summary>
 		/// 起動ディレクトリ
 		/// </summary>
-		public static string ApplicationRootDirectoryPath { get { return Path.GetDirectoryName(ApplicationExecutablePath); } }
+		public string ApplicationRootDirectoryPath { get { return Path.GetDirectoryName(ApplicationExecutablePath); } }
 
 		/// <summary>
 		/// bin/
 		/// </summary>
-		public static string ApplicationBinDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, "bin"); } }
+		public string ApplicationBinDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, "bin"); } }
 		/// <summary>
 		/// sbin/
 		/// </summary>
-		public static string ApplicationSBinDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, "sbin"); } }
+		public string ApplicationSBinDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, "sbin"); } }
 		/// <summary>
 		/// lib/
 		/// </summary>
-		public static string ApplicationLibraryDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, "lib"); } }
+		public string ApplicationLibraryDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, "lib"); } }
 		/// <summary>
 		/// etc/
 		/// </summary>
-		public static string ApplicationEtcDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, "etc"); } }
+		public string ApplicationEtcDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, "etc"); } }
 		/// <summary>
 		/// doc/
 		/// </summary>
-		public static string ApplicationDocumentDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, "doc"); } }
+		public string ApplicationDocumentDirPath { get { return Path.Combine(ApplicationRootDirectoryPath, "doc"); } }
 
 		/// <summary>
 		/// ユーザールートディレクトリ。
 		/// </summary>
-		public static string UserDirectoryPath { get { return Path.Combine(_settingRootDirectoryPath, _rootDirectoryName); } }
+		public string UserDirectoryPath { get { return Path.Combine(_settingRootDirectoryPath, _rootDirectoryName); } }
 		/// <summary>
 		/// ユーザー設定ディレクトリ。
 		/// </summary>
-		public static string UserSettingDirectoryPath { get { return Path.Combine(UserDirectoryPath, "setting"); } }
+		public string UserSettingDirectoryPath { get { return Path.Combine(UserDirectoryPath, "setting"); } }
 		/// <summary>
 		/// ログ保存ディレクトリ。
 		/// </summary>
-		public static string LogDirectoryPath { get { return _logRootDirPath; } }
+		public string LogDirectoryPath { get { return _logRootDirPath; } }
 		/// <summary>
 		/// バックアップディレクトリパス。
 		/// </summary>
-		public static string UserBackupDirectoryPath { get { return Path.Combine(UserDirectoryPath, "backup"); } }
+		public string UserBackupDirectoryPath { get { return Path.Combine(UserDirectoryPath, "backup"); } }
 
 		public string UserSettingFileMainSettingPath { get { return Path.Combine(UserSettingDirectoryPath, "main-setting.xml"); } }
 		public string UserSettingFileLauncherItemSettingPath { get { return Path.Combine(UserSettingDirectoryPath, "item-setting.xml"); } }
