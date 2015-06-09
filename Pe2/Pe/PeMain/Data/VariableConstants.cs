@@ -27,7 +27,7 @@
 		#region variable
 
 		string _settingRootDirectoryPath = _baseDirPath;
-		string _logRootDirPath = Path.Combine(_baseDirPath, Constants.logDirectoryName);
+		string _logRootDirectoryPath = Path.Combine(_baseDirPath, Constants.logDirectoryName);
 
 		string _mainSettingFileName = Constants.mainSettingFileName;
 		string _launcherItemSettingFileName = Constants.launcherItemSettingFileName;
@@ -38,47 +38,42 @@
 		#endregion
 
 		public VariableConstants()
-		{ }
+		{
+			FileLogging = false;
+		}
 
 		public VariableConstants(CommandLine commandLine)
+			: this()
 		{
-			if(commandLine.HasOption("setting-root")) {
-				_settingRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
+			if (commandLine.HasOption("setting-root")) {
+				this._settingRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("setting-root"));
 			}
-			if(commandLine.HasOption("log")) {
-				if(commandLine.HasValue("log")) {
-					_logRootDirPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("log"));
+			if (commandLine.HasOption("log")) {
+				if (commandLine.HasValue("log")) {
+					this._logRootDirectoryPath = Environment.ExpandEnvironmentVariables(commandLine.GetValue("log"));
 				}
+				FileLogging = true;
 			}
 		}
 
 		#region property
 
 		/// <summary>
-		/// 実行パス
-		/// </summary>
-		public string ApplicationExecutablePath { get { return Assembly.GetExecutingAssembly().Location; } }
-		/// <summary>
-		/// 起動ディレクトリ
-		/// </summary>
-		public string ApplicationRootDirectoryPath { get { return Path.GetDirectoryName(ApplicationExecutablePath); } }
-
-		/// <summary>
 		/// bin/
 		/// </summary>
-		public string ApplicationBinDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.binDirectoryName); } }
+		public string ApplicationBinDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.binDirectoryName); } }
 		/// <summary>
 		/// sbin/
 		/// </summary>
-		public string ApplicationSBinDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.sbinDirectoryName); } }
+		public string ApplicationSBinDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.sbinDirectoryName); } }
 		/// <summary>
 		/// lib/
 		/// </summary>
-		public string ApplicationLibraryDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.libraryDirectoryName); } }
+		public string ApplicationLibraryDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.libraryDirectoryName); } }
 		/// <summary>
 		/// etc/
 		/// </summary>
-		public string ApplicationEtcDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.etcDirectoryName); } }
+		public string ApplicationEtcDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.etcDirectoryName); } }
 		/// <summary>
 		/// etc/lang
 		/// </summary>
@@ -86,7 +81,7 @@
 		/// <summary>
 		/// doc/
 		/// </summary>
-		public string ApplicationDocumentDirectoryPath { get { return Path.Combine(ApplicationRootDirectoryPath, Constants.documentDirectoryName); } }
+		public string ApplicationDocumentDirectoryPath { get { return Path.Combine(Constants.applicationRootDirectoryPath, Constants.documentDirectoryName); } }
 
 		/// <summary>
 		/// ユーザールートディレクトリ。
@@ -99,7 +94,7 @@
 		/// <summary>
 		/// ログ保存ディレクトリ。
 		/// </summary>
-		public string LogDirectoryPath { get { return _logRootDirPath; } }
+		public string LogDirectoryPath { get { return _logRootDirectoryPath; } }
 		/// <summary>
 		/// バックアップディレクトリパス。
 		/// </summary>
@@ -110,6 +105,9 @@
 		public string UserSettingFileLauncherGroupItemSetting { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
 
 		public string LanguageCode { get { return this._languageCode; } }
+
+		public bool FileLogging { get; private set; }
+
 		#endregion
 	}
 }

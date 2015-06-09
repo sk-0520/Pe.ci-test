@@ -42,7 +42,18 @@
 		/// <summary>
 		/// 詳細はあるか。
 		/// </summary>
-		public bool HasDetail { get { return Detail == null; } }
+		public bool HasDetail { get { return Detail != null; } }
+		public string DetailText
+		{
+			get
+			{
+				if (HasDetail) {
+					return Detail.ToString();
+				} else {
+					return string.Empty;
+				}
+			}
+		}
 		/// <summary>
 		/// スタックトレース情報。
 		/// </summary>

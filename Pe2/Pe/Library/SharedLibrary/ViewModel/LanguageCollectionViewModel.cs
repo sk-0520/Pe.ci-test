@@ -13,9 +13,17 @@
 	/// </summary>
 	public class LanguageCollectionViewModel: ModelWrapperViewModelBase<LanguageCollectionModel>
 	{
-		public LanguageCollectionViewModel(LanguageCollectionModel model)
+		public LanguageCollectionViewModel(LanguageCollectionModel model, string languageFilePath)
 			: base(model)
-		{ }
+		{
+			LanguageFilePath = languageFilePath;
+		}
+
+		#region property
+
+		public string LanguageFilePath { get; private set; }
+
+		#endregion
 
 		#region function
 

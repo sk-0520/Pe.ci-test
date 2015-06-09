@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	using Hardcodet.Wpf.TaskbarNotification;
 
 	/// <summary>
@@ -23,9 +24,13 @@
 		{
 			base.OnStartup(e);
 
-			var constants = new VariableConstants(new CommandLine());
+			var commandLine = new CommandLine();
+			var constants = new VariableConstants(commandLine);
+			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
+			systemLogger.Information("start!", commandLine);
+			var workVm = new MainWorkerViewModel(constants, systemLogger);;
 			this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-			this._notifyIcon.DataContext = AppUtility.CreateMainWorkerViewModel(constants);
+			this._notifyIcon.DataContext = workVm;
 		}
 
 		protected override void OnExit(ExitEventArgs e)

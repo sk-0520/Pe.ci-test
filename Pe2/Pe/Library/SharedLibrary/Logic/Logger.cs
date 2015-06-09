@@ -14,6 +14,12 @@
 	/// </summary>
 	public class Logger: LoggerBase, IIsDisposed
 	{
+		#region define
+
+		const string indent = "    ";
+		
+		#endregion
+
 		#region varable
 
 		string _filePath = null;
@@ -24,11 +30,6 @@
 		public Logger()
 			:base()
 		{ }
-
-		~Logger()
-		{
-			Dispose(false);
-		}
 
 		#region property
 
@@ -57,7 +58,7 @@
 			get
 			{
 				if(this._fileWriter == null && CanFilePuts) {
-					this._fileWriter = new StreamWriter(new FileStream(this._filePath, FileMode.Append, FileAccess.ReadWrite, FileShare.Read), Encoding.UTF8);
+					this._fileWriter = new StreamWriter(new FileStream(this._filePath, FileMode.Append, FileAccess.Write, FileShare.Read), Encoding.UTF8);
 				}
 
 				return this._fileWriter;
@@ -87,7 +88,29 @@
 		protected override void PutsFile(LogItemModel item)
 		{
 			if(FileWriter != null) {
-				FileWriter.WriteLine(item);
+				FileWriter.WriteLine(
+					"{0}[{1}] {2} <{3}({4})> , Thread = {5}/{6}, Assembly: {7}"
+					+ Environment.NewLine
+					+ " [MSG] {8}\t{9}"
+					+ Environment.NewLine
+					+ indent + "[ Native ][   IL   ] Method(line)"
+					+ Environment.NewLine
+					+ "{10}"
+					+ Environment.NewLine
+					,
+					item.DateTime.ToString("yyyy-MM-ddTHH:mm:ss.fff"),
+					item.LogKind.ToString().ToUpper().Substring(0, 1),
+					item.CallerMember,
+					item.CallerFile,
+					item.CallerLine,
+					item.CallerThread.ManagedThreadId,
+					item.CallerThread.ThreadState,
+					item.CallerAssembly.GetName(),
+					item.Message,
+					item.DetailText,
+					string.Join(Environment.NewLine, item.StackTrace.GetFrames().Select(sf => string.Format(indent + "[{0:x8}][{1:x8}] {2}({3})", sf.GetNativeOffset(), sf.GetILOffset(), sf.GetMethod(), sf.GetFileLineNumber())))
+				);
+				FileWriter.Flush();
 			}
 		}
 

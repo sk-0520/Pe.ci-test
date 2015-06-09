@@ -11,7 +11,7 @@
 	/// <summary>
 	/// LogItemModelを用いたログ出力用IF。
 	/// </summary>
-	public interface ILogger
+	public interface ILogger: IDisposable
 	{
 		#region property
 

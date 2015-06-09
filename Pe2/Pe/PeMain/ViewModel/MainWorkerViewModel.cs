@@ -6,6 +6,7 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
@@ -15,11 +16,12 @@
 
 	public sealed class MainWorkerViewModel: ViewModelBase
 	{
-		public MainWorkerViewModel(VariableConstants variableConstants)
+		public MainWorkerViewModel(VariableConstants variableConstants, SystemLogger systemLogger)
 		{
 			VariableConstants = variableConstants;
-			LoadSetting();
+			LoadSetting(systemLogger);
 		}
+
 
 		#region property
 
@@ -86,22 +88,24 @@
 
 		#region function
 
-		void LoadSetting()
+		void LoadSetting(ILogger logger)
 		{
+			// 各種設定の読込
 			var mainSetting = AppUtility.LoadSetting<MainSettingModel>(VariableConstants.UserSettingFileMainSettingPath);
 			var launcherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath);
 			var launcherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting);
-			
-			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, mainSetting.Language.Name, VariableConstants.LanguageCode);
+			// 言語ファイル
+			string loadLanguagePath;
+			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, mainSetting.Language.Name, VariableConstants.LanguageCode, out loadLanguagePath);
 
-			CommonData = new CommonData(mainSetting, launcherItemSetting, launcherGroupItemSetting, language);
+			CommonData = new CommonData(mainSetting, launcherItemSetting, launcherGroupItemSetting, language, loadLanguagePath, logger);
 		}
 
 		void SaveSetting()
 		{
-			//AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, MainSetting);
-			//AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, LauncherItemSetting);
-			//AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, LauncherGroupItemSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting);
+			AppUtility.SaveSetting(VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupItemSetting);
 		}
 
 		#endregion

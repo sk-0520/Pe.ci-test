@@ -174,6 +174,7 @@
 				CallerLine = callerLine,
 				CallerMember = callerMember,
 				CallerAssembly = callerAssembly,
+				CallerThread = callerThread,
 			};
 			if (string.IsNullOrEmpty(message) && detail != null && detail is Exception) {
 				var ex = (Exception)detail;
