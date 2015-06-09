@@ -111,13 +111,14 @@
 		/// <summary>
 		///プログラム実行を準備。
 		/// </summary>
-		public void Initialize()
+		public bool Initialize()
 		{
 			CommonData.Logger.Information("MainWorkerViewModel initialize");
 
 			LoadSetting();
 
 
+			return true;
 		}
 
 		#endregion

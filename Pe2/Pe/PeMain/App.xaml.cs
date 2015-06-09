@@ -29,9 +29,12 @@
 			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
 			systemLogger.Information("start!", commandLine);
 			var workVm = new MainWorkerViewModel(constants, systemLogger);
-			workVm.Initialize();
-			this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-			this._notifyIcon.DataContext = workVm;
+			if(workVm.Initialize()) {
+				this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+				this._notifyIcon.DataContext = workVm;
+			} else {
+				// 終了
+			}
 		}
 
 		protected override void OnExit(ExitEventArgs e)
