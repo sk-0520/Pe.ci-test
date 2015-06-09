@@ -91,7 +91,6 @@
     </Compile>
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Data\Constants.cs" />
-    <Compile Include="Data\StartupWindowStatus.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="Logic\AppUtility.cs" />

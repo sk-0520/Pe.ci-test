@@ -13,7 +13,6 @@ using ContentTypeTextNet.Pe.PeMain.View.Parts;
 	public static class LanguageUtility
 	{
 		static void SetUI_Impl(UIElement ui, LanguageCollectionViewModel language, IReadOnlyDictionary<string,string> map, Action<string> action)
-			where T: UIElement
 		{
 			var key = ui.LanguageKey();
 			if(!string.IsNullOrWhiteSpace(key)) {

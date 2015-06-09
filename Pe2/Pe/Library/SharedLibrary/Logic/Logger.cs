@@ -89,7 +89,7 @@
 		{
 			if(FileWriter != null) {
 				FileWriter.WriteLine(
-					"{0}[{1}] {2} <{3}({4})> , Thread = {5}/{6}, Assembly: {7}"
+					"{0}[{1}] {2} <{3}({4})> , Thread: {5}/{6}, Assembly: {7}"
 					+ Environment.NewLine
 					+ " [MSG] {8}\t{9}"
 					+ Environment.NewLine

@@ -32,9 +32,6 @@
 			CommonData = commonData;
 
 			ApplySetting();
-			
-			//Startup.UndoWindowState();
-			//Startup = null;
 		}
 
 		public CommonData CommonData { get; private set; }
@@ -42,11 +39,6 @@
 		#endregion
 
 		#region function
-
-		protected virtual StartupWindowStatus CreateStartupWindowStatus()
-		{
-			return new StartupWindowStatus(this);
-		}
 
 		protected virtual void ApplySetting()
 		{
