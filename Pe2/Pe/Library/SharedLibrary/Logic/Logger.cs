@@ -93,7 +93,9 @@
 					+ Environment.NewLine
 					+ " [MSG] {8}\t{9}"
 					+ Environment.NewLine
-					+ indent + "[ Native ][   IL   ] Method(line)"
+					+ " [STK]"
+					+ Environment.NewLine
+					+ indent + "+[ Native ][   IL   ] Method(line)"
 					+ Environment.NewLine
 					+ "{10}"
 					+ Environment.NewLine
@@ -108,7 +110,19 @@
 					item.CallerAssembly.GetName(),
 					item.Message,
 					item.DetailText,
-					string.Join(Environment.NewLine, item.StackTrace.GetFrames().Select(sf => string.Format(indent + "[{0:x8}][{1:x8}] {2}({3})", sf.GetNativeOffset(), sf.GetILOffset(), sf.GetMethod(), sf.GetFileLineNumber())))
+					string.Join(
+						Environment.NewLine, 
+						item.StackTrace.GetFrames()
+							.Select(sf => 
+								string.Format(
+									indent + "-[{0:x8}][{1:x8}] {2}({3})", 
+									sf.GetNativeOffset(), 
+									sf.GetILOffset(), 
+									sf.GetMethod(), 
+									sf.GetFileLineNumber()
+								)
+							)
+					)
 				);
 				FileWriter.Flush();
 			}

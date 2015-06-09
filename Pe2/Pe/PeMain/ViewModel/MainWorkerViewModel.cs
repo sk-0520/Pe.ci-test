@@ -97,9 +97,7 @@
 			CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.Logger);
 			CommonData.LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
 			// 言語ファイル
-			string loadLanguagePath;
-			var language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, VariableConstants.LanguageCode, out loadLanguagePath);
-			CommonData.Language = new LanguageCollectionViewModel(language, loadLanguagePath);
+			CommonData.Language = AppUtility.LoadLanguageFile(VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, VariableConstants.LanguageCode, CommonData.Logger);
 		}
 
 		void SaveSetting()
