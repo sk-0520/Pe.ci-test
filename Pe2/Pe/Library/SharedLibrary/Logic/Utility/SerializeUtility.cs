@@ -261,7 +261,12 @@
 				throw new InvalidOperationException(typeof(T).ToString());
 			}
 
-			var jsonString = JsonConvert.SerializeObject(model);
+			var setting = new JsonSerializerSettings() {
+				Formatting = Newtonsoft.Json.Formatting.Indented,
+				TypeNameHandling = TypeNameHandling.All,
+			};
+
+			var jsonString = JsonConvert.SerializeObject(model, setting);
 			using(var writer = new StreamWriter(stream)) {
 				writer.Write(jsonString);
 			}

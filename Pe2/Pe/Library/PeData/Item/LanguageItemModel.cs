@@ -17,6 +17,7 @@
 
 		#region IName
 
+		[DataMember]
 		public string Name { get; set; }
 
 		#endregion

@@ -45,6 +45,5 @@
 		public TIdCollection<string, LanguageItemModel> Words { get; set; }
 
 		#endregion
-
 	}
 }

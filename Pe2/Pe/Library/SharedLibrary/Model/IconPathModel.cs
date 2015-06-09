@@ -16,10 +16,12 @@
 		/// <summary>
 		/// パス。
 		/// </summary>
+		[DataMember]
 		public string Path { get; set; }
 		/// <summary>
 		/// アイコンインデックス。
 		/// </summary>
+		[DataMember]
 		public int Index { get; set; }
 	}
 }

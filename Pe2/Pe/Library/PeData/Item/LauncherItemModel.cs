@@ -28,6 +28,7 @@
 		/// <summary>
 		/// ID。
 		/// </summary>
+		[DataMember]
 		public string Id { get; set; }
 
 		#endregion
