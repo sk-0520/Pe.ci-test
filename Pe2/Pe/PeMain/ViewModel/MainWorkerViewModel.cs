@@ -25,7 +25,6 @@
 			};
 		}
 
-
 		#region property
 
 		CommonData CommonData { get; set; }
@@ -38,20 +37,6 @@
 		#endregion
 
 		#region command
-
-		/// <summary>
-		/// Hides the main window. This command is only enabled if a window is open.
-		/// </summary>
-		public ICommand HideWindowCommand
-		{
-			get
-			{
-				return new DelegateCommand {
-					Command = o => Application.Current.MainWindow.Close(),
-					CanExecute = o => Application.Current.MainWindow != null
-				};
-			}
-		}
 
 		public ICommand ShowSettingWindowCommand
 		{
@@ -115,6 +100,8 @@
 			CommonData.Logger.Information("MainWorkerViewModel initialize");
 
 			LoadSetting();
+
+			// 使用許諾まわり
 			if(CheckAccept()) {
 				IncrementRunningInformation();
 			} else {
@@ -131,6 +118,8 @@
 					return false;
 				}
 			}
+
+			CreateToolbar();
 
 			return true;
 		}
@@ -162,6 +151,13 @@
 		{
 			CommonData.MainSetting.RunningInformation.LastExecuteVersion = Constants.assemblyVersion;
 			CommonData.MainSetting.RunningInformation.ExecuteCount += 1;
+		}
+
+		/// <summary>
+		/// ツールバーの生成。
+		/// </summary>
+		void CreateToolbar()
+		{
 		}
 
 		#endregion
