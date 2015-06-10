@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -40,15 +41,12 @@
 
 		#region command
 
+
 		public ICommand OkCommand
 		{
 			get
 			{
-				return new DelegateCommand(
-					o => {
-						Model.Accept = true;
-					}
-				);
+				return new DelegateCommand(o => OnDailogCommand(o, true));
 			}
 		}
 
@@ -56,13 +54,28 @@
 		{
 			get
 			{
-				return new DelegateCommand(
-					o => {
-						Model.Accept = false;
-					}
-				);
+				return new DelegateCommand(o => OnDailogCommand(o, false));
 			}
 		}
+
+		#endregion
+
+		#region function
+
+		void OnDailogCommand(object sender, bool result)
+		{
+			Model.Accept = result;
+
+			var window = sender as Window;
+			if (window != null) {
+				if (result) {
+					window.DialogResult = true;
+				} else {
+					window.DialogResult = false;
+				}
+			}
+		}
+
 
 		#endregion
 	}

@@ -118,10 +118,17 @@
 			if(CheckAccept()) {
 				IncrementRunningInformation();
 			} else {
-				// 使用許諾
+				// 使用許諾表示前に使用しない状態にしておく。
+				CommonData.MainSetting.RunningInformation.Accept = false;
 				var window = new AcceptWindow();
 				window.SetCommonData(CommonData);
 				window.ShowDialog();
+				if (CommonData.MainSetting.RunningInformation.Accept) {
+					// OK
+					IncrementRunningInformation();
+				} else {
+					return false;
+				}
 			}
 
 			return true;

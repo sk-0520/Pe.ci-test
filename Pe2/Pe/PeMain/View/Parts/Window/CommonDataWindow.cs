@@ -16,6 +16,7 @@
 	public abstract class CommonDataWindow : Window, ICommonData
 	{
 		public CommonDataWindow()
+			:base()
 		{ }
 
 		#region property

@@ -1,9 +1,10 @@
-﻿<CD:CommonDataWindow 
-	x:Class="ContentTypeTextNet.Pe.PeMain.View.AcceptWindow"
+﻿<CD:CommonDataWindow
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:local="clr-namespace:ContentTypeTextNet.Pe.PeMain.View"
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.AcceptWindow"
 	UI:XamlTag.LanguageKey="window/accept"
 	Title="AcceptWindow" 
 	Width="{Binding MinWidth, RelativeSource={RelativeSource Self}}"
@@ -13,16 +14,16 @@
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 >
-	<Window.Resources>
+	<CD:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
-	</Window.Resources>
+	</CD:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="211*"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
-		<WebBrowser Name="webDocument" Grid.Row="0" />
+		<WebBrowser x:Name="webDocument" Grid.Row="0" />
 		<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="1" Margin="8,8,8,0">
 			<StackPanel.Resources>
 				<Style TargetType="{x:Type CheckBox}">
@@ -33,8 +34,8 @@
 			<CheckBox IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AcceptWindow}}}" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AcceptWindow}}}" />
 		</StackPanel>
 	</Grid>
 </CD:CommonDataWindow>
