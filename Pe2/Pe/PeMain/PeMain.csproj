@@ -105,6 +105,9 @@
     <Compile Include="View\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\LoggingWindow.xaml.cs">
+      <DependentUpon>LoggingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
@@ -146,6 +149,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoggingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

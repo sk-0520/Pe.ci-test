@@ -31,6 +31,7 @@
 
 		public bool Pause { get; set; }
 
+		LoggingWindow LoggingWindow { get; set; }
 		List<Window> WindowList { get; set; }
 
 
@@ -38,6 +39,9 @@
 
 		#region command
 
+		/// <summary>
+		/// 設定ウィンドウ表示。
+		/// </summary>
 		public ICommand ShowSettingWindowCommand
 		{
 			get
@@ -54,7 +58,31 @@
 		}
 
 		/// <summary>
-		/// Shuts down the application.
+		/// ログウィンドウ切り替え。
+		/// </summary>
+		public ICommand SwitchLoggingWindowCommand
+		{
+			get
+			{
+				var result = new DelegateCommand();
+				result.Command += o => {
+					if (LoggingWindow == null) {
+						LoggingWindow = new LoggingWindow();
+						LoggingWindow.SetCommonData(CommonData);
+					}
+					if (LoggingWindow.Visibility == Visibility.Visible) {
+						LoggingWindow.Visibility = Visibility.Hidden;
+					} else {
+						LoggingWindow.Visibility = Visibility.Visible;
+					}
+				};
+
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// プログラム終了。
 		/// </summary>
 		public ICommand ExitApplicationCommand
 		{
@@ -119,6 +147,8 @@
 				}
 			}
 
+			CreateLogger();
+
 			CreateToolbar();
 
 			return true;
@@ -151,6 +181,13 @@
 		{
 			CommonData.MainSetting.RunningInformation.LastExecuteVersion = Constants.assemblyVersion;
 			CommonData.MainSetting.RunningInformation.ExecuteCount += 1;
+		}
+
+		/// <summary>
+		/// ログの生成。
+		/// </summary>
+		void CreateLogger()
+		{
 		}
 
 		/// <summary>

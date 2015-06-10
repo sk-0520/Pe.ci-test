@@ -4,18 +4,20 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 	xmlns:local="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 >
 
 	<ContextMenu x:Shared="false" x:Key="TasktrayContextMenu">
-		<MenuItem Header="setting" Tag="lang:setting" Command="{Binding ShowSettingWindowCommand}" />
-		<MenuItem Header="toolbar" Tag="lang:toolbar"/>
-		<MenuItem Header="note" Tag="lang:note"/>
-		<MenuItem Header="command" Tag="lang:command"/>
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" />
 		<Separator />
-		<MenuItem Header="system-env" Tag="lang:system-env"/>
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/log" Header="system-env" />
 		<Separator />
-		<MenuItem Header="about" Tag="lang:about"/>
-		<MenuItem Header="exit" Tag="lang:exit"  Command="{Binding ExitApplicationCommand}" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
 	</ContextMenu>
 
 
