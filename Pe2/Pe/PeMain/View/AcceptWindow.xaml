@@ -23,18 +23,18 @@
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
 		<WebBrowser Name="webDocument" Grid.Row="0" />
-		<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="1" Margin="8,0,0,0">
+		<StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="1" Margin="8,8,8,0">
 			<StackPanel.Resources>
 				<Style TargetType="{x:Type CheckBox}">
 					<Setter Property="Margin" Value="0,4,10,4"/>
 				</Style>
 			</StackPanel.Resources>
-			<CheckBox Content="release" IsChecked="{Binding CheckUpdateRelease}" UI:XamlTag.LanguageKey="update-check/release" />
-			<CheckBox Content="rc" IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" />
+			<CheckBox Style="{StaticResource ResourceKey=LanguageKeyCheckBox}" IsChecked="{Binding CheckUpdateRelease}" UI:XamlTag.LanguageKey="update-check/release" Content="release" />
+			<CheckBox Style="{StaticResource ResourceKey=LanguageKeyCheckBox}" IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" />
 		</StackPanel>
 	</Grid>
 </CD:CommonDataWindow>

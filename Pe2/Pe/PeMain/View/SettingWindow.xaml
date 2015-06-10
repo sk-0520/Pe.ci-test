@@ -17,11 +17,10 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="auto"/>
 		</Grid.RowDefinitions>
-		<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/ok?" Grid.Row="0" />
 
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/cancel" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/ok" Content="ok" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/cancel" Content="cancel" />
 		</StackPanel>
 	</Grid>
 </CD:CommonDataWindow>
