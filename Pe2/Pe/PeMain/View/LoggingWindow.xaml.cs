@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage
+﻿namespace ContentTypeTextNet.Pe.PeMain.View
 {
 	using System;
 	using System.Collections.Generic;
@@ -12,16 +12,15 @@
 	using System.Windows.Input;
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
-	using System.Windows.Navigation;
 	using System.Windows.Shapes;
-	using ContentTypeTextNet.Pe.PeMain.View.Parts.Control;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 
 	/// <summary>
-	/// MainSettingControl.xaml の相互作用ロジック
+	/// LoggingWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class MainSettingControl : CommonDataUserControl
+	public partial class LoggingWindow : CommonDataWindow
 	{
-		public MainSettingControl()
+		public LoggingWindow()
 		{
 			InitializeComponent();
 		}
