@@ -29,12 +29,12 @@
 					<Setter Property="Margin" Value="0,4,10,4"/>
 				</Style>
 			</StackPanel.Resources>
-			<CheckBox Style="{StaticResource ResourceKey=LanguageKeyCheckBox}" IsChecked="{Binding CheckUpdateRelease}" UI:XamlTag.LanguageKey="update-check/release" Content="release" />
-			<CheckBox Style="{StaticResource ResourceKey=LanguageKeyCheckBox}" IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" Content="rc" />
+			<CheckBox IsChecked="{Binding CheckUpdateRelease}" UI:XamlTag.LanguageKey="update-check/release" Content="release" />
+			<CheckBox IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}" />
 		</StackPanel>
 	</Grid>
 </CD:CommonDataWindow>
