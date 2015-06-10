@@ -13,12 +13,13 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 
 	/// <summary>
 	/// SettingWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class SettingWindow: CommonDataWindow
+	public partial class SettingWindow : CommonDataWindow
 	{
 		public SettingWindow()
 		{

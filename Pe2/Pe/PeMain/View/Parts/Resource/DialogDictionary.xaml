@@ -2,7 +2,13 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	x:Class="object"
 >
+	<!--
+		x:Class="object"
+		=> http://frog.raindrop.jp/knowledge/archives/002177.html
+	-->
+	
 	<Style x:Key="DialogResultPanel" TargetType="StackPanel">
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="HorizontalAlignment" Value="Right" />

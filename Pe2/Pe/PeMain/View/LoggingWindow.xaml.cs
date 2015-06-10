@@ -13,16 +13,32 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
 	/// <summary>
 	/// LoggingWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LoggingWindow : CommonDataWindow
+	public partial class LoggingWindow : VMCommonDataWindow<LoggingViewModel>
 	{
 		public LoggingWindow()
 		{
 			InitializeComponent();
 		}
+
+		#region CommonDataWindow
+
+		protected override void CreateViewModel()
+		{
+			ViewModel = new LoggingViewModel(CommonData.MainSetting.Logging);
+		}
+
+		protected override void ApplyViewModel()
+		{
+			DataContext = ViewModel;
+		}
+
+		#endregion
 	}
 }

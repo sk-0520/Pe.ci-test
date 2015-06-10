@@ -9,12 +9,13 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class CommonDataWindow : Window, ICommonData
+	public abstract class CommonDataWindow: Window, ICommonData
 	{
 		public CommonDataWindow()
 			:base()
@@ -45,9 +46,13 @@
 		{
 			Debug.Assert(CommonData != null);
 
+			CreateViewModel();
 			ApplyViewModel();
 			Loaded += CommonDataWindow_Loaded;
 		}
+
+		protected virtual void CreateViewModel()
+		{ }
 
 		protected virtual void ApplyLanguage()
 		{

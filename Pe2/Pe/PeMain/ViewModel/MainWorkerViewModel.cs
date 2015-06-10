@@ -66,10 +66,8 @@
 			{
 				var result = new DelegateCommand();
 				result.Command += o => {
-					if (LoggingWindow == null) {
-						LoggingWindow = new LoggingWindow();
-						LoggingWindow.SetCommonData(CommonData);
-					}
+					Debug.Assert(LoggingWindow != null);
+
 					if (LoggingWindow.Visibility == Visibility.Visible) {
 						LoggingWindow.Visibility = Visibility.Hidden;
 					} else {
@@ -188,6 +186,9 @@
 		/// </summary>
 		void CreateLogger()
 		{
+			LoggingWindow = new LoggingWindow();
+			LoggingWindow.SetCommonData(CommonData);
+			//LoggingWindow.da
 		}
 
 		/// <summary>

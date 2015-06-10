@@ -20,7 +20,7 @@
 	/// <summary>
 	/// AcceptWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class AcceptWindow: CommonDataWindow
+	public partial class AcceptWindow: VMCommonDataWindow<AcceptViewModel>
 	{
 		public AcceptWindow()
 		{
@@ -29,10 +29,14 @@
 
 		#region CommonDataWindow
 
+		protected override void CreateViewModel()
+		{
+			ViewModel = new AcceptViewModel(CommonData.MainSetting.RunningInformation);
+		}
+
 		protected override void ApplyViewModel()
 		{
-			var vm = new AcceptViewModel(CommonData.MainSetting.RunningInformation);
-			DataContext = vm;
+			DataContext = ViewModel;
 
 			var acceptSource = File.ReadAllText(CommonData.Language.AcceptDocumentFilePath);
 			var acceptMap = new Dictionary<string, string>() {
