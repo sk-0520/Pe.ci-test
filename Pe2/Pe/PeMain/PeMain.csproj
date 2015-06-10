@@ -105,7 +105,10 @@
     <Compile Include="View\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\Control\CommonDataControl.cs" />
+    <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
+    <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
+      <DependentUpon>MainSettingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\XamlTag.cs" />
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -154,14 +157,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Parts\Control\SettingPage\MainSettingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\Parts\SettingWindow\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{fbf5e5e8-2d88-45a7-b1ea-9e3fb68e97e4}</Project>

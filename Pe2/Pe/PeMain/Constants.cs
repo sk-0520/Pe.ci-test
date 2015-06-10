@@ -19,7 +19,7 @@
 		/// <summary>
 		/// 前回バージョンがこれ未満なら使用許諾を表示
 		/// </summary>
-		public static readonly Version acceptVersion = new Version(1, 0, 0, 0);
+		public static readonly Version acceptVersion = new Version(0, 0, 0, 0);
 
 #if DEBUG
 		public const string shortcutName = programName + "(DEBUG).lnk";

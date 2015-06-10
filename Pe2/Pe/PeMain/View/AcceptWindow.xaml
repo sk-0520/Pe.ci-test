@@ -12,7 +12,10 @@
 	MinWidth="600"
 	MinHeight="400"
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" WindowStartupLocation="CenterScreen" Topmost="True" ResizeMode="CanResizeWithGrip"
+	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+	WindowStartupLocation="CenterScreen" 
+	Topmost="True" 
+	ResizeMode="CanResizeWithGrip"
 >
 	<CD:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
