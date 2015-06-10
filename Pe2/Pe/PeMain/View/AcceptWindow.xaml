@@ -6,8 +6,12 @@
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	UI:XamlTag.LanguageKey="window/accept"
 	Title="AcceptWindow" 
-	Height="308.955" 
-	Width="414.925"
+	Width="{Binding MinWidth, RelativeSource={RelativeSource Self}}"
+	Height="{Binding MinHeight, RelativeSource={RelativeSource Self}}" 
+	MinWidth="600"
+	MinHeight="400"
+	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 >
 	<Window.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>

@@ -6,6 +6,7 @@
 	</Define>
 	<Words>
 		<Item Id="window/setting" Word="setting"  />
+		<Item Id="window/accept" Word="@[APPLICATION] 使用許諾"  />
 		<Item Id="common/ok" Word="${ok}"  />
 		<Item Id="common/cancel" Word="${cancel}"  />
 		<Item Id="tasktray/tooltip" Word="ぴーいー" />
