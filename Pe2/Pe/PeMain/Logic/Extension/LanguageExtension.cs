@@ -13,7 +13,7 @@
 
 	public static class LanguageExtension
 	{
-		static void SetUI_Impl(UIElement ui, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string> action)
+		static void SetUI_Impl(DependencyObject ui, LanguageManager language, IReadOnlyDictionary<string, string> map, Action<string> action)
 		{
 			var key = ui.LanguageKey();
 			if(!string.IsNullOrWhiteSpace(key)) {
@@ -42,6 +42,17 @@
 					ui.Content = language[key, map];
 				}
 			});
+		}
+
+		public static void SetUI(this GridViewColumnHeader ui, LanguageManager language, IReadOnlyDictionary<string, string> map = null)
+		{
+			if (ui.Column != null) {
+				SetUI_Impl(ui.Column, language, map, key => {
+					if (!ui.HasContent || ui.Content is string) {
+						ui.Content = language[key, map];
+					}
+				});
+			}
 		}
 	}
 }

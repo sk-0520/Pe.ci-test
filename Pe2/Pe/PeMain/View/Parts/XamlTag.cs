@@ -18,29 +18,29 @@
 			new FrameworkPropertyMetadata(null)
 		);
 
-		public static string GetLanguageKey(UIElement element)
+		public static string GetLanguageKey(DependencyObject dependencyObject)
 		{
-			Validate(element);
+			Validate(dependencyObject);
 
-			return (string)element.GetValue(LanguageKeyProperty);
+			return (string)dependencyObject.GetValue(LanguageKeyProperty);
 		}
-		public static void SetLanguageKey(UIElement element, string value)
+		public static void SetLanguageKey(DependencyObject dependencyObject, string value)
 		{
-			Validate(element);
+			Validate(dependencyObject);
 
-			element.SetValue(LanguageKeyProperty, value);
+			dependencyObject.SetValue(LanguageKeyProperty, value);
 		}
 
 		#region extension
 
-		public static string LanguageKey(this UIElement element)
+		public static string LanguageKey(this DependencyObject dependencyObject)
 		{
-			return GetLanguageKey(element);
+			return GetLanguageKey(dependencyObject);
 		}
 
-		public static void LanguageKey(this UIElement element, string value)
+		public static void LanguageKey(this DependencyObject dependencyObject, string value)
 		{
-			SetLanguageKey(element, value);
+			SetLanguageKey(dependencyObject, value);
 		}
 
 		#endregion
@@ -49,10 +49,10 @@
 
 		#region function
 
-		static void Validate(UIElement element)
+		static void Validate(DependencyObject dependencyObject)
 		{
-			if(element == null) {
-				throw new ArgumentNullException("element");
+			if (dependencyObject == null) {
+				throw new ArgumentNullException("dependencyObject");
 			}
 		}
 

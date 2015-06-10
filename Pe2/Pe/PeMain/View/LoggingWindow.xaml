@@ -11,30 +11,26 @@
 	ShowInTaskbar="False" 
 	WindowStyle="ToolWindow"
 >
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="28"/>
-			<RowDefinition Height="128*"/>
-			<RowDefinition Height="67"/>
-			<RowDefinition Height="28"/>
-		</Grid.RowDefinitions>
-		<ToolBar Grid.Row="0" >
-			<ToolBar.Background>
-				<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
-			</ToolBar.Background>
+	<DockPanel LastChildFill="True">
+		<ToolBar DockPanel.Dock="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ToolBarTray.IsLocked="True">
+			<Button Content="save" UI:XamlTag.LanguageKey="log/save" />
+			<Button Content="clear" UI:XamlTag.LanguageKey="log/clear" />
 		</ToolBar>
-		<ListView Grid.Row="1">
-			<ListView.View>
-				<GridView>
-					<GridViewColumn/>
-				</GridView>
-			</ListView.View>
-		</ListView>
-		<TextBox Grid.Row="2" AllowDrop="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-		<StatusBar Grid.Row="3">
-			<StatusBar.Background>
-				<SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
-			</StatusBar.Background>
-		</StatusBar>
-	</Grid>
+		<StatusBar DockPanel.Dock="Bottom" FontFamily="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="{DynamicResource {x:Static SystemParameters.MenuHeightKey}}" />
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="154*"/>
+				<RowDefinition Height="103*"/>
+			</Grid.RowDefinitions>
+			<ListView Grid.Row="0">
+				<ListView.View>
+					<GridView>
+						<GridViewColumn Header="timestamp" UI:XamlTag.LanguageKey="log-timestamp" DisplayMemberBinding="{Binding Timestamp}" />
+						<GridViewColumn Header="message" UI:XamlTag.LanguageKey="log-message" DisplayMemberBinding="{Binding Message}" />
+					</GridView>
+				</ListView.View>
+			</ListView>
+			<TextBox Margin="0,2,0,0" Grid.Row="1" AllowDrop="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+		</Grid>
+	</DockPanel>
 </CD:CommonDataWindow>

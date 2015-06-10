@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	
 	public abstract class CommonDataUserControl: UserControl
 	{
@@ -47,18 +48,7 @@
 		{
 			Debug.Assert(CommonData != null);
 
-			var map = new Dictionary<Type, Action<UIElement>>() {
-				{ typeof(Button), ui => ((Button)ui).SetUI(CommonData.Language) }
-			};
-
-			foreach(var element in UIUtility.FindVisualChildren<UIElement>(this)) {
-				var type = element.GetType();
-
-				Action<UIElement> action;
-				if(map.TryGetValue(type, out action)) {
-					action(element);
-				}
-			}
+			LanguageUtility.SetLanguage(this, CommonData.Language);
 		}
 
 		protected virtual void ApplyViewModel()
