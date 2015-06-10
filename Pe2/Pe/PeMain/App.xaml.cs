@@ -35,12 +35,15 @@
 				this._notifyIcon.DataContext = workVm;
 			} else {
 				// 終了
+				Application.Current.Shutdown();
 			}
 		}
 
 		protected override void OnExit(ExitEventArgs e)
 		{
-			_notifyIcon.Dispose(); //the icon would clean up automatically, but this is cleaner
+			if (this._notifyIcon != null) {
+				this._notifyIcon.Dispose();
+			}
 			base.OnExit(e);
 		}
 	}

@@ -124,9 +124,10 @@
 				window.SetCommonData(CommonData);
 				window.ShowDialog();
 				if (CommonData.MainSetting.RunningInformation.Accept) {
-					// OK
+					CommonData.Logger.Information("accept: OK");
 					IncrementRunningInformation();
 				} else {
+					CommonData.Logger.Information("accept: NG");
 					return false;
 				}
 			}
@@ -138,16 +139,19 @@
 		{
 			if(!CommonData.MainSetting.RunningInformation.Accept) {
 				// 完全に初回
+				CommonData.Logger.Debug("first");
 				return false;
 			}
 
 			if(CommonData.MainSetting.RunningInformation.LastExecuteVersion == null) {
 				// 何らかの理由で前回実行時のバージョン格納されていない
+				CommonData.Logger.Debug("last version == null");
 				return false;
 			}
 
 			if(CommonData.MainSetting.RunningInformation.LastExecuteVersion < Constants.acceptVersion) {
 				// 前回バージョンから強制定期に使用許諾が必要
+				CommonData.Logger.Debug("last version < accept version");
 				return false;
 			}
 
