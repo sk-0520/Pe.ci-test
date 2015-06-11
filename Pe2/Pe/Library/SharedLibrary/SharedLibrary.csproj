@@ -119,6 +119,8 @@
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logic\LanguageManager.cs" />
+    <Compile Include="ViewModel\HavingViewModelBase.cs" />
+    <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
   </ItemGroup>

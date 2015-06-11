@@ -13,10 +13,10 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class AcceptViewModel : SingleModelWrapperViewModelBase<RunningInformationItemModel>, IHavingView<AcceptWindow>
+	public class AcceptViewModel : HavingViewSingleModelWrapperViewModelBase<AcceptWindow, RunningInformationItemModel>
 	{
-		public AcceptViewModel(RunningInformationItemModel model)
-			: base(model)
+		public AcceptViewModel(AcceptWindow view, RunningInformationItemModel model)
+			: base(view, model)
 		{ }
 
 		#region property

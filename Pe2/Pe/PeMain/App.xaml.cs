@@ -51,7 +51,7 @@
 				this._notifyIcon.Dispose();
 			}
 			if (this._systemLogger != null) {
-				this._systemLogger.LoggerConfig.PutsCustom = false;
+				//this._systemLogger.LoggerConfig.PutsCustom = false;
 			}
 			base.OnExit(e);
 		}

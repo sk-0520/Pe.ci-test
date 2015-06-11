@@ -31,8 +31,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new LoggingViewModel(CommonData.MainSetting.Logging);
-			ViewModel.View = this;
+			ViewModel = new LoggingViewModel(this, CommonData.MainSetting.Logging);
 		}
 
 		protected override void ApplyViewModel()

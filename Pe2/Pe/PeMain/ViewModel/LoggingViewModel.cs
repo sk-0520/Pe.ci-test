@@ -15,7 +15,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LoggingViewModel:SingleModelWrapperViewModelBase<LoggingItemModel>, IHavingView<LoggingWindow>, ILogAppender
+	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender
 	{
 		#region event
 
@@ -23,19 +23,13 @@
 
 		#endregion
 
-		public LoggingViewModel(LoggingItemModel model)
-			:base(model)
+		public LoggingViewModel(LoggingWindow view, LoggingItemModel model)
+			: base(view, model)
 		{
 			LogItems = new ObservableCollection<LogItemModel>();
 		}
 
 		#region property
-
-		#region IHavingView
-
-		public LoggingWindow View { get; set; }
-
-		#endregion
 
 		public ObservableCollection<LogItemModel> LogItems { get; set; }
 
