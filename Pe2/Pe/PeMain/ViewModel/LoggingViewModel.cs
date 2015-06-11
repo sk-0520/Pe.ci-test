@@ -3,12 +3,15 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.ComponentModel;
+	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -18,12 +21,6 @@
 
 	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender
 	{
-		#region event
-
-		public event EventHandler ShowFront = delegate { };
-
-		#endregion
-
 		public LoggingViewModel(LoggingWindow view, LoggingItemModel model)
 			: base(view, model)
 		{
@@ -59,8 +56,20 @@
 
 		protected override void InitializeView()
 		{
-			if(View != null)
+			Debug.Assert(HasView);
+
+			View.Closing += View_Closing;
+
 			base.InitializeView();
+		}
+
+		protected override void UninitializeView()
+		{
+			Debug.Assert(HasView);
+
+			View.Closing -= View_Closing;
+
+			base.UninitializeView();
 		}
 
 		#endregion
@@ -69,9 +78,16 @@
 
 		public void AddLog(LogItemModel item)
 		{
-			View.Dispatcher.BeginInvoke(new Action(() => LogItems.Add(item)));
+			if(HasView) {
+				View.Dispatcher.BeginInvoke(new Action(() => LogItems.Add(item)));
+			}
 		}
 
 		#endregion
+
+		void View_Closing(object sender, CancelEventArgs e)
+		{
+			e.Cancel = true;
+		}
 	}
 }

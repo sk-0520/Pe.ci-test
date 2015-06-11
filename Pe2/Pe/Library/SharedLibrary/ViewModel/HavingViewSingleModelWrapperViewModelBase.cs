@@ -1,17 +1,17 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Controls;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	public abstract class HavingViewSingleModelWrapperViewModelBase<TView, TModel> : SingleModelWrapperViewModelBase<TModel>, IHavingView<TView>
 		where TView: UIElement
@@ -63,7 +63,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			UninitializeView();
 		}
 
-		protected void UninitializeView()
+		protected virtual void UninitializeView()
 		{
 			Debug.Assert(HasView);
 		}
