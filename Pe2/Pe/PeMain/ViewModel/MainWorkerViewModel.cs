@@ -15,7 +15,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public sealed class MainWorkerViewModel: ViewModelBase
+	public sealed class MainWorkerViewModel: ViewModelBase, IDisposable
 	{
 		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
 		{
@@ -95,6 +95,15 @@
 
 				return result;
 			}
+		}
+
+		#endregion
+
+		#region IDisposable
+
+		public void Dispose()
+		{
+			CommonData.Dispose();
 		}
 
 		#endregion

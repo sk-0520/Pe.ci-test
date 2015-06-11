@@ -22,7 +22,7 @@
 		#region variable
 		
 		TaskbarIcon _notifyIcon;
-		SystemLogger _systemLogger;
+		MainWorkerViewModel _mainWorker;
 
 		#endregion
 
@@ -32,13 +32,13 @@
 
 			var commandLine = new CommandLine();
 			var constants = new VariableConstants(commandLine);
-			this._systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
-			this._systemLogger.IsStock = true;
-			this._systemLogger.Information("start!", commandLine);
-			var workVm = new MainWorkerViewModel(constants, this._systemLogger);
-			if(workVm.Initialize()) {
+			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
+			systemLogger.IsStock = true;
+			systemLogger.Information("start!", commandLine);
+			this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
+			if (this._mainWorker.Initialize()) {
 				this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
-				this._notifyIcon.DataContext = workVm;
+				this._notifyIcon.DataContext = this._mainWorker;
 			} else {
 				// 終了
 				Application.Current.Shutdown();
@@ -50,9 +50,10 @@
 			if (this._notifyIcon != null) {
 				this._notifyIcon.Dispose();
 			}
-			if (this._systemLogger != null) {
-				//this._systemLogger.LoggerConfig.PutsCustom = false;
+			if (this._mainWorker != null) {
+				this._mainWorker.Dispose();
 			}
+
 			base.OnExit(e);
 		}
 	}

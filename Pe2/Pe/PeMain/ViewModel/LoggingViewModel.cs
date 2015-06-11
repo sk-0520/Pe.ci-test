@@ -55,7 +55,7 @@
 
 		public void AddLog(LogItemModel item)
 		{
-			Application.Current.Dispatcher.Invoke(new Action(() => LogItems.Add(item)));
+			View.Dispatcher.BeginInvoke(new Action(() => LogItems.Add(item)));
 		}
 
 		#endregion
