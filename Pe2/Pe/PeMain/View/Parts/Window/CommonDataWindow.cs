@@ -17,7 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public abstract class CommonDataWindow: UserClosableWindowWindow, ICommonData
+	public abstract class CommonDataWindow: UserClosableWindowWindowBase, ICommonData
 	{
 		public CommonDataWindow()
 			:base()
@@ -42,6 +42,18 @@
 
 		#endregion
 
+		#region UserClosableWindowWindow
+
+		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			base.OnLoaded(sender, e);
+
+			ApplyLanguage();
+			SetChildCommonData();
+		}
+
+		#endregion
+
 		#region function
 
 		protected virtual void ApplySetting()
@@ -50,7 +62,6 @@
 
 			CreateViewModel();
 			ApplyViewModel();
-			Loaded += CommonDataWindow_Loaded;
 		}
 
 		protected virtual void CreateViewModel()
@@ -78,13 +89,6 @@
 		}
 
 		#endregion
-
-		void CommonDataWindow_Loaded(object sender, RoutedEventArgs e)
-		{
-			Loaded -= CommonDataWindow_Loaded;
-			ApplyLanguage();
-			SetChildCommonData();
-		}
 
 	}
 }

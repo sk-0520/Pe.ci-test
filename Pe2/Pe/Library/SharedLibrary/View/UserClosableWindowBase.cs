@@ -13,7 +13,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 	/// <summary>
 	/// × とか Alt + F4 で閉じたことを検知できる Window。
 	/// </summary>
-	public abstract class UserClosableWindowWindow: WndProcWindow, IUserClosableWindow
+	public abstract class UserClosableWindowWindowBase: WndProcWindowBase, IUserClosableWindow
 	{
 		#region event
 
@@ -26,7 +26,7 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 		#endregion
 
-		public UserClosableWindowWindow()
+		public UserClosableWindowWindowBase()
 			: base()
 		{ }
 

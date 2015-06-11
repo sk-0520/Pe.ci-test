@@ -126,10 +126,10 @@
     <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
-    <Compile Include="View\OnLoadedWindow.cs" />
-    <Compile Include="View\UserClosableWindow.cs" />
-    <Compile Include="View\WindowsAPIWindow.cs" />
-    <Compile Include="View\WndProcWindow.cs" />
+    <Compile Include="View\OnLoadedWindowBase.cs" />
+    <Compile Include="View\UserClosableWindowBase.cs" />
+    <Compile Include="View\WindowsAPIWindowBase.cs" />
+    <Compile Include="View\WndProcWindowBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

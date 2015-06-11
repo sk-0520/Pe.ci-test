@@ -8,9 +8,9 @@
 	using System.Windows;
 	using System.Windows.Interop;
 
-	public class WindowsAPIWindow: OnLoadedWindow
+	public abstract class WindowsAPIWindowBase: OnLoadedWindowBase
 	{
-		public WindowsAPIWindow()
+		public WindowsAPIWindowBase()
 			:base()
 		{ }
 

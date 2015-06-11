@@ -12,7 +12,7 @@
 	/// <summary>
 	/// Windowsのウィンドウプロシージャを持つWindow。
 	/// </summary>
-	public abstract class WndProcWindow: WindowsAPIWindow, IDisposable, IIsDisposed
+	public abstract class WndProcWindowBase: WindowsAPIWindowBase, IDisposable, IIsDisposed
 	{
 		#region variable
 
@@ -20,11 +20,11 @@
 
 		#endregion
 
-		public WndProcWindow()
+		public WndProcWindowBase()
 			: base()
 		{ }
 
-		~WndProcWindow()
+		~WndProcWindowBase()
 		{
 			Dispose(false);
 		}
