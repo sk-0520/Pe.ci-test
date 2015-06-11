@@ -144,7 +144,7 @@
 		/// 出力担当。
 		/// </summary>
 		/// <param name="item"></param>
-		protected void Puts(LogItemModel item)
+		protected virtual void Puts(LogItemModel item)
 		{
 			var putsList = new[] {
 				new Tuple<bool, Action<LogItemModel>>(LoggerConfig.PutsFile, PutsFile),

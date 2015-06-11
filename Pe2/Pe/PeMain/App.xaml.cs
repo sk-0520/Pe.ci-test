@@ -28,6 +28,7 @@
 			var commandLine = new CommandLine();
 			var constants = new VariableConstants(commandLine);
 			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
+			systemLogger.IsStock = true;
 			systemLogger.Information("start!", commandLine);
 			var workVm = new MainWorkerViewModel(constants, systemLogger);
 			if(workVm.Initialize()) {

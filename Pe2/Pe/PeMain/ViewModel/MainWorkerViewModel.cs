@@ -189,6 +189,16 @@
 			LoggingWindow = new LoggingWindow();
 			LoggingWindow.SetCommonData(CommonData);
 			//LoggingWindow.da
+
+			var systemLogger = (SystemLogger)CommonData.Logger;
+			systemLogger.LogCollector = LoggingWindow.ViewModel;
+			if (systemLogger.IsStock) {
+				// 溜まったログをViewにドバー
+				foreach (var logItem in systemLogger.StockItems) {
+					systemLogger.LogCollector.Puts(logItem);
+				}
+				systemLogger.IsStock = false;
+			}
 		}
 
 		/// <summary>

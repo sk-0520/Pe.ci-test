@@ -14,6 +14,7 @@
 		#region variable
 
 		ILogCollector _logCollector;
+		bool _isStock;
 
 		#endregion
 
@@ -45,6 +46,27 @@
 			}
 		}
 
+		public List<LogItemModel> StockItems { get; private set; }
+
+		public bool IsStock
+		{
+			get { return this._isStock; }
+			set
+			{
+				this._isStock = value;
+				if (this._isStock) {
+					if (StockItems == null) {
+						StockItems = new List<LogItemModel>();
+					}
+				} else {
+					if (StockItems != null) {
+						StockItems.Clear();
+						StockItems = null;
+					}
+				}
+			}
+		}
+
 		#endregion
 
 		#region Logger
@@ -62,6 +84,14 @@
 			if (LogCollector != null) {
 				LogCollector.Puts(item);
 			}
+		}
+
+		protected override void Puts(LogItemModel item)
+		{
+			if (IsStock) {
+				StockItems.Add(item);
+			}
+			base.Puts(item);
 		}
 
 		#endregion
