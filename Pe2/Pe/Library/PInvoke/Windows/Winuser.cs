@@ -58,11 +58,84 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		Refresh = 0x7103,
 	}
 	
+	/// <summary>
+	/// http://chokuto.ifdef.jp/urawaza/message/WM_SYSCOMMAND.html
+	/// </summary>
 	public enum SC
 	{
-		SC_MINIMIZE = 0xf020,
-		SC_MAXIMIZE = 0xf030,
-		SC_RESTORE = 0xf120,
+		/// <summary>
+		/// ウィンドウサイズを変更します。
+		/// </summary>
+		SC_SIZE = 0xF000,
+		/// <summary>
+		/// ウィンドウを移動します。
+		/// </summary>
+		SC_MOVE = 0xF010,
+		/// <summary>
+		/// ウィンドウを最小化します。
+		/// </summary>
+		SC_MINIMIZE = 0xF020,
+		/// <summary>
+		/// ウィンドウを最大化します。
+		/// </summary>
+		SC_MAXIMIZE = 0xF030,
+		/// <summary>
+		/// 次のウィンドウに移動します。
+		/// </summary>
+		SC_NEXTWINDOW = 0xF040,
+		/// <summary>
+		/// 前のウィンドウに移動します。
+		/// </summary>
+		SC_PREVWINDOW = 0xF050,
+		/// <summary>
+		/// ウィンドウをクローズします。
+		/// </summary>
+		SC_CLOSE = 0xF060,
+		/// <summary>
+		/// 垂直にスクロールします。
+		/// </summary>
+		SC_VSCROLL = 0xF070,
+		/// <summary>
+		/// 水平にスクロールします。
+		/// </summary>
+		SC_HSCROLL = 0xF080,
+		/// <summary>
+		/// マウスクリックによりメニューを取得します。
+		/// </summary>
+		SC_MOUSEMENU = 0xF090,
+		/// <summary>
+		/// キー操作によりメニューを取得します。
+		/// </summary>
+		SC_KEYMENU = 0xF100,
+		/// <summary>
+		/// ウィンドウを元の位置とサイズに戻します。
+		/// </summary>
+		SC_RESTORE = 0xF120,
+		/// <summary>
+		/// スタートメニューを表示します。
+		/// </summary>
+		SC_TASKLIST = 0xF130,
+		/// <summary>
+		/// system.ini の [boot] セクションで指定されたスクリーンセーバーを起動します。
+		/// </summary>
+		SC_SCREENSAVE = 0xF140,
+		/// <summary>
+		/// アプリケーション指定のホットキーに関連付けられたウィンドウをアクティブにします。
+		/// lParam パラメータの下位ワードがアクティブになるウィンドウのハンドルを示します。
+		/// </summary>
+		SC_HOTKEY = 0xF150,
+		/// <summary>
+		/// ユーザーがシステムメニューをダブルクリックしたことにより、デフォルトメニューアイテムを選択します。
+		/// </summary>
+		SC_DEFAULT = 0xF160,
+		/// <summary>
+		/// ディスプレイを表示状態を設定します。このコマンドは、バッテリーを使用するコンピュータなどのパワーセブ機能をもつデバイスをサポートします。 lParam パラメータが 1 のときはディスプレイが省電力表示に移行することを示し、 2 のときはディスプレイ表示を停止しようとしていることを示します。
+		/// </summary>
+		SC_MONITORPOWER = 0xF170,
+		/// <summary>
+		/// マウスポインタをクエスチョンマークに変えます。この後にユーザーがダイアログボックス内のコントロールをクリックすると、コントロールは WM_HELP メッセージを受け取ります。
+		/// </summary>
+		SC_CONTEXTHELP = 0xF180
 	}
 
 	public enum SB

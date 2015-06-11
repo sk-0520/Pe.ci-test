@@ -88,6 +88,7 @@
     <Compile Include="IF\IModel.cs" />
     <Compile Include="IF\IName.cs" />
     <Compile Include="IF\ITId.cs" />
+    <Compile Include="IF\IUserClosableWindow.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\DisposeFinalizeBase.cs" />
@@ -125,6 +126,10 @@
     <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
+    <Compile Include="View\OnLoadedWindow.cs" />
+    <Compile Include="View\UserClosableWindow.cs" />
+    <Compile Include="View\WindowsAPIWindow.cs" />
+    <Compile Include="View\WndProcWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -135,6 +140,7 @@
       <Name>PInvoke</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

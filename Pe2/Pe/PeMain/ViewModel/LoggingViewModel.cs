@@ -58,7 +58,7 @@
 		{
 			Debug.Assert(HasView);
 
-			View.Closing += View_Closing;
+			View.UserClosing += View_UserClosing;
 
 			base.InitializeView();
 		}
@@ -67,7 +67,7 @@
 		{
 			Debug.Assert(HasView);
 
-			View.Closing -= View_Closing;
+			View.UserClosing -= View_UserClosing;
 
 			base.UninitializeView();
 		}
@@ -85,8 +85,10 @@
 
 		#endregion
 
-		void View_Closing(object sender, CancelEventArgs e)
+		void View_UserClosing(object sender, CancelEventArgs e)
 		{
+			Debug.Assert(HasView);
+
 			e.Cancel = true;
 		}
 	}

@@ -79,6 +79,7 @@
     <Compile Include="Windows\Uxtheme.cs" />
     <Compile Include="Windows\Winbase.cs" />
     <Compile Include="Windows\Windef.cs" />
+    <Compile Include="Windows\WindowsUtility.cs" />
     <Compile Include="Windows\Winerror.cs" />
     <Compile Include="Windows\Wingdi.cs" />
     <Compile Include="Windows\Winuser.cs" />
