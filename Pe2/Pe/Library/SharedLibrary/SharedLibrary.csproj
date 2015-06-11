@@ -91,11 +91,13 @@
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\DisposeFinalizeBase.cs" />
+    <Compile Include="Logic\EventDisposer.cs" />
     <Compile Include="Logic\Extension\LinqExtension.cs" />
     <Compile Include="Logic\Extension\TextExtension.cs" />
     <Compile Include="Logic\Logger.cs" />
     <Compile Include="Logic\LoggerBase.cs" />
     <Compile Include="Logic\ShortcutFile.cs" />
+    <Compile Include="Logic\Utility\EventUtility.cs" />
     <Compile Include="Logic\Utility\HavingViewUtility.cs" />
     <Compile Include="Logic\Utility\UIUtility.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
