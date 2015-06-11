@@ -7,8 +7,8 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public interface ILogCollector
+	public interface ILogAppender
 	{
-		void Puts(LogItemModel item);
+		void AddLog(LogItemModel item);
 	}
 }

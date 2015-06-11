@@ -162,7 +162,7 @@
 		protected virtual LogItemModel CreateItem(LogKind logKind, string message, object detail, int frame, string callerFile, int callerLine, string callerMember, Assembly callerAssembly, Thread callerThread)
 		{
 			var result = new LogItemModel() {
-				DateTime = DateTime.Now,
+				Timestamp = DateTime.Now,
 				LogKind = logKind,
 				StackTrace = new StackTrace(frame + 1, true),
 				CallerFile = callerFile,

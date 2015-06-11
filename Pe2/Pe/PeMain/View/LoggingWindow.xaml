@@ -24,7 +24,7 @@
 				<RowDefinition Height="154*"/>
 				<RowDefinition Height="103*"/>
 			</Grid.RowDefinitions>
-			<ListView Grid.Row="0">
+			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}">
 				<ListView.View>
 					<GridView>
 						<GridViewColumn Header="timestamp" UI:XamlTag.LanguageKey="log-timestamp" DisplayMemberBinding="{Binding Timestamp}" />

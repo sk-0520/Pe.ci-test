@@ -13,7 +13,7 @@
 	{
 		#region variable
 
-		ILogCollector _logCollector;
+		ILogAppender _logCollector;
 		bool _isStock;
 
 		#endregion
@@ -27,7 +27,7 @@
 
 		#region property
 
-		public ILogCollector LogCollector
+		public ILogAppender LogCollector
 		{
 			get { return this._logCollector; }
 			set
@@ -82,7 +82,7 @@
 		protected override void PutsCustom(LogItemModel item)
 		{
 			if (LogCollector != null) {
-				LogCollector.Puts(item);
+				LogCollector.AddLog(item);
 			}
 		}
 

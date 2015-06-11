@@ -94,7 +94,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\ICommonData.cs" />
-    <Compile Include="IF\ILogCollector.cs" />
+    <Compile Include="IF\Appender.cs" />
     <Compile Include="IF\IViewModelElement.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />

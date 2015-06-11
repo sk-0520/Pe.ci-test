@@ -100,7 +100,7 @@
 					+ "{10}"
 					+ Environment.NewLine
 					,
-					item.DateTime.ToString("yyyy-MM-ddTHH:mm:ss.fff"),
+					item.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fff"),
 					item.LogKind.ToString().ToUpper().Substring(0, 1),
 					item.CallerMember,
 					item.CallerFile,
@@ -162,7 +162,7 @@
 		{
 			return string.Format(
 				"{0}{1}[{2}] {3}({4}): {5}",
-				item.DateTime,
+				item.Timestamp,
 				c,
 				item.LogKind.ToString().ToUpper()[0],
 				item.CallerMember,

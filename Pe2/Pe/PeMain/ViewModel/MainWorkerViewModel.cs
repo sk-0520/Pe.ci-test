@@ -195,7 +195,7 @@
 			if (systemLogger.IsStock) {
 				// 溜まったログをViewにドバー
 				foreach (var logItem in systemLogger.StockItems) {
-					systemLogger.LogCollector.Puts(logItem);
+					systemLogger.LogCollector.AddLog(logItem);
 				}
 				systemLogger.IsStock = false;
 			}

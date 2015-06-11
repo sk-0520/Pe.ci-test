@@ -21,7 +21,7 @@
 		/// 発生日。
 		/// </summary>
 		[DataMember]
-		public DateTime DateTime { get; set; }
+		public DateTime Timestamp { get; set; }
 		/// <summary>
 		/// ログ種別。
 		/// </summary>
