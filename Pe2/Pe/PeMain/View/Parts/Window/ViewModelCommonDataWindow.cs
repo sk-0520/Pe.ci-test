@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -15,7 +16,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ViewModelCommonDataWindow<TViewModel> : CommonDataWindow, IViewModelElement<TViewModel>
+	public class ViewModelCommonDataWindow<TViewModel> : CommonDataWindow, IHavingViewModel<TViewModel>
 		where TViewModel : ViewModelBase
 	{
 		public ViewModelCommonDataWindow()

@@ -8,12 +8,14 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Threading;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LoggingViewModel:SingleModelWrapperViewModelBase<LoggingItemModel>, ILogAppender
+	public class LoggingViewModel:SingleModelWrapperViewModelBase<LoggingItemModel>, IHavingView<LoggingWindow>, ILogAppender
 	{
 		#region event
 
@@ -29,7 +31,26 @@
 
 		#region property
 
+		#region IHavingView
+
+		public LoggingWindow View { get; set; }
+
+		#endregion
+
 		public ObservableCollection<LogItemModel> LogItems { get; set; }
+
+		public Visibility Visible
+		{
+			get { return Model.Visible ? Visibility.Visible : Visibility.Hidden; }
+			set 
+			{
+				var visible = value == Visibility.Visible;
+				if (Model.Visible != visible) {
+					Model.Visible = visible;
+					OnPropertyChanged();
+				}
+			}
+		}
 
 		#endregion
 

@@ -7,11 +7,13 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class AcceptViewModel: SingleModelWrapperViewModelBase<RunningInformationItemModel>
+	public class AcceptViewModel : SingleModelWrapperViewModelBase<RunningInformationItemModel>, IHavingView<AcceptWindow>
 	{
 		public AcceptViewModel(RunningInformationItemModel model)
 			: base(model)
