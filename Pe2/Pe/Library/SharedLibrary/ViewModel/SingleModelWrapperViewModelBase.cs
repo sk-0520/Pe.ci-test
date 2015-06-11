@@ -21,6 +21,7 @@
 		public SingleModelWrapperViewModelBase(TModel model)
 		{
 			Model = model;
+			InitializeModel();
 		}
 
 		#region property
@@ -31,5 +32,13 @@
 		protected TModel Model { get; private set; }
 
 		#endregion
+
+		#region function
+
+		protected virtual void InitializeModel()
+		{ }
+
+		#endregion
+
 	}
 }

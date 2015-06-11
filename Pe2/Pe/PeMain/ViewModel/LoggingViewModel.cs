@@ -53,51 +53,6 @@
 			}
 		}
 
-		public double Left
-		{
-			get { return Model.Left; }
-			set 
-			{
-				if (Model.Left != value) {
-					Model.Left = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-		public double Top
-		{
-			get { return Model.Top; }
-			set
-			{
-				if (Model.Top != value) {
-					Model.Top = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-		public double Width
-		{
-			get { return Model.Width; }
-			set
-			{
-				if (Model.Width != value) {
-					Model.Width = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-		public double Height
-		{
-			get { return Model.Height; }
-			set
-			{
-				if (Model.Height != value) {
-					Model.Height = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-
 		#endregion
 
 		#region HavingViewSingleModelWrapperViewModelBase

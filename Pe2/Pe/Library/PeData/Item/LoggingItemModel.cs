@@ -19,13 +19,7 @@
 		[DataMember]
 		public bool Visible { get; set; }
 		[DataMember]
-		public double Left { get; set; }
-		[DataMember]
-		public double Top { get; set; }
-		[DataMember]
-		public double Width { get; set; }
-		[DataMember]
-		public double Height { get; set; }
+		public WindowStatus WindowStatus { get; set; }
 		[DataMember]
 		public bool AddShow { get; set; }
 		[DataMember]

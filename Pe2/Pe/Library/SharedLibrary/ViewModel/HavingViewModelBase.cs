@@ -14,8 +14,23 @@
 		public HavingViewModelBase(TView view)
 		{
 			View = view;
+			InitializeView();
 		}
 
+		#region IHavingView
+
 		public TView View { get; private set; }
+
+		#endregion
+
+		#region function
+
+		protected virtual void InitializeView()
+		{ }
+
+		protected virtual void UninitializeView()
+		{ }
+
+		#endregion
 	}
 }
