@@ -20,13 +20,17 @@
 			Loaded += OnLoadedWindow_Loaded;
 		}
 
+		#region function
+
+		protected virtual void OnLoaded(object sender, RoutedEventArgs e)
+		{ }
+
+		#endregion
+
 		void OnLoadedWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			Loaded -= OnLoadedWindow_Loaded;
 			OnLoaded(sender, e);
 		}
-
-		protected virtual void OnLoaded(object sender, RoutedEventArgs e)
-		{ }
 	}
 }

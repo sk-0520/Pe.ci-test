@@ -22,7 +22,7 @@
 
 		#endregion
 
-		#region OnLoadedWindow
+		#region OnLoadedWindowBase
 
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{

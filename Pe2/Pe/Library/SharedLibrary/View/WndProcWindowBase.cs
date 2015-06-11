@@ -68,7 +68,7 @@
 
 		#endregion
 
-		#region WindowsAPIWindow
+		#region WindowsAPIWindowBase
 
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{
@@ -76,6 +76,10 @@
 
 			 HandleSource.AddHook(WndProc);
 		}
+
+		#endregion function
+
+		#region WindowsAPIWindowBase
 
 		protected virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{

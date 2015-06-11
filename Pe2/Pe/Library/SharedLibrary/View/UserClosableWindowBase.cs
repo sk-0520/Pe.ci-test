@@ -21,16 +21,11 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 		#endregion
 
-		#region variable
-
-
-		#endregion
-
 		public UserClosableWindowWindowBase()
 			: base()
 		{ }
 
-		#region WndProcWindow
+		#region WndProcWindowBase
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
@@ -60,10 +55,14 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 		}
 
 		#endregion
-		
+
+		#region function
+
 		protected virtual void OnUserClosing(CancelEventArgs e)
 		{
 			UserClosing(this, e);
 		}
+
+		#endregion
 	}
 }
