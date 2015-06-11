@@ -25,7 +25,7 @@
 				<RowDefinition Height="154*"/>
 				<RowDefinition Height="103*"/>
 			</Grid.RowDefinitions>
-			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}">
+			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="LogList">
 				<ListView.View>
 					<GridView>
 						<GridViewColumn Header="timestamp" UI:XamlTag.LanguageKey="log-timestamp" DisplayMemberBinding="{Binding Timestamp}" />
@@ -33,7 +33,7 @@
 					</GridView>
 				</ListView.View>
 			</ListView>
-			<TextBox Margin="0,2,0,0" Grid.Row="1" AllowDrop="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+			<TextBox Margin="0,2,0,0" Grid.Row="1" AllowDrop="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Text="{Binding SelectedValue.DetailText, ElementName=LogList, Mode=OneWay}" />
 		</Grid>
 	</DockPanel>
 </CD:ViewModelCommonDataWindow>
