@@ -1,4 +1,4 @@
-﻿<CD:VMCommonDataWindow
+﻿<CD:ViewModelCommonDataWindow
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LoggingWindow"
 	x:TypeArguments="VM:LoggingViewModel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -35,4 +35,4 @@
 			<TextBox Margin="0,2,0,0" Grid.Row="1" AllowDrop="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
 		</Grid>
 	</DockPanel>
-</CD:VMCommonDataWindow>
+</CD:ViewModelCommonDataWindow>

@@ -20,7 +20,7 @@
 	/// <summary>
 	/// LoggingWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LoggingWindow : VMCommonDataWindow<LoggingViewModel>
+	public partial class LoggingWindow : ViewModelCommonDataWindow<LoggingViewModel>
 	{
 		public LoggingWindow()
 		{

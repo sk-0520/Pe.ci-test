@@ -95,6 +95,7 @@
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILogCollector.cs" />
+    <Compile Include="IF\IViewModelElement.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\Window\VMCommonDataWindow.cs" />
+    <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>

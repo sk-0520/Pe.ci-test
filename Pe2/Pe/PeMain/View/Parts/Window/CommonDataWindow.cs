@@ -66,12 +66,22 @@
 			Debug.Assert(CommonData != null);
 		}
 
+		protected virtual void SetChildCommonData()
+		{
+			Debug.Assert(CommonData != null);
+
+			foreach (var ui in UIUtility.FindVisualChildren<UserControl>(this).OfType<ICommonData>()) {
+				ui.SetCommonData(CommonData);
+			}
+		}
+
 		#endregion
 
 		void CommonDataWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			Loaded -= CommonDataWindow_Loaded;
 			ApplyLanguage();
+			SetChildCommonData();
 		}
 
 	}

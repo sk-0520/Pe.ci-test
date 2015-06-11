@@ -15,16 +15,20 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class VMCommonDataWindow<TViewModel> : CommonDataWindow
+	public class ViewModelCommonDataWindow<TViewModel> : CommonDataWindow, IViewModelElement<TViewModel>
 		where TViewModel : ViewModelBase
 	{
-		public VMCommonDataWindow()
+		public ViewModelCommonDataWindow()
 			:base()
 		{ }
 
 		#region property
 
+		#region TViewModel
+
 		public TViewModel ViewModel { get; protected set; }
+
+		#endregion
 
 		#endregion
 

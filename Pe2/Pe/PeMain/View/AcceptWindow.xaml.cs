@@ -20,7 +20,7 @@
 	/// <summary>
 	/// AcceptWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class AcceptWindow: VMCommonDataWindow<AcceptViewModel>
+	public partial class AcceptWindow: ViewModelCommonDataWindow<AcceptViewModel>
 	{
 		public AcceptWindow()
 		{

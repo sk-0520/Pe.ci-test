@@ -32,7 +32,7 @@
 
 			foreach (var dependencyObject in UIUtility.FindVisualChildren<DependencyObject>(root)) {
 				var type = dependencyObject.GetType();
-				System.Diagnostics.Debug.WriteLine(dependencyObject);
+				
 				Action<DependencyObject> action;
 				if (map.TryGetValue(type, out action)) {
 					action(dependencyObject);
