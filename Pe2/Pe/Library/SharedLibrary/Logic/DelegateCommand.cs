@@ -61,11 +61,7 @@
 
 		bool ICommand.CanExecute(object parameter)
 		{
-			if(CanExecute != null) {
-				return CanExecute(parameter);
-			} else {
-				return true;
-			}
+			return CanExecute(parameter);
 		}
 
 		event EventHandler ICommand.CanExecuteChanged

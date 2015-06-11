@@ -98,6 +98,7 @@
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
+    <Compile Include="Logic\Utility\ConvertUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />

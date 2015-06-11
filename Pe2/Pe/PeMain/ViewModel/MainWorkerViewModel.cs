@@ -31,7 +31,7 @@
 
 		public bool Pause { get; set; }
 
-		LoggingWindow LoggingWindow { get; set; }
+		public LoggingViewModel LoggingVM { get; set; }
 		List<Window> WindowList { get; set; }
 
 
@@ -66,13 +66,9 @@
 			{
 				var result = new DelegateCommand();
 				result.Command += o => {
-					Debug.Assert(LoggingWindow != null);
+					Debug.Assert(LoggingVM != null);
 
-					if (LoggingWindow.Visibility == Visibility.Visible) {
-						LoggingWindow.Visibility = Visibility.Hidden;
-					} else {
-						LoggingWindow.Visibility = Visibility.Visible;
-					}
+					LoggingVM.Visible = !LoggingVM.Visible;
 				};
 
 				return result;
@@ -195,12 +191,12 @@
 		/// </summary>
 		void CreateLogger()
 		{
-			LoggingWindow = new LoggingWindow();
-			LoggingWindow.SetCommonData(CommonData);
-			//LoggingWindow.da
+			var loggingWindow = new LoggingWindow();
+			loggingWindow.SetCommonData(CommonData);
+			LoggingVM = loggingWindow.ViewModel;
 
 			var systemLogger = (SystemLogger)CommonData.Logger;
-			systemLogger.LogCollector = LoggingWindow.ViewModel;
+			systemLogger.LogCollector = LoggingVM;
 			if (systemLogger.IsStock) {
 				// 溜まったログをViewにドバー
 				foreach (var logItem in systemLogger.StockItems) {

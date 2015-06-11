@@ -17,8 +17,15 @@
 			:base(model)
 		{
 			View = view;
+			InitializeView();
 		}
 
 		public TView View { get; private set; }
+
+		protected virtual void InitializeView()
+		{ }
+
+		protected virtual void UninitializeView()
+		{ }
 	}
 }

@@ -13,6 +13,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender
@@ -33,22 +34,39 @@
 
 		public ObservableCollection<LogItemModel> LogItems { get; set; }
 
-		public Visibility Visible
+		public Visibility Visibility
 		{
-			get { return Model.Visible ? Visibility.Visible : Visibility.Hidden; }
-			set 
+			get { return ConvertUtility.To(Visible); }
+			set { Visible = ConvertUtility.To(value); }
+		}
+
+		public bool Visible 
+		{
+			get { return Model.Visible; }
+			set
 			{
-				var visible = value == Visibility.Visible;
-				if (Model.Visible != visible) {
-					Model.Visible = visible;
+				if (Model.Visible != value) {
+					Model.Visible = value;
 					OnPropertyChanged();
+					OnPropertyChanged("Visibility");
 				}
 			}
 		}
 
 		#endregion
 
-		#region SingleModelWrapperViewModelBase
+		#region HavingViewSingleModelWrapperViewModelBase
+
+		protected override void InitializeView()
+		{
+			base.InitializeView();
+		}
+
+		protected override void UninitializeView()
+		{
+			base.UninitializeView();
+		}
+
 		#endregion
 
 		#region ILogCollector
