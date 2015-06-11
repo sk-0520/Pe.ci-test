@@ -62,11 +62,6 @@
 			base.InitializeView();
 		}
 
-		protected override void UninitializeView()
-		{
-			base.UninitializeView();
-		}
-
 		#endregion
 
 		#region ILogCollector

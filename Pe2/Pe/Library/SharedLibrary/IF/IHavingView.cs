@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 
-	public interface IHavingView<TView>
+	public interface IHavingView<out TView>
 		where TView: UIElement
 	{
 		TView View { get; }

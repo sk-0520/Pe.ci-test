@@ -107,6 +107,7 @@
 	}
 
 	public class EventHandlerDisposer<TEventArgs>: DisposeFinalizeBase
+		where TEventArgs: EventArgs
 	{
 		public EventHandlerDisposer()
 			: base()

@@ -81,8 +81,8 @@
     <Compile Include="Define\LogKind.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
-    <Compile Include="IF\IHavingViewModel.cs" />
     <Compile Include="IF\IHavingView.cs" />
+    <Compile Include="IF\IHavingViewModel.cs" />
     <Compile Include="IF\IIsDisposed.cs" />
     <Compile Include="IF\ILogger.cs" />
     <Compile Include="IF\IModel.cs" />
@@ -98,7 +98,6 @@
     <Compile Include="Logic\LoggerBase.cs" />
     <Compile Include="Logic\ShortcutFile.cs" />
     <Compile Include="Logic\Utility\EventUtility.cs" />
-    <Compile Include="Logic\Utility\HavingViewUtility.cs" />
     <Compile Include="Logic\Utility\UIUtility.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />
     <Compile Include="Logic\Utility\TextUtility.cs" />

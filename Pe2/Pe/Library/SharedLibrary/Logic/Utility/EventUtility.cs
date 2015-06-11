@@ -8,7 +8,7 @@
 
 	public static class EventUtility
 	{
-		public static Delegate Create(Delegate handler, Action<Delegate> releaseEvent, out EventDisposer eventDisposer)
+		public static Delegate CreateEvent(Delegate handler, Action<Delegate> releaseEvent, out EventDisposer eventDisposer)
 		{
 			eventDisposer = new EventDisposer();
 			return eventDisposer.Handle(handler, releaseEvent);
@@ -16,7 +16,7 @@
 		public static Delegate Auto(Delegate handler, Action<Delegate> releaseEvent)
 		{
 			EventDisposer eventDisposer;
-			return Create(handler, releaseEvent, out eventDisposer);
+			return CreateEvent(handler, releaseEvent, out eventDisposer);
 		}
 
 		public static EventHandler Create(EventHandler handler, Action<EventHandler> releaseEvent, out EventHandlerDisposer eventDisposer)
@@ -31,11 +31,13 @@
 		}
 
 		public static EventHandler<TEventArgs> Create<TEventArgs>(EventHandler<TEventArgs> handler, Action<EventHandler<TEventArgs>> releaseEvent, out EventHandlerDisposer<TEventArgs> eventDisposer)
+			where TEventArgs: EventArgs
 		{
 			eventDisposer = new EventHandlerDisposer<TEventArgs>();
 			return eventDisposer.Handle(handler, releaseEvent);
 		}
 		public static EventHandler<TEventArgs> Auto<TEventArgs>(EventHandler<TEventArgs> handler, Action<EventHandler<TEventArgs>> releaseEvent)
+			where TEventArgs: EventArgs
 		{
 			EventHandlerDisposer<TEventArgs> eventDisposer;
 			return Create(handler, releaseEvent, out eventDisposer);

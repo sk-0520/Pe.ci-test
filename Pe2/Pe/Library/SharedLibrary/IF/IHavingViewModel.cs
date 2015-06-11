@@ -8,7 +8,7 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 
-	public interface IHavingViewModel<TViewModel>
+	public interface IHavingViewModel<out TViewModel>
 		where TViewModel : ViewModelBase
 	{
 		TViewModel ViewModel { get; }
