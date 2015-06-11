@@ -19,9 +19,13 @@
 		[DataMember]
 		public bool Visible { get; set; }
 		[DataMember]
-		public Point Location { get; set; }
+		public double Left { get; set; }
 		[DataMember]
-		public Size Size { get; set; }
+		public double Top { get; set; }
+		[DataMember]
+		public double Width { get; set; }
+		[DataMember]
+		public double Height { get; set; }
 		[DataMember]
 		public bool AddShow { get; set; }
 		[DataMember]
