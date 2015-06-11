@@ -35,6 +35,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		#region property
 
 		public TView View { get; private set; }
+		public bool HasView { get { return View != null; } }
 
 		#endregion
 
@@ -45,7 +46,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 			Debug.Assert(View != null);
 
 			var vm = this as IHavingView<Window>;
-			if(vm != null) {
+			if(vm != null && HasView) {
 				vm.View.Closed += EventUtility.Create(
 					(object sender, EventArgs e) => UninitializeView_Impl(), 
 					handler => vm.View.Closed -= handler,
@@ -56,12 +57,16 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 		void UninitializeView_Impl()
 		{
+			Debug.Assert(HasView);
+
 			this._closedEvent.Dispose();
 			UninitializeView();
 		}
 
 		protected void UninitializeView()
-		{ }
+		{
+			Debug.Assert(HasView);
+		}
 
 		#endregion
 	}

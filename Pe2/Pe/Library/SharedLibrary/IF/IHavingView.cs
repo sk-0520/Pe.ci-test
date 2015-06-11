@@ -11,5 +11,11 @@
 		where TView: UIElement
 	{
 		TView View { get; }
+		/// <summary>
+		/// Viewが存在するか。
+		/// <para>View != null じゃなくて本メソッドでView存在確認を行う。</para>
+		/// <para>テストの際にView が存在しない可能性がある。</para>
+		/// </summary>
+		bool HasView { get; }
 	}
 }

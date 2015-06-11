@@ -59,6 +59,7 @@
 
 		protected override void InitializeView()
 		{
+			if(View != null)
 			base.InitializeView();
 		}
 

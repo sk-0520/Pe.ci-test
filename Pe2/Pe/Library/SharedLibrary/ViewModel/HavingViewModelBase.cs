@@ -20,6 +20,7 @@
 		#region IHavingView
 
 		public TView View { get; private set; }
+		public bool HasView { get { return View != null; } }
 
 		#endregion
 
