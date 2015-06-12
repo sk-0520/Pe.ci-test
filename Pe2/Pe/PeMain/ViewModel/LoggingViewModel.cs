@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender, IWindowStatus
+	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingItemModel, LoggingWindow>, ILogAppender, IWindowStatus
 	{
 		public LoggingViewModel(LoggingItemModel model, LoggingWindow view)
 			: base(model, view)

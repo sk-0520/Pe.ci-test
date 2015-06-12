@@ -7,11 +7,12 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LauncherToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>
 	{
-		public LauncherToolbarViewModel(ToolbarItemModel model)
-			:base(model)
+		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
+			: base(model, view)
 		{ }
 	}
 }

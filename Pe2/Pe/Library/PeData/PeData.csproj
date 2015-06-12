@@ -84,6 +84,7 @@
     <Compile Include="Item\LauncherHistoryItemModel.cs" />
     <Compile Include="Item\LauncherItemModel.cs" />
     <Compile Include="Item\LauncherStdStreamItemModel.cs" />
+    <Compile Include="Item\LauncherToolbarItemModel.cs" />
     <Compile Include="Item\LoggingItemModel.cs" />
     <Compile Include="Item\ToolbarItemCollectionModel.cs" />
     <Compile Include="Item\ToolbarItemModel.cs" />
