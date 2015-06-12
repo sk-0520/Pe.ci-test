@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
@@ -34,62 +35,32 @@
 
 		public double WindowLeft
 		{
-			get { return Model.WindowLeft; }
-			set
-			{
-				if (Model.WindowLeft != value && Model.WindowState == WindowState.Normal) {
-					Model.WindowLeft = value;
-					OnPropertyChanged();
-				}
-			}
+			get { return WindowStatusProperty.GetWindowLeft(Model); }
+			set { WindowStatusProperty.SetWindowLeft(Model, value, OnPropertyChanged); }
 		}
 
 		public double WindowTop
 		{
-			get { return Model.WindowTop; }
-			set
-			{
-				if (Model.WindowTop != value && Model.WindowState == WindowState.Normal) {
-					Model.WindowTop = value;
-					OnPropertyChanged();
-				}
-			}
+			get { return WindowStatusProperty.GetWindowTop(Model); }
+			set { WindowStatusProperty.SetWindowTop(Model, value, OnPropertyChanged); }
 		}
 
 		public double WindowWidth
 		{
-			get { return Model.WindowWidth; }
-			set
-			{
-				if (Model.WindowWidth != value && Model.WindowState == WindowState.Normal) {
-					Model.WindowWidth = value;
-					OnPropertyChanged();
-				}
-			}
+			get { return WindowStatusProperty.GetWindowWidth(Model); }
+			set { WindowStatusProperty.SetWindowWidth(Model, value, OnPropertyChanged); }
 		}
 
 		public double WindowHeight
 		{
-			get { return Model.WindowHeight; }
-			set
-			{
-				if (Model.WindowHeight != value && Model.WindowState == WindowState.Normal) {
-					Model.WindowHeight = value;
-					OnPropertyChanged();
-				}
-			}
+			get { return WindowStatusProperty.GetWindowHeight(Model); }
+			set { WindowStatusProperty.SetWindowHeight(Model, value, OnPropertyChanged); }
 		}
 
 		public WindowState WindowState
 		{
-			get { return Model.WindowState; }
-			set
-			{
-				if (Model.WindowState != value) {
-					Model.WindowState = value;
-					OnPropertyChanged();
-				}
-			}
+			get { return WindowStatusProperty.GetWindowState(Model); }
+			set { WindowStatusProperty.SetWindowState(Model, value, OnPropertyChanged); }
 		}
 
 		#endregion
