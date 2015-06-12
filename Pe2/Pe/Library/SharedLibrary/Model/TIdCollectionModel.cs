@@ -69,6 +69,10 @@
 		{
 			return a.CompareTo(b) == 0;
 		}
+		static bool IsEqual(TValue a, TValue b)
+		{
+			return IsEqual(a.Id, b.Id);
+		}
 
 		/// <summary>
 		/// 要素を追加する。
@@ -88,7 +92,7 @@
 					throw new ArgumentNullException("value");
 				}
 
-				if (Items.Any(i => value.Id.CompareTo(i) == 0)) {
+				if(Items.Any(i => IsEqual(value, i))) {
 					throw new ArgumentException(GetIdString(value));
 				}
 			}
