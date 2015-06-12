@@ -14,12 +14,13 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender
+	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender, IWindowStatus
 	{
 		public LoggingViewModel(LoggingItemModel model, LoggingWindow view)
 			: base(model, view)
@@ -28,6 +29,71 @@
 		}
 
 		#region property
+
+		#region IWindowStatus
+
+		public double WindowLeft
+		{
+			get { return Model.WindowLeft; }
+			set
+			{
+				if (Model.WindowLeft != value && Model.WindowState == WindowState.Normal) {
+					Model.WindowLeft = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public double WindowTop
+		{
+			get { return Model.WindowTop; }
+			set
+			{
+				if (Model.WindowTop != value && Model.WindowState == WindowState.Normal) {
+					Model.WindowTop = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public double WindowWidth
+		{
+			get { return Model.WindowWidth; }
+			set
+			{
+				if (Model.WindowWidth != value && Model.WindowState == WindowState.Normal) {
+					Model.WindowWidth = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public double WindowHeight
+		{
+			get { return Model.WindowHeight; }
+			set
+			{
+				if (Model.WindowHeight != value && Model.WindowState == WindowState.Normal) {
+					Model.WindowHeight = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public WindowState WindowState
+		{
+			get { return Model.WindowState; }
+			set
+			{
+				if (Model.WindowState != value) {
+					Model.WindowState = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 
 		public ObservableCollection<LogItemModel> LogItems { get; set; }
 

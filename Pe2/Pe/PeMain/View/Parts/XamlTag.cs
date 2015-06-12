@@ -6,6 +6,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public static class XamlTag
 	{

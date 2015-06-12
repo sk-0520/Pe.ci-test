@@ -53,6 +53,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -72,6 +73,7 @@
     <Compile Include="IF\IItemModel.cs" />
     <Compile Include="IF\IPeData.cs" />
     <Compile Include="IF\ISettingModel.cs" />
+    <Compile Include="IF\IWindowStatus.cs" />
     <Compile Include="Item\FloatToolbarAreaItemModel.cs" />
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IconItemModel.cs" />
@@ -90,7 +92,6 @@
     <Compile Include="Item\TagItemModel.cs" />
     <Compile Include="Item\LauncherItemCollectionModel.cs" />
     <Compile Include="Item\WindowSaveItemModel.cs" />
-    <Compile Include="Item\WindowStatus.cs" />
     <Compile Include="Setting\LauncherGroupItemSettingModel.cs" />
     <Compile Include="Setting\LauncherItemSettingModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />

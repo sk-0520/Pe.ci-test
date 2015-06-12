@@ -13,6 +13,7 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
@@ -37,6 +38,8 @@
 		protected override void ApplyViewModel()
 		{
 			DataContext = ViewModel;
+
+			base.ApplyViewModel();
 		}
 
 		#endregion

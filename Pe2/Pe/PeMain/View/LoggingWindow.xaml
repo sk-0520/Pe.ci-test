@@ -11,10 +11,11 @@
 	ShowInTaskbar="False" 
 	WindowStyle="ToolWindow"
 	Visibility="{Binding Visibility}"
-	Height="{Binding Height, Mode=TwoWay}" 
-	Width="{Binding Width, Mode=TwoWay}" 
-	Left="{Binding Left, Mode=TwoWay}" 
-	Top="{Binding Top, Mode=TwoWay}"
+	WindowState="{Binding WindowState}"
+	Left="{Binding WindowLeft, Mode=TwoWay}"
+	Top="{Binding WindowTop, Mode=TwoWay}"
+	Width="{Binding WindowWidth, Mode=TwoWay}"
+	Height="{Binding WindowHeight, Mode=TwoWay}"
 >
 	<DockPanel LastChildFill="True">
 		<ToolBar DockPanel.Dock="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ToolBarTray.IsLocked="True">

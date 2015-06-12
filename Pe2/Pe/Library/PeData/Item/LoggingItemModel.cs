@@ -8,18 +8,32 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LoggingItemModel: ItemModelBase
+	public class LoggingItemModel : ItemModelBase, IWindowStatus
 	{
 		public LoggingItemModel()
 			: base()
 		{ }
 
+		#region IWindowStatus
+
+		[DataMember]
+		public double WindowTop { get; set; }
+		[DataMember]
+		public double WindowLeft { get; set; }
+		[DataMember]
+		public double WindowWidth { get; set; }
+		[DataMember]
+		public double WindowHeight { get; set; }
+		[DataMember]
+		public WindowState WindowState { get; set; }
+
+		#endregion
+
 		[DataMember]
 		public bool Visible { get; set; }
-		[DataMember]
-		public WindowStatus WindowStatus { get; set; }
 		[DataMember]
 		public bool AddShow { get; set; }
 		[DataMember]

@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.View;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
@@ -42,7 +43,7 @@
 
 		#endregion
 
-		#region UserClosableWindowWindow
+		#region UserClosableWindowWindowBase
 
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{
