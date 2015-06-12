@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -13,10 +14,14 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
+	using System.Windows.Threading;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -29,7 +34,7 @@
 		}
 
 		public LauncherToolbarWindow(ScreenModel screen)
-			:this()
+			: this()
 		{
 			if (screen == null) {
 				throw new ArgumentNullException("screen");
@@ -75,6 +80,11 @@
 
 			DataContext = ViewModel;
 		}
+
+		#endregion
+
+		#region function
+
 
 		#endregion
 	}

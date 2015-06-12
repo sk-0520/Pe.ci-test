@@ -96,6 +96,7 @@
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
+    <Compile Include="Logic\Extension\DockTypeExtension.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\Property\VisibleVisibilityProperty.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />

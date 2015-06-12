@@ -37,7 +37,7 @@
 		/// ツールバー位置。
 		/// </summary>
 		[DataMember]
-		public ToobarPosition ToobarPosition { get; set; }
+		public DockType DockType { get; set; }
 
 		#region IVisible
 
