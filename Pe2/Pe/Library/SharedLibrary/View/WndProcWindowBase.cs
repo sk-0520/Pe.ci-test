@@ -70,16 +70,16 @@
 
 		#region WindowsAPIWindowBase
 
-		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		protected override void OnSourceInitialized(EventArgs e)
 		{
- 			 base.OnLoaded(sender, e);
+			base.OnSourceInitialized(e);
 
-			 HandleSource.AddHook(WndProc);
+			HandleSource.AddHook(WndProc);
 		}
 
-		#endregion function
+		#endregion
 
-		#region WindowsAPIWindowBase
+		#region function
 
 		protected virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{

@@ -55,7 +55,6 @@
 		{
 			Debug.Assert(HasView);
 
-			this._closedEvent.Dispose();
 			UninitializeView();
 		}
 

@@ -24,11 +24,11 @@
 
 		#region OnLoadedWindowBase
 
-		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		protected override void OnSourceInitialized(EventArgs e)
 		{
-			base.OnLoaded(sender, e);
-
 			WindowInteropHelper = new WindowInteropHelper(this);
+
+			base.OnSourceInitialized(e);
 		}
 
 		#endregion
