@@ -127,6 +127,7 @@
 			Debug.Assert(HasView);
 
 			e.Cancel = true;
+			Visible = false;
 		}
 	}
 }
