@@ -19,7 +19,7 @@
 	{
 		#region variable
 
-		protected EventHandlerDisposer _closedEvent = null; 
+		//protected EventHandlerDisposer _closedEvent = null; 
 
 		#endregion
 
@@ -47,11 +47,7 @@
 
 			var vm = this as IHavingView<Window>;
 			if(vm != null && HasView) {
-				vm.View.Closed += EventUtility.Create(
-					(object sender, EventArgs e) => UninitializeView_Impl(), 
-					handler => vm.View.Closed -= handler,
-					out this._closedEvent
-				);
+				vm.View.Closed += View_Closed;
 			}
 		}
 
@@ -69,5 +65,14 @@
 		}
 
 		#endregion
+
+		void View_Closed(object sender, EventArgs e)
+		{
+			Debug.Assert(HasView);
+
+			var vm = (IHavingView<Window>)this;
+			vm.View.Closed -= View_Closed;
+			UninitializeView_Impl();
+		}
 	}
 }
