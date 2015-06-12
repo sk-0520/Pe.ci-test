@@ -12,7 +12,7 @@
 	/// <summary>
 	/// Windowsのウィンドウプロシージャを持つWindow。
 	/// </summary>
-	public abstract class WndProcWindowBase: WindowsAPIWindowBase, IDisposable, IIsDisposed
+	public abstract class WndProcWindowBase: WindowsAPIWindowBase
 	{
 		#region variable
 
@@ -23,11 +23,6 @@
 		public WndProcWindowBase()
 			: base()
 		{ }
-
-		~WndProcWindowBase()
-		{
-			Dispose(false);
-		}
 
 		#region property
 
@@ -45,29 +40,6 @@
 
 		#endregion
 
-		#region IIsDisposed
-
-		public bool IsDisposed { get; private set; }
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if(IsDisposed) {
-				return;
-			}
-
-			HandleSource.RemoveHook(WndProc);
-
-			IsDisposed = true;
-			GC.SuppressFinalize(this);
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-		}
-
-		#endregion
-
 		#region WindowsAPIWindowBase
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -75,6 +47,7 @@
 			base.OnSourceInitialized(e);
 
 			HandleSource.AddHook(WndProc);
+			Closed += WndProcWindowBase_Closed;
 		}
 
 		#endregion
@@ -87,5 +60,11 @@
 		}
 
 		#endregion
+
+		void WndProcWindowBase_Closed(object sender, EventArgs e)
+		{
+			Closed -= WndProcWindowBase_Closed;
+			HandleSource.RemoveHook(WndProc);
+		}
 	}
 }

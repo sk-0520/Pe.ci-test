@@ -1,11 +1,13 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
+	using System.Linq;
 	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -211,6 +213,10 @@
 		/// </summary>
 		void CreateToolbar()
 		{
+			foreach (var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
+				var toolbar = new LauncherToolbarWindow(screen);
+				toolbar.SetCommonData(CommonData);
+			}
 		}
 
 		#endregion

@@ -13,9 +13,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public abstract class HavingViewSingleModelWrapperViewModelBase<TView, TModel> : SingleModelWrapperViewModelBase<TModel>, IHavingView<TView>
-		where TView: UIElement
+	public abstract class HavingViewSingleModelWrapperViewModelBase<TModel, TView> : SingleModelWrapperViewModelBase<TModel>, IHavingView<TView>
 		where TModel: ModelBase
+		where TView: UIElement
 	{
 		#region variable
 

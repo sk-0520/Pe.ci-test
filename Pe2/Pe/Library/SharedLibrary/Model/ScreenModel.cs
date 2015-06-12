@@ -7,6 +7,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	/// <summary>
 	/// 使用データは全て物理ピクセル。
@@ -22,7 +24,8 @@
 		/// <summary>
 		/// ディスプレイの範囲を取得します。
 		/// </summary>
-		public Rect Bounds { get; protected internal set; }
+		[PixelKind(Px.Device)]
+		public Rect DeviceBounds { get; protected internal set; }
 		/// <summary>
 		/// ディスプレイに関連付けられているデバイス名を取得します。
 		/// </summary>
@@ -34,7 +37,8 @@
 		/// <summary>
 		/// ディスプレイの作業領域を取得します。 作業領域とは、ディスプレイのデスクトップ領域からタスクバー、ドッキングされたウィンドウ、およびドッキングされたツール バーを除いた部分です。 
 		/// </summary>
-		public Rect WorkingArea { get; protected internal set; }
+		[PixelKind(Px.Device)]
+		public Rect DeviceWorkingArea { get; protected internal set; }
 
 		#endregion
 	}

@@ -93,12 +93,14 @@
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\VariableConstants.cs" />
+    <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
+    <Compile Include="Logic\Extension\DockTypeExtension.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
+    <Compile Include="Logic\Property\VisibleVisibilityProperty.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
-    <Compile Include="Logic\Utility\ConvertUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
     <Compile Include="Logic\Property\WindowStatusProperty.cs" />
@@ -122,6 +124,9 @@
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Window\CommonDataWindow.cs" />
+    <Compile Include="View\LauncherToolbarWindow.xaml.cs">
+      <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -174,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LauncherToolbarWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

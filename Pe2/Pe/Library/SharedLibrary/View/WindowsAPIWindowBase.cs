@@ -27,7 +27,7 @@
 		protected override void OnSourceInitialized(EventArgs e)
 		{
 			WindowInteropHelper = new WindowInteropHelper(this);
-
+			
 			base.OnSourceInitialized(e);
 		}
 

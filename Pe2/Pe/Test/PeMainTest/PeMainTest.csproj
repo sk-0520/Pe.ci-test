@@ -93,7 +93,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Logic\Utility\ConvertUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

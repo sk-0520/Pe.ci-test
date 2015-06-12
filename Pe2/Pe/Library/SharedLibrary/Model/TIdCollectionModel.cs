@@ -23,6 +23,7 @@
 			: base()
 		{
 			Items = new List<TValue>();
+			this._map = new Dictionary<TKey, TValue>();
 		}
 
 		#region property
