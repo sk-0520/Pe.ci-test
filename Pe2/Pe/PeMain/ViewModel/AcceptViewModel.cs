@@ -15,8 +15,8 @@
 
 	public class AcceptViewModel : HavingViewSingleModelWrapperViewModelBase<AcceptWindow, RunningInformationItemModel>
 	{
-		public AcceptViewModel(AcceptWindow view, RunningInformationItemModel model)
-			: base(view, model)
+		public AcceptViewModel(RunningInformationItemModel model, AcceptWindow view)
+			: base(model, view)
 		{ }
 
 		#region property

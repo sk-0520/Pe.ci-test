@@ -31,7 +31,7 @@
 
 		protected override void CreateViewModel()
 		{
-			ViewModel = new AcceptViewModel(this, CommonData.MainSetting.RunningInformation);
+			ViewModel = new AcceptViewModel(CommonData.MainSetting.RunningInformation, this);
 		}
 
 		protected override void ApplyViewModel()

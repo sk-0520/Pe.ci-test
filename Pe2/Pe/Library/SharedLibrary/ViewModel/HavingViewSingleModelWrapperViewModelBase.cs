@@ -23,7 +23,7 @@
 
 		#endregion
 
-		public HavingViewSingleModelWrapperViewModelBase(TView view, TModel model) 
+		public HavingViewSingleModelWrapperViewModelBase(TModel model, TView view) 
 			:base(model)
 		{
 			View = view;

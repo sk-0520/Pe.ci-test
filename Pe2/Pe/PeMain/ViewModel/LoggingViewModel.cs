@@ -21,8 +21,8 @@
 
 	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingWindow, LoggingItemModel>, ILogAppender
 	{
-		public LoggingViewModel(LoggingWindow view, LoggingItemModel model)
-			: base(view, model)
+		public LoggingViewModel(LoggingItemModel model, LoggingWindow view)
+			: base(model, view)
 		{
 			LogItems = new ObservableCollection<LogItemModel>();
 		}
