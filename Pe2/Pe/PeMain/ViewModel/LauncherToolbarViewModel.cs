@@ -98,5 +98,17 @@
 		#endregion
 
 		#endregion
+
+		protected override void InitializeView()
+		{
+			View.Loaded += View_Loaded;
+			base.InitializeView();
+		}
+
+		void View_Loaded(object sender, RoutedEventArgs e)
+		{
+			DockType = Library.PeData.Define.DockType.None;
+			View.Docking(Library.PeData.Define.DockType.Right);
+		}
 	}
 }

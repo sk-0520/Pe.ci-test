@@ -109,16 +109,10 @@
 			Appbar = ViewModel;
 		}
 
-		protected override void OnLoaded(object sender, RoutedEventArgs e)
-		{
-			base.OnLoaded(sender, e);
-			//Appbar.DockType = DockType.Right;
-			Docking(DockType.Right);
-		}
-
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if(Appbar.IsDocking) {
+				/*
 				switch((int)msg) {
 					case (int)WM.WM_ACTIVATE: 
 						{
@@ -130,6 +124,7 @@
 
 					case (int)WM.WM_WINDOWPOSCHANGED: 
 						{
+							//DockingFromProperty();
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
 							//handled = true;
@@ -138,23 +133,8 @@
 
 					case (int)WM.WM_EXITSIZEMOVE:
 						{
-							DockingFromProperty();
-							//// AppBar のサイズを更新。
-							//switch(Appbar.DockType) {
-							//	case DockType.Left:
-							//	case DockType.Right:
-							//		Appbar.BarSize = new Size(Width, Appbar.BarSize.Height);
-							//		break;
-							//	case DockType.Top:
-							//	case DockType.Bottom:
-							//		Appbar.BarSize = new Size(Appbar.BarSize.Width, Height);
-							//		break;
-							//	default:
-							//		throw new NotImplementedException();
-							//}
-							////Docking(Appbar.DockType);
-							//DockingFromProperty();
-							////handled = true;
+							OnResizeEnd();
+							handled = true;
 						}
 						break;
 
@@ -164,27 +144,32 @@
 								case (int)ABN.ABN_FULLSCREENAPP:
 									// フルスクリーン
 									OnAppbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
-									//handled = true;
 									break;
 
 								case (int)ABN.ABN_POSCHANGED:
 									// 他のバーの位置が変更されたので再設定
 									OnAppbarPosChanged();
-									//handled = true;
 									break;
 
 								case (int)ABN.ABN_STATECHANGE:
 									// タスクバーの [常に手前に表示] または [自動的に隠す] が変化したとき
 									// 特に何もする必要なし
 									OnAppbarStateChange();
-									//handled = true;
 									break;
 
 								default:
 									break;
 							}
+							OnAppbarPosChanged();
+							handled = true;
 						}
 						break;
+				}
+				*/
+				if(msg == Appbar.CallbackMessage) {
+					DockingFromProperty();
+					handled = true;
+
 				}
 			}
 
@@ -192,6 +177,7 @@
 		}
 
 		#endregion
+
 
 		#region function
 
@@ -229,7 +215,7 @@
 			return registResult.ToInt32() != 0;
 		}
 
-		bool UnResistAppbar()
+		bool UnresistAppbar()
 		{
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
@@ -276,7 +262,7 @@
 				}
 			}
 
-			return new Rect(left, width, width, height);
+			return new Rect(left, top, width, height);
 		}
 
 		/// <summary>
@@ -286,7 +272,7 @@
 		void TuneSystemBarArea(ref APPBARDATA appBar)
 		{
 			var deviceBarSize = UIUtility.ToDevicePixel(this, Appbar.BarSize);
-			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
+
 			switch(appBar.uEdge) {
 				case ABE.ABE_LEFT:
 					appBar.rc.Right = appBar.rc.Left + (int)deviceBarSize.Width;
@@ -307,6 +293,7 @@
 				default:
 					throw new NotImplementedException();
 			}
+			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 		}
 
 		public IntPtr ExistsHideWindow(DockType dockType)
@@ -339,15 +326,16 @@
 					autoHideResult = true;
 				}
 			}
-			if (!autoHideResult) {
-				var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
-			}
 
 			Appbar.AutoHide = autoHideResult;
+			Appbar.DockType = dockType;
 
 			var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(this, deviceWindowBounds);
 
+			//if (!autoHideResult) {
+			var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+			//}
 			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, true);
 			Appbar.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
 
@@ -376,7 +364,7 @@
 			var needResist = true;
 			if(Appbar.IsDocking) {
 				if(Appbar.DockType != dockType || Appbar.AutoHide) {
-					UnResistAppbar();
+					UnresistAppbar();
 					needResist = true;
 				} else {
 					needResist = false;
@@ -394,9 +382,27 @@
 			}
 
 			DockingFromParameter(dockType, Appbar.AutoHide);
-			Appbar.DockType = dockType;
 		}
 
+		void OnResizeEnd()
+		{
+			// AppBar のサイズを更新。
+			switch(Appbar.DockType) {
+				case DockType.Left:
+				case DockType.Right:
+					Appbar.BarSize = new Size(Width, Appbar.BarSize.Height);
+					break;
+				case DockType.Top:
+				case DockType.Bottom:
+					Appbar.BarSize = new Size(Appbar.BarSize.Width, Height);
+					break;
+				default:
+					throw new NotImplementedException();
+			}
+			//Docking(Appbar.DockType);
+			DockingFromProperty();
+			//handled = true;
+		}
 		#endregion
 	}
 }
