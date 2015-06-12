@@ -9,9 +9,10 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class ToolbarItemModel: ItemModelBase, ITId<string>
+	public class ToolbarItemModel : ItemModelBase, ITId<string>, IVisible
 	{
 		public ToolbarItemModel()
 			: base()
@@ -37,11 +38,17 @@
 		/// </summary>
 		[DataMember]
 		public ToobarPosition ToobarPosition { get; set; }
+
+		#region IVisible
+
 		/// <summary>
 		/// 表示。
 		/// </summary>
 		[DataMember]
 		public bool Visible { get; set; }
+
+		#endregion
+
 		/// <summary>
 		/// 最前面表示。
 		/// </summary>
