@@ -7,6 +7,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	[Serializable]
 	public class FloatToolbarAreaItemModel: ItemModelBase
@@ -29,11 +31,13 @@
 		/// 論理X座標。
 		/// </summary>
 		[DataMember]
+		[PixelKind(Px.Logical)]
 		public double X { get; set; }
 		/// <summary>
 		/// 論理Y座標。
 		/// </summary>
 		[DataMember]
+		[PixelKind(Px.Logical)]
 		public double Y { get; set; }
 	}
 }
