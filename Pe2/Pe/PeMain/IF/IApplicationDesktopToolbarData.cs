@@ -33,9 +33,9 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 		[PixelKind(Px.Logical)]
 		Size BarSize { get; set; }
 		/// <summary>
-		/// 表示中の論理バーサイズ。
+		/// 表示中の物理バーサイズ。
 		/// </summary>
-		[PixelKind(Px.Logical)]
+		[PixelKind(Px.Device)]
 		Size ShowBarSize { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。

@@ -6,18 +6,23 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
 	{
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{
 			MessageString = "appbar";
+			BarSize = new Size(80, 80);
 		}
 
 		#region property
@@ -38,46 +43,52 @@
 
 		#endregion
 
-		#region Appbar
+		#region IApplicationDesktopToolbarData
 
 		public uint CallbackMessage { get; set; }
 		public string MessageString { get; set; }
-
 		/// <summary>
-		/// 自動的に隠すか。
+		/// ドッキング種別。
+		/// </summary>
+		public DockType DockType { get; set; }
+		/// <summary>
+		/// 自動的に隠す。
 		/// </summary>
 		public bool AutoHide { get; set; }
 		/// <summary>
-		/// 隠されているか。
+		/// 隠れているか。
 		/// </summary>
 		public bool IsHidden { get; set; }
 		/// <summary>
-		/// ドッキングしているか
+		/// バーの論理サイズ
 		/// </summary>
-		public bool IsDocking { get; set; }
+		[PixelKind(Px.Logical)]
+		public Size BarSize { get; set; }
+		/// <summary>
+		/// 表示中の物理バーサイズ。
+		/// </summary>
+		[PixelKind(Px.Device)]
+		public Size ShowBarSize { get; set; }
+		/// <summary>
+		/// 隠れた状態のバー論理サイズ。
+		/// <para>横: Widthを使用</para>
+		/// <para>縦: Heightを使用</para>
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Size HideSize { get; set; }
+		/// <summary>
+		/// 自動的に隠すまでの時間。
+		/// </summary>
+		public TimeSpan HiddenWaitTime { get; set; }
+		/// <summary>
+		/// 自動的に隠す際のアニメーション時間。
+		/// </summary>
+		public TimeSpan HiddenAnimateTime { get; set; }
+		/// <summary>
+		/// ドッキングに使用するスクリーン。
+		/// </summary>
+		public ScreenModel DockScreen { get; set; }
 
-		public DockType DockType 
-		{
-			get { return Model.Toolbar.DockType; }
-			set { Model.Toolbar.DockType = value; }
-		}
-
-		public Size BarSize { 
-			get; 
-			set; 
-		}
-
-		public Size HiddenSize
-		{
-			get;
-			set;
-		}
-
-		public TimeSpan HiddenAnimateTime
-		{
-			get { return Model.Toolbar.HiddenAnimateTime; }
-			set { Model.Toolbar.HiddenAnimateTime = value; }
-		}
 
 		#endregion
 

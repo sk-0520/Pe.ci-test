@@ -78,7 +78,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 			model.Toolbar = toolbar;
 			
 			ViewModel = new LauncherToolbarViewModel(model, this);
-
+			ViewModel.DockScreen = Screen;
 			// 以降Viewの保持するスクリーン情報は使用しない
 			Screen = null;
 		}
@@ -88,6 +88,13 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 			base.ApplyViewModel();
 
 			DataContext = ViewModel;
+			Appbar = ViewModel;
+		}
+
+		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			base.OnLoaded(sender, e);
+			Docking(DockType.Right);
 		}
 
 		#endregion
@@ -125,7 +132,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 		{
 			Debug.Assert(dockType != DockType.None);
 
-			var desktopArea = Appbar.DockScreen.DeviceBounds;
+			var deviceDesktopArea = Appbar.DockScreen.DeviceBounds;
 
 			var deviceBarSize = UIUtility.ToDevicePixel(this, Appbar.BarSize);
 
@@ -133,23 +140,23 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 			// 設定値からバー領域取得
 			if (dockType == DockType.Left || dockType == DockType.Right) {
-				top = desktopArea.Top;
+				top = deviceDesktopArea.Top;
 				width = deviceBarSize.Width;
-				height = desktopArea.Height;
+				height = deviceDesktopArea.Height;
 				if (dockType == DockType.Left) {
-					left = desktopArea.Left;
+					left = deviceDesktopArea.Left;
 				} else {
-					left = desktopArea.Right - width;
+					left = deviceDesktopArea.Right - width;
 				}
 			} else {
 				Debug.Assert(dockType == DockType.Top || dockType == DockType.Bottom);
-				left = desktopArea.Left;
-				width = desktopArea.Width;
+				left = deviceDesktopArea.Left;
+				width = deviceDesktopArea.Width;
 				height = deviceBarSize.Height;
 				if (dockType == DockType.Top) {
-					top = desktopArea.Top;
+					top = deviceDesktopArea.Top;
 				} else {
-					top = desktopArea.Bottom - height;
+					top = deviceDesktopArea.Bottom - height;
 				}
 			}
 
@@ -226,11 +233,51 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(this, deviceWindowBounds);
 
 			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, true);
-			Appbar.ShowBarSize = logicalWindowBounds.Size;
+			Appbar.ShowBarSize =  new Size(appBar.rc.Width, appBar.rc.Height);
 
 			if (Appbar.AutoHide) {
 				//WaitHidden();
 			}
+		}
+
+		public void DockingFromProperty()
+		{
+			DockingFromParameter(Appbar.DockType, Appbar.AutoHide);
+		}
+
+		/// <summary>
+		/// ドッキングの実行
+		/// 
+		/// すでにドッキングされている場合はドッキングを再度実行する
+		/// </summary>
+		public void Docking(DockType dockType)
+		{
+			//if(this.timerAutoHidden.Enabled) {
+			//	this.timerAutoHidden.Stop();
+			//}
+
+			// 登録済みであればいったん解除
+			var needResist = true;
+			if(Appbar.DockType != DockType.None) {
+				if(Appbar.DockType != dockType || Appbar.AutoHide) {
+					UnResistAppbar();
+					needResist = true;
+				} else {
+					needResist = false;
+				}
+			}
+
+			if(dockType == DockType.None) {
+				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
+				return;
+			}
+
+			// 登録
+			if(needResist) {
+				RegistAppbar();
+			}
+
+			DockingFromParameter(dockType, Appbar.AutoHide);
 		}
 
 		#endregion
