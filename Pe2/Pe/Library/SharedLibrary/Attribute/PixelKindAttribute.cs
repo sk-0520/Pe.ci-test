@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
-	[AttributeUsage(AttributeTargets.Property)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
 	public class PixelKindAttribute : System.Attribute
 	{
 		public PixelKindAttribute(Px px)
