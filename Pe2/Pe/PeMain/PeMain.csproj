@@ -93,6 +93,7 @@
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\VariableConstants.cs" />
+    <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />

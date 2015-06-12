@@ -22,6 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using System.Windows.Threading;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -45,6 +46,7 @@
 		#region property
 
 		ScreenModel Screen { get; set; }
+		IApplicationDesktopToolbarData Appbar { get; set; }
 
 		#endregion
 
@@ -72,6 +74,9 @@
 			model.Toolbar = toolbar;
 			
 			ViewModel = new LauncherToolbarViewModel(model, this);
+
+			// 以降Viewの保持するスクリーン情報は使用しない
+			Screen = null;
 		}
 
 		protected override void ApplyViewModel()
@@ -84,6 +89,61 @@
 		#endregion
 
 		#region function
+
+		bool RegistAppbar()
+		{
+			Appbar.CallbackMessage = NativeMethods.RegisterWindowMessage(Appbar.MessageString);
+
+			var appBar = new APPBARDATA(Handle);
+			appBar.uCallbackMessage = Appbar.CallbackMessage;
+
+			var registResult = NativeMethods.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
+
+			return registResult.ToInt32() != 0;
+		}
+
+		bool UnResistAppbar()
+		{
+			var appBar = new APPBARDATA(Handle);
+			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
+			Appbar.CallbackMessage = 0;
+
+			return unregistResult.ToInt32() != 0;
+		}
+
+		//private RECT CalcWantBarArea(DockType dockType)
+		//{
+		//	Debug.Assert(dockType != DockType.None);
+
+		//	var desktopArea = Appbar.DockScreen.DeviceBounds;
+		//	var barArea = new RECT();
+
+		//	// 設定値からバー領域取得
+		//	if (dockType == DockType.Left || dockType == DockType.Right) {
+		//		barArea.Top = desktopArea.Top;
+		//		barArea.Bottom = desktopArea.Bottom;
+		//		if (dockType == DockType.Left) {
+		//			barArea.Left = desktopArea.Left;
+		//			barArea.Right = desktopArea.Left + BarSize.Width;
+		//		} else {
+		//			barArea.Left = desktopArea.Right - BarSize.Width;
+		//			barArea.Right = desktopArea.Right;
+		//		}
+		//	} else {
+		//		Debug.Assert(dockType == DockType.Top || dockType == DockType.Bottom);
+		//		barArea.Left = desktopArea.Left;
+		//		barArea.Right = desktopArea.Right;
+		//		if (dockType == DockType.Top) {
+		//			barArea.Top = desktopArea.Top;
+		//			barArea.Bottom = desktopArea.Top + BarSize.Height;
+		//		} else {
+		//			barArea.Top = desktopArea.Bottom - BarSize.Height;
+		//			barArea.Bottom = desktopArea.Bottom;
+		//		}
+		//	}
+
+		//	return barArea;
+		//}
 
 
 		#endregion

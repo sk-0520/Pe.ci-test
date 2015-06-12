@@ -24,10 +24,10 @@
 		{
 			return new ScreenModel() {
 				BitsPerPixel = screen.BitsPerPixel,
-				Bounds = screen.Bounds.ToRect(),
+				DeviceBounds = screen.Bounds.ToRect(),
 				DeviceName = screen.DeviceName,
 				Primary = screen.Primary,
-				WorkingArea = screen.WorkingArea.ToRect(),
+				DeviceWorkingArea = screen.WorkingArea.ToRect(),
 			}; 
 		}
 
