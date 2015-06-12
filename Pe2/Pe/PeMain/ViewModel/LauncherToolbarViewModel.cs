@@ -14,5 +14,7 @@
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{ }
+
+		
 	}
 }

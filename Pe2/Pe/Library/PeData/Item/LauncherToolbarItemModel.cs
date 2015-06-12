@@ -11,5 +11,18 @@
 		public LauncherToolbarItemModel()
 			: base()
 		{ }
+
+		/// <summary>
+		/// ツールバー設定。
+		/// </summary>
+		public ToolbarItemModel Toolbar { get; set; }
+		/// <summary>
+		/// ランチャーアイテム。
+		/// </summary>
+		public LauncherItemCollectionModel LauncherItems { get; set; }
+		/// <summary>
+		/// グループアイテム。
+		/// </summary>
+		public LauncherGroupItemCollectionModel GroupItems { get; set; }
 	}
 }
