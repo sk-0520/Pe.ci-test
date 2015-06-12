@@ -16,6 +16,14 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 		uint CallbackMessage { get; set; }
 		string MessageString { get; set; }
 		/// <summary>
+		/// 他ウィンドウがフルスクリーン表示。
+		/// </summary>
+		bool NowFullScreen { get; set; }
+		/// <summary>
+		/// ドッキング中か。
+		/// </summary>
+		bool IsDocking { get; }
+		/// <summary>
 		/// ドッキング種別。
 		/// </summary>
 		DockType DockType { get; set; }
@@ -36,7 +44,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 		/// 表示中の物理バーサイズ。
 		/// </summary>
 		[PixelKind(Px.Device)]
-		Size ShowBarSize { get; set; }
+		Rect ShowDeviceBarArea { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// <para>横: Widthを使用</para>

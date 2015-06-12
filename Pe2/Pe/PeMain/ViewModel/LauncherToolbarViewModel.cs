@@ -48,6 +48,11 @@
 		public uint CallbackMessage { get; set; }
 		public string MessageString { get; set; }
 		/// <summary>
+		/// 他ウィンドウがフルスクリーン表示。
+		/// </summary>
+		public bool NowFullScreen { get; set; }
+		public bool IsDocking { get { return DockType != DockType.None; } }
+		/// <summary>
 		/// ドッキング種別。
 		/// </summary>
 		public DockType DockType { get; set; }
@@ -68,7 +73,7 @@
 		/// 表示中の物理バーサイズ。
 		/// </summary>
 		[PixelKind(Px.Device)]
-		public Size ShowBarSize { get; set; }
+		public Rect ShowDeviceBarArea { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// <para>横: Widthを使用</para>

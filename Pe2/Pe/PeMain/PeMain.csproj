@@ -92,6 +92,10 @@
     </Compile>
     <Compile Include="Data\CommonData.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Data\Event\AppbarStateChangeEventArgs.cs" />
+    <Compile Include="Data\Event\AppbarPosChangedEventArgs.cs" />
+    <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
+    <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\ICommonData.cs" />

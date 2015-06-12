@@ -24,15 +24,33 @@
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data.Event;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
 	/// </summary>
 	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>
 	{
+		#region event
+
+		/// <summary>
+		/// フルスクリーンイベント。
+		/// </summary>
+		public event EventHandler<AppbarFullScreenEventArgs> AppbarFullScreen;
+		/// <summary>
+		/// 位置変更時に発生。
+		/// </summary>
+		public event EventHandler<AppbarPosChangedEventArgs> AppbarPosChanged = delegate { };
+		/// <summary>
+		/// ステータス変更。
+		/// </summary>
+		public event EventHandler<AppbarStateChangeEventArgs> AppbarStateChange = delegate { };
+
+		#endregion
+
 		public LauncherToolbarWindow()
 		{
 			InitializeComponent();
@@ -94,13 +112,111 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{
 			base.OnLoaded(sender, e);
+			//Appbar.DockType = DockType.Right;
 			Docking(DockType.Right);
+		}
+
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if(Appbar.IsDocking) {
+				switch((int)msg) {
+					case (int)WM.WM_ACTIVATE: 
+						{
+							var appBar = new APPBARDATA(Handle);
+							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
+							//handled = true;
+						}
+						break;
+
+					case (int)WM.WM_WINDOWPOSCHANGED: 
+						{
+							var appBar = new APPBARDATA(Handle);
+							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
+							//handled = true;
+						}
+						break;
+
+					case (int)WM.WM_EXITSIZEMOVE:
+						{
+							DockingFromProperty();
+							//// AppBar のサイズを更新。
+							//switch(Appbar.DockType) {
+							//	case DockType.Left:
+							//	case DockType.Right:
+							//		Appbar.BarSize = new Size(Width, Appbar.BarSize.Height);
+							//		break;
+							//	case DockType.Top:
+							//	case DockType.Bottom:
+							//		Appbar.BarSize = new Size(Appbar.BarSize.Width, Height);
+							//		break;
+							//	default:
+							//		throw new NotImplementedException();
+							//}
+							////Docking(Appbar.DockType);
+							//DockingFromProperty();
+							////handled = true;
+						}
+						break;
+
+					default:
+						if(Appbar.CallbackMessage != 0 && msg == Appbar.CallbackMessage) {
+							switch(wParam.ToInt32()) {
+								case (int)ABN.ABN_FULLSCREENAPP:
+									// フルスクリーン
+									OnAppbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
+									//handled = true;
+									break;
+
+								case (int)ABN.ABN_POSCHANGED:
+									// 他のバーの位置が変更されたので再設定
+									OnAppbarPosChanged();
+									//handled = true;
+									break;
+
+								case (int)ABN.ABN_STATECHANGE:
+									// タスクバーの [常に手前に表示] または [自動的に隠す] が変化したとき
+									// 特に何もする必要なし
+									OnAppbarStateChange();
+									//handled = true;
+									break;
+
+								default:
+									break;
+							}
+						}
+						break;
+				}
+			}
+
+			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion
 
 		#region function
 
+		protected void OnAppbarFullScreen(bool fullScreen)
+		{
+			var e = new AppbarFullScreenEventArgs(fullScreen);
+			Appbar.NowFullScreen = e.FullScreen;
+			AppbarFullScreen(this, e);
+		}
+
+		protected virtual void OnAppbarPosChanged()
+		{
+			DockingFromProperty();
+
+			var e = new AppbarPosChangedEventArgs();
+			AppbarPosChanged(this, e);
+		}
+
+		protected virtual void OnAppbarStateChange()
+		{
+			DockingFromProperty();
+
+			var e = new AppbarStateChangeEventArgs();
+			AppbarStateChange(this, e);
+		}
 		bool RegistAppbar()
 		{
 			Appbar.CallbackMessage = NativeMethods.RegisterWindowMessage(Appbar.MessageString);
@@ -233,7 +349,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(this, deviceWindowBounds);
 
 			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, true);
-			Appbar.ShowBarSize =  new Size(appBar.rc.Width, appBar.rc.Height);
+			Appbar.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
 
 			if (Appbar.AutoHide) {
 				//WaitHidden();
@@ -258,7 +374,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 			// 登録済みであればいったん解除
 			var needResist = true;
-			if(Appbar.DockType != DockType.None) {
+			if(Appbar.IsDocking) {
 				if(Appbar.DockType != dockType || Appbar.AutoHide) {
 					UnResistAppbar();
 					needResist = true;
@@ -278,6 +394,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 			}
 
 			DockingFromParameter(dockType, Appbar.AutoHide);
+			Appbar.DockType = dockType;
 		}
 
 		#endregion

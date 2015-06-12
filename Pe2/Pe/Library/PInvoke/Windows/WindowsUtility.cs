@@ -12,5 +12,10 @@
 		{
 			return (SC)(wParam.ToInt32() & 0xfff0);
 		}
+
+		public static bool ConvertBoolFromLParam(IntPtr lParam)
+		{
+			return Convert.ToBoolean(lParam.ToInt32());
+		}
 	}
 }
