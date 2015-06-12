@@ -1,13 +1,15 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 
 	public interface IApplicationDesktopToolbarData
 	{
@@ -28,12 +30,19 @@
 		/// <summary>
 		/// バーの論理サイズ
 		/// </summary>
+		[PixelKind(Px.Logical)]
 		Size BarSize { get; set; }
+		/// <summary>
+		/// 表示中の論理バーサイズ。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		Size ShowBarSize { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// <para>横: Widthを使用</para>
 		/// <para>縦: Heightを使用</para>
 		/// </summary>
+		[PixelKind(Px.Logical)]
 		Size HideSize { get; set; }
 		/// <summary>
 		/// 自動的に隠すまでの時間。

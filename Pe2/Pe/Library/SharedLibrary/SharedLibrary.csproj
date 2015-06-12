@@ -78,6 +78,7 @@
     <Compile Include="CompatibleForms\Extension\ConvertExtension.cs" />
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
+    <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
     <Compile Include="Define\Px.cs" />

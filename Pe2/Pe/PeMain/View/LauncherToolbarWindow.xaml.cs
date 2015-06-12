@@ -23,6 +23,10 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -111,40 +115,123 @@
 			return unregistResult.ToInt32() != 0;
 		}
 
-		//private RECT CalcWantBarArea(DockType dockType)
-		//{
-		//	Debug.Assert(dockType != DockType.None);
+		/// <summary>
+		// 設定値からバー領域取得
+		/// </summary>
+		/// <param name="dockType"></param>
+		/// <returns></returns>
+		[return: PixelKind(Px.Device)]
+		Rect CalcWantBarArea(DockType dockType)
+		{
+			Debug.Assert(dockType != DockType.None);
 
-		//	var desktopArea = Appbar.DockScreen.DeviceBounds;
-		//	var barArea = new RECT();
+			var desktopArea = Appbar.DockScreen.DeviceBounds;
 
-		//	// 設定値からバー領域取得
-		//	if (dockType == DockType.Left || dockType == DockType.Right) {
-		//		barArea.Top = desktopArea.Top;
-		//		barArea.Bottom = desktopArea.Bottom;
-		//		if (dockType == DockType.Left) {
-		//			barArea.Left = desktopArea.Left;
-		//			barArea.Right = desktopArea.Left + BarSize.Width;
-		//		} else {
-		//			barArea.Left = desktopArea.Right - BarSize.Width;
-		//			barArea.Right = desktopArea.Right;
-		//		}
-		//	} else {
-		//		Debug.Assert(dockType == DockType.Top || dockType == DockType.Bottom);
-		//		barArea.Left = desktopArea.Left;
-		//		barArea.Right = desktopArea.Right;
-		//		if (dockType == DockType.Top) {
-		//			barArea.Top = desktopArea.Top;
-		//			barArea.Bottom = desktopArea.Top + BarSize.Height;
-		//		} else {
-		//			barArea.Top = desktopArea.Bottom - BarSize.Height;
-		//			barArea.Bottom = desktopArea.Bottom;
-		//		}
-		//	}
+			var deviceBarSize = UIUtility.ToDevicePixel(this, Appbar.BarSize);
 
-		//	return barArea;
-		//}
+			double top, left, width, height;
 
+			// 設定値からバー領域取得
+			if (dockType == DockType.Left || dockType == DockType.Right) {
+				top = desktopArea.Top;
+				width = deviceBarSize.Width;
+				height = desktopArea.Height;
+				if (dockType == DockType.Left) {
+					left = desktopArea.Left;
+				} else {
+					left = desktopArea.Right - width;
+				}
+			} else {
+				Debug.Assert(dockType == DockType.Top || dockType == DockType.Bottom);
+				left = desktopArea.Left;
+				width = desktopArea.Width;
+				height = deviceBarSize.Height;
+				if (dockType == DockType.Top) {
+					top = desktopArea.Top;
+				} else {
+					top = desktopArea.Bottom - height;
+				}
+			}
+
+			return new Rect(left, width, width, height);
+		}
+
+		/// <summary>
+		/// 現在の希望するサイズから実際のサイズ要求する
+		/// </summary>
+		/// <param name="appBar"></param>
+		void TuneSystemBarArea(ref APPBARDATA appBar)
+		{
+			var deviceBarSize = UIUtility.ToDevicePixel(this, Appbar.BarSize);
+			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
+			switch(appBar.uEdge) {
+				case ABE.ABE_LEFT:
+					appBar.rc.Right = appBar.rc.Left + (int)deviceBarSize.Width;
+					break;
+					
+				case ABE.ABE_RIGHT:
+					appBar.rc.Left = appBar.rc.Right - (int)deviceBarSize.Width;
+					break;
+					
+				case ABE.ABE_TOP:
+					appBar.rc.Bottom = appBar.rc.Top + (int)deviceBarSize.Height;
+					break;
+					
+				case ABE.ABE_BOTTOM:
+					appBar.rc.Top = appBar.rc.Bottom - (int)deviceBarSize.Height;
+					break;
+					
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+		public IntPtr ExistsHideWindow(DockType dockType)
+		{
+			Debug.Assert(dockType != DockType.None);
+
+			var appBar = new APPBARDATA(Handle);
+			appBar.uEdge = dockType.ToABE();
+			var nowWnd = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
+
+			return nowWnd;
+		}
+
+		private void DockingFromParameter(DockType dockType, bool autoHide)
+		{
+			Debug.Assert(dockType != DockType.None);
+
+			var appBar = new APPBARDATA(Handle);
+			appBar.uEdge = dockType.ToABE();
+			appBar.rc = PodStructUtility.Convert(CalcWantBarArea(dockType));
+			TuneSystemBarArea(ref appBar);
+
+			bool autoHideResult = false;
+			if (autoHide) {
+				var hideWnd = ExistsHideWindow(dockType);
+				if (hideWnd == IntPtr.Zero || hideWnd == Handle) {
+					// 自動的に隠す
+					var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
+					autoHideResult = result.ToInt32() != 0;
+					autoHideResult = true;
+				}
+			}
+			if (!autoHideResult) {
+				var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+			}
+
+			Appbar.AutoHide = autoHideResult;
+
+			var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
+			var logicalWindowBounds = UIUtility.ToLogicalPixel(this, deviceWindowBounds);
+
+			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, true);
+			Appbar.ShowBarSize = logicalWindowBounds.Size;
+
+			if (Appbar.AutoHide) {
+				//WaitHidden();
+			}
+		}
 
 		#endregion
 	}

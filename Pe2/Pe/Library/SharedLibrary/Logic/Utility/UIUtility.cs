@@ -8,6 +8,8 @@
 	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public static class UIUtility
 	{
@@ -36,6 +38,94 @@
 					}
 				}
 			}
+		}
+
+		/// <summary>
+		/// http://grabacr.net/archives/1105
+		/// </summary>
+		/// <param name="visual"></param>
+		/// <returns></returns>
+		public static Point GetDpiScale(Visual visual)
+		{
+			var source = PresentationSource.FromVisual(visual);
+			if (source != null && source.CompositionTarget != null) {
+				return new Point(
+					source.CompositionTarget.TransformToDevice.M11,
+					source.CompositionTarget.TransformToDevice.M22
+				);
+			}
+
+			return new Point(1.0, 1.0);
+		}
+
+		[return: PixelKind(Px.Device)] 
+		public static Point ToDevicePixel(Visual visual, Point point)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return new Point(
+				point.X * dpiScale.X,
+				point.Y * dpiScale.Y
+			);
+		}
+
+		[return: PixelKind(Px.Logical)]
+		public static Point ToLogicalPixel(Visual visual, Point point)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return new Point(
+				point.X / dpiScale.X,
+				point.Y / dpiScale.Y
+			);
+		}
+
+		[return: PixelKind(Px.Device)]
+		public static Size ToDevicePixel(Visual visual, Size size)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return new Size(
+				size.Width * dpiScale.X,
+				size.Height * dpiScale.Y
+			);
+		}
+
+		[return: PixelKind(Px.Logical)]
+		public static Size ToLogicalPixel(Visual visual, Size size)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return new Size(
+				size.Width / dpiScale.X,
+				size.Height / dpiScale.Y
+			);
+		}
+
+		[return: PixelKind(Px.Device)]
+		public static Rect ToDevicePixel(Visual visual, Rect rect)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return new Rect(
+				rect.X * dpiScale.X,
+				rect.Y * dpiScale.Y,
+				rect.Width * dpiScale.X,
+				rect.Height * dpiScale.Y
+			);
+		}
+
+		[return: PixelKind(Px.Logical)]
+		public static Rect ToLogicalPixel(Visual visual, Rect rect)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return new Rect(
+				rect.X / dpiScale.X,
+				rect.Y / dpiScale.Y,
+				rect.Width / dpiScale.X,
+				rect.Height / dpiScale.Y
+			);
 		}
 	}
 }
