@@ -68,24 +68,21 @@
 
 		public ObservableCollection<LogItemModel> LogItems { get; set; }
 
+		#region IVisible
+
 		public Visibility Visibility
 		{
-			get { return ConvertUtility.To(Visible); }
-			set { Visible = ConvertUtility.To(value); }
+			get { return VisibleVisibilityProperty.GetVisibility(Model); }
+			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
 		}
 
 		public bool Visible 
 		{
-			get { return Model.Visible; }
-			set
-			{
-				if (Model.Visible != value) {
-					Model.Visible = value;
-					OnPropertyChanged();
-					OnPropertyChanged("Visibility");
-				}
-			}
+			get { return VisibleVisibilityProperty.GetVisible(Model); }
+			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
 		}
+
+		#endregion
 
 		#endregion
 

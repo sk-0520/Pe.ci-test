@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LoggingItemModel : ItemModelBase, IWindowStatus
+	public class LoggingItemModel : ItemModelBase, IWindowStatus, IVisible
 	{
 		public LoggingItemModel()
 			: base()
@@ -32,8 +32,13 @@
 
 		#endregion
 
+		#region IVisible
+
 		[DataMember]
 		public bool Visible { get; set; }
+
+		#endregion
+
 		[DataMember]
 		public bool AddShow { get; set; }
 		[DataMember]
