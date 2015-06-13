@@ -19,27 +19,14 @@
 			return CreateEvent(handler, releaseEvent, out eventDisposer);
 		}
 
-		public static EventHandler Create(EventHandler handler, Action<EventHandler> releaseEvent, out EventHandlerDisposer eventDisposer)
+		public static TEventHandler Create<TEventHandler>(TEventHandler handler, Action<TEventHandler> releaseEvent, out EventDisposer<TEventHandler> eventDisposer)
 		{
-			eventDisposer = new EventHandlerDisposer();
+			eventDisposer = new EventDisposer<TEventHandler>();
 			return eventDisposer.Handle(handler, releaseEvent);
 		}
-		public static EventHandler Auto(EventHandler handler, Action<EventHandler> releaseEvent)
+		public static TEventHandler Auto<TEventHandler>(TEventHandler handler, Action<TEventHandler> releaseEvent)
 		{
-			EventHandlerDisposer eventDisposer;
-			return Create(handler, releaseEvent, out eventDisposer);
-		}
-
-		public static EventHandler<TEventArgs> Create<TEventArgs>(EventHandler<TEventArgs> handler, Action<EventHandler<TEventArgs>> releaseEvent, out EventHandlerDisposer<TEventArgs> eventDisposer)
-			where TEventArgs: EventArgs
-		{
-			eventDisposer = new EventHandlerDisposer<TEventArgs>();
-			return eventDisposer.Handle(handler, releaseEvent);
-		}
-		public static EventHandler<TEventArgs> Auto<TEventArgs>(EventHandler<TEventArgs> handler, Action<EventHandler<TEventArgs>> releaseEvent)
-			where TEventArgs: EventArgs
-		{
-			EventHandlerDisposer<TEventArgs> eventDisposer;
+			EventDisposer<TEventHandler> eventDisposer;
 			return Create(handler, releaseEvent, out eventDisposer);
 		}
 	}

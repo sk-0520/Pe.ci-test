@@ -56,16 +56,16 @@
 		#endregion
 	}
 
-	public class EventHandlerDisposer: DisposeFinalizeBase
+	public class EventDisposer<TEventHandler>: DisposeFinalizeBase
 	{
-		public EventHandlerDisposer()
+		public EventDisposer()
 			: base()
 		{ }
 
 		#region property
 
-		protected EventHandler EventHandler {get; private set;}
-		protected Action<EventHandler> ReleaseEvent { get; private set; }
+		protected TEventHandler EventHandler { get; private set; }
+		protected Action<TEventHandler> ReleaseEvent { get; private set; }
 
 		#endregion
 
@@ -83,58 +83,7 @@
 
 		#region function
 
-		public EventHandler Handle(EventHandler eventHandler, Action<EventHandler> releaseEvent)
-		{
-			if(EventHandler != null) {
-				throw new InvalidOperationException("EventHandler");
-			}
-			if(ReleaseEvent != null) {
-				throw new InvalidOperationException("ReleaseEvent");
-			}
-
-			if(eventHandler == null) {
-				throw new ArgumentNullException("eventHandler");
-			}
-			if(releaseEvent == null) {
-				throw new ArgumentNullException("releaseEvent");
-			}
-
-			ReleaseEvent = releaseEvent;
-			return EventHandler = eventHandler;
-		}
-
-		#endregion
-	}
-
-	public class EventHandlerDisposer<TEventArgs>: DisposeFinalizeBase
-		where TEventArgs: EventArgs
-	{
-		public EventHandlerDisposer()
-			: base()
-		{ }
-
-		#region property
-
-		protected EventHandler<TEventArgs> EventHandler { get; private set; }
-		protected Action<EventHandler<TEventArgs>> ReleaseEvent { get; private set; }
-
-		#endregion
-
-		#region DisposeFinalizeBase
-
-		protected override void Dispose(bool disposing)
-		{
-			if(!IsDisposed) {
-				ReleaseEvent(EventHandler);
-			}
-
-			base.Dispose(disposing);
-		}
-		#endregion
-
-		#region function
-
-		public EventHandler<TEventArgs> Handle(EventHandler<TEventArgs> eventHandler, Action<EventHandler<TEventArgs>> releaseEvent)
+		public TEventHandler Handle(TEventHandler eventHandler, Action<TEventHandler> releaseEvent)
 		{
 			if(EventHandler != null) {
 				throw new InvalidOperationException("EventHandler");
