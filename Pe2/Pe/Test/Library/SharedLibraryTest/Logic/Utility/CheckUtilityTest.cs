@@ -34,5 +34,14 @@
 			Assert.DoesNotThrow(() => CheckUtility.EnforceNotNull(new Exception()));
 			Assert.Throws<ArgumentNullException>(() => CheckUtility.EnforceNotNull(default(Exception)));
 		}
+
+		[Test]
+		public void EnforceNotNull_Nullable_Test()
+		{
+			int? test1 = 1;
+			Assert.DoesNotThrow(() => CheckUtility.EnforceNotNull(test1));
+			test1 = null;
+			Assert.Throws<ArgumentNullException>(() => CheckUtility.EnforceNotNull(test1));
+		}
 	}
 }

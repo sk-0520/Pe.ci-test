@@ -42,5 +42,16 @@
 		{
 			Enforce<ArgumentNullException>(obj != null);
 		}
+
+		/// <summary>
+		/// 非nullを強制。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="nullable"></param>
+		public static void EnforceNotNull<T>(Nullable<T> nullable)
+			where T: struct
+		{
+			Enforce<ArgumentNullException>(nullable.HasValue);
+		}
 	}
 }
