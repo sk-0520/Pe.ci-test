@@ -28,6 +28,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data.Event;
+	using System.ComponentModel;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -109,16 +110,23 @@
 			Appbar = ViewModel;
 		}
 
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			base.OnClosing(e);
+			// Closedだとハンドルがないのでこっちで対応
+			if(!e.Cancel && Appbar != null && Appbar.IsDocking) {
+				UnresistAppbar();
+			}
+		}
+
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if(Appbar.IsDocking) {
-				/*
 				switch((int)msg) {
 					case (int)WM.WM_ACTIVATE: 
 						{
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
-							//handled = true;
 						}
 						break;
 
@@ -127,14 +135,13 @@
 							//DockingFromProperty();
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
-							//handled = true;
 						}
 						break;
 
 					case (int)WM.WM_EXITSIZEMOVE:
 						{
+							// 到達した試しがない
 							OnResizeEnd();
-							handled = true;
 						}
 						break;
 
@@ -148,6 +155,7 @@
 
 								case (int)ABN.ABN_POSCHANGED:
 									// 他のバーの位置が変更されたので再設定
+									DockingFromProperty();
 									OnAppbarPosChanged();
 									break;
 
@@ -160,16 +168,8 @@
 								default:
 									break;
 							}
-							OnAppbarPosChanged();
-							handled = true;
 						}
 						break;
-				}
-				*/
-				if(msg == Appbar.CallbackMessage) {
-					DockingFromProperty();
-					handled = true;
-
 				}
 			}
 
@@ -190,8 +190,6 @@
 
 		protected virtual void OnAppbarPosChanged()
 		{
-			DockingFromProperty();
-
 			var e = new AppbarPosChangedEventArgs();
 			AppbarPosChanged(this, e);
 		}
@@ -272,6 +270,7 @@
 		void TuneSystemBarArea(ref APPBARDATA appBar)
 		{
 			var deviceBarSize = UIUtility.ToDevicePixel(this, Appbar.BarSize);
+			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 
 			switch(appBar.uEdge) {
 				case ABE.ABE_LEFT:
@@ -293,7 +292,6 @@
 				default:
 					throw new NotImplementedException();
 			}
-			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 		}
 
 		public IntPtr ExistsHideWindow(DockType dockType)
@@ -333,15 +331,27 @@
 			var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(this, deviceWindowBounds);
 
-			//if (!autoHideResult) {
-			var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
-			//}
-			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, true);
+			if (!autoHideResult) {
+				var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
+			}
+
+			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
 			Appbar.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
 
 			if (Appbar.AutoHide) {
 				//WaitHidden();
 			}
+
+			Dispatcher.BeginInvoke(
+				DispatcherPriority.ApplicationIdle,
+				new Action(() => ResizeShowDeviceBarArea())
+			);
+		}
+
+		void ResizeShowDeviceBarArea()
+		{
+			var dviceArea = Appbar.ShowDeviceBarArea;
+			NativeMethods.MoveWindow(Handle, (int)dviceArea.X, (int)dviceArea.Y, (int)dviceArea.Width, (int)dviceArea.Height, true);
 		}
 
 		public void DockingFromProperty()

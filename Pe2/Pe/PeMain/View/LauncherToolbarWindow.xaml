@@ -10,7 +10,7 @@
 	Title="ToolbarWindow" 
 	Height="300" 
 	Width="300"
-	Visibility="{Binding Visibility}" WindowStyle="None" ShowInTaskbar="true" ResizeMode="NoResize" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStartupLocation="Manual"
+	Visibility="{Binding Visibility}" WindowStyle="None" ShowInTaskbar="False" ResizeMode="NoResize" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStartupLocation="Manual"
 >
     <Grid>
         
