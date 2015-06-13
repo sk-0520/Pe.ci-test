@@ -1,21 +1,24 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
+	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	[Serializable]
-	public class TIdCollection<TKey, TValue>: DisposeFinalizeModelBase
+	public class TIdCollection<TKey, TValue>: DisposeFinalizeModelBase, ICollection<TValue>
 		where TValue: ITId<TKey>
 		where TKey: IComparable
 	{
 		#region variable
 
-		protected Dictionary<TKey, TValue> _map;
+		protected Dictionary<TKey, TValue> _map = new Dictionary<TKey, TValue>();
+		protected bool _isReadOnly = false;
 
 		#endregion
 
@@ -23,12 +26,69 @@
 			: base()
 		{
 			Items = new List<TValue>();
-			this._map = new Dictionary<TKey, TValue>();
 		}
 
 		#region property
 
 		public List<TValue> Items { get; set; }
+
+		#endregion
+
+		#region ICollection
+
+		public int Count { get { return Items.Count; } }
+		public bool IsReadOnly { get { return this._isReadOnly; } }
+
+		/// <summary>
+		/// 要素を追加する。
+		/// </summary>
+		/// <param name="value"></param>
+		/// <exception cref="ArgumentNullException">valueがnull</exception>
+		/// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
+		public void Add(TValue value)
+		{
+			CheckReadOnly();
+
+			Add(value, true);
+		}
+
+		public void Clear()
+		{
+			CheckReadOnly();
+
+			Items.Clear();
+			this._map.Clear();
+		}
+
+		public bool Contains(TValue item)
+		{
+			return Items.Contains(item);
+		}
+
+		public void CopyTo(TValue[] array, int arrayIndex)
+		{
+			Items.CopyTo(array, arrayIndex);
+		}
+
+		IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
+		{
+			return Items.GetEnumerator();
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return Items.GetEnumerator();
+		}
+
+		public bool Remove(TValue item)
+		{
+			if(Items.Remove(item)) {
+				this._map.Remove(item.Id);
+				return true;
+			}
+
+			return false;
+		}
 
 		#endregion
 
@@ -73,16 +133,12 @@
 		{
 			return IsEqual(a.Id, b.Id);
 		}
-
-		/// <summary>
-		/// 要素を追加する。
-		/// </summary>
-		/// <param name="value"></param>
-		/// <exception cref="ArgumentNullException">valueがnull</exception>
-		/// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
-		public void Add(TValue value)
+		
+		void CheckReadOnly()
 		{
-			Add(value, true);
+			if(IsReadOnly) {
+				throw new NotSupportedException();
+			}
 		}
 
 		void Add(TValue value, bool check)
@@ -168,6 +224,15 @@
 			srcValue.Id = dst;
 			this._map.Remove(src);
 			this._map[dst] = srcValue;
+		}
+
+		public bool ChangeReadOnly()
+		{
+			if(!IsReadOnly) {
+				return true;
+			}
+
+			return false;
 		}
 
 		#endregion
