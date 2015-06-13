@@ -24,7 +24,7 @@
 
 		public MainSettingModel MainSetting { get; set; }
 		public LauncherItemSettingModel LauncherItemSetting { get; set; }
-		public LauncherGroupItemSettingModel LauncherGroupItemSetting { get; set; }
+		public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
 		public AppLanguageManager Language { get; set; }
 		public ILogger Logger { get; set; }
 
@@ -37,7 +37,7 @@
 			if (!IsDisposed) {
 				MainSetting.Dispose();
 				LauncherItemSetting.Dispose();
-				LauncherGroupItemSetting.Dispose();
+				LauncherGroupSetting.Dispose();
 				Logger.Dispose();
 			}
 			base.Dispose(disposing);

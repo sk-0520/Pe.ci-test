@@ -113,7 +113,7 @@
 			// 各種設定の読込
 			CommonData.MainSetting= AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.Logger);
 			CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.Logger);
-			CommonData.LauncherGroupItemSetting = AppUtility.LoadSetting<LauncherGroupItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
+			CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
 			// 言語ファイル
 			CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
 		}
@@ -122,7 +122,7 @@
 		{
 			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, CommonData.Logger);
 			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, CommonData.Logger);
-			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupItemSetting, CommonData.Logger);
+			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, CommonData.Logger);
 		}
 
 		/// <summary>
@@ -133,11 +133,9 @@
 			CommonData.Logger.Information("MainWorkerViewModel initialize");
 
 			LoadSetting();
-
 			if(!InitializeAccept()) {
 				return false;
 			}
-
 			InitializeSetting();
 
 			CreateLogger();
@@ -152,7 +150,7 @@
 		/// </summary>
 		bool InitializeAccept()
 		{
-			if(CheckAccept()) {
+			if(SettingUtility.CheckAccept(CommonData.MainSetting.RunningInformation, CommonData.Logger)) {
 				SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
 			} else {
 				// 使用許諾表示前に使用しない状態にしておく。
@@ -172,36 +170,12 @@
 			return true;
 		}
 
-		bool CheckAccept()
-		{
-			if(!CommonData.MainSetting.RunningInformation.Accept) {
-				// 完全に初回
-				CommonData.Logger.Debug("first");
-				return false;
-			}
-
-			if(CommonData.MainSetting.RunningInformation.LastExecuteVersion == null) {
-				// 何らかの理由で前回実行時のバージョン格納されていない
-				CommonData.Logger.Debug("last version == null");
-				return false;
-			}
-
-			if(CommonData.MainSetting.RunningInformation.LastExecuteVersion < Constants.acceptVersion) {
-				// 前回バージョンから強制定期に使用許諾が必要
-				CommonData.Logger.Debug("last version < accept version");
-				return false;
-			}
-
-			return true;
-		}
 
 		void InitializeSetting()
 		{
-			InitializeMainSetting();
-		}
-
-		void InitializeMainSetting()
-		{
+			SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.Logger);
+			SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.Logger);
+			SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.Language, CommonData.Logger);
 		}
 
 		/// <summary>

@@ -16,7 +16,7 @@
 		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
 
 		<Item Id="new/group-id" Word="group" />
-		<Item Id="new/group-name" Word="group" />
+		<Item Id="new/group-name" Word="新規グループ" />
 
 	</Words>
 </Language>

@@ -97,7 +97,7 @@
     <Compile Include="Item\TagItemModel.cs" />
     <Compile Include="Item\LauncherItemCollectionModel.cs" />
     <Compile Include="Item\WindowSaveItemModel.cs" />
-    <Compile Include="Setting\LauncherGroupItemSettingModel.cs" />
+    <Compile Include="Setting\LauncherGroupSettingModel.cs" />
     <Compile Include="Setting\LauncherItemSettingModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />

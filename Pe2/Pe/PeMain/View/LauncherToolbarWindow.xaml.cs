@@ -79,7 +79,7 @@
 		{
 			var model = new LauncherToolbarItemModel() {
 				LauncherItems = CommonData.LauncherItemSetting.Items,
-				GroupItems = CommonData.LauncherGroupItemSetting.Items,
+				GroupItems = CommonData.LauncherGroupSetting.Groups,
 			};
 
 			ToolbarItemModel toolbar;
@@ -177,7 +177,6 @@
 		}
 
 		#endregion
-
 
 		#region function
 
