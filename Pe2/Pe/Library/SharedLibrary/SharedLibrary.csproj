@@ -84,6 +84,7 @@
     <Compile Include="Define\Px.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
+    <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />
     <Compile Include="IF\IHavingViewModel.cs" />
     <Compile Include="IF\IIsDisposed.cs" />

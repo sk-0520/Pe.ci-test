@@ -7,8 +7,9 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Interop;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public abstract class WindowsAPIWindowBase: OnLoadedWindowBase
+	public abstract class WindowsAPIWindowBase: OnLoadedWindowBase, IWindowsHandle
 	{
 		public WindowsAPIWindowBase()
 			:base()
@@ -18,7 +19,11 @@
 
 		protected WindowInteropHelper WindowInteropHelper { get; private set; }
 
-		protected IntPtr Handle { get { return WindowInteropHelper.Handle; } }
+		#region IWindowsHandle
+
+		public IntPtr Handle { get { return WindowInteropHelper.Handle; } }
+
+		#endregion
 
 		#endregion
 
