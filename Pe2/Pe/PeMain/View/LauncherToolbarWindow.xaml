@@ -10,9 +10,16 @@
 	Title="ToolbarWindow" 
 	Height="300" 
 	Width="300"
-	Visibility="{Binding Visibility}" WindowStyle="None" ShowInTaskbar="False" ResizeMode="NoResize" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStartupLocation="Manual"
+	WindowStyle="None"
+	ShowInTaskbar="False" 
+	ResizeMode="NoResize"
+	ScrollViewer.VerticalScrollBarVisibility="Disabled"
+	WindowStartupLocation="Manual"
+	Visibility="{Binding Visibility}" 
+	Topmost="{Binding TopMost}"
 >
     <Grid>
-        
+		<ToolBar>
+		</ToolBar>
     </Grid>
 </CD:ViewModelCommonDataWindow>

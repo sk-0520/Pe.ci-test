@@ -18,6 +18,12 @@
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
 	{
+		#region variable
+
+		string _selectedGroup;
+
+		#endregion
+
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{
@@ -57,6 +63,7 @@
 
 		public uint CallbackMessage { get; set; }
 		public string MessageString { get; set; }
+
 		/// <summary>
 		/// 他ウィンドウがフルスクリーン表示。
 		/// </summary>
@@ -106,6 +113,20 @@
 
 
 		#endregion
+
+		public string SelectedGroup
+		{
+			get { return this._selectedGroup; }
+			set
+			{
+				if(this._selectedGroup != value) {
+					this._selectedGroup = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		//IReadOnlyList<LauncherItemModel>
 
 		#endregion
 

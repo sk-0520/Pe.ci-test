@@ -409,9 +409,8 @@
 				default:
 					throw new NotImplementedException();
 			}
-			//Docking(Appbar.DockType);
+
 			DockingFromProperty();
-			//handled = true;
 		}
 		#endregion
 	}
