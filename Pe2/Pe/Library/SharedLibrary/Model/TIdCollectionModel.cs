@@ -32,6 +32,8 @@
 
 		public List<TValue> Items { get; set; }
 
+		public IEnumerable<TKey> Keys { get { return Items.Select(i => i.Id); } }
+
 		#endregion
 
 		#region ICollection

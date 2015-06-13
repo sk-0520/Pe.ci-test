@@ -14,7 +14,9 @@
 		<Item Id="accept/ng" Word="使用しない" />
 		<Item Id="update-check/release" Word="アップデートを確認する" />
 		<Item Id="update-check/rc" Word="RC版も確認対象とする" />
-		
-		
+
+		<Item Id="new/group-id" Word="group" />
+		<Item Id="new/group-name" Word="group" />
+
 	</Words>
 </Language>
