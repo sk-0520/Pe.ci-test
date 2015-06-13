@@ -19,6 +19,13 @@
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
 	{
+		#region variable
+
+		string _selectedGroup = null;
+		IEnumerable<LauncherItemModel> _launcherItems = null;
+
+		#endregion
+
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{
@@ -113,7 +120,29 @@
 			get { return DockType == DockType.Left ? Orientation.Horizontal : System.Windows.Controls.Orientation.Vertical; }
 		}
 
-		public string SelectedGroup { get; set; }
+		public string SelectedGroup
+		{
+			get { return this._selectedGroup; }
+			set
+			{
+				if(this._selectedGroup != value) {
+					this._selectedGroup = value;
+					this._selectedGroup = null;
+				}
+			}
+		}
+
+		public IEnumerable<LauncherItemModel> LauncherItems 
+		{
+			get
+			{
+				if(this._launcherItems == null) {
+					this._launcherItems = GetLauncherItems(SelectedGroup);
+				}
+
+				return this._launcherItems;
+			}
+		}
 
 		#endregion
 
