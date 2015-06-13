@@ -20,9 +20,44 @@
 >
 	<!--<Grid>-->
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
-			<ToolBar>
-				<Button>asd</Button>
-			</ToolBar>
-		</ToolBarTray>
+		<ToolBar>
+			<ToolBar.Resources>
+				<Style x:Key="Image" TargetType="Image">
+					<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
+				</Style>
+				<Style x:Key="Text" TargetType="TextBlock">
+					<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
+				</Style>
+			</ToolBar.Resources>
+			<ToolBar.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Vertical">
+
+						<!-- ファイル -->
+						<Button Visibility="{Binding VisibilityFile, Mode=OneWay}">
+							<StackPanel Orientation="Horizontal">
+								<Image Style="{StaticResource Image}"/>
+								<TextBlock Style="{StaticResource Text}" />
+							</StackPanel>
+						</Button>
+						<!-- ディレクトリ -->
+						<Button Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
+							<StackPanel Orientation="Horizontal">
+								<Image Style="{StaticResource Image}"/>
+								<TextBlock Style="{StaticResource Text}" />
+							</StackPanel>
+						</Button>
+						<!-- コマンド -->
+						<Button Visibility="{Binding VisibilityCommand, Mode=OneWay}">
+							<StackPanel Orientation="Horizontal">
+								<Image Style="{StaticResource Image}"/>
+								<TextBlock Style="{StaticResource Text}" />
+							</StackPanel>
+						</Button>
+					</StackPanel>
+				</DataTemplate>
+			</ToolBar.ItemTemplate>
+		</ToolBar>
+	</ToolBarTray>
 	<!--</Grid>-->
 </CD:ViewModelCommonDataWindow>
