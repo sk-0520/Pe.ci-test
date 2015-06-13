@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
-	public interface IWindowStatus
+	public interface IWindowStatus: IVisible, ITopMost
 	{
 		/// <summary>
 		/// 論理ウィンドウ座標(X)

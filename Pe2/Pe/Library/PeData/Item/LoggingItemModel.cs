@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LoggingItemModel : ItemModelBase, IWindowStatus, IVisible
+	public class LoggingItemModel : ItemModelBase, IWindowStatus
 	{
 		public LoggingItemModel()
 			: base()
@@ -36,12 +36,19 @@
 		[PixelKind(Px.Logical)]
 		public WindowState WindowState { get; set; }
 
+		#region ITopMost
+
+		[DataMember]
+		public bool TopMost { get; set; }
+
 		#endregion
 
 		#region IVisible
 
 		[DataMember]
 		public bool Visible { get; set; }
+
+		#endregion
 
 		#endregion
 

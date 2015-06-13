@@ -27,6 +27,16 @@
 
 		#region property
 
+		#region ITopMost
+
+		public bool TopMost
+		{
+			get { return TopMostProperty.GetTopMost(Model.Toolbar); }
+			set { TopMostProperty.SetTopMost(Model.Toolbar, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
 		#region IVisible
 
 		public Visibility Visibility

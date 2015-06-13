@@ -63,11 +63,6 @@
 			set { WindowStatusProperty.SetWindowState(Model, value, OnPropertyChanged); }
 		}
 
-		#endregion
-
-
-		public ObservableCollection<LogItemModel> LogItems { get; set; }
-
 		#region IVisible
 
 		public Visibility Visibility
@@ -76,13 +71,28 @@
 			set { VisibleVisibilityProperty.SetVisibility(Model, value, OnPropertyChanged); }
 		}
 
-		public bool Visible 
+		public bool Visible
 		{
 			get { return VisibleVisibilityProperty.GetVisible(Model); }
 			set { VisibleVisibilityProperty.SetVisible(Model, value, OnPropertyChanged); }
 		}
 
 		#endregion
+
+		#region ITopMost
+
+		public bool TopMost
+		{
+			get { return TopMostProperty.GetTopMost(Model); }
+			set { TopMostProperty.SetTopMost(Model, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
+		#endregion
+
+
+		public ObservableCollection<LogItemModel> LogItems { get; set; }
 
 		#endregion
 

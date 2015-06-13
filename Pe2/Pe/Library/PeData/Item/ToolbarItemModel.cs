@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class ToolbarItemModel : ItemModelBase, ITId<string>, IVisible
+	public class ToolbarItemModel : ItemModelBase, ITId<string>, IVisible, ITopMost
 	{
 		public ToolbarItemModel()
 			: base()
@@ -49,11 +49,16 @@
 
 		#endregion
 
+		#region ITopMost
+
 		/// <summary>
 		/// 最前面表示。
 		/// </summary>
 		[DataMember]
 		public bool TopMost { get; set; }
+
+		#endregion
+
 		/// <summary>
 		/// フロート状態。
 		/// </summary>

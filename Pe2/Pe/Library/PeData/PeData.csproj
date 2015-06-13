@@ -75,6 +75,7 @@
     <Compile Include="IF\IItemModel.cs" />
     <Compile Include="IF\IPeData.cs" />
     <Compile Include="IF\ISettingModel.cs" />
+    <Compile Include="IF\ITopMost.cs" />
     <Compile Include="IF\IVisible.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
     <Compile Include="Item\FloatToolbarAreaItemModel.cs" />
