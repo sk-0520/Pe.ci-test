@@ -18,8 +18,11 @@
 	Visibility="{Binding Visibility}" 
 	Topmost="{Binding TopMost}"
 >
-    <Grid>
-		<ToolBar>
-		</ToolBar>
-    </Grid>
+	<!--<Grid>-->
+	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
+			<ToolBar>
+				<Button>asd</Button>
+			</ToolBar>
+		</ToolBarTray>
+	<!--</Grid>-->
 </CD:ViewModelCommonDataWindow>

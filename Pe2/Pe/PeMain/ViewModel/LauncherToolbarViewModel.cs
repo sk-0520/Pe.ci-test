@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Controls;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
@@ -18,12 +19,6 @@
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
 	{
-		#region variable
-
-		string _selectedGroup;
-
-		#endregion
-
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{
@@ -111,24 +106,18 @@
 		/// </summary>
 		public ScreenModel DockScreen { get; set; }
 
-
 		#endregion
 
-		public string SelectedGroup
+		public Orientation Orientation
 		{
-			get { return this._selectedGroup; }
-			set
-			{
-				if(this._selectedGroup != value) {
-					this._selectedGroup = value;
-					OnPropertyChanged();
-				}
-			}
+			get { return DockType == DockType.Left ? Orientation.Horizontal : System.Windows.Controls.Orientation.Vertical; }
 		}
 
-		//IReadOnlyList<LauncherItemModel>
+		public string SelectedGroup { get; set; }
 
 		#endregion
+
+		#region functino
 
 		protected override void InitializeView()
 		{
@@ -136,10 +125,27 @@
 			base.InitializeView();
 		}
 
+		IEnumerable<LauncherItemModel> GetLauncherItems(string groupId)
+		{
+			var groupItem = Model.GroupItems[groupId];
+			if(groupItem.GroupKind == GroupKind.LauncherItems) {
+				return Model.GroupItems[groupId].LauncherItems
+					.Where(i => Model.LauncherItems.Contains(i))
+					.Select(i => Model.LauncherItems[i])
+				;
+			}
+			// 当面はランチャーアイテムのみ
+			throw new NotImplementedException();
+		}
+
+		#endregion
+
 		void View_Loaded(object sender, RoutedEventArgs e)
 		{
 			DockType = Library.PeData.Define.DockType.None;
 			View.Docking(Library.PeData.Define.DockType.Right);
+			//DockType = Library.PeData.Define.DockType.Left;
+			//OnPropertyChanged("Orientation");
 		}
 	}
 }
