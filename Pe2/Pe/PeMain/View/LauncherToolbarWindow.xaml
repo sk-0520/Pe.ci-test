@@ -20,7 +20,7 @@
 >
 	<!--<Grid>-->
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
-		<ToolBar>
+		<ToolBar ItemsSource="{Binding LauncherItems}">
 			<ToolBar.Resources>
 				<Style x:Key="Image" TargetType="Image">
 					<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />

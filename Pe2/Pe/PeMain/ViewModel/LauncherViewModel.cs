@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
-	public class LauncherViewModel
+	public class LauncherViewModel: SingleModelWrapperViewModelBase<LauncherItemModel>
 	{
+		public LauncherViewModel(LauncherItemModel model)
+			: base(model)
+		{ }
 	}
 }

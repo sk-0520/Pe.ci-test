@@ -22,7 +22,7 @@
 		#region variable
 
 		string _selectedGroup = null;
-		IEnumerable<LauncherItemModel> _launcherItems = null;
+		IEnumerable<LauncherViewModel> _launcherItems = null;
 
 		#endregion
 
@@ -132,12 +132,14 @@
 			}
 		}
 
-		public IEnumerable<LauncherItemModel> LauncherItems 
+		public IEnumerable<LauncherViewModel> LauncherItems 
 		{
 			get
 			{
 				if(this._launcherItems == null) {
-					this._launcherItems = GetLauncherItems(SelectedGroup);
+					this._launcherItems = GetLauncherItems(SelectedGroup)
+						.Select(m => new LauncherViewModel(m))
+					;
 				}
 
 				return this._launcherItems;
