@@ -1,0 +1,36 @@
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic.Utility
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+
+	public static class CheckUtility
+	{
+		/// <summary>
+		/// 真を強制させる。
+		/// </summary>
+		/// <typeparam name="TException">失敗時に投げられる例外。</typeparam>
+		/// <param name="test">テスト。</param>
+		/// <exception cref="TException">テスト失敗時に投げられる。</exception>
+		public static void Enforce<TException>(bool test)
+			where TException: Exception, new()
+		{
+			if(!test) {
+				throw new TException();
+			}
+		}
+
+		/// <summary>
+		/// 非nullを強制。
+		/// </summary>
+		/// <typeparam name="TClass"></typeparam>
+		/// <param name="obj"></param>
+		public static void EnforceNotNull<TClass>(TClass obj)
+			where TClass: class
+		{
+			Enforce<ArgumentNullException>(obj != null);
+		}
+	}
+}

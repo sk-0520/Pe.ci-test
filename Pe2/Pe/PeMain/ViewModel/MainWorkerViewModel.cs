@@ -134,27 +134,40 @@
 
 			LoadSetting();
 
-			// 使用許諾まわり
+			if(!InitializeAccept()) {
+				return false;
+			}
+
+			InitializeSetting();
+
+			CreateLogger();
+
+			CreateToolbar();
+
+			return true;
+		}
+
+		/// <summary>
+		/// 使用許諾まわり。
+		/// </summary>
+		bool InitializeAccept()
+		{
 			if(CheckAccept()) {
-				IncrementRunningInformation();
+				SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
 			} else {
 				// 使用許諾表示前に使用しない状態にしておく。
 				CommonData.MainSetting.RunningInformation.Accept = false;
 				var window = new AcceptWindow();
 				window.SetCommonData(CommonData);
 				window.ShowDialog();
-				if (CommonData.MainSetting.RunningInformation.Accept) {
+				if(CommonData.MainSetting.RunningInformation.Accept) {
 					CommonData.Logger.Information("accept: OK");
-					IncrementRunningInformation();
+					SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
 				} else {
 					CommonData.Logger.Information("accept: NG");
 					return false;
 				}
 			}
-
-			CreateLogger();
-
-			CreateToolbar();
 
 			return true;
 		}
@@ -182,10 +195,13 @@
 			return true;
 		}
 
-		void IncrementRunningInformation()
+		void InitializeSetting()
 		{
-			CommonData.MainSetting.RunningInformation.LastExecuteVersion = Constants.assemblyVersion;
-			CommonData.MainSetting.RunningInformation.ExecuteCount += 1;
+			InitializeMainSetting();
+		}
+
+		void InitializeMainSetting()
+		{
 		}
 
 		/// <summary>

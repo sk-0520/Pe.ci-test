@@ -109,6 +109,7 @@
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\SystemLogger.cs" />
     <Compile Include="Logic\Property\WindowStatusProperty.cs" />
+    <Compile Include="Logic\Utility\SettingUtility.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherViewModel.cs" />
