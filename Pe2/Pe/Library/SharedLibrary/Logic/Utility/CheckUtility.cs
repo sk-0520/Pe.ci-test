@@ -53,5 +53,23 @@
 		{
 			Enforce<ArgumentNullException>(nullable.HasValue);
 		}
+
+		/// <summary>
+		/// 文字列が非nullで長さ0でないことを強制。
+		/// </summary>
+		/// <param name="s"></param>
+		public static void EnforceNotNullAndNotEmpty(string s)
+		{
+			Enforce<ArgumentException>(!string.IsNullOrEmpty(s));
+		}
+
+		/// <summary>
+		/// 文字列が非nullでホワイトスペースのみでないことを強制。
+		/// </summary>
+		/// <param name="s"></param>
+		public static void EnforceNotNullAndNotWhiteSpace(string s)
+		{
+			Enforce<ArgumentException>(!string.IsNullOrWhiteSpace(s));
+		}
 	}
 }

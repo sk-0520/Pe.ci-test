@@ -43,5 +43,37 @@
 			test1 = null;
 			Assert.Throws<ArgumentNullException>(() => CheckUtility.EnforceNotNull(test1));
 		}
+
+		[TestCase(true, "b")]
+		[TestCase(true, " c")]
+		[TestCase(true, "d ")]
+		[TestCase(true, " e ")]
+		[TestCase(true, " ")]
+		[TestCase(false, null)]
+		[TestCase(false, "")]
+		public void EnforceNotNullAndNotEmptyTest(bool success, string test)
+		{
+			if(success) {
+				Assert.DoesNotThrow(() => CheckUtility.EnforceNotNullAndNotEmpty(test));
+			} else {
+				Assert.Throws<ArgumentException>(() => CheckUtility.EnforceNotNullAndNotEmpty(test));
+			}
+		}
+
+		[TestCase(true, "b")]
+		[TestCase(true, " c")]
+		[TestCase(true, "d ")]
+		[TestCase(true, " e ")]
+		[TestCase(false, " ")]
+		[TestCase(false, null)]
+		[TestCase(false, "")]
+		public void EnforceNotNullAndNotWhiteSpaceTest(bool success, string test)
+		{
+			if(success) {
+				Assert.DoesNotThrow(() => CheckUtility.EnforceNotNullAndNotWhiteSpace(test));
+			} else {
+				Assert.Throws<ArgumentException>(() => CheckUtility.EnforceNotNullAndNotWhiteSpace(test));
+			}
+		}
 	}
 }
