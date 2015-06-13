@@ -121,6 +121,9 @@
       <DependentUpon>LoggingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
+    <Compile Include="View\Parts\Control\LauncherToolbar\LauncherToolbarButtonControl.xaml.cs">
+      <DependentUpon>LauncherToolbarButtonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\LauncherToolbar\LauncherToolbarButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
