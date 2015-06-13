@@ -16,6 +16,7 @@
 		public static void IncrementRunningInformation(RunningInformationItemModel model)
 		{
 			CheckUtility.EnforceNotNull(model);
+
 			model.LastExecuteVersion = Constants.assemblyVersion;
 			model.ExecuteCount += 1;
 		}
