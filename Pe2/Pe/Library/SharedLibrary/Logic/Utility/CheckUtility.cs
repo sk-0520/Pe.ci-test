@@ -21,12 +21,22 @@
 				throw new TException();
 			}
 		}
+		/// <summary>
+		/// 真を強制させる。
+		/// </summary>
+		/// <param name="test">テスト。</param>
+		/// <exception cref="Exception">テスト失敗時に投げられる。</exception>
+		public static void Enforce(bool test)
+		{
+			Enforce<Exception>(test);
+		}
 
 		/// <summary>
 		/// 非nullを強制。
 		/// </summary>
 		/// <typeparam name="TClass"></typeparam>
 		/// <param name="obj"></param>
+		/// <exception cref="ArgumentNullException">null。</exception>
 		public static void EnforceNotNull<TClass>(TClass obj)
 			where TClass: class
 		{

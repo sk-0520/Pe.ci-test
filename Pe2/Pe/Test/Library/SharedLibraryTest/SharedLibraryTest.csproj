@@ -92,6 +92,7 @@
     <Compile Include="Logic\CommandLineTest.cs" />
     <Compile Include="Logic\Extension\LinqExtensionTest.cs" />
     <Compile Include="Logic\Extension\TextExtensionTest.cs" />
+    <Compile Include="Logic\Utility\CheckUtilityTest.cs" />
     <Compile Include="Logic\Utility\PathUtilityTest.cs" />
     <Compile Include="Logic\Utility\TextUtilityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,6 +10,7 @@ using ContentTypeTextNet.Pe.Library.PeData.IF;
 using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 using NUnit.Framework;
 
+	[TestFixture]
 	class VisibleVisibilityPropertyTest
 	{
 		class IVisibleImpl: IVisible
