@@ -79,9 +79,15 @@
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
     <Compile Include="Define\Px.cs" />
+    <Compile Include="Event\AppbarEventArgs.cs" />
+    <Compile Include="Event\AppbarFullScreenEventArgs.cs" />
+    <Compile Include="Event\AppbarPosChangedEventArgs.cs" />
+    <Compile Include="Event\AppbarStateChangeEventArgs.cs" />
+    <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
@@ -93,6 +99,7 @@
     <Compile Include="IF\IName.cs" />
     <Compile Include="IF\ITId.cs" />
     <Compile Include="IF\IUserClosableWindow.cs" />
+    <Compile Include="View\Parts\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\DisposeFinalizeBase.cs" />
@@ -103,6 +110,7 @@
     <Compile Include="Logic\LoggerBase.cs" />
     <Compile Include="Logic\ShortcutFile.cs" />
     <Compile Include="Logic\Utility\CheckUtility.cs" />
+    <Compile Include="Logic\Utility\DockTypeUtility.cs" />
     <Compile Include="Logic\Utility\EventUtility.cs" />
     <Compile Include="Logic\Utility\UIUtility.cs" />
     <Compile Include="Logic\Utility\PathUtility.cs" />

@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Define
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Event
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,12 +6,6 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public enum DockType
-	{
-		None,
-		Left,
-		Top,
-		Right,
-		Bottom
-	}
+	public class AppbarStateChangeEventArgs: AppbarEventArgs
+	{ }
 }

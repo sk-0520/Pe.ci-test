@@ -6,16 +6,16 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
-	public static class DockTypeExtension
+	public static class DockTypeUtility
 	{
 		/// <summary>
 		/// ABEへ変換。
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static ABE ToABE(this DockType type)
+		public static ABE ToABE(DockType type)
 		{
 			switch (type) {
 				case DockType.Left: return ABE.ABE_LEFT;
@@ -32,7 +32,7 @@
 		/// </summary>
 		/// <param name="abe"></param>
 		/// <returns></returns>
-		public static DockType ToDockType(this ABE abe)
+		public static DockType ToDockType(ABE abe)
 		{
 			switch (abe) {
 				case ABE.ABE_LEFT: return DockType.Left;

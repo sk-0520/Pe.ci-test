@@ -1,12 +1,7 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.View.Parts
 {
 	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
 	using System.Diagnostics;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Interop;
 	using System.Windows.Threading;
@@ -14,14 +9,15 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Event;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.PeMain.Data.Event;
-	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Extension;
 
+	/// <summary>
+	/// Windowにアプリケーションデスクトップツールバー機能を付与する。
+	/// </summary>
 	public class ApplicationDesktopToolbar: DisposeFinalizeBase
 	{
 		#region event
@@ -186,6 +182,25 @@
 			AppbarStateChange(View, e);
 		}
 
+		void OnResizeEnd()
+		{
+			// AppBar のサイズを更新。
+			switch(ViewModel.DockType) {
+				case DockType.Left:
+				case DockType.Right:
+					ViewModel.BarSize = new Size(View.Width, ViewModel.BarSize.Height);
+					break;
+				case DockType.Top:
+				case DockType.Bottom:
+					ViewModel.BarSize = new Size(ViewModel.BarSize.Width, View.Height);
+					break;
+				default:
+					throw new NotImplementedException();
+			}
+
+			DockingFromProperty();
+		}
+
 		bool RegistAppbar()
 		{
 			ViewModel.CallbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
@@ -284,18 +299,18 @@
 			Debug.Assert(dockType != DockType.None);
 
 			var appBar = new APPBARDATA(Handle);
-			appBar.uEdge = dockType.ToABE();
+			appBar.uEdge = DockTypeUtility.ToABE(dockType);
 			var nowWnd = NativeMethods.SHAppBarMessage(ABM.ABM_GETAUTOHIDEBAR, ref appBar);
 
 			return nowWnd;
 		}
 
-		private void DockingFromParameter(DockType dockType, bool autoHide)
+		void DockingFromParameter(DockType dockType, bool autoHide)
 		{
 			Debug.Assert(dockType != DockType.None);
 
 			var appBar = new APPBARDATA(Handle);
-			appBar.uEdge = dockType.ToABE();
+			appBar.uEdge = DockTypeUtility.ToABE(dockType);
 			appBar.rc = PodStructUtility.Convert(CalcWantBarArea(dockType));
 			TuneSystemBarArea(ref appBar);
 
@@ -377,25 +392,6 @@
 			}
 
 			DockingFromParameter(dockType, ViewModel.AutoHide);
-		}
-
-		void OnResizeEnd()
-		{
-			// AppBar のサイズを更新。
-			switch(ViewModel.DockType) {
-				case DockType.Left:
-				case DockType.Right:
-					ViewModel.BarSize = new Size(View.Width, ViewModel.BarSize.Height);
-					break;
-				case DockType.Top:
-				case DockType.Bottom:
-					ViewModel.BarSize = new Size(ViewModel.BarSize.Width, View.Height);
-					break;
-				default:
-					throw new NotImplementedException();
-			}
-
-			DockingFromProperty();
 		}
 
 		#endregion

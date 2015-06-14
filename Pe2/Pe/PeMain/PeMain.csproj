@@ -97,11 +97,9 @@
     <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\VariableConstants.cs" />
-    <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
-    <Compile Include="Logic\Extension\DockTypeExtension.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\Property\TopMostProperty.cs" />
     <Compile Include="Logic\Property\VisibleVisibilityProperty.cs" />
@@ -120,9 +118,6 @@
     </Compile>
     <Compile Include="View\LoggingWindow.xaml.cs">
       <DependentUpon>LoggingWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Parts\ApplicationDesktopToolbar.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">

@@ -31,6 +31,7 @@
 	using System.ComponentModel;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.View.Parts;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック

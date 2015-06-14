@@ -71,7 +71,6 @@
   <ItemGroup>
     <Compile Include="Define\GroupKind.cs" />
     <Compile Include="Define\LauncherKind.cs" />
-    <Compile Include="Define\DockType.cs" />
     <Compile Include="IF\IItemModel.cs" />
     <Compile Include="IF\IPeData.cs" />
     <Compile Include="IF\ISettingModel.cs" />
