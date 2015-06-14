@@ -99,6 +99,7 @@
     <Compile Include="IF\IName.cs" />
     <Compile Include="IF\ITId.cs" />
     <Compile Include="IF\IUserClosableWindow.cs" />
+    <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Parts\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
@@ -139,10 +140,10 @@
     <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
-    <Compile Include="View\OnLoadedWindowBase.cs" />
-    <Compile Include="View\UserClosableWindowBase.cs" />
-    <Compile Include="View\WindowsAPIWindowBase.cs" />
-    <Compile Include="View\WndProcWindowBase.cs" />
+    <Compile Include="View\Window\OnLoadedWindowBase.cs" />
+    <Compile Include="View\Window\UserClosableWindowBase.cs" />
+    <Compile Include="View\Window\WindowsAPIWindowBase.cs" />
+    <Compile Include="View\Window\WndProcWindowBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

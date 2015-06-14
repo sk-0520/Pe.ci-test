@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.View;
+	using ContentTypeTextNet.Library.SharedLibrary.View.Window;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.PeMain.Data;

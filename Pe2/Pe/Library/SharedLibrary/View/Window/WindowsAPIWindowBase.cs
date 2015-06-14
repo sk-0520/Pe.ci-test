@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.View
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.View.Window
 {
 	using System;
 	using System.Collections.Generic;

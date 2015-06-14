@@ -125,7 +125,7 @@
 
 		public string SelectedGroup
 		{
-			get { return this._selectedGroup; }
+			get { return this._selectedGroup ?? Model.Toolbar.DefaultGroupId ?? string.Empty; }
 			set
 			{
 				if(this._selectedGroup != value) {
@@ -140,7 +140,11 @@
 			get
 			{
 				if(this._launcherItems == null) {
-					this._launcherItems = GetLauncherItems(SelectedGroup)
+					var selectedGroup = SelectedGroup;
+					if(!Model.GroupItems.Contains(SelectedGroup)) {
+						selectedGroup = Model.GroupItems.First().Id;
+					}
+					this._launcherItems = GetLauncherItems(selectedGroup)
 						.Select(m => new LauncherViewModel(m))
 					;
 				}
