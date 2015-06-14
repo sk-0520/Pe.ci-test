@@ -200,10 +200,9 @@
 
 		public bool UnresistAppbar()
 		{
-			//var appBar = new APPBARDATA(Handle);
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
-			//ViewModel.CallbackMessage = 0;
+			ViewModel.CallbackMessage = 0;
 			ViewModel.IsDocking = false;
 			return unregistResult.ToInt32() != 0;
 		}
@@ -398,17 +397,6 @@
 
 			DockingFromProperty();
 		}
-
-		//public void OnClosing(CancelEventArgs e)
-		//{
-		//	if(ViewModel.IsDocking) {
-		//		//View.Dispatcher.BeginInvoke(
-		//		//	DispatcherPriority.ApplicationIdle,
-		//		//	new Action(() => UnresistAppbar())
-		//		//);
-		//		UnresistAppbar();
-		//	}
-		//}
 
 		#endregion
 	}
