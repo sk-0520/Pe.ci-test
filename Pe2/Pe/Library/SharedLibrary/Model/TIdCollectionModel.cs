@@ -30,6 +30,7 @@
 
 		#region property
 
+		[DataMember]
 		public List<TValue> Items { get; set; }
 
 		public IEnumerable<TKey> Keys { get { return Items.Select(i => i.Id); } }
@@ -50,6 +51,7 @@
 		public void Add(TValue value)
 		{
 			CheckReadOnly();
+			CheckId(value);
 
 			Add(value, true);
 		}
@@ -143,6 +145,11 @@
 			}
 		}
 
+		void CheckId(TValue item)
+		{
+			CheckUtility.Enforce<ArgumentException>(item.IsSafeId(item.Id));
+		}
+
 		void Add(TValue value, bool check)
 		{
 			if (check) {
@@ -153,6 +160,8 @@
 				if(Items.Any(i => IsEqual(value, i))) {
 					throw new ArgumentException(GetIdString(value));
 				}
+
+				CheckId(value);
 			}
 
 			Items.Add(value);
@@ -176,6 +185,7 @@
 				Items[index] = value;
 				this._map[value.Id] = value;
 			} else {
+				CheckId(value);
 				Add(value, false);
 			}
 		}
