@@ -106,5 +106,15 @@
 		{
 			EnforceNotNullAndNotWhiteSpace(s);
 		}
+
+		public static void EnforceNotZero(IntPtr p)
+		{
+			Enforce<ArgumentException>(p != IntPtr.Zero);
+		}
+		[Conditional("DEBUG")]
+		public static void DebugEnforceNotZero(IntPtr p)
+		{
+			Enforce<ArgumentException>(p != IntPtr.Zero);
+		}
 	}
 }

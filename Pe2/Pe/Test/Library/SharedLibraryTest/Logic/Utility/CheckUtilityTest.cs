@@ -75,5 +75,24 @@
 				Assert.Throws<ArgumentException>(() => CheckUtility.EnforceNotNullAndNotWhiteSpace(test));
 			}
 		}
+
+		[TestCase(true, 1)]
+		[TestCase(false, 0)]
+		public void EnforceNotZeroTest(bool success, int arg)
+		{
+			var test = new IntPtr(arg);
+			if(success) {
+				Assert.DoesNotThrow(() => CheckUtility.EnforceNotZero(test));
+			} else {
+				Assert.Throws<ArgumentException>(() => CheckUtility.EnforceNotZero(test));
+			}
+		}
+
+		[Test]
+		public void EnforceNotZero_val_Test()
+		{
+			Assert.Throws<ArgumentException>(() => CheckUtility.EnforceNotZero(IntPtr.Zero));
+			Assert.Throws<ArgumentException>(() => CheckUtility.EnforceNotZero((IntPtr)null));
+		}
 	}
 }
