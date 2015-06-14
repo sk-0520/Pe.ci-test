@@ -70,7 +70,7 @@
 		/// 他ウィンドウがフルスクリーン表示。
 		/// </summary>
 		public bool NowFullScreen { get; set; }
-		public bool IsDocking { get { return DockType != DockType.None; } }
+		public bool IsDocking { get; set; }
 		/// <summary>
 		/// ドッキング種別。
 		/// </summary>
@@ -173,7 +173,7 @@
 
 		void View_Loaded(object sender, RoutedEventArgs e)
 		{
-			DockType = Library.PeData.Define.DockType.None;
+			//DockType = Library.PeData.Define.DockType.Right;
 			View.Docking(Library.PeData.Define.DockType.Right);
 			//DockType = Library.PeData.Define.DockType.Left;
 			//OnPropertyChanged("Orientation");

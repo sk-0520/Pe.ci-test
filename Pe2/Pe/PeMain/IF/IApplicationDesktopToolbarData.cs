@@ -22,7 +22,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 		/// <summary>
 		/// ドッキング中か。
 		/// </summary>
-		bool IsDocking { get; }
+		bool IsDocking { get; set; }
 		/// <summary>
 		/// ドッキング種別。
 		/// </summary>

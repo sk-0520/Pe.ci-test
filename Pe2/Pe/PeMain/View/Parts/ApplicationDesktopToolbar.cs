@@ -45,7 +45,8 @@
 
 		EventDisposer<RoutedEventHandler> _eventLoaded = null;
 
-		#endregion
+		#endregion variable
+
 
 		public ApplicationDesktopToolbar(IApplicationDesktopToolbarData viewModel, System.Windows.Window view)
 			: base()
@@ -75,7 +76,6 @@
 			//CheckUtility.EnforceNotNull(Handle);
 		}
 
-
 		#region property
 
 		protected IApplicationDesktopToolbarData ViewModel { get; private set; }
@@ -84,30 +84,45 @@
 
 		#endregion
 
-		#region function
+		#region DisposeFinalizeBase
 
-		/// <summary>
-		/// Closedだとハンドルがないのでこっちで対応
-		/// </summary>
-		/// <param name="e"></param>
-		public void OnClosing(CancelEventArgs e)
+		protected override void Dispose(bool disposing)
 		{
-			if(!e.Cancel && ViewModel.IsDocking) {
-				UnresistAppbar();
+			if(!IsDisposed) {
+				if(this._eventLoaded != null) {
+					this._eventLoaded.Dispose();
+					this._eventLoaded = null;
+				}
+
+				Handle = IntPtr.Zero;
+				View = null;
+				ViewModel = null;
 			}
+			base.Dispose(disposing);
 		}
+
+		#endregion
+
+		#region function
 
 		public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if(ViewModel.IsDocking) {
+			if(ViewModel != null && ViewModel.IsDocking) {
 				switch((int)msg) {
-					case (int)WM.WM_ACTIVATE: {
+					case (int)WM.WM_DESTROY:
+						UnresistAppbar();
+						handled = true;
+						break;
+
+					case (int)WM.WM_ACTIVATE:
+						{
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
 						}
 						break;
 
-					case (int)WM.WM_WINDOWPOSCHANGED: {
+					case (int)WM.WM_WINDOWPOSCHANGED: 
+						{
 							//DockingFromProperty();
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
@@ -137,6 +152,7 @@
 								case (int)ABN.ABN_STATECHANGE:
 									// タスクバーの [常に手前に表示] または [自動的に隠す] が変化したとき
 									// 特に何もする必要なし
+									DockingFromProperty();
 									OnAppbarStateChange();
 									break;
 
@@ -180,17 +196,17 @@
 			appBar.uCallbackMessage = ViewModel.CallbackMessage;
 
 			var registResult = NativeMethods.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
-
-			return registResult.ToInt32() != 0;
+			
+			return ViewModel.IsDocking = registResult.ToInt32() != 0;
 		}
 
 		public bool UnresistAppbar()
 		{
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
-			ViewModel.CallbackMessage = 0;
+			//ViewModel.CallbackMessage = 0;
 
-			return unregistResult.ToInt32() != 0;
+			return ViewModel.IsDocking = unregistResult.ToInt32() != 0;
 		}
 
 		/// <summary>
@@ -384,6 +400,16 @@
 			DockingFromProperty();
 		}
 
+		public void OnClosing(CancelEventArgs e)
+		{
+			if(ViewModel.IsDocking) {
+				//View.Dispatcher.BeginInvoke(
+				//	DispatcherPriority.ApplicationIdle,
+				//	new Action(() => UnresistAppbar())
+				//);
+				//UnresistAppbar();
+			}
+		}
 
 		#endregion
 	}

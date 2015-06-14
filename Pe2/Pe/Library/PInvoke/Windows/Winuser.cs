@@ -6,6 +6,7 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 {
 	public enum WM: uint
 	{
+		WM_DESTROY = 0x0002,
 		WM_ACTIVATE = 0x06,
 		WM_WINDOWPOSCHANGED = 0x47,
 		WM_HOTKEY = 0x0312,

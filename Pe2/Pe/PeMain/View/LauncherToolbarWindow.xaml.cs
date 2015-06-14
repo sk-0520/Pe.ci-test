@@ -114,11 +114,13 @@
 			DataContext = ViewModel;
 		}
 
-		protected override void OnClosing(CancelEventArgs e)
-		{
-			base.OnClosing(e);
-			Appbar.OnClosing(e);
-		}
+		//protected override void OnClosing(CancelEventArgs e)
+		//{
+		//	base.OnClosing(e);
+		//	if(!e.Cancel && Appbar != null) {
+		//		Appbar.OnClosing(e);
+		//	}
+		//}
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
@@ -173,7 +175,12 @@
 			//			break;
 			//	}
 			//}
-			Appbar.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			if(Appbar != null) {
+				Appbar.WndProc(hwnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return IntPtr.Zero;
+				}
+			}
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
 
