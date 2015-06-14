@@ -154,7 +154,7 @@
 						LauncherKind = LauncherKind.File,
 						Command = @"C:\Windows\System32\mspaint.exe"
 					}));
-					//this._launcherItems =list;
+					this._launcherItems =list;
 				}
 
 				return this._launcherItems;
