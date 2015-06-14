@@ -29,7 +29,6 @@
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{
-			MessageString = "appbar";
 			BarSize = new Size(80, 80);
 		}
 
@@ -64,7 +63,6 @@
 		#region IApplicationDesktopToolbarData
 
 		public uint CallbackMessage { get; set; }
-		public string MessageString { get; set; }
 
 		/// <summary>
 		/// 他ウィンドウがフルスクリーン表示。
@@ -74,7 +72,11 @@
 		/// <summary>
 		/// ドッキング種別。
 		/// </summary>
-		public DockType DockType { get; set; }
+		public DockType DockType 
+		{
+			get { return Model.Toolbar.DockType; }
+			set { Model.Toolbar.DockType = value; } 
+		}
 		/// <summary>
 		/// 自動的に隠す。
 		/// </summary>
@@ -150,12 +152,6 @@
 
 		#region functino
 
-		protected override void InitializeView()
-		{
-			View.Loaded += View_Loaded;
-			base.InitializeView();
-		}
-
 		IEnumerable<LauncherItemModel> GetLauncherItems(string groupId)
 		{
 			var groupItem = Model.GroupItems[groupId];
@@ -171,12 +167,12 @@
 
 		#endregion
 
-		void View_Loaded(object sender, RoutedEventArgs e)
-		{
-			//DockType = Library.PeData.Define.DockType.Right;
-			View.Docking(Library.PeData.Define.DockType.Right);
-			//DockType = Library.PeData.Define.DockType.Left;
-			//OnPropertyChanged("Orientation");
-		}
+		//void View_Loaded(object sender, RoutedEventArgs e)
+		//{
+		//	//DockType = Library.PeData.Define.DockType.Right;
+		//	//View.Docking(Library.PeData.Define.DockType.Right);
+		//	//DockType = Library.PeData.Define.DockType.Left;
+		//	//OnPropertyChanged("Orientation");
+		//}
 	}
 }

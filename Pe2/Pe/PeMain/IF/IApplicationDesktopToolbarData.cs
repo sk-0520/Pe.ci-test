@@ -14,7 +14,6 @@ using ContentTypeTextNet.Pe.Library.PeData.Define;
 	public interface IApplicationDesktopToolbarData
 	{
 		uint CallbackMessage { get; set; }
-		string MessageString { get; set; }
 		/// <summary>
 		/// 他ウィンドウがフルスクリーン表示。
 		/// </summary>

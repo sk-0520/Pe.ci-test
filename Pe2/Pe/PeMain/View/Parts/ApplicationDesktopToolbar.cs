@@ -51,29 +51,23 @@
 		public ApplicationDesktopToolbar(IApplicationDesktopToolbarData viewModel, System.Windows.Window view)
 			: base()
 		{
+			CheckUtility.EnforceNotNull(view);
+			CheckUtility.EnforceNotNull(viewModel);
+			CheckUtility.Enforce(view.IsLoaded);
+
 			ViewModel = viewModel;
 			View = view;
 
-			Action getWindowHandle = () => {
-				var windowHandle = View as IWindowsHandle;
-				if(windowHandle != null) {
-					Handle = windowHandle.Handle;
-				} else {
-					var helper = new WindowInteropHelper(View);
-					Handle = helper.Handle;
-				}
-			};
-
-			if(View.IsLoaded) {
-				getWindowHandle();
-				getWindowHandle = null;
+			var windowHandle = View as IWindowsHandle;
+			if(windowHandle != null) {
+				Handle = windowHandle.Handle;
 			} else {
-				View.Loaded += EventUtility.Create<RoutedEventHandler>((object sender, RoutedEventArgs e) => {
-					getWindowHandle();
-					getWindowHandle = null;
-				}, handler => View.Loaded -= handler, out this._eventLoaded);
+				var helper = new WindowInteropHelper(View);
+				Handle = helper.Handle;
 			}
+
 			//CheckUtility.EnforceNotNull(Handle);
+			Docking(ViewModel.DockType);
 		}
 
 		#region property
@@ -81,6 +75,8 @@
 		protected IApplicationDesktopToolbarData ViewModel { get; private set; }
 		protected System.Windows.Window View { get; private set; }
 		protected IntPtr Handle { get; private set; }
+
+		protected virtual string MessageString { get { return "appbar"; } }
 
 		#endregion
 
@@ -107,11 +103,13 @@
 
 		public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if(ViewModel != null && ViewModel.IsDocking) {
+			if(ViewModel.IsDocking) {
 				switch((int)msg) {
-					case (int)WM.WM_DESTROY:
-						UnresistAppbar();
-						handled = true;
+					case (int)WM.WM_DESTROY: 
+						{
+							UnresistAppbar();
+							handled = true;
+						}
 						break;
 
 					case (int)WM.WM_ACTIVATE:
@@ -190,7 +188,7 @@
 
 		bool RegistAppbar()
 		{
-			ViewModel.CallbackMessage = NativeMethods.RegisterWindowMessage(ViewModel.MessageString);
+			ViewModel.CallbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
 
 			var appBar = new APPBARDATA(Handle);
 			appBar.uCallbackMessage = ViewModel.CallbackMessage;
@@ -202,11 +200,12 @@
 
 		public bool UnresistAppbar()
 		{
+			//var appBar = new APPBARDATA(Handle);
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
 			//ViewModel.CallbackMessage = 0;
-
-			return ViewModel.IsDocking = unregistResult.ToInt32() != 0;
+			ViewModel.IsDocking = false;
+			return unregistResult.ToInt32() != 0;
 		}
 
 		/// <summary>
@@ -400,16 +399,16 @@
 			DockingFromProperty();
 		}
 
-		public void OnClosing(CancelEventArgs e)
-		{
-			if(ViewModel.IsDocking) {
-				//View.Dispatcher.BeginInvoke(
-				//	DispatcherPriority.ApplicationIdle,
-				//	new Action(() => UnresistAppbar())
-				//);
-				//UnresistAppbar();
-			}
-		}
+		//public void OnClosing(CancelEventArgs e)
+		//{
+		//	if(ViewModel.IsDocking) {
+		//		//View.Dispatcher.BeginInvoke(
+		//		//	DispatcherPriority.ApplicationIdle,
+		//		//	new Action(() => UnresistAppbar())
+		//		//);
+		//		UnresistAppbar();
+		//	}
+		//}
 
 		#endregion
 	}

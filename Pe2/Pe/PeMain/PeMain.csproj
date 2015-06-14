@@ -97,7 +97,6 @@
     <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\VariableConstants.cs" />
-    <Compile Include="IF\IApplicationDesktopToolbar.cs" />
     <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />

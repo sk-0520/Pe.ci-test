@@ -35,7 +35,7 @@
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherToolbarWindow: ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar
+	public partial class LauncherToolbarWindow: ViewModelCommonDataWindow<LauncherToolbarViewModel>
 	{
 		//#region event
 
@@ -104,7 +104,6 @@
 			ViewModel.DockScreen = Screen;
 			// 以降Viewの保持するスクリーン情報は使用しない
 			Screen = null;
-			Appbar = new ApplicationDesktopToolbar(ViewModel, this);
 		}
 
 		protected override void ApplyViewModel()
@@ -112,6 +111,12 @@
 			base.ApplyViewModel();
 
 			DataContext = ViewModel;
+		}
+
+		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			base.OnLoaded(sender, e);
+			Appbar = new ApplicationDesktopToolbar(ViewModel, this);
 		}
 
 		//protected override void OnClosing(CancelEventArgs e)
@@ -184,6 +189,15 @@
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
 
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+			if(Appbar != null) {
+				Appbar.Dispose();
+				Appbar = null;
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -224,9 +238,16 @@
 		//{
 		//	var appBar = new APPBARDATA(Handle);
 		//	var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
-		//	AppbarData.CallbackMessage = 0;
+		//	//AppbarData.CallbackMessage = 0;
 
 		//	return unregistResult.ToInt32() != 0;
+		//}
+
+		//protected override void OnClosed(EventArgs e)
+		//{
+		//	//Appbar.UnresistAppbar();
+		//	//UnresistAppbar();
+		//	base.OnClosed(e);
 		//}
 
 		///// <summary>
@@ -376,10 +397,10 @@
 		//	//if(this.timerAutoHidden.Enabled) {
 		//	//	this.timerAutoHidden.Stop();
 		//	//}
-		public void Docking(DockType dockType)
-		{
-			Appbar.Docking(dockType);
-		}
+		//public void Docking(DockType dockType)
+		//{
+		//	Appbar.Docking(dockType);
+		//}
 
 		//	// 登録済みであればいったん解除
 		//	var needResist = true;
