@@ -1,9 +1,9 @@
-﻿<CD:ViewModelCommonDataWindow
+﻿<W:ViewModelCommonDataWindow
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:Control="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Control;assembly=SharedLibrary"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
 	x:TypeArguments="VM:LauncherToolbarViewModel"
@@ -23,9 +23,31 @@
 		<ToolBar>
 			<Button>
 				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="main" />
+					<Image />
+					<TextBlock Text="Rotate"/>
+					<Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
 				</StackPanel>
 			</Button>
+			<Menu  Name="rotAnimMenu"  Visibility="Hidden"  HorizontalAlignment="Left" Margin="374,114,0,0"  VerticalAlignment="Top"  >
+				<MenuItem >
+					<MenuItem.Header>
+						<DockPanel>
+							<Image Height="32" ></Image>
+							<Label>Rotate 90°</Label>
+						</DockPanel>
+					</MenuItem.Header>
+
+				</MenuItem>
+				<MenuItem >
+					<MenuItem.Header>
+						<DockPanel>
+							<Image Height="32" ></Image>
+							<Label>Rotate 180°</Label>
+						</DockPanel>
+					</MenuItem.Header>
+
+				</MenuItem>
+			</Menu>
 		</ToolBar>
 		<Control:TemplateBindingToolBar ItemsSource="{Binding LauncherItems}">
 			<Control:TemplateBindingToolBar.Resources>
@@ -67,4 +89,4 @@
 		</Control:TemplateBindingToolBar>
 	</ToolBarTray>
 	<!--</Grid>-->
-</CD:ViewModelCommonDataWindow>
+</W:ViewModelCommonDataWindow>
