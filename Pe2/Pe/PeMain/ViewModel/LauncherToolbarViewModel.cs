@@ -164,7 +164,7 @@
 		#endregion
 
 		#region functino
-
+	
 		IEnumerable<LauncherItemModel> GetLauncherItems(string groupId)
 		{
 			var groupItem = Model.GroupItems[groupId];

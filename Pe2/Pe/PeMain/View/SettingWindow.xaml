@@ -12,9 +12,9 @@
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 >
-	<CD:CommonDataWindow.Resources>
+	<W:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
-	</CD:CommonDataWindow.Resources>
+	</W:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -33,7 +33,7 @@
 				<Style x:Key="PageBody" TargetType="{x:Type UserControl}" BasedOn="{StaticResource ResourceKey=PageHeader}" />
 			</TabControl.Resources>
 			<TabItem Header="TabItem" Style="{StaticResource PageHeader}">
-				<SettingPage:MainSettingControl BorderBrush="AliceBlue" VerticalAlignment="Top" />
+				<SP:MainSettingControl BorderBrush="AliceBlue" VerticalAlignment="Top" />
 			</TabItem>
 			<TabItem Header="TabItem" Style="{StaticResource PageHeader}">
 				<Grid Background="#FFE5E5E5"/>

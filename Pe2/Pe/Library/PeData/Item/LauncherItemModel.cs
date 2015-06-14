@@ -13,6 +13,12 @@
 	[Serializable]
 	public class LauncherItemModel: ItemModelBase, ITId<string>, IName, IDeepClone
 	{
+		#region define
+
+		const string unusableCharacters = " /*-+,.\"\'#$%&|{}[]`<>!?";
+
+		#endregion
+
 		public LauncherItemModel()
 			: base()
 		{
@@ -25,11 +31,24 @@
 
 		#region ITId
 
-		/// <summary>
-		/// ID。
-		/// </summary>
-		[DataMember]
+		[DataMember, XmlAttribute]
 		public string Id { get; set; }
+
+		public bool IsSafeId(string s)
+		{
+			if(string.IsNullOrWhiteSpace(s)) {
+				return false;
+			}
+			return !s.Any(sc => unusableCharacters.Any(uc => sc != uc));
+		}
+
+		public string ToSafeId(string s)
+		{
+			if(string.IsNullOrWhiteSpace(s)) {
+				return "id";
+			}
+			return string.Concat(s.Select(sc => unusableCharacters.Any(uc => uc == sc) ? '_' : sc));
+		}
 
 		#endregion
 

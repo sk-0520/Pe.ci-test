@@ -13,5 +13,19 @@
 		/// ID。
 		/// </summary>
 		T Id { get; set; }
+
+		/// <summary>
+		/// IDが設定可能なものか。
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		bool IsSafeId(T id);
+
+		/// <summary>
+		/// IDを設定可能なものに変更。
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		T ToSafeId(T id);
 	}
 }

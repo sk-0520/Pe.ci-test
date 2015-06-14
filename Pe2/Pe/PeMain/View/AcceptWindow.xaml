@@ -1,4 +1,4 @@
-﻿<CD:ViewModelCommonDataWindow
+﻿<W:ViewModelCommonDataWindow
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.AcceptWindow"
 	x:TypeArguments="VM:AcceptViewModel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -19,9 +19,9 @@
 	Topmost="True" 
 	ResizeMode="CanResizeWithGrip"
 >
-	<CD:CommonDataWindow.Resources>
+	<W:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
-	</CD:CommonDataWindow.Resources>
+	</W:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="211*"/>
@@ -43,4 +43,4 @@
 			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AcceptWindow}}}" />
 		</StackPanel>
 	</Grid>
-</CD:ViewModelCommonDataWindow>
+</W:ViewModelCommonDataWindow>

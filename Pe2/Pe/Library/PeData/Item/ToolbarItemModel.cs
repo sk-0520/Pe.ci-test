@@ -31,6 +31,20 @@
 		[DataMember]
 		public string Id { get; set; }
 
+		public bool IsSafeId(string s)
+		{
+			return !string.IsNullOrEmpty(s);
+		}
+
+		public string ToSafeId(string s)
+		{
+			if(string.IsNullOrEmpty(s)) {
+				return "id";
+			}
+
+			return s;
+		}
+
 		#endregion 
 
 		/// <summary>
