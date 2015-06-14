@@ -187,14 +187,14 @@
 			loggingWindow.SetCommonData(CommonData);
 			LoggingVM = loggingWindow.ViewModel;
 
-			var systemLogger = (SystemLogger)CommonData.Logger;
-			systemLogger.LogCollector = LoggingVM;
-			if (systemLogger.IsStock) {
+			var appLogger = (AppLogger)CommonData.Logger;
+			appLogger.LogCollector = LoggingVM;
+			if (appLogger.IsStock) {
 				// 溜まったログをViewにドバー
-				foreach (var logItem in systemLogger.StockItems) {
-					systemLogger.LogCollector.AddLog(logItem);
+				foreach (var logItem in appLogger.StockItems) {
+					appLogger.LogCollector.AddLog(logItem);
 				}
-				systemLogger.IsStock = false;
+				appLogger.IsStock = false;
 			}
 		}
 

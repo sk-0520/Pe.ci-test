@@ -75,9 +75,9 @@
 		/// <param name="outputFile"></param>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		public static SystemLogger CreateSystemLogger(bool outputFile, string baseDir)
+		public static AppLogger CreateSystemLogger(bool outputFile, string baseDir)
 		{
-			var logger = new SystemLogger();
+			var logger = new AppLogger();
 
 			if(outputFile) {
 				logger.LoggerConfig.PutsFile = true;

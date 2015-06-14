@@ -105,7 +105,7 @@
     <Compile Include="Logic\Property\VisibleVisibilityProperty.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
-    <Compile Include="Logic\SystemLogger.cs" />
+    <Compile Include="Logic\AppLogger.cs" />
     <Compile Include="Logic\Property\WindowStatusProperty.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
