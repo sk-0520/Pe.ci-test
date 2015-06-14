@@ -147,6 +147,14 @@
 					this._launcherItems = GetLauncherItems(selectedGroup)
 						.Select(m => new LauncherViewModel(m))
 					;
+					var list = new List<LauncherViewModel>(this._launcherItems);
+					list.Add(new LauncherViewModel(new LauncherItemModel() {
+						Id = "test",
+						Name = "name",
+						LauncherKind = LauncherKind.File,
+						Command = @"C:\Windows\System32\mspaint.exe"
+					}));
+					//this._launcherItems =list;
 				}
 
 				return this._launcherItems;

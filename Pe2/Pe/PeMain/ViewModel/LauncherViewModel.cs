@@ -12,6 +12,7 @@
 	{
 		public LauncherViewModel(LauncherItemModel model)
 			: base(model)
-		{ }
+		{
+		}
 	}
 }
