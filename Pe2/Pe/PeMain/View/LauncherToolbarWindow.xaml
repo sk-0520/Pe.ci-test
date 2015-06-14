@@ -18,57 +18,64 @@
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 
 	Topmost="{Binding TopMost}"
+	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 >
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
+		<ToolBarTray.Resources>
+			<Style x:Key="Image" TargetType="{x:Type Image}">
+				<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
+			</Style>
+			<Style x:Key="Text" TargetType="{x:Type TextBlock}">
+				<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
+			</Style>
+		</ToolBarTray.Resources>
+		
 		<ToolBar>
-			<Button>
-				<StackPanel Orientation="Horizontal">
-					<Image />
-					<TextBlock Text="Rotate"/>
-					<Path x:Name="BtnArrow" Margin="4" VerticalAlignment="Center" Width="6" Fill="#FF527DB5" Stretch="Uniform" HorizontalAlignment="Right" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
-				</StackPanel>
-			</Button>
-			<Menu  Name="rotAnimMenu"  Visibility="Hidden"  HorizontalAlignment="Left" Margin="374,114,0,0"  VerticalAlignment="Top"  >
-				<MenuItem >
-					<MenuItem.Header>
-						<DockPanel>
-							<Image Height="32" ></Image>
-							<Label>Rotate 90°</Label>
-						</DockPanel>
-					</MenuItem.Header>
-
-				</MenuItem>
-				<MenuItem >
-					<MenuItem.Header>
-						<DockPanel>
-							<Image Height="32" ></Image>
-							<Label>Rotate 180°</Label>
-						</DockPanel>
-					</MenuItem.Header>
-
-				</MenuItem>
-			</Menu>
+			<xctk:DropDownButton>
+				<xctk:DropDownButton.Content>
+					<StackPanel Orientation="Horizontal">
+						<Image Style="{StaticResource Image}"/>
+						<TextBlock Style="{StaticResource Text}" />
+					</StackPanel>
+				</xctk:DropDownButton.Content>
+				<xctk:DropDownButton.DropDownContent>
+					<StackPanel>
+						<MenuItem>
+							<MenuItem.Header>
+								<Label Content="toolbar pos:" />
+							</MenuItem.Header>
+						</MenuItem>
+						<Separator />
+						<MenuItem Header="topmost" />
+						<MenuItem Header="auto hide" />
+					</StackPanel>
+				</xctk:DropDownButton.DropDownContent>
+			</xctk:DropDownButton>
 		</ToolBar>
+		
 		<Control:TemplateBindingToolBar ItemsSource="{Binding LauncherItems}">
-			<Control:TemplateBindingToolBar.Resources>
-				<Style x:Key="Image" TargetType="{x:Type Image}">
-					<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
-				</Style>
-				<Style x:Key="Text" TargetType="{x:Type TextBlock}">
-					<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
-				</Style>
-			</Control:TemplateBindingToolBar.Resources>
 			<Control:TemplateBindingToolBar.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Vertical">
 
 						<!-- ファイル -->
-						<Button Visibility="{Binding VisibilityFile, Mode=OneWay}">
-							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource Image}"/>
-								<TextBlock Style="{StaticResource Text}" />
-							</StackPanel>
-						</Button>
+						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}">
+							<xctk:SplitButton.Content>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource Image}"/>
+									<TextBlock Style="{StaticResource Text}" />
+								</StackPanel>
+							</xctk:SplitButton.Content>
+							<xctk:SplitButton.DropDownContent>
+								<StackPanel>
+									<MenuItem Header="execute" />
+									<MenuItem Header="execute-ex" />
+									<Separator/>
+									<MenuItem Header="file" />
+									<MenuItem Header="path" />
+								</StackPanel>
+							</xctk:SplitButton.DropDownContent>
+						</xctk:SplitButton>
 						<!-- ディレクトリ -->
 						<Button Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
