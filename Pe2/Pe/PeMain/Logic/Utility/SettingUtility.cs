@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
 	/// <summary>
 	/// 設定データを上手いことなんやかんやする。
