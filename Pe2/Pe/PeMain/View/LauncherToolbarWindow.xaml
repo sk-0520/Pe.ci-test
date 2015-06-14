@@ -20,6 +20,13 @@
 	Topmost="{Binding TopMost}"
 >
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
+		<ToolBar>
+			<Button>
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="main" />
+				</StackPanel>
+			</Button>
+		</ToolBar>
 		<Control:TemplateBindingToolBar ItemsSource="{Binding LauncherItems}">
 			<Control:TemplateBindingToolBar.Resources>
 				<Style x:Key="Image" TargetType="{x:Type Image}">
