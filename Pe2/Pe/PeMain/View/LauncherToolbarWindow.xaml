@@ -19,6 +19,7 @@
 	Visibility="{Binding Visibility}" 
 	Topmost="{Binding TopMost}"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+	x:Name="Launcher"
 >
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
 		<ToolBarTray.Resources>
@@ -29,35 +30,40 @@
 				<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
 			</Style>
 		</ToolBarTray.Resources>
-		
-		<ToolBar>
-			<xctk:DropDownButton>
-				<xctk:DropDownButton.Content>
-					<StackPanel Orientation="Horizontal">
-						<Image Style="{StaticResource Image}"/>
-						<TextBlock Style="{StaticResource Text}" />
-					</StackPanel>
-				</xctk:DropDownButton.Content>
-				<xctk:DropDownButton.DropDownContent>
-					<StackPanel>
-						<MenuItem>
-							<MenuItem.Header>
-								<Label Content="toolbar pos:" />
-							</MenuItem.Header>
-						</MenuItem>
-						<Separator />
-						<MenuItem Header="topmost" />
-						<MenuItem Header="auto hide" />
-					</StackPanel>
-				</xctk:DropDownButton.DropDownContent>
-			</xctk:DropDownButton>
-		</ToolBar>
-		
-		<Control:TemplateBindingToolBar ItemsSource="{Binding LauncherItems}">
+
+		<Control:TemplateBindingToolBar>
+			<Control:TemplateBindingToolBar.Resources>
+				<CollectionViewSource Source="{Binding LauncherItems}" x:Key="item"/>
+			</Control:TemplateBindingToolBar.Resources>
+			<Control:TemplateBindingToolBar.ItemsSource>
+				<CompositeCollection>
+					<xctk:DropDownButton>
+						<xctk:DropDownButton.Content>
+							<StackPanel Orientation="Horizontal">
+								<Image Style="{StaticResource Image}"/>
+								<TextBlock Style="{StaticResource Text}" />
+							</StackPanel>
+						</xctk:DropDownButton.Content>
+						<xctk:DropDownButton.DropDownContent>
+							<StackPanel>
+								<MenuItem>
+									<MenuItem.Header>
+										<Label Content="toolbar pos:" />
+									</MenuItem.Header>
+								</MenuItem>
+								<Separator />
+								<MenuItem Header="topmost" />
+								<MenuItem Header="auto hide" />
+							</StackPanel>
+						</xctk:DropDownButton.DropDownContent>
+					</xctk:DropDownButton>
+					<CollectionContainer Collection="{Binding Source={StaticResource item}}" />
+				</CompositeCollection>
+			</Control:TemplateBindingToolBar.ItemsSource>
 			<Control:TemplateBindingToolBar.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Vertical">
-						
+
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}">
 							<xctk:SplitButton.Content>
@@ -76,7 +82,7 @@
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
-						
+
 						<!-- ディレクトリ -->
 						<Button Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
@@ -84,7 +90,7 @@
 								<TextBlock Style="{StaticResource Text}" />
 							</StackPanel>
 						</Button>
-						
+
 						<!-- コマンド -->
 						<Button Visibility="{Binding VisibilityCommand, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
@@ -96,6 +102,6 @@
 				</DataTemplate>
 			</Control:TemplateBindingToolBar.ItemTemplate>
 		</Control:TemplateBindingToolBar>
+
 	</ToolBarTray>
-	<!--</Grid>-->
 </W:ViewModelCommonDataWindow>

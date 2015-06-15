@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -24,7 +25,7 @@
 		#region variable
 
 		LauncherGroupItemModel _selectedGroup = null;
-		IEnumerable<LauncherViewModel> _launcherItems = null;
+		ObservableCollection<LauncherViewModel> _launcherItems = null;
 
 		#endregion
 
@@ -143,28 +144,28 @@
 
 		//
 
-		public IEnumerable<LauncherViewModel> LauncherItems 
+		public ObservableCollection<LauncherViewModel> LauncherItems 
 		{
 			get
 			{
 				if(this._launcherItems == null) {
-					this._launcherItems = GetLauncherItems(SelectedGroup)
+					var list = GetLauncherItems(SelectedGroup)
 						.Select(m => new LauncherViewModel(m))
 					;
-					var list = new List<LauncherViewModel>(this._launcherItems);
-					list.Add(new LauncherViewModel(new LauncherItemModel() {
+					var list2 = new ObservableCollection<LauncherViewModel>(list);
+					list2.Add(new LauncherViewModel(new LauncherItemModel() {
 						Id = "test1",
 						Name = "name1",
 						LauncherKind = LauncherKind.File,
 						Command = @"C:\Windows\System32\mspaint.exe"
 					}));
-					list.Add(new LauncherViewModel(new LauncherItemModel() {
+					list2.Add(new LauncherViewModel(new LauncherItemModel() {
 						Id = "test2",
 						Name = "name2",
 						LauncherKind = LauncherKind.File,
 						Command = @"%windir%\system32\calc.exe"
 					}));
-					this._launcherItems = list;
+					this._launcherItems = list2;
 					OnPropertyChanged();
 				}
 
