@@ -39,48 +39,6 @@
 			sizeofGRPICONDIRENTRY = Marshal.SizeOf<GRPICONDIRENTRY>();
 		}
 
-		///// <summary>
-		///// GBITAMPからBitmap作成。
-		///// 
-		///// http://svn.nate.deepcreek.org.au/svn/KeyboardRedirector/trunk/IconExtractor/IconExtractor.cs
-		///// </summary>
-		///// <param name="hBitmap"></param>
-		///// <returns></returns>
-		//static Bitmap BitmapFromhBitmap(BitmapHandleModel hBitmap)
-		//{
-		//	var plainBitmap = hBitmap.ToManagedBitmap(); //Image.FromHbitmap(hBitmap.Handle);
-		//	var bmData = new BitmapData[2];
-		//	var bounds = new Rectangle(0, 0, plainBitmap.Width, plainBitmap.Height);
-		//	bmData[0] = plainBitmap.LockBits(bounds, ImageLockMode.ReadOnly, plainBitmap.PixelFormat);
-
-		//	var transparentBitmap = new Bitmap(bmData[0].Width, bmData[0].Height, bmData[0].Stride, System.Drawing.Imaging.PixelFormat.Format32bppArgb, bmData[0].Scan0);
-		//	bmData[1] = transparentBitmap.LockBits(bounds, System.Drawing.Imaging.ImageLockMode.WriteOnly, transparentBitmap.PixelFormat);
-		//	try {
-		//		Marshal.StructureToPtr(bmData[0].Scan0, bmData[1].Scan0, true);
-		//	} finally {
-		//		transparentBitmap.UnlockBits(bmData[1]);
-		//		plainBitmap.UnlockBits(bmData[0]);
-		//	}
-		//	var isPlain = true;
-		//	for (int y = 0; y < transparentBitmap.Height; y++) {
-		//		for (int x = 0; x < transparentBitmap.Width; x++) {
-		//			if ((x > 0) && (y > 0)) {
-		//				byte alpha = transparentBitmap.GetPixel(x, y).A;
-		//				if (alpha > 0) {
-		//					isPlain = false;
-		//					break;
-		//				}
-		//			}
-		//		}
-		//	}
-
-		//	if (!isPlain) {
-		//		return transparentBitmap;
-		//	}
-
-		//	return plainBitmap;
-		//}
-
 		/// <summary>
 		/// ファイルのサムネイルを取得。
 		/// </summary>
@@ -248,14 +206,6 @@
 
 			if (iconScale == IconScale.Normal) {
 				try {
-					//using (var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-					//	if (bitmap != null) {
-					//		//result = (Icon)System.Drawing.Icon.FromHandle(bitmap.GetHicon()).Clone();
-					//		using (var hBitmap = new BitmapHandleModel(bitmap)) {
-					//			return hIcon.MakeImageSource();
-					//		}
-					//	}
-					//}
 					var thumbnailImage = GetThumbnailImage(iconPath, iconScale, logger);
 					if (thumbnailImage != null) {
 						return thumbnailImage;
@@ -308,13 +258,6 @@
 				}
 			}
 
-			//using (var bitmap = GetThumbnailImage(iconPath, iconScale)) {
-			//	if (bitmap != null) {
-			//		using (var hIcon = UnmanagedIcon.FromBitmap(bitmap)) {
-			//			return hIcon.ToManagedIcon();
-			//		}
-			//	}
-			//}
 			var thumbnailImage = GetThumbnailImage(iconPath, iconScale, logger);
 			if (thumbnailImage != null) {
 				return thumbnailImage;
