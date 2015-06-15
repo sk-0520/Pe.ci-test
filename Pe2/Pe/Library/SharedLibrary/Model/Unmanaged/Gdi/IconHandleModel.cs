@@ -33,7 +33,7 @@
 
 		public override bool CanMakeImageSource { get { return true; } }
 
-		protected override ImageSource MakeImageSourceImpl()
+		protected override BitmapSource MakeImageSourceImpl()
 		{
 			var result = Imaging.CreateBitmapSourceFromHIcon(
 				Handle,

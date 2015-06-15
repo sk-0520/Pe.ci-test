@@ -17,6 +17,7 @@
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using System.Windows.Media.Imaging;
 
 	/// <summary>
 	/// アイコン取得共通処理。
@@ -85,7 +86,7 @@
 		/// <param name="iconPath"></param>
 		/// <param name="iconScale"></param>
 		/// <returns></returns>
-		public static ImageSource GetThumbnailImage(string iconPath, IconScale iconScale)
+		public static BitmapSource GetThumbnailImage(string iconPath, IconScale iconScale)
 		{
 			try {
 				IShellItem iShellItem = null;
@@ -223,7 +224,7 @@
 		/// <param name="iconIndex"></param>
 		/// <param name="hasIcon"></param>
 		/// <returns></returns>
-		static ImageSource LoadNormalIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+		static BitmapSource LoadNormalIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
 		{
 			Debug.Assert(new[] { IconScale.Small, IconScale.Normal }.Any(i => i == iconScale), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
@@ -289,7 +290,7 @@
 		/// <param name="iconIndex"></param>
 		/// <param name="hasIcon"></param>
 		/// <returns></returns>
-		static ImageSource LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+		static BitmapSource LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
 		{
 			//Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 			Debug.Assert(new[] { IconScale.Big, IconScale.Large }.Any(i => i == iconScale), iconScale.ToString());
@@ -299,7 +300,7 @@
 				try {
 					var iconList = LoadIconResource(iconPath);
 					if (iconIndex < iconList.Count) {
-						return ImageUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
+						return (BitmapSource)ImageUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
 					}
 				} catch (Exception ex) {
 					Debug.WriteLine(ex);
@@ -359,13 +360,13 @@
 		/// <param name="iconScale">アイコンサイズ。</param>
 		/// <param name="iconIndex">アイコンインデックス。</param>
 		/// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-		public static ImageSource Load(string iconPath, IconScale iconScale, int iconIndex)
+		public static BitmapSource Load(string iconPath, IconScale iconScale, int iconIndex)
 		{
 			// 実行形式
 			var hasIcon = PathUtility.HasIconPath(iconPath);
 			var useIconIndex = Math.Abs(iconIndex);
 
-			ImageSource result = null;
+			BitmapSource result = null;
 			if (iconScale == IconScale.Small || iconScale == IconScale.Normal) {
 				result = LoadNormalIcon(iconPath, iconScale, useIconIndex, hasIcon);
 			} else {
