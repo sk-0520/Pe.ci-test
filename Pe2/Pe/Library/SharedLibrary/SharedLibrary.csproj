@@ -78,13 +78,16 @@
     <Compile Include="CompatibleForms\Extension\ConvertExtension.cs" />
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
+    <Compile Include="CompatibleForms\Utility\DrawingUtility.cs" />
     <Compile Include="CompatibleForms\Utility\ImageUtility.cs" />
+    <Compile Include="CompatibleWindows\IconWrapper.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
     <Compile Include="Define\Px.cs" />
+    <Compile Include="Define\SharedConstants.cs" />
     <Compile Include="Event\AppbarEventArgs.cs" />
     <Compile Include="Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Event\AppbarPosChangedEventArgs.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
+    <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />
     <Compile Include="IF\IHavingViewModel.cs" />

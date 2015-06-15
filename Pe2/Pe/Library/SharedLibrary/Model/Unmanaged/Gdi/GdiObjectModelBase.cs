@@ -9,12 +9,13 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	/// <summary>
 	/// アンマネージドなGDIオブジェクトを管理。
 	/// </summary>
-	public abstract class GdiObjectModelBase: UnmanagedHandleModelBase
+	public abstract class GdiObjectModelBase: UnmanagedHandleModelBase, IMakeBitmapSource
 	{
 		public GdiObjectModelBase(IntPtr hHandle)
 			: base(hHandle)
@@ -35,22 +36,26 @@
 
 		#endregion
 
-		#region function
-
-		protected virtual BitmapSource MakeImageSourceImpl()
-		{
-			throw new NotImplementedException();
-		}
+		#region IMakeBitmapSource
 
 		/// <summary>
 		/// GDIオブジェクトからImageSource作成。
 		/// </summary>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException">CanMakeImageSource</exception>
-		public BitmapSource MakeImageSource()
+		public BitmapSource MakeBitmapSource()
 		{
 			CheckUtility.Enforce<NotImplementedException>(CanMakeImageSource);
-			return MakeImageSourceImpl();
+			return MakeBitmapSourceImpl();
+		}
+
+		#endregion
+
+		#region function
+
+		protected virtual BitmapSource MakeBitmapSourceImpl()
+		{
+			throw new NotImplementedException();
 		}
 
 		#endregion

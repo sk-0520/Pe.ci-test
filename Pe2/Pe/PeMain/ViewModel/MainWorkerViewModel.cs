@@ -16,6 +16,10 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
+using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IDisposable
 	{
@@ -36,6 +40,15 @@
 		public LoggingViewModel LoggingVM { get; set; }
 		List<Window> WindowList { get; set; }
 
+		public ImageSource ApplicationIcon
+		{
+			get
+			{
+				using(var icon = new IconWrapper("/Resources/Icon/App.ico", IconScale.Big)) {
+					return icon.MakeBitmapSource();
+				}
+			}
+		}
 
 		#endregion
 

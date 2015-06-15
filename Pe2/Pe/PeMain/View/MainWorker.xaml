@@ -24,7 +24,7 @@
 	<!-- the application's NotifyIcon - started from App.xaml.cs. Declares its own view model. -->
 	<Taskbar:TaskbarIcon 
 		x:Key="NotifyIcon"
-		IconSource="/Resources/Icon/App.ico"
+		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
 		ToolTipText="Double-click for window, right-click for menu"
 		ContextMenu="{StaticResource TasktrayContextMenu}"
 	/>

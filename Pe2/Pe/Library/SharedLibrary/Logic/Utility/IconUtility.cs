@@ -58,7 +58,7 @@
 					((IShellItemImageFactory)shellItem.Com).GetImage(PodStructUtility.Convert(size), siigbf, out hResultBitmap);
 				}
 				using (var hBitmap = new BitmapHandleModel(hResultBitmap)) {
-					var result = hBitmap.MakeImageSource();
+					var result = hBitmap.MakeBitmapSource();
 					return result;
 				}
 			} catch (COMException ex) {
@@ -199,7 +199,7 @@
 				}
 				if (iconHandle[0] != IntPtr.Zero) {
 					using (var hIcon = new IconHandleModel(iconHandle[0])) {
-						return hIcon.MakeImageSource();
+						return hIcon.MakeBitmapSource();
 					}
 				}
 			}
@@ -226,7 +226,7 @@
 			var fileInfoResult = NativeMethods.SHGetFileInfo(iconPath, 0, ref fileInfo, (uint)Marshal.SizeOf(fileInfo), flag);
 			if (fileInfo.hIcon != IntPtr.Zero) {
 				using (var hIcon = new IconHandleModel(fileInfo.hIcon)) {
-					return hIcon.MakeImageSource();
+					return hIcon.MakeBitmapSource();
 				}
 			}
 
@@ -285,7 +285,7 @@
 						var hResult = imageList.Com.GetIcon(fileInfo.iIcon, (int)ImageListDrawItemConstants.ILD_TRANSPARENT, ref hResultIcon);
 						if (hResultIcon != IntPtr.Zero) {
 							using (var hIcon = new IconHandleModel(hResultIcon)) {
-								return hIcon.MakeImageSource();
+								return hIcon.MakeBitmapSource();
 							}
 						}
 					}

@@ -7,6 +7,8 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -25,6 +27,7 @@
 		public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
 		public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
 		public Visibility VisibilityCommand { get { return ToVisibility(Model.LauncherKind == LauncherKind.Command); } }
+
 
 		#endregion
 
