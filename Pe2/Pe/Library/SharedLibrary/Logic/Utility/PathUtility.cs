@@ -46,6 +46,23 @@
 			return ToSafeName(name, c => "_");
 		}
 
+		public static bool HasExtension(string path, params string[] extList)
+		{
+			var dotExt = Path.GetExtension(path);
+			if (string.IsNullOrEmpty(dotExt)) {
+				return false;
+			}
+
+			var ext = dotExt.Substring(1);
+			return extList
+				.Select(s => s.ToLower())
+				.Any(s => s == ext);
+		}
+
+		public static bool HasIconPath(string path)
+		{
+			return HasExtension(path, "exxe", "dll");
+		}
 
 	}
 }

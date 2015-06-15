@@ -33,5 +33,15 @@
 
 			return result;
 		}
+
+		public static SIZE Convert(Size size)
+		{
+			return new SIZE((int)size.Width, (int)size.Height);
+		}
+
+		public static Size Convert(SIZE size)
+		{
+			return new Size(size.cx, size.cy);
+		}
 	}
 }

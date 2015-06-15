@@ -78,6 +78,8 @@
     <Compile Include="CompatibleForms\Extension\ConvertExtension.cs" />
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
+    <Compile Include="CompatibleForms\Utility\ImageUtility.cs" />
+    <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
@@ -99,6 +101,10 @@
     <Compile Include="IF\IName.cs" />
     <Compile Include="IF\ITId.cs" />
     <Compile Include="IF\IUserClosableWindow.cs" />
+    <Compile Include="Logic\Extension\IconScaleExtension.cs" />
+    <Compile Include="Logic\Utility\IconUtility.cs" />
+    <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />
+    <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Parts\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
@@ -130,7 +136,7 @@
     <Compile Include="Logic\Utility\ReflectionUtility.cs" />
     <Compile Include="Logic\Utility\SerializeUtility.cs" />
     <Compile Include="Model\Unmanaged\Com\ComModelBase.cs" />
-    <Compile Include="Model\Unmanaged\GdiObjectModelBase.cs" />
+    <Compile Include="Model\Unmanaged\Gdi\GdiObjectModelBase.cs" />
     <Compile Include="Model\Unmanaged\UnmanagedHandleModelBase.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Unmanaged\UnmanagedModelBase.cs" />
@@ -154,9 +160,7 @@
       <Name>PInvoke</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CompatibleForms\Utility\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
