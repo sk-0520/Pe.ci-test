@@ -18,6 +18,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	/// <summary>
 	/// アイコン取得共通処理。
@@ -86,7 +87,7 @@
 		/// <param name="iconPath"></param>
 		/// <param name="iconScale"></param>
 		/// <returns></returns>
-		public static BitmapSource GetThumbnailImage(string iconPath, IconScale iconScale)
+		public static BitmapSource GetThumbnailImage(string iconPath, IconScale iconScale, ILogger logger = null)
 		{
 			try {
 				IShellItem iShellItem = null;
@@ -103,10 +104,10 @@
 					return result;
 				}
 			} catch (COMException ex) {
-				Debug.WriteLine("{0}, {1}", ex, iconPath);
+				logger.SafeWarning(ex);
 				return null;
 			} catch (ArgumentException ex) {
-				Debug.WriteLine("{0}, {1}", ex, iconPath);
+				logger.SafeWarning(ex);
 				return null;
 			}
 		}
@@ -224,7 +225,7 @@
 		/// <param name="iconIndex"></param>
 		/// <param name="hasIcon"></param>
 		/// <returns></returns>
-		static BitmapSource LoadNormalIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+		static BitmapSource LoadNormalIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon, ILogger logger = null)
 		{
 			Debug.Assert(new[] { IconScale.Small, IconScale.Normal }.Any(i => i == iconScale), iconScale.ToString());
 			Debug.Assert(0 <= iconIndex, iconIndex.ToString());
@@ -255,7 +256,7 @@
 					//		}
 					//	}
 					//}
-					var thumbnailImage = GetThumbnailImage(iconPath, iconScale);
+					var thumbnailImage = GetThumbnailImage(iconPath, iconScale, logger);
 					if (thumbnailImage != null) {
 						return thumbnailImage;
 					}
@@ -290,7 +291,7 @@
 		/// <param name="iconIndex"></param>
 		/// <param name="hasIcon"></param>
 		/// <returns></returns>
-		static BitmapSource LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon)
+		static BitmapSource LoadLargeIcon(string iconPath, IconScale iconScale, int iconIndex, bool hasIcon, ILogger logger = null)
 		{
 			//Debug.Assert(iconScale.IsIn(IconScale.Big, IconScale.Large), iconScale.ToString());
 			Debug.Assert(new[] { IconScale.Big, IconScale.Large }.Any(i => i == iconScale), iconScale.ToString());
@@ -303,7 +304,7 @@
 						return (BitmapSource)ImageUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
 					}
 				} catch (Exception ex) {
-					Debug.WriteLine(ex);
+					logger.SafeDebug(ex);
 				}
 			}
 
@@ -314,7 +315,7 @@
 			//		}
 			//	}
 			//}
-			var thumbnailImage = GetThumbnailImage(iconPath, iconScale);
+			var thumbnailImage = GetThumbnailImage(iconPath, iconScale, logger);
 			if (thumbnailImage != null) {
 				return thumbnailImage;
 			}
@@ -347,7 +348,7 @@
 					}
 				}
 			} catch (InvalidCastException ex) {
-				Debug.WriteLine(ex);
+				logger.SafeWarning(ex);
 			}
 
 			return null;
@@ -360,7 +361,7 @@
 		/// <param name="iconScale">アイコンサイズ。</param>
 		/// <param name="iconIndex">アイコンインデックス。</param>
 		/// <returns>取得したアイコン。呼び出し側で破棄が必要。</returns>
-		public static BitmapSource Load(string iconPath, IconScale iconScale, int iconIndex)
+		public static BitmapSource Load(string iconPath, IconScale iconScale, int iconIndex, ILogger logger = null)
 		{
 			// 実行形式
 			var hasIcon = PathUtility.HasIconPath(iconPath);
@@ -368,9 +369,9 @@
 
 			BitmapSource result = null;
 			if (iconScale == IconScale.Small || iconScale == IconScale.Normal) {
-				result = LoadNormalIcon(iconPath, iconScale, useIconIndex, hasIcon);
+				result = LoadNormalIcon(iconPath, iconScale, useIconIndex, hasIcon, logger);
 			} else {
-				result = LoadLargeIcon(iconPath, iconScale, useIconIndex, hasIcon);
+				result = LoadLargeIcon(iconPath, iconScale, useIconIndex, hasIcon, logger);
 			}
 
 			return result;

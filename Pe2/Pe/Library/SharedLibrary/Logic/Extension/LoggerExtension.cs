@@ -8,7 +8,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public class LoggerExtension
+	public static class LoggerExtension
 	{
 		#region function
 

@@ -19,7 +19,7 @@
 		/// </summary>
 		void DebugProcess()
 		{
-			icon();
+			//icon();
 		}
 
 		void icon()
