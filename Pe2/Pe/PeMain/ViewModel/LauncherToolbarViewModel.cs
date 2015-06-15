@@ -1,28 +1,29 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Controls;
-	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-	using ContentTypeTextNet.Pe.PeMain.View;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
 	{
 		#region variable
 
-		string _selectedGroup = null;
+		LauncherGroupItemModel _selectedGroup = null;
 		IEnumerable<LauncherViewModel> _launcherItems = null;
 
 		#endregion
@@ -123,53 +124,63 @@
 			get { return DockType == DockType.Left ? Orientation.Horizontal : System.Windows.Controls.Orientation.Vertical; }
 		}
 
-		public string SelectedGroup
+		public LauncherGroupItemModel SelectedGroup
 		{
-			get { return this._selectedGroup ?? Model.Toolbar.DefaultGroupId ?? string.Empty; }
-			set
+			get 
 			{
-				if(this._selectedGroup != value) {
-					this._selectedGroup = value;
-					this._selectedGroup = null;
+				if (this._selectedGroup == null) {
+					if(!string.IsNullOrEmpty(Model.Toolbar.DefaultGroupId)) {
+						this._selectedGroup = Model.GroupItems[Model.Toolbar.DefaultGroupId];
+					} else {
+						this._selectedGroup = Model.GroupItems.First();
+					}
 				}
+				return this._selectedGroup;
 			}
 		}
+
+		//
 
 		public IEnumerable<LauncherViewModel> LauncherItems 
 		{
 			get
 			{
 				if(this._launcherItems == null) {
-					var selectedGroup = SelectedGroup;
-					if(!Model.GroupItems.Contains(SelectedGroup)) {
-						selectedGroup = Model.GroupItems.First().Id;
-					}
-					this._launcherItems = GetLauncherItems(selectedGroup)
+					this._launcherItems = GetLauncherItems(SelectedGroup)
 						.Select(m => new LauncherViewModel(m))
 					;
 					var list = new List<LauncherViewModel>(this._launcherItems);
 					list.Add(new LauncherViewModel(new LauncherItemModel() {
-						Id = "test",
-						Name = "name",
+						Id = "test1",
+						Name = "name1",
 						LauncherKind = LauncherKind.File,
 						Command = @"C:\Windows\System32\mspaint.exe"
 					}));
-					this._launcherItems =list;
+					list.Add(new LauncherViewModel(new LauncherItemModel() {
+						Id = "test2",
+						Name = "name2",
+						LauncherKind = LauncherKind.File,
+						Command = @"%windir%\system32\calc.exe"
+					}));
+					this._launcherItems = list;
+					OnPropertyChanged();
 				}
 
 				return this._launcherItems;
 			}
 		}
 
+		public ImageSource ToolbarImage { get { return null; } }
+		public string ToolbarText { get { return SelectedGroup.Name; } }
+
 		#endregion
 
 		#region functino
-	
-		IEnumerable<LauncherItemModel> GetLauncherItems(string groupId)
+
+		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
 		{
-			var groupItem = Model.GroupItems[groupId];
 			if(groupItem.GroupKind == GroupKind.LauncherItems) {
-				return Model.GroupItems[groupId].LauncherItems
+				return groupItem.LauncherItems
 					.Where(i => Model.LauncherItems.Contains(i))
 					.Select(i => Model.LauncherItems[i])
 				;
@@ -180,12 +191,5 @@
 
 		#endregion
 
-		//void View_Loaded(object sender, RoutedEventArgs e)
-		//{
-		//	//DockType = Library.PeData.Define.DockType.Right;
-		//	//View.Docking(Library.PeData.Define.DockType.Right);
-		//	//DockType = Library.PeData.Define.DockType.Left;
-		//	//OnPropertyChanged("Orientation");
-		//}
 	}
 }

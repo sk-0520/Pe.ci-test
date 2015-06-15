@@ -57,7 +57,7 @@
 			<Control:TemplateBindingToolBar.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Vertical">
-
+						
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}">
 							<xctk:SplitButton.Content>
@@ -76,6 +76,7 @@
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
+						
 						<!-- ディレクトリ -->
 						<Button Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
@@ -83,6 +84,7 @@
 								<TextBlock Style="{StaticResource Text}" />
 							</StackPanel>
 						</Button>
+						
 						<!-- コマンド -->
 						<Button Visibility="{Binding VisibilityCommand, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
