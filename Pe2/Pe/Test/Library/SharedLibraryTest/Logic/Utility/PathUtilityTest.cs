@@ -28,9 +28,9 @@
 		[TestCase("a?", "a?", "?")]
 		[TestCase("a@b@c@d", "a?b\\c*d", "@")]
 		[TestCase("a<>b<>c<>d", "a?b\\c*d", "<>")]
-		public void ToSafeNameTest(string test, string s, string c)
+		public void ToSafeNameTest(string test, string value, string c)
 		{
-			Assert.AreEqual(test, PathUtility.ToSafeName(s, v => c));
+			Assert.AreEqual(test, PathUtility.ToSafeName(value, v => c));
 		}
 
 		[TestCase("", "")]
@@ -39,9 +39,22 @@
 		[TestCase("a_", "a?")]
 		[TestCase("a_", "a?")]
 		[TestCase("a_b_c_d", "a?b\\c*d")]
-		public void ToSafeNameDefaultTest(string test, string s)
+		public void ToSafeNameDefaultTest(string test, string value)
 		{
-			Assert.AreEqual(test, PathUtility.ToSafeNameDefault(s));
+			Assert.AreEqual(test, PathUtility.ToSafeNameDefault(value));
+		}
+
+		[TestCase(false, "exe")]
+		[TestCase(false, "dll")]
+		[TestCase(true, ".exe")]
+		[TestCase(true, ".dll")]
+		[TestCase(false, ".ico")]
+		[TestCase(true, "a.exe")]
+		[TestCase(true, "a.dll")]
+		[TestCase(false, "a.ico")]
+		public void HasIconTest(bool test, string value)
+		{
+			Assert.AreEqual(test, PathUtility.HasIconPath(value));
 		}
 	}
 }

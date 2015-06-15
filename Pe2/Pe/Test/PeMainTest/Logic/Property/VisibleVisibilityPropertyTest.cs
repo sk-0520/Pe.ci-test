@@ -22,41 +22,41 @@ using NUnit.Framework;
 
 		[TestCase(true, true)]
 		[TestCase(false, false)]
-		public void GetVisibleTest(bool result, bool test)
+		public void GetVisibleTest(bool test, bool arg)
 		{
 			var testObj = new IVisibleImpl() {
-				Visible = test,
+				Visible = arg,
 			};
-			Assert.AreEqual(result, VisibleVisibilityProperty.GetVisible(testObj));
+			Assert.AreEqual(test, VisibleVisibilityProperty.GetVisible(testObj));
 		}
 
 		[TestCase(true, true)]
 		[TestCase(false, false)]
-		public void SetVisibleTest(bool result, bool test)
+		public void SetVisibleTest(bool test, bool value)
 		{
 			var testObj = new IVisibleImpl();
-			VisibleVisibilityProperty.SetVisible(testObj, test, DummyAction);
-			Assert.AreEqual(result, testObj.Visible);
+			VisibleVisibilityProperty.SetVisible(testObj, value, DummyAction);
+			Assert.AreEqual(test, testObj.Visible);
 		}
 
 		[TestCase(Visibility.Visible, true)]
 		[TestCase(Visibility.Hidden, false)]
-		public void GetVisibleTest(Visibility result, bool test)
+		public void GetVisibleTest(Visibility test, bool value)
 		{
 			var testObj = new IVisibleImpl() {
-				Visible = test,
+				Visible = value,
 			};
-			Assert.AreEqual(result, VisibleVisibilityProperty.GetVisibility(testObj));
+			Assert.AreEqual(test, VisibleVisibilityProperty.GetVisibility(testObj));
 		}
 
 		[TestCase(true, Visibility.Visible)]
 		[TestCase(false, Visibility.Collapsed)]
 		[TestCase(false, Visibility.Hidden)]
-		public void SetVisibleTest(bool result, Visibility test)
+		public void SetVisibleTest(bool test, Visibility value)
 		{
 			var testObj = new IVisibleImpl();
-			VisibleVisibilityProperty.SetVisibility(testObj, test, DummyAction);
-			Assert.AreEqual(result, testObj.Visible);
+			VisibleVisibilityProperty.SetVisibility(testObj, value, DummyAction);
+			Assert.AreEqual(test, testObj.Visible);
 		}
 	}
 }

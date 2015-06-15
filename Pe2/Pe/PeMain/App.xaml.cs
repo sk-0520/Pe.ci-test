@@ -30,6 +30,10 @@
 		{
 			base.OnStartup(e);
 
+#if DEBUG
+			DebugProcess();
+#endif
+
 			var commandLine = new CommandLine();
 			var constants = new VariableConstants(commandLine);
 			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);

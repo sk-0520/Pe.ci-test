@@ -61,7 +61,7 @@
 
 		public static bool HasIconPath(string path)
 		{
-			return HasExtension(path, "exxe", "dll");
+			return HasExtension(path, "exe", "dll");
 		}
 
 	}

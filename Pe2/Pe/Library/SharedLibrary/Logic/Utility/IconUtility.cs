@@ -299,7 +299,7 @@
 				try {
 					var iconList = LoadIconResource(iconPath);
 					if (iconIndex < iconList.Count) {
-						ImageUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
+						return ImageUtility.ImageSourceFromBinaryIcon(iconList[iconIndex], iconScale.ToSize());
 					}
 				} catch (Exception ex) {
 					Debug.WriteLine(ex);
