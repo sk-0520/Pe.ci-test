@@ -50,7 +50,7 @@ using NUnit.Framework;
 		}
 
 		[TestCase(true, Visibility.Visible)]
-		[TestCase(true, Visibility.Collapsed)]
+		[TestCase(false, Visibility.Collapsed)]
 		[TestCase(false, Visibility.Hidden)]
 		public void SetVisibleTest(bool result, Visibility test)
 		{

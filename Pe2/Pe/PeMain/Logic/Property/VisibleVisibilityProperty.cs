@@ -31,7 +31,7 @@
 
 		public static void SetVisibility(IVisible model, Visibility value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			SetVisible(model, value != Visibility.Hidden, onPropertyChanged, propertyName);
+			SetVisible(model, value == Visibility.Visible, onPropertyChanged, propertyName);
 		}
 
 
