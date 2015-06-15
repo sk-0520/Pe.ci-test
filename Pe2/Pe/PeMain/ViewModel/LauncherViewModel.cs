@@ -22,9 +22,18 @@
 		public string ToolbarText { get { return Model.Name; } }
 		public ImageSource ToolbarImage { get { return null; } }
 
-		public Visibility VisibilityFile { get { return Model.LauncherKind == LauncherKind.File ? Visibility.Visible : Visibility.Collapsed; } }
-		public Visibility VisibilityDirectory { get { return Model.LauncherKind == LauncherKind.Directory ? Visibility.Visible : Visibility.Collapsed; } }
-		public Visibility VisibilityCommand { get { return Model.LauncherKind == LauncherKind.Command ? Visibility.Visible : Visibility.Collapsed; } }
+		public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
+		public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
+		public Visibility VisibilityCommand { get { return ToVisibility(Model.LauncherKind == LauncherKind.Command); } }
+
+		#endregion
+
+		#region function
+
+		Visibility ToVisibility(bool test)
+		{
+			return test ? Visibility.Visible : Visibility.Collapsed;
+		}
 
 		#endregion
 	}
