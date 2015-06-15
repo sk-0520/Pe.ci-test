@@ -101,6 +101,7 @@
     <Compile Include="IF\IName.cs" />
     <Compile Include="IF\ITId.cs" />
     <Compile Include="IF\IUserClosableWindow.cs" />
+    <Compile Include="Logic\Caching.cs" />
     <Compile Include="Logic\Extension\IconScaleExtension.cs" />
     <Compile Include="Logic\Extension\LoggerExtension.cs" />
     <Compile Include="Logic\Utility\IconUtility.cs" />
