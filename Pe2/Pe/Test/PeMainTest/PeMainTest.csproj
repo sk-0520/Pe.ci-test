@@ -79,6 +79,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xaml" />
@@ -105,6 +106,10 @@
     <ProjectReference Include="..\..\Library\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\SharedLibrary\SharedLibrary.csproj">
+      <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
+      <Name>SharedLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\PeMain\PeMain.csproj">
       <Project>{c35bcf43-bb6d-45db-9784-7d79254ea4b8}</Project>

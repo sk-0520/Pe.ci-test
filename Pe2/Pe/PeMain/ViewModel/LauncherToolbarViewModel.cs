@@ -129,12 +129,14 @@
 			get 
 			{
 				if (this._selectedGroup == null) {
-					if(!string.IsNullOrEmpty(Model.Toolbar.DefaultGroupId)) {
-						this._selectedGroup = Model.GroupItems[Model.Toolbar.DefaultGroupId];
-					} else {
+					if(Model.Toolbar.DefaultGroupId != null) {
+						Model.GroupItems.TryGetValue(Model.Toolbar.DefaultGroupId, out this._selectedGroup);
+					}
+					if (this._selectedGroup == null) {
 						this._selectedGroup = Model.GroupItems.First();
 					}
 				}
+
 				return this._selectedGroup;
 			}
 		}

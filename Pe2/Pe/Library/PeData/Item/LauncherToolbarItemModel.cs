@@ -9,8 +9,16 @@
 	public class LauncherToolbarItemModel : ItemModelBase
 	{
 		public LauncherToolbarItemModel()
-			: base()
+			: this(new ToolbarItemModel(), new LauncherItemCollectionModel(), new LauncherGroupItemCollectionModel())
 		{ }
+
+		public LauncherToolbarItemModel(ToolbarItemModel toolbar, LauncherItemCollectionModel item, LauncherGroupItemCollectionModel group)
+			:base()
+		{
+			Toolbar = toolbar;
+			LauncherItems = item;
+			GroupItems = group;
+		}
 
 		/// <summary>
 		/// ツールバー設定。
