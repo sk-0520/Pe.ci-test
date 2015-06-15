@@ -20,16 +20,18 @@
 	Topmost="{Binding TopMost}"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	x:Name="Launcher"
+	xmlns:DEFINE="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 >
-	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
-		<ToolBarTray.Resources>
+	<W:CommonDataWindow.Resources>
 			<Style x:Key="Image" TargetType="{x:Type Image}">
 				<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
 			</Style>
 			<Style x:Key="Text" TargetType="{x:Type TextBlock}">
 				<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
 			</Style>
-		</ToolBarTray.Resources>
+	</W:CommonDataWindow.Resources>
+	
+	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
 
 		<Control:TemplateBindingToolBar>
 			<Control:TemplateBindingToolBar.Resources>
@@ -61,9 +63,9 @@
 				</CompositeCollection>
 			</Control:TemplateBindingToolBar.ItemsSource>
 			<Control:TemplateBindingToolBar.ItemTemplate>
-				<DataTemplate>
+				<DataTemplate DataType="{x:Type DEFINE:LauncherKind}">
 					<StackPanel Orientation="Vertical">
-
+						
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}">
 							<xctk:SplitButton.Content>
@@ -84,20 +86,20 @@
 						</xctk:SplitButton>
 
 						<!-- ディレクトリ -->
-						<Button Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
+						<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
 								<Image Style="{StaticResource Image}"/>
 								<TextBlock Style="{StaticResource Text}" />
 							</StackPanel>
-						</Button>
+						</xctk:DropDownButton>
 
 						<!-- コマンド -->
-						<Button Visibility="{Binding VisibilityCommand, Mode=OneWay}">
+						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}">
 							<StackPanel Orientation="Horizontal">
 								<Image Style="{StaticResource Image}"/>
 								<TextBlock Style="{StaticResource Text}" />
 							</StackPanel>
-						</Button>
+						</xctk:SplitButton>
 					</StackPanel>
 				</DataTemplate>
 			</Control:TemplateBindingToolBar.ItemTemplate>
