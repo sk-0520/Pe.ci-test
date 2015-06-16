@@ -35,10 +35,11 @@ using System.Windows.Media;
 		#region property
 
 		CommonData CommonData { get; set; }
+		public LanguageManager Language { get { return CommonData.Language; } }
 
 		public bool Pause { get; set; }
 
-		public LoggingViewModel LoggingVM { get; set; }
+		public LoggingViewModel Logging { get; set; }
 		List<Window> WindowList { get; set; }
 
 		public ImageSource ApplicationIcon
@@ -89,9 +90,9 @@ using System.Windows.Media;
 			{
 				var result = new DelegateCommand();
 				result.Command += o => {
-					Debug.Assert(LoggingVM != null);
+					Debug.Assert(Logging != null);
 
-					LoggingVM.Visible = !LoggingVM.Visible;
+					Logging.Visible = !Logging.Visible;
 				};
 
 				return result;
@@ -206,10 +207,10 @@ using System.Windows.Media;
 		{
 			var loggingWindow = new LoggingWindow();
 			loggingWindow.SetCommonData(CommonData);
-			LoggingVM = loggingWindow.ViewModel;
+			Logging = loggingWindow.ViewModel;
 
 			var appLogger = (AppLogger)CommonData.Logger;
-			appLogger.LogCollector = LoggingVM;
+			appLogger.LogCollector = Logging;
 			if (appLogger.IsStock) {
 				// 溜まったログをViewにドバー
 				foreach (var logItem in appLogger.StockItems) {
