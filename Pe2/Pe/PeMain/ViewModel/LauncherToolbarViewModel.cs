@@ -275,6 +275,7 @@
 
 		public ImageSource ToolbarImage { get { return null; } }
 		public string ToolbarText { get { return SelectedGroup.Name; } }
+		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
 
 		#endregion
 
@@ -323,7 +324,7 @@
 
 		Size CalcButtonSize()
 		{
-			return new Size(40 + MenuWidth, 40);
+			return new Size(40 + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth: 0), 40);
 		}
 
 		double CalcViewWidth(DockType dockType)

@@ -47,6 +47,8 @@
 
 		#endregion 
 
+		#region property
+
 		/// <summary>
 		/// ツールバー位置。
 		/// </summary>
@@ -103,5 +105,18 @@
 		/// </summary>
 		[DataMember]
 		public string DefaultGroupId { get; set; }
+
+		/// <summary>
+		/// テキスト表示を行うか。
+		/// </summary>
+		[DataMember]
+		public bool TextVisible { get; set; }
+		/// <summary>
+		/// テキストの表示幅。
+		/// </summary>
+		[DataMember]
+		public double TextWidth { get; set; }
+
+		#endregion
 	}
 }
