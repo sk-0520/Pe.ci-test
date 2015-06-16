@@ -16,6 +16,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -170,13 +171,14 @@
 
 		public void ChangingWindowMode()
 		{
-			var rect = new Rect(
+			var logicalRect = new Rect(
 				FloatLeft,
 				FloatTop,
 				FloatWidth,
 				FloatHeight
 			);
-			var podRect = PodStructUtility.Convert(rect);
+			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
+			var podRect = PodStructUtility.Convert(deviceRect);
 			NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
 		}
 
