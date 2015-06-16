@@ -32,11 +32,12 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.View.Parts;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherToolbarWindow: ViewModelCommonDataWindow<LauncherToolbarViewModel>
+	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar
 	{
 		public LauncherToolbarWindow()
 		{
@@ -119,6 +120,17 @@
 			if(Appbar != null) {
 				Appbar.Dispose();
 				Appbar = null;
+			}
+		}
+
+		#endregion
+
+		#region IApplicationDesktopToolbar
+
+		public void Docking(DockType dockType)
+		{
+			if (Appbar != null) {
+				Appbar.Docking(dockType);
 			}
 		}
 

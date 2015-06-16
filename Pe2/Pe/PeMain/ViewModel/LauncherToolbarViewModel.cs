@@ -8,10 +8,14 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Controls;
+	using System.Windows.Input;
 	using System.Windows.Media;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -33,6 +37,7 @@
 			: base(model, view)
 		{
 			BarSize = new Size(80, 80);
+			ButtonSize = CalcButtonSize();
 		}
 
 		#region property
@@ -62,6 +67,51 @@
 		}
 
 		#endregion
+
+		public double FloatLeft
+		{
+			get { return Model.Toolbar.FloatToolbarArea.Left; }
+			set 
+			{
+				if (DockType == DockType.None && Model.Toolbar.FloatToolbarArea.Left != value) {
+					Model.Toolbar.FloatToolbarArea.Left = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+		public double FloatTop
+		{
+			get { return Model.Toolbar.FloatToolbarArea.Top; }
+			set
+			{
+				if (DockType == DockType.None && Model.Toolbar.FloatToolbarArea.Top != value) {
+					Model.Toolbar.FloatToolbarArea.Top = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+		public double FloatWidth
+		{
+			get { return CalcViewWidth(DockType); }
+			set
+			{
+				if (DockType == DockType.None) {
+					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalcButtonWidthCount(value, DockType);
+					OnPropertyChanged();
+				}
+			}
+		}
+		public double FloatHeight
+		{
+			get { return CalcViewHeight(DockType); }
+			set
+			{
+				if (DockType == DockType.None) {
+					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalcButtonHeightCount(value, DockType);
+					OnPropertyChanged();
+				}
+			}
+		}
 
 		#region IApplicationDesktopToolbarData
 
@@ -118,12 +168,28 @@
 		/// </summary>
 		public ScreenModel DockScreen { get; set; }
 
+		public void ChangingWindowMode()
+		{
+			var rect = new Rect(
+				FloatLeft,
+				FloatTop,
+				FloatWidth,
+				FloatHeight
+			);
+			var podRect = PodStructUtility.Convert(rect);
+			NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+		}
+
 		#endregion
+
+		public Size ButtonSize { get; set; }
 
 		public Orientation Orientation
 		{
 			get { return DockType == DockType.Left ? Orientation.Horizontal : System.Windows.Controls.Orientation.Vertical; }
 		}
+
+		public ObservableCollection<LauncherGroupItemModel> GroupItems { get { return new ObservableCollection<LauncherGroupItemModel>( Model.GroupItems.Items); } }
 
 		public LauncherGroupItemModel SelectedGroup
 		{
@@ -190,6 +256,25 @@
 
 		#endregion
 
+		#region command
+
+		public ICommand PositionChangeCommand
+		{
+			get
+			{
+				var result = new DelegateCommand(
+					o => {
+						var dockType = (DockType)o;
+						View.Docking(dockType);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
 		#region functino
 
 		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
@@ -202,6 +287,28 @@
 			}
 			// 当面はランチャーアイテムのみ
 			throw new NotImplementedException();
+		}
+
+		Size CalcButtonSize()
+		{
+			return new Size(40, 40);
+		}
+
+		double CalcViewWidth(DockType dockType)
+		{
+			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width;
+		}
+		int CalcButtonWidthCount(double viewWidth, DockType dockType)
+		{
+			return (int)(viewWidth / ButtonSize.Width);
+		}
+		double CalcViewHeight(DockType dockType)
+		{
+			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height;
+		}
+		int CalcButtonHeightCount(double viewHeight, DockType dockType)
+		{
+			return (int)(viewHeight / ButtonSize.Height);
 		}
 
 		#endregion

@@ -382,6 +382,8 @@
 			}
 
 			if(dockType == DockType.None) {
+				ViewModel.DockType = dockType;
+				ViewModel.ChangingWindowMode();
 				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
 				return;
 			}

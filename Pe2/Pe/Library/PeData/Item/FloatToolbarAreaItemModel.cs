@@ -21,23 +21,23 @@ using ContentTypeTextNet.Library.SharedLibrary.Define;
 		/// 横に表示するアイテム数。
 		/// </summary>
 		[DataMember]
-		public int Width { get; set; }
+		public int WidthButtonCount { get; set; }
 		/// <summary>
 		/// 縦に表示するアイテム数。
 		/// </summary>
 		[DataMember]
-		public int Height { get; set; }
+		public int HeightButtonCount { get; set; }
 		/// <summary>
 		/// 論理X座標。
 		/// </summary>
 		[DataMember]
 		[PixelKind(Px.Logical)]
-		public double X { get; set; }
+		public double Left { get; set; }
 		/// <summary>
 		/// 論理Y座標。
 		/// </summary>
 		[DataMember]
 		[PixelKind(Px.Logical)]
-		public double Y { get; set; }
+		public double Top { get; set; }
 	}
 }

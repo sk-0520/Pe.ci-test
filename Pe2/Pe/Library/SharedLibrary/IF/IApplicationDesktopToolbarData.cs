@@ -58,5 +58,10 @@
 		/// ドッキングに使用するスクリーン。
 		/// </summary>
 		ScreenModel DockScreen { get; set; }
+
+		/// <summary>
+		/// 指定位置に合わせてデータ書き換え
+		/// </summary>
+		void ChangingWindowMode();
 	}
 }

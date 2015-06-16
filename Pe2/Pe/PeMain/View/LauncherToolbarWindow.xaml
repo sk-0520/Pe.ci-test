@@ -9,10 +9,12 @@
 	x:TypeArguments="VM:LauncherToolbarViewModel"
 	UI:XamlTag.LanguageKey="window/toolbar"
 	Title="ToolbarWindow" 
-	Height="300" 
-	Width="300"
+	Height="{Binding FloatHeight, Mode=TwoWay}" 
+	Width="{Binding FloatWidth, Mode=TwoWay}"
+	Left="{Binding FloatLeft, Mode=TwoWay}" 
+	Top="{Binding FloatTop, Mode=TwoWay}"
 	WindowStyle="None"
-	ShowInTaskbar="True" 
+	ShowInTaskbar="False" 
 	ResizeMode="NoResize"
 	ScrollViewer.VerticalScrollBarVisibility="Disabled"
 	WindowStartupLocation="Manual"
@@ -20,26 +22,33 @@
 	Topmost="{Binding TopMost}"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	x:Name="Launcher"
-	xmlns:DEFINE="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+	xmlns:PD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
+	
 >
 	<W:CommonDataWindow.Resources>
-			<Style x:Key="Image" TargetType="{x:Type Image}">
-				<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
-			</Style>
-			<Style x:Key="Text" TargetType="{x:Type TextBlock}">
-				<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
-			</Style>
+		<Style x:Key="Image" TargetType="{x:Type Image}">
+			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
+		</Style>
+		<Style x:Key="Text" TargetType="{x:Type TextBlock}">
+			<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
+		</Style>
+		
 	</W:CommonDataWindow.Resources>
-	
+
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
 
 		<Control:TemplateBindingToolBar>
 			<Control:TemplateBindingToolBar.Resources>
-				<CollectionViewSource Source="{Binding LauncherItems}" x:Key="item"/>
+				<CollectionViewSource Source="{Binding LauncherItems}" x:Key="LauncherItems"/>
 			</Control:TemplateBindingToolBar.Resources>
 			<Control:TemplateBindingToolBar.ItemsSource>
 				<CompositeCollection>
 					<xctk:DropDownButton>
+						<xctk:DropDownButton.Resources>
+							<CollectionViewSource Source="{Binding GroupItems}" x:Key="GroupItems"/>
+						</xctk:DropDownButton.Resources>
+
 						<xctk:DropDownButton.Content>
 							<StackPanel Orientation="Horizontal">
 								<Image Style="{StaticResource Image}"/>
@@ -48,24 +57,38 @@
 						</xctk:DropDownButton.Content>
 						<xctk:DropDownButton.DropDownContent>
 							<StackPanel>
-								<MenuItem>
-									<MenuItem.Header>
-										<Label Content="toolbar pos:" />
-									</MenuItem.Header>
-								</MenuItem>
+								<Label Content="toolbar pos:" />
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition />
+										<ColumnDefinition />
+										<ColumnDefinition />
+									</Grid.ColumnDefinitions>
+									<Grid.RowDefinitions>
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+									</Grid.RowDefinitions>
+									<Button Grid.Row="0" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Top}">↑</Button>
+									<Button Grid.Row="1" Grid.Column="0" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Left}">←</Button>
+									<Button Grid.Row="1" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.None}">□</Button>
+									<Button Grid.Row="1" Grid.Column="2" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Right}">→</Button>
+									<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}">↓</Button>
+								</Grid>
 								<Separator />
 								<MenuItem Header="topmost" />
 								<MenuItem Header="auto hide" />
+								<Separator />
 							</StackPanel>
 						</xctk:DropDownButton.DropDownContent>
 					</xctk:DropDownButton>
-					<CollectionContainer Collection="{Binding Source={StaticResource item}}" />
+					<CollectionContainer Collection="{Binding Source={StaticResource LauncherItems}}" />
 				</CompositeCollection>
 			</Control:TemplateBindingToolBar.ItemsSource>
 			<Control:TemplateBindingToolBar.ItemTemplate>
-				<DataTemplate DataType="{x:Type DEFINE:LauncherKind}">
+				<DataTemplate DataType="{x:Type PD:LauncherKind}">
 					<StackPanel Orientation="Vertical">
-						
+
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}">
 							<xctk:SplitButton.Content>
