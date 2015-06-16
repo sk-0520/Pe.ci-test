@@ -323,7 +323,7 @@
 
 		Size CalcButtonSize()
 		{
-			return new Size(40, 40);
+			return new Size(40 + MenuWidth, 40);
 		}
 
 		double CalcViewWidth(DockType dockType)
