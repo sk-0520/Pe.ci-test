@@ -20,6 +20,7 @@ using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using System.Windows.Media.Imaging;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IDisposable
 	{
@@ -44,9 +45,16 @@ using System.Windows.Media;
 		{
 			get
 			{
-				using(var icon = new IconWrapper("/Resources/Icon/App.ico", IconScale.Big)) {
-					return icon.MakeBitmapSource();
-				}
+				//TODO: 自前で生成したいけどHardcodet.Wpf.TaskbarNotificationの都合上厳しい
+#if DEBUG
+				var path = "/Resources/Icon/Tasktray/App-debug.ico";
+#elif BETA
+				var path = "/Resources/Icon/Tasktray/App-beta.ico";
+#else
+				var path = "/Resources/Icon/Tasktray/App-release.ico";
+#endif
+				var uri = SharedConstants.GetEntryUri(path);
+				return new BitmapImage(uri);
 			}
 		}
 

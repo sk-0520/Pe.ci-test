@@ -18,11 +18,11 @@
 
 		public static Uri GetAssemblyUri(Assembly assembly, string path)
 		{
-			var asmName = assembly.GetName().Name;
+			var asmName = "/" + assembly.GetName().Name;
 			if(path.FirstOrDefault() == '/') {
 				path = path.Substring(1);
 			}
-			return GetPackUri(asmName + "/" + path);
+			return GetPackUri(asmName + ";component/" + path);
 		}
 
 		public static Uri GetEntryUri(string path)
