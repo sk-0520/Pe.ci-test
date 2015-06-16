@@ -212,7 +212,7 @@
 
 		//
 
-		public ObservableCollection<LauncherViewModel> LauncherItems 
+		public IEnumerable<LauncherViewModel> LauncherItems 
 		{
 			get
 			{

@@ -21,7 +21,6 @@
 	Visibility="{Binding Visibility}" 
 	Topmost="{Binding TopMost}"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-	x:Name="Launcher"
 	xmlns:PD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
 	
@@ -33,15 +32,22 @@
 		<Style x:Key="Text" TargetType="{x:Type TextBlock}">
 			<Setter Property="Text" Value="{Binding ToolbarText, Mode=OneWay}" />
 		</Style>
-		
+
+		<!--  Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.ItemsControl', AncestorLevel='1''. BindingExpression:Path=HorizontalContentAlignment; DataItem=null; target element is 'MenuItem' (Name=''); -->
+		<Style x:Key="_b" TargetType="MenuItem">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+		</Style>
+
 	</W:CommonDataWindow.Resources>
 
 	<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
 
 		<Control:TemplateBindingToolBar>
 			<Control:TemplateBindingToolBar.Resources>
-				<CollectionViewSource Source="{Binding LauncherItems}" x:Key="LauncherItems"/>
+				<CollectionViewSource Source="{Binding LauncherItems, Mode=OneWay}" x:Key="LauncherItems"/>
 			</Control:TemplateBindingToolBar.Resources>
+
 			<Control:TemplateBindingToolBar.ItemsSource>
 				<CompositeCollection>
 					<xctk:DropDownButton>
@@ -76,8 +82,8 @@
 									<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}">↓</Button>
 								</Grid>
 								<Separator />
-								<MenuItem Header="topmost" />
-								<MenuItem Header="auto hide" />
+								<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource _b}" />
+								<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource _b}" />
 								<Separator />
 							</StackPanel>
 						</xctk:DropDownButton.DropDownContent>
@@ -99,11 +105,11 @@
 							</xctk:SplitButton.Content>
 							<xctk:SplitButton.DropDownContent>
 								<StackPanel>
-									<MenuItem Header="execute" />
-									<MenuItem Header="execute-ex" />
+									<MenuItem Header="execute"  Style="{StaticResource _b}" />
+									<MenuItem Header="execute-ex"  Style="{StaticResource _b}" />
 									<Separator/>
-									<MenuItem Header="file" />
-									<MenuItem Header="path" />
+									<MenuItem Header="file"  Style="{StaticResource _b}" />
+									<MenuItem Header="path"  Style="{StaticResource _b}" />
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
