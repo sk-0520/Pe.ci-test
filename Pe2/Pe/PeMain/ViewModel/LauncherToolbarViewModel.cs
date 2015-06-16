@@ -318,7 +318,7 @@
 
 		double GetMenuWidth()
 		{
-			return 10;
+			return 20;
 		}
 
 		Size CalcButtonSize()
