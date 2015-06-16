@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
@@ -38,7 +39,9 @@
 			: base(model, view)
 		{
 			BarSize = new Size(80, 80);
+			MenuWidth = GetMenuWidth();
 			ButtonSize = CalcButtonSize();
+			IconSize = CalcIconSize();
 		}
 
 		#region property
@@ -184,7 +187,9 @@
 
 		#endregion
 
+		public Size IconSize { get; set; }
 		public Size ButtonSize { get; set; }
+		public double MenuWidth { get; set; }
 
 		public Orientation Orientation
 		{
@@ -304,6 +309,16 @@
 			}
 			// 当面はランチャーアイテムのみ
 			throw new NotImplementedException();
+		}
+
+		Size CalcIconSize()
+		{
+			return Model.Toolbar.IconScale.ToSize();
+		}
+
+		double GetMenuWidth()
+		{
+			return 10;
 		}
 
 		Size CalcButtonSize()
