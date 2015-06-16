@@ -38,7 +38,9 @@
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 		</Style>
-		
+
+		<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />
+
 	</W:CommonDataWindow.Resources>
 
 	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}">
@@ -51,7 +53,6 @@
 			</xctk:DropDownButton.Content>
 			<xctk:DropDownButton.DropDownContent>
 				<StackPanel>
-					<Label Content="toolbar pos:" />
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition />
@@ -62,24 +63,31 @@
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
+							<RowDefinition />
 						</Grid.RowDefinitions>
-						<Button Grid.Row="0" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Top}">↑</Button>
-						<Button Grid.Row="1" Grid.Column="0" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Left}">←</Button>
-						<Button Grid.Row="1" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.None}">□</Button>
-						<Button Grid.Row="1" Grid.Column="2" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Right}">→</Button>
-						<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}">↓</Button>
+						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Content="toolbar pos" />
+						<Button Grid.Row="1" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Top}">↑</Button>
+						<Button Grid.Row="2" Grid.Column="0" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Left}">←</Button>
+						<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.None}">□</Button>
+						<Button Grid.Row="2" Grid.Column="2" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Right}">→</Button>
+						<Button Grid.Row="3" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}">↓</Button>
 					</Grid>
 					<Separator />
 					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource _b}" />
 					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource _b}" />
 					<Separator />
+					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<MenuItem Header="{Binding Name}" />
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
 				</StackPanel>
 			</xctk:DropDownButton.DropDownContent>
 		</xctk:DropDownButton>
+
 		<ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}">
-			<ItemsControl.Resources>
-				<CollectionViewSource Source="{Binding LauncherItems, Mode=OneWay}" x:Key="LauncherItems"/>
-			</ItemsControl.Resources>
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" />
@@ -129,100 +137,5 @@
 		</ItemsControl>
 	</StackPanel>
 
-	<!--<ToolBarTray Orientation="{Binding Orientation, Mode=OneWay}" ClipToBounds="True">
 
-		<Control:TemplateBindingToolBar>
-			<Control:TemplateBindingToolBar.Resources>
-				<CollectionViewSource Source="{Binding LauncherItems, Mode=OneWay}" x:Key="LauncherItems"/>
-			</Control:TemplateBindingToolBar.Resources>
-
-			<Control:TemplateBindingToolBar.ItemsSource>
-				<CompositeCollection>
-					<StackPanel>
-						
-					--><!-- System.Windows.Data Error: 26 : ItemTemplate and ItemTemplateSelector are ignored for items already of the ItemsControl's container type; --><!--
-					<xctk:DropDownButton>
-						<xctk:DropDownButton.Content>
-							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource Image}"/>
-								<TextBlock Style="{StaticResource Text}" />
-							</StackPanel>
-						</xctk:DropDownButton.Content>
-						<xctk:DropDownButton.DropDownContent>
-							<StackPanel>
-								<Label Content="toolbar pos:" />
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition />
-										<ColumnDefinition />
-										<ColumnDefinition />
-									</Grid.ColumnDefinitions>
-									<Grid.RowDefinitions>
-										<RowDefinition />
-										<RowDefinition />
-										<RowDefinition />
-									</Grid.RowDefinitions>
-									<Button Grid.Row="0" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Top}">↑</Button>
-									<Button Grid.Row="1" Grid.Column="0" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Left}">←</Button>
-									<Button Grid.Row="1" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.None}">□</Button>
-									<Button Grid.Row="1" Grid.Column="2" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Right}">→</Button>
-									<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}">↓</Button>
-								</Grid>
-								<Separator />
-								<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource _b}" />
-								<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource _b}" />
-								<Separator />
-							</StackPanel>
-						</xctk:DropDownButton.DropDownContent>
-					</xctk:DropDownButton>
-					</StackPanel>
-					
-					<CollectionContainer Collection="{Binding Source={StaticResource LauncherItems}}" />
-				</CompositeCollection>
-			</Control:TemplateBindingToolBar.ItemsSource>
-			<Control:TemplateBindingToolBar.ItemTemplate>
-				<DataTemplate DataType="{x:Type StackPanel}">
-				--><!--<DataTemplate>--><!--
-					<StackPanel Orientation="Vertical">
-
-						--><!--ファイル--><!--
-						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}">
-							<xctk:SplitButton.Content>
-								<StackPanel Orientation="Horizontal">
-									<Image Style="{StaticResource Image}"/>
-									<TextBlock Style="{StaticResource Text}" />
-								</StackPanel>
-							</xctk:SplitButton.Content>
-							<xctk:SplitButton.DropDownContent>
-								<StackPanel>
-									<MenuItem Header="execute"  Style="{StaticResource _b}" />
-									<MenuItem Header="execute-ex"  Style="{StaticResource _b}" />
-									<Separator/>
-									<MenuItem Header="file"  Style="{StaticResource _b}" />
-									<MenuItem Header="path"  Style="{StaticResource _b}" />
-								</StackPanel>
-							</xctk:SplitButton.DropDownContent>
-						</xctk:SplitButton>
-
-						--><!--ディレクトリ--><!--
-						<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}">
-							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource Image}"/>
-								<TextBlock Style="{StaticResource Text}" />
-							</StackPanel>
-						</xctk:DropDownButton>
-
-						--><!--コマンド--><!--
-						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}">
-							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource Image}"/>
-								<TextBlock Style="{StaticResource Text}" />
-							</StackPanel>
-						</xctk:SplitButton>
-					</StackPanel>
-				</DataTemplate>
-			</Control:TemplateBindingToolBar.ItemTemplate>
-		</Control:TemplateBindingToolBar>
-
-	</ToolBarTray>-->
 </W:ViewModelCommonDataWindow>
