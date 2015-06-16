@@ -188,7 +188,22 @@
 
 		public Orientation Orientation
 		{
-			get { return DockType == DockType.Left ? Orientation.Horizontal : System.Windows.Controls.Orientation.Vertical; }
+			get
+			{
+				switch (DockType) {
+					case DockType.Left:
+					case DockType.Right:
+						return Orientation.Vertical;
+
+					case DockType.Top:
+					case DockType.Bottom:
+					case DockType.None:
+						return Orientation.Horizontal;
+
+					default:
+						throw new NotImplementedException();
+				}
+			}
 		}
 
 		public ObservableCollection<LauncherGroupItemModel> GroupItems { get { return new ObservableCollection<LauncherGroupItemModel>( Model.GroupItems.Items); } }
