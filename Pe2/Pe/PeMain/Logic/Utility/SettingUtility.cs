@@ -71,6 +71,15 @@
 		public static void InitializeMainSetting(MainSettingModel setting, ILogger logger)
 		{
 			CheckUtility.EnforceNotNull(setting);
+
+			foreach(var toolbar in setting.Toolbar.Items) {
+				if(toolbar.FloatToolbarArea.WidthButtonCount <= 0) {
+					toolbar.FloatToolbarArea.WidthButtonCount = 1;
+				}
+				if(toolbar.FloatToolbarArea.HeightButtonCount <= 0) {
+					toolbar.FloatToolbarArea.HeightButtonCount = 1;
+				}
+			}
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, ILogger logger)
