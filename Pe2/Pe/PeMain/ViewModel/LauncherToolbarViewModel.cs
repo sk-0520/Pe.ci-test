@@ -143,6 +143,7 @@
 					OnPropertyChanged("CaptionVisibility");
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
+					OnPropertyChanged("CaptionCursor");
 				}
 			}
 		}
@@ -202,6 +203,20 @@
 		public Size IconSize { get; set; }
 		public Size ButtonSize { get; set; }
 		public double MenuWidth { get; set; }
+
+		public bool NowFloatWindow { get { return DockType == DockType.None; } }
+		public bool CanWindowDrag { get { return NowFloatWindow; } }
+		public Cursor CaptionCursor
+		{
+			get
+			{
+				if (NowFloatWindow) {
+					return Cursors.ScrollAll;
+				} else {
+					return Cursors.Arrow;
+				}
+			}
+		}
 
 		public Visibility CaptionVisibility
 		{
@@ -395,6 +410,33 @@
 			var captionSize = GetCaptionSize(orientation);
 			return (int)((viewHeight - captionSize.Height) / ButtonSize.Height);
 		}
+
+		#endregion
+
+		#region HavingViewSingleModelWrapperViewModelBase
+
+		//protected override void InitializeView()
+		//{
+		//	base.InitializeView();
+
+		//	View.MouseDown += View_MouseDown;
+		//}
+
+		//protected override void UninitializeView()
+		//{
+		//	View.MouseDown -= View_MouseDown;
+			
+		//	base.UninitializeView();
+		//}
+
+		//void View_MouseDown(object sender, MouseButtonEventArgs e)
+		//{
+		//	if (DockType == DockType.None) {
+		//		if (e.LeftButton == MouseButtonState.Pressed) {
+		//			View.DragMove();
+		//		}
+		//	}
+		//}
 
 		#endregion
 

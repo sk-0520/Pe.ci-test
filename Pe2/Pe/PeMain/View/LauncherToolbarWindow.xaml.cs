@@ -135,5 +135,14 @@
 		}
 
 		#endregion
+
+		private void Caption_MouseLeftButton(object sender, MouseButtonEventArgs e)
+		{
+			if (e.LeftButton == MouseButtonState.Pressed) {
+				if (ViewModel.CanWindowDrag) {
+					DragMove();
+				}
+			}
+		}
 	}
 }
