@@ -132,7 +132,14 @@
 		public DockType DockType 
 		{
 			get { return Model.Toolbar.DockType; }
-			set { Model.Toolbar.DockType = value; } 
+			set 
+			{
+				if(Model.Toolbar.DockType != value) {
+					Model.Toolbar.DockType = value; 
+					OnPropertyChanged();
+					OnPropertyChanged("Orientation");
+				}
+			}
 		}
 		/// <summary>
 		/// 自動的に隠す。
@@ -298,7 +305,7 @@
 
 		#endregion
 
-		#region functino
+		#region function
 
 		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
 		{
