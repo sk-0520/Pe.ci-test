@@ -32,16 +32,18 @@
 
 		LauncherGroupItemModel _selectedGroup = null;
 		ObservableCollection<LauncherViewModel> _launcherItems = null;
+		double _captionSize;
 
 		#endregion
 
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
 			: base(model, view)
 		{
-			BarSize = new Size(80, 80);
 			MenuWidth = GetMenuWidth();
 			ButtonSize = CalcButtonSize();
 			IconSize = CalcIconSize();
+			this._captionSize = 10;
+			BarSize = ButtonSize;
 		}
 
 		#region property
@@ -96,22 +98,22 @@
 		}
 		public double FloatWidth
 		{
-			get { return CalcViewWidth(DockType); }
+			get { return CalcViewWidth(DockType, Orientation); }
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalcButtonWidthCount(value, DockType);
+					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalcButtonWidthCount(value, DockType, Orientation);
 					OnPropertyChanged();
 				}
 			}
 		}
 		public double FloatHeight
 		{
-			get { return CalcViewHeight(DockType); }
+			get { return CalcViewHeight(DockType, Orientation); }
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalcButtonHeightCount(value, DockType);
+					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalcButtonHeightCount(value, DockType, Orientation);
 					OnPropertyChanged();
 				}
 			}
@@ -138,6 +140,9 @@
 					Model.Toolbar.DockType = value; 
 					OnPropertyChanged();
 					OnPropertyChanged("Orientation");
+					OnPropertyChanged("CaptionVisibility");
+					OnPropertyChanged("CaptionWidth");
+					OnPropertyChanged("CaptionHeight");
 				}
 			}
 		}
@@ -197,6 +202,42 @@
 		public Size IconSize { get; set; }
 		public Size ButtonSize { get; set; }
 		public double MenuWidth { get; set; }
+
+		public Visibility CaptionVisibility
+		{
+			get { return Visibility.Visible; }
+		}
+		public double CaptionWidth
+		{
+			get 
+			{
+				if (Orientation == Orientation.Vertical) {
+					return this._captionSize;
+				} else {
+					return HasView ? View.Width : ButtonSize.Width;
+				}
+			}
+		}
+		public double CaptionHeight
+		{
+			get
+			{
+				if (Orientation == Orientation.Horizontal) {
+					return this._captionSize;
+				} else {
+					return HasView ? View.Height: ButtonSize.Height;
+				}
+			}
+		}
+
+		Size GetCaptionSize(Orientation orientation)
+		{
+			if (orientation == Orientation.Horizontal) {
+				return new Size(this._captionSize, 0);
+			} else {
+				return new Size(0, this._captionSize);
+			}
+		}
 
 		public Orientation Orientation
 		{
@@ -334,21 +375,25 @@
 			return new Size(40 + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth: 0), 40);
 		}
 
-		double CalcViewWidth(DockType dockType)
+		double CalcViewWidth(DockType dockType, Orientation orientation)
 		{
-			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width;
+			var captionSize = GetCaptionSize(orientation);
+			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width + captionSize.Width;
 		}
-		int CalcButtonWidthCount(double viewWidth, DockType dockType)
+		int CalcButtonWidthCount(double viewWidth, DockType dockType, Orientation orientation)
 		{
-			return (int)(viewWidth / ButtonSize.Width);
+			var captionSize = GetCaptionSize(orientation);
+			return (int)((viewWidth - captionSize.Width) / ButtonSize.Width);
 		}
-		double CalcViewHeight(DockType dockType)
+		double CalcViewHeight(DockType dockType, Orientation orientation)
 		{
-			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height;
+			var captionSize = GetCaptionSize(orientation);
+			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height + captionSize.Height;
 		}
-		int CalcButtonHeightCount(double viewHeight, DockType dockType)
+		int CalcButtonHeightCount(double viewHeight, DockType dockType, Orientation orientation)
 		{
-			return (int)(viewHeight / ButtonSize.Height);
+			var captionSize = GetCaptionSize(orientation);
+			return (int)((viewHeight - captionSize.Height) / ButtonSize.Height);
 		}
 
 		#endregion
