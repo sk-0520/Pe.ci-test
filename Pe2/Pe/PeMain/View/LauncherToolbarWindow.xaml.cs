@@ -33,6 +33,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.View.Parts;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using System.Windows.Interop;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -101,6 +102,8 @@
 		{
 			base.OnLoaded(sender, e);
 			Appbar = new ApplicationDesktopToolbar(ViewModel, this);
+
+			SetStyle();
 		}
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -131,6 +134,33 @@
 		{
 			if (Appbar != null) {
 				Appbar.Docking(dockType);
+			}
+		}
+
+		#endregion
+
+		#region function
+
+		void SetStyle()
+		{
+			bool aeroSupport;
+			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
+			if(aeroSupport) {
+				var blurHehind = new DWM_BLURBEHIND();
+				blurHehind.fEnable = true;
+				blurHehind.hRgnBlur = IntPtr.Zero;
+				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
+				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+				// 設定色を取得
+				this.Background = Brushes.Transparent;
+				HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
+				var margins = new MARGINS() {
+					leftWidth = 0,
+					rightWidth = 0,
+					topHeight = 0,
+					bottomHeight = 0,
+				};
+				NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
 			}
 		}
 
