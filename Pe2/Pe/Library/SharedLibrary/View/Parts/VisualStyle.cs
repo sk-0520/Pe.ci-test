@@ -138,14 +138,14 @@
 					blurHehind.hRgnBlur = IntPtr.Zero;
 					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
 					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-					View.Background = Brushes.Transparent;
-					HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
 					var margins = new MARGINS() {
-						leftWidth = 0,
-						rightWidth = 0,
-						topHeight = 0,
-						bottomHeight = 0,
+						leftWidth = -1,
+						rightWidth = -1,
+						topHeight = -1,
+						bottomHeight = -1,
 					};
+					View.Background = new SolidColorBrush(Color.FromArgb(1, 255, 255, 255));
+					HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
 					NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
 				}
 				UsingAeroGlass = true;
