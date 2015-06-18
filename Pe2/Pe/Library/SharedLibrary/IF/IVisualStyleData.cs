@@ -5,8 +5,9 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
 
-	public interface IVisualStyleData
+	public interface IVisualStyleData : IWindowsViewExtendRestrictionViewModelMarker
 	{
 		bool EnabledVisualStyle { get; set; }
 	}

@@ -4,9 +4,10 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public interface IApplicationDesktopToolbarData
+	public interface IApplicationDesktopToolbarData : IWindowsViewExtendRestrictionViewModelMarker
 	{
 		uint CallbackMessage { get; set; }
 		/// <summary>
