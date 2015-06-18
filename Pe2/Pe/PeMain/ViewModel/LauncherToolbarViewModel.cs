@@ -25,6 +25,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
 	{
@@ -340,13 +341,7 @@
 		public string ToolbarText { get { return SelectedGroup.Name; } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
 
-		public string ScreenName
-		{
-			get
-			{
-				return DockScreen.DeviceName;
-			}
-		}
+		public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
 		public ImageSource ScreenPosition
 		{
 			get
