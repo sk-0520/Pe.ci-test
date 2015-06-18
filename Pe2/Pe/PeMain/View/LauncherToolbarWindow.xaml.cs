@@ -43,7 +43,6 @@
 		#region property
 
 		bool _useVisualStyle = false;
-		Color _visualColor;
 		
 		#endregion
 
@@ -122,8 +121,17 @@
 				}
 			}
 			if (this._useVisualStyle) {
-				if (msg == (int)WM.WM_DWMCOMPOSITIONCHANGED) {
-					SetStyleColor();
+				switch(msg) {
+					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+						SetStyle();
+						break;
+					
+					case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
+						SetStyle();
+						break;
+
+					default:
+						break;
 				}
 			}
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
@@ -158,43 +166,41 @@
 			bool aeroSupport;
 			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
 			if(aeroSupport) {
-				this._useVisualStyle = true;
+				if (!this._useVisualStyle) {
+					this._useVisualStyle = true;
 
-				// Aero Glass
-				var blurHehind = new DWM_BLURBEHIND();
-				blurHehind.fEnable = true;
-				blurHehind.hRgnBlur = IntPtr.Zero;
-				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
-				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-				this.Background = Brushes.Transparent;
-				HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
-				var margins = new MARGINS() {
-					leftWidth = 0,
-					rightWidth = 0,
-					topHeight = 0,
-					bottomHeight = 0,
-				};
-				NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
+					// Aero Glass
+					var blurHehind = new DWM_BLURBEHIND();
+					blurHehind.fEnable = true;
+					blurHehind.hRgnBlur = IntPtr.Zero;
+					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
+					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+					this.Background = Brushes.Transparent;
+					HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
+					var margins = new MARGINS() {
+						leftWidth = 0,
+						rightWidth = 0,
+						topHeight = 0,
+						bottomHeight = 0,
+					};
+					NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
+				}
+
 				// 色を取得
-				SetStyleColor();
+				uint rawColor;
+				bool blend;
+				NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
+				//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
+				var a = (byte)((rawColor & 0xff000000) >> 24);
+				var r = (byte)((rawColor & 0x00ff0000) >> 16);
+				var g = (byte)((rawColor & 0x0000ff00) >> 8);
+				var b = (byte)((rawColor & 0x000000ff) >> 0);
+				var visualColor = Color.FromArgb(a, r, g, b);
+				Background = new SolidColorBrush(visualColor);
 			} else {
 				this._useVisualStyle = false;
+				Background = SystemColors.WindowFrameBrush;
 			}
-		}
-
-		void SetStyleColor()
-		{
-			uint rawColor;
-			bool blend;
-			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
-			//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
-			var a = (byte)((rawColor & 0xff000000) >> 24);
-			var r = (byte)((rawColor & 0x00ff0000) >> 16);
-			var g = (byte)((rawColor & 0x0000ff00) >> 8);
-			var b = (byte)((rawColor & 0x000000ff) >> 0);
-			this._visualColor = Color.FromArgb(a, r, g, b);
-
-			Background = new SolidColorBrush(this._visualColor);
 		}
 
 		#endregion
