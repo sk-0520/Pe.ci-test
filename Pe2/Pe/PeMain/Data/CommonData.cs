@@ -1,16 +1,17 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Setting;
-	using ContentTypeTextNet.Pe.PeMain.Logic;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Setting;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public sealed class CommonData: DisposeFinalizeModelBase
 	{
@@ -27,6 +28,7 @@
 		public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
 		public AppLanguageManager Language { get; set; }
 		public ILogger Logger { get; set; }
+		public IAppSender AppSender { get; set; }
 
 		#endregion
 

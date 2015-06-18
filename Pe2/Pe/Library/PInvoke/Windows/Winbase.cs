@@ -105,5 +105,8 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		[SuppressUnmanagedCodeSecurity]
 		public static extern uint SizeofResource(IntPtr hModule, IntPtr hResInfo);
 
+		[DllImport("kernel32.dll", SetLastError = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern void SetLastError(uint dwErrCode);
 	}
 }

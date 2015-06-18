@@ -16,19 +16,21 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
-using System.Windows.Media;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public sealed class MainWorkerViewModel: ViewModelBase, IDisposable
+	public sealed class MainWorkerViewModel : ViewModelBase, IDisposable, IAppSender
 	{
 		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
 		{
 			CommonData = new CommonData() {
 				Logger = logger,
 				VariableConstants = variableConstants,
+				AppSender = this,
 			};
 		}
 
@@ -40,6 +42,8 @@ using System.Windows.Media;
 		public bool Pause { get; set; }
 
 		public LoggingViewModel Logging { get; set; }
+
+		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
 
 		public ImageSource ApplicationIcon
@@ -128,6 +132,31 @@ using System.Windows.Media;
 
 		#endregion
 
+		#region IAppSender
+
+		public void SendWindowAppend(Window window)
+		{
+			RecvWindowAppend(window);
+		}
+
+		public void SendDeviceChanged(ChangedDevice changedDevice)
+		{
+			RecvDeviceChanged(changedDevice);
+		}
+
+		#region IAppSender-Implement
+
+		void RecvWindowAppend(Window window)
+		{ }
+
+		void RecvDeviceChanged(ChangedDevice changedDevice)
+		{ }
+
+		#endregion
+
+		#endregion
+
+
 		#region function
 
 		void LoadSetting()
@@ -159,6 +188,8 @@ using System.Windows.Media;
 				return false;
 			}
 			InitializeSetting();
+
+			CreateMessage();
 
 			CreateLogger();
 
@@ -198,6 +229,16 @@ using System.Windows.Media;
 			SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.Logger);
 			SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.Logger);
 			SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.Language, CommonData.Logger);
+		}
+
+		/// <summary>
+		/// メッセージウィンドウ作成
+		/// </summary>
+		void CreateMessage()
+		{
+			MessageWindow = new MessageWindow();
+			MessageWindow.SetCommonData(CommonData);
+			MessageWindow.Show();
 		}
 
 		/// <summary>
