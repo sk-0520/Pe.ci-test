@@ -50,5 +50,10 @@
 
 			return result;
 		}
+
+		public static void Reload(IntPtr handle)
+		{
+			NativeMethods.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, SWP.SWP_FRAMECHANGED | SWP.SWP_NOSIZE | SWP.SWP_NOMOVE | SWP.SWP_NOZORDER | SWP.SWP_NOOWNERZORDER | SWP.SWP_NOACTIVATE);
+		}
 	}
 }

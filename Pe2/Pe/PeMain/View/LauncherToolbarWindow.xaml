@@ -14,8 +14,8 @@
 	Width="{Binding FloatWidth, Mode=TwoWay}"
 	Left="{Binding FloatLeft, Mode=TwoWay}" 
 	Top="{Binding FloatTop, Mode=TwoWay}"
-	WindowStyle="None"
 	ShowInTaskbar="False" 
+	WindowStyle="None"
 	ResizeMode="NoResize"
 	ScrollViewer.VerticalScrollBarVisibility="Disabled"
 	WindowStartupLocation="Manual"
@@ -29,6 +29,7 @@
 	mc:Ignorable="d" 
 	d:DesignWidth="300" 
 	d:DesignHeight="200"
+	AllowsTransparency="True"
 >
 	<W:CommonDataWindow.Resources>
 		<Style x:Key="Image" TargetType="{x:Type Image}">
@@ -65,8 +66,19 @@
 		<!--<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />-->
 	</W:CommonDataWindow.Resources>
 
-	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}">
-		
+	<!--<WindowChrome.WindowChrome>
+		<WindowChrome
+			CaptionHeight="0"
+			GlassFrameThickness="0,0,0,-1"
+			NonClientFrameEdges="Bottom"
+			ResizeBorderThickness="0"
+			UseAeroCaptionButtons="False"
+		/>
+	</WindowChrome.WindowChrome>-->
+
+
+	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" >
+
 		<Rectangle 
 			Width="{Binding CaptionHeight, Mode=OneWay}" 
 			Height="{Binding CaptionWidth, Mode=OneWay}" 
@@ -75,7 +87,7 @@
 			Cursor="{Binding CaptionCursor, Mode=OneWay}"
 			MouseLeftButtonDown="Caption_MouseLeftButton"
 		/>
-		
+
 		<xctk:DropDownButton Style="{StaticResource LauncherDropDown}">
 			<xctk:DropDownButton.Content>
 				<StackPanel>

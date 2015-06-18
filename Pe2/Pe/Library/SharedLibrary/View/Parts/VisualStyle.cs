@@ -42,6 +42,11 @@
 					SetWindowColor();
 					break;
 
+				case (int)WM.WM_NCHITTEST:
+					IntPtr result = new IntPtr();
+					handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
+					break;
+
 				default:
 					break;
 			}
@@ -52,6 +57,19 @@
 		#endregion
 
 		#region function
+
+		static bool SupportAeroGlass()
+		{
+			var osVersion = Environment.OSVersion.Version;
+			if(osVersion.Major == 6) {
+				// vista, 7
+				if(osVersion.Minor == 0 || osVersion.Minor == 1) {
+					return true;
+				}
+			}
+
+			return false;
+		}
 
 		public void SetStyle()
 		{
@@ -64,17 +82,15 @@
 			bool aeroSupport;
 			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
 			RestrictionViewModel.EnabledVisualStyle = aeroSupport;
-			if (RestrictionViewModel.EnabledVisualStyle) {
-				RestrictionViewModel.EnabledVisualStyle = true;
-
+			if (RestrictionViewModel.EnabledVisualStyle && SupportAeroGlass()) {
 				// Aero Glass
 				var blurHehind = new DWM_BLURBEHIND();
 				blurHehind.fEnable = true;
 				blurHehind.hRgnBlur = IntPtr.Zero;
 				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
 				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-				View.Background = Brushes.Transparent;
-				HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
+				//View.Background = Brushes.Transparent;
+				HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
 				var margins = new MARGINS() {
 					leftWidth = 0,
 					rightWidth = 0,
@@ -97,8 +113,11 @@
 				var r = (byte)((rawColor & 0x00ff0000) >> 16);
 				var g = (byte)((rawColor & 0x0000ff00) >> 8);
 				var b = (byte)((rawColor & 0x000000ff) >> 0);
-				var visualColor = Color.FromArgb(a, r, g, b);
-				View.Background = new SolidColorBrush(visualColor);
+
+				RestrictionViewModel.VisualAlphaColor = Color.FromArgb(a, r, g, b);
+				RestrictionViewModel.VisualPlainColor = Color.FromRgb(r, g, b);
+
+				View.Background = new SolidColorBrush(RestrictionViewModel.VisualAlphaColor);
 			} else {
 				View.Background = StockBackground;
 			}

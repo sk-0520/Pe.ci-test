@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Interop;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
@@ -30,7 +31,9 @@
 			View = view;
 			RestrictionViewModel = restrictionViewModel;
 
+
 			Handle = HandleUtility.GetWindowHandle(View);
+			HwndSource = HwndSource.FromHwnd(Handle);
 		}
 
 		#region property
@@ -38,6 +41,7 @@
 		protected TViewModel RestrictionViewModel { get; private set; }
 		protected Window View { get; private set; }
 		protected IntPtr Handle { get; private set; }
+		protected HwndSource HwndSource { get; private set; }
 
 		#endregion
 
@@ -46,6 +50,10 @@
 		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
+				if (HwndSource != null) {
+					HwndSource.Dispose();
+					HwndSource = null;
+				}
 				Handle = IntPtr.Zero;
 				RestrictionViewModel = null;
 				View = null;

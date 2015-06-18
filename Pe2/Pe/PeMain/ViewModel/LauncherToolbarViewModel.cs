@@ -75,6 +75,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		#endregion
 
+		#region float window
+
 		public double FloatLeft
 		{
 			get { return Model.Toolbar.FloatToolbarArea.Left; }
@@ -119,6 +121,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 				}
 			}
 		}
+
+		#endregion
 
 		#region IApplicationDesktopToolbarData
 
@@ -204,6 +208,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 		#region IVisualStyleData
 
 		public bool EnabledVisualStyle { get; set; }
+		public Color VisualPlainColor { get; set; }
+		public Color VisualAlphaColor { get; set; }
 
 		#endregion
 
@@ -353,6 +359,14 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			get
 			{
 				return null;
+			}
+		}
+
+		public Thickness  ResizeBorderThickness
+		{
+			get
+			{
+				return new Thickness(400, 0, 4, 0);
 			}
 		}
 
