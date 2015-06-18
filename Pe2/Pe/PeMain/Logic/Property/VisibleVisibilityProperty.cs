@@ -20,6 +20,7 @@
 		{
 			if (model.Visible != value) {
 				model.Visible = value;
+				onPropertyChanged(propertyName);
 				onPropertyChanged("Visibility");
 			}
 		}

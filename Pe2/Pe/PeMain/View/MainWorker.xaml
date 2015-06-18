@@ -12,7 +12,7 @@
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible}" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
 		<Separator />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/log" Header="system-env" />
 		<Separator />
