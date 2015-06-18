@@ -98,6 +98,7 @@
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
+    <Compile Include="IF\IVisualStyleData.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />
     <Compile Include="IF\IHavingViewModel.cs" />
@@ -155,6 +156,8 @@
     <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
+    <Compile Include="View\Parts\VisualStyle.cs" />
+    <Compile Include="View\Parts\WindowsViewExtendBase.cs" />
     <Compile Include="View\Window\OnLoadedWindowBase.cs" />
     <Compile Include="View\Window\UserClosableWindowBase.cs" />
     <Compile Include="View\Window\WindowsAPIWindowBase.cs" />

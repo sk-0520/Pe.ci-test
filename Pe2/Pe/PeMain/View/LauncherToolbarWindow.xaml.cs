@@ -40,12 +40,6 @@
 	/// </summary>
 	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar
 	{
-		#region property
-
-		bool _useVisualStyle = false;
-		
-		#endregion
-
 		public LauncherToolbarWindow()
 		{
 			InitializeComponent();
@@ -65,6 +59,7 @@
 		ScreenModel Screen { get; set; }
 
 		ApplicationDesktopToolbar Appbar { get; set; }
+		VisualStyle VisualStyle { get; set; }
 
 		#endregion
 
@@ -112,8 +107,8 @@
 
 			base.OnLoaded(sender, e);
 
-			Appbar = new ApplicationDesktopToolbar(ViewModel, this);
-			SetStyle();
+			Appbar = new ApplicationDesktopToolbar(this, ViewModel);
+			VisualStyle = new VisualStyle(this, ViewModel);
 		}
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -124,20 +119,13 @@
 					return IntPtr.Zero;
 				}
 			}
-			if (this._useVisualStyle) {
-				switch(msg) {
-					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
-						SetStyle();
-						break;
-					
-					case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
-						SetStyle();
-						break;
-
-					default:
-						break;
+			if (VisualStyle != null) {
+				VisualStyle.WndProc(hwnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return IntPtr.Zero;
 				}
 			}
+
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
 
@@ -165,47 +153,6 @@
 
 		#region function
 
-		void SetStyle()
-		{
-			bool aeroSupport;
-			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
-			if(aeroSupport) {
-				if (!this._useVisualStyle) {
-					this._useVisualStyle = true;
-
-					// Aero Glass
-					var blurHehind = new DWM_BLURBEHIND();
-					blurHehind.fEnable = true;
-					blurHehind.hRgnBlur = IntPtr.Zero;
-					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
-					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-					this.Background = Brushes.Transparent;
-					HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
-					var margins = new MARGINS() {
-						leftWidth = 0,
-						rightWidth = 0,
-						topHeight = 0,
-						bottomHeight = 0,
-					};
-					NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
-				}
-
-				// 色を取得
-				uint rawColor;
-				bool blend;
-				NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
-				//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
-				var a = (byte)((rawColor & 0xff000000) >> 24);
-				var r = (byte)((rawColor & 0x00ff0000) >> 16);
-				var g = (byte)((rawColor & 0x0000ff00) >> 8);
-				var b = (byte)((rawColor & 0x000000ff) >> 0);
-				var visualColor = Color.FromArgb(a, r, g, b);
-				Background = new SolidColorBrush(visualColor);
-			} else {
-				this._useVisualStyle = false;
-				Background = SystemColors.WindowFrameBrush;
-			}
-		}
 
 		#endregion
 

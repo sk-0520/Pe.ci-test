@@ -27,7 +27,7 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData
 	{
 		#region variable
 
@@ -198,6 +198,12 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			var podRect = PodStructUtility.Convert(deviceRect);
 			NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
 		}
+
+		#endregion
+
+		#region IVisualStyleData
+
+		public bool EnabledVisualStyle { get; set; }
 
 		#endregion
 

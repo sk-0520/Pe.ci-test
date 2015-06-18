@@ -18,7 +18,7 @@
 	/// <summary>
 	/// Windowにアプリケーションデスクトップツールバー機能を付与する。
 	/// </summary>
-	public class ApplicationDesktopToolbar: DisposeFinalizeBase
+	public class ApplicationDesktopToolbar : WindowsViewExtendBase<IApplicationDesktopToolbarData>
 	{
 		#region event
 
@@ -43,34 +43,27 @@
 
 		#endregion variable
 
-
-		public ApplicationDesktopToolbar(IApplicationDesktopToolbarData viewModel, System.Windows.Window view)
-			: base()
+		public ApplicationDesktopToolbar(Window view, IApplicationDesktopToolbarData restrictionViewModel)
+			: base(view, restrictionViewModel)
 		{
-			CheckUtility.EnforceNotNull(view);
-			CheckUtility.EnforceNotNull(viewModel);
-			CheckUtility.Enforce(view.IsLoaded);
+			//CheckUtility.EnforceNotNull(view);
+			//CheckUtility.EnforceNotNull(viewModel);
+			//CheckUtility.Enforce(view.IsLoaded);
 
-			ViewModel = viewModel;
-			View = view;
+			//ViewModel = viewModel;
+			//View = view;
 
-			var windowHandle = View as IWindowsHandle;
-			if(windowHandle != null) {
-				Handle = windowHandle.Handle;
-			} else {
-				var helper = new WindowInteropHelper(View);
-				Handle = helper.Handle;
-			}
+			//Handle = HandleUtility.GetWindowHandle(View);
 
 			//CheckUtility.EnforceNotNull(Handle);
-			Docking(ViewModel.DockType);
+			Docking(RestrictionViewModel.DockType);
 		}
 
 		#region property
 
-		protected IApplicationDesktopToolbarData ViewModel { get; private set; }
-		protected System.Windows.Window View { get; private set; }
-		protected IntPtr Handle { get; private set; }
+		//protected IApplicationDesktopToolbarData ViewModel { get; private set; }
+		//protected System.Windows.Window View { get; private set; }
+		//protected IntPtr Handle { get; private set; }
 
 		protected virtual string MessageString { get { return "appbar"; } }
 
@@ -85,21 +78,17 @@
 					this._eventLoaded.Dispose();
 					this._eventLoaded = null;
 				}
-
-				Handle = IntPtr.Zero;
-				View = null;
-				ViewModel = null;
 			}
 			base.Dispose(disposing);
 		}
 
 		#endregion
 
-		#region function
+		#region WindowsViewExtendBase
 
-		public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if(ViewModel.IsDocking) {
+			if (RestrictionViewModel.IsDocking) {
 				switch((int)msg) {
 					case (int)WM.WM_DESTROY: 
 						{
@@ -130,7 +119,7 @@
 						break;
 
 					default:
-						if(ViewModel.CallbackMessage != 0 && msg == ViewModel.CallbackMessage) {
+						if (RestrictionViewModel.CallbackMessage != 0 && msg == RestrictionViewModel.CallbackMessage) {
 							switch(wParam.ToInt32()) {
 								case (int)ABN.ABN_FULLSCREENAPP:
 									// フルスクリーン
@@ -158,13 +147,17 @@
 				}
 			}
 
-			return IntPtr.Zero;
+			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
+
+		#endregion
+
+		#region function
 
 		protected void OnAppbarFullScreen(bool fullScreen)
 		{
 			var e = new AppbarFullScreenEventArgs(fullScreen);
-			ViewModel.NowFullScreen = e.FullScreen;
+			RestrictionViewModel.NowFullScreen = e.FullScreen;
 			AppbarFullScreen(View, e);
 		}
 
@@ -185,14 +178,14 @@
 		void OnResizeEnd()
 		{
 			// AppBar のサイズを更新。
-			switch(ViewModel.DockType) {
+			switch (RestrictionViewModel.DockType) {
 				case DockType.Left:
 				case DockType.Right:
-					ViewModel.BarSize = new Size(View.Width, ViewModel.BarSize.Height);
+					RestrictionViewModel.BarSize = new Size(View.Width, RestrictionViewModel.BarSize.Height);
 					break;
 				case DockType.Top:
 				case DockType.Bottom:
-					ViewModel.BarSize = new Size(ViewModel.BarSize.Width, View.Height);
+					RestrictionViewModel.BarSize = new Size(RestrictionViewModel.BarSize.Width, View.Height);
 					break;
 				default:
 					throw new NotImplementedException();
@@ -203,22 +196,22 @@
 
 		bool RegistAppbar()
 		{
-			ViewModel.CallbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
+			RestrictionViewModel.CallbackMessage = NativeMethods.RegisterWindowMessage(MessageString);
 
 			var appBar = new APPBARDATA(Handle);
-			appBar.uCallbackMessage = ViewModel.CallbackMessage;
+			appBar.uCallbackMessage = RestrictionViewModel.CallbackMessage;
 
 			var registResult = NativeMethods.SHAppBarMessage(ABM.ABM_NEW, ref appBar);
-			
-			return ViewModel.IsDocking = registResult.ToInt32() != 0;
+
+			return RestrictionViewModel.IsDocking = registResult.ToInt32() != 0;
 		}
 
 		public bool UnresistAppbar()
 		{
 			var appBar = new APPBARDATA(Handle);
 			var unregistResult = NativeMethods.SHAppBarMessage(ABM.ABM_REMOVE, ref appBar);
-			ViewModel.CallbackMessage = 0;
-			ViewModel.IsDocking = false;
+			RestrictionViewModel.CallbackMessage = 0;
+			RestrictionViewModel.IsDocking = false;
 			return unregistResult.ToInt32() != 0;
 		}
 
@@ -232,9 +225,9 @@
 		{
 			Debug.Assert(dockType != DockType.None);
 
-			var deviceDesktopArea = ViewModel.DockScreen.DeviceBounds;
+			var deviceDesktopArea = RestrictionViewModel.DockScreen.DeviceBounds;
 
-			var deviceBarSize = UIUtility.ToDevicePixel(View, ViewModel.BarSize);
+			var deviceBarSize = UIUtility.ToDevicePixel(View, RestrictionViewModel.BarSize);
 
 			double top, left, width, height;
 
@@ -269,7 +262,7 @@
 		/// <param name="appBar"></param>
 		void TuneSystemBarArea(ref APPBARDATA appBar)
 		{
-			var deviceBarSize = UIUtility.ToDevicePixel(View, ViewModel.BarSize);
+			var deviceBarSize = UIUtility.ToDevicePixel(View, RestrictionViewModel.BarSize);
 			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 
 			switch(appBar.uEdge) {
@@ -325,8 +318,8 @@
 				}
 			}
 
-			ViewModel.AutoHide = autoHideResult;
-			ViewModel.DockType = dockType;
+			RestrictionViewModel.AutoHide = autoHideResult;
+			RestrictionViewModel.DockType = dockType;
 
 			var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(View, deviceWindowBounds);
@@ -336,9 +329,9 @@
 			}
 
 			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
-			ViewModel.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
+			RestrictionViewModel.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
 
-			if(ViewModel.AutoHide) {
+			if (RestrictionViewModel.AutoHide) {
 				//WaitHidden();
 			}
 
@@ -350,13 +343,13 @@
 
 		void ResizeShowDeviceBarArea()
 		{
-			var dviceArea = ViewModel.ShowDeviceBarArea;
+			var dviceArea = RestrictionViewModel.ShowDeviceBarArea;
 			NativeMethods.MoveWindow(Handle, (int)dviceArea.X, (int)dviceArea.Y, (int)dviceArea.Width, (int)dviceArea.Height, true);
 		}
 
 		public void DockingFromProperty()
 		{
-			DockingFromParameter(ViewModel.DockType, ViewModel.AutoHide);
+			DockingFromParameter(RestrictionViewModel.DockType, RestrictionViewModel.AutoHide);
 		}
 
 		/// <summary>
@@ -372,8 +365,8 @@
 
 			// 登録済みであればいったん解除
 			var needResist = true;
-			if(ViewModel.IsDocking) {
-				if(ViewModel.DockType != dockType || ViewModel.AutoHide) {
+			if (RestrictionViewModel.IsDocking) {
+				if (RestrictionViewModel.DockType != dockType || RestrictionViewModel.AutoHide) {
 					UnresistAppbar();
 					needResist = true;
 				} else {
@@ -382,8 +375,8 @@
 			}
 
 			if(dockType == DockType.None) {
-				ViewModel.DockType = dockType;
-				ViewModel.ChangingWindowMode();
+				RestrictionViewModel.DockType = dockType;
+				RestrictionViewModel.ChangingWindowMode();
 				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
 				return;
 			}
@@ -393,7 +386,7 @@
 				RegistAppbar();
 			}
 
-			DockingFromParameter(dockType, ViewModel.AutoHide);
+			DockingFromParameter(dockType, RestrictionViewModel.AutoHide);
 		}
 
 		#endregion
