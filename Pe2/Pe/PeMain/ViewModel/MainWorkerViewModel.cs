@@ -44,8 +44,8 @@
 		LoggingWindow LoggingWindow { get; set; }
 		public LoggingViewModel Logging { get { return LoggingWindow.ViewModel; } }
 
-		List<LauncherToolbarWindow> LauncherWindowList { get; set; }
-		public IEnumerable<LauncherToolbarViewModel> LauncherToolbarWindow { get { return LauncherWindowList.Select(l => l.ViewModel); } }
+		List<LauncherToolbarWindow> LauncherToolbarWindowList { get; set; }
+		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
@@ -269,12 +269,12 @@
 		/// </summary>
 		void CreateToolbar()
 		{
-			LauncherWindowList = new List<LauncherToolbarWindow>();
+			LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
 
 			foreach (var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
 				var toolbar = new LauncherToolbarWindow(screen);
 				toolbar.SetCommonData(CommonData);
-				LauncherWindowList.Add(toolbar);
+				LauncherToolbarWindowList.Add(toolbar);
 			}
 		}
 

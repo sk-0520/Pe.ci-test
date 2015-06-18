@@ -340,6 +340,21 @@
 		public string ToolbarText { get { return SelectedGroup.Name; } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
 
+		public string ScreenName
+		{
+			get
+			{
+				return DockScreen.DeviceName;
+			}
+		}
+		public ImageSource ScreenPosition
+		{
+			get
+			{
+				return null;
+			}
+		}
+
 		#endregion
 
 		#region command
