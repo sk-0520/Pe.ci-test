@@ -146,6 +146,9 @@
 		{
 			if (Appbar != null) {
 				Appbar.Docking(dockType);
+				if(VisualStyle != null) {
+					VisualStyle.SetStyle();
+				}
 			}
 		}
 

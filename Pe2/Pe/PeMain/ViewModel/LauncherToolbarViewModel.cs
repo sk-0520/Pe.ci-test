@@ -200,7 +200,9 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			);
 			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
 			var podRect = PodStructUtility.Convert(deviceRect);
-			NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, true);
+			NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
+			View.InvalidateVisual();
+			//View.UpdateLayout()
 		}
 
 		#endregion

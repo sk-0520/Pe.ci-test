@@ -42,10 +42,14 @@
 					SetWindowColor();
 					break;
 
-				case (int)WM.WM_NCHITTEST:
-					IntPtr result = new IntPtr();
-					handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
-					break;
+				//case (int)WM.WM_NCHITTEST:
+				//	IntPtr result = new IntPtr();
+				//	handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
+				//	break;
+
+				//case (int)WM.WM_WINDOWPOSCHANGED:
+				//	SetStyle();
+				//	break;
 
 				default:
 					break;
@@ -73,15 +77,40 @@
 
 		public void SetStyle()
 		{
+			if(RestrictionViewModel.EnabledVisualStyle) {
+				var blurHehind = new DWM_BLURBEHIND();
+				blurHehind.fEnable = false;
+				//blurHehind.hRgnBlur = IntPtr.Zero;
+				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;// | DWM_BB.DWM_BB_BLURREGION;
+				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+				View.Background = StockBackground;
+				WindowsUtility.Reload(Handle);
+				//if(RestrictionViewModel.EnabledVisualStyle) {
+				//	var margin = new MARGINS();
+				//	margin.leftWidth = 0;
+				//	margin.rightWidth = 0;
+				//	margin.topHeight = 0;
+				//	margin.bottomHeight = 0;
+				//	NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margin); 
+
+				//	DWM_BLURBEHIND blurHehind = new DWM_BLURBEHIND();
+				//	blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;
+				//	blurHehind.fEnable = false;
+				
+				//	NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+				//}
+				return;
+			}
+			bool aeroSupport;
+			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
+			RestrictionViewModel.EnabledVisualStyle = aeroSupport;
+
 			SetWindowStyle();
 			SetWindowColor();
 		}
 
 		protected void SetWindowStyle()
 		{
-			bool aeroSupport;
-			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
-			RestrictionViewModel.EnabledVisualStyle = aeroSupport;
 			if (RestrictionViewModel.EnabledVisualStyle && SupportAeroGlass()) {
 				// Aero Glass
 				var blurHehind = new DWM_BLURBEHIND();
@@ -89,16 +118,17 @@
 				blurHehind.hRgnBlur = IntPtr.Zero;
 				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
 				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-				//View.Background = Brushes.Transparent;
+				View.Background = Brushes.Transparent;
 				HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
-				var margins = new MARGINS() {
-					leftWidth = 0,
-					rightWidth = 0,
-					topHeight = 0,
-					bottomHeight = 0,
-				};
-				NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
+				//var margins = new MARGINS() {
+				//	leftWidth = 0,
+				//	rightWidth = 0,
+				//	topHeight = 0,
+				//	bottomHeight = 0,
+				//};
+				//NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
 			}
+			WindowsUtility.Reload(Handle);
 		}
 
 		protected void SetWindowColor()
