@@ -136,17 +136,17 @@
 					var blurHehind = new DWM_BLURBEHIND();
 					blurHehind.fEnable = true;
 					blurHehind.hRgnBlur = IntPtr.Zero;
-					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
+					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;
 					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-					var margins = new MARGINS() {
-						leftWidth = -1,
-						rightWidth = -1,
-						topHeight = -1,
-						bottomHeight = -1,
-					};
-					View.Background = new SolidColorBrush(Color.FromArgb(1, 255, 255, 255));
+					//var margins = new MARGINS() {
+					//	leftWidth = -1,
+					//	rightWidth = -1,
+					//	topHeight = -1,
+					//	bottomHeight = -1,
+					//};
 					HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
-					NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
+					View.Background = new SolidColorBrush(Color.FromArgb(1, 255, 255, 255));
+					//NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
 				}
 				UsingAeroGlass = true;
 			}

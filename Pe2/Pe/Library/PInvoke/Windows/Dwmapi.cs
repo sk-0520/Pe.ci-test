@@ -58,7 +58,35 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		//	dwFlags |= DWM_BB.DWM_BB_BLURREGION;
 		//}
 	}
-	
+
+	public enum DWMWINDOWATTRIBUTE
+	{
+		DWMWA_NCRENDERING_ENABLED = 1,
+		DWMWA_NCRENDERING_POLICY,
+		DWMWA_TRANSITIONS_FORCEDISABLED,
+		DWMWA_ALLOW_NCPAINT,
+		DWMWA_CAPTION_BUTTON_BOUNDS,
+		DWMWA_NONCLIENT_RTL_LAYOUT,
+		DWMWA_FORCE_ICONIC_REPRESENTATION,
+		DWMWA_FLIP3D_POLICY,
+		DWMWA_EXTENDED_FRAME_BOUNDS,
+		DWMWA_HAS_ICONIC_BITMAP,
+		DWMWA_DISALLOW_PEEK,
+		DWMWA_EXCLUDED_FROM_PEEK,
+		DWMWA_CLOAK,
+		DWMWA_CLOAKED,
+		DWMWA_FREEZE_REPRESENTATION,
+		DWMWA_LAST
+	}
+
+	public enum DWMNCRENDERINGPOLICY
+	{
+		DWMNCRP_USEWINDOWSTYLE,
+		DWMNCRP_DISABLED,
+		DWMNCRP_ENABLED,
+		DWMNCRP_LAST
+	}
+
 	partial class NativeMethods
 	{
 		/// <summary>
@@ -90,5 +118,11 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		[DllImport("dwmapi.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool DwmDefWindowProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref IntPtr plResult);
+
+
+		[DllImport("dwmapi.dll", PreserveSig = true)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern int DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attr, ref DWMNCRENDERINGPOLICY attrValue, int attrSize);
+
 	}
 }
