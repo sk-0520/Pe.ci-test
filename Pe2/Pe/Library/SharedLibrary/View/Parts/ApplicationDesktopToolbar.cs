@@ -46,24 +46,10 @@
 		public ApplicationDesktopToolbar(Window view, IApplicationDesktopToolbarData restrictionViewModel)
 			: base(view, restrictionViewModel)
 		{
-			//CheckUtility.EnforceNotNull(view);
-			//CheckUtility.EnforceNotNull(viewModel);
-			//CheckUtility.Enforce(view.IsLoaded);
-
-			//ViewModel = viewModel;
-			//View = view;
-
-			//Handle = HandleUtility.GetWindowHandle(View);
-
-			//CheckUtility.EnforceNotNull(Handle);
 			Docking(RestrictionViewModel.DockType);
 		}
 
 		#region property
-
-		//protected IApplicationDesktopToolbarData ViewModel { get; private set; }
-		//protected System.Windows.Window View { get; private set; }
-		//protected IntPtr Handle { get; private set; }
 
 		protected virtual string MessageString { get { return "appbar"; } }
 
