@@ -106,9 +106,13 @@
 
 		protected override void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			base.OnLoaded(sender, e);
-			Appbar = new ApplicationDesktopToolbar(ViewModel, this);
+			int exStyle = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_EXSTYLE);
+			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
+			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
 
+			base.OnLoaded(sender, e);
+
+			Appbar = new ApplicationDesktopToolbar(ViewModel, this);
 			SetStyle();
 		}
 
