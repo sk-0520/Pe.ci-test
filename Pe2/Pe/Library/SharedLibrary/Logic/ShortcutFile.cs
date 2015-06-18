@@ -39,6 +39,7 @@
 		/// ショートカットを作成するためにオブジェクト生成。
 		/// </summary>
 		public ShortcutFile()
+			: base()
 		{
 			this._shellLink = CreateShellLink();
 		}
@@ -48,6 +49,7 @@
 		/// </summary>
 		/// <param name="path">読み込むショートカットファイルパス。</param>
 		public ShortcutFile(string path)
+			: base()
 		{
 			Load(path);
 		}

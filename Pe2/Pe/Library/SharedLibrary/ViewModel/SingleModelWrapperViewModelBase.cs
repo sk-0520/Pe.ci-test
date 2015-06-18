@@ -19,6 +19,7 @@
 		/// </summary>
 		/// <param name="model">取り込むモデル</param>
 		public SingleModelWrapperViewModelBase(TModel model)
+			: base()
 		{
 			Model = model;
 			InitializeModel();

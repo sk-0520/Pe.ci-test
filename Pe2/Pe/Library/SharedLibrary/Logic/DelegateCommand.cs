@@ -20,11 +20,11 @@
 		/// <summary>
 		/// コマンド。
 		/// </summary>
-		public Action<object> Command;
+		public Action<object> Command { get; set; }
 		/// <summary>
 		/// 実行可否。
 		/// </summary>
-		public Func<object, bool> CanExecute;
+		public Func<object, bool> CanExecute { get; set; }
 
 		public DelegateCommand()
 		{
