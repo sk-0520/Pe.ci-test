@@ -40,6 +40,13 @@
 	/// </summary>
 	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar
 	{
+		#region property
+
+		bool _useVisualStyle = false;
+		Color _visualColor;
+		
+		#endregion
+
 		public LauncherToolbarWindow()
 		{
 			InitializeComponent();
@@ -114,6 +121,11 @@
 					return IntPtr.Zero;
 				}
 			}
+			if (this._useVisualStyle) {
+				if (msg == (int)WM.WM_DWMCOMPOSITIONCHANGED) {
+					SetStyleColor();
+				}
+			}
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
 
@@ -146,12 +158,14 @@
 			bool aeroSupport;
 			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
 			if(aeroSupport) {
+				this._useVisualStyle = true;
+
+				// Aero Glass
 				var blurHehind = new DWM_BLURBEHIND();
 				blurHehind.fEnable = true;
 				blurHehind.hRgnBlur = IntPtr.Zero;
 				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
 				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-				// 設定色を取得
 				this.Background = Brushes.Transparent;
 				HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
 				var margins = new MARGINS() {
@@ -161,7 +175,26 @@
 					bottomHeight = 0,
 				};
 				NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
+				// 色を取得
+				SetStyleColor();
+			} else {
+				this._useVisualStyle = false;
 			}
+		}
+
+		void SetStyleColor()
+		{
+			uint rawColor;
+			bool blend;
+			NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
+			//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
+			var a = (byte)((rawColor & 0xff000000) >> 24);
+			var r = (byte)((rawColor & 0x00ff0000) >> 16);
+			var g = (byte)((rawColor & 0x0000ff00) >> 8);
+			var b = (byte)((rawColor & 0x000000ff) >> 0);
+			this._visualColor = Color.FromArgb(a, r, g, b);
+
+			Background = new SolidColorBrush(this._visualColor);
 		}
 
 		#endregion
