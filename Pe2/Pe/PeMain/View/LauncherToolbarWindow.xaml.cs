@@ -146,9 +146,11 @@
 		{
 			if (Appbar != null) {
 				Appbar.Docking(dockType);
-				if(VisualStyle != null) {
-					VisualStyle.SetStyle();
-				}
+				//if(VisualStyle != null) {
+				//	VisualStyle.UnsetStyle();
+				//	VisualStyle.SetStyle();
+				//}
+				//NativeMethods.UpdateWindow(Handle);
 			}
 		}
 

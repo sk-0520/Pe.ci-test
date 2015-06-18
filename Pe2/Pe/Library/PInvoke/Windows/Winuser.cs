@@ -2049,6 +2049,10 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		[DllImport("user32.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern bool UpdateWindow(IntPtr hWnd);
 	}
 
 

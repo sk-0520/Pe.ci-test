@@ -16,7 +16,7 @@
 	Top="{Binding FloatTop, Mode=TwoWay}"
 	ShowInTaskbar="False" 
 	WindowStyle="None"
-	ResizeMode="NoResize"
+	ResizeMode="CanResizeWithGrip"
 	ScrollViewer.VerticalScrollBarVisibility="Disabled"
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 

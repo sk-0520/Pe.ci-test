@@ -200,8 +200,9 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			);
 			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
 			var podRect = PodStructUtility.Convert(deviceRect);
-			NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
-			View.InvalidateVisual();
+			//NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
+			NativeMethods.SetWindowPos(View.Handle, IntPtr.Zero, podRect.Left, podRect.Top, podRect.Width, podRect.Height, SWP.SWP_NOSENDCHANGING | SWP.SWP_NOREDRAW);
+			//View.InvalidateVisual();
 			//View.UpdateLayout()
 		}
 
