@@ -212,7 +212,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			get
 			{
 				if (NowFloatWindow) {
-					return Cursors.ScrollAll;
+					return Cursors.SizeAll;
 				} else {
 					return Cursors.Arrow;
 				}
