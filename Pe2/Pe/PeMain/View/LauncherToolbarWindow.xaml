@@ -35,7 +35,7 @@
 	<W:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 		<C:LogicalOrMultiConverter x:Key="LogicalOrMultiConverter" />
-		
+
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
 			<Setter Property="Width" Value="{Binding DataContext.IconSize.Width, Mode=OneWay, ElementName=root}" />
@@ -197,6 +197,7 @@
 			MouseLeftButtonDown="Caption_MouseLeftButton"
 		/>
 
+		<!-- メインボタン -->
 		<xctk:DropDownButton Style="{StaticResource LauncherDropDown}" >
 			<xctk:DropDownButton.Content>
 				<StackPanel>
@@ -249,7 +250,7 @@
 				<DataTemplate>
 					<StackPanel Orientation="Vertical">
 
-						<!--ファイル-->
+						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}">
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
@@ -279,13 +280,14 @@
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
+										<Button Content="setting" />
 										<Button Content="property" />
 									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
 
-						<!--ディレクトリ-->
+						<!-- ディレクトリ -->
 						<!--<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}" Style="{StaticResource LauncherDropDown}">
 							<StackPanel Orientation="Horizontal">
 								<Image Style="{StaticResource Image}"/>
@@ -293,12 +295,32 @@
 							</StackPanel>
 						</xctk:DropDownButton>-->
 
-						<!--コマンド-->
+						<!-- コマンド -->
 						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}">
-							<StackPanel Orientation="Horizontal">
-								<Image Style="{StaticResource Image}"/>
-								<TextBlock Style="{StaticResource Text}" />
-							</StackPanel>
+							<xctk:SplitButton.Content>
+								<StackPanel Orientation="Horizontal">
+									<Image Style="{StaticResource Image}"/>
+									<TextBlock Style="{StaticResource Text}" />
+								</StackPanel>
+							</xctk:SplitButton.Content>
+							<xctk:SplitButton.DropDownContent>
+								<StackPanel>
+									<TextBlock Text="execute" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="normal" />
+										<Button Content="extra" />
+									</StackPanel>
+									<Separator/>
+									<TextBlock Text="clipboard" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="command" />
+									</StackPanel>
+									<TextBlock Text="others" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="setting" />
+									</StackPanel>
+								</StackPanel>
+							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
 					</StackPanel>
 				</DataTemplate>
