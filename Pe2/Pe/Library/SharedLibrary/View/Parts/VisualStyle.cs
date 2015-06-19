@@ -35,6 +35,10 @@
 		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			switch (msg) {
+				case (int)WM.WM_DESTROY:
+					UnsetStyle();
+					break;
+
 				case (int)WM.WM_DWMCOMPOSITIONCHANGED:
 					SetStyle();
 					handled = true;

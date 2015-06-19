@@ -115,15 +115,12 @@
 		{
 			if(Appbar != null) {
 				Appbar.WndProc(hwnd, msg, wParam, lParam, ref handled);
-				if(handled) {
-					return IntPtr.Zero;
-				}
 			}
 			if (VisualStyle != null) {
 				VisualStyle.WndProc(hwnd, msg, wParam, lParam, ref handled);
-				if(handled) {
-					return IntPtr.Zero;
-				}
+			}
+			if (handled) {
+				return IntPtr.Zero;
 			}
 
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
@@ -147,8 +144,8 @@
 			if (Appbar != null) {
 				Appbar.Docking(dockType);
 				if(VisualStyle != null) {
-					VisualStyle.UnsetStyle();
-					//VisualStyle.SetStyle();
+					//VisualStyle.UnsetStyle();
+					VisualStyle.SetStyle();
 				}
 				//NativeMethods.UpdateWindow(Handle);
 			}

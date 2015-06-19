@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherViewModel: SingleModelWrapperViewModelBase<LauncherItemModel>
 	{
@@ -21,7 +22,7 @@
 
 		#region property
 
-		public string ToolbarText { get { return Model.Name; } }
+		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 		public ImageSource ToolbarImage { get { return null; } }
 
 		public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
