@@ -261,8 +261,10 @@
 									<MenuItem Header="execute"  Style="{StaticResource _b}" />
 									<MenuItem Header="execute-ex"  Style="{StaticResource _b}" />
 									<Separator/>
+									<MenuItem Header="path"  Style="{StaticResource _b}">
+										<MenuItem Header="open parent dir" />
+									</MenuItem>
 									<MenuItem Header="file"  Style="{StaticResource _b}" />
-									<MenuItem Header="path"  Style="{StaticResource _b}" />
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
