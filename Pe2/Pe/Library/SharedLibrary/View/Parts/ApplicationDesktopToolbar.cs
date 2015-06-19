@@ -37,16 +37,13 @@
 
 		#endregion
 
-		#region variable
-
-		EventDisposer<RoutedEventHandler> _eventLoaded = null;
-
-		#endregion variable
-
 		public ApplicationDesktopToolbar(Window view, IApplicationDesktopToolbarData restrictionViewModel)
 			: base(view, restrictionViewModel)
 		{
-			Docking(RestrictionViewModel.DockType);
+			View.IsVisibleChanged += View_IsVisibleChanged;
+			if(view.Visibility == Visibility.Visible) {
+				Docking(RestrictionViewModel.DockType);
+			}
 		}
 
 		#region property
@@ -60,10 +57,7 @@
 		protected override void Dispose(bool disposing)
 		{
 			if(!IsDisposed) {
-				if(this._eventLoaded != null) {
-					this._eventLoaded.Dispose();
-					this._eventLoaded = null;
-				}
+				View.IsVisibleChanged -= View_IsVisibleChanged;
 			}
 			base.Dispose(disposing);
 		}
@@ -376,5 +370,19 @@
 		}
 
 		#endregion
+
+		void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if(e.NewValue != e.OldValue) {
+				var visibility = (Visibility)e.NewValue;
+				if(visibility == Visibility.Visible) {
+					Docking(RestrictionViewModel.DockType);
+				} else {
+					if(RestrictionViewModel.IsDocking) {
+						UnresistAppbar();
+					}
+				}
+			}
+		}
 	}
 }

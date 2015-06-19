@@ -229,6 +229,8 @@
 					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource _b}" />
 					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource _b}" />
 					<Separator />
+					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource _b}" />
+					<Separator />
 					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
