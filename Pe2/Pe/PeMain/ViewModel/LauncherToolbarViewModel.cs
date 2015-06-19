@@ -25,7 +25,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData
 	{
@@ -107,6 +107,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 				if (DockType == DockType.None) {
 					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalcButtonWidthCount(value, DockType, Orientation);
 					OnPropertyChanged();
+					OnPropertyChanged("CaptionHeight");
 				}
 			}
 		}
@@ -118,6 +119,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 				if (DockType == DockType.None) {
 					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalcButtonHeightCount(value, DockType, Orientation);
 					OnPropertyChanged();
+					OnPropertyChanged("CaptionWidth");
 				}
 			}
 		}
@@ -242,7 +244,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 		{
 			get 
 			{
-				if (Orientation == Orientation.Vertical) {
+				if (Orientation == Orientation.Horizontal) {
 					return this._captionSize;
 				} else {
 					return HasView ? View.Width : ButtonSize.Width;
@@ -253,7 +255,7 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 		{
 			get
 			{
-				if (Orientation == Orientation.Horizontal) {
+				if (Orientation == Orientation.Vertical) {
 					return this._captionSize;
 				} else {
 					return HasView ? View.Height: ButtonSize.Height;

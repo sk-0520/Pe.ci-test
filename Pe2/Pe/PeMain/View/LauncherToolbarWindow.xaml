@@ -188,8 +188,8 @@
 	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" >
 
 		<Rectangle 
-			Width="{Binding CaptionHeight, Mode=OneWay}" 
-			Height="{Binding CaptionWidth, Mode=OneWay}" 
+			Width="{Binding CaptionWidth, Mode=OneWay}" 
+			Height="{Binding CaptionHeight, Mode=OneWay}" 
 			Visibility="{Binding CaptionVisibility}" 
 			Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
 			Cursor="{Binding CaptionCursor, Mode=OneWay}"
