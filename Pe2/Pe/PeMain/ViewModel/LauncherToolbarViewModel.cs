@@ -334,12 +334,12 @@
 						LauncherKind = LauncherKind.File,
 						Command = @"%windir%\system32\calc.exe"
 					}));
-					list2.Add(new LauncherViewModel(new LauncherItemModel() {
-						Id = "test3",
-						Name = "name3",
-						LauncherKind = LauncherKind.Directory,
-						Command = @"%windir%\"
-					}));
+					//list2.Add(new LauncherViewModel(new LauncherItemModel() {
+					//	Id = "test3",
+					//	Name = "name3",
+					//	LauncherKind = LauncherKind.Directory,
+					//	Command = @"%windir%\"
+					//}));
 					list2.Add(new LauncherViewModel(new LauncherItemModel() {
 						Id = "test4",
 						Name = "name4",

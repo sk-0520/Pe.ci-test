@@ -286,12 +286,12 @@
 						</xctk:SplitButton>
 
 						<!--ディレクトリ-->
-						<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}" Style="{StaticResource LauncherDropDown}">
+						<!--<xctk:DropDownButton Visibility="{Binding VisibilityDirectory, Mode=OneWay}" Style="{StaticResource LauncherDropDown}">
 							<StackPanel Orientation="Horizontal">
 								<Image Style="{StaticResource Image}"/>
 								<TextBlock Style="{StaticResource Text}" />
 							</StackPanel>
-						</xctk:DropDownButton>
+						</xctk:DropDownButton>-->
 
 						<!--コマンド-->
 						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}">

@@ -19,10 +19,10 @@
 		/// 何かのファイル。
 		/// </summary>
 		File,
-		/// <summary>
-		/// ディレクトリ。
-		/// </summary>
-		Directory,
+		///// <summary>
+		///// ディレクトリ。
+		///// </summary>
+		//Directory,
 		/// <summary>
 		/// コマンド。
 		/// </summary>
