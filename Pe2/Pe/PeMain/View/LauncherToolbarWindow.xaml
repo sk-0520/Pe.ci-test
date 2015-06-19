@@ -259,13 +259,28 @@
 							</xctk:SplitButton.Content>
 							<xctk:SplitButton.DropDownContent>
 								<StackPanel>
-									<MenuItem Header="execute"  Style="{StaticResource _b}" />
-									<MenuItem Header="execute-ex"  Style="{StaticResource _b}" />
+									<TextBlock Text="execute" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="normal" />
+										<Button Content="extra" />
+									</StackPanel>
 									<Separator/>
-									<MenuItem Header="path"  Style="{StaticResource _b}">
-										<MenuItem Header="open parent dir" />
-									</MenuItem>
-									<MenuItem Header="file"  Style="{StaticResource _b}" />
+									<TextBlock Text="file" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="parent dir" />
+										<Button Content="work dir" />
+									</StackPanel>
+									<Separator/>
+									<TextBlock Text="clipboard" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="command" />
+										<Button Content="parent dir" />
+										<Button Content="work dir" />
+									</StackPanel>
+									<TextBlock Text="others" />
+									<StackPanel Orientation="Horizontal">
+										<Button Content="property" />
+									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
 						</xctk:SplitButton>
