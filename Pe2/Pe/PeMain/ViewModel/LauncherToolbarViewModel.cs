@@ -41,8 +41,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			: base(model, view)
 		{
 			MenuWidth = GetMenuWidth();
-			ButtonSize = CalcButtonSize();
 			IconSize = CalcIconSize();
+			ButtonSize = CalcButtonSize();
 			this._captionSize = 10;
 			BarSize = ButtonSize;
 		}
@@ -365,13 +365,32 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			}
 		}
 
-		public Thickness  ResizeBorderThickness
-		{
-			get
-			{
-				return new Thickness(400, 0, 4, 0);
-			}
-		}
+		#endregion
+
+		#region HavingViewSingleModelWrapperViewModelBase
+
+		//protected override void InitializeView()
+		//{
+		//	base.InitializeView();
+
+		//	View.MouseDown += View_MouseDown;
+		//}
+
+		//protected override void UninitializeView()
+		//{
+		//	View.MouseDown -= View_MouseDown;
+			
+		//	base.UninitializeView();
+		//}
+
+		//void View_MouseDown(object sender, MouseButtonEventArgs e)
+		//{
+		//	if (DockType == DockType.None) {
+		//		if (e.LeftButton == MouseButtonState.Pressed) {
+		//			View.DragMove();
+		//		}
+		//	}
+		//}
 
 		#endregion
 
@@ -420,7 +439,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		Size CalcButtonSize()
 		{
-			return new Size(40 + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth: 0), 40);
+			var mainButtonSize = IconSize;
+			return new Size(mainButtonSize.Width + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth : 0), mainButtonSize.Height);
 		}
 
 		double CalcViewWidth(DockType dockType, Orientation orientation)
@@ -446,32 +466,6 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		#endregion
 
-		#region HavingViewSingleModelWrapperViewModelBase
-
-		//protected override void InitializeView()
-		//{
-		//	base.InitializeView();
-
-		//	View.MouseDown += View_MouseDown;
-		//}
-
-		//protected override void UninitializeView()
-		//{
-		//	View.MouseDown -= View_MouseDown;
-			
-		//	base.UninitializeView();
-		//}
-
-		//void View_MouseDown(object sender, MouseButtonEventArgs e)
-		//{
-		//	if (DockType == DockType.None) {
-		//		if (e.LeftButton == MouseButtonState.Pressed) {
-		//			View.DragMove();
-		//		}
-		//	}
-		//}
-
-		#endregion
 
 	}
 }
