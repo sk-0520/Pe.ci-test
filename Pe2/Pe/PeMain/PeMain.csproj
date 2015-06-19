@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="View\MessageWindow.cs" />
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
+    <Compile Include="View\Parts\Control\LauncherToolbar\FastToggleButton.cs" />
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>

@@ -79,6 +79,7 @@
     <Compile Include="CompatibleForms\Extension\ConvertExtension.cs" />
     <Compile Include="Attribute\PixelKindAttribute.cs" />
     <Compile Include="CompatibleForms\Screen.cs" />
+    <Compile Include="CompatibleForms\SystemInformation.cs" />
     <Compile Include="CompatibleForms\Utility\DrawingUtility.cs" />
     <Compile Include="CompatibleForms\Utility\ImageUtility.cs" />
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
