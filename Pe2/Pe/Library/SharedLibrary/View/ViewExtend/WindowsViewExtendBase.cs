@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.View.Parts
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend
 {
 	using System;
 	using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.View.Parts.Converter
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.View.Converter
 {
 	using System;
 	using System.Collections.Generic;

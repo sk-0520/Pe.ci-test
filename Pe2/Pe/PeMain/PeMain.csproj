@@ -161,7 +161,6 @@
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
-    <Compile Include="View\Parts\Converter\LogicalOrMultiConverter.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />
     <Compile Include="View\SettingWindow.xaml.cs">

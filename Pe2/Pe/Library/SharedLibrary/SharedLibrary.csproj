@@ -119,7 +119,8 @@
     <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
-    <Compile Include="View\Parts\ApplicationDesktopToolbar.cs" />
+    <Compile Include="View\Converter\LogicalOrMultiConverter.cs" />
+    <Compile Include="View\ViewExtend\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
     <Compile Include="Logic\DisposeFinalizeBase.cs" />
@@ -159,8 +160,8 @@
     <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
-    <Compile Include="View\Parts\VisualStyle.cs" />
-    <Compile Include="View\Parts\WindowsViewExtendBase.cs" />
+    <Compile Include="View\ViewExtend\VisualStyle.cs" />
+    <Compile Include="View\ViewExtend\WindowsViewExtendBase.cs" />
     <Compile Include="View\Window\OnLoadedWindowBase.cs" />
     <Compile Include="View\Window\UserClosableWindowBase.cs" />
     <Compile Include="View\Window\WindowsAPIWindowBase.cs" />
