@@ -22,6 +22,7 @@
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 
 	Topmost="{Binding TopMost}"
+	AllowsTransparency="True"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:PD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
@@ -30,7 +31,6 @@
 	mc:Ignorable="d" 
 	d:DesignWidth="300" 
 	d:DesignHeight="200"
-	AllowsTransparency="True"
 >
 	<W:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -326,7 +326,7 @@
 			</xctk:DropDownButton.DropDownContent>
 		</xctk:DropDownButton>
 
-		<ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}">
+		<ItemsControl ItemsSource="{Binding LauncherItems, Mode=OneWay}" IsTabStop="False">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" />
