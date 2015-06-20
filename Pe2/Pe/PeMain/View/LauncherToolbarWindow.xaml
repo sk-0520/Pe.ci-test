@@ -35,6 +35,7 @@
 	<W:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 		<C:LogicalOrMultiConverter x:Key="LogicalOrMultiConverter" />
+		<C:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
@@ -234,7 +235,7 @@
 					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<MenuItem Header="{Binding Name}"  />
+								<MenuItem Header="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
