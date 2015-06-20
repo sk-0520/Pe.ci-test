@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public static class LauncherItemUtility
@@ -39,12 +40,15 @@
 						useIcon.Index = 0;
 					}
 				}
+				if(!hasIcon && model.LauncherKind == LauncherKind.Command) {
+					return Resource.GetLauncherCommandIcon(iconScale, logger);
+				}
 			}
 
 			if(hasIcon) {
 				return AppUtility.LoadIconDefault(useIcon, iconScale, logger);
 			} else {
-				return null;
+				return Resource.GetNotFoundIcon(iconScale, logger);
 			}
 		}
 	}

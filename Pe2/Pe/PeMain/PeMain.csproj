@@ -265,6 +265,8 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icon\LauncherCommand.ico" />
+    <Resource Include="Resources\Icon\NotFound.ico" />
     <Resource Include="Resources\Icon\LauncherToolbarMain.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-beta.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-debug.ico" />

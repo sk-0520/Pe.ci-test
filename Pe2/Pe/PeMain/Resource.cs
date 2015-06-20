@@ -31,7 +31,9 @@
 		#region variable
 
 		public const string applicationIconPath = "/Resources/Icon/App.ico";
+		public const string notFoundIconPath = "/Resources/Icon/NotFound.ico";
 		public const string launcherToolbarMainIconPath = "/Resources/Icon/LauncherToolbarMain.ico";
+		public const string launcherCommandIconPath = "/Resources/Icon/LauncherCommand.ico";
 		
 		#endregion
 
@@ -54,9 +56,19 @@
 			return GetIcon(applicationIconPath, iconScale, logger);
 		}
 
+		static public BitmapSource GetNotFoundIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(notFoundIconPath, iconScale, logger);
+		}
+
 		static public BitmapSource GetLauncherToolbarMainIcon(IconScale iconScale, ILogger logger = null)
 		{
 			return GetIcon(launcherToolbarMainIconPath, iconScale, logger);
+		}
+
+		static public BitmapSource GetLauncherCommandIcon(IconScale iconScale, ILogger logger = null)
+		{
+			return GetIcon(launcherCommandIconPath, iconScale, logger);
 		}
 
 		#endregion
