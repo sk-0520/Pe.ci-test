@@ -358,7 +358,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 		}
 
 		public ImageSource ToolbarImage { get { return Resource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale); } }
-		public string ToolbarText { get { return SelectedGroup.Name; } }
+		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
 
 		public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
