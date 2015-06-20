@@ -156,7 +156,6 @@
     </Compile>
     <Compile Include="View\MessageWindow.cs" />
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
-    <Compile Include="View\Parts\Control\LauncherToolbar\FastToggleButton.cs" />
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
@@ -232,6 +231,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Image\" />
+    <Folder Include="View\Parts\Control\LauncherToolbar\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
