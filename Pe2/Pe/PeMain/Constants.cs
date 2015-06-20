@@ -66,6 +66,9 @@
 
 		public const string languageAcceptDocumentFileName = ".accept.html";
 
+		public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
+		public const int iconLoadRetryMax = 3;
+
 		/// <summary>
 		/// 実行パス
 		/// </summary>

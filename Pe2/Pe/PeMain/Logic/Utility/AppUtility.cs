@@ -2,18 +2,24 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
+	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using System.Threading;
+	using System.Windows.Media.Imaging;
 
 	public static class AppUtility
 	{
@@ -88,5 +94,59 @@
 
 			return logger;
 		}
+
+		/// <summary>
+		/// 自身のショートカットを作成。
+		/// </summary>
+		/// <param name="savePath">保存先パス。</param>
+		public static void MakeAppShortcut(string savePath, VariableConstants variableConstants)
+		{
+			using(var shortcut = new ShortcutFile()) {
+				shortcut.TargetPath = Constants.applicationExecutablePath;
+				shortcut.WorkingDirectory = Constants.applicationRootDirectoryPath;
+				shortcut.SetIcon(new IconPathModel() {
+					Path = Constants.applicationExecutablePath,
+					Index = 0,
+				});
+				shortcut.Save(savePath);
+			}
+		}
+
+		/// <summary>
+		/// アイコン読み込み処理。
+		/// 
+		/// なんやかんや色々あるけどアイコン再読み込みとか泥臭い処理を頑張る最上位の子。
+		/// </summary>
+		/// <param name="iconPath">アイコンパス(とインデックス)。</param>
+		/// <param name="iconScale">アイコンサイズ。</param>
+		/// <param name="waitTime">待ち時間</param>
+		/// <param name="waitMaxCount">待ちを何回繰り返すか</param>
+		/// <param name="logger"></param>
+		/// <param name="callerMember"></param>
+		/// <returns></returns>
+		public static BitmapSource LoadIcon(IconPathModel iconPath, IconScale iconScale, TimeSpan waitTime, int waitMaxCount, ILogger logger = null, [CallerMemberName] string callerMember = "")
+		{
+			Debug.Assert(FileUtility.Exists(iconPath.Path));
+
+			var waitCount = 0;
+			while(waitCount <= waitMaxCount) {
+				var icon = IconUtility.Load(iconPath.Path, iconScale, iconPath.Index);
+				if(icon != null) {
+					return icon;
+				} else {
+					logger.SafeDebug(iconPath.Path, string.Format("{0} -> wait: {1} ms, count: {2}", callerMember, waitTime.TotalMilliseconds, waitCount));
+					Thread.Sleep(waitTime);
+					waitCount++;
+				}
+			}
+
+			return null;
+		}
+
+		public static BitmapSource LoadIconDefault(IconPathModel iconPath, IconScale iconScale, ILogger logger = null, [CallerMemberName] string callerMember = "")
+		{
+			return LoadIcon(iconPath, iconScale, Constants.iconLoadWaitTime, Constants.iconLoadRetryMax, logger, callerMember);
+		}
+
 	}
 }
