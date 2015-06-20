@@ -15,7 +15,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherViewModel: SingleModelWrapperViewModelBase<LauncherItemModel>
+	public class LauncherViewModel: LauncherViewModelBase
 	{
 		public LauncherViewModel(LauncherItemModel model)
 			: base(model)

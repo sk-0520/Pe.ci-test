@@ -142,6 +142,7 @@
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherViewModel.cs" />
+    <Compile Include="ViewModel\LauncherViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
     <Compile Include="View\AcceptWindow.xaml.cs">
