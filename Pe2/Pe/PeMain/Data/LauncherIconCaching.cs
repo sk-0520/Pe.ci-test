@@ -10,17 +10,15 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	/// <summary>
 	/// ランチャーアイテムのアイコン保存庫。
 	/// </summary>
-	public sealed class LauncherIconCaching: Dictionary<IconScale, Caching<LauncherItemModel, BitmapSource>>
+	public sealed class LauncherIconCaching: IconCaching<LauncherItemModel>
 	{
 		public LauncherIconCaching()
-		{
-			foreach(var iconScale in EnumUtility.GetMembers<IconScale>()) {
-				this.Add(iconScale, new Caching<LauncherItemModel, BitmapSource>());
-			}
-		}
+			: base()
+		{ }
 	}
 }

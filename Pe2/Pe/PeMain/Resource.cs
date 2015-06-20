@@ -13,6 +13,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	/// <summary>
@@ -23,7 +24,7 @@
 	{
 		#region static
 
-		static Caching<string, BitmapSource> imageCaching = new Caching<string, BitmapSource>();
+		static IconCaching<string> _iconCaching = new IconCaching<string>();
 
 		#endregion
 
@@ -41,9 +42,11 @@
 
 		static BitmapSource GetIcon(string path, IconScale iconScale, ILogger logger = null)
 		{
-			using(var icon = new IconWrapper(path, iconScale)) {
-				return icon.MakeBitmapSource();
-			}
+			return _iconCaching[iconScale].Get(path, () => {
+				using(var icon = new IconWrapper(path, iconScale)) {
+					return icon.MakeBitmapSource();
+				}
+			});
 		}
 
 		static public BitmapSource GetApplicationIcon(IconScale iconScale, ILogger logger = null)
