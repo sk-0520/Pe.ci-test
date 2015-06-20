@@ -124,6 +124,7 @@
     <Compile Include="Data\Event\AppbarPosChangedEventArgs.cs" />
     <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
+    <Compile Include="Data\LauncherIconCaching.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\ICommonData.cs" />

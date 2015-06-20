@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherViewModel: SingleModelWrapperViewModelBase<LauncherItemModel>
@@ -29,7 +30,7 @@
 		//public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
 		public Visibility VisibilityCommand { get { return ToVisibility(Model.LauncherKind == LauncherKind.Command); } }
 
-
+		public LauncherIconCaching LauncherIcons { get; set; }
 		#endregion
 
 		#region function
