@@ -357,7 +357,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			}
 		}
 
-		public ImageSource ToolbarImage { get { return null; } }
+		public ImageSource ToolbarImage { get { return Resource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale); } }
 		public string ToolbarText { get { return SelectedGroup.Name; } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
 

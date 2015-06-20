@@ -140,6 +140,7 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\LauncherItemUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
+    <Compile Include="Resource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherViewModel.cs" />
@@ -263,6 +264,7 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Icon\LauncherToolbarMain.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-beta.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-debug.ico" />
     <Resource Include="Resources\Icon\Tasktray\App-release.ico" />
