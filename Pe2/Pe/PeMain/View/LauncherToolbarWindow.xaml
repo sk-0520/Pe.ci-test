@@ -67,6 +67,11 @@
 			<Setter Property="Placement" Value="Bottom" />
 			<Setter Property="Focusable" Value="False" />
 		</Style>
+		<Style x:Key="DropDownPopupBorder" TargetType="Border">
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+		</Style>
 
 		<Style x:Key="LauncherDropDown" TargetType="xctk:DropDownButton">
 			<Setter Property="Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, ElementName=root}" />
@@ -79,6 +84,7 @@
 								<ToggleButton
 									x:Name="PART_DropDownButton"
 									IsTabStop="False"
+									Focusable="False"
 									IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
 									IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
 									BorderThickness="0"
@@ -90,21 +96,22 @@
 											<ContentPresenter />
 										</ControlTemplate>
 									</ToggleButton.Template>
-										<ToggleButton 
+									<ToggleButton 
 											x:Name="PART_ToggleButton"
 											Grid.Column="1"
 											IsTabStop="False"
+											Focusable="False"
 											IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
 											IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
 											Converter={StaticResource InverseBoolConverter}}"
 											BorderThickness="0"
 										>
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="*" />
-													<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
-												</Grid.ColumnDefinitions>
-												<ContentPresenter
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*" />
+												<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
+											</Grid.ColumnDefinitions>
+											<ContentPresenter
 													Name="ActionButtonContent"
 													Margin="{TemplateBinding Padding}"
 													Content="{TemplateBinding Content}"
@@ -113,11 +120,11 @@
 													HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 													RecognizesAccessKey="true"
 												/>
-												<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
-													<Path Style="{StaticResource ArrowContent}" />
-												</Grid>
+											<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
+												<Path Style="{StaticResource ArrowContent}" />
 											</Grid>
-										</ToggleButton>
+										</Grid>
+									</ToggleButton>
 								</ToggleButton>
 							</xctk:ButtonChrome>
 							<Popup 
@@ -125,8 +132,7 @@
 								Style="{StaticResource DropDownPopup}"
 								IsOpen="{Binding IsChecked, ElementName=PART_DropDownButton}"
 							>
-								<!--TODO: Create Popup Styles that can be reused on all popups in the toolkit-->
-								<Border BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderBrush="{TemplateBinding BorderBrush}">
+								<Border Style="{StaticResource DropDownPopupBorder}">
 									<ContentPresenter Content="{TemplateBinding DropDownContent}" />
 								</Border>
 							</Popup>
@@ -152,6 +158,8 @@
 									<Button
 										x:Name="PART_ActionButton"
 										Grid.Column="0"
+										IsTabStop="False"
+										Focusable="False"
 										Margin="{TemplateBinding Margin}"
 										HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
 										VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -186,6 +194,8 @@
 									<ToggleButton 
 										x:Name="PART_ToggleButton"
 										Grid.Column="1"
+										IsTabStop="False"
+										Focusable="False"
 										IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
 										IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
 										Converter={StaticResource InverseBoolConverter}}"
@@ -196,28 +206,28 @@
 												<ContentPresenter />
 											</ControlTemplate>
 										</ToggleButton.Template>
-											<xctk:ButtonChrome
+										<xctk:ButtonChrome
 												x:Name="ToggleButtonChrome"
 												RenderNormal="True"
 												RenderChecked="{TemplateBinding IsOpen}"
 												RenderEnabled="{TemplateBinding IsEnabled}"
 											>
-												<xctk:ButtonChrome.RenderMouseOver>
-													<MultiBinding Converter="{StaticResource LogicalOrMultiConverter}">
-														<Binding ElementName="PART_ActionButton" Path="IsMouseOver"/>
-														<Binding ElementName="PART_ToggleButton" Path="IsMouseOver"/>
-													</MultiBinding>
-												</xctk:ButtonChrome.RenderMouseOver>
-												<xctk:ButtonChrome.RenderPressed>
-													<MultiBinding Converter="{StaticResource LogicalOrMultiConverter}">
-														<Binding ElementName="PART_ActionButton" Path="IsPressed"/>
-														<Binding ElementName="PART_ToggleButton" Path="IsPressed"/>
-													</MultiBinding>
-												</xctk:ButtonChrome.RenderPressed>
-												<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
-													<Path Style="{StaticResource ArrowContent}" />
-												</Grid>
-											</xctk:ButtonChrome>
+											<xctk:ButtonChrome.RenderMouseOver>
+												<MultiBinding Converter="{StaticResource LogicalOrMultiConverter}">
+													<Binding ElementName="PART_ActionButton" Path="IsMouseOver"/>
+													<Binding ElementName="PART_ToggleButton" Path="IsMouseOver"/>
+												</MultiBinding>
+											</xctk:ButtonChrome.RenderMouseOver>
+											<xctk:ButtonChrome.RenderPressed>
+												<MultiBinding Converter="{StaticResource LogicalOrMultiConverter}">
+													<Binding ElementName="PART_ActionButton" Path="IsPressed"/>
+													<Binding ElementName="PART_ToggleButton" Path="IsPressed"/>
+												</MultiBinding>
+											</xctk:ButtonChrome.RenderPressed>
+											<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
+												<Path Style="{StaticResource ArrowContent}" />
+											</Grid>
+										</xctk:ButtonChrome>
 									</ToggleButton>
 								</Grid>
 							</xctk:ButtonChrome>
@@ -227,8 +237,7 @@
 								Style="{StaticResource DropDownPopup}"
 								IsOpen="{Binding IsChecked, ElementName=PART_ToggleButton}"
 							>
-								<!--TODO: Create Popup Styles that can be reused on all popups in the toolkit-->
-								<Border BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderBrush="{TemplateBinding BorderBrush}">
+								<Border Style="{StaticResource DropDownPopupBorder}">
 									<ContentPresenter Content="{TemplateBinding DropDownContent}" />
 								</Border>
 							</Popup>
