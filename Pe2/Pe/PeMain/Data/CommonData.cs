@@ -1,23 +1,25 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.Data
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
 
 	public sealed class CommonData: DisposeFinalizeModelBase
 	{
 		public CommonData()
 			: base()
-		{ }
+		{
+			LauncherIcons = new LauncherIconCaching();
+		}
 
 		#region property
 
@@ -29,6 +31,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic;
 		public AppLanguageManager Language { get; set; }
 		public ILogger Logger { get; set; }
 		public IAppSender AppSender { get; set; }
+
+		public LauncherIconCaching LauncherIcons { get; set; }
 
 		#endregion
 

@@ -88,6 +88,7 @@
 			
 			ViewModel = new LauncherToolbarViewModel(model, this);
 			ViewModel.DockScreen = Screen;
+			ViewModel.LauncherIcons = CommonData.LauncherIcons;
 			// 以降Viewの保持するスクリーン情報は使用しない
 			Screen = null;
 		}
