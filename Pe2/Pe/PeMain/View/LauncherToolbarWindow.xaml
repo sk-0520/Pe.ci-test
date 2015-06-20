@@ -80,7 +80,7 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
 						<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-							<xctk:ButtonChrome x:Name="ControlChrome" Background="{TemplateBinding Background}" RenderEnabled="{TemplateBinding IsEnabled}" CornerRadius="2.75">
+							<xctk:ButtonChrome x:Name="ControlChrome" Background="{TemplateBinding Background}" RenderEnabled="{TemplateBinding IsEnabled}">
 								<ToggleButton
 									x:Name="PART_DropDownButton"
 									IsTabStop="False"
@@ -149,7 +149,7 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:SplitButton}">
 						<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-							<xctk:ButtonChrome x:Name="ControlChrome" Background="{TemplateBinding Background}" RenderEnabled="{TemplateBinding IsEnabled}" CornerRadius="2.75">
+							<xctk:ButtonChrome x:Name="ControlChrome" Background="{TemplateBinding Background}" RenderEnabled="{TemplateBinding IsEnabled}">
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*" />
