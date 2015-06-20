@@ -374,8 +374,8 @@
 		void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			if(e.NewValue != e.OldValue) {
-				var visibility = (Visibility)e.NewValue;
-				if(visibility == Visibility.Visible) {
+				var isVisible = (bool)e.NewValue;
+				if(isVisible) {
 					Docking(RestrictionViewModel.DockType);
 				} else {
 					if(RestrictionViewModel.IsDocking) {
