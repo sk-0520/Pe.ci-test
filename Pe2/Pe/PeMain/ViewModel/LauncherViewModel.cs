@@ -17,20 +17,23 @@
 
 	public class LauncherViewModel: LauncherViewModelBase
 	{
-		public LauncherViewModel(LauncherItemModel model)
-			: base(model)
-		{ }
+		public LauncherViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching)
+			: base(model, launcherIconCaching)
+		{
+			IconScale = IconScale.Small;
+		}
 
 		#region property
 
+		public IconScale IconScale { get; set; }
+
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(Model); } }
-		public ImageSource ToolbarImage { get { return null; } }
+		public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
 
 		public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
 		//public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
 		public Visibility VisibilityCommand { get { return ToVisibility(Model.LauncherKind == LauncherKind.Command); } }
 
-		public LauncherIconCaching LauncherIcons { get; set; }
 		#endregion
 
 		#region function

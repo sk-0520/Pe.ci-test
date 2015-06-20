@@ -322,9 +322,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			{
 				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherViewModel(m) {
-							LauncherIcons = this.LauncherIcons,
-						})
+						.Select(m => new LauncherViewModel(m, this.LauncherIcons))
 					;
 					var list2 = new ObservableCollection<LauncherViewModel>(list);
 					list2.Add(new LauncherViewModel(new LauncherItemModel() {
@@ -332,17 +330,13 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 						Name = "name1",
 						LauncherKind = LauncherKind.File,
 						Command = @"C:\Windows\System32\mspaint.exe"
-					}) {
-						LauncherIcons = this.LauncherIcons,
-					});
+					}, this.LauncherIcons) { IconScale = Model.Toolbar.IconScale });
 					list2.Add(new LauncherViewModel(new LauncherItemModel() {
 						Id = "test2",
 						Name = "name2",
 						LauncherKind = LauncherKind.File,
 						Command = @"%windir%\system32\calc.exe"
-					}) {
-						LauncherIcons = this.LauncherIcons,
-					});
+					}, this.LauncherIcons) { IconScale = Model.Toolbar.IconScale });
 					//list2.Add(new LauncherViewModel(new LauncherItemModel() {
 					//	Id = "test3",
 					//	Name = "name3",
@@ -354,9 +348,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 						Name = "name4",
 						LauncherKind = LauncherKind.Command,
 						Command = @"ping"
-					}) {
-						LauncherIcons = this.LauncherIcons,
-					});
+					}, this.LauncherIcons) { IconScale = Model.Toolbar.IconScale});
 					this._launcherItems = list2;
 					OnPropertyChanged();
 				}
@@ -452,8 +444,11 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 
 		Size CalcButtonSize()
 		{
+			//TODO: どれくらいのサイズがいいかね。
+			var padding = 10.0;
+
 			var mainButtonSize = IconSize;
-			return new Size(mainButtonSize.Width + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth : 0), mainButtonSize.Height);
+			return new Size(mainButtonSize.Width + padding + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth : 0), mainButtonSize.Height + padding);
 		}
 
 		double CalcViewWidth(DockType dockType, Orientation orientation)

@@ -138,6 +138,7 @@
     <Compile Include="Logic\AppLogger.cs" />
     <Compile Include="Logic\Property\WindowStatusProperty.cs" />
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
+    <Compile Include="Logic\Utility\LauncherItemUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
