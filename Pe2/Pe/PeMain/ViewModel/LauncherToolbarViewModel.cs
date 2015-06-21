@@ -28,7 +28,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess
 	{
 		#region variable
 
@@ -38,7 +38,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view)
+		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, INonProcess nonProcess)
 			: base(model, view)
 		{
 			MenuWidth = GetMenuWidth();
@@ -46,11 +46,19 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			ButtonSize = CalcButtonSize();
 			this._captionSize = 10;
 			BarSize = ButtonSize;
+
+			NonProcess = nonProcess;
 		}
 
 		#region property
 
 		public LauncherIconCaching LauncherIcons { get; set; }
+
+		#region IHavingNonPorocess
+
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
 
 		#region ITopMost
 
@@ -322,7 +330,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			{
 				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherViewModel(m, this.LauncherIcons))
+						.Select(m => new LauncherViewModel(m, this.LauncherIcons, NonProcess))
 					;
 					var list2 = new ObservableCollection<LauncherViewModel>(list);
 					list2.Add(new LauncherViewModel(new LauncherItemModel() {
@@ -330,13 +338,13 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 						Name = "name1",
 						LauncherKind = LauncherKind.File,
 						Command = @"C:\Windows\System32\mspaint.exe"
-					}, this.LauncherIcons) { IconScale = Model.Toolbar.IconScale });
+					}, this.LauncherIcons, NonProcess) { IconScale = Model.Toolbar.IconScale });
 					list2.Add(new LauncherViewModel(new LauncherItemModel() {
 						Id = "test2",
 						Name = "name2",
 						LauncherKind = LauncherKind.File,
 						Command = @"%windir%\system32\calc.exe"
-					}, this.LauncherIcons) { IconScale = Model.Toolbar.IconScale });
+					}, this.LauncherIcons, NonProcess) { IconScale = Model.Toolbar.IconScale });
 					//list2.Add(new LauncherViewModel(new LauncherItemModel() {
 					//	Id = "test3",
 					//	Name = "name3",
@@ -348,7 +356,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 						Name = "name4",
 						LauncherKind = LauncherKind.Command,
 						Command = @"ping"
-					}, this.LauncherIcons) { IconScale = Model.Toolbar.IconScale});
+					}, this.LauncherIcons, NonProcess) { IconScale = Model.Toolbar.IconScale });
 					this._launcherItems = list2;
 					OnPropertyChanged();
 				}

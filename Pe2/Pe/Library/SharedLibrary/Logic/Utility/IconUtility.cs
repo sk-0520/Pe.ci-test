@@ -211,7 +211,7 @@
 						return thumbnailImage;
 					}
 				} catch (Exception ex) {
-					Debug.WriteLine(ex);
+					logger.SafeWarning(ex);
 				}
 			}
 

@@ -2,6 +2,7 @@
 	x:Name="root"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
@@ -255,11 +256,24 @@
 			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 		</Style>
 
-
+		<Storyboard x:Key="HidePopup" Storyboard.TargetName="{Binding RelativeSource={RelativeSource AncestorType=Popup}}" Storyboard.TargetProperty="(Popup.IsOpen)">
+			<BooleanAnimationUsingKeyFrames>
+				<DiscreteBooleanKeyFrame KeyTime="00:00:00.5" Value="False" />
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
 
 		<!--<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />-->
 	</W:CommonDataWindow.Resources>
 
+	<W:CommonDataWindow.ContextMenu>
+		<ContextMenu ItemsSource="{Binding GroupItems, Mode=OneWay}">
+			<ContextMenu.ItemContainerStyle>
+				<Style TargetType="MenuItem">
+					<Setter Property="Header" Value="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}"/>
+				</Style>
+			</ContextMenu.ItemContainerStyle>
+		</ContextMenu>
+	</W:CommonDataWindow.ContextMenu>
 	<!--<WindowChrome.WindowChrome>
 		<WindowChrome
 			CaptionHeight="0"
@@ -337,7 +351,7 @@
 					<StackPanel Orientation="Vertical">
 
 						<!-- ファイル -->
-						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}">
+						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding ExecuteCommand}">
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource Image}"/>
@@ -348,7 +362,7 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" />
+										<Button Content="normal" Command="{Binding ExecuteCommand}" Click="Element_Click" />
 										<Button Content="extra" />
 									</StackPanel>
 									<Separator/>
@@ -382,7 +396,7 @@
 						</xctk:DropDownButton>-->
 
 						<!-- コマンド -->
-						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}">
+						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding ExecuteCommand}" >
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource Image}"/>
@@ -393,7 +407,7 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" />
+										<Button Content="normal" Command="{Binding ExecuteCommand}" />
 										<Button Content="extra" />
 									</StackPanel>
 									<Separator/>

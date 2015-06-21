@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 
-	public sealed class CommonData: DisposeFinalizeModelBase
+	public sealed class CommonData: DisposeFinalizeModelBase, INonProcess
 	{
 		public CommonData()
 			: base()
@@ -29,6 +29,7 @@
 		public LauncherItemSettingModel LauncherItemSetting { get; set; }
 		public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
 		public AppLanguageManager Language { get; set; }
+		ILanguage INonProcess.Language { get { return Language; } }
 		public ILogger Logger { get; set; }
 		public IAppSender AppSender { get; set; }
 

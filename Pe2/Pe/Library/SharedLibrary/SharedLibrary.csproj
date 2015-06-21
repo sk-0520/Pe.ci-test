@@ -98,7 +98,10 @@
     <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IGetMembers.cs" />
+    <Compile Include="IF\IHavingNonProcess.cs" />
+    <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
+    <Compile Include="IF\INonProcess.cs" />
     <Compile Include="IF\IVisualStyleData.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />

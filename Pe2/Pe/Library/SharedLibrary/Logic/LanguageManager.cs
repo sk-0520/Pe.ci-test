@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -12,7 +13,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	public class LanguageManager: SingleModelWrapperViewModelBase<LanguageCollectionModel>
+	public class LanguageManager: SingleModelWrapperViewModelBase<LanguageCollectionModel>, ILanguage
 	{
 		public LanguageManager(LanguageCollectionModel model, string languageFilePath)
 			: base(model)

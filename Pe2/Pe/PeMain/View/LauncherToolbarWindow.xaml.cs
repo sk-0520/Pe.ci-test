@@ -34,6 +34,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using System.Windows.Interop;
 	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
+	using Xceed.Wpf.Toolkit;
+	using System.Windows.Controls.Primitives;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -85,8 +87,8 @@
 				toolbar = new ToolbarItemModel();
 			}
 			model.Toolbar = toolbar;
-			
-			ViewModel = new LauncherToolbarViewModel(model, this);
+
+			ViewModel = new LauncherToolbarViewModel(model, this, CommonData);
 			ViewModel.DockScreen = Screen;
 			ViewModel.LauncherIcons = CommonData.LauncherIcons;
 			// 以降Viewの保持するスクリーン情報は使用しない
@@ -165,6 +167,14 @@
 				if (ViewModel.CanWindowDrag) {
 					DragMove();
 				}
+			}
+		}
+
+		private void Element_Click(object sender, RoutedEventArgs e)
+		{
+			// ダルイ、全部閉じちゃおう
+			foreach(var button in UIUtility.FindVisualChildren<DropDownButton>(this).Where(b => b.IsOpen)) {
+				button.IsOpen = false;
 			}
 		}
 	}

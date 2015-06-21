@@ -14,17 +14,25 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>
+	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess
 	{
-		public LauncherViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching)
+		public LauncherViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(model)
 		{
 			LauncherIcons = launcherIconCaching;
+			NonProcess = nonProcess;
 		}
 
 		#region property
 
+		#region INonProcess
+
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
 		protected LauncherIconCaching LauncherIcons { get; private set; }
+
 
 		#endregion
 

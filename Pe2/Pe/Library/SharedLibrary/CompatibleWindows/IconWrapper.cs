@@ -49,8 +49,6 @@ using Drawing = System.Drawing;
 		public BitmapSource MakeBitmapSource()
 		{
 			using(var hIcon = new IconHandleModel(Icon.Handle)) {
-				System.Diagnostics.Debug.WriteLine(hIcon.MakeBitmapSource());
-				var im = hIcon.MakeBitmapSource();
 				return hIcon.MakeBitmapSource();
 			}
 		}

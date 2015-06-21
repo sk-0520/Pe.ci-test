@@ -40,6 +40,23 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 			}
 		}
 
+		public static DependencyObject GetVisualParent(DependencyObject depObj)
+		{
+			return VisualTreeHelper.GetParent(depObj);
+		}
+
+		public static DependencyObject GetVisualClosest<T>(DependencyObject depObj)
+			where T: DependencyObject
+		{
+			var parent = GetVisualParent(depObj);
+			var element = parent as T;
+			if(element != null) {
+				return element;
+			} else {
+				return GetVisualClosest<T>(parent);
+			}
+		}
+
 		/// <summary>
 		/// http://grabacr.net/archives/1105
 		/// </summary>
