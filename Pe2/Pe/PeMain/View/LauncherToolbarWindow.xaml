@@ -249,18 +249,22 @@
 		</Style>
 
 
+		<!--メニューを閉じる用-->
+		<Style x:Key="PopupClose">
+			<EventSetter  Event="Button.Click" Handler="Element_Click" />
+			<EventSetter  Event="MenuItem.Click" Handler="Element_Click" />
+		</Style>
+
+		<Style x:Key="PopupCloseMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupClose}">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+		</Style>
 
 		<!--  Cannot find source for binding with reference 'RelativeSource FindAncestor, AncestorType='System.Windows.Controls.ItemsControl', AncestorLevel='1''. BindingExpression:Path=HorizontalContentAlignment; DataItem=null; target element is 'MenuItem' (Name=''); -->
 		<Style x:Key="_b" TargetType="MenuItem">
 			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 		</Style>
-
-		<Storyboard x:Key="HidePopup" Storyboard.TargetName="{Binding RelativeSource={RelativeSource AncestorType=Popup}}" Storyboard.TargetProperty="(Popup.IsOpen)">
-			<BooleanAnimationUsingKeyFrames>
-				<DiscreteBooleanKeyFrame KeyTime="00:00:00.5" Value="False" />
-			</BooleanAnimationUsingKeyFrames>
-		</Storyboard>
 
 		<!--<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />-->
 	</W:CommonDataWindow.Resources>
@@ -317,22 +321,22 @@
 							<RowDefinition />
 							<RowDefinition />
 						</Grid.RowDefinitions>
-						<Button Grid.Row="0" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Top}">↑</Button>
-						<Button Grid.Row="1" Grid.Column="0" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Left}">←</Button>
-						<Button Grid.Row="1" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.None}">□</Button>
-						<Button Grid.Row="1" Grid.Column="2" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Right}">→</Button>
-						<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}">↓</Button>
+						<Button Grid.Row="0" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Top}" Style="{StaticResource PopupClose}">↑</Button>
+						<Button Grid.Row="1" Grid.Column="0" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Left}" Style="{StaticResource PopupClose}">←</Button>
+						<Button Grid.Row="1" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.None}" Style="{StaticResource PopupClose}">□</Button>
+						<Button Grid.Row="1" Grid.Column="2" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Right}" Style="{StaticResource PopupClose}">→</Button>
+						<Button Grid.Row="2" Grid.Column="1" Command="{Binding PositionChangeCommand}" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
-					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource _b}" />
-					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource _b}" />
+					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" />
+					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" />
 					<Separator />
-					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource _b}" />
+					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" />
 					<Separator />
 					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<MenuItem Header="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />
+								<MenuItem Header="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" Style="{StaticResource PopupCloseMenu}" />
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
@@ -362,26 +366,26 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" Command="{Binding ExecuteCommand}" Click="Element_Click" />
-										<Button Content="extra" />
+										<Button Content="normal" Command="{Binding ExecuteCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra"  Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="file" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="parent dir" />
-										<Button Content="work dir" />
+										<Button Content="parent dir"  Style="{StaticResource PopupClose}" />
+										<Button Content="work dir"  Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command" />
-										<Button Content="parent dir" />
+										<Button Content="command" Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" Style="{StaticResource PopupClose}" />
 										<Button Content="work dir" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="setting" />
-										<Button Content="property" />
+										<Button Content="setting" Style="{StaticResource PopupClose}" />
+										<Button Content="property" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
@@ -407,17 +411,17 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" Command="{Binding ExecuteCommand}" />
-										<Button Content="extra" />
+										<Button Content="normal" Command="{Binding ExecuteCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command" />
+										<Button Content="command" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="setting" />
+										<Button Content="setting" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
