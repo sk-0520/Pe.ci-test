@@ -7,7 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows.Data;
 
-	public class LogicalOrMultiConverter : IMultiValueConverter
+	public class LogicalMultiOrConverter : IMultiValueConverter
 	{
 		public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{

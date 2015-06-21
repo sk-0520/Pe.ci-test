@@ -35,8 +35,8 @@
 >
 	<W:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-		<SC:LogicalOrMultiConverter x:Key="LogicalOrMultiConverter" />
-		<SC:LogicalEqualConverter x:Key="LogicalEqualConverter" />
+		<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
+		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
 
@@ -215,13 +215,13 @@
 												RenderEnabled="{TemplateBinding IsEnabled}"
 											>
 											<xctk:ButtonChrome.RenderMouseOver>
-												<MultiBinding Converter="{StaticResource LogicalOrMultiConverter}">
+												<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
 													<Binding ElementName="PART_ActionButton" Path="IsMouseOver"/>
 													<Binding ElementName="PART_ToggleButton" Path="IsMouseOver"/>
 												</MultiBinding>
 											</xctk:ButtonChrome.RenderMouseOver>
 											<xctk:ButtonChrome.RenderPressed>
-												<MultiBinding Converter="{StaticResource LogicalOrMultiConverter}">
+												<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
 													<Binding ElementName="PART_ActionButton" Path="IsPressed"/>
 													<Binding ElementName="PART_ToggleButton" Path="IsPressed"/>
 												</MultiBinding>
@@ -267,7 +267,7 @@
 			<Setter Property="CommandParameter" Value="{Binding}" />
 			<Setter Property="IsChecked">
 				<Setter.Value>
-					<MultiBinding Converter="{StaticResource LogicalEqualConverter}" Mode="OneWay">
+					<MultiBinding Converter="{StaticResource LogicalMultiEqualConverter}" Mode="OneWay">
 						<Binding RelativeSource="{RelativeSource Self}" Path="DataContext"  />
 						<Binding RelativeSource="{RelativeSource AncestorType=Window}" Path="DataContext.SelectedGroup"  />
 					</MultiBinding>
