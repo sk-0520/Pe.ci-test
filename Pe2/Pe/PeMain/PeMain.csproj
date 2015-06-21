@@ -231,7 +231,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Image\" />
-    <Folder Include="View\Parts\Control\LauncherToolbar\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
