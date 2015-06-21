@@ -303,7 +303,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			}
 		}
 
-		public ObservableCollection<LauncherGroupItemModel> GroupItems { get { return new ObservableCollection<LauncherGroupItemModel>( Model.GroupItems.Items); } }
+		public IEnumerable<LauncherGroupItemModel> GroupItems { get { return Model.GroupItems.Items; } }
 
 		public LauncherGroupItemModel SelectedGroup
 		{
@@ -320,6 +320,19 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 
 				return this._selectedGroup;
 			}
+			set
+			{
+				if(this._selectedGroup != value) {
+					this._selectedGroup = value;
+					OnPropertyChanged();
+					var oldItems = this._launcherItems;
+					this._launcherItems = null;
+					OnPropertyChanged("LauncherItems");
+					foreach(var oldItem in oldItems) {
+						oldItem.Dispose();
+					}
+				}
+			}
 		}
 
 		//
@@ -330,35 +343,12 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			{
 				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherViewModel(m, this.LauncherIcons, NonProcess))
+						.Select(m => new LauncherViewModel(m, this.LauncherIcons, NonProcess) {
+							IconScale = Model.Toolbar.IconScale,
+						});
 					;
-					var list2 = new ObservableCollection<LauncherViewModel>(list);
-					list2.Add(new LauncherViewModel(new LauncherItemModel() {
-						Id = "test1",
-						Name = "name1",
-						LauncherKind = LauncherKind.File,
-						Command = @"C:\Windows\System32\mspaint.exe"
-					}, this.LauncherIcons, NonProcess) { IconScale = Model.Toolbar.IconScale });
-					list2.Add(new LauncherViewModel(new LauncherItemModel() {
-						Id = "test2",
-						Name = "name2",
-						LauncherKind = LauncherKind.File,
-						Command = @"%windir%\system32\calc.exe"
-					}, this.LauncherIcons, NonProcess) { IconScale = Model.Toolbar.IconScale });
-					//list2.Add(new LauncherViewModel(new LauncherItemModel() {
-					//	Id = "test3",
-					//	Name = "name3",
-					//	LauncherKind = LauncherKind.Directory,
-					//	Command = @"%windir%\"
-					//}));
-					list2.Add(new LauncherViewModel(new LauncherItemModel() {
-						Id = "test4",
-						Name = "name4",
-						LauncherKind = LauncherKind.Command,
-						Command = @"ping"
-					}, this.LauncherIcons, NonProcess) { IconScale = Model.Toolbar.IconScale });
-					this._launcherItems = list2;
-					OnPropertyChanged();
+
+					this._launcherItems = new ObservableCollection<LauncherViewModel>(list);
 				}
 
 				return this._launcherItems;
@@ -424,6 +414,22 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			}
 		}
 
+		public ICommand GroupChangeCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var group = (LauncherGroupItemModel)o;
+						NonProcess.Logger.Debug(group.ToString());
+						SelectedGroup = group;
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
@@ -436,6 +442,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 					.Select(i => Model.LauncherItems[i])
 				;
 			}
+
 			// 当面はランチャーアイテムのみ
 			throw new NotImplementedException();
 		}

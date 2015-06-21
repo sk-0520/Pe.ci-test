@@ -8,6 +8,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 
@@ -85,6 +86,29 @@
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, ILogger logger)
 		{
 			CheckUtility.EnforceNotNull(setting);
+
+			// --------------------------------
+			if(!setting.Items.Any()) {
+				setting.Items.Add(new LauncherItemModel() {
+					Id = "test1",
+					Name = "name1",
+					LauncherKind = LauncherKind.File,
+					Command = @"C:\Windows\System32\mspaint.exe"
+				});
+				setting.Items.Add(new LauncherItemModel() {
+					Id = "test2",
+					Name = "name2",
+					LauncherKind = LauncherKind.File,
+					Command = @"%windir%\system32\calc.exe"
+				});
+				setting.Items.Add(new LauncherItemModel() {
+					Id = "test3",
+					Name = "name3",
+					LauncherKind = LauncherKind.Command,
+					Command = @"ping"
+				});
+			}
+			// --------------------------------
 		}
 
 		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, LanguageManager language, ILogger logger)
@@ -94,6 +118,13 @@
 
 			if(!setting.Groups.Any()) {
 				var initGroup = CreateLauncherGroup(setting.Groups, language);
+				//------------------------
+				initGroup.LauncherItems.AddRange(new[] {
+					"test1",
+					"test2",
+					"test3",
+				});
+				//------------------------
 				setting.Groups.Add(initGroup);
 			}
 		}

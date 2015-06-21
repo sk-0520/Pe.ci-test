@@ -39,7 +39,7 @@
 			if(string.IsNullOrWhiteSpace(s)) {
 				return false;
 			}
-			return !s.Any(sc => unusableCharacters.Any(uc => sc != uc));
+			return !s.Any(sc => unusableCharacters.Any(uc => sc == uc));
 		}
 
 		public string ToSafeId(string s)

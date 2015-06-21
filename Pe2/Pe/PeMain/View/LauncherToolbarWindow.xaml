@@ -336,7 +336,7 @@
 					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<MenuItem Header="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" Style="{StaticResource PopupCloseMenu}" />
+								<MenuItem Header="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" Style="{StaticResource PopupCloseMenu}" Command="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>

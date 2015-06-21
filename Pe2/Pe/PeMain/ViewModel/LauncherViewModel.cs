@@ -20,15 +20,30 @@
 
 	public class LauncherViewModel: LauncherViewModelBase
 	{
+		#region varable
+
+		IconScale _iconScale;
+
+		#endregion
+
 		public LauncherViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
 			: base(model, launcherIconCaching, nonPorocess)
-		{
-			IconScale = IconScale.Small;
-		}
+		{ }
 
 		#region property
 
-		public IconScale IconScale { get; set; }
+		public IconScale IconScale 
+		{
+			get { return this._iconScale; }
+			set
+			{
+				if(this._iconScale != value) {
+					this._iconScale = value;
+					OnPropertyChanged();
+					OnPropertyChanged("ToolbarImage");
+				}
+			}
+		}
 
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 		public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
