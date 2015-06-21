@@ -325,6 +325,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 				if(this._selectedGroup != value) {
 					this._selectedGroup = value;
 					OnPropertyChanged();
+					OnPropertyChanged("GroupItems");
 					var oldItems = this._launcherItems;
 					this._launcherItems = null;
 					OnPropertyChanged("LauncherItems");
