@@ -35,8 +35,9 @@
 >
 	<W:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-		<!--<SC:LogicalOrMultiConverter x:Key="LogicalOrMultiConverter" />-->
 		<SC:LogicalOrMultiConverter x:Key="LogicalOrMultiConverter" />
+		<SC:LogicalEqualConverter x:Key="LogicalEqualConverter" />
+
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
@@ -336,6 +337,18 @@
 					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
+								<DataTemplate.Resources>
+									<Style x:Key="PopupCloseMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
+										<Setter Property="IsChecked">
+											<Setter.Value>
+												<MultiBinding Converter="{StaticResource LogicalEqualConverter}" Mode="OneWay">
+													<Binding RelativeSource="{RelativeSource Self}" Path="DataContext"  />
+													<Binding ElementName="root"  Path="DataContext.SelectedGroup"  />
+												</MultiBinding>
+											</Setter.Value>
+										</Setter>
+									</Style>
+								</DataTemplate.Resources>
 								<MenuItem Header="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" Style="{StaticResource PopupCloseMenu}" Command="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" CommandParameter="{Binding}" />
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>

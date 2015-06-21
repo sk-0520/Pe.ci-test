@@ -122,6 +122,7 @@
     <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
+    <Compile Include="View\Converter\LogicalEqualConverter.cs" />
     <Compile Include="View\Converter\LogicalOrMultiConverter.cs" />
     <Compile Include="View\ViewExtend\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
