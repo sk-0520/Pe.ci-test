@@ -45,10 +45,12 @@
 		{
 			get
 			{
-				var result = new DelegateCommand();
-				result.Command = o => {
-					NonProcess.Logger.Debug(Model.ToString());
-				};
+				var result = CreateCommand(
+					o => {
+						NonProcess.Logger.Debug(Model.ToString());
+					}
+				);
+
 				return result;
 			}
 		}

@@ -413,7 +413,7 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 		{
 			get
 			{
-				var result = new DelegateCommand(
+				var result = CreateCommand(
 					o => {
 						var dockType = (DockType)o;
 						View.Docking(dockType);

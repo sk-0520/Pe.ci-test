@@ -23,7 +23,7 @@
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public sealed class MainWorkerViewModel : ViewModelBase, IDisposable, IAppSender
+	public sealed class MainWorkerViewModel : ViewModelBase, IAppSender
 	{
 		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
 		{
@@ -78,12 +78,13 @@
 		{
 			get
 			{
-				var result = new DelegateCommand();
-				result.Command = o => {
-					var window = new SettingWindow();
-					window.SetCommonData(CommonData);
-					window.ShowDialog();
-				};
+				var result = CreateCommand(
+					o => {
+						var window = new SettingWindow();
+						window.SetCommonData(CommonData);
+						window.ShowDialog();
+					}
+				);
 
 				return result;
 			}
@@ -96,12 +97,12 @@
 		{
 			get
 			{
-				var result = new DelegateCommand();
-				result.Command += o => {
-					Debug.Assert(Logging != null);
-
-					Logging.Visible = !Logging.Visible;
-				};
+				var result = CreateCommand(
+					o => {
+						Debug.Assert(Logging != null);
+						Logging.Visible = !Logging.Visible;
+					}
+				);
 
 				return result;
 			}
@@ -114,12 +115,12 @@
 		{
 			get
 			{
-				var result = new DelegateCommand();
-				
-				result.Command = o => {
-					SaveSetting();
-					Application.Current.Shutdown();
-				};
+				var result = CreateCommand(
+					o => {
+						SaveSetting();
+						Application.Current.Shutdown();
+					}
+				);
 
 				return result;
 			}
@@ -127,11 +128,14 @@
 
 		#endregion
 
-		#region IDisposable
+		#region ViewModelBase
 
-		public void Dispose()
+		protected override void Dispose(bool disposing)
 		{
-			CommonData.Dispose();
+			if(!IsDisposed) {
+				CommonData.Dispose();
+			}
+			base.Dispose(disposing);
 		}
 
 		#endregion

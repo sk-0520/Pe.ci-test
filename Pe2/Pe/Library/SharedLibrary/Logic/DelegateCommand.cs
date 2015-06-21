@@ -6,62 +6,82 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	/// <summary>
 	/// コマンド。
 	/// </summary>
-	public class DelegateCommand : ICommand
+	public class DelegateCommand : DisposeFinalizeBase, ICommand
 	{
-		static bool DefaultExecute(object o)
+		//#region variable
+
+		//EventDisposer<Action<object>> _executeCommandEvent;
+		//EventDisposer<Func<object, bool>> _canExecuteCommandEvent;
+
+		//#endregion
+
+		public DelegateCommand()
+		{ }
+
+		public DelegateCommand(Action<object> executeCommand)
+			: this()
 		{
-			return true;
+			if(executeCommand == null) {
+				throw new ArgumentNullException("executeCommand");
+			}
+			ExecuteCommand = executeCommand;
 		}
+
+		public DelegateCommand(Action<object> command, Func<object, bool> canExecuteCommand)
+			: this(command)
+		{
+			if(canExecuteCommand == null) {
+				throw new ArgumentNullException("canExecuteCommand");
+			}
+
+			CanExecuteCommand = canExecuteCommand;
+		}
+
+		#region property
 
 		/// <summary>
 		/// コマンド。
 		/// </summary>
-		public Action<object> Command { get; set; }
+		public Action<object> ExecuteCommand { get; set; }
 		/// <summary>
 		/// 実行可否。
 		/// </summary>
-		public Func<object, bool> CanExecute { get; set; }
+		public Func<object, bool> CanExecuteCommand { get; set; }
 
-		public DelegateCommand()
-		{
-			CanExecute = DefaultExecute;
-		}
+		#endregion
 
-		public DelegateCommand(Action<object> command)
-			: this()
+		#region DisposeFinalizeBase
+
+		protected override void Dispose(bool disposing)
 		{
-			if(command == null) {
-				throw new ArgumentNullException("command");
+			if(!IsDisposed) {
+				CanExecuteCommand = null;
+				ExecuteCommand = null;
 			}
-
-			Command = command;
+			base.Dispose(disposing);
 		}
 
-		public DelegateCommand(Action<object> command, Func<object, bool> canExecute)
-			: this(command)
-		{
-			if(canExecute == null) {
-				throw new ArgumentNullException("canExecute");
-			}
-
-			CanExecute = canExecute;
-		}
-
+		#endregion
 
 		#region ICommand
 
-		void ICommand.Execute(object parameter)
+		public void Execute(object parameter)
 		{
-			Command(parameter);
+			ExecuteCommand(parameter);
 		}
 
-		bool ICommand.CanExecute(object parameter)
+		public bool CanExecute(object parameter)
 		{
-			return CanExecute(parameter);
+			if(CanExecuteCommand != null) {
+				return CanExecuteCommand(parameter);
+			} else {
+				return true;
+			}
 		}
 
 		event EventHandler ICommand.CanExecuteChanged

@@ -22,12 +22,17 @@
 		public static TEventHandler Create<TEventHandler>(TEventHandler handler, Action<TEventHandler> releaseEvent, out EventDisposer<TEventHandler> eventDisposer)
 		{
 			eventDisposer = new EventDisposer<TEventHandler>();
-			return eventDisposer.Handle(handler, releaseEvent);
+			return eventDisposer.Handling(handler, releaseEvent);
 		}
 		public static TEventHandler Auto<TEventHandler>(TEventHandler handler, Action<TEventHandler> releaseEvent)
 		{
 			EventDisposer<TEventHandler> eventDisposer;
 			return Create(handler, releaseEvent, out eventDisposer);
+		}
+
+		internal static Func<object, bool> Create<T1>(Func<object, bool> canExecuteCommand, Action<Func<object, bool>> action, out EventDisposer<Func<object, bool>> eventDisposer)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

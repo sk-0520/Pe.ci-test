@@ -83,7 +83,7 @@
 
 		#region function
 
-		public TEventHandler Handle(TEventHandler eventHandler, Action<TEventHandler> releaseEvent)
+		public TEventHandler Handling(TEventHandler eventHandler, Action<TEventHandler> releaseEvent)
 		{
 			if(EventHandler != null) {
 				throw new InvalidOperationException("EventHandler");

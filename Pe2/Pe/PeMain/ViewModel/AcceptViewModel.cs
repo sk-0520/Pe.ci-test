@@ -53,7 +53,7 @@
 		{
 			get
 			{
-				return new DelegateCommand(o => OnDailogCommand(o, true));
+				return CreateCommand(o => OnDailogCommand(o, true));
 			}
 		}
 
@@ -61,7 +61,7 @@
 		{
 			get
 			{
-				return new DelegateCommand(o => OnDailogCommand(o, false));
+				return CreateCommand(o => OnDailogCommand(o, false));
 			}
 		}
 
