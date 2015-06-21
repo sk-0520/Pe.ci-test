@@ -6,7 +6,6 @@
 	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-	xmlns:local="clr-namespace:ContentTypeTextNet.Pe.PeMain.View"
 	UI:XamlTag.LanguageKey="window/accept"
 	Title="AcceptWindow" 
 	Width="{Binding MinWidth, RelativeSource={RelativeSource Self}}"
@@ -39,8 +38,8 @@
 			<CheckBox IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AcceptWindow}}}" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}" CommandParameter="{Binding Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:AcceptWindow}}}" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
 		</StackPanel>
 	</Grid>
 </W:ViewModelCommonDataWindow>

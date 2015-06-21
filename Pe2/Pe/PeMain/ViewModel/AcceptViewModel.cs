@@ -53,7 +53,7 @@
 		{
 			get
 			{
-				return CreateCommand(o => OnDailogCommand(o, true));
+				return CreateCommand(o => OnDailogCommand(true));
 			}
 		}
 
@@ -61,7 +61,7 @@
 		{
 			get
 			{
-				return CreateCommand(o => OnDailogCommand(o, false));
+				return CreateCommand(o => OnDailogCommand(false));
 			}
 		}
 
@@ -69,16 +69,14 @@
 
 		#region function
 
-		void OnDailogCommand(object sender, bool result)
+		void OnDailogCommand(bool result)
 		{
 			Model.Accept = result;
-
-			var window = sender as Window;
-			if (window != null) {
+			if (HasView) {
 				if (result) {
-					window.DialogResult = true;
+					View.DialogResult = true;
 				} else {
-					window.DialogResult = false;
+					View.DialogResult = false;
 				}
 			}
 		}
