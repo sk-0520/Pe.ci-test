@@ -408,6 +408,10 @@
 					o => {
 						var dockType = (DockType)o;
 						View.Docking(dockType);
+					},
+					o => {
+						var dockType = (DockType)o;
+						return dockType != DockType;
 					}
 				);
 

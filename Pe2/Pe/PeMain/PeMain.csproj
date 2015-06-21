@@ -159,7 +159,6 @@
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\Converter\DockTypeMultiEqualConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />

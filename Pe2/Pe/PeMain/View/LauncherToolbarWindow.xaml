@@ -39,7 +39,6 @@
 		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
-		<PC:DockTypeMultiEqualConverter x:Key="DockTypeMultiEqualConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
@@ -326,17 +325,8 @@
 					<Label Content="toolbar pos" />
 					<Grid>
 						<Grid.Resources>
-							<Style x:Key="PopupClose" TargetType="ToggleButton" BasedOn="{StaticResource PopupClose}">
+							<Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
 								<Setter Property="Command" Value="{Binding PositionChangeCommand}" />
-								<Setter Property="IsChecked">
-									<Setter.Value>
-										<MultiBinding Converter="{StaticResource DockTypeMultiEqualConverter}" Mode="OneWay">
-											<Binding RelativeSource="{RelativeSource Self}" Path="CommandParameter"  />
-											<!--<Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}" Path="DataContext.DockType" />-->
-											<Binding Source="{x:Reference Name=root}" Path="DataContext.DockType" />
-										</MultiBinding>
-									</Setter.Value>
-								</Setter>
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
@@ -349,11 +339,11 @@
 							<RowDefinition />
 							<RowDefinition />
 						</Grid.RowDefinitions>
-						<ToggleButton Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}" Style="{StaticResource PopupClose}">↑</ToggleButton>
-						<ToggleButton Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}" Style="{StaticResource PopupClose}">←</ToggleButton>
-						<ToggleButton Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}" Style="{StaticResource PopupClose}">□</ToggleButton>
-						<ToggleButton Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}" Style="{StaticResource PopupClose}">→</ToggleButton>
-						<ToggleButton Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</ToggleButton>
+						<Button Grid.Row="0" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Top}" Style="{StaticResource PopupClose}">↑</Button>
+						<Button Grid.Row="1" Grid.Column="0" CommandParameter="{x:Static SD:DockType.Left}" Style="{StaticResource PopupClose}">←</Button>
+						<Button Grid.Row="1" Grid.Column="1" CommandParameter="{x:Static SD:DockType.None}" Style="{StaticResource PopupClose}">□</Button>
+						<Button Grid.Row="1" Grid.Column="2" CommandParameter="{x:Static SD:DockType.Right}" Style="{StaticResource PopupClose}">→</Button>
+						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
 					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" />
