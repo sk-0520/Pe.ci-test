@@ -2053,6 +2053,11 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		[DllImport("user32.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern bool UpdateWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool GetCursorPos(out POINT lpPoint);
 	}
 
 

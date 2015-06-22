@@ -31,6 +31,10 @@
 		/// </summary>
 		bool IsHidden { get; set; }
 		/// <summary>
+		/// 表示状態。
+		/// </summary>
+		Visibility Visibility { get; set; }
+		/// <summary>
 		/// バーの論理サイズ
 		/// </summary>
 		[PixelKind(Px.Logical)]
@@ -47,6 +51,11 @@
 		/// </summary>
 		[PixelKind(Px.Logical)]
 		Size HideSize { get; set; }
+		/// <summary>
+		/// 表示中の隠れたバーの論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		Rect HideLogicalBarArea { get; set; }
 		/// <summary>
 		/// 自動的に隠すまでの時間。
 		/// </summary>

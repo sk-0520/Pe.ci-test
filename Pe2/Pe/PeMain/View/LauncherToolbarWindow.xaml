@@ -349,7 +349,7 @@
 					</Grid>
 					<Separator />
 					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
-					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}"/>
+					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
 					<Separator />
 					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" />
 					<Separator />

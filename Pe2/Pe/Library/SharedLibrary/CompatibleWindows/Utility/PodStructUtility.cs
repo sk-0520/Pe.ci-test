@@ -43,5 +43,15 @@
 		{
 			return new Size(size.cx, size.cy);
 		}
+
+		public static POINT Convert(Point point)
+		{
+			return new POINT((int)point.X, (int)point.Y);
+		}
+
+		public static Point Convert(POINT point)
+		{
+			return new Point(point.X, point.Y);
+		}
 	}
 }

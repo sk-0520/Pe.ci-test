@@ -47,6 +47,8 @@
 			this._captionSize = 10;
 			BarSize = ButtonSize;
 
+			HideSize = new Size(10, 10);
+
 			NonProcess = nonProcess;
 		}
 
@@ -90,7 +92,12 @@
 
 		public double FloatLeft
 		{
-			get { return Model.Toolbar.FloatToolbarArea.Left; }
+			get 
+			{ 
+				return IsHidden 
+					? HideLogicalBarArea.Left
+					: Model.Toolbar.FloatToolbarArea.Left;
+			}
 			set 
 			{
 				if (DockType == DockType.None && Model.Toolbar.FloatToolbarArea.Left != value) {
@@ -101,7 +108,11 @@
 		}
 		public double FloatTop
 		{
-			get { return Model.Toolbar.FloatToolbarArea.Top; }
+			get { 
+				return IsHidden 
+					? HideLogicalBarArea.Top
+					: Model.Toolbar.FloatToolbarArea.Top; 
+			}
 			set
 			{
 				if (DockType == DockType.None && Model.Toolbar.FloatToolbarArea.Top != value) {
@@ -112,7 +123,12 @@
 		}
 		public double FloatWidth
 		{
-			get { return CalcViewWidth(DockType, Orientation); }
+			get
+			{
+				return IsHidden
+				? HideLogicalBarArea.Width
+				: CalcViewWidth(DockType, Orientation);
+			}
 			set
 			{
 				if (DockType == DockType.None) {
@@ -124,7 +140,12 @@
 		}
 		public double FloatHeight
 		{
-			get { return CalcViewHeight(DockType, Orientation); }
+			get
+			{
+				return IsHidden
+					? HideLogicalBarArea.Height
+					: CalcViewHeight(DockType, Orientation);
+			}
 			set
 			{
 				if (DockType == DockType.None) {
@@ -168,7 +189,20 @@
 		/// <summary>
 		/// 自動的に隠す。
 		/// </summary>
-		public bool AutoHide { get; set; }
+		public bool AutoHide 
+		{
+			get { return Model.Toolbar.AutoHide; }
+			set
+			{
+				if (Model.Toolbar.AutoHide != value) {
+					Model.Toolbar.AutoHide = value;
+					OnPropertyChanged();
+					if (HasView) {
+						View.Docking(DockType);
+					}
+				}
+			}
+		}
 		/// <summary>
 		/// 隠れているか。
 		/// </summary>
@@ -191,13 +225,36 @@
 		[PixelKind(Px.Logical)]
 		public Size HideSize { get; set; }
 		/// <summary>
+		/// 表示中の隠れたバーの論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect HideLogicalBarArea { get; set; }
+		/// <summary>
 		/// 自動的に隠すまでの時間。
 		/// </summary>
-		public TimeSpan HiddenWaitTime { get; set; }
+		public TimeSpan HiddenWaitTime {
+			get { return Model.Toolbar.HiddenWaitTime; }
+			set
+			{
+				if (Model.Toolbar.HiddenWaitTime != value) {
+					Model.Toolbar.HiddenWaitTime = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 		/// <summary>
 		/// 自動的に隠す際のアニメーション時間。
 		/// </summary>
-		public TimeSpan HiddenAnimateTime { get; set; }
+		public TimeSpan HiddenAnimateTime {
+			get { return Model.Toolbar.HiddenAnimateTime; }
+			set
+			{
+				if (Model.Toolbar.HiddenAnimateTime != value) {
+					Model.Toolbar.HiddenAnimateTime = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 		/// <summary>
 		/// ドッキングに使用するスクリーン。
 		/// </summary>
@@ -426,6 +483,23 @@
 				var result = CreateCommand(
 					o => {
 						TopMost = !TopMost;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchAutoHideCommand
+		{
+			get 
+			{
+				var result = CreateCommand(
+					o => {
+						AutoHide = !AutoHide;
+					},
+					o => {
+						return IsDocking;
 					}
 				);
 

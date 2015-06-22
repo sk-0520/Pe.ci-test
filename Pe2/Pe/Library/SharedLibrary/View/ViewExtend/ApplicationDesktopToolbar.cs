@@ -1,8 +1,10 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Windows;
+	using System.Windows.Input;
 	using System.Windows.Interop;
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
@@ -41,7 +43,11 @@
 			: base(view, restrictionViewModel)
 		{
 			View.IsVisibleChanged += View_IsVisibleChanged;
-			if(view.Visibility == Visibility.Visible) {
+
+			AutoHideTimer = new DispatcherTimer();
+			AutoHideTimer.Tick += TimerAutoHide_Tick;
+
+			if (view.Visibility == Visibility.Visible) {
 				Docking(RestrictionViewModel.DockType);
 			}
 		}
@@ -49,6 +55,7 @@
 		#region property
 
 		protected virtual string MessageString { get { return "appbar"; } }
+		protected virtual DispatcherTimer AutoHideTimer { get; private set; }
 
 		#endregion
 
@@ -56,7 +63,7 @@
 
 		protected override void Dispose(bool disposing)
 		{
-			if(!IsDisposed) {
+			if (!IsDisposed) {
 				View.IsVisibleChanged -= View_IsVisibleChanged;
 			}
 			base.Dispose(disposing);
@@ -69,23 +76,20 @@
 		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (RestrictionViewModel.IsDocking) {
-				switch((int)msg) {
-					case (int)WM.WM_DESTROY: 
-						{
+				switch ((int)msg) {
+					case (int)WM.WM_DESTROY: {
 							UnresistAppbar();
 							handled = true;
 						}
 						break;
 
-					case (int)WM.WM_ACTIVATE:
-						{
+					case (int)WM.WM_ACTIVATE: {
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
 						}
 						break;
 
-					case (int)WM.WM_WINDOWPOSCHANGED: 
-						{
+					case (int)WM.WM_WINDOWPOSCHANGED: {
 							//DockingFromProperty();
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
@@ -100,7 +104,7 @@
 
 					default:
 						if (RestrictionViewModel.CallbackMessage != 0 && msg == RestrictionViewModel.CallbackMessage) {
-							switch(wParam.ToInt32()) {
+							switch (wParam.ToInt32()) {
 								case (int)ABN.ABN_FULLSCREENAPP:
 									// フルスクリーン
 									OnAppbarFullScreen(WindowsUtility.ConvertBoolFromLParam(lParam));
@@ -212,11 +216,11 @@
 			double top, left, width, height;
 
 			// 設定値からバー領域取得
-			if(dockType == DockType.Left || dockType == DockType.Right) {
+			if (dockType == DockType.Left || dockType == DockType.Right) {
 				top = deviceDesktopArea.Top;
 				width = deviceBarSize.Width;
 				height = deviceDesktopArea.Height;
-				if(dockType == DockType.Left) {
+				if (dockType == DockType.Left) {
 					left = deviceDesktopArea.Left;
 				} else {
 					left = deviceDesktopArea.Right - width;
@@ -226,7 +230,7 @@
 				left = deviceDesktopArea.Left;
 				width = deviceDesktopArea.Width;
 				height = deviceBarSize.Height;
-				if(dockType == DockType.Top) {
+				if (dockType == DockType.Top) {
 					top = deviceDesktopArea.Top;
 				} else {
 					top = deviceDesktopArea.Bottom - height;
@@ -245,7 +249,7 @@
 			var deviceBarSize = UIUtility.ToDevicePixel(View, RestrictionViewModel.BarSize);
 			NativeMethods.SHAppBarMessage(ABM.ABM_QUERYPOS, ref appBar);
 
-			switch(appBar.uEdge) {
+			switch (appBar.uEdge) {
 				case ABE.ABE_LEFT:
 					appBar.rc.Right = appBar.rc.Left + (int)deviceBarSize.Width;
 					break;
@@ -288,9 +292,9 @@
 			TuneSystemBarArea(ref appBar);
 
 			bool autoHideResult = false;
-			if(autoHide) {
+			if (autoHide) {
 				var hideWnd = ExistsHideWindow(dockType);
-				if(hideWnd == IntPtr.Zero || hideWnd == Handle) {
+				if (hideWnd == IntPtr.Zero || hideWnd == Handle) {
 					// 自動的に隠す
 					var result = NativeMethods.SHAppBarMessage(ABM.ABM_SETAUTOHIDEBAR, ref appBar);
 					autoHideResult = result.ToInt32() != 0;
@@ -304,7 +308,7 @@
 			var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(View, deviceWindowBounds);
 
-			if(!autoHideResult) {
+			if (!autoHideResult) {
 				var appbarResult = NativeMethods.SHAppBarMessage(ABM.ABM_SETPOS, ref appBar);
 			}
 
@@ -312,7 +316,7 @@
 			RestrictionViewModel.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
 
 			if (RestrictionViewModel.AutoHide) {
-				//WaitHidden();
+				WaitHidden();
 			}
 
 			View.Dispatcher.BeginInvoke(
@@ -323,8 +327,8 @@
 
 		void ResizeShowDeviceBarArea()
 		{
-			var dviceArea = RestrictionViewModel.ShowDeviceBarArea;
-			NativeMethods.MoveWindow(Handle, (int)dviceArea.X, (int)dviceArea.Y, (int)dviceArea.Width, (int)dviceArea.Height, true);
+			var deviceArea = RestrictionViewModel.ShowDeviceBarArea;
+			NativeMethods.MoveWindow(Handle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
 		}
 
 		public void DockingFromProperty()
@@ -342,6 +346,9 @@
 			//if(this.timerAutoHidden.Enabled) {
 			//	this.timerAutoHidden.Stop();
 			//}
+			if (AutoHideTimer.IsEnabled) {
+				AutoHideTimer.Stop();
+			}
 
 			// 登録済みであればいったん解除
 			var needResist = true;
@@ -353,8 +360,9 @@
 					needResist = false;
 				}
 			}
+			RestrictionViewModel.IsHidden = false;
 
-			if(dockType == DockType.None) {
+			if (dockType == DockType.None) {
 				RestrictionViewModel.DockType = dockType;
 				RestrictionViewModel.ChangingWindowMode();
 				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
@@ -362,27 +370,208 @@
 			}
 
 			// 登録
-			if(needResist) {
+			if (needResist) {
 				RegistAppbar();
 			}
 
 			DockingFromParameter(dockType, RestrictionViewModel.AutoHide);
 		}
 
+		/// <summary>
+		/// 非表示状態への待ちを取りやめ。
+		/// </summary>
+		void StopHidden()
+		{
+			Debug.Assert(RestrictionViewModel.AutoHide);
+			if (AutoHideTimer.IsEnabled) {
+				AutoHideTimer.Stop();
+			}
+			ToShow();
+		}
+
+		/// <summary>
+		/// 非表示状態への待ちを開始。
+		/// </summary>
+		void WaitHidden()
+		{
+			Debug.Assert(RestrictionViewModel.AutoHide);
+
+			if (!AutoHideTimer.IsEnabled) {
+				AutoHideTimer.Interval = RestrictionViewModel.HiddenWaitTime;
+				AutoHideTimer.Start();
+			}
+		}
+
+		/// <summary>
+		/// 自動的に隠す状態から復帰
+		/// </summary>
+		protected virtual void ToShow()
+		{
+			Debug.Assert(RestrictionViewModel.DockType != DockType.None);
+			Debug.Assert(RestrictionViewModel.AutoHide);
+
+			
+			//var screeanPos = DockScreen.WorkingArea.Location;
+			//var screeanSize = DockScreen.WorkingArea.Size;
+			//var size = ShowBarSize;
+			//var pos = Location;
+			//switch (DesktopDockType) {
+			//	case DesktopDockType.Top:
+			//		//size.Width = screeanSize.Width;
+			//		//size.Height = HiddenSize.Top;
+			//		pos.X = screeanPos.X;
+			//		pos.Y = screeanPos.Y;
+			//		break;
+
+			//	case DesktopDockType.Bottom:
+			//		//size.Width = screeanSize.Width;
+			//		//size.Height = HiddenSize.Bottom;
+			//		pos.X = screeanPos.X;
+			//		pos.Y = screeanPos.Y + screeanSize.Height - size.Height;
+			//		break;
+
+			//	case DesktopDockType.Left:
+			//		//size.Width = HiddenSize.Left;
+			//		//size.Height = screeanSize.Height;
+			//		pos.X = screeanPos.X;
+			//		pos.Y = screeanPos.Y;
+			//		break;
+
+			//	case DesktopDockType.Right:
+			//		//size.Width = HiddenSize.Right;
+			//		//size.Height = screeanSize.Height;
+			//		pos.X = screeanPos.X + screeanSize.Width - size.Width;
+			//		pos.Y = screeanPos.Y;
+			//		break;
+
+			//	default:
+			//		throw new NotImplementedException();
+			//}
+
+			//Bounds = new Rectangle(pos, size);
+			//IsHidden = false;
+			ResizeShowDeviceBarArea();
+		}
+
+		/// <summary>
+		/// 非表示状態へ遷移。
+		/// </summary>
+		/// <param name="force">強制的に遷移するか。</param>
+		protected void ToHidden(bool force)
+		{
+			Debug.Assert(RestrictionViewModel.DockType != DockType.None);
+			Debug.Assert(RestrictionViewModel.AutoHide);
+
+			AutoHideTimer.Stop();
+
+			var deviceCursolPosition = new POINT();
+			NativeMethods.GetCursorPos(out deviceCursolPosition);
+
+			if (!force && RestrictionViewModel.ShowDeviceBarArea.Contains(PodStructUtility.Convert(deviceCursolPosition))) {
+				return;
+			}
+
+			//RestrictionViewModel.HideSize
+			//RestrictionViewModel.DockScreen.DeviceBounds.Location
+
+			Size deviceSize;
+			Point deviceLocation;
+
+			switch (RestrictionViewModel.DockType) {
+				case DockType.Top:
+					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideSize.Height);
+					deviceLocation = RestrictionViewModel.DockScreen.DeviceBounds.Location;
+					break;
+
+				case DockType.Bottom:
+					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideSize.Height);
+					deviceLocation = new Point(RestrictionViewModel.DockScreen.DeviceBounds.X, RestrictionViewModel.DockScreen.DeviceBounds.Y - deviceSize.Height);
+					break;
+
+				case DockType.Left:
+					deviceSize = new Size(RestrictionViewModel.HideSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Height);
+					deviceLocation = RestrictionViewModel.DockScreen.DeviceBounds.Location;
+					break;
+
+				case DockType.Right:
+					deviceSize = new Size(RestrictionViewModel.HideSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Height);
+					deviceLocation = new Point(RestrictionViewModel.DockScreen.DeviceBounds.Right - deviceSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Y);
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+
+			HiddenView(!force, new Rect(deviceLocation, deviceSize));
+		}
+
+		static AW ToAW(DockType type, bool show)
+		{
+			var result = new Dictionary<DockType, AW>() {
+				{ DockType .Top,    show ? AW.AW_VER_POSITIVE: AW.AW_VER_NEGATIVE },
+				{ DockType .Bottom, show ? AW.AW_VER_NEGATIVE: AW.AW_VER_POSITIVE },
+				{ DockType .Left,   show ? AW.AW_HOR_POSITIVE: AW.AW_HOR_NEGATIVE },
+				{ DockType .Right,  show ? AW.AW_HOR_NEGATIVE: AW.AW_HOR_POSITIVE },
+			}[type];
+
+			if (!show) {
+				result |= AW.AW_HIDE;
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// 自動的に隠すの実際の処理。
+		/// </summary>
+		/// <param name="animation"></param>
+		/// <param name="deviceHiddenArea"></param>
+		protected virtual void HiddenView(bool animation, Rect deviceHiddenArea)
+		{
+			var prevVisibility = RestrictionViewModel.Visibility;
+
+			if (RestrictionViewModel.Visibility == Visibility.Visible) {
+				if (animation) {
+					var animateTime = (int)RestrictionViewModel.HiddenAnimateTime.TotalMilliseconds;
+					var animateFlag = ToAW(RestrictionViewModel.DockType, false);
+					//NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
+				}
+				RestrictionViewModel.IsHidden = true;
+				RestrictionViewModel.HideLogicalBarArea = UIUtility.ToLogicalPixel(View, deviceHiddenArea);
+				
+				RestrictionViewModel.Visibility = prevVisibility;
+				//View.Left = deviceHiddenArea.X;
+				//View.Top = deviceHiddenArea.Y;
+				//View.Width = 10;
+				//View.Height = deviceHiddenArea.Height;
+				NativeMethods.MoveWindow(Handle, (int)deviceHiddenArea.X, (int)deviceHiddenArea.Y, (int)deviceHiddenArea.Width, (int)deviceHiddenArea.Height, true);
+			}
+		}
+
 		#endregion
 
 		void View_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
-			if(e.NewValue != e.OldValue) {
+			if (e.NewValue != e.OldValue) {
 				var isVisible = (bool)e.NewValue;
-				if(isVisible) {
+				if (isVisible) {
 					Docking(RestrictionViewModel.DockType);
 				} else {
-					if(RestrictionViewModel.IsDocking) {
+					if (RestrictionViewModel.IsDocking) {
 						UnresistAppbar();
 					}
 				}
 			}
 		}
+
+		void TimerAutoHide_Tick(object sender, EventArgs e)
+		{
+			if (RestrictionViewModel.IsDocking) {
+				ToHidden(false);
+			} else {
+				AutoHideTimer.Stop();
+			}
+		}
+
 	}
 }
