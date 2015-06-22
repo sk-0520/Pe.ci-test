@@ -35,6 +35,8 @@
 		LauncherGroupItemModel _selectedGroup = null;
 		ObservableCollection<LauncherViewModel> _launcherItems = null;
 		double _captionSize;
+		Thickness _borderThickness;
+		Brush _borderBrush;
 
 		#endregion
 
@@ -45,9 +47,14 @@
 			IconSize = CalcIconSize();
 			ButtonSize = CalcButtonSize();
 			this._captionSize = 10;
-			BarSize = ButtonSize;
 
-			HideSize = new Size(10, 10);
+			BorderThickness = new Thickness(10);
+			BorderBrush = Brushes.Beige;
+
+			BarSize = new Size(ButtonSize.Width + GetBorderThicknessWidth(), ButtonSize.Height + GetBorderThicknessHeight());
+			if (!NowFloatWindow) {
+				HideWidth = CalcHideWidth(Model.Toolbar.DockType);
+			}
 
 			NonProcess = nonProcess;
 		}
@@ -55,6 +62,29 @@
 		#region property
 
 		public LauncherIconCaching LauncherIcons { get; set; }
+
+		public Thickness BorderThickness {
+			get { return this._borderThickness; } 
+			set
+			{
+				if (this._borderThickness != value) {
+					this._borderThickness = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public Brush BorderBrush
+		{
+			get { return this._borderBrush; }
+			set
+			{
+				if (this._borderBrush != value) {
+					this._borderBrush = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 
 		#region IHavingNonPorocess
 
@@ -176,7 +206,10 @@
 			set 
 			{
 				if(Model.Toolbar.DockType != value) {
-					Model.Toolbar.DockType = value; 
+					Model.Toolbar.DockType = value;
+					if (!NowFloatWindow) {
+						HideWidth = CalcHideWidth(Model.Toolbar.DockType);
+					}
 					OnPropertyChanged();
 					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
@@ -217,13 +250,18 @@
 		/// </summary>
 		[PixelKind(Px.Device)]
 		public Rect ShowDeviceBarArea { get; set; }
+		///// <summary>
+		///// 隠れた状態のバー論理サイズ。
+		///// <para>横: Widthを使用</para>
+		///// <para>縦: Heightを使用</para>
+		///// </summary>
+		//[PixelKind(Px.Logical)]
+		//public Size HideSize { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
-		/// <para>横: Widthを使用</para>
-		/// <para>縦: Heightを使用</para>
 		/// </summary>
 		[PixelKind(Px.Logical)]
-		public Size HideSize { get; set; }
+		public double HideWidth { get; set; }
 		/// <summary>
 		/// 表示中の隠れたバーの論理領域。
 		/// </summary>
@@ -540,6 +578,15 @@
 			throw new NotImplementedException();
 		}
 
+		double GetBorderThicknessWidth()
+		{
+			return BorderThickness.Left + BorderThickness.Right;
+		}
+		double GetBorderThicknessHeight()
+		{
+			return BorderThickness.Top + BorderThickness.Bottom;
+		}
+
 		Size CalcIconSize()
 		{
 			return Model.Toolbar.IconScale.ToSize();
@@ -562,22 +609,34 @@
 		double CalcViewWidth(DockType dockType, Orientation orientation)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width + captionSize.Width;
+			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width + captionSize.Width + GetBorderThicknessWidth();
 		}
 		int CalcButtonWidthCount(double viewWidth, DockType dockType, Orientation orientation)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return (int)((viewWidth - captionSize.Width) / ButtonSize.Width);
+			return (int)((viewWidth - GetBorderThicknessWidth() - captionSize.Width) / ButtonSize.Width);
 		}
 		double CalcViewHeight(DockType dockType, Orientation orientation)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height + captionSize.Height;
+			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height + captionSize.Height + GetBorderThicknessHeight();
 		}
 		int CalcButtonHeightCount(double viewHeight, DockType dockType, Orientation orientation)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return (int)((viewHeight - captionSize.Height) / ButtonSize.Height);
+			return (int)((viewHeight -GetBorderThicknessHeight()- captionSize.Height) / ButtonSize.Height);
+		}
+
+		double CalcHideWidth(DockType dockType)
+		{
+			var map = new Dictionary<DockType, double>() {
+				{ DockType.Left, BorderThickness.Right },
+				{ DockType.Top, BorderThickness.Bottom },
+				{ DockType.Right, BorderThickness.Left },
+				{ DockType.Bottom, BorderThickness.Top },
+			};
+
+			return map[dockType];
 		}
 
 		#endregion

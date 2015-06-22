@@ -44,13 +44,18 @@
 		/// </summary>
 		[PixelKind(Px.Device)]
 		Rect ShowDeviceBarArea { get; set; }
+		///// <summary>
+		///// 隠れた状態のバー論理サイズ。
+		///// <para>横: Widthを使用</para>
+		///// <para>縦: Heightを使用</para>
+		///// </summary>
+		//[PixelKind(Px.Logical)]
+		//Size HideSize { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
-		/// <para>横: Widthを使用</para>
-		/// <para>縦: Heightを使用</para>
 		/// </summary>
 		[PixelKind(Px.Logical)]
-		Size HideSize { get; set; }
+		double HideWidth { get; set; }
 		/// <summary>
 		/// 表示中の隠れたバーの論理領域。
 		/// </summary>

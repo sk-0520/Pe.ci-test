@@ -6,6 +6,8 @@
 	using System.Windows;
 	using System.Windows.Input;
 	using System.Windows.Interop;
+	using System.Windows.Media.Animation;
+	using System.Windows.Shapes;
 	using System.Windows.Threading;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
@@ -50,6 +52,9 @@
 			if (view.Visibility == Visibility.Visible) {
 				Docking(RestrictionViewModel.DockType, RestrictionViewModel.AutoHide);
 			}
+
+			view.MouseEnter += View_MouseEnter;
+			view.MouseLeave += View_MouseLeave;
 		}
 
 		#region property
@@ -316,7 +321,7 @@
 			RestrictionViewModel.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
 
 			if (RestrictionViewModel.AutoHide) {
-				WaitHidden();
+				StartHideWait();
 			}
 
 			View.Dispatcher.BeginInvoke(
@@ -380,19 +385,21 @@
 		/// <summary>
 		/// 非表示状態への待ちを取りやめ。
 		/// </summary>
-		void StopHidden()
+		void StopHideWait()
 		{
 			Debug.Assert(RestrictionViewModel.AutoHide);
 			if (AutoHideTimer.IsEnabled) {
 				AutoHideTimer.Stop();
 			}
-			ToShow();
+			if (RestrictionViewModel.IsDocking) {
+				AutoHideToShow();
+			}
 		}
 
 		/// <summary>
 		/// 非表示状態への待ちを開始。
 		/// </summary>
-		void WaitHidden()
+		void StartHideWait()
 		{
 			Debug.Assert(RestrictionViewModel.AutoHide);
 
@@ -405,7 +412,7 @@
 		/// <summary>
 		/// 自動的に隠す状態から復帰
 		/// </summary>
-		protected virtual void ToShow()
+		protected virtual void AutoHideToShow()
 		{
 			Debug.Assert(RestrictionViewModel.DockType != DockType.None);
 			Debug.Assert(RestrictionViewModel.AutoHide);
@@ -457,7 +464,7 @@
 		/// 非表示状態へ遷移。
 		/// </summary>
 		/// <param name="force">強制的に遷移するか。</param>
-		protected void ToHidden(bool force)
+		protected void HideView(bool force)
 		{
 			Debug.Assert(RestrictionViewModel.DockType != DockType.None);
 			Debug.Assert(RestrictionViewModel.AutoHide);
@@ -479,22 +486,22 @@
 
 			switch (RestrictionViewModel.DockType) {
 				case DockType.Top:
-					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideSize.Height);
+					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideWidth);
 					deviceLocation = RestrictionViewModel.DockScreen.DeviceBounds.Location;
 					break;
 
 				case DockType.Bottom:
-					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideSize.Height);
+					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideWidth);
 					deviceLocation = new Point(RestrictionViewModel.DockScreen.DeviceBounds.X, RestrictionViewModel.DockScreen.DeviceBounds.Y - deviceSize.Height);
 					break;
 
 				case DockType.Left:
-					deviceSize = new Size(RestrictionViewModel.HideSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Height);
+					deviceSize = new Size(RestrictionViewModel.HideWidth, RestrictionViewModel.DockScreen.DeviceBounds.Height);
 					deviceLocation = RestrictionViewModel.DockScreen.DeviceBounds.Location;
 					break;
 
 				case DockType.Right:
-					deviceSize = new Size(RestrictionViewModel.HideSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Height);
+					deviceSize = new Size(RestrictionViewModel.HideWidth, RestrictionViewModel.DockScreen.DeviceBounds.Height);
 					deviceLocation = new Point(RestrictionViewModel.DockScreen.DeviceBounds.Right - deviceSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Y);
 					break;
 
@@ -502,49 +509,47 @@
 					throw new NotImplementedException();
 			}
 
-			HiddenView(!force, new Rect(deviceLocation, deviceSize));
+			HideViewImplement(!force, new Rect(deviceLocation, deviceSize));
 		}
 
-		static AW ToAW(DockType type, bool show)
-		{
-			var result = new Dictionary<DockType, AW>() {
-				{ DockType .Top,    show ? AW.AW_VER_POSITIVE: AW.AW_VER_NEGATIVE },
-				{ DockType .Bottom, show ? AW.AW_VER_NEGATIVE: AW.AW_VER_POSITIVE },
-				{ DockType .Left,   show ? AW.AW_HOR_POSITIVE: AW.AW_HOR_NEGATIVE },
-				{ DockType .Right,  show ? AW.AW_HOR_NEGATIVE: AW.AW_HOR_POSITIVE },
-			}[type];
+		//static AW ToAW(DockType type, bool show)
+		//{
+		//	var result = new Dictionary<DockType, AW>() {
+		//		{ DockType .Top,    show ? AW.AW_VER_POSITIVE: AW.AW_VER_NEGATIVE },
+		//		{ DockType .Bottom, show ? AW.AW_VER_NEGATIVE: AW.AW_VER_POSITIVE },
+		//		{ DockType .Left,   show ? AW.AW_HOR_POSITIVE: AW.AW_HOR_NEGATIVE },
+		//		{ DockType .Right,  show ? AW.AW_HOR_NEGATIVE: AW.AW_HOR_POSITIVE },
+		//	}[type];
 
-			if (!show) {
-				result |= AW.AW_HIDE;
-			}
+		//	if (!show) {
+		//		result |= AW.AW_HIDE;
+		//	}
 
-			return result;
-		}
+		//	return result;
+		//}
 
 		/// <summary>
 		/// 自動的に隠すの実際の処理。
 		/// </summary>
 		/// <param name="animation"></param>
 		/// <param name="deviceHiddenArea"></param>
-		protected virtual void HiddenView(bool animation, Rect deviceHiddenArea)
+		protected virtual void HideViewImplement(bool animation, Rect deviceHiddenArea)
 		{
 			var prevVisibility = RestrictionViewModel.Visibility;
 
 			if (RestrictionViewModel.Visibility == Visibility.Visible) {
-				if (animation) {
-					var animateTime = (int)RestrictionViewModel.HiddenAnimateTime.TotalMilliseconds;
-					var animateFlag = ToAW(RestrictionViewModel.DockType, false);
-					//NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
-				}
+
 				RestrictionViewModel.IsHidden = true;
 				RestrictionViewModel.HideLogicalBarArea = UIUtility.ToLogicalPixel(View, deviceHiddenArea);
-				
-				RestrictionViewModel.Visibility = prevVisibility;
-				//View.Left = deviceHiddenArea.X;
-				//View.Top = deviceHiddenArea.Y;
-				//View.Width = 10;
-				//View.Height = deviceHiddenArea.Height;
-				NativeMethods.MoveWindow(Handle, (int)deviceHiddenArea.X, (int)deviceHiddenArea.Y, (int)deviceHiddenArea.Width, (int)deviceHiddenArea.Height, true);
+
+				if (animation) {
+					//var animateTime = (int)RestrictionViewModel.HiddenAnimateTime.TotalMilliseconds;
+					//var animateFlag = ToAW(RestrictionViewModel.DockType, false);
+					//NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
+					/*TODO*/NativeMethods.MoveWindow(Handle, (int)deviceHiddenArea.X, (int)deviceHiddenArea.Y, (int)deviceHiddenArea.Width, (int)deviceHiddenArea.Height, true);
+				} else {
+					NativeMethods.MoveWindow(Handle, (int)deviceHiddenArea.X, (int)deviceHiddenArea.Y, (int)deviceHiddenArea.Width, (int)deviceHiddenArea.Height, true);
+				}
 			}
 		}
 
@@ -567,11 +572,26 @@
 		void TimerAutoHide_Tick(object sender, EventArgs e)
 		{
 			if (RestrictionViewModel.IsDocking) {
-				ToHidden(false);
+				HideView(false);
 			} else {
 				AutoHideTimer.Stop();
 			}
 		}
+
+		void View_MouseEnter(object sender, MouseEventArgs e)
+		{
+			if (RestrictionViewModel.AutoHide) {
+				StopHideWait();
+			}
+		}
+
+		void View_MouseLeave(object sender, MouseEventArgs e)
+		{
+			if (RestrictionViewModel.AutoHide) {
+				StartHideWait();
+			}
+		}
+
 
 	}
 }
