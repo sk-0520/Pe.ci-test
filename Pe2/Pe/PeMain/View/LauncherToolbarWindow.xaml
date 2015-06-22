@@ -86,51 +86,40 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
 						<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-							<xctk:ButtonChrome x:Name="ControlChrome" Background="{TemplateBinding Background}" RenderEnabled="{TemplateBinding IsEnabled}">
-								<ToggleButton
+							<xctk:ButtonChrome
+								x:Name="ControlChrome"
+								Background="{TemplateBinding Background}"
+								RenderEnabled="{TemplateBinding IsEnabled}" 
+								BorderThickness="0"
+							>
+								<ToggleButton 
 									x:Name="PART_DropDownButton"
+									Grid.Column="1"
 									IsTabStop="False"
-									Focusable="False"
+									Focusable="false"
 									IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-									IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
+									IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
+									Converter={StaticResource InverseBoolConverter}}"
 									BorderThickness="0"
-									Margin="{TemplateBinding Margin}"
-									Padding="{TemplateBinding Padding}"
 								>
-									<ToggleButton.Template>
-										<ControlTemplate TargetType="ToggleButton">
-											<ContentPresenter />
-										</ControlTemplate>
-									</ToggleButton.Template>
-									<ToggleButton 
-											x:Name="PART_ToggleButton"
-											Grid.Column="1"
-											IsTabStop="False"
-											Focusable="False"
-											IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-											IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
-											Converter={StaticResource InverseBoolConverter}}"
-											BorderThickness="0"
-										>
-										<Grid>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="*" />
-												<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
-											</Grid.ColumnDefinitions>
-											<ContentPresenter
-													Name="ActionButtonContent"
-													Margin="{TemplateBinding Padding}"
-													Content="{TemplateBinding Content}"
-													ContentTemplate="{TemplateBinding ContentTemplate}"
-													VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-													HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-													RecognizesAccessKey="true"
-												/>
-											<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
-												<Path Style="{StaticResource ArrowContent}" />
-											</Grid>
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*" />
+											<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
+										</Grid.ColumnDefinitions>
+										<ContentPresenter
+											Name="ActionButtonContent"
+											Margin="{TemplateBinding Padding}"
+											Content="{TemplateBinding Content}"
+											ContentTemplate="{TemplateBinding ContentTemplate}"
+											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											RecognizesAccessKey="true"
+										/>
+										<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
+											<Path Style="{StaticResource ArrowContent}" />
 										</Grid>
-									</ToggleButton>
+									</Grid>
 								</ToggleButton>
 							</xctk:ButtonChrome>
 							<Popup 
@@ -155,7 +144,12 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:SplitButton}">
 						<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-							<xctk:ButtonChrome x:Name="ControlChrome" Background="{TemplateBinding Background}" RenderEnabled="{TemplateBinding IsEnabled}">
+							<xctk:ButtonChrome
+								x:Name="ControlChrome" 
+								Background="{TemplateBinding Background}" 
+								RenderEnabled="{TemplateBinding IsEnabled}"
+								BorderThickness="0"
+							>
 								<Grid>
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*" />
@@ -206,7 +200,6 @@
 										IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
 										IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
 										Converter={StaticResource InverseBoolConverter}}"
-										BorderThickness="0"
 									>
 										<ToggleButton.Template>
 											<ControlTemplate TargetType="ToggleButton">
@@ -319,7 +312,7 @@
 		/>
 
 		<!-- メインボタン -->
-		<xctk:DropDownButton Style="{StaticResource LauncherDropDown}" >
+		<xctk:DropDownButton Style="{StaticResource LauncherDropDown}">
 			<xctk:DropDownButton.Content>
 				<StackPanel>
 					<Image Style="{StaticResource Image}"/>

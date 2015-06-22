@@ -124,6 +124,7 @@
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Converter\LogicalMultiEqualConverter.cs" />
     <Compile Include="View\Converter\LogicalMultiOrConverter.cs" />
+    <Compile Include="View\Converter\LogicalNotConverter.cs" />
     <Compile Include="View\ViewExtend\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
