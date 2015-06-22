@@ -154,21 +154,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-						if(Model.LauncherKind == LauncherKind.File) {
-							// コマンド
-							var command = Environment.ExpandEnvironmentVariables(Model.Command ?? string.Empty);
-							HasDataCommand = !string.IsNullOrWhiteSpace(command);
-							ExistsCommand = HasDataCommand && FileUtility.Exists(command);
-							// ディレクトリ
-							var parentDir = Path.GetDirectoryName(command);
-							HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
-							ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
-							var workDir = Environment.ExpandEnvironmentVariables(Model.WorkDirectoryPath ?? string.Empty);
-							HasDataWorkDirectory = !string.IsNullOrWhiteSpace(workDir);
-							ExistsWorkDirectory = HasDataWorkDirectory && Directory.Exists(workDir);
-						}
-						}));
+						Application.Current.Dispatcher.BeginInvoke(new Action(CalculateStatus));
 					}
 				);
 
@@ -184,6 +170,32 @@
 		Visibility ToVisibility(bool test)
 		{
 			return test ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		void CalculateStatus()
+		{
+			// コマンド
+			var command = Environment.ExpandEnvironmentVariables(Model.Command ?? string.Empty);
+			HasDataCommand = !string.IsNullOrWhiteSpace(command);
+
+			// 作業ディレクトリ
+			var workDir = Environment.ExpandEnvironmentVariables(Model.WorkDirectoryPath ?? string.Empty);
+			HasDataWorkDirectory = !string.IsNullOrWhiteSpace(workDir);
+			ExistsWorkDirectory = HasDataWorkDirectory && Directory.Exists(workDir);
+
+			switch(Model.LauncherKind) {
+				case LauncherKind.File: 
+					{
+						// ファイル(ディレクトリとして有効か)
+						ExistsCommand = HasDataCommand && FileUtility.Exists(command);
+
+						// 親ディレクトリ
+						var parentDir = Path.GetDirectoryName(command);
+						HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
+						ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
+					}
+					break;
+			}
 		}
 
 		#endregion

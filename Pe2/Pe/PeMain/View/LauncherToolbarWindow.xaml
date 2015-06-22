@@ -78,6 +78,7 @@
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" />
 			<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+			<Setter Property="Padding" Value="4" />
 		</Style>
 
 		<Style x:Key="DefaultButton">
@@ -350,6 +351,7 @@
 						<Grid.Resources>
 							<Style x:Key="PopupClose" TargetType="Button" BasedOn="{StaticResource PopupClose}">
 								<Setter Property="Command" Value="{Binding PositionChangeCommand}" />
+								<Setter Property="Margin" Value="2" />
 							</Style>
 						</Grid.Resources>
 						<Grid.ColumnDefinitions>
@@ -463,13 +465,13 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" Command="{Binding ExecuteCommand}" Style="{StaticResource PopupClose}" />
-										<Button Content="extra" Style="{StaticResource PopupClose}" />
+										<Button Content="normal" Command="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra" Command="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command" Style="{StaticResource PopupClose}" />
+										<Button Content="command" Command="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
