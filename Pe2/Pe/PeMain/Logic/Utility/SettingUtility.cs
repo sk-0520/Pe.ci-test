@@ -107,6 +107,12 @@
 					LauncherKind = LauncherKind.Command,
 					Command = @"ping"
 				});
+				setting.Items.Add(new LauncherItemModel() {
+					Id = "test4",
+					Name = "name4",
+					LauncherKind = LauncherKind.File,
+					Command = @"c:\"
+				});
 			}
 			// --------------------------------
 		}
@@ -123,6 +129,7 @@
 					"test1",
 					"test2",
 					"test3",
+					"test4",
 				});
 				//------------------------
 				setting.Groups.Add(initGroup);

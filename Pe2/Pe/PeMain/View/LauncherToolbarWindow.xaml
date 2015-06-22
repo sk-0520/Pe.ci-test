@@ -3,6 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
@@ -400,6 +401,13 @@
 
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding ExecuteCommand}">
+							
+							<i:Interaction.Triggers>
+								<i:EventTrigger EventName="Opened">
+									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
+								</i:EventTrigger>
+							</i:Interaction.Triggers>
+							
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource Image}"/>
@@ -410,26 +418,26 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" Command="{Binding ExecuteCommand}" Style="{StaticResource PopupClose}" />
-										<Button Content="extra"  Style="{StaticResource PopupClose}" />
+										<Button Content="normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding ExecuteCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra"  IsEnabled="{Binding ExistsCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="file" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="parent dir"  Style="{StaticResource PopupClose}" />
-										<Button Content="work dir"  Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" IsEnabled="{Binding ExistsParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="work dir" IsEnabled="{Binding ExistsWorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command" Style="{StaticResource PopupClose}" />
-										<Button Content="parent dir" Style="{StaticResource PopupClose}" />
-										<Button Content="work dir" />
+										<Button Content="command"  IsEnabled="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" IsEnabled="{Binding HasDataParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="work dir" IsEnabled="{Binding HasDataWorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="setting" Style="{StaticResource PopupClose}" />
-										<Button Content="property" Style="{StaticResource PopupClose}" />
+										<Button Content="property" IsEnabled="{Binding ExistsParentDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>
