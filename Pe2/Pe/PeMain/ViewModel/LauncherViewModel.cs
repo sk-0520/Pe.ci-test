@@ -162,9 +162,11 @@
 							ExistsCommand = HasDataCommand && FileUtility.Exists(command);
 							// ディレクトリ
 							var parentDir = Path.GetDirectoryName(command);
-							ExistsParentDirectory = ExistsCommand && !string.IsNullOrWhiteSpace(parentDir) && Directory.Exists(parentDir);
+							HasDataParentDirectory = !string.IsNullOrWhiteSpace(parentDir);
+							ExistsParentDirectory = ExistsCommand && HasDataParentDirectory && Directory.Exists(parentDir);
 							var workDir = Environment.ExpandEnvironmentVariables(Model.WorkDirectoryPath ?? string.Empty);
-							ExistsWorkDirectory = !string.IsNullOrWhiteSpace(workDir) && Directory.Exists(workDir);
+							HasDataWorkDirectory = !string.IsNullOrWhiteSpace(workDir);
+							ExistsWorkDirectory = HasDataWorkDirectory && Directory.Exists(workDir);
 						}
 						}));
 					}
