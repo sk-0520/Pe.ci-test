@@ -93,11 +93,20 @@
 			</Setter>
 		</Style>
 
-		<Style x:Key="DefaultToggleButtonContent" BasedOn="{StaticResource DefaultButton}">
+		<Style x:Key="DefaultSplitContent" BasedOn="{StaticResource DefaultButton}">
 		</Style>
 
 		
-		<Style x:Key="DefaultToggleButtonMenu" BasedOn="{StaticResource DefaultButton}">
+		<Style x:Key="DefaultSplitMenu" BasedOn="{StaticResource DefaultButton}">
+			<Setter Property="Control.Background">
+				<Setter.Value>
+					<LinearGradientBrush StartPoint="1,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
+						<GradientStop Color="#ffffffff"/>
+						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
+						<GradientStop Color="#11000000" Offset="1"/>
+					</LinearGradientBrush>
+				</Setter.Value>
+			</Setter>
 		</Style>
 		
 
@@ -205,7 +214,7 @@
 										RenderEnabled="{TemplateBinding IsEnabled}"
 										RenderMouseOver="{Binding IsMouseOver, ElementName=PART_ActionButton}"
 										RenderPressed="{Binding IsPressed, ElementName=PART_ActionButton}"
-										Style="{StaticResource DefaultButton}"
+										Style="{StaticResource DefaultSplitContent}"
 									>
 										<ContentPresenter
 											Name="ActionButtonContent"
@@ -236,7 +245,7 @@
 										RenderNormal="True"
 										RenderChecked="{TemplateBinding IsOpen}"
 										RenderEnabled="{TemplateBinding IsEnabled}"
-										Style="{StaticResource DefaultToggleButtonContent}"
+										Style="{StaticResource DefaultSplitMenu}"
 									>
 										<xctk:ButtonChrome.RenderMouseOver>
 											<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
