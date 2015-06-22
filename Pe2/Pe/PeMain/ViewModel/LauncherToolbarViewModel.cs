@@ -419,6 +419,20 @@
 			}
 		}
 
+		public ICommand SwitchTopMostCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						TopMost = !TopMost;
+					}
+				);
+
+				return result;
+			}
+		}
+
 		public ICommand GroupChangeCommand
 		{
 			get

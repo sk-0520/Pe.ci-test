@@ -22,7 +22,7 @@
 	ScrollViewer.VerticalScrollBarVisibility="Disabled"
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 
-	Topmost="{Binding TopMost}"
+	Topmost="{Binding TopMost, Mode=OneWay}"
 	AllowsTransparency="True"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 	xmlns:PD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
@@ -348,8 +348,8 @@
 						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
-					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" />
-					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" />
+					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
+					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}"/>
 					<Separator />
 					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" />
 					<Separator />
