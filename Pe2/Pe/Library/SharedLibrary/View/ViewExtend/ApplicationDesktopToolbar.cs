@@ -369,8 +369,9 @@
 			RestrictionViewModel.IsHidden = false;
 
 			if (dockType == DockType.None) {
+				//RestrictionViewModel.DockType = dockType;
 				RestrictionViewModel.DockType = dockType;
-				RestrictionViewModel.ChangingWindowMode();
+				RestrictionViewModel.ChangingWindowMode(dockType);
 				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
 				return;
 			}

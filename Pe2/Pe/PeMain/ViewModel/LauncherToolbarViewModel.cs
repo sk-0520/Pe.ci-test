@@ -34,6 +34,11 @@
 	{
 		#region static
 
+		static double GetCaptionSize()
+		{
+			return 10;
+		}
+
 		static Thickness GetBorderThickness(DockType dockType, Visual visual)
 		{
 			var borderSize = SystemInformation.BorderSize;
@@ -80,6 +85,16 @@
 			return map[dockType];
 		}
 
+		Size GetMinSize(DockType dockType, Orientation orientation, Thickness borderThickness, Size buttonSize)
+		{
+			var captionSize = GetCaptionSize(orientation);
+
+			return new Size(
+				captionSize.Width + borderThickness.GetHorizon() + buttonSize.Width,
+				captionSize.Height + borderThickness.GetVertical() + buttonSize.Height
+			);
+		}
+
 		#endregion
 
 		#region variable
@@ -89,18 +104,21 @@
 		double _captionSize;
 		Thickness _borderThickness;
 		Brush _borderBrush;
+		Size _minSize;
 
 		#endregion
 
 		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, INonProcess nonProcess)
 			: base(model, view)
 		{
+			NonProcess = nonProcess;
+
+			this._captionSize = GetCaptionSize();
 			MenuWidth = GetMenuWidth();
 			IconSize = GetIconSize(Model.Toolbar.IconScale);
 			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
-			this._captionSize = 10;
 
-			BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
+			//BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
 			BorderBrush = View.Background;
 
 			var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
@@ -110,12 +128,9 @@
 				backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
 			}
 
-			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
-			if (!NowFloatWindow) {
-				HideWidth = GetHideWidth(Model.Toolbar.DockType);
-			}
 
-			NonProcess = nonProcess;
+			CalculateWindowStatus();
+
 		}
 
 		#region property
@@ -267,10 +282,7 @@
 			{
 				if(Model.Toolbar.DockType != value) {
 					Model.Toolbar.DockType = value;
-					if (!NowFloatWindow) {
-						HideWidth = GetHideWidth(Model.Toolbar.DockType);
-					}
-					BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
+					CalculateWindowStatus();
 					OnPropertyChanged();
 					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
@@ -352,7 +364,7 @@
 		/// </summary>
 		public ScreenModel DockScreen { get; set; }
 
-		public void ChangingWindowMode()
+		public void ChangingWindowMode(DockType dockType)
 		{
 			var logicalRect = new Rect(
 				FloatLeft,
@@ -366,6 +378,8 @@
 			NativeMethods.SetWindowPos(View.Handle, IntPtr.Zero, podRect.Left, podRect.Top, podRect.Width, podRect.Height, SWP.SWP_NOSENDCHANGING | SWP.SWP_NOREDRAW);
 			//View.InvalidateVisual();
 			//View.UpdateLayout()
+			//DockType = dockType;
+			//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
 		}
 
 		#endregion
@@ -398,7 +412,7 @@
 
 		public Visibility CaptionVisibility
 		{
-			get { return Visibility.Visible; }
+			get { return NowFloatWindow ? Visibility.Visible: Visibility.Collapsed; }
 		}
 		public double CaptionWidth
 		{
@@ -423,15 +437,6 @@
 			}
 		}
 
-		Size GetCaptionSize(Orientation orientation)
-		{
-			if (orientation == Orientation.Horizontal) {
-				return new Size(this._captionSize, 0);
-			} else {
-				return new Size(0, this._captionSize);
-			}
-		}
-
 		public Orientation Orientation
 		{
 			get
@@ -448,6 +453,18 @@
 
 					default:
 						throw new NotImplementedException();
+				}
+			}
+		}
+
+		public Size MinSize
+		{
+			get { return this._minSize; }
+			set
+			{
+				if (this._minSize != value) {
+					this._minSize = value;
+					OnPropertyChanged();
 				}
 			}
 		}
@@ -484,8 +501,6 @@
 				}
 			}
 		}
-
-		//
 
 		public IEnumerable<LauncherViewModel> LauncherItems 
 		{
@@ -619,6 +634,30 @@
 
 		#region function
 
+		void CalculateWindowStatus()
+		{
+			BorderThickness = GetBorderThickness(DockType, View);
+
+			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
+
+			if (!NowFloatWindow) {
+				HideWidth = GetHideWidth(DockType);
+				MinSize = new Size(0, 0);
+			} else {
+				//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
+			}
+
+		}
+
+		Size GetCaptionSize(Orientation orientation)
+		{
+			if (orientation == Orientation.Horizontal) {
+				return new Size(this._captionSize, 0);
+			} else {
+				return new Size(0, this._captionSize);
+			}
+		}
+
 		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
 		{
 			if(groupItem.GroupKind == GroupKind.LauncherItems) {
@@ -652,6 +691,7 @@
 			var captionSize = GetCaptionSize(orientation);
 			return (int)((viewHeight - borderThickness.GetVertical() - captionSize.Height) / ButtonSize.Height);
 		}
+
 
 		#endregion
 

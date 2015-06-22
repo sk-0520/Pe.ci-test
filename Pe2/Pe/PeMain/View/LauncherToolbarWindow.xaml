@@ -16,6 +16,8 @@
 	Width="{Binding FloatWidth, Mode=TwoWay}"
 	Left="{Binding FloatLeft, Mode=TwoWay}" 
 	Top="{Binding FloatTop, Mode=TwoWay}"
+	MinHeight="{Binding MinSize.Height, Mode=OneWay}"
+	MinWidth="{Binding MinSize.Width, Mode=OneWay}"
 	ShowInTaskbar="False" 
 	WindowStyle="None"
 	ResizeMode="CanResizeWithGrip"

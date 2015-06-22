@@ -70,6 +70,6 @@
 		/// <summary>
 		/// 指定位置に合わせてデータ書き換え
 		/// </summary>
-		void ChangingWindowMode();
+		void ChangingWindowMode(DockType dockType);
 	}
 }
