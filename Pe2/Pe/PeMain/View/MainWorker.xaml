@@ -5,7 +5,13 @@
 	xmlns:Taskbar="http://www.hardcodet.net/taskbar"
 	xmlns:local="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary>
+			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+		</ResourceDictionary>
+	</ResourceDictionary.MergedDictionaries>
 
 	<ContextMenu x:Shared="false" x:Key="TasktrayContextMenu">
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
@@ -13,6 +19,8 @@
 			<MenuItem.ItemContainerStyle>
 				<Style TargetType="MenuItem">
 					<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
+					<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
+					<Setter Property="CommandParameter" Value="{Binding Visible, Converter={StaticResource LogicalNotConverter}}" />
 				</Style>
 			</MenuItem.ItemContainerStyle>
 			<MenuItem.ItemTemplate>
