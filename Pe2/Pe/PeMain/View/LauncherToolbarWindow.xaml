@@ -371,7 +371,11 @@
 					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
 					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
 					<Separator />
-					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" />
+					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
+						<MenuItem.CommandParameter>
+							<sys:Boolean>false</sys:Boolean>
+						</MenuItem.CommandParameter>
+					</MenuItem>
 					<Separator />
 					<ItemsControl ItemsSource="{Binding GroupItems, Mode=OneWay}">
 						<ItemsControl.ItemTemplate>
