@@ -41,10 +41,12 @@
 
 		#endregion
 
-		public ApplicationDesktopToolbar(Window view, IApplicationDesktopToolbarData restrictionViewModel)
-			: base(view, restrictionViewModel)
+		public ApplicationDesktopToolbar(Window view, IApplicationDesktopToolbarData restrictionViewModel, INonProcess nonProcess)
+			: base(view, restrictionViewModel, nonProcess)
 		{
 			View.IsVisibleChanged += View_IsVisibleChanged;
+			View.MouseEnter += View_MouseEnter;
+			View.MouseLeave += View_MouseLeave;
 
 			AutoHideTimer = new DispatcherTimer();
 			AutoHideTimer.Tick += TimerAutoHide_Tick;
@@ -52,9 +54,6 @@
 			if (view.Visibility == Visibility.Visible) {
 				Docking(RestrictionViewModel.DockType, RestrictionViewModel.AutoHide);
 			}
-
-			view.MouseEnter += View_MouseEnter;
-			view.MouseLeave += View_MouseLeave;
 		}
 
 		#region property
@@ -70,6 +69,8 @@
 		{
 			if (!IsDisposed) {
 				View.IsVisibleChanged -= View_IsVisibleChanged;
+				View.MouseEnter -= View_MouseEnter;
+				View.MouseLeave -= View_MouseLeave;
 			}
 			base.Dispose(disposing);
 		}

@@ -27,9 +27,60 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using System.ComponentModel;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess
 	{
+		#region static
+
+		static Thickness GetBorderThickness(DockType dockType)
+		{
+			var baseWidth = 2;
+
+			var map = new Dictionary<DockType, Thickness>() {
+				{ DockType.None, new Thickness(baseWidth) },
+				{ DockType.Left, new Thickness(0, 0, baseWidth, 0) },
+				{ DockType.Top, new Thickness(0, 0, 0, baseWidth) },
+				{ DockType.Right, new Thickness(baseWidth, 0, 0, 0)},
+				{ DockType.Bottom, new Thickness(0, baseWidth, 0, 0)},
+			};
+
+			return map[dockType];
+		}
+
+		static Size GetIconSize(IconScale iconScale)
+		{
+			return iconScale.ToSize();
+		}
+
+		static double GetMenuWidth()
+		{
+			return 20;
+		}
+
+		static Size GetButtonSize(Size iconSize, double menuWidth, bool showText, double textWidth)
+		{
+			//TODO: どれくらいのサイズがいいかね。
+			var padding = 10.0;
+
+			var mainButtonSize = iconSize;
+			return new Size(mainButtonSize.Width + padding + menuWidth + (showText ? textWidth : 0), mainButtonSize.Height + padding);
+		}
+
+		double GetHideWidth(DockType dockType)
+		{
+			var map = new Dictionary<DockType, double>() {
+				{ DockType.Left, BorderThickness.Right },
+				{ DockType.Top, BorderThickness.Bottom },
+				{ DockType.Right, BorderThickness.Left },
+				{ DockType.Bottom, BorderThickness.Top },
+			};
+
+			return map[dockType];
+		}
+
+		#endregion
+
 		#region variable
 
 		LauncherGroupItemModel _selectedGroup = null;
@@ -44,16 +95,23 @@
 			: base(model, view)
 		{
 			MenuWidth = GetMenuWidth();
-			IconSize = CalcIconSize();
-			ButtonSize = CalcButtonSize();
+			IconSize = GetIconSize(Model.Toolbar.IconScale);
+			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
 			this._captionSize = 10;
 
-			BorderThickness = new Thickness(10);
-			BorderBrush = Brushes.Beige;
+			BorderThickness = GetBorderThickness(Model.Toolbar.DockType);
+			BorderBrush = View.Background;
 
-			BarSize = new Size(ButtonSize.Width + GetBorderThicknessWidth(), ButtonSize.Height + GetBorderThicknessHeight());
+			var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
+				Window.BackgroundProperty, typeof(Brush)
+			);
+			if (backgroundPropertyDescriptor != null) {
+				backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
+			}
+
+			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
 			if (!NowFloatWindow) {
-				HideWidth = CalcHideWidth(Model.Toolbar.DockType);
+				HideWidth = GetHideWidth(Model.Toolbar.DockType);
 			}
 
 			NonProcess = nonProcess;
@@ -63,7 +121,8 @@
 
 		public LauncherIconCaching LauncherIcons { get; set; }
 
-		public Thickness BorderThickness {
+		public Thickness BorderThickness
+		{
 			get { return this._borderThickness; } 
 			set
 			{
@@ -157,12 +216,12 @@
 			{
 				return IsHidden
 				? HideLogicalBarArea.Width
-				: CalcViewWidth(DockType, Orientation);
+				: CalculateViewWidth(DockType, Orientation, BorderThickness);
 			}
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalcButtonWidthCount(value, DockType, Orientation);
+					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionHeight");
 				}
@@ -174,12 +233,12 @@
 			{
 				return IsHidden
 					? HideLogicalBarArea.Height
-					: CalcViewHeight(DockType, Orientation);
+					: CalculateViewHeight(DockType, Orientation, BorderThickness);
 			}
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalcButtonHeightCount(value, DockType, Orientation);
+					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionWidth");
 				}
@@ -208,8 +267,9 @@
 				if(Model.Toolbar.DockType != value) {
 					Model.Toolbar.DockType = value;
 					if (!NowFloatWindow) {
-						HideWidth = CalcHideWidth(Model.Toolbar.DockType);
+						HideWidth = GetHideWidth(Model.Toolbar.DockType);
 					}
+					BorderThickness = GetBorderThickness(Model.Toolbar.DockType);
 					OnPropertyChanged();
 					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
@@ -578,69 +638,36 @@
 			throw new NotImplementedException();
 		}
 
-		double GetBorderThicknessWidth()
-		{
-			return BorderThickness.Left + BorderThickness.Right;
-		}
-		double GetBorderThicknessHeight()
-		{
-			return BorderThickness.Top + BorderThickness.Bottom;
-		}
-
-		Size CalcIconSize()
-		{
-			return Model.Toolbar.IconScale.ToSize();
-		}
-
-		double GetMenuWidth()
-		{
-			return 20;
-		}
-
-		Size CalcButtonSize()
-		{
-			//TODO: どれくらいのサイズがいいかね。
-			var padding = 10.0;
-
-			var mainButtonSize = IconSize;
-			return new Size(mainButtonSize.Width + padding + MenuWidth + (Model.Toolbar.Visible ? Model.Toolbar.TextWidth : 0), mainButtonSize.Height + padding);
-		}
-
-		double CalcViewWidth(DockType dockType, Orientation orientation)
+		double CalculateViewWidth(DockType dockType, Orientation orientation, Thickness borderThickness)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width + captionSize.Width + GetBorderThicknessWidth();
+			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width + captionSize.Width + borderThickness.GetHorizon();
 		}
-		int CalcButtonWidthCount(double viewWidth, DockType dockType, Orientation orientation)
+		int CalculateButtonWidthCount(DockType dockType, Orientation orientation, Thickness borderThickness, double viewWidth)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return (int)((viewWidth - GetBorderThicknessWidth() - captionSize.Width) / ButtonSize.Width);
+			return (int)((viewWidth - borderThickness.GetHorizon() - captionSize.Width) / ButtonSize.Width);
 		}
-		double CalcViewHeight(DockType dockType, Orientation orientation)
+		double CalculateViewHeight(DockType dockType, Orientation orientation, Thickness borderThickness)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height + captionSize.Height + GetBorderThicknessHeight();
+			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height + captionSize.Height + borderThickness.GetVertical();
 		}
-		int CalcButtonHeightCount(double viewHeight, DockType dockType, Orientation orientation)
+		int CalculateButtonHeightCount(DockType dockType, Orientation orientation, Thickness borderThickness, double viewHeight)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return (int)((viewHeight -GetBorderThicknessHeight()- captionSize.Height) / ButtonSize.Height);
-		}
-
-		double CalcHideWidth(DockType dockType)
-		{
-			var map = new Dictionary<DockType, double>() {
-				{ DockType.Left, BorderThickness.Right },
-				{ DockType.Top, BorderThickness.Bottom },
-				{ DockType.Right, BorderThickness.Left },
-				{ DockType.Bottom, BorderThickness.Top },
-			};
-
-			return map[dockType];
+			return (int)((viewHeight - borderThickness.GetVertical() - captionSize.Height) / ButtonSize.Height);
 		}
 
 		#endregion
 
+		void OnBackgroundChanged(object sender, EventArgs e)
+		{
+			var viewBrush = View.Background as SolidColorBrush;
+			if (viewBrush != null) {
+				BorderBrush = viewBrush;
+			}
+		}
 
 	}
 }

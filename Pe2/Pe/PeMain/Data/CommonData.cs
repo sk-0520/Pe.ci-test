@@ -30,10 +30,16 @@
 		public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
 		public AppLanguageManager Language { get; set; }
 		ILanguage INonProcess.Language { get { return Language; } }
+
 		public ILogger Logger { get; set; }
 		public IAppSender AppSender { get; set; }
 
 		public LauncherIconCaching LauncherIcons { get; set; }
+
+		/// <summary>
+		/// 呼び出し元から見てると心臓に悪い。
+		/// </summary>
+		public INonProcess NonProcess { get { return this; } }
 
 		#endregion
 
@@ -51,5 +57,6 @@
 		}
 
 		#endregion
+
 	}
 }

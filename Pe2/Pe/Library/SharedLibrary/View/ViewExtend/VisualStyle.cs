@@ -15,8 +15,8 @@
 
 	public class VisualStyle : WindowsViewExtendBase<IVisualStyleData>
 	{
-		public VisualStyle(Window view, IVisualStyleData restrictionViewModel)
-			: base(view, restrictionViewModel)
+		public VisualStyle(Window view, IVisualStyleData restrictionViewModel, INonProcess nonProcess)
+			: base(view, restrictionViewModel, nonProcess)
 		{
 			StockBackground = view.Background;
 

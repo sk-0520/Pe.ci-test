@@ -110,8 +110,8 @@
 
 			base.OnLoaded(sender, e);
 
-			Appbar = new ApplicationDesktopToolbar(this, ViewModel);
-			VisualStyle = new VisualStyle(this, ViewModel);
+			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
+			VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

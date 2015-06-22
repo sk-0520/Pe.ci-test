@@ -21,7 +21,7 @@
 	public abstract class WindowsViewExtendBase<TViewModel> : DisposeFinalizeBase
 		where TViewModel : class, IWindowsViewExtendRestrictionViewModelMarker
 	{
-		public WindowsViewExtendBase(Window view, TViewModel restrictionViewModel)
+		public WindowsViewExtendBase(Window view, TViewModel restrictionViewModel, INonProcess nonProcess)
 			: base()
 		{
 			CheckUtility.EnforceNotNull(view);
@@ -30,7 +30,7 @@
 
 			View = view;
 			RestrictionViewModel = restrictionViewModel;
-
+			NonProcess = NonProcess;
 
 			Handle = HandleUtility.GetWindowHandle(View);
 			HwndSource = HwndSource.FromHwnd(Handle);
@@ -40,6 +40,7 @@
 
 		protected TViewModel RestrictionViewModel { get; private set; }
 		protected Window View { get; private set; }
+		protected INonProcess NonProcess { get; private set; }
 		protected IntPtr Handle { get; private set; }
 		protected HwndSource HwndSource { get; private set; }
 
