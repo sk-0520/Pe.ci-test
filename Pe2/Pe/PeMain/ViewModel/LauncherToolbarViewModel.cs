@@ -641,6 +641,21 @@
 			}
 		}
 
+		public ICommand ChangeVisibleCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var visible = (bool)o;
+						Visible = visible;
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function

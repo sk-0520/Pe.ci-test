@@ -314,7 +314,7 @@
 
 		<!--<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />-->
 	</W:CommonDataWindow.Resources>
-
+	
 	<W:CommonDataWindow.ContextMenu>
 		<ContextMenu ItemsSource="{Binding GroupItems, Mode=OneWay}">
 			<ContextMenu.ItemContainerStyle>
@@ -322,15 +322,6 @@
 			</ContextMenu.ItemContainerStyle>
 		</ContextMenu>
 	</W:CommonDataWindow.ContextMenu>
-	<!--<WindowChrome.WindowChrome>
-		<WindowChrome
-			CaptionHeight="0"
-			GlassFrameThickness="0,0,0,-1"
-			NonClientFrameEdges="Bottom"
-			ResizeBorderThickness="0"
-			UseAeroCaptionButtons="False"
-		/>
-	</WindowChrome.WindowChrome>-->
 
 	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" >
 
