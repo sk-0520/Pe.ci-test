@@ -110,7 +110,7 @@
 											IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
 											IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
 											Converter={StaticResource InverseBoolConverter}}"
-											BorderThickness="1"
+											BorderThickness="0"
 										>
 										<Grid>
 											<Grid.ColumnDefinitions>
