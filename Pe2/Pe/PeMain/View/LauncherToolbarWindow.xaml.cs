@@ -142,10 +142,10 @@
 
 		#region IApplicationDesktopToolbar
 
-		public void Docking(DockType dockType)
+		public void Docking(DockType dockType, bool autoHide)
 		{
 			if (Appbar != null) {
-				Appbar.Docking(dockType);
+				Appbar.Docking(dockType, autoHide);
 				if(VisualStyle != null) {
 					//VisualStyle.UnsetStyle();
 					VisualStyle.SetStyle();

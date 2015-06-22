@@ -198,7 +198,7 @@
 					Model.Toolbar.AutoHide = value;
 					OnPropertyChanged();
 					if (HasView) {
-						View.Docking(DockType);
+						View.Docking(DockType, AutoHide);
 					}
 				}
 			}
@@ -464,7 +464,7 @@
 				var result = CreateCommand(
 					o => {
 						var dockType = (DockType)o;
-						View.Docking(dockType);
+						View.Docking(dockType, AutoHide);
 					},
 					o => {
 						var dockType = (DockType)o;

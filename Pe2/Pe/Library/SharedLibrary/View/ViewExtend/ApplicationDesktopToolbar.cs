@@ -48,7 +48,7 @@
 			AutoHideTimer.Tick += TimerAutoHide_Tick;
 
 			if (view.Visibility == Visibility.Visible) {
-				Docking(RestrictionViewModel.DockType);
+				Docking(RestrictionViewModel.DockType, RestrictionViewModel.AutoHide);
 			}
 		}
 
@@ -341,7 +341,7 @@
 		/// 
 		/// すでにドッキングされている場合はドッキングを再度実行する
 		/// </summary>
-		public void Docking(DockType dockType)
+		public void Docking(DockType dockType, bool autoHide)
 		{
 			//if(this.timerAutoHidden.Enabled) {
 			//	this.timerAutoHidden.Stop();
@@ -374,7 +374,7 @@
 				RegistAppbar();
 			}
 
-			DockingFromParameter(dockType, RestrictionViewModel.AutoHide);
+			DockingFromParameter(dockType, autoHide);
 		}
 
 		/// <summary>
@@ -555,7 +555,7 @@
 			if (e.NewValue != e.OldValue) {
 				var isVisible = (bool)e.NewValue;
 				if (isVisible) {
-					Docking(RestrictionViewModel.DockType);
+					Docking(RestrictionViewModel.DockType, RestrictionViewModel.AutoHide);
 				} else {
 					if (RestrictionViewModel.IsDocking) {
 						UnresistAppbar();

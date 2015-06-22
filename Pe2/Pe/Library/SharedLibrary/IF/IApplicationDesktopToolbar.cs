@@ -8,6 +8,6 @@
 
 	public interface IApplicationDesktopToolbar
 	{
-		void Docking(DockType dockType);
+		void Docking(DockType dockType, bool autoHide);
 	}
 }
