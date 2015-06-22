@@ -34,9 +34,18 @@
 	{
 		#region static
 
-		static double GetCaptionSize()
+		static double GetCaptionWidth()
 		{
 			return 10;
+		}
+
+		static Size GetCaptionSize(Orientation orientation, double captionWidth)
+		{
+			if (orientation == Orientation.Horizontal) {
+				return new Size(captionWidth, 0);
+			} else {
+				return new Size(0, captionWidth);
+			}
 		}
 
 		static Thickness GetBorderThickness(DockType dockType, Visual visual)
@@ -85,9 +94,26 @@
 			return map[dockType];
 		}
 
-		Size GetMinSize(DockType dockType, Orientation orientation, Thickness borderThickness, Size buttonSize)
+		static Orientation GetOrientation(DockType dockType)
 		{
-			var captionSize = GetCaptionSize(orientation);
+			switch (dockType) {
+				case DockType.Left:
+				case DockType.Right:
+					return Orientation.Vertical;
+
+				case DockType.Top:
+				case DockType.Bottom:
+				case DockType.None:
+					return Orientation.Horizontal;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+		static Size GetMinSize(DockType dockType, Orientation orientation, Thickness borderThickness, Size buttonSize, double captionWidth)
+		{
+			var captionSize = GetCaptionSize(orientation, captionWidth);
 
 			return new Size(
 				captionSize.Width + borderThickness.GetHorizon() + buttonSize.Width,
@@ -101,7 +127,7 @@
 
 		LauncherGroupItemModel _selectedGroup = null;
 		ObservableCollection<LauncherViewModel> _launcherItems = null;
-		double _captionSize;
+		double _captionWidth;
 		Thickness _borderThickness;
 		Brush _borderBrush;
 		Size _minSize;
@@ -113,7 +139,7 @@
 		{
 			NonProcess = nonProcess;
 
-			this._captionSize = GetCaptionSize();
+			this._captionWidth = GetCaptionWidth();
 			MenuWidth = GetMenuWidth();
 			IconSize = GetIconSize(Model.Toolbar.IconScale);
 			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
@@ -129,7 +155,7 @@
 			}
 
 
-			CalculateWindowStatus();
+			CalculateWindowStatus(DockType);
 
 		}
 
@@ -232,12 +258,12 @@
 			{
 				return IsHidden
 				? HideLogicalBarArea.Width
-				: CalculateViewWidth(DockType, Orientation, BorderThickness);
+				: CalculateViewWidth(DockType, Orientation, BorderThickness, this._captionWidth);
 			}
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, value);
+					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionHeight");
 				}
@@ -249,12 +275,12 @@
 			{
 				return IsHidden
 					? HideLogicalBarArea.Height
-					: CalculateViewHeight(DockType, Orientation, BorderThickness);
+					: CalculateViewHeight(DockType, Orientation, BorderThickness, this._captionWidth);
 			}
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, value);
+					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionWidth");
 				}
@@ -281,8 +307,8 @@
 			set 
 			{
 				if(Model.Toolbar.DockType != value) {
+					CalculateWindowStatus(value);
 					Model.Toolbar.DockType = value;
-					CalculateWindowStatus();
 					OnPropertyChanged();
 					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
@@ -419,7 +445,7 @@
 			get 
 			{
 				if (Orientation == Orientation.Horizontal) {
-					return this._captionSize;
+					return this._captionWidth;
 				} else {
 					return HasView ? View.Width : ButtonSize.Width;
 				}
@@ -430,7 +456,7 @@
 			get
 			{
 				if (Orientation == Orientation.Vertical) {
-					return this._captionSize;
+					return this._captionWidth;
 				} else {
 					return HasView ? View.Height: ButtonSize.Height;
 				}
@@ -439,22 +465,7 @@
 
 		public Orientation Orientation
 		{
-			get
-			{
-				switch (DockType) {
-					case DockType.Left:
-					case DockType.Right:
-						return Orientation.Vertical;
-
-					case DockType.Top:
-					case DockType.Bottom:
-					case DockType.None:
-						return Orientation.Horizontal;
-
-					default:
-						throw new NotImplementedException();
-				}
-			}
+			get { return GetOrientation(DockType); }
 		}
 
 		public Size MinSize
@@ -634,28 +645,20 @@
 
 		#region function
 
-		void CalculateWindowStatus()
+		void CalculateWindowStatus(DockType dockType)
 		{
-			BorderThickness = GetBorderThickness(DockType, View);
+			BorderThickness = GetBorderThickness(dockType, View);
 
 			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
 
-			if (!NowFloatWindow) {
-				HideWidth = GetHideWidth(DockType);
+			if (dockType != DockType.None) {
+				HideWidth = GetHideWidth(dockType);
 				MinSize = new Size(0, 0);
 			} else {
-				//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
+				var orientation = GetOrientation(dockType);
+				MinSize = GetMinSize(dockType, orientation, BorderThickness, ButtonSize, this._captionWidth);
 			}
 
-		}
-
-		Size GetCaptionSize(Orientation orientation)
-		{
-			if (orientation == Orientation.Horizontal) {
-				return new Size(this._captionSize, 0);
-			} else {
-				return new Size(0, this._captionSize);
-			}
 		}
 
 		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
@@ -671,24 +674,24 @@
 			throw new NotImplementedException();
 		}
 
-		double CalculateViewWidth(DockType dockType, Orientation orientation, Thickness borderThickness)
+		double CalculateViewWidth(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth)
 		{
-			var captionSize = GetCaptionSize(orientation);
+			var captionSize = GetCaptionSize(orientation, captionWidth);
 			return Model.Toolbar.FloatToolbar.WidthButtonCount * ButtonSize.Width + captionSize.Width + borderThickness.GetHorizon();
 		}
-		int CalculateButtonWidthCount(DockType dockType, Orientation orientation, Thickness borderThickness, double viewWidth)
+		int CalculateButtonWidthCount(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth, double viewWidth)
 		{
-			var captionSize = GetCaptionSize(orientation);
+			var captionSize = GetCaptionSize(orientation, captionWidth);
 			return (int)((viewWidth - borderThickness.GetHorizon() - captionSize.Width) / ButtonSize.Width);
 		}
-		double CalculateViewHeight(DockType dockType, Orientation orientation, Thickness borderThickness)
+		double CalculateViewHeight(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth)
 		{
-			var captionSize = GetCaptionSize(orientation);
+			var captionSize = GetCaptionSize(orientation, captionWidth);
 			return Model.Toolbar.FloatToolbar.HeightButtonCount * ButtonSize.Height + captionSize.Height + borderThickness.GetVertical();
 		}
-		int CalculateButtonHeightCount(DockType dockType, Orientation orientation, Thickness borderThickness, double viewHeight)
+		int CalculateButtonHeightCount(DockType dockType, Orientation orientation, Thickness borderThickness, double captionWidth, double viewHeight)
 		{
-			var captionSize = GetCaptionSize(orientation);
+			var captionSize = GetCaptionSize(orientation, captionWidth);
 			return (int)((viewHeight - borderThickness.GetVertical() - captionSize.Height) / ButtonSize.Height);
 		}
 
