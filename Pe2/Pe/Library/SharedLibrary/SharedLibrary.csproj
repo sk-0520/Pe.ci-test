@@ -115,7 +115,9 @@
     <Compile Include="Logic\Caching.cs" />
     <Compile Include="Logic\Extension\IconScaleExtension.cs" />
     <Compile Include="Logic\Extension\LoggerExtension.cs" />
+    <Compile Include="Logic\Extension\NonProcessExtension.cs" />
     <Compile Include="Logic\Extension\ThicknessExtension.cs" />
+    <Compile Include="Logic\TimeLogger.cs" />
     <Compile Include="Logic\Utility\EnumUtility.cs" />
     <Compile Include="Logic\Utility\ScreenUtility.cs" />
     <Compile Include="Logic\Utility\IconUtility.cs" />

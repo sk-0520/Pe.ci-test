@@ -10,6 +10,7 @@
 	Title="LoggingWindow" 
 	ShowInTaskbar="False" 
 	WindowStyle="ToolWindow"
+	ResizeMode="CanResizeWithGrip"
 	Visibility="{Binding Visibility}"
 	WindowState="{Binding WindowState}"
 	Left="{Binding WindowLeft, Mode=TwoWay}"

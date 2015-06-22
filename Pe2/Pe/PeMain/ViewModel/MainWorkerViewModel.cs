@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -169,19 +170,23 @@
 
 		void LoadSetting()
 		{
-			// 各種設定の読込
-			CommonData.MainSetting= AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.Logger);
-			CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.Logger);
-			CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
-			// 言語ファイル
-			CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				// 各種設定の読込
+				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.Logger);
+				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.Logger);
+				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
+				// 言語ファイル
+				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
+			}
 		}
 
 		void SaveSetting()
 		{
-			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, CommonData.Logger);
-			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, CommonData.Logger);
-			AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, CommonData.Logger);
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, CommonData.Logger);
+			}
 		}
 
 		/// <summary>
@@ -189,21 +194,22 @@
 		/// </summary>
 		public bool Initialize()
 		{
-			CommonData.Logger.Information("MainWorkerViewModel initialize");
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 
-			LoadSetting();
-			if(!InitializeAccept()) {
-				return false;
+				LoadSetting();
+				if(!InitializeAccept()) {
+					return false;
+				}
+				InitializeSetting();
+
+				CreateMessage();
+
+				CreateLogger();
+
+				CreateToolbar();
+
+				return true;
 			}
-			InitializeSetting();
-
-			CreateMessage();
-
-			CreateLogger();
-
-			CreateToolbar();
-
-			return true;
 		}
 
 		/// <summary>
@@ -234,9 +240,11 @@
 
 		void InitializeSetting()
 		{
-			SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.Logger);
-			SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.Logger);
-			SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.Language, CommonData.Logger);
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.Logger);
+				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.Logger);
+				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.Language, CommonData.Logger);
+			}
 		}
 
 		/// <summary>
@@ -254,17 +262,19 @@
 		/// </summary>
 		void CreateLogger()
 		{
-			LoggingWindow = new LoggingWindow();
-			LoggingWindow.SetCommonData(CommonData);
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				LoggingWindow = new LoggingWindow();
+				LoggingWindow.SetCommonData(CommonData);
 
-			var appLogger = (AppLogger)CommonData.Logger;
-			appLogger.LogCollector = Logging;
-			if (appLogger.IsStock) {
-				// 溜まったログをViewにドバー
-				foreach (var logItem in appLogger.StockItems) {
-					appLogger.LogCollector.AddLog(logItem);
+				var appLogger = (AppLogger)CommonData.Logger;
+				appLogger.LogCollector = Logging;
+				if(appLogger.IsStock) {
+					// 溜まったログをViewにドバー
+					foreach(var logItem in appLogger.StockItems) {
+						appLogger.LogCollector.AddLog(logItem);
+					}
+					appLogger.IsStock = false;
 				}
-				appLogger.IsStock = false;
 			}
 		}
 
@@ -273,12 +283,14 @@
 		/// </summary>
 		void CreateToolbar()
 		{
-			LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
 
-			foreach (var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
-				var toolbar = new LauncherToolbarWindow(screen);
-				toolbar.SetCommonData(CommonData);
-				LauncherToolbarWindowList.Add(toolbar);
+				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
+					var toolbar = new LauncherToolbarWindow(screen);
+					toolbar.SetCommonData(CommonData);
+					LauncherToolbarWindowList.Add(toolbar);
+				}
 			}
 		}
 
