@@ -29,6 +29,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using System.ComponentModel;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using System.Diagnostics;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess
 	{
@@ -548,28 +549,23 @@
 
 		#region HavingViewSingleModelWrapperViewModelBase
 
-		//protected override void InitializeView()
-		//{
-		//	base.InitializeView();
+		protected override void InitializeView()
+		{
+			Debug.Assert(HasView);
 
-		//	View.MouseDown += View_MouseDown;
-		//}
+			View.UserClosing += View_UserClosing;
 
-		//protected override void UninitializeView()
-		//{
-		//	View.MouseDown -= View_MouseDown;
-			
-		//	base.UninitializeView();
-		//}
+			base.InitializeView();
+		}
 
-		//void View_MouseDown(object sender, MouseButtonEventArgs e)
-		//{
-		//	if (DockType == DockType.None) {
-		//		if (e.LeftButton == MouseButtonState.Pressed) {
-		//			View.DragMove();
-		//		}
-		//	}
-		//}
+		protected override void UninitializeView()
+		{
+			Debug.Assert(HasView);
+
+			View.UserClosing -= View_UserClosing;
+
+			base.UninitializeView();
+		}
 
 		#endregion
 
@@ -720,6 +716,15 @@
 				BorderBrush = viewBrush;
 			}
 		}
+
+		void View_UserClosing(object sender, CancelEventArgs e)
+		{
+			Debug.Assert(HasView);
+
+			e.Cancel = true;
+			Visible = false;
+		}
+
 
 	}
 }
