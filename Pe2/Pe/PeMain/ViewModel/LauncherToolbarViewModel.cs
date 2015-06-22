@@ -145,18 +145,18 @@
 			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
 
 			//BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
-			BorderBrush = View.Background;
+			if(HasView) {
+				BorderBrush = View.Background;
 
-			var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
-				Window.BackgroundProperty, typeof(Brush)
-			);
-			if (backgroundPropertyDescriptor != null) {
-				backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
+				var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
+					Window.BackgroundProperty, typeof(Brush)
+				);
+				if (backgroundPropertyDescriptor != null) {
+					backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
+				}
 			}
 
-
 			CalculateWindowStatus(DockType);
-
 		}
 
 		#region property
