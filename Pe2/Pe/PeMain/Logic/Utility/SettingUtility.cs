@@ -74,11 +74,11 @@
 			CheckUtility.EnforceNotNull(setting);
 
 			foreach(var toolbar in setting.Toolbar.Items) {
-				if(toolbar.FloatToolbarArea.WidthButtonCount <= 0) {
-					toolbar.FloatToolbarArea.WidthButtonCount = 1;
+				if(toolbar.FloatToolbar.WidthButtonCount <= 0) {
+					toolbar.FloatToolbar.WidthButtonCount = 1;
 				}
-				if(toolbar.FloatToolbarArea.HeightButtonCount <= 0) {
-					toolbar.FloatToolbarArea.HeightButtonCount = 1;
+				if(toolbar.FloatToolbar.HeightButtonCount <= 0) {
+					toolbar.FloatToolbar.HeightButtonCount = 1;
 				}
 			}
 		}

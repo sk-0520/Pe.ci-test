@@ -405,7 +405,7 @@
 			Debug.Assert(RestrictionViewModel.AutoHide);
 
 			if (!AutoHideTimer.IsEnabled) {
-				AutoHideTimer.Interval = RestrictionViewModel.HiddenWaitTime;
+				AutoHideTimer.Interval = RestrictionViewModel.HideWaitTime;
 				AutoHideTimer.Start();
 			}
 		}

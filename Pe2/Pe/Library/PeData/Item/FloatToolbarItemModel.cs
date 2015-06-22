@@ -11,9 +11,9 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	[Serializable]
-	public class FloatToolbarAreaItemModel: ItemModelBase
+	public class FloatToolbarItemModel: ItemModelBase
 	{
-		public FloatToolbarAreaItemModel()
+		public FloatToolbarItemModel()
 			: base()
 		{ }
 

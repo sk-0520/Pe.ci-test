@@ -44,13 +44,6 @@
 		/// </summary>
 		[PixelKind(Px.Device)]
 		Rect ShowDeviceBarArea { get; set; }
-		///// <summary>
-		///// 隠れた状態のバー論理サイズ。
-		///// <para>横: Widthを使用</para>
-		///// <para>縦: Heightを使用</para>
-		///// </summary>
-		//[PixelKind(Px.Logical)]
-		//Size HideSize { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// </summary>
@@ -64,11 +57,11 @@
 		/// <summary>
 		/// 自動的に隠すまでの時間。
 		/// </summary>
-		TimeSpan HiddenWaitTime { get; set; }
+		TimeSpan HideWaitTime { get; set; }
 		/// <summary>
 		/// 自動的に隠す際のアニメーション時間。
 		/// </summary>
-		TimeSpan HiddenAnimateTime { get; set; }
+		TimeSpan HideAnimateTime { get; set; }
 		/// <summary>
 		/// ドッキングに使用するスクリーン。
 		/// </summary>

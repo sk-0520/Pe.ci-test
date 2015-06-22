@@ -28,21 +28,22 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using System.ComponentModel;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 
 	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess
 	{
 		#region static
 
-		static Thickness GetBorderThickness(DockType dockType)
+		static Thickness GetBorderThickness(DockType dockType, Visual visual)
 		{
-			var baseWidth = 2;
+			var borderSize = SystemInformation.BorderSize;
 
 			var map = new Dictionary<DockType, Thickness>() {
-				{ DockType.None, new Thickness(baseWidth) },
-				{ DockType.Left, new Thickness(0, 0, baseWidth, 0) },
-				{ DockType.Top, new Thickness(0, 0, 0, baseWidth) },
-				{ DockType.Right, new Thickness(baseWidth, 0, 0, 0)},
-				{ DockType.Bottom, new Thickness(0, baseWidth, 0, 0)},
+				{ DockType.None, new Thickness(borderSize.Width, borderSize.Height, borderSize.Width, borderSize.Height) },
+				{ DockType.Left, new Thickness(0, 0, borderSize.Width, 0) },
+				{ DockType.Top, new Thickness(0, 0, 0, borderSize.Height) },
+				{ DockType.Right, new Thickness(borderSize.Width, 0, 0, 0)},
+				{ DockType.Bottom, new Thickness(0, borderSize.Height, 0, 0)},
 			};
 
 			return map[dockType];
@@ -99,7 +100,7 @@
 			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
 			this._captionSize = 10;
 
-			BorderThickness = GetBorderThickness(Model.Toolbar.DockType);
+			BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
 			BorderBrush = View.Background;
 
 			var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
@@ -185,12 +186,12 @@
 			{ 
 				return IsHidden 
 					? HideLogicalBarArea.Left
-					: Model.Toolbar.FloatToolbarArea.Left;
+					: Model.Toolbar.FloatToolbar.Left;
 			}
 			set 
 			{
-				if (DockType == DockType.None && Model.Toolbar.FloatToolbarArea.Left != value) {
-					Model.Toolbar.FloatToolbarArea.Left = value;
+				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Left != value) {
+					Model.Toolbar.FloatToolbar.Left = value;
 					OnPropertyChanged();
 				}
 			}
@@ -200,12 +201,12 @@
 			get { 
 				return IsHidden 
 					? HideLogicalBarArea.Top
-					: Model.Toolbar.FloatToolbarArea.Top; 
+					: Model.Toolbar.FloatToolbar.Top; 
 			}
 			set
 			{
-				if (DockType == DockType.None && Model.Toolbar.FloatToolbarArea.Top != value) {
-					Model.Toolbar.FloatToolbarArea.Top = value;
+				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Top != value) {
+					Model.Toolbar.FloatToolbar.Top = value;
 					OnPropertyChanged();
 				}
 			}
@@ -221,7 +222,7 @@
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbarArea.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, value);
+					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionHeight");
 				}
@@ -238,7 +239,7 @@
 			set
 			{
 				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbarArea.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, value);
+					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionWidth");
 				}
@@ -269,7 +270,7 @@
 					if (!NowFloatWindow) {
 						HideWidth = GetHideWidth(Model.Toolbar.DockType);
 					}
-					BorderThickness = GetBorderThickness(Model.Toolbar.DockType);
+					BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
 					OnPropertyChanged();
 					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
@@ -310,13 +311,6 @@
 		/// </summary>
 		[PixelKind(Px.Device)]
 		public Rect ShowDeviceBarArea { get; set; }
-		///// <summary>
-		///// 隠れた状態のバー論理サイズ。
-		///// <para>横: Widthを使用</para>
-		///// <para>縦: Heightを使用</para>
-		///// </summary>
-		//[PixelKind(Px.Logical)]
-		//public Size HideSize { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// </summary>
@@ -330,12 +324,12 @@
 		/// <summary>
 		/// 自動的に隠すまでの時間。
 		/// </summary>
-		public TimeSpan HiddenWaitTime {
-			get { return Model.Toolbar.HiddenWaitTime; }
+		public TimeSpan HideWaitTime {
+			get { return Model.Toolbar.HideWaitTime; }
 			set
 			{
-				if (Model.Toolbar.HiddenWaitTime != value) {
-					Model.Toolbar.HiddenWaitTime = value;
+				if (Model.Toolbar.HideWaitTime != value) {
+					Model.Toolbar.HideWaitTime = value;
 					OnPropertyChanged();
 				}
 			}
@@ -343,12 +337,12 @@
 		/// <summary>
 		/// 自動的に隠す際のアニメーション時間。
 		/// </summary>
-		public TimeSpan HiddenAnimateTime {
-			get { return Model.Toolbar.HiddenAnimateTime; }
+		public TimeSpan HideAnimateTime {
+			get { return Model.Toolbar.HideAnimateTime; }
 			set
 			{
-				if (Model.Toolbar.HiddenAnimateTime != value) {
-					Model.Toolbar.HiddenAnimateTime = value;
+				if (Model.Toolbar.HideAnimateTime != value) {
+					Model.Toolbar.HideAnimateTime = value;
 					OnPropertyChanged();
 				}
 			}
@@ -641,7 +635,7 @@
 		double CalculateViewWidth(DockType dockType, Orientation orientation, Thickness borderThickness)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return Model.Toolbar.FloatToolbarArea.WidthButtonCount * ButtonSize.Width + captionSize.Width + borderThickness.GetHorizon();
+			return Model.Toolbar.FloatToolbar.WidthButtonCount * ButtonSize.Width + captionSize.Width + borderThickness.GetHorizon();
 		}
 		int CalculateButtonWidthCount(DockType dockType, Orientation orientation, Thickness borderThickness, double viewWidth)
 		{
@@ -651,7 +645,7 @@
 		double CalculateViewHeight(DockType dockType, Orientation orientation, Thickness borderThickness)
 		{
 			var captionSize = GetCaptionSize(orientation);
-			return Model.Toolbar.FloatToolbarArea.HeightButtonCount * ButtonSize.Height + captionSize.Height + borderThickness.GetVertical();
+			return Model.Toolbar.FloatToolbar.HeightButtonCount * ButtonSize.Height + captionSize.Height + borderThickness.GetVertical();
 		}
 		int CalculateButtonHeightCount(DockType dockType, Orientation orientation, Thickness borderThickness, double viewHeight)
 		{

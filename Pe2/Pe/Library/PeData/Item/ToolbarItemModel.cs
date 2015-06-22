@@ -17,10 +17,10 @@
 		public ToolbarItemModel()
 			: base()
 		{
-			FloatToolbarArea = new FloatToolbarAreaItemModel();
+			FloatToolbar = new FloatToolbarItemModel();
 			IconScale = IconScale.Normal;
-			HiddenWaitTime = TimeSpan.FromSeconds(3);
-			HiddenAnimateTime = TimeSpan.FromMilliseconds(250);
+			HideWaitTime = TimeSpan.FromSeconds(3);
+			HideAnimateTime = TimeSpan.FromMilliseconds(250);
 		}
 
 		#region IId
@@ -79,7 +79,7 @@
 		/// フロート状態。
 		/// </summary>
 		[DataMember]
-		public FloatToolbarAreaItemModel FloatToolbarArea { get; set; }
+		public FloatToolbarItemModel FloatToolbar { get; set; }
 		/// <summary>
 		/// アイコンサイズ。
 		/// </summary>
@@ -94,12 +94,12 @@
 		/// 自動的に隠すまでの時間。
 		/// </summary>
 		[DataMember]
-		public TimeSpan HiddenWaitTime { get; set; }
+		public TimeSpan HideWaitTime { get; set; }
 		/// <summary>
 		/// 自動的に隠す際のアニメーション時間。
 		/// </summary>
 		[DataMember]
-		public TimeSpan HiddenAnimateTime { get; set; }
+		public TimeSpan HideAnimateTime { get; set; }
 		/// <summary>
 		/// 初期値として使用するグループID。
 		/// </summary>

@@ -75,6 +75,38 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 			return new Point(1.0, 1.0);
 		}
 
+		[return: PixelKind(Px.Device)]
+		public static double ToDevicePixelFromX(Visual visual, double x)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return x * dpiScale.X;
+		}
+
+		[return: PixelKind(Px.Logical)]
+		public static double ToLogicalPixelX(Visual visual, double x)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return x / dpiScale.X;
+		}
+
+		[return: PixelKind(Px.Device)]
+		public static double ToDevicePixelFromY(Visual visual, double y)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return y * dpiScale.Y;
+		}
+
+		[return: PixelKind(Px.Logical)]
+		public static double ToLogicalPixelY(Visual visual, double y)
+		{
+			var dpiScale = GetDpiScale(visual);
+
+			return y / dpiScale.Y;
+		}
+
 		[return: PixelKind(Px.Device)] 
 		public static Point ToDevicePixel(Visual visual, Point point)
 		{

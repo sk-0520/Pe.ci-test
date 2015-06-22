@@ -8,7 +8,7 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using Forms = System.Windows.Forms;
-	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
 
 	/// <summary>
 	/// System.Windows.Forms.Screen 互換クラス。
@@ -24,10 +24,10 @@
 		{
 			return new ScreenModel() {
 				BitsPerPixel = screen.BitsPerPixel,
-				DeviceBounds = screen.Bounds.ToRect(),
+				DeviceBounds = DrawingUtility.Convert(screen.Bounds),
 				DeviceName = screen.DeviceName,
 				Primary = screen.Primary,
-				DeviceWorkingArea = screen.WorkingArea.ToRect(),
+				DeviceWorkingArea = DrawingUtility.Convert(screen.WorkingArea),
 			}; 
 		}
 
