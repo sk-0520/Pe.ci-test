@@ -180,6 +180,7 @@
 												RenderEnabled="{TemplateBinding IsEnabled}"
 												RenderMouseOver="{Binding IsMouseOver, ElementName=PART_ActionButton}"
 												RenderPressed="{Binding IsPressed, ElementName=PART_ActionButton}"
+												BorderThickness="0"
 											>
 												<ContentPresenter
 													Name="ActionButtonContent"
@@ -213,6 +214,7 @@
 												RenderNormal="True"
 												RenderChecked="{TemplateBinding IsOpen}"
 												RenderEnabled="{TemplateBinding IsEnabled}"
+												BorderThickness="0"
 											>
 											<xctk:ButtonChrome.RenderMouseOver>
 												<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
