@@ -69,6 +69,9 @@
 		public static readonly TimeSpan iconLoadWaitTime = TimeSpan.FromMilliseconds(250);
 		public const int iconLoadRetryMax = 3;
 
+		public const int screenCountChangeRetryCount = 10;
+		public static readonly TimeSpan screenCountChangeWaitTime = TimeSpan.FromMilliseconds(250);
+
 		/// <summary>
 		/// 実行パス
 		/// </summary>

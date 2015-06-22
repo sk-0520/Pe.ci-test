@@ -23,6 +23,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using System.Threading.Tasks;
+	using System.Threading;
 
 	public sealed class MainWorkerViewModel : ViewModelBase, IAppSender
 	{
@@ -159,7 +162,41 @@
 		{ }
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
-		{ }
+		{
+			CommonData.Logger.Information("catch: changed device");
+			// TODO: まだ作ってないので暫定的に。
+			var Initialized = true;
+
+			// デバイス状態が変更されたか
+			if(changedDevice.DBT == DBT.DBT_DEVNODES_CHANGED && Initialized && !Pause) {
+				// デバイス変更前のスクリーン数が異なっていればディスプレイの抜き差しが行われたと判定する
+				// 現在生成されているツールバーの数が前回ディスプレイ数となる
+
+				// 変更通知から現在数をAPIでまともに取得する
+				var rawScreenCount = NativeMethods.GetSystemMetrics(SM.SM_CMONITORS);
+				bool changedScreenCount = LauncherToolbar.Count() != rawScreenCount;
+
+				Task.Run(() => {
+					// Forms で取得するディスプレイ数の合計値は少し遅れる
+					const int waitMax = Constants.screenCountChangeRetryCount;
+					int waitCount = 0;
+
+					var managedScreenCount = Screen.AllScreens.Count();
+					while(rawScreenCount != managedScreenCount) {
+						if(waitMax < ++waitCount) {
+							// タイムアウト
+							break;
+						}
+						Thread.Sleep(Constants.screenCountChangeWaitTime);
+						managedScreenCount = Screen.AllScreens.Count();
+					}
+				}).ContinueWith(t => {
+					if(changedScreenCount) {
+						ChangedScreenCount();
+					}
+				}, TaskScheduler.FromCurrentSynchronizationContext());
+			}
+		}
 
 		#endregion
 
@@ -292,6 +329,13 @@
 					LauncherToolbarWindowList.Add(toolbar);
 				}
 			}
+		}
+
+		/// <summary>
+		/// ディスプレイ数に変更があった。
+		/// </summary>
+		void ChangedScreenCount()
+		{
 		}
 
 		#endregion
