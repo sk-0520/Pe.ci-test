@@ -21,7 +21,7 @@
 	MinWidth="{Binding MinSize.Width, Mode=OneWay}"
 	ShowInTaskbar="False" 
 	WindowStyle="None"
-	ResizeMode="CanResizeWithGrip"
+	ResizeMode="NoResize"
 	ScrollViewer.VerticalScrollBarVisibility="Disabled"
 	WindowStartupLocation="Manual"
 	Visibility="{Binding Visibility}" 
