@@ -35,18 +35,18 @@
 			Visibility = System.Windows.Visibility.Collapsed;
 		}
 		
-		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			switch(msg) {
 				case (int)WM.WM_DEVICECHANGE:
 					{
-						var changedDevice = new ChangedDevice(hwnd, msg, wParam, lParam);
+						var changedDevice = new ChangedDevice(hWnd, msg, wParam, lParam);
 						CommonData.AppSender.SendDeviceChanged(changedDevice);
 					}
 					break;
 			}
 
-			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion

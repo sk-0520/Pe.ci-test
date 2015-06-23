@@ -27,7 +27,7 @@
 
 		#region WndProcWindowBase
 
-		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if(msg == (int)WM.WM_SYSCOMMAND) {
 				if(WindowsUtility.ConvertSCFromWParam(wParam) == SC.SC_CLOSE) {
@@ -38,7 +38,7 @@
 					}
 				}
 			}
-			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion

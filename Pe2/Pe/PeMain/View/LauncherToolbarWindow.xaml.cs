@@ -116,22 +116,22 @@
 			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
 		}
 
-		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if(Appbar != null) {
-				Appbar.WndProc(hwnd, msg, wParam, lParam, ref handled);
+				Appbar.WndProc(hWnd, msg, wParam, lParam, ref handled);
 			}
 			if (VisualStyle != null) {
-				VisualStyle.WndProc(hwnd, msg, wParam, lParam, ref handled);
+				VisualStyle.WndProc(hWnd, msg, wParam, lParam, ref handled);
 			}
 			if (WindowAreaCorrection != null) {
-				WindowAreaCorrection.WndProc(hwnd, msg, wParam, lParam, ref handled);
+				WindowAreaCorrection.WndProc(hWnd, msg, wParam, lParam, ref handled);
 			}
 			if (handled) {
 				return IntPtr.Zero;
 			}
 
-			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		protected override void OnClosed(EventArgs e)
