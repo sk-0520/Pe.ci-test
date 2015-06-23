@@ -134,20 +134,6 @@
 
 		#region command
 
-		public ICommand ExecuteCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						NonProcess.Logger.Debug(Model.ToString());
-					}
-				);
-
-				return result;
-			}
-		}
-
 		public ICommand OpenDropDownCommand
 		{
 			get
@@ -162,6 +148,49 @@
 			}
 		}
 
+		public ICommand ExecuteCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						NonProcess.Logger.Debug(Model.ToString());
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand OpenDirectory
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						NonProcess.Logger.Debug(Model.ToString());
+						NonProcess.Logger.Debug(string.Format("{0}", o));
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyText
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						NonProcess.Logger.Debug(Model.ToString());
+						NonProcess.Logger.Debug(string.Format("{0}", o));
+					}
+				);
+
+				return result;
+			}
+		}
 
 		#endregion
 

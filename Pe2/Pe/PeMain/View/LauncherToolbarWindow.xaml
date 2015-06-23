@@ -112,10 +112,12 @@
 		</Style>
 		
 
+		<Style x:Key="LauncherBaseButton">
+			<Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, ElementName=root}" />
+			<Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, ElementName=root}" />
+		</Style>
 
-		<Style x:Key="LauncherDropDown" TargetType="xctk:DropDownButton">
-			<Setter Property="Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, ElementName=root}" />
-			<Setter Property="Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, ElementName=root}" />
+		<Style x:Key="LauncherDropDown" TargetType="xctk:DropDownButton" BasedOn="{StaticResource LauncherBaseButton}">
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:DropDownButton}">
@@ -183,9 +185,7 @@
 			</Setter>
 		</Style>
 
-		<Style x:Key="LauncherSplit" TargetType="xctk:SplitButton">
-			<Setter Property="Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, ElementName=root}" />
-			<Setter Property="Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, ElementName=root}" />
+		<Style x:Key="LauncherSplit" TargetType="xctk:SplitButton" BasedOn="{StaticResource LauncherBaseButton}">
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:SplitButton}">
@@ -403,13 +403,11 @@
 
 						<!-- ファイル -->
 						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding ExecuteCommand}">
-							
 							<i:Interaction.Triggers>
 								<i:EventTrigger EventName="Opened">
 									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
 								</i:EventTrigger>
 							</i:Interaction.Triggers>
-							
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource Image}"/>
@@ -426,15 +424,15 @@
 									<Separator/>
 									<TextBlock Text="file" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="parent dir" IsEnabled="{Binding ExistsParentDirectory}" Style="{StaticResource PopupClose}" />
-										<Button Content="work dir" IsEnabled="{Binding ExistsWorkDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static PD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="work dir" IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static PD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command"  IsEnabled="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
-										<Button Content="parent dir" IsEnabled="{Binding HasDataParentDirectory}" Style="{StaticResource PopupClose}" />
-										<Button Content="work dir" IsEnabled="{Binding HasDataWorkDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="command"  IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="work dir" IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
@@ -455,6 +453,11 @@
 
 						<!-- コマンド -->
 						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding ExecuteCommand}" >
+							<i:Interaction.Triggers>
+								<i:EventTrigger EventName="Opened">
+									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
+								</i:EventTrigger>
+							</i:Interaction.Triggers>
 							<xctk:SplitButton.Content>
 								<StackPanel Orientation="Horizontal">
 									<Image Style="{StaticResource Image}"/>
@@ -465,13 +468,13 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" Command="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
-										<Button Content="extra" Command="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="normal" IsEnabled="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="extra" IsEnabled="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command" Command="{Binding HasDataCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
