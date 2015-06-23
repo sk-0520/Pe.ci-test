@@ -28,7 +28,7 @@
 				};
 				m.GroupItems.Add(lg);
 			}
-			var vm = new LauncherToolbarViewModel(m, null, null);
+			var vm = new LauncherToolbarViewModel(m, null, null, null);
 			Assert.AreEqual(result, vm.SelectedGroup.Id);
 		}
 	}
