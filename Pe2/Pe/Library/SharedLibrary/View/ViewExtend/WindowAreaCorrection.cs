@@ -27,6 +27,9 @@
 			if (RestrictionViewModel.UsingMultipleResize) {
 				CorrectionSizing(hwnd, msg, wParam, lParam, ref handled);
 			}
+			if (RestrictionViewModel.UsingMoveLimitArea) {
+				CorrectionMoving(hwnd, msg, wParam, lParam, ref handled);
+			}
 
 			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
 		}
@@ -39,7 +42,6 @@
 		{
 			if (msg == (int)WM.WM_SIZING) {
 				var logicalRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertRECTFromLParam(lParam)));
-				NonProcess.Logger.Information(logicalRect.ToString());
 
 				var l = logicalRect.Left;
 				var t = logicalRect.Top;
@@ -89,6 +91,45 @@
 				var resizedLogicalRect = new Rect(l, t, r - l, b - t);
 				var resizedDeviceRawRect = PodStructUtility.Convert(UIUtility.ToDevicePixel(View, resizedLogicalRect));
 				Marshal.StructureToPtr(resizedDeviceRawRect, lParam, false);
+
+				handled = true;
+			}
+
+			return IntPtr.Zero;
+		}
+
+		IntPtr CorrectionMoving(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if (msg == (int)WM.WM_MOVING) {
+				var rawRect = WindowsUtility.ConvertRECTFromLParam(lParam);
+				var logicalRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(rawRect));
+				
+				var x = logicalRect.Left;
+				var y = logicalRect.Top;
+
+				if (logicalRect.X < RestrictionViewModel.MoveLimitArea.X) {
+					// 左
+					x = RestrictionViewModel.MoveLimitArea.X;
+				} else if (logicalRect.Right > RestrictionViewModel.MoveLimitArea.Right) {
+					// 右
+					x = RestrictionViewModel.MoveLimitArea.Right - logicalRect.Width;
+				}
+
+				if (logicalRect.Y < RestrictionViewModel.MoveLimitArea.Y) {
+					// 上
+					y = RestrictionViewModel.MoveLimitArea.Y;
+				} else if (logicalRect.Bottom > RestrictionViewModel.MoveLimitArea.Bottom) {
+					// 下
+					y = RestrictionViewModel.MoveLimitArea.Bottom - logicalRect.Height;
+				}
+
+				var logicalPoint = new Point(x, y);
+				var devicePoint = UIUtility.ToDevicePixel(View, logicalPoint);
+
+				rawRect.X = (int)devicePoint.X;
+				rawRect.Y = (int)devicePoint.Y;
+
+				Marshal.StructureToPtr(rawRect, lParam, false);
 
 				handled = true;
 			}
