@@ -20,5 +20,9 @@
 		/// </summary>
 		/// <param name="changedDevice"></param>
 		void SendDeviceChanged(ChangedDevice changedDevice);
+		/// <summary>
+		/// クリップボードが変更された際に通知。
+		/// </summary>
+		void SendClipboardChanged();
 	}
 }

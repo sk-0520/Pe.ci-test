@@ -24,8 +24,15 @@
 			Height = 0;
 			ResizeMode = System.Windows.ResizeMode.NoResize;
 			ShowInTaskbar = false;
+
+			ClipboardListenerRegisted = false;
 		}
 
+		#region property
+
+		bool ClipboardListenerRegisted { get; set; }
+
+		#endregion
 
 		#region ViewModelCommonDataWindow
 
@@ -33,20 +40,53 @@
 		{
 			base.OnLoaded(sender, e);
 			Visibility = System.Windows.Visibility.Collapsed;
+
+			RegistClipboardListener();
 		}
 		
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			switch(msg) {
+				case (int)WM.WM_DESTROY:
+					{
+						UnregistClipboardListener();
+					}
+					break;
+
 				case (int)WM.WM_DEVICECHANGE:
 					{
 						var changedDevice = new ChangedDevice(hWnd, msg, wParam, lParam);
 						CommonData.AppSender.SendDeviceChanged(changedDevice);
 					}
 					break;
+
+				case (int)WM.WM_CLIPBOARDUPDATE:
+					{
+						CommonData.AppSender.SendClipboardChanged();
+					}
+					break;
 			}
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
+		}
+
+		#endregion
+
+		#region function
+		
+		public void RegistClipboardListener()
+		{
+			if(!ClipboardListenerRegisted) {
+				ClipboardListenerRegisted = NativeMethods.AddClipboardFormatListener(Handle);
+			}
+		}
+
+		public void UnregistClipboardListener()
+		{
+			if(ClipboardListenerRegisted) {
+				NativeMethods.RemoveClipboardFormatListener(Handle);
+				ClipboardListenerRegisted = false;
+			}
 		}
 
 		#endregion

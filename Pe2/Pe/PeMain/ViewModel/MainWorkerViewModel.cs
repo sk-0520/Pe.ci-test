@@ -156,6 +156,11 @@
 			ReceiveDeviceChanged(changedDevice);
 		}
 
+		public void SendClipboardChanged()
+		{
+			ReceiveClipboardChanged();
+		}
+
 		#region IAppSender-Implement
 
 		void ReceiveWindowAppend(Window window)
@@ -197,6 +202,9 @@
 				}, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 		}
+
+		void ReceiveClipboardChanged()
+		{}
 
 		#endregion
 

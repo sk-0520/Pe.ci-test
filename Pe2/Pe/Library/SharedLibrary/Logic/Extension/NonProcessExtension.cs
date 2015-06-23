@@ -12,11 +12,11 @@
 
 	public static class NonProcessExtension
 	{
-		public static TimeLogger CreateTimeLogger(this INonProcess nonProcess, LogKind logKind = LogKind.Trace, object detail = null, int frame = 3, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		public static TimeLogger CreateTimeLogger(this INonProcess nonProcess, string id = "", LogKind logKind = LogKind.Trace, object detail = null, int frame = 3, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
 		{
 			Debug.Assert(nonProcess != null);
 			Debug.Assert(nonProcess.Logger != null);
-			return new TimeLogger(nonProcess.Logger, logKind, detail, frame, callerFile, callerLine, callerMember);
+			return new TimeLogger(nonProcess.Logger, id, logKind, detail, frame, callerFile, callerLine, callerMember);
 		}
 	}
 }

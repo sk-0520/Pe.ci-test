@@ -50,12 +50,14 @@
 
 		#endregion
 
-		public TimeLogger(ILogger logger, LogKind logKind = LogKind.Trace, object detail = null, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
+		public TimeLogger(ILogger logger, string id = "", LogKind logKind = LogKind.Trace, object detail = null, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")
 		{
 			CheckUtility.DebugEnforceNotNull(logger);
 
 			InstanceName = GetType().Name;
-			InstanceId = random.Next().ToString("x8");
+			InstanceId = !string.IsNullOrWhiteSpace(id) 
+				? id .Trim()
+				: random.Next().ToString("x8");
 
 			Logger = logger;
 			LogKind = logKind;
