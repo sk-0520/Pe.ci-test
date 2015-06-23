@@ -7,8 +7,8 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
 	[Serializable]
 	public class FloatToolbarItemModel: ItemModelBase

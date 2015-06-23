@@ -32,7 +32,7 @@
 	using System.Diagnostics;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IWindowAreaCorrectionData
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData
 	{
 		#region static
 
@@ -136,10 +136,11 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, INonProcess nonProcess)
+		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model, view)
 		{
 			NonProcess = nonProcess;
+			ClipboardWatcher = clipboardWatcher;
 
 			this._captionWidth = GetCaptionWidth();
 			MenuWidth = GetMenuWidth();
@@ -192,6 +193,12 @@
 		#region IHavingNonPorocess
 
 		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region IHavingClipboardWatcher
+
+		public IClipboardWatcher ClipboardWatcher { get; private set; }
 
 		#endregion
 
@@ -578,7 +585,7 @@
 			{
 				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherViewModel(m, this.LauncherIcons, NonProcess) {
+						.Select(m => new LauncherViewModel(m, this.LauncherIcons, NonProcess, ClipboardWatcher) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;

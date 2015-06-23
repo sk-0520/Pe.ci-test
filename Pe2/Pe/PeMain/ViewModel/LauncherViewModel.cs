@@ -18,6 +18,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherViewModel: LauncherViewModelBase
@@ -36,8 +37,8 @@
 
 		#endregion
 
-		public LauncherViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
-			: base(model, launcherIconCaching, nonPorocess)
+		public LauncherViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher)
+			: base(model, launcherIconCaching, nonPorocess, clipboardWatcher)
 		{ }
 
 		#region property

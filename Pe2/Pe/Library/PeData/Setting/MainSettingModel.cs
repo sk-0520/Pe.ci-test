@@ -23,6 +23,7 @@
 			Toolbar = new ToolbarItemCollectionModel();
 			WindowSave = new WindowSaveItemModel();
 			SystemEnvironment = new SystemEnvironmentItemModel();
+			Clipboard = new ClipboardItemModel();
 		}
 
 		[DataMember]
@@ -37,5 +38,7 @@
 		public WindowSaveItemModel WindowSave { get; set; }
 		[DataMember]
 		public SystemEnvironmentItemModel SystemEnvironment { get; set; }
+		[DataMember]
+		public ClipboardItemModel Clipboard { get; set; }
 	}
 }

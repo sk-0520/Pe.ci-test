@@ -27,7 +27,7 @@
 	using System.Threading.Tasks;
 	using System.Threading;
 
-	public sealed class MainWorkerViewModel : ViewModelBase, IAppSender
+	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
 		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
 		{
@@ -35,6 +35,7 @@
 				Logger = logger,
 				VariableConstants = variableConstants,
 				AppSender = this,
+				ClipboardWatcher = this,
 			};
 		}
 
@@ -204,9 +205,28 @@
 		}
 
 		void ReceiveClipboardChanged()
-		{}
+		{
+			if(!CommonData.MainSetting.Clipboard.Enabled) {
+				return;
+			}
+		}
 
 		#endregion
+
+		#endregion
+
+		#region IClipboardWatcher
+
+		public void ClipboardChangeWatch(bool watch)
+		{
+			if(watch) {
+				MessageWindow.RegistClipboardListener();
+			} else {
+				MessageWindow.UnregistClipboardListener();
+			}
+		}
+
+		public bool ClipboardWatching { get { return MessageWindow.ClipboardListenerRegisted; } }
 
 		#endregion
 

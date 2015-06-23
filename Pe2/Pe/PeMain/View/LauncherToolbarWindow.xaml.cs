@@ -89,7 +89,7 @@
 			}
 			model.Toolbar = toolbar;
 
-			ViewModel = new LauncherToolbarViewModel(model, this, CommonData.NonProcess);
+			ViewModel = new LauncherToolbarViewModel(model, this, CommonData.NonProcess, CommonData.ClipboardWatcher);
 			ViewModel.DockScreen = Screen;
 			ViewModel.LauncherIcons = CommonData.LauncherIcons;
 			// 以降Viewの保持するスクリーン情報は使用しない

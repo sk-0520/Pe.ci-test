@@ -30,7 +30,7 @@
 
 		#region property
 
-		bool ClipboardListenerRegisted { get; set; }
+		public bool ClipboardListenerRegisted { get; private set; }
 
 		#endregion
 

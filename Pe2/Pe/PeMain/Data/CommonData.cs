@@ -17,12 +17,16 @@
 	{
 		#region define
 
-		public sealed class NonProcessImplement: INonProcess
+		public sealed class AppNonProcessImplement: INonProcess
 		{
-			public bool initialized = false;
+			public AppNonProcessImplement(ILogger logger, ILanguage language)
+			{
+				Logger = logger;
+				Language = language;
+			}
 
-			public ILanguage Language { get; set; }
-			public ILogger Logger { get; set; }
+			public ILogger Logger { get; private set; }
+			public ILanguage Language { get; private set; }
 		}
 
 		#endregion
@@ -31,13 +35,11 @@
 			: base()
 		{
 			LauncherIcons = new LauncherIconCaching();
-			
-			NonProcessInstance = new NonProcessImplement();
 		}
 
 		#region property
 
-		NonProcessImplement NonProcessInstance { get; set; }
+		AppNonProcessImplement NonProcessInstance { get; set; }
 
 		public VariableConstants VariableConstants { get; set; }
 
@@ -48,6 +50,7 @@
 
 		public ILogger Logger { get; set; }
 		public IAppSender AppSender { get; set; }
+		public IClipboardWatcher ClipboardWatcher { get; set; }
 
 		public LauncherIconCaching LauncherIcons { get; set; }
 
@@ -58,9 +61,8 @@
 		{ 
 			get 
 			{
-				if(!NonProcessInstance.initialized) {
-					NonProcessInstance.Language = Language;
-					NonProcessInstance.Logger = Logger;
+				if(NonProcessInstance == null) {
+					NonProcessInstance = new AppNonProcessImplement(Logger, Language);
 				}
 
 				return NonProcessInstance; 
