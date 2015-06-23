@@ -422,15 +422,23 @@
 
 		#region IPositionCorrectionData
 
+		/// <summary>
+		/// ウィンドウサイズの倍数制御を行うか。
+		/// </summary>
 		public bool UsingMultipleResize { get { return NowFloatWindow && Visible; } }
-
-
+		/// <summary>
+		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
+		/// </summary>
+		[PixelKind(Px.Logical)]
 		public Size MultipleSize
 		{
 			//TODO: 手抜き
 			get { return ButtonSize; }
 		}
-
+		/// <summary>
+		/// タイトルバーとかボーダーを含んだ領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
 		public Thickness MultipleThickness
 		{
 			get
@@ -443,6 +451,27 @@
 					BorderThickness.Bottom
 				);
 				return result;
+			}
+		}
+
+		/// <summary>
+		/// 移動制限を行うか。
+		/// </summary>
+		public bool UsingMoveLimitArea { get { return CaptionVisibility == Visibility.Visible; } }
+		/// <summary>
+		/// 移動制限に使用する論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect MoveLimitArea 
+		{ 
+			get 
+			{
+				if (HasView) {
+					return UIUtility.ToLogicalPixel(View, DockScreen.DeviceWorkingArea);
+				} else {
+					NonProcess.Logger.SafeDebug("device pixel");
+					return DockScreen.DeviceWorkingArea;
+				}
 			}
 		}
 

@@ -17,13 +17,23 @@ using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
 		/// </summary>
 		bool UsingMultipleResize { get; }
 		/// <summary>
-		/// ウィンドウサイズの倍数制御に使用する元となるサイズ。
+		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
 		/// </summary>
 		[PixelKind(Px.Logical)]
 		Size MultipleSize { get; }
 		/// <summary>
 		/// タイトルバーとかボーダーを含んだ領域。
 		/// </summary>
+		[PixelKind(Px.Logical)]
 		Thickness MultipleThickness { get; }
+		/// <summary>
+		/// 移動制限を行うか。
+		/// </summary>
+		bool UsingMoveLimitArea { get; }
+		/// <summary>
+		/// 移動制限に使用する論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		Rect MoveLimitArea { get; }
 	}
 }
