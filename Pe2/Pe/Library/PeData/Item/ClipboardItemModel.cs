@@ -17,7 +17,7 @@
 		#region property
 
 		/// <summary>
-		/// クリップボードの監視。
+		/// クリップボード監視の変更を検知するか。
 		/// </summary>
 		[DataMember]
 		public bool Enabled { get; set; }
