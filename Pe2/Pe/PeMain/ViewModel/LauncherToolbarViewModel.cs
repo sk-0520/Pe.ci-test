@@ -30,8 +30,9 @@
 	using System.ComponentModel;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using System.Diagnostics;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 
-	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IWindowAreaCorrectionData
 	{
 		#region static
 
@@ -419,6 +420,34 @@
 
 		#endregion
 
+		#region IPositionCorrectionData
+
+		public bool UsingMultipleResize { get { return NowFloatWindow && Visible; } }
+
+
+		public Size MultipleSize
+		{
+			//TODO: 手抜き
+			get { return ButtonSize; }
+		}
+
+		public Thickness MultipleThickness
+		{
+			get
+			{
+				var captionSize = GetCaptionSize(Orientation, this._captionWidth);
+				var result = new Thickness(
+					BorderThickness.Left + captionSize.Width,
+					BorderThickness.Top + captionSize.Height,
+					BorderThickness.Right,
+					BorderThickness.Bottom
+				);
+				return result;
+			}
+		}
+
+		#endregion
+
 		public Size IconSize { get; set; }
 		public Size ButtonSize { get; set; }
 		public double MenuWidth { get; set; }
@@ -724,7 +753,6 @@
 			e.Cancel = true;
 			Visible = false;
 		}
-
 
 	}
 }

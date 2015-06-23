@@ -101,6 +101,7 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
+    <Compile Include="IF\WindowsViewExtend\IWindowAreaCorrectionData.cs" />
     <Compile Include="IF\IVisualStyleData.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="ViewModel\HavingViewSingleModelWrapperViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\SingleModelWrapperViewModelBase.cs" />
+    <Compile Include="View\ViewExtend\WindowAreaCorrection.cs" />
     <Compile Include="View\ViewExtend\VisualStyle.cs" />
     <Compile Include="View\ViewExtend\WindowsViewExtendBase.cs" />
     <Compile Include="View\Window\OnLoadedWindowBase.cs" />

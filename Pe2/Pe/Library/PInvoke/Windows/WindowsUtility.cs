@@ -9,15 +9,31 @@
 
 	public static class WindowsUtility
 	{
+		#region window message convert
+
 		public static SC ConvertSCFromWParam(IntPtr wParam)
 		{
 			return (SC)(wParam.ToInt32() & 0xfff0);
+		}
+
+		public static WMSZ ConvertWMSZFromWParam(IntPtr wParam)
+		{
+			return (WMSZ)(wParam.ToInt32());
 		}
 
 		public static bool ConvertBoolFromLParam(IntPtr lParam)
 		{
 			return Convert.ToBoolean(lParam.ToInt32());
 		}
+
+		public static RECT  ConvertRECTFromLParam(IntPtr lParam)
+		{
+			return (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+		}
+
+		#endregion
+
+		#region function
 
 		public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex)
 		{
@@ -55,5 +71,7 @@
 		{
 			NativeMethods.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, SWP.SWP_FRAMECHANGED | SWP.SWP_NOSIZE | SWP.SWP_NOMOVE | SWP.SWP_NOZORDER | SWP.SWP_NOOWNERZORDER | SWP.SWP_NOACTIVATE);
 		}
+
+		#endregion
 	}
 }

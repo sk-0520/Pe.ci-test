@@ -30,7 +30,7 @@
 
 			View = view;
 			RestrictionViewModel = restrictionViewModel;
-			NonProcess = NonProcess;
+			NonProcess = nonProcess;
 
 			Handle = HandleUtility.GetWindowHandle(View);
 			HwndSource = HwndSource.FromHwnd(Handle);

@@ -62,6 +62,7 @@
 
 		ApplicationDesktopToolbar Appbar { get; set; }
 		VisualStyle VisualStyle { get; set; }
+		WindowAreaCorrection WindowAreaCorrection { get; set; }
 
 		#endregion
 
@@ -112,6 +113,7 @@
 
 			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
 			VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
+			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -121,6 +123,9 @@
 			}
 			if (VisualStyle != null) {
 				VisualStyle.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			}
+			if (WindowAreaCorrection != null) {
+				WindowAreaCorrection.WndProc(hwnd, msg, wParam, lParam, ref handled);
 			}
 			if (handled) {
 				return IntPtr.Zero;
