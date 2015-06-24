@@ -87,6 +87,18 @@
 		DWMNCRP_LAST
 	}
 
+
+	public struct DWM_COLORIZATION_PARAMS
+	{
+		public uint clrColor;
+		public uint clrAfterGlow;
+		public uint nIntensity;
+		public uint clrAfterGlowBalance;
+		public uint clrBlurBalance;
+		public uint clrGlassReflectionIntensity;
+		public bool fOpaque;
+	}
+
 	partial class NativeMethods
 	{
 		/// <summary>
@@ -111,9 +123,12 @@
 		/// </summary>
 		/// <param name="ColorizationColor"></param>
 		/// <param name="ColorizationOpaqueBlend"></param>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("dwmapi.dll", PreserveSig = false)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out bool ColorizationOpaqueBlend);
+		[DllImport("dwmapi.dll", EntryPoint = "#127", PreserveSig = false)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
+		public static extern void DwmGetColorizationParameters(out DWM_COLORIZATION_PARAMS parameters);
 
 		[DllImport("dwmapi.dll")]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]

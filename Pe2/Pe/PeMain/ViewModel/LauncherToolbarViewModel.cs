@@ -52,15 +52,15 @@
 
 		static Thickness GetBorderThickness(DockType dockType, Visual visual)
 		{
-			var borderSize = SystemInformation.BorderSize;
-			borderSize = new Size(10, 10);
+			var deviceBorderSize = SystemInformation.BorderSize;
+			var logicalBorderSize = UIUtility.ToLogicalPixel(visual, deviceBorderSize);
 
 			var map = new Dictionary<DockType, Thickness>() {
-				{ DockType.None, new Thickness(borderSize.Width, borderSize.Height, borderSize.Width, borderSize.Height) },
-				{ DockType.Left, new Thickness(0, 0, borderSize.Width, 0) },
-				{ DockType.Top, new Thickness(0, 0, 0, borderSize.Height) },
-				{ DockType.Right, new Thickness(borderSize.Width, 0, 0, 0)},
-				{ DockType.Bottom, new Thickness(0, borderSize.Height, 0, 0)},
+				{ DockType.None, new Thickness(logicalBorderSize.Width, logicalBorderSize.Height, logicalBorderSize.Width, logicalBorderSize.Height) },
+				{ DockType.Left, new Thickness(0, 0, logicalBorderSize.Width, 0) },
+				{ DockType.Top, new Thickness(0, 0, 0, logicalBorderSize.Height) },
+				{ DockType.Right, new Thickness(logicalBorderSize.Width, 0, 0, 0)},
+				{ DockType.Bottom, new Thickness(0, logicalBorderSize.Height, 0, 0)},
 			};
 
 			return map[dockType];

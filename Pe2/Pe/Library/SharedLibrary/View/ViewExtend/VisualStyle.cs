@@ -148,7 +148,8 @@
 		{
 			Debug.Assert(RestrictionViewModel.UsingVisualStyle);
 
-			if (RestrictionViewModel.EnabledVisualStyle && SupportAeroGlass()) {
+			// AllowsTransparency="True" で aero glass の動作がもうほんとわけわかめ
+			if (RestrictionViewModel.EnabledVisualStyle && /*SupportAeroGlass()*/ false) {
 				if(!UsingAeroGlass) {
 					// Aero Glass
 
@@ -197,10 +198,17 @@
 				}
 
 				// 色を取得
-				uint rawColor;
-				bool blend;
-				NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
-				//VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
+				//uint rawColor;
+				//bool blend;
+				//NativeMethods.DwmGetColorizationColor(out rawColor, out blend);
+				////VisualColor = Color.FromArgb((int)(rawColor & 0x00ffffff));
+				//var a = (byte)((rawColor & 0xff000000) >> 24);
+				//var r = (byte)((rawColor & 0x00ff0000) >> 16);
+				//var g = (byte)((rawColor & 0x0000ff00) >> 8);
+				//var b = (byte)((rawColor & 0x000000ff) >> 0);
+				DWM_COLORIZATION_PARAMS colorization;
+				NativeMethods.DwmGetColorizationParameters(out colorization);
+				var rawColor = colorization.clrColor;
 				var a = (byte)((rawColor & 0xff000000) >> 24);
 				var r = (byte)((rawColor & 0x00ff0000) >> 16);
 				var g = (byte)((rawColor & 0x0000ff00) >> 8);
