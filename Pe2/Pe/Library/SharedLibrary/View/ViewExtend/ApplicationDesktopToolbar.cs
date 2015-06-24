@@ -459,6 +459,7 @@
 
 			//Bounds = new Rectangle(pos, size);
 			//IsHidden = false;
+			RestrictionViewModel.IsHidden = false;
 			ResizeShowDeviceBarArea();
 		}
 
@@ -520,6 +521,7 @@
 					throw new NotImplementedException();
 			}
 
+			RestrictionViewModel.IsHidden = true;
 			HideViewImplement(!force, logicalHideArea);
 		}
 

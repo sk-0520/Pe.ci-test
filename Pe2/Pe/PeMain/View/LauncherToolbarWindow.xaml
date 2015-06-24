@@ -325,7 +325,7 @@
 		</ContextMenu>
 	</W:CommonDataWindow.ContextMenu>
 
-	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" >
+	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" Visibility="{Binding HideVisibility}" >
 
 		<Rectangle 
 			Width="{Binding CaptionWidth, Mode=OneWay}" 

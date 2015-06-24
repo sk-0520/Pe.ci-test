@@ -136,6 +136,7 @@
 		Size _minSize;
 
 		Rect _showLogicalBarArea;
+		bool _isHidden;
 
 		#endregion
 
@@ -379,7 +380,18 @@
 		/// <summary>
 		/// 隠れているか。
 		/// </summary>
-		public bool IsHidden { get; set; }
+		public bool IsHidden 
+		{
+			get { return this._isHidden; }
+			set
+			{
+				if (this._isHidden != value) {
+					this._isHidden = value;
+					OnPropertyChanged();
+					OnPropertyChanged("HideVisibility");
+				}
+			}
+		}
 		/// <summary>
 		/// バーの論理サイズ
 		/// </summary>
@@ -543,6 +555,16 @@
 		public Thickness ResizeThickness { get { return BorderThickness; } }
 
 		#endregion
+
+		public Visibility HideVisibility {
+			get
+			{
+				return IsHidden
+					? Visibility.Collapsed
+					: Visibility.Visible
+				;
+			}
+		}
 
 		public Size IconSize { get; set; }
 		public Size ButtonSize { get; set; }
