@@ -292,6 +292,8 @@
 		{
 			Debug.Assert(dockType != DockType.None);
 
+			RestrictionViewModel.DockType = dockType;
+
 			var appBar = new APPBARDATA(Handle);
 			appBar.uEdge = DockTypeUtility.ToABE(dockType);
 			appBar.rc = PodStructUtility.Convert(CalcWantBarArea(dockType));
@@ -309,7 +311,6 @@
 			}
 
 			RestrictionViewModel.AutoHide = autoHideResult;
-			RestrictionViewModel.DockType = dockType;
 
 			var deviceWindowBounds = PodStructUtility.Convert(appBar.rc);
 			var logicalWindowBounds = UIUtility.ToLogicalPixel(View, deviceWindowBounds);
