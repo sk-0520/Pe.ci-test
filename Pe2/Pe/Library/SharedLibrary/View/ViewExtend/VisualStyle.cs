@@ -2,11 +2,13 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Input;
 	using System.Windows.Interop;
 	using System.Windows.Media;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
@@ -28,6 +30,7 @@
 
 		Brush StockBackground { get; set; }
 		bool UsingAeroGlass { get; set; }
+		Window Window { get; set; }
 
 		#endregion
 
@@ -50,6 +53,7 @@
 						SetWindowColor();
 						handled = true;
 						break;
+
 
 					//case (int)WM.WM_NCHITTEST:
 					//	IntPtr result = new IntPtr();
@@ -95,6 +99,7 @@
 					//blurHehind.hRgnBlur = IntPtr.Zero;
 					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;// | DWM_BB.DWM_BB_BLURREGION;
 					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+
 					UsingAeroGlass = false;
 				}
 				View.Background = StockBackground;
@@ -146,20 +151,36 @@
 			if (RestrictionViewModel.EnabledVisualStyle && SupportAeroGlass()) {
 				if(!UsingAeroGlass) {
 					// Aero Glass
-					var blurHehind = new DWM_BLURBEHIND();
-					blurHehind.fEnable = true;
-					blurHehind.hRgnBlur = IntPtr.Zero;
-					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;
-					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-					//var margins = new MARGINS() {
+
+					View.Background = new SolidColorBrush(Color.FromArgb(1, 255, 255, 255));
+					HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+
+					//var margin = new MARGINS() {
 					//	leftWidth = -1,
 					//	rightWidth = -1,
 					//	topHeight = -1,
 					//	bottomHeight = -1,
 					//};
-					HwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
-					View.Background = new SolidColorBrush(Color.FromArgb(1, 255, 255, 255));
+					//NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margin); 
+
+					var blurHehind = new DWM_BLURBEHIND();
+					blurHehind.fEnable = true;
+					blurHehind.hRgnBlur = IntPtr.Zero;
+					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE | DWM_BB.DWM_BB_BLURREGION;
+					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+
+					//var DWMNCRP_DISABLED = DWMNCRP.DWMNCRP_DISABLED; 
+					//NativeMethods.DwmSetWindowAttribute(Handle, DWMWA.DWMWA_NCRENDERING_POLICY, ref DWMNCRP_DISABLED, sizeof(int));
+//					var a = DWMNCRP.DWMNCRP_DISABLED; 
+//					NativeMethods.DwmSetWindowAttribute(Handle, DWMWA.DWMWA_TRANSITIONS_FORCEDISABLED, ref a, sizeof(int));
+//					NativeMethods.SetWindowThemeAttribute(hwnd, WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT, ref options, WTA_OPTIONS.Size);
+
 					//NativeMethods.DwmExtendFrameIntoClientArea(Handle, ref margins);
+
+					View.MouseLeftButtonDown += (s1, e1) => {
+						((Window)s1).DragMove();
+						e1.Handled = true;
+					};
 				}
 				UsingAeroGlass = true;
 			}

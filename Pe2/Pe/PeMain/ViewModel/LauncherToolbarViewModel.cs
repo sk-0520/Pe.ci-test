@@ -468,7 +468,7 @@
 
 		#region IVisualStyleData
 
-		public bool UsingVisualStyle { get { return false; } }
+		public bool UsingVisualStyle { get { return true; } }
 		public bool EnabledVisualStyle { get; set; }
 		public Color VisualPlainColor { get; set; }
 		public Color VisualAlphaColor { get; set; }

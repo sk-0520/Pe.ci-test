@@ -83,26 +83,30 @@
 		{
 			if (RestrictionViewModel.IsDocking) {
 				switch ((int)msg) {
-					case (int)WM.WM_DESTROY: {
+					case (int)WM.WM_DESTROY:
+						{
 							UnresistAppbar();
 							handled = true;
 						}
 						break;
 
-					case (int)WM.WM_ACTIVATE: {
+					case (int)WM.WM_ACTIVATE:
+						{
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_ACTIVATE, ref appBar);
 						}
 						break;
 
-					case (int)WM.WM_WINDOWPOSCHANGED: {
+					case (int)WM.WM_WINDOWPOSCHANGED:
+						{
 							//DockingFromProperty();
 							var appBar = new APPBARDATA(Handle);
 							NativeMethods.SHAppBarMessage(ABM.ABM_WINDOWPOSCHANGED, ref appBar);
 						}
 						break;
 
-					case (int)WM.WM_EXITSIZEMOVE: {
+					case (int)WM.WM_EXITSIZEMOVE:
+						{
 							// 到達した試しがない
 							OnResizeEnd();
 						}

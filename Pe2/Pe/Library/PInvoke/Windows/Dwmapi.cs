@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace ContentTypeTextNet.Library.PInvoke.Windows
+﻿namespace ContentTypeTextNet.Library.PInvoke.Windows
 {
+	using System;
+	using System.Runtime.InteropServices;
+
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MARGINS
 	{
@@ -59,7 +59,7 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		//}
 	}
 
-	public enum DWMWINDOWATTRIBUTE
+	public enum DWMWA
 	{
 		DWMWA_NCRENDERING_ENABLED = 1,
 		DWMWA_NCRENDERING_POLICY,
@@ -79,7 +79,7 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		DWMWA_LAST
 	}
 
-	public enum DWMNCRENDERINGPOLICY
+	public enum DWMNCRP
 	{
 		DWMNCRP_USEWINDOWSTYLE,
 		DWMNCRP_DISABLED,
@@ -122,7 +122,7 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 
 		[DllImport("dwmapi.dll", PreserveSig = true)]
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
-		public static extern int DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attr, ref DWMNCRENDERINGPOLICY attrValue, int attrSize);
+		public static extern int DwmSetWindowAttribute(IntPtr hwnd, DWMWA attr, ref DWMNCRP attrValue, int attrSize);
 
 	}
 }

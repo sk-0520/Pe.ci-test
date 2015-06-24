@@ -134,9 +134,10 @@
 			//	return IntPtr.Zero;
 			//}
 
+
 			var extends = new IHavingWndProc[] {
-				Appbar,
 				VisualStyle,
+				Appbar,
 				WindowAreaCorrection,
 				WindowHitTest,
 			};
