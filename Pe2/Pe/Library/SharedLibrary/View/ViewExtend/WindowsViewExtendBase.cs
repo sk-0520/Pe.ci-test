@@ -18,7 +18,7 @@
 	/// ウィンドウとかに何かしら機能拡張する実装。
 	/// </summary>
 	/// <typeparam name="TViewModel"></typeparam>
-	public abstract class WindowsViewExtendBase<TViewModel> : DisposeFinalizeBase
+	public abstract class WindowsViewExtendBase<TViewModel> : DisposeFinalizeBase, IHavingWndProc
 		where TViewModel : class, IWindowsViewExtendRestrictionViewModelMarker
 	{
 		public WindowsViewExtendBase(Window view, TViewModel restrictionViewModel, INonProcess nonProcess)
@@ -64,9 +64,9 @@
 
 		#endregion
 
-		#region function
+		#region IHavingWndProc
 
-		public virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		public virtual IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			return IntPtr.Zero;
 		}

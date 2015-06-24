@@ -9,6 +9,23 @@
 
 	public static class WindowsUtility
 	{
+		#region define-function
+
+		public static int GetIntUnchecked(IntPtr value)
+		{
+			return IntPtr.Size == 8 ? unchecked((int)value.ToInt64()) : value.ToInt32();
+		}
+		public static int LOWORD(IntPtr value)
+		{
+			return unchecked((short)GetIntUnchecked(value));
+		}
+		public static int HIWORD(IntPtr value)
+		{
+			return unchecked((short)(((uint)GetIntUnchecked(value)) >> 16));
+		}
+
+		#endregion
+
 		#region window message convert
 
 		public static SC ConvertSCFromWParam(IntPtr wParam)
@@ -29,6 +46,17 @@
 		public static RECT  ConvertRECTFromLParam(IntPtr lParam)
 		{
 			return (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+		}
+
+
+		public static POINT ConvertPOINTFromLParam(IntPtr lParam)
+		{
+			return new POINT(LOWORD(lParam), HIWORD(lParam));
+		}
+
+		public static HT ConvertHTFromLParam(IntPtr param)
+		{
+			return (HT)LOWORD(param);
 		}
 
 		#endregion

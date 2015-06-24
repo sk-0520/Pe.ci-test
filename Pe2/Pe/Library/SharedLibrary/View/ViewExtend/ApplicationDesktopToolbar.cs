@@ -319,7 +319,7 @@
 			}
 
 			NativeMethods.MoveWindow(Handle, appBar.rc.X, appBar.rc.Y, appBar.rc.Width, appBar.rc.Height, false);
-			RestrictionViewModel.ShowDeviceBarArea = PodStructUtility.Convert(appBar.rc);
+			RestrictionViewModel.ShowLogicalBarArea = logicalWindowBounds;//PodStructUtility.Convert(appBar.rc);
 
 			if (RestrictionViewModel.AutoHide) {
 				StartHideWait();
@@ -333,7 +333,7 @@
 
 		void ResizeShowDeviceBarArea()
 		{
-			var deviceArea = RestrictionViewModel.ShowDeviceBarArea;
+			var deviceArea = UIUtility.ToDevicePixel(View, RestrictionViewModel.ShowLogicalBarArea);
 			NativeMethods.MoveWindow(Handle, (int)deviceArea.X, (int)deviceArea.Y, (int)deviceArea.Width, (int)deviceArea.Height, true);
 		}
 
@@ -370,7 +370,7 @@
 
 			if (dockType == DockType.None) {
 				//RestrictionViewModel.DockType = dockType;
-				RestrictionViewModel.DockType = dockType;
+				//RestrictionViewModel.DockType = dockType;
 				RestrictionViewModel.ChangingWindowMode(dockType);
 				// NOTE: もっかしフルスクリーン通知拾えるかもなんで登録すべきかも。
 				return;
@@ -475,43 +475,52 @@
 
 			var deviceCursolPosition = new POINT();
 			NativeMethods.GetCursorPos(out deviceCursolPosition);
+			var logicalCursolPosition = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(deviceCursolPosition));
 
-			if (!force && RestrictionViewModel.ShowDeviceBarArea.Contains(PodStructUtility.Convert(deviceCursolPosition))) {
+			if (!force && RestrictionViewModel.ShowLogicalBarArea.Contains(logicalCursolPosition)) {
 				return;
 			}
 
 			//RestrictionViewModel.HideSize
 			//RestrictionViewModel.DockScreen.DeviceBounds.Location
 
-			Size deviceSize;
-			Point deviceLocation;
+			var logicalScreenArea = UIUtility.ToLogicalPixel(View, RestrictionViewModel.DockScreen.DeviceBounds);
+			Rect logicalHideArea = new Rect();
 
 			switch (RestrictionViewModel.DockType) {
 				case DockType.Top:
-					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideWidth);
-					deviceLocation = RestrictionViewModel.DockScreen.DeviceBounds.Location;
+					logicalHideArea.Width = logicalScreenArea.Width;
+					logicalHideArea.Height = RestrictionViewModel.HideWidth;
+					logicalHideArea.X = logicalScreenArea.X;
+					logicalHideArea.Y = logicalScreenArea.Y;
 					break;
 
 				case DockType.Bottom:
-					deviceSize = new Size(RestrictionViewModel.DockScreen.DeviceBounds.Width, RestrictionViewModel.HideWidth);
-					deviceLocation = new Point(RestrictionViewModel.DockScreen.DeviceBounds.X, RestrictionViewModel.DockScreen.DeviceBounds.Y - deviceSize.Height);
+					logicalHideArea.Width = logicalScreenArea.Width;
+					logicalHideArea.Height = RestrictionViewModel.HideWidth;
+					logicalHideArea.X = logicalScreenArea.X;
+					logicalHideArea.Y = logicalScreenArea.Y - logicalHideArea.Height;
 					break;
 
 				case DockType.Left:
-					deviceSize = new Size(RestrictionViewModel.HideWidth, RestrictionViewModel.DockScreen.DeviceBounds.Height);
-					deviceLocation = RestrictionViewModel.DockScreen.DeviceBounds.Location;
+					logicalHideArea.Width = RestrictionViewModel.HideWidth;
+					logicalHideArea.Height = logicalScreenArea.Height;
+					logicalHideArea.X = logicalScreenArea.X;
+					logicalHideArea.Y = logicalScreenArea.Y;
 					break;
 
 				case DockType.Right:
-					deviceSize = new Size(RestrictionViewModel.HideWidth, RestrictionViewModel.DockScreen.DeviceBounds.Height);
-					deviceLocation = new Point(RestrictionViewModel.DockScreen.DeviceBounds.Right - deviceSize.Width, RestrictionViewModel.DockScreen.DeviceBounds.Y);
+					logicalHideArea.Width = RestrictionViewModel.HideWidth;
+					logicalHideArea.Height = logicalScreenArea.Height;
+					logicalHideArea.X = logicalScreenArea.Right - logicalHideArea.Width;
+					logicalHideArea.Y = logicalScreenArea.Y;
 					break;
 
 				default:
 					throw new NotImplementedException();
 			}
 
-			HideViewImplement(!force, new Rect(deviceLocation, deviceSize));
+			HideViewImplement(!force, logicalHideArea);
 		}
 
 		//static AW ToAW(DockType type, bool show)
@@ -534,23 +543,25 @@
 		/// 自動的に隠すの実際の処理。
 		/// </summary>
 		/// <param name="animation"></param>
-		/// <param name="deviceHiddenArea"></param>
-		protected virtual void HideViewImplement(bool animation, Rect deviceHiddenArea)
+		/// <param name="logicalHideArea"></param>
+		protected virtual void HideViewImplement(bool animation, Rect logicalHideArea)
 		{
 			var prevVisibility = RestrictionViewModel.Visibility;
 
 			if (RestrictionViewModel.Visibility == Visibility.Visible) {
 
 				RestrictionViewModel.IsHidden = true;
-				RestrictionViewModel.HideLogicalBarArea = UIUtility.ToLogicalPixel(View, deviceHiddenArea);
+				RestrictionViewModel.HideLogicalBarArea = UIUtility.ToLogicalPixel(View, logicalHideArea);
 
+				var deviceHideArea = UIUtility.ToDevicePixel(View, logicalHideArea);
 				if (animation) {
 					//var animateTime = (int)RestrictionViewModel.HiddenAnimateTime.TotalMilliseconds;
 					//var animateFlag = ToAW(RestrictionViewModel.DockType, false);
 					//NativeMethods.AnimateWindow(Handle, animateTime, animateFlag);
-					/*TODO*/NativeMethods.MoveWindow(Handle, (int)deviceHiddenArea.X, (int)deviceHiddenArea.Y, (int)deviceHiddenArea.Width, (int)deviceHiddenArea.Height, true);
+					/*TODO*/
+					NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
 				} else {
-					NativeMethods.MoveWindow(Handle, (int)deviceHiddenArea.X, (int)deviceHiddenArea.Y, (int)deviceHiddenArea.Width, (int)deviceHiddenArea.Height, true);
+					NativeMethods.MoveWindow(Handle, (int)deviceHideArea.X, (int)deviceHideArea.Y, (int)deviceHideArea.Width, (int)deviceHideArea.Height, true);
 				}
 			}
 		}

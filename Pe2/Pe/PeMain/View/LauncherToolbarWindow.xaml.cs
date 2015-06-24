@@ -36,6 +36,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using Xceed.Wpf.Toolkit;
 	using System.Windows.Controls.Primitives;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -63,6 +64,7 @@
 		ApplicationDesktopToolbar Appbar { get; set; }
 		VisualStyle VisualStyle { get; set; }
 		WindowAreaCorrection WindowAreaCorrection { get; set; }
+		WindowHitTest WindowHitTest { get; set; }
 
 		#endregion
 
@@ -114,21 +116,35 @@
 			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
 			VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
 			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
+			WindowHitTest = new WindowHitTest(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if(Appbar != null) {
-				Appbar.WndProc(hWnd, msg, wParam, lParam, ref handled);
-			}
-			if (VisualStyle != null) {
-				VisualStyle.WndProc(hWnd, msg, wParam, lParam, ref handled);
-			}
-			if (WindowAreaCorrection != null) {
-				WindowAreaCorrection.WndProc(hWnd, msg, wParam, lParam, ref handled);
-			}
-			if (handled) {
-				return IntPtr.Zero;
+			//if(Appbar != null) {
+			//	Appbar.WndProc(hWnd, msg, wParam, lParam, ref handled);
+			//}
+			//if (VisualStyle != null) {
+			//	VisualStyle.WndProc(hWnd, msg, wParam, lParam, ref handled);
+			//}
+			//if (WindowAreaCorrection != null) {
+			//	WindowAreaCorrection.WndProc(hWnd, msg, wParam, lParam, ref handled);
+			//}
+			//if (handled) {
+			//	return IntPtr.Zero;
+			//}
+
+			var extends = new IHavingWndProc[] {
+				Appbar,
+				VisualStyle,
+				WindowAreaCorrection,
+				WindowHitTest,
+			};
+			foreach (var extend in extends.Where(e => e != null)) {
+				var result = extend.WndProc(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
 			}
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);

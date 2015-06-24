@@ -32,7 +32,7 @@
 	using System.Diagnostics;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData
 	{
 		#region static
 
@@ -53,6 +53,7 @@
 		static Thickness GetBorderThickness(DockType dockType, Visual visual)
 		{
 			var borderSize = SystemInformation.BorderSize;
+			borderSize = new Size(10, 10);
 
 			var map = new Dictionary<DockType, Thickness>() {
 				{ DockType.None, new Thickness(borderSize.Width, borderSize.Height, borderSize.Width, borderSize.Height) },
@@ -133,6 +134,8 @@
 		Thickness _borderThickness;
 		Brush _borderBrush;
 		Size _minSize;
+
+		Rect _showLogicalBarArea;
 
 		#endregion
 
@@ -228,46 +231,65 @@
 
 		#endregion
 
-		#region float window
+		#region window
 
-		public double FloatLeft
+		public double WindowLeft
 		{
 			get 
-			{ 
-				return IsHidden 
-					? HideLogicalBarArea.Left
-					: Model.Toolbar.FloatToolbar.Left;
+			{
+				if (DockType == DockType.None) {
+					return Model.Toolbar.FloatToolbar.Left;
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Left
+						: ShowLogicalBarArea.Left;
+				}
 			}
 			set 
 			{
 				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Left != value) {
 					Model.Toolbar.FloatToolbar.Left = value;
 					OnPropertyChanged();
+				} else if (!IsHidden && ShowLogicalBarArea.X != value) {
+					this._showLogicalBarArea.X = value;
+					OnPropertyChanged();
 				}
 			}
 		}
-		public double FloatTop
+		public double WindowTop
 		{
-			get { 
-				return IsHidden 
-					? HideLogicalBarArea.Top
-					: Model.Toolbar.FloatToolbar.Top; 
+			get 
+			{
+				if (DockType == DockType.None) {
+					return Model.Toolbar.FloatToolbar.Top;
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Top
+						: ShowLogicalBarArea.Top;
+				}
 			}
 			set
 			{
 				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Top != value) {
 					Model.Toolbar.FloatToolbar.Top = value;
 					OnPropertyChanged();
+				} else if (!IsHidden && ShowLogicalBarArea.Y != value) {
+					this._showLogicalBarArea.Y = value;
+					OnPropertyChanged();
 				}
 			}
 		}
-		public double FloatWidth
+		public double WindowWidth
 		{
 			get
 			{
-				return IsHidden
-				? HideLogicalBarArea.Width
-				: CalculateViewWidth(DockType, Orientation, BorderThickness, this._captionWidth);
+				if (DockType == DockType.None) {
+					return CalculateViewWidth(DockType, Orientation, BorderThickness, this._captionWidth);
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Width
+						: ShowLogicalBarArea.Width;
+				}
 			}
 			set
 			{
@@ -275,16 +297,23 @@
 					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionHeight");
+				} else if (!IsHidden && ShowLogicalBarArea.Width != value) {
+					this._showLogicalBarArea.Width = value;
+					OnPropertyChanged();
 				}
 			}
 		}
-		public double FloatHeight
+		public double WindowHeight
 		{
 			get
 			{
-				return IsHidden
-					? HideLogicalBarArea.Height
-					: CalculateViewHeight(DockType, Orientation, BorderThickness, this._captionWidth);
+				if (DockType == DockType.None) {
+					return CalculateViewHeight(DockType, Orientation, BorderThickness, this._captionWidth);
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Height
+						: ShowLogicalBarArea.Height;
+				}
 			}
 			set
 			{
@@ -292,6 +321,9 @@
 					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
 					OnPropertyChanged();
 					OnPropertyChanged("CaptionWidth");
+				} else if (!IsHidden && ShowLogicalBarArea.Height != value) {
+					this._showLogicalBarArea.Height = value;
+					OnPropertyChanged();
 				}
 			}
 		}
@@ -319,8 +351,8 @@
 					CalculateWindowStatus(value);
 					Model.Toolbar.DockType = value;
 					OnPropertyChanged();
-					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
+					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
 					OnPropertyChanged("CaptionCursor");
@@ -354,10 +386,10 @@
 		[PixelKind(Px.Logical)]
 		public Size BarSize { get; set; }
 		/// <summary>
-		/// 表示中の物理バーサイズ。
+		/// 表示中の論理バーサイズ。
 		/// </summary>
-		[PixelKind(Px.Device)]
-		public Rect ShowDeviceBarArea { get; set; }
+		[PixelKind(Px.Logical)]
+		public Rect ShowLogicalBarArea { get { return this._showLogicalBarArea; } set { this._showLogicalBarArea = value; } }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// </summary>
@@ -401,11 +433,12 @@
 
 		public void ChangingWindowMode(DockType dockType)
 		{
+			DockType = dockType;
 			var logicalRect = new Rect(
-				FloatLeft,
-				FloatTop,
-				FloatWidth,
-				FloatHeight
+				WindowLeft,
+				WindowTop,
+				WindowWidth,
+				WindowHeight
 			);
 			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
 			var podRect = PodStructUtility.Convert(deviceRect);
@@ -427,7 +460,7 @@
 
 		#endregion
 
-		#region IPositionCorrectionData
+		#region IWindowAreaCorrectionData
 
 		/// <summary>
 		/// ウィンドウサイズの倍数制御を行うか。
@@ -481,6 +514,33 @@
 				}
 			}
 		}
+
+		#endregion
+
+		#region IWindowHitTestData
+
+		/// <summary>
+		/// ヒットテストを行うか
+		/// </summary>
+		public bool UsingHitTest { get { return NowFloatWindow; } }
+
+		/// <summary>
+		/// タイトルバーとして認識される領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect CaptionArea
+		{
+			get 
+			{ 
+				var result = new Rect(BorderThickness.Left, BorderThickness.Top, CaptionWidth, CaptionHeight);
+				return result;
+			} 
+		}
+		/// <summary>
+		/// サイズ変更に使用する境界線。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness ResizeThickness { get { return BorderThickness; } }
 
 		#endregion
 

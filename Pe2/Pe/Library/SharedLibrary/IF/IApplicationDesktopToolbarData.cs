@@ -40,10 +40,10 @@
 		[PixelKind(Px.Logical)]
 		Size BarSize { get; set; }
 		/// <summary>
-		/// 表示中の物理バーサイズ。
+		/// 表示中の論理バーサイズ。
 		/// </summary>
-		[PixelKind(Px.Device)]
-		Rect ShowDeviceBarArea { get; set; }
+		[PixelKind(Px.Logical)]
+		Rect ShowLogicalBarArea { get; set; }
 		/// <summary>
 		/// 隠れた状態のバー論理サイズ。
 		/// </summary>

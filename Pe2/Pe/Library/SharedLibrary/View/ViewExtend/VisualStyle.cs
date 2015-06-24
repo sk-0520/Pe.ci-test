@@ -32,7 +32,7 @@
 
 		#region WindowsViewExtendBase
 
-		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			switch (msg) {
 				case (int)WM.WM_DESTROY:
@@ -63,7 +63,7 @@
 					break;
 			}
 
-			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion

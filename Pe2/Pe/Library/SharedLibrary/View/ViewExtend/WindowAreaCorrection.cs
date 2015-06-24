@@ -22,23 +22,23 @@
 
 		#region WindowsViewExtendBase
 
-		public override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (RestrictionViewModel.UsingMultipleResize) {
-				CorrectionSizing(hwnd, msg, wParam, lParam, ref handled);
+				CorrectionSizing(hWnd, msg, wParam, lParam, ref handled);
 			}
 			if (RestrictionViewModel.UsingMoveLimitArea) {
-				CorrectionMoving(hwnd, msg, wParam, lParam, ref handled);
+				CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
 			}
 
-			return base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion
 
 		#region function
 
-		IntPtr CorrectionSizing(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		IntPtr CorrectionSizing(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WM.WM_SIZING) {
 				var logicalRect = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertRECTFromLParam(lParam)));
@@ -98,7 +98,7 @@
 			return IntPtr.Zero;
 		}
 
-		IntPtr CorrectionMoving(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		IntPtr CorrectionMoving(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WM.WM_MOVING) {
 				var rawRect = WindowsUtility.ConvertRECTFromLParam(lParam);
