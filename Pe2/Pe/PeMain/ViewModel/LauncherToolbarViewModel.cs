@@ -352,11 +352,13 @@
 					CalculateWindowStatus(value);
 					Model.Toolbar.DockType = value;
 					OnPropertyChanged();
-					OnPropertyChanged("CaptionVisibility");
+					View.InvalidateArrange();
 					OnPropertyChanged("Orientation");
+					OnPropertyChanged("CaptionVisibility");
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
 					OnPropertyChanged("CaptionCursor");
+					View.UpdateLayout();
 				}
 			}
 		}
@@ -466,6 +468,7 @@
 
 		#region IVisualStyleData
 
+		public bool UsingVisualStyle { get { return false; } }
 		public bool EnabledVisualStyle { get; set; }
 		public Color VisualPlainColor { get; set; }
 		public Color VisualAlphaColor { get; set; }

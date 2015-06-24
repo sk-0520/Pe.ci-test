@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -34,33 +35,35 @@
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			switch (msg) {
-				case (int)WM.WM_DESTROY:
-					UnsetStyle();
-					break;
+			if(RestrictionViewModel.UsingVisualStyle) {
+				switch(msg) {
+					case (int)WM.WM_DESTROY:
+						UnsetStyle();
+						break;
 
-				case (int)WM.WM_DWMCOMPOSITIONCHANGED:
-					SetStyle();
-					handled = true;
-					break;
+					case (int)WM.WM_DWMCOMPOSITIONCHANGED:
+						SetStyle();
+						handled = true;
+						break;
 
-				case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
-					SetWindowColor();
-					handled = true;
-					break;
+					case (int)WM.WM_DWMCOLORIZATIONCOLORCHANGED:
+						SetWindowColor();
+						handled = true;
+						break;
 
-				//case (int)WM.WM_NCHITTEST:
-				//	IntPtr result = new IntPtr();
-				//	handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
-				//	handled = true;
-				//	break;
+					//case (int)WM.WM_NCHITTEST:
+					//	IntPtr result = new IntPtr();
+					//	handled = NativeMethods.DwmDefWindowProc(hwnd, msg, wParam, lParam, ref result);
+					//	handled = true;
+					//	break;
 
-				//case (int)WM.WM_WINDOWPOSCHANGED:
-				//	SetStyle();
-				//	break;
+					//case (int)WM.WM_WINDOWPOSCHANGED:
+					//	SetStyle();
+					//	break;
 
-				default:
-					break;
+					default:
+						break;
+				}
 			}
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
@@ -83,19 +86,21 @@
 			return false;
 		}
 
-		public  void UnsetStyle()
+		public void UnsetStyle()
 		{
-			if(RestrictionViewModel.EnabledVisualStyle && UsingAeroGlass) {
-				var blurHehind = new DWM_BLURBEHIND();
-				blurHehind.fEnable = false;
-				//blurHehind.hRgnBlur = IntPtr.Zero;
-				blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;// | DWM_BB.DWM_BB_BLURREGION;
-				NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
-				UsingAeroGlass = false;
-			}
-			View.Background = StockBackground;
+			if(RestrictionViewModel.UsingVisualStyle) {
+				if(RestrictionViewModel.EnabledVisualStyle && UsingAeroGlass) {
+					var blurHehind = new DWM_BLURBEHIND();
+					blurHehind.fEnable = false;
+					//blurHehind.hRgnBlur = IntPtr.Zero;
+					blurHehind.dwFlags = DWM_BB.DWM_BB_ENABLE;// | DWM_BB.DWM_BB_BLURREGION;
+					NativeMethods.DwmEnableBlurBehindWindow(Handle, ref blurHehind);
+					UsingAeroGlass = false;
+				}
+				View.Background = StockBackground;
 
-			RestrictionViewModel.EnabledVisualStyle = false;
+				RestrictionViewModel.EnabledVisualStyle = false;
+			}
 		}
 
 		public void SetStyle()
@@ -124,16 +129,20 @@
 			//	//}
 			//	return;
 			//}
-			bool aeroSupport;
-			NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
-			RestrictionViewModel.EnabledVisualStyle = aeroSupport;
+			if(RestrictionViewModel.UsingVisualStyle) {
+				bool aeroSupport;
+				NativeMethods.DwmIsCompositionEnabled(out aeroSupport);
+				RestrictionViewModel.EnabledVisualStyle = aeroSupport;
 
-			SetWindowStyle();
-			SetWindowColor();
+				SetWindowStyle();
+				SetWindowColor();
+			}
 		}
 
 		protected void SetWindowStyle()
 		{
+			Debug.Assert(RestrictionViewModel.UsingVisualStyle);
+
 			if (RestrictionViewModel.EnabledVisualStyle && SupportAeroGlass()) {
 				if(!UsingAeroGlass) {
 					// Aero Glass
@@ -159,7 +168,9 @@
 
 		protected void SetWindowColor()
 		{
-			if (RestrictionViewModel.EnabledVisualStyle) {
+			Debug.Assert(RestrictionViewModel.UsingVisualStyle);
+
+			if(RestrictionViewModel.EnabledVisualStyle) {
 				if(UsingAeroGlass) {
 					return;
 				}

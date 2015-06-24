@@ -10,6 +10,7 @@
 
 	public interface IVisualStyleData : IWindowsViewExtendRestrictionViewModelMarker
 	{
+		bool UsingVisualStyle { get; }
 		bool EnabledVisualStyle { get; set; }
 		Color VisualPlainColor { get; set; }
 		Color VisualAlphaColor { get; set; }
