@@ -33,7 +33,7 @@
 		/// <summary>
 		/// 表示状態。
 		/// </summary>
-		Visibility Visibility { get; set; }
+		Visibility Visibility { get; }
 		/// <summary>
 		/// バーの論理サイズ
 		/// </summary>
@@ -48,7 +48,7 @@
 		/// 隠れた状態のバー論理サイズ。
 		/// </summary>
 		[PixelKind(Px.Logical)]
-		double HideWidth { get; set; }
+		double HideWidth { get; }
 		/// <summary>
 		/// 表示中の隠れたバーの論理領域。
 		/// </summary>
@@ -57,15 +57,15 @@
 		/// <summary>
 		/// 自動的に隠すまでの時間。
 		/// </summary>
-		TimeSpan HideWaitTime { get; set; }
+		TimeSpan HideWaitTime { get; }
 		/// <summary>
 		/// 自動的に隠す際のアニメーション時間。
 		/// </summary>
-		TimeSpan HideAnimateTime { get; set; }
+		TimeSpan HideAnimateTime { get; }
 		/// <summary>
 		/// ドッキングに使用するスクリーン。
 		/// </summary>
-		ScreenModel DockScreen { get; set; }
+		ScreenModel DockScreen { get; }
 
 		/// <summary>
 		/// 指定位置に合わせてデータ書き換え
