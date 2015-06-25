@@ -169,8 +169,14 @@
 			{
 				var result = CreateCommand(
 					o => {
-						NonProcess.Logger.Debug(Model.ToString());
-						NonProcess.Logger.Debug(string.Format("{0}", o));
+						var type = (LauncherCommandType)o;
+						var map = new Dictionary<LauncherCommandType, Func<string>>() {
+							{ LauncherCommandType.ParentDirectory, () => Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(Model.Command)) },
+							{ LauncherCommandType.WorkDirectory, () => Environment.ExpandEnvironmentVariables(Model.WorkDirectoryPath) },
+						};
+						var s = map[type]();
+
+						ExecuteUtility.OpenDirectory(s, NonProcess, default(LauncherItemModel));
 					}
 				);
 
@@ -185,12 +191,12 @@
 				var result = CreateCommand(
 					o => {
 						var type = (LauncherCommandType)o;
-						var map = new Dictionary<LauncherCommandType, string>() {
-							{ LauncherCommandType.Command, Model.Command },
-							{ LauncherCommandType.ParentDirectory, Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(Model.Command)) },
-							{ LauncherCommandType.WorkDirectory, Model.WorkDirectoryPath },
+						var map = new Dictionary<LauncherCommandType, Func<string>>() {
+							{ LauncherCommandType.Command, () => Model.Command },
+							{ LauncherCommandType.ParentDirectory, () => Path.GetDirectoryName(Environment.ExpandEnvironmentVariables(Model.Command)) },
+							{ LauncherCommandType.WorkDirectory, () => Model.WorkDirectoryPath },
 						};
-						var s = map[type];
+						var s = map[type]();
 
 						ClipboardUtility.CopyText(s, ClipboardWatcher);
 					}
