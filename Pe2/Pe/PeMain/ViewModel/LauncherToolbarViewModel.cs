@@ -31,6 +31,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using System.Diagnostics;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+	using System.Windows.Controls.Primitives;
 
 	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData
 	{
@@ -122,6 +123,18 @@
 				captionSize.Width + borderThickness.GetHorizon() + buttonSize.Width,
 				captionSize.Height + borderThickness.GetVertical() + buttonSize.Height
 			);
+		}
+
+		static PlacementMode GetDropDownPlacement(DockType dockeType)
+		{
+			var map = new Dictionary<DockType, PlacementMode>() {
+				{ DockType.None, PlacementMode.Bottom },
+				{ DockType.Left, PlacementMode.Right },
+				{ DockType.Top, PlacementMode.Bottom },
+				{ DockType.Right, PlacementMode.Left },
+				{ DockType.Bottom, PlacementMode.Top },
+			};
+			return map[dockeType];
 		}
 
 		#endregion
@@ -357,6 +370,7 @@
 					OnPropertyChanged("CaptionVisibility");
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
+					OnPropertyChanged("DropDownPlacement");
 					View.UpdateLayout();
 				}
 			}
@@ -681,6 +695,11 @@
 			{
 				return null;
 			}
+		}
+
+		public PlacementMode DropDownPlacement
+		{
+			get { return GetDropDownPlacement(DockType); }
 		}
 
 		#endregion

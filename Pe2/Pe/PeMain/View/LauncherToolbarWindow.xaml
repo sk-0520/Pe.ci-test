@@ -70,7 +70,7 @@
 			<Setter Property="VerticalOffset" Value="1" />
 			<Setter Property="AllowsTransparency" Value="True" />
 			<Setter Property="StaysOpen" Value="False" />
-			<Setter Property="Placement" Value="Bottom" />
+			<Setter Property="Placement" Value="{Binding DataContext.DropDownPlacement, Mode=OneWay, ElementName=root}" />
 			<Setter Property="Focusable" Value="False" />
 		</Style>
 		<Style x:Key="DropDownPopupBorder" TargetType="Border">
