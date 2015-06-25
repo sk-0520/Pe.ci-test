@@ -37,6 +37,7 @@
 	using Xceed.Wpf.Toolkit;
 	using System.Windows.Controls.Primitives;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -64,7 +65,7 @@
 		ApplicationDesktopToolbar Appbar { get; set; }
 		VisualStyle VisualStyle { get; set; }
 		WindowAreaCorrection WindowAreaCorrection { get; set; }
-		WindowHitTest WindowHitTest { get; set; }
+		LauncherToolbarHitTest WindowHitTest { get; set; }
 
 		#endregion
 
@@ -116,7 +117,7 @@
 			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);
 			VisualStyle = new VisualStyle(this, ViewModel, CommonData.NonProcess);
 			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
-			WindowHitTest = new WindowHitTest(this, ViewModel, CommonData.NonProcess);
+			WindowHitTest = new LauncherToolbarHitTest(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -183,14 +184,14 @@
 
 		#endregion
 
-		private void Caption_MouseLeftButton(object sender, MouseButtonEventArgs e)
-		{
-			if (e.LeftButton == MouseButtonState.Pressed) {
-				if (ViewModel.CanWindowDrag) {
-					DragMove();
-				}
-			}
-		}
+		//private void Caption_MouseLeftButton(object sender, MouseButtonEventArgs e)
+		//{
+		//	if (e.LeftButton == MouseButtonState.Pressed) {
+		//		if (ViewModel.CanWindowDrag) {
+		//			DragMove();
+		//		}
+		//	}
+		//}
 
 		private void Element_Click(object sender, RoutedEventArgs e)
 		{

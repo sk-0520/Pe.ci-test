@@ -331,8 +331,6 @@
 			Height="{Binding CaptionHeight, Mode=OneWay}" 
 			Visibility="{Binding CaptionVisibility}" 
 			Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"
-			Cursor="{Binding CaptionCursor, Mode=OneWay}"
-			MouseLeftButtonDown="Caption_MouseLeftButton"
 		/>
 
 		<!-- メインボタン -->
