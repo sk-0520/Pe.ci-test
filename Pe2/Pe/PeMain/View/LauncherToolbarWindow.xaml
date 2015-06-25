@@ -434,7 +434,7 @@
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
 										<Button Content="setting" Style="{StaticResource PopupClose}" />
-										<Button Content="property" IsEnabled="{Binding ExistsParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="property" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenProperty}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 								</StackPanel>
 							</xctk:SplitButton.DropDownContent>

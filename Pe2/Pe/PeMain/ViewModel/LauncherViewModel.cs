@@ -206,6 +206,21 @@
 			}
 		}
 
+		public ICommand OpenProperty
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var s = Environment.ExpandEnvironmentVariables(Model.Command);
+						ExecuteUtility.OpenProperty(s, IntPtr.Zero);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
