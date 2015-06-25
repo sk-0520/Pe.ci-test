@@ -357,7 +357,6 @@
 					OnPropertyChanged("CaptionVisibility");
 					OnPropertyChanged("CaptionWidth");
 					OnPropertyChanged("CaptionHeight");
-					OnPropertyChanged("CaptionCursor");
 					View.UpdateLayout();
 				}
 			}
@@ -574,18 +573,7 @@
 		public double MenuWidth { get; set; }
 
 		public bool NowFloatWindow { get { return DockType == DockType.None; } }
-		public bool CanWindowDrag { get { return NowFloatWindow; } }
-		public Cursor CaptionCursor
-		{
-			get
-			{
-				if (NowFloatWindow) {
-					return Cursors.SizeAll;
-				} else {
-					return Cursors.Arrow;
-				}
-			}
-		}
+		//public bool CanWindowDrag { get { return NowFloatWindow; } }
 
 		public Visibility CaptionVisibility
 		{

@@ -21,6 +21,15 @@
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
+			if(msg == (int)WM.WM_SETCURSOR) {
+				var hitTest = WindowsUtility.ConvertHTFromLParam(lParam);
+				if (hitTest == HT.HTCAPTION) {
+					NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
+					handled = true;
+					return new IntPtr(1);
+				}
+			}
+
 			var result = base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 			if (RestrictionViewModel.UsingHitTest && handled && result != IntPtr.Zero) {
 				var hitTest = (HT)result.ToInt32();
