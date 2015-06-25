@@ -30,6 +30,9 @@
 			if (RestrictionViewModel.UsingMoveLimitArea) {
 				CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
 			}
+			if (RestrictionViewModel.UsingMaxMinSuppression) {
+				SuppressionMaxMin(hWnd, msg, wParam, lParam, ref handled);
+			}
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
@@ -97,7 +100,7 @@
 
 			return IntPtr.Zero;
 		}
-
+		
 		IntPtr CorrectionMoving(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WM.WM_MOVING) {
@@ -132,6 +135,23 @@
 				Marshal.StructureToPtr(rawRect, lParam, false);
 
 				handled = true;
+			}
+
+			return IntPtr.Zero;
+		}
+
+		IntPtr SuppressionMaxMin(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			if (msg == (int)WM.WM_SYSCOMMAND) {
+				var sc = WindowsUtility.ConvertSCFromWParam(wParam);
+				var set = new HashSet<SC>() {
+					SC.SC_MINIMIZE,
+					SC.SC_MAXIMIZE,
+					SC.SC_RESTORE,
+				};
+				if(!set.Add(sc)) {
+					handled = true;
+				}
 			}
 
 			return IntPtr.Zero;

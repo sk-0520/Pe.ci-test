@@ -35,5 +35,9 @@
 		/// </summary>
 		[PixelKind(Px.Logical)]
 		Rect MoveLimitArea { get; }
+		/// <summary>
+		/// 最大化・最小化を抑制するか。
+		/// </summary>
+		bool UsingMaxMinSuppression { get; }
 	}
 }
