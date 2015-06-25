@@ -17,23 +17,23 @@
 	/// </summary>
 	public static class SettingUtility
 	{
-		public static bool CheckAccept(RunningInformationItemModel model, ILogger logger)
+		public static bool CheckAccept(RunningInformationItemModel model, INonProcess nonProcess)
 		{
 			if(!model.Accept) {
 				// 完全に初回
-				logger.Debug("first");
+				nonProcess.Logger.Debug("first");
 				return false;
 			}
 
 			if(model.LastExecuteVersion == null) {
 				// 何らかの理由で前回実行時のバージョン格納されていない
-				logger.Debug("last version == null");
+				nonProcess.Logger.Debug("last version == null");
 				return false;
 			}
 
 			if(model.LastExecuteVersion < Constants.acceptVersion) {
 				// 前回バージョンから強制定期に使用許諾が必要
-				logger.Debug("last version < accept version");
+				nonProcess.Logger.Debug("last version < accept version");
 				return false;
 			}
 
@@ -49,10 +49,10 @@
 			model.ExecuteCount += 1;
 		}
 
-		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, LanguageManager language)
+		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
 		{
-			var newGroupId = language["new/group-id"];
-			var newGroupName = language["new/group-id"];
+			var newGroupId = nonProcess.Language["new/group-id"];
+			var newGroupName = nonProcess.Language["new/group-id"];
 
 			var result = new LauncherGroupItemModel();
 			if(group != null || group.Any()) {
@@ -69,7 +69,7 @@
 			return result;
 		}
 
-		public static void InitializeMainSetting(MainSettingModel setting, ILogger logger)
+		public static void InitializeMainSetting(MainSettingModel setting, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
@@ -83,7 +83,7 @@
 			}
 		}
 
-		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, ILogger logger)
+		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
@@ -117,13 +117,13 @@
 			// --------------------------------
 		}
 
-		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, LanguageManager language, ILogger logger)
+		public static void InitializeLauncherGroupSetting(LauncherGroupSettingModel setting, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
-			CheckUtility.EnforceNotNull(language);
+			CheckUtility.EnforceNotNull(nonProcess);
 
 			if(!setting.Groups.Any()) {
-				var initGroup = CreateLauncherGroup(setting.Groups, language);
+				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
 				//------------------------
 				initGroup.LauncherItems.AddRange(new[] {
 					"test1",
@@ -134,6 +134,11 @@
 				//------------------------
 				setting.Groups.Add(initGroup);
 			}
+		}
+
+		public static void IncrementLauncherItem(LauncherItemModel launcherItem, string option, string workDirPath, INonProcess nonProcess)
+		{
+			CheckUtility.EnforceNotNull(launcherItem);
 		}
 
 	}

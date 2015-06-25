@@ -155,7 +155,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						ExecuteUtility.RunItem(Model, NonProcess);
+						Execute();
 					}
 				);
 

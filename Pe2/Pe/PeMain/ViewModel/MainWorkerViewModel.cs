@@ -282,7 +282,7 @@
 		/// </summary>
 		bool InitializeAccept()
 		{
-			if(SettingUtility.CheckAccept(CommonData.MainSetting.RunningInformation, CommonData.Logger)) {
+			if(SettingUtility.CheckAccept(CommonData.MainSetting.RunningInformation, CommonData.NonProcess)) {
 				SettingUtility.IncrementRunningInformation(CommonData.MainSetting.RunningInformation);
 			} else {
 				// 使用許諾表示前に使用しない状態にしておく。
@@ -306,9 +306,9 @@
 		void InitializeSetting()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.Logger);
-				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.Logger);
-				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.Language, CommonData.Logger);
+				SettingUtility.InitializeMainSetting(CommonData.MainSetting, CommonData.NonProcess);
+				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.NonProcess);
+				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.NonProcess);
 			}
 		}
 

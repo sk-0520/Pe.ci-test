@@ -53,6 +53,16 @@
 			return LauncherIcons[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, logger));
 		}
 
+		protected void Execute()
+		{
+			try {
+				ExecuteUtility.RunItem(Model, NonProcess);
+				SettingUtility.IncrementLauncherItem(Model, null, null, NonProcess);
+			} catch (Exception ex) {
+				NonProcess.Logger.Warning(ex);
+			}
+		}
+
 		#endregion
 	}
 }
