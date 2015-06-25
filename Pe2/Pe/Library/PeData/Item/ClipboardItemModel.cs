@@ -22,6 +22,12 @@
 		[DataMember]
 		public bool Enabled { get; set; }
 
+		/// <summary>
+		/// アプリケーション内でのコピー操作も監視対象とするか。
+		/// </summary>
+		[DataMember]
+		public bool EnabledApplicationCopy { get; set; }
+
 		#endregion
 
 	}

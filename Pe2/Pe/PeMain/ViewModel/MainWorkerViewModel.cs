@@ -228,6 +228,8 @@
 
 		public bool ClipboardWatching { get { return MessageWindow.ClipboardListenerRegisted; } }
 
+		public bool ClipboardEnabledApplicationCopy { get { return CommonData.MainSetting.Clipboard.EnabledApplicationCopy; } }
+
 		#endregion
 
 

@@ -17,5 +17,9 @@
 		/// 監視しているか。
 		/// </summary>
 		bool ClipboardWatching { get; }
+		/// <summary>
+		/// クリップボード
+		/// </summary>
+		bool ClipboardEnabledApplicationCopy { get; }
 	}
 }
