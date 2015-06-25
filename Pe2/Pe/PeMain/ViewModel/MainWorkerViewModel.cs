@@ -217,7 +217,7 @@
 
 		#region IClipboardWatcher
 
-		public void ClipboardChangeWatch(bool watch)
+		public void ClipboardWatchingChange(bool watch)
 		{
 			if(watch) {
 				MessageWindow.RegistClipboardListener();

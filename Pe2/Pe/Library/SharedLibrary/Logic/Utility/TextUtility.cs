@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.Specialized;
 	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
@@ -50,6 +51,12 @@
 			return ToUnique(target, list, (string source, int index) => string.Format("{0}({1})", source, index));
 		}
 
+		public static StringCollection ToStringCollection(IEnumerable<string> seq)
+		{
+			var sc = new StringCollection();
+			sc.AddRange(seq.ToArray());
 
+			return sc;
+		}
 	}
 }

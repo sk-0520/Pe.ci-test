@@ -138,6 +138,7 @@
     <Compile Include="Logic\Property\TopMostProperty.cs" />
     <Compile Include="Logic\Property\VisibleVisibilityProperty.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
+    <Compile Include="Logic\Utility\ClipboardUtility.cs" />
     <Compile Include="Logic\Utility\ExecuteUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\AppLogger.cs" />
