@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.IO;
 	using System.Linq;
@@ -10,19 +11,129 @@
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public static class ExecuteUtility
 	{
+		static Process RunFileItem(LauncherItemModel launcherItem, INonProcess nonProcess)
+		{
+			Debug.Assert(launcherItem.LauncherKind == LauncherKind.File);
+
+			var process = new Process();
+			var startInfo = process.StartInfo;
+			startInfo.FileName = Environment.ExpandEnvironmentVariables(launcherItem.Command);
+			var getOutput = false;
+
+			startInfo.Arguments = launcherItem.Option;
+
+			if (launcherItem.Administrator) {
+				startInfo.Verb = "runas";
+			}
+
+			// 作業ディレクトリ
+			if (!string.IsNullOrWhiteSpace(launcherItem.WorkDirectoryPath)) {
+				startInfo.WorkingDirectory = Environment.ExpandEnvironmentVariables(launcherItem.WorkDirectoryPath);
+			} else if (Path.IsPathRooted(startInfo.FileName) && FileUtility.Exists(startInfo.FileName)) {
+				startInfo.WorkingDirectory = Path.GetDirectoryName(startInfo.FileName);
+			}
+
+			// 環境変数
+			if (launcherItem.EnvironmentVariable.Edit) {
+				startInfo.UseShellExecute = false;
+				var envs = startInfo.EnvironmentVariables;
+				// 追加・更新
+				foreach (var pair in launcherItem.EnvironmentVariable.Update) {
+					envs[pair.Key] = pair.Value;
+				}
+				// 削除
+				var removeList = launcherItem.EnvironmentVariable.Remove.Where(envs.ContainsKey);
+				foreach (var key in removeList) {
+					envs.Remove(key);
+				}
+			}
+
+			// 出力取得
+			//StreamForm streamForm = null;
+			//startInfo.CreateNoWindow = launcherItem.StdOutputWatch;
+			//if (launcherItem.StdOutputWatch) {
+			//	getOutput = true;
+			//	startInfo.UseShellExecute = false;
+			//	startInfo.RedirectStandardOutput = true;
+			//	startInfo.RedirectStandardError = true;
+			//	startInfo.RedirectStandardInput = true;
+			//}
+
+			try {
+				if (getOutput) {
+					//streamForm = new StreamForm();
+					//streamForm.SetParameter(process, launcherItem);
+					//streamForm.SetCommonData(commonData);
+					//commonData.RootSender.AppendWindow(streamForm);
+				}
+
+				process.Start();
+
+				if (getOutput) {
+					//streamForm.StartStream();
+					//streamForm.Show();
+				}
+			} catch (Win32Exception ex) {
+				nonProcess.Logger.Error(ex);
+				//if (streamForm != null) {
+				//	streamForm.Dispose();
+				//}
+				throw;
+			}
+
+			return process;
+		}
+
+		/// <summary>
+		/// URIアイテム実行。
+		/// </summary>
+		/// <param name="launcherItem">URIアイテム</param>
+		/// <param name="commonData">共通データ</param>
+		/// <param name="parentForm">親ウィンドウ</param>
+		private static Process RunCommandItem(LauncherItemModel launcherItem, INonProcess nonProcess)
+		{
+			Debug.Assert(launcherItem.LauncherKind == LauncherKind.Command);
+
+			//return RunCommand(launcherItem.Command, launcherItem.Option, commonData);
+			var fileLauncherItem = (LauncherItemModel)launcherItem.DeepClone();
+			// ファイルアイテムに変換
+			fileLauncherItem.LauncherKind = LauncherKind.File;
+			// 管理者権限はどうにも効かなさそう
+			fileLauncherItem.Administrator = false;
+
+			return RunFileItem(fileLauncherItem, nonProcess);
+		}
+		public static Process RunItem(LauncherItemModel launcherItem, INonProcess nonProcess)
+		{
+			nonProcess.Logger.Information(launcherItem.ToString());
+
+			switch(launcherItem.LauncherKind) {
+				case LauncherKind.File:
+					return RunFileItem(launcherItem, nonProcess);
+
+				case LauncherKind.Command:
+					return RunCommandItem(launcherItem, nonProcess);
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
+
+
 		/// <summary>
 		/// コマンド文字列の実行。
 		/// </summary>
 		/// <param name="expandedPath">環境変数展開済みコマンド文字列。</param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		public static Process RunCommand(string expandedPath, INonProcess nonProcess)
+		public static Process ExecuteCommand(string expandedPath, INonProcess nonProcess)
 		{
-			return RunCommand(expandedPath, null, nonProcess);
+			return ExecuteCommand(expandedPath, null, nonProcess);
 		}
 
 		/// <summary>
@@ -31,7 +142,7 @@
 		/// <param name="expandedPath">環境変数展開済みコマンド文字列。</param>
 		/// <param name="nonProcess"></param>
 		/// <returns></returns>
-		public static Process RunCommand(string expandedPath, string arguments, INonProcess nonProcess)
+		public static Process ExecuteCommand(string expandedPath, string arguments, INonProcess nonProcess)
 		{
 			string exCommand = expandedPath;
 

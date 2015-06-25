@@ -149,13 +149,13 @@
 			}
 		}
 
-		public ICommand ExecuteCommand
+		public ICommand RunCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
-						NonProcess.Logger.Debug(Model.ToString());
+						ExecuteUtility.RunItem(Model, NonProcess);
 					}
 				);
 

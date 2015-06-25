@@ -14,7 +14,10 @@
 	{
 		public LauncherEnvironmentVariableItemModel()
 			: base()
-		{ }
+		{
+			Update = new DictionaryModel<string, string>();
+			Remove = new List<string>();
+		}
 
 		/// <summary>
 		/// 環境変数を変更するか。

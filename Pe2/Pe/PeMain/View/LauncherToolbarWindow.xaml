@@ -399,7 +399,7 @@
 					<StackPanel Orientation="Vertical">
 
 						<!-- ファイル -->
-						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding ExecuteCommand}">
+						<xctk:SplitButton Visibility="{Binding VisibilityFile, Mode=OneWay}" Style="{StaticResource LauncherSplit}" Command="{Binding RunCommand}">
 							<i:Interaction.Triggers>
 								<i:EventTrigger EventName="Opened">
 									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
@@ -415,7 +415,7 @@
 								<StackPanel>
 									<TextBlock Text="execute" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding ExecuteCommand}" Style="{StaticResource PopupClose}" />
+										<Button Content="normal" IsEnabled="{Binding ExistsCommand}" Command="{Binding RunCommand}" Style="{StaticResource PopupClose}" />
 										<Button Content="extra"  IsEnabled="{Binding ExistsCommand}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
@@ -449,7 +449,7 @@
 						</xctk:DropDownButton>-->
 
 						<!-- コマンド -->
-						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding ExecuteCommand}" >
+						<xctk:SplitButton Visibility="{Binding VisibilityCommand, Mode=OneWay}" Style="{StaticResource LauncherSplit}"  Command="{Binding RunCommand}" >
 							<i:Interaction.Triggers>
 								<i:EventTrigger EventName="Opened">
 									<i:InvokeCommandAction Command="{Binding OpenDropDownCommand}"></i:InvokeCommandAction>
