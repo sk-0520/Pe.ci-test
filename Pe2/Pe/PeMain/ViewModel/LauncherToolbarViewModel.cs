@@ -823,7 +823,9 @@
 
 		void CalculateWindowStatus(DockType dockType)
 		{
-			BorderThickness = GetBorderThickness(dockType, View);
+			if (HasView) {
+				BorderThickness = GetBorderThickness(dockType, View);
+			}
 
 			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
 
