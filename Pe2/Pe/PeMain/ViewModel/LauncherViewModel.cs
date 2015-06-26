@@ -58,6 +58,7 @@
 
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 		public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
+		public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
 
 		public Visibility VisibilityFile { get { return ToVisibility(Model.LauncherKind == LauncherKind.File); } }
 		//public Visibility VisibilityDirectory { get { return ToVisibility(Model.LauncherKind == LauncherKind.Directory); } }
@@ -74,7 +75,6 @@
 				}
 			}
 		}
-
 		public bool ExistsParentDirectory
 		{
 			get { return this._existsParentDir; }
@@ -131,6 +131,7 @@
 				}
 			}
 		}
+
 		#endregion
 
 		#region command

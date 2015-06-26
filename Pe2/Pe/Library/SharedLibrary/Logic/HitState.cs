@@ -73,7 +73,7 @@
 		/// <param name="area">全体領域。</param>
 		/// <param name="thickness">パディング領域。</param>
 		/// <param name="point">判定座標。</param>
-		public void CalcAndSetValue(Rect area, Thickness thickness, Point point)
+		public void CalculateAndSetValue(Rect area, Thickness thickness, Point point)
 		{
 			var workArea = new Rect();
 

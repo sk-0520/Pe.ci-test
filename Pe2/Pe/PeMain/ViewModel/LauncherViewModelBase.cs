@@ -1,19 +1,20 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Media.Imaging;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingClipboardWatcher
 	{
@@ -46,11 +47,16 @@
 
 		#region function
 
-		public BitmapSource GetIcon(IconScale iconScale, ILogger logger = null)
+		public BitmapSource GetIcon(IconScale iconScale)
 		{
 			CheckUtility.DebugEnforceNotNull(LauncherIcons);
 
-			return LauncherIcons[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, logger));
+			return LauncherIcons[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
+		}
+
+		public Color GetIconColor(IconScale iconScale)
+		{
+			return Colors.Red;
 		}
 
 		protected void Execute()

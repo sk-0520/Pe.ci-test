@@ -123,6 +123,7 @@
     <Compile Include="Logic\HitState.cs" />
     <Compile Include="Logic\TimeLogger.cs" />
     <Compile Include="Logic\Utility\EnumUtility.cs" />
+    <Compile Include="Logic\Utility\MediaUtility.cs" />
     <Compile Include="Logic\Utility\ScreenUtility.cs" />
     <Compile Include="Logic\Utility\IconUtility.cs" />
     <Compile Include="Model\Unmanaged\Gdi\IconHandleModel.cs" />

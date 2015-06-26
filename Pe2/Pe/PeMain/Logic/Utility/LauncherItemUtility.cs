@@ -15,10 +15,11 @@
 
 	public static class LauncherItemUtility
 	{
-		public static BitmapSource GetIcon(LauncherItemModel model, IconScale iconScale, ILogger logger = null)
+		public static BitmapSource GetIcon(LauncherItemModel model, IconScale iconScale, INonProcess nonProcess)
 		{
 			CheckUtility.DebugEnforceNotNull(model);
 			CheckUtility.DebugEnforceNotNull(model.Icon);
+			CheckUtility.DebugEnforceNotNull(nonProcess);
 
 			var hasIcon = false;
 			var useIcon = new IconPathModel();
@@ -41,14 +42,14 @@
 					}
 				}
 				if(!hasIcon && model.LauncherKind == LauncherKind.Command) {
-					return Resource.GetLauncherCommandIcon(iconScale, logger);
+					return Resource.GetLauncherCommandIcon(iconScale, nonProcess.Logger);
 				}
 			}
 
 			if(hasIcon) {
-				return AppUtility.LoadIconDefault(useIcon, iconScale, logger);
+				return AppUtility.LoadIconDefault(useIcon, iconScale, nonProcess.Logger);
 			} else {
-				return Resource.GetNotFoundIcon(iconScale, logger);
+				return Resource.GetNotFoundIcon(iconScale, nonProcess.Logger);
 			}
 		}
 	}

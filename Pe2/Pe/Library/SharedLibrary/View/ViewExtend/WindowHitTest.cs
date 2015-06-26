@@ -34,7 +34,7 @@
 					hitTest = HT.HTCAPTION;
 				} else {
 					var hitState = new HitState();
-					hitState.CalcAndSetValue(new Rect(0, 0, View.Width, View.Height), RestrictionViewModel.ResizeThickness, logicalClientPoint);
+					hitState.CalculateAndSetValue(new Rect(0, 0, View.Width, View.Height), RestrictionViewModel.ResizeThickness, logicalClientPoint);
 					if (hitState.Enabled) {
 						if (hitState.Left) {
 							if (hitState.Top) {
