@@ -6,6 +6,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 	public static class MediaUtility
 	{
@@ -70,6 +71,61 @@
 			} else {
 				return Colors.White;
 			}
+		}
+
+		public static byte[] GetPixels(BitmapSource bitmapSource)
+		{
+			var usingNewImage = bitmapSource.Format != PixelFormats.Bgra32;
+			if (usingNewImage) {
+				bitmapSource = new FormatConvertedBitmap(
+					bitmapSource,
+					PixelFormats.Bgra32,
+					null,
+					0);
+				bitmapSource.Freeze();
+			}
+			int width = (int)bitmapSource.Width;
+			int height = (int)bitmapSource.Height;
+			int stride = width * 4;
+			var pixels = new byte[stride * height];
+			bitmapSource.CopyPixels(pixels, stride, 0);
+
+			if (usingNewImage) {
+				// 解放処理
+			}
+			
+			return pixels;
+		}
+
+		public static IEnumerable< Color> GetColors(byte[] pixels)
+		{
+			for (var i = 0; i < pixels.Length; i += 4) {
+				var b = pixels[i + 0];
+				var g = pixels[i + 1];
+				var r = pixels[i + 2];
+				var a = pixels[i + 3];
+				yield return Color.FromArgb(a, r, g, b);
+			}
+		}
+
+		public static Color GetPredominantColorFromBitmapSource(BitmapSource bitmapSource)
+		{
+			return GetPredominantColor(GetColors(GetPixels(bitmapSource)));
+			//return Colors.Red;
+		}
+
+		public static Color GetPredominantColor(IEnumerable<Color> colors)
+		{
+			var map = new Dictionary<Color, int>();
+			int tempValue;
+			foreach (var color in colors.Where(c => c.A > 120)) {
+				if (map.TryGetValue(color, out tempValue)) {
+					map[color] += 1;
+				} else {
+					map[color] = 1;
+				}
+			}
+			return map.OrderByDescending(p => p.Value).First().Key;
 		}
 
 	}

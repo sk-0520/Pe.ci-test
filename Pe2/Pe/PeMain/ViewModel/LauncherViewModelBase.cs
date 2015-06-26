@@ -56,7 +56,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		public Color GetIconColor(IconScale iconScale)
 		{
-			return Colors.Red;
+			var icon = GetIcon(iconScale);
+			return MediaUtility.GetPredominantColorFromBitmapSource(icon);
 		}
 
 		protected void Execute()

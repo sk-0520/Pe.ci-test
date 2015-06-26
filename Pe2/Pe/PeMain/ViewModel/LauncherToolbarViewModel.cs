@@ -32,6 +32,7 @@
 	using System.Diagnostics;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using System.Windows.Controls.Primitives;
+using System.Windows.Media.Imaging;
 
 	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData
 	{
@@ -690,8 +691,9 @@
 			}
 		}
 
-		public ImageSource ToolbarImage { get { return Resource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale); } }
+		public ImageSource ToolbarImage { get { return GetAppIcon(); } }
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
+		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
 		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
 
 		public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
@@ -871,6 +873,16 @@
 		{
 			var captionSize = GetCaptionSize(orientation, captionWidth);
 			return (int)((viewHeight - borderThickness.GetVertical() - captionSize.Height) / ButtonSize.Height);
+		}
+
+		BitmapSource GetAppIcon()
+		{
+			return Resource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale);
+		}
+
+		Color GetAppIconColor()
+		{
+			return MediaUtility.GetPredominantColorFromBitmapSource(GetAppIcon());
 		}
 
 
