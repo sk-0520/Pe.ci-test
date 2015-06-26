@@ -19,14 +19,11 @@
 
 		public sealed class AppNonProcessImplement: INonProcess
 		{
-			public AppNonProcessImplement(ILogger logger, ILanguage language)
-			{
-				Logger = logger;
-				Language = language;
-			}
+			public AppNonProcessImplement()
+			{ }
 
-			public ILogger Logger { get; private set; }
-			public ILanguage Language { get; private set; }
+			public ILogger Logger { get; set; }
+			public ILanguage Language { get; set; }
 		}
 
 		#endregion
@@ -62,8 +59,10 @@
 			get 
 			{
 				if(NonProcessInstance == null) {
-					NonProcessInstance = new AppNonProcessImplement(Logger, Language);
+					NonProcessInstance = new AppNonProcessImplement();
 				}
+				NonProcessInstance.Language = Language;
+				NonProcessInstance.Logger = Logger;
 
 				return NonProcessInstance; 
 			} 
