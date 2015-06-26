@@ -200,5 +200,15 @@
 				button.IsOpen = false;
 			}
 		}
+
+		private void PART_ToggleButton_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			e.Handled = true;
+		}
+
+		private void PART_ToggleButton_Click(object sender, RoutedEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

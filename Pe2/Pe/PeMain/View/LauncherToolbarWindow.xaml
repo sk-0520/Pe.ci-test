@@ -42,7 +42,7 @@
 		<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
 		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
-		
+
 
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
 
@@ -67,6 +67,7 @@
 			<Setter Property="Data" Value="M 0,1 C0,1 0,0 0,0 0,0 3,0 3,0 3,0 3,1 3,1 3,1 4,1 4,1 4,1 4,0 4,0 4,0 7,0 7,0 7,0 7,1 7,1 7,1 6,1 6,1 6,1 6,2 6,2 6,2 5,2 5,2 5,2 5,3 5,3 5,3 4,3 4,3 4,3 4,4 4,4 4,4 3,4 3,4 3,4 3,3 3,3 3,3 2,3 2,3 2,3 2,2 2,2 2,2 1,2 1,2 1,2 1,1 1,1 1,1 0,1 0,1 z" />
 			<Setter Property="Fill" Value="#FF000000" />
 		</Style>
+		
 		<Style x:Key="DropDownPopup" TargetType="Popup">
 			<Setter Property="HorizontalOffset" Value="1" />
 			<Setter Property="VerticalOffset" Value="1" />
@@ -82,8 +83,8 @@
 			<Setter Property="Padding" Value="4" />
 		</Style>
 
-		<Style x:Key="DefaultButtonChrome" TargetType="xctk:ButtonChrome" >
-			<!--<Setter Property="Control.Background" Value="Transparent"/>-->
+		<!--<Style x:Key="DefaultButtonChrome" TargetType="xctk:ButtonChrome" >
+			--><!--<Setter Property="Control.Background" Value="Transparent"/>--><!--
 			<Setter Property="BorderThickness" Value="0"/>
 			<Setter Property="Background">
 				<Setter.Value>
@@ -94,14 +95,14 @@
 					</LinearGradientBrush>
 				</Setter.Value>
 			</Setter>
-			<!--<Style.Triggers>
+			--><!--<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
 					<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}"/>
 				</Trigger>
-			</Style.Triggers>-->
-		</Style>
+			</Style.Triggers>--><!--
+		</Style>-->
 
-		<Style x:Key="DefaultSplitContentChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
+		<!--<Style x:Key="DefaultSplitContentChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
 		</Style>
 
 		<Style x:Key="DefaultSplitMenuChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
@@ -114,8 +115,8 @@
 					</LinearGradientBrush>
 				</Setter.Value>
 			</Setter>
-		</Style>
-		
+		</Style>-->
+
 		<Style x:Key="LauncherBaseButton">
 			<Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, ElementName=root}" />
 			<Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, ElementName=root}" />
@@ -132,9 +133,8 @@
 								IsTabStop="False"
 								Focusable="false"
 								IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-								IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, 
-								Converter={StaticResource InverseBoolConverter}}"
 							>
+								<!--IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"-->
 								<ToggleButton.Template>
 									<ControlTemplate TargetType="ToggleButton">
 										<Grid x:Name="border" Background="Transparent">
@@ -153,24 +153,24 @@
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
 								</ToggleButton.Template>
-								<xctk:ButtonChrome
+								<!--<xctk:ButtonChrome
 									x:Name="ControlChrome"
 									RenderNormal="True"
 									RenderEnabled="{TemplateBinding IsEnabled}"
 									Style="{StaticResource DefaultButtonChrome}" 
-								>
-									<!--<xctk:ButtonChrome.RenderPressed>
+								>-->
+								<!--<xctk:ButtonChrome.RenderPressed>
 										<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
 											<Binding ElementName="PART_DropDownButton" Path="IsPressed"/>
 											<Binding ElementName="PART_Popup" Path="IsOpen"/>
 										</MultiBinding>
 									</xctk:ButtonChrome.RenderPressed>-->
-									<Grid>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*" />
-											<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
-										</Grid.ColumnDefinitions>
-										<ContentPresenter
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
+									</Grid.ColumnDefinitions>
+									<ContentPresenter
 											Name="ActionButtonContent"
 											Margin="{TemplateBinding Padding}"
 											Content="{TemplateBinding Content}"
@@ -179,11 +179,11 @@
 											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 											RecognizesAccessKey="true"
 										/>
-										<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
-											<Path Style="{StaticResource ArrowContent}" />
-										</Grid>
+									<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
+										<Path Style="{StaticResource ArrowContent}" />
 									</Grid>
-								</xctk:ButtonChrome>
+								</Grid>
+								<!--</xctk:ButtonChrome>-->
 							</ToggleButton>
 							<Popup 
 								x:Name="PART_Popup" 
@@ -205,12 +205,7 @@
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type xctk:SplitButton}">
 						<Grid x:Name="MainGrid" SnapsToDevicePixels="True">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="*" />
-									<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
-								</Grid.ColumnDefinitions>
-								<Button
+							<Button
 									x:Name="PART_ActionButton"
 									Grid.Column="0"
 									IsTabStop="False"
@@ -220,82 +215,72 @@
 									VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
 									Padding="{TemplateBinding Padding}"
 								>
-									<Button.Template>
-										<ControlTemplate TargetType="Button">
-											<Grid x:Name="border" Background="Transparent">
-												<ContentPresenter />
-											</Grid>
-											<ControlTemplate.Triggers>
-												<Trigger Property="IsMouseOver" Value="True">
-													<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="border" />
-												</Trigger>
-												<Trigger Property="IsPressed" Value="True">
-													<Setter Property="Background" Value="Green" TargetName="border" />
-												</Trigger>
-											</ControlTemplate.Triggers>
-										</ControlTemplate>
-									</Button.Template>
-									<xctk:ButtonChrome
-										x:Name="ActionButtonChrome"
-										RenderNormal="True"
-										RenderEnabled="{TemplateBinding IsEnabled}"
-										Style="{StaticResource DefaultSplitContentChrome}"
-									>
-										<ContentPresenter
+								<Button.Template>
+									<ControlTemplate TargetType="Button">
+										<Grid x:Name="border" Background="Transparent">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*" />
+												<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
+											</Grid.ColumnDefinitions>
+											<ContentPresenter Grid.Row="0" />
+											<ToggleButton 
+												x:Name="PART_ToggleButton"
+												Grid.Column="1"
+												IsTabStop="False"
+												Focusable="False"
+									IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"
+												MouseDown="PART_ToggleButton_MouseDown"
+												Click="PART_ToggleButton_Click"
+											>
+												<ToggleButton.Template>
+													<ControlTemplate TargetType="ToggleButton">
+														<Grid x:Name="border" Background="Yellow">
+															<ContentPresenter />
+														</Grid>
+														<ControlTemplate.Triggers>
+															<Trigger Property="IsMouseOver" Value="True">
+																<Setter Property="Background" Value="Red" TargetName="border"></Setter>
+															</Trigger>
+															<Trigger Property="IsChecked" Value="True">
+																<Setter Property="Background" Value="Blue" TargetName="border"></Setter>
+															</Trigger>
+														</ControlTemplate.Triggers>
+													</ControlTemplate>
+												</ToggleButton.Template>
+												<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
+													<Path Style="{StaticResource ArrowContent}" />
+												</Grid>
+											</ToggleButton>
+										</Grid>
+
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsMouseOver" Value="True">
+												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="border" />
+											</Trigger>
+											<Trigger Property="IsPressed" Value="True">
+												<Setter Property="Background" Value="Green" TargetName="border" />
+											</Trigger>
+										</ControlTemplate.Triggers>
+									</ControlTemplate>
+								</Button.Template>
+								<ContentPresenter
 											Name="ActionButtonContent"
+											Margin="{TemplateBinding Padding}"
 											Content="{TemplateBinding Content}"
 											ContentTemplate="{TemplateBinding ContentTemplate}"
 											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 											RecognizesAccessKey="true"
 										/>
-									</xctk:ButtonChrome>
-								</Button>
-								<ToggleButton 
-									x:Name="PART_ToggleButton"
-									Grid.Column="1"
-									IsTabStop="False"
-									Focusable="False"
-									IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-									IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
-								>
-									<ToggleButton.Template>
-										<ControlTemplate TargetType="ToggleButton">
-											<ContentPresenter />
-										</ControlTemplate>
-									</ToggleButton.Template>
-									<xctk:ButtonChrome
-										x:Name="ToggleButtonChrome"
-										RenderNormal="True"
-										RenderChecked="{TemplateBinding IsOpen}"
-										RenderEnabled="{TemplateBinding IsEnabled}"
-										Style="{StaticResource DefaultSplitMenuChrome}"
-									>
-										<xctk:ButtonChrome.RenderMouseOver>
-											<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
-												<Binding ElementName="PART_ActionButton" Path="IsMouseOver"/>
-												<Binding ElementName="PART_ToggleButton" Path="IsMouseOver"/>
-											</MultiBinding>
-										</xctk:ButtonChrome.RenderMouseOver>
-										<xctk:ButtonChrome.RenderPressed>
-											<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
-												<Binding ElementName="PART_ActionButton" Path="IsPressed"/>
-												<Binding ElementName="PART_ToggleButton" Path="IsPressed"/>
-											</MultiBinding>
-										</xctk:ButtonChrome.RenderPressed>
-										<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
-											<Path Style="{StaticResource ArrowContent}" />
-										</Grid>
-									</xctk:ButtonChrome>
-								</ToggleButton>
-							</Grid>
+							</Button>
+							
 							<Popup 
 								x:Name="PART_Popup"
 								Style="{StaticResource DropDownPopup}"
-								IsOpen="{Binding IsChecked, ElementName=PART_ToggleButton}"
+								IsOpen="{TemplateBinding IsOpen}"
 							>
 								<Border Style="{StaticResource DropDownPopupBorder}">
-									<ContentPresenter Content="{TemplateBinding DropDownContent}" />
+									<ContentPresenter Content="{Binding DropDownContent,RelativeSource={RelativeSource AncestorType=xctk:SplitButton}}" />
 								</Border>
 							</Popup>
 						</Grid>
@@ -338,7 +323,7 @@
 
 		<!--<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />-->
 	</W:CommonDataWindow.Resources>
-	
+
 	<W:CommonDataWindow.ContextMenu>
 		<ContextMenu ItemsSource="{Binding GroupItems, Mode=OneWay}">
 			<ContextMenu.ItemContainerStyle>
