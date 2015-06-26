@@ -121,9 +121,17 @@
 			</Setter>
 		</Style>-->
 
+		<Style x:Key="ParentElementStyle" TargetType="Grid">
+			<Setter Property="Background" Value="Transparent" />
+		</Style>
+
 		<Style x:Key="LauncherBaseButton">
 			<Setter Property="Control.Width" Value="{Binding DataContext.ButtonSize.Width, Mode=OneWay, ElementName=root}" />
 			<Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, ElementName=root}" />
+		</Style>
+
+		<Style x:Key="LauncherContentButton" TargetType="Control">
+			<Setter Property="Background" Value="Red" />
 		</Style>
 
 		<Style x:Key="LauncherDropDown" TargetType="xctk:DropDownButton" BasedOn="{StaticResource LauncherBaseButton}">
@@ -141,18 +149,18 @@
 							>
 								<ToggleButton.Template>
 									<ControlTemplate TargetType="ToggleButton">
-										<Grid x:Name="ElementParent" Background="Transparent">
-											<ContentPresenter />
+										<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
+											<ContentPresenter  />
 										</Grid>
 										<ControlTemplate.Triggers>
 											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ElementParent" />
+												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ParentElement" />
 											</Trigger>
 											<Trigger Property="IsChecked" Value="True">
-												<Setter Property="Background" Value="Red" TargetName="ElementParent" />
+												<Setter Property="Background" Value="Red" TargetName="ParentElement" />
 											</Trigger>
 											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="Background" Value="Green" TargetName="ElementParent" />
+												<Setter Property="Background" Value="Green" TargetName="ParentElement" />
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
@@ -170,6 +178,7 @@
 										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 										RecognizesAccessKey="true"
+										Grid.Column="0"
 									/>
 									<Grid x:Name="arrowGlyph" Grid.Column="1" Style="{StaticResource ArrowParent}">
 										<Path Style="{StaticResource ArrowContent}" />
@@ -210,7 +219,7 @@
 							>
 								<Button.Template>
 									<ControlTemplate TargetType="Button">
-										<Grid x:Name="ElementParent" Background="Transparent">
+										<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition Width="*" />
 												<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
@@ -228,15 +237,15 @@
 											>
 												<ToggleButton.Template>
 													<ControlTemplate TargetType="ToggleButton">
-														<Grid x:Name="ElementParent" Background="Yellow">
+														<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
 															<ContentPresenter />
 														</Grid>
 														<ControlTemplate.Triggers>
 															<Trigger Property="IsMouseOver" Value="True">
-																<Setter Property="Background" Value="Red" TargetName="ElementParent"></Setter>
+																<Setter Property="Background" Value="Red" TargetName="ParentElement"></Setter>
 															</Trigger>
 															<Trigger Property="IsChecked" Value="True">
-																<Setter Property="Background" Value="Blue" TargetName="ElementParent"></Setter>
+																<Setter Property="Background" Value="Blue" TargetName="ParentElement"></Setter>
 															</Trigger>
 														</ControlTemplate.Triggers>
 													</ControlTemplate>
@@ -249,10 +258,10 @@
 
 										<ControlTemplate.Triggers>
 											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ElementParent" />
+												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ParentElement" />
 											</Trigger>
 											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="Background" Value="Green" TargetName="ElementParent" />
+												<Setter Property="Background" Value="Green" TargetName="ParentElement" />
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
