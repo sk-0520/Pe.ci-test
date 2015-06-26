@@ -104,7 +104,6 @@
 		<Style x:Key="DefaultSplitContentChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
 		</Style>
 
-
 		<Style x:Key="DefaultSplitMenuChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
 			<Setter Property="Background">
 				<Setter.Value>
@@ -252,12 +251,12 @@
 										RenderEnabled="{TemplateBinding IsEnabled}"
 										Style="{StaticResource DefaultSplitMenuChrome}"
 									>
-										<!--<xctk:ButtonChrome.RenderMouseOver>
+										<xctk:ButtonChrome.RenderMouseOver>
 											<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
 												<Binding ElementName="PART_ActionButton" Path="IsMouseOver"/>
 												<Binding ElementName="PART_ToggleButton" Path="IsMouseOver"/>
 											</MultiBinding>
-										</xctk:ButtonChrome.RenderMouseOver>-->
+										</xctk:ButtonChrome.RenderMouseOver>
 										<xctk:ButtonChrome.RenderPressed>
 											<MultiBinding Converter="{StaticResource LogicalMultiOrConverter}">
 												<Binding ElementName="PART_ActionButton" Path="IsPressed"/>
