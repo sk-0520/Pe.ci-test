@@ -10,7 +10,7 @@
 	Width="640"
 	Height="480" 
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
+	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" WindowStartupLocation="CenterScreen"
 >
 	<W:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>

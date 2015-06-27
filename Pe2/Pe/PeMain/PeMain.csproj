@@ -151,6 +151,7 @@
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
+    <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemsViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\LauncherItemSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\MainSettingViewModel.cs" />
@@ -183,6 +184,7 @@
     </Compile>
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
+    <Compile Include="View\Parts\Converter\LauncherItemsListSelectedItemConverter.cs" />
     <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />

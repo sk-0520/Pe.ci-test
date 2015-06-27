@@ -33,6 +33,11 @@
 		/// </summary>
 		protected TModel Model { get; private set; }
 
+		/// <summary>
+		/// Modelを外に出せるか。
+		/// </summary>
+		protected virtual bool CanOutputModel { get { return false; } }
+
 		#endregion
 
 		#region function
@@ -51,6 +56,16 @@
 		protected bool SetModelValue<T>(T value, [CallerMemberName] string memberName = "", [CallerMemberName] string propertyName = "")
 		{
 			return SetPropertyValue(Model, value, memberName, propertyName);
+		}
+
+
+		public TModel GetModel()
+		{
+			if(CanOutputModel) {
+				return Model;
+			}
+
+			throw new InvalidOperationException();
 		}
 
 		#endregion

@@ -14,6 +14,8 @@
 	using System.Windows.Media.Imaging;
 	using System.Windows.Navigation;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
 	/// <summary>
 	/// LauncherItemsListControl.xaml の相互作用ロジック
@@ -23,6 +25,27 @@
 		public LauncherItemsListControl()
 		{
 			InitializeComponent();
+
+			ListItems.SelectionChanged += ListItems_SelectionChanged;
 		}
+
+		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
+			"SelectedLauncherItem", 
+			typeof(object),
+			typeof(LauncherItemsListControl),
+			new FrameworkPropertyMetadata(null)
+		);
+
+		public object SelectedLauncherItem
+		{
+			get { return GetValue(SelectedLauncherItemProperty); }
+			set { SetValue(SelectedLauncherItemProperty, value); }
+		}
+
+		void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			SelectedLauncherItem = ListItems.SelectedItem;
+		}
+
 	}
 }
