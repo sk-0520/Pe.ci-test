@@ -36,6 +36,7 @@
 		{
 			var color = (Color)values[0];
 			var dockType = (DockType)values[1];
+			var length = (double)values[2];
 
 			var brush = new LinearGradientBrush();
 			switch(dockType) {
@@ -62,6 +63,7 @@
 			//brush.EndPoint = new Point(0.5, 1.0);
 			//brush.StartPoint = new Point(0.5, 0.0);
 			brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, color.R, color.G, color.B), 1.00));
+			brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xef, color.R, color.G, color.B), 1 - length));
 			brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, color.R, color.G, color.B), 0.00));
 			return brush;
 		}

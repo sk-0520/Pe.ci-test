@@ -83,44 +83,6 @@
 			<Setter Property="Padding" Value="4" />
 		</Style>
 
-		<!--<Style x:Key="DefaultButtonChrome" TargetType="xctk:ButtonChrome" >
-			-->
-		<!--<Setter Property="Control.Background" Value="Transparent"/>-->
-		<!--
-			<Setter Property="BorderThickness" Value="0"/>
-			<Setter Property="Background">
-				<Setter.Value>
-					<LinearGradientBrush StartPoint="0,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
-						<GradientStop Color="#ffffffff"/>
-						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
-						<GradientStop Color="#11000000" Offset="1"/>
-					</LinearGradientBrush>
-				</Setter.Value>
-			</Setter>
-			-->
-		<!--<Style.Triggers>
-				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}"/>
-				</Trigger>
-			</Style.Triggers>-->
-		<!--
-		</Style>-->
-
-		<!--<Style x:Key="DefaultSplitContentChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
-		</Style>
-
-		<Style x:Key="DefaultSplitMenuChrome" TargetType="xctk:ButtonChrome" BasedOn="{StaticResource DefaultButtonChrome}">
-			<Setter Property="Background">
-				<Setter.Value>
-					<LinearGradientBrush StartPoint="1,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
-						<GradientStop Color="#ffffffff"/>
-						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
-						<GradientStop Color="#11000000" Offset="1"/>
-					</LinearGradientBrush>
-				</Setter.Value>
-			</Setter>
-		</Style>-->
-
 		<Style x:Key="ParentElementStyle" TargetType="Grid">
 			<Setter Property="Background" Value="Transparent" />
 		</Style>
@@ -130,80 +92,122 @@
 			<Setter Property="Control.Height" Value="{Binding DataContext.ButtonSize.Height, Mode=OneWay, ElementName=root}" />
 		</Style>
 
-		<!--<Style x:Key="LauncherContent" TargetType="ButtonBase">
-			<Style.Triggers>
-				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ParentElement" />
-				</Trigger>
-				<Trigger Property="ToggleButton.IsChecked" Value="True">
-					<Setter Property="Background" Value="Red" TargetName="ParentElement" />
-				</Trigger>
-				<Trigger Property="ButtonBase.IsPressed" Value="True">
-					<Setter Property="Background" Value="Green" TargetName="ParentElement" />
-				</Trigger>
-			</Style.Triggers>
-		</Style>-->
-
-		<ControlTemplate x:Key="LauncherContentButton" TargetType="ButtonBase">
-			<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
-				<Grid.Background>
-					<LinearGradientBrush StartPoint="0,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
+		<Style x:Key="LauncherButtonFace" TargetType="Grid" BasedOn="{StaticResource ParentElementStyle}">
+			<Setter Property="Background">
+				<Setter.Value>
+					<LinearGradientBrush>
 						<GradientStop Color="#ffffffff"/>
 						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
 						<GradientStop Color="#11000000" Offset="1"/>
 					</LinearGradientBrush>
-				</Grid.Background>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+		<ControlTemplate x:Key="LauncherContentButton" TargetType="ButtonBase">
+			<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
 				<ContentPresenter  />
-				<!--<i:Interaction.Triggers>
-					<i:EventTrigger EventName="MouseMove">
-						<i:EventToReactiveProperty  Command=""
-					</i:EventTrigger>
-				</i:Interaction.Triggers>-->
 			</Grid>
 			<ControlTemplate.Triggers>
-				<EventTrigger RoutedEvent="MouseMove">
-					<EventTrigger.Actions>
-					</EventTrigger.Actions>
-				</EventTrigger>
-				<Trigger Property="IsMouseOver" Value="True">
-					<!--<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource HotTrackConverter}, ConverterParameter={} }" TargetName="ParentElement" />-->
+				<Trigger Property="IsMouseOver" Value="True" >
 					<Setter Property="Background" TargetName="ParentElement">
 						<Setter.Value>
 							<MultiBinding Converter="{StaticResource HotTrackConverter}">
 								<Binding Path="ToolbarHotTrack" />
 								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>0.2</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+				<Trigger Property="ButtonBase.IsPressed" Value="True">
+					<Setter Property="Background" TargetName="ParentElement">
+						<Setter.Value>
+							<MultiBinding Converter="{StaticResource HotTrackConverter}">
+								<Binding Path="ToolbarHotTrack" />
+								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>0.6</sys:Double>
+									</Binding.Source>
+								</Binding>
 							</MultiBinding>
 						</Setter.Value>
 					</Setter>
 				</Trigger>
 				<Trigger Property="ToggleButton.IsChecked" Value="True">
-					<Setter Property="Background" Value="Red" TargetName="ParentElement" />
-				</Trigger>
-				<Trigger Property="ButtonBase.IsPressed" Value="True">
-					<Setter Property="Background" Value="Green" TargetName="ParentElement" />
+					<Setter Property="Background" TargetName="ParentElement">
+						<Setter.Value>
+							<MultiBinding Converter="{StaticResource HotTrackConverter}">
+								<Binding Path="ToolbarHotTrack" />
+								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>0.8</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Setter.Value>
+					</Setter>
 				</Trigger>
 			</ControlTemplate.Triggers>
 		</ControlTemplate>
 
 		<ControlTemplate x:Key="LauncherMenuButton"  TargetType="ToggleButton" >
 				<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
-				<!--<Grid.Background>
-					<LinearGradientBrush StartPoint="1,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
-						<GradientStop Color="#ffffffff"/>
-						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
-						<GradientStop Color="#11000000" Offset="1"/>
-					</LinearGradientBrush>
-				</Grid.Background>-->
 					<ContentPresenter />
 				</Grid>
 				<ControlTemplate.Triggers>
-					<Trigger Property="IsMouseOver" Value="True">
-						<Setter Property="Background" Value="Red" TargetName="ParentElement"></Setter>
-					</Trigger>
-					<Trigger Property="IsChecked" Value="True">
-						<Setter Property="Background" Value="Blue" TargetName="ParentElement"></Setter>
-					</Trigger>
-				</ControlTemplate.Triggers>
+				<Trigger Property="IsMouseOver" Value="True" >
+					<Setter Property="Background" TargetName="ParentElement">
+						<Setter.Value>
+							<MultiBinding Converter="{StaticResource HotTrackConverter}">
+								<Binding Path="ToolbarHotTrack" />
+								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>0.2</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+				<Trigger Property="ButtonBase.IsPressed" Value="True">
+					<Setter Property="Background" TargetName="ParentElement">
+						<Setter.Value>
+							<MultiBinding Converter="{StaticResource HotTrackConverter}">
+								<Binding Path="ToolbarHotTrack" />
+								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>0.6</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+				<Trigger Property="ToggleButton.IsChecked" Value="True">
+					<Setter Property="Background" TargetName="ParentElement">
+						<Setter.Value>
+							<MultiBinding Converter="{StaticResource HotTrackConverter}">
+								<Binding Path="ToolbarHotTrack" />
+								<Binding Path="DataContext.DockType" ElementName="root" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>0.8</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Setter.Value>
+					</Setter>
+				</Trigger>
+			</ControlTemplate.Triggers>
 		</ControlTemplate>
 
 		<Style x:Key="LauncherDropDown" TargetType="xctk:DropDownButton" BasedOn="{StaticResource LauncherBaseButton}">
@@ -220,25 +224,7 @@
 								IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolConverter}}"
 								Template="{StaticResource LauncherContentButton}"
 							>
-								<!--<ToggleButton.Template>
-									<ControlTemplate TargetType="ToggleButton">
-										<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
-											<ContentPresenter  />
-										</Grid>
-										<ControlTemplate.Triggers>
-											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ParentElement" />
-											</Trigger>
-											<Trigger Property="IsChecked" Value="True">
-												<Setter Property="Background" Value="Red" TargetName="ParentElement" />
-											</Trigger>
-											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="Background" Value="Green" TargetName="ParentElement" />
-											</Trigger>
-										</ControlTemplate.Triggers>
-									</ControlTemplate>
-								</ToggleButton.Template>-->
-								<Grid>
+								<Grid Style="{StaticResource LauncherButtonFace}">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*" />
 										<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
@@ -291,90 +277,32 @@
 								IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
 								Template="{StaticResource LauncherContentButton}"
 							>
-								<!--<Button.Template>
-									<ControlTemplate TargetType="Button">
-										<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="*" />
-												<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
-											</Grid.ColumnDefinitions>
-											<ContentPresenter Grid.Row="0" />
-											<ToggleButton 
-												x:Name="PART_ToggleButton"
-												Grid.Column="1"
-												IsTabStop="False"
-												Focusable="False"
-												IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"
-												IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
-												MouseDown="PART_ToggleButton_MouseDown"
-												Click="PART_ToggleButton_Click"
-											>
-												<ToggleButton.Template>
-													<ControlTemplate TargetType="ToggleButton">
-														<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
-															<ContentPresenter />
-														</Grid>
-														<ControlTemplate.Triggers>
-															<Trigger Property="IsMouseOver" Value="True">
-																<Setter Property="Background" Value="Red" TargetName="ParentElement"></Setter>
-															</Trigger>
-															<Trigger Property="IsChecked" Value="True">
-																<Setter Property="Background" Value="Blue" TargetName="ParentElement"></Setter>
-															</Trigger>
-														</ControlTemplate.Triggers>
-													</ControlTemplate>
-												</ToggleButton.Template>
-												<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
-													<Path Style="{StaticResource ArrowContent}" />
-												</Grid>
-											</ToggleButton>
-										</Grid>
-										<ControlTemplate.Triggers>
-											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ParentElement" />
-											</Trigger>
-											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="Background" Value="Green" TargetName="ParentElement" />
-											</Trigger>
-										</ControlTemplate.Triggers>
-									</ControlTemplate>
-								</Button.Template>-->
-								
-								<!--<ContentPresenter
-											Name="ActionButtonContent"
-											Margin="{TemplateBinding Padding}"
-											Content="{TemplateBinding Content}"
-											ContentTemplate="{TemplateBinding ContentTemplate}"
-											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-											RecognizesAccessKey="true"
-										/>-->
-								<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
+								<Grid x:Name="ParentElement" Style="{StaticResource LauncherButtonFace}">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*" />
 										<ColumnDefinition Width="{Binding DataContext.MenuWidth, ElementName=root}" />
 									</Grid.ColumnDefinitions>
 									<ContentPresenter
-											Name="ActionButtonContent"
-												Grid.Column="0"
-											Margin="{TemplateBinding Padding}"
-											Content="{TemplateBinding Content}"
-											ContentTemplate="{TemplateBinding ContentTemplate}"
-											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-											RecognizesAccessKey="true"
-										/>
+										Name="ActionButtonContent"
+										Grid.Column="0"
+										Margin="{TemplateBinding Padding}"
+										Content="{TemplateBinding Content}"
+										ContentTemplate="{TemplateBinding ContentTemplate}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										RecognizesAccessKey="true"
+									/>
 									<ToggleButton 
-												x:Name="PART_ToggleButton"
-												Grid.Column="1"
-												IsTabStop="False"
-												Focusable="False"
-												IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"
-												IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
+										x:Name="PART_ToggleButton"
+										Grid.Column="1"
+										IsTabStop="False"
+										Focusable="False"
+										IsChecked="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Mode=TwoWay}"
+										IsHitTestVisible="{Binding IsOpen, RelativeSource={RelativeSource AncestorType=xctk:SplitButton}, Converter={StaticResource InverseBoolConverter}}"
 										Template="{StaticResource LauncherMenuButton}"
-												MouseDown="PART_ToggleButton_MouseDown"
-												Click="PART_ToggleButton_Click"
-											>
+										MouseDown="PART_ToggleButton_MouseDown"
+										Click="PART_ToggleButton_Click"
+									>
 										<Grid x:Name="arrowGlyph" Style="{StaticResource ArrowParent}">
 											<Path Style="{StaticResource ArrowContent}" />
 										</Grid>
@@ -429,7 +357,6 @@
 			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 		</Style>
 
-		<!--<CollectionViewSource x:Key="GroupItems" Source="{Binding GroupItems, Mode=OneWay}" />-->
 	</W:CommonDataWindow.Resources>
 
 	<W:CommonDataWindow.ContextMenu>
