@@ -1,0 +1,24 @@
+﻿<CD:CommonDataUserControl
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.LauncherItemSettingControl"
+	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:PC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	mc:Ignorable="d" 
+	d:DesignHeight="300" d:DesignWidth="300"
+>
+	<CD:CommonDataUserControl.Resources>
+		<PC:LauncherItemsListSelectedItemConverter x:Key="LauncherItemsListSelectedItemConverter" />
+	</CD:CommonDataUserControl.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="7*"/>
+			<ColumnDefinition Width="13*"/>
+		</Grid.ColumnDefinitions>
+		<CD:LauncherItemsListControl  Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
+		<CD:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherItem,ElementName=ItemList, Converter={StaticResource LauncherItemsListSelectedItemConverter}}" />
+	</Grid>
+</CD:CommonDataUserControl>
