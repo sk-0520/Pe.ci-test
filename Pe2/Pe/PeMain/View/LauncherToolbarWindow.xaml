@@ -43,8 +43,8 @@
 		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
 
-
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
+		<PC:HotTrackConverter x:Key="HotTrackConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
@@ -146,11 +146,35 @@
 
 		<ControlTemplate x:Key="LauncherContentButton" TargetType="ButtonBase">
 			<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
+				<Grid.Background>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
+						<GradientStop Color="#ffffffff"/>
+						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
+						<GradientStop Color="#11000000" Offset="1"/>
+					</LinearGradientBrush>
+				</Grid.Background>
 				<ContentPresenter  />
+				<!--<i:Interaction.Triggers>
+					<i:EventTrigger EventName="MouseMove">
+						<i:EventToReactiveProperty  Command=""
+					</i:EventTrigger>
+				</i:Interaction.Triggers>-->
 			</Grid>
 			<ControlTemplate.Triggers>
+				<EventTrigger RoutedEvent="MouseMove">
+					<EventTrigger.Actions>
+					</EventTrigger.Actions>
+				</EventTrigger>
 				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource ResourceKey=ColorBrushConverter}}" TargetName="ParentElement" />
+					<!--<Setter Property="Background" Value="{Binding ToolbarHotTrack, Converter={StaticResource HotTrackConverter}, ConverterParameter={} }" TargetName="ParentElement" />-->
+					<Setter Property="Background" TargetName="ParentElement">
+						<Setter.Value>
+							<MultiBinding Converter="{StaticResource HotTrackConverter}">
+								<Binding Path="ToolbarHotTrack" />
+								<Binding Path="DataContext.DockType" ElementName="root" />
+							</MultiBinding>
+						</Setter.Value>
+					</Setter>
 				</Trigger>
 				<Trigger Property="ToggleButton.IsChecked" Value="True">
 					<Setter Property="Background" Value="Red" TargetName="ParentElement" />
@@ -163,6 +187,13 @@
 
 		<ControlTemplate x:Key="LauncherMenuButton"  TargetType="ToggleButton" >
 				<Grid x:Name="ParentElement" Style="{StaticResource ParentElementStyle}">
+				<!--<Grid.Background>
+					<LinearGradientBrush StartPoint="1,0" EndPoint="1,1" MappingMode="RelativeToBoundingBox">
+						<GradientStop Color="#ffffffff"/>
+						<GradientStop Color="#88FFFFFF" Offset="0.1"/>
+						<GradientStop Color="#11000000" Offset="1"/>
+					</LinearGradientBrush>
+				</Grid.Background>-->
 					<ContentPresenter />
 				</Grid>
 				<ControlTemplate.Triggers>

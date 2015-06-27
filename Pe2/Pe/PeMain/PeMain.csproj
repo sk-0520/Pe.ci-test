@@ -165,6 +165,7 @@
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
     <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
