@@ -73,7 +73,7 @@
 		{
 			CheckUtility.EnforceNotNull(setting);
 
-			foreach(var toolbar in setting.Toolbar.Items) {
+			foreach(var toolbar in setting.Toolbar) {
 				if(toolbar.FloatToolbar.WidthButtonCount <= 0) {
 					toolbar.FloatToolbar.WidthButtonCount = 1;
 				}

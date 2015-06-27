@@ -642,7 +642,7 @@
 			}
 		}
 
-		public IEnumerable<LauncherGroupItemModel> GroupItems { get { return Model.GroupItems.Items; } }
+		public IEnumerable<LauncherGroupItemModel> GroupItems { get { return Model.GroupItems; } }
 
 		public LauncherGroupItemModel SelectedGroup
 		{

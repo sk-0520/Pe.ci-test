@@ -3,15 +3,18 @@
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using System.Xml.Serialization;
 
 	[Serializable]
-	public class TIdCollection<TKey, TValue>: DisposeFinalizeModelBase, ICollection<TValue>
+	public class TIdCollection<TKey, TValue>: ObservableCollection<TValue>, IIsDisposed
 		where TValue: ITId<TKey>
 		where TKey: IComparable
 	{
@@ -25,22 +28,47 @@
 		public TIdCollection()
 			: base()
 		{
-			Items = new List<TValue>();
+			//Items = new List<TValue>();
+			IsDisposed = false;
+		}
+
+		~TIdCollection()
+		{
+			Dispose(false);
 		}
 
 		#region property
 
-		[DataMember]
-		public List<TValue> Items { get; set; }
+		//[DataMember]
+		//public List<TValue> Items { get; set; }
 
-		public IEnumerable<TKey> Keys { get { return Items.Select(i => i.Id); } }
+		public IEnumerable<TKey> Keys { get { return this.Select(i => i.Id); } }
 
 		#endregion
 
-		#region ICollection
+		#region IIsDisposed
 
-		public int Count { get { return Items.Count; } }
-		public bool IsReadOnly { get { return this._isReadOnly; } }
+		[IgnoreDataMember, XmlIgnore]
+		public bool IsDisposed { get; private set; }
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if(IsDisposed) {
+				return;
+			}
+
+			IsDisposed = true;
+			GC.SuppressFinalize(this);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		#endregion
+
+		#region ObservableCollection
 
 		/// <summary>
 		/// 要素を追加する。
@@ -48,53 +76,34 @@
 		/// <param name="value"></param>
 		/// <exception cref="ArgumentNullException">valueがnull</exception>
 		/// <exception cref="ArgumentException">value.Idがすでに存在する</exception>
-		public void Add(TValue value)
+		public new void Add(TValue value)
 		{
-			CheckReadOnly();
 			CheckId(value);
 
 			Add(value, true);
 		}
 
-		public void Clear()
+		public new void Clear()
 		{
-			CheckReadOnly();
-
-			Items.Clear();
+			base.Clear();
 			this._map.Clear();
 		}
 
-		public bool Contains(TValue item)
+		public new void ClearItems()
 		{
-			return Items.Contains(item);
+			base.ClearItems();
+			this._map.Clear();
 		}
 
-		public void CopyTo(TValue[] array, int arrayIndex)
+		public new bool Remove(TValue item)
 		{
-			Items.CopyTo(array, arrayIndex);
-		}
-
-		IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
-		{
-			return Items.GetEnumerator();
-		}
-
-		public IEnumerator GetEnumerator()
-		{
-			return Items.GetEnumerator();
-		}
-
-		public bool Remove(TValue item)
-		{
-			if(Items.Remove(item)) {
+			if(base.Remove(item)) {
 				this._map.Remove(item.Id);
 				return true;
 			}
 
 			return false;
 		}
-
-		#endregion
 
 		#region indexer
 
@@ -119,6 +128,8 @@
 
 		#endregion
 
+		#endregion
+
 		#region function
 
 		static string GetIdString(TKey id)
@@ -138,13 +149,6 @@
 			return IsEqual(a.Id, b.Id);
 		}
 		
-		void CheckReadOnly()
-		{
-			if(IsReadOnly) {
-				throw new NotSupportedException();
-			}
-		}
-
 		void CheckId(TValue item)
 		{
 			CheckUtility.Enforce<ArgumentException>(item.IsSafeId(item.Id));
@@ -157,14 +161,14 @@
 					throw new ArgumentNullException("value");
 				}
 
-				if(Items.Any(i => IsEqual(value, i))) {
+				if(this.Any(i => IsEqual(value, i))) {
 					throw new ArgumentException(GetIdString(value));
 				}
 
 				CheckId(value);
 			}
 
-			Items.Add(value);
+			base.Add(value);
 			this._map[value.Id] = value;
 		}
 
@@ -236,15 +240,6 @@
 			srcValue.Id = dst;
 			this._map.Remove(src);
 			this._map[dst] = srcValue;
-		}
-
-		public bool ChangeReadOnly()
-		{
-			if(!IsReadOnly) {
-				return true;
-			}
-
-			return false;
 		}
 
 		#endregion

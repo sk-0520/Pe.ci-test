@@ -6,6 +6,7 @@
 	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
@@ -13,7 +14,7 @@
 	/// </summary>
 	/// <typeparam name="TModel">モデル。</typeparam>
 	public abstract class SingleModelWrapperViewModelBase<TModel> : ViewModelBase
-		where TModel: ModelBase
+		where TModel: IModel
 	{
 		/// <summary>
 		/// 

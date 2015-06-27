@@ -8,6 +8,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -19,17 +20,17 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemCollectionModel launcherItemCollection, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base()
 		{
-			LauncherItemCollection = launcherItemCollection;
+			LauncherItemSetting = launcherItemSetting;
 			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 		}
 
 		#region proerty
 
-		LauncherItemCollectionModel LauncherItemCollection { get; set; }
+		LauncherItemSettingModel LauncherItemSetting { get; set; }
 
 		#region IHavingLauncherIconCaching
 
@@ -49,7 +50,7 @@
 			{
 				if(this._launcherItems == null) {
 					this._launcherItems = new LauncherItemsViewModel(
-						LauncherItemCollection,
+						LauncherItemSetting,
 						LauncherIconCaching,
 						NonProcess
 					);

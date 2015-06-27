@@ -58,7 +58,7 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
 			{
 				if(this._launcherItemSetting == null) {
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
-						CommonData.LauncherItemSetting.Items,
+						CommonData.LauncherItemSetting,
 						CommonData.LauncherIcons,
 						CommonData.NonProcess
 					);

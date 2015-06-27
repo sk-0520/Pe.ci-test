@@ -44,5 +44,28 @@
 			return IfElse(seq, orderByAsc, s => s.OrderBy(keySelector), s => s.OrderByDescending(keySelector));
 		}
 
+		/// <summary>
+		/// <para>http://stackoverflow.com/questions/13767451/ilistt-findindexint32-predicate-t?answertab=votes#tab-top</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="source"></param>
+		/// <param name="startIndex"></param>
+		/// <param name="match"></param>
+		/// <returns></returns>
+		public static int FindIndex<T>(this IList<T> source, int startIndex , Predicate<T> match)
+		{
+			// TODO: Validation
+			for(int i = startIndex; i < source.Count; i++) {
+				if(match(source[i])) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		public static int FindIndex<T>(this IList<T> source, Predicate<T> match)
+		{
+			return FindIndex(source, 0, match);
+		}
 	}
 }

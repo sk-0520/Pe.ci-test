@@ -9,12 +9,13 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingNonProcess, IHavingLauncherIconCaching
+	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemSettingModel>, IHavingNonProcess, IHavingLauncherIconCaching
 	{
-		public LauncherItemsViewModel(LauncherItemCollectionModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public LauncherItemsViewModel(LauncherItemSettingModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(model)
 		{
 			LauncherIconCaching = launcherIconCaching;
@@ -41,11 +42,11 @@
 
 		#endregion
 
-		public ObservableCollection<LauncherSimpleViewModel> Items 
+		public ObservableCollection<LauncherItemModel> Items 
 		{ 
 			get
 			{
-				return new ObservableCollection<LauncherSimpleViewModel>(Model.Items.Select(i => new LauncherSimpleViewModel(i, LauncherIconCaching, NonProcess)));
+				return Model.Items;
 			}
 		}
 
