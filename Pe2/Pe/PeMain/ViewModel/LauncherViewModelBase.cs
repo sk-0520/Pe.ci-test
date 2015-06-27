@@ -16,7 +16,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingClipboardWatcher, IHavingLauncherIconCaching
+	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
 	{
 		#region variable
 
@@ -25,12 +25,11 @@
 
 		#endregion
 
-		public LauncherViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public LauncherViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(model)
 		{
 			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
-			ClipboardWatcher = clipboardWatcher;
 		}
 
 		#region property
@@ -38,12 +37,6 @@
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
 
 		#endregion
 

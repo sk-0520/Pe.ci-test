@@ -7,8 +7,8 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
 	UI:XamlTag.LanguageKey="window/setting"
 	Title="SettingWindow" 
-	Height="261.576" 
-	Width="527.586"
+	Width="640"
+	Height="480" 
 	Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	BorderBrush="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}"
 >

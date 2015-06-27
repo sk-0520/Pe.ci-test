@@ -43,7 +43,8 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
 					this._mainSetting = new MainSettingViewModel(
 						CommonData.MainSetting.RunningInformation,
 						CommonData.MainSetting.Language,
-						CommonData.MainSetting.Logging
+						CommonData.MainSetting.Logging,
+						CommonData.NonProcess
 					);
 				}
 
@@ -58,7 +59,8 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
 				if(this._launcherItemSetting == null) {
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
 						CommonData.LauncherItemSetting.Items,
-						CommonData.LauncherIcons
+						CommonData.LauncherIcons,
+						CommonData.NonProcess
 					);
 				}
 

@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherViewModel: LauncherViewModelBase
+	public class LauncherButtonViewModel: LauncherSimpleViewModel, IHavingClipboardWatcher
 	{
 		#region varable
 
@@ -37,12 +37,21 @@
 
 		#endregion
 
-		public LauncherViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher)
-			: base(model, launcherIconCaching, nonPorocess, clipboardWatcher)
-		{ }
+		public LauncherButtonViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess, IClipboardWatcher clipboardWatcher)
+			: base(model, launcherIconCaching, nonPorocess)
+		{
+			ClipboardWatcher = clipboardWatcher;
+		}
 
 		#region property
 
+
+		#region IHavingClipboardWatcher
+
+		public IClipboardWatcher ClipboardWatcher { get; private set; }
+
+		#endregion
+	
 		public IconScale IconScale 
 		{
 			get { return this._iconScale; }
