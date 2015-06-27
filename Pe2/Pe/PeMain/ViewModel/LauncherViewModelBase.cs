@@ -1,23 +1,30 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingClipboardWatcher
 	{
+		#region variable
+
+		static readonly Color defualtIconColor = Colors.Transparent;
+		Color _iconColor = defualtIconColor;
+
+		#endregion
+
 		public LauncherViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model)
 		{
@@ -56,8 +63,12 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		public Color GetIconColor(IconScale iconScale)
 		{
-			var icon = GetIcon(iconScale);
-			return MediaUtility.GetPredominantColorFromBitmapSource(icon);
+			if(this._iconColor == Colors.Transparent) {
+				var icon = GetIcon(iconScale);
+				this._iconColor = MediaUtility.GetPredominantColorFromBitmapSource(icon);
+			}
+
+			return this._iconColor;
 		}
 
 		protected void Execute()

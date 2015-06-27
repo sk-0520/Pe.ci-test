@@ -50,12 +50,12 @@
 					brush.EndPoint = new Point(0.0, 0.5);
 					break;
 				case DockType.Top:
-					brush.StartPoint = new Point(0.5, 0.0);
-					brush.EndPoint = new Point(0.5, 1.0);
-					break;
-				case DockType.Right:
 					brush.StartPoint = new Point(0.5, 1.0);
 					brush.EndPoint = new Point(0.5, 0.0);
+					break;
+				case DockType.Right:
+					brush.StartPoint = new Point(0.0, 0.5);
+					brush.EndPoint = new Point(1.0, 0.5);
 					break;
 				default:
 					throw new NotImplementedException();
