@@ -7,8 +7,8 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public interface ICommonData: IHavingCommonData
+	public interface IHavingCommonData
 	{
-		void SetCommonData(CommonData commonData);
+		CommonData CommonData { get; }
 	}
 }

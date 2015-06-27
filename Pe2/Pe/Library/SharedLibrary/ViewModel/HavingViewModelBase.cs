@@ -7,6 +7,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	public abstract class HavingViewModelBase<TView> : ViewModelBase, IHavingView<TView>
 		where TView: UIElement
@@ -20,7 +21,7 @@
 		#region IHavingView
 
 		public TView View { get; private set; }
-		public bool HasView { get { return View != null; } }
+		public bool HasView { get { return HavingViewUtility.GetHasView(this); } }
 
 		#endregion
 

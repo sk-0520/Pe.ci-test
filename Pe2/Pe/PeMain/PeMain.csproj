@@ -131,6 +131,7 @@
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
     <Compile Include="IF\IHavingClipboardWatcher.cs" />
+    <Compile Include="IF\IHavingCommonData.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="ViewModel\LauncherViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
+    <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="View\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>

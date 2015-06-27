@@ -15,6 +15,7 @@
 	using System.Windows.Shapes;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
 	/// <summary>
 	/// SettingWindow.xaml の相互作用ロジック
@@ -27,6 +28,14 @@
 		}
 
 		#region CommonDataWindow
+
+		protected override void ApplyViewModel()
+		{
+			base.ApplyViewModel();
+			//TODO
+			var clonedCommonData = CommonData;
+			DataContext = new SettingViewModel(this, clonedCommonData);
+		}
 
 		#endregion
 	}

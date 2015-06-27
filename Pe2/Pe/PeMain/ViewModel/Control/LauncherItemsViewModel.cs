@@ -7,12 +7,13 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public class LauncherItemsViewModel: ViewModelBase, IHavingNonProcess
+	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingNonProcess
 	{
-		public LauncherItemsViewModel(INonProcess nonProcess)
-			: base()
+		public LauncherItemsViewModel(LauncherItemCollectionModel model, INonProcess nonProcess)
+			: base(model)
 		{
 			NonProcess = nonProcess;
 		}

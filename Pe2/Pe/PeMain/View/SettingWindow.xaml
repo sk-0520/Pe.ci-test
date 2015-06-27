@@ -23,7 +23,7 @@
 
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
 			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/ok" Content="ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/cancel" Content="cancel" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
 		</StackPanel>
 		<TabControl>
 			<TabControl.Resources>
@@ -33,10 +33,10 @@
 				<Style x:Key="PageBody" TargetType="{x:Type UserControl}" BasedOn="{StaticResource ResourceKey=PageHeader}" />
 			</TabControl.Resources>
 			<TabItem Header="main" Style="{StaticResource PageHeader}">
-				<SP:MainSettingControl VerticalAlignment="Top" />
+				<SP:MainSettingControl x:Name="MainSettingControl" VerticalAlignment="Top" />
 			</TabItem>
 			<TabItem Header="launcher" Style="{StaticResource PageHeader}">
-				<SP:LauncherItemSettingControl VerticalAlignment="Top" />
+				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" VerticalAlignment="Top" />
 			</TabItem>
 		</TabControl>
 	</Grid>
