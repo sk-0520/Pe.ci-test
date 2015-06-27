@@ -33,10 +33,10 @@
 				<Style x:Key="PageBody" TargetType="{x:Type UserControl}" BasedOn="{StaticResource ResourceKey=PageHeader}" />
 			</TabControl.Resources>
 			<TabItem Header="main" Style="{StaticResource PageHeader}">
-				<SP:MainSettingControl x:Name="MainSettingControl" VerticalAlignment="Top" />
+				<SP:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Top" />
 			</TabItem>
 			<TabItem Header="launcher" Style="{StaticResource PageHeader}">
-				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" VerticalAlignment="Top" />
+				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Top" />
 			</TabItem>
 		</TabControl>
 	</Grid>

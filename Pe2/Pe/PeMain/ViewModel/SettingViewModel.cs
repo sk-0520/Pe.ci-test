@@ -12,9 +12,17 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View;
+using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
 
 	public class SettingViewModel: ViewModelBase, IHavingCommonData, IHavingView<SettingWindow>
 	{
+		#region variable
+
+		MainSettingViewModel _mainSetting;
+		LauncherItemSettingViewModel _launcherItemSetting;
+
+		#endregion
+
 		public SettingViewModel(CommonData commonData, SettingWindow view)
 		{
 			CommonData = commonData;
@@ -26,6 +34,37 @@
 		#region IHavingCommonData
 
 		public CommonData CommonData { get; private set; }
+
+		public MainSettingViewModel MainSetting
+		{
+			get
+			{
+				if(this._mainSetting == null) {
+					this._mainSetting = new MainSettingViewModel(
+						CommonData.MainSetting.RunningInformation,
+						CommonData.MainSetting.Language,
+						CommonData.MainSetting.Logging
+					);
+				}
+
+				return this._mainSetting;
+			}
+		}
+
+		public LauncherItemSettingViewModel LauncherItemSetting
+		{
+			get
+			{
+				if(this._launcherItemSetting == null) {
+					this._launcherItemSetting = new LauncherItemSettingViewModel(
+						CommonData.LauncherItemSetting.Items,
+						CommonData.LauncherIcons
+					);
+				}
+
+				return this._launcherItemSetting;
+			}
+		}
 
 		#endregion
 
