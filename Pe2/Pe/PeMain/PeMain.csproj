@@ -149,6 +149,7 @@
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
+    <Compile Include="ViewModel\Control\LauncherItemsViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherViewModel.cs" />
     <Compile Include="ViewModel\LauncherViewModelBase.cs" />

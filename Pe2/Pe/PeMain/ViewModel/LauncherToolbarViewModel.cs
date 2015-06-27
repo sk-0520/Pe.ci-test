@@ -32,7 +32,7 @@
 	using System.Diagnostics;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using System.Windows.Controls.Primitives;
-using System.Windows.Media.Imaging;
+	using System.Windows.Media.Imaging;
 
 	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData
 	{
