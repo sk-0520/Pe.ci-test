@@ -34,7 +34,7 @@
 			base.ApplyViewModel();
 			//TODO
 			var clonedCommonData = CommonData;
-			DataContext = new SettingViewModel(this, clonedCommonData);
+			DataContext = new SettingViewModel(clonedCommonData, this);
 		}
 
 		#endregion

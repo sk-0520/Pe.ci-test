@@ -16,7 +16,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingClipboardWatcher
+	public class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingClipboardWatcher, IHavingLauncherIconCaching
 	{
 		#region variable
 
@@ -28,7 +28,7 @@
 		public LauncherViewModelBase(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model)
 		{
-			LauncherIcons = launcherIconCaching;
+			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
 		}
@@ -47,8 +47,11 @@
 
 		#endregion
 
-		protected LauncherIconCaching LauncherIcons { get; private set; }
+		#region IHavingLauncherIconCaching
 
+		public LauncherIconCaching LauncherIconCaching { get; private set; }
+
+		#endregion
 
 		#endregion
 
@@ -56,9 +59,9 @@
 
 		public BitmapSource GetIcon(IconScale iconScale)
 		{
-			CheckUtility.DebugEnforceNotNull(LauncherIcons);
+			CheckUtility.DebugEnforceNotNull(LauncherIconCaching);
 
-			return LauncherIcons[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
+			return LauncherIconCaching[iconScale].Get(Model, () => LauncherItemUtility.GetIcon(Model, iconScale, NonProcess));
 		}
 
 		public Color GetIconColor(IconScale iconScale)

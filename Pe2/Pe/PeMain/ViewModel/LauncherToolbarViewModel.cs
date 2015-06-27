@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData
+	public class LauncherToolbarViewModel: HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching
 	{
 		#region static
 
@@ -154,9 +154,11 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model, view)
 		{
+			DockScreen = screen;
+			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
 
@@ -175,14 +177,30 @@
 				if (backgroundPropertyDescriptor != null) {
 					backgroundPropertyDescriptor.AddValueChanged(View, OnBackgroundChanged);
 				}
-			}
 
-			CalculateWindowStatus(DockType);
+				CalculateWindowStatus(DockType);
+			}
 		}
 
 		#region property
 
-		public LauncherIconCaching LauncherIcons { get; set; }
+		#region IHavingLauncherIconCaching
+
+		public LauncherIconCaching LauncherIconCaching { get; private set; }
+
+		#endregion
+
+		#region IHavingNonPorocess
+
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region IHavingClipboardWatcher
+
+		public IClipboardWatcher ClipboardWatcher { get; private set; }
+
+		#endregion
 
 		public Thickness BorderThickness
 		{
@@ -209,18 +227,6 @@
 				SetVariableValue(ref this._borderBrush, value);
 			}
 		}
-
-		#region IHavingNonPorocess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
 
 		#region ITopMost
 
@@ -365,7 +371,10 @@
 			set 
 			{
 				if(Model.Toolbar.DockType != value) {
-					CalculateWindowStatus(value);
+					if(HasView) {
+						CalculateWindowStatus(value);
+					}
+
 					Model.Toolbar.DockType = value;
 					OnPropertyChanged();
 					View.InvalidateArrange();
@@ -469,7 +478,7 @@
 		/// <summary>
 		/// ドッキングに使用するスクリーン。
 		/// </summary>
-		public ScreenModel DockScreen { get; set; }
+		public ScreenModel DockScreen { get; private set; }
 
 		#endregion
 
@@ -681,7 +690,7 @@
 			{
 				if(this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
-						.Select(m => new LauncherViewModel(m, this.LauncherIcons, NonProcess, ClipboardWatcher) {
+						.Select(m => new LauncherViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher) {
 							IconScale = Model.Toolbar.IconScale,
 						});
 					;
@@ -827,9 +836,9 @@
 
 		void CalculateWindowStatus(DockType dockType)
 		{
-			if (HasView) {
-				BorderThickness = GetBorderThickness(dockType, View);
-			}
+			Debug.Assert(HasView);
+
+			BorderThickness = GetBorderThickness(dockType, View);
 
 			BarSize = new Size(ButtonSize.Width + BorderThickness.GetHorizon(), ButtonSize.Height + BorderThickness.GetVertical());
 

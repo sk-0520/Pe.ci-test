@@ -15,7 +15,7 @@
 
 	public class SettingViewModel: ViewModelBase, IHavingCommonData, IHavingView<SettingWindow>
 	{
-		public SettingViewModel(SettingWindow view, CommonData commonData)
+		public SettingViewModel(CommonData commonData, SettingWindow view)
 		{
 			CommonData = commonData;
 			View = view;
