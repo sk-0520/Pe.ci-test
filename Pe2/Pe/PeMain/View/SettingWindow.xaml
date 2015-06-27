@@ -32,11 +32,11 @@
 				</Style>
 				<Style x:Key="PageBody" TargetType="{x:Type UserControl}" BasedOn="{StaticResource ResourceKey=PageHeader}" />
 			</TabControl.Resources>
-			<TabItem Header="TabItem" Style="{StaticResource PageHeader}">
-				<SP:MainSettingControl BorderBrush="AliceBlue" VerticalAlignment="Top" />
+			<TabItem Header="main" Style="{StaticResource PageHeader}">
+				<SP:MainSettingControl VerticalAlignment="Top" />
 			</TabItem>
-			<TabItem Header="TabItem" Style="{StaticResource PageHeader}">
-				<Grid Background="#FFE5E5E5"/>
+			<TabItem Header="launcher" Style="{StaticResource PageHeader}">
+				<SP:LauncherItemSettingControl VerticalAlignment="Top" />
 			</TabItem>
 		</TabControl>
 	</Grid>

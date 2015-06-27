@@ -7,17 +7,42 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	mc:Ignorable="d" 
-	d:DesignWidth="300" 
-	d:DesignHeight="173.343"
+	d:DesignWidth="480" 
+	d:DesignHeight="400"
 >
-	<Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-		<GroupBox UI:XamlTag.LanguageKey="setting/main" Header="main" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="79" Width="202" Margin="0,0,0,63">
+	<Grid>
+		<GroupBox UI:XamlTag.LanguageKey="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
 					<Label UI:XamlTag.LanguageKey="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" />
 				</StackPanel>
 				<CheckBox UI:XamlTag.LanguageKey="startup/regist" Content="startup"/>
+			</StackPanel>
+		</GroupBox>
+
+		<GroupBox UI:XamlTag.LanguageKey="setting/log" Header="log" Margin="10,94,0,0" HorizontalAlignment="Left" Width="202" Height="182" VerticalAlignment="Top">
+			<StackPanel>
+				<CheckBox UI:XamlTag.LanguageKey="visivle" Content="visible" />
+				<GroupBox>
+					<GroupBox.Header>
+						<CheckBox UI:XamlTag.LanguageKey="log/add-show" Content="add-show" />
+					</GroupBox.Header>
+					<StackPanel Margin="8">
+						<CheckBox UI:XamlTag.LanguageKey="log/debug" Content="debug" />
+						<CheckBox UI:XamlTag.LanguageKey="log/trace" Content="trace" />
+						<CheckBox UI:XamlTag.LanguageKey="log/information" Content="info" />
+						<CheckBox UI:XamlTag.LanguageKey="log/warning" Content="warning" />
+						<CheckBox UI:XamlTag.LanguageKey="log/error" Content="error" />
+						<CheckBox UI:XamlTag.LanguageKey="log/fatal" Content="fatal" />
+					</StackPanel>
+				</GroupBox>
+			</StackPanel>
+		</GroupBox>
+		<GroupBox UI:XamlTag.LanguageKey="setting/update"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="118">
+			<StackPanel>
+				<CheckBox UI:XamlTag.LanguageKey="update/check-release" Content="update check" />
+				<CheckBox UI:XamlTag.LanguageKey="update/check-rc" Content="update check rc" />
 			</StackPanel>
 		</GroupBox>
 
