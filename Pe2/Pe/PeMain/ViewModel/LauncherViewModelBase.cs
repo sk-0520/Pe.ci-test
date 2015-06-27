@@ -35,7 +35,7 @@
 
 		#region property
 
-		#region INonProcess
+		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
 
