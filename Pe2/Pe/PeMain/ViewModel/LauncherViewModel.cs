@@ -48,9 +48,12 @@
 			get { return this._iconScale; }
 			set
 			{
-				if(this._iconScale != value) {
-					this._iconScale = value;
-					OnPropertyChanged();
+				//if(this._iconScale != value) {
+				//	this._iconScale = value;
+				//	OnPropertyChanged();
+				//	OnPropertyChanged("ToolbarImage");
+				//}
+				if(SetVariableValue(ref this._iconScale, value)) {
 					OnPropertyChanged("ToolbarImage");
 				}
 			}
@@ -69,10 +72,11 @@
 			get { return this._existsCommand; }
 			set
 			{
-				if(this._existsCommand != value) {
-					this._existsCommand = value;
-					OnPropertyChanged();
-				}
+				//if(this._existsCommand != value) {
+				//	this._existsCommand = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._existsCommand, value);
 			}
 		}
 		public bool ExistsParentDirectory
@@ -80,10 +84,11 @@
 			get { return this._existsParentDir; }
 			set
 			{
-				if(this._existsParentDir != value) {
-					this._existsParentDir = value;
-					OnPropertyChanged();
-				}
+				//if(this._existsParentDir != value) {
+				//	this._existsParentDir = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._existsParentDir, value);
 			}
 		}
 		public bool ExistsWorkDirectory
@@ -91,10 +96,11 @@
 			get { return this._existsWorkDir; }
 			set
 			{
-				if(this._existsWorkDir != value) {
-					this._existsWorkDir = value;
-					OnPropertyChanged();
-				}
+				//if(this._existsWorkDir != value) {
+				//	this._existsWorkDir = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._existsWorkDir, value);
 			}
 		}
 
@@ -103,10 +109,11 @@
 			get { return this._hasDataCommand; }
 			set
 			{
-				if(this._hasDataCommand != value) {
-					this._hasDataCommand = value;
-					OnPropertyChanged();
-				}
+				//if(this._hasDataCommand != value) {
+				//	this._hasDataCommand = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._hasDataCommand, value);
 			}
 		}
 		public bool HasDataParentDirectory
@@ -114,10 +121,11 @@
 			get { return this._hasDataParentDir; }
 			set
 			{
-				if(this._hasDataParentDir != value) {
-					this._hasDataParentDir = value;
-					OnPropertyChanged();
-				}
+				//if(this._hasDataParentDir != value) {
+				//	this._hasDataParentDir = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._hasDataParentDir, value);
 			}
 		}
 		public bool HasDataWorkDirectory
@@ -125,10 +133,11 @@
 			get { return this._hasDataWorkDir; }
 			set
 			{
-				if(this._hasDataWorkDir != value) {
-					this._hasDataWorkDir = value;
-					OnPropertyChanged();
-				}
+				//if(this._hasDataWorkDir != value) {
+				//	this._hasDataWorkDir = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._hasDataWorkDir, value);
 			}
 		}
 

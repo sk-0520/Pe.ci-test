@@ -31,6 +31,8 @@
 
 		#region property
 
+		public ObservableCollection<LogItemModel> LogItems { get; set; }
+
 		#region IWindowStatus
 
 		public double WindowLeft
@@ -90,9 +92,6 @@
 		#endregion
 
 		#endregion
-
-
-		public ObservableCollection<LogItemModel> LogItems { get; set; }
 
 		#endregion
 

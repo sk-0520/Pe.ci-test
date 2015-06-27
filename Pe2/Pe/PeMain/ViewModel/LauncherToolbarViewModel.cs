@@ -189,10 +189,11 @@
 			get { return this._borderThickness; } 
 			set
 			{
-				if (this._borderThickness != value) {
-					this._borderThickness = value;
-					OnPropertyChanged();
-				}
+				//if (this._borderThickness != value) {
+				//	this._borderThickness = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._borderThickness, value);
 			}
 		}
 
@@ -201,10 +202,11 @@
 			get { return this._borderBrush; }
 			set
 			{
-				if (this._borderBrush != value) {
-					this._borderBrush = value;
-					OnPropertyChanged();
-				}
+				//if (this._borderBrush != value) {
+				//	this._borderBrush = value;
+				//	OnPropertyChanged();
+				//}
+				SetVariableValue(ref this._borderBrush, value);
 			}
 		}
 

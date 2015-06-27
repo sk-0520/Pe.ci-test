@@ -54,6 +54,28 @@
 
 		#endregion
 
+		#region functino
+
+		/// <summary>
+		/// 変数変更のヘルパ。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="modelProperty">格納するプロパティ。</param>
+		/// <param name="value">変更データ。</param>
+		/// <param name="propertyName"></param>
+		/// <returns>変更があった場合は真を返す。</returns>
+		protected bool SetVariableValue<T>(ref T modelProperty, T value, [CallerMemberName] string propertyName = "")
+		{
+			if(!IComparable<T>.Equals(modelProperty, value)) {
+				modelProperty = value;
+				OnPropertyChanged(propertyName);
+
+				return true;
+			}
+
+			return false;
+		}
+
 		protected virtual ICommand CreateCommand(Action<object> executeCommand)
 		{
 			var result = new DelegateCommand(executeCommand);
@@ -71,5 +93,7 @@
 
 			return result;
 		}
+
+		#endregion
 	}
 }
