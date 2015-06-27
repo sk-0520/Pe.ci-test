@@ -386,10 +386,15 @@
 			get { return Model.Toolbar.AutoHide; }
 			set
 			{
-				if (Model.Toolbar.AutoHide != value) {
-					Model.Toolbar.AutoHide = value;
-					OnPropertyChanged();
-					if (HasView) {
+				//if (Model.Toolbar.AutoHide != value) {
+				//	Model.Toolbar.AutoHide = value;
+				//	OnPropertyChanged();
+				//	if (HasView) {
+				//		View.Docking(DockType, AutoHide);
+				//	}
+				//}
+				if(SetPropertyValue(Model.Toolbar, value)) {
+					if(HasView) {
 						View.Docking(DockType, AutoHide);
 					}
 				}
@@ -403,9 +408,12 @@
 			get { return this._isHidden; }
 			set
 			{
-				if (this._isHidden != value) {
-					this._isHidden = value;
-					OnPropertyChanged();
+				//if (this._isHidden != value) {
+				//	this._isHidden = value;
+				//	OnPropertyChanged();
+				//	OnPropertyChanged("HideVisibility");
+				//}
+				if(SetVariableValue(ref this._isHidden, value)) {
 					OnPropertyChanged("HideVisibility");
 				}
 			}
@@ -437,10 +445,11 @@
 			get { return Model.Toolbar.HideWaitTime; }
 			set
 			{
-				if (Model.Toolbar.HideWaitTime != value) {
-					Model.Toolbar.HideWaitTime = value;
-					OnPropertyChanged();
-				}
+				//if (Model.Toolbar.HideWaitTime != value) {
+				//	Model.Toolbar.HideWaitTime = value;
+				//	OnPropertyChanged();
+				//}
+				SetPropertyValue(Model.Toolbar, value);
 			}
 		}
 		/// <summary>
@@ -450,35 +459,17 @@
 			get { return Model.Toolbar.HideAnimateTime; }
 			set
 			{
-				if (Model.Toolbar.HideAnimateTime != value) {
-					Model.Toolbar.HideAnimateTime = value;
-					OnPropertyChanged();
-				}
+				//if (Model.Toolbar.HideAnimateTime != value) {
+				//	Model.Toolbar.HideAnimateTime = value;
+				//	OnPropertyChanged();
+				//}
+				SetPropertyValue(Model.Toolbar, value);
 			}
 		}
 		/// <summary>
 		/// ドッキングに使用するスクリーン。
 		/// </summary>
 		public ScreenModel DockScreen { get; set; }
-
-		public void ChangingWindowMode(DockType dockType)
-		{
-			DockType = dockType;
-			var logicalRect = new Rect(
-				WindowLeft,
-				WindowTop,
-				WindowWidth,
-				WindowHeight
-			);
-			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
-			var podRect = PodStructUtility.Convert(deviceRect);
-			//NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
-			NativeMethods.SetWindowPos(View.Handle, IntPtr.Zero, podRect.Left, podRect.Top, podRect.Width, podRect.Height, SWP.SWP_NOSENDCHANGING | SWP.SWP_NOREDRAW);
-			//View.InvalidateVisual();
-			//View.UpdateLayout()
-			//DockType = dockType;
-			//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
-		}
 
 		#endregion
 
@@ -661,9 +652,18 @@
 			}
 			set
 			{
-				if(this._selectedGroup != value) {
-					this._selectedGroup = value;
-					OnPropertyChanged();
+				//if(this._selectedGroup != value) {
+				//	this._selectedGroup = value;
+				//	OnPropertyChanged();
+				//	OnPropertyChanged("GroupItems");
+				//	var oldItems = this._launcherItems;
+				//	this._launcherItems = null;
+				//	OnPropertyChanged("LauncherItems");
+				//	foreach(var oldItem in oldItems) {
+				//		oldItem.Dispose();
+				//	}
+				//}
+				if(SetVariableValue(ref this._selectedGroup, value)) {
 					OnPropertyChanged("GroupItems");
 					var oldItems = this._launcherItems;
 					this._launcherItems = null;
@@ -887,6 +887,24 @@
 			return MediaUtility.GetPredominantColorFromBitmapSource(GetAppIcon());
 		}
 
+		public void ChangingWindowMode(DockType dockType)
+		{
+			DockType = dockType;
+			var logicalRect = new Rect(
+				WindowLeft,
+				WindowTop,
+				WindowWidth,
+				WindowHeight
+			);
+			var deviceRect = UIUtility.ToDevicePixel(View, logicalRect);
+			var podRect = PodStructUtility.Convert(deviceRect);
+			//NativeMethods.MoveWindow(View.Handle, podRect.Left, podRect.Top, podRect.Width, podRect.Height, false);
+			NativeMethods.SetWindowPos(View.Handle, IntPtr.Zero, podRect.Left, podRect.Top, podRect.Width, podRect.Height, SWP.SWP_NOSENDCHANGING | SWP.SWP_NOREDRAW);
+			//View.InvalidateVisual();
+			//View.UpdateLayout()
+			//DockType = dockType;
+			//MinSize = GetMinSize(DockType, Orientation, BorderThickness, ButtonSize);
+		}
 
 		#endregion
 

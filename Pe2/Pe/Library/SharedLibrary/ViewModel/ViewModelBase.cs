@@ -4,11 +4,13 @@
 	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Linq;
+	using System.Reflection;
 	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	public abstract class ViewModelBase: DisposeFinalizeBase, INotifyPropertyChanged
 	{
@@ -57,17 +59,45 @@
 		#region functino
 
 		/// <summary>
-		/// 変数変更のヘルパ。
+		/// 変数変更用ヘルパ。
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="modelProperty">格納するプロパティ。</param>
+		/// <param name="variable">格納する変数。</param>
 		/// <param name="value">変更データ。</param>
 		/// <param name="propertyName"></param>
 		/// <returns>変更があった場合は真を返す。</returns>
-		protected bool SetVariableValue<T>(ref T modelProperty, T value, [CallerMemberName] string propertyName = "")
+		protected bool SetVariableValue<T>(ref T variable, T value, [CallerMemberName] string propertyName = "")
 		{
-			if(!IComparable<T>.Equals(modelProperty, value)) {
-				modelProperty = value;
+			if(!IComparable<T>.Equals(variable, value)) {
+				variable = value;
+				OnPropertyChanged(propertyName);
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// プロパティ変更用ヘルパ。
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj">対象オブジェクト。</param>
+		/// <param name="value">変更データ。</param>
+		/// <param name="memberName">対象オブジェクトのメンバ名。</param>
+		/// <param name="propertyName"></param>
+		/// <returns>変更があった場合は真を返す。</returns>
+		protected bool SetPropertyValue<T>(object obj, T value, [CallerMemberName] string memberName = "", [CallerMemberName] string propertyName = "")
+		{
+			CheckUtility.DebugEnforceNotNull(obj);
+
+			var type = obj.GetType();
+			var propertyInfo = type.GetProperty(memberName);
+
+			var nowValue = (T)propertyInfo.GetValue(obj);
+
+			if(!IComparable<T>.Equals(nowValue, value)) {
+				propertyInfo.SetValue(obj, value);
 				OnPropertyChanged(propertyName);
 
 				return true;
