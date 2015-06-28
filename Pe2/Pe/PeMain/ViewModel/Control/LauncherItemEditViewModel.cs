@@ -14,5 +14,15 @@
 		public LauncherItemEditViewModel(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonPorocess)
 			: base(model, launcherIconCaching, nonPorocess)
 		{ }
+
+		#region property
+
+		public string ItemName
+		{
+			get { return Model.Name; }
+			set { SetModelValue(value, "Name"); }
+		}
+
+		#endregion
 	}
 }

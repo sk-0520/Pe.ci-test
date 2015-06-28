@@ -8,6 +8,7 @@
 	using System.Windows.Data;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 
 	public class LauncherViewModelBaseConverter: IValueConverter
 	{
@@ -15,7 +16,8 @@
 		{
 			var model = value as LauncherViewModelBase;
 			if(model != null) {
-				var result = new LauncherSimpleViewModel(model.GetModel(), model.LauncherIconCaching, model.NonProcess);
+				//TODO: parameterで切り替えれた方があとあと便利そう。
+				var result = new LauncherItemEditViewModel(model.GetModel(), model.LauncherIconCaching, model.NonProcess);
 				return result;
 			}
 			return null;

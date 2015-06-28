@@ -9,7 +9,58 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 >
-	<Grid>
+	<TabControl>
+		<TabItem Header="main">
+			<StackPanel>
+				<GroupBox Header="kind">
+					<StackPanel Orientation="Horizontal">
+						<RadioButton Content="file" />
+						<RadioButton Content="command" />
+					</StackPanel>
+				</GroupBox>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
 
-	</Grid>
+					<Label Content="name" Grid.Row="0" Grid.Column="0" />
+					<TextBox Text="{Binding ItemName}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" />
+
+					<Label Content="command" Grid.Row="1" Grid.Column="0" />
+					<TextBox Grid.Row="1" Grid.Column="1"  />
+					<Button Grid.Row="1" Grid.Column="2" />
+					<Button Grid.Row="1" Grid.Column="3" />
+
+					<Label Content="option" Grid.Row="2" Grid.Column="0" />
+					<TextBox Grid.Row="2" Grid.Column="1" />
+					<Button Grid.Row="2" Grid.Column="2" />
+					<Button Grid.Row="2" Grid.Column="3" />
+					
+					<Label Content="work dir" Grid.Row="3" Grid.Column="0" />
+					<TextBox Grid.Row="3" Grid.Column="1"  />
+					<Button Grid.Row="3" Grid.Column="2" />
+
+					<Label Content="icon path" Grid.Row="4" Grid.Column="0" />
+					<TextBox Grid.Row="4" Grid.Column="1"  />
+					<Button Grid.Row="4" Grid.Column="2" />
+				</Grid>
+			</StackPanel>
+		</TabItem>
+		<TabItem Header="env">
+
+		</TabItem>
+		<TabItem Header="others">
+
+		</TabItem>
+	</TabControl>
 </CD:CommonDataUserControl>
