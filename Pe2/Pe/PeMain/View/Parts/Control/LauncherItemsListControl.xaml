@@ -11,7 +11,8 @@
 	d:DesignHeight="300" d:DesignWidth="300"
 >
 	<CD:CommonDataUserControl.Resources>
-		<PC:LauncherViewModelBaseConverter x:Key="LauncherViewModelBaseConverter" />
+		<PC:LauncherListDisplayImageConverter x:Key="LauncherListDisplayImageConverter" />
+		<PC:LauncherListDisplayTextConverter x:Key="LauncherListDisplayTextConverter" />
 	</CD:CommonDataUserControl.Resources>
 	
 	<StackPanel>
@@ -28,7 +29,8 @@
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{Binding}" />
+						<Image Source="{Binding Converter={StaticResource LauncherListDisplayImageConverter}}" />
+						<TextBlock Text="{Binding Converter={StaticResource LauncherListDisplayTextConverter}}" />
 					</StackPanel>
 				</DataTemplate>
 			</ListBox.ItemTemplate>

@@ -26,6 +26,7 @@
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using System.Threading.Tasks;
 	using System.Threading;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.Converter;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -269,6 +270,8 @@
 				}
 				InitializeSetting();
 
+				InitializeStatic();
+
 				CreateMessage();
 
 				CreateLogger();
@@ -312,6 +315,12 @@
 				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.NonProcess);
 				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.NonProcess);
 			}
+		}
+
+		void InitializeStatic()
+		{
+			LauncherListDisplayImageConverter.LauncherIconCaching = CommonData.LauncherIconCaching;
+			LauncherListDisplayImageConverter.NonProcess = CommonData.NonProcess;
 		}
 
 		/// <summary>
