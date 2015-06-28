@@ -11,7 +11,7 @@
 	d:DesignHeight="300" d:DesignWidth="300"
 >
 	<CD:CommonDataUserControl.Resources>
-		<PC:LauncherItemsListSelectedItemConverter x:Key="LauncherItemsListSelectedItemConverter" />
+		<PC:LauncherViewModelBaseConverter x:Key="LauncherViewModelBaseConverter" />
 	</CD:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -19,6 +19,6 @@
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
 		<CD:LauncherItemsListControl  Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
-		<CD:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherItem,ElementName=ItemList, Converter={StaticResource LauncherItemsListSelectedItemConverter}}" />
+		<CD:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LauncherViewModelBaseConverter}}" />
 	</Grid>
 </CD:CommonDataUserControl>

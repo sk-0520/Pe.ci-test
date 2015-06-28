@@ -85,10 +85,11 @@
 		{
 			Debug.Assert(CommonData != null);
 
-			foreach (var ui in UIUtility.FindVisualChildren<UserControl>(this).OfType<ICommonData>()) {
+			foreach(var ui in UIUtility.FindLogicalChildren<UserControl>(this).OfType<ICommonData>()) {
 				ui.SetCommonData(CommonData);
 			}
 		}
+
 
 		#endregion
 

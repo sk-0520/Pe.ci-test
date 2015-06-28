@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View;
-using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
+	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
 
 	public class SettingViewModel: ViewModelBase, IHavingCommonData, IHavingView<SettingWindow>
 	{

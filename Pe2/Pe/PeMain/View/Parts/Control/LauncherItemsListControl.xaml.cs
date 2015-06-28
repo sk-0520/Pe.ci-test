@@ -30,21 +30,37 @@
 		}
 
 		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
-			"SelectedLauncherItem", 
-			typeof(object),
+			"SelectedLauncherItem",
+			typeof(LauncherItemModel),
 			typeof(LauncherItemsListControl),
 			new FrameworkPropertyMetadata(null)
 		);
 
-		public object SelectedLauncherItem
+		public LauncherItemModel SelectedLauncherItem
 		{
-			get { return GetValue(SelectedLauncherItemProperty); }
-			set { SetValue(SelectedLauncherItemProperty, value); }
+			get { return GetValue(SelectedLauncherItemProperty) as LauncherItemModel; }
+			set 
+			{ 
+				SetValue(SelectedLauncherItemProperty, value);
+				SelectedLauncherViewModel = new LauncherViewModelBase(SelectedLauncherItem, CommonData.LauncherIcons, CommonData.NonProcess);
+			}
+		}
+
+		public static readonly DependencyProperty SelectedLauncherViewModelProperty = DependencyProperty.Register(
+			"SelectedLauncherViewModel",
+			typeof(LauncherViewModelBase),
+			typeof(LauncherItemsListControl),
+			new FrameworkPropertyMetadata(null)
+		);
+		public LauncherViewModelBase SelectedLauncherViewModel
+		{
+			get { return GetValue(SelectedLauncherViewModelProperty) as LauncherViewModelBase; }
+			set { SetValue(SelectedLauncherViewModelProperty, value); }
 		}
 
 		void ListItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			SelectedLauncherItem = ListItems.SelectedItem;
+			SelectedLauncherItem = ListItems.SelectedItem as LauncherItemModel;
 		}
 
 	}

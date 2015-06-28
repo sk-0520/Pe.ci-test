@@ -6,17 +6,17 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Data;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
-	public class LauncherItemsListSelectedItemConverter: IValueConverter
+	public class LauncherViewModelBaseConverter: IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var vm = value as LauncherViewModelBase;
-			if(vm != null) {
-				var model = vm.GetModel();
-				var result = new LauncherSimpleViewModel(model, vm.LauncherIconCaching, vm.NonProcess);
-				return result;
+			var model = value as LauncherViewModelBase;
+			if(model != null) {
+				//var result = new LauncherSimpleViewModel(model, model.LauncherIconCaching, model.NonProcess);
+				//return result;
 			}
 			return null;
 		}

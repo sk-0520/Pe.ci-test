@@ -184,7 +184,7 @@
     </Compile>
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
-    <Compile Include="View\Parts\Converter\LauncherItemsListSelectedItemConverter.cs" />
+    <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
     <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />

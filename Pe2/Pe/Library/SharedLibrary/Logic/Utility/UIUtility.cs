@@ -40,6 +40,24 @@ using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 			}
 		}
 
+		public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj)
+			where T: DependencyObject
+		{
+			if(depObj != null) {
+				foreach(var child in LogicalTreeHelper.GetChildren(depObj).OfType<DependencyObject>()) {
+					if(child != null) {
+						var childObj = child as T;
+						if(childObj != null) {
+							yield return childObj;
+						}
+						foreach(var childOfChild in FindLogicalChildren<T>(child)) {
+							yield return childOfChild;
+						}
+					}
+				}
+			}
+		}
+
 		public static DependencyObject GetVisualParent(DependencyObject depObj)
 		{
 			return VisualTreeHelper.GetParent(depObj);

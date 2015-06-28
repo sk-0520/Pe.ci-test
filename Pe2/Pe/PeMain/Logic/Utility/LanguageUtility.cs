@@ -23,7 +23,7 @@
 				window.SetUI(language);
 			}
 
-			foreach (var dependencyObject in UIUtility.FindVisualChildren<DependencyObject>(root)) {
+			foreach (var dependencyObject in UIUtility.FindLogicalChildren<DependencyObject>(root)) {
 				var type = dependencyObject.GetType();
 				
 				Action<DependencyObject> action;
