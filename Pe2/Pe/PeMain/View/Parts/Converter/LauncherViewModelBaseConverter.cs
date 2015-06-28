@@ -15,8 +15,8 @@
 		{
 			var model = value as LauncherViewModelBase;
 			if(model != null) {
-				//var result = new LauncherSimpleViewModel(model, model.LauncherIconCaching, model.NonProcess);
-				//return result;
+				var result = new LauncherSimpleViewModel(model.GetModel(), model.LauncherIconCaching, model.NonProcess);
+				return result;
 			}
 			return null;
 		}

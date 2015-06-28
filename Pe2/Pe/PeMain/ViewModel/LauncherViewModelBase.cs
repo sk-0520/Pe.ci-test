@@ -46,6 +46,8 @@
 
 		#endregion
 
+		public string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+
 		#endregion
 
 		#region SingleModelWrapperViewModelBase

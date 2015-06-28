@@ -31,7 +31,7 @@
 		public CommonData()
 			: base()
 		{
-			LauncherIcons = new LauncherIconCaching();
+			LauncherIconCaching = new LauncherIconCaching();
 		}
 
 		#region property
@@ -49,7 +49,7 @@
 		public IAppSender AppSender { get; set; }
 		public IClipboardWatcher ClipboardWatcher { get; set; }
 
-		public LauncherIconCaching LauncherIcons { get; set; }
+		public LauncherIconCaching LauncherIconCaching { get; set; }
 
 		/// <summary>
 		/// 呼び出し元から見てると心臓に悪い。

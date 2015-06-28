@@ -18,7 +18,7 @@
 			<ColumnDefinition Width="7*"/>
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
-		<CD:LauncherItemsListControl  Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
+		<CD:LauncherItemsListControl Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
 		<CD:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LauncherViewModelBaseConverter}}" />
 	</Grid>
 </CD:CommonDataUserControl>

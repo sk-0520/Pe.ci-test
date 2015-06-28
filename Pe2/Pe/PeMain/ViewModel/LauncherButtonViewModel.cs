@@ -68,7 +68,7 @@
 			}
 		}
 
-		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+		public string ToolbarText { get { return DisplayText; } }
 		public ImageSource ToolbarImage { get { return GetIcon(IconScale); } }
 		public Color ToolbarHotTrack { get { return GetIconColor(IconScale); } }
 

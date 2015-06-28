@@ -59,7 +59,7 @@
 				if(this._launcherItemSetting == null) {
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
 						CommonData.LauncherItemSetting,
-						CommonData.LauncherIcons,
+						CommonData.LauncherIconCaching,
 						CommonData.NonProcess
 					);
 				}
