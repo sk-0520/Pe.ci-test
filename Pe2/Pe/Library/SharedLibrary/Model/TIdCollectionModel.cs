@@ -12,16 +12,20 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using System.Xml.Serialization;
+	using System.Reflection;
 
 	[Serializable]
-	public class TIdCollection<TKey, TValue>: ObservableCollection<TValue>, IIsDisposed
+	public class TIdCollection<TKey, TValue>: ObservableCollection<TValue>, IIsDisposed, IModel
 		where TValue: ITId<TKey>
 		where TKey: IComparable
 	{
 		#region variable
 
 		protected Dictionary<TKey, TValue> _map = new Dictionary<TKey, TValue>();
-		protected bool _isReadOnly = false;
+		//protected bool _isReadOnly = false;
+
+		[IgnoreDataMember, XmlIgnore]
+		IEnumerable<PropertyInfo> _propertyInfos = null;
 
 		#endregion
 
@@ -65,6 +69,32 @@
 		{
 			Dispose(true);
 		}
+
+		#endregion
+
+		#region IModel
+
+		[IgnoreDataMember, XmlIgnore]
+		public IEnumerable<PropertyInfo> PropertyInfos
+		{
+			get
+			{
+				if(this._propertyInfos == null) {
+					this._propertyInfos = GetType().GetProperties();
+				}
+
+				return this._propertyInfos;
+			}
+		}
+
+		public IEnumerable<string> GetNameValueList()
+		{
+			var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
+			return ReflectionUtility.GetNameValueStrings(nameValueMap);
+		}
+
+		public virtual void Correction()
+		{ }
 
 		#endregion
 
