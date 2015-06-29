@@ -34,24 +34,24 @@
 					</Grid.ColumnDefinitions>
 
 					<Label Content="name" Grid.Row="0" Grid.Column="0" />
-					<TextBox Text="{Binding ItemName}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" />
+					<TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" />
 
 					<Label Content="command" Grid.Row="1" Grid.Column="0" />
-					<TextBox Grid.Row="1" Grid.Column="1"  />
+					<TextBox Text="{Binding Command}" Grid.Row="1" Grid.Column="1"  />
 					<Button Grid.Row="1" Grid.Column="2" />
 					<Button Grid.Row="1" Grid.Column="3" />
 
 					<Label Content="option" Grid.Row="2" Grid.Column="0" />
-					<TextBox Grid.Row="2" Grid.Column="1" />
+					<TextBox Text="{Binding Option}" Grid.Row="2" Grid.Column="1" />
 					<Button Grid.Row="2" Grid.Column="2" />
 					<Button Grid.Row="2" Grid.Column="3" />
 					
 					<Label Content="work dir" Grid.Row="3" Grid.Column="0" />
-					<TextBox Grid.Row="3" Grid.Column="1"  />
+					<TextBox Text="{Binding WorkDirectoryPath}" Grid.Row="3" Grid.Column="1"  />
 					<Button Grid.Row="3" Grid.Column="2" />
 
 					<Label Content="icon path" Grid.Row="4" Grid.Column="0" />
-					<TextBox Grid.Row="4" Grid.Column="1"  />
+					<TextBox Text="{Binding IconPath}" Grid.Row="4" Grid.Column="1"  />
 					<Button Grid.Row="4" Grid.Column="2" />
 				</Grid>
 			</StackPanel>

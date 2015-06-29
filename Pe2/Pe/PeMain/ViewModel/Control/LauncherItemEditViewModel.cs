@@ -17,10 +17,16 @@
 
 		#region property
 
-		public string ItemName
+		public string Name
 		{
 			get { return Model.Name; }
-			set { SetModelValue(value, "Name"); }
+			set { SetModelValue(value); }
+		}
+
+		public string IconPath
+		{
+			get { return Model.Icon.Path; }
+			set { SetPropertyValue(Model.Icon, value, "Path"); }
 		}
 
 		#endregion
