@@ -80,7 +80,9 @@
 
 			using(var xmlReader = XmlReader.Create(stream)) {
 				var serializer = new DataContractSerializer(typeof(T));
-				return (T)serializer.ReadObject(xmlReader);
+				var result = (T)serializer.ReadObject(xmlReader);
+				result.Correction();
+				return result;
 			}
 		}
 
@@ -115,7 +117,9 @@
 
 			using(var reader = new XmlTextReader(stream)) {
 				var serializer = new XmlSerializer(typeof(T));
-				return (T)serializer.Deserialize(reader);
+				var result = (T)serializer.Deserialize(reader);
+				result.Correction();
+				return result;
 			}
 		}
 
@@ -229,7 +233,9 @@
 			//var serializer = new DataContractJsonSerializer(typeof(T));
 			//return (T)serializer.ReadObject(stream);
 			using(var reader = new StreamReader(stream)) {
-				return JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
+				var result = JsonConvert.DeserializeObject<T>(reader.ReadToEnd());
+				result.Correction();
+				return result;
 			}
 		}
 
