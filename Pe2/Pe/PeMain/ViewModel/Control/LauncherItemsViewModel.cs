@@ -13,9 +13,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemSettingModel>, IHavingNonProcess, IHavingLauncherIconCaching
+	public class LauncherItemsViewModel: SingleModelWrapperViewModelBase<LauncherItemCollectionModel>, IHavingNonProcess, IHavingLauncherIconCaching
 	{
-		public LauncherItemsViewModel(LauncherItemSettingModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public LauncherItemsViewModel(LauncherItemCollectionModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(model)
 		{
 			LauncherIconCaching = launcherIconCaching;
@@ -46,7 +46,7 @@
 		{ 
 			get
 			{
-				return Model.Items;
+				return Model;
 			}
 		}
 

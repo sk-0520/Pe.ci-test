@@ -50,7 +50,7 @@
 			{
 				if(this._launcherItems == null) {
 					this._launcherItems = new LauncherItemsViewModel(
-						LauncherItemSetting,
+						LauncherItemSetting.Items,
 						LauncherIconCaching,
 						NonProcess
 					);
