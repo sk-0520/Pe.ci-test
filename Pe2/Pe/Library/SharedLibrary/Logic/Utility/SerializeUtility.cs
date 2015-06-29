@@ -11,6 +11,7 @@
 	using System.Threading.Tasks;
 	using System.Xml;
 	using System.Xml.Serialization;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using Newtonsoft.Json;
 
@@ -72,7 +73,7 @@
 		/// <param name="stream"></param>
 		/// <returns></returns>
 		public static T LoadXmlDataFromStream<T>(Stream stream)
-			where T: ModelBase, new()
+			where T: IModel, new()
 		{
 			if(!HasDataContract<T>()) {
 				throw new InvalidOperationException(typeof(T).ToString());
@@ -94,7 +95,7 @@
 		/// <param name="filePath"></param>
 		/// <returns></returns>
 		public static T LoadXmlDataFromFile<T>(string filePath)
-			where T: ModelBase, new()
+			where T: IModel, new()
 		{
 			using(var stream = CreateReadFileStream(filePath)) {
 				return LoadXmlDataFromStream<T>(stream);
@@ -109,7 +110,7 @@
 		/// <param name="stream"></param>
 		/// <returns></returns>
 		public static T LoadXmlSerializeFromStream<T>(Stream stream)
-			where T: ModelBase, new()
+			where T: IModel, new()
 		{
 			if(!HasSerializable<T>()) {
 				throw new InvalidOperationException(typeof(T).ToString());
@@ -131,7 +132,7 @@
 		/// <param name="stream"></param>
 		/// <returns></returns>
 		public static T LoadXmlSerializeFromFile<T>(string filePath)
-			where T: ModelBase, new()
+			where T: IModel, new()
 		{
 			using(var stream = CreateReadFileStream(filePath)) {
 				return LoadXmlSerializeFromStream<T>(stream);
@@ -147,7 +148,7 @@
 		/// <param name="stream"></param>
 		/// <param name="model"></param>
 		public static void SaveXmlDataToStream<T>(Stream stream, T model)
-			 where T: ModelBase
+			 where T: IModel
 		{
 			Debug.Assert(model != null);
 
@@ -174,7 +175,7 @@
 		/// <param name="filePath"></param>
 		/// <param name="model"></param>
 		public static void SaveXmlDataToFile<T>(string filePath, T model)
-			where T: ModelBase
+			where T: IModel
 		{
 			using(var stream = CreateWriteFileStream(filePath)) {
 				SaveXmlDataToStream(stream, model);
@@ -189,7 +190,7 @@
 		/// <param name="stream"></param>
 		/// <param name="model"></param>
 		public static void SaveXmlSerializeToStream<T>(Stream stream, T model)
-			where T: ModelBase
+			where T: IModel
 		{
 			Debug.Assert(model != null);
 
@@ -209,7 +210,7 @@
 		/// <param name="filePath"></param>
 		/// <param name="model"></param>
 		public static void SaveXmlSerializeToFile<T>(string filePath, T model)
-			where T: ModelBase
+			where T: IModel
 		{
 			using(var stream = CreateWriteFileStream(filePath)) {
 				SaveXmlSerializeToStream(stream, model);
@@ -224,7 +225,7 @@
 		/// <param name="stream"></param>
 		/// <returns></returns>
 		public static T LoadJsonDataFromStream<T>(Stream stream)
-			where T : ModelBase, new()
+			where T: IModel, new()
 		{
 			if (!HasDataContract<T>()) {
 				throw new InvalidOperationException(typeof(T).ToString());
@@ -247,7 +248,7 @@
 		/// <param name="filePath"></param>
 		/// <returns></returns>
 		public static T LoadJsonDataFromFile<T>(string filePath)
-			where T : ModelBase, new()
+			where T: IModel, new()
 		{
 			using (var stream = CreateReadFileStream(filePath)) {
 				return LoadJsonDataFromStream<T>(stream);
@@ -261,7 +262,7 @@
 		/// <param name="filePath"></param>
 		/// <param name="model"></param>
 		public static void SaveJsonDataToStream<T>(Stream stream, T model)
-			where T : ModelBase
+			where T: IModel
 		{
 			if(!HasDataContract<T>()) {
 				throw new InvalidOperationException(typeof(T).ToString());
@@ -286,7 +287,7 @@
 		/// <param name="filePath"></param>
 		/// <param name="model"></param>
 		public static void SaveJsonDataToFile<T>(string filePath, T model)
-			where T : ModelBase
+			where T: IModel
 		{
 			using (var stream = CreateWriteFileStream(filePath)) {
 				SaveJsonDataToStream(stream, model);
