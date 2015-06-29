@@ -146,6 +146,9 @@
 			return ReflectionUtility.GetNameValueStrings(nameValueMap);
 		}
 
+		public virtual void Correction()
+		{ }
+
 		#endregion
 
 		/// <summary>

@@ -7,5 +7,10 @@
 	using System.Threading.Tasks;
 
 	public interface IModel: IGetMembers
-	{ }
+	{
+		/// <summary>
+		/// 補正。
+		/// </summary>
+		void Correction();
+	}
 }
