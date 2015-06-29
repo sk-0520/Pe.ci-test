@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control;
 
-	public class LauncherViewModelBaseConverter: IValueConverter
+	public class LauncherViewModelConverter: IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
