@@ -96,6 +96,7 @@
     <Compile Include="IF\IApplicationDesktopToolbar.cs" />
     <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />
+    <Compile Include="IF\IDisplayText.cs" />
     <Compile Include="IF\IGetMembers.cs" />
     <Compile Include="IF\IHavingNonProcess.cs" />
     <Compile Include="IF\IHavingWndProc.cs" />

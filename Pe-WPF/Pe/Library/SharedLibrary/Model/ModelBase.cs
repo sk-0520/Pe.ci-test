@@ -37,6 +37,12 @@
 		#region IModel
 
 		[IgnoreDataMember, XmlIgnore]
+		public virtual string DisplayText
+		{
+			get { return GetType().FullName; }
+		}
+
+		[IgnoreDataMember, XmlIgnore]
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public IEnumerable<PropertyInfo> PropertyInfos
 		{

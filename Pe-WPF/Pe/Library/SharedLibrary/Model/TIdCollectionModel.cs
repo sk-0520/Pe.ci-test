@@ -75,6 +75,12 @@
 		#region IModel
 
 		[IgnoreDataMember, XmlIgnore]
+		public virtual string DisplayText
+		{
+			get { return GetType().FullName; }
+		}
+
+		[IgnoreDataMember, XmlIgnore]
 		public IEnumerable<PropertyInfo> PropertyInfos
 		{
 			get

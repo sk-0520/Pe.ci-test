@@ -6,11 +6,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public interface IModel: IGetMembers, IDisplayText
+	/// <summary>
+	/// 困ったときの表示用文字列。
+	/// </summary>
+	public interface IDisplayText
 	{
-		/// <summary>
-		/// 補正。
-		/// </summary>
-		void Correction();
+		string DisplayText { get; }
 	}
 }
