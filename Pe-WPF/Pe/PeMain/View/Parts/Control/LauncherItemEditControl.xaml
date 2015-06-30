@@ -51,7 +51,7 @@
 					<Button Grid.Row="3" Grid.Column="2" />
 
 					<Label Content="icon path" Grid.Row="4" Grid.Column="0" />
-					<TextBox Text="{Binding IconPath}" Grid.Row="4" Grid.Column="1"  />
+					<TextBox Text="{Binding IconPath, Mode=OneWay}" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="4" Grid.Column="1"  />
 					<Button Grid.Row="4" Grid.Column="2" />
 				</Grid>
 			</StackPanel>

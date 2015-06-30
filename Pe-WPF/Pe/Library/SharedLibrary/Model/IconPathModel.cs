@@ -23,5 +23,25 @@
 		/// </summary>
 		[DataMember]
 		public int Index { get; set; }
+
+		#region ModelBase
+
+		public override string DisplayText
+		{
+			get
+			{
+				if(string.IsNullOrWhiteSpace(Path)) {
+					if(Index > 0) {
+						return string.Format(":Index = {0}", Index);
+					} else {
+						return string.Empty;
+					}
+				} else {
+					return string.Format("{0},{1}", Path, Index);
+				}
+			}
+		}
+
+		#endregion
 	}
 }

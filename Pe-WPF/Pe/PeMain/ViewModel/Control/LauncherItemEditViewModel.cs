@@ -25,8 +25,7 @@
 
 		public string IconPath
 		{
-			get { return Model.Icon.Path; }
-			set { SetPropertyValue(Model.Icon, value, "Path"); }
+			get { return Model.Icon.DisplayText; }
 		}
 
 		#endregion
