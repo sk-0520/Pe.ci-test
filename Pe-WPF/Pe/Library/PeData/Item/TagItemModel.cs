@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
@@ -18,14 +19,14 @@
 		public TagItemModel() 
 			: base() 
 		{
-			Items = new List<string>();
+			Items = new ObservableCollection<string>();
 		}
 
 		/// <summary>
 		/// タグ。
 		/// </summary>
 		[DataMember, XmlArray("Items"), XmlArrayItem("Item")]
-		public List<string> Items { get; set; }
+		public ObservableCollection<string> Items { get; set; }
 
 		#region IDeepClone
 		
@@ -33,7 +34,7 @@
 		{
 			var result = new TagItemModel();
 
-			result.Items.AddRange(Items);
+			result.Items = new ObservableCollection<string>(Items);
 
 			return result;
 		}

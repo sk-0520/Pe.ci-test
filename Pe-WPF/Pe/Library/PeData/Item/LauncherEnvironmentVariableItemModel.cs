@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
@@ -16,7 +17,7 @@
 			: base()
 		{
 			Update = new DictionaryModel<string, string>();
-			Remove = new List<string>();
+			Remove = new ObservableCollection<string>();
 		}
 
 		/// <summary>
@@ -35,7 +36,7 @@
 		/// 削除変数
 		/// </summary>
 		[DataMember]
-		public List<string> Remove { get; set; }
+		public ObservableCollection<string> Remove { get; set; }
 
 		#region IDeepClone
 
@@ -47,7 +48,7 @@
 
 			// 二回も生成するのかー。。。
 			result.Update = new DictionaryModel<string, string>(Update);
-			result.Remove.AddRange(Remove);
+			result.Remove = new ObservableCollection<string>(Remove);
 
 			return result;
 		}

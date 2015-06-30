@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
@@ -22,7 +23,7 @@
 		public LauncherGroupItemModel()
 			: base()
 		{
-			LauncherItems = new List<string>();
+			LauncherItems = new ObservableCollection<string>();
 		}
 
 		#region ITId
@@ -68,6 +69,6 @@
 		/// ランチャーアイテム。
 		/// </summary>
 		[DataMember, XmlArrayItem("Item")]
-		public List<string> LauncherItems { get; set; }
+		public ObservableCollection<string> LauncherItems { get; set; }
 	}
 }

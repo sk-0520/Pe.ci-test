@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -125,7 +126,7 @@
 			if(!setting.Groups.Any()) {
 				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
 				//------------------------
-				initGroup.LauncherItems.AddRange(new[] {
+				initGroup.LauncherItems = new ObservableCollection<string>(new[] {
 					"test1",
 					"test2",
 					"test3",
