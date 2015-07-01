@@ -63,9 +63,9 @@
 			</StackPanel>
 		</TabItem>
 		<TabItem Header="env">
-
+			<CD:EnvironmentVariablesEditControl Margin="10,10,4,5"/>
 		</TabItem>
-		<TabItem Header="others">
+		<TabItem Header="others" HorizontalAlignment="Left" Width="53">
 
 		</TabItem>
 	</TabControl>

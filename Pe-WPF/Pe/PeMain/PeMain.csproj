@@ -151,6 +151,7 @@
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
+    <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemsViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\LauncherItemSettingViewModel.cs" />
@@ -170,6 +171,9 @@
     </Compile>
     <Compile Include="View\MessageWindow.cs" />
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
+    <Compile Include="View\Parts\Control\EnvironmentVariablesEditControl.xaml.cs">
+      <DependentUpon>EnvironmentVariablesEditControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\LauncherItemEditControl.xaml.cs">
       <DependentUpon>LauncherItemEditControl.xaml</DependentUpon>
     </Compile>
@@ -237,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\EnvironmentVariablesEditControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

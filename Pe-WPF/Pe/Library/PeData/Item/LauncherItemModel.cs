@@ -26,7 +26,7 @@
 			History = new LauncherHistoryItemModel();
 			Tag = new TagItemModel();
 			StdStream = new LauncherStdStreamItemModel();
-			EnvironmentVariable = new LauncherEnvironmentVariableItemModel();
+			EnvironmentVariables = new EnvironmentVariablesItemModel();
 		}
 
 		#region ITId
@@ -118,7 +118,7 @@
 		/// 環境変数。
 		/// </summary>
 		[DataMember]
-		public LauncherEnvironmentVariableItemModel EnvironmentVariable { get; set; }
+		public EnvironmentVariablesItemModel EnvironmentVariables { get; set; }
 
 		#region IDeepClone
 
@@ -139,7 +139,7 @@
 			result.History = (LauncherHistoryItemModel)History.DeepClone();
 			result.Tag = (TagItemModel)Tag.DeepClone();
 			result.StdStream = (LauncherStdStreamItemModel)StdStream.DeepClone();
-			result.EnvironmentVariable = (LauncherEnvironmentVariableItemModel)EnvironmentVariable.DeepClone();
+			result.EnvironmentVariables = (EnvironmentVariablesItemModel)EnvironmentVariables.DeepClone();
 
 			return result;
 		}

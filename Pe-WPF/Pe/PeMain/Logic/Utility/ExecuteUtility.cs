@@ -39,15 +39,15 @@
 			}
 
 			// 環境変数
-			if (launcherItem.EnvironmentVariable.Edit) {
+			if (launcherItem.EnvironmentVariables.Edit) {
 				startInfo.UseShellExecute = false;
 				var envs = startInfo.EnvironmentVariables;
 				// 追加・更新
-				foreach (var pair in launcherItem.EnvironmentVariable.Update) {
+				foreach (var pair in launcherItem.EnvironmentVariables.Update) {
 					envs[pair.Key] = pair.Value;
 				}
 				// 削除
-				var removeList = launcherItem.EnvironmentVariable.Remove.Where(envs.ContainsKey);
+				var removeList = launcherItem.EnvironmentVariables.Remove.Where(envs.ContainsKey);
 				foreach (var key in removeList) {
 					envs.Remove(key);
 				}
