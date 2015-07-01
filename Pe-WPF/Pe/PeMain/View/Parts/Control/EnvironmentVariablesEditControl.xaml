@@ -17,11 +17,20 @@
 			<RowDefinition Height="148*"/>
 		</Grid.RowDefinitions>
 		<CheckBox Content="edit" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-		<GroupBox Header="edit" Grid.Row="1" Margin="10,0,10,10" >
-			<DataGrid Margin="0,0,-2,-2"/>
+		<GroupBox Header="update" Grid.Row="1" Margin="0" >
+			<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Update}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="key" />
+					<DataGridTextColumn Header="value" />
+				</DataGrid.Columns>
+			</DataGrid>
 		</GroupBox>
-		<GroupBox Header="remove" Grid.Row="1" Grid.Column="1" Margin="10,0,10,10" >
-			<DataGrid Margin="0,0,-2,-2"/>
+		<GroupBox Header="remove" Grid.Row="1" Grid.Column="1" Margin="0" >
+			<DataGrid Margin="0" AutoGenerateColumns="False" ItemsSource="{Binding Remove}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="key" />
+				</DataGrid.Columns>
+			</DataGrid>
 		</GroupBox>
 	</Grid>
 </UserControl>

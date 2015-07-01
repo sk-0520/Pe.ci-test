@@ -44,7 +44,7 @@
 				var envs = startInfo.EnvironmentVariables;
 				// 追加・更新
 				foreach (var pair in launcherItem.EnvironmentVariables.Update) {
-					envs[pair.Key] = pair.Value;
+					envs[pair.Id] = pair.Value;
 				}
 				// 削除
 				var removeList = launcherItem.EnvironmentVariables.Remove.Where(envs.ContainsKey);

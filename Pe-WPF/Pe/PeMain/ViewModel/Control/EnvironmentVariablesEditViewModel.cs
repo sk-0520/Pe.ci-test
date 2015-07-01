@@ -2,10 +2,12 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -30,6 +32,17 @@
 			get { return Model.Edit; }
 			set { SetModelValue(value); }
 		}
+
+		public EnvironmentVariableUpdateItemCollectionModel Update
+		{
+			get { return Model.Update; }
+		}
+
+		public ObservableCollection<string> Remove 
+		{
+			get { return Model.Remove; } 
+		}
+
 
 
 		#endregion

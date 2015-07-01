@@ -35,6 +35,11 @@ using ContentTypeTextNet.Pe.PeMain.Data;
 			get { return Model.Icon.DisplayText; }
 		}
 
+		public EnvironmentVariablesEditViewModel EnvironmentVariables
+		{
+			get { return new EnvironmentVariablesEditViewModel(Model.EnvironmentVariables, NonProcess); }
+		}
+
 		#endregion
 	}
 }

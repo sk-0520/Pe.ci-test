@@ -63,7 +63,7 @@
 			</StackPanel>
 		</TabItem>
 		<TabItem Header="env">
-			<CD:EnvironmentVariablesEditControl Margin="10,10,4,5"/>
+			<CD:EnvironmentVariablesEditControl Margin="0" DataContext="{Binding EnvironmentVariables, Mode=OneWay}"/>
 		</TabItem>
 		<TabItem Header="others" HorizontalAlignment="Left" Width="53">
 			<StackPanel>

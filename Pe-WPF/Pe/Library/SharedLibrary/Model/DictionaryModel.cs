@@ -13,6 +13,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
+	[Obsolete]
 	[Serializable]
 	public class DictionaryModel<TKey, TValue> : Dictionary<TKey, TValue>, IModel, IIsDisposed, IXmlSerializable
 	{

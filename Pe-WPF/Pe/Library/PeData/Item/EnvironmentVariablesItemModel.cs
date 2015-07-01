@@ -16,7 +16,7 @@
 		public EnvironmentVariablesItemModel()
 			: base()
 		{
-			Update = new DictionaryModel<string, string>();
+			Update = new EnvironmentVariableUpdateItemCollectionModel();
 			Remove = new ObservableCollection<string>();
 		}
 
@@ -30,7 +30,7 @@
 		/// 追加・変更対象
 		/// </summary>
 		[DataMember]
-		public DictionaryModel<string, string> Update { get; set; }
+		public EnvironmentVariableUpdateItemCollectionModel Update { get; set; }
 
 		/// <summary>
 		/// 削除変数
@@ -47,7 +47,8 @@
 			};
 
 			// 二回も生成するのかー。。。
-			result.Update = new DictionaryModel<string, string>(Update);
+			// TODO: clone
+			result.Update = Update;
 			result.Remove = new ObservableCollection<string>(Remove);
 
 			return result;
