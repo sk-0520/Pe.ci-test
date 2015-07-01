@@ -20,8 +20,8 @@
 		<GroupBox Header="update" Grid.Row="1" Margin="0" >
 			<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Update}">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="key" />
-					<DataGridTextColumn Header="value" />
+					<DataGridTextColumn Header="key" Binding="{Binding Id}" />
+					<DataGridTextColumn Header="value" Binding="{Binding Value}" />
 				</DataGrid.Columns>
 			</DataGrid>
 		</GroupBox>

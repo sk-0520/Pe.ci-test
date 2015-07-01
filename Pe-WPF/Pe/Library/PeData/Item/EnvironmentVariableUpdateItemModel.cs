@@ -23,6 +23,7 @@
 
 		#region property
 
+		[DataMember]
 		public string Value { get; set; }
 
 		#endregion

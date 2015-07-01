@@ -79,13 +79,13 @@
     <Compile Include="IF\IVisible.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
     <Compile Include="Item\ClipboardItemModel.cs" />
+    <Compile Include="Item\EnvironmentVariablesItemModel.cs" />
+    <Compile Include="Item\EnvironmentVariableUpdateItemCollectionModel.cs" />
     <Compile Include="Item\EnvironmentVariableUpdateItemModel.cs" />
     <Compile Include="Item\FloatToolbarItemModel.cs" />
     <Compile Include="Item\HistoryItemModel.cs" />
     <Compile Include="Item\IconItemModel.cs" />
     <Compile Include="Item\LanguageItemModel.cs" />
-    <Compile Include="Item\EnvironmentVariablesItemModel.cs" />
-    <Compile Include="Item\EnvironmentVariableUpdateItemCollectionModel.cs" />
     <Compile Include="Item\LauncherGroupItemCollectionModel.cs" />
     <Compile Include="Item\LauncherGroupItemModel.cs" />
     <Compile Include="Item\LauncherHistoryItemModel.cs" />
