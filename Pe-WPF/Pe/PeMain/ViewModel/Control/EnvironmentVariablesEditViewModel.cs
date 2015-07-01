@@ -9,6 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public class EnvironmentVariablesEditViewModel : SingleModelWrapperViewModelBase<EnvironmentVariablesItemModel>, IHavingNonProcess
@@ -38,9 +39,14 @@
 			get { return Model.Update; }
 		}
 
-		public ObservableCollection<string> Remove 
+		public string Remove 
 		{
-			get { return Model.Remove; } 
+			get { return string.Join(Environment.NewLine, Model.Remove); }
+			set
+			{
+				var removes = value.SplitLines();
+				Model.Remove = new ObservableCollection<string>(removes);
+			}
 		}
 
 
