@@ -49,10 +49,10 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		public string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
-		public LauncherKind LauncherKind
+		public virtual LauncherKind LauncherKind
 		{
 			get { return Model.LauncherKind; }
-			set { SetModelValue(value); }
+			set { throw new NotSupportedException(); }
 		}
 
 		public string Command
