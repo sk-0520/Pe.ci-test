@@ -67,8 +67,8 @@
 		</TabItem>
 		<TabItem Header="others" HorizontalAlignment="Left" Width="53">
 			<StackPanel>
-				<CheckBox Content="stream" />
-				<CheckBox Content="admin" />
+				<CheckBox Content="stream" IsChecked="{Binding StdStreamOutput}" />
+				<CheckBox Content="admin" IsChecked="{Binding Administrator}" />
 				<Grid>
 					<Grid.RowDefinitions>
 						<RowDefinition />
@@ -79,10 +79,10 @@
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Label Grid.Row="0" Grid.Column="0" Content="tag" />
-					<TextBox Grid.Row="0" Grid.Column="1" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Tags}" />
 
 					<Label Grid.Row="1" Grid.Column="0" Content="memo" />
-					<TextBox Grid.Row="1" Grid.Column="1" />
+					<TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment}" />
 				</Grid>
 			</StackPanel>
 		</TabItem>

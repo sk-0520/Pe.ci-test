@@ -1,21 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public abstract class LauncherViewModelBase: SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
 	{
@@ -85,7 +86,33 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			set { SetModelValue(value); }
 		}
 
+		public bool StdStreamOutput
+		{
+			get { return Model.StdStream.OutputWatch; }
+			set { SetPropertyValue(Model.StdStream, value, "OutputWatch"); }
+		}
 
+		public bool Administrator
+		{
+			get { return Model.Administrator; }
+			set { SetModelValue(value); }
+		}
+
+		public string Tags
+		{
+			get { return string.Join(", ", Model.Tag.Items); }
+			set
+			{
+				var items = value.Split(',')
+					.Where(s => !string.IsNullOrWhiteSpace(s))
+					.Select(s => s.Trim())
+					.OrderBy(s => s)
+					.Distinct()
+				;
+				Model.Tag.Items = new ObservableCollection<string>(items);
+				OnPropertyChanged();
+			}
+		}
 
 		#endregion
 
