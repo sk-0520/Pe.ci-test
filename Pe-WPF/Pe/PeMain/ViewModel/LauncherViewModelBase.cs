@@ -48,7 +48,7 @@
 
 		#endregion
 
-		public string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		public virtual LauncherKind LauncherKind
 		{

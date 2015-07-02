@@ -1,18 +1,19 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Linq;
-	using System.Reflection;
-	using System.Runtime.CompilerServices;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows.Input;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic;
-	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Logic;
+using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-	public abstract class ViewModelBase: DisposeFinalizeBase, INotifyPropertyChanged
+	public abstract class ViewModelBase: DisposeFinalizeBase, INotifyPropertyChanged, IDisplayText
 	{
 		#region variable
 
@@ -23,6 +24,12 @@
 		public ViewModelBase()
 			: base()
 		{ }
+
+		#region IDisplayText
+
+		public virtual string DisplayText { get { return ToString(); } }
+
+		#endregion
 
 		#region DisposeFinalizeBase
 
@@ -56,7 +63,7 @@
 
 		#endregion
 
-		#region functino
+		#region function
 
 		/// <summary>
 		/// 変数変更用ヘルパ。

@@ -12,21 +12,55 @@
 >
 	<Grid>
 		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200"/>
 			<ColumnDefinition Width="198*"/>
-			<ColumnDefinition Width="200*"/>
 			<ColumnDefinition Width="119*"/>
 		</Grid.ColumnDefinitions>
-		<GroupBox>
+		<GroupBox HorizontalAlignment="Stretch">
 			<GroupBox.Header>
-				<Grid>
+				<Grid HorizontalAlignment="Stretch" Width="180">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto" MinWidth="42" />
 					</Grid.ColumnDefinitions>
-					<ComboBox />
-					<Button Content="screen" />
+					<ComboBox Grid.Column="0" ItemsSource="{Binding ToolbarItemList, Mode=OneTime}" DisplayMemberPath="DisplayText" SelectedIndex="0" x:Name="Toolbar" />
+					<Button Grid.Column="1" Content="screen" />
 				</Grid>
 			</GroupBox.Header>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="95*"/>
+					<ColumnDefinition Width="91*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="24*"/>
+					<RowDefinition Height="32*"/>
+					<RowDefinition Height="36*"/>
+					<RowDefinition Height="36*"/>
+					<RowDefinition Height="37*"/>
+					<RowDefinition Height="125*"/>
+				</Grid.RowDefinitions>
+				<Label Content="group" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"/>
+				<ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+				<Label Content="dock" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" />
+				<ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" />
+
+				<Label Content="icon" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"/>
+				<ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" />
+
+				<Label Content="font" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top"/>
+
+				<Label Content="text length" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top"/>
+				<Slider Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" />
+
+				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
+					<CheckBox Content="show text" />
+					<CheckBox Content="auto hide" />
+					<CheckBox Content="topmost" />
+					<CheckBox Content="visible" />
+				</StackPanel>
+			</Grid>
 		</GroupBox>
 		<Grid Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 			<Grid.RowDefinitions>

@@ -57,17 +57,16 @@
 			}
 		}
 
-		//public IEnumerable<LauncherToolbarSettingViewModel> ToolbarItemList
-		//{
-		//	get 
-		//	{
-		//		//foreach (var model in ToolbarItems) {
-		//		//	var vm = new LauncherToolbarSettingViewModel(model, LauncherIconCaching, NonProcess);
-		//		//	yield return vm;
-		//		//}
-		//		return null;
-		//	}
-		//}
+		public IEnumerable<ToolbarViewModel> ToolbarItemList
+		{
+			get
+			{
+				foreach (var model in ToolbarItems) {
+					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups,NonProcess);
+					yield return vm;
+				}
+			}
+		}
 
 		#region IHavingLauncherIconCaching
 
