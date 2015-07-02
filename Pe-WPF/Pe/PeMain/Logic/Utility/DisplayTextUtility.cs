@@ -23,7 +23,7 @@
 				return model.Id;
 			}
 
-			return model.Name;
+			return model.Name ?? string.Empty;
 		}
 	}
 }

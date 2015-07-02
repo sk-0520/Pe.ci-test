@@ -196,6 +196,7 @@
     <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherListDisplayTextConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
+    <Compile Include="View\Parts\EnumList.cs" />
     <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />
