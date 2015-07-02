@@ -62,7 +62,7 @@
 			get
 			{
 				foreach (var model in ToolbarItems) {
-					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups,NonProcess);
+					var vm = new ToolbarViewModel(model, GroupSettingModel.Groups, LauncherIconCaching, NonProcess);
 					yield return vm;
 				}
 			}

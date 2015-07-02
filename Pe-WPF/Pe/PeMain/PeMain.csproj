@@ -157,6 +157,7 @@
     <Compile Include="ViewModel\Control\SettingPage\ToolbarSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\LauncherItemSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\MainSettingViewModel.cs" />
+    <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\LauncherSimpleViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherButtonViewModel.cs" />

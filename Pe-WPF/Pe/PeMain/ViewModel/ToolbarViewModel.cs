@@ -9,15 +9,18 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ToolbarViewModel : ViewModelBase, IHavingNonProcess
+	public class ToolbarViewModel : ViewModelBase, IHavingNonProcess, IHavingLauncherIconCaching
 	{
-		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, INonProcess nonProcess)
+		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base()
 		{
 			Toolbar = toolbarItemModel;
 			Group = group;
+			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 		}
 
@@ -31,6 +34,12 @@
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region IHavingLauncherIconCaching
+
+		public LauncherIconCaching LauncherIconCaching { get; private set; }
 
 		#endregion
 
