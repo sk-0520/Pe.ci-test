@@ -10,7 +10,7 @@
 	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:PC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
-	x:TypeArguments="VM:LauncherToolbarWindowViewModel"
+	x:TypeArguments="VM:LauncherToolbarViewModel"
 	UI:XamlTag.LanguageKey="window/toolbar"
 	Title="ToolbarWindow" 
 	Left="{Binding WindowLeft, Mode=TwoWay}" 

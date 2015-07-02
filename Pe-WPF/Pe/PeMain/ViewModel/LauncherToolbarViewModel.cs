@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarWindowViewModel : LauncherToolbarViewModelBase<LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching
 	{
 		#region static
 
@@ -154,10 +154,12 @@
 
 		#endregion
 
-		public LauncherToolbarWindowViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
-			: base(model, view, launcherIconCaching, nonProcess)
+		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+			: base(model, view)
 		{
 			DockScreen = screen;
+			LauncherIconCaching = launcherIconCaching;
+			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
 
 			this._captionWidth = GetCaptionWidth();
@@ -166,7 +168,7 @@
 			ButtonSize = GetButtonSize(IconSize, MenuWidth, Model.Toolbar.TextVisible, Model.Toolbar.TextWidth);
 
 			//BorderThickness = GetBorderThickness(Model.Toolbar.DockType, View);
-			if(HasView) {
+			if (HasView) {
 				BorderBrush = View.Background;
 
 				var backgroundPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(
@@ -182,6 +184,18 @@
 
 		#region property
 
+		#region IHavingLauncherIconCaching
+
+		public LauncherIconCaching LauncherIconCaching { get; private set; }
+
+		#endregion
+
+		#region IHavingNonPorocess
+
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
 		#region IHavingClipboardWatcher
 
 		public IClipboardWatcher ClipboardWatcher { get; private set; }
@@ -190,7 +204,7 @@
 
 		public Thickness BorderThickness
 		{
-			get { return this._borderThickness; } 
+			get { return this._borderThickness; }
 			set
 			{
 				//if (this._borderThickness != value) {
@@ -214,6 +228,16 @@
 			}
 		}
 
+		#region ITopMost
+
+		public bool TopMost
+		{
+			get { return TopMostProperty.GetTopMost(Model.Toolbar); }
+			set { TopMostProperty.SetTopMost(Model.Toolbar, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
 		#region IVisible
 
 		public Visibility Visibility
@@ -234,7 +258,7 @@
 
 		public double WindowLeft
 		{
-			get 
+			get
 			{
 				if (DockType == DockType.None) {
 					return Model.Toolbar.FloatToolbar.Left;
@@ -244,7 +268,7 @@
 						: ShowLogicalBarArea.Left;
 				}
 			}
-			set 
+			set
 			{
 				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Left != value) {
 					Model.Toolbar.FloatToolbar.Left = value;
@@ -257,7 +281,7 @@
 		}
 		public double WindowTop
 		{
-			get 
+			get
 			{
 				if (DockType == DockType.None) {
 					return Model.Toolbar.FloatToolbar.Top;
@@ -341,19 +365,18 @@
 		/// <summary>
 		/// ドッキング種別。
 		/// </summary>
-		public override DockType DockType 
+		public DockType DockType
 		{
-			get { return base.DockType; }
-			set 
+			get { return Model.Toolbar.DockType; }
+			set
 			{
-				if(Model.Toolbar.DockType != value) {
-					if(HasView) {
+				if (Model.Toolbar.DockType != value) {
+					if (HasView) {
 						CalculateWindowStatus(value);
 					}
 
-					//Model.Toolbar.DockType = value;
-					//OnPropertyChanged();
-					base.DockType = value;
+					Model.Toolbar.DockType = value;
+					OnPropertyChanged();
 					View.InvalidateArrange();
 					OnPropertyChanged("Orientation");
 					OnPropertyChanged("CaptionVisibility");
@@ -367,13 +390,19 @@
 		/// <summary>
 		/// 自動的に隠す。
 		/// </summary>
-		public override bool AutoHide 
+		public bool AutoHide
 		{
 			get { return Model.Toolbar.AutoHide; }
 			set
 			{
-				if (Model.Toolbar.AutoHide != value) {
-					base.AutoHide = value;
+				//if (Model.Toolbar.AutoHide != value) {
+				//	Model.Toolbar.AutoHide = value;
+				//	OnPropertyChanged();
+				//	if (HasView) {
+				//		View.Docking(DockType, AutoHide);
+				//	}
+				//}
+				if (SetPropertyValue(Model.Toolbar, value)) {
 					if (HasView) {
 						View.Docking(DockType, AutoHide);
 					}
@@ -383,7 +412,7 @@
 		/// <summary>
 		/// 隠れているか。
 		/// </summary>
-		public bool IsHidden 
+		public bool IsHidden
 		{
 			get { return this._isHidden; }
 			set
@@ -393,7 +422,7 @@
 				//	OnPropertyChanged();
 				//	OnPropertyChanged("HideVisibility");
 				//}
-				if(SetVariableValue(ref this._isHidden, value)) {
+				if (SetVariableValue(ref this._isHidden, value)) {
 					OnPropertyChanged("HideVisibility");
 				}
 			}
@@ -418,7 +447,36 @@
 		/// </summary>
 		[PixelKind(Px.Logical)]
 		public Rect HideLogicalBarArea { get; set; }
-
+		/// <summary>
+		/// 自動的に隠すまでの時間。
+		/// </summary>
+		public TimeSpan HideWaitTime
+		{
+			get { return Model.Toolbar.HideWaitTime; }
+			set
+			{
+				//if (Model.Toolbar.HideWaitTime != value) {
+				//	Model.Toolbar.HideWaitTime = value;
+				//	OnPropertyChanged();
+				//}
+				SetPropertyValue(Model.Toolbar, value);
+			}
+		}
+		/// <summary>
+		/// 自動的に隠す際のアニメーション時間。
+		/// </summary>
+		public TimeSpan HideAnimateTime
+		{
+			get { return Model.Toolbar.HideAnimateTime; }
+			set
+			{
+				//if (Model.Toolbar.HideAnimateTime != value) {
+				//	Model.Toolbar.HideAnimateTime = value;
+				//	OnPropertyChanged();
+				//}
+				SetPropertyValue(Model.Toolbar, value);
+			}
+		}
 		/// <summary>
 		/// ドッキングに使用するスクリーン。
 		/// </summary>
@@ -477,9 +535,9 @@
 		/// 移動制限に使用する論理領域。
 		/// </summary>
 		[PixelKind(Px.Logical)]
-		public Rect MoveLimitArea 
-		{ 
-			get 
+		public Rect MoveLimitArea
+		{
+			get
 			{
 				if (HasView) {
 					return UIUtility.ToLogicalPixel(View, DockScreen.DeviceWorkingArea);
@@ -511,11 +569,11 @@
 		[PixelKind(Px.Logical)]
 		public Rect CaptionArea
 		{
-			get 
-			{ 
+			get
+			{
 				var result = new Rect(BorderThickness.Left, BorderThickness.Top, CaptionWidth, CaptionHeight);
 				return result;
-			} 
+			}
 		}
 		/// <summary>
 		/// サイズ変更に使用する境界線。
@@ -525,7 +583,8 @@
 
 		#endregion
 
-		public Visibility HideVisibility {
+		public Visibility HideVisibility
+		{
 			get
 			{
 				return IsHidden
@@ -544,11 +603,11 @@
 
 		public Visibility CaptionVisibility
 		{
-			get { return NowFloatWindow ? Visibility.Visible: Visibility.Collapsed; }
+			get { return NowFloatWindow ? Visibility.Visible : Visibility.Collapsed; }
 		}
 		public double CaptionWidth
 		{
-			get 
+			get
 			{
 				if (Orientation == Orientation.Horizontal) {
 					return this._captionWidth;
@@ -564,7 +623,7 @@
 				if (Orientation == Orientation.Vertical) {
 					return this._captionWidth;
 				} else {
-					return HasView ? View.Height: ButtonSize.Height;
+					return HasView ? View.Height : ButtonSize.Height;
 				}
 			}
 		}
@@ -590,10 +649,10 @@
 
 		public LauncherGroupItemModel SelectedGroup
 		{
-			get 
+			get
 			{
 				if (this._selectedGroup == null) {
-					if(Model.Toolbar.DefaultGroupId != null) {
+					if (Model.Toolbar.DefaultGroupId != null) {
 						Model.GroupItems.TryGetValue(Model.Toolbar.DefaultGroupId, out this._selectedGroup);
 					}
 					if (this._selectedGroup == null) {
@@ -616,23 +675,23 @@
 				//		oldItem.Dispose();
 				//	}
 				//}
-				if(SetVariableValue(ref this._selectedGroup, value)) {
+				if (SetVariableValue(ref this._selectedGroup, value)) {
 					OnPropertyChanged("GroupItems");
 					var oldItems = this._launcherItems;
 					this._launcherItems = null;
 					OnPropertyChanged("LauncherItems");
-					foreach(var oldItem in oldItems) {
+					foreach (var oldItem in oldItems) {
 						oldItem.Dispose();
 					}
 				}
 			}
 		}
 
-		public IEnumerable<LauncherButtonViewModel> LauncherItems 
+		public IEnumerable<LauncherButtonViewModel> LauncherItems
 		{
 			get
 			{
-				if(this._launcherItems == null) {
+				if (this._launcherItems == null) {
 					var list = GetLauncherItems(SelectedGroup)
 						.Select(m => new LauncherButtonViewModel(m, this.LauncherIconCaching, NonProcess, ClipboardWatcher) {
 							IconScale = Model.Toolbar.IconScale,
@@ -649,7 +708,7 @@
 		public ImageSource ToolbarImage { get { return GetAppIcon(); } }
 		public string ToolbarText { get { return DisplayTextUtility.GetDisplayName(SelectedGroup); } }
 		public Color ToolbarHotTrack { get { return GetAppIconColor(); } }
-		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible: Visibility.Collapsed; } }
+		public Visibility TextVisible { get { return Model.Toolbar.TextVisible ? Visibility.Visible : Visibility.Collapsed; } }
 
 		public string ScreenName { get { return ScreenUtility.GetScreenName(DockScreen); } }
 		public ImageSource ScreenPosition
@@ -728,7 +787,7 @@
 
 		public ICommand SwitchAutoHideCommand
 		{
-			get 
+			get
 			{
 				var result = CreateCommand(
 					o => {
@@ -798,7 +857,7 @@
 
 		IEnumerable<LauncherItemModel> GetLauncherItems(LauncherGroupItemModel groupItem)
 		{
-			if(groupItem.GroupKind == GroupKind.LauncherItems) {
+			if (groupItem.GroupKind == GroupKind.LauncherItems) {
 				return groupItem.LauncherItems
 					.Where(i => Model.LauncherItems.Contains(i))
 					.Select(i => Model.LauncherItems[i])

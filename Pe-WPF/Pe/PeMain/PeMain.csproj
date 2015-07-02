@@ -158,10 +158,8 @@
     <Compile Include="ViewModel\Control\SettingPage\LauncherItemSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\MainSettingViewModel.cs" />
     <Compile Include="ViewModel\LauncherSimpleViewModel.cs" />
-    <Compile Include="ViewModel\LauncherToolbarSettingViewModel.cs" />
-    <Compile Include="ViewModel\LauncherToolbarWindowViewModel.cs" />
+    <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherButtonViewModel.cs" />
-    <Compile Include="ViewModel\LauncherToolbarViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />

@@ -51,7 +51,7 @@
 		public LoggingViewModel Logging { get { return LoggingWindow.ViewModel; } }
 
 		List<LauncherToolbarWindow> LauncherToolbarWindowList { get; set; }
-		public IEnumerable<LauncherToolbarWindowViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
+		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
