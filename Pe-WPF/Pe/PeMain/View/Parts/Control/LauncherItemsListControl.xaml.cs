@@ -42,7 +42,7 @@
 			set 
 			{ 
 				SetValue(SelectedLauncherItemProperty, value);
-				SelectedLauncherViewModel = new LauncherViewModelBase(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
+				SelectedLauncherViewModel = new LauncherSimpleViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
 			}
 		}
 
