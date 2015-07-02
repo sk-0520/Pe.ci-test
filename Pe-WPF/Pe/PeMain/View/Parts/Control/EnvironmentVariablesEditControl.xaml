@@ -16,7 +16,7 @@
 			<RowDefinition Height="31*"/>
 			<RowDefinition Height="148*"/>
 		</Grid.RowDefinitions>
-		<CheckBox Content="edit" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+		<CheckBox Content="edit" Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="{Binding Edit}" />
 		<GroupBox Header="update" Grid.Row="1" Margin="0" >
 			<DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Update}" CanUserAddRows="True" >
 				<DataGrid.Columns>
