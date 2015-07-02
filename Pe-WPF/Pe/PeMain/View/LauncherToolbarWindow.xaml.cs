@@ -42,7 +42,7 @@
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarViewModel>, IApplicationDesktopToolbar
+	public partial class LauncherToolbarWindow : ViewModelCommonDataWindow<LauncherToolbarWindowViewModel>, IApplicationDesktopToolbar
 	{
 		public LauncherToolbarWindow()
 		{
@@ -92,7 +92,7 @@
 			}
 			model.Toolbar = toolbar;
 
-			ViewModel = new LauncherToolbarViewModel(model, this, Screen, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.ClipboardWatcher);
+			ViewModel = new LauncherToolbarWindowViewModel(model, this, Screen, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.ClipboardWatcher);
 			//ViewModel.DockScreen = Screen;
 			// 以降Viewの保持するスクリーン情報は使用しない
 			Screen = null;

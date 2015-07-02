@@ -38,6 +38,9 @@
 			<TabItem Header="launcher" Style="{StaticResource PageHeader}">
 				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
+			<TabItem Header="toolbar" Style="{StaticResource PageHeader}">
+				<SP:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
+			</TabItem>
 		</TabControl>
 	</Grid>
 </W:CommonDataWindow>

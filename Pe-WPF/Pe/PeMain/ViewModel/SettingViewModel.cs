@@ -20,6 +20,7 @@
 
 		MainSettingViewModel _mainSetting;
 		LauncherItemSettingViewModel _launcherItemSetting;
+		ToolbarSettingViewModel _toolbarSetting;
 
 		#endregion
 
@@ -30,10 +31,6 @@
 		}
 
 		#region property
-
-		#region IHavingCommonData
-
-		public CommonData CommonData { get; private set; }
 
 		public MainSettingViewModel MainSetting
 		{
@@ -67,6 +64,28 @@
 				return this._launcherItemSetting;
 			}
 		}
+
+		public ToolbarSettingViewModel ToolbarSetting
+		{
+			get
+			{
+				if (this._toolbarSetting == null) {
+					this._toolbarSetting = new ToolbarSettingViewModel(
+						CommonData.MainSetting.Toolbar,
+						CommonData.LauncherGroupSetting,
+						CommonData.LauncherItemSetting,
+						CommonData.LauncherIconCaching,
+						CommonData.NonProcess
+					);
+				}
+
+				return this._toolbarSetting;
+			}
+		}
+
+		#region IHavingCommonData
+
+		public CommonData CommonData { get; private set; }
 
 		#endregion
 

@@ -154,11 +154,14 @@
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemsViewModel.cs" />
+    <Compile Include="ViewModel\Control\SettingPage\ToolbarSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\LauncherItemSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\MainSettingViewModel.cs" />
     <Compile Include="ViewModel\LauncherSimpleViewModel.cs" />
-    <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
+    <Compile Include="ViewModel\LauncherToolbarSettingViewModel.cs" />
+    <Compile Include="ViewModel\LauncherToolbarWindowViewModel.cs" />
     <Compile Include="ViewModel\LauncherButtonViewModel.cs" />
+    <Compile Include="ViewModel\LauncherToolbarViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
@@ -179,6 +182,9 @@
     </Compile>
     <Compile Include="View\Parts\Control\LauncherItemsListControl.xaml.cs">
       <DependentUpon>LauncherItemsListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Parts\Control\SettingPage\ToolbarSettingControl.xaml.cs">
+      <DependentUpon>ToolbarSettingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Control\SettingPage\LauncherItemSettingControl.xaml.cs">
       <DependentUpon>LauncherItemSettingControl.xaml</DependentUpon>
@@ -253,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\LauncherItemsListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\SettingPage\ToolbarSettingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
