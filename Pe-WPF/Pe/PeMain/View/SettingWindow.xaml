@@ -25,7 +25,7 @@
 			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/ok" Content="ok" />
 			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
 		</StackPanel>
-		<TabControl>
+		<TabControl VerticalAlignment="Stretch">
 			<TabControl.Resources>
 				<Style x:Key="PageHeader" TargetType="{x:Type TabItem}">
 					<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
@@ -36,7 +36,7 @@
 				<SP:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Top" />
 			</TabItem>
 			<TabItem Header="launcher" Style="{StaticResource PageHeader}">
-				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Top" />
+				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 		</TabControl>
 	</Grid>

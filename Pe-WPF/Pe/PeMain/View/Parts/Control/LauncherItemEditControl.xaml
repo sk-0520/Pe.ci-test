@@ -14,23 +14,27 @@
 	<CD:CommonDataUserControl.Resources>
 		<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
 	</CD:CommonDataUserControl.Resources>
-	
-	<TabControl>
-		<TabItem Header="main">
-			<StackPanel>
-				<GroupBox Header="kind">
+
+	<TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+		<TabItem Header="main" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<GroupBox Header="kind" Grid.Row="0">
 					<StackPanel Orientation="Horizontal">
 						<RadioButton IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static PD:LauncherKind.File}}" Content="file" />
 						<RadioButton IsChecked="{Binding LauncherKind, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static PD:LauncherKind.Command}}" Content="command" />
 					</StackPanel>
 				</GroupBox>
-				<Grid>
+				<Grid Grid.Row="1">
 					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
-						<RowDefinition />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />
@@ -51,7 +55,7 @@
 					<TextBox Text="{Binding Option}" Grid.Row="2" Grid.Column="1" />
 					<Button Grid.Row="2" Grid.Column="2" />
 					<Button Grid.Row="2" Grid.Column="3" />
-					
+
 					<Label Content="work dir" Grid.Row="3" Grid.Column="0" />
 					<TextBox Text="{Binding WorkDirectoryPath}" Grid.Row="3" Grid.Column="1"  />
 					<Button Grid.Row="3" Grid.Column="2" />
@@ -60,31 +64,33 @@
 					<TextBox Text="{Binding IconPath, Mode=OneWay}" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="4" Grid.Column="1"  />
 					<Button Grid.Row="4" Grid.Column="2" />
 				</Grid>
-			</StackPanel>
+			</Grid>
 		</TabItem>
 		<TabItem Header="env">
 			<CD:EnvironmentVariablesEditControl Margin="0" DataContext="{Binding EnvironmentVariables, Mode=OneWay}"/>
 		</TabItem>
 		<TabItem Header="others" HorizontalAlignment="Left" Width="53">
-			<StackPanel>
-				<CheckBox Content="stream" IsChecked="{Binding StdStreamOutput}" />
-				<CheckBox Content="admin" IsChecked="{Binding Administrator}" />
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<Label Grid.Row="0" Grid.Column="0" Content="tag" />
-					<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Tags}" />
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
 
-					<Label Grid.Row="1" Grid.Column="0" Content="memo" />
-					<TextBox Grid.Row="1" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment}" />
-				</Grid>
-			</StackPanel>
+				<CheckBox Grid.Row="0" Grid.Column="0"  Content="stream" IsChecked="{Binding StdStreamOutput}" />
+				<CheckBox Grid.Row="1" Grid.Column="0"  Content="admin" IsChecked="{Binding Administrator}" />
+
+				<Label Grid.Row="2" Grid.Column="0" Content="tag" />
+				<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Tags}" />
+
+				<Label Grid.Row="3" Grid.Column="0" Content="memo" />
+				<TextBox Grid.Row="3" Grid.Column="1" AcceptsReturn="True" Text="{Binding Comment}" />
+			</Grid>
 		</TabItem>
 	</TabControl>
 </CD:CommonDataUserControl>
