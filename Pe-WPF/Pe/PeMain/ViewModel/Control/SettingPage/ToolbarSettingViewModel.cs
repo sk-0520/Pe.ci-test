@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -20,7 +21,7 @@
 		#region variable
 
 		LauncherItemsViewModel _launcherItems;
-
+		ObservableCollection<GroupViewModel> _groupTree;
 		#endregion
 
 		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
@@ -78,6 +79,21 @@
 				foreach(var item in GroupSettingModel.Groups) {
 					yield return item;
 				}
+			}
+		}
+
+		public ObservableCollection<GroupViewModel> GroupTree
+		{
+			get
+			{
+				if(this._groupTree == null) {
+					var groupVm = GroupSettingModel.Groups
+						.Select(g => new GroupViewModel(g, LauncherItemSetting.Items, LauncherIconCaching, NonProcess))
+					;
+					this._groupTree = new ObservableCollection<GroupViewModel>(groupVm);
+				}
+
+				return this._groupTree;
 			}
 		}
 

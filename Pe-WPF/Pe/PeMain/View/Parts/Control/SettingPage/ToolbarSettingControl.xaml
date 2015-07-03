@@ -88,7 +88,14 @@
 					</StackPanel>
 				</ToolBar>
 			</ToolBarTray>
-			<TreeView Grid.Row="1" />
+			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" >
+				<TreeView.ItemTemplate>
+					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
+						<Label Content="{Binding }" />
+					</HierarchicalDataTemplate>
+				</TreeView.ItemTemplate>
+				<!--<ContentPresenter  Content="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />-->
+			</TreeView>
 		</Grid>
 		<CD:LauncherItemsListControl Grid.Column="2"  DataContext="{Binding LauncherItems}" x:Name="ItemList"/>
 	</Grid>
