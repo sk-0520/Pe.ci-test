@@ -1,17 +1,18 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class GroupViewModel : SingleModelWrapperViewModelBase<LauncherGroupItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
 	{
@@ -55,6 +56,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			}
 		}
 
+		public string Id { get { return Model.Id; } }
+
 		#endregion
 
 		#region IHavingLauncherIconCaching
@@ -72,6 +75,8 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		#region SingleModelWrapperViewModelBase
 
 		protected override bool CanOutputModel { get { return true; } }
+
+		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		#endregion
 	}

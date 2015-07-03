@@ -12,15 +12,10 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class GroupItemViewMode : SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
 	{
-		//#region variable
-
-		//bool _isSelected;
-
-		//#endregion
-
 		public GroupItemViewMode(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(model)
 		{
@@ -41,11 +36,7 @@
 			get { return null; }
 		}
 
-		//public bool IsSelected 
-		//{
-		//	get { return this._isSelected; }
-		//	set { SetVariableValue(ref this._isSelected, value); }
-		//}
+		public string Id { get { return Model.Id; } }
 
 		#region IHavingLauncherIconCaching
 
@@ -56,6 +47,12 @@
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region SingleModelWrapperViewModelBase
+
+		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		#endregion
 

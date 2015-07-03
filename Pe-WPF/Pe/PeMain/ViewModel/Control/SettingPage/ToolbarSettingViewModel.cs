@@ -174,6 +174,83 @@
 			}
 		}
 
+		public ICommand NodeUpCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => MoveNode(o, true)
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand NodeDownCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => MoveNode(o, false)
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
+		#region function
+
+		void MoveNode(object o, bool isUp)
+		{
+			var toolbarNode = (IToolbarNode)o;
+			if (toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+				var groupViewModel = (GroupViewModel)toolbarNode;
+				var groupModel = groupViewModel.GetModel();
+				var srcIndex = GroupSettingModel.Groups.IndexOf(groupModel);
+				var nextIndex = srcIndex + (isUp ? -1 : +1);
+
+				if (isUp && srcIndex == 0) {
+					return;
+				}
+				if (!isUp && GroupSettingModel.Groups.Count == srcIndex + 1) {
+					return;
+				}
+				var swapModel = nextIndex == 0
+					? GroupSettingModel.Groups.First()
+					: GroupSettingModel.Groups.Take(nextIndex).First()
+				;
+				GroupSettingModel.Groups.Remove(groupModel);
+				GroupSettingModel.Groups.Insert(nextIndex, groupModel);
+				this._groupTree.Remove(groupViewModel);
+				this._groupTree.Insert(nextIndex, groupViewModel);
+			} else {
+				Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
+				var itemViewModel = (GroupItemViewMode)toolbarNode;
+				var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
+				var targetIdList = GroupSettingModel.Groups[groupViewModel.Id].LauncherItems;
+				var srcIndex = targetIdList.IndexOf(itemViewModel.Id);
+				var nextIndex = srcIndex + (isUp ? -1 : +1);
+
+				if (isUp && srcIndex == 0) {
+					return;
+				}
+				if (!isUp && targetIdList.Count == srcIndex + 1) {
+					return;
+				}
+				var swapModel = nextIndex == 0
+					? targetIdList.First()
+					: targetIdList.Take(nextIndex).First()
+				;
+
+				targetIdList.Remove(itemViewModel.Id);
+				targetIdList.Insert(nextIndex, itemViewModel.Id);
+				groupViewModel.Nodes.Remove(itemViewModel);
+				groupViewModel.Nodes.Insert(nextIndex, itemViewModel);
+			}
+		}
+
 		#endregion
 	}
 }

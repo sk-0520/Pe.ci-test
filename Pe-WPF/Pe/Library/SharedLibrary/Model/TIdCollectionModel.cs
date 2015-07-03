@@ -230,7 +230,13 @@
 			}
 		}
 
-		void Swap(TKey keyA, TKey keyB)
+		/// <summary>
+		/// IDの入れ替え。
+		/// <para>オブジェクトの入れ替えでないことに注意。</para>
+		/// </summary>
+		/// <param name="keyA"></param>
+		/// <param name="keyB"></param>
+		public void SwapId(TKey keyA, TKey keyB)
 		{
 			var valueA = this[keyA];
 			var valueB = this[keyB];
@@ -238,6 +244,18 @@
 			valueB.Id = keyA;
 			this._map[keyA] = valueB;
 			this._map[keyB] = valueA;
+		}
+
+		public void SwapObject(TValue a, TValue b)
+		{
+			var indexA = IndexOf(a);
+			var indexB = IndexOf(b);
+
+			RemoveAt(indexA);
+			RemoveAt(indexB);
+
+			Insert(indexA, b);
+			Insert(indexB, a);
 		}
 
 		public bool TryGetValue(TKey key, out TValue result)

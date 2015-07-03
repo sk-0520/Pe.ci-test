@@ -96,8 +96,8 @@
 								</MultiBinding>
 							</Button.CommandParameter>
 						</Button>
-						<Button Content="up" />
-						<Button Content="down" />
+						<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem, ElementName=GroupTree}" />
+						<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem, ElementName=GroupTree}" />
 						<Button Content="remove" />
 					</StackPanel>
 				</ToolBar>
@@ -105,7 +105,7 @@
 			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" x:Name="GroupTree" >
 				<TreeView.ItemTemplate>
 					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
-						<Label Content="{Binding }" />
+						<Label Content="{Binding DisplayText}" />
 					</HierarchicalDataTemplate>
 				</TreeView.ItemTemplate>
 				<!--<ContentPresenter  Content="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />-->
