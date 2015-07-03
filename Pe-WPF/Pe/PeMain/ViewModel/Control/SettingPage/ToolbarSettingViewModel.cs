@@ -68,6 +68,19 @@
 			}
 		}
 
+		public IEnumerable<LauncherGroupItemModel> DefaultGroupList
+		{
+			get
+			{
+				// TODO: なまえ
+				yield return new LauncherGroupItemModel() { Name = "(default)" };
+
+				foreach(var item in GroupSettingModel.Groups) {
+					yield return item;
+				}
+			}
+		}
+
 		#region IHavingLauncherIconCaching
 
 		public LauncherIconCaching LauncherIconCaching { get; private set; }

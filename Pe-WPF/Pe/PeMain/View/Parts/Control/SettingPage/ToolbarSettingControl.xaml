@@ -10,6 +10,9 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="318" d:DesignWidth="517"
 >
+	<CD:CommonDataUserControl.Resources>
+		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
+	</CD:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="200"/>
@@ -41,24 +44,31 @@
 					<RowDefinition Height="125*"/>
 				</Grid.RowDefinitions>
 				<Label Content="group" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" />
+				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" >
+					<ComboBox.ItemTemplate>
+						<ItemContainerTemplate>
+							<ContentPresenter  Content="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />
+						</ItemContainerTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
 
 				<Label Content="dock" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" />
-				<ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" />
+				<ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static UI:EnumList.DockTypeList}}" SelectedItem="{Binding SelectedItem.DockType, ElementName=Toolbar, Mode=TwoWay}" />
 
 				<Label Content="icon" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"/>
-				<ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" />
+				<ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding Source={x:Static UI:EnumList.PlainIconScaleList}}" SelectedItem="{Binding SelectedItem.IconScale, ElementName=Toolbar, Mode=TwoWay}" />
 
-				<Label Content="font" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top"/>
+				<Label Content="font" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
 
-				<Label Content="text length" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top"/>
-				<Slider Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" />
+				<Label Content="text length" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+				<!-- 記号定数化 -->
+				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedItem.TextWidth, ElementName=Toolbar, Mode=TwoWay}" Minimum="1" Maximum="200" />
 
 				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
-					<CheckBox Content="show text" />
-					<CheckBox Content="auto hide" />
-					<CheckBox Content="topmost" />
-					<CheckBox Content="visible" />
+					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.TextVisible, ElementName=Toolbar}" />
+					<CheckBox Content="auto hide" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.AutoHide, ElementName=Toolbar}" />
+					<CheckBox Content="topmost" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.TopMost, ElementName=Toolbar}" />
+					<CheckBox Content="visible" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.Visible, ElementName=Toolbar}" />
 				</StackPanel>
 			</Grid>
 		</GroupBox>
