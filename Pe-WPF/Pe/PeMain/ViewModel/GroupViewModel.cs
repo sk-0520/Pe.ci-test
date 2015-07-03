@@ -68,5 +68,11 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 		public INonProcess NonProcess { get; private set; }
 
 		#endregion
+
+		#region SingleModelWrapperViewModelBase
+
+		protected override bool CanOutputModel { get { return true; } }
+
+		#endregion
 	}
 }

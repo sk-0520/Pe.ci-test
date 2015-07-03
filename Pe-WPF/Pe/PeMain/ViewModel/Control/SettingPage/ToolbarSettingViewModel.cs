@@ -16,6 +16,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
@@ -140,8 +141,32 @@
 				var result = CreateCommand(
 					o => {
 						var nodeAndItem = (SelectedNodeAndLauncherItem)o;
-						//new GroupItemViewMode(model, LauncherIconCaching, NonProcess);
-						NonProcess.Logger.Information(nodeAndItem.ToString());
+						if(nodeAndItem.LauncherItem == null || nodeAndItem.SelectedNode == null) {
+							// 何をしろと。
+							return;
+						}
+						if (nodeAndItem.SelectedNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+							// グループに追加
+							var groupViewModel = (GroupViewModel)nodeAndItem.SelectedNode;
+							var groupModel = groupViewModel.GetModel();
+							var target = this._groupTree.Single(g => g == groupViewModel);
+							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
+
+							groupModel.LauncherItems.Add(nodeAndItem.LauncherItem.Id);
+							target.Nodes.Add(appendViewModel);
+						} else {
+							// 選択ノードの下に追加
+							Debug.Assert(nodeAndItem.SelectedNode.ToolbarNodeKind == ToolbarNodeKind.Item);
+							var itemViewModel = (GroupItemViewMode)nodeAndItem.SelectedNode;
+							var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
+							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
+							var groupModel = groupViewModel.GetModel();
+							
+							var insertIndex = groupViewModel.Nodes.IndexOf(itemViewModel) + 1;
+
+							groupModel.LauncherItems.Insert(insertIndex, nodeAndItem.LauncherItem.Id);
+							groupViewModel.Nodes.Insert(insertIndex, appendViewModel);
+						}
 					}
 				);
 
