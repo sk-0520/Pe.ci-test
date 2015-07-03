@@ -25,7 +25,7 @@
 		#region variable
 
 		LauncherItemsViewModel _launcherItems;
-		ObservableCollection<GroupViewModel> _groupTree;
+		ObservableCollection<GroupRootViewModel> _groupTree;
 		#endregion
 
 		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
@@ -86,15 +86,15 @@
 			}
 		}
 
-		public ObservableCollection<GroupViewModel> GroupTree
+		public ObservableCollection<GroupRootViewModel> GroupTree
 		{
 			get
 			{
 				if(this._groupTree == null) {
 					var groupVm = GroupSettingModel.Groups
-						.Select(g => new GroupViewModel(g, LauncherItemSetting.Items, LauncherIconCaching, NonProcess))
+						.Select(g => new GroupRootViewModel(g, LauncherItemSetting.Items, LauncherIconCaching, NonProcess))
 					;
-					this._groupTree = new ObservableCollection<GroupViewModel>(groupVm);
+					this._groupTree = new ObservableCollection<GroupRootViewModel>(groupVm);
 				}
 
 				return this._groupTree;
@@ -115,7 +115,7 @@
 
 		#endregion
 
-		#region
+		#region command
 
 		public ICommand CreateGroupCommand
 		{
@@ -125,7 +125,7 @@
 					o => {
 						var model = SettingUtility.CreateLauncherGroup(GroupSettingModel.Groups, NonProcess);
 						GroupSettingModel.Groups.Add(model);
-						var vm = new GroupViewModel(model, LauncherItemSetting.Items, LauncherIconCaching, NonProcess);
+						var vm = new GroupRootViewModel(model, LauncherItemSetting.Items, LauncherIconCaching, NonProcess);
 						this._groupTree.Add(vm);
 					}
 				);
@@ -147,7 +147,7 @@
 						}
 						if (nodeAndItem.SelectedNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
 							// グループに追加
-							var groupViewModel = (GroupViewModel)nodeAndItem.SelectedNode;
+							var groupViewModel = (GroupRootViewModel)nodeAndItem.SelectedNode;
 							var groupModel = groupViewModel.GetModel();
 							var target = this._groupTree.Single(g => g == groupViewModel);
 							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
@@ -209,7 +209,7 @@
 			}
 			var toolbarNode = (IToolbarNode)o;
 			if (toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
-				var groupViewModel = (GroupViewModel)toolbarNode;
+				var groupViewModel = (GroupRootViewModel)toolbarNode;
 				var groupModel = groupViewModel.GetModel();
 				var srcIndex = GroupSettingModel.Groups.IndexOf(groupModel);
 				var nextIndex = srcIndex + (isUp ? -1 : +1);

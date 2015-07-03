@@ -14,13 +14,13 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class GroupViewModel : SingleModelWrapperViewModelBase<LauncherGroupItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
+	public class GroupRootViewModel : SingleModelWrapperViewModelBase<LauncherGroupItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
 	{
 		#region variable
 		ObservableCollection<GroupItemViewMode> _nodes;
 		#endregion
 
-		public GroupViewModel(LauncherGroupItemModel group, LauncherItemCollectionModel items, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+		public GroupRootViewModel(LauncherGroupItemModel group, LauncherItemCollectionModel items, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			:base(group)
 		{
 			Items = items;

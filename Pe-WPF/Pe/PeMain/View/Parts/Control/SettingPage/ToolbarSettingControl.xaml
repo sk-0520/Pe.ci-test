@@ -111,6 +111,11 @@
 					</HierarchicalDataTemplate>
 				</TreeView.ItemTemplate>
 				<!--<ContentPresenter  Content="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />-->
+				<TreeView.ItemContainerStyle>
+					<Style TargetType="{x:Type TreeViewItem}">
+						<Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+					</Style>
+				</TreeView.ItemContainerStyle>
 			</TreeView>
 		</Grid>
 		<CD:LauncherItemsListControl Grid.Column="2"  DataContext="{Binding LauncherItems}" x:Name="ItemList"/>
