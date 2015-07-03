@@ -105,7 +105,9 @@
 			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" x:Name="GroupTree" >
 				<TreeView.ItemTemplate>
 					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
-						<Label Content="{Binding DisplayText}" />
+						<StackPanel>
+							<Label Content="{Binding DisplayText}" />
+						</StackPanel>
 					</HierarchicalDataTemplate>
 				</TreeView.ItemTemplate>
 				<!--<ContentPresenter  Content="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />-->

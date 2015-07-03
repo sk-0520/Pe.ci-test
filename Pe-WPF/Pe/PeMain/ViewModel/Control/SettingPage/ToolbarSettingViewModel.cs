@@ -204,6 +204,9 @@
 
 		void MoveNode(object o, bool isUp)
 		{
+			if (o == null) {
+				return;
+			}
 			var toolbarNode = (IToolbarNode)o;
 			if (toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
 				var groupViewModel = (GroupViewModel)toolbarNode;
