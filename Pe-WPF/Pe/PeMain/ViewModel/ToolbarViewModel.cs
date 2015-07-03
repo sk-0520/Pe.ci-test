@@ -14,8 +14,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
-	public class ToolbarViewModel : ViewModelBase, IHavingNonProcess, IHavingLauncherIconCaching
+	public class ToolbarViewModel : SingleModelWrapperViewModelBase<ToolbarItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
 	{
 		public ToolbarViewModel(ToolbarItemModel toolbarItemModel, LauncherGroupItemCollectionModel group, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(toolbarItemModel)
