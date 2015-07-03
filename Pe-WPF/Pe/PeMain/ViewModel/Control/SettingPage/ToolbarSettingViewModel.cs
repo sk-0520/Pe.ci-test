@@ -1,21 +1,22 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 {
 	using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class ToolbarSettingViewModel : ViewModelBase, IHavingNonProcess, IHavingLauncherIconCaching
 	{
@@ -124,6 +125,21 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 						GroupSettingModel.Groups.Add(model);
 						var vm = new GroupViewModel(model, LauncherItemSetting.Items, LauncherIconCaching, NonProcess);
 						this._groupTree.Add(vm);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CreateLauncherItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var nodeAndItem = (SelectedNodeAndLauncherItem)o;
+						//new GroupItemViewMode(model, LauncherIconCaching, NonProcess);
 					}
 				);
 

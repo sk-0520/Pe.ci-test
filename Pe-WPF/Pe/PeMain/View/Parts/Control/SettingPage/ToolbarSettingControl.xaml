@@ -14,6 +14,7 @@
 	<CD:CommonDataUserControl.Resources>
 		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
+		<PC:CreateLauncherItemCommandConverter x:Key="CreateLauncherItemCommandConverter" />
 	</CD:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -83,14 +84,25 @@
 				<ToolBar HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 					<StackPanel Orientation="Horizontal">
 						<Button Content="group" Command="{Binding CreateGroupCommand}" />
-						<Button Content="item" IsEnabled="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LogicalIsNotNullConverter}}" />
+						<Button 
+							Content="item" 
+							IsEnabled="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LogicalIsNotNullConverter}}" 
+							Command="{Binding CreateLauncherItemCommand}" 
+						>
+							<Button.CommandParameter>
+								<MultiBinding Converter="{StaticResource CreateLauncherItemCommandConverter}">
+									<Binding Path="SelectedItem" ElementName="GroupTree" />
+									<Binding Path="SelectedLauncherViewModel" ElementName="ItemList" />
+								</MultiBinding>
+							</Button.CommandParameter>
+						</Button>
 						<Button Content="up" />
 						<Button Content="down" />
 						<Button Content="remove" />
 					</StackPanel>
 				</ToolBar>
 			</ToolBarTray>
-			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" >
+			<TreeView Grid.Row="1" ItemsSource="{Binding GroupTree}" x:Name="GroupTree" >
 				<TreeView.ItemTemplate>
 					<HierarchicalDataTemplate ItemsSource="{Binding Nodes}" >
 						<Label Content="{Binding }" />

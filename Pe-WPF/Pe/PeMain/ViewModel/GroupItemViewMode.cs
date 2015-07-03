@@ -14,6 +14,12 @@
 
 	public class GroupItemViewMode : SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
 	{
+		//#region variable
+
+		//bool _isSelected;
+
+		//#endregion
+
 		public GroupItemViewMode(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			: base(model)
 		{
@@ -25,6 +31,12 @@
 		{
 			get { return null; }
 		}
+
+		//public bool IsSelected 
+		//{
+		//	get { return this._isSelected; }
+		//	set { SetVariableValue(ref this._isSelected, value); }
+		//}
 
 		#region IHavingLauncherIconCaching
 

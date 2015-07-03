@@ -126,6 +126,7 @@
     <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\LauncherIconCaching.cs" />
+    <Compile Include="Data\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Converter\CreateLauncherItemCommandConverter.cs" />
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />
