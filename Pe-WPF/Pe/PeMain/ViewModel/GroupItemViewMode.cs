@@ -14,22 +14,13 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class GroupItemViewMode : SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
+	public class GroupItemViewMode: GroupViewModelBase<LauncherItemModel>
 	{
 		public GroupItemViewMode(LauncherItemModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			: base(model)
-		{
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
-		}
+			: base(model, launcherIconCaching, nonProcess)
+		{ }
 
 		#region property
-
-		#region IToolbarNode
-
-		public ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Item; } }
-
-		#endregion
 
 		public ObservableCollection<GroupItemViewMode> Nodes
 		{
@@ -38,23 +29,17 @@
 
 		public string Id { get { return Model.Id; } }
 
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
 		#endregion
 
-		#region IHavingNonProcess
+		#region IToolbarNode
 
-		public INonProcess NonProcess { get; private set; }
+		public override ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Item; } }
 
 		#endregion
 
 		#region SingleModelWrapperViewModelBase
 
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
-
-		#endregion
 
 		#endregion
 	}

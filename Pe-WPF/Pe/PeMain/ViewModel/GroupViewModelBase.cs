@@ -23,6 +23,10 @@
 
 		#region property
 
+		public bool IsExpanded { get { return true; } }
+
+		#endregion
+
 		#region IToolbarNode
 
 		public abstract ToolbarNodeKind ToolbarNodeKind { get; }
@@ -38,8 +42,6 @@
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
-
-		#endregion
 
 		#endregion
 	}

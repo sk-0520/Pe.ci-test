@@ -14,30 +14,21 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class GroupRootViewModel : SingleModelWrapperViewModelBase<LauncherGroupItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
+	public class GroupRootViewModel: GroupViewModelBase<LauncherGroupItemModel>
 	{
 		#region variable
 		ObservableCollection<GroupItemViewMode> _nodes;
 		#endregion
 
-		public GroupRootViewModel(LauncherGroupItemModel group, LauncherItemCollectionModel items, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			:base(group)
+		public GroupRootViewModel(LauncherGroupItemModel model, LauncherItemCollectionModel items, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
+			: base(model, launcherIconCaching, nonProcess)
 		{
 			Items = items;
-
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
 		}
 
 		#region proeprty
 
 		LauncherItemCollectionModel Items { get; set; }
-
-		#region IToolbarNode
-
-		public ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Group; } }
-
-		#endregion
 
 		public ObservableCollection<GroupItemViewMode> Nodes
 		{
@@ -60,15 +51,9 @@
 
 		#endregion
 
-		#region IHavingLauncherIconCaching
+		#region IToolbarNode
 
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
+		public override ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Group; } }
 
 		#endregion
 
