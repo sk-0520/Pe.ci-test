@@ -10,9 +10,10 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class GroupItemViewMode : SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching
+	public class GroupItemViewMode : SingleModelWrapperViewModelBase<LauncherItemModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
 	{
 		//#region variable
 
@@ -26,6 +27,14 @@
 			LauncherIconCaching = launcherIconCaching;
 			NonProcess = nonProcess;
 		}
+
+		#region property
+
+		#region IToolbarNode
+
+		public ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Item; } }
+
+		#endregion
 
 		public ObservableCollection<GroupItemViewMode> Nodes
 		{
@@ -47,6 +56,8 @@
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
+
+		#endregion
 
 		#endregion
 	}

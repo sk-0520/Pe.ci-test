@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Data
+﻿namespace ContentTypeTextNet.Pe.PeMain.Data.Temporary
 {
 	using System;
 	using System.Collections.Generic;
@@ -6,10 +6,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public class SelectedNodeAndLauncherItem
 	{
-		public object SelectedNode { get; set; }
+		public IToolbarNode SelectedNode { get; set; }
 		public LauncherItemModel LauncherItem { get; set; }
 	}
 }

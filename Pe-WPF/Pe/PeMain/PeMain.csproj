@@ -126,8 +126,9 @@
     <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\LauncherIconCaching.cs" />
-    <Compile Include="Data\SelectedNodeAndLauncherItem.cs" />
+    <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
+    <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="IF\IHavingCommonData.cs" />
     <Compile Include="IF\IHavingLauncherIconCaching.cs" />
     <Compile Include="IF\ILogAppender.cs" />
+    <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\IconCaching.cs" />
@@ -194,7 +196,7 @@
     <Compile Include="View\Parts\Control\SettingPage\MainSettingControl.xaml.cs">
       <DependentUpon>MainSettingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Parts\Converter\CreateLauncherItemCommandConverter.cs" />
+    <Compile Include="View\Parts\Converter\SelectedNodeAndLauncherItemConverter.cs" />
     <Compile Include="View\Parts\Converter\HotTrackConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherGroupItemDisplayTextConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />

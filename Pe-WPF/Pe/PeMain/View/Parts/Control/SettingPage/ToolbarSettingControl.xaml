@@ -14,7 +14,7 @@
 	<CD:CommonDataUserControl.Resources>
 		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
-		<PC:CreateLauncherItemCommandConverter x:Key="CreateLauncherItemCommandConverter" />
+		<PC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
 	</CD:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -90,7 +90,7 @@
 							Command="{Binding CreateLauncherItemCommand}" 
 						>
 							<Button.CommandParameter>
-								<MultiBinding Converter="{StaticResource CreateLauncherItemCommandConverter}">
+								<MultiBinding Converter="{StaticResource SelectedNodeAndLauncherItemConverter}">
 									<Binding Path="SelectedItem" ElementName="GroupTree" />
 									<Binding Path="SelectedLauncherViewModel" ElementName="ItemList" />
 								</MultiBinding>

@@ -15,6 +15,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
@@ -140,6 +141,7 @@
 					o => {
 						var nodeAndItem = (SelectedNodeAndLauncherItem)o;
 						//new GroupItemViewMode(model, LauncherIconCaching, NonProcess);
+						NonProcess.Logger.Information(nodeAndItem.ToString());
 					}
 				);
 
