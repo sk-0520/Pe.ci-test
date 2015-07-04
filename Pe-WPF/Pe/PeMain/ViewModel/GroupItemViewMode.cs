@@ -27,19 +27,11 @@
 			get { return null; }
 		}
 
-		public string Id { get { return Model.Id; } }
-
 		#endregion
 
 		#region IToolbarNode
 
 		public override ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Item; } }
-
-		#endregion
-
-		#region SingleModelWrapperViewModelBase
-
-		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		#endregion
 	}

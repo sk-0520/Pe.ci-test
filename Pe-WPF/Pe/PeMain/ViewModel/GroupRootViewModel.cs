@@ -47,8 +47,6 @@
 			}
 		}
 
-		public string Id { get { return Model.Id; } }
-
 		#endregion
 
 		#region IToolbarNode
@@ -60,8 +58,6 @@
 		#region SingleModelWrapperViewModelBase
 
 		protected override bool CanOutputModel { get { return true; } }
-
-		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
 		#endregion
 	}
