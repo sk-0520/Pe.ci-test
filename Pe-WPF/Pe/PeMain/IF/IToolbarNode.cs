@@ -10,5 +10,7 @@
 	public interface IToolbarNode
 	{
 		ToolbarNodeKind ToolbarNodeKind { get; }
+		bool IsExpanded { get; }
+		bool IsSelected { get; set; }
 	}
 }

@@ -15,6 +15,12 @@
 	public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
 		where TModel: IModel, ITId<string>, IName
 	{
+		#region variable
+
+		bool _isSelected;
+
+		#endregion
+
 		public GroupViewModelBase(TModel model, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
 			:base(model)
 		{
@@ -24,8 +30,6 @@
 
 		#region property
 
-		public bool IsExpanded { get { return true; } }
-
 		public string Id { get { return Model.Id; } }
 
 		#endregion
@@ -33,6 +37,12 @@
 		#region IToolbarNode
 
 		public abstract ToolbarNodeKind ToolbarNodeKind { get; }
+		public bool IsExpanded { get { return true; } }
+		public bool IsSelected {
+			get { return this._isSelected; }
+			set { SetVariableValue(ref this._isSelected, value); }
+		}
+
 
 		#endregion
 

@@ -15,8 +15,6 @@
 		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
 		<PC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
-		<PC:SelectedNodeAndTreeViewConverter x:Key="SelectedNodeAndTreeViewConverter" />
-		
 	</CD:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -94,35 +92,14 @@
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource SelectedNodeAndLauncherItemConverter}">
 									<Binding Path="SelectedItem" ElementName="GroupTree" />
-									<Binding ElementName="GroupTree" />
 									<Binding Path="SelectedLauncherViewModel" ElementName="ItemList" />
 								</MultiBinding>
 							</Button.CommandParameter>
 						</Button>
-						<Button Content="up" Command="{Binding NodeUpCommand}" >
-							<Button.CommandParameter>
-								<MultiBinding Converter="{StaticResource SelectedNodeAndTreeViewConverter}">
-									<Binding Path="SelectedItem" ElementName="GroupTree" />
-									<Binding ElementName="GroupTree" />
-								</MultiBinding>
-							</Button.CommandParameter>
-						</Button>
-						<Button Content="down" Command="{Binding NodeDownCommand}" >
-							<Button.CommandParameter>
-								<MultiBinding Converter="{StaticResource SelectedNodeAndTreeViewConverter}">
-									<Binding Path="SelectedItem" ElementName="GroupTree" />
-									<Binding ElementName="GroupTree" />
-								</MultiBinding>
-							</Button.CommandParameter>
-						</Button>
-						<Button Content="remove" Command="{Binding NodeRemoveCommand}">
-							<Button.CommandParameter>
-								<MultiBinding Converter="{StaticResource SelectedNodeAndTreeViewConverter}">
-									<Binding Path="SelectedItem" ElementName="GroupTree" />
-									<Binding ElementName="GroupTree" />
-								</MultiBinding>
-							</Button.CommandParameter>
-						</Button>
+						
+						<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}" />
+						<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}" />
+						<Button Content="remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem,ElementName=GroupTree}"  />
 					</StackPanel>
 				</ToolBar>
 			</ToolBarTray>
@@ -138,6 +115,7 @@
 				<TreeView.ItemContainerStyle>
 					<Style TargetType="{x:Type TreeViewItem}">
 						<Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+						<Setter Property="IsSelected" Value="{Binding IsSelected}" />
 					</Style>
 				</TreeView.ItemContainerStyle>
 			</TreeView>

@@ -19,10 +19,9 @@
 		{
 			var result = new SelectedNodeAndLauncherItem();
 			result.SelectedNode = values[0] as IToolbarNode;
-			result.TreeView = values[1] as TreeView;
-			result.LauncherItem = values[2] == null
+			result.LauncherItem = values[1] == null
 				? default(LauncherItemModel)
-				: ((LauncherViewModelBase)values[2]).GetModel()
+				: ((LauncherViewModelBase)values[1]).GetModel()
 			;
 
 			return result;

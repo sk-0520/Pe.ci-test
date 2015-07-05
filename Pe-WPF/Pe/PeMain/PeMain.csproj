@@ -127,7 +127,6 @@
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\LauncherIconCaching.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
-    <Compile Include="Data\Temporary\SelectedNodeAndTreeView.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
@@ -204,7 +203,6 @@
     <Compile Include="View\Parts\Converter\LauncherListDisplayImageConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherListDisplayTextConverter.cs" />
     <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
-    <Compile Include="View\Parts\Converter\SelectedNodeAndTreeViewConverter.cs" />
     <Compile Include="View\Parts\EnumList.cs" />
     <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />

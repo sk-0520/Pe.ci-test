@@ -8,8 +8,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class SelectedNodeAndLauncherItem: SelectedNodeAndTreeView
+	public class SelectedNodeAndLauncherItem
 	{
+		public IToolbarNode SelectedNode { get; set; }
 		public LauncherItemModel LauncherItem { get; set; }
 	}
 }
