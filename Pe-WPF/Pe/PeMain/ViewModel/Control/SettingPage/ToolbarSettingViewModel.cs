@@ -198,6 +198,40 @@
 			}
 		}
 
+		public ICommand NodeRemoveCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(o == null) {
+							return;
+						}
+
+						var toolbarNode = (IToolbarNode)o;
+						if(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
+							var groupViewModel = (GroupRootViewModel)toolbarNode;
+							var groupModel = groupViewModel.GetModel();
+
+							GroupSettingModel.Groups.Remove(groupModel);
+							this._groupTree.Remove(groupViewModel);
+						} else {
+							Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
+							var itemViewModel = (GroupItemViewMode)toolbarNode;
+							var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
+							var groupModel = groupViewModel.GetModel();
+
+							var removeIndex = groupViewModel.Nodes.IndexOf(itemViewModel);
+
+							groupModel.LauncherItems.RemoveAt(removeIndex);
+							groupViewModel.Nodes.RemoveAt(removeIndex);
+						}
+					});
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function

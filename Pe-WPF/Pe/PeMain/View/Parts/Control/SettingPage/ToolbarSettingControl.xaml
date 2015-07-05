@@ -98,7 +98,7 @@
 						</Button>
 						<Button Content="up" Command="{Binding NodeUpCommand}" CommandParameter="{Binding SelectedItem, ElementName=GroupTree}" />
 						<Button Content="down" Command="{Binding NodeDownCommand}" CommandParameter="{Binding SelectedItem, ElementName=GroupTree}" />
-						<Button Content="remove" />
+						<Button Content="remove" Command="{Binding NodeRemoveCommand}" CommandParameter="{Binding SelectedItem, ElementName=GroupTree}" />
 					</StackPanel>
 				</ToolBar>
 			</ToolBarTray>
