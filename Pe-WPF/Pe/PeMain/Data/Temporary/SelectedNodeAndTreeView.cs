@@ -5,11 +5,12 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using System.Windows.Controls;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class SelectedNodeAndLauncherItem: SelectedNodeAndTreeView
+	public class SelectedNodeAndTreeView
 	{
-		public LauncherItemModel LauncherItem { get; set; }
+		public IToolbarNode SelectedNode { get; set; }
+		public TreeView TreeView { get; set; }
 	}
 }

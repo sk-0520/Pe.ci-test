@@ -7,23 +7,16 @@
 	using System.Threading.Tasks;
 	using System.Windows.Controls;
 	using System.Windows.Data;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.ViewModel;
-
-	public class SelectedNodeAndLauncherItemConverter : IMultiValueConverter
+	
+	public class SelectedNodeAndTreeViewConverter: IMultiValueConverter
 	{
 		public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var result = new SelectedNodeAndLauncherItem();
+			var result = new SelectedNodeAndTreeView();
 			result.SelectedNode = values[0] as IToolbarNode;
-			result.TreeView = values[1] as TreeView;
-			result.LauncherItem = values[2] == null
-				? default(LauncherItemModel)
-				: ((LauncherViewModelBase)values[2]).GetModel()
-			;
+			result.TreeView = (TreeView)values[1];
 
 			return result;
 		}
