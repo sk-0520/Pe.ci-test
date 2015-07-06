@@ -21,6 +21,7 @@
 		MainSettingViewModel _mainSetting;
 		LauncherItemSettingViewModel _launcherItemSetting;
 		ToolbarSettingViewModel _toolbarSetting;
+		CommandSettingViewModel _commandSetting;
 
 		#endregion
 
@@ -80,6 +81,20 @@
 				}
 
 				return this._toolbarSetting;
+			}
+		}
+
+		public CommandSettingViewModel CommandSetting
+		{
+			get
+			{
+				if(this._commandSetting == null) {
+					this._commandSetting = new CommandSettingViewModel(
+						CommonData.NonProcess
+					);
+				}
+
+				return this._commandSetting;
 			}
 		}
 

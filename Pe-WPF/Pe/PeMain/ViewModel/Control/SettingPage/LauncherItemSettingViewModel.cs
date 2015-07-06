@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class LauncherItemSettingViewModel: ViewModelBase, IHavingNonProcess, IHavingLauncherIconCaching
+	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase
 	{
 		#region variable
 
@@ -21,11 +21,9 @@
 		#endregion
 
 		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			: base()
+			: base(launcherIconCaching, nonProcess)
 		{
 			LauncherItemSetting = launcherItemSetting;
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
 		}
 
 		#region proerty
@@ -47,18 +45,6 @@
 				return this._launcherItems;
 			}
 		}
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
 
 		#endregion
 	}

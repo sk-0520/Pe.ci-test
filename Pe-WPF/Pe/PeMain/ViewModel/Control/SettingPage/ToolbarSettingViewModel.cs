@@ -21,7 +21,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class ToolbarSettingViewModel : ViewModelBase, IHavingNonProcess, IHavingLauncherIconCaching
+	public class ToolbarSettingViewModel: SettingPageLauncherIconCacheViewModelBase
 	{
 		#region variable
 
@@ -33,13 +33,11 @@
 		#endregion
 
 		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			: base()
+			: base(launcherIconCaching, nonProcess)
 		{
 			ToolbarItems = toolbarItems;
 			GroupSettingModel = groupSettingModel;
 			LauncherItemSetting = launcherItemSetting;
-			LauncherIconCaching = launcherIconCaching;
-			NonProcess = nonProcess;
 		}
 
 		#region proerty
@@ -137,18 +135,6 @@
 				}
 			}
 		}
-
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
-		#region IHavingNonProcess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
 
 		#endregion
 

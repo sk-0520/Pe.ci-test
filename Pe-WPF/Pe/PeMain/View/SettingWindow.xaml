@@ -41,6 +41,7 @@
 				<SP:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
 			<TabItem Header="command">
+				<SP:CommandSettingControl x:Name="CommandSettingControl" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="note">
 			</TabItem>
