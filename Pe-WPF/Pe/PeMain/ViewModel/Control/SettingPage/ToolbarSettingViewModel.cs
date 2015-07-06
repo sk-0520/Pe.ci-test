@@ -108,7 +108,34 @@
 		public LauncherItemModel SelectedLauncherItem
 		{
 			get { return this._selectedLauncherItem; }
-			set { SetVariableValue(ref this._selectedLauncherItem, value); }
+			set
+			{
+				if (SetVariableValue(ref this._selectedLauncherItem, value)) {
+					if (this._selectedLauncherItem != null) {
+						var groupNode = this._groupTree
+							.FirstOrDefault(g => g.Nodes.Any(n => n.IsSelected))
+						;
+						if (groupNode == null) {
+							return;
+						}
+						var targetGroupSetting = GroupSettingModel.Groups[groupNode.Id];
+						var itemViewModel = groupNode.Nodes.Single(n => n.IsSelected);
+						var selectedIndex = groupNode.Nodes.IndexOf(itemViewModel);
+
+						if (groupNode.Nodes[selectedIndex].GetModel() != this._selectedLauncherItem) {
+							targetGroupSetting.LauncherItems[selectedIndex] = this._selectedLauncherItem.Id;
+
+							var insertViewModel = new GroupItemViewMode(this._selectedLauncherItem, LauncherIconCaching, NonProcess) {
+								IsSelected = true,
+							};
+							foreach (var node in groupNode.Nodes) {
+								node.IsSelected = false;
+							}
+							groupNode.Nodes[selectedIndex] = insertViewModel;
+						}
+					}
+				}
+			}
 		}
 
 		#region IHavingLauncherIconCaching
