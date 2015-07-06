@@ -79,6 +79,7 @@
     <Compile Include="IF\IVisible.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
     <Compile Include="Item\ClipboardItemModel.cs" />
+    <Compile Include="Item\CommandItemModel.cs" />
     <Compile Include="Item\EnvironmentVariablesItemModel.cs" />
     <Compile Include="Item\EnvironmentVariableUpdateItemCollectionModel.cs" />
     <Compile Include="Item\EnvironmentVariableUpdateItemModel.cs" />

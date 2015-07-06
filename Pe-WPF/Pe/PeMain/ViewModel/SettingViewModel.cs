@@ -90,6 +90,7 @@
 			{
 				if(this._commandSetting == null) {
 					this._commandSetting = new CommandSettingViewModel(
+						CommonData.MainSetting.Command,
 						CommonData.NonProcess
 					);
 				}

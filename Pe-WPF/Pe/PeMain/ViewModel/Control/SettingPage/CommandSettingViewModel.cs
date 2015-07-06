@@ -7,11 +7,20 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	public class CommandSettingViewModel: SettingPageViewModelBase
 	{
-		public CommandSettingViewModel(INonProcess nonProcess)
+		public CommandSettingViewModel(CommandItemModel command, INonProcess nonProcess)
 			: base(nonProcess)
-		{ }
+		{
+			Command = command;
+		}
+
+		#region property
+
+		CommandItemModel Command { get; set; }
+
+		#endregion
 	}
 }
