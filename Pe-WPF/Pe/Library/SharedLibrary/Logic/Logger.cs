@@ -1,13 +1,14 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.Logic
 {
 	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
 	/// 最低限度の機能を保持したログ出力処理。
@@ -18,6 +19,22 @@
 
 		const string indent = "    ";
 		
+		#endregion
+
+		#region static 
+		
+		static string ToShowText(MethodBase method)
+		{
+			var parameters = string.Join(
+				", ", 
+				method.GetParameters()
+					.OrderBy(p => p.Position)
+					.Select(p => p.ToString())
+			);
+
+			return method.ReflectedType.Name + "." + method.Name + "(" + parameters + ")";
+		}
+
 		#endregion
 
 		#region varable
@@ -95,7 +112,7 @@
 					+ Environment.NewLine
 					+ " [STK]"
 					+ Environment.NewLine
-					+ indent + "+[ Native ][   IL   ] Method(line)"
+					+ indent + "+[ Native ][   IL   ] Method[line]"
 					+ Environment.NewLine
 					+ "{10}"
 					+ Environment.NewLine
@@ -115,10 +132,10 @@
 						item.StackTrace.GetFrames()
 							.Select(sf => 
 								string.Format(
-									indent + "-[{0:x8}][{1:x8}] {2}({3})", 
+									indent + "-[{0:x8}][{1:x8}] {2}[{3}]", 
 									sf.GetNativeOffset(), 
 									sf.GetILOffset(), 
-									sf.GetMethod(), 
+									ToShowText(sf.GetMethod()), 
 									sf.GetFileLineNumber()
 								)
 							)
