@@ -24,6 +24,7 @@
 			WindowSave = new WindowSaveItemModel();
 			SystemEnvironment = new SystemEnvironmentItemModel();
 			Clipboard = new ClipboardItemModel();
+			Template = new TemplateItemModel();
 		}
 
 		[DataMember]
@@ -40,5 +41,7 @@
 		public SystemEnvironmentItemModel SystemEnvironment { get; set; }
 		[DataMember]
 		public ClipboardItemModel Clipboard { get; set; }
+		[DataMember]
+		public TemplateItemModel Template { get; set; }
 	}
 }
