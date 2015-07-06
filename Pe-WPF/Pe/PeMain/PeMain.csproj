@@ -193,6 +193,7 @@
     <Compile Include="View\Parts\Control\LauncherItemsListControl.xaml.cs">
       <DependentUpon>LauncherItemsListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Parts\Control\PeHotkeyControl.cs" />
     <Compile Include="View\Parts\Control\SettingPage\CommandSettingControl.xaml.cs">
       <DependentUpon>CommandSettingControl.xaml</DependentUpon>
     </Compile>
