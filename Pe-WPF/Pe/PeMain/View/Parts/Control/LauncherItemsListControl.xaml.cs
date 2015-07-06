@@ -2,7 +2,9 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Linq;
+	using System.Runtime.CompilerServices;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
@@ -20,7 +22,7 @@
 	/// <summary>
 	/// LauncherItemsListControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class LauncherItemsListControl: CommonDataUserControl
+	public partial class LauncherItemsListControl : CommonDataUserControl, INotifyPropertyChanged
 	{
 		public LauncherItemsListControl()
 		{
@@ -29,20 +31,50 @@
 			ListItems.SelectionChanged += ListItems_SelectionChanged;
 		}
 
+		#region INotifyPropertyChanged
+
+		/// <summary>
+		/// プロパティが変更された際に発生。
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
+		/// <summary>
+		/// PropertyChanged呼び出し。
+		/// </summary>
+		/// <param name="propertyName"></param>
+		protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		#endregion
+
+
 		public static readonly DependencyProperty SelectedLauncherItemProperty = DependencyProperty.Register(
 			"SelectedLauncherItem",
 			typeof(LauncherItemModel),
 			typeof(LauncherItemsListControl),
-			new FrameworkPropertyMetadata(null)
+			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSelectedLauncherItem))
 		);
+
+		private static void OnSelectedLauncherItem(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var control = d as LauncherItemsListControl;
+			if (control != null) {
+				control.SelectedLauncherItem = e.NewValue as LauncherItemModel;
+			}
+		}
 
 		public LauncherItemModel SelectedLauncherItem
 		{
 			get { return GetValue(SelectedLauncherItemProperty) as LauncherItemModel; }
 			set 
-			{ 
+			{
 				SetValue(SelectedLauncherItemProperty, value);
-				SelectedLauncherViewModel = new LauncherSimpleViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
+				this.ListItems.SelectedItem = value;
+				if (value != null) {
+					SelectedLauncherViewModel = new LauncherSimpleViewModel(SelectedLauncherItem, CommonData.LauncherIconCaching, CommonData.NonProcess);
+				}
 			}
 		}
 

@@ -62,6 +62,8 @@
 
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
 
+		protected override bool CanOutputModel { get { return true; } }
+
 		#endregion
 	}
 }

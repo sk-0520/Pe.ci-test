@@ -7,6 +7,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
@@ -26,6 +27,9 @@
 
 		LauncherItemsViewModel _launcherItems;
 		ObservableCollection<GroupRootViewModel> _groupTree;
+
+		LauncherItemModel _selectedLauncherItem;
+
 		#endregion
 
 		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
@@ -99,6 +103,12 @@
 
 				return this._groupTree;
 			}
+		}
+
+		public LauncherItemModel SelectedLauncherItem
+		{
+			get { return this._selectedLauncherItem; }
+			set { SetVariableValue(ref this._selectedLauncherItem, value); }
 		}
 
 		#region IHavingLauncherIconCaching
@@ -227,6 +237,26 @@
 							groupViewModel.Nodes.RemoveAt(removeIndex);
 						}
 					});
+
+				return result;
+			}
+		}
+
+		public ICommand SelectedItemChangedCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(o != null) {
+							var toolbarNode = (IToolbarNode)o;
+							if (toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item) {
+								var model = (GroupItemViewMode)toolbarNode;
+								SelectedLauncherItem = model.GetModel();
+							}
+						}
+					}
+				);
 
 				return result;
 			}

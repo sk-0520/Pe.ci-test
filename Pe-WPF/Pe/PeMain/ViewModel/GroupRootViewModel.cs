@@ -61,11 +61,5 @@
 		public override ToolbarNodeKind ToolbarNodeKind { get { return ToolbarNodeKind.Group; } }
 
 		#endregion
-
-		#region SingleModelWrapperViewModelBase
-
-		protected override bool CanOutputModel { get { return true; } }
-
-		#endregion
 	}
 }
