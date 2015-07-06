@@ -27,19 +27,26 @@
 		</StackPanel>
 		<TabControl VerticalAlignment="Stretch">
 			<TabControl.Resources>
-				<Style x:Key="PageHeader" TargetType="{x:Type TabItem}">
+				<Style TargetType="{x:Type TabItem}">
 					<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
 				</Style>
-				<Style x:Key="PageBody" TargetType="{x:Type UserControl}" BasedOn="{StaticResource ResourceKey=PageHeader}" />
 			</TabControl.Resources>
-			<TabItem Header="main" Style="{StaticResource PageHeader}">
+			<TabItem Header="main">
 				<SP:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Top" />
 			</TabItem>
-			<TabItem Header="launcher" Style="{StaticResource PageHeader}">
+			<TabItem Header="launcher">
 				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>
 			</TabItem>
-			<TabItem Header="toolbar" Style="{StaticResource PageHeader}">
+			<TabItem Header="toolbar" >
 				<SP:ToolbarSettingControl x:Name="ToolbarSettingControl" DataContext="{Binding ToolbarSetting}" VerticalAlignment="Stretch"/>
+			</TabItem>
+			<TabItem Header="command">
+			</TabItem>
+			<TabItem Header="note">
+			</TabItem>
+			<TabItem Header="clipboard">
+			</TabItem>
+			<TabItem Header="template">
 			</TabItem>
 		</TabControl>
 	</Grid>
