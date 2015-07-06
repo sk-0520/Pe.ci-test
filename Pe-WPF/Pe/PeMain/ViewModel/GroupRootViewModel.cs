@@ -37,8 +37,15 @@
 				if (this._nodes == null) {
 					var list = new List<GroupItemViewMode>(Model.LauncherItems.Count);
 					foreach(var s in Model.LauncherItems) {
-						var item = Items[s];
-						list.Add(new GroupItemViewMode(item, LauncherIconCaching, NonProcess));
+						if (Items.Contains(s)) {
+							var item = Items[s];
+							list.Add(new GroupItemViewMode(item, LauncherIconCaching, NonProcess));
+						} else {
+							//TODO: 表記
+							var item = new LauncherItemModel();
+							item.Id = item.Name = s;
+							list.Add(new GroupItemViewMode(item, LauncherIconCaching, NonProcess));
+						}
 					}
 
 					this._nodes = new ObservableCollection<GroupItemViewMode>(list);

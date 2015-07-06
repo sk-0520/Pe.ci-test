@@ -859,7 +859,7 @@
 		{
 			if (groupItem.GroupKind == GroupKind.LauncherItems) {
 				return groupItem.LauncherItems
-					.Where(i => Model.LauncherItems.Contains(i))
+					.Where(i => Model.LauncherItems.Contains(i)) //TODO: Xアイコン表示をどうしよう
 					.Select(i => Model.LauncherItems[i])
 				;
 			}
