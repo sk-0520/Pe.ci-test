@@ -44,6 +44,12 @@
 		ModifierKeys ModifierKeys { get; set; }
 		Key Key { get; set; }
 
+		/// <summary>
+		/// キー文字列の結合表記文字列。
+		/// </summary>
+		/// <returns></returns>
+		protected virtual string DisplayAddText { get { return "+"; } }
+
 		#endregion
 
 		#region DependencyProperty
@@ -143,19 +149,14 @@
 
 			var modText = GetDisplayModTexts(mod);
 			if(modText.Any()) {
-				buffer.Append(string.Join(GetDisplayAddText(), modText));
+				buffer.Append(string.Join(DisplayAddText, modText));
 				if(key != Key.None) {
-					buffer.Append(GetDisplayAddText());
+					buffer.Append(DisplayAddText);
 				}
 			}
 			buffer.Append(GetDisplayKeyText(key));
 
 			Text = buffer.ToString();
-		}
-
-		protected virtual string GetDisplayAddText()
-		{
-			return "+";
 		}
 
 		IEnumerable<string> GetDisplayModTexts(ModifierKeys mod)
@@ -174,11 +175,21 @@
 			}
 		}
 
+		/// <summary>
+		/// 修飾キーを表記文字列に変換。
+		/// </summary>
+		/// <param name="mod">修飾キー。単一データで来る。</param>
+		/// <returns></returns>
 		protected virtual string GetDisplayModText(ModifierKeys mod)
 		{
 			return mod.ToString();
 		}
 
+		/// <summary>
+		/// キーを表記文字列に変換。
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		protected virtual string GetDisplayKeyText(Key key)
 		{
 			return key.ToString();
