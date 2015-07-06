@@ -5,13 +5,15 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
 	using System.Windows.Controls;
 	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
 	/// <para>http://stackoverflow.com/questions/2136431/how-do-i-read-custom-keyboard-shortcut-from-user-in-wpf?answertab=votes#tab-top</para>
 	/// </summary>
-	public class HotkeyControl:TextBox
+	public class HotkeyControl: TextBox
 	{
 		#region variable
 
@@ -33,6 +35,7 @@
 		{
 			IsReadOnly = true;
 			IsReadOnlyCaretVisible = true;
+
 			ResetKey();
 		}
 
@@ -43,21 +46,58 @@
 
 		#endregion
 
+		#region DependencyProperty
+
+		public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
+			"Hotkey",
+			typeof(HotkeyModel),
+			typeof(HotkeyControl),
+			new FrameworkPropertyMetadata(
+				null,
+				FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+				new PropertyChangedCallback(OnHotkeyChanged)
+			)
+		);
+
+		private static void OnHotkeyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		{
+			var view = obj as HotkeyControl;
+			if(view != null) {
+				view.Hotkey = e.NewValue as HotkeyModel;
+			}
+		}
+
+		public HotkeyModel Hotkey
+		{
+			get { return GetValue(HotkeyProperty) as HotkeyModel; }
+			set
+			{
+				SetValue(HotkeyProperty, value);
+				if(value == null) {
+					ResetKey();
+				} else {
+					ModifierKeys = value.ModifierKeys;
+					Key = value.Key;
+				}
+				SetText();
+			}
+		}
+		#endregion
+
 		#region TextBox
 
 		protected override void OnPreviewKeyDown(KeyEventArgs e)
 		{
-			e.Handled = true; 
-			Key key = (e.Key == Key.System ? e.SystemKey : e.Key);
+			e.Handled = true;
 
-			// Ignore modifier keys.
+			var key = (e.Key == Key.System ? e.SystemKey : e.Key);
 			if(this._ignoreKeys.Any(k => k == key)) {
 				ResetKey();
 				SetText();
 				return;
 			}
 
-			SetKey(Keyboard.Modifiers, e.Key);
+			SetKey(Keyboard.Modifiers, key);
 
 			SetText();
 		}
@@ -85,6 +125,11 @@
 		{
 			ModifierKeys = mod;
 			Key = key;
+
+			Hotkey = new HotkeyModel() {
+				ModifierKeys = this.ModifierKeys,
+				Key = this.Key,
+			};
 		}
 
 		void SetText()
@@ -119,6 +164,7 @@
 				ModifierKeys.Alt,
 				ModifierKeys.Control,
 				ModifierKeys.Shift,
+				ModifierKeys.Windows,
 			};
 
 			foreach(var m in mk) {
