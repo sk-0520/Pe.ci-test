@@ -56,10 +56,10 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<Label Grid.Row="0" Grid.Column="0" Content="hide file" />
-				<PV:PeHotkeyControl Grid.Row="0" Grid.Column="1" />
+				<PV:AppHotkeyControl Grid.Row="0" Grid.Column="1" />
 				
 				<Label Grid.Row="1" Grid.Column="0" Content="extension" />
-				<PV:PeHotkeyControl Grid.Row="1" Grid.Column="1" />
+				<PV:AppHotkeyControl Grid.Row="1" Grid.Column="1" />
 			</Grid>
 		</GroupBox>
 

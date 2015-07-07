@@ -9,9 +9,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
-	public class PeHotkeyControl: HotkeyControl, ICommonData
+	public class AppHotkeyControl: HotkeyControl, ICommonData
 	{
-		public PeHotkeyControl()
+		public AppHotkeyControl()
 		{ }
 
 		#region ICommonData

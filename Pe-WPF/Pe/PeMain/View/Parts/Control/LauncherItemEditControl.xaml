@@ -1,9 +1,9 @@
-﻿<CD:CommonDataUserControl
+﻿<PV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.LauncherItemEditControl"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:PV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns:PD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
@@ -11,9 +11,9 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 >
-	<CD:CommonDataUserControl.Resources>
+	<PV:CommonDataUserControl.Resources>
 		<SC:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-	</CD:CommonDataUserControl.Resources>
+	</PV:CommonDataUserControl.Resources>
 
 	<TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 		<TabItem Header="main" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -67,7 +67,7 @@
 			</Grid>
 		</TabItem>
 		<TabItem Header="env">
-			<CD:EnvironmentVariablesEditControl Margin="0" DataContext="{Binding EnvironmentVariables, Mode=OneWay}"/>
+			<PV:EnvironmentVariablesEditControl Margin="0" DataContext="{Binding EnvironmentVariables, Mode=OneWay}"/>
 		</TabItem>
 		<TabItem Header="others" HorizontalAlignment="Left" Width="53">
 			<Grid>
@@ -93,4 +93,4 @@
 			</Grid>
 		</TabItem>
 	</TabControl>
-</CD:CommonDataUserControl>
+</PV:CommonDataUserControl>

@@ -1,6 +1,6 @@
-﻿<CD:CommonDataUserControl 
+﻿<PV:CommonDataUserControl 
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.ToolbarSettingControl"
-	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:PV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:PC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
@@ -12,12 +12,12 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="318" d:DesignWidth="517"
 >
-	<CD:CommonDataUserControl.Resources>
+	<PV:CommonDataUserControl.Resources>
 		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
 		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
 		<PC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
 		<PC:TreeListLauncherItemRelationConverter x:Key="TreeListLauncherItemRelationConverter" />
-	</CD:CommonDataUserControl.Resources>
+	</PV:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="200"/>
@@ -126,11 +126,11 @@
 				</TreeView.ItemContainerStyle>
 			</TreeView>
 		</Grid>
-		<CD:LauncherItemsListControl
+		<PV:LauncherItemsListControl
 			Grid.Column="2"
 			DataContext="{Binding LauncherItems}"
 			x:Name="ItemList"
-			SelectedLauncherItem="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=CD:CommonDataUserControl}, Mode=TwoWay}"
+			SelectedLauncherItem="{Binding DataContext.SelectedLauncherItem, RelativeSource={RelativeSource AncestorType=PV:CommonDataUserControl}, Mode=TwoWay}"
 		/>
 	</Grid>
-</CD:CommonDataUserControl>
+</PV:CommonDataUserControl>

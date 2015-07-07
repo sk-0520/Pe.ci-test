@@ -1,6 +1,6 @@
-﻿<CD:CommonDataUserControl
+﻿<PV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.LauncherItemSettingControl"
-	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:PV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:PC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,9 +10,9 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 >
-	<CD:CommonDataUserControl.Resources>
+	<PV:CommonDataUserControl.Resources>
 		<PC:LauncherViewModelConverter x:Key="LauncherViewModelConverter" />
-	</CD:CommonDataUserControl.Resources>
+	</PV:CommonDataUserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
@@ -21,7 +21,7 @@
 			<ColumnDefinition Width="7*"/>
 			<ColumnDefinition Width="13*"/>
 		</Grid.ColumnDefinitions>
-		<CD:LauncherItemsListControl Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
-		<CD:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LauncherViewModelConverter}}" />
+		<PV:LauncherItemsListControl Grid.Column="0" DataContext="{Binding LauncherItems}" x:Name="ItemList" />
+		<PV:LauncherItemEditControl Grid.Column="1" DataContext="{Binding SelectedLauncherViewModel, ElementName=ItemList, Converter={StaticResource LauncherViewModelConverter}}" />
 	</Grid>
-</CD:CommonDataUserControl>
+</PV:CommonDataUserControl>

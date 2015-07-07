@@ -1,6 +1,6 @@
-﻿<CD:CommonDataUserControl
+﻿<PV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.LauncherItemsListControl"
-	xmlns:CD="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:PV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:PC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,10 +10,10 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="300"
 >
-	<CD:CommonDataUserControl.Resources>
+	<PV:CommonDataUserControl.Resources>
 		<PC:LauncherListDisplayImageConverter x:Key="LauncherListDisplayImageConverter" />
 		<PC:LauncherListDisplayTextConverter x:Key="LauncherListDisplayTextConverter" />
-	</CD:CommonDataUserControl.Resources>
+	</PV:CommonDataUserControl.Resources>
 	
 	<Grid>
 		<Grid.RowDefinitions>
@@ -40,4 +40,4 @@
 			</ListBox.ItemTemplate>
 		</ListBox>
 	</Grid>
-</CD:CommonDataUserControl>
+</PV:CommonDataUserControl>
