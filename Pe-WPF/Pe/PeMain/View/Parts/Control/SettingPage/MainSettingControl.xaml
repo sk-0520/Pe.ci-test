@@ -17,7 +17,7 @@
 					<Label AP:XamlTag.LanguageKey="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" />
 				</StackPanel>
-				<CheckBox AP:XamlTag.LanguageKey="startup/regist" Content="startup"/>
+				<CheckBox AP:XamlTag.LanguageKey="startup/regist" Content="startup" IsChecked="{Binding Startup}"/>
 			</StackPanel>
 		</GroupBox>
 

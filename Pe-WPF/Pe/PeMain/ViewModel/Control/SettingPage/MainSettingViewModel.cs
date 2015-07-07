@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -13,6 +14,12 @@
 
 	public class MainSettingViewModel: SettingPageViewModelBase
 	{
+		#region variable
+
+		bool? _startup = null;
+
+		#endregion
+
 		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, INonProcess nonProcess, VariableConstants variableConstants)
 			: base(nonProcess, variableConstants)
 		{
@@ -26,6 +33,26 @@
 		RunningInformationSettingModel RunningInformation { get; set; }
 		LanguageSettingModel Language { get; set; }
 		LoggingSettingModel Logging { get; set; }
+
+		public bool Startup
+		{
+			get
+			{
+				if(!this._startup.HasValue) {
+					var path = Environment.ExpandEnvironmentVariables(Constants.startupShortcutPath);
+					this._startup = File.Exists(path);
+				}
+
+				return this._startup.Value;
+			}
+			set
+			{
+				if(this._startup != value) {
+					this._startup = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 
 		#endregion
 	}
