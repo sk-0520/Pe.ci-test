@@ -1,12 +1,12 @@
-﻿<W:ViewModelCommonDataWindow
+﻿<AW:ViewModelCommonDataWindow
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.AcceptWindow"
-	x:TypeArguments="VM:AcceptViewModel"
+	x:TypeArguments="AVM:AcceptViewModel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-	UI:XamlTag.LanguageKey="window/accept"
+	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	AP:XamlTag.LanguageKey="window/accept"
 	Title="AcceptWindow" 
 	Width="{Binding MinWidth, RelativeSource={RelativeSource Self}}"
 	Height="{Binding MinHeight, RelativeSource={RelativeSource Self}}" 
@@ -18,9 +18,9 @@
 	Topmost="True" 
 	ResizeMode="CanResizeWithGrip"
 >
-	<W:CommonDataWindow.Resources>
+	<AW:CommonDataWindow.Resources>
 		<ResourceDictionary Source="/View/Parts/Resource/DialogDictionary.xaml"/>
-	</W:CommonDataWindow.Resources>
+	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="211*"/>
@@ -34,12 +34,12 @@
 					<Setter Property="Margin" Value="0,4,10,4"/>
 				</Style>
 			</StackPanel.Resources>
-			<CheckBox IsChecked="{Binding CheckUpdateRelease}" UI:XamlTag.LanguageKey="update-check/release" Content="release" />
-			<CheckBox IsChecked="{Binding CheckUpdateRC}" UI:XamlTag.LanguageKey="update-check/rc" Content="rc" />
+			<CheckBox IsChecked="{Binding CheckUpdateRelease}" AP:XamlTag.LanguageKey="update-check/release" Content="release" />
+			<CheckBox IsChecked="{Binding CheckUpdateRC}" AP:XamlTag.LanguageKey="update-check/rc" Content="rc" />
 		</StackPanel>
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AP:XamlTag.LanguageKey="accept/ok" Content="ok" Command="{Binding OkCommand}"  />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AP:XamlTag.LanguageKey="accept/ng" Content="ng" Command="{Binding NgCommand}"  />
 		</StackPanel>
 	</Grid>
-</W:ViewModelCommonDataWindow>
+</AW:ViewModelCommonDataWindow>

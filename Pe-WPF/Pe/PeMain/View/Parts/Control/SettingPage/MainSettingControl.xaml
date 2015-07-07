@@ -1,7 +1,7 @@
-﻿<PV:CommonDataUserControl
+﻿<AV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.MainSettingControl"
-	xmlns:PV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
-	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,38 +11,38 @@
 	d:DesignHeight="400"
 >
 	<Grid>
-		<GroupBox UI:XamlTag.LanguageKey="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+		<GroupBox AP:XamlTag.LanguageKey="setting/main" Header="main" Height="79" Width="202" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 			<StackPanel Orientation="Vertical">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="190">
-					<Label UI:XamlTag.LanguageKey="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+					<Label AP:XamlTag.LanguageKey="using-language" Content="language" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 					<ComboBox HorizontalAlignment="Left" Width="89" Height="27" VerticalAlignment="Top" />
 				</StackPanel>
-				<CheckBox UI:XamlTag.LanguageKey="startup/regist" Content="startup"/>
+				<CheckBox AP:XamlTag.LanguageKey="startup/regist" Content="startup"/>
 			</StackPanel>
 		</GroupBox>
 
-		<GroupBox UI:XamlTag.LanguageKey="setting/log" Header="log" Margin="10,94,0,0" HorizontalAlignment="Left" Width="202" Height="182" VerticalAlignment="Top">
+		<GroupBox AP:XamlTag.LanguageKey="setting/log" Header="log" Margin="10,94,0,0" HorizontalAlignment="Left" Width="202" Height="182" VerticalAlignment="Top">
 			<StackPanel>
-				<CheckBox UI:XamlTag.LanguageKey="visivle" Content="visible" />
+				<CheckBox AP:XamlTag.LanguageKey="visivle" Content="visible" />
 				<GroupBox>
 					<GroupBox.Header>
-						<CheckBox UI:XamlTag.LanguageKey="log/add-show" Content="add-show" />
+						<CheckBox AP:XamlTag.LanguageKey="log/add-show" Content="add-show" />
 					</GroupBox.Header>
 					<StackPanel Margin="8">
-						<CheckBox UI:XamlTag.LanguageKey="log/debug" Content="debug" />
-						<CheckBox UI:XamlTag.LanguageKey="log/trace" Content="trace" />
-						<CheckBox UI:XamlTag.LanguageKey="log/information" Content="info" />
-						<CheckBox UI:XamlTag.LanguageKey="log/warning" Content="warning" />
-						<CheckBox UI:XamlTag.LanguageKey="log/error" Content="error" />
-						<CheckBox UI:XamlTag.LanguageKey="log/fatal" Content="fatal" />
+						<CheckBox AP:XamlTag.LanguageKey="log/debug" Content="debug" />
+						<CheckBox AP:XamlTag.LanguageKey="log/trace" Content="trace" />
+						<CheckBox AP:XamlTag.LanguageKey="log/information" Content="info" />
+						<CheckBox AP:XamlTag.LanguageKey="log/warning" Content="warning" />
+						<CheckBox AP:XamlTag.LanguageKey="log/error" Content="error" />
+						<CheckBox AP:XamlTag.LanguageKey="log/fatal" Content="fatal" />
 					</StackPanel>
 				</GroupBox>
 			</StackPanel>
 		</GroupBox>
-		<GroupBox UI:XamlTag.LanguageKey="setting/update"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="118">
+		<GroupBox AP:XamlTag.LanguageKey="setting/update"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="118">
 			<StackPanel>
-				<CheckBox UI:XamlTag.LanguageKey="update/check-release" Content="update check" />
-				<CheckBox UI:XamlTag.LanguageKey="update/check-rc" Content="update check rc" />
+				<CheckBox AP:XamlTag.LanguageKey="update/check-release" Content="update check" />
+				<CheckBox AP:XamlTag.LanguageKey="update/check-rc" Content="update check rc" />
 			</StackPanel>
 		</GroupBox>
 		<GroupBox Header="system" HorizontalAlignment="Left" Margin="217,94,0,0" VerticalAlignment="Top" Height="95" Width="118">
@@ -56,12 +56,12 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<Label Grid.Row="0" Grid.Column="0" Content="hide file" />
-				<PV:AppHotkeyControl Grid.Row="0" Grid.Column="1" />
+				<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" />
 				
 				<Label Grid.Row="1" Grid.Column="0" Content="extension" />
-				<PV:AppHotkeyControl Grid.Row="1" Grid.Column="1" />
+				<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" />
 			</Grid>
 		</GroupBox>
 
 	</Grid>
-</PV:CommonDataUserControl>
+</AV:CommonDataUserControl>

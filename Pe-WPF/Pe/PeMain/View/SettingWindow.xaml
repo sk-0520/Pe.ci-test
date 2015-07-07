@@ -1,11 +1,11 @@
 ﻿<W:CommonDataWindow
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:SP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage" 
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.SettingWindow"
-	UI:XamlTag.LanguageKey="window/setting"
+	AP:XamlTag.LanguageKey="window/setting"
 	Title="SettingWindow" 
 	Width="640"
 	Height="480" 
@@ -22,8 +22,8 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Style="{StaticResource ResourceKey=DialogResultPanel}"  Grid.Row="2">
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/ok" Content="ok" />
-			<Button Style="{StaticResource ResourceKey=DialogResultButton}" UI:XamlTag.LanguageKey="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AP:XamlTag.LanguageKey="common/ok" Content="ok" />
+			<Button Style="{StaticResource ResourceKey=DialogResultButton}" AP:XamlTag.LanguageKey="common/cancel" Content="cancel" Command="{Binding CancelCommand}" />
 		</StackPanel>
 		<TabControl VerticalAlignment="Stretch">
 			<TabControl.Resources>

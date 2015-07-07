@@ -1,17 +1,17 @@
-﻿<W:ViewModelCommonDataWindow
+﻿<AW:ViewModelCommonDataWindow
 	x:Name="root"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
-	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-	xmlns:PC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LauncherToolbarWindow"
-	x:TypeArguments="VM:LauncherToolbarViewModel"
-	UI:XamlTag.LanguageKey="window/toolbar"
+	x:TypeArguments="AVM:LauncherToolbarViewModel"
+	AP:XamlTag.LanguageKey="window/toolbar"
 	Title="ToolbarWindow" 
 	Left="{Binding WindowLeft, Mode=TwoWay}" 
 	Top="{Binding WindowTop, Mode=TwoWay}"
@@ -29,7 +29,7 @@
 	BorderBrush="{Binding BorderBrush, Mode=OneWay}"
 	AllowsTransparency="True"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-	xmlns:PD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
 	xmlns:SD="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.Define;assembly=SharedLibrary"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -37,14 +37,14 @@
 	d:DesignWidth="300" 
 	d:DesignHeight="200"
 >
-	<W:CommonDataWindow.Resources>
+	<AW:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
 		<SC:LogicalMultiOrConverter x:Key="LogicalMultiOrConverter" />
 		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
 
-		<PC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
-		<PC:HotTrackConverter x:Key="HotTrackConverter" />
+		<AC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
+		<AC:HotTrackConverter x:Key="HotTrackConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
 			<Setter Property="Source" Value="{Binding ToolbarImage, Mode=OneWay}" />
@@ -357,15 +357,15 @@
 			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
 		</Style>
 
-	</W:CommonDataWindow.Resources>
+	</AW:CommonDataWindow.Resources>
 
-	<W:CommonDataWindow.ContextMenu>
+	<AW:CommonDataWindow.ContextMenu>
 		<ContextMenu ItemsSource="{Binding GroupItems, Mode=OneWay}">
 			<ContextMenu.ItemContainerStyle>
 				<Style TargetType="MenuItem" BasedOn="{StaticResource GroupMenu}" />
 			</ContextMenu.ItemContainerStyle>
 		</ContextMenu>
-	</W:CommonDataWindow.ContextMenu>
+	</AW:CommonDataWindow.ContextMenu>
 
 	<StackPanel Orientation="{Binding Orientation, Mode=OneWay}" Visibility="{Binding HideVisibility}" >
 
@@ -411,10 +411,10 @@
 						<Button Grid.Row="2" Grid.Column="1" CommandParameter="{x:Static SD:DockType.Bottom}" Style="{StaticResource PopupClose}">↓</Button>
 					</Grid>
 					<Separator />
-					<MenuItem Header="topmost" UI:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
-					<MenuItem Header="auto hide" UI:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
+					<MenuItem Header="topmost" AP:XamlTag.LanguageKey="topmost" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding TopMost}" Command="{Binding SwitchTopMostCommand}"  />
+					<MenuItem Header="auto hide" AP:XamlTag.LanguageKey="autohide" Style="{StaticResource PopupCloseMenu}" IsChecked="{Binding AutoHide}" Command="{Binding SwitchAutoHideCommand}"/>
 					<Separator />
-					<MenuItem Header="hide" UI:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
+					<MenuItem Header="hide" AP:XamlTag.LanguageKey="hide" Style="{StaticResource PopupCloseMenu}" Command="{Binding ChangeVisibleCommand}" >
 						<MenuItem.CommandParameter>
 							<sys:Boolean>false</sys:Boolean>
 						</MenuItem.CommandParameter>
@@ -464,15 +464,15 @@
 									<Separator/>
 									<TextBlock Text="file" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="parent dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static PD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-										<Button Content="work dir" IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static PD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" IsEnabled="{Binding ExistsParentDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="work dir" IsEnabled="{Binding ExistsWorkDirectory}" Command="{Binding OpenDirectory}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command"  IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
-										<Button Content="parent dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
-										<Button Content="work dir" IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="command"  IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+										<Button Content="parent dir" IsEnabled="{Binding HasDataParentDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.ParentDirectory}" Style="{StaticResource PopupClose}" />
+										<Button Content="work dir" IsEnabled="{Binding HasDataWorkDirectory}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.WorkDirectory}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
@@ -514,7 +514,7 @@
 									<Separator/>
 									<TextBlock Text="clipboard" />
 									<StackPanel Orientation="Horizontal">
-										<Button Content="command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static PD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
+										<Button Content="command" IsEnabled="{Binding HasDataCommand}" Command="{Binding CopyText}" CommandParameter="{x:Static AD:LauncherCommandType.Command}" Style="{StaticResource PopupClose}" />
 									</StackPanel>
 									<TextBlock Text="others" />
 									<StackPanel Orientation="Horizontal">
@@ -530,4 +530,4 @@
 	</StackPanel>
 
 
-</W:ViewModelCommonDataWindow>
+</AW:ViewModelCommonDataWindow>

@@ -1,12 +1,12 @@
-﻿<W:ViewModelCommonDataWindow
+﻿<AW:ViewModelCommonDataWindow
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.LoggingWindow"
-	x:TypeArguments="VM:LoggingViewModel"
+	x:TypeArguments="AVM:LoggingViewModel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:VM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
-	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
-	xmlns:W="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
-	UI:XamlTag.LanguageKey="window/log"
+	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	AP:XamlTag.LanguageKey="window/log"
 	Title="LoggingWindow" 
 	ShowInTaskbar="False" 
 	WindowStyle="ToolWindow"
@@ -20,8 +20,8 @@
 >
 	<DockPanel LastChildFill="True">
 		<ToolBar DockPanel.Dock="Top" FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" Height="30" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ToolBarTray.IsLocked="True">
-			<Button Content="save" UI:XamlTag.LanguageKey="log/save" />
-			<Button Content="clear" UI:XamlTag.LanguageKey="log/clear" />
+			<Button Content="save" AP:XamlTag.LanguageKey="log/save" />
+			<Button Content="clear" AP:XamlTag.LanguageKey="log/clear" />
 		</ToolBar>
 		<StatusBar DockPanel.Dock="Bottom" FontFamily="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" FontSize="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="{DynamicResource {x:Static SystemParameters.MenuHeightKey}}" />
 		<Grid>
@@ -32,12 +32,12 @@
 			<ListView Grid.Row="0" ItemsSource="{Binding LogItems}" x:Name="LogList">
 				<ListView.View>
 					<GridView>
-						<GridViewColumn Header="timestamp" UI:XamlTag.LanguageKey="log-timestamp" DisplayMemberBinding="{Binding Timestamp}" />
-						<GridViewColumn Header="message" UI:XamlTag.LanguageKey="log-message" DisplayMemberBinding="{Binding Message}" />
+						<GridViewColumn Header="timestamp" AP:XamlTag.LanguageKey="log-timestamp" DisplayMemberBinding="{Binding Timestamp}" />
+						<GridViewColumn Header="message" AP:XamlTag.LanguageKey="log-message" DisplayMemberBinding="{Binding Message}" />
 					</GridView>
 				</ListView.View>
 			</ListView>
 			<TextBox Margin="0,2,0,0" Grid.Row="1" AllowDrop="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsUndoEnabled="False" IsReadOnly="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Text="{Binding SelectedValue.DetailText, ElementName=LogList, Mode=OneWay}" />
 		</Grid>
 	</DockPanel>
-</W:ViewModelCommonDataWindow>
+</AW:ViewModelCommonDataWindow>
