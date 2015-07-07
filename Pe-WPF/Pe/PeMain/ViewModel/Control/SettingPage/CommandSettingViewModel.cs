@@ -5,6 +5,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -23,11 +24,42 @@
 
 		CommandSettingModel Command { get; set; }
 
+		public IconScale IconScale 
+		{
+			get { return Command.IconScale; }
+			set { SetPropertyValue(Command, value); }
+		}
+
+		public double HideTimeMs
+		{
+			get { return Command.HideTime.TotalMilliseconds; }
+			set { SetPropertyValue(Command, TimeSpan.FromMilliseconds(value), "HideTime"); }
+		}
+
 		public HotkeyModel ShowHotkey
 		{
 			get { return Command.ShowHotkey; }
 			set { SetPropertyValue(Command, value); }
 		}
+
+		public bool FindId
+		{
+			get { return Command.FindId; }
+			set { SetPropertyValue(Command, value); }
+		}
+
+		public bool FindTag
+		{
+			get { return Command.FindTag; }
+			set { SetPropertyValue(Command, value); }
+		}
+
+		public bool FindFile
+		{
+			get { return Command.FindFile; }
+			set { SetPropertyValue(Command, value); }
+		}
+
 
 		#endregion
 	}

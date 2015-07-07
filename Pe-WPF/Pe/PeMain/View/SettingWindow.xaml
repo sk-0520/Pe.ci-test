@@ -32,7 +32,7 @@
 				</Style>
 			</TabControl.Resources>
 			<TabItem Header="main">
-				<SP:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Top" />
+				<SP:MainSettingControl x:Name="MainSettingControl" DataContext="{Binding MainSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="launcher">
 				<SP:LauncherItemSettingControl x:Name="LauncherItemSettingControl" DataContext="{Binding LauncherItemSetting}" VerticalAlignment="Stretch"/>

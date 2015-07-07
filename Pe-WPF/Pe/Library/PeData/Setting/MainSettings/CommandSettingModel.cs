@@ -35,8 +35,27 @@
 		[DataMember]
 		public TimeSpan HideTime { get; set; }
 
+		/// <summary>
+		/// 呼び出しホットキー。
+		/// </summary>
 		[DataMember]
 		public HotkeyModel ShowHotkey { get; set; }
+
+		/// <summary>
+		/// IDを検索対象にする。
+		/// </summary>
+		[DataMember]
+		public bool FindId { get; set; }
+		/// <summary>
+		/// タグを検索対象にする。
+		/// </summary>
+		[DataMember]
+		public bool FindTag { get; set; }
+		/// <summary>
+		/// ファイル検索を有効にする。
+		/// </summary>
+		[DataMember]
+		public bool FindFile { get; set; }
 
 		#endregion
 
