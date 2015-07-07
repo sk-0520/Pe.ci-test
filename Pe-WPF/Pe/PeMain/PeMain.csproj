@@ -128,6 +128,7 @@
     <Compile Include="Data\Event\AppbarFullScreenEventArgs.cs" />
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\LauncherIconCaching.cs" />
+    <Compile Include="Data\LauncherToolbarItemModel.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
