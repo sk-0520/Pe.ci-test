@@ -9,11 +9,12 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	public class MainSettingViewModel: SettingPageViewModelBase
 	{
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, INonProcess nonProcess)
-			: base(nonProcess)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, INonProcess nonProcess, VariableConstants variableConstants)
+			: base(nonProcess, variableConstants)
 		{
 			RunningInformation = runningInformation;
 			Language = language;

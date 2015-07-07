@@ -42,7 +42,8 @@
 						CommonData.MainSetting.RunningInformation,
 						CommonData.MainSetting.Language,
 						CommonData.MainSetting.Logging,
-						CommonData.NonProcess
+						CommonData.NonProcess,
+						CommonData.VariableConstants
 					);
 				}
 
@@ -58,7 +59,8 @@
 					this._launcherItemSetting = new LauncherItemSettingViewModel(
 						CommonData.LauncherItemSetting,
 						CommonData.LauncherIconCaching,
-						CommonData.NonProcess
+						CommonData.NonProcess,
+						CommonData.VariableConstants
 					);
 				}
 
@@ -76,7 +78,8 @@
 						CommonData.LauncherGroupSetting,
 						CommonData.LauncherItemSetting,
 						CommonData.LauncherIconCaching,
-						CommonData.NonProcess
+						CommonData.NonProcess,
+						CommonData.VariableConstants
 					);
 				}
 
@@ -91,7 +94,8 @@
 				if(this._commandSetting == null) {
 					this._commandSetting = new CommandSettingViewModel(
 						CommonData.MainSetting.Command,
-						CommonData.NonProcess
+						CommonData.NonProcess,
+						CommonData.VariableConstants
 					);
 				}
 

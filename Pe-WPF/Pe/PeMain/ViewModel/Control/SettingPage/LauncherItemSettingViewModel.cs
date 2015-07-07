@@ -20,8 +20,8 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			: base(launcherIconCaching, nonProcess)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants)
+			: base(launcherIconCaching, nonProcess, variableConstants)
 		{
 			LauncherItemSetting = launcherItemSetting;
 		}

@@ -33,8 +33,8 @@
 
 		#endregion
 
-		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess)
-			: base(launcherIconCaching, nonProcess)
+		public ToolbarSettingViewModel(ToolbarItemCollectionModel toolbarItems, LauncherGroupSettingModel groupSettingModel, LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants)
+			: base(launcherIconCaching, nonProcess, variableConstants)
 		{
 			ToolbarItems = toolbarItems;
 			GroupSettingModel = groupSettingModel;

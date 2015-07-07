@@ -138,6 +138,7 @@
     <Compile Include="IF\IHavingClipboardWatcher.cs" />
     <Compile Include="IF\IHavingCommonData.cs" />
     <Compile Include="IF\IHavingLauncherIconCaching.cs" />
+    <Compile Include="IF\IHavingVariableConstants.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="IF\IToolbarNode.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />

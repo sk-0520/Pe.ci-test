@@ -11,11 +11,12 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	public class CommandSettingViewModel: SettingPageViewModelBase
 	{
-		public CommandSettingViewModel(CommandSettingModel command, INonProcess nonProcess)
-			: base(nonProcess)
+		public CommandSettingViewModel(CommandSettingModel command, INonProcess nonProcess, VariableConstants variableConstants)
+			: base(nonProcess, variableConstants)
 		{
 			Command = command;
 		}
