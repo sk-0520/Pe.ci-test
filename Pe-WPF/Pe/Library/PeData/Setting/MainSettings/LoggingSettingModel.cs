@@ -53,18 +53,39 @@
 
 		#endregion
 
+		/// <summary>
+		/// ログ追加時にUIを表示るか。
+		/// </summary>
 		[DataMember]
 		public bool AddShow { get; set; }
+		/// <summary>
+		/// デバッグ時に表示する
+		/// </summary>
 		[DataMember]
 		public bool ShowTriggerDebug { get; set; }
+		/// <summary>
+		/// トレース時に表示する
+		/// </summary>
 		[DataMember]
 		public bool ShowTriggerTrace { get; set; }
+		/// <summary>
+		/// 情報時に表示する
+		/// </summary>
 		[DataMember]
 		public bool ShowTriggerInformation { get; set; }
+		/// <summary>
+		/// 警告時に表示する
+		/// </summary>
 		[DataMember]
 		public bool ShowTriggerWarning { get; set; }
+		/// <summary>
+		/// エラー時に表示する
+		/// </summary>
 		[DataMember]
 		public bool ShowTriggerError { get; set; }
+		/// <summary>
+		/// 致命時に表示する
+		/// </summary>
 		[DataMember]
 		public bool ShowTriggerFatal { get; set; }
 	}
