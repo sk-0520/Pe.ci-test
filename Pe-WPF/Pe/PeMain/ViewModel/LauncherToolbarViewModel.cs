@@ -34,7 +34,7 @@
 	using System.Windows.Controls.Primitives;
 	using System.Windows.Media.Imaging;
 
-	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarItemModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching
+	public class LauncherToolbarViewModel : HavingViewSingleModelWrapperViewModelBase<LauncherToolbarDataModel, LauncherToolbarWindow>, IApplicationDesktopToolbarData, IVisualStyleData, IHavingNonProcess, IHavingClipboardWatcher, IWindowAreaCorrectionData, IWindowHitTestData, IHavingLauncherIconCaching
 	{
 		#region static
 
@@ -154,7 +154,7 @@
 
 		#endregion
 
-		public LauncherToolbarViewModel(LauncherToolbarItemModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public LauncherToolbarViewModel(LauncherToolbarDataModel model, LauncherToolbarWindow view, ScreenModel screen, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model, view)
 		{
 			DockScreen = screen;

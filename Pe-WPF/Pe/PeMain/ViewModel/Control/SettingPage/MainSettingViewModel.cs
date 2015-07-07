@@ -8,6 +8,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	public class MainSettingViewModel: SettingPageViewModelBase
 	{

@@ -9,6 +9,7 @@
 	using NUnit.Framework;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	[TestFixture]
 	class LauncherToolbarViewModelTest
@@ -20,7 +21,7 @@
 		[TestCase("a", "e", "a", "b", "c")]
 		public void SelectedGroupTest(string result, string defaultGroup, params string[] groups)
 		{
-			var m = new LauncherToolbarItemModel();
+			var m = new LauncherToolbarDataModel();
 			m.Toolbar.DefaultGroupId = defaultGroup;
 			foreach (var group in groups) {
 				var lg = new LauncherGroupItemModel() {

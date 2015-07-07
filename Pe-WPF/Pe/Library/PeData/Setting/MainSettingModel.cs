@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	/// <summary>
 	/// 各設定の統括。

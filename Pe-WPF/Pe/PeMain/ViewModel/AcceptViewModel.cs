@@ -17,6 +17,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.View;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	public class AcceptViewModel : HavingViewSingleModelWrapperViewModelBase<RunningInformationItemModel, AcceptWindow>
 	{

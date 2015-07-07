@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
 	using System.Collections.Generic;
@@ -7,6 +7,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
 	public class LanguageItemModel: ItemModelBase, IName

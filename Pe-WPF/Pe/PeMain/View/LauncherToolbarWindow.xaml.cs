@@ -38,6 +38,7 @@
 	using System.Windows.Controls.Primitives;
 	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
+	using ContentTypeTextNet.Pe.PeMain.Data;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -73,7 +74,7 @@
 
 		protected override void CreateViewModel()
 		{
-			var model = new LauncherToolbarItemModel() {
+			var model = new LauncherToolbarDataModel() {
 				LauncherItems = CommonData.LauncherItemSetting.Items,
 				GroupItems = CommonData.LauncherGroupSetting.Groups,
 			};

@@ -16,6 +16,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;

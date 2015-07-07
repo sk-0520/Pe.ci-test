@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,6 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
 	public class CommandItemModel : ItemModelBase, IWindowStatus

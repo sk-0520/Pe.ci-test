@@ -12,6 +12,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	/// <summary>
 	/// 設定データを上手いことなんやかんやする。

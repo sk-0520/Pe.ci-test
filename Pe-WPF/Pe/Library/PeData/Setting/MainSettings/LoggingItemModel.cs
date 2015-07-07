@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
 	public class LoggingItemModel : ItemModelBase, IWindowStatus

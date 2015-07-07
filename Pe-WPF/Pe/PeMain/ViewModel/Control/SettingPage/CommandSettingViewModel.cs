@@ -9,6 +9,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
 	public class CommandSettingViewModel: SettingPageViewModelBase
 	{
