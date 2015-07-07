@@ -62,7 +62,7 @@
 			var nameValueStrings = getMembers.GetNameValueList();
 			var joinString = ReflectionUtility.JoinNameValueStrings(nameValueStrings);
 
-			return string.Format("{0} => {1}", name, joinString);
+			return string.Format("{0}=>{1}", name, joinString);
 		}
 	}
 }
