@@ -22,9 +22,9 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingItemModel, LoggingWindow>, ILogAppender, IWindowStatus
+	public class LoggingViewModel : HavingViewSingleModelWrapperViewModelBase<LoggingSettingModel, LoggingWindow>, ILogAppender, IWindowStatus
 	{
-		public LoggingViewModel(LoggingItemModel model, LoggingWindow view)
+		public LoggingViewModel(LoggingSettingModel model, LoggingWindow view)
 			: base(model, view)
 		{
 			LogItems = new ObservableCollection<LogItemModel>();

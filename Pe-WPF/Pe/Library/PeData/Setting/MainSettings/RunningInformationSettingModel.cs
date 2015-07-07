@@ -9,9 +9,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class RunningInformationItemModel: ItemModelBase
+	public class RunningInformationSettingModel : SettingModelBase
 	{
-		public RunningInformationItemModel()
+		public RunningInformationSettingModel()
 			: base()
 		{ }
 

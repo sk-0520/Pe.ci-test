@@ -3,14 +3,15 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class TemplateItemModel : ItemModelBase
+	public class SystemEnvironmentSettingModel : SettingModelBase
 	{
-		public TemplateItemModel()
+		public SystemEnvironmentSettingModel()
 			: base()
 		{ }
 	}

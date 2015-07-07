@@ -18,34 +18,34 @@
 	{
 		public MainSettingModel()
 		{
-			RunningInformation = new RunningInformationItemModel();
-			Language = new LanguageItemModel();
-			Logging = new LoggingItemModel();
+			RunningInformation = new RunningInformationSettingModel();
+			Language = new LanguageSettingModel();
+			Logging = new LoggingSettingModel();
 			Toolbar = new ToolbarItemCollectionModel();
-			WindowSave = new WindowSaveItemModel();
-			SystemEnvironment = new SystemEnvironmentItemModel();
-			Command = new CommandItemModel();
-			Clipboard = new ClipboardItemModel();
-			Template = new TemplateItemModel();
+			WindowSave = new WindowSaveSettingModel();
+			SystemEnvironment = new SystemEnvironmentSettingModel();
+			Command = new CommandSettingModel();
+			Clipboard = new ClipboardSettingModel();
+			Template = new TemplateSettingModel();
 		}
 
 		[DataMember]
-		public RunningInformationItemModel RunningInformation { get; set; }
+		public RunningInformationSettingModel RunningInformation { get; set; }
 		[DataMember]
-		public LanguageItemModel Language { get; set; }
+		public LanguageSettingModel Language { get; set; }
 		[DataMember]
-		public LoggingItemModel Logging { get; set; }
+		public LoggingSettingModel Logging { get; set; }
 		[DataMember]
 		public ToolbarItemCollectionModel Toolbar { get; set; }
 		[DataMember]
-		public WindowSaveItemModel WindowSave { get; set; }
+		public WindowSaveSettingModel WindowSave { get; set; }
 		[DataMember]
-		public SystemEnvironmentItemModel SystemEnvironment { get; set; }
+		public SystemEnvironmentSettingModel SystemEnvironment { get; set; }
 		[DataMember]
-		public CommandItemModel Command { get; set; }
+		public CommandSettingModel Command { get; set; }
 		[DataMember]
-		public ClipboardItemModel Clipboard { get; set; }
+		public ClipboardSettingModel Clipboard { get; set; }
 		[DataMember]
-		public TemplateItemModel Template { get; set; }
+		public TemplateSettingModel Template { get; set; }
 	}
 }

@@ -14,9 +14,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class CommandItemModel : ItemModelBase, IWindowStatus
+	public class CommandSettingModel : SettingModelBase, IWindowStatus
 	{
-		public CommandItemModel()
+		public CommandSettingModel()
 			: base()
 		{
 			ShowHotkey = new HotkeyModel();

@@ -8,28 +8,26 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
+	/// <summary>
+	/// ウィンドウ状態復元設定。
+	/// </summary>
 	[Serializable]
-	public class ClipboardItemModel: ItemModelBase
+	public class WindowSaveSettingModel : SettingModelBase
 	{
-		public ClipboardItemModel()
-			: base()
-		{ }
-
-		#region property
-
 		/// <summary>
-		/// クリップボード監視の変更を検知するか。
+		/// 有効。
 		/// </summary>
 		[DataMember]
 		public bool Enabled { get; set; }
-
 		/// <summary>
-		/// アプリケーション内でのコピー操作も監視対象とするか。
+		/// 保存数。
 		/// </summary>
 		[DataMember]
-		public bool EnabledApplicationCopy { get; set; }
-
-		#endregion
-
+		public int SaveCount { get; set; }
+		/// <summary>
+		/// 保存間隔。
+		/// </summary>
+		[DataMember]
+		public TimeSpan SaveSpan { get; set; }
 	}
 }

@@ -13,7 +13,7 @@
 
 	public class CommandSettingViewModel: SettingPageViewModelBase
 	{
-		public CommandSettingViewModel(CommandItemModel command, INonProcess nonProcess)
+		public CommandSettingViewModel(CommandSettingModel command, INonProcess nonProcess)
 			: base(nonProcess)
 		{
 			Command = command;
@@ -21,7 +21,7 @@
 
 		#region property
 
-		CommandItemModel Command { get; set; }
+		CommandSettingModel Command { get; set; }
 
 		public HotkeyModel ShowHotkey
 		{

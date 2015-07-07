@@ -12,7 +12,7 @@
 
 	public class MainSettingViewModel: SettingPageViewModelBase
 	{
-		public MainSettingViewModel(RunningInformationItemModel runningInformation, LanguageItemModel language, LoggingItemModel logging, INonProcess nonProcess)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, INonProcess nonProcess)
 			: base(nonProcess)
 		{
 			RunningInformation = runningInformation;
@@ -22,9 +22,9 @@
 
 		#region property
 
-		RunningInformationItemModel RunningInformation { get; set; }
-		LanguageItemModel Language { get; set; }
-		LoggingItemModel Logging { get; set; }
+		RunningInformationSettingModel RunningInformation { get; set; }
+		LanguageSettingModel Language { get; set; }
+		LoggingSettingModel Logging { get; set; }
 
 		#endregion
 	}

@@ -19,7 +19,7 @@
 	/// </summary>
 	public static class SettingUtility
 	{
-		public static bool CheckAccept(RunningInformationItemModel model, INonProcess nonProcess)
+		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
 		{
 			if(!model.Accept) {
 				// 完全に初回
@@ -43,7 +43,7 @@
 		}
 
 
-		public static void IncrementRunningInformation(RunningInformationItemModel model)
+		public static void IncrementRunningInformation(RunningInformationSettingModel model)
 		{
 			CheckUtility.EnforceNotNull(model);
 

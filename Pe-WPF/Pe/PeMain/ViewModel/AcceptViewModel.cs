@@ -19,9 +19,9 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 
-	public class AcceptViewModel : HavingViewSingleModelWrapperViewModelBase<RunningInformationItemModel, AcceptWindow>
+	public class AcceptViewModel : HavingViewSingleModelWrapperViewModelBase<RunningInformationSettingModel, AcceptWindow>
 	{
-		public AcceptViewModel(RunningInformationItemModel model, AcceptWindow view)
+		public AcceptViewModel(RunningInformationSettingModel model, AcceptWindow view)
 			: base(model, view)
 		{ }
 

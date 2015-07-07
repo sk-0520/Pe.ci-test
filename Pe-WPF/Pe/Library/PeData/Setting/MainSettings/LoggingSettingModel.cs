@@ -13,9 +13,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class LoggingItemModel : ItemModelBase, IWindowStatus
+	public class LoggingSettingModel : SettingModelBase, IWindowStatus
 	{
-		public LoggingItemModel()
+		public LoggingSettingModel()
 			: base()
 		{ }
 

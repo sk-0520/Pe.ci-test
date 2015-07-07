@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class ToolbarItemCollectionModel : TIdCollection<string, ToolbarItemModel>, IItemModel
+	public class ToolbarItemCollectionModel : TIdCollection<string, ToolbarItemModel>, ISettingModel
 	{
 		public ToolbarItemCollectionModel()
 			: base()

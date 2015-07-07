@@ -10,9 +10,9 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class LanguageItemModel: ItemModelBase, IName
+	public class LanguageSettingModel : SettingModelBase, IName
 	{
-		public LanguageItemModel()
+		public LanguageSettingModel()
 			: base()
 		{ }
 
