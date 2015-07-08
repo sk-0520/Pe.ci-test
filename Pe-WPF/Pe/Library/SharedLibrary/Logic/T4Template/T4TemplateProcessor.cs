@@ -22,8 +22,10 @@
 	/// <para>これSerializableいらんと思うんだけどなぁ。</para>
 	/// </summary>
 	[Serializable]
-	public class T4TemplateProcessor : IDisposable
+	public class T4TemplateProcessor : DisposeFinalizeBase
 	{
+		#region variable
+
 		/// <summary>
 		/// テンプレートソース。
 		/// </summary>
@@ -48,11 +50,12 @@
 		/// テンプレートソース -> プログラムソースでのエラー。
 		/// </summary>
 		private List<CompilerError> _generatedErrorList = new List<CompilerError>();
-		public int FirstLineNumber { get; protected set; }
 		/// <summary>
 		/// プログラムソース -> アセンブリでのエラー。
 		/// </summary>
 		private List<CompilerError> _compileErrorList = new List<CompilerError>();
+		
+		#endregion
 
 		/// <summary>
 		/// デフォルト値での生成。
@@ -76,14 +79,7 @@
 			Initialize();
 		}
 
-		/// <summary>
-		/// これを明示的に通すのは勘弁な。
-		/// </summary>
-		~T4TemplateProcessor()
-		{
-			Debug.WriteLine(TemplateAppDomainName);
-			Dispose(false);
-		}
+		#region property
 
 		/// <summary>
 		/// テンプレートソース。
@@ -225,20 +221,24 @@
 		/// </summary>
 		public Exception Error { get; protected set; }
 
-		#region IDisposable
+		public int FirstLineNumber { get; protected set; }
+
+		#endregion
+
+		#region DisposeFinalizeBase
 
 		protected virtual void Dispose(bool disposing)
 		{
-			DisposeTemplateSource(disposing);
-		}
+			if (!IsDisposed) {
+				DisposeTemplateSource(disposing);
+			}
 
-		public void Dispose()
-		{
-			GC.SuppressFinalize(this);
-			Dispose(true);
+			base.Dispose(disposing);
 		}
 
 		#endregion
+
+		#region function
 
 		/// <summary>
 		/// コンストラクタからの初期化。
@@ -554,6 +554,8 @@
 				CompileProgramSource();
 			}
 		}
+
+		#endregion
 
 		void WithEvent_Error(object sender, TextTemplatingErrorEventArgs e)
 		{

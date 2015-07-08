@@ -16,7 +16,11 @@
 	[Serializable]
 	public class ProgramTemplateProcessor : T4TemplateProcessor
 	{
+		#region define
+
 		const string directiveLang = "LANGUAGE";
+
+		#endregion
 
 		public ProgramTemplateProcessor()
 			: base()
@@ -25,6 +29,8 @@
 		public ProgramTemplateProcessor(TextTemplatingEngineHost host)
 			: base(host)
 		{ }
+
+		#region property
 
 		/// <summary>
 		/// テンプレートディレクティブ。
@@ -35,6 +41,10 @@
 		/// 言語コード。
 		/// </summary>
 		public string CultureCode { get; set; }
+
+		#endregion
+
+		#region T4TemplateProcessor
 
 		protected override void Initialize()
 		{
@@ -74,6 +84,17 @@
 			return templateSource.ToString();
 		}
 
+		protected override string TransformText_Impl()
+		{
+			ResetVariable();
+
+			return base.TransformText_Impl();
+		}
+
+		#endregion
+
+		#region function
+
 		protected void ResetVariable()
 		{
 			//var clipboardItem = ClipboardUtility.CreateClipboardItem(ClipboardType.Text, IntPtr.Zero, new NullLogger());
@@ -86,11 +107,6 @@
 			//Variable[TemplateProgramLanguageName.versionHash] = Literal.Version.ProductVersion;
 		}
 
-		protected override string TransformText_Impl()
-		{
-			ResetVariable();
-
-			return base.TransformText_Impl();
-		}
+		#endregion
 	}
 }
