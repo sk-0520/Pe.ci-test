@@ -67,8 +67,8 @@
 
 			Puts = GetPuts(Logger, LogKind);
 
-			InstanceStopWatch = Stopwatch.StartNew();
 			Puts(MakeMessage("START"), Detail, frame, callerFile, callerLine, callerMember);
+			InstanceStopWatch = Stopwatch.StartNew();
 		}
 
 		#region property
@@ -105,7 +105,11 @@
 
 		string MakeMessage(string type)
 		{
-			return string.Format("[{0}-{1}]: {2} {3} > {4}", InstanceName, InstanceId, CallerMember, type, InstanceStopWatch.Elapsed);
+			if (InstanceStopWatch != null) {
+				return string.Format("[{0}-{1}]: {2} {3} > {4}", InstanceName, InstanceId, CallerMember, type, InstanceStopWatch.Elapsed);
+			} else {
+				return string.Format("[{0}-{1}]: {2} {3}", InstanceName, InstanceId, CallerMember, type);
+			}
 		}
 
 		public void Check(object detail = null, int frame = 2, [CallerFilePath] string callerFile = "", [CallerLineNumber] int callerLine = -1, [CallerMemberName] string callerMember = "")

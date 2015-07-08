@@ -8,7 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
 	/// 最低限度の機能を保持したログ出力処理。
@@ -18,6 +19,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		#region define
 
 		const string indent = "    ";
+		const string messageFormat = " [MSG] {0}";
+		const string detailPadding = "\t";
 		
 		#endregion
 
@@ -105,18 +108,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 		protected override void PutsFile(LogItemModel item)
 		{
 			if(FileWriter != null) {
-				FileWriter.WriteLine(
-					"{0}[{1}] {2} <{3}({4})> , Thread: {5}/{6}, Assembly: {7}"
-					+ Environment.NewLine
-					+ " [MSG] {8}\t{9}"
-					+ Environment.NewLine
-					+ " [STK]"
-					+ Environment.NewLine
-					+ indent + "+[ Native ][   IL   ] Method[line]"
-					+ Environment.NewLine
-					+ "{10}"
-					+ Environment.NewLine
-					,
+				var header = string.Format(
+					"{0}[{1}] {2} <{3}({4})> , Thread: {5}/{6}, Assembly: {7}",
 					item.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fff"),
 					item.LogKind.ToString().ToUpper().Substring(0, 1),
 					item.CallerMember,
@@ -124,22 +117,46 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 					item.CallerLine,
 					item.CallerThread.ManagedThreadId,
 					item.CallerThread.ThreadState,
-					item.CallerAssembly.GetName(),
-					item.Message,
-					item.DetailText,
-					string.Join(
-						Environment.NewLine, 
-						item.StackTrace.GetFrames()
-							.Select(sf => 
-								string.Format(
-									indent + "-[{0:x8}][{1:x8}] {2}[{3}]", 
-									sf.GetNativeOffset(), 
-									sf.GetILOffset(), 
-									ToShowText(sf.GetMethod()), 
-									sf.GetFileLineNumber()
-								)
-							)
+					item.CallerAssembly.GetName()
+				);
+				var message = string.Format(messageFormat, item.Message);
+				var detail = item.DetailText;
+				if (!string.IsNullOrEmpty(detail)) {
+					var detailIndent = new string(' ', message.Length);
+					var lines = detail.SplitLines();
+					var nexts = lines.Skip(1).Select(s => detailIndent + detailPadding + s);
+					if (nexts.Any()) {
+						var first = detailPadding + lines.First();
+						detail = first + Environment.NewLine + string.Join(Environment.NewLine, nexts);
+					} else {
+						detail = detailPadding + detail;
+					}
+				}
+				var stack = string.Join(
+					Environment.NewLine, 
+					item.StackTrace.GetFrames()
+						.Select(sf => string.Format(
+							indent + "-[{0:x8}][{1:x8}] {2}[{3}]", 
+							sf.GetNativeOffset(), 
+							sf.GetILOffset(), 
+							ToShowText(sf.GetMethod()), 
+							sf.GetFileLineNumber()
+						)
 					)
+				);
+
+				FileWriter.WriteLine(
+					header
+					+ Environment.NewLine
+					+ message
+					+ detail
+					+ Environment.NewLine
+					+ " [STK]"
+					+ Environment.NewLine
+					+ indent + "+[ Native ][   IL   ] Method[line]"
+					+ Environment.NewLine
+					+ stack
+					+ Environment.NewLine
 				);
 				FileWriter.Flush();
 			}
