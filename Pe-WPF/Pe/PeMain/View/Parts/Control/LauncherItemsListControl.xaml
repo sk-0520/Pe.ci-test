@@ -12,7 +12,7 @@
 >
 	<AV:CommonDataUserControl.Resources>
 		<AC:LauncherListDisplayImageConverter x:Key="LauncherListDisplayImageConverter" />
-		<AC:LauncherListDisplayTextConverter x:Key="LauncherListDisplayTextConverter" />
+		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 	</AV:CommonDataUserControl.Resources>
 	
 	<Grid>
@@ -34,7 +34,7 @@
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal">
 						<Image Source="{Binding Converter={StaticResource LauncherListDisplayImageConverter}}" />
-						<TextBlock Text="{Binding Converter={StaticResource LauncherListDisplayTextConverter}}" />
+						<TextBlock Text="{Binding Converter={StaticResource DisplayTextConverter}}" />
 					</StackPanel>
 				</DataTemplate>
 			</ListBox.ItemTemplate>

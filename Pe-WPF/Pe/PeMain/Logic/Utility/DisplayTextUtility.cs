@@ -19,11 +19,36 @@
 		public static string GetDisplayName<TModel>(TModel model)
 			where TModel: ITId<string>, IName
 		{
-			if (string.IsNullOrWhiteSpace(model.Name)) {
-				return model.Id;
+			return GetDisplayName(model, model);
+		}
+
+		public static string GetDisplayName(ITId<string> id, IName name)
+		{
+			if (string.IsNullOrWhiteSpace(name.Name)) {
+				return id.Id;
 			}
 
-			return model.Name ?? string.Empty;
+			return name.Name ?? string.Empty;
+		}
+
+		public static string GetDisplayName(ITId<string> id)
+		{
+			var name = id as IName;
+			if(name != null) {
+				return GetDisplayName(id, name);
+			}
+
+			return id.Id ?? string.Empty;
+		}
+
+		public static string GetDisplayName(IName name)
+		{
+			var id = name as ITId<string>;
+			if(id != null) {
+				return GetDisplayName(id, name);
+			}
+
+			return name.Name ?? string.Empty;
 		}
 	}
 }

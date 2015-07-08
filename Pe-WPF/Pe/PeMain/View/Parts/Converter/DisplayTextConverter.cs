@@ -6,17 +6,26 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Data;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class LauncherListDisplayTextConverter: IValueConverter
+	public class DisplayTextConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var model = value as LauncherItemModel;
-			if(model != null) {
-				return DisplayTextUtility.GetDisplayName(model);
+			var id = value as ITId<string>;
+			var name = value as IName;
+
+			if (id != null && name != null) {
+				return DisplayTextUtility.GetDisplayName(id, name);
 			}
+			if (id != null) {
+				return DisplayTextUtility.GetDisplayName(id);
+			}
+			if (name != null) {
+				return DisplayTextUtility.GetDisplayName(name);
+			}
+
 			return value;
 		}
 

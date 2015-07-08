@@ -14,7 +14,7 @@
 >
 	<AV:CommonDataUserControl.Resources>
 		<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-		<AC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
+		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		<AC:SelectedNodeAndLauncherItemConverter x:Key="SelectedNodeAndLauncherItemConverter" />
 		<AC:TreeListLauncherItemRelationConverter x:Key="TreeListLauncherItemRelationConverter" />
 	</AV:CommonDataUserControl.Resources>
@@ -52,7 +52,7 @@
 				<ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding DefaultGroupList}" >
 					<ComboBox.ItemTemplate>
 						<ItemContainerTemplate>
-							<ContentPresenter  Content="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />
+							<ContentPresenter  Content="{Binding Converter={StaticResource DisplayTextConverter}}" />
 						</ItemContainerTemplate>
 					</ComboBox.ItemTemplate>
 				</ComboBox>

@@ -43,7 +43,7 @@
 		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
 
-		<AC:LauncherGroupItemDisplayTextConverter x:Key="LauncherGroupItemDisplayTextConverter" />
+		<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		<AC:HotTrackConverter x:Key="HotTrackConverter" />
 
 		<Style x:Key="Image" TargetType="{x:Type Image}">
@@ -338,7 +338,7 @@
 		</Style>
 
 		<Style x:Key="GroupMenu" TargetType="MenuItem" BasedOn="{StaticResource PopupCloseMenu}">
-			<Setter Property="Header" Value="{Binding Converter={StaticResource LauncherGroupItemDisplayTextConverter}}" />
+			<Setter Property="Header" Value="{Binding Converter={StaticResource DisplayTextConverter}}" />
 			<Setter Property="Command" Value="{Binding DataContext.GroupChangeCommand, Source={x:Reference root}}" />
 			<Setter Property="CommandParameter" Value="{Binding}" />
 			<Setter Property="IsChecked">
