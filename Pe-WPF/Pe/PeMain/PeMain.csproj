@@ -146,6 +146,7 @@
     <Compile Include="IF\IHavingVariableConstants.cs" />
     <Compile Include="IF\ILogAppender.cs" />
     <Compile Include="IF\IToolbarNode.cs" />
+    <Compile Include="Logic\AppInformationCollection.cs" />
     <Compile Include="Logic\AppLanguageManager.cs" />
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\IconCaching.cs" />

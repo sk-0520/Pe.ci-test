@@ -88,6 +88,7 @@
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
+    <Compile Include="Data\InformationGroup.cs" />
     <Compile Include="Define\DockType.cs" />
     <Compile Include="Define\IconScale.cs" />
     <Compile Include="Define\LogKind.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Logic\Extension\NonProcessExtension.cs" />
     <Compile Include="Logic\Extension\ThicknessExtension.cs" />
     <Compile Include="Logic\HitState.cs" />
+    <Compile Include="Logic\InformationCollection.cs" />
     <Compile Include="Logic\T4Template\RuntimeTextTemplateProxy.cs" />
     <Compile Include="Logic\T4Template\T4TemplateProcessor.cs" />
     <Compile Include="Logic\T4Template\TextTemplatingEngineHost.cs" />

@@ -39,6 +39,7 @@
 			var systemLogger = AppUtility.CreateSystemLogger(constants.FileLogging, constants.LogDirectoryPath);
 			systemLogger.IsStock = true;
 			systemLogger.Information("start!", commandLine);
+			systemLogger.Information("application", new AppInformationCollection().ToString());
 			this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
 			if (this._mainWorker.Initialize()) {
 				LanguageUtility.SetLanguage(this._notifyIcon, this._mainWorker.Language);

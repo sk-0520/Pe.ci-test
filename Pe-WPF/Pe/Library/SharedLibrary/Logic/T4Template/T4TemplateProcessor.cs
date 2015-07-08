@@ -227,7 +227,7 @@
 
 		#region DisposeFinalizeBase
 
-		protected virtual void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
 			if (!IsDisposed) {
 				DisposeTemplateSource(disposing);
