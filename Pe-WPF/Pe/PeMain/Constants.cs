@@ -9,6 +9,7 @@
 	using System.IO;
 	using System.Diagnostics;
 	using System.Configuration;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	/// <summary>
 	/// 定数。
@@ -71,6 +72,8 @@
 
 		public const int screenCountChangeRetryCount = 10;
 		public static readonly TimeSpan screenCountChangeWaitTime = TimeSpan.FromMilliseconds(250);
+
+		//public static readonly RangeModel<double> commandHideTimeDefualt = TimeSpan.FromSeconds(2).TotalMilliseconds;
 
 		/// <summary>
 		/// 実行パス
