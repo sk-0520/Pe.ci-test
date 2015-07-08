@@ -1,17 +1,18 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage
 {
 	using System;
-	using System.Collections.Generic;
-	using System.IO;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-	using ContentTypeTextNet.Pe.PeMain.Data;
-	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 
 	public class MainSettingViewModel: SettingPageViewModelBase
 	{
@@ -94,6 +95,38 @@
 		{
 			get { return Logging.ShowTriggerFatal; }
 			set { SetPropertyValue(Logging, value, "ShowTriggerFatal"); }
+		}
+
+		#endregion
+
+		#region runnunginfo
+		
+		public bool RunningCheckUpdateRelease
+		{
+			get { return RunningInformation.CheckUpdateRelease; }
+			set { SetPropertyValue(RunningInformation, value, "CheckUpdateRelease"); }
+		}
+
+		public bool RunningCheckUpdateRC
+		{
+			get { return RunningInformation.CheckUpdateRC; }
+			set { SetPropertyValue(RunningInformation, value, "CheckUpdateRC"); }
+		}
+
+		#endregion
+
+		#region
+
+		public HotkeyModel SysEnvHideFileHotkey
+		{
+			get { return SystemEnvironment.HideFileHotkey; }
+			set { SetPropertyValue(SystemEnvironment, value, "HideFileHotkey"); }
+		}
+
+		public HotkeyModel SysEnvExtensionHotkey
+		{
+			get { return SystemEnvironment.ExtensionHotkey; }
+			set { SetPropertyValue(SystemEnvironment, value, "ExtensionHotkey"); }
 		}
 
 		#endregion

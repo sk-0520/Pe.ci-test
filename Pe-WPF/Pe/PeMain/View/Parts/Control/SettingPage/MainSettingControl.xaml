@@ -39,10 +39,10 @@
 				</GroupBox>
 			</StackPanel>
 		</GroupBox>
-		<GroupBox AP:XamlTag.LanguageKey="setting/update"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="118">
+		<GroupBox AP:XamlTag.LanguageKey="setting/running"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="118">
 			<StackPanel>
-				<CheckBox AP:XamlTag.LanguageKey="update/check-release" Content="update check" />
-				<CheckBox AP:XamlTag.LanguageKey="update/check-rc" Content="update check rc" />
+				<CheckBox AP:XamlTag.LanguageKey="update/check-release" Content="update check" IsChecked="{Binding RunningCheckUpdateRelease}" />
+				<CheckBox AP:XamlTag.LanguageKey="update/check-rc" Content="update check rc" IsChecked="{Binding RunningCheckUpdateRC}" />
 			</StackPanel>
 		</GroupBox>
 		<GroupBox Header="system" HorizontalAlignment="Left" Margin="217,94,0,0" VerticalAlignment="Top" Height="95" Width="118">
@@ -56,10 +56,10 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 				<Label Grid.Row="0" Grid.Column="0" Content="hide file" />
-				<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" />
+				<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" Hotkey="{Binding SysEnvHideFileHotkey}" />
 				
 				<Label Grid.Row="1" Grid.Column="0" Content="extension" />
-				<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" />
+				<AV:AppHotkeyControl Grid.Row="1" Grid.Column="1" Hotkey="{Binding SysEnvExtensionHotkey}" />
 			</Grid>
 		</GroupBox>
 
