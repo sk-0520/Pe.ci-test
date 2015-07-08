@@ -46,6 +46,7 @@
 						CommonData.MainSetting.RunningInformation,
 						CommonData.MainSetting.Language,
 						CommonData.MainSetting.Logging,
+						CommonData.MainSetting.SystemEnvironment,
 						CommonData.NonProcess,
 						CommonData.VariableConstants,
 						SettingNotifiyItem

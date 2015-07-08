@@ -15,12 +15,13 @@
 
 	public class MainSettingViewModel: SettingPageViewModelBase
 	{
-		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
+		public MainSettingViewModel(RunningInformationSettingModel runningInformation, LanguageSettingModel language, LoggingSettingModel logging, SystemEnvironmentSettingModel systemEnvironment, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
 			: base(nonProcess, variableConstants, settingNotifiyItem)
 		{
 			RunningInformation = runningInformation;
 			Language = language;
 			Logging = logging;
+			SystemEnvironment = systemEnvironment;
 		}
 
 		#region property
@@ -28,6 +29,7 @@
 		RunningInformationSettingModel RunningInformation { get; set; }
 		LanguageSettingModel Language { get; set; }
 		LoggingSettingModel Logging { get; set; }
+		SystemEnvironmentSettingModel SystemEnvironment { get; set; }
 
 		public bool Startup
 		{
@@ -48,6 +50,53 @@
 				}
 			}
 		}
+
+		#region logging
+
+		public bool LogVisible
+		{
+			get { return Logging.Visible; }
+			set { SetPropertyValue(Logging, value, "Visible"); }
+		}
+
+		public bool LogAddShow
+		{
+			get { return Logging.AddShow; }
+			set { SetPropertyValue(Logging, value, "AddShow"); }
+		}
+
+		public bool LogTriggerDebug
+		{
+			get { return Logging.ShowTriggerDebug; }
+			set { SetPropertyValue(Logging, value, "ShowTriggerDebug"); }
+		}
+		public bool LogTriggerTrace
+		{
+			get { return Logging.ShowTriggerTrace; }
+			set { SetPropertyValue(Logging, value, "ShowTriggerTrace"); }
+		}
+		public bool LogTriggerInformation
+		{
+			get { return Logging.ShowTriggerInformation; }
+			set { SetPropertyValue(Logging, value, "ShowTriggerInformation"); }
+		}
+		public bool LogTriggerWarning
+		{
+			get { return Logging.ShowTriggerWarning; }
+			set { SetPropertyValue(Logging, value, "ShowTriggerWarning"); }
+		}
+		public bool LogTriggerError
+		{
+			get { return Logging.ShowTriggerError; }
+			set { SetPropertyValue(Logging, value, "ShowTriggerError"); }
+		}
+		public bool LogTriggerFatal
+		{
+			get { return Logging.ShowTriggerFatal; }
+			set { SetPropertyValue(Logging, value, "ShowTriggerFatal"); }
+		}
+
+		#endregion
 
 		#endregion
 	}

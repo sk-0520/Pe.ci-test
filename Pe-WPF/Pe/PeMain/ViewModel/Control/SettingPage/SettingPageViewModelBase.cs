@@ -16,8 +16,8 @@
 	{
 		public SettingPageViewModelBase(INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
 		{
-			CheckUtility.EnforceNotNull(nonProcess);
-			CheckUtility.EnforceNotNull(variableConstants);
+			CheckUtility.DebugEnforceNotNull(nonProcess);
+			CheckUtility.DebugEnforceNotNull(variableConstants);
 			CheckUtility.DebugEnforceNotNull(settingNotifiyItem);
 
 			NonProcess = nonProcess;
