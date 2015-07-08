@@ -2,6 +2,7 @@
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.CommandSettingControl"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -26,9 +27,8 @@
 		<Label Content="hotkey" HorizontalAlignment="Left" Margin="22,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
 		<AV:AppHotkeyControl Hotkey="{Binding ShowHotkey}" Margin="10" Grid.Column="1" Grid.Row="1" />
 
-		<!-- TODO: 定数化 -->
 		<Label Content="hide time" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-		<Slider Grid.Column="1" HorizontalAlignment="Left" Margin="10,15,0,0" Grid.Row="2" VerticalAlignment="Top" Width="149" Value="{Binding HideTimeMs}"/>
+		<Slider Grid.Column="1" HorizontalAlignment="Left" Margin="10,15,0,0" Grid.Row="2" VerticalAlignment="Top" Width="149" Value="{Binding HideTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.CommandHideMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.CommandHideMaximumTime}}"/>
 
 		<GroupBox Header="GroupBox" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Height="123" Width="201" Grid.ColumnSpan="2">
 			<StackPanel>

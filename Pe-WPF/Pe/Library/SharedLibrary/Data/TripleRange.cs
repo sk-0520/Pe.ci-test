@@ -14,19 +14,26 @@
 	public struct TripleRange<T>
 		where T: IComparable
 	{
+		#region variable
+
 		public readonly T minimum, median, maximum;
 
-		public TripleRange(T min, T median, T max)
+		#endregion
+
+		public TripleRange(T minimum, T median, T maximum)
 		{
-			this.minimum = min;
+			this.minimum = minimum;
 			this.median = median;
-			this.maximum = max;
+			this.maximum = maximum;
 		}
+
+		#region function
 
 		public T GetRounding(T value)
 		{
 			return RangeUtility.Rounding(value, this.minimum, this.maximum);
 		}
 
+		#endregion
 	}
 }

@@ -73,7 +73,17 @@
 		public const int screenCountChangeRetryCount = 10;
 		public static readonly TimeSpan screenCountChangeWaitTime = TimeSpan.FromMilliseconds(250);
 
-		//public static readonly RangeModel<double> commandHideTimeDefualt = TimeSpan.FromSeconds(2).TotalMilliseconds;
+		public static readonly TripleRange<TimeSpan> commandHideTime = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(250),
+			TimeSpan.FromSeconds(2),
+			TimeSpan.FromSeconds(10)
+		);
+
+		public static readonly TripleRange<double> toolbarTextLength = new TripleRange<double>(
+			20,
+			80,
+			200
+		);
 
 		/// <summary>
 		/// 実行パス
@@ -99,6 +109,20 @@
 		/// スタートアップ用ショートカットファイルパス。
 		/// </summary>
 		public static readonly string startupShortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), shortcutName);
+
+		#region commandHideTime
+
+		public static double CommandHideMinimumTime { get { return commandHideTime.minimum.TotalMilliseconds; } }
+		public static double CommandHideMaximumTime { get { return commandHideTime.maximum.TotalMilliseconds; } }
+
+		#endregion
+
+		#region toolbarTextLength
+
+		public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
+		public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
+			 
+		#endregion
 
 		#region app.config
 

@@ -1,5 +1,6 @@
 ﻿<AV:CommonDataUserControl 
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.ToolbarSettingControl"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
@@ -66,8 +67,7 @@
 				<Label Content="font" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
 
 				<Label Content="text length" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-				<!-- 記号定数化 -->
-				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedItem.TextWidth, ElementName=Toolbar, Mode=TwoWay}" Minimum="1" Maximum="200" />
+				<Slider Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" Value="{Binding SelectedItem.TextWidth, ElementName=Toolbar, Mode=TwoWay}" Minimum="{Binding Source={x:Static AM:Constants.ToolbarTextMinimumLength}}" Maximum="{Binding Source={x:Static AM:Constants.ToolbarTextMaximumLength}}" />
 
 				<StackPanel HorizontalAlignment="Left" Height="71" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
 					<CheckBox Content="show text" HorizontalAlignment="Stretch" IsChecked="{Binding SelectedItem.TextVisible, ElementName=Toolbar}" />
