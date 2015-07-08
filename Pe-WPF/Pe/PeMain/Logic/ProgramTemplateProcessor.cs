@@ -14,7 +14,7 @@
 	/// TODO: 既存の処理を暫定的に外してる
 	/// </summary>
 	[Serializable]
-	public class ProgramTemplateProcessor : T4TemplateProcessor, IHavingNonProcess
+	public class ProgramTemplateProcessor : T4TemplateProcessor
 	{
 		const string directiveLang = "LANGUAGE";
 
