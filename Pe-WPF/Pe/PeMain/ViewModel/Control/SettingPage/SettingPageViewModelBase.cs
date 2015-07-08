@@ -8,19 +8,28 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public abstract class SettingPageViewModelBase: ViewModelBase, IHavingNonProcess, IHavingVariableConstants
 	{
-		public SettingPageViewModelBase(INonProcess nonProcess, VariableConstants variableConstants)
+		public SettingPageViewModelBase(INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
 		{
 			CheckUtility.EnforceNotNull(nonProcess);
 			CheckUtility.EnforceNotNull(variableConstants);
+			CheckUtility.DebugEnforceNotNull(settingNotifiyItem);
 
 			NonProcess = nonProcess;
 			VariableConstants = variableConstants;
+			SettingNotifiyItem = settingNotifiyItem;
 		}
+
+		#region property
+
+		protected SettingNotifiyItem SettingNotifiyItem { get; private set; }
+
+		#endregion
 
 		#region IHavingNonProcess
 

@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel.Control.SettingPage;
@@ -29,9 +30,12 @@
 		{
 			CommonData = commonData;
 			View = view;
+			SettingNotifiyItem = new SettingNotifiyItem();
 		}
 
 		#region property
+
+		SettingNotifiyItem SettingNotifiyItem { get; set; }
 
 		public MainSettingViewModel MainSetting
 		{
@@ -43,7 +47,8 @@
 						CommonData.MainSetting.Language,
 						CommonData.MainSetting.Logging,
 						CommonData.NonProcess,
-						CommonData.VariableConstants
+						CommonData.VariableConstants,
+						SettingNotifiyItem
 					);
 				}
 
@@ -60,7 +65,8 @@
 						CommonData.LauncherItemSetting,
 						CommonData.LauncherIconCaching,
 						CommonData.NonProcess,
-						CommonData.VariableConstants
+						CommonData.VariableConstants,
+						SettingNotifiyItem
 					);
 				}
 
@@ -79,7 +85,8 @@
 						CommonData.LauncherItemSetting,
 						CommonData.LauncherIconCaching,
 						CommonData.NonProcess,
-						CommonData.VariableConstants
+						CommonData.VariableConstants,
+						SettingNotifiyItem
 					);
 				}
 
@@ -95,7 +102,8 @@
 					this._commandSetting = new CommandSettingViewModel(
 						CommonData.MainSetting.Command,
 						CommonData.NonProcess,
-						CommonData.VariableConstants
+						CommonData.VariableConstants,
+						SettingNotifiyItem
 					);
 				}
 

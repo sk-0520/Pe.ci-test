@@ -12,11 +12,12 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 
 	public class CommandSettingViewModel: SettingPageViewModelBase
 	{
-		public CommandSettingViewModel(CommandSettingModel command, INonProcess nonProcess, VariableConstants variableConstants)
-			: base(nonProcess, variableConstants)
+		public CommandSettingViewModel(CommandSettingModel command, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
+			: base(nonProcess, variableConstants, settingNotifiyItem)
 		{
 			Command = command;
 		}

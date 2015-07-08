@@ -130,6 +130,7 @@
     <Compile Include="Data\LauncherIconCaching.cs" />
     <Compile Include="Data\LauncherToolbarDataModel.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
+    <Compile Include="Data\Temporary\SettingNotifiyItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />

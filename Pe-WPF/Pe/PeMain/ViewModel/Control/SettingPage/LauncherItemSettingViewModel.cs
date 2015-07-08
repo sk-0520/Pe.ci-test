@@ -10,6 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
 	public class LauncherItemSettingViewModel: SettingPageLauncherIconCacheViewModelBase
@@ -20,8 +21,8 @@
 
 		#endregion
 
-		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants)
-			: base(launcherIconCaching, nonProcess, variableConstants)
+		public LauncherItemSettingViewModel(LauncherItemSettingModel launcherItemSetting, LauncherIconCaching launcherIconCaching, INonProcess nonProcess, VariableConstants variableConstants, SettingNotifiyItem settingNotifiyItem)
+			: base(launcherIconCaching, nonProcess, variableConstants, settingNotifiyItem)
 		{
 			LauncherItemSetting = launcherItemSetting;
 		}
