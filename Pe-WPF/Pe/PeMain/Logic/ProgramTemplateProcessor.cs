@@ -22,12 +22,12 @@
 
 		#endregion
 
-		public ProgramTemplateProcessor()
-			: base()
+		public ProgramTemplateProcessor(ILogger logger = null)
+			: base(logger)
 		{ }
 
-		public ProgramTemplateProcessor(TextTemplatingEngineHost host)
-			: base(host)
+		public ProgramTemplateProcessor(TextTemplatingEngineHost host, ILogger logger = null)
+			: base(host, logger)
 		{ }
 
 		#region property

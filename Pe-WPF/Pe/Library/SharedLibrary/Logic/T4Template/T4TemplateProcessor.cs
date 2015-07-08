@@ -12,6 +12,8 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Event;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using Microsoft.VisualStudio.TextTemplating;
 	using Mono.TextTemplating;
 
@@ -60,26 +62,30 @@
 		/// <summary>
 		/// デフォルト値での生成。
 		/// </summary>
-		public T4TemplateProcessor()
+		public T4TemplateProcessor(ILogger logger = null)
 			: this(new TextTemplatingEngineHost() {
 				Session = new TextTemplatingSession()
-			})
+			}, logger)
 		{ }
 
 		/// <summary>
 		/// 指定データでの生成。
 		/// </summary>
 		/// <param name="host">セッション定義済みのホスト環境。</param>
-		public T4TemplateProcessor(TextTemplatingEngineHost host)
+		public T4TemplateProcessor(TextTemplatingEngineHost host, ILogger logger = null)
 		{
 			//Session = host.Session;
 			Host = host;
 			Variable = host.Session as TextTemplatingSession;
 
+			Logger = logger;
+
 			Initialize();
 		}
 
 		#region property
+
+		protected ILogger Logger { get; private set; }
 
 		/// <summary>
 		/// テンプレートソース。
@@ -286,7 +292,7 @@
 							TemplateProxy.Dispose();
 						}
 					} catch (RemotingException ex) {
-						Debug.WriteLine(ex);
+						Logger.SafeWarning(ex);
 					}
 				} else {
 					if (TemplateProxy != null) {
@@ -301,7 +307,7 @@
 						try {
 							AppDomain.Unload(TemplateAppDomain);
 						} catch (CannotUnloadAppDomainException ex) {
-							Debug.WriteLine(ex);
+							Logger.SafeWarning(ex);
 						}
 					} else {
 						AppDomain.Unload(TemplateAppDomain);
@@ -448,10 +454,10 @@
 			if (!Generated) {
 				throw new InvalidOperationException("Generated");
 			}
-			Debug.Assert(!string.IsNullOrEmpty(ProgrammingLanguage));
-			Debug.Assert(!string.IsNullOrEmpty(GeneratedProgramSource));
-			Debug.Assert(!string.IsNullOrWhiteSpace(NamespaceName));
-			Debug.Assert(!string.IsNullOrWhiteSpace(ClassName));
+			CheckUtility.DebugEnforceNotNullAndNotEmpty(ProgrammingLanguage);
+			CheckUtility.DebugEnforceNotNullAndNotEmpty(GeneratedProgramSource);
+			CheckUtility.DebugEnforceNotNullAndNotEmpty(NamespaceName);
+			CheckUtility.DebugEnforceNotNullAndNotEmpty(ClassName);
 
 			DisposeProgramSource(true);
 
@@ -478,7 +484,7 @@
 				try {
 					File.Delete(pathAssembly);
 				} catch (Exception ex) {
-					Debug.WriteLine(ex);
+					Logger.SafeWarning(ex);
 				}
 
 				if (string.IsNullOrEmpty(TemplateAppDomainName)) {
