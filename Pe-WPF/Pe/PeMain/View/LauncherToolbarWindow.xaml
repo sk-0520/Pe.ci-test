@@ -39,7 +39,6 @@
 >
 	<AW:CommonDataWindow.Resources>
 		<xctk:InverseBoolConverter x:Key="InverseBoolConverter" />
-		<SC:LogicalMultiTrueOrConverter x:Key="LogicalMultiTrueOrConverter" />
 		<SC:LogicalMultiEqualConverter x:Key="LogicalMultiEqualConverter" />
 		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
 
