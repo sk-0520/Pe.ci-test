@@ -110,6 +110,7 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
+    <Compile Include="Model\RangeModel.cs" />
     <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="IF\WindowsViewExtend\IWindowHitTestData.cs" />
     <Compile Include="IF\WindowsViewExtend\IWindowAreaCorrectionData.cs" />

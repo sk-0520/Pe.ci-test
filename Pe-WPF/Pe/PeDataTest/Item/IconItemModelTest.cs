@@ -24,7 +24,7 @@
 			Assert.AreEqual(cp.Index, src.Index);
 
 			src.Path = "test";
-			src.Index = 2
+			src.Index = 2;
 
 			Assert.AreNotEqual(cp.Path, src.Path);
 			Assert.AreNotEqual(cp.Index, src.Index);
