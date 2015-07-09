@@ -154,7 +154,7 @@
     <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNullConverter.cs" />
     <Compile Include="View\Converter\LogicalMultiEqualConverter.cs" />
-    <Compile Include="View\Converter\LogicalMultiOrConverter.cs" />
+    <Compile Include="View\Converter\LogicalMultiTrueOrConverter.cs" />
     <Compile Include="View\Converter\LogicalNotConverter.cs" />
     <Compile Include="View\ViewExtend\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
