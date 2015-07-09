@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 
@@ -106,7 +107,33 @@
 			Copy(() => Clipboard.SetDataObject(data), watcher);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="range"></param>
+		/// <param name="rawHtml"></param>
+		/// <param name="encoding"></param>
+		/// <returns></returns>
+		static string ConvertStringFromRawHtml(RangeModel<int> range, byte[] rawHtml, Encoding encoding)
+		{
+			if(-1 < range.Head && -1 < range.Tail && range.Head <= range.Tail) {
+				var raw = rawHtml.Skip(range.Head).Take(range.Tail - range.Head);
+				return Encoding.UTF8.GetString(raw.ToArray());
+			}
 
+			return null;
+		}
+
+		/// <summary>
+		/// <para>UTF-8</para>
+		/// </summary>
+		/// <param name="range"></param>
+		/// <param name="rawHtml"></param>
+		/// <returns></returns>
+		static string ConvertStringFromDefaultRawHtml(RangeModel<int> range, byte[] rawHtml)
+		{
+			return ConvertStringFromRawHtml(range, rawHtml, Encoding.UTF8);
+		}
 
 
 	}

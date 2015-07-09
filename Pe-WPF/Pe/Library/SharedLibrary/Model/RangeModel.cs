@@ -25,12 +25,12 @@ namespace ContentTypeTextNet.Library.SharedLibrary.IF
 		/// 範囲の開始点。
 		/// </summary>
 		[DataMember]
-		T Head { get; set; }
+		public T Head { get; set; }
 		/// <summary>
 		/// 範囲の終了点。
 		/// </summary>
 		[DataMember]
-		T Tail { get; set; }
+		public T Tail { get; set; }
 
 		#endregion
 	}
