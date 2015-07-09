@@ -27,8 +27,8 @@
 	using System.Threading.Tasks;
 	using System.Threading;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Converter;
-using ContentTypeTextNet.Pe.PeMain.Define;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.PeMain.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{

@@ -18,6 +18,9 @@
 
 		#region IName
 
+		/// <summary>
+		/// 言語名もしくは言語コード。
+		/// </summary>
 		[DataMember]
 		public string Name { get; set; }
 
