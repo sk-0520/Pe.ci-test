@@ -55,9 +55,9 @@
 			return new POINT(LOWORD(lParam), HIWORD(lParam));
 		}
 
-		public static HT ConvertHTFromLParam(IntPtr param)
+		public static HT ConvertHTFromLParam(IntPtr lParam)
 		{
-			return (HT)LOWORD(param);
+			return (HT)LOWORD(lParam);
 		}
 
 		public static MOD ConvertMODFromModifierKeys(ModifierKeys mod)
@@ -68,6 +68,16 @@
 		public static ModifierKeys ConvertModifierKeysFromMOD(MOD mod)
 		{
 			return (ModifierKeys)mod;
+		}
+
+		public static ModifierKeys ConvertModifierKeysFromLParam(IntPtr lParam)
+		{
+			return ConvertModifierKeysFromMOD((MOD)unchecked((short)(long)lParam));
+		}
+
+		public static Key ConvertKeyFromLParam(IntPtr lParam)
+		{
+			return KeyInterop.KeyFromVirtualKey(unchecked((ushort)((long)lParam >> 16)));
 		}
 
 		#endregion

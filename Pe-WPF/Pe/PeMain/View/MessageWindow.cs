@@ -74,8 +74,8 @@
 					{
 						var hotKeyId = (HotKeyId)wParam;
 						var hotKeyModel = new HotKeyModel() {
-							Key = KeyInterop.KeyFromVirtualKey(unchecked((ushort)((long)lParam >> 16))),
-							ModifierKeys = WindowsUtility.ConvertModifierKeysFromMOD((MOD)unchecked((short)(long)lParam)),
+							Key = WindowsUtility.ConvertKeyFromLParam(lParam),
+							ModifierKeys = WindowsUtility.ConvertModifierKeysFromLParam(lParam),
 						};
 
 						CommonData.AppSender.SendHotKey(hotKeyId, hotKeyModel);
