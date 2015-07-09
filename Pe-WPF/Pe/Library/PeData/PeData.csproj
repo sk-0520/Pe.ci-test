@@ -93,6 +93,7 @@
     <Compile Include="Item\LauncherItemModel.cs" />
     <Compile Include="Item\LauncherStdStreamItemModel.cs" />
     <Compile Include="Setting\MainSettings\LoggingSettingModel.cs" />
+    <Compile Include="Setting\MainSettings\NoteSettingModel.cs" />
     <Compile Include="Setting\MainSettings\TemplateSettingModel.cs" />
     <Compile Include="Setting\MainSettings\ToolbarItemCollectionModel.cs" />
     <Compile Include="Item\ToolbarItemModel.cs" />
