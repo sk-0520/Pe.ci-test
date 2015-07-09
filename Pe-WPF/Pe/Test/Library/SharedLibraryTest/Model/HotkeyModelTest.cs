@@ -15,12 +15,12 @@
 		[Test]
 		public void DeepCloneTest()
 		{
-			var src = new HotkeyModel() {
+			var src = new HotKeyModel() {
 				Key = Key.A,
 				ModifierKeys = ModifierKeys.Control
 			};
 
-			var cp = (HotkeyModel)src.DeepClone();
+			var cp = (HotKeyModel)src.DeepClone();
 
 			Assert.AreEqual(cp.Key, src.Key);
 			Assert.AreEqual(cp.ModifierKeys, src.ModifierKeys);

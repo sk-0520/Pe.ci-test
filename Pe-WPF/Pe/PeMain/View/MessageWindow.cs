@@ -6,8 +6,11 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Input;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
@@ -41,6 +44,7 @@
 			base.OnLoaded(sender, e);
 			Visibility = System.Windows.Visibility.Collapsed;
 
+			ApplyHotKey();
 			RegistClipboardListener();
 		}
 		
@@ -65,6 +69,18 @@
 						CommonData.AppSender.SendClipboardChanged();
 					}
 					break;
+
+				case (int)WM.WM_HOTKEY: 
+					{
+						var hotKeyId = (HotKeyId)wParam;
+						var hotKeyModel = new HotKeyModel() {
+							Key = KeyInterop.KeyFromVirtualKey(unchecked((ushort)((long)lParam >> 16))),
+							ModifierKeys = WindowsUtility.ConvertModifierKeysFromMOD((MOD)unchecked((short)(long)lParam)),
+						};
+
+						CommonData.AppSender.SendHotKey(hotKeyId, hotKeyModel);
+					}
+					break;
 			}
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
@@ -86,6 +102,56 @@
 			if(ClipboardListenerRegisted) {
 				NativeMethods.RemoveClipboardFormatListener(Handle);
 				ClipboardListenerRegisted = false;
+			}
+		}
+
+		bool RegistHotKey(HotKeyId hotKeyId, HotKeyModel hotkeyModel)
+		{
+			var mod = WindowsUtility.ConvertMODFromModifierKeys(hotkeyModel.ModifierKeys);
+			var key = KeyInterop.VirtualKeyFromKey(hotkeyModel.Key);
+
+			return NativeMethods.RegisterHotKey(Handle, (int)hotKeyId, mod, key);
+		}
+
+		bool UnRegisterHotKey(HotKeyId hotKeyId)
+		{
+			return NativeMethods.UnregisterHotKey(Handle, (int)hotKeyId);
+		}
+
+		void ApplyHotKey()
+		{
+			var hotKeyDatas = new[] {
+					new { Id = HotKeyId.ShowCommand,   HotKey = CommonData.MainSetting.Command.ShowHotkey,                 UnRegistMessageName = "hotkey/unregist/command",         RegistMessageName = "hotkey/regist/command" },
+					new { Id = HotKeyId.HideFile,      HotKey = CommonData.MainSetting.SystemEnvironment.HideFileHotkey, UnRegistMessageName = "hotkey/unregist/hidden-file",     RegistMessageName = "hotkey/regist/hidden-file" },
+					new { Id = HotKeyId.Extension,     HotKey = CommonData.MainSetting.SystemEnvironment.ExtensionHotkey,  UnRegistMessageName = "hotkey/unregist/extension",       RegistMessageName = "hotkey/regist/extension" },
+					//new { Id = HotKeyId.CreateNote,    HotKey = CommonData.MainSetting.Note.CreateHotKey,              UnRegistMessageName = "hotkey/unregist/create-note",     RegistMessageName = "hotkey/regist/create-note" },
+					//new { Id = HotKeyId.HiddenNote,    HotKey = CommonData.MainSetting.Note.HiddenHotKey,              UnRegistMessageName = "hotkey/unregist/hidden-note",     RegistMessageName = "hotkey/regist/hidden-note" },
+					//new { Id = HotKeyId.CompactNote,   HotKey = CommonData.MainSetting.Note.CompactHotKey,             UnRegistMessageName = "hotkey/unregist/compact-note",    RegistMessageName = "hotkey/regist/compact-note" },
+					//new { Id = HotKeyId.ShowFrontNote, HotKey = CommonData.MainSetting.Note.ShowFrontHotKey,           UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/show-front-note" },
+					//new { Id = HotKeyId.SwitchClipboardShow, HotKey = CommonData.MainSetting.Clipboard.ToggleHotKeySetting, UnRegistMessageName = "hotkey/unregist/show-front-note", RegistMessageName = "hotkey/regist/clipborad" },
+				};
+			// 登録解除
+			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.IsRegistered)) {
+				if(UnRegisterHotKey(hotKeyData.Id)) {
+					hotKeyData.HotKey.IsRegistered = false;
+				} else {
+					var message = CommonData.Language["hotkey/unregist/fail"];
+					var detail = CommonData.Language[hotKeyData.UnRegistMessageName];
+
+					CommonData.Logger.Warning(message, detail);
+				}
+			}
+
+			// 登録
+			foreach(var hotKeyData in hotKeyDatas.Where(hk => hk.HotKey.Enabled)) {
+				if(RegistHotKey(hotKeyData.Id, hotKeyData.HotKey)) {
+					hotKeyData.HotKey.IsRegistered = true;
+				} else {
+					var message = CommonData.Language["hotkey/regist/fail"];
+					var detail = CommonData.Language[hotKeyData.RegistMessageName];
+
+					CommonData.Logger.Warning(message, detail);
+				}
 			}
 		}
 

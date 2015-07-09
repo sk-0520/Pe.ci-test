@@ -1,12 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using ContentTypeTextNet.Pe.PeMain.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.PeMain.Data;
+using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public interface IAppSender
 	{
@@ -24,5 +26,11 @@
 		/// クリップボードが変更された際に通知。
 		/// </summary>
 		void SendClipboardChanged();
+		/// <summary>
+		/// ホットキー。
+		/// </summary>
+		/// <param name="hotKeyId"></param>
+		/// <param name="hotKeyModel"></param>
+		void SendHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel);
 	}
 }

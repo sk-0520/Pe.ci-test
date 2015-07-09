@@ -136,6 +136,7 @@
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\Temporary\SettingNotifiyItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
+    <Compile Include="Define\HotKeyId.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />

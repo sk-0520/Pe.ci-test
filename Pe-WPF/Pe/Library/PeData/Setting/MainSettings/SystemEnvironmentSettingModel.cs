@@ -15,19 +15,19 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public SystemEnvironmentSettingModel()
 			: base()
 		{
-			HideFileHotkey = new HotkeyModel();
-			ExtensionHotkey = new HotkeyModel();
+			HideFileHotkey = new HotKeyModel();
+			ExtensionHotkey = new HotKeyModel();
 		}
 
 		/// <summary>
 		/// 隠しファイル表示切り替えホットキー。
 		/// </summary>
 		[DataMember]
-		public HotkeyModel HideFileHotkey { get; set; }
+		public HotKeyModel HideFileHotkey { get; set; }
 		/// <summary>
 		/// 拡張子表示切替ホットキー。
 		/// </summary>
 		[DataMember]
-		public HotkeyModel ExtensionHotkey { get; set; }
+		public HotKeyModel ExtensionHotkey { get; set; }
 	}
 }

@@ -27,6 +27,8 @@
 	using System.Threading.Tasks;
 	using System.Threading;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Converter;
+using ContentTypeTextNet.Pe.PeMain.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -163,6 +165,11 @@
 			ReceiveClipboardChanged();
 		}
 
+		public void SendHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
+		{
+			ReceiveHotKey(hotKeyId, hotKeyModel);
+		}
+
 		#region IAppSender-Implement
 
 		void ReceiveWindowAppend(Window window)
@@ -210,6 +217,11 @@
 			if(!CommonData.MainSetting.Clipboard.Enabled) {
 				return;
 			}
+		}
+
+		public void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
+		{
+			CommonData.Logger.Trace(hotKeyId.ToString(), hotKeyModel);
 		}
 
 		#endregion

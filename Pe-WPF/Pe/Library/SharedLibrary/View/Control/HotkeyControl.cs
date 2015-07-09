@@ -56,7 +56,7 @@
 
 		public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
 			"Hotkey",
-			typeof(HotkeyModel),
+			typeof(HotKeyModel),
 			typeof(HotkeyControl),
 			new FrameworkPropertyMetadata(
 				null,
@@ -69,13 +69,13 @@
 		{
 			var view = obj as HotkeyControl;
 			if(view != null) {
-				view.Hotkey = e.NewValue as HotkeyModel;
+				view.Hotkey = e.NewValue as HotKeyModel;
 			}
 		}
 
-		public HotkeyModel Hotkey
+		public HotKeyModel Hotkey
 		{
-			get { return GetValue(HotkeyProperty) as HotkeyModel; }
+			get { return GetValue(HotkeyProperty) as HotKeyModel; }
 			set
 			{
 				SetValue(HotkeyProperty, value);
@@ -132,7 +132,7 @@
 			ModifierKeys = mod;
 			Key = key;
 
-			Hotkey = new HotkeyModel() {
+			Hotkey = new HotKeyModel() {
 				ModifierKeys = this.ModifierKeys,
 				Key = this.Key,
 			};

@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Library.PInvoke.Windows
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool RegisterHotKey(IntPtr hWnd, int id, MOD fsModifiers, uint vk);
+		public static extern bool RegisterHotKey(IntPtr hWnd, int id, MOD fsModifiers, int vk);
 
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible"), System.Security.SuppressUnmanagedCodeSecurity]
 		[DllImport("user32", SetLastError = true)]

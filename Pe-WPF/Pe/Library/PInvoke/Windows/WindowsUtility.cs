@@ -6,6 +6,7 @@
 	using System.Runtime.InteropServices;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Input;
 
 	public static class WindowsUtility
 	{
@@ -57,6 +58,16 @@
 		public static HT ConvertHTFromLParam(IntPtr param)
 		{
 			return (HT)LOWORD(param);
+		}
+
+		public static MOD ConvertMODFromModifierKeys(ModifierKeys mod)
+		{
+			return (MOD)mod;
+		}
+
+		public static ModifierKeys ConvertModifierKeysFromMOD(MOD mod)
+		{
+			return (ModifierKeys)mod;
 		}
 
 		#endregion

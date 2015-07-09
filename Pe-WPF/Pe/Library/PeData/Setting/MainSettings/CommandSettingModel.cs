@@ -19,7 +19,7 @@
 		public CommandSettingModel()
 			: base()
 		{
-			ShowHotkey = new HotkeyModel();
+			ShowHotkey = new HotKeyModel();
 		}
 
 		#region property
@@ -39,7 +39,7 @@
 		/// 呼び出しホットキー。
 		/// </summary>
 		[DataMember]
-		public HotkeyModel ShowHotkey { get; set; }
+		public HotKeyModel ShowHotkey { get; set; }
 
 		/// <summary>
 		/// IDを検索対象にする。

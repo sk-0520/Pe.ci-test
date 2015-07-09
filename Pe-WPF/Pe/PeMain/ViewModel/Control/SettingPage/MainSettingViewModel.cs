@@ -119,13 +119,13 @@
 
 		#region
 
-		public HotkeyModel SysEnvHideFileHotkey
+		public HotKeyModel SysEnvHideFileHotkey
 		{
 			get { return SystemEnvironment.HideFileHotkey; }
 			set { SetPropertyValue(SystemEnvironment, value, "HideFileHotkey"); }
 		}
 
-		public HotkeyModel SysEnvExtensionHotkey
+		public HotKeyModel SysEnvExtensionHotkey
 		{
 			get { return SystemEnvironment.ExtensionHotkey; }
 			set { SetPropertyValue(SystemEnvironment, value, "ExtensionHotkey"); }
