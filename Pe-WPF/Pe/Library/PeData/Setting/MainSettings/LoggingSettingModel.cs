@@ -53,6 +53,8 @@
 
 		#endregion
 
+		#region property
+
 		/// <summary>
 		/// ログ追加時にUIを表示るか。
 		/// </summary>
@@ -88,5 +90,7 @@
 		/// </summary>
 		[DataMember]
 		public bool ShowTriggerFatal { get; set; }
+
+		#endregion
 	}
 }
