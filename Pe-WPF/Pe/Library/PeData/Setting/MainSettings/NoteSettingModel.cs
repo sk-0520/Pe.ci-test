@@ -14,7 +14,7 @@
 			: base()
 		{
 			CreateHotKey = new HotKeyModel();
-			HiddenHotKey = new HotKeyModel();
+			HideHotKey = new HotKeyModel();
 			CompactHotKey = new HotKeyModel();
 			ShowFrontHotKey = new HotKeyModel();
 		}
@@ -27,7 +27,7 @@
 		[DataMember]
 		public HotKeyModel CreateHotKey { get; set; }
 		[DataMember]
-		public HotKeyModel HiddenHotKey { get; set; }
+		public HotKeyModel HideHotKey { get; set; }
 		[DataMember]
 		public HotKeyModel CompactHotKey { get; set; }
 		[DataMember]

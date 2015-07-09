@@ -38,6 +38,7 @@
 		/// <summary>
 		/// 有効なキー設定か。
 		/// </summary>
+		[XmlIgnore, IgnoreDataMember]
 		public bool Enabled
 		{
 			get
