@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	/// <summary>
-	/// ランチャアイテム。
+	/// ランチャグループ。
 	/// </summary>
 	[DataContract, Serializable]
 	public class LauncherGroupSettingModel: SettingModelBase

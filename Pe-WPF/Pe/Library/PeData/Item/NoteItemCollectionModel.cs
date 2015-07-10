@@ -8,7 +8,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Model;
 namespace ContentTypeTextNet.Pe.Library.PeData.Item
 {
 	[Serializable]
-	public class NoteItemCollectionModel: GuidCollectionBase<NoteItemModel>
+	public class NoteItemCollectionModel: IndexItemCollectionModel<NoteItemModel>
 	{
 		public NoteItemCollectionModel()
 			: base()

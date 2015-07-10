@@ -73,6 +73,7 @@
     <Compile Include="Define\GroupKind.cs" />
     <Compile Include="Define\LauncherKind.cs" />
     <Compile Include="Define\LauncherCommandType.cs" />
+    <Compile Include="Define\NoteKind.cs" />
     <Compile Include="IF\IItemModel.cs" />
     <Compile Include="IF\IPeData.cs" />
     <Compile Include="IF\ISettingModel.cs" />
@@ -81,8 +82,14 @@
     <Compile Include="IF\IWindowArea.cs" />
     <Compile Include="IF\IWindowState.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
+    <Compile Include="Item\ClipboardItemCollectionModel.cs" />
+    <Compile Include="Item\ClipboardItemModel.cs" />
+    <Compile Include="Item\IndexItemCollectionModel.cs" />
+    <Compile Include="Item\IndexItemModelBase.cs" />
     <Compile Include="Item\NoteItemCollectionModel.cs" />
     <Compile Include="Item\NoteItemModel.cs" />
+    <Compile Include="Item\TemplateItemCollectionModel.cs" />
+    <Compile Include="Item\TemplateItemModel.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModel.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModel.cs" />
     <Compile Include="Item\EnvironmentVariablesItemModel.cs" />
@@ -110,6 +117,7 @@
     <Compile Include="Setting\LauncherGroupSettingModel.cs" />
     <Compile Include="Setting\LauncherItemSettingModel.cs" />
     <Compile Include="Setting\MainSettingModel.cs" />
+    <Compile Include="Setting\NoteIndexSettingModel.cs" />
     <Compile Include="Setting\SettingModelBase.cs" />
     <Compile Include="PeModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
