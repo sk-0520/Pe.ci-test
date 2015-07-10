@@ -1,16 +1,17 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
 	public class ClipboardSettingModel: SettingModelBase, IWindowStatus
@@ -32,6 +33,12 @@
 		/// </summary>
 		[DataMember]
 		public bool EnabledApplicationCopy { get; set; }
+
+		/// <summary>
+		/// 表示非表示切り替え。
+		/// </summary>
+		[DataMember]
+		public HotKeyModel ToggleHotKey { get; set; }
 
 		#endregion
 
