@@ -90,6 +90,18 @@
 			TimeSpan.FromSeconds(1)
 		);
 
+		public static readonly TripleRange<double> clipboardSaveCount = new TripleRange<double>(
+			0,
+			1024,
+			1024 * 10
+		);
+
+		public static readonly TripleRange<double> clipboardDuplicationCount = new TripleRange<double>(
+			-1,
+			50,
+			256
+		);
+
 		/// <summary>
 		/// 実行パス
 		/// </summary>
@@ -133,6 +145,20 @@
 
 		public static double ClipboardWaitMinimumTime { get { return clipboardWaitTime.minimum.TotalMilliseconds; } }
 		public static double ClipboardWaitMaximumTime { get { return clipboardWaitTime.maximum.TotalMilliseconds; } }
+
+		#endregion
+
+		#region clipboardSaveCount
+
+		public static double ClipboardSaveMinimumCount { get { return clipboardSaveCount.minimum; } }
+		public static double ClipboardSaveMaximumCount { get { return clipboardSaveCount.maximum; } }
+
+		#endregion
+
+		#region clipboardDuplicationCount
+
+		public static double ClipboardDuplicationMinimumCount { get { return clipboardDuplicationCount.minimum; } }
+		public static double ClipboardDuplicationMaximumCount { get { return clipboardDuplicationCount.maximum; } }
 
 		#endregion
 
