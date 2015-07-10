@@ -1,0 +1,29 @@
+﻿<AV:CommonDataUserControl 
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.NoteSettingControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	mc:Ignorable="d" 
+	d:DesignHeight="300" d:DesignWidth="300"
+>
+	<Grid>
+		<GroupBox Header="key" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" Height="215" Width="129">
+			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+				<Label Content="create" />
+				<AV:AppHotkeyControl Hotkey="{Binding CreateHotKey}" />
+
+				<Label Content="hide" />
+				<AV:AppHotkeyControl Hotkey="{Binding HideHotKey}" />
+
+				<Label Content="compact" />
+				<AV:AppHotkeyControl Hotkey="{Binding CompactHotKey}" />
+
+				<Label Content="fromt" />
+				<AV:AppHotkeyControl Hotkey="{Binding ShowFrontHotKey}" />
+
+			</StackPanel>
+		</GroupBox>
+	</Grid>
+</AV:CommonDataUserControl>
