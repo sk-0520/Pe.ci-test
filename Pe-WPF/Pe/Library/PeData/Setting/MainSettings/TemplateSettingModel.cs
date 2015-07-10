@@ -9,6 +9,7 @@
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
@@ -17,7 +18,19 @@
 	{
 		public TemplateSettingModel()
 			: base()
-		{ }
+		{
+			ToggleHotKey = new HotKeyModel();
+		}
+
+		#region property
+
+		/// <summary>
+		/// 表示非表示切り替え。
+		/// </summary>
+		[DataMember]
+		public HotKeyModel ToggleHotKey { get; set; }
+
+		#endregion
 
 		#region IWindowStatus
 

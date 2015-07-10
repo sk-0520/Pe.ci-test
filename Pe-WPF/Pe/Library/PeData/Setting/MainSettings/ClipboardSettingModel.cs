@@ -10,11 +10,12 @@ using System.Windows;
 using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 using ContentTypeTextNet.Library.SharedLibrary.Define;
 using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.Define;
 using ContentTypeTextNet.Pe.Library.PeData.IF;
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class ClipboardSettingModel: SettingModelBase, IWindowStatus
+	public class ClipboardSettingModel : SettingModelBase, IWindowStatus
 	{
 		public ClipboardSettingModel()
 			: base()
@@ -37,10 +38,46 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		public bool EnabledApplicationCopy { get; set; }
 
 		/// <summary>
+		/// 履歴を保存する。
+		/// </summary>
+		[DataMember]
+		public bool SaveClipboard { get; set; }
+
+		/// <summary>
 		/// 表示非表示切り替え。
 		/// </summary>
 		[DataMember]
 		public HotKeyModel ToggleHotKey { get; set; }
+
+		/// <summary>
+		/// 取り込み対象。
+		/// </summary>
+		[DataMember]
+		public ClipboardType EnabledClipboardTypes { get; set; }
+
+		/// <summary>
+		/// 保存対象。
+		/// </summary>
+		[DataMember]
+		public ClipboardType SaveClipboardTypes { get; set; }
+
+		/// <summary>
+		/// 履歴数。
+		/// </summary>
+		[DataMember]
+		public int SaveCount { get; set; }
+
+		/// <summary>
+		/// 待機時間。
+		/// </summary>
+		[DataMember]
+		public TimeSpan WaitTime { get; set; }
+
+		/// <summary>
+		/// 重複判定。
+		/// </summary>
+		[DataMember]
+		public int DuplicationCount {get;set;}
 
 		#endregion
 
