@@ -10,5 +10,8 @@
 	public class IndexItemCollectionModel<TIndexModel>: GuidCollectionBase<TIndexModel>
 		where TIndexModel: IndexItemModelBase
 	{
+		public IndexItemCollectionModel()
+			: base()
+		{ }
 	}
 }
