@@ -152,8 +152,10 @@
     <Compile Include="Logic\Extension\LanguageExtension.cs" />
     <Compile Include="Logic\IconCaching.cs" />
     <Compile Include="Logic\ProgramTemplateProcessor.cs" />
+    <Compile Include="Logic\Property\WindowAreaProperty.cs" />
     <Compile Include="Logic\Property\TopMostProperty.cs" />
     <Compile Include="Logic\Property\VisibleVisibilityProperty.cs" />
+    <Compile Include="Logic\Property\WindowStateProperty.cs" />
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\ClipboardUtility.cs" />
     <Compile Include="Logic\Utility\ExecuteUtility.cs" />
