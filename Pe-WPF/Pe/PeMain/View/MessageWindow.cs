@@ -44,8 +44,7 @@
 			base.OnLoaded(sender, e);
 			Visibility = System.Windows.Visibility.Collapsed;
 
-			ApplyHotKey();
-			RegistClipboardListener();
+			ApplySettingImpl();
 		}
 		
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -86,9 +85,23 @@
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
+		protected override void ApplySetting()
+		{
+			base.ApplySetting();
+			if (IsHandleCreated) {
+				ApplySettingImpl();
+			}
+		}
+
 		#endregion
 
 		#region function
+
+		void ApplySettingImpl()
+		{
+			ApplyHotKey();
+			RegistClipboardListener();
+		}
 		
 		public void RegistClipboardListener()
 		{

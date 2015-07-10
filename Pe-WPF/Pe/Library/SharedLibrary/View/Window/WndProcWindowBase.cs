@@ -26,6 +26,8 @@
 
 		#region property
 
+		public bool IsHandleCreated { get; set; }
+
 		protected HwndSource HandleSource 
 		{ 
 			get 
@@ -48,6 +50,8 @@
 
 			HandleSource.AddHook(WndProc);
 			Closed += WndProcWindowBase_Closed;
+
+			IsHandleCreated = true;
 		}
 
 		#endregion

@@ -18,7 +18,9 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 	{
 		public ClipboardSettingModel()
 			: base()
-		{ }
+		{
+			ToggleHotKey = new HotKeyModel();
+		}
 
 		#region property
 
