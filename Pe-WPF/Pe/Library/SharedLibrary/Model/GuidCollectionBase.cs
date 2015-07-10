@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	[Serializable]
-	public abstract class GuidCollectionBase<TValue>: TIdCollectionModel<string, TValue>
+	public abstract class GuidCollectionBase<TValue>: TIdCollectionModel<Guid, TValue>
 		where TValue: GuidModelBase
 	{
 		public GuidCollectionBase()

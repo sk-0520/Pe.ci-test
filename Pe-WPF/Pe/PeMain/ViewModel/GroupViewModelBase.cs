@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public abstract class GroupViewModelBase<TModel>: SingleModelWrapperViewModelBase<TModel>, IHavingNonProcess, IHavingLauncherIconCaching, IToolbarNode
-		where TModel: IModel, ITId<string>, IName
+		where TModel: IModel, ITId<Guid>, IName
 	{
 		#region variable
 
@@ -30,7 +30,7 @@
 
 		#region property
 
-		public string Id { get { return Model.Id; } }
+		public Guid Id { get { return Model.Id; } }
 
 		#endregion
 

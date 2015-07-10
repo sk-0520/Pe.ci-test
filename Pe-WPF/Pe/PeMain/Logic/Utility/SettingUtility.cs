@@ -19,6 +19,12 @@
 	/// </summary>
 	public static class SettingUtility
 	{
+		static Guid[] guidList = new[] {
+			Guid.NewGuid(),
+			Guid.NewGuid(),
+			Guid.NewGuid(),
+			Guid.NewGuid(),
+		};
 		public static bool CheckAccept(RunningInformationSettingModel model, INonProcess nonProcess)
 		{
 			if(!model.Accept) {
@@ -58,14 +64,14 @@
 
 			var result = new LauncherGroupItemModel();
 			if(group != null || group.Any()) {
-				newGroupId = TextUtility.ToUnique(
-					newGroupId,
-					group.Keys,
-					(s, i) => string.Format("{0}_{1}", s, i)
-				);
-				newGroupName = TextUtility.ToUniqueDefault(newGroupId, group.Select(g => g.Name));
+				//newGroupId = TextUtility.ToUnique(
+				//	newGroupId,
+				//	group.Keys,
+				//	(s, i) => string.Format("{0}_{1}", s, i)
+				//);
+				newGroupName = TextUtility.ToUniqueDefault(newGroupName, group.Select(g => g.Name));
 			}
-			result.Id = newGroupId;
+			//result.Id = newGroupId;
 			result.Name = newGroupName;
 
 			return result;
@@ -92,25 +98,25 @@
 			// --------------------------------
 			if(!setting.Items.Any()) {
 				setting.Items.Add(new LauncherItemModel() {
-					Id = "test1",
+					Id = guidList[0],
 					Name = "name1",
 					LauncherKind = LauncherKind.File,
 					Command = @"C:\Windows\System32\mspaint.exe"
 				});
 				setting.Items.Add(new LauncherItemModel() {
-					Id = "test2",
+					Id = guidList[1],
 					Name = "name2",
 					LauncherKind = LauncherKind.File,
 					Command = @"%windir%\system32\calc.exe"
 				});
 				setting.Items.Add(new LauncherItemModel() {
-					Id = "test3",
+					Id = guidList[2],
 					Name = "name3",
 					LauncherKind = LauncherKind.Command,
 					Command = @"ping"
 				});
 				setting.Items.Add(new LauncherItemModel() {
-					Id = "test4",
+					Id = guidList[3],
 					Name = "name4",
 					LauncherKind = LauncherKind.File,
 					Command = @"c:\"
@@ -127,11 +133,11 @@
 			if(!setting.Groups.Any()) {
 				var initGroup = CreateLauncherGroup(setting.Groups, nonProcess);
 				//------------------------
-				initGroup.LauncherItems = new ObservableCollection<string>(new[] {
-					"test1",
-					"test2",
-					"test3",
-					"test4",
+				initGroup.LauncherItems = new ObservableCollection<Guid>(new[] {
+					guidList[0],
+					guidList[1],
+					guidList[2],
+					guidList[3],
 				});
 				//------------------------
 				setting.Groups.Add(initGroup);

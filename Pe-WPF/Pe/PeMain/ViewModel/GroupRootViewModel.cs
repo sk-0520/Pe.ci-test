@@ -43,7 +43,8 @@
 						} else {
 							//TODO: 表記
 							var item = new LauncherItemModel();
-							item.Id = item.Name = s;
+							item.Id = s;
+							item.Name = s.ToString("B");
 							list.Add(new GroupItemViewMode(item, LauncherIconCaching, NonProcess));
 						}
 					}

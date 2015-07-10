@@ -9,7 +9,7 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public abstract class GuidModelBase: ModelBase, ITId<string>
+	public abstract class GuidModelBase: ModelBase, ITId<Guid>
 	{
 		#region define
 
@@ -19,22 +19,23 @@
 
 		public GuidModelBase()
 			: base()
-		{ }
+		{
+			Id = Guid.NewGuid();
+		}
 
 		#region ITId
 
 		[DataMember, XmlAttribute]
-		public string Id { get; set; }
+		public Guid Id { get; set; }
 
-		public bool IsSafeId(string id)
+		public bool IsSafeId(Guid id)
 		{
-			Guid temp;
-			return Guid.TryParse(id, out temp);
+			return true;
 		}
 
-		public string ToSafeId(string id)
+		public Guid ToSafeId(Guid id)
 		{
-			return Guid.NewGuid().ToString();
+			return id;
 		}
 
 		#endregion

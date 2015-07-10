@@ -19,7 +19,7 @@
 		public LauncherGroupItemModel()
 			: base()
 		{
-			LauncherItems = new ObservableCollection<string>();
+			LauncherItems = new ObservableCollection<Guid>();
 		}
 
 		#region IName
@@ -42,6 +42,6 @@
 		/// ランチャーアイテム。
 		/// </summary>
 		[DataMember, XmlArrayItem("Item")]
-		public ObservableCollection<string> LauncherItems { get; set; }
+		public ObservableCollection<Guid> LauncherItems { get; set; }
 	}
 }

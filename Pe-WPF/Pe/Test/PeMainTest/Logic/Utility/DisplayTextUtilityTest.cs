@@ -12,18 +12,17 @@
 	[TestFixture]
 	class DisplayTextUtilityTest
 	{
-		[TestCase("", "", "")]
-		[TestCase("", "", null)]
-		[TestCase(null, null, null)]
-		[TestCase("name", "id", "name")]
-		[TestCase("name", "", "name")]
-		[TestCase("id", "id", "")]
-		[TestCase("id", "id", " ")]
-		[TestCase("id", "id", null)]
-		public void GetDisplayName_LauncherItemModel_Test(string test, string id, string name)
+		[TestCase("", "")]
+		[TestCase("", null)]
+		//[TestCase(null, null)]
+		[TestCase("name", "name")]
+		[TestCase("name", "name")]
+		//[TestCase("id", "")]
+		//[TestCase("id", " ")]
+		//[TestCase("id", null)]
+		public void GetDisplayName_LauncherItemModel_Test(string test, string name)
 		{
 			var model = new LauncherItemModel() {
-				Id = id,
 				Name = name,
 			};
 			var result = DisplayTextUtility.GetDisplayName(model);

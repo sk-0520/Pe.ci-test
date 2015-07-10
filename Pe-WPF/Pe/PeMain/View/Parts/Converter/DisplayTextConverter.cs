@@ -13,15 +13,15 @@
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			var id = value as ITId<string>;
+			//var id = value as ITId<string>;
 			var name = value as IName;
 
-			if (id != null && name != null) {
-				return DisplayTextUtility.GetDisplayName(id, name);
-			}
-			if (id != null) {
-				return DisplayTextUtility.GetDisplayName(id);
-			}
+			//if (id != null && name != null) {
+			//	return DisplayTextUtility.GetDisplayName(id, name);
+			//}
+			//if (id != null) {
+			//	return DisplayTextUtility.GetDisplayName(id);
+			//}
 			if (name != null) {
 				return DisplayTextUtility.GetDisplayName(name);
 			}

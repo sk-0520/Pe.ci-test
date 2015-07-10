@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class ToolbarItemModel: GuidModelBase, IVisible, ITopMost
+	public class ToolbarItemModel: ModelBase, IVisible, ITopMost, ITId<string>
 	{
 		public ToolbarItemModel()
 			: base()
@@ -52,6 +52,30 @@
 
 		#endregion
 
+		#region IId
+
+		/// <summary>
+		/// ツールバーの所属ディスプレイ名。
+		/// </summary>
+		[DataMember]
+		public string Id { get; set; }
+
+		public bool IsSafeId(string s)
+		{
+			return !string.IsNullOrEmpty(s);
+		}
+
+		public string ToSafeId(string s)
+		{
+			if(string.IsNullOrEmpty(s)) {
+				return "id";
+			}
+
+			return s;
+		}
+
+		#endregion 
+
 		/// <summary>
 		/// フロート状態。
 		/// </summary>
@@ -81,7 +105,7 @@
 		/// 初期値として使用するグループID。
 		/// </summary>
 		[DataMember]
-		public string DefaultGroupId { get; set; }
+		public Guid DefaultGroupId { get; set; }
 
 		/// <summary>
 		/// テキスト表示を行うか。
