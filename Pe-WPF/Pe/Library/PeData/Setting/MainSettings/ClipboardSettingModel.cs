@@ -1,18 +1,18 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.Library.PeData.IF;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Runtime.Serialization;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
 	public class ClipboardSettingModel : SettingModelBase, IWindowStatus
@@ -77,7 +77,13 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		/// 重複判定。
 		/// </summary>
 		[DataMember]
-		public int DuplicationCount {get;set;}
+		public int DuplicationCount { get; set; }
+
+		/// <summary>
+		/// 転送にクリップボードを使用する。
+		/// </summary>
+		[DataMember]
+		public bool UsingClipboard { get; set; }
 
 		#endregion
 
