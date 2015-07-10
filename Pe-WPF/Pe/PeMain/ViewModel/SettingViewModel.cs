@@ -24,6 +24,8 @@
 		ToolbarSettingViewModel _toolbarSetting;
 		CommandSettingViewModel _commandSetting;
 		NoteSettingViewModel _noteSetting;
+		ClipboardSettingViewModel _clipboardSetting;
+		TemplateSettingViewModel _templateSetting;
 
 		#endregion
 
@@ -127,6 +129,40 @@
 				}
 
 				return this._noteSetting;
+			}
+		}
+
+		public ClipboardSettingViewModel ClipboardSetting
+		{
+			get
+			{
+				if (this._clipboardSetting == null) {
+					this._clipboardSetting = new ClipboardSettingViewModel(
+						CommonData.MainSetting.Clipboard,
+						CommonData.NonProcess,
+						CommonData.VariableConstants,
+						SettingNotifiyItem
+					);
+				}
+
+				return this._clipboardSetting;
+			}
+		}
+
+		public TemplateSettingViewModel TemplateSetting
+		{
+			get
+			{
+				if (this._templateSetting == null) {
+					this._templateSetting = new TemplateSettingViewModel(
+						CommonData.MainSetting.Template,
+						CommonData.NonProcess,
+						CommonData.VariableConstants,
+						SettingNotifiyItem
+					);
+				}
+
+				return this._templateSetting;
 			}
 		}
 

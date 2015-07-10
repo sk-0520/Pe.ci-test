@@ -1,19 +1,19 @@
 ﻿namespace ContentTypeTextNet.Library.SharedLibrary.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Logic;
-using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Linq;
+	using System.Reflection;
+	using System.Runtime.CompilerServices;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Input;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-	public abstract class ViewModelBase: DisposeFinalizeBase, INotifyPropertyChanged, IDisplayText
+	public abstract class ViewModelBase : DisposeFinalizeBase, INotifyPropertyChanged, IDisplayText
 	{
 		#region variable
 
@@ -35,8 +35,8 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 		protected override void Dispose(bool disposing)
 		{
-			if(!IsDisposed) {
-				foreach(var command in this._createdCommands) {
+			if (!IsDisposed) {
+				foreach (var command in this._createdCommands) {
 					command.Dispose();
 				}
 			}
@@ -75,7 +75,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 		/// <returns>変更があった場合は真を返す。</returns>
 		protected bool SetVariableValue<T>(ref T variable, T value, [CallerMemberName] string propertyName = "")
 		{
-			if(!IComparable<T>.Equals(variable, value)) {
+			if (!IComparable<T>.Equals(variable, value)) {
 				variable = value;
 				OnPropertyChanged(propertyName);
 
@@ -103,7 +103,7 @@ using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 			var nowValue = (T)propertyInfo.GetValue(obj);
 
-			if(!IComparable<T>.Equals(nowValue, value)) {
+			if (!IComparable<T>.Equals(nowValue, value)) {
 				propertyInfo.SetValue(obj, value);
 				OnPropertyChanged(propertyName);
 

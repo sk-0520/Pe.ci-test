@@ -47,8 +47,10 @@
 				<SP:NoteSettingControl x:Name="NoteSettingControl" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="clipboard">
+				<SP:ClipboardSettingControl x:Name="ClipboardSettingControl" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="template">
+				<SP:ClipboardSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 		</TabControl>
 	</Grid>
