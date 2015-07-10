@@ -11,7 +11,7 @@
 
 	[Serializable]
 	public abstract class HashIdCollectionBase<TValue>: TIdCollectionModel<string, TValue>
-		where TValue: HashId
+		where TValue: HashIdModelBase
 	{
 		public HashIdCollectionBase()
 			: base()

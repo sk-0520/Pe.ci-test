@@ -8,11 +8,12 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class ToolbarItemModel: ItemModelBase, HashId, IVisible, ITopMost
+	public class ToolbarItemModel: HashIdModelBase, IVisible, ITopMost
 	{
 		public ToolbarItemModel()
 			: base()
@@ -22,30 +23,6 @@
 			HideWaitTime = TimeSpan.FromSeconds(3);
 			HideAnimateTime = TimeSpan.FromMilliseconds(250);
 		}
-
-		#region IId
-
-		/// <summary>
-		/// ツールバーの所属ディスプレイ名。
-		/// </summary>
-		[DataMember]
-		public string Id { get; set; }
-
-		public bool IsSafeId(string s)
-		{
-			return !string.IsNullOrEmpty(s);
-		}
-
-		public string ToSafeId(string s)
-		{
-			if(string.IsNullOrEmpty(s)) {
-				return "id";
-			}
-
-			return s;
-		}
-
-		#endregion 
 
 		#region property
 
