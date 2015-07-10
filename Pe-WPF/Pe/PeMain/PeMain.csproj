@@ -171,6 +171,7 @@
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemsViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\CommandSettingViewModel.cs" />
+    <Compile Include="ViewModel\Control\SettingPage\NoteSettingViewModel.cs" />
     <Compile Include="ViewModel\Control\SettingPage\SettingPageLauncherIconCacheViewModelBase.cs" />
     <Compile Include="ViewModel\Control\SettingPage\SettingPageViewModelBase.cs" />
     <Compile Include="ViewModel\Control\SettingPage\ToolbarSettingViewModel.cs" />
@@ -207,6 +208,9 @@
     <Compile Include="View\Parts\Control\AppHotkeyControl.cs" />
     <Compile Include="View\Parts\Control\SettingPage\CommandSettingControl.xaml.cs">
       <DependentUpon>CommandSettingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Parts\Control\SettingPage\NoteSettingControl.xaml.cs">
+      <DependentUpon>NoteSettingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Parts\Control\SettingPage\ToolbarSettingControl.xaml.cs">
       <DependentUpon>ToolbarSettingControl.xaml</DependentUpon>
@@ -290,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\SettingPage\CommandSettingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Control\SettingPage\NoteSettingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

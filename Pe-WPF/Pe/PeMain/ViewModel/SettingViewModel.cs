@@ -23,6 +23,7 @@
 		LauncherItemSettingViewModel _launcherItemSetting;
 		ToolbarSettingViewModel _toolbarSetting;
 		CommandSettingViewModel _commandSetting;
+		NoteSettingViewModel _noteSetting;
 
 		#endregion
 
@@ -109,6 +110,23 @@
 				}
 
 				return this._commandSetting;
+			}
+		}
+
+		public NoteSettingViewModel NoteSetting
+		{
+			get
+			{
+				if (this._noteSetting == null) {
+					this._noteSetting = new NoteSettingViewModel(
+						CommonData.MainSetting.Note,
+						CommonData.NonProcess,
+						CommonData.VariableConstants,
+						SettingNotifiyItem
+					);
+				}
+
+				return this._noteSetting;
 			}
 		}
 

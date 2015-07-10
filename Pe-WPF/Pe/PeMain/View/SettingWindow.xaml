@@ -44,6 +44,7 @@
 				<SP:CommandSettingControl x:Name="CommandSettingControl" DataContext="{Binding CommandSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="note">
+				<SP:NoteSettingControl x:Name="NoteSettingControl" DataContext="{Binding NoteSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="clipboard">
 			</TabItem>

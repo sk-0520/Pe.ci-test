@@ -16,11 +16,11 @@
 	using System.Windows.Shapes;
 
 	/// <summary>
-	/// LauncherGroupControl.xaml の相互作用ロジック
+	/// NoteSettingControl.xaml の相互作用ロジック
 	/// </summary>
-	public partial class ToolbarSettingControl : CommonDataUserControl
+	public partial class NoteSettingControl : CommonDataUserControl
 	{
-		public ToolbarSettingControl()
+		public NoteSettingControl()
 		{
 			InitializeComponent();
 		}
