@@ -8,22 +8,15 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class IndexItemModelBase<TValue>: ItemModelBase
+	public abstract class TextIdCollectionBase<TValue>: TIdCollectionModel<string, TValue>, IItemModel
 		where TValue: ITId<string>
 	{
-		public IndexItemModelBase()
+		public TextIdCollectionBase()
 			: base()
-		{
-			Items = new TIdCollection<string, TValue>();
-		}
+		{ }
 
-		#region property
-
-		[DataMember]
-		public TIdCollection<string, TValue> Items { get; set; }
-
-		#endregion
 	}
 }

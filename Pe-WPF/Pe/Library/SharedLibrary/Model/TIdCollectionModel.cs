@@ -15,7 +15,7 @@
 	using System.Reflection;
 
 	[Serializable]
-	public class TIdCollection<TKey, TValue>: ObservableCollection<TValue>, IIsDisposed, IModel
+	public class TIdCollectionModel<TKey, TValue>: ObservableCollection<TValue>, IIsDisposed, IModel
 		where TValue: ITId<TKey>
 		where TKey: IComparable
 	{
@@ -29,14 +29,14 @@
 
 		#endregion
 
-		public TIdCollection()
+		public TIdCollectionModel()
 			: base()
 		{
 			//Items = new List<TValue>();
 			IsDisposed = false;
 		}
 
-		~TIdCollection()
+		~TIdCollectionModel()
 		{
 			Dispose(false);
 		}
