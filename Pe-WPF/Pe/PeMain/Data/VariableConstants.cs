@@ -33,6 +33,12 @@
 		string _launcherItemSettingFileName = Constants.launcherItemSettingFileName;
 		string _launcherGroupItemSettingFileName = Constants.launcherGroupItemSettingFileName;
 
+		string _noteDirectoryFileName = Constants.noteRootDirectoryName;
+		string _noteIndexFileName = Constants.noteIndexFileName;
+
+		string _clipboardDirectoryFileName = Constants.clipboardRootDirectoryName;
+		string _clipboardIndexFileName = Constants.clipboardIndexFileName;
+
 		string _languageCode = CultureInfo.CurrentCulture.Name;
 
 		#endregion
@@ -111,6 +117,12 @@
 		public string UserSettingFileMainSettingPath { get { return Path.Combine(UserSettingDirectoryPath, this._mainSettingFileName); } }
 		public string UserSettingFileLauncherItemSettingPath { get { return Path.Combine(UserSettingDirectoryPath, this._launcherItemSettingFileName); } }
 		public string UserSettingFileLauncherGroupItemSetting { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
+
+		public string UserSettingNoteDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._noteDirectoryFileName); } }
+		public string UserSettingNoteIndexFilePath { get { return Path.Combine(UserSettingNoteDirectoryPath, this._noteIndexFileName); } }
+
+		public string UserSettingClipboardDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardDirectoryFileName); } }
+		public string UserSettingClipboardIndexFilePath { get { return Path.Combine(UserSettingClipboardDirectoryPath, this._clipboardIndexFileName); } }
 
 		public string LanguageCode { get { return this._languageCode; } }
 
