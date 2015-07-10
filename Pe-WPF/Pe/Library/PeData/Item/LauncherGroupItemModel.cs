@@ -10,9 +10,10 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherGroupItemModel: ItemModelBase, ITId<string>, IName
+	public class LauncherGroupItemModel: ItemModelBase, HashId, IName
 	{
 		#region define
 

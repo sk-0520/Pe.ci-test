@@ -8,8 +8,9 @@
 	using System.Threading.Tasks;
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	public class EnvironmentVariableUpdateItemModel : ItemModelBase, ITId<string>
+	public class EnvironmentVariableUpdateItemModel: ItemModelBase, HashId
 	{
 		#region define
 

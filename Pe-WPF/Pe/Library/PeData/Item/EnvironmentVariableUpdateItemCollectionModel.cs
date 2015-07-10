@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class EnvironmentVariableUpdateItemCollectionModel: TextIdCollectionBase<EnvironmentVariableUpdateItemModel>
+	public class EnvironmentVariableUpdateItemCollectionModel: HashIdCollectionBase<EnvironmentVariableUpdateItemModel>
 	{
 		public EnvironmentVariableUpdateItemCollectionModel()
 			: base()

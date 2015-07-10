@@ -78,8 +78,10 @@
     <Compile Include="IF\ISettingModel.cs" />
     <Compile Include="IF\ITopMost.cs" />
     <Compile Include="IF\IVisible.cs" />
+    <Compile Include="IF\IWindowArea.cs" />
+    <Compile Include="IF\IWindowState.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
-    <Compile Include="Item\TextIdCollectionBase.cs" />
+    <Compile Include="Item\NoteItemModel.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModel.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModel.cs" />
     <Compile Include="Item\EnvironmentVariablesItemModel.cs" />

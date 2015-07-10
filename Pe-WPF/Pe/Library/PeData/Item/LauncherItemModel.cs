@@ -9,9 +9,10 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherItemModel: ItemModelBase, ITId<string>, IName, IDeepClone
+	public class LauncherItemModel: ItemModelBase, HashId, IName, IDeepClone
 	{
 		#region define
 

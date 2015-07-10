@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.Library.PeData.Item
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.Model
 {
 	using System;
 	using System.Collections.Generic;
@@ -8,15 +8,13 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
-	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public abstract class TextIdCollectionBase<TValue>: TIdCollectionModel<string, TValue>, IItemModel
-		where TValue: ITId<string>
+	public abstract class HashIdCollectionBase<TValue>: TIdCollectionModel<string, TValue>
+		where TValue: HashId
 	{
-		public TextIdCollectionBase()
+		public HashIdCollectionBase()
 			: base()
 		{ }
-
 	}
 }

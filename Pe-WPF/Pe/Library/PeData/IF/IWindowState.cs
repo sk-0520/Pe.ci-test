@@ -6,9 +6,12 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
-	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
 
-	public interface IWindowStatus: IVisible, ITopMost, IWindowArea, IWindowState
-	{ }
+	public interface IWindowState
+	{
+		/// <summary>
+		/// ウィンドウ状態。
+		/// </summary>
+		WindowState WindowState { get; set; }
+	}
 }

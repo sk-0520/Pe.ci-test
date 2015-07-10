@@ -63,12 +63,12 @@
 			}
 		}
 
-		public static WindowState GetWindowState(IWindowStatus model)
+		public static WindowState GetWindowState(IWindowState model)
 		{
 			return model.WindowState;
 		}
 
-		public static void SetWindowState(IWindowStatus model, WindowState value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static void SetWindowState(IWindowState model, WindowState value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if (model.WindowState != value) {
 				model.WindowState = value;
