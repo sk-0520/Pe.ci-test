@@ -89,11 +89,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\PeData\PeData.csproj">
+    <ProjectReference Include="..\..\..\Library\PeData\PeData.csproj">
       <Project>{b3c0d8c0-2382-4058-8cec-3c62de401c3f}</Project>
       <Name>PeData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library\SharedLibrary\SharedLibrary.csproj">
+    <ProjectReference Include="..\..\..\Library\SharedLibrary\SharedLibrary.csproj">
       <Project>{9e8e373e-cd97-411d-8c45-10ac4a86cae8}</Project>
       <Name>SharedLibrary</Name>
     </ProjectReference>
