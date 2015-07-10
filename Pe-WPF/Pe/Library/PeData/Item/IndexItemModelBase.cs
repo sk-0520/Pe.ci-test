@@ -3,9 +3,10 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	[Serializable]
@@ -18,7 +19,11 @@ using ContentTypeTextNet.Library.SharedLibrary.IF;
 			Items = new TIdCollection<string, TValue>();
 		}
 
+		#region property
 
-		TIdCollection<string, TValue> Items { get; set; }
+		[DataMember]
+		public TIdCollection<string, TValue> Items { get; set; }
+
+		#endregion
 	}
 }
