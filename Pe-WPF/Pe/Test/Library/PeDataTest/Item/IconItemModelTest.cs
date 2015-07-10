@@ -11,6 +11,7 @@
 	[TestFixture]
 	class IconItemModelTest
 	{
+		[Test]
 		public void DeepCloneTest()
 		{
 			var src = new IconItemModel() {
