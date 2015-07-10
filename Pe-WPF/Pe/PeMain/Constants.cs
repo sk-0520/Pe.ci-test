@@ -39,7 +39,6 @@
 #endif
 		public static readonly string buildProcess = Environment.Is64BitProcess ? "64" : "32";
 
-
 		public const string binDirectoryName = "bin";
 		public const string sbinDirectoryName = "sbin";
 		public const string libraryDirectoryName = "lib";
@@ -85,6 +84,12 @@
 			200
 		);
 
+		public static readonly TripleRange<TimeSpan> clipboardWaitTime = new TripleRange<TimeSpan>(
+			TimeSpan.FromMilliseconds(50),
+			TimeSpan.FromMilliseconds(500),
+			TimeSpan.FromSeconds(1)
+		);
+
 		/// <summary>
 		/// 実行パス
 		/// </summary>
@@ -121,7 +126,14 @@
 
 		public static double ToolbarTextMinimumLength { get { return toolbarTextLength.minimum; } }
 		public static double ToolbarTextMaximumLength { get { return toolbarTextLength.maximum; } }
-			 
+		
+		#endregion
+
+		#region clipboardWaitTime
+
+		public static double ClipboardWaitMinimumTime { get { return clipboardWaitTime.minimum.TotalMilliseconds; } }
+		public static double ClipboardWaitMaximumTime { get { return clipboardWaitTime.maximum.TotalMilliseconds; } }
+
 		#endregion
 
 		#region app.config
