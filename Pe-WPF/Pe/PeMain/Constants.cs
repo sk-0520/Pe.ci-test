@@ -63,6 +63,9 @@
 		public const string clipboardRootDirectoryName = "clipboard";
 		public const string clipboardIndexFileName = "clipboard.json";
 
+		public const string templateRootDirectoryName = "template";
+		public const string templateIndexFileName = "template.json";
+
 		public const string styleCommonFileName = "common.css";
 
 		public const string languageDefaultFileName = "default.xml";

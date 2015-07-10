@@ -90,6 +90,8 @@
     <Compile Include="Item\NoteItemModel.cs" />
     <Compile Include="Item\TemplateItemCollectionModel.cs" />
     <Compile Include="Item\TemplateItemModel.cs" />
+    <Compile Include="Setting\ClipboardIndexSettingModel.cs" />
+    <Compile Include="Setting\IndexSettingModelBase.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModel.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModel.cs" />
     <Compile Include="Item\EnvironmentVariablesItemModel.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="PeModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Item\ItemModelBase.cs" />
+    <Compile Include="Setting\TemplateIndexSettingModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj">
