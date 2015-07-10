@@ -151,7 +151,6 @@
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Converter\ColorBrushConverter.cs" />
-    <Compile Include="View\Converter\EnumFlagsToBooleanConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNullConverter.cs" />

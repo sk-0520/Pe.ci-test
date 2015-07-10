@@ -1,6 +1,8 @@
 ﻿<AV:CommonDataUserControl
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.Parts.Control.SettingPage.ClipboardSettingControl"
 	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Control"
+	xmlns:AD="clr-namespace:ContentTypeTextNet.Pe.Library.PeData.Define;assembly=PeData"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,31 +11,33 @@
 	mc:Ignorable="d" 
 	d:DesignHeight="300" d:DesignWidth="400"
 >
+	<AV:CommonDataUserControl.Resources>
+	</AV:CommonDataUserControl.Resources>
 	<Grid>
 		<StackPanel HorizontalAlignment="Left" Height="93" Margin="10,10,0,0" VerticalAlignment="Top" Width="114">
-			<CheckBox Content="enabled"/>
-			<CheckBox Content="copy app"/>
-			<CheckBox Content="save"/>
-			<CheckBox Content="topmost"/>
-			<CheckBox Content="visible"/>
-			<CheckBox Content="using clipboard"/>
+			<CheckBox Content="enabled" IsChecked="{Binding Enabled}" />
+			<CheckBox Content="copy app" IsChecked="{Binding EnabledApplicationCopy}"/>
+			<CheckBox Content="save" IsChecked="{Binding SaveClipboard}" />
+			<CheckBox Content="topmost" IsChecked="{Binding TopMost}" />
+			<CheckBox Content="visible" IsChecked="{Binding Visible}" />
+			<CheckBox Content="using clipboard" IsChecked="{Binding UsingClipboard}"/>
 		</StackPanel>
 		<GroupBox Header="enabled type" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top" Height="119" Width="97">
 			<StackPanel>
-				<CheckBox Content="text"/>
-				<CheckBox Content="rtf"/>
-				<CheckBox Content="html"/>
-				<CheckBox Content="image"/>
-				<CheckBox Content="file"/>
+				<CheckBox Content="text" IsChecked="{Binding EnabledClipboardTypesText}" />
+				<CheckBox Content="rtf" IsChecked="{Binding EnabledClipboardTypesRtf}" />
+				<CheckBox Content="html" IsChecked="{Binding EnabledClipboardTypesHtml}" />
+				<CheckBox Content="image" IsChecked="{Binding EnabledClipboardTypesImage}" />
+				<CheckBox Content="file" IsChecked="{Binding EnabledClipboardTypesFile}" />
 			</StackPanel>
 		</GroupBox>
 		<GroupBox Header="save type" HorizontalAlignment="Left" Margin="226,8,0,0" VerticalAlignment="Top" Height="121" Width="100">
 			<StackPanel>
-				<CheckBox Content="text"/>
-				<CheckBox Content="rtf"/>
-				<CheckBox Content="html"/>
-				<CheckBox Content="image"/>
-				<CheckBox Content="file"/>
+				<CheckBox Content="text" IsChecked="{Binding SaveClipboardTypesText}" />
+				<CheckBox Content="rtf" IsChecked="{Binding SaveClipboardTypesRtf}" />
+				<CheckBox Content="html" IsChecked="{Binding SaveClipboardTypesHtml}" />
+				<CheckBox Content="image" IsChecked="{Binding SaveClipboardTypesImage}" />
+				<CheckBox Content="file" IsChecked="{Binding SaveClipboardTypesFile}" />
 			</StackPanel>
 		</GroupBox>
 		<Grid HorizontalAlignment="Left" Height="134" Margin="23,147,0,0" VerticalAlignment="Top" Width="148">
