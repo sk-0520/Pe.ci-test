@@ -81,6 +81,7 @@
     <Compile Include="IF\IWindowArea.cs" />
     <Compile Include="IF\IWindowState.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
+    <Compile Include="Item\NoteItemCollectionModel.cs" />
     <Compile Include="Item\NoteItemModel.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModel.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModel.cs" />
