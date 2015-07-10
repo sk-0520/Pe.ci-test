@@ -50,7 +50,7 @@
 				<SP:ClipboardSettingControl x:Name="ClipboardSettingControl" DataContext="{Binding ClipboardSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 			<TabItem Header="template">
-				<SP:ClipboardSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
+				<SP:TemplateSettingControl x:Name="TemplateSettingControl" DataContext="{Binding TemplateSetting}" VerticalAlignment="Stretch" />
 			</TabItem>
 		</TabControl>
 	</Grid>
