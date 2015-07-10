@@ -23,7 +23,7 @@
 			<CheckBox Content="visible" IsChecked="{Binding Visible}" />
 			<CheckBox Content="using clipboard" IsChecked="{Binding UsingClipboard}"/>
 		</StackPanel>
-		<GroupBox Header="enabled type" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top" Height="119" Width="97">
+		<GroupBox Header="enabled type" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top" Height="119" Width="97">
 			<StackPanel>
 				<CheckBox Content="text" IsChecked="{Binding EnabledClipboardTypesText}" />
 				<CheckBox Content="rtf" IsChecked="{Binding EnabledClipboardTypesRtf}" />
@@ -32,7 +32,7 @@
 				<CheckBox Content="file" IsChecked="{Binding EnabledClipboardTypesFile}" />
 			</StackPanel>
 		</GroupBox>
-		<GroupBox Header="save type" HorizontalAlignment="Left" Margin="226,8,0,0" VerticalAlignment="Top" Height="121" Width="100">
+		<GroupBox Header="save type" HorizontalAlignment="Left" Margin="112,121,0,0" VerticalAlignment="Top" Height="121" Width="100">
 			<StackPanel>
 				<CheckBox Content="text" IsChecked="{Binding SaveClipboardTypesText}" />
 				<CheckBox Content="rtf" IsChecked="{Binding SaveClipboardTypesRtf}" />
@@ -41,7 +41,7 @@
 				<CheckBox Content="file" IsChecked="{Binding SaveClipboardTypesFile}" />
 			</StackPanel>
 		</GroupBox>
-		<Grid HorizontalAlignment="Left" Height="134" Margin="23,147,0,0" VerticalAlignment="Top" Width="148">
+		<Grid HorizontalAlignment="Left" Height="92" Margin="130,11,0,0" VerticalAlignment="Top" Width="148">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="31*"/>
 				<RowDefinition Height="33*"/>
@@ -53,16 +53,16 @@
 				<ColumnDefinition Width="22*"/>
 			</Grid.ColumnDefinitions>
 
-			<Label Grid.Row="0" Grid.Column="0" Content="show" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-			<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+			<Label Grid.Row="0" Grid.Column="0" Content="show" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="21"/>
+			<AV:AppHotkeyControl Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-			<Label Grid.Row="1" Grid.Column="0" Content="save count" HorizontalAlignment="Left" Margin="9,5,0,0" VerticalAlignment="Top"/>
+			<Label Grid.Row="1" Grid.Column="0" Content="save count" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top"/>
 			<xctk:SingleUpDown Grid.Row="1" Grid.Column="1" Value="{Binding SaveCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardSaveMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardSaveMaximumCount}}" />
 
-			<Label Grid.Row="2" Grid.Column="0" Content="wait time" HorizontalAlignment="Left" Margin="9,5,0,0" VerticalAlignment="Top"/>
+			<Label Grid.Row="2" Grid.Column="0" Content="wait time" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top"/>
 			<Slider Grid.Row="2" Grid.Column="1" Value="{Binding WaitTimeMs}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardWaitMinimumTime}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardWaitMaximumTime}}" />
 
-			<Label Grid.Row="3" Grid.Column="0" Content="dup" HorizontalAlignment="Left" Margin="9,5,0,0" VerticalAlignment="Top"/>
+			<Label Grid.Row="3" Grid.Column="0" Content="dup" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
 			<xctk:SingleUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DuplicationCount}" Minimum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMinimumCount}}" Maximum="{Binding Source={x:Static AM:Constants.ClipboardDuplicationMaximumCount}}"  />
 		</Grid>
 

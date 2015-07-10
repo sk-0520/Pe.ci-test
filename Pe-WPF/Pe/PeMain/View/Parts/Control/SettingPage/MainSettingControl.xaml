@@ -39,13 +39,13 @@
 				</GroupBox>
 			</StackPanel>
 		</GroupBox>
-		<GroupBox AP:XamlTag.LanguageKey="setting/running"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="118">
+		<GroupBox AP:XamlTag.LanguageKey="setting/running"  Header="update" HorizontalAlignment="Left" Margin="217,10,0,0" VerticalAlignment="Top" Height="70" Width="136">
 			<StackPanel>
 				<CheckBox AP:XamlTag.LanguageKey="update/check-release" Content="update check" IsChecked="{Binding RunningCheckUpdateRelease}" />
 				<CheckBox AP:XamlTag.LanguageKey="update/check-rc" Content="update check rc" IsChecked="{Binding RunningCheckUpdateRC}" />
 			</StackPanel>
 		</GroupBox>
-		<GroupBox Header="system" HorizontalAlignment="Left" Margin="217,94,0,0" VerticalAlignment="Top" Height="95" Width="118">
+		<GroupBox Header="system" HorizontalAlignment="Left" Margin="217,94,0,0" VerticalAlignment="Top" Height="75" Width="136">
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition />
