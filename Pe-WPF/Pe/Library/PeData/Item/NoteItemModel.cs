@@ -11,70 +11,64 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	///// <summary>
-	///// 
-	///// </summary>
-	//[Serializable]
-	//public class NoteItemModel: ItemModelBase, IName, ITId<string>, IWindowStatus
-	//{
-	//	public NoteItemModel()
-	//		: base()
-	//	{ }
+	/// <summary>
+	/// 
+	/// </summary>
+	[Serializable]
+	public class NoteItemModel: GuidModelBase, IName, IWindowStatus
+	{
+		public NoteItemModel()
+			: base()
+		{ }
 
-	//	#region property
-	//	#endregion
+		#region property
+		#endregion
 
-	//	#region IWindowStatus
+		#region IName
 
-	//	[DataMember]
-	//	[PixelKind(Px.Logical)]
-	//	public double WindowTop { get; set; }
-	//	[DataMember]
-	//	[PixelKind(Px.Logical)]
-	//	public double WindowLeft { get; set; }
-	//	[DataMember]
-	//	[PixelKind(Px.Logical)]
-	//	public double WindowWidth { get; set; }
-	//	[DataMember]
-	//	[PixelKind(Px.Logical)]
-	//	public double WindowHeight { get; set; }
-	//	[DataMember]
-	//	[PixelKind(Px.Logical)]
-	//	public WindowState WindowState { get; set; }
+		/// <summary>
+		/// ノートタイトル。
+		/// </summary>
+		[DataMember, XmlAttribute]
+		public string Name { get; set; }
 
-	//	#region ITopMost
+		#endregion
 
-	//	[DataMember]
-	//	public bool TopMost { get; set; }
+		#region IWindowStatus
 
-	//	#endregion
+		[DataMember]
+		[PixelKind(Px.Logical)]
+		public double WindowTop { get; set; }
+		[DataMember]
+		[PixelKind(Px.Logical)]
+		public double WindowLeft { get; set; }
+		[DataMember]
+		[PixelKind(Px.Logical)]
+		public double WindowWidth { get; set; }
+		[DataMember]
+		[PixelKind(Px.Logical)]
+		public double WindowHeight { get; set; }
+		[DataMember]
+		[PixelKind(Px.Logical)]
+		public WindowState WindowState { get; set; }
 
-	//	#region IVisible
+		#region ITopMost
 
-	//	[DataMember]
-	//	public bool Visible { get; set; }
+		[DataMember]
+		public bool TopMost { get; set; }
 
-	//	#endregion
+		#endregion
 
-	//	#endregion
+		#region IVisible
 
-	//	#region ITId
+		[DataMember]
+		public bool Visible { get; set; }
 
-	//	[DataMember, XmlAttribute]
-	//	public string Id { get; set; }
+		#endregion
 
-	//	public bool IsSafeId(string id)
-	//	{
-	//		throw new NotImplementedException();
-	//	}
-
-	//	public string ToSafeId(string id)
-	//	{
-	//		throw new NotImplementedException();
-	//	}
-
-	//	#endregion
-	//}
+		#endregion
+	}
 }
