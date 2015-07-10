@@ -79,6 +79,7 @@
     <Compile Include="IF\ITopMost.cs" />
     <Compile Include="IF\IVisible.cs" />
     <Compile Include="IF\IWindowStatus.cs" />
+    <Compile Include="Item\IndexItemModelBase.cs" />
     <Compile Include="Setting\MainSettings\ClipboardSettingModel.cs" />
     <Compile Include="Setting\MainSettings\CommandSettingModel.cs" />
     <Compile Include="Item\EnvironmentVariablesItemModel.cs" />
