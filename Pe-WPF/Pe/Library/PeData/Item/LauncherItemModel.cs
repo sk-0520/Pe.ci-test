@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherItemModel: HashIdModelBase, IName, IDeepClone
+	public class LauncherItemModel: GuidModelBase, IName, IDeepClone
 	{
 		public LauncherItemModel()
 			: base()

@@ -10,7 +10,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherGroupItemCollectionModel: HashIdCollectionBase<LauncherGroupItemModel>
+	public class LauncherGroupItemCollectionModel: GuidCollectionBase<LauncherGroupItemModel>
 	{
 		public LauncherGroupItemCollectionModel()
 			: base()

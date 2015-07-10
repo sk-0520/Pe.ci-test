@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[Serializable]
-	public class LauncherItemCollectionModel: HashIdCollectionBase<LauncherItemModel>
+	public class LauncherItemCollectionModel: GuidCollectionBase<LauncherItemModel>
 	{
 		public LauncherItemCollectionModel()
 			: base()

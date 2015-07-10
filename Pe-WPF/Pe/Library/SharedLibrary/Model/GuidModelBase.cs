@@ -9,9 +9,15 @@
 	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public abstract class HashIdModelBase: ModelBase, ITId<string>
+	public abstract class GuidModelBase: ModelBase, ITId<string>
 	{
-		public HashIdModelBase()
+		#region define
+
+		//string pattern = @"[]";
+
+		#endregion
+
+		public GuidModelBase()
 			: base()
 		{ }
 
@@ -22,12 +28,13 @@
 
 		public bool IsSafeId(string id)
 		{
-			throw new NotImplementedException();
+			Guid temp;
+			return Guid.TryParse(id, out temp);
 		}
 
 		public string ToSafeId(string id)
 		{
-			throw new NotImplementedException();
+			return Guid.NewGuid().ToString();
 		}
 
 		#endregion

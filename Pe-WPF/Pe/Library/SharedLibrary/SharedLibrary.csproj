@@ -110,8 +110,8 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
-    <Compile Include="Model\HashIdCollectionBase.cs" />
-    <Compile Include="Model\HashIdModelBase.cs" />
+    <Compile Include="Model\GuidCollectionBase.cs" />
+    <Compile Include="Model\GuidModelBase.cs" />
     <Compile Include="Model\RangeModel.cs" />
     <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="IF\WindowsViewExtend\IWindowHitTestData.cs" />

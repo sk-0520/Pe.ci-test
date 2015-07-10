@@ -11,7 +11,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	public class EnvironmentVariableUpdateItemModel: HashIdModelBase
+	public class EnvironmentVariableUpdateItemModel: GuidModelBase
 	{
 		public EnvironmentVariableUpdateItemModel()
 		{ }

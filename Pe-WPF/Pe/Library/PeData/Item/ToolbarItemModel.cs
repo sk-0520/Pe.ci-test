@@ -13,7 +13,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class ToolbarItemModel: HashIdModelBase, IVisible, ITopMost
+	public class ToolbarItemModel: GuidModelBase, IVisible, ITopMost
 	{
 		public ToolbarItemModel()
 			: base()

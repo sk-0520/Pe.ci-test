@@ -10,10 +10,10 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
 	[Serializable]
-	public abstract class HashIdCollectionBase<TValue>: TIdCollectionModel<string, TValue>
-		where TValue: HashIdModelBase
+	public abstract class GuidCollectionBase<TValue>: TIdCollectionModel<string, TValue>
+		where TValue: GuidModelBase
 	{
-		public HashIdCollectionBase()
+		public GuidCollectionBase()
 			: base()
 		{ }
 	}

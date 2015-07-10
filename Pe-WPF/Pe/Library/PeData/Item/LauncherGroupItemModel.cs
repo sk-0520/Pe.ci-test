@@ -14,7 +14,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[Serializable]
-	public class LauncherGroupItemModel: HashIdModelBase, IName
+	public class LauncherGroupItemModel: GuidModelBase, IName
 	{
 		public LauncherGroupItemModel()
 			: base()
