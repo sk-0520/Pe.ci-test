@@ -20,8 +20,6 @@
 	Topmost="{Binding TopMost}"
 	BorderThickness="{Binding ResizeThickness}"
 	BorderBrush="{Binding BorderBrush}"
-	MaxWidth="640"
-	MaxHeight="480"
 >
 	<Grid>
 		<Grid.RowDefinitions>
