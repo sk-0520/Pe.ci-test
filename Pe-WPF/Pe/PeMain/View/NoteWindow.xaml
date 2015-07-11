@@ -20,8 +20,26 @@
 	Topmost="{Binding TopMost}"
 	BorderThickness="{Binding ResizeThickness}"
 	BorderBrush="{Binding BorderBrush}"
+	MaxWidth="640"
+	MaxHeight="480"
 >
 	<Grid>
-
+		<Grid.RowDefinitions>
+			<RowDefinition Height="{Binding TitleHeight, Mode=OneWay}"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" x:Name="Caption" />
+			<Button Grid.Column="1" />
+			<Button Grid.Column="2" />
+			<Button Grid.Column="3" />
+		</Grid>
+		<RichTextBox Grid.Row="1" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

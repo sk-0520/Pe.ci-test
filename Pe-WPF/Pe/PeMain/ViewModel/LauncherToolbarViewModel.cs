@@ -184,24 +184,6 @@
 
 		#region property
 
-		#region IHavingLauncherIconCaching
-
-		public LauncherIconCaching LauncherIconCaching { get; private set; }
-
-		#endregion
-
-		#region IHavingNonPorocess
-
-		public INonProcess NonProcess { get; private set; }
-
-		#endregion
-
-		#region IHavingClipboardWatcher
-
-		public IClipboardWatcher ClipboardWatcher { get; private set; }
-
-		#endregion
-
 		public Thickness BorderThickness
 		{
 			get { return this._borderThickness; }
@@ -227,361 +209,6 @@
 				SetVariableValue(ref this._borderBrush, value);
 			}
 		}
-
-		#region ITopMost
-
-		public bool TopMost
-		{
-			get { return TopMostProperty.GetTopMost(Model.Toolbar); }
-			set { TopMostProperty.SetTopMost(Model.Toolbar, value, OnPropertyChanged); }
-		}
-
-		#endregion
-
-		#region IVisible
-
-		public Visibility Visibility
-		{
-			get { return VisibleVisibilityProperty.GetVisibility(Model.Toolbar); }
-			set { VisibleVisibilityProperty.SetVisibility(Model.Toolbar, value, OnPropertyChanged); }
-		}
-
-		public bool Visible
-		{
-			get { return VisibleVisibilityProperty.GetVisible(Model.Toolbar); }
-			set { VisibleVisibilityProperty.SetVisible(Model.Toolbar, value, OnPropertyChanged); }
-		}
-
-		#endregion
-
-		#region window
-
-		public double WindowLeft
-		{
-			get
-			{
-				if (DockType == DockType.None) {
-					return Model.Toolbar.FloatToolbar.Left;
-				} else {
-					return IsHidden
-						? HideLogicalBarArea.Left
-						: ShowLogicalBarArea.Left;
-				}
-			}
-			set
-			{
-				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Left != value) {
-					Model.Toolbar.FloatToolbar.Left = value;
-					OnPropertyChanged();
-				} else if (!IsHidden && ShowLogicalBarArea.X != value) {
-					this._showLogicalBarArea.X = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-		public double WindowTop
-		{
-			get
-			{
-				if (DockType == DockType.None) {
-					return Model.Toolbar.FloatToolbar.Top;
-				} else {
-					return IsHidden
-						? HideLogicalBarArea.Top
-						: ShowLogicalBarArea.Top;
-				}
-			}
-			set
-			{
-				if (DockType == DockType.None && Model.Toolbar.FloatToolbar.Top != value) {
-					Model.Toolbar.FloatToolbar.Top = value;
-					OnPropertyChanged();
-				} else if (!IsHidden && ShowLogicalBarArea.Y != value) {
-					this._showLogicalBarArea.Y = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-		public double WindowWidth
-		{
-			get
-			{
-				if (DockType == DockType.None) {
-					return CalculateViewWidth(DockType, Orientation, BorderThickness, this._captionWidth);
-				} else {
-					return IsHidden
-						? HideLogicalBarArea.Width
-						: ShowLogicalBarArea.Width;
-				}
-			}
-			set
-			{
-				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
-					OnPropertyChanged();
-					OnPropertyChanged("CaptionHeight");
-				} else if (!IsHidden && ShowLogicalBarArea.Width != value) {
-					this._showLogicalBarArea.Width = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-		public double WindowHeight
-		{
-			get
-			{
-				if (DockType == DockType.None) {
-					return CalculateViewHeight(DockType, Orientation, BorderThickness, this._captionWidth);
-				} else {
-					return IsHidden
-						? HideLogicalBarArea.Height
-						: ShowLogicalBarArea.Height;
-				}
-			}
-			set
-			{
-				if (DockType == DockType.None) {
-					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
-					OnPropertyChanged();
-					OnPropertyChanged("CaptionWidth");
-				} else if (!IsHidden && ShowLogicalBarArea.Height != value) {
-					this._showLogicalBarArea.Height = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-
-		#endregion
-
-		#region IApplicationDesktopToolbarData
-
-		public uint CallbackMessage { get; set; }
-
-		/// <summary>
-		/// 他ウィンドウがフルスクリーン表示。
-		/// </summary>
-		public bool NowFullScreen { get; set; }
-		public bool IsDocking { get; set; }
-		/// <summary>
-		/// ドッキング種別。
-		/// </summary>
-		public DockType DockType
-		{
-			get { return Model.Toolbar.DockType; }
-			set
-			{
-				if (Model.Toolbar.DockType != value) {
-					if (HasView) {
-						CalculateWindowStatus(value);
-					}
-
-					Model.Toolbar.DockType = value;
-					OnPropertyChanged();
-					View.InvalidateArrange();
-					OnPropertyChanged("Orientation");
-					OnPropertyChanged("CaptionVisibility");
-					OnPropertyChanged("CaptionWidth");
-					OnPropertyChanged("CaptionHeight");
-					OnPropertyChanged("DropDownPlacement");
-					View.UpdateLayout();
-				}
-			}
-		}
-		/// <summary>
-		/// 自動的に隠す。
-		/// </summary>
-		public bool AutoHide
-		{
-			get { return Model.Toolbar.AutoHide; }
-			set
-			{
-				//if (Model.Toolbar.AutoHide != value) {
-				//	Model.Toolbar.AutoHide = value;
-				//	OnPropertyChanged();
-				//	if (HasView) {
-				//		View.Docking(DockType, AutoHide);
-				//	}
-				//}
-				if (SetPropertyValue(Model.Toolbar, value)) {
-					if (HasView) {
-						View.Docking(DockType, AutoHide);
-					}
-				}
-			}
-		}
-		/// <summary>
-		/// 隠れているか。
-		/// </summary>
-		public bool IsHidden
-		{
-			get { return this._isHidden; }
-			set
-			{
-				//if (this._isHidden != value) {
-				//	this._isHidden = value;
-				//	OnPropertyChanged();
-				//	OnPropertyChanged("HideVisibility");
-				//}
-				if (SetVariableValue(ref this._isHidden, value)) {
-					OnPropertyChanged("HideVisibility");
-				}
-			}
-		}
-		/// <summary>
-		/// バーの論理サイズ
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Size BarSize { get; set; }
-		/// <summary>
-		/// 表示中の論理バーサイズ。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Rect ShowLogicalBarArea { get { return this._showLogicalBarArea; } set { this._showLogicalBarArea = value; } }
-		/// <summary>
-		/// 隠れた状態のバー論理サイズ。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public double HideWidth { get; set; }
-		/// <summary>
-		/// 表示中の隠れたバーの論理領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Rect HideLogicalBarArea { get; set; }
-		/// <summary>
-		/// 自動的に隠すまでの時間。
-		/// </summary>
-		public TimeSpan HideWaitTime
-		{
-			get { return Model.Toolbar.HideWaitTime; }
-			set
-			{
-				//if (Model.Toolbar.HideWaitTime != value) {
-				//	Model.Toolbar.HideWaitTime = value;
-				//	OnPropertyChanged();
-				//}
-				SetPropertyValue(Model.Toolbar, value);
-			}
-		}
-		/// <summary>
-		/// 自動的に隠す際のアニメーション時間。
-		/// </summary>
-		public TimeSpan HideAnimateTime
-		{
-			get { return Model.Toolbar.HideAnimateTime; }
-			set
-			{
-				//if (Model.Toolbar.HideAnimateTime != value) {
-				//	Model.Toolbar.HideAnimateTime = value;
-				//	OnPropertyChanged();
-				//}
-				SetPropertyValue(Model.Toolbar, value);
-			}
-		}
-		/// <summary>
-		/// ドッキングに使用するスクリーン。
-		/// </summary>
-		public ScreenModel DockScreen { get; private set; }
-
-		#endregion
-
-		#region IVisualStyleData
-
-		public bool UsingVisualStyle { get { return true; } }
-		public bool EnabledVisualStyle { get; set; }
-		public Color VisualPlainColor { get; set; }
-		public Color VisualAlphaColor { get; set; }
-
-		#endregion
-
-		#region IWindowAreaCorrectionData
-
-		/// <summary>
-		/// ウィンドウサイズの倍数制御を行うか。
-		/// </summary>
-		public bool UsingMultipleResize { get { return NowFloatWindow && Visible; } }
-		/// <summary>
-		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Size MultipleSize
-		{
-			//TODO: 手抜き
-			get { return ButtonSize; }
-		}
-		/// <summary>
-		/// タイトルバーとかボーダーを含んだ領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Thickness MultipleThickness
-		{
-			get
-			{
-				var captionSize = GetCaptionSize(Orientation, this._captionWidth);
-				var result = new Thickness(
-					BorderThickness.Left + captionSize.Width,
-					BorderThickness.Top + captionSize.Height,
-					BorderThickness.Right,
-					BorderThickness.Bottom
-				);
-				return result;
-			}
-		}
-
-		/// <summary>
-		/// 移動制限を行うか。
-		/// </summary>
-		public bool UsingMoveLimitArea { get { return CaptionVisibility == Visibility.Visible; } }
-		/// <summary>
-		/// 移動制限に使用する論理領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Rect MoveLimitArea
-		{
-			get
-			{
-				if (HasView) {
-					return UIUtility.ToLogicalPixel(View, DockScreen.DeviceWorkingArea);
-				} else {
-					NonProcess.Logger.SafeDebug("device pixel");
-					return DockScreen.DeviceWorkingArea;
-				}
-			}
-		}
-
-		/// <summary>
-		/// 最大化・最小化を抑制するか。
-		/// </summary>
-		public bool UsingMaxMinSuppression { get { return true; } }
-
-
-		#endregion
-
-		#region IWindowHitTestData
-
-		/// <summary>
-		/// ヒットテストを行うか
-		/// </summary>
-		public bool UsingHitTest { get { return NowFloatWindow; } }
-
-		/// <summary>
-		/// タイトルバーとして認識される領域。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Rect CaptionArea
-		{
-			get
-			{
-				var result = new Rect(BorderThickness.Left, BorderThickness.Top, CaptionWidth, CaptionHeight);
-				return result;
-			}
-		}
-		/// <summary>
-		/// サイズ変更に使用する境界線。
-		/// </summary>
-		[PixelKind(Px.Logical)]
-		public Thickness ResizeThickness { get { return BorderThickness; } }
-
-		#endregion
 
 		public Visibility HideVisibility
 		{
@@ -723,6 +350,379 @@
 		{
 			get { return GetDropDownPlacement(DockType); }
 		}
+
+		#endregion
+
+		#region IHavingLauncherIconCaching
+
+		public LauncherIconCaching LauncherIconCaching { get; private set; }
+
+		#endregion
+
+		#region IHavingNonPorocess
+
+		public INonProcess NonProcess { get; private set; }
+
+		#endregion
+
+		#region IHavingClipboardWatcher
+
+		public IClipboardWatcher ClipboardWatcher { get; private set; }
+
+		#endregion
+
+		#region ITopMost
+
+		public bool TopMost
+		{
+			get { return TopMostProperty.GetTopMost(Model.Toolbar); }
+			set { TopMostProperty.SetTopMost(Model.Toolbar, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
+		#region IVisible
+
+		public Visibility Visibility
+		{
+			get { return VisibleVisibilityProperty.GetVisibility(Model.Toolbar); }
+			set { VisibleVisibilityProperty.SetVisibility(Model.Toolbar, value, OnPropertyChanged); }
+		}
+
+		public bool Visible
+		{
+			get { return VisibleVisibilityProperty.GetVisible(Model.Toolbar); }
+			set { VisibleVisibilityProperty.SetVisible(Model.Toolbar, value, OnPropertyChanged); }
+		}
+
+		#endregion
+
+		#region window
+
+		public double WindowLeft
+		{
+			get
+			{
+				if(DockType == DockType.None) {
+					return Model.Toolbar.FloatToolbar.Left;
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Left
+						: ShowLogicalBarArea.Left;
+				}
+			}
+			set
+			{
+				if(DockType == DockType.None && Model.Toolbar.FloatToolbar.Left != value) {
+					Model.Toolbar.FloatToolbar.Left = value;
+					OnPropertyChanged();
+				} else if(!IsHidden && ShowLogicalBarArea.X != value) {
+					this._showLogicalBarArea.X = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+		public double WindowTop
+		{
+			get
+			{
+				if(DockType == DockType.None) {
+					return Model.Toolbar.FloatToolbar.Top;
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Top
+						: ShowLogicalBarArea.Top;
+				}
+			}
+			set
+			{
+				if(DockType == DockType.None && Model.Toolbar.FloatToolbar.Top != value) {
+					Model.Toolbar.FloatToolbar.Top = value;
+					OnPropertyChanged();
+				} else if(!IsHidden && ShowLogicalBarArea.Y != value) {
+					this._showLogicalBarArea.Y = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+		public double WindowWidth
+		{
+			get
+			{
+				if(DockType == DockType.None) {
+					return CalculateViewWidth(DockType, Orientation, BorderThickness, this._captionWidth);
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Width
+						: ShowLogicalBarArea.Width;
+				}
+			}
+			set
+			{
+				if(DockType == DockType.None) {
+					Model.Toolbar.FloatToolbar.WidthButtonCount = CalculateButtonWidthCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
+					OnPropertyChanged();
+					OnPropertyChanged("CaptionHeight");
+				} else if(!IsHidden && ShowLogicalBarArea.Width != value) {
+					this._showLogicalBarArea.Width = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+		public double WindowHeight
+		{
+			get
+			{
+				if(DockType == DockType.None) {
+					return CalculateViewHeight(DockType, Orientation, BorderThickness, this._captionWidth);
+				} else {
+					return IsHidden
+						? HideLogicalBarArea.Height
+						: ShowLogicalBarArea.Height;
+				}
+			}
+			set
+			{
+				if(DockType == DockType.None) {
+					Model.Toolbar.FloatToolbar.HeightButtonCount = CalculateButtonHeightCount(DockType, Orientation, BorderThickness, this._captionWidth, value);
+					OnPropertyChanged();
+					OnPropertyChanged("CaptionWidth");
+				} else if(!IsHidden && ShowLogicalBarArea.Height != value) {
+					this._showLogicalBarArea.Height = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region IApplicationDesktopToolbarData
+
+		public uint CallbackMessage { get; set; }
+
+		/// <summary>
+		/// 他ウィンドウがフルスクリーン表示。
+		/// </summary>
+		public bool NowFullScreen { get; set; }
+		public bool IsDocking { get; set; }
+		/// <summary>
+		/// ドッキング種別。
+		/// </summary>
+		public DockType DockType
+		{
+			get { return Model.Toolbar.DockType; }
+			set
+			{
+				if(Model.Toolbar.DockType != value) {
+					if(HasView) {
+						CalculateWindowStatus(value);
+					}
+
+					Model.Toolbar.DockType = value;
+					OnPropertyChanged();
+					View.InvalidateArrange();
+					OnPropertyChanged("Orientation");
+					OnPropertyChanged("CaptionVisibility");
+					OnPropertyChanged("CaptionWidth");
+					OnPropertyChanged("CaptionHeight");
+					OnPropertyChanged("DropDownPlacement");
+					View.UpdateLayout();
+				}
+			}
+		}
+		/// <summary>
+		/// 自動的に隠す。
+		/// </summary>
+		public bool AutoHide
+		{
+			get { return Model.Toolbar.AutoHide; }
+			set
+			{
+				//if (Model.Toolbar.AutoHide != value) {
+				//	Model.Toolbar.AutoHide = value;
+				//	OnPropertyChanged();
+				//	if (HasView) {
+				//		View.Docking(DockType, AutoHide);
+				//	}
+				//}
+				if(SetPropertyValue(Model.Toolbar, value)) {
+					if(HasView) {
+						View.Docking(DockType, AutoHide);
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// 隠れているか。
+		/// </summary>
+		public bool IsHidden
+		{
+			get { return this._isHidden; }
+			set
+			{
+				//if (this._isHidden != value) {
+				//	this._isHidden = value;
+				//	OnPropertyChanged();
+				//	OnPropertyChanged("HideVisibility");
+				//}
+				if(SetVariableValue(ref this._isHidden, value)) {
+					OnPropertyChanged("HideVisibility");
+				}
+			}
+		}
+		/// <summary>
+		/// バーの論理サイズ
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Size BarSize { get; set; }
+		/// <summary>
+		/// 表示中の論理バーサイズ。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect ShowLogicalBarArea { get { return this._showLogicalBarArea; } set { this._showLogicalBarArea = value; } }
+		/// <summary>
+		/// 隠れた状態のバー論理サイズ。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public double HideWidth { get; set; }
+		/// <summary>
+		/// 表示中の隠れたバーの論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect HideLogicalBarArea { get; set; }
+		/// <summary>
+		/// 自動的に隠すまでの時間。
+		/// </summary>
+		public TimeSpan HideWaitTime
+		{
+			get { return Model.Toolbar.HideWaitTime; }
+			set
+			{
+				//if (Model.Toolbar.HideWaitTime != value) {
+				//	Model.Toolbar.HideWaitTime = value;
+				//	OnPropertyChanged();
+				//}
+				SetPropertyValue(Model.Toolbar, value);
+			}
+		}
+		/// <summary>
+		/// 自動的に隠す際のアニメーション時間。
+		/// </summary>
+		public TimeSpan HideAnimateTime
+		{
+			get { return Model.Toolbar.HideAnimateTime; }
+			set
+			{
+				//if (Model.Toolbar.HideAnimateTime != value) {
+				//	Model.Toolbar.HideAnimateTime = value;
+				//	OnPropertyChanged();
+				//}
+				SetPropertyValue(Model.Toolbar, value);
+			}
+		}
+		/// <summary>
+		/// ドッキングに使用するスクリーン。
+		/// </summary>
+		public ScreenModel DockScreen { get; private set; }
+
+		#endregion
+
+		#region IVisualStyleData
+
+		public bool UsingVisualStyle { get { return true; } }
+		public bool EnabledVisualStyle { get; set; }
+		public Color VisualPlainColor { get; set; }
+		public Color VisualAlphaColor { get; set; }
+
+		#endregion
+
+		#region IWindowAreaCorrectionData
+
+		/// <summary>
+		/// ウィンドウサイズの倍数制御を行うか。
+		/// </summary>
+		public bool UsingMultipleResize { get { return NowFloatWindow && Visible; } }
+		/// <summary>
+		/// ウィンドウサイズの倍数制御に使用する元となる論理サイズ。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Size MultipleSize
+		{
+			//TODO: 手抜き
+			get { return ButtonSize; }
+		}
+		/// <summary>
+		/// タイトルバーとかボーダーを含んだ領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness MultipleThickness
+		{
+			get
+			{
+				var captionSize = GetCaptionSize(Orientation, this._captionWidth);
+				var result = new Thickness(
+					BorderThickness.Left + captionSize.Width,
+					BorderThickness.Top + captionSize.Height,
+					BorderThickness.Right,
+					BorderThickness.Bottom
+				);
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// 移動制限を行うか。
+		/// </summary>
+		public bool UsingMoveLimitArea { get { return CaptionVisibility == Visibility.Visible; } }
+		/// <summary>
+		/// 移動制限に使用する論理領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect MoveLimitArea
+		{
+			get
+			{
+				if(HasView) {
+					return UIUtility.ToLogicalPixel(View, DockScreen.DeviceWorkingArea);
+				} else {
+					NonProcess.Logger.SafeDebug("device pixel");
+					return DockScreen.DeviceWorkingArea;
+				}
+			}
+		}
+
+		/// <summary>
+		/// 最大化・最小化を抑制するか。
+		/// </summary>
+		public bool UsingMaxMinSuppression { get { return true; } }
+
+
+		#endregion
+
+		#region IWindowHitTestData
+
+		/// <summary>
+		/// ヒットテストを行うか
+		/// </summary>
+		public bool UsingHitTest { get { return NowFloatWindow; } }
+
+		/// <summary>
+		/// タイトルバーとして認識される領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect CaptionArea
+		{
+			get
+			{
+				var result = new Rect(BorderThickness.Left, BorderThickness.Top, CaptionWidth, CaptionHeight);
+				return result;
+			}
+		}
+		/// <summary>
+		/// サイズ変更に使用する境界線。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness ResizeThickness { get { return BorderThickness; } }
 
 		#endregion
 

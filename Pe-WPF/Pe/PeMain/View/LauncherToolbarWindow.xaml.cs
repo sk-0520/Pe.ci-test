@@ -101,6 +101,10 @@
 			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
 			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
 
+			var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
+			style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
+			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style);
+			
 			base.OnLoaded(sender, e);
 
 			Appbar = new ApplicationDesktopToolbar(this, ViewModel, CommonData.NonProcess);

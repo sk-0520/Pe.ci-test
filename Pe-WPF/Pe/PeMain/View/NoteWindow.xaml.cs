@@ -34,6 +34,7 @@
 		#region property
 
 		WindowHitTest WindowHitTest { get; set; }
+		WindowAreaCorrection WindowAreaCorrection { get; set; }
 
 		#endregion
 
@@ -58,14 +59,20 @@
 			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
 			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
 
+			var style = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_STYLE);
+			style &= ~(int)(WS.WS_MAXIMIZEBOX | WS.WS_MINIMIZEBOX);
+			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_STYLE, (IntPtr)style); 
+			
 			base.OnLoaded(sender, e);
 
 			WindowHitTest = new CaptionCursorHitTest(this, ViewModel, CommonData.NonProcess);
+			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			var extends = new IHavingWndProc[] {
+				WindowAreaCorrection,
 				WindowHitTest,
 			};
 			foreach(var extend in extends.Where(e => e != null)) {

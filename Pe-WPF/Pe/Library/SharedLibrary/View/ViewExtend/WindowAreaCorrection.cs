@@ -24,14 +24,23 @@
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
+			if (RestrictionViewModel.UsingMaxMinSuppression) {
+				var result = SuppressionMaxMin(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
+			}
 			if (RestrictionViewModel.UsingMultipleResize) {
-				CorrectionSizing(hWnd, msg, wParam, lParam, ref handled);
+				var result = CorrectionSizing(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
 			}
 			if (RestrictionViewModel.UsingMoveLimitArea) {
-				CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
-			}
-			if (RestrictionViewModel.UsingMaxMinSuppression) {
-				SuppressionMaxMin(hWnd, msg, wParam, lParam, ref handled);
+				var result = CorrectionMoving(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
 			}
 
 			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
