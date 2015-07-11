@@ -190,6 +190,7 @@
     <Compile Include="ViewModel\LauncherViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
+    <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\ToolbarViewModel.cs" />
     <Compile Include="View\AcceptWindow.xaml.cs">
@@ -199,6 +200,9 @@
       <DependentUpon>LoggingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessageWindow.cs" />
+    <Compile Include="View\NoteWindow.xaml.cs">
+      <DependentUpon>NoteWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Parts\Control\CommonDataUserControl.cs" />
     <Compile Include="View\Parts\Control\EnvironmentVariablesEditControl.xaml.cs">
       <DependentUpon>EnvironmentVariablesEditControl.xaml</DependentUpon>
@@ -288,6 +292,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWorker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NoteWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

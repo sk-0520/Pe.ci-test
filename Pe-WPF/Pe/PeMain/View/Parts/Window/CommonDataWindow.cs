@@ -28,14 +28,16 @@
 		#region property
 
 		//StartupWindowStatus Startup { get; set; }
+		protected object ExtensionData { get; private set; }
 
 		#endregion
 
 		#region ICommonData
 
-		public void SetCommonData(CommonData commonData)
+		public void SetCommonData(CommonData commonData, object extensionData)
 		{
 			CommonData = commonData;
+			ExtensionData = extensionData;
 
 			ApplySetting();
 		}
@@ -86,7 +88,7 @@
 			Debug.Assert(CommonData != null);
 
 			foreach(var ui in UIUtility.FindLogicalChildren<Control>(this).OfType<ICommonData>()) {
-				ui.SetCommonData(CommonData);
+				ui.SetCommonData(CommonData, ExtensionData);
 			}
 		}
 

@@ -19,14 +19,16 @@
 		#region property
 
 		//StartupWindowStatus Startup { get; set; }
+		protected object ExtensionData { get; private set; }
 
 		#endregion
 
 		#region ICommonData
 
-		public void SetCommonData(CommonData commonData)
+		public void SetCommonData(CommonData commonData, object extensionData)
 		{
 			CommonData = commonData;
+			ExtensionData = extensionData;
 		}
 
 		public CommonData CommonData { get; private set; }

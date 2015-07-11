@@ -43,7 +43,7 @@
 
 		#endregion
 
-		#region IWindowStatus
+		#region IWindowArea
 
 		[DataMember]
 		[PixelKind(Px.Logical)]
@@ -57,9 +57,8 @@
 		[DataMember]
 		[PixelKind(Px.Logical)]
 		public double WindowHeight { get; set; }
-		[DataMember]
-		[PixelKind(Px.Logical)]
-		public WindowState WindowState { get; set; }
+
+		#endregion
 
 		#region ITopMost
 
@@ -72,8 +71,6 @@
 
 		[DataMember]
 		public bool Visible { get; set; }
-
-		#endregion
 
 		#endregion
 	}

@@ -91,7 +91,7 @@
 				var result = CreateCommand(
 					o => {
 						var window = new SettingWindow();
-						window.SetCommonData(CommonData);
+						window.SetCommonData(CommonData, null);
 						window.ShowDialog();
 					}
 				);
@@ -141,7 +141,11 @@
 			get
 			{
 				var result = CreateCommand(
-					o => CreateNoteItem()
+					o => {
+						var point = new Point();
+						var size = new Size(200, 200);
+						CreateNoteItem(point, size, true); 
+					}
 				);
 
 				return result;
@@ -327,7 +331,7 @@
 				// 使用許諾表示前に使用しない状態にしておく。
 				CommonData.MainSetting.RunningInformation.Accept = false;
 				var window = new AcceptWindow();
-				window.SetCommonData(CommonData);
+				window.SetCommonData(CommonData, null);
 				window.ShowDialog();
 				if(CommonData.MainSetting.RunningInformation.Accept) {
 					CommonData.Logger.Information("accept: OK");
@@ -363,7 +367,7 @@
 		void CreateMessage()
 		{
 			MessageWindow = new MessageWindow();
-			MessageWindow.SetCommonData(CommonData);
+			MessageWindow.SetCommonData(CommonData, null);
 			MessageWindow.Show();
 		}
 
@@ -374,7 +378,7 @@
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				LoggingWindow = new LoggingWindow();
-				LoggingWindow.SetCommonData(CommonData);
+				LoggingWindow.SetCommonData(CommonData, null);
 
 				var appLogger = (AppLogger)CommonData.Logger;
 				appLogger.LogCollector = Logging;
@@ -397,8 +401,8 @@
 				LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
 
 				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
-					var toolbar = new LauncherToolbarWindow(screen);
-					toolbar.SetCommonData(CommonData);
+					var toolbar = new LauncherToolbarWindow();
+					toolbar.SetCommonData(CommonData, screen);
 					LauncherToolbarWindowList.Add(toolbar);
 				}
 			}
@@ -427,6 +431,8 @@
 
 		void CreateNoteWindow(NoteItemModel noteItem, bool append)
 		{
+			var window = new NoteWindow();
+			window.SetCommonData(CommonData, noteItem);
 			if(append) {
 				CommonData.NoteIndexSetting.Items.Add(noteItem);
 			}

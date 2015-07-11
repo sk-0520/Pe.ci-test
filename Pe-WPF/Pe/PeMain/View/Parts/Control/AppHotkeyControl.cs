@@ -14,11 +14,18 @@
 		public AppHotkeyControl()
 		{ }
 
+		#region property
+
+		protected object ExtensionData { get; private set; }
+
+		#endregion
+
 		#region ICommonData
 
-		public void SetCommonData(CommonData commonData)
+		public void SetCommonData(CommonData commonData, object extensionData)
 		{
 			CommonData = commonData;
+			ExtensionData = extensionData;
 		}
 
 		public CommonData CommonData { get; private set; }

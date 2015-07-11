@@ -9,6 +9,6 @@
 
 	public interface ICommonData: IHavingCommonData
 	{
-		void SetCommonData(CommonData commonData);
+		void SetCommonData(CommonData commonData, object extensionData);
 	}
 }

@@ -50,18 +50,9 @@
 			InitializeComponent();
 		}
 
-		public LauncherToolbarWindow(ScreenModel screen)
-			: this()
-		{
-			if (screen == null) {
-				throw new ArgumentNullException("screen");
-			}
-			Screen = screen;
-		}
-
 		#region property
 
-		ScreenModel Screen { get; set; }
+		//ScreenModel Screen { get; set; }
 
 		ApplicationDesktopToolbar Appbar { get; set; }
 		VisualStyle VisualStyle { get; set; }
@@ -80,11 +71,12 @@
 			};
 
 			ToolbarItemModel toolbar;
-			if (Screen != null) {
-				if(!CommonData.MainSetting.Toolbar.TryGetValue(Screen.DeviceName, out toolbar)) {
+			var screen = ExtensionData as ScreenModel;
+			if (screen != null) {
+				if(!CommonData.MainSetting.Toolbar.TryGetValue(screen.DeviceName, out toolbar)) {
 					toolbar = new ToolbarItemModel();
-					toolbar.Id = Screen.DeviceName;
-					CommonData.Logger.Information("create toolbar", Screen);
+					toolbar.Id = screen.DeviceName;
+					CommonData.Logger.Information("create toolbar", screen);
 					CommonData.MainSetting.Toolbar.Add(toolbar);
 				}
 			} else {
@@ -93,10 +85,7 @@
 			}
 			model.Toolbar = toolbar;
 
-			ViewModel = new LauncherToolbarViewModel(model, this, Screen, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.ClipboardWatcher);
-			//ViewModel.DockScreen = Screen;
-			// 以降Viewの保持するスクリーン情報は使用しない
-			Screen = null;
+			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.ClipboardWatcher);
 		}
 
 		protected override void ApplyViewModel()
