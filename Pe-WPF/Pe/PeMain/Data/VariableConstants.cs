@@ -33,13 +33,13 @@
 		string _launcherItemSettingFileName = Constants.launcherItemSettingFileName;
 		string _launcherGroupItemSettingFileName = Constants.launcherGroupItemSettingFileName;
 
-		string _noteDirectoryFileName = Constants.noteRootDirectoryName;
+		string _noteDirectoryFileName = Constants.noteSaveDirectoryName;
 		string _noteIndexFileName = Constants.noteIndexFileName;
 
-		string _clipboardDirectoryFileName = Constants.clipboardRootDirectoryName;
+		string _clipboardDirectoryFileName = Constants.clipboardSaveDirectoryName;
 		string _clipboardIndexFileName = Constants.clipboardIndexFileName;
 
-		string _templateDirectoryFileName = Constants.templateRootDirectoryName;
+		string _templateDirectoryFileName = Constants.templateSaveDirectoryName;
 		string _templateIndexFileName = Constants.templateIndexFileName;
 
 		string _languageCode = CultureInfo.CurrentCulture.Name;
@@ -122,13 +122,13 @@
 		public string UserSettingFileLauncherGroupItemSetting { get { return Path.Combine(UserSettingDirectoryPath, this._launcherGroupItemSettingFileName); } }
 
 		public string UserSettingNoteDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._noteDirectoryFileName); } }
-		public string UserSettingNoteIndexFilePath { get { return Path.Combine(UserSettingNoteDirectoryPath, this._noteIndexFileName); } }
+		public string UserSettingNoteIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._noteIndexFileName); } }
 
 		public string UserSettingClipboardDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardDirectoryFileName); } }
-		public string UserSettingClipboardIndexFilePath { get { return Path.Combine(UserSettingClipboardDirectoryPath, this._clipboardIndexFileName); } }
+		public string UserSettingClipboardIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._clipboardIndexFileName); } }
 
 		public string UserSettingTemplateDirectoryPath { get { return Path.Combine(UserSettingDirectoryPath, this._templateDirectoryFileName); } }
-		public string UserSettingTemplateIndexFilePath { get { return Path.Combine(UserSettingTemplateDirectoryPath, this._templateIndexFileName); } }
+		public string UserSettingTemplateIndexFilePath { get { return Path.Combine(UserSettingDirectoryPath, this._templateIndexFileName); } }
 
 		public string LanguageCode { get { return this._languageCode; } }
 

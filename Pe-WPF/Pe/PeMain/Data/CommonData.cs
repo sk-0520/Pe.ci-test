@@ -43,6 +43,9 @@
 		public MainSettingModel MainSetting { get; set; }
 		public LauncherItemSettingModel LauncherItemSetting { get; set; }
 		public LauncherGroupSettingModel LauncherGroupSetting { get; set; }
+		public NoteIndexSettingModel NoteIndexSetting;
+		public ClipboardIndexSettingModel ClipboardIndexSetting;
+		public TemplateIndexSettingModel TemplateIndexSetting;
 		public AppLanguageManager Language { get; set; }
 
 		public ILogger Logger { get; set; }

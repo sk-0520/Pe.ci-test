@@ -257,6 +257,10 @@
 				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
 				// 言語ファイル
 				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
+				// インデックスファイル読み込み
+				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, CommonData.Logger);
+				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, CommonData.Logger);
+				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, CommonData.Logger);
 			}
 		}
 
@@ -266,6 +270,10 @@
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, CommonData.Logger);
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, CommonData.Logger);
 				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, CommonData.Logger);
+
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingNoteIndexFilePath, CommonData.NoteIndexSetting, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, CommonData.ClipboardIndexSetting, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, CommonData.TemplateIndexSetting, CommonData.Logger);
 			}
 		}
 

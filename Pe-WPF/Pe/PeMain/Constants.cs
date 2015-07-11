@@ -57,14 +57,14 @@
 		public const string launcherItemSettingFileName = "item-setting.json";
 		public const string launcherGroupItemSettingFileName = "group-item.json";
 
-		public const string noteRootDirectoryName = "note";
-		public const string noteIndexFileName = "note.json";
+		public const string noteSaveDirectoryName = "notes";
+		public const string noteIndexFileName = "note-index.json";
 
-		public const string clipboardRootDirectoryName = "clipboard";
-		public const string clipboardIndexFileName = "clipboard.json";
+		public const string clipboardSaveDirectoryName = "clipboards";
+		public const string clipboardIndexFileName = "clipboard-index.json";
 
-		public const string templateRootDirectoryName = "template";
-		public const string templateIndexFileName = "template.json";
+		public const string templateSaveDirectoryName = "templates";
+		public const string templateIndexFileName = "template-index.json";
 
 		public const string styleCommonFileName = "common.css";
 

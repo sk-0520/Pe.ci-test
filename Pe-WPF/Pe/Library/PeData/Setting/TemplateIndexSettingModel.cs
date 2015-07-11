@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
+	[DataContract, Serializable]
 	public class TemplateIndexSettingModel: IndexSettingModelBase<TemplateItemCollectionModel, TemplateItemModel>
 	{
 		public TemplateIndexSettingModel()

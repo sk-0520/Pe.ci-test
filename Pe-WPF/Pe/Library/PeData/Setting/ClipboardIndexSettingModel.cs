@@ -8,6 +8,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
+	[DataContract, Serializable]
 	public class ClipboardIndexSettingModel: IndexSettingModelBase<ClipboardItemCollectionModel, ClipboardItemModel>
 	{
 		public ClipboardIndexSettingModel()
