@@ -242,6 +242,7 @@
     <Compile Include="View\Parts\Converter\LauncherViewModelBaseConverter.cs" />
     <Compile Include="View\Parts\Converter\TreeListLauncherItemRelationConverter.cs" />
     <Compile Include="View\Parts\EnumList.cs" />
+    <Compile Include="View\Parts\ViewExtend\CaptionCursorHitTest.cs" />
     <Compile Include="View\Parts\ViewExtend\LauncherToolbarHitTest.cs" />
     <Compile Include="View\Parts\Window\ViewModelCommonDataWindow.cs" />
     <Compile Include="View\Parts\XamlTag.cs" />

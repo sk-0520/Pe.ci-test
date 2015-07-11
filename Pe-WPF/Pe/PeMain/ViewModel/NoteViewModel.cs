@@ -6,14 +6,18 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher
+	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData
 	{
 		public NoteViewModel(NoteItemModel model, NoteWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model, view)
@@ -23,6 +27,17 @@
 		}
 
 		#region property
+
+		public Brush BorderBrush
+		{
+			get
+			{
+				return new SolidColorBrush(Colors.Red);
+			}
+		}
+
+		#endregion
+
 		#region ITopMost
 
 		public bool TopMost
@@ -54,13 +69,15 @@
 		public double WindowLeft
 		{
 			get { return WindowAreaProperty.GetWindowLeft(Model); }
-			set { WindowAreaProperty.SetWindowLeft(Model, value, OnPropertyChanged);}
+			set { WindowAreaProperty.SetWindowLeft(Model, value, OnPropertyChanged); }
 		}
 
 		public double WindowTop
 		{
 			get { return WindowAreaProperty.GetWindowTop(Model); }
-			set { WindowAreaProperty.SetWindowTop(Model, value, OnPropertyChanged); 
+			set
+			{
+				WindowAreaProperty.SetWindowTop(Model, value, OnPropertyChanged);
 			}
 		}
 		public double WindowWidth
@@ -76,8 +93,6 @@
 
 		#endregion
 
-		#endregion
-
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
@@ -90,5 +105,24 @@
 
 		#endregion
 
+		#region IWindowHitTestData
+
+		/// <summary>
+		/// ヒットテストを行うか
+		/// </summary>
+		public bool UsingHitTest { get{return true;} }
+
+		/// <summary>
+		/// タイトルバーとして認識される領域。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Rect CaptionArea { get { return new Rect(); } }
+		/// <summary>
+		/// サイズ変更に使用する境界線。
+		/// </summary>
+		[PixelKind(Px.Logical)]
+		public Thickness ResizeThickness { get { return new Thickness(8); } }
+
+		#endregion
 	}
 }

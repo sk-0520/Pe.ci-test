@@ -11,23 +11,19 @@
 	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 
-	public class LauncherToolbarHitTest : WindowHitTest
+	public class LauncherToolbarHitTest: CaptionCursorHitTest
 	{
 		public LauncherToolbarHitTest(Window view, IWindowHitTestData restrictionViewModel, INonProcess nonProcess)
 			: base(view, restrictionViewModel, nonProcess)
 		{ }
 
-		#region WindowHitTest
+		#region CaptionCursorHitTest
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if(msg == (int)WM.WM_SETCURSOR) {
-				var hitTest = WindowsUtility.ConvertHTFromLParam(lParam);
-				if (hitTest == HT.HTCAPTION) {
-					NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));
-					handled = true;
-					return new IntPtr(1);
-				}
+			var captionResult = base.WndProc(hWnd, msg, wParam, lParam, ref handled);
+			if(HitCaption && handled) {
+				return captionResult;
 			}
 
 			var result = base.WndProc(hWnd, msg, wParam, lParam, ref handled);

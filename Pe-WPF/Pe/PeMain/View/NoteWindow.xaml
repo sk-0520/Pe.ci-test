@@ -6,12 +6,20 @@
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	ShowInTaskbar="False" 
+	WindowStyle="None"
+	ResizeMode="CanResize"
+	AllowsTransparency="True"
+	WindowStartupLocation="Manual"
 	Title="NoteWindow"
 	Left="{Binding WindowLeft, Mode=TwoWay}"
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
 	Visibility="{Binding Visibility}"
+	Topmost="{Binding TopMost}"
+	BorderThickness="{Binding ResizeThickness}"
+	BorderBrush="{Binding BorderBrush}"
 >
 	<Grid>
 

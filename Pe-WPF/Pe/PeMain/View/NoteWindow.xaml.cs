@@ -13,7 +13,11 @@
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
 	using System.Windows.Shapes;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.View.ViewExtend;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Window;
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 
@@ -26,6 +30,12 @@
 		{
 			InitializeComponent();
 		}
+
+		#region property
+
+		WindowHitTest WindowHitTest { get; set; }
+
+		#endregion
 
 		#region ViewModelCommonDataWindow
 
@@ -40,6 +50,32 @@
 			DataContext = ViewModel;
 
 			base.ApplyViewModel();
+		}
+
+		protected override void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			int exStyle = (int)WindowsUtility.GetWindowLong(Handle, (int)GWL.GWL_EXSTYLE);
+			exStyle |= (int)WS_EX.WS_EX_TOOLWINDOW;
+			WindowsUtility.SetWindowLong(Handle, (int)GWL.GWL_EXSTYLE, (IntPtr)exStyle);
+
+			base.OnLoaded(sender, e);
+
+			WindowHitTest = new CaptionCursorHitTest(this, ViewModel, CommonData.NonProcess);
+		}
+
+		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		{
+			var extends = new IHavingWndProc[] {
+				WindowHitTest,
+			};
+			foreach(var extend in extends.Where(e => e != null)) {
+				var result = extend.WndProc(hWnd, msg, wParam, lParam, ref handled);
+				if(handled) {
+					return result;
+				}
+			}
+
+			return base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 		}
 
 		#endregion
