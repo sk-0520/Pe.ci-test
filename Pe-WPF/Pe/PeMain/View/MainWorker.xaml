@@ -32,7 +32,14 @@
 				</DataTemplate>
 			</MenuItem.ItemTemplate>
 		</MenuItem>
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note">
+			<MenuItem Header="create" Command="{Binding CreateNoteItemCommand}" />
+			<MenuItem Header="compact" />
+			<MenuItem Header="hide" />
+			<Separator />
+			<MenuItem Header="front" />
+			<Separator />
+		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
 		<Separator />

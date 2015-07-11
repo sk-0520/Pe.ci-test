@@ -29,6 +29,8 @@
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.Converter;
 	using ContentTypeTextNet.Pe.PeMain.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -128,6 +130,18 @@
 						SaveSetting();
 						Application.Current.Shutdown();
 					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CreateNoteItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => CreateNoteItem()
 				);
 
 				return result;
@@ -395,6 +409,27 @@
 		/// </summary>
 		void ChangedScreenCount()
 		{
+		}
+
+		void CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool append)
+		{
+			var noteItem = new NoteItemModel() {
+				WindowLeft = point.X,
+				WindowTop = point.Y,
+				WindowWidth = size.Width,
+				WindowHeight = size.Height,
+				Visible = true,
+				Name = "TODO: note title",
+			};
+
+			CreateNoteWindow(noteItem, append);
+		}
+
+		void CreateNoteWindow(NoteItemModel noteItem, bool append)
+		{
+			if(append) {
+				CommonData.NoteIndexSetting.Items.Add(noteItem);
+			}
 		}
 
 		#endregion
