@@ -57,6 +57,9 @@
 		List<LauncherToolbarWindow> LauncherToolbarWindowList { get; set; }
 		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
 
+		List<NoteWindow> NoteWindowList { get; set; }
+		public IEnumerable<NoteViewModel> Note { get { return NoteWindowList.Select(n => n.ViewModel); } }
+
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
 
@@ -316,6 +319,8 @@
 
 				CreateToolbar();
 
+				CreateNote();
+
 				return true;
 			}
 		}
@@ -408,6 +413,18 @@
 			}
 		}
 
+		void CreateNote()
+		{
+			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
+				NoteWindowList = new List<NoteWindow>();
+
+				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(i => i.Visible)) {
+					var noteWindow = CreateNoteWindow(noteItem, false);
+					NoteWindowList.Add(noteWindow);
+				}
+			}
+		}
+
 		/// <summary>
 		/// ディスプレイ数に変更があった。
 		/// </summary>
@@ -415,7 +432,7 @@
 		{
 		}
 
-		void CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool append)
+		NoteWindow CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool appendIndex)
 		{
 			var noteItem = new NoteItemModel() {
 				WindowLeft = point.X,
@@ -426,16 +443,18 @@
 				Name = "TODO: note title",
 			};
 
-			CreateNoteWindow(noteItem, append);
+			return CreateNoteWindow(noteItem, appendIndex);
 		}
 
-		void CreateNoteWindow(NoteItemModel noteItem, bool append)
+		NoteWindow CreateNoteWindow(NoteItemModel noteItem, bool appendIndex)
 		{
 			var window = new NoteWindow();
 			window.SetCommonData(CommonData, noteItem);
-			if(append) {
+			if(appendIndex) {
 				CommonData.NoteIndexSetting.Items.Add(noteItem);
 			}
+
+			return window;
 		}
 
 		#endregion

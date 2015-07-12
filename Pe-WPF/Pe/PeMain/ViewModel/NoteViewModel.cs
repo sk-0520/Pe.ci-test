@@ -40,6 +40,18 @@
 
 		public double TitleHeight { get { return 20; } }
 
+		public Visibility CaptionButtonVisibility
+		{
+			get
+			{
+				if(Model.Lock) {
+					return Visibility.Collapsed;
+				} else {
+					return Visibility.Visible;
+				}
+			}
+		}
+
 		#endregion
 
 		#region HavingViewSingleModelWrapperViewModelBase
