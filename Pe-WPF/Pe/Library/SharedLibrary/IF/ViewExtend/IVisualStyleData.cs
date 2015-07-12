@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Library.SharedLibrary.IF
+﻿namespace ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend
 {
 	using System;
 	using System.Collections.Generic;

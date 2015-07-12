@@ -14,6 +14,7 @@
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
 	public class VisualStyle : WindowsViewExtendBase<IVisualStyleData>

@@ -101,7 +101,7 @@
     <Compile Include="Event\AppbarStateChangeEventArgs.cs" />
     <Compile Include="Event\TextTemplatingErrorEventArgs.cs" />
     <Compile Include="IF\IApplicationDesktopToolbar.cs" />
-    <Compile Include="IF\IApplicationDesktopToolbarData.cs" />
+    <Compile Include="IF\ViewExtend\IApplicationDesktopToolbarData.cs" />
     <Compile Include="IF\IDeepClone.cs" />
     <Compile Include="IF\IDisplayText.cs" />
     <Compile Include="IF\IGetMembers.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="IF\IRuntimeTextTemplate.cs" />
     <Compile Include="IF\ViewExtend\IWindowHitTestData.cs" />
     <Compile Include="IF\ViewExtend\IWindowAreaCorrectionData.cs" />
-    <Compile Include="IF\IVisualStyleData.cs" />
+    <Compile Include="IF\ViewExtend\IVisualStyleData.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />
     <Compile Include="IF\IHavingViewModel.cs" />
