@@ -91,21 +91,21 @@
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj">対象オブジェクト。</param>
 		/// <param name="value">変更データ。</param>
-		/// <param name="memberName">対象オブジェクトのメンバ名。</param>
+		/// <param name="targetMemberName">対象オブジェクトのメンバ名。</param>
 		/// <param name="propertyName"></param>
 		/// <returns>変更があった場合は真を返す。</returns>
-		protected bool SetPropertyValue<T>(object obj, T value, [CallerMemberName] string memberName = "", [CallerMemberName] string propertyName = "")
+		protected bool SetPropertyValue<T>(object obj, T value, [CallerMemberName] string targetMemberName = "", [CallerMemberName] string callerPropertyName = "")
 		{
 			CheckUtility.DebugEnforceNotNull(obj);
 
 			var type = obj.GetType();
-			var propertyInfo = type.GetProperty(memberName);
+			var propertyInfo = type.GetProperty(targetMemberName);
 
 			var nowValue = (T)propertyInfo.GetValue(obj);
 
 			if (!IComparable<T>.Equals(nowValue, value)) {
 				propertyInfo.SetValue(obj, value);
-				OnPropertyChanged(propertyName);
+				OnPropertyChanged(callerPropertyName);
 
 				return true;
 			}

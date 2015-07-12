@@ -249,7 +249,18 @@ using System.IO;
 
 		public IIndexBody ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
 		{
-			return null;
+			switch(indexKind) {
+				case IndexKind.Note: 
+					{
+						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
+						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
+						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+						return AppUtility.LoadSetting<NoteBodyItemModel>(path, CommonData.Logger);
+					}
+
+				default:
+					throw new NotImplementedException();
+			}
 		}
 
 		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody, Stream stream)

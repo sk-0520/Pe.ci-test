@@ -39,6 +39,8 @@
 #endif
 		public static readonly string buildProcess = Environment.Is64BitProcess ? "64" : "32";
 
+		public const string keyGuidName = "${GUID}";
+
 		public const string binDirectoryName = "bin";
 		public const string sbinDirectoryName = "sbin";
 		public const string libraryDirectoryName = "lib";
@@ -56,6 +58,8 @@
 		public const string mainSettingFileName = "main-setting.json";
 		public const string launcherItemSettingFileName = "item-setting.json";
 		public const string launcherGroupItemSettingFileName = "group-item.json";
+
+		public const string indexBodyBaseFileName = keyGuidName + ".json";
 
 		public const string noteSaveDirectoryName = "notes";
 		public const string noteIndexFileName = "note-index.json";

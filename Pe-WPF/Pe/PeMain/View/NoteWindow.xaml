@@ -31,6 +31,11 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
+			<Grid.Resources>
+				<Style TargetType="Button">
+					<Setter Property="Focusable" Value="False"/>
+				</Style>
+			</Grid.Resources>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
@@ -48,6 +53,6 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<RichTextBox Grid.Row="1" IsReadOnly="{Binding IsLocked, Converter={StaticResource LogicalNotConverter}}" />
+		<TextBox Grid.Row="1" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

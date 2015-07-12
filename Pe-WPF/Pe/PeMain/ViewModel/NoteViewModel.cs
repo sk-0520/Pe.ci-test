@@ -1,26 +1,33 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Linq;
-	using System.Text;
-	using System.Threading.Tasks;
-	using System.Windows;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-	using ContentTypeTextNet.Library.SharedLibrary.Define;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
-	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
-	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-	using ContentTypeTextNet.Pe.Library.PeData.Item;
-	using ContentTypeTextNet.Pe.PeMain.IF;
-	using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
-	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-	using ContentTypeTextNet.Pe.PeMain.View;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+using ContentTypeTextNet.Library.SharedLibrary.Define;
+using ContentTypeTextNet.Library.SharedLibrary.IF;
+using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+using ContentTypeTextNet.Pe.Library.PeData.IF;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.IF;
+using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
+using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender
 	{
+		#region variable
+
+		IIndexBody _indexBody;
+
+		#endregion
+
 		public NoteViewModel(NoteIndexItemModel model, NoteWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, view)
 		{
@@ -30,6 +37,8 @@
 		}
 
 		#region property
+
+		NoteBodyItemModel IndexBody { get { return this._indexBody as NoteBodyItemModel; } }
 
 		public bool IsTemporary { get; set; }
 		public bool IsRemove { get; set; }
@@ -48,7 +57,7 @@
 		{
 			get
 			{
-				if(Model.IsLocked) {
+				if(IsLocked) {
 					return Visibility.Collapsed;
 				} else {
 					return Visibility.Visible;
@@ -60,6 +69,29 @@
 		{
 			get { return Model.IsLocked; }
 			set { SetModelValue(value); }
+		}
+
+		public string Body
+		{
+			get 
+			{
+				if(IndexBody == null) {
+					this._indexBody = AppSender.SendGetIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
+					if(this._indexBody == null) {
+						this._indexBody = new NoteBodyItemModel();
+					}
+				}
+				var indexBody = IndexBody;
+				return indexBody.Text ?? string.Empty;
+			}
+			set
+			{
+				if(IndexBody == null) {
+					this._indexBody = new NoteBodyItemModel();
+				}
+				var indexBody = IndexBody;
+				SetPropertyValue(indexBody, value, "Text");
+			}
 		}
 
 		#endregion

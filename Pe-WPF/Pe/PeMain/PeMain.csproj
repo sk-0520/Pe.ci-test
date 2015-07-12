@@ -161,6 +161,7 @@
     <Compile Include="Logic\Utility\AppUtility.cs" />
     <Compile Include="Logic\Utility\ClipboardUtility.cs" />
     <Compile Include="Logic\Utility\ExecuteUtility.cs" />
+    <Compile Include="Logic\Utility\IndexItemUtility.cs" />
     <Compile Include="Logic\Utility\LanguageUtility.cs" />
     <Compile Include="Logic\AppLogger.cs" />
     <Compile Include="Logic\Property\WindowStatusProperty.cs" />

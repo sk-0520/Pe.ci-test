@@ -24,7 +24,7 @@
 	public static class AppUtility
 	{
 		public static T LoadSetting<T>(string path, ILogger logger)
-			where T: SettingModelBase, new()
+			where T: ModelBase, new()
 		{
 			logger.Information("load setting", path);
 			T result = null;
@@ -39,7 +39,7 @@
 		}
 
 		public static void SaveSetting<T>(string path, T model, ILogger logger)
-			where T: SettingModelBase
+			where T: ModelBase
 		{
 			logger.Information("load setting", path);
 			SerializeUtility.SaveJsonDataToFile(path, model);
