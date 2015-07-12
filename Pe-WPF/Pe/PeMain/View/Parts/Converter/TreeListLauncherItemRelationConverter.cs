@@ -22,7 +22,7 @@
 				return null;
 			}
 			var itemNode = (GroupItemViewMode)toolbarNode;
-			return itemNode.GetModel();
+			return itemNode.Model;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

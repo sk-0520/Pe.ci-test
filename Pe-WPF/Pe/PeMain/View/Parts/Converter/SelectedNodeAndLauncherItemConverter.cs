@@ -21,7 +21,7 @@
 			result.SelectedNode = values[0] as IToolbarNode;
 			result.LauncherItem = values[1] == null
 				? default(LauncherItemModel)
-				: ((LauncherViewModelBase)values[1]).GetModel()
+				: ((LauncherViewModelBase)values[1]).Model
 			;
 
 			return result;

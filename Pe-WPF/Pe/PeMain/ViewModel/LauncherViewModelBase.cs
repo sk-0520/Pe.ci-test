@@ -116,12 +116,6 @@
 
 		#endregion
 
-		#region SingleModelWrapperViewModelBase
-
-		protected override bool CanOutputModel { get { return true; } }
-
-		#endregion
-
 		#region function
 
 		public BitmapSource GetIcon(IconScale iconScale)

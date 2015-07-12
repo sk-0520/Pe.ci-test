@@ -32,6 +32,7 @@
 		#region property
 
 		public bool IsTemporary { get; set; }
+		public bool IsRemove { get; set; }
 
 		public Brush BorderBrush
 		{

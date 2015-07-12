@@ -1,14 +1,14 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.IF
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.Define;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public interface IAppSender
 	{
@@ -22,6 +22,17 @@ using ContentTypeTextNet.Pe.PeMain.Define;
 		/// </summary>
 		/// <param name="window"></param>
 		void SendWindowRemove(Window window);
+		/// <summary>
+		/// 対象インデックスから指定IDを削除。
+		/// </summary>
+		/// <param name="guid"></param>
+		/// <param name="indexKind"></param>
+		void SendIndexRemove(IndexKind indexKind, Guid guid);
+		/// <summary>
+		/// 対象インデックスを保存。
+		/// </summary>
+		/// <param name="indexKind"></param>
+		void SendIndexSave(IndexKind indexKind);
 		/// <summary>
 		/// デバイスが変更されたことを通知。
 		/// </summary>

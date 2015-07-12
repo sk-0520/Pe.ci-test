@@ -121,7 +121,7 @@
 						var itemViewModel = groupNode.Nodes.Single(n => n.IsSelected);
 						var selectedIndex = groupNode.Nodes.IndexOf(itemViewModel);
 
-						if (groupNode.Nodes[selectedIndex].GetModel() != this._selectedLauncherItem) {
+						if(groupNode.Nodes[selectedIndex].Model != this._selectedLauncherItem) {
 							targetGroupSetting.LauncherItems[selectedIndex] = this._selectedLauncherItem.Id;
 
 							var insertViewModel = new GroupItemViewMode(this._selectedLauncherItem, LauncherIconCaching, NonProcess) {
@@ -172,7 +172,7 @@
 						if (nodeAndItem.SelectedNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
 							// グループに追加
 							var groupViewModel = (GroupRootViewModel)nodeAndItem.SelectedNode;
-							var groupModel = groupViewModel.GetModel();
+							var groupModel = groupViewModel.Model;
 							var target = this._groupTree.Single(g => g == groupViewModel);
 							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
 
@@ -184,7 +184,7 @@
 							var itemViewModel = (GroupItemViewMode)nodeAndItem.SelectedNode;
 							var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
 							var appendViewModel = new GroupItemViewMode(nodeAndItem.LauncherItem, LauncherIconCaching, NonProcess);
-							var groupModel = groupViewModel.GetModel();
+							var groupModel = groupViewModel.Model;
 							
 							var insertIndex = groupViewModel.Nodes.IndexOf(itemViewModel) + 1;
 
@@ -235,7 +235,7 @@
 						var toolbarNode = (IToolbarNode)o;
 						if(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
 							var groupViewModel = (GroupRootViewModel)toolbarNode;
-							var groupModel = groupViewModel.GetModel();
+							var groupModel = groupViewModel.Model;
 
 							GroupSettingModel.Groups.Remove(groupModel);
 							this._groupTree.Remove(groupViewModel);
@@ -243,7 +243,7 @@
 							Debug.Assert(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item);
 							var itemViewModel = (GroupItemViewMode)toolbarNode;
 							var groupViewModel = this._groupTree.First(g => g.Nodes.Any(i => i == itemViewModel));
-							var groupModel = groupViewModel.GetModel();
+							var groupModel = groupViewModel.Model;
 
 							var removeIndex = groupViewModel.Nodes.IndexOf(itemViewModel);
 
@@ -266,7 +266,7 @@
 							var toolbarNode = (IToolbarNode)o;
 							if (toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Item) {
 								var model = (GroupItemViewMode)toolbarNode;
-								SelectedLauncherItem = model.GetModel();
+								SelectedLauncherItem = model.Model;
 							}
 						}
 					}
@@ -288,7 +288,7 @@
 			var toolbarNode = (IToolbarNode)o;
 			if(toolbarNode.ToolbarNodeKind == ToolbarNodeKind.Group) {
 				var groupViewModel = (GroupRootViewModel)toolbarNode;
-				var groupModel = groupViewModel.GetModel();
+				var groupModel = groupViewModel.Model;
 				var srcIndex = GroupSettingModel.Groups.IndexOf(groupModel);
 				var nextIndex = srcIndex + (isUp ? -1 : +1);
 

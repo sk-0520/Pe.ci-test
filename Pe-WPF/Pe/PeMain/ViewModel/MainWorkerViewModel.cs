@@ -182,6 +182,16 @@
 			ReceiveWindowRemove(window);
 		}
 
+		public void SendIndexRemove(IndexKind indexKind, Guid guid)
+		{
+			ReceiveIndexRemove(indexKind, guid);
+		}
+
+		public void SendIndexSave(IndexKind indexKind)
+		{
+			ReceiveIndexSave(indexKind);
+		}
+
 		public void SendDeviceChanged(ChangedDevice changedDevice)
 		{
 			ReceiveDeviceChanged(changedDevice);
@@ -207,8 +217,22 @@
 			var noteWindow = window as NoteWindow;
 			if(noteWindow != null) {
 				NoteWindowList.Remove(noteWindow);
+				var noteViewMode = noteWindow.ViewModel;
+				if(noteViewMode.IsRemove) {
+					// インデックスから削除
+					//noteViewMode.GetModel
+					CommonData.NoteIndexSetting.Items.Remove(noteViewMode.Model);
+				}
+				OnPropertyChanged("NoteShowItems");
+				OnPropertyChanged("NoteHiddenItems");
 			}
 		}
+
+		void ReceiveIndexRemove(IndexKind indexKind, Guid guid)
+		{ }
+
+		void ReceiveIndexSave(IndexKind indexKind)
+		{ }
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{

@@ -17,7 +17,7 @@
 			var model = value as LauncherViewModelBase;
 			if(model != null) {
 				//TODO: parameterで切り替えれた方があとあと便利そう。
-				var result = new LauncherItemEditViewModel(model.GetModel(), model.LauncherIconCaching, model.NonProcess);
+				var result = new LauncherItemEditViewModel(model.Model, model.LauncherIconCaching, model.NonProcess);
 				return result;
 			}
 			return null;
