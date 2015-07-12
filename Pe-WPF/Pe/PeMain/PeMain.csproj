@@ -137,7 +137,6 @@
     <Compile Include="Data\Temporary\SettingNotifiyItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
     <Compile Include="Define\HotKeyId.cs" />
-    <Compile Include="Define\IndexKind.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IHavingAppSender.cs" />

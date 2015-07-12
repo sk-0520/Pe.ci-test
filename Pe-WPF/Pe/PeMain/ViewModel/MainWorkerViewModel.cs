@@ -31,6 +31,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
+using System.IO;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -192,6 +195,16 @@
 			ReceiveIndexSave(indexKind);
 		}
 
+		public IIndexBody SendGetIndexBody(IndexKind indexKind, Guid guid)
+		{
+			return ReceiveGetIndexBody(indexKind, guid);
+		}
+
+		public void SendSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody, Stream stream)
+		{
+			ReceiveSaveIndexBody(indexKind, guid, indexBody, stream);
+		}
+
 		public void SendDeviceChanged(ChangedDevice changedDevice)
 		{
 			ReceiveDeviceChanged(changedDevice);
@@ -233,6 +246,15 @@
 
 		void ReceiveIndexSave(IndexKind indexKind)
 		{ }
+
+		public IIndexBody ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
+		{
+			return null;
+		}
+
+		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody, Stream stream)
+		{ }
+
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{

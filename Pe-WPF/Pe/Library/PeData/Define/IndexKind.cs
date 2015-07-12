@@ -1,4 +1,4 @@
-﻿namespace ContentTypeTextNet.Pe.PeMain.Define
+﻿namespace ContentTypeTextNet.Pe.Library.PeData.Define
 {
 	using System;
 	using System.Collections.Generic;
