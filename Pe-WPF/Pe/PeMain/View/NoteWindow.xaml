@@ -59,6 +59,6 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" IsReadOnly="{Binding IsLocked}" Text="{Binding Body, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" />
+		<TextBox Grid.Row="1" IsReadOnly="{Binding IsLocked}" Text="{Binding Body, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Focusable="True" AcceptsReturn="True" AcceptsTab="True" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>
