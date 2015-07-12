@@ -114,8 +114,8 @@
     <Compile Include="Model\GuidModelBase.cs" />
     <Compile Include="Model\RangeModel.cs" />
     <Compile Include="IF\IRuntimeTextTemplate.cs" />
-    <Compile Include="IF\WindowsViewExtend\IWindowHitTestData.cs" />
-    <Compile Include="IF\WindowsViewExtend\IWindowAreaCorrectionData.cs" />
+    <Compile Include="IF\ViewExtend\IWindowHitTestData.cs" />
+    <Compile Include="IF\ViewExtend\IWindowAreaCorrectionData.cs" />
     <Compile Include="IF\IVisualStyleData.cs" />
     <Compile Include="IF\IWindowsHandle.cs" />
     <Compile Include="IF\IHavingView.cs" />

@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
@@ -14,10 +15,11 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData
+	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData
 	{
 		public NoteViewModel(NoteItemModel model, NoteWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
 			: base(model, view)
@@ -37,6 +39,10 @@
 		}
 
 		public double TitleHeight { get { return 20; } }
+
+		#endregion
+
+		#region HavingViewSingleModelWrapperViewModelBase
 
 		#endregion
 
@@ -169,6 +175,13 @@
 		/// 最大化・最小化を抑制するか。
 		/// </summary>
 		public bool UsingMaxMinSuppression { get { return true; } }
+
+		#endregion
+
+		#region ICaptionDoubleClickData
+
+		public void OnCaptionDoubleClick(object sender, CancelEventArgs e)
+		{ }
 
 		#endregion
 	}

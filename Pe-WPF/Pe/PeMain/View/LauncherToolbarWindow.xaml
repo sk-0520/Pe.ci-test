@@ -17,8 +17,6 @@
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}" 
-	MinHeight="{Binding MinSize.Height, Mode=OneWay}"
-	MinWidth="{Binding MinSize.Width, Mode=OneWay}"
 	ShowInTaskbar="False" 
 	WindowStyle="None"
 	ResizeMode="CanResize"

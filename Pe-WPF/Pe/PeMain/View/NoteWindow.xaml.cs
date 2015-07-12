@@ -33,6 +33,7 @@
 
 		#region property
 
+		CaptionDoubleClick CaptionDoubleClick { get; set; }
 		WindowHitTest WindowHitTest { get; set; }
 		WindowAreaCorrection WindowAreaCorrection { get; set; }
 
@@ -65,13 +66,15 @@
 			
 			base.OnLoaded(sender, e);
 
+			CaptionDoubleClick = new CaptionDoubleClick(this, ViewModel, CommonData.NonProcess);
+			//WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
 			WindowHitTest = new CaptionCursorHitTest(this, ViewModel, CommonData.NonProcess);
-			WindowAreaCorrection = new WindowAreaCorrection(this, ViewModel, CommonData.NonProcess);
 		}
 
 		protected override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			var extends = new IHavingWndProc[] {
+				CaptionDoubleClick,
 				WindowAreaCorrection,
 				WindowHitTest,
 			};
