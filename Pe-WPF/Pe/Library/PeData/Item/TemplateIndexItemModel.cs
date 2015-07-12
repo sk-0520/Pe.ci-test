@@ -6,9 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public class TemplateItemModel: IndexItemModelBase
+	public class TemplateIndexItemModel: IndexItemModelBase
 	{
-		public TemplateItemModel()
+		public TemplateIndexItemModel()
 			: base()
 		{ }
 	}

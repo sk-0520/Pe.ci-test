@@ -8,9 +8,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
-	public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteItemModel>
+	public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>
 	{
-		public NoteMenuViewModel(NoteItemModel model)
+		public NoteMenuViewModel(NoteIndexItemModel model)
 			: base(model)
 		{ }
 	}

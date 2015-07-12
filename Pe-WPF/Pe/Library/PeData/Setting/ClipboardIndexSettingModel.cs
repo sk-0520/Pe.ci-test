@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[DataContract, Serializable]
-	public class ClipboardIndexSettingModel: IndexSettingModelBase<ClipboardItemCollectionModel, ClipboardItemModel>
+	public class ClipboardIndexSettingModel: IndexSettingModelBase<ClipboardIndexItemCollectionModel, ClipboardIndexItemModel>
 	{
 		public ClipboardIndexSettingModel()
 			:base()

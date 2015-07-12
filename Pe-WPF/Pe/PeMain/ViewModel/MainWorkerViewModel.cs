@@ -472,7 +472,7 @@
 
 		NoteWindow CreateNoteItem([PixelKind(Px.Logical)] Point point, [PixelKind(Px.Logical)] Size size, bool appendIndex)
 		{
-			var noteItem = new NoteItemModel() {
+			var noteItem = new NoteIndexItemModel() {
 				WindowLeft = point.X,
 				WindowTop = point.Y,
 				WindowWidth = size.Width,
@@ -484,7 +484,7 @@
 			return CreateNoteWindow(noteItem, appendIndex);
 		}
 
-		NoteWindow CreateNoteWindow(NoteItemModel noteItem, bool appendIndex)
+		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
 		{
 			var window = new NoteWindow();
 			window.SetCommonData(CommonData, noteItem);

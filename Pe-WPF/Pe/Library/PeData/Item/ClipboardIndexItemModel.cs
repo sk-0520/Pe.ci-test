@@ -8,9 +8,9 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 
-	public class ClipboardItemModel: IndexItemModelBase
+	public class ClipboardIndexItemModel: IndexItemModelBase
 	{
-		public ClipboardItemModel()
+		public ClipboardIndexItemModel()
 			: base()
 		{ }
 	}

@@ -9,7 +9,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 	[DataContract, Serializable]
-	public class TemplateIndexSettingModel: IndexSettingModelBase<TemplateItemCollectionModel, TemplateItemModel>
+	public class TemplateIndexSettingModel: IndexSettingModelBase<TemplateIndexItemCollectionModel, TemplateIndexItemModel>
 	{
 		public TemplateIndexSettingModel()
 			: base()

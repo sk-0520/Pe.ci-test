@@ -20,9 +20,9 @@
 	/// 
 	/// </summary>
 	[Serializable]
-	public class NoteItemModel: IndexItemModelBase, IWindowArea, ITopMost, IVisible
+	public class NoteIndexItemModel: IndexItemModelBase, IWindowArea, ITopMost, IVisible
 	{
-		public NoteItemModel()
+		public NoteIndexItemModel()
 			: base()
 		{
 			NoteKind = NoteKind.Plain;

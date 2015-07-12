@@ -6,6 +6,7 @@
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	ShowInTaskbar="False" 
 	WindowStyle="None"
 	ResizeMode="CanResize"
@@ -21,6 +22,9 @@
 	BorderThickness="{Binding ResizeThickness}"
 	BorderBrush="{Binding BorderBrush}"
 >
+	<AW:CommonDataWindow.Resources>
+		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+	</AW:CommonDataWindow.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="{Binding TitleHeight, Mode=OneWay}"/>
@@ -34,10 +38,16 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<TextBlock Grid.Column="0" x:Name="Caption" />
-			<Button Grid.Column="1" Visibility="{Binding CaptionButtonVisibility}"/>
-			<Button Grid.Column="2" Visibility="{Binding CaptionButtonVisibility}" />
-			<Button Grid.Column="3" Visibility="{Binding CaptionButtonVisibility}" />
+			<Button Grid.Column="1" Visibility="{Binding CaptionButtonVisibility}">
+				<TextBlock Text="_" />
+			</Button>
+			<Button Grid.Column="2" Visibility="{Binding CaptionButtonVisibility}">
+				<TextBlock Text="y" />
+			</Button>
+			<Button Grid.Column="3" Visibility="{Binding CaptionButtonVisibility}">
+				<TextBlock Text="x" />
+			</Button>
 		</Grid>
-		<RichTextBox Grid.Row="1" />
+		<RichTextBox Grid.Row="1" IsReadOnly="{Binding IsLocked, Converter={StaticResource LogicalNotConverter}}" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>

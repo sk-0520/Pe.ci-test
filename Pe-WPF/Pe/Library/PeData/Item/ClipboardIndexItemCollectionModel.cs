@@ -6,9 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 
-	public class ClipboardItemCollectionModel: IndexItemCollectionModel<ClipboardItemModel>
+	public class ClipboardIndexItemCollectionModel: IndexItemCollectionModel<ClipboardIndexItemModel>
 	{
-		public ClipboardItemCollectionModel()
+		public ClipboardIndexItemCollectionModel()
 			: base()
 		{ }
 	}

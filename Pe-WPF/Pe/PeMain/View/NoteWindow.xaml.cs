@@ -43,7 +43,7 @@
 
 		protected override void CreateViewModel()
 		{
-			var model = (NoteItemModel)ExtensionData;
+			var model = (NoteIndexItemModel)ExtensionData;
 			ViewModel = new NoteViewModel(model, this, CommonData.NonProcess, CommonData.ClipboardWatcher, CommonData.AppSender);
 		}
 
