@@ -23,7 +23,15 @@
 
 		public ViewModelBase()
 			: base()
-		{ }
+		{
+			ResetChangeFlag();
+		}
+
+		#region property
+
+		public bool IsChanged { get; private set; }
+
+		#endregion
 
 		#region IDisplayText
 
@@ -58,6 +66,7 @@
 		/// <param name="propertyName"></param>
 		protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{
+			IsChanged = true;
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 
@@ -129,6 +138,11 @@
 			this._createdCommands.Add(result);
 
 			return result;
+		}
+
+		protected void ResetChangeFlag()
+		{
+			IsChanged = false;
 		}
 
 		#endregion

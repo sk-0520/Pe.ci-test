@@ -41,7 +41,7 @@
 		public static void SaveSetting<T>(string path, T model, ILogger logger)
 			where T: ModelBase
 		{
-			logger.Information("load setting", path);
+			logger.Information("save setting", path);
 			SerializeUtility.SaveJsonDataToFile(path, model);
 		}
 

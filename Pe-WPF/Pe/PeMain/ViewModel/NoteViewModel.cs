@@ -272,7 +272,15 @@
 			{
 				var result = CreateCommand(
 					o => {
-						AppSender.SendIndexSave(IndexKind.Note);
+						if(IsChanged) {
+							AppSender.SendIndexSave(IndexKind.Note);
+							ResetChangeFlag();
+						}
+						if(HasView) {
+							// フォーカス外れたときにうまいこと反映されない対策
+							Body = View.Body.Text;
+							ResetChangeFlag();
+						}
 					}
 				);
 
