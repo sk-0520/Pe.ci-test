@@ -18,6 +18,11 @@ using ContentTypeTextNet.Pe.PeMain.Define;
 		/// <param name="window"></param>
 		void SendWindowAppend(Window window);
 		/// <summary>
+		/// ウィンドウを破棄。
+		/// </summary>
+		/// <param name="window"></param>
+		void SendWindowRemove(Window window);
+		/// <summary>
 		/// デバイスが変更されたことを通知。
 		/// </summary>
 		/// <param name="changedDevice"></param>

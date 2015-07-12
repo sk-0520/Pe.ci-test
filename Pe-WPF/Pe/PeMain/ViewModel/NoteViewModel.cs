@@ -19,16 +19,19 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData
+	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender
 	{
-		public NoteViewModel(NoteItemModel model, NoteWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher)
+		public NoteViewModel(NoteItemModel model, NoteWindow view, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, IAppSender appSender)
 			: base(model, view)
 		{
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
+			AppSender = appSender;
 		}
 
 		#region property
+
+		public bool IsTemporary { get; set; }
 
 		public Brush BorderBrush
 		{
@@ -55,6 +58,20 @@
 		#endregion
 
 		#region HavingViewSingleModelWrapperViewModelBase
+
+		protected override void InitializeView()
+		{
+			View.UserClosing += View_UserClosing;
+
+			base.InitializeView();
+		}
+
+		protected override void UninitializeView()
+		{
+			View.UserClosing -= View_UserClosing;
+
+			base.UninitializeView();
+		}
 
 		#endregion
 
@@ -196,5 +213,20 @@
 		{ }
 
 		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
+
+		#endregion
+
+		private void View_UserClosing(object sender, CancelEventArgs e)
+		{
+			Visible = false;
+			if(HasView) {
+				AppSender.SendWindowRemove(View);
+			}
+		}
+
 	}
 }

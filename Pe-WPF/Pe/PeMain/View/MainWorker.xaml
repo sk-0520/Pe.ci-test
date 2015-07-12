@@ -39,6 +39,8 @@
 			<Separator />
 			<MenuItem Header="front" />
 			<Separator />
+			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" />
+			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" />
 		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />

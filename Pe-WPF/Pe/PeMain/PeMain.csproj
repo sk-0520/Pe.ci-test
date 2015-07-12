@@ -139,6 +139,7 @@
     <Compile Include="Define\HotKeyId.cs" />
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
+    <Compile Include="IF\IHavingAppSender.cs" />
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="ViewModel\LauncherViewModelBase.cs" />
     <Compile Include="ViewModel\LoggingViewModel.cs" />
     <Compile Include="ViewModel\MainWorkerViewModel.cs" />
+    <Compile Include="ViewModel\NoteMenuViewModel.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\ToolbarViewModel.cs" />

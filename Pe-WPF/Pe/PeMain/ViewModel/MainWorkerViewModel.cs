@@ -58,7 +58,8 @@
 		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
 
 		List<NoteWindow> NoteWindowList { get; set; }
-		public IEnumerable<NoteViewModel> Note { get { return NoteWindowList.Select(n => n.ViewModel); } }
+		public IEnumerable<NoteMenuViewModel> NoteShowItems { get { return CommonData.NoteIndexSetting.Items.Where(n => n.Visible).Select(n => new NoteMenuViewModel(n)); } }
+		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n)); } }
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
@@ -176,6 +177,11 @@
 			ReceiveWindowAppend(window);
 		}
 
+		public void SendWindowRemove(Window window)
+		{
+			ReceiveWindowRemove(window);
+		}
+
 		public void SendDeviceChanged(ChangedDevice changedDevice)
 		{
 			ReceiveDeviceChanged(changedDevice);
@@ -195,6 +201,14 @@
 
 		void ReceiveWindowAppend(Window window)
 		{ }
+
+		void ReceiveWindowRemove(Window window)
+		{
+			var noteWindow = window as NoteWindow;
+			if(noteWindow != null) {
+				NoteWindowList.Remove(noteWindow);
+			}
+		}
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{
@@ -418,7 +432,7 @@
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				NoteWindowList = new List<NoteWindow>();
 
-				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(i => i.Visible)) {
+				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
 					var noteWindow = CreateNoteWindow(noteItem, false);
 					NoteWindowList.Add(noteWindow);
 				}
