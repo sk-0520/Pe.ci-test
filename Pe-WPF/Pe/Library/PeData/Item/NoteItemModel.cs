@@ -36,8 +36,8 @@
 		public Color ForeColor { get; set; }
 		public Color BackColor { get; set; }
 
-		public bool Lock { get; set; }
-		public bool Compact { get; set; }
+		public bool IsLocked { get; set; }
+		public bool IsCompacted { get; set; }
 
 		public HistoryItemModel History { get; set; }
 

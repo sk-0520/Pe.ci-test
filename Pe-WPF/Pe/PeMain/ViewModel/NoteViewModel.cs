@@ -48,7 +48,7 @@
 		{
 			get
 			{
-				if(Model.Lock) {
+				if(Model.IsLocked) {
 					return Visibility.Collapsed;
 				} else {
 					return Visibility.Visible;
