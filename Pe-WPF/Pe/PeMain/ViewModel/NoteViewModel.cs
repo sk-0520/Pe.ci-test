@@ -1,24 +1,26 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.Attribute;
-using ContentTypeTextNet.Library.SharedLibrary.Define;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.IF;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
-using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.IF.WindowsViewExtend;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.IF;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender
 	{
@@ -73,7 +75,7 @@ using ContentTypeTextNet.Pe.PeMain.View;
 
 		public string Body
 		{
-			get 
+			get
 			{
 				if(IndexBody == null) {
 					this._indexBody = AppSender.SendGetIndexBody(Library.PeData.Define.IndexKind.Note, Model.Id);
@@ -90,7 +92,9 @@ using ContentTypeTextNet.Pe.PeMain.View;
 					this._indexBody = new NoteBodyItemModel();
 				}
 				var indexBody = IndexBody;
-				SetPropertyValue(indexBody, value, "Text");
+				if(SetPropertyValue(indexBody, value, "Text")) {
+					AppSender.SendSaveIndexBody(IndexKind.Note, Model.Id, IndexBody);
+				}
 			}
 		}
 
@@ -186,14 +190,15 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		/// <summary>
 		/// ヒットテストを行うか
 		/// </summary>
-		public bool UsingHitTest { get{return true;} }
+		public bool UsingHitTest { get { return true; } }
 
 		/// <summary>
 		/// タイトルバーとして認識される領域。
 		/// </summary>
 		[PixelKind(Px.Logical)]
-		public Rect CaptionArea {
-			get 
+		public Rect CaptionArea
+		{
+			get
 			{
 				var resizeThickness = ResizeThickness;
 				var rect = new Rect(
@@ -203,8 +208,8 @@ using ContentTypeTextNet.Pe.PeMain.View;
 					View.Caption.ActualHeight
 				);
 
-				return rect; 
-			} 
+				return rect;
+			}
 		}
 		/// <summary>
 		/// サイズ変更に使用する境界線。
@@ -256,6 +261,24 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		#region IHavingAppSender
 
 		public IAppSender AppSender { get; private set; }
+
+		#endregion
+
+		#region command
+
+		public ICommand SaveIndexCommnad
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						AppSender.SendIndexSave(IndexKind.Note);
+					}
+				);
+
+				return result;
+			}
+		}
 
 		#endregion
 

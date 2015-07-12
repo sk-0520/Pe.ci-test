@@ -200,9 +200,9 @@ using System.IO;
 			return ReceiveGetIndexBody(indexKind, guid);
 		}
 
-		public void SendSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody, Stream stream)
+		public void SendSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody)
 		{
-			ReceiveSaveIndexBody(indexKind, guid, indexBody, stream);
+			ReceiveSaveIndexBody(indexKind, guid, indexBody);
 		}
 
 		public void SendDeviceChanged(ChangedDevice changedDevice)
@@ -245,7 +245,19 @@ using System.IO;
 		{ }
 
 		void ReceiveIndexSave(IndexKind indexKind)
-		{ }
+		{
+			switch(indexKind) {
+				case IndexKind.Note: 
+					{
+						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath);
+						AppUtility.SaveSetting(path, CommonData.NoteIndexSetting, CommonData.Logger);
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
 
 		public IIndexBody ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
 		{
@@ -263,8 +275,21 @@ using System.IO;
 			}
 		}
 
-		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody, Stream stream)
-		{ }
+		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody)
+		{
+			switch(indexKind) {
+				case IndexKind.Note: {
+						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
+						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
+						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+						AppUtility.SaveSetting(path, (NoteBodyItemModel)indexBody, CommonData.Logger);
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
 
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
@@ -342,6 +367,7 @@ using System.IO;
 
 		void LoadSetting()
 		{
+			// TODO: 環境変数展
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
 				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.Logger);

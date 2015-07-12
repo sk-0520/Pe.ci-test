@@ -49,7 +49,7 @@
 		/// <param name="indexKind"></param>
 		/// <param name="guid"></param>
 		/// <param name="indexBody"></param>
-		void SendSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody, Stream stream);
+		void SendSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody);
 		/// <summary>
 		/// デバイスが変更されたことを通知。
 		/// </summary>

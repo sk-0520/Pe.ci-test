@@ -3,6 +3,7 @@
 	x:TypeArguments="AVM:NoteViewModel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
@@ -22,6 +23,11 @@
 	BorderThickness="{Binding ResizeThickness}"
 	BorderBrush="{Binding BorderBrush}"
 >
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Deactivated">
+			<i:InvokeCommandAction Command="{Binding SaveIndexCommnad}"></i:InvokeCommandAction>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 	<AW:CommonDataWindow.Resources>
 		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 	</AW:CommonDataWindow.Resources>
@@ -53,6 +59,6 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" />
+		<TextBox Grid.Row="1" IsReadOnly="{Binding IsLocked}" Text="{Binding Body, Mode=TwoWay}" AcceptsReturn="True" AcceptsTab="True" />
 	</Grid>
 </AW:ViewModelCommonDataWindow>
