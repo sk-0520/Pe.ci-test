@@ -10,6 +10,12 @@
 
 	public static class WindowsUtility
 	{
+		#region define
+
+		public const int classNameLength = 260;
+
+		#endregion
+
 		#region define-function
 
 		public static int GetIntUnchecked(IntPtr value)

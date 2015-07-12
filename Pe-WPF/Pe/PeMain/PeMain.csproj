@@ -166,6 +166,7 @@
     <Compile Include="Logic\Utility\DisplayTextUtility.cs" />
     <Compile Include="Logic\Utility\LauncherItemUtility.cs" />
     <Compile Include="Logic\Utility\SettingUtility.cs" />
+    <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />
     <Compile Include="Resource.cs" />
