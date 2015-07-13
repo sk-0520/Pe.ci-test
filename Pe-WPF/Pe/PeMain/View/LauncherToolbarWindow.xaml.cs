@@ -39,6 +39,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF.Marker;
 	using ContentTypeTextNet.Pe.PeMain.View.Parts.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	/// <summary>
 	/// ToolbarWindow.xaml の相互作用ロジック
@@ -83,6 +84,7 @@
 				CommonData.Logger.Debug("dummy toolbar");
 				toolbar = new ToolbarItemModel();
 			}
+			SettingUtility.InitializeToolbar(toolbar, CommonData.NonProcess);
 			model.Toolbar = toolbar;
 
 			ViewModel = new LauncherToolbarViewModel(model, this, screen, CommonData.LauncherIconCaching, CommonData.NonProcess, CommonData.ClipboardWatcher);

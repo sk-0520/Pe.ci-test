@@ -77,17 +77,22 @@
 			return result;
 		}
 
+		public static void InitializeToolbar(ToolbarItemModel model, INonProcess nonProcess)
+		{
+			if(model.FloatToolbar.WidthButtonCount <= 0) {
+				model.FloatToolbar.WidthButtonCount = 1;
+				}
+			if(model.FloatToolbar.HeightButtonCount <= 0) {
+				model.FloatToolbar.HeightButtonCount = 1;
+				}
+		}
+
 		public static void InitializeMainSetting(MainSettingModel setting, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
 
 			foreach(var toolbar in setting.Toolbar) {
-				if(toolbar.FloatToolbar.WidthButtonCount <= 0) {
-					toolbar.FloatToolbar.WidthButtonCount = 1;
-				}
-				if(toolbar.FloatToolbar.HeightButtonCount <= 0) {
-					toolbar.FloatToolbar.HeightButtonCount = 1;
-				}
+				InitializeToolbar(toolbar, nonProcess);
 			}
 		}
 
