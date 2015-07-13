@@ -89,5 +89,17 @@
 		}
 
 		#endregion
+
+		/// <summary>
+		/// <para>http://stackoverflow.com/questions/5736359/popup-control-moves-with-parent</para>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		protected override void OnLocationChanged(EventArgs e)
+		{
+			popup.HorizontalOffset += 1;
+			popup.HorizontalOffset -= 1;
+			base.OnLocationChanged(e);
+		}
 	}
 }

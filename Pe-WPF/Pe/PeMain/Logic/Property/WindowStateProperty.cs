@@ -16,12 +16,16 @@
 			return model.WindowState;
 		}
 
-		public static void SetWindowState(IWindowState model, WindowState value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowState(IWindowState model, WindowState value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if(model.WindowState != value) {
 				model.WindowState = value;
 				onPropertyChanged(propertyName);
+
+				return true;
 			}
+
+			return false;
 		}
 	}
 }

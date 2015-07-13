@@ -1,6 +1,4 @@
 ﻿<AW:ViewModelCommonDataWindow
-	x:Class="ContentTypeTextNet.Pe.PeMain.View.NoteWindow"
-	x:TypeArguments="AVM:NoteViewModel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -8,6 +6,9 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	x:Class="ContentTypeTextNet.Pe.PeMain.View.NoteWindow"
+	x:TypeArguments="AVM:NoteViewModel"
 	ShowInTaskbar="False" 
 	WindowStyle="None"
 	ResizeMode="CanResize"
@@ -22,15 +23,16 @@
 	Topmost="{Binding TopMost}"
 	BorderThickness="{Binding ResizeThickness}"
 	BorderBrush="{Binding BorderBrush}"
+	x:Name="root"
 >
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Deactivated">
-			<i:InvokeCommandAction Command="{Binding SaveIndexCommnad}"></i:InvokeCommandAction>
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
 	<AW:CommonDataWindow.Resources>
 		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 	</AW:CommonDataWindow.Resources>
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Deactivated">
+			<i:InvokeCommandAction Command="{Binding SaveIndexCommnad}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="{Binding TitleHeight, Mode=OneWay}"/>
@@ -38,7 +40,7 @@
 		</Grid.RowDefinitions>
 		<Grid Grid.Row="0">
 			<Grid.Resources>
-				<Style TargetType="Button">
+				<Style TargetType="{x:Type Button}">
 					<Setter Property="Focusable" Value="False"/>
 				</Style>
 			</Grid.Resources>
@@ -49,16 +51,33 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<TextBlock Grid.Column="0" x:Name="Caption" />
-			<Button Grid.Column="1" Visibility="{Binding CaptionButtonVisibility}">
+			<Button Grid.Column="1" Visibility="{Binding CaptionButtonVisibility}" Command="{Binding SwitchCompactCommand}">
 				<TextBlock Text="_" />
 			</Button>
-			<Button Grid.Column="2" Visibility="{Binding CaptionButtonVisibility}">
+			<Button Grid.Column="2" Visibility="{Binding CaptionButtonVisibility}" Command="{Binding SwitchTopMostCommand}">
 				<TextBlock Text="y" />
 			</Button>
-			<Button Grid.Column="3" Visibility="{Binding CaptionButtonVisibility}">
+			<Button Grid.Column="3" Visibility="{Binding CaptionButtonVisibility}" Command="{Binding HideCommand}">
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" x:Name="Body" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" />
+		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" />
+
+		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=root}" Placement="Left" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}">
+			<Popup.Resources>
+				<Style TargetType="Button">
+					<Setter Property="Focusable" Value="False" />
+				</Style>
+			</Popup.Resources>
+			<Border BorderThickness="4" BorderBrush="Green" Background="WhiteSmoke">
+				<StackPanel>
+					<Label Content="input" />
+					<Button Content="title" />
+					<Button Content="body" />
+					<Label Content="clipboard" />
+					<Button Content="copy" />
+				</StackPanel>
+			</Border>
+		</Popup>
 	</Grid>
 </AW:ViewModelCommonDataWindow>

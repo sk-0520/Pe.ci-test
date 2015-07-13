@@ -29,7 +29,7 @@
 		{
 			HitCaption = false;
 
-			if(msg == (int)WM.WM_SETCURSOR) {
+			if(msg == (int)WM.WM_SETCURSOR && RestrictionViewModel.UsingCaptionHitTest) {
 				var hitTest = WindowsUtility.ConvertHTFromLParam(lParam);
 				if(hitTest == HT.HTCAPTION) {
 					NativeMethods.SetCursor(NativeMethods.LoadCursor(IntPtr.Zero, IDC.IDC_SIZEALL));

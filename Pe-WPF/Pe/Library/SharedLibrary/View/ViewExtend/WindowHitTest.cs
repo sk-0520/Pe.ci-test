@@ -25,14 +25,14 @@
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (RestrictionViewModel.UsingHitTest && msg == (int)WM.WM_NCHITTEST) {
+			if ((RestrictionViewModel.UsingBorderHitTest || RestrictionViewModel.UsingCaptionHitTest) && msg == (int)WM.WM_NCHITTEST) {
 				var logicalScreenPoint = UIUtility.ToLogicalPixel(View, PodStructUtility.Convert(WindowsUtility.ConvertPOINTFromLParam(lParam)));
 				var logicalClientPoint = View.PointFromScreen(logicalScreenPoint);
 
 				var hitTest = HT.HTNOWHERE;
-				if (RestrictionViewModel.CaptionArea.Contains(logicalClientPoint)) {
+				if (RestrictionViewModel.UsingCaptionHitTest && RestrictionViewModel.CaptionArea.Contains(logicalClientPoint)) {
 					hitTest = HT.HTCAPTION;
-				} else {
+				} else if (RestrictionViewModel.UsingBorderHitTest) {
 					var hitState = new HitState();
 					hitState.CalculateAndSetValue(new Rect(0, 0, View.Width, View.Height), RestrictionViewModel.ResizeThickness, logicalClientPoint);
 					if (hitState.Enabled) {

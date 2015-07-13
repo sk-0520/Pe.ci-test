@@ -15,12 +15,16 @@
 			return model.TopMost;
 		}
 
-		public static void SetTopMost(ITopMost model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetTopMost(ITopMost model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if(model.TopMost != value) {
 				model.TopMost = value;
 				onPropertyChanged(propertyName);
+
+				return true;
 			}
+
+			return false;
 		}
 	}
 }

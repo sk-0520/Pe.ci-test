@@ -16,11 +16,13 @@
 			return WindowAreaProperty.GetWindowLeft(model);
 		}
 
-		public static void SetWindowLeft(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowLeft(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if (model.WindowState == WindowState.Normal) {
-				WindowAreaProperty.SetWindowLeft(model, value, onPropertyChanged, propertyName);
+				return WindowAreaProperty.SetWindowLeft(model, value, onPropertyChanged, propertyName);
 			}
+
+			return false;
 		}
 
 		public static double GetWindowTop(IWindowStatus model)
@@ -28,11 +30,13 @@
 			return WindowAreaProperty.GetWindowTop(model);
 		}
 
-		public static void SetWindowTop(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowTop(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if (model.WindowState == WindowState.Normal) {
-				WindowAreaProperty.SetWindowTop(model, value, onPropertyChanged, propertyName);
+				return WindowAreaProperty.SetWindowTop(model, value, onPropertyChanged, propertyName);
 			}
+
+			return false;
 		}
 
 		public static double GetWindowWidth(IWindowStatus model)
@@ -40,11 +44,13 @@
 			return WindowAreaProperty.GetWindowWidth(model);
 		}
 
-		public static void SetWindowWidth(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowWidth(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if (model.WindowState == WindowState.Normal) {
-				WindowAreaProperty.SetWindowWidth(model, value, onPropertyChanged, propertyName);
+				return WindowAreaProperty.SetWindowWidth(model, value, onPropertyChanged, propertyName);
 			}
+
+			return false;
 		}
 
 		public static double GetWindowHeight(IWindowStatus model)
@@ -52,11 +58,13 @@
 			return WindowAreaProperty.GetWindowHeight(model);
 		}
 
-		public static void SetWindowHeight(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowHeight(IWindowStatus model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if (model.WindowState == WindowState.Normal) {
-				WindowAreaProperty.SetWindowHeight(model, value, onPropertyChanged, propertyName);
+				return WindowAreaProperty.SetWindowHeight(model, value, onPropertyChanged, propertyName);
 			}
+
+			return false;
 		}
 
 		public static WindowState GetWindowState(IWindowState model)
@@ -74,9 +82,9 @@
 			return TopMostProperty.GetTopMost(model);
 		}
 
-		public static void SetTopMost(ITopMost model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetTopMost(ITopMost model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			TopMostProperty.SetTopMost(model, value, onPropertyChanged, propertyName);
+			return TopMostProperty.SetTopMost(model, value, onPropertyChanged, propertyName);
 		}
 	}
 }

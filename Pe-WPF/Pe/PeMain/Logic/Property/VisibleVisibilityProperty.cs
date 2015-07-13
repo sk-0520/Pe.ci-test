@@ -16,13 +16,17 @@
 			return model.Visible;
 		}
 
-		public static void SetVisible(IVisible model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetVisible(IVisible model, bool value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if (model.Visible != value) {
 				model.Visible = value;
 				onPropertyChanged(propertyName);
 				onPropertyChanged("Visibility");
+
+				return true;
 			}
+
+			return false;
 		}
 
 		public static Visibility GetVisibility(IVisible model)
@@ -30,9 +34,9 @@
 			return GetVisible(model) ? Visibility.Visible : Visibility.Hidden;
 		}
 
-		public static void SetVisibility(IVisible model, Visibility value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetVisibility(IVisible model, Visibility value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
-			SetVisible(model, value == Visibility.Visible, onPropertyChanged, propertyName);
+			return SetVisible(model, value == Visibility.Visible, onPropertyChanged, propertyName);
 		}
 
 

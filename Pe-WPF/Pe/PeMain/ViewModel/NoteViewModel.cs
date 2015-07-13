@@ -21,12 +21,14 @@
 	using ContentTypeTextNet.Pe.PeMain.IF.ViewExtend;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
+	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
 	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender
 	{
 		#region variable
 
-		IndexBodyItemModelBase _indexBody;
+		IndexBodyItemModelBase _indexBody = null;
+		double _compactHeight;
 
 		#endregion
 
@@ -36,6 +38,8 @@
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
 			AppSender = appSender;
+
+			SetCompactArea();
 		}
 
 		#region property
@@ -73,6 +77,19 @@
 			set { SetModelValue(value); }
 		}
 
+		public bool IsCompacted
+		{
+			get { return Model.IsCompacted; }
+			set {
+				if (SetModelValue(value)) {
+					if (value) {
+						SetCompactArea();
+					}
+					OnPropertyChanged("WindowHeight");
+				}
+			}
+		}
+
 		public string Body
 		{
 			get
@@ -104,8 +121,10 @@
 
 		protected override void InitializeView()
 		{
-			View.UserClosing += View_UserClosing;
+			SetCompactArea();
 
+			View.UserClosing += View_UserClosing;
+			
 			base.InitializeView();
 		}
 
@@ -149,7 +168,12 @@
 		public double WindowLeft
 		{
 			get { return WindowAreaProperty.GetWindowLeft(Model); }
-			set { WindowAreaProperty.SetWindowLeft(Model, value, OnPropertyChanged); }
+			set 
+			{
+				if (!IsLocked) {
+					WindowAreaProperty.SetWindowLeft(Model, value, OnPropertyChanged); 
+				}
+			}
 		}
 
 		public double WindowTop
@@ -157,18 +181,39 @@
 			get { return WindowAreaProperty.GetWindowTop(Model); }
 			set
 			{
-				WindowAreaProperty.SetWindowTop(Model, value, OnPropertyChanged);
+				if (!IsLocked) {
+					WindowAreaProperty.SetWindowTop(Model, value, OnPropertyChanged);
+				}
 			}
 		}
 		public double WindowWidth
 		{
-			get { return WindowAreaProperty.GetWindowWidth(Model); }
-			set { WindowAreaProperty.SetWindowWidth(Model, value, OnPropertyChanged); }
+			get 
+			{
+				return WindowAreaProperty.GetWindowWidth(Model); 
+			}
+			set 
+			{
+				if (!IsLocked && !IsCompacted) {
+					WindowAreaProperty.SetWindowWidth(Model, value, OnPropertyChanged);
+				}
+			}
 		}
 		public double WindowHeight
 		{
-			get { return WindowAreaProperty.GetWindowHeight(Model); }
-			set { WindowAreaProperty.SetWindowHeight(Model, value, OnPropertyChanged); }
+			get {
+				if (IsCompacted) {
+					return this._compactHeight;
+				} else {
+					return WindowAreaProperty.GetWindowHeight(Model);
+				}
+			}
+			set 
+			{ 
+				if (!IsLocked && !IsCompacted) {
+					WindowAreaProperty.SetWindowHeight(Model, value, OnPropertyChanged);
+				}
+			}
 		}
 
 		#endregion
@@ -190,7 +235,9 @@
 		/// <summary>
 		/// ヒットテストを行うか
 		/// </summary>
-		public bool UsingHitTest { get { return true; } }
+		public bool UsingBorderHitTest { get { return !(IsCompacted || IsLocked); } }
+
+		public bool UsingCaptionHitTest { get { return !IsLocked; } }
 
 		/// <summary>
 		/// タイトルバーとして認識される領域。
@@ -205,7 +252,7 @@
 					resizeThickness.Left,
 					resizeThickness.Top,
 					View.Caption.ActualWidth,
-					View.Caption.ActualHeight
+					TitleHeight
 				);
 
 				return rect;
@@ -278,7 +325,7 @@
 						}
 						if(HasView) {
 							// フォーカス外れたときにうまいこと反映されない対策
-							Body = View.Body.Text;
+							Body = View.body.Text;
 							ResetChangeFlag();
 						}
 					}
@@ -286,6 +333,59 @@
 
 				return result;
 			}
+		}
+
+		public ICommand SwitchCompactCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						IsCompacted = !IsCompacted;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchTopMostCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						TopMost = !TopMost;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand HideCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						View.UserClose();
+					}
+				);
+
+				return result;
+			}
+		}
+
+
+
+		#endregion
+
+		#region function
+
+		void SetCompactArea()
+		{
+			this._compactHeight = CaptionArea.Height + ResizeThickness.GetVertical();
 		}
 
 		#endregion

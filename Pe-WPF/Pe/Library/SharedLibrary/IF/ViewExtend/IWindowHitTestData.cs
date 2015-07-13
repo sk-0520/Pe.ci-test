@@ -13,9 +13,13 @@
 	public interface IWindowHitTestData : IWindowsViewExtendRestrictionViewModelMarker
 	{
 		/// <summary>
-		/// ヒットテストを行うか
+		/// ボーダーに対するヒットテストを行うか
 		/// </summary>
-		bool UsingHitTest { get; }
+		bool UsingBorderHitTest { get; }
+		/// <summary>
+		/// タイトルバーに対するヒットテストを行うか
+		/// </summary>
+		bool UsingCaptionHitTest { get; }
 
 		/// <summary>
 		/// タイトルバーとして認識される領域。

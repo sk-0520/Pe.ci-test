@@ -21,13 +21,13 @@
 
 		public override IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			var captionResult = base.WndProc(hWnd, msg, wParam, lParam, ref handled);
+			var result = base.WndProc(hWnd, msg, wParam, lParam, ref handled);
 			if(HitCaption && handled) {
-				return captionResult;
+				return result;
 			}
 
-			var result = base.WndProc(hWnd, msg, wParam, lParam, ref handled);
-			if (RestrictionViewModel.UsingHitTest && handled && result != IntPtr.Zero) {
+			//var result = base.WndProc(hWnd, msg, wParam, lParam, ref handled);
+			if (RestrictionViewModel.UsingBorderHitTest && handled && result != IntPtr.Zero) {
 				var hitTest = (HT)result.ToInt32();
 				var map = new Dictionary<HT, HT>() {
 					{ HT.HTTOP, HT.HTNOWHERE },

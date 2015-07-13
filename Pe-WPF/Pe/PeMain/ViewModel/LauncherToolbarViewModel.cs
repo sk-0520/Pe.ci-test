@@ -704,8 +704,8 @@
 		/// <summary>
 		/// ヒットテストを行うか
 		/// </summary>
-		public bool UsingHitTest { get { return NowFloatWindow; } }
-
+		public bool UsingBorderHitTest { get { return NowFloatWindow; } }
+		public bool UsingCaptionHitTest { get { return NowFloatWindow; } }
 		/// <summary>
 		/// タイトルバーとして認識される領域。
 		/// </summary>

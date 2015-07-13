@@ -15,12 +15,16 @@
 			return model.WindowLeft;
 		}
 
-		public static void SetWindowLeft(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowLeft(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if(model.WindowLeft != value) {
 				model.WindowLeft = value;
 				onPropertyChanged(propertyName);
+
+				return true;
 			}
+
+			return false;
 		}
 
 		public static double GetWindowTop(IWindowArea model)
@@ -28,12 +32,16 @@
 			return model.WindowTop;
 		}
 
-		public static void SetWindowTop(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowTop(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if(model.WindowTop != value) {
 				model.WindowTop = value;
 				onPropertyChanged(propertyName);
+
+				return true;
 			}
+
+			return false;
 		}
 
 		public static double GetWindowWidth(IWindowArea model)
@@ -41,12 +49,16 @@
 			return model.WindowWidth;
 		}
 
-		public static void SetWindowWidth(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowWidth(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if(model.WindowWidth != value) {
 				model.WindowWidth = value;
 				onPropertyChanged(propertyName);
+
+				return true;
 			}
+
+			return false;
 		}
 
 		public static double GetWindowHeight(IWindowArea model)
@@ -54,12 +66,16 @@
 			return model.WindowHeight;
 		}
 
-		public static void SetWindowHeight(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
+		public static bool SetWindowHeight(IWindowArea model, double value, Action<string> onPropertyChanged, [CallerMemberName] string propertyName = "")
 		{
 			if(model.WindowHeight != value) {
 				model.WindowHeight = value;
 				onPropertyChanged(propertyName);
+
+				return true;
 			}
+
+			return false;
 		}
 	}
 }
