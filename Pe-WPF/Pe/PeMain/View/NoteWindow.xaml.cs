@@ -90,6 +90,16 @@
 
 		#endregion
 
+		#region function
+
+		void ResetPopupPosition()
+		{
+			popup.HorizontalOffset += 1;
+			popup.HorizontalOffset -= 1;
+		}
+
+		#endregion
+
 		/// <summary>
 		/// <para>http://stackoverflow.com/questions/5736359/popup-control-moves-with-parent</para>
 		/// </summary>
@@ -97,9 +107,14 @@
 		/// <param name="e"></param>
 		protected override void OnLocationChanged(EventArgs e)
 		{
-			popup.HorizontalOffset += 1;
-			popup.HorizontalOffset -= 1;
+			ResetPopupPosition();
 			base.OnLocationChanged(e);
+		}
+
+		protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+		{
+			ResetPopupPosition();
+			base.OnRenderSizeChanged(sizeInfo);
 		}
 	}
 }
