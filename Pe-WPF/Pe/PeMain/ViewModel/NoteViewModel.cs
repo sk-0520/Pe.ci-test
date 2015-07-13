@@ -110,6 +110,7 @@
 				}
 				var indexBody = IndexBody;
 				if(SetPropertyValue(indexBody, value, "Text")) {
+					indexBody.History.Update();
 					AppSender.SendSaveIndexBody(IndexKind.Note, Model.Id, IndexBody);
 				}
 			}
@@ -320,6 +321,7 @@
 				var result = CreateCommand(
 					o => {
 						if(IsChanged) {
+							Model.History.Update();
 							AppSender.SendIndexSave(IndexKind.Note);
 							ResetChangeFlag();
 						}
