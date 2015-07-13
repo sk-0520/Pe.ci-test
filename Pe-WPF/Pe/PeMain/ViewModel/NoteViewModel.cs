@@ -25,10 +25,20 @@
 
 	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender
 	{
+		#region static
+
+		public Thickness CaptionPadding { get { return new Thickness(2); } }
+
+		#endregion
+
 		#region variable
 
 		IndexBodyItemModelBase _indexBody = null;
 		double _compactHeight;
+		Visibility _titleEditVisibility = Visibility.Collapsed;
+
+		bool _editingTitle = false;
+		bool _editingBody = false;
 
 		#endregion
 
@@ -57,7 +67,7 @@
 			}
 		}
 
-		public double TitleHeight { get { return 20; } }
+		public double TitleHeight { get { return 20 + CaptionPadding.GetHorizon(); } }
 
 		public Visibility CaptionButtonVisibility
 		{
@@ -71,6 +81,27 @@
 			}
 		}
 
+		public Visibility TitleCaptionVisibility
+		{
+			get { return this._titleEditVisibility == Visibility.Visible ? Visibility.Collapsed: Visibility.Visible ; }
+		}
+		public Visibility TitleEditVisibility
+		{
+			get { return this._titleEditVisibility; }
+			set
+			{
+				if(SetVariableValue(ref this._titleEditVisibility, value)) {
+					OnPropertyChanged("TitleCaptionVisibility");
+				}
+			}
+		}
+
+		public string Name
+		{
+			get { return Model.Name; }
+			set { SetModelValue(value); }
+		}
+
 		public bool IsLocked
 		{
 			get { return Model.IsLocked; }
@@ -78,6 +109,7 @@
 			{
 				if(SetModelValue(value)) {
 					OnPropertyChanged("CaptionButtonVisibility");
+					OnPropertyChanged("IsBodyReadOnly");
 				}
 			}
 		}
@@ -105,6 +137,18 @@
 		{
 			get { return Model.BackColor; }
 			set { SetModelValue(value); }
+		}
+
+		public bool IsBodyReadOnly
+		{
+			get
+			{
+				if(IsLocked) {
+					return !this._editingBody;
+				}
+
+				return IsLocked;
+			}
 		}
 
 		public string Body
@@ -140,6 +184,7 @@
 		protected override void InitializeView()
 		{
 			SetCompactArea();
+			OnPropertyChanged("IsBodyReadOnly");
 
 			View.UserClosing += View_UserClosing;
 			
@@ -255,7 +300,17 @@
 		/// </summary>
 		public bool UsingBorderHitTest { get { return !(IsCompacted || IsLocked); } }
 
-		public bool UsingCaptionHitTest { get { return !IsLocked; } }
+		public bool UsingCaptionHitTest
+		{
+			get
+			{
+				if(this._editingTitle) {
+					return false;
+				}
+
+				return !IsLocked;
+			}
+		}
 
 		/// <summary>
 		/// タイトルバーとして認識される領域。
@@ -269,7 +324,7 @@
 				var rect = new Rect(
 					resizeThickness.Left,
 					resizeThickness.Top,
-					View.Caption.ActualWidth,
+					View.caption.ActualWidth,
 					TitleHeight
 				);
 
@@ -337,6 +392,8 @@
 			{
 				var result = CreateCommand(
 					o => {
+						EndEditTitle();
+						EndEditBody();
 						if(IsChanged) {
 							Model.History.Update();
 							AppSender.SendIndexSave(IndexKind.Note);
@@ -399,7 +456,75 @@
 			}
 		}
 
+		public ICommand EditTitleCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						TitleEditVisibility = Visibility.Visible;
+						this._editingTitle = true;
+						if(HasView) {
+							View.title.SelectAll();
+							View.title.Focus();
+						}
+					}
+				);
 
+				return result;
+			}
+		}
+
+		public ICommand HideTitleEditCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						EndEditTitle();
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand EditBodyCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						this._editingBody = true;
+						OnPropertyChanged("IsBodyReadOnly");
+						if(HasView) {
+							if(View.body.SelectionLength == 0) {
+								View.body.SelectAll();
+							}
+							View.body.Focus();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand ReturnTitleCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(this._editingTitle) {
+							EndEditTitle();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
 
 		#endregion
 
@@ -408,6 +533,25 @@
 		void SetCompactArea()
 		{
 			this._compactHeight = CaptionArea.Height + ResizeThickness.GetVertical();
+		}
+
+		void EndEditTitle()
+		{
+			if(this._editingTitle) {
+				this._editingTitle = false;
+				if(HasView) {
+					Name = View.title.Text;
+				}
+				TitleEditVisibility = Visibility.Collapsed;
+			}
+		}
+
+		void EndEditBody()
+		{
+			if(this._editingBody) {
+				this._editingBody = false;
+				OnPropertyChanged("IsBodyReadOnly");
+			}
 		}
 
 		#endregion
