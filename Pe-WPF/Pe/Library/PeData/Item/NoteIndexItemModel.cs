@@ -20,7 +20,7 @@
 	/// 
 	/// </summary>
 	[Serializable]
-	public class NoteIndexItemModel: IndexItemModelBase, IWindowArea, ITopMost, IVisible
+	public class NoteIndexItemModel: IndexItemModelBase, IWindowArea, ITopMost, IVisible, IColorPair
 	{
 		public NoteIndexItemModel()
 			: base()
@@ -33,13 +33,17 @@
 
 		public NoteKind NoteKind { get;set;}
 
-		public Color ForeColor { get; set; }
-		public Color BackColor { get; set; }
-
 		public bool IsLocked { get; set; }
 		public bool IsCompacted { get; set; }
 
 		public HistoryItemModel History { get; set; }
+
+		#endregion
+
+		#region IColorPair
+
+		public Color ForeColor { get; set; }
+		public Color BackColor { get; set; }
 
 		#endregion
 

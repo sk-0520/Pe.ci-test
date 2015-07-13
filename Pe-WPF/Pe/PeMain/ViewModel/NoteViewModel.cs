@@ -23,11 +23,11 @@
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 
-	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender
+	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair
 	{
 		#region static
 
-		public Thickness CaptionPadding { get { return new Thickness(2); } }
+		public Thickness CaptionPadding { get { return Constants.noteCaptionPadding; } }
 
 		#endregion
 
@@ -67,7 +67,7 @@
 			}
 		}
 
-		public double TitleHeight { get { return 20 + CaptionPadding.GetHorizon(); } }
+		public double TitleHeight { get { return Constants.noteCaptionHeight + CaptionPadding.GetHorizon(); } }
 
 		public Visibility CaptionButtonVisibility
 		{
@@ -127,18 +127,6 @@
 			}
 		}
 
-		public Color ForeColor
-		{
-			get { return Model.ForeColor; }
-			set { SetModelValue(value); }
-		}
-
-		public Color BackColor
-		{
-			get { return Model.BackColor; }
-			set { SetModelValue(value); }
-		}
-
 		public bool IsBodyReadOnly
 		{
 			get
@@ -196,6 +184,22 @@
 			View.UserClosing -= View_UserClosing;
 
 			base.UninitializeView();
+		}
+
+		#endregion
+
+		#region IColorPair
+
+		public Color ForeColor
+		{
+			get { return ColorPairProperty.GetNoneAlphaForeColor(Model); }
+			set { ColorPairProperty.SetNoneAlphaForekColor(Model, value, OnPropertyChanged); }
+		}
+
+		public Color BackColor
+		{
+			get { return ColorPairProperty.GetNoneAlphaBackColor(Model); }
+			set { ColorPairProperty.SetNoneAlphaBackColor(Model, value, OnPropertyChanged); }
 		}
 
 		#endregion

@@ -70,8 +70,8 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 			<VirtualizingStackPanel x:Name="caption" Grid.Column="0">
-				<TextBlock Text="{Binding Name}" Visibility="{Binding TitleCaptionVisibility}" Padding="2" />
-				<TextBox x:Name="title" Text="{Binding Name}" Visibility="{Binding TitleEditVisibility}" Padding="2" BorderThickness="0" >
+				<TextBlock Text="{Binding Name}" Visibility="{Binding TitleCaptionVisibility}" Padding="{Binding CaptionPadding,Mode=OneTime}" />
+				<TextBox x:Name="title" Text="{Binding Name}" Visibility="{Binding TitleEditVisibility}" Padding="{Binding CaptionPadding,Mode=OneTime}" BorderThickness="0" >
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="LostFocus">
 							<i:InvokeCommandAction Command="{Binding HideTitleEditCommand}" />
@@ -141,10 +141,10 @@
 							<ColumnDefinition />
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
-						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="color" Style="{StaticResource Title}" />
+						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="style" Style="{StaticResource Title}" />
 						<Label Grid.Row="1" Grid.Column="0" Content="fore" />
-						<Label Grid.Row="1" Grid.Column="1" Content="back" />
-						<xctk:ColorPicker Grid.Row="2" Grid.Column="0" SelectedColor="{Binding ForeColor}" />
+						<xctk:ColorPicker Grid.Row="1" Grid.Column="1" SelectedColor="{Binding ForeColor}" />
+						<Label Grid.Row="2" Grid.Column="0" Content="back" />
 						<xctk:ColorPicker Grid.Row="2" Grid.Column="1" SelectedColor="{Binding BackColor}" />
 					</Grid>
 					<Grid Style="{StaticResource Group}">

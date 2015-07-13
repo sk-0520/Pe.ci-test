@@ -10,6 +10,7 @@
 	using System.Diagnostics;
 	using System.Configuration;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
+using System.Windows;
 
 	/// <summary>
 	/// 定数。
@@ -114,6 +115,9 @@
 			50,
 			256
 		);
+
+		public static readonly Thickness noteCaptionPadding = new Thickness(2);
+		public const double noteCaptionHeight = 20;
 
 		/// <summary>
 		/// 実行パス
