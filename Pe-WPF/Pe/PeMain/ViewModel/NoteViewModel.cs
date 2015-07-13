@@ -90,6 +90,18 @@
 			}
 		}
 
+		public Color ForeColor
+		{
+			get { return Model.ForeColor; }
+			set { SetModelValue(value); }
+		}
+
+		public Color BackColor
+		{
+			get { return Model.BackColor; }
+			set { SetModelValue(value); }
+		}
+
 		public string Body
 		{
 			get
@@ -371,7 +383,10 @@
 			{
 				var result = CreateCommand(
 					o => {
-						View.UserClose();
+						if (HasView) {
+							// 表示切替はイベント内で実施。
+							View.UserClose();
+						}
 					}
 				);
 

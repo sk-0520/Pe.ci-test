@@ -10,7 +10,7 @@
 
 	public class ColorBrushConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		public virtual object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			var color = (Color)value;
 			return new SolidColorBrush(color);

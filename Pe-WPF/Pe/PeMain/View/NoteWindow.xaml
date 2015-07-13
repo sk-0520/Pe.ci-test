@@ -6,6 +6,7 @@
 	xmlns:AP="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
+	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
 	x:Class="ContentTypeTextNet.Pe.PeMain.View.NoteWindow"
 	x:TypeArguments="AVM:NoteViewModel"
 	xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -29,7 +30,15 @@
 >
 	<AW:CommonDataWindow.Resources>
 		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
+		<AC:NoteBackColorConverter x:Key="NoteBackColorConverter" />
 	</AW:CommonDataWindow.Resources>
+	<AW:CommonDataWindow.Foreground>
+		<SolidColorBrush Color="{Binding ForeColor}" />
+	</AW:CommonDataWindow.Foreground>
+	<AW:CommonDataWindow.Background>
+		<SolidColorBrush Color="{Binding BackColor}" />
+	</AW:CommonDataWindow.Background>
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Deactivated">
 			<i:InvokeCommandAction Command="{Binding SaveIndexCommnad}"/>
@@ -63,7 +72,7 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" />
+		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" Foreground="{Binding ForeColor}" BorderThickness="0" Padding="2" />
 
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=root}" Placement="Left" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}">
 			<Popup.Resources>
@@ -79,9 +88,9 @@
 					<Label Content="clipboard" />
 					<Button Content="copy" />
 					<Label Content="fore" />
-					<xctk:ColorPicker />
+					<xctk:ColorPicker SelectedColor="{Binding ForeColor}" />
 					<Label Content="back" />
-					<xctk:ColorPicker />
+					<xctk:ColorPicker SelectedColor="{Binding BackColor}" />
 					<Label Content="state" />
 					<ToggleButton IsChecked="{Binding IsLocked}" Content="lock" />
 					<ToggleButton IsChecked="{Binding IsCompacted}" Content="compact" />
