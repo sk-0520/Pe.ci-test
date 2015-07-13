@@ -74,7 +74,12 @@
 		public bool IsLocked
 		{
 			get { return Model.IsLocked; }
-			set { SetModelValue(value); }
+			set
+			{
+				if(SetModelValue(value)) {
+					OnPropertyChanged("CaptionButtonVisibility");
+				}
+			}
 		}
 
 		public bool IsCompacted
