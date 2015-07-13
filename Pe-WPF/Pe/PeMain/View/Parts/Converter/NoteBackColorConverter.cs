@@ -5,13 +5,19 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Data;
 	using ContentTypeTextNet.Library.SharedLibrary.View.Converter;
 
-	public class NoteBackColorConverter : ColorBrushConverter
+	public class NoteBackColorConverter : IValueConverter
 	{
-		public override object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return base.Convert(value, targetType, parameter, culture);
+			return value;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

@@ -30,7 +30,6 @@
 >
 	<AW:CommonDataWindow.Resources>
 		<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
-		<SC:ColorBrushConverter x:Key="ColorBrushConverter" />
 		<AC:NoteBackColorConverter x:Key="NoteBackColorConverter" />
 	</AW:CommonDataWindow.Resources>
 	<AW:CommonDataWindow.Foreground>
@@ -72,7 +71,11 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" Foreground="{Binding ForeColor}" BorderThickness="0" Padding="2" />
+		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsLocked}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2">
+			<TextBox.Foreground>
+				<SolidColorBrush Color="{Binding ForeColor}" />
+			</TextBox.Foreground>
+		</TextBox>
 
 		<Popup x:Name="popup" PlacementTarget="{Binding ElementName=root}" Placement="Left" IsOpen="{Binding IsActive, ElementName=root, Mode=OneWay}">
 			<Popup.Resources>
