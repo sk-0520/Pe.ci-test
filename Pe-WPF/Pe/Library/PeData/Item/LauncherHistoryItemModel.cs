@@ -40,7 +40,7 @@
 
 		#region IDeepClone
 
-		public IDeepClone DeepClone()
+		public override IDeepClone DeepClone()
 		{
 			var result = new LauncherHistoryItemModel() {
 				ExecuteCount = this.ExecuteCount,

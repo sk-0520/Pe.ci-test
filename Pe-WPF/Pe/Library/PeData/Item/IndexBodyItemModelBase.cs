@@ -10,22 +10,21 @@
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
 	[DataContract, Serializable]
-	public class NoteBodyItemModel : IndexBodyItemModelBase
+	public abstract class IndexBodyItemModelBase : ItemModelBase
 	{
-		public NoteBodyItemModel()
+		public IndexBodyItemModelBase()
 			: base()
-		{ }
+		{
+			History = new HistoryItemModel();
+		}
 
 		#region property
 
 		[DataMember]
-		public string Text { get; set; }
+		public abstract IndexKind IndexKind { get; }
 
-		#endregion
-
-		#region IndexBodyItemModelBase
-
-		public override IndexKind IndexKind { get { return IndexKind.Note; } }
+		[DataMember]
+		public HistoryItemModel History { get; set; }
 
 		#endregion
 	}

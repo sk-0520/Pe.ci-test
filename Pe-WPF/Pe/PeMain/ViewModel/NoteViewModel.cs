@@ -26,7 +26,7 @@
 	{
 		#region variable
 
-		IIndexBody _indexBody;
+		IndexBodyItemModelBase _indexBody;
 
 		#endregion
 

@@ -195,12 +195,12 @@ using System.IO;
 			ReceiveIndexSave(indexKind);
 		}
 
-		public IIndexBody SendGetIndexBody(IndexKind indexKind, Guid guid)
+		public IndexBodyItemModelBase SendGetIndexBody(IndexKind indexKind, Guid guid)
 		{
 			return ReceiveGetIndexBody(indexKind, guid);
 		}
 
-		public void SendSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody)
+		public void SendSaveIndexBody(IndexKind indexKind, Guid guid, IndexBodyItemModelBase indexBody)
 		{
 			ReceiveSaveIndexBody(indexKind, guid, indexBody);
 		}
@@ -259,7 +259,7 @@ using System.IO;
 			}
 		}
 
-		public IIndexBody ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
+		public IndexBodyItemModelBase ReceiveGetIndexBody(IndexKind indexKind, Guid guid)
 		{
 			switch(indexKind) {
 				case IndexKind.Note: 
@@ -275,7 +275,7 @@ using System.IO;
 			}
 		}
 
-		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IIndexBody indexBody)
+		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IndexBodyItemModelBase indexBody)
 		{
 			switch(indexKind) {
 				case IndexKind.Note: {
