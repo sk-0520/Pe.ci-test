@@ -154,6 +154,9 @@
 			}
 			set
 			{
+				if (IsTemporary) {
+					return;
+				}
 				if(IndexBody == null) {
 					this._indexBody = new NoteBodyItemModel();
 				}
@@ -398,6 +401,11 @@
 					o => {
 						EndEditTitle();
 						EndEditBody();
+
+						if (IsTemporary) {
+							return;
+						}
+
 						if(IsChanged) {
 							Model.History.Update();
 							AppSender.SendIndexSave(IndexKind.Note);
@@ -415,33 +423,33 @@
 			}
 		}
 
-		public ICommand SwitchCompactCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						IsCompacted = !IsCompacted;
-					}
-				);
+		//public ICommand SwitchCompactCommand
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//				IsCompacted = !IsCompacted;
+		//			}
+		//		);
 
-				return result;
-			}
-		}
+		//		return result;
+		//	}
+		//}
 
-		public ICommand SwitchTopMostCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						TopMost = !TopMost;
-					}
-				);
+		//public ICommand SwitchTopMostCommand
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//				TopMost = !TopMost;
+		//			}
+		//		);
 
-				return result;
-			}
-		}
+		//		return result;
+		//	}
+		//}
 
 		public ICommand HideCommand
 		{
@@ -563,7 +571,7 @@
 		private void View_UserClosing(object sender, CancelEventArgs e)
 		{
 			Visible = false;
-			if(HasView) {
+			if (HasView) {
 				AppSender.SendWindowRemove(View);
 			}
 		}
