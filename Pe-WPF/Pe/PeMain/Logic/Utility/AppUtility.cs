@@ -20,6 +20,9 @@
 	using ContentTypeTextNet.Pe.PeMain.ViewModel;
 	using System.Threading;
 	using System.Windows.Media.Imaging;
+using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 
 	public static class AppUtility
 	{
@@ -148,5 +151,60 @@
 			return LoadIcon(iconPath, iconScale, Constants.iconLoadWaitTime, Constants.iconLoadRetryMax, logger, callerMember);
 		}
 
+		public static IList<WindowItemModel> GetSystemWindowList(bool getAppWindow)
+		{
+			// http://msdn.microsoft.com/en-us/library/windows/desktop/ms633574(v=vs.85).aspx
+			var skipClassName = new[] {
+				"Shell_TrayWnd", // タスクバー
+				"Button",
+				"Progman", // プログラムマネージャ
+				"#32769", // デスクトップ
+				"WorkerW",
+				"SysShadow",
+				"SideBar_HTMLHostWindow",
+			};
+
+			var myProcess = Process.GetCurrentProcess();
+			var windowItemList = new List<WindowItemModel>();
+
+			NativeMethods.EnumWindows((hWnd, lParam) => {
+				int processId;
+				NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
+				var process = Process.GetProcessById(processId);
+				if(!getAppWindow) {
+					if(myProcess.Id == process.Id) {
+						return true;
+					}
+				}
+
+				if(!NativeMethods.IsWindowVisible(hWnd)) {
+					return true;
+				}
+
+				var classBuffer = new StringBuilder(WindowsUtility.classNameLength);
+				NativeMethods.GetClassName(hWnd, classBuffer, classBuffer.Capacity);
+				var className = classBuffer.ToString();
+				if(skipClassName.Any(s => s == className)) {
+					return true;
+				}
+
+				var titleLength = NativeMethods.GetWindowTextLength(hWnd);
+				var titleBuffer = new StringBuilder(titleLength + 1);
+				NativeMethods.GetWindowText(hWnd, titleBuffer, titleBuffer.Capacity);
+				var rawRect = new RECT();
+				NativeMethods.GetWindowRect(hWnd, out rawRect);
+				var windowItem = new WindowItemModel() {
+					Name = titleBuffer.ToString(),
+					Process = process,
+					WindowHandle = hWnd,
+					WindowArea = PodStructUtility.Convert(rawRect),
+				};
+				windowItemList.Add(windowItem);
+				return true;
+			}, IntPtr.Zero
+			);
+
+			return windowItemList;
+		}
 	}
 }
