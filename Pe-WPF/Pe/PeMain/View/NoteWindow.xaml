@@ -176,7 +176,7 @@
 							<ColumnDefinition />
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="operation" Style="{StaticResource Title}" />
-						<Button Grid.Row="1" Grid.Column="0"  Content="copy" />
+						<Button Grid.Row="1" Grid.Column="0"  Content="copy" Command="{Binding CopyBodyCommand}" />
 						<Button Grid.Row="1" Grid.Column="1"  Content="hide" Command="{Binding HideCommand}" />
 						<Button Grid.Row="1" Grid.Column="2"  Content="remove" Command="{Binding RemoveCommand}" />
 					</Grid>

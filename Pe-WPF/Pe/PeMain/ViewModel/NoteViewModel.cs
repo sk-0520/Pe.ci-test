@@ -22,6 +22,7 @@
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
 	using ContentTypeTextNet.Pe.PeMain.View;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair
 	{
@@ -478,6 +479,25 @@
 							View.Close();
 						}
 						AppSender.SendIndexRemove(IndexKind.Note, Model.Id);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyBodyCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if (string.IsNullOrEmpty(Body)) {
+							NonProcess.Logger.Information("empty body");
+							return;
+						}
+
+						ClipboardUtility.CopyText(Body, ClipboardWatcher);
 					}
 				);
 
