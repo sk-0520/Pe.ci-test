@@ -61,8 +61,8 @@
 		public IEnumerable<LauncherToolbarViewModel> LauncherToolbar { get { return LauncherToolbarWindowList.Select(l => l.ViewModel); } }
 
 		List<NoteWindow> NoteWindowList { get; set; }
-		public IEnumerable<NoteMenuViewModel> NoteShowItems { get { return CommonData.NoteIndexSetting.Items.Where(n => n.Visible).Select(n => new NoteMenuViewModel(n)); } }
-		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n)); } }
+		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindowList.Select(w => w.ViewModel); } }
+		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData.AppSender)); } }
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
@@ -159,20 +159,17 @@
 			}
 		}
 
-		public ICommand SelectedNoteMeneItemCommand
+		public ICommand MenuSelectedCommand
 		{
 			get
 			{
 				var result = CreateCommand(
-					o => {
-						CommonData.NonProcess.Logger.Information(string.Format("{0}", o));
-					}
+					o => { }
 				);
 
 				return result;
 			}
 		}
-
 		#endregion
 
 		#region ViewModelBase
@@ -237,19 +234,20 @@
 		#region IAppSender-Implement
 
 		void ReceiveWindowAppend(Window window)
-		{ }
+		{
+			var noteWindow = window as NoteWindow;
+			if (noteWindow != null) {
+				NoteWindowList.Add(noteWindow);
+			}
+		}
 
 		void ReceiveWindowRemove(Window window)
 		{
 			var noteWindow = window as NoteWindow;
 			if(noteWindow != null) {
 				NoteWindowList.Remove(noteWindow);
-				var noteViewMode = noteWindow.ViewModel;
-				if(noteViewMode.IsRemove) {
-					// インデックスから削除
-					//noteViewMode.GetModel
-					CommonData.NoteIndexSetting.Items.Remove(noteViewMode.Model);
-				}
+				//var noteViewMode = noteWindow.ViewModel;
+
 				OnPropertyChanged("NoteShowItems");
 				OnPropertyChanged("NoteHiddenItems");
 			}

@@ -7,25 +7,20 @@
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
-	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary>
+	<ContextMenu x:Shared="false" x:Key="ContextMenu">
+		<ContextMenu.Resources>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
-			
+
 			<ItemContainerTemplate x:Key="NoteMenuItemTemplate">
 				<StackPanel Orientation="Horizontal">
-					<Image />
+					<Image Source="{Binding MenuImage}" />
 					<TextBlock Text="{Binding DisplayText}" />
-					<TextBlock Text="{Binding PlacementTarget.Tag.DisplayText,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" />
 				</StackPanel>
 			</ItemContainerTemplate>
 			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
-				<Setter Property="Command" Value="{Binding PlacementTarget.Tag.SelectedNoteMeneItemCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" />
-				<Setter Property="BorderThickness" Value="10" />
+				<Setter Property="Command" Value="{Binding MenuSelectedCommand}" />
 			</Style>
-		</ResourceDictionary>
-	</ResourceDictionary.MergedDictionaries>
-
-	<ContextMenu x:Shared="false" x:Key="TasktrayContextMenu">
+		</ContextMenu.Resources>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
 			<MenuItem.ItemContainerStyle>
@@ -63,13 +58,12 @@
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
 	</ContextMenu>
 
-
-	<!-- the application's NotifyIcon - started from App.xaml.cs. Declares its own view model. -->
 	<Taskbar:TaskbarIcon 
 		x:Key="root"
 		Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
 		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
 		ToolTipText="Double-click for window, right-click for menu"
-		ContextMenu="{StaticResource TasktrayContextMenu}"
-	/>
+		ContextMenu="{StaticResource ResourceKey=ContextMenu}"
+	>
+	</Taskbar:TaskbarIcon>
 </ResourceDictionary>

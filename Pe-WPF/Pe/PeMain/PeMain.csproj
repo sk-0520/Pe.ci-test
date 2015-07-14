@@ -140,6 +140,7 @@
     <Compile Include="Define\ToolbarNodeKind.cs" />
     <Compile Include="IF\IAppSender.cs" />
     <Compile Include="IF\IHavingAppSender.cs" />
+    <Compile Include="IF\IMenuItem.cs" />
     <Compile Include="IF\ViewExtend\ICaptionDoubleClickData.cs" />
     <Compile Include="IF\IClipboardWatcher.cs" />
     <Compile Include="IF\ICommonData.cs" />

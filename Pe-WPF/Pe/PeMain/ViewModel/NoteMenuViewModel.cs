@@ -1,20 +1,24 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class NoteMenuViewModel: SingleModelWrapperViewModelBase<NoteIndexItemModel>
+	public class NoteMenuViewModel : SingleModelWrapperViewModelBase<NoteIndexItemModel>, IMenuItem
 	{
-		public NoteMenuViewModel(NoteIndexItemModel model)
+		public NoteMenuViewModel(NoteIndexItemModel model, IAppSender appSender)
 			: base(model)
-		{ }
+		{
+			AppSender = appSender;
+		}
 
 		#region property
 		#endregion
@@ -27,7 +31,8 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 			{
 				var result = CreateCommand(
 					o => {
-						if (Model.Visible) {
+						if (!Model.Visible) {
+							
 						} 
 					}
 				);
@@ -39,15 +44,29 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		#endregion
 
-		#region SingleModelWrapperViewModelBase
+		#region IMenuItem
 
-		public override string DisplayText
+		public ImageSource MenuImage { get { return null; } }
+		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+		public ICommand MenuSelectedCommand
 		{
 			get
 			{
-				return DisplayTextUtility.GetDisplayName(Model);
+				var result = CreateCommand(
+					o => {
+					}
+				);
+
+				return result;
 			}
 		}
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
+
 		#endregion
 	}
 }

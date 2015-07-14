@@ -24,7 +24,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class NoteViewModel: HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair
+	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, IMenuItem
 	{
 		#region static
 
@@ -58,7 +58,6 @@
 		NoteBodyItemModel IndexBody { get { return this._indexBody as NoteBodyItemModel; } }
 
 		public bool IsTemporary { get; set; }
-		public bool IsRemove { get; set; }
 
 		public Brush BorderBrush
 		{
@@ -392,6 +391,25 @@
 
 		#endregion
 
+		#region IMenuItem
+
+		public ImageSource MenuImage { get { return null; } }
+		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
+		public ICommand MenuSelectedCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+					}
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
 		#region command
 
 		public ICommand SaveIndexCommnad
@@ -451,6 +469,18 @@
 		//		return result;
 		//	}
 		//}
+
+		public ICommand SelectedNoteMeneItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => { }
+				);
+
+				return result;
+			}
+		}
 
 		public ICommand HideCommand
 		{
