@@ -11,6 +11,7 @@
 	using System.Configuration;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 using System.Windows;
+using System.Windows.Media;
 
 	/// <summary>
 	/// 定数。
@@ -118,6 +119,8 @@ using System.Windows;
 
 		public static readonly Thickness noteCaptionPadding = new Thickness(2);
 		public const double noteCaptionHeight = 20;
+		public static readonly Color noteForeColor = Colors.Black;
+		public static readonly Color noteBackColor = Color.FromRgb(250, 250, 180);
 
 		/// <summary>
 		/// 実行パス

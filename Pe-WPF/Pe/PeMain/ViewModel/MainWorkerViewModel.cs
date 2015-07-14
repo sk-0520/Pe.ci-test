@@ -33,7 +33,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
-using System.IO;
+	using System.IO;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -152,6 +152,20 @@ using System.IO;
 						var point = new Point();
 						var size = new Size(200, 200);
 						CreateNoteItem(point, size, true); 
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SelectedNoteMeneItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						CommonData.NonProcess.Logger.Information(string.Format("{0}", o));
 					}
 				);
 
@@ -549,6 +563,8 @@ using System.IO;
 				WindowWidth = size.Width,
 				WindowHeight = size.Height,
 				Visible = true,
+				ForeColor = CommonData.MainSetting.Note.ForeColor,
+				BackColor = CommonData.MainSetting.Note.BackColor,
 				Name = "TODO: note title",
 			};
 

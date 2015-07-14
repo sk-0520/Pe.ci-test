@@ -43,7 +43,7 @@
 			this._mainWorker = new MainWorkerViewModel(constants, systemLogger);
 			if (this._mainWorker.Initialize()) {
 				LanguageUtility.SetLanguage(this._notifyIcon, this._mainWorker.Language);
-				this._notifyIcon = (TaskbarIcon)FindResource("NotifyIcon");
+				this._notifyIcon = (TaskbarIcon)FindResource("root");
 				this._notifyIcon.DataContext = this._mainWorker;
 			} else {
 				// 終了

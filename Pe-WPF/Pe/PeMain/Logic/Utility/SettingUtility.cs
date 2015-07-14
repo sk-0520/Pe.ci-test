@@ -6,6 +6,7 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows.Media;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
@@ -79,12 +80,22 @@
 
 		public static void InitializeToolbar(ToolbarItemModel model, INonProcess nonProcess)
 		{
-			if(model.FloatToolbar.WidthButtonCount <= 0) {
+			if (model.FloatToolbar.WidthButtonCount <= 0) {
 				model.FloatToolbar.WidthButtonCount = 1;
-				}
-			if(model.FloatToolbar.HeightButtonCount <= 0) {
+			}
+			if (model.FloatToolbar.HeightButtonCount <= 0) {
 				model.FloatToolbar.HeightButtonCount = 1;
-				}
+			}
+		}
+
+		public static void InitializeNoteSetting(NoteSettingModel model, INonProcess nonProcess)
+		{
+			if (model.ForeColor == default(Color)) {
+				model.ForeColor = Constants.noteForeColor;
+			}
+			if (model.BackColor == default(Color)) {
+				model.BackColor = Constants.noteBackColor;
+			}
 		}
 
 		public static void InitializeMainSetting(MainSettingModel setting, INonProcess nonProcess)
@@ -94,6 +105,8 @@
 			foreach(var toolbar in setting.Toolbar) {
 				InitializeToolbar(toolbar, nonProcess);
 			}
+
+			InitializeNoteSetting(setting.Note, nonProcess);
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, INonProcess nonProcess)

@@ -1,14 +1,16 @@
 ﻿namespace ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Runtime.Serialization;
-	using System.Text;
-	using System.Threading.Tasks;
-	using ContentTypeTextNet.Library.SharedLibrary.Model;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Media;
+using ContentTypeTextNet.Library.SharedLibrary.Model;
+using ContentTypeTextNet.Pe.Library.PeData.IF;
 
-	public class NoteSettingModel: SettingModelBase
+	public class NoteSettingModel: SettingModelBase, IColorPair
 	{
 		public NoteSettingModel()
 			: base()
@@ -34,5 +36,15 @@
 		public HotKeyModel ShowFrontHotKey { get; set; }
 
 		#endregion
+
+		#region IColorPair
+
+		[DataMember]
+		public Color ForeColor { get; set; }
+		[DataMember]
+		public Color BackColor { get; set; }
+
+		#endregion
+
 	}
 }

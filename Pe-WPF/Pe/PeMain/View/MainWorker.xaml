@@ -10,6 +10,18 @@
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+			
+			<ItemContainerTemplate x:Key="NoteMenuItemTemplate">
+				<StackPanel Orientation="Horizontal">
+					<Image />
+					<TextBlock Text="{Binding DisplayText}" />
+					<TextBlock Text="{Binding PlacementTarget.Tag.DisplayText,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" />
+				</StackPanel>
+			</ItemContainerTemplate>
+			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
+				<Setter Property="Command" Value="{Binding PlacementTarget.Tag.SelectedNoteMeneItemCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" />
+				<Setter Property="BorderThickness" Value="10" />
+			</Style>
 		</ResourceDictionary>
 	</ResourceDictionary.MergedDictionaries>
 
@@ -39,8 +51,8 @@
 			<Separator />
 			<MenuItem Header="front" />
 			<Separator />
-			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" />
-			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" />
+			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
+			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}"  />
 		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
@@ -54,7 +66,8 @@
 
 	<!-- the application's NotifyIcon - started from App.xaml.cs. Declares its own view model. -->
 	<Taskbar:TaskbarIcon 
-		x:Key="NotifyIcon"
+		x:Key="root"
+		Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
 		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
 		ToolTipText="Double-click for window, right-click for menu"
 		ContextMenu="{StaticResource TasktrayContextMenu}"
