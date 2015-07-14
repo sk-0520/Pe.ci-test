@@ -95,7 +95,7 @@
 				<TextBlock Text="x" />
 			</Button>
 		</Grid>
-		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsBodyReadOnly}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="Wrap" >
+		<TextBox Grid.Row="1" x:Name="body" IsReadOnly="{Binding IsBodyReadOnly}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" Text="{Binding Body}" AcceptsReturn="True" AcceptsTab="True" Background="Transparent" BorderThickness="0" Padding="2" TextWrapping="Wrap" >
 			<TextBox.Foreground>
 				<SolidColorBrush Color="{Binding ForeColor}" />
 			</TextBox.Foreground>
@@ -132,7 +132,7 @@
 						</Grid.ColumnDefinitions>
 						<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="input" Style="{StaticResource Title}" />
 						<Button Grid.Row="1" Grid.Column="0" Content="title" Command="{Binding EditTitleCommand}" />
-						<Button Grid.Row="1" Grid.Column="1" Content="body" Command="{Binding EditBodyCommand}" />
+						<Button Grid.Row="1" Grid.Column="1" Content="body" Command="{Binding EditBodyCommand}" IsEnabled="{Binding IsCompacted, Converter={StaticResource LogicalNotConverter}}" />
 					</Grid>
 					<Grid Style="{StaticResource Group}">
 						<Grid.RowDefinitions>
