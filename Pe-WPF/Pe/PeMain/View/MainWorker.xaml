@@ -26,6 +26,7 @@
 			</Style>
 		</ContextMenu.Resources>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
+		<Separator />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
 			<MenuItem.ItemContainerStyle>
 				<Style TargetType="MenuItem">
