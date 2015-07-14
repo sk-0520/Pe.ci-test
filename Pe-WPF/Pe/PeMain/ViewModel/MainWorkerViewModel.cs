@@ -173,19 +173,38 @@
 			}
 		}
 
-		//public ICommand MenuSelectedCommand
-		//{
-		//	get
-		//	{
-		//		var result = CreateCommand(
-		//			o => {
-		//				CommonData.Logger.Information("@@@@@@@");
-		//			}
-		//		);
+		public ICommand CompactNoteItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						foreach(var vm in GetEnabledNoteItems()) {
+							vm.IsCompacted = true;
+						}
+					}
+				);
 
-		//		return result;
-		//	}
-		//}
+				return result;
+			}
+		}
+
+		public ICommand HideNoteItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						foreach(var window in NoteWindowList.Where(n => !n.ViewModel.IsLocked).ToArray()) {
+							window.UserClose();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region ViewModelBase
@@ -597,6 +616,14 @@
 			}
 
 			return window;
+		}
+
+		IEnumerable<NoteViewModel> GetEnabledNoteItems()
+		{
+			return NoteShowItems
+				.Where(n => !n.IsLocked)
+				.Where(n => !n.IsCompacted)
+			;
 		}
 
 		#endregion

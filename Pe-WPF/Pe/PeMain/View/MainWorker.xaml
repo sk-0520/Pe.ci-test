@@ -45,8 +45,8 @@
 		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note">
 			<MenuItem Header="create" Command="{Binding CreateNoteItemCommand}" />
-			<MenuItem Header="compact" />
-			<MenuItem Header="hide" />
+			<MenuItem Header="compact" Command="{Binding CompactNoteItemCommand}" />
+			<MenuItem Header="hide" Command="{Binding HideNoteItemCommand}" />
 			<Separator />
 			<MenuItem Header="front" />
 			<Separator />
