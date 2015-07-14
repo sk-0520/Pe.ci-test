@@ -468,6 +468,23 @@
 			}
 		}
 
+		public ICommand RemoveCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if (HasView) {
+							View.Close();
+						}
+						AppSender.SendIndexRemove(IndexKind.Note, Model.Id);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		public ICommand EditTitleCommand
 		{
 			get

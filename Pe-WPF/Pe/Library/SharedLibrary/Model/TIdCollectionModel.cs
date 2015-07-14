@@ -141,6 +141,19 @@
 			return false;
 		}
 
+		public bool Remove(TKey key)
+		{
+			var index = FindIndex(key);
+			if (index != -1) {
+				Items.RemoveAt(index);
+				this._map.Remove(key);
+
+				return true;
+			}
+
+			return false;
+		}
+
 		#region indexer
 
 		public TValue this[TKey key]
@@ -208,6 +221,11 @@
 			this._map[value.Id] = value;
 		}
 
+		public int FindIndex(TKey key)
+		{
+			return Items.FindIndex(i => IsEqual(key, i.Id));
+		}
+
 		/// <summary>
 		/// 要素を設定する。
 		/// <para>既に存在する場合は上書きされる。</para>
@@ -220,7 +238,7 @@
 				throw new ArgumentNullException("value");
 			}
 
-			var index = Items.FindIndex(i => value.Id.CompareTo(i) == 0);
+			var index = FindIndex(value.Id);
 			if(index != -1) {
 				Items[index] = value;
 				this._map[value.Id] = value;

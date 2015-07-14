@@ -242,7 +242,19 @@ using System.IO;
 		}
 
 		void ReceiveIndexRemove(IndexKind indexKind, Guid guid)
-		{ }
+		{
+			switch(indexKind) {
+				case IndexKind.Note: 
+					{
+						CommonData.NoteIndexSetting.Items.Remove(guid);
+						SendIndexSave(indexKind);
+					}
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
+		}
 
 		void ReceiveIndexSave(IndexKind indexKind)
 		{
