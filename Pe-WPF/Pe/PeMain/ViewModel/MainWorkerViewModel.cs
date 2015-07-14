@@ -121,6 +121,32 @@
 			}
 		}
 
+		public ICommand SwitchTemplateWindowCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchCommandWindowCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+					}
+				);
+
+				return result;
+			}
+		}
+
 		/// <summary>
 		/// ログウィンドウ切り替え。
 		/// </summary>

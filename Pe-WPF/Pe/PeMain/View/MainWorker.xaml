@@ -53,10 +53,24 @@
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
 		</MenuItem>
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" Command="{Binding SwitchCommandWindowCommand}" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
 		<Separator />
-		<MenuItem UI:XamlTag.LanguageKey="tasktray/log" Header="system-env" />
+		<MenuItem UI:XamlTag.LanguageKey="tasktray/system-env" Header="system-env">
+			<MenuItem Header="hide file" />
+			<MenuItem Header="extension" />
+			<Separator />
+			<MenuItem Header="clipboard" />
+			<Separator />
+			<MenuItem Header="window">
+				<MenuItem Header="save" />
+				<MenuItem Header="load" />
+				<Separator />
+				<MenuItem Header="timer" />
+				<MenuItem Header="system" />
+			</MenuItem>
+		</MenuItem>
 		<Separator />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
