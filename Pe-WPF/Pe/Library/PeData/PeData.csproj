@@ -94,6 +94,7 @@
     <Compile Include="Item\NoteIndexItemModel.cs" />
     <Compile Include="Item\TemplateIndexItemCollectionModel.cs" />
     <Compile Include="Item\TemplateIndexItemModel.cs" />
+    <Compile Include="Item\WindowItemCollectionModel.cs" />
     <Compile Include="Item\WindowItemModel.cs" />
     <Compile Include="Setting\ClipboardIndexSettingModel.cs" />
     <Compile Include="Setting\IndexSettingModelBase.cs" />

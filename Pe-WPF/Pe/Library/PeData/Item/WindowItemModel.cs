@@ -4,9 +4,11 @@
 	using System.Collections.Generic;
 	using System.Diagnostics;
 	using System.Linq;
+	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.Attribute;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
@@ -32,6 +34,7 @@
 
 		#region IName
 
+		[DataMember, XmlAttribute]
 		public string Name { get; set; }
 
 		#endregion

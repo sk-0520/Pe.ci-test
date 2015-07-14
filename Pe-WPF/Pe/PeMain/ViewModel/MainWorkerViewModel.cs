@@ -45,6 +45,8 @@
 				AppSender = this,
 				ClipboardWatcher = this,
 			};
+
+			WindowSaveData = new WindowSaveData();
 		}
 		///// <summary>
 		///// dummy init
@@ -80,6 +82,8 @@
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
+
+		WindowSaveData WindowSaveData { get; set; }
 
 		public ImageSource ApplicationIcon
 		{
