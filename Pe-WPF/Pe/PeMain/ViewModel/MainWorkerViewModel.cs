@@ -205,6 +205,22 @@
 			}
 		}
 
+		public ICommand FrontNoteItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						foreach(var window in NoteWindowList) {
+							WindowsUtility.ShowNoActive(window.Handle);
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region ViewModelBase

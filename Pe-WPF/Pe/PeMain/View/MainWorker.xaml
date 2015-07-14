@@ -48,7 +48,7 @@
 			<MenuItem Header="compact" Command="{Binding CompactNoteItemCommand}" />
 			<MenuItem Header="hide" Command="{Binding HideNoteItemCommand}" />
 			<Separator />
-			<MenuItem Header="front" />
+			<MenuItem Header="front" Command="{Binding FrontNoteItemCommand}" />
 			<Separator />
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
 			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />

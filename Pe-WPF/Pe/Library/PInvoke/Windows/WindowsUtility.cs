@@ -127,6 +127,17 @@
 			NativeMethods.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, SWP.SWP_FRAMECHANGED | SWP.SWP_NOSIZE | SWP.SWP_NOMOVE | SWP.SWP_NOZORDER | SWP.SWP_NOOWNERZORDER | SWP.SWP_NOACTIVATE);
 		}
 
+		public static void ShowNoActive(IntPtr hWnd)
+		{
+			NativeMethods.SetWindowPos(
+				hWnd,
+				IntPtr.Zero,
+				0, 0,
+				0, 0,
+				SWP.SWP_NOACTIVATE | SWP.SWP_NOMOVE | SWP.SWP_NOSIZE | SWP.SWP_SHOWWINDOW
+			);
+		}
+
 		#endregion
 	}
 }
