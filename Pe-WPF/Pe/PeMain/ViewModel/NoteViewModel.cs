@@ -402,7 +402,7 @@
 			{
 				var result = CreateCommand(
 					o => {
-						NonProcess.Logger.Information("note");
+						View.Activate();
 					}
 				);
 

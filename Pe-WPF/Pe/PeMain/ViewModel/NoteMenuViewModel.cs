@@ -43,6 +43,8 @@
 				var result = CreateCommand(
 					o => {
 						CommonData.NonProcess.Logger.Information("menu");
+						var window = ViewUtility.CreateNoteWindow(Model, CommonData);
+						window.Activate();
 					}
 				);
 

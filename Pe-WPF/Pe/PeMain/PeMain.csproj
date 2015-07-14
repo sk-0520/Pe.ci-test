@@ -174,6 +174,7 @@
     <Compile Include="Logic\Utility\SystemEnvironmentUtility.cs" />
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />
+    <Compile Include="Logic\Utility\ViewUtility.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />

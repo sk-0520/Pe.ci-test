@@ -556,8 +556,7 @@
 				NoteWindowList = new List<NoteWindow>();
 
 				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
-					var noteWindow = CreateNoteWindow(noteItem, false);
-					NoteWindowList.Add(noteWindow);
+					CreateNoteWindow(noteItem, false);
 				}
 			}
 		}
@@ -587,8 +586,7 @@
 
 		NoteWindow CreateNoteWindow(NoteIndexItemModel noteItem, bool appendIndex)
 		{
-			var window = new NoteWindow();
-			window.SetCommonData(CommonData, noteItem);
+			var window = ViewUtility.CreateNoteWindow(noteItem, CommonData);
 			if(appendIndex) {
 				CommonData.NoteIndexSetting.Items.Add(noteItem);
 			}
