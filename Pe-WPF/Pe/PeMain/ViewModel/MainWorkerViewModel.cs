@@ -251,6 +251,10 @@
 
 		void ReceiveWindowAppend(Window window)
 		{
+			var toolbarWindow = window as LauncherToolbarWindow;
+			if(toolbarWindow != null) {
+				LauncherToolbarWindowList.Add(toolbarWindow);
+			}
 			var noteWindow = window as NoteWindow;
 			if (noteWindow != null) {
 				NoteWindowList.Add(noteWindow);
@@ -543,9 +547,10 @@
 				LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
 
 				foreach(var screen in Screen.AllScreens.OrderBy(s => !s.Primary)) {
-					var toolbar = new LauncherToolbarWindow();
-					toolbar.SetCommonData(CommonData, screen);
-					LauncherToolbarWindowList.Add(toolbar);
+					//var toolbar = new LauncherToolbarWindow();
+					//toolbar.SetCommonData(CommonData, screen);
+					//LauncherToolbarWindowList.Add(toolbar);
+					ViewUtility.CreateToolbarWindow(screen, CommonData);
 				}
 			}
 		}
@@ -556,7 +561,7 @@
 				NoteWindowList = new List<NoteWindow>();
 
 				foreach(var noteItem in CommonData.NoteIndexSetting.Items.Where(n => n.Visible)) {
-					CreateNoteWindow(noteItem, false);
+					var window = CreateNoteWindow(noteItem, false);
 				}
 			}
 		}

@@ -402,7 +402,9 @@
 			{
 				var result = CreateCommand(
 					o => {
-						View.Activate();
+						if(HasView) {
+							View.Activate();
+						}
 					}
 				);
 
