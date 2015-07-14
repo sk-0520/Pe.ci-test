@@ -24,7 +24,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Extension;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
-	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, IMenuItem
+	public class NoteViewModel : HavingViewSingleModelWrapperViewModelBase<NoteIndexItemModel, NoteWindow>, IHavingNonProcess, IHavingClipboardWatcher, IWindowHitTestData, IWindowAreaCorrectionData, ICaptionDoubleClickData, IHavingAppSender, IColorPair, INoteMenuItem
 	{
 		#region static
 
@@ -391,16 +391,18 @@
 
 		#endregion
 
-		#region IMenuItem
+		#region INoteMenuItem
 
 		public ImageSource MenuImage { get { return null; } }
 		public override string DisplayText { get { return DisplayTextUtility.GetDisplayName(Model); } }
-		public ICommand MenuSelectedCommand
+
+		public ICommand NoteMenuSelectedCommand
 		{
 			get
 			{
 				var result = CreateCommand(
 					o => {
+						NonProcess.Logger.Information("note");
 					}
 				);
 
@@ -469,18 +471,6 @@
 		//		return result;
 		//	}
 		//}
-
-		public ICommand SelectedNoteMeneItemCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => { }
-				);
-
-				return result;
-			}
-		}
 
 		public ICommand HideCommand
 		{

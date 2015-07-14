@@ -7,6 +7,7 @@
 	using System.Linq;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Controls;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
@@ -45,6 +46,9 @@
 				LanguageUtility.SetLanguage(this._notifyIcon, this._mainWorker.Language);
 				this._notifyIcon = (TaskbarIcon)FindResource("root");
 				this._notifyIcon.DataContext = this._mainWorker;
+				//var menu = (ContextMenu)FindResource("ContextMenu");
+				//menu.PlacementTarget = this._notifyIcon;
+				//menu.DataContext = this._notifyIcon.DataContext;
 			} else {
 				// 終了
 				Application.Current.Shutdown();

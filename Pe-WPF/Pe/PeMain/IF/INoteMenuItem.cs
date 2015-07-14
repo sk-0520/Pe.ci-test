@@ -6,11 +6,9 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows.Input;
-	using System.Windows.Media;
-	using ContentTypeTextNet.Library.SharedLibrary.IF;
 
-	public interface IMenuItem: IDisplayText
+	public interface INoteMenuItem : IMenuItem
 	{
-		ImageSource MenuImage { get; }
+		ICommand NoteMenuSelectedCommand { get; }
 	}
 }

@@ -46,6 +46,20 @@
 				ClipboardWatcher = this,
 			};
 		}
+		///// <summary>
+		///// dummy init
+		///// </summary>
+		//public MainWorkerViewModel() 
+		//{
+		//	CommonData = new CommonData() {
+		//		NoteIndexSetting = new NoteIndexSettingModel(),
+		//		TemplateIndexSetting = new TemplateIndexSettingModel(),
+		//		ClipboardIndexSetting = new ClipboardIndexSettingModel(),
+		//	};
+		//	LauncherToolbarWindowList = new List<LauncherToolbarWindow>();
+		//	NoteWindowList = new List<NoteWindow>();
+		//	LoggingWindow = new LoggingWindow();
+		//}
 
 		#region property
 
@@ -62,7 +76,7 @@
 
 		List<NoteWindow> NoteWindowList { get; set; }
 		public IEnumerable<NoteViewModel> NoteShowItems { get { return NoteWindowList.Select(w => w.ViewModel); } }
-		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData.AppSender)); } }
+		public IEnumerable<NoteMenuViewModel> NoteHiddenItems { get { return CommonData.NoteIndexSetting.Items.Where(n => !n.Visible).Select(n => new NoteMenuViewModel(n, CommonData)); } }
 
 		MessageWindow MessageWindow { get; set; }
 		List<Window> WindowList { get; set; }
@@ -159,17 +173,19 @@
 			}
 		}
 
-		public ICommand MenuSelectedCommand
-		{
-			get
-			{
-				var result = CreateCommand(
-					o => { }
-				);
+		//public ICommand MenuSelectedCommand
+		//{
+		//	get
+		//	{
+		//		var result = CreateCommand(
+		//			o => {
+		//				CommonData.Logger.Information("@@@@@@@");
+		//			}
+		//		);
 
-				return result;
-			}
-		}
+		//		return result;
+		//	}
+		//}
 		#endregion
 
 		#region ViewModelBase

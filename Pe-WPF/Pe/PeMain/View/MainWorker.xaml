@@ -3,7 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:Taskbar="http://www.hardcodet.net/taskbar"
-	xmlns:local="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
+	xmlns:AV="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
@@ -18,7 +18,11 @@
 				</StackPanel>
 			</ItemContainerTemplate>
 			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
-				<Setter Property="Command" Value="{Binding MenuSelectedCommand}" />
+				<!--<Setter Property="Command" Value="{Binding MenuSelectedCommand, RelativeSource={RelativeSource FindAncestor,AncestorType=Taskbar:TaskbarIcon}}" />-->
+				<!--<Setter Property="Command" Value="{Binding DataContext.MenuSelectedCommand, RelativeSource={RelativeSource FindAncestor,AncestorType=Taskbar:TaskbarIcon}}" />-->
+				<!--<Setter Property="Command" Value="{Binding Path=PlacementTarget.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />-->
+				<!--<Setter Property="Command" Value="{Binding Path=PlacementTarget.DataContext.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />-->
+				<Setter Property="Command" Value="{Binding NoteMenuSelectedCommand}" />
 			</Style>
 		</ContextMenu.Resources>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
@@ -47,7 +51,7 @@
 			<MenuItem Header="front" />
 			<Separator />
 			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
-			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}"  />
+			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
 		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
@@ -64,6 +68,69 @@
 		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
 		ToolTipText="Double-click for window, right-click for menu"
 		ContextMenu="{StaticResource ResourceKey=ContextMenu}"
+	/>
+
+	<!--<Taskbar:TaskbarIcon 
+		x:Key="root"
+		x:Name="root"
+		Tag="{Binding DataContext,RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
+		IconSource="{Binding ApplicationIcon, Mode=OneWay}"
+		ToolTipText="Double-click for window, right-click for menu"
 	>
-	</Taskbar:TaskbarIcon>
+		<Taskbar:TaskbarIcon.ContextMenu>
+			<ContextMenu >
+				<ContextMenu.Resources>
+					<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+
+					<ItemContainerTemplate x:Key="NoteMenuItemTemplate">
+						<StackPanel Orientation="Horizontal">
+							<Image Source="{Binding MenuImage}" />
+							<TextBlock Text="{Binding DisplayText}" />
+						</StackPanel>
+					</ItemContainerTemplate>
+					<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
+						<Setter Property="Command" Value="{Binding Path=PlacementTarget.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />
+					</Style>
+				</ContextMenu.Resources>
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/toolbar" Header="toolbar" ItemsSource="{Binding LauncherToolbar}">
+					<MenuItem.ItemContainerStyle>
+						<Style TargetType="MenuItem">
+							<Setter Property="IsChecked" Value="{Binding Visible, Mode=OneWay}"/>
+							<Setter Property="Command" Value="{Binding ChangeVisibleCommand}" />
+							<Setter Property="CommandParameter" Value="{Binding Visible, Converter={StaticResource LogicalNotConverter}}" />
+						</Style>
+					</MenuItem.ItemContainerStyle>
+					<MenuItem.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Image Source="{Binding ScreenPosition}" />
+								<TextBlock Text="{Binding ScreenName}" />
+							</StackPanel>
+						</DataTemplate>
+					</MenuItem.ItemTemplate>
+				</MenuItem>
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/note"    Header="note">
+					<MenuItem Header="create" Command="{Binding CreateNoteItemCommand}" />
+					<MenuItem Header="compact" />
+					<MenuItem Header="hide" />
+					<Separator />
+					<MenuItem Header="front" />
+					<Separator />
+					<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
+					<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" Command="{Binding MenuSelectedCommand}" />
+				</MenuItem>
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" />
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/log"     Header="log" Command="{Binding SwitchLoggingWindowCommand}" IsChecked="{Binding Logging.Visible, Mode=OneWay}" />
+				<Separator />
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/log" Header="system-env" />
+				<Separator />
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />
+				<MenuItem UI:XamlTag.LanguageKey="tasktray/exit" Header="exit" Command="{Binding ExitApplicationCommand}" />
+			</ContextMenu>
+		</Taskbar:TaskbarIcon.ContextMenu>
+		<Taskbar:TaskbarIcon.DataContext>
+			<AV:MainWorkerViewModel />
+		</Taskbar:TaskbarIcon.DataContext>
+	</Taskbar:TaskbarIcon>-->
 </ResourceDictionary>
