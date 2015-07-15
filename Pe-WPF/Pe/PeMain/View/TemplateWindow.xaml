@@ -94,7 +94,7 @@
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="Auto" />
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Source}" />
+							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Source,UpdateSourceTrigger=PropertyChanged}" />
 							<GridSplitter Grid.Column="1"  Style="{StaticResource DefaultGridSplitterStyle}" />
 							<ListBox Grid.Column="1" Margin="{StaticResource SplitterMargin}" />
 						</Grid>
