@@ -73,8 +73,8 @@
 					o => {
 						var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, NonProcess);
 						var indexViewModel = CreateIndexViewModel(indexModel);
-						IndexModel.Items.Add(indexModel);
-						IndexItems.Add(indexViewModel);
+						IndexModel.Items.Insert(0, indexModel);
+						IndexItems.Insert(0, indexViewModel);
 						SelectedViewModel = indexViewModel;
 					}
 				);

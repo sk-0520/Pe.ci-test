@@ -36,6 +36,21 @@
 		public static string LauncherToolbarMainIconPath { get { return "/Resources/Icon/LauncherToolbarMain.ico"; } }
 		public static string LauncherCommandIconPath { get { return "/Resources/Icon/LauncherCommand.ico"; } }
 
+		public static string ApplicationTasktrayPath
+		{
+			get
+			{
+#if DEBUG
+				return "/Resources/Icon/Tasktray/App-debug.ico";
+#elif BETA
+				return "/Resources/Icon/Tasktray/App-beta.ico";
+#else
+				return "/Resources/Icon/Tasktray/App-release.ico";
+#endif
+
+			}
+		}
+
 		public static string FilteringPath { get { return "/Resources/Image/Filtering.png"; } }
 
 		public static string TemplatePath { get { return "/Resources/Image/Template.png"; } }

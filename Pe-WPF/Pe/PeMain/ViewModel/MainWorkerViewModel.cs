@@ -120,14 +120,14 @@
 			get
 			{
 				//TODO: 自前で生成したいけどHardcodet.Wpf.TaskbarNotificationの都合上厳しい
-#if DEBUG
-				var path = "/Resources/Icon/Tasktray/App-debug.ico";
-#elif BETA
-				var path = "/Resources/Icon/Tasktray/App-beta.ico";
-#else
-				var path = "/Resources/Icon/Tasktray/App-release.ico";
-#endif
-				var uri = SharedConstants.GetEntryUri(path);
+//#if DEBUG
+//				var path = "/Resources/Icon/Tasktray/App-debug.ico";
+//#elif BETA
+//				var path = "/Resources/Icon/Tasktray/App-beta.ico";
+//#else
+//				var path = "/Resources/Icon/Tasktray/App-release.ico";
+//#endif
+				var uri = SharedConstants.GetEntryUri(AppResource.ApplicationTasktrayPath);
 				return new BitmapImage(uri);
 			}
 		}
