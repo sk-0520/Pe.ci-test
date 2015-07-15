@@ -68,7 +68,7 @@
 			<MenuItem Header="window - save" />
 			<MenuItem Header="window - load" />
 			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" />
-			<MenuItem Header="window - system" />
+			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}"/>
 		</MenuItem>
 		<Separator />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />
