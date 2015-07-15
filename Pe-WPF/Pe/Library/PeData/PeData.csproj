@@ -92,6 +92,7 @@
     <Compile Include="Item\NoteBodyItemModel.cs" />
     <Compile Include="Item\NoteIndexItemCollectionModel.cs" />
     <Compile Include="Item\NoteIndexItemModel.cs" />
+    <Compile Include="Item\TemplateBodyItemModel.cs" />
     <Compile Include="Item\TemplateIndexItemCollectionModel.cs" />
     <Compile Include="Item\TemplateIndexItemModel.cs" />
     <Compile Include="Item\WindowItemCollectionModel.cs" />

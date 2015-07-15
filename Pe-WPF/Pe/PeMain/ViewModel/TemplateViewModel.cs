@@ -2,34 +2,153 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Diagnostics;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class TemplateViewModel : HavingViewSingleModelWrapperViewModelBase<TemplateSettingModel, TemplateWindow>, IHavingClipboardWatcher, IHavingVariableConstants, IHavingNonProcess
+	public class TemplateViewModel : HavingViewSingleModelWrapperViewModelBase<TemplateSettingModel, TemplateWindow>, IHavingClipboardWatcher, IHavingVariableConstants, IHavingNonProcess, IHavingAppSender
 	{
-		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants)
+		#region variable
+
+		TemplateItemViewModel _selectedViewModel;
+
+		#endregion
+
+		public TemplateViewModel(TemplateSettingModel model, TemplateWindow view, TemplateIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
 			: base(model, view)
 		{
 			IndexModel = indexModel;
 			NonProcess = nonProcess;
 			ClipboardWatcher = clipboardWatcher;
 			VariableConstants = variableConstants;
+			AppSender = appSender;
+
+			InitializeIndexItemsViewModel();
 		}
 
 		#region property
-		
+
 		TemplateIndexSettingModel IndexModel { get; set; }
+
+		public ObservableCollection<TemplateItemViewModel> IndexItems { get; set; }
+
+		public TemplateItemViewModel SelectedViewModel
+		{
+			get { return this._selectedViewModel; }
+			set 
+			{ 
+				var prevViewModel = this._selectedViewModel;
+				if (SetVariableValue(ref this._selectedViewModel, value)) {
+					if (prevViewModel != null) {
+						SaveItemViewModel(prevViewModel);
+					}
+				}
+			}
+		}
+
+		#endregion
+
+		#region command
+
+		public ICommand CreateTemplateItem
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var indexModel = SettingUtility.CreateTemplateIndexItem(IndexModel.Items, NonProcess);
+						var indexViewModel = CreateIndexViewModel(indexModel);
+						IndexModel.Items.Add(indexModel);
+						IndexItems.Add(indexViewModel);
+						SelectedViewModel = indexViewModel;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand RemoveTemplateItem
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var nowViewModel = SelectedViewModel;
+						if (nowViewModel == null) {
+							return;
+						}
+						IndexModel.Items.Remove(nowViewModel.Model);
+						IndexItems.Remove(nowViewModel);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand ListItemSelectionChangedCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if (HasView) {
+							View.pageSource.IsSelected = true;
+						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+
+		#endregion
+
+		#region function
+
+		void InitializeIndexItemsViewModel()
+		{
+			var items = IndexModel.Items.Select(CreateIndexViewModel);
+
+			IndexItems = new ObservableCollection<TemplateItemViewModel>(items);
+		}
+
+		TemplateItemViewModel CreateIndexViewModel(TemplateIndexItemModel model)
+		{
+			var result = new TemplateItemViewModel(
+				model,
+				AppSender,
+				ClipboardWatcher,
+				NonProcess,
+				VariableConstants
+			);
+
+			return result;
+		}
+
+		void SaveItemViewModel(TemplateItemViewModel vm)
+		{
+			if (vm.IsChanged) {
+				vm.SaveBody();
+			}
+		}
 
 		#endregion
 
@@ -93,7 +212,6 @@
 
 		#endregion
 
-
 		#region IHavingNonProcess
 
 		public INonProcess NonProcess { get; private set; }
@@ -109,6 +227,12 @@
 		#region IHavingVariableConstants
 
 		public VariableConstants VariableConstants { get; private set; }
+
+		#endregion
+
+		#region IHavingAppSender
+
+		public IAppSender AppSender { get; private set; }
 
 		#endregion
 

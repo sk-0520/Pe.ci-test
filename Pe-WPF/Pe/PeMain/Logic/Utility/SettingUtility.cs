@@ -58,23 +58,51 @@
 			model.ExecuteCount += 1;
 		}
 
+		static TModel CreateModelName<TModel>(IEnumerable<TModel> items, ILanguage language, string nameKey)
+			where TModel: IName, new()
+		{
+			var newName = language[nameKey];
+
+			var result = new TModel();
+			if (items != null || items.Any()) {
+				newName = TextUtility.ToUniqueDefault(newName, items.Select(g => g.Name));
+			}
+			result.Name = newName;
+
+			return result;
+		}
+
 		public static LauncherGroupItemModel CreateLauncherGroup(LauncherGroupItemCollectionModel group, INonProcess nonProcess)
 		{
-			var newGroupId = nonProcess.Language["new/group-id"];
-			var newGroupName = nonProcess.Language["new/group-id"];
+			////var newGroupId = nonProcess.Language["new/group-id"];
+			//var newGroupName = nonProcess.Language["new/group-name"];
 
-			var result = new LauncherGroupItemModel();
-			if(group != null || group.Any()) {
-				//newGroupId = TextUtility.ToUnique(
-				//	newGroupId,
-				//	group.Keys,
-				//	(s, i) => string.Format("{0}_{1}", s, i)
-				//);
-				newGroupName = TextUtility.ToUniqueDefault(newGroupName, group.Select(g => g.Name));
-			}
-			//result.Id = newGroupId;
-			result.Name = newGroupName;
+			//var result = new LauncherGroupItemModel();
+			//if(group != null || group.Any()) {
+			//	//newGroupId = TextUtility.ToUnique(
+			//	//	newGroupId,
+			//	//	group.Keys,
+			//	//	(s, i) => string.Format("{0}_{1}", s, i)
+			//	//);
+			//	newGroupName = TextUtility.ToUniqueDefault(newGroupName, group.Select(g => g.Name));
+			//}
+			////result.Id = newGroupId;
+			//result.Name = newGroupName;
 
+			//return result;
+			var result = CreateModelName(group, nonProcess.Language, "new/group-name");
+			return result;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="items"></param>
+		/// <param name="nonProcess"></param>
+		/// <returns></returns>
+		public static TemplateIndexItemModel CreateTemplateIndexItem(TemplateIndexItemCollectionModel items, INonProcess nonProcess)
+		{
+			var result = CreateModelName(items, nonProcess.Language, "new/template-name");
 			return result;
 		}
 

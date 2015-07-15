@@ -163,7 +163,7 @@
 				var indexBody = IndexBody;
 				if(SetPropertyValue(indexBody, value, "Text")) {
 					indexBody.History.Update();
-					AppSender.SendSaveIndexBody(IndexKind.Note, Model.Id, IndexBody);
+					AppSender.SendSaveIndexBody(IndexBody, Model.Id);
 				}
 			}
 		}

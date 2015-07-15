@@ -31,18 +31,24 @@
 
 		#region property
 
-		public NoteKind NoteKind { get;set;}
+		[DataMember]
+		public NoteKind NoteKind { get; set; }
 
+		[DataMember]
 		public bool IsLocked { get; set; }
+		[DataMember]
 		public bool IsCompacted { get; set; }
 
+		[DataMember]
 		public HistoryItemModel History { get; set; }
 
 		#endregion
 
 		#region IColorPair
 
+		[DataMember]
 		public Color ForeColor { get; set; }
+		[DataMember]
 		public Color BackColor { get; set; }
 
 		#endregion

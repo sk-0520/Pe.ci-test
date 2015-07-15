@@ -404,9 +404,9 @@
 			return ReceiveGetIndexBody(indexKind, guid);
 		}
 
-		public void SendSaveIndexBody(IndexKind indexKind, Guid guid, IndexBodyItemModelBase indexBody)
+		public void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid)
 		{
-			ReceiveSaveIndexBody(indexKind, guid, indexBody);
+			ReceiveSaveIndexBody(indexBody, guid);
 		}
 
 		public void SendDeviceChanged(ChangedDevice changedDevice)
@@ -491,15 +491,24 @@
 						return AppUtility.LoadSetting<NoteBodyItemModel>(path, CommonData.Logger);
 					}
 
+				case IndexKind.Template: 
+					{
+						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
+						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
+						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+						return AppUtility.LoadSetting<TemplateBodyItemModel>(path, CommonData.Logger);
+					}
+
 				default:
 					throw new NotImplementedException();
 			}
 		}
 
-		void ReceiveSaveIndexBody(IndexKind indexKind, Guid guid, IndexBodyItemModelBase indexBody)
+		void ReceiveSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid)
 		{
-			switch(indexKind) {
-				case IndexKind.Note: {
+			switch (indexBody.IndexKind) {
+				case IndexKind.Note:
+					{
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
@@ -507,11 +516,19 @@
 					}
 					break;
 
+				case IndexKind.Template: 
+					{
+						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
+						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
+						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+						AppUtility.SaveSetting(path, (TemplateBodyItemModel)indexBody, CommonData.Logger);
+					}
+					break;
+
 				default:
 					throw new NotImplementedException();
 			}
 		}
-
 
 		void ReceiveDeviceChanged(ChangedDevice changedDevice)
 		{

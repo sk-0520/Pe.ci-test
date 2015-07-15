@@ -47,10 +47,9 @@
 		/// <summary>
 		/// 対象インデックスのボディ部を保存。
 		/// </summary>
-		/// <param name="indexKind"></param>
-		/// <param name="guid"></param>
 		/// <param name="indexBody"></param>
-		void SendSaveIndexBody(IndexKind indexKind, Guid guid, IndexBodyItemModelBase indexBody);
+		/// <param name="guid"></param>
+		void SendSaveIndexBody(IndexBodyItemModelBase indexBody, Guid guid);
 		/// <summary>
 		/// デバイスが変更されたことを通知。
 		/// </summary>

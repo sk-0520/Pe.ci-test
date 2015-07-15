@@ -36,7 +36,8 @@ using ContentTypeTextNet.Pe.PeMain.ViewModel;
 				CommonData.TemplateIndexSetting, 
 				CommonData.NonProcess,
 				CommonData.ClipboardWatcher,
-				CommonData.VariableConstants
+				CommonData.VariableConstants,
+				CommonData.AppSender
 			);
 		}
 
