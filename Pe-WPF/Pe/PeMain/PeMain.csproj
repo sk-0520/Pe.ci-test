@@ -202,6 +202,7 @@
     <Compile Include="ViewModel\NoteMenuViewModel.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
+    <Compile Include="ViewModel\TemplateViewModel.cs" />
     <Compile Include="ViewModel\ToolbarViewModel.cs" />
     <Compile Include="ViewModel\WindowItemCollectionViewModel.cs" />
     <Compile Include="View\AcceptWindow.xaml.cs">
@@ -264,6 +265,9 @@
     <Compile Include="View\Parts\Window\CommonDataWindow.cs" />
     <Compile Include="View\LauncherToolbarWindow.xaml.cs">
       <DependentUpon>LauncherToolbarWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TemplateWindow.xaml.cs">
+      <DependentUpon>TemplateWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LauncherToolbarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TemplateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -34,7 +34,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using System.IO;
-using System.Windows.Threading;
+	using System.Windows.Threading;
 	using Microsoft.Win32;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
@@ -146,6 +146,9 @@ using System.Windows.Threading;
 		public bool IsVisibledShellHideFile { get { return SystemEnvironmentUtility.IsHideFileShow(); } }
 		public bool IsVisibledShellExtension { get { return SystemEnvironmentUtility.IsExtensionShow(); } }
 
+		TemplateWindow TemplateWindow { get; set; }
+		public TemplateViewModel Template { get { return TemplateWindow.ViewModel; } }
+
 		#endregion
 
 		#region command
@@ -175,6 +178,8 @@ using System.Windows.Threading;
 			{
 				var result = CreateCommand(
 					o => {
+						Debug.Assert(Template != null);
+						Template.Visible = !Template.Visible;
 					}
 				);
 
@@ -641,6 +646,8 @@ using System.Windows.Threading;
 
 				CreateNote();
 
+				CreateTemplate();
+
 				return true;
 			}
 		}
@@ -762,6 +769,12 @@ using System.Windows.Threading;
 					var window = CreateNoteWindow(noteItem, false);
 				}
 			}
+		}
+
+		void CreateTemplate()
+		{
+			TemplateWindow = new TemplateWindow();
+			TemplateWindow.SetCommonData(CommonData, null);
 		}
 
 		/// <summary>
