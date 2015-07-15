@@ -97,42 +97,11 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 		#region function
 
-		void SetProcessor()
-		{
-			//TODO:Processor.CultureCode = 
-			if (Processor == null) {
-				var processor = new ProgramTemplateProcessor() {
-					TemplateSource = Source ?? string.Empty,
-				};
-				Processor = processor;
-			} else {
-				Processor.TemplateSource = Source ?? string.Empty;
-			}
-		}
-
-		string ExecuteProcessor(ProgramTemplateProcessor processor)
-		{
-			if (processor.Compiled) {
-				return processor.TransformText();
-			}
-			processor.AllProcess();
-			if (processor.Error != null || processor.GeneratedErrorList.Any() || processor.CompileErrorList.Any()) {
-				// エラーあり
-				if (processor.Error != null) {
-					return processor.Error.ToString() + Environment.NewLine + string.Join(Environment.NewLine, processor.GeneratedErrorList.Concat(processor.CompileErrorList).Select(e => e.ToString()));
-				} else {
-					return string.Join(Environment.NewLine, processor.GeneratedErrorList.Concat(processor.CompileErrorList).Select(e => string.Format("[{0},{1}] {2}: {3}", e.Line - processor.FirstLineNumber, e.Column, e.ErrorNumber, e.ErrorText)));
-				}
-			}
-			return processor.TransformText();
-		}
-
 		void SetReplacedValue()
 		{
-			if (IsProgrammableReplace) {
-				SetProcessor();
-				var result = ExecuteProcessor(Processor);
-				Replaced = result;
+			if (IsReplace) {
+				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, NonProcess);
+				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, NonProcess);
 			}
 		}
 
@@ -142,8 +111,10 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 				// 読み込んでない。
 				return;
 			}
+			BodyModel.History.Update();
 			NonProcess.Logger.Information("save body:" + Name, BodyModel);
 			AppSender.SendSaveIndexBody(BodyModel, Model.Id);
+			ResetChangeFlag();
 		}
 
 		#endregion

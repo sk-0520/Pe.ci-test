@@ -25,6 +25,8 @@
 
 		public string LanguageFilePath { get; private set; }
 
+		public string CultureCode { get { return Model.CultureCode; } }
+
 		#endregion
 
 		#region function
@@ -79,9 +81,9 @@
 			};
 		}
 
-		public string GetReplacedWordText(string key, DateTime dateTime, IReadOnlyDictionary<string, string> map)
+		public string GetReplacedWordText(string words, DateTime dateTime, IReadOnlyDictionary<string, string> map)
 		{
-			var plainText = GetPlainText(key);
+			var plainText = GetPlainText(words);
 
 			var usingMap = GetSystemMap(dateTime);
 			if(map != null) {

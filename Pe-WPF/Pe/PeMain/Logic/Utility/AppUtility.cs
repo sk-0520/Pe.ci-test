@@ -53,9 +53,9 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 		/// </summary>
 		/// <param name="baseDir">検索ディレクトリ</param>
 		/// <param name="name">検索名</param>
-		/// <param name="code">検索コード</param>
+		/// <param name="cultureCode">検索コード</param>
 		/// <returns></returns>
-		public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string code, ILogger logger)
+		public static AppLanguageManager LoadLanguageFile(string baseDir, string name, string cultureCode, ILogger logger)
 		{
 			logger.Information("load language file", baseDir);
 			var langPairList = new List<KeyValuePair<string, LanguageCollectionModel>?>();
@@ -71,7 +71,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 			var defaultPath = Path.Combine(baseDir, Constants.languageDefaultFileName);
 			var lang = langPairList.FirstOrDefault(p => p.Value.Value.Name == name)
-				?? langPairList.FirstOrDefault(l => l.Value.Value.Code == code)
+				?? langPairList.FirstOrDefault(l => l.Value.Value.CultureCode == cultureCode)
 				?? new KeyValuePair<string, LanguageCollectionModel>(defaultPath, SerializeUtility.LoadXmlSerializeFromFile<LanguageCollectionModel>(defaultPath))
 			;
 			return new AppLanguageManager(lang.Value, lang.Key);

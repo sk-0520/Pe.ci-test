@@ -12,7 +12,7 @@
 	/// </summary>
 	public interface INonProcess
 	{
-		ILanguage Language { get; }
 		ILogger Logger { get; }
+		ILanguage Language { get; }
 	}
 }

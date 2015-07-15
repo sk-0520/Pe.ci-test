@@ -30,6 +30,12 @@
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Deactivated">
+			<i:InvokeCommandAction Command="{Binding WindowDeactivCommnad}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>

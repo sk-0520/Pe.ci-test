@@ -118,6 +118,21 @@
 			}
 		}
 
+		public ICommand WindowDeactivCommnad
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						if(SelectedViewModel != null && SelectedViewModel.IsChanged) {
+							SelectedViewModel.SaveBody();
+						}
+					}
+				);
+
+				return result;
+			}
+		}
 
 		#endregion
 

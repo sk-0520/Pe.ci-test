@@ -28,7 +28,7 @@
 		/// 言語コード。
 		/// </summary>
 		[DataMember, XmlAttribute]
-		public string Code { get; set; }
+		public string CultureCode { get; set; }
 
 		#region IName
 
