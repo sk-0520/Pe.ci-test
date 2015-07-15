@@ -10,6 +10,7 @@
 	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}">
 		<ContextMenu.Resources>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
+			<SC:IsNotEmptyCollection x:Key="IsNotEmptyCollection" />
 
 			<ItemContainerTemplate x:Key="IMenuItemTemplate">
 				<StackPanel Orientation="Horizontal">
@@ -52,8 +53,8 @@
 			<Separator />
 			<MenuItem Header="front" Command="{Binding FrontNoteItemCommand}" />
 			<Separator />
-			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
-			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
+			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
+			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}"/>
 		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" Command="{Binding SwitchCommandWindowCommand}" />
@@ -66,9 +67,9 @@
 			<MenuItem Header="clipboard" />
 			<Separator />
 			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}" />
-			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}"/>
-			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" />
-			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}"/>
+			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}" />
+			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
+			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" IsEnabled="{Binding ItemsSource,RelativeSource={RelativeSource Self}, Converter={StaticResource IsNotEmptyCollection}}" />
 		</MenuItem>
 		<Separator />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />

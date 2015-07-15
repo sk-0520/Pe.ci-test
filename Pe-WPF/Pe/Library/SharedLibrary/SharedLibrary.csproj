@@ -155,6 +155,8 @@
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
+    <Compile Include="View\Converter\IsEmptyCollection.cs" />
+    <Compile Include="View\Converter\IsNotEmptyCollection.cs" />
     <Compile Include="View\Converter\LogicalIsNotNullConverter.cs" />
     <Compile Include="View\Converter\LogicalIsNullConverter.cs" />
     <Compile Include="View\Converter\LogicalMultiEqualConverter.cs" />
