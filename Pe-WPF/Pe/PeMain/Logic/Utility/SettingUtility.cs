@@ -88,6 +88,12 @@
 			}
 		}
 
+		public static void InitializeWindowSaveSetting(WindowSaveSettingModel model, INonProcess nonProcess)
+		{
+			model.SaveCount = Constants.windowSaveCount.GetRounding(model.SaveCount);
+			model.SaveIntervalTime = Constants.windowSaveIntervalTime.GetRounding(model.SaveIntervalTime);
+		}
+
 		public static void InitializeNoteSetting(NoteSettingModel model, INonProcess nonProcess)
 		{
 			if (model.ForeColor == default(Color)) {
@@ -107,6 +113,7 @@
 			}
 
 			InitializeNoteSetting(setting.Note, nonProcess);
+			InitializeWindowSaveSetting(setting.WindowSave, nonProcess);
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, INonProcess nonProcess)

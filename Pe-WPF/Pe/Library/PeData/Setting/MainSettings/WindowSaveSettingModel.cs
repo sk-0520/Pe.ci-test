@@ -28,6 +28,6 @@
 		/// 保存間隔。
 		/// </summary>
 		[DataMember]
-		public TimeSpan SaveSpan { get; set; }
+		public TimeSpan SaveIntervalTime { get; set; }
 	}
 }

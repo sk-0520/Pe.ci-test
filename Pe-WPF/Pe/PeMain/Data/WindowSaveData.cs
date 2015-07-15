@@ -23,11 +23,11 @@
 		/// <summary>
 		/// タイマー保存。
 		/// </summary>
-		public FixeSizedList<WindowItemCollectionModel> TimerItems { private get; set; }
+		public FixeSizedList<WindowItemCollectionModel> TimerItems { get; private set; }
 		/// <summary>
 		/// 環境変更時の保存。
 		/// </summary>
-		public FixeSizedList<WindowItemCollectionModel> SystemItems { private get; set; }
+		public FixeSizedList<WindowItemCollectionModel> SystemItems { get; private set; }
 
 		#endregion
 	}

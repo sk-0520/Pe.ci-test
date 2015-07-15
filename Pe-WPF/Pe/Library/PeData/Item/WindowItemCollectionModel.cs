@@ -12,7 +12,7 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-	public class WindowItemCollectionModel: ObservableCollection<WindowItemModel>, IName
+	public class WindowItemCollectionModel: ObservableCollection<WindowItemModel>, IName, IModel
 	{
 		#region variable
 

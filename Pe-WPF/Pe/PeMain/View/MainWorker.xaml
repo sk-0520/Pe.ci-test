@@ -11,18 +11,19 @@
 		<ContextMenu.Resources>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 
-			<ItemContainerTemplate x:Key="NoteMenuItemTemplate">
+			<ItemContainerTemplate x:Key="IMenuItemTemplate">
 				<StackPanel Orientation="Horizontal">
 					<Image Source="{Binding MenuImage}" />
 					<TextBlock Text="{Binding DisplayText}" />
 				</StackPanel>
 			</ItemContainerTemplate>
+			
 			<Style x:Key="NoteMenuItemStyle" TargetType="MenuItem">
-				<!--<Setter Property="Command" Value="{Binding MenuSelectedCommand, RelativeSource={RelativeSource FindAncestor,AncestorType=Taskbar:TaskbarIcon}}" />-->
-				<!--<Setter Property="Command" Value="{Binding DataContext.MenuSelectedCommand, RelativeSource={RelativeSource FindAncestor,AncestorType=Taskbar:TaskbarIcon}}" />-->
-				<!--<Setter Property="Command" Value="{Binding Path=PlacementTarget.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />-->
-				<!--<Setter Property="Command" Value="{Binding Path=PlacementTarget.DataContext.MenuSelectedCommand,  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}" />-->
 				<Setter Property="Command" Value="{Binding NoteMenuSelectedCommand}" />
+			</Style>
+
+			<Style x:Key="WindowMenuItemStyle" TargetType="MenuItem">
+				<Setter Property="Command" Value="{Binding WindowMenuSelectedCommand}" />
 			</Style>
 		</ContextMenu.Resources>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/setting" Header="setting" Command="{Binding ShowSettingWindowCommand}" />
@@ -51,8 +52,8 @@
 			<Separator />
 			<MenuItem Header="front" Command="{Binding FrontNoteItemCommand}" />
 			<Separator />
-			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
-			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=NoteMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
+			<MenuItem Header="show" ItemsSource="{Binding NoteShowItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
+			<MenuItem Header="hidden" ItemsSource="{Binding NoteHiddenItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=NoteMenuItemStyle}" />
 		</MenuItem>
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/template" Header="template" Command="{Binding SwitchTemplateWindowCommand}" />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/command" Header="command" Command="{Binding SwitchCommandWindowCommand}" />
@@ -64,13 +65,10 @@
 			<Separator />
 			<MenuItem Header="clipboard" />
 			<Separator />
-			<MenuItem Header="window">
-				<MenuItem Header="save" />
-				<MenuItem Header="load" />
-				<Separator />
-				<MenuItem Header="timer" />
-				<MenuItem Header="system" />
-			</MenuItem>
+			<MenuItem Header="window - save" />
+			<MenuItem Header="window - load" />
+			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" />
+			<MenuItem Header="window - system" />
 		</MenuItem>
 		<Separator />
 		<MenuItem UI:XamlTag.LanguageKey="tasktray/about" Header="about" />

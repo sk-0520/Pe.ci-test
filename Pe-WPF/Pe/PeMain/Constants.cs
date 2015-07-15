@@ -117,6 +117,18 @@ using System.Windows.Media;
 			256
 		);
 
+		public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
+			//TimeSpan.FromMinutes(1),
+			TimeSpan.FromSeconds(5),
+			TimeSpan.FromMinutes(10),
+			TimeSpan.FromHours(1)
+		);
+		public static readonly TripleRange<int> windowSaveCount = new TripleRange<int>(
+			3,
+			10,
+			20
+		);
+
 		public static readonly Thickness noteCaptionPadding = new Thickness(2);
 		public const double noteCaptionHeight = 20;
 		public static readonly Color noteForeColor = Colors.Black;

@@ -203,6 +203,7 @@
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\ToolbarViewModel.cs" />
+    <Compile Include="ViewModel\WindowItemCollectionViewModel.cs" />
     <Compile Include="View\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
     </Compile>

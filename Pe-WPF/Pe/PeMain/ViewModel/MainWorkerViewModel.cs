@@ -34,6 +34,7 @@
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 	using System.IO;
+using System.Windows.Threading;
 
 	public sealed class MainWorkerViewModel: ViewModelBase, IAppSender, IClipboardWatcher
 	{
@@ -100,6 +101,13 @@
 				var uri = SharedConstants.GetEntryUri(path);
 				return new BitmapImage(uri);
 			}
+		}
+
+		DispatcherTimer WindowSaveTimer { get; set; }
+
+		public IEnumerable<WindowItemCollectionViewModel> WindowTimerItems
+		{
+			get { return WindowSaveData.TimerItems.Select(w => new WindowItemCollectionViewModel(w)); }
 		}
 
 		#endregion
@@ -471,7 +479,6 @@
 
 		#endregion
 
-
 		#region function
 
 		void LoadSetting()
@@ -517,6 +524,8 @@
 				}
 				InitializeSetting();
 
+				InitializeStatus();
+
 				InitializeStatic();
 
 				CreateMessage();
@@ -556,7 +565,6 @@
 			return true;
 		}
 
-
 		void InitializeSetting()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
@@ -564,6 +572,21 @@
 				SettingUtility.InitializeLauncherItemSetting(CommonData.LauncherItemSetting, CommonData.NonProcess);
 				SettingUtility.InitializeLauncherGroupSetting(CommonData.LauncherGroupSetting, CommonData.NonProcess);
 			}
+		}
+
+		void InitializeStatus()
+		{
+			WindowSaveData.TimerItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+			WindowSaveData.SystemItems.LimitSize = CommonData.MainSetting.WindowSave.SaveCount;
+			
+			if (WindowSaveTimer != null) {
+				WindowSaveTimer.Stop();
+			}
+
+			WindowSaveTimer = new DispatcherTimer();
+			WindowSaveTimer.Tick += Timer_Tick;
+			WindowSaveTimer.Interval = CommonData.MainSetting.WindowSave.SaveIntervalTime;
+			WindowSaveTimer.Start();
 		}
 
 		void InitializeStatic()
@@ -673,5 +696,30 @@
 		}
 
 		#endregion
+
+		void Timer_Tick(object sender, EventArgs e)
+		{
+			if (Pause) {
+				return;
+			}
+
+			var timer = (DispatcherTimer)sender;
+			timer.Stop();
+			try {
+				if (timer == WindowSaveTimer) {
+					var windowList = AppUtility.GetSystemWindowList(false);
+					var windowCollection = new WindowItemCollectionModel();
+					foreach (var window in windowList) {
+						windowCollection.Add(window);
+					}
+					windowCollection.Name = "TODO:" + DateTime.Now.ToString();
+					WindowSaveData.TimerItems.Add(windowCollection);
+					OnPropertyChanged("WindowTimerItems");
+					CommonData.Logger.Information("save window", windowCollection);
+				}
+			} finally {
+				timer.Start();
+			}
+		}
 	}
 }
