@@ -42,14 +42,14 @@
 					}
 				}
 				if(!hasIcon && model.LauncherKind == LauncherKind.Command) {
-					return Resource.GetLauncherCommandIcon(iconScale, nonProcess.Logger);
+					return AppResource.GetLauncherCommandIcon(iconScale, nonProcess.Logger);
 				}
 			}
 
 			if(hasIcon) {
 				return AppUtility.LoadIconDefault(useIcon, iconScale, nonProcess.Logger);
 			} else {
-				return Resource.GetNotFoundIcon(iconScale, nonProcess.Logger);
+				return AppResource.GetNotFoundIcon(iconScale, nonProcess.Logger);
 			}
 		}
 	}

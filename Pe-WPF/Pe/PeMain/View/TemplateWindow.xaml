@@ -62,7 +62,7 @@
 					<Image />
 					<TextBox />
 				</StackPanel>
-				<ListBox Grid.Row="1" ItemsSource="{Binding IndexItems}" SelectedItem="{Binding SelectedViewModel}" x:Name="itemsList">
+				<ListBox Grid.Row="1" ItemsSource="{Binding IndexItems}" SelectedItem="{Binding SelectedViewModel}" x:Name="itemsList" HorizontalContentAlignment="Stretch">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="SelectionChanged">
 							<i:InvokeCommandAction Command="{Binding ListItemSelectionChangedCommand}" />
@@ -70,7 +70,12 @@
 					</i:Interaction.Triggers>
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding DisplayText}" />
+							<StackPanel>
+								<TextBlock Text="{Binding DisplayText}" />
+								<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+									<Image Source="{Binding ItemImage}" />
+								</StackPanel>
+							</StackPanel>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>

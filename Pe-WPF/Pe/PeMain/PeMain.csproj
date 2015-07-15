@@ -176,7 +176,7 @@
     <Compile Include="Logic\Utility\SystemExecuteUtility.cs" />
     <Compile Include="Logic\Utility\TemplateUtility.cs" />
     <Compile Include="Logic\Utility\ViewUtility.cs" />
-    <Compile Include="Resource.cs" />
+    <Compile Include="AppResource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
@@ -378,9 +378,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Image\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Library\Package\Package.csproj">
       <Project>{fbf5e5e8-2d88-45a7-b1ea-9e3fb68e97e4}</Project>
@@ -419,6 +417,11 @@
     <Content Include="etc\style\common.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Image\Filtering.png" />
+    <Resource Include="Resources\Image\Template.png" />
+    <Resource Include="Resources\Image\TemplatePlain.png" />
+    <Resource Include="Resources\Image\TemplateProgrammable.png" />
+    <Resource Include="Resources\Image\TemplateReplace.png" />
     <Resource Include="Resources\Icon\LauncherCommand.ico" />
     <Resource Include="Resources\Icon\NotFound.ico" />
     <Resource Include="Resources\Icon\LauncherToolbarMain.ico" />

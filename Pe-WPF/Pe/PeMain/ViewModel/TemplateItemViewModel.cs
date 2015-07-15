@@ -1,18 +1,21 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Define;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic;
-using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Media;
+	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.Define;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Define;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants
 	{
@@ -59,13 +62,23 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 		public bool IsReplace
 		{
 			get { return Model.IsReplace; }
-			set { SetModelValue(value); }
+			set
+			{
+				if(SetModelValue(value)) {
+					OnPropertyChanged("ItemImage");
+				}
+			}
 		}
 
 		public bool IsProgrammableReplace
 		{
 			get { return Model.IsProgrammableReplace; }
-			set { SetModelValue(value); }
+			set
+			{
+				if(SetModelValue(value)) {
+					OnPropertyChanged("ItemImage");
+				}
+			}
 		}
 
 		public bool ReplaceViewSelected
@@ -91,6 +104,21 @@ using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 		{
 			get { return this._replaced; }
 			set { SetVariableValue(ref _replaced, value); }
+		}
+
+		public ImageSource ItemImage
+		{
+			get
+			{
+				if(IsReplace) {
+					if(IsProgrammableReplace) {
+						return AppResource.TemplateProgrammableImage;
+					} else {
+						return AppResource.TemplateReplaceImage;
+					}
+				}
+				return AppResource.TemplatePlainImage;
+			}
 		}
 
 		#endregion

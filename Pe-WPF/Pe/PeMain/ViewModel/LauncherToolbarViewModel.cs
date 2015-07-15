@@ -891,7 +891,7 @@
 
 		BitmapSource GetAppIcon()
 		{
-			return Resource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale);
+			return AppResource.GetLauncherToolbarMainIcon(Model.Toolbar.IconScale);
 		}
 
 		Color GetAppIconColor()
