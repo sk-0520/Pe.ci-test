@@ -65,7 +65,7 @@
 			set
 			{
 				if(SetModelValue(value)) {
-					OnPropertyChanged("ItemImage");
+					OnPropertyChangedItemType();
 				}
 			}
 		}
@@ -76,7 +76,7 @@
 			set
 			{
 				if(SetModelValue(value)) {
-					OnPropertyChanged("ItemImage");
+					OnPropertyChangedItemType();
 				}
 			}
 		}
@@ -106,7 +106,7 @@
 			set { SetVariableValue(ref _replaced, value); }
 		}
 
-		public ImageSource ItemImage
+		public ImageSource ItemTypeImage
 		{
 			get
 			{
@@ -121,9 +121,30 @@
 			}
 		}
 
+		public string ItemTypeText
+		{
+			get
+			{
+				if(IsReplace) {
+					if(IsProgrammableReplace) {
+						return "TODO:Programmable";
+					} else {
+						return "TODO:Replace";
+					}
+				}
+				return "TODO:Plain";
+			}
+		}
+
 		#endregion
 
 		#region function
+
+		void OnPropertyChangedItemType()
+		{
+			OnPropertyChanged("ItemTypeImage");
+			OnPropertyChanged("ItemTypeText");
+		}
 
 		void SetReplacedValue()
 		{

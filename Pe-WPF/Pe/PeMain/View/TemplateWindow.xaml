@@ -70,12 +70,17 @@
 					</i:Interaction.Triggers>
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<StackPanel>
+							<Border Padding="2">
+								<StackPanel>
 								<TextBlock Text="{Binding DisplayText}" />
-								<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-									<Image Source="{Binding ItemImage}" />
-								</StackPanel>
+								<Border Padding="1">
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+										<Image Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
+										<TextBlock Text="{Binding ItemTypeText}" />
+										</StackPanel>
+									</Border>
 							</StackPanel>
+							</Border>
 						</DataTemplate>
 					</ListBox.ItemTemplate>
 				</ListBox>
