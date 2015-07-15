@@ -7,7 +7,7 @@
 	xmlns:UI="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
-	<ContextMenu x:Shared="false" x:Key="ContextMenu">
+	<ContextMenu x:Shared="false" x:Key="ContextMenu" IsOpen="{Binding IsContextMenuOpen}">
 		<ContextMenu.Resources>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter"/>
 
@@ -65,8 +65,8 @@
 			<Separator />
 			<MenuItem Header="clipboard" />
 			<Separator />
-			<MenuItem Header="window - save" />
-			<MenuItem Header="window - load" />
+			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}" />
+			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}"/>
 			<MenuItem Header="window - timer" ItemsSource="{Binding WindowTimerItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}" />
 			<MenuItem Header="window - system" ItemsSource="{Binding WindowSystemItems}" ItemTemplate="{StaticResource ResourceKey=IMenuItemTemplate}" ItemContainerStyle="{StaticResource ResourceKey=WindowMenuItemStyle}"/>
 		</MenuItem>

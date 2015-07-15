@@ -1,15 +1,18 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.PeMain.IF;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows.Input;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.PInvoke.Windows;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
 
 	public class WindowItemCollectionViewModel : SingleModelWrapperViewModelBase<WindowItemCollectionModel>, IMenuItem
 	{
@@ -39,7 +42,7 @@ using ContentTypeTextNet.Pe.PeMain.IF;
 			{
 				var result = CreateCommand(
 					o => {
-
+						AppUtility.ChangeWindowFromWindowList(Model);
 					}
 				);
 

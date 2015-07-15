@@ -206,5 +206,21 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 
 			return windowItemList;
 		}
+
+		public static void ChangeWindowFromWindowList(IList<WindowItemModel> windowList)
+		{
+			foreach (var windowItem in windowList) {
+				var rect = PodStructUtility.Convert(windowItem.WindowArea);
+				var reslut = NativeMethods.MoveWindow(
+					windowItem.WindowHandle,
+					rect.X,
+					rect.Y,
+					rect.Width,
+					rect.Height,
+					true
+				);
+			}
+
+		}
 	}
 }

@@ -43,9 +43,16 @@ using System.Windows.Threading;
 
 		enum WindowSaveType
 		{
+			Temporary,
 			Timer,
 			System
 		}
+
+		#endregion
+
+		#region variable
+
+		bool _isContextMenuOpen;
 
 		#endregion
 
@@ -81,6 +88,17 @@ using System.Windows.Threading;
 		public LanguageManager Language { get { return CommonData.Language; } }
 
 		public bool Pause { get; set; }
+
+		public bool IsContextMenuOpen 
+		{
+			get { return this._isContextMenuOpen; }
+			set
+			{
+				if (SetVariableValue(ref this._isContextMenuOpen, value)) {
+					Pause = IsContextMenuOpen;
+				}
+			}
+		}
 
 		LoggingWindow LoggingWindow { get; set; }
 		public LoggingViewModel Logging { get { return LoggingWindow.ViewModel; } }
@@ -267,6 +285,37 @@ using System.Windows.Threading;
 						foreach(var window in NoteWindowList) {
 							WindowsUtility.ShowNoActive(window.Handle);
 						}
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SaveTemporaryWindow
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						SaveWindowItemAsync(WindowSaveType.Temporary);
+						//CommandManager.InvalidateRequerySuggested();
+					}
+				);
+
+				return result;
+			}
+		}
+		public ICommand LoadTemporaryWindow
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						AppUtility.ChangeWindowFromWindowList(WindowSaveData.TemporaryItem);
+					},
+					o => {
+						return WindowSaveData.TemporaryItem != null;
 					}
 				);
 
@@ -717,7 +766,7 @@ using System.Windows.Threading;
 			;
 		}
 
-		void SetWindowItems(WindowSaveType type)
+		WindowItemCollectionModel SaveWindowItem(WindowSaveType type)
 		{
 			var windowList = AppUtility.GetSystemWindowList(false);
 			var windowCollection = new WindowItemCollectionModel();
@@ -728,6 +777,10 @@ using System.Windows.Threading;
 			windowCollection.Name = "TODO:" + DateTime.Now.ToString();
 
 			switch(type) {
+				case WindowSaveType.Temporary:
+					WindowSaveData.TemporaryItem = windowCollection;
+					break;
+
 				case WindowSaveType.Timer:
 					WindowSaveData.TimerItems.Add(windowCollection);
 					OnPropertyChanged("WindowTimerItems");
@@ -739,6 +792,13 @@ using System.Windows.Threading;
 					break;
 			}
 			CommonData.Logger.Information("save window", windowCollection);
+
+			return windowCollection;
+		}
+
+		Task<WindowItemCollectionModel> SaveWindowItemAsync(WindowSaveType type)
+		{
+			return Task.Run(() => SaveWindowItem(type));
 		}
 
 		#endregion
@@ -746,6 +806,7 @@ using System.Windows.Threading;
 		void Timer_Tick(object sender, EventArgs e)
 		{
 			if (Pause) {
+				CommonData.Logger.Information("pause");
 				return;
 			}
 
@@ -753,7 +814,7 @@ using System.Windows.Threading;
 			timer.Stop();
 			try {
 				if (timer == WindowSaveTimer) {
-					SetWindowItems(WindowSaveType.Timer);
+					SaveWindowItemAsync(WindowSaveType.Timer);
 				}
 			} finally {
 				timer.Start();
@@ -762,7 +823,7 @@ using System.Windows.Threading;
 
 		void SystemEvents_DisplaySettingsChanging(object sender, EventArgs e)
 		{
-			SetWindowItems(WindowSaveType.System);
+			SaveWindowItem(WindowSaveType.System);
 		}
 
 	}
