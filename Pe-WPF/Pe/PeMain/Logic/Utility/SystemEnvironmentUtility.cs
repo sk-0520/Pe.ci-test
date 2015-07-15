@@ -12,47 +12,47 @@
 	{
 		#region define
 
-		const string hiddenFileRootPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
-		const string extensionRootPath = hiddenFileRootPath;
+		const string hideFileRootPath = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
+		const string extensionRootPath = hideFileRootPath;
 		const string hiddenKey = "Hidden";
 		const string extensionKey = "HideFileExt";
 
-		enum HiddenFileHiddenType
+		enum HideFileHiddenType
 		{
 			Show = 1,
-			Hidden = 2,
+			Hide = 2,
 		}
-		enum HiddenFileSuperHiddenType
+		enum HideFileSuperHiddenType
 		{
 			Show = 1,
-			Hidden = 0,
+			Hide = 0,
 		}
 
-		enum ExtensionHiddenType
+		enum ExtensionHideType
 		{
-			Hidden = 1,
+			Hide = 1,
 			Show = 0,
 		}
 
 		#endregion
 
-		#region functino
+		#region function
 
 		/// <summary>
 		/// </summary>
 		/// <returns></returns>
-		public static bool IsHiddenFileShow()
+		public static bool IsHideFileShow()
 		{
-			using(var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath)) {
+			using(var subKey = Registry.CurrentUser.OpenSubKey(hideFileRootPath)) {
 				//Debug.WriteLine(subKey.GetValue("ShowSuperHidden"));
 				var hiddenValue = (int)subKey.GetValue(hiddenKey);
-				return hiddenValue == (int)HiddenFileHiddenType.Show;
+				return hiddenValue == (int)HideFileHiddenType.Show;
 			}
 		}
-		public static void SetHiddenFileShow(bool show)
+		public static void SetHideFileShow(bool show)
 		{
-			using(var subKey = Registry.CurrentUser.OpenSubKey(hiddenFileRootPath, true)) {
-				var hiddenValue = (int)(show ? HiddenFileHiddenType.Show : HiddenFileHiddenType.Hidden);
+			using(var subKey = Registry.CurrentUser.OpenSubKey(hideFileRootPath, true)) {
+				var hiddenValue = (int)(show ? HideFileHiddenType.Show : HideFileHiddenType.Hide);
 				subKey.SetValue(hiddenKey, hiddenValue, RegistryValueKind.DWord);
 			}
 		}
@@ -61,13 +61,13 @@
 		{
 			using(var subKey = Registry.CurrentUser.OpenSubKey(extensionRootPath)) {
 				var extValue = (int)subKey.GetValue(extensionKey);
-				return extValue == (int)ExtensionHiddenType.Show;
+				return extValue == (int)ExtensionHideType.Show;
 			}
 		}
 		public static void SetExtensionShow(bool show)
 		{
 			using(var subKey = Registry.CurrentUser.OpenSubKey(extensionRootPath, true)) {
-				var extType = (int)(show ? ExtensionHiddenType.Show : ExtensionHiddenType.Hidden);
+				var extType = (int)(show ? ExtensionHideType.Show : ExtensionHideType.Hide);
 				subKey.SetValue(extensionKey, extType, RegistryValueKind.DWord);
 			}
 		}

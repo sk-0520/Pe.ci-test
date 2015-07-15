@@ -143,6 +143,9 @@ using System.Windows.Threading;
 			get { return WindowSaveData.SystemItems.Select(w => new WindowItemCollectionViewModel(w)); }
 		}
 
+		public bool IsVisibledShellHideFile { get { return SystemEnvironmentUtility.IsHideFileShow(); } }
+		public bool IsVisibledShellExtension { get { return SystemEnvironmentUtility.IsExtensionShow(); } }
+
 		#endregion
 
 		#region command
@@ -316,6 +319,38 @@ using System.Windows.Threading;
 					},
 					o => {
 						return WindowSaveData.TemporaryItem != null;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchShellHideFile
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						SystemEnvironmentUtility.SetHideFileShow(!IsVisibledShellHideFile);
+						SystemEnvironmentUtility.RefreshShell();
+						OnPropertyChanged("IsVisibledShellHideFile");
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchShellExtension
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						SystemEnvironmentUtility.SetExtensionShow(!IsVisibledShellExtension);
+						SystemEnvironmentUtility.RefreshShell();
+						OnPropertyChanged("IsVisibledShellExtension");
 					}
 				);
 
@@ -519,6 +554,10 @@ using System.Windows.Threading;
 
 		public void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
 		{
+			if (Pause) {
+				CommonData.Logger.Information("pause");
+				return;
+			}
 			CommonData.Logger.Trace(hotKeyId.ToString(), hotKeyModel);
 		}
 
