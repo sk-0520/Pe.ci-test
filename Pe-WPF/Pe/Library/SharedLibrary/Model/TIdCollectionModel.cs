@@ -96,7 +96,7 @@
 
 		public bool Remove(TKey key)
 		{
-			var index = FindIndex(key);
+			var index = IndexOf(key);
 			if (index != -1) {
 				Items.RemoveAt(index);
 				this._map.Remove(key);
@@ -174,7 +174,7 @@
 			this._map[value.Id] = value;
 		}
 
-		public int FindIndex(TKey key)
+		public int IndexOf(TKey key)
 		{
 			return Items.FindIndex(i => IsEqual(key, i.Id));
 		}
@@ -191,7 +191,7 @@
 				throw new ArgumentNullException("value");
 			}
 
-			var index = FindIndex(value.Id);
+			var index = IndexOf(value.Id);
 			if(index != -1) {
 				Items[index] = value;
 				this._map[value.Id] = value;
@@ -215,18 +215,6 @@
 			valueB.Id = keyA;
 			this._map[keyA] = valueB;
 			this._map[keyB] = valueA;
-		}
-
-		public void SwapObject(TValue a, TValue b)
-		{
-			var indexA = IndexOf(a);
-			var indexB = IndexOf(b);
-
-			RemoveAt(indexA);
-			RemoveAt(indexB);
-
-			Insert(indexA, b);
-			Insert(indexB, a);
 		}
 
 		public bool TryGetValue(TKey key, out TValue result)

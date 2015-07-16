@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.Collections.Specialized;
 	using System.Linq;
 	using System.Reflection;
 	using System.Runtime.Serialization;
@@ -110,6 +111,48 @@
 			foreach (var item in items) {
 				Add(item);
 			}
+		}
+
+		public void SwapIndex(int indexA, int indexB)
+		{
+			var itemA = Items[indexA];
+			var itemB = Items[indexB];
+
+			//RemoveAt(indexA);
+			//RemoveAt(indexB);
+
+			//Insert(indexA, itemB);
+			//Insert(indexB, itemA);
+			var temp = itemA;
+			Items[indexB] = temp;
+			Items[indexA] = itemB;
+
+			//var eventA = new NotifyCollectionChangedEventArgs(
+			//	NotifyCollectionChangedAction.Reset,
+			//	itemA,
+			//	indexA
+			//);
+			//var eventB = new NotifyCollectionChangedEventArgs(
+			//	NotifyCollectionChangedAction.Move,
+			//	itemB,
+			//	indexB
+			//);
+			//OnCollectionChanged(eventA);
+			//OnCollectionChanged(eventB);
+			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+		}
+
+		public void SwapObject(TValue itemA, TValue itemB)
+		{
+			var indexA = IndexOf(itemA);
+			var indexB = IndexOf(itemB);
+
+			//RemoveAt(indexA);
+			//RemoveAt(indexB);
+
+			//Insert(indexA, itemB);
+			//Insert(indexB, itemA);
+			SwapIndex(indexA, indexB);
 		}
 
 		#endregion

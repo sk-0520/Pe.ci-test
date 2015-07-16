@@ -10,6 +10,7 @@
 	using System.Windows;
 	using System.Windows.Input;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
@@ -45,7 +46,7 @@
 
 		TemplateIndexSettingModel IndexModel { get; set; }
 
-		public ObservableCollection<TemplateItemViewModel> IndexItems { get; set; }
+		public CollectionModel<TemplateItemViewModel> IndexItems { get; set; }
 
 		public TemplateItemViewModel SelectedViewModel
 		{
@@ -134,15 +135,96 @@
 			}
 		}
 
+		public ICommand SendItemCommand
+		{
+			// TODO: ItemVMに持たせるか考え中
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						NonProcess.Logger.Information("send");
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyItemCommand
+		{
+			// TODO: ItemVMに持たせるか考え中
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						NonProcess.Logger.Information("copy");
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand MoveUpItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						MoveItem(true, o as TemplateItemViewModel);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand MoveDownItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						MoveItem(false, o as TemplateItemViewModel);
+					}
+				);
+
+				return result;
+			}
+		}
+
 		#endregion
 
 		#region function
+
+		void MoveItem(bool moveUp, TemplateItemViewModel itemViewModel)
+		{
+			if (itemViewModel != null) {
+				var model = itemViewModel.Model;
+				var index = IndexModel.Items.IndexOf(model);
+				var next = 0;
+				if (moveUp) {
+					if (index == 0) {
+						return;
+					}
+					next = -1;
+				} else {
+					if (index == IndexModel.Items.Count - 1) {
+						return;
+					}
+					next = +1;
+				}
+				IndexModel.Items.SwapIndex(index, index + next);
+				IndexItems.SwapIndex(index, index + next);
+				SelectedViewModel = itemViewModel;
+			}
+		}
 
 		void InitializeIndexItemsViewModel()
 		{
 			var items = IndexModel.Items.Select(CreateIndexViewModel);
 
-			IndexItems = new ObservableCollection<TemplateItemViewModel>(items);
+			IndexItems = new CollectionModel<TemplateItemViewModel>(items);
 		}
 
 		TemplateItemViewModel CreateIndexViewModel(TemplateIndexItemModel model)

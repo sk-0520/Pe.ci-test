@@ -155,6 +155,7 @@
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
+    <Compile Include="View\Converter\BooleanVisibility.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\IsEmptyCollection.cs" />
     <Compile Include="View\Converter\IsNotEmptyCollection.cs" />
