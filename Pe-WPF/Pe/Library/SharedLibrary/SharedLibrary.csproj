@@ -111,6 +111,7 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
+    <Compile Include="Model\CollectionModel.cs" />
     <Compile Include="Model\FixedSizeCollection.cs" />
     <Compile Include="Model\GuidCollectionBase.cs" />
     <Compile Include="Model\GuidModelBase.cs" />
