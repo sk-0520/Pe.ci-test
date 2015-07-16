@@ -12,7 +12,10 @@
 
 	public class FixedSizeCollectionModel<T> : CollectionModel<T>, LimitSize
 	{
-		public static int DefaultLimit { get { return 64; } }
+		/// <summary>
+		/// 初期値は上限なしでいいや。
+		/// </summary>
+		public static int DefaultLimit { get { return 0; } }
 
 		private int _limitSize;
 
@@ -32,7 +35,7 @@
 		}
 
 		public FixedSizeCollectionModel(IEnumerable<T> collection)
-			: this(collection, collection.Count())
+			: this(collection, DefaultLimit)
 		{ }
 
 		public FixedSizeCollectionModel(IEnumerable<T> collection, int limitSize)

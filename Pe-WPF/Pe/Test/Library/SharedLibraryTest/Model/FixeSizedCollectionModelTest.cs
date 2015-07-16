@@ -15,7 +15,7 @@
 		public void CtorListTest()
 		{
 			var values = new[] { 1, 2, 3 };
-			var list = new FixedSizeCollectionModel<int>(values);
+			var list = new FixedSizeCollectionModel<int>(values, values.Length);
 			Assert.AreEqual(values.Length, list.Count, list.LimitSize);
 			Assert.True(list.IsFIFO);
 		}
@@ -58,7 +58,8 @@
 
 		public FixedSizeCollectionModel<int> GetList()
 		{
-			return new FixedSizeCollectionModel<int>(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+			var values = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+			return new FixedSizeCollectionModel<int>(values, values.Length);
 		}
 
 		[TestCase(10, 20)]
