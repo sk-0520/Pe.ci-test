@@ -15,7 +15,7 @@
 	using System.Reflection;
 
 	[Serializable]
-	public class TIdCollectionModel<TKey, TValue>: ObservableCollection<TValue>, IIsDisposed, IModel
+	public class TIdCollectionModel<TKey, TValue> : FixedSizeCollectionModel<TValue>
 		where TValue: ITId<TKey>
 		where TKey: IComparable
 	{
@@ -24,87 +24,40 @@
 		protected Dictionary<TKey, TValue> _map = new Dictionary<TKey, TValue>();
 		//protected bool _isReadOnly = false;
 
-		[IgnoreDataMember, XmlIgnore]
-		IEnumerable<PropertyInfo> _propertyInfos = null;
-
 		#endregion
 
 		public TIdCollectionModel()
 			: base()
-		{
-			//Items = new List<TValue>();
-			IsDisposed = false;
-		}
+		{ }
 
-		~TIdCollectionModel()
-		{
-			Dispose(false);
-		}
+		public TIdCollectionModel(int limitSize)
+			: base(limitSize, true)
+		{ }
+
+		public TIdCollectionModel(int limitSize, bool isFifo)
+			: base(limitSize, isFifo)
+		{ }
+
+		public TIdCollectionModel(IEnumerable<TValue> collection)
+			: base(collection, DefaultLimit)
+		{ }
+
+		public TIdCollectionModel(IEnumerable<TValue> collection, int limitSize)
+			: base(collection, limitSize, true)
+		{ }
+
+		public TIdCollectionModel(IEnumerable<TValue> collection, int limitSize, bool isFifo)
+			: base(collection)
+		{ }
+
 
 		#region property
-
-		//[DataMember]
-		//public List<TValue> Items { get; set; }
 
 		public IEnumerable<TKey> Keys { get { return this.Select(i => i.Id); } }
 
 		#endregion
 
-		#region IIsDisposed
-
-		[IgnoreDataMember, XmlIgnore]
-		public bool IsDisposed { get; private set; }
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if(IsDisposed) {
-				return;
-			}
-
-			IsDisposed = true;
-			GC.SuppressFinalize(this);
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-		}
-
-		#endregion
-
-		#region IModel
-
-		[IgnoreDataMember, XmlIgnore]
-		public virtual string DisplayText
-		{
-			get { return GetType().FullName; }
-		}
-
-		[IgnoreDataMember, XmlIgnore]
-		public IEnumerable<PropertyInfo> PropertyInfos
-		{
-			get
-			{
-				if(this._propertyInfos == null) {
-					this._propertyInfos = GetType().GetProperties();
-				}
-
-				return this._propertyInfos;
-			}
-		}
-
-		public IEnumerable<string> GetNameValueList()
-		{
-			var nameValueMap = ReflectionUtility.GetMembers(this, PropertyInfos);
-			return ReflectionUtility.GetNameValueStrings(nameValueMap);
-		}
-
-		public virtual void Correction()
-		{ }
-
-		#endregion
-
-		#region ObservableCollection
+		#region FixedSizeCollectionModel
 
 		/// <summary>
 		/// 要素を追加する。
@@ -143,7 +96,7 @@
 
 		public bool Remove(TKey key)
 		{
-			var index = FindIndex(key);
+			var index = IndexOf(key);
 			if (index != -1) {
 				Items.RemoveAt(index);
 				this._map.Remove(key);
@@ -221,7 +174,7 @@
 			this._map[value.Id] = value;
 		}
 
-		public int FindIndex(TKey key)
+		public int IndexOf(TKey key)
 		{
 			return Items.FindIndex(i => IsEqual(key, i.Id));
 		}
@@ -238,7 +191,7 @@
 				throw new ArgumentNullException("value");
 			}
 
-			var index = FindIndex(value.Id);
+			var index = IndexOf(value.Id);
 			if(index != -1) {
 				Items[index] = value;
 				this._map[value.Id] = value;
@@ -262,18 +215,6 @@
 			valueB.Id = keyA;
 			this._map[keyA] = valueB;
 			this._map[keyB] = valueA;
-		}
-
-		public void SwapObject(TValue a, TValue b)
-		{
-			var indexA = IndexOf(a);
-			var indexB = IndexOf(b);
-
-			RemoveAt(indexA);
-			RemoveAt(indexB);
-
-			Insert(indexA, b);
-			Insert(indexB, a);
 		}
 
 		public bool TryGetValue(TKey key, out TValue result)

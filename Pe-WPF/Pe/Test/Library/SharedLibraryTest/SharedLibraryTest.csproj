@@ -103,6 +103,7 @@
     <Compile Include="Logic\Utility\PathUtilityTest.cs" />
     <Compile Include="Logic\Utility\T4TemplateUtilityTest.cs" />
     <Compile Include="Logic\Utility\TextUtilityTest.cs" />
+    <Compile Include="Model\FixeSizedCollectionModelTest.cs" />
     <Compile Include="Model\HotkeyModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

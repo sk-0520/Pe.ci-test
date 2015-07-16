@@ -85,6 +85,7 @@
     <Compile Include="CompatibleForms\SystemInformation.cs" />
     <Compile Include="CompatibleForms\Utility\DrawingUtility.cs" />
     <Compile Include="CompatibleForms\Utility\ImageUtility.cs" />
+    <Compile Include="CompatibleForms\Utility\SendKeysUtility.cs" />
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />
@@ -111,7 +112,8 @@
     <Compile Include="IF\ILanguage.cs" />
     <Compile Include="IF\IMakeBitmapSource.cs" />
     <Compile Include="IF\INonProcess.cs" />
-    <Compile Include="Model\FixedSizeCollection.cs" />
+    <Compile Include="Model\CollectionModel.cs" />
+    <Compile Include="Model\FixedSizeCollectionModel.cs" />
     <Compile Include="Model\GuidCollectionBase.cs" />
     <Compile Include="Model\GuidModelBase.cs" />
     <Compile Include="Model\RangeModel.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
+    <Compile Include="View\Converter\BooleanVisibility.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\IsEmptyCollection.cs" />
     <Compile Include="View\Converter\IsNotEmptyCollection.cs" />

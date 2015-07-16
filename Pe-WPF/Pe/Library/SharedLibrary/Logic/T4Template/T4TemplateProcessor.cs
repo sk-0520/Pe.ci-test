@@ -92,7 +92,7 @@
 		/// </summary>
 		public string TemplateSource
 		{
-			get { return this._templateSource; }
+			get { return this._templateSource ?? string.Empty; }
 			set
 			{
 				if (this._templateSource != value) {

@@ -133,6 +133,7 @@
     <Compile Include="Data\Event\AppbarEventArgs.cs" />
     <Compile Include="Data\LauncherIconCaching.cs" />
     <Compile Include="Data\LauncherToolbarDataModel.cs" />
+    <Compile Include="Data\Temporary\ClipboardItem.cs" />
     <Compile Include="Data\Temporary\SelectedNodeAndLauncherItem.cs" />
     <Compile Include="Data\Temporary\SettingNotifiyItem.cs" />
     <Compile Include="Data\VariableConstants.cs" />
@@ -358,6 +359,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Parts\Control\SettingPage\MainSettingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Parts\Resource\ImageDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
