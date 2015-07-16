@@ -87,8 +87,8 @@
 							</Border>
 								<Border BorderThickness="4" BorderBrush="Yellow" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="Auto" Height="Auto">
 									<StackPanel Orientation="Horizontal">
-										<Button Content="send" Command="{Binding DataContext.SendItemCommand, ElementName=root}" />
-										<Button Content="copy" Command="{Binding DataContext.CopyItemCommand, ElementName=root}" />
+										<Button Content="send" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" />
+										<Button Content="copy" Command="{Binding CopyItemCommand}" />
 										<Button Content="up" Command="{Binding DataContext.MoveUpItemCommand, ElementName=root}" CommandParameter="{Binding }" />
 										<Button Content="down" Command="{Binding DataContext.MoveDownItemCommand, ElementName=root}" />
 									</StackPanel>

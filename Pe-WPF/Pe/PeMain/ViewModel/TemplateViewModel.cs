@@ -135,36 +135,6 @@
 			}
 		}
 
-		public ICommand SendItemCommand
-		{
-			// TODO: ItemVMに持たせるか考え中
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						NonProcess.Logger.Information("send");
-					}
-				);
-
-				return result;
-			}
-		}
-
-		public ICommand CopyItemCommand
-		{
-			// TODO: ItemVMに持たせるか考え中
-			get
-			{
-				var result = CreateCommand(
-					o => {
-						NonProcess.Logger.Information("copy");
-					}
-				);
-
-				return result;
-			}
-		}
-
 		public ICommand MoveUpItemCommand
 		{
 			get

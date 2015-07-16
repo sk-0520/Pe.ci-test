@@ -15,5 +15,7 @@
 		Html = 0x04,
 		Image = 0x08,
 		File = 0x10,
+
+		All = Text | Rtf | Html | Image | File,
 	}
 }

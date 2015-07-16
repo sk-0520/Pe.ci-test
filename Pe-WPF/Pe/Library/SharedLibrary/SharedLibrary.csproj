@@ -85,6 +85,7 @@
     <Compile Include="CompatibleForms\SystemInformation.cs" />
     <Compile Include="CompatibleForms\Utility\DrawingUtility.cs" />
     <Compile Include="CompatibleForms\Utility\ImageUtility.cs" />
+    <Compile Include="CompatibleForms\Utility\SendKeysUtility.cs" />
     <Compile Include="CompatibleWindows\IconWrapper.cs" />
     <Compile Include="CompatibleWindows\Utility\HandleUtility.cs" />
     <Compile Include="CompatibleWindows\Utility\PodStructUtility.cs" />

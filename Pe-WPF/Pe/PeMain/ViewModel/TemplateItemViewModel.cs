@@ -5,8 +5,11 @@
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Input;
 	using System.Windows.Media;
 	using System.Windows.Media.Imaging;
+	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
 	using ContentTypeTextNet.Library.SharedLibrary.Define;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
@@ -16,6 +19,7 @@
 	using ContentTypeTextNet.Pe.PeMain.IF;
 	using ContentTypeTextNet.Pe.PeMain.Logic;
 	using ContentTypeTextNet.Pe.PeMain.Logic.Utility;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
 	public class TemplateItemViewModel: SingleModelWrapperViewModelBase<TemplateIndexItemModel>, IHavingAppSender, IHavingClipboardWatcher, IHavingNonProcess, IHavingVariableConstants
 	{
@@ -103,7 +107,7 @@
 		public string Replaced
 		{
 			get { return this._replaced; }
-			set { SetVariableValue(ref _replaced, value); }
+			set { SetVariableValue(ref this._replaced, value); }
 		}
 
 		public ImageSource ItemTypeImage
@@ -138,6 +142,45 @@
 
 		#endregion
 
+		#region command
+
+		public ICommand SendItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						var templateWindow = (TemplateWindow)o;
+						var hWnd = templateWindow.Handle;
+						// TODO: なんだかなぁ。
+						var usingClipboard = templateWindow.CommonData.MainSetting.Clipboard.UsingClipboard;
+
+						SetReplacedValue();
+						ClipboardUtility.OutputText(hWnd, Replaced, usingClipboard, NonProcess, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand CopyItemCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						SetReplacedValue();
+						ClipboardUtility.CopyText(Replaced, ClipboardWatcher);
+					}
+				);
+
+				return result;
+			}
+		}
+
+		#endregion
+
 		#region function
 
 		void OnPropertyChangedItemType()
@@ -151,6 +194,8 @@
 			if (IsReplace) {
 				Processor = TemplateUtility.MakeTemplateProcessor(BodyModel.Source, Processor, NonProcess);
 				Replaced = TemplateUtility.ToPlainText(Model, BodyModel, Processor, DateTime.Now, NonProcess);
+			} else {
+				Replaced = Source ?? string.Empty;
 			}
 		}
 
