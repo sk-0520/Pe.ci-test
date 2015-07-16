@@ -179,6 +179,7 @@
     <Compile Include="Logic\Utility\ViewUtility.cs" />
     <Compile Include="AppResource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
+    <Compile Include="ViewModel\ClipboardViewModel.cs" />
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemsViewModel.cs" />
@@ -209,6 +210,9 @@
     <Compile Include="ViewModel\WindowItemCollectionViewModel.cs" />
     <Compile Include="View\AcceptWindow.xaml.cs">
       <DependentUpon>AcceptWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClipboardWindow.xaml.cs">
+      <DependentUpon>ClipboardWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoggingWindow.xaml.cs">
       <DependentUpon>LoggingWindow.xaml</DependentUpon>
@@ -303,6 +307,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\AcceptWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ClipboardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

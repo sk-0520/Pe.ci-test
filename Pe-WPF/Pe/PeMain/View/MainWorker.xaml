@@ -64,7 +64,7 @@
 			<MenuItem Header="hide file" Command="{Binding SwitchShellHideFile}" IsChecked="{Binding IsVisibledShellHideFile, Mode=OneWay}" />
 			<MenuItem Header="extension" Command="{Binding SwitchShellExtension}" IsChecked="{Binding IsVisibledShellExtension, Mode=OneWay}" />
 			<Separator />
-			<MenuItem Header="clipboard" />
+			<MenuItem Header="clipboard" Command="{Binding SwitchClipboardWindowCommand}" IsChecked="{Binding Clipboard.Visible}" />
 			<Separator />
 			<MenuItem Header="window - save" Command="{Binding SaveTemporaryWindow}" />
 			<MenuItem Header="window - load" Command="{Binding LoadTemporaryWindow}" />

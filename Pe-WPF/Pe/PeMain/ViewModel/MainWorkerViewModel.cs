@@ -149,6 +149,9 @@
 		TemplateWindow TemplateWindow { get; set; }
 		public TemplateViewModel Template { get { return TemplateWindow.ViewModel; } }
 
+		ClipboardWindow ClipboardWindow { get; set; }
+		public ClipboardViewModel Clipboard { get { return ClipboardWindow.ViewModel; } }
+
 		#endregion
 
 		#region command
@@ -211,6 +214,21 @@
 					o => {
 						Debug.Assert(Logging != null);
 						Logging.Visible = !Logging.Visible;
+					}
+				);
+
+				return result;
+			}
+		}
+
+		public ICommand SwitchClipboardWindowCommand
+		{
+			get
+			{
+				var result = CreateCommand(
+					o => {
+						Debug.Assert(Clipboard != null);
+						Clipboard.Visible = !Clipboard.Visible;
 					}
 				);
 
@@ -665,6 +683,8 @@
 
 				CreateTemplate();
 
+				CreateClipboard();
+
 				return true;
 			}
 		}
@@ -792,6 +812,12 @@
 		{
 			TemplateWindow = new TemplateWindow();
 			TemplateWindow.SetCommonData(CommonData, null);
+		}
+
+		void CreateClipboard()
+		{
+			ClipboardWindow = new ClipboardWindow();
+			ClipboardWindow.SetCommonData(CommonData, null);
 		}
 
 		/// <summary>
