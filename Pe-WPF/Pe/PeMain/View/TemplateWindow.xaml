@@ -24,6 +24,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/View/Parts/Resource/IndexItemsDictionary.xaml"/>
+				<ResourceDictionary Source="/View/Parts/Resource/ImageDictionary.xaml"/>
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
@@ -72,14 +73,14 @@
 						<DataTemplate>
 							<Border Padding="2">
 								<StackPanel>
-								<TextBlock Text="{Binding DisplayText}" />
-								<Border Padding="1">
-									<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-										<Image Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
-										<TextBlock Text="{Binding ItemTypeText}" />
+									<TextBlock Text="{Binding DisplayText}" />
+									<Border Padding="1">
+										<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+											<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding ItemTypeImage}" Margin="0,0,2,0" />
+											<TextBlock Text="{Binding ItemTypeText}" />
 										</StackPanel>
 									</Border>
-							</StackPanel>
+								</StackPanel>
 							</Border>
 						</DataTemplate>
 					</ListBox.ItemTemplate>

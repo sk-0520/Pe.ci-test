@@ -65,7 +65,7 @@
 		public static string ToPlainText(TemplateIndexItemModel indexModel, TemplateBodyItemModel bodyModel, ProgramTemplateProcessor processor, DateTime dateTime, INonProcess nonProcess)
 		{
 			if(!indexModel.IsReplace) {
-				return bodyModel.Source;
+				return bodyModel.Source ?? string.Empty;
 			}
 			if(indexModel.IsProgrammableReplace) {
 				if(processor.Compiled) {
@@ -83,7 +83,7 @@
 				return processor.TransformText();
 			} else {
 				var map = GetTemplateMap();
-				var replacedText = nonProcess.Language.GetReplacedWordText(bodyModel.Source, dateTime, map);
+				var replacedText = nonProcess.Language.GetReplacedWordText(bodyModel.Source ?? string.Empty, dateTime, map);
 				nonProcess.Logger.Debug("replacedText: " + replacedText);
 				return replacedText;
 			}
