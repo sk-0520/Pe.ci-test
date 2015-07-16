@@ -12,8 +12,8 @@
 	{
 		public WindowSaveData()
 		{
-			TimerItems = new FixeSizedList<WindowItemCollectionModel>();
-			SystemItems = new FixeSizedList<WindowItemCollectionModel>();
+			TimerItems = new FixedSizeCollectionModel<WindowItemCollectionModel>();
+			SystemItems = new FixedSizeCollectionModel<WindowItemCollectionModel>();
 		}
 
 		#region property
@@ -23,11 +23,11 @@
 		/// <summary>
 		/// タイマー保存。
 		/// </summary>
-		public FixeSizedList<WindowItemCollectionModel> TimerItems { get; private set; }
+		public FixedSizeCollectionModel<WindowItemCollectionModel> TimerItems { get; private set; }
 		/// <summary>
 		/// 環境変更時の保存。
 		/// </summary>
-		public FixeSizedList<WindowItemCollectionModel> SystemItems { get; private set; }
+		public FixedSizeCollectionModel<WindowItemCollectionModel> SystemItems { get; private set; }
 
 		#endregion
 	}
