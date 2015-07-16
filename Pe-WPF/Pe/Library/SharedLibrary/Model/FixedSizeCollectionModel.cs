@@ -9,7 +9,12 @@
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Library.SharedLibrary.Logic.Utility;
 
-
+	/// <summary>
+	/// 上限付きコレクション。
+	/// <para>上限はほとんどおまけ。</para>
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	[Serializable]
 	public class FixedSizeCollectionModel<T> : CollectionModel<T>, LimitSize
 	{
 		/// <summary>

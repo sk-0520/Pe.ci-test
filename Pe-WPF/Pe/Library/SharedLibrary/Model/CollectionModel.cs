@@ -17,6 +17,7 @@
 	/// <para>ObservableCollectionの単純ラッパー。</para>
 	/// </summary>
 	/// <typeparam name="TValue"></typeparam>
+	[Serializable]
 	public class CollectionModel<TValue> : ObservableCollection<TValue>, IIsDisposed, IModel
 	{
 		#region variable
