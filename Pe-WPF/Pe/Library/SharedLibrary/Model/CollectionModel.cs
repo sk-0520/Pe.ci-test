@@ -97,5 +97,21 @@
 		{ }
 
 		#endregion
+
+		#region function
+
+		/// <summary>
+		/// Addを内部的に繰り返すだけ。
+		/// <para>速度的にどうとかじゃなくて毎度毎度foreachするのだりぃ。</para>
+		/// </summary>
+		/// <param name="items"></param>
+		public void AddRange(IEnumerable<TValue> items)
+		{
+			foreach (var item in items) {
+				Add(item);
+			}
+		}
+
+		#endregion
 	}
 }
