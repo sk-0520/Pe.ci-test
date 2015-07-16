@@ -179,6 +179,7 @@
     <Compile Include="Logic\Utility\ViewUtility.cs" />
     <Compile Include="AppResource.cs" />
     <Compile Include="ViewModel\AcceptViewModel.cs" />
+    <Compile Include="ViewModel\ClipboardItemViewModel.cs" />
     <Compile Include="ViewModel\ClipboardViewModel.cs" />
     <Compile Include="ViewModel\Control\EnvironmentVariablesEditViewModel.cs" />
     <Compile Include="ViewModel\Control\LauncherItemEditViewModel.cs" />

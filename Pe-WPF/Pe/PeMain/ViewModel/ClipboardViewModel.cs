@@ -8,7 +8,9 @@
 	using System.Threading.Tasks;
 	using System.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting;
 	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
 	using ContentTypeTextNet.Pe.PeMain.Data;
@@ -18,6 +20,12 @@
 
 	public class ClipboardViewModel: HavingViewSingleModelWrapperViewModelBase<ClipboardSettingModel, ClipboardWindow>, IHavingClipboardWatcher, IHavingVariableConstants, IHavingNonProcess, IHavingAppSender
 	{
+		#region variable
+
+		ClipboardItemViewModel _selectedViewModel;
+		
+		#endregion
+
 		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
 			: base(model, view)
 		{
@@ -27,11 +35,48 @@
 			VariableConstants = variableConstants;
 			AppSender = appSender;
 
+			InitializeIndexItemsViewModel();
 		}
 
 		#region property
 
 		ClipboardIndexSettingModel IndexModel { get; set; }
+
+		public CollectionModel<ClipboardItemViewModel> IndexItems { get; set; }
+
+		public ClipboardItemViewModel SelectedViewModel
+		{
+			get { return this._selectedViewModel; }
+			set { SetVariableValue(ref this._selectedViewModel, value); }
+		}
+
+		#endregion
+
+		#region command
+		#endregion
+
+		#region function
+
+		void InitializeIndexItemsViewModel()
+		{
+			var items = IndexModel.Items.Select(CreateIndexViewModel);
+
+			IndexItems = new CollectionModel<ClipboardItemViewModel>(items);
+		}
+
+		ClipboardItemViewModel CreateIndexViewModel(ClipboardIndexItemModel model)
+		{
+			var result = new ClipboardItemViewModel(
+				model,
+				AppSender,
+				ClipboardWatcher,
+				NonProcess,
+				VariableConstants
+			);
+
+			return result;
+		}
+
 
 		#endregion
 
