@@ -132,6 +132,12 @@
 			}
 		}
 
+		public static void InitializeClipboardSetting(ClipboardSettingModel setting, INonProcess nonProcess)
+		{
+			setting.WaitTime = Constants.clipboardWaitTime.GetRounding(setting.WaitTime);
+		}
+
+
 		public static void InitializeMainSetting(MainSettingModel setting, INonProcess nonProcess)
 		{
 			CheckUtility.EnforceNotNull(setting);
@@ -142,6 +148,7 @@
 
 			InitializeNoteSetting(setting.Note, nonProcess);
 			InitializeWindowSaveSetting(setting.WindowSave, nonProcess);
+			InitializeClipboardSetting(setting.Clipboard, nonProcess);
 		}
 
 		public static void InitializeLauncherItemSetting(LauncherItemSettingModel setting, INonProcess nonProcess)
