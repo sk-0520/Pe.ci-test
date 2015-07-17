@@ -7,6 +7,7 @@
 	using System.Threading.Tasks;
 	using ContentTypeTextNet.Library.SharedLibrary.IF;
 	using ContentTypeTextNet.Pe.Library.PeData.Item;
+using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 
 	public static class DisplayTextUtility
 	{
@@ -47,6 +48,11 @@
 		public static string GetDisplayName(IName name)
 		{
 			return name.Name ?? string.Empty;
+		}
+
+		public static string MakeClipboardName(ClipboardItem clipboardItem, INonProcess nonProcess) 
+		{ 
+			return null; 
 		}
 	}
 }

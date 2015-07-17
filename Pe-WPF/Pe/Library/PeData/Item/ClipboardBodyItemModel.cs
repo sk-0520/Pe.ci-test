@@ -19,12 +19,17 @@ using System.Windows.Media.Imaging;
 			Files = new CollectionModel<string>();
 		}
 
+		[DataMember]
 		public string Text { get; set; }
+		[DataMember]
 		public string Rtf { get; set; }
+		[DataMember]
 		public string Html { get; set; }
 
+		[DataMember]
 		public BitmapSource Image { get; set; }
-		public CollectionModel<string> Files {get;set; }
+		[DataMember]
+		public CollectionModel<string> Files { get; set; }
 
 		#region IndexBodyItemModelBase
 

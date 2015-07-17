@@ -23,10 +23,11 @@
 using ContentTypeTextNet.Pe.Library.PeData.Item;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleWindows.Utility;
+	using ContentTypeTextNet.Pe.PeMain.Define;
 
 	public static class AppUtility
 	{
-		public static T LoadSetting<T>(string path, ILogger logger)
+		public static T LoadSetting<T>(string path, FileType fileType, ILogger logger)
 			where T: ModelBase, new()
 		{
 			logger.Information("load setting", path);
@@ -41,7 +42,7 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 			return result ?? new T();
 		}
 
-		public static void SaveSetting<T>(string path, T model, ILogger logger)
+		public static void SaveSetting<T>(string path, T model, FileType fileType, ILogger logger)
 			where T: ModelBase
 		{
 			logger.Information("save setting", path);

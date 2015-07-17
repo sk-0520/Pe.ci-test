@@ -54,6 +54,9 @@
 
 		bool _isContextMenuOpen;
 
+		DateTime _clipboardPreviousTime = DateTime.MinValue;
+		uint _clipboardPreviousSequenceNumber = 0;
+
 		#endregion
 
 		public MainWorkerViewModel(VariableConstants variableConstants, ILogger logger)
@@ -489,7 +492,7 @@
 				case IndexKind.Note: 
 					{
 						var path = Environment.ExpandEnvironmentVariables(CommonData.VariableConstants.UserSettingNoteIndexFilePath);
-						AppUtility.SaveSetting(path, CommonData.NoteIndexSetting, CommonData.Logger);
+						AppUtility.SaveSetting(path, CommonData.NoteIndexSetting, FileType.Json, CommonData.Logger);
 					}
 					break;
 
@@ -506,7 +509,7 @@
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						return AppUtility.LoadSetting<NoteBodyItemModel>(path, CommonData.Logger);
+						return AppUtility.LoadSetting<NoteBodyItemModel>(path, FileType.Json, CommonData.Logger);
 					}
 
 				case IndexKind.Template: 
@@ -514,7 +517,7 @@
 						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						return AppUtility.LoadSetting<TemplateBodyItemModel>(path, CommonData.Logger);
+						return AppUtility.LoadSetting<TemplateBodyItemModel>(path, FileType.Json, CommonData.Logger);
 					}
 
 				default:
@@ -530,7 +533,7 @@
 						var dirPath = CommonData.VariableConstants.UserSettingNoteDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						AppUtility.SaveSetting(path, (NoteBodyItemModel)indexBody, CommonData.Logger);
+						AppUtility.SaveSetting(path, (NoteBodyItemModel)indexBody, FileType.Json, CommonData.Logger);
 					}
 					break;
 
@@ -539,7 +542,16 @@
 						var dirPath = CommonData.VariableConstants.UserSettingTemplateDirectoryPath;
 						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
 						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
-						AppUtility.SaveSetting(path, (TemplateBodyItemModel)indexBody, CommonData.Logger);
+						AppUtility.SaveSetting(path, (TemplateBodyItemModel)indexBody, FileType.Json, CommonData.Logger);
+					}
+					break;
+
+				case IndexKind.Clipboard: 
+					{
+						var dirPath = CommonData.VariableConstants.UserSettingClipboardDirectoryPath;
+						var fileName = IndexItemUtility.GetIndexBodyFileName(guid);
+						var path = Environment.ExpandEnvironmentVariables(Path.Combine(dirPath, fileName));
+						AppUtility.SaveSetting(path, (ClipboardBodyItemModel)indexBody, FileType.Binary, CommonData.Logger);
 					}
 					break;
 
@@ -590,6 +602,69 @@
 			if(!CommonData.MainSetting.Clipboard.Enabled) {
 				return;
 			}
+
+			var seq = NativeMethods.GetClipboardSequenceNumber();
+			if (this._clipboardPreviousSequenceNumber == seq) {
+				return;
+			}
+			this._clipboardPreviousSequenceNumber = seq;
+
+			var now = DateTime.Now;
+			if (now - this._clipboardPreviousTime  <= CommonData.MainSetting.Clipboard.WaitTime) {
+				CommonData.Logger.Information("clipboard time");
+				return;
+			}
+			this._clipboardPreviousTime = now;
+
+			try {
+				var clipboardItem = ClipboardUtility.CreateClipboardItem(CommonData.MainSetting.Clipboard.EnabledClipboardTypes, MessageWindow.Handle, CommonData.Logger);
+				if (clipboardItem.Type != ClipboardType.None) {
+					Task.Run(() => {
+						//clipboardItem.Name = displayText;
+						if (Clipboard.IndexItems.Any()) {
+							if (CommonData.MainSetting.Clipboard.DuplicationCount == 0) {
+								// 範囲チェックを行わないのであれば無条件で追加
+								return true;
+							}
+
+							// 毎回ファイル読むのもなぁ
+							//// 指定範囲内に同じデータがあれば追加しない
+							//IEnumerable<ClipboardItem> clipboardItems = this._commonData.MainSetting.Clipboard.HistoryItems;
+							//if (this._commonData.MainSetting.Clipboard.ClipboardRepeated != Constants.clipboardDuplicationCount.minimum) {
+							//	clipboardItems = clipboardItems.Take(this._commonData.MainSetting.Clipboard.ClipboardRepeated);
+							//}
+							//var hitItem = clipboardItems.FirstOrDefault(c => ClipboardUtility.EqualClipboardItem(c, clipboardItem));
+							//return hitItem == null;
+						}
+						return true;
+					}).ContinueWith(t => {
+						Debug.WriteLine("Clipboard: " + t.Result);
+						if (t.Result) {
+							try {
+								//this._commonData.MainSetting.Clipboard.HistoryItems.Insert(0, clipboardItem);
+								//Clipboard.IndexItems.Insert();
+								//var body = ReceiveGetIndexBody(IndexKind.Template)
+								var displayText = DisplayTextUtility.MakeClipboardName(clipboardItem, CommonData.NonProcess);
+								var index = new ClipboardIndexItemModel() {
+									Name = displayText,
+									Type = clipboardItem.Type,
+								};
+								SendSaveIndexBody(clipboardItem.Body, index.Id);
+							} catch (Exception ex) {
+								CommonData.Logger.Error(ex);
+							}
+						} else {
+							CommonData.Logger.Information("clipboard dup");
+						}
+
+						t.Dispose();
+					}, TaskScheduler.FromCurrentSynchronizationContext());
+				}
+			} catch (AccessViolationException ex) {
+				// #251
+				CommonData.Logger.Error(ex);
+				//this._commonData.Logger.Puts(LogType.Error, ex.Message, ex);
+			}
 		}
 
 		public void ReceiveHotKey(HotKeyId hotKeyId, HotKeyModel hotKeyModel)
@@ -629,28 +704,28 @@
 			// TODO: 環境変数展
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
 				// 各種設定の読込
-				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.Logger);
-				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.Logger);
-				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.Logger);
+				CommonData.MainSetting = AppUtility.LoadSetting<MainSettingModel>(CommonData.VariableConstants.UserSettingFileMainSettingPath, FileType.Json, CommonData.Logger);
+				CommonData.LauncherItemSetting = AppUtility.LoadSetting<LauncherItemSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, FileType.Json, CommonData.Logger);
+				CommonData.LauncherGroupSetting = AppUtility.LoadSetting<LauncherGroupSettingModel>(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, FileType.Json, CommonData.Logger);
 				// 言語ファイル
 				CommonData.Language = AppUtility.LoadLanguageFile(CommonData.VariableConstants.ApplicationLanguageDirectoryPath, CommonData.MainSetting.Language.Name, CommonData.VariableConstants.LanguageCode, CommonData.Logger);
 				// インデックスファイル読み込み
-				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, CommonData.Logger);
-				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, CommonData.Logger);
-				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, CommonData.Logger);
+				CommonData.NoteIndexSetting = AppUtility.LoadSetting<NoteIndexSettingModel>(CommonData.VariableConstants.UserSettingNoteIndexFilePath, FileType.Json, CommonData.Logger);
+				CommonData.ClipboardIndexSetting = AppUtility.LoadSetting<ClipboardIndexSettingModel>(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, FileType.Json, CommonData.Logger);
+				CommonData.TemplateIndexSetting = AppUtility.LoadSetting<TemplateIndexSettingModel>(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, FileType.Json, CommonData.Logger);
 			}
 		}
 
 		void SaveSetting()
 		{
 			using(var timeLogger = CommonData.NonProcess.CreateTimeLogger()) {
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileMainSettingPath, CommonData.MainSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherItemSettingPath, CommonData.LauncherItemSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingFileLauncherGroupItemSetting, CommonData.LauncherGroupSetting, FileType.Json, CommonData.Logger);
 
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingNoteIndexFilePath, CommonData.NoteIndexSetting, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, CommonData.ClipboardIndexSetting, CommonData.Logger);
-				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, CommonData.TemplateIndexSetting, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingNoteIndexFilePath, CommonData.NoteIndexSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingClipboardIndexFilePath, CommonData.ClipboardIndexSetting, FileType.Json, CommonData.Logger);
+				AppUtility.SaveSetting(CommonData.VariableConstants.UserSettingTemplateIndexFilePath, CommonData.TemplateIndexSetting, FileType.Json, CommonData.Logger);
 			}
 		}
 
