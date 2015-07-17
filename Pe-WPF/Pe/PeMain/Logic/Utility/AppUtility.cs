@@ -33,7 +33,17 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 			logger.Information("load setting", path);
 			T result = null;
 			if(File.Exists(path)) {
-				result = SerializeUtility.LoadJsonDataFromFile<T>(path);
+				switch(fileType) {
+					case FileType.Json:
+						result = SerializeUtility.LoadJsonDataFromFile<T>(path);
+						break;
+
+					case FileType.Binary:
+						break;
+
+					default:
+						throw new NotImplementedException();
+				}
 				logger.Debug("load data", result != null ? typeof(T).Name: "null");
 			} else {
 				logger.Debug("file not found", path);

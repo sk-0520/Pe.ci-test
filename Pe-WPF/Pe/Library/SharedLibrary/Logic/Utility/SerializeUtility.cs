@@ -294,6 +294,13 @@
 			}
 		}
 
+		/// <summary>
+		/// バイナリストリーム書き出し。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream"></param>
+		/// <param name="model"></param>
 		public static void SaveBinaryDataToStream<T>(Stream stream, T model)
 			where T : IModel
 		{
@@ -308,7 +315,7 @@
 		}
 
 		/// <summary>
-		/// Jsonファイル書き出し。
+		/// バイナリファイル書き出し。
 		/// <para>DataContractを使用。</para>
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -322,5 +329,35 @@
 			}
 		}
 
+		public static T LoadBinaryDataFromStream<T>(Stream stream)
+			where T: IModel, new()
+		{
+			if(!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
+			using(var reader = XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max)) {
+				reader.Read();
+				var serializer = new DataContractSerializer(typeof(T));
+				var result = (T)serializer.ReadObject(reader);
+				result.Correction();
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// バイナリファイル読み込み。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <returns></returns>
+		public static T LoadBinaryDataFromFile<T>(string filePath)
+			where T: IModel, new()
+		{
+			using(var stream = CreateReadFileStream(filePath)) {
+				return LoadBinaryDataFromStream<T>(stream);
+			}
+		}
 	}
 }

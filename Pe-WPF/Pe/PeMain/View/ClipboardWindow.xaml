@@ -74,7 +74,7 @@
 											<TextBlock Text="{Binding DisplayText}" />
 											<Border Padding="1">
 												<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-													<Image Style="{StaticResource ImageRenderStyle}" Source="" Margin="0,0,2,0" />
+													<Image Style="{StaticResource ImageRenderStyle}" Margin="0,0,2,0" />
 												</StackPanel>
 											</Border>
 										</StackPanel>
