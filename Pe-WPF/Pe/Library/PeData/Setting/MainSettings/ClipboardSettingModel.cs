@@ -79,6 +79,12 @@
 		[DataMember]
 		public bool UsingClipboard { get; set; }
 
+		/// <summary>
+		/// リスト部の幅。
+		/// </summary>
+		[DataMember]
+		public double ItemsListWidth { get; set; }
+
 		#endregion
 
 		#region IWindowStatus

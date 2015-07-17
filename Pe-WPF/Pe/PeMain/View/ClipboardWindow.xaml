@@ -29,6 +29,7 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
 			<AC:ReverseClipboardItemListConverter x:Key="ReverseClipboardItemListConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		</ResourceDictionary>
@@ -40,15 +41,18 @@
 				<RowDefinition Height="*"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
-			<ToolBarTray>
 				<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
-					<Button Content="create" />
-					<Button Content="remove" />
-				</ToolBar>
-			</ToolBarTray>
+					<Button Content="save" />
+				<Separator />
+				<Button Content="remove" />
+				<Button Content="clipboard clear" />
+				<Separator />
+				<ToggleButton Content="topmost" />
+				<ToggleButton Content="send clipboard" />
+			</ToolBar>
 			<Grid Style="{StaticResource IndexItemsStyleDefaultMainPanelStyle}" Grid.Row="1">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="180"/>
+					<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}"/>
 					<ColumnDefinition Width="*"/>
 				</Grid.ColumnDefinitions>
 				<Grid Grid.Column="0">
@@ -88,8 +92,11 @@
 										<StackPanel Orientation="Horizontal">
 											<Button Content="send" />
 											<Button Content="copy" />
-											<Button Content="up" />
-											<Button Content="down" />
+											<Button Content="text" />
+											<Button Content="rtf" />
+											<Button Content="html" />
+											<Button Content="image" />
+											<Button Content="file" />
 										</StackPanel>
 									</Border>
 								</Grid>

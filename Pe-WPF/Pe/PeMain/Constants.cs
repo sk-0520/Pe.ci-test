@@ -116,6 +116,10 @@ using System.Windows.Media;
 			50,
 			256
 		);
+		public const double clipboardItemsListWidth = 180;
+
+		public const double templateItemsListWidth = 180;
+		public const double templateReplaceListWidth = 100;
 
 		public static readonly TripleRange<TimeSpan> windowSaveIntervalTime = new TripleRange<TimeSpan>(
 			//TimeSpan.FromMinutes(1),

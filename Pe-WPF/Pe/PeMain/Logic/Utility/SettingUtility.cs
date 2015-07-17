@@ -135,6 +135,20 @@
 		public static void InitializeClipboardSetting(ClipboardSettingModel setting, INonProcess nonProcess)
 		{
 			setting.WaitTime = Constants.clipboardWaitTime.GetRounding(setting.WaitTime);
+
+			if(setting.ItemsListWidth <= 0) {
+				setting.ItemsListWidth = Constants.clipboardItemsListWidth;
+			}
+		}
+
+		public static void InitializeTemplateSetting(TemplateSettingModel setting, INonProcess nonProcess)
+		{
+			if(setting.ItemsListWidth <= 0) {
+				setting.ItemsListWidth = Constants.templateItemsListWidth;
+			}
+			if(setting.ReplaceListWidth <= 0) {
+				setting.ReplaceListWidth = Constants.templateReplaceListWidth;
+			}
 		}
 
 

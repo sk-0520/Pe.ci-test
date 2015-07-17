@@ -51,6 +51,24 @@
 			}
 		}
 
+		/// <summary>
+		/// リスト部の幅。
+		/// </summary>
+		public double ItemsListWidth
+		{
+			get { return Model.ItemsListWidth; }
+			set { SetModelValue(value); }
+		}
+
+		/// <summary>
+		/// 置き換えリスト部の幅。
+		/// </summary>
+		public double ReplaceListWidth
+		{
+			get { return Model.ReplaceListWidth; }
+			set { SetModelValue(value); }
+		}
+
 		#endregion
 
 		#region command

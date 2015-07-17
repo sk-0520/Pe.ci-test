@@ -51,40 +51,48 @@
 			}
 		}
 
-		public static string FilteringPath { get { return "/Resources/Image/Filtering.png"; } }
-
-		public static string TemplatePath { get { return "/Resources/Image/Template.png"; } }
-		public static string ClipboardPath { get { return "/Resources/Image/Clipboard.png"; } }
+		public static string CommonFilteringPath { get { return "/Resources/Image/Common/Filtering.png"; } }
+		public static string CommonTemplatePath { get { return "/Resources/Image/Common/Template.png"; } }
+		public static string CommonClipboardPath { get { return "/Resources/Image/Common/Clipboard.png"; } }
+		public static string CommonSendPath { get { return "/Resources/Image/Common/Send.png"; } }
+		public static string CommonPinPath { get { return "/Resources/Image/Common/Pin.png"; } }
+		public static string CommonWindowListPath { get { return "/Resources/Image/Common/Pin.png"; } }
 
 		public static string TemplatePlainPath { get { return "/Resources/Image/Template/TemplatePlain.png"; } }
 		public static string TemplateReplacePath { get { return "/Resources/Image/Template/TemplateReplace.png"; } }
 		public static string TemplateProgrammablePath { get { return "/Resources/Image/Template/TemplateProgrammable.png"; } }
 
-		public static string ClipboardCopyPath { get { return "/Resources/Image/Clipboard/ClipboardCopy.png"; } }
 		public static string ClipboardTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardText.png"; } }
 		public static string ClipboardHtmlPath { get { return "/Resources/Image/Clipboard/ClipboardHtml.png"; } }
 		public static string ClipboardRichTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardRichTextFormat.png"; } }
 		public static string ClipboardImagePath { get { return "/Resources/Image/Clipboard/ClipboardImage.png"; } }
 		public static string ClipboardFilePath { get { return "/Resources/Image/Clipboard/ClipboardFile.png"; } }
 
+		public static string WindowLoadPath { get { return "/Resources/Image/Window/WindowLoad.png"; } }
+		public static string WindowSavePath { get { return "/Resources/Image/Window/WindowSave.png"; } }
+
 		#endregion
 
 		#region property
 
-		public static BitmapSource TemplateImage { get { return GetImage(TemplatePath); } }
-		public static BitmapSource ClipboardImage { get { return GetImage(ClipboardPath); } }
+		public static BitmapSource CommonTemplateImage { get { return GetImage(CommonTemplatePath); } }
+		public static BitmapSource CommonClipboardImage { get { return GetImage(CommonClipboardPath); } }
+		public static BitmapSource CommonSendImage { get {return GetImage(CommonSendPath); } }
+		public static BitmapSource CommonPinImage { get {return GetImage(CommonPinPath); } }
+		public static BitmapSource CommonWindowListImage {get {return GetImage(CommonWindowListPath); } }
 
 		public static BitmapSource TemplatePlainImage { get { return GetImage(TemplatePlainPath); } }
 		public static BitmapSource TemplateReplaceImage { get { return GetImage(TemplateReplacePath); } }
 		public static BitmapSource TemplateProgrammableImage { get { return GetImage(TemplateProgrammablePath); } }
 
-		public static BitmapSource ClipboardCopyImage { get { return GetImage(ClipboardCopyPath); } }
 		public static BitmapSource ClipboardTextFormatImage { get { return GetImage(ClipboardTextFormatPath); } }
 		public static BitmapSource ClipboardHtmlImage { get { return GetImage(ClipboardHtmlPath); } }
 		public static BitmapSource ClipboardRichTextFormatImage { get { return GetImage(ClipboardRichTextFormatPath); } }
 		public static BitmapSource ClipboardImageImage { get { return GetImage(ClipboardImagePath); } }
 		public static BitmapSource ClipboardFileImage { get { return GetImage(ClipboardFilePath); } }
 
+		public static BitmapSource WindowSaveImage { get { return GetImage(WindowLoadPath); } }
+		public static BitmapSource WindowLoadImage { get { return GetImage(WindowSavePath); } }
 		#endregion
 
 		#region function

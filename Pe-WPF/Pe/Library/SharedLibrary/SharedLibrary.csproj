@@ -160,6 +160,7 @@
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
     <Compile Include="View\Converter\BooleanVisibilityConverter.cs" />
+    <Compile Include="View\Converter\DoubleGridLengthConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\IsEmptyCollection.cs" />
     <Compile Include="View\Converter\IsNotEmptyCollection.cs" />

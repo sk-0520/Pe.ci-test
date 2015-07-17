@@ -30,6 +30,18 @@
 		[DataMember]
 		public HotKeyModel ToggleHotKey { get; set; }
 
+		/// <summary>
+		/// リスト部の幅。
+		/// </summary>
+		[DataMember]
+		public double ItemsListWidth { get; set; }
+
+		/// <summary>
+		/// 置き換えリスト部の幅。
+		/// </summary>
+		[DataMember]
+		public double ReplaceListWidth { get; set; }
+
 		#endregion
 
 		#region IWindowStatus

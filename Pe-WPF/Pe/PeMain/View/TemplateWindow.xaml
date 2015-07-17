@@ -29,6 +29,7 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
+			<SC:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>
@@ -44,15 +45,18 @@
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<ToolBarTray>
 			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
 				<Button Content="create" Command="{Binding CreateTemplateItem}" />
-				<Button Content="remove" Command="{Binding RemoveTemplateItem}" />
-			</ToolBar>
-		</ToolBarTray>
+				<Button Content="save" />
+			<Separator />
+			<Button Content="remove" Command="{Binding RemoveTemplateItem}" />
+			<Separator />
+			<ToggleButton Content="topmost" />
+			<ToggleButton Content="send clipboard" />
+		</ToolBar>
 		<Grid Style="{StaticResource IndexItemsStyleDefaultMainPanelStyle}" Grid.Row="1">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="180"/>
+				<ColumnDefinition Width="{Binding ItemsListWidth, Converter={StaticResource DoubleGridLengthConverter}, Mode=TwoWay}"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 			<Grid Grid.Column="0">
@@ -129,7 +133,7 @@
 						<Grid Grid.Row="1">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="{Binding DataContext.ReplaceListWidth, Converter={StaticResource DoubleGridLengthConverter}, ElementName=root, Mode=TwoWay}" />
 							</Grid.ColumnDefinitions>
 							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Source,UpdateSourceTrigger=PropertyChanged}" />
 							<GridSplitter Grid.Column="1"  Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />

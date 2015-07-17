@@ -1,30 +1,30 @@
 ﻿namespace ContentTypeTextNet.Pe.PeMain.ViewModel
 {
 	using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using ContentTypeTextNet.Library.SharedLibrary.IF;
-using ContentTypeTextNet.Library.SharedLibrary.Model;
-using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
-using ContentTypeTextNet.Pe.Library.PeData.Item;
-using ContentTypeTextNet.Pe.Library.PeData.Setting;
-using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
-using ContentTypeTextNet.Pe.PeMain.Data;
-using ContentTypeTextNet.Pe.PeMain.IF;
-using ContentTypeTextNet.Pe.PeMain.Logic.Property;
-using ContentTypeTextNet.Pe.PeMain.View;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;
+	using System.Windows;
+	using System.Windows.Media;
+	using ContentTypeTextNet.Library.SharedLibrary.IF;
+	using ContentTypeTextNet.Library.SharedLibrary.Model;
+	using ContentTypeTextNet.Library.SharedLibrary.ViewModel;
+	using ContentTypeTextNet.Pe.Library.PeData.Item;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting;
+	using ContentTypeTextNet.Pe.Library.PeData.Setting.MainSettings;
+	using ContentTypeTextNet.Pe.PeMain.Data;
+	using ContentTypeTextNet.Pe.PeMain.IF;
+	using ContentTypeTextNet.Pe.PeMain.Logic.Property;
+	using ContentTypeTextNet.Pe.PeMain.View;
 
-	public class ClipboardViewModel : HavingViewSingleModelWrapperIndexViewModelBase<ClipboardSettingModel, ClipboardWindow, ClipboardIndexItemCollectionModel, ClipboardIndexItemModel, ClipboardItemViewModel>
+	public class ClipboardViewModel: HavingViewSingleModelWrapperIndexViewModelBase<ClipboardSettingModel, ClipboardWindow, ClipboardIndexItemCollectionModel, ClipboardIndexItemModel, ClipboardItemViewModel>
 	{
 		#region variable
 
 		ClipboardItemViewModel _selectedViewModel;
-		
+
 		#endregion
 
 		public ClipboardViewModel(ClipboardSettingModel model, ClipboardWindow view, ClipboardIndexSettingModel indexModel, INonProcess nonProcess, IClipboardWatcher clipboardWatcher, VariableConstants variableConstants, IAppSender appSender)
@@ -37,6 +37,15 @@ using ContentTypeTextNet.Pe.PeMain.View;
 		{
 			get { return this._selectedViewModel; }
 			set { SetVariableValue(ref this._selectedViewModel, value); }
+		}
+
+		/// <summary>
+		/// リスト部の幅。
+		/// </summary>
+		public double ItemsListWidth
+		{
+			get { return Model.ItemsListWidth; }
+			set { SetModelValue(value); }
 		}
 
 		#endregion
