@@ -57,11 +57,17 @@
 		public static string CommonSendPath { get { return "/Resources/Image/Common/Send.png"; } }
 		public static string CommonPinPath { get { return "/Resources/Image/Common/Pin.png"; } }
 		public static string CommonWindowListPath { get { return "/Resources/Image/Common/Pin.png"; } }
+		public static string CommonAddPath { get { return "/Resources/Image/Common/Add.png"; } }
+		public static string CommonRemovePath { get { return "/Resources/Image/Common/Remove.png"; } }
+		public static string CommonSavePath { get { return "/Resources/Image/Common/Save.png"; } }
+		public static string CommonUsingClipboardPath { get { return "/Resources/Image/Common/UsingClipboard.png"; } }
+		
 
 		public static string TemplatePlainPath { get { return "/Resources/Image/Template/TemplatePlain.png"; } }
 		public static string TemplateReplacePath { get { return "/Resources/Image/Template/TemplateReplace.png"; } }
 		public static string TemplateProgrammablePath { get { return "/Resources/Image/Template/TemplateProgrammable.png"; } }
 
+		public static string ClipboardClearPath { get { return "/Resources/Image/Clipboard/Clear.png"; } }
 		public static string ClipboardTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardText.png"; } }
 		public static string ClipboardHtmlPath { get { return "/Resources/Image/Clipboard/ClipboardHtml.png"; } }
 		public static string ClipboardRichTextFormatPath { get { return "/Resources/Image/Clipboard/ClipboardRichTextFormat.png"; } }
@@ -79,12 +85,18 @@
 		public static BitmapSource CommonClipboardImage { get { return GetImage(CommonClipboardPath); } }
 		public static BitmapSource CommonSendImage { get {return GetImage(CommonSendPath); } }
 		public static BitmapSource CommonPinImage { get {return GetImage(CommonPinPath); } }
-		public static BitmapSource CommonWindowListImage {get {return GetImage(CommonWindowListPath); } }
+		public static BitmapSource CommonWindowListImage { get { return GetImage(CommonWindowListPath); } }
+		public static BitmapSource CommonAddImage { get { return GetImage(CommonAddPath); } }
+		public static BitmapSource CommonRemoveImage { get { return GetImage(CommonRemovePath); } }
+		public static BitmapSource CommonSaveImage { get { return GetImage(CommonSavePath); } }
+		public static BitmapSource CommonUsingClipboardImage { get { return GetImage(CommonUsingClipboardPath); } }
+		
 
 		public static BitmapSource TemplatePlainImage { get { return GetImage(TemplatePlainPath); } }
 		public static BitmapSource TemplateReplaceImage { get { return GetImage(TemplateReplacePath); } }
 		public static BitmapSource TemplateProgrammableImage { get { return GetImage(TemplateProgrammablePath); } }
 
+		public static BitmapSource ClipboardClearImage { get { return GetImage(ClipboardClearPath); } }
 		public static BitmapSource ClipboardTextFormatImage { get { return GetImage(ClipboardTextFormatPath); } }
 		public static BitmapSource ClipboardHtmlImage { get { return GetImage(ClipboardHtmlPath); } }
 		public static BitmapSource ClipboardRichTextFormatImage { get { return GetImage(ClipboardRichTextFormatPath); } }

@@ -7,6 +7,7 @@
 	xmlns:AW="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Window"
 	xmlns:AVM="clr-namespace:ContentTypeTextNet.Pe.PeMain.ViewModel"
 	xmlns:AC="clr-namespace:ContentTypeTextNet.Pe.PeMain.View.Parts.Converter"
+	xmlns:AM="clr-namespace:ContentTypeTextNet.Pe.PeMain"
 	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 	x:TypeArguments="AVM:TemplateViewModel"
 	Title="TemplateWindow"
@@ -46,13 +47,38 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
-				<Button Content="create" Command="{Binding CreateTemplateItem}" />
-				<Button Content="save" />
+			<Button>
+				<StackPanel Orientation="Horizontal">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonAddImage}}" />
+					<TextBlock Text="create" />
+				</StackPanel>
+			</Button>
+			<Button>
+				<StackPanel Orientation="Horizontal">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonSaveImage}}" />
+					<TextBlock Text="save" />
+				</StackPanel>
+			</Button>
 			<Separator />
-			<Button Content="remove" Command="{Binding RemoveTemplateItem}" />
+			<Button Command="{Binding RemoveTemplateItem}" >
+				<StackPanel Orientation="Horizontal">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonRemoveImage}}" />
+					<TextBlock Text="remove" />
+				</StackPanel>
+			</Button>
 			<Separator />
-			<ToggleButton Content="topmost" />
-			<ToggleButton Content="send clipboard" />
+			<ToggleButton>
+				<StackPanel Orientation="Horizontal">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonPinImage}}" />
+					<TextBlock Text="topmost" />
+				</StackPanel>
+			</ToggleButton>
+			<ToggleButton>
+				<StackPanel Orientation="Horizontal">
+					<Image Style="{StaticResource ImageRenderStyle}" Source="{Binding Source={x:Static AM:AppResource.CommonUsingClipboardImage}}" />
+					<TextBlock Text="use clipboard" />
+				</StackPanel>
+			</ToggleButton>
 		</ToolBar>
 		<Grid Style="{StaticResource IndexItemsStyleDefaultMainPanelStyle}" Grid.Row="1">
 			<Grid.ColumnDefinitions>
