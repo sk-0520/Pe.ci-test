@@ -46,7 +46,18 @@ using ContentTypeTextNet.Pe.Library.PeData.Item;
 			where T: ModelBase
 		{
 			logger.Information("save setting", path);
-			SerializeUtility.SaveJsonDataToFile(path, model);
+			switch(fileType) {
+				case FileType.Json:
+					SerializeUtility.SaveJsonDataToFile(path, model);
+					break;
+
+				case FileType.Binary:
+					SerializeUtility.SaveBinaryDataToFile(path, model);
+					break;
+
+				default:
+					throw new NotImplementedException();
+			}
 		}
 
 		/// <summary>

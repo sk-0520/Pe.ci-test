@@ -293,5 +293,34 @@
 				SaveJsonDataToStream(stream, model);
 			}
 		}
+
+		public static void SaveBinaryDataToStream<T>(Stream stream, T model)
+			where T : IModel
+		{
+			if (!HasDataContract<T>()) {
+				throw new InvalidOperationException(typeof(T).ToString());
+			}
+
+			using (var writer = XmlDictionaryWriter.CreateBinaryWriter(stream)) {
+				var serializer = new DataContractSerializer(typeof(T));
+				serializer.WriteObject(writer, model);
+			}
+		}
+
+		/// <summary>
+		/// Jsonファイル書き出し。
+		/// <para>DataContractを使用。</para>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="filePath"></param>
+		/// <param name="model"></param>
+		public static void SaveBinaryDataToFile<T>(string filePath, T model)
+			where T : IModel
+		{
+			using (var stream = CreateWriteFileStream(filePath)) {
+				SaveBinaryDataToStream(stream, model);
+			}
+		}
+
 	}
 }

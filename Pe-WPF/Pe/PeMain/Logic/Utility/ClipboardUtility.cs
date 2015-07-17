@@ -8,6 +8,7 @@
 	using System.Text;
 	using System.Threading.Tasks;
 	using System.Windows;
+	using System.Windows.Interop;
 	using System.Windows.Media.Imaging;
 	using ContentTypeTextNet.Library.PInvoke.Windows;
 	using ContentTypeTextNet.Library.SharedLibrary.CompatibleForms.Utility;
@@ -204,7 +205,9 @@
 					if (enabledTypes.HasFlag(ClipboardType.Image) && clipboardData.GetDataPresent(DataFormats.Bitmap)) {
 						var image = clipboardData.GetData(DataFormats.Bitmap) as BitmapSource;
 						if (image != null) {
-							clipboardItem.Body.Image = (BitmapSource)image.Clone();
+							var bitmap = BitmapFrame.Create(image);
+
+							clipboardItem.Body.Image = bitmap;
 							clipboardItem.Type |= ClipboardType.Image;
 						}
 					}

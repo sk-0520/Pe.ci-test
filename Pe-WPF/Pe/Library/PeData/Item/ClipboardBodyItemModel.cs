@@ -2,11 +2,14 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.IO;
 	using System.Linq;
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+	using System.Windows.Media.Imaging;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Library.SharedLibrary.Model;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 
@@ -26,8 +29,36 @@ using System.Windows.Media.Imaging;
 		[DataMember]
 		public string Html { get; set; }
 
-		[DataMember]
+		[IgnoreDataMember, XmlIgnore]
 		public BitmapSource Image { get; set; }
+
+		[DataMember(Name = "Image")]
+		public byte[] Image_Impl
+		{
+			get {
+				if (Image != null) {
+					var encoder = new PngBitmapEncoder();
+					encoder.Frames.Add(BitmapFrame.Create(Image));
+					using (var stream = new MemoryStream()) {
+						encoder.Save(stream);
+						return stream.ToArray();
+					}
+				} else {
+					return null;
+				}
+			}
+			set
+			{
+				if (value == null) {
+					Image = null;
+				} else {
+					using(var stream = new MemoryStream(value)) {
+						Image = BitmapFrame.Create(stream);
+					}
+				}
+			}
+		}
+
 		[DataMember]
 		public CollectionModel<string> Files { get; set; }
 

@@ -6,6 +6,7 @@
 	using System.Runtime.Serialization;
 	using System.Text;
 	using System.Threading.Tasks;
+	using System.Xml.Serialization;
 	using ContentTypeTextNet.Pe.Library.PeData.Define;
 	using ContentTypeTextNet.Pe.Library.PeData.IF;
 
@@ -20,7 +21,7 @@
 
 		#region property
 
-		[DataMember]
+		[IgnoreDataMember, XmlIgnore]
 		public abstract IndexKind IndexKind { get; }
 
 		[DataMember]

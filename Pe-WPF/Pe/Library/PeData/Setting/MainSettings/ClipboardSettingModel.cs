@@ -56,12 +56,6 @@
 		public ClipboardType EnabledClipboardTypes { get; set; }
 
 		/// <summary>
-		/// 保存対象。
-		/// </summary>
-		[DataMember]
-		public ClipboardType SaveClipboardTypes { get; set; }
-
-		/// <summary>
 		/// 履歴数。
 		/// </summary>
 		[DataMember]

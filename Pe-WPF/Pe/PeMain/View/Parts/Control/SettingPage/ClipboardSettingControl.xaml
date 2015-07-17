@@ -32,15 +32,6 @@
 				<CheckBox Content="file" IsChecked="{Binding EnabledClipboardTypesFile}" />
 			</StackPanel>
 		</GroupBox>
-		<GroupBox Header="save type" HorizontalAlignment="Left" Margin="112,121,0,0" VerticalAlignment="Top" Height="121" Width="100">
-			<StackPanel>
-				<CheckBox Content="text" IsChecked="{Binding SaveClipboardTypesText}" />
-				<CheckBox Content="rtf" IsChecked="{Binding SaveClipboardTypesRtf}" />
-				<CheckBox Content="html" IsChecked="{Binding SaveClipboardTypesHtml}" />
-				<CheckBox Content="image" IsChecked="{Binding SaveClipboardTypesImage}" />
-				<CheckBox Content="file" IsChecked="{Binding SaveClipboardTypesFile}" />
-			</StackPanel>
-		</GroupBox>
 		<Grid HorizontalAlignment="Left" Height="92" Margin="130,11,0,0" VerticalAlignment="Top" Width="148">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="31*"/>

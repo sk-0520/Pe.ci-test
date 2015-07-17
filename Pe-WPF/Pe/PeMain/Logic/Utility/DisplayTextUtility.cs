@@ -51,8 +51,8 @@ using ContentTypeTextNet.Pe.PeMain.Data.Temporary;
 		}
 
 		public static string MakeClipboardName(ClipboardItem clipboardItem, INonProcess nonProcess) 
-		{ 
-			return null; 
+		{
+			return string.Empty; 
 		}
 	}
 }

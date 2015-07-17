@@ -86,36 +86,6 @@
 
 		#endregion
 
-		#region SaveClipboardTypes
-
-		public bool SaveClipboardTypesText
-		{
-			get { return GetBoolean(Clipboard.SaveClipboardTypes, ClipboardType.Text); }
-			set { SetClipboardType(Clipboard, Clipboard.SaveClipboardTypes, ClipboardType.Text, defineSave); }
-		}
-		public bool SaveClipboardTypesRtf
-		{
-			get { return GetBoolean(Clipboard.SaveClipboardTypes, ClipboardType.Rtf); }
-			set { SetClipboardType(Clipboard, Clipboard.SaveClipboardTypes, ClipboardType.Rtf, defineSave); }
-		}
-		public bool SaveClipboardTypesHtml
-		{
-			get { return GetBoolean(Clipboard.SaveClipboardTypes, ClipboardType.Html); }
-			set { SetClipboardType(Clipboard, Clipboard.SaveClipboardTypes, ClipboardType.Html, defineSave); }
-		}
-		public bool SaveClipboardTypesImage
-		{
-			get { return GetBoolean(Clipboard.SaveClipboardTypes, ClipboardType.Image); }
-			set { SetClipboardType(Clipboard, Clipboard.SaveClipboardTypes, ClipboardType.Image, defineSave); }
-		}
-		public bool SaveClipboardTypesFile
-		{
-			get { return GetBoolean(Clipboard.SaveClipboardTypes, ClipboardType.File); }
-			set { SetClipboardType(Clipboard, Clipboard.SaveClipboardTypes, ClipboardType.File, defineSave); }
-		}
-
-		#endregion
-
 		public int SaveCount
 		{
 			get { return Clipboard.SaveCount; }
