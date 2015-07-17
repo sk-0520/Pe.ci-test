@@ -2,29 +2,42 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	xmlns:SC="clr-namespace:ContentTypeTextNet.Library.SharedLibrary.View.Converter;assembly=SharedLibrary"
 >
-	<sys:Double x:Key="SplitterWidth">5</sys:Double>
-	
-	<Style x:Key="DefualtWindowStyle" TargetType="Window">
+	<sys:Double x:Key="IndexItemsStyleSplitterWidth">5</sys:Double>
+
+	<Style x:Key="IndexItemsStyleDefualtWindowStyle" TargetType="Window">
 		<Setter Property="WindowStyle" Value="ToolWindow" />
 		<Setter Property="ShowInTaskbar" Value="False" />
 	</Style>
-	<Style x:Key="DefaultToolbarStyle" TargetType="ToolBar">
+	<Style x:Key="IndexItemsStyleDefaultToolbarStyle" TargetType="ToolBar">
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>
-	<Style x:Key="DefaultStatusbarStyle" TargetType="StatusBar">
+	<Style x:Key="IndexItemsStyleDefaultStatusbarStyle" TargetType="StatusBar">
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>
-	<Style x:Key="DefaultMainPanelStyle" TargetType="Grid">
+	<Style x:Key="IndexItemsStyleDefaultMainPanelStyle" TargetType="Grid">
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
 	</Style>
-	<Style x:Key="DefaultGridSplitterStyle" TargetType="GridSplitter">
+	<Style x:Key="IndexItemsStyleDefaultGridSplitterStyle" TargetType="GridSplitter">
 		<Setter Property="HorizontalAlignment" Value="Left" />
 		<Setter Property="VerticalAlignment" Value="Stretch" />
-		<Setter Property="Width" Value="{StaticResource SplitterWidth}" />
+		<Setter Property="Width" Value="{StaticResource IndexItemsStyleSplitterWidth}" />
 	</Style>
-	<Thickness x:Key="SplitterMargin" Left="{StaticResource SplitterWidth}" Top="0" Right="0" Bottom="0" />
+	<Thickness x:Key="IndexItemsStyleSplitterMargin" Left="{StaticResource IndexItemsStyleSplitterWidth}" Top="0" Right="0" Bottom="0" />
+	<Style x:Key="IndexItemsStyleItemCommandArea" TargetType="Border">
+		<Style.Resources>
+			<SC:BooleanVisibility x:Key="BooleanVisibility" />
+		</Style.Resources>
+		<Setter Property="BorderThickness" Value="4" />
+		<Setter Property="BorderBrush" Value="Yellow" />
+		<Setter Property="Visibility" Value="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" />
+		<Setter Property="VerticalAlignment" Value="Bottom" />
+		<Setter Property="HorizontalAlignment" Value="Left" />
+		<Setter Property="Width" Value="Auto" />
+		<Setter Property="Height" Value="Auto" />
+	</Style>
 </ResourceDictionary>

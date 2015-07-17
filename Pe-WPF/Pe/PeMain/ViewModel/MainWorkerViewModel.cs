@@ -650,6 +650,7 @@
 									Type = clipboardItem.Type,
 								};
 								SendSaveIndexBody(clipboardItem.Body, index.Id);
+								Clipboard.IndexPairList.Add(index, null);
 							} catch (Exception ex) {
 								CommonData.Logger.Error(ex);
 							}

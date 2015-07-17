@@ -17,7 +17,7 @@
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
-	Style="{DynamicResource ResourceKey=DefualtWindowStyle}"
+	Style="{DynamicResource IndexItemsStyleDefualtWindowStyle}"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="407" d:DesignHeight="222"
 >
@@ -41,12 +41,12 @@
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<ToolBarTray>
-				<ToolBar Style="{StaticResource DefaultToolbarStyle}" >
+				<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
 					<Button Content="create" />
 					<Button Content="remove" />
 				</ToolBar>
 			</ToolBarTray>
-			<Grid Style="{StaticResource DefaultMainPanelStyle}" Grid.Row="1">
+			<Grid Style="{StaticResource IndexItemsStyleDefaultMainPanelStyle}" Grid.Row="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="180"/>
 					<ColumnDefinition Width="*"/>
@@ -79,7 +79,7 @@
 											</Border>
 										</StackPanel>
 									</Border>
-									<Border BorderThickness="4" BorderBrush="Yellow" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="Auto" Height="Auto">
+									<Border Style="{StaticResource IndexItemsStyleItemCommandArea}" Visibility="{Binding Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}">
 										<StackPanel Orientation="Horizontal">
 											<Button Content="send" />
 											<Button Content="copy" />
@@ -92,9 +92,9 @@
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</Grid>
-				<GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
+				<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
 			</Grid>
-			<StatusBar Grid.Row="2" Style="{StaticResource DefaultStatusbarStyle}">
+			<StatusBar Grid.Row="2" Style="{StaticResource IndexItemsStyleDefaultStatusbarStyle}">
 				<TextBlock Text="now" />
 				<TextBlock Text="/" />
 				<TextBlock Text="max" />

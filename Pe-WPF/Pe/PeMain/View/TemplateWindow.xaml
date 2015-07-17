@@ -17,7 +17,7 @@
 	Top="{Binding WindowTop, Mode=TwoWay}"
 	Width="{Binding WindowWidth, Mode=TwoWay}"
 	Height="{Binding WindowHeight, Mode=TwoWay}"
-	Style="{DynamicResource ResourceKey=DefualtWindowStyle}"
+	Style="{DynamicResource IndexItemsStyleDefualtWindowStyle}"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	d:DesignWidth="407" d:DesignHeight="222"
 >
@@ -46,12 +46,12 @@
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<ToolBarTray>
-			<ToolBar Style="{StaticResource DefaultToolbarStyle}" >
+			<ToolBar Style="{StaticResource IndexItemsStyleDefaultToolbarStyle}" >
 				<Button Content="create" Command="{Binding CreateTemplateItem}" />
 				<Button Content="remove" Command="{Binding RemoveTemplateItem}" />
 			</ToolBar>
 		</ToolBarTray>
-		<Grid Style="{StaticResource DefaultMainPanelStyle}" Grid.Row="1">
+		<Grid Style="{StaticResource IndexItemsStyleDefaultMainPanelStyle}" Grid.Row="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="180"/>
 				<ColumnDefinition Width="*"/>
@@ -85,7 +85,8 @@
 									</Border>
 								</StackPanel>
 							</Border>
-								<Border BorderThickness="4" BorderBrush="Yellow" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="Auto" Height="Auto">
+						<!--<Border BorderThickness="4" BorderBrush="Yellow" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="Auto" Height="Auto">-->
+								<Border Style="{StaticResource IndexItemsStyleItemCommandArea}">
 									<StackPanel Orientation="Horizontal">
 										<Button Content="send" Command="{Binding SendItemCommand}" CommandParameter="{Binding ElementName=root}" />
 										<Button Content="copy" Command="{Binding CopyItemCommand}" />
@@ -107,8 +108,8 @@
 					</ListBox.ItemContainerStyle>-->
 				</ListBox>
 			</Grid>
-			<GridSplitter Grid.Column="1" Style="{StaticResource DefaultGridSplitterStyle}" />
-			<TabControl Grid.Column="1" Margin="{StaticResource ResourceKey=SplitterMargin}" DataContext="{Binding SelectedItem,ElementName=itemsList}" IsEnabled="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalIsNotNullConverter}}">
+			<GridSplitter Grid.Column="1" Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
+			<TabControl Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" DataContext="{Binding SelectedItem,ElementName=itemsList}" IsEnabled="{Binding DataContext, RelativeSource={RelativeSource Self}, Converter={StaticResource LogicalIsNotNullConverter}}">
 				<TabItem Header="source" x:Name="pageSource">
 					<Grid>
 						<Grid.RowDefinitions>
@@ -133,8 +134,8 @@
 								<ColumnDefinition Width="Auto" />
 							</Grid.ColumnDefinitions>
 							<TextBox Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="{Binding Source,UpdateSourceTrigger=PropertyChanged}" />
-							<GridSplitter Grid.Column="1"  Style="{StaticResource DefaultGridSplitterStyle}" />
-							<ListBox Grid.Column="1" Margin="{StaticResource SplitterMargin}" />
+							<GridSplitter Grid.Column="1"  Style="{StaticResource IndexItemsStyleDefaultGridSplitterStyle}" />
+							<ListBox Grid.Column="1" Margin="{StaticResource IndexItemsStyleSplitterMargin}" />
 						</Grid>
 					</Grid>
 				</TabItem>
@@ -143,7 +144,7 @@
 				</TabItem>
 			</TabControl>
 		</Grid>
-		<StatusBar Grid.Row="2" Style="{StaticResource DefaultStatusbarStyle}">
+		<StatusBar Grid.Row="2" Style="{StaticResource IndexItemsStyleDefaultStatusbarStyle}">
 			<TextBlock Text="now" />
 			<TextBlock Text="/" />
 			<TextBlock Text="max" />

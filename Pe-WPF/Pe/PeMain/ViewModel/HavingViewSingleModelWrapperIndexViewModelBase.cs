@@ -51,7 +51,7 @@
 
 		protected IndexSettingModelBase<TCollectionModel, TItemModel> IndexModel { get; private set; }
 
-		protected MVMPairCreateDelegationCollection<TItemModel, TItemViewModel> IndexPairList { get; private set; }
+		public MVMPairCreateDelegationCollection<TItemModel, TItemViewModel> IndexPairList { get; private set; }
 
 		public ObservableCollection<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
 
