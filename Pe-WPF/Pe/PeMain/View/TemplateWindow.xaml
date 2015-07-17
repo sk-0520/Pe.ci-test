@@ -29,7 +29,6 @@
 			</ResourceDictionary.MergedDictionaries>
 			<SC:LogicalNotConverter x:Key="LogicalNotConverter" />
 			<SC:LogicalIsNotNullConverter x:Key="LogicalIsNotNullConverter" />
-			<SC:BooleanVisibility x:Key="BooleanVisibility" />
 			<AC:DisplayTextConverter x:Key="DisplayTextConverter" />
 		</ResourceDictionary>
 	</AW:CommonDataWindow.Resources>

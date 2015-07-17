@@ -53,7 +53,7 @@
 
 		public MVMPairCreateDelegationCollection<TItemModel, TItemViewModel> IndexPairList { get; private set; }
 
-		public ObservableCollection<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
+		public virtual ObservableCollection<TItemViewModel> IndexItems { get { return IndexPairList.ViewModelList; } }
 
 		#endregion
 

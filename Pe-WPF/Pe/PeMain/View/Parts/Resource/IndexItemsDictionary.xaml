@@ -30,11 +30,11 @@
 	<Thickness x:Key="IndexItemsStyleSplitterMargin" Left="{StaticResource IndexItemsStyleSplitterWidth}" Top="0" Right="0" Bottom="0" />
 	<Style x:Key="IndexItemsStyleItemCommandArea" TargetType="Border">
 		<Style.Resources>
-			<SC:BooleanVisibility x:Key="BooleanVisibility" />
+			<SC:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter" />
 		</Style.Resources>
 		<Setter Property="BorderThickness" Value="4" />
 		<Setter Property="BorderBrush" Value="Yellow" />
-		<Setter Property="Visibility" Value="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibility}}" />
+		<Setter Property="Visibility" Value="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter}}" />
 		<Setter Property="VerticalAlignment" Value="Bottom" />
 		<Setter Property="HorizontalAlignment" Value="Left" />
 		<Setter Property="Width" Value="Auto" />

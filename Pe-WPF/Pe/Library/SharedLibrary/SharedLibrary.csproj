@@ -159,7 +159,7 @@
     <Compile Include="Model\Unmanaged\Gdi\BitmapHandleModel.cs" />
     <Compile Include="View\Control\HotkeyControl.cs" />
     <Compile Include="View\Control\TemplateBindingToolbar.cs" />
-    <Compile Include="View\Converter\BooleanVisibility.cs" />
+    <Compile Include="View\Converter\BooleanVisibilityConverter.cs" />
     <Compile Include="View\Converter\EnumToBooleanConverter .cs" />
     <Compile Include="View\Converter\IsEmptyCollection.cs" />
     <Compile Include="View\Converter\IsNotEmptyCollection.cs" />
@@ -168,6 +168,7 @@
     <Compile Include="View\Converter\LogicalMultiEqualConverter.cs" />
     <Compile Include="View\Converter\LogicalMultiTrueOrConverter.cs" />
     <Compile Include="View\Converter\LogicalNotConverter.cs" />
+    <Compile Include="View\Converter\ReverseListConverterBase.cs" />
     <Compile Include="View\ViewExtend\ApplicationDesktopToolbar.cs" />
     <Compile Include="Logic\CommandLine.cs" />
     <Compile Include="Logic\DelegateCommand.cs" />
