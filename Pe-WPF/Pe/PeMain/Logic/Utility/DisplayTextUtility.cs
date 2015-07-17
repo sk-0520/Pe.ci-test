@@ -88,8 +88,8 @@
 							using(var reader = new MemoryStream(ASCIIEncoding.Default.GetBytes(clipboardItem.Body.Rtf))) {
 								rt.Selection.Load(reader, DataFormats.Rtf);
 								using(var writer = new MemoryStream()) {
-									rt.Selection.Save(writer, DataFormats.UnicodeText);
-									plainText = writer.ToString();
+									rt.Selection.Save(writer, DataFormats.Text);
+									plainText = ASCIIEncoding.Default.GetString(writer.ToArray());
 								}
 							}
 
