@@ -196,6 +196,7 @@
     <Compile Include="ViewModel\GroupItemViewMode.cs" />
     <Compile Include="ViewModel\GroupRootViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModelBase.cs" />
+    <Compile Include="ViewModel\HavingViewSingleModelWrapperIndexViewModelBase.cs" />
     <Compile Include="ViewModel\LauncherSimpleViewModel.cs" />
     <Compile Include="ViewModel\LauncherToolbarViewModel.cs" />
     <Compile Include="ViewModel\LauncherButtonViewModel.cs" />
